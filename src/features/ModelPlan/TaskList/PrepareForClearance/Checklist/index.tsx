@@ -240,8 +240,14 @@ const PrepareForClearanceCheckList = ({
           innerRef={formikRef}
         >
           {(formikProps: FormikProps<ClearanceStatusesModelPlanFormType>) => {
-            const { errors, handleSubmit, setErrors, values, setFieldValue } =
-              formikProps;
+            const {
+              errors,
+              handleSubmit,
+              setErrors,
+              values,
+              setFieldValue,
+              dirty
+            } = formikProps;
             const flatErrors = flattenErrors(errors);
 
             return (
@@ -278,7 +284,7 @@ const PrepareForClearanceCheckList = ({
                       <FieldGroup
                         scrollElement="basics"
                         error={!!flatErrors.basics}
-                        className="margin-top-4"
+                        className="margin-top-0"
                       >
                         <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
                         {/* Mapping over task list sections and dynamically rendering each checkbox with labels */}
@@ -380,6 +386,7 @@ const PrepareForClearanceCheckList = ({
                         type="submit"
                         data-testid="update-clearance"
                         onClick={() => setErrors({})}
+                        disabled={!!error || loading || !dirty}
                       >
                         {t('update')}
                       </Button>
