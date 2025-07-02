@@ -19,25 +19,59 @@ ALTER TABLE mto_common_solution_contact
 ADD COLUMN receive_emails BOOLEAN NOT NULL DEFAULT TRUE;
 
 -- TODO before merging in feature branch remove this filler data and run drop below 
--- FILL COMMANDS
+-- FILL COMMANDS START These will be removed after prod release -------------------------------------------------------------------------
 UPDATE mto_common_solution_contact
 SET
     mailbox_title = COALESCE(mailbox_title, 'empty string'),
-    mailbox_address = COALESCE(mailbox_address, 'empty string'),
+    mailbox_address = GEN_RANDOM_UUID()::TEXT || '@example.com',
     modified_by = '00000001-0001-0001-0001-000000000001', --System Account
     modified_dts = CURRENT_TIMESTAMP
 WHERE is_team = TRUE;
 -- Set mailbox_title and mailbox_address to NULL, and user_id to a valid UUID for user contacts
--- Replace '00000000-0000-0000-0000-000000000000' with a real user_account.id as appropriate
-UPDATE mto_common_solution_contact
+
+-- Insert random users for each non-team contact
+INSERT INTO user_account (
+    id, username, is_euaid, common_name, locale, email, given_name, family_name, zone_info, has_logged_in
+)
+SELECT
+    GEN_RANDOM_UUID() AS id,
+    GEN_RANDOM_UUID()::TEXT AS username,
+    FALSE AS is_euaid,
+    'Filler User' AS common_name,
+    'en-US' AS locale,
+    GEN_RANDOM_UUID()::TEXT || '@example.com' AS email,
+    'Filler' AS given_name,
+    'User' AS family_name,
+    'America/New_York' AS zone_info,
+    FALSE AS has_logged_in
+FROM mto_common_solution_contact
+WHERE is_team = FALSE;
+
+-- Assign each non-team contact a user_id from the users just created
+WITH user_ids AS (
+    SELECT id, ROW_NUMBER() OVER () AS rn
+    FROM user_account
+    WHERE email LIKE '%@example.com'
+),
+
+contacts AS (
+    SELECT ctid, ROW_NUMBER() OVER () AS rn
+    FROM mto_common_solution_contact
+    WHERE is_team = FALSE
+)
+
+UPDATE mto_common_solution_contact c
 SET
     mailbox_title = NULL,
     mailbox_address = NULL,
-    user_id = '00000000-0000-0000-0000-000000000000',
-    modified_by = '00000001-0001-0001-0001-000000000001', --System Account
+    user_id = u.id,
+    modified_by = '00000001-0001-0001-0001-000000000001',
     modified_dts = CURRENT_TIMESTAMP
-WHERE is_team = FALSE;
--- FILLER COMMANDS END
+FROM contacts ct
+JOIN user_ids u ON ct.rn = u.rn
+WHERE c.ctid = ct.ctid;
+
+-- FILLER COMMANDS END These will be removed after prod release-------------------------------------------------------------------------
 -- TODO remove after feature branch merge
 -- Remove all existing rows to ensure a clean slate for new constraints
 -- ALTER TABLE mto_common_solution_contact DISABLE TRIGGER trg_ensure_primary_contact_MTO;
@@ -85,3 +119,11 @@ EXECUTE FUNCTION ENFORCE_SINGLE_PRIMARY_CONTACT();
 
 -- This needs to be part of a separate migration than the definition of contractor table to avoid issues with existing data 
 ALTER TYPE TABLE_NAME ADD VALUE 'mto_common_solution_contractor';
+
+CREATE UNIQUE INDEX IF NOT EXISTS uniq_user_id_per_solution_key
+ON mto_common_solution_contact (mto_common_solution_key, user_id)
+WHERE user_id IS NOT NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS uniq_mailbox_address_per_solution_key
+ON mto_common_solution_contact (mto_common_solution_key, mailbox_address)
+WHERE mailbox_address IS NOT NULL;
