@@ -65,7 +65,14 @@ const general = {
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
   timelineReady: 'The model timeline is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
-  validDate: 'Please use a valid date format.'
+  validDate: 'Please use a valid date format.',
+  lockedModal: {
+    heading:
+      'Someone is currently editing the Model Plan section you’re trying to access.',
+    subHeading: 'Please try again later.',
+    return: 'Return to the task list',
+    goBack: 'Go back'
+  }
 };
 
 export default general;

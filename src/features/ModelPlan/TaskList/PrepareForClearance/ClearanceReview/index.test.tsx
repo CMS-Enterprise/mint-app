@@ -40,6 +40,10 @@ const repeatedMockData = {
 const GetClearanceStatusesMockData: GetClearanceStatusesType = {
   __typename: 'ModelPlan',
   id: modelID,
+  timeline: {
+    __typename: 'PlanTimeline',
+    ...repeatedMockData
+  },
   basics: {
     __typename: 'PlanBasics',
     ...repeatedMockData

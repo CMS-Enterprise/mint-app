@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
@@ -14,7 +14,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageLoading from 'components/PageLoading';
 import Tooltip from 'components/Tooltip';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 import { isAssessment } from 'utils/user';
@@ -29,21 +28,20 @@ import './index.scss';
 export type ReadOnlyProps = {
   modelID: string;
   clearance?: boolean;
+  editDates?: boolean;
   filteredView?: FilterGroup;
 };
 
 const ReadOnlyModelTimeline = ({
   modelID,
   clearance,
+  editDates = true,
   filteredView
 }: ReadOnlyProps) => {
   const { t: timelineT } = useTranslation('timeline');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
-  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const modelTimelineConfig = usePlanTranslation('timeline');
-
-  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetTimelineQuery({
     variables: {
@@ -92,16 +90,8 @@ const ReadOnlyModelTimeline = ({
         modifiedOrCreatedDts={
           allTimelineData.modifiedDts || allTimelineData.createdDts
         }
-        editDates={hasEditAccess && !filteredView}
+        editDates={editDates && hasEditAccess && !filteredView}
       />
-
-      {clearance && (
-        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {prepareForClearanceT('forModelPlan', {
-            modelName
-          })}
-        </p>
-      )}
 
       {loading && !data ? (
         <div className="height-viewport">

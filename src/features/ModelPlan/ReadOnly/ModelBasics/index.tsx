@@ -32,7 +32,6 @@ const ReadOnlyModelBasics = ({
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
-  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
 
   const modelPlanConfig = usePlanTranslation('modelPlan');
   const basicsConfig = usePlanTranslation('basics');
@@ -94,14 +93,6 @@ const ReadOnlyModelBasics = ({
           allBasicsData.modifiedDts || allBasicsData.createdDts
         }
       />
-
-      {clearance && (
-        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {prepareForClearanceT('forModelPlan', {
-            modelName
-          })}
-        </p>
-      )}
 
       {loading && !data ? (
         <div className="height-viewport">
