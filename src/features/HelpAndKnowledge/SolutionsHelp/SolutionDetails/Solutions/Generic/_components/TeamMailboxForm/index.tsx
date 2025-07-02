@@ -12,7 +12,10 @@ import {
   Tooltip
 } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { useUpdateMtoCommonSolutionContactMutation } from 'gql/generated/graphql';
+import {
+  useCreateMtoCommonSolutionMailboxContactMutation,
+  useUpdateMtoCommonSolutionContactMutation
+} from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Alert from 'components/Alert';
@@ -21,6 +24,8 @@ import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
+import { TeamMailboxModeType } from '../MailboxAndTeamMemberModal';
+
 type FormValues = {
   mailboxAddress: string;
   mailboxTitle: string;
@@ -28,12 +33,24 @@ type FormValues = {
   receiveEmails: boolean;
 };
 
-const EditTeamMailboxForm = ({
+const TeamMailboxForm = ({
+  mode,
   closeModal,
-  teamMailbox
+  teamMailbox = {
+    __typename: 'MTOCommonSolutionContact',
+    id: 'not a real id',
+    name: '',
+    email: '',
+    mailboxTitle: '',
+    mailboxAddress: '',
+    isTeam: true,
+    isPrimary: false,
+    receiveEmails: false
+  }
 }: {
+  mode: TeamMailboxModeType;
   closeModal: () => void;
-  teamMailbox: SolutionContactType;
+  teamMailbox?: SolutionContactType;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
@@ -56,6 +73,13 @@ const EditTeamMailboxForm = ({
 
   const { selectedSolution } = useModalSolutionState();
   const { showMessage } = useMessage();
+  const [create] = useCreateMtoCommonSolutionMailboxContactMutation({
+    refetchQueries: [
+      {
+        query: GetMTOSolutionContacts
+      }
+    ]
+  });
   const [update] = useUpdateMtoCommonSolutionContactMutation({
     refetchQueries: [
       {
@@ -64,6 +88,8 @@ const EditTeamMailboxForm = ({
     ]
   });
   const [hasMutationError, setHasMutationError] = useState(false);
+  const isAddMode = mode === 'addTeamMailbox';
+  const isEditMode = mode === 'editTeamMailbox';
   const disabledSubmitBtn =
     isSubmitting ||
     !isDirty ||
@@ -79,23 +105,34 @@ const EditTeamMailboxForm = ({
       teamMailbox,
       formData
     );
-    update({
-      variables: {
-        id: teamMailbox.id,
-        input: {
-          mailboxTitle,
-          isPrimary,
-          receiveEmails
-        }
-      }
-    })
+    const promise = isAddMode
+      ? create({
+          variables: {
+            key: selectedSolution.enum,
+            mailboxTitle: formData.mailboxTitle,
+            mailboxAddress: formData.mailboxAddress,
+            isPrimary: formData.isPrimary,
+            receiveEmails: formData.receiveEmails
+          }
+        })
+      : update({
+          variables: {
+            id: teamMailbox.id,
+            input: {
+              mailboxTitle,
+              isPrimary,
+              receiveEmails
+            }
+          }
+        });
+    promise
       .then(response => {
         if (!response?.errors) {
           showMessage(
             <Trans
-              i18nKey="mtoCommonSolutionContactMisc:editTeamMailbox.success"
+              i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
-                contact: teamMailbox.name
+                contact: formData.mailboxAddress || teamMailbox.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -114,8 +151,8 @@ const EditTeamMailboxForm = ({
     <FormProvider {...methods}>
       <Form
         className="maxw-none"
-        data-testid="team-member-form"
-        id="team-member-form"
+        data-testid="team-mailbox-form"
+        id="team-mailbox-form"
         onSubmit={handleSubmit(onSubmit)}
       >
         {hasMutationError && (
@@ -125,7 +162,7 @@ const EditTeamMailboxForm = ({
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT('editTeamMailbox.error')}
+            {miscT(`${mode}.error`)}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -134,7 +171,7 @@ const EditTeamMailboxForm = ({
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
@@ -155,7 +192,7 @@ const EditTeamMailboxForm = ({
                   id="team-mailbox-address"
                   data-testid="team-mailbox-address"
                   value={field.value || ''}
-                  disabled
+                  disabled={isEditMode}
                 />
               </FormGroup>
             )}
@@ -166,7 +203,7 @@ const EditTeamMailboxForm = ({
             control={control}
             rules={{
               required: true,
-              validate: value => value !== 'default'
+              validate: value => value !== ''
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0">
@@ -199,7 +236,11 @@ const EditTeamMailboxForm = ({
                   id="isPrimary"
                   testid="isPrimary"
                   label={contactT('isPrimary.label')}
-                  subLabel={miscT('editTeamMailbox.primaryPocSubLabel')}
+                  subLabel={
+                    isAddMode
+                      ? contactT('isPrimary.sublabel')
+                      : miscT('editTeamMailbox.primaryPocSubLabel')
+                  }
                   checked={Boolean(field.value)}
                   value="true"
                   onBlur={field.onBlur}
@@ -273,7 +314,7 @@ const EditTeamMailboxForm = ({
             disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
-            {miscT('saveChanges')}
+            {miscT(`${mode}.cta`)}
           </Button>
           <Button
             type="button"
@@ -289,4 +330,4 @@ const EditTeamMailboxForm = ({
   );
 };
 
-export default EditTeamMailboxForm;
+export default TeamMailboxForm;
