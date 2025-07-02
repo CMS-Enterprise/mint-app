@@ -11,7 +11,7 @@ type EChimpCR {
   CRSummary is rich text in HTML format, in practice, the data is not tagged.
   We use the TaggedContent type as we don't have another use for a plain HTML type.
   """
-  crSummary: TaggedContent 
+  crSummary: TaggedContent
   crStatus: String
   emergencyCrFlag: Boolean
   relatedCrNumbers: String

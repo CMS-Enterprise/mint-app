@@ -41,16 +41,16 @@ input PlanCollaboratorCreateInput {
 
 extend type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
-  @hasRole(role: MINT_USER)
+  createPlanCollaborator(
+    input: PlanCollaboratorCreateInput!
+  ): PlanCollaborator! @hasRole(role: MINT_USER)
 
   updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
-  deletePlanCollaborator(id: UUID!): PlanCollaborator!
-  @hasRole(role: MINT_USER)
+  deletePlanCollaborator(id: UUID!): PlanCollaborator! @hasRole(role: MINT_USER)
 }

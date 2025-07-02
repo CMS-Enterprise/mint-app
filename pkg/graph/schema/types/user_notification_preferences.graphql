@@ -1,27 +1,26 @@
 enum UserNotificationPreferenceFlag {
-  IN_APP,
+  IN_APP
   EMAIL
 }
 
 enum DatesChangedNotificationType {
-  ALL_MODELS,
-  FOLLOWED_MODELS,
-  MY_MODELS,
+  ALL_MODELS
+  FOLLOWED_MODELS
+  MY_MODELS
 }
 
 enum DataExchangeApproachMarkedCompleteNotificationType {
-  ALL_MODELS,
-  FOLLOWED_MODELS,
-  MY_MODELS,
+  ALL_MODELS
+  FOLLOWED_MODELS
+  MY_MODELS
 }
-
 
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
 """
 type UserNotificationPreferences {
   id: UUID!
-	userID: UUID!
+  userID: UUID!
 
   dailyDigestComplete: [UserNotificationPreferenceFlag!]!
 
@@ -51,12 +50,11 @@ type UserNotificationPreferences {
   modifiedDts: Time
 }
 
-
 """
 UserNotificationPreferencesChanges represents the ways that a UserNotifications Preferences object can be updated
 """
-input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}")  {
-
+input UserNotificationPreferencesChanges
+  @goModel(model: "map[string]interface{}") {
   dailyDigestComplete: [UserNotificationPreferenceFlag!]
 
   addedAsCollaborator: [UserNotificationPreferenceFlag!]
@@ -79,9 +77,10 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 }
 
 extend type Mutation {
-
-"""
-Sets the notification preferences of a user.
-"""
-updateUserNotificationPreferences(changes: UserNotificationPreferencesChanges!): UserNotificationPreferences!
+  """
+  Sets the notification preferences of a user.
+  """
+  updateUserNotificationPreferences(
+    changes: UserNotificationPreferencesChanges!
+  ): UserNotificationPreferences!
 }

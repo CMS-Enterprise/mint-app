@@ -40,18 +40,17 @@ enum TaskStatusInput {
 }
 
 enum TaskListSection {
-  BASICS,
-  GENERAL_CHARACTERISTICS,
-  PARTICIPANTS_AND_PROVIDERS,
-  BENEFICIARIES,
-  OPERATIONS_EVALUATION_AND_LEARNING,
-  PAYMENT,
+  BASICS
+  GENERAL_CHARACTERISTICS
+  PARTICIPANTS_AND_PROVIDERS
+  BENEFICIARIES
+  OPERATIONS_EVALUATION_AND_LEARNING
+  PAYMENT
   PREPARE_FOR_CLEARANCE
 }
 # Region : Operational Need and Solutions, these will be removed after MTO is fully migrated
 
-
-enum OperationalNeedKey{
+enum OperationalNeedKey {
   MANAGE_CD
   REV_COL_BIDS
   UPDATE_CONTRACT
@@ -86,8 +85,8 @@ enum OperationalNeedKey{
 }
 
 enum OperationalSolutionSubtaskStatus {
-  TODO,
-  IN_PROGRESS,
+  TODO
+  IN_PROGRESS
   DONE
 }
 enum OpSolutionStatus {
@@ -99,8 +98,7 @@ enum OpSolutionStatus {
   AT_RISK
 }
 
-
-enum OperationalSolutionKey{
+enum OperationalSolutionKey {
   INNOVATION
   ACO_OS
   APPS
@@ -146,20 +144,18 @@ enum OperationalSolutionKey{
 
 #endregion : Operational Need and Solutions, these will be removed after MTO is fully migrated
 
-
 enum DiscussionUserRole {
-  CMS_SYSTEM_SERVICE_TEAM,
-  LEADERSHIP,
-  MEDICARE_ADMINISTRATIVE_CONTRACTOR,
-  MINT_TEAM,
-  IT_LEAD,
-  MODEL_LEAD,
-  MODEL_TEAM,
-  SHARED_SYSTEM_MAINTAINER,
-  SOLUTION_ARCHITECT,
-  NONE_OF_THE_ABOVE,
+  CMS_SYSTEM_SERVICE_TEAM
+  LEADERSHIP
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR
+  MINT_TEAM
+  IT_LEAD
+  MODEL_LEAD
+  MODEL_TEAM
+  SHARED_SYSTEM_MAINTAINER
+  SOLUTION_ARCHITECT
+  NONE_OF_THE_ABOVE
 }
-
 
 """
 A user role associated with a job code
@@ -180,7 +176,6 @@ enum Role {
   """
   MINT_MAC
 }
-
 
 """
 These represent all the possible tables in the database, in the public schema.

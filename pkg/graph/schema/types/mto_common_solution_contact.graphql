@@ -1,4 +1,3 @@
-
 type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
@@ -8,7 +7,6 @@ type MTOCommonSolutionContact {
   isTeam: Boolean!
   role: String
   isPrimary: Boolean!
-
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -30,5 +28,4 @@ type MTOCommonSolutionContactInformation {
   The point of contact who is determined to be the primary contact
   """
   primaryContact: MTOCommonSolutionContact!
-
 }
