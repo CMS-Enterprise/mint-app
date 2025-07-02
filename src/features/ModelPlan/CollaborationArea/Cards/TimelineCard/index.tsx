@@ -12,7 +12,8 @@ import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
   GetCollaborationAreaQuery,
-  LockableSection
+  LockableSection,
+  ModelShareSection
 } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
@@ -66,6 +67,7 @@ const TimelineCard = ({
         <ShareExportModal
           closeModal={() => setIsExportModalOpen(false)}
           modelID={modelID}
+          filteredView={ModelShareSection.TIMELINE}
           setStatusMessage={setStatusMessage}
         />
       </Modal>
