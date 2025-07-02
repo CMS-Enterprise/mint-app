@@ -669,7 +669,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   data-testid="grid"
                 >
                   <div
-                    class="desktop:grid-col-8"
+                    class="desktop:grid-col-8 padding-x-05"
                     data-testid="grid"
                   >
                     <div
