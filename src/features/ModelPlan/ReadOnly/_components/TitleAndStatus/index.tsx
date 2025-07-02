@@ -88,7 +88,7 @@ const TitleAndStatus = ({
             )}
 
             {editDates && (
-              <>
+              <div className="mint-no-print">
                 <div className="border-left-2px border-base-light margin-left-105 padding-left-2 height-2 margin-top-1px" />
 
                 <Icon.Edit
@@ -102,7 +102,7 @@ const TitleAndStatus = ({
                 >
                   {timelineMiscT('editDates')}
                 </UswdsReactLink>
-              </>
+              </div>
             )}
           </div>
         </div>
