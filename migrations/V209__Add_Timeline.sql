@@ -82,8 +82,11 @@ SELECT
     status
 FROM plan_basics;
 
+-- Disable audit table trigger while we drop columns and move data
 ALTER TABLE plan_basics DISABLE TRIGGER audit_trigger;
+ALTER TABLE plan_general_characteristics DISABLE TRIGGER audit_trigger;
 
+-- Remove timeline data columns from basics
 ALTER TABLE plan_basics
 DROP COLUMN complete_icip,
 DROP COLUMN clearance_starts,
@@ -96,7 +99,27 @@ DROP COLUMN performance_period_ends,
 DROP COLUMN wrap_up_ends,
 DROP COLUMN high_level_note;
 
+-- Added phased_in and phased_in_note to plan_general_characteristics
+ALTER TABLE plan_general_characteristics
+    ADD COLUMN phased_in BOOLEAN,
+    ADD COLUMN phased_in_note TEXT;
+
+-- Update plan_general_characteristics with phased_in and phased_in_note from plan_basics
+UPDATE plan_general_characteristics gc
+SET
+    phased_in = pb.phased_in,
+    phased_in_note = pb.phased_in_note
+FROM plan_basics pb
+WHERE gc.model_plan_id = pb.model_plan_id;
+
+-- Remove phased_in and phased_in_note from plan_basics
+ALTER TABLE plan_basics
+    DROP COLUMN phased_in,
+    DROP COLUMN phased_in_note;
+
+-- Re-enable audit table triggers after modifications
 ALTER TABLE plan_basics ENABLE TRIGGER audit_trigger;
+ALTER TABLE plan_general_characteristics ENABLE TRIGGER audit_trigger;
 
 -- Add audit configuration for the new plan_timeline table
 SELECT audit.AUDIT_TABLE(
