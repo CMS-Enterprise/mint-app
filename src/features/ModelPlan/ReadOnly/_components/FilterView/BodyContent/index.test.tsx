@@ -42,14 +42,25 @@ const mockData: GetModelSummaryTypes = {
   createdDts: '2022-08-23T04:00:00Z',
   modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
+  mostRecentEdit: {
+    __typename: 'TranslatedAudit',
+    id: '123',
+    date: '2022-08-27T04:00:00Z'
+  },
   basics: {
     __typename: 'PlanBasics',
-    goal: 'This is the goal',
-    performancePeriodStarts: '2022-08-20T04:00:00Z'
+    id: '123',
+    goal: 'This is the goal'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
+    id: '123',
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
+  },
+  timeline: {
+    __typename: 'PlanTimeline',
+    id: '123',
+    performancePeriodStarts: '2022-08-20T04:00:00Z'
   },
   isCollaborator: true,
   echimpCRsAndTDLs: [

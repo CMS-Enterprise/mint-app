@@ -11,6 +11,7 @@ import ReadOnlyOpsEvalAndLearning from 'features/ModelPlan/ReadOnly/OpsEvalAndLe
 import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'features/ModelPlan/ReadOnly/Team';
+import ReadOnlyModelTimeline from 'features/ModelPlan/ReadOnly/Timeline';
 
 import Divider from 'components/Divider';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -28,6 +29,7 @@ import {
 
 const components: Record<string, React.ElementType> = {
   basics: ReadOnlyModelBasics,
+  timeline: ReadOnlyModelTimeline,
   generalCharacteristics: ReadOnlyGeneralCharacteristics,
   participantsAndProviders: ReadOnlyParticipantsAndProviders,
   beneficiaries: ReadOnlyBeneficiaries,

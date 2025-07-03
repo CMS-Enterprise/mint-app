@@ -252,7 +252,7 @@ const ModelPlansTable = ({
       clearanceDate: {
         id: 'clearanceDate',
         Header: homeT('requestsTable.headers.clearanceDate'),
-        accessor: ({ basics: { clearanceStarts } }: any) => {
+        accessor: ({ timeline: { clearanceStarts } }: any) => {
           if (clearanceStarts) {
             return formatDateUtc(clearanceStarts, 'MM/dd/yyyy');
           }
@@ -268,7 +268,7 @@ const ModelPlansTable = ({
       startDate: {
         id: 'startDate',
         Header: homeT('requestsTable.headers.startDate'),
-        accessor: ({ basics: { performancePeriodStarts } }: any) => {
+        accessor: ({ timeline: { performancePeriodStarts } }: any) => {
           if (performancePeriodStarts) {
             return formatDateUtc(performancePeriodStarts, 'MM/dd/yyyy');
           }

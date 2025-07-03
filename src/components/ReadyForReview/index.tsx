@@ -38,15 +38,23 @@ const ReadyForReview = ({
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
       <SummaryBox className="bg-white border-base-light padding-2">
-        <p className="margin-0">{t('modelPlanStatus')}</p>
+        <p className="margin-0">
+          {sectionName === 'Model timeline'
+            ? t('modelTimelineStatus')
+            : t('modelPlanStatus')}
+        </p>
         <Field
           as={CheckboxField}
           id={id}
           testid={id}
           name={field}
-          label={t('modelPlanCopy', {
-            sectionName: `${sectionName}`
-          })}
+          label={
+            sectionName === 'Model timeline'
+              ? t('timelineReady')
+              : t('modelPlanCopy', {
+                  sectionName: `${sectionName}`
+                })
+          }
           checked={status === TaskStatus.READY_FOR_REVIEW}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.checked) {

@@ -198,11 +198,11 @@ const searchModelsFilter = (
         ?.toLowerCase()
         .includes(queryValueLower) ||
       formatDateUtc(
-        model.modelPlan?.basics?.performancePeriodStarts,
+        model.modelPlan?.timeline?.performancePeriodStarts,
         'MM/dd/yyyy'
       ).includes(queryValueLower) ||
       formatDateUtc(
-        model.modelPlan?.basics?.performancePeriodEnds,
+        model.modelPlan?.timeline?.performancePeriodEnds,
         'MM/dd/yyyy'
       ).includes(queryValueLower)
     );

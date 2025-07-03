@@ -108,6 +108,8 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	suite.Nil(gc.AgencyOrStateHelp)
 	suite.Nil(gc.AgencyOrStateHelpOther)
 	suite.Nil(gc.AgencyOrStateHelpNote)
+	suite.Nil(gc.PhasedIn)
+	suite.Nil(gc.PhasedInNote)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
@@ -127,6 +129,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 		"agencyOrStateHelp":               []string{"YES_STATE", "YES_AGENCY_IDEAS", "OTHER"},
 		"agencyOrStateHelpOther":          "Some other note",
 		"agencyOrStateHelpNote":           "Some note",
+		"phasedIn":                        true,
 	}
 
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -145,6 +148,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.EqualValues([]string{"YES_STATE", "YES_AGENCY_IDEAS", "OTHER"}, updatedGeneralCharacteristics.AgencyOrStateHelp)
 	suite.EqualValues("Some other note", *updatedGeneralCharacteristics.AgencyOrStateHelpOther)
 	suite.EqualValues("Some note", *updatedGeneralCharacteristics.AgencyOrStateHelpNote)
+	suite.EqualValues(changes["phasedIn"], *updatedGeneralCharacteristics.PhasedIn)
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedGeneralCharacteristics.IsNewModel)

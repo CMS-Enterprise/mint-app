@@ -1,0 +1,154 @@
+{
+  "completeICIP": {
+    "gqlField": "completeICIP",
+    "goField": "CompleteICIP",
+    "dbField": "complete_icip",
+    "label": "Complete ICIP",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.01
+  },
+  "clearanceStarts": {
+    "gqlField": "clearanceStarts",
+    "goField": "ClearanceStarts",
+    "dbField": "clearance_starts",
+    "label": "Clearance start date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.02
+  },
+  "clearanceEnds": {
+    "gqlField": "clearanceEnds",
+    "goField": "ClearanceEnds",
+    "dbField": "clearance_ends",
+    "label": "Clearance end date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.03
+  },
+  "announced": {
+    "gqlField": "announced",
+    "goField": "Announced",
+    "dbField": "announced",
+    "label": "Announce model",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.04
+  },
+  "applicationsStart": {
+    "gqlField": "applicationsStart",
+    "goField": "ApplicationsStart",
+    "dbField": "applications_starts",
+    "label": "Application start date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.05
+  },
+  "applicationsEnd": {
+    "gqlField": "applicationsEnd",
+    "goField": "ApplicationsEnd",
+    "dbField": "applications_ends",
+    "label": "Application end date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.06
+  },
+  "performancePeriodStarts": {
+    "gqlField": "performancePeriodStarts",
+    "goField": "PerformancePeriodStarts",
+    "dbField": "performance_period_starts",
+    "label": "Performance start date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.07,
+    "groupLabel": "Performance period",
+    "groupLabelTooltip": "When the model will be active beginning with the go-live date"
+  },
+  "performancePeriodEnds": {
+    "gqlField": "performancePeriodEnds",
+    "goField": "PerformancePeriodEnds",
+    "dbField": "performance_period_ends",
+    "label": "Performance end date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.08
+  },
+  "highLevelNote": {
+    "gqlField": "highLevelNote",
+    "goField": "HighLevelNote",
+    "dbField": "high_level_note",
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Timeline",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.09
+  },
+  "wrapUpEnds": {
+    "gqlField": "wrapUpEnds",
+    "goField": "WrapUpEnds",
+    "dbField": "wrap_up_ends",
+    "label": "Model wrap-up end date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.1
+  },
+  "readyForReviewBy": {
+    "gqlField": "readyForReviewBy",
+    "goField": "ReadyForReviewBy",
+    "dbField": "ready_for_review_by",
+    "label": "This section of the Model Plan (Model basics) is ready for review.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 3.13,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForReviewDts": {
+    "gqlField": "readyForReviewDts",
+    "goField": "ReadyForReviewDts",
+    "dbField": "ready_for_review_dts",
+    "label": "Ready for review date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.14,
+    "hideFromReadonly": true
+  },
+  "readyForClearanceBy": {
+    "gqlField": "readyForClearanceBy",
+    "goField": "ReadyForClearanceBy",
+    "dbField": "ready_for_clearance_by",
+    "label": "This section of the Model Plan (Model basics) is ready for clearance.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 3.15,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForClearanceDts": {
+    "gqlField": "readyForClearanceDts",
+    "goField": "ReadyForClearanceDts",
+    "dbField": "ready_for_clearance_dts",
+    "label": "Ready for clearance date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.16,
+    "hideFromReadonly": true
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.17,
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    },
+    "hideFromReadonly": true
+  }
+}

@@ -255,7 +255,11 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       <p
                         class="margin-top-0 margin-bottom-0"
                       >
-                        07/24/2024
+                        <i
+                          class="text-base"
+                        >
+                          To be determined
+                        </i>
                       </p>
                     </div>
                     <div
@@ -270,7 +274,11 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       <p
                         class="margin-top-0 margin-bottom-0"
                       >
-                        07/31/2024
+                        <i
+                          class="text-base"
+                        >
+                          To be determined
+                        </i>
                       </p>
                     </div>
                   </div>

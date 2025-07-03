@@ -26,12 +26,19 @@ import FieldGroup from 'components/FieldGroup';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 
 type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
+
+// Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+type InitialValueType = Omit<
+  BasicsFormType,
+  'readyForReviewByUserAccount' | 'readyForReviewDts'
+>;
 
 const Overview = () => {
   const { t: basicsT } = useTranslation('basics');
@@ -42,7 +49,7 @@ const Overview = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<BasicsFormType>>(null);
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useGetOverviewQuery({
@@ -60,7 +67,10 @@ const Overview = () => {
     problem,
     goal,
     testInterventions,
-    note
+    note,
+    readyForReviewByUserAccount,
+    readyForReviewDts,
+    status
   } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
   const { mutationError } = useHandleMutation(TypedUpdateBasicsDocument, {
@@ -68,7 +78,7 @@ const Overview = () => {
     formikRef
   });
 
-  const initialValues: BasicsFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanBasics',
     id: id ?? '',
     modelType: modelType ?? [],
@@ -76,7 +86,8 @@ const Overview = () => {
     problem: problem ?? '',
     goal: goal ?? '',
     testInterventions: testInterventions ?? '',
-    note: note ?? ''
+    note: note ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -121,7 +132,7 @@ const Overview = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/collaboration-area/task-list/basics/milestones`
+            `/models/${modelID}/collaboration-area/task-list/characteristics`
           );
         }}
         enableReinitialize
@@ -131,8 +142,14 @@ const Overview = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BasicsFormType>) => {
-          const { dirty, handleSubmit, isValid, setErrors, values } =
-            formikProps;
+          const {
+            dirty,
+            handleSubmit,
+            isValid,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>
@@ -210,6 +227,18 @@ const Overview = () => {
 
                   <AddNote id="ModelType-note" field="note" />
 
+                  {!loading && values.status && (
+                    <ReadyForReview
+                      id="milestones-status"
+                      field="status"
+                      sectionName={basicsMiscT('heading')}
+                      status={values.status}
+                      setFieldValue={setFieldValue}
+                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                      readyForReviewDts={readyForReviewDts}
+                    />
+                  )}
+
                   <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
@@ -229,7 +258,7 @@ const Overview = () => {
                       className=""
                       onClick={() => setErrors({})}
                     >
-                      {miscellaneousT('next')}
+                      {miscellaneousT('saveAndStartNext')}
                     </Button>
                   </div>
                   <Button
@@ -256,7 +285,7 @@ const Overview = () => {
         }}
       </Formik>
 
-      <PageNumber currentPage={2} totalPages={3} className="margin-bottom-10" />
+      <PageNumber currentPage={2} totalPages={2} className="margin-bottom-10" />
     </div>
   );
 };

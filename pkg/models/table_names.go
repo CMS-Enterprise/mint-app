@@ -62,6 +62,7 @@ const (
 	TNMTOCommonMilestone                 TableName = "mto_common_milestone"
 	TNMTOCommonSolutionContact           TableName = "mto_common_solution_contact"
 	TNMTOCommonSolution                  TableName = "mto_common_solution"
+	TNPlanTimeline                       TableName = "plan_timeline"
 
 	TNMTOSuggestedMilestone TableName = "mto_suggested_milestone"
 )

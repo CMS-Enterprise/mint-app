@@ -36,6 +36,8 @@ type PlanGeneralCharacteristics struct {
 	HasComponentsOrTracksNote   *string `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
+	PhasedIn                     *bool          `json:"phasedIn" db:"phased_in" statusWeight:"1"` //default to false
+	PhasedInNote                 *string        `json:"phasedInNote" db:"phased_in_note"`
 	AgencyOrStateHelp            pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
 	AgencyOrStateHelpOther       *string        `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
 	AgencyOrStateHelpNote        *string        `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`

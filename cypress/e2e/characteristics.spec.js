@@ -122,6 +122,11 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
+    cy.get('#phased-in-true')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
     cy.get('#plan-characteristics-agency-or-state-help-YES_AGENCY_IAA').should(
       'not.be.disabled'
     );

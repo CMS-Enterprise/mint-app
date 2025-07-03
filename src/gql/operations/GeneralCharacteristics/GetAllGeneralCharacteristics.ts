@@ -30,6 +30,8 @@ export default gql(/* GraphQL */ `
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
+        phasedIn
+        phasedInNote
         agencyOrStateHelp
         agencyOrStateHelpOther
         agencyOrStateHelpNote

@@ -1,7 +1,7 @@
 SELECT
-    posSol.filter_view AS filter_view, --noqa
-    posSol.sol_name AS sol_name, --noqa
-    SOL.status AS sol_status,
+    possol.filter_view AS filter_view, --noqa
+    possol.sol_name AS sol_name, --noqa
+    sol.status AS sol_status,
     (
         SELECT
             string_agg(
@@ -9,24 +9,19 @@ SELECT
             )
         FROM plan_collaborator AS collab
         LEFT JOIN user_account AS account ON account.id = collab.user_id --noqa
-        WHERE collab.model_plan_id = plan.ID AND collab.team_roles @> '{"MODEL_LEAD"}' --noqa
+        WHERE collab.model_plan_id = plan.id AND collab.team_roles @> '{"MODEL_LEAD"}' --noqa
     ) AS model_lead_names,
-
-    posNEED.need_name,
-    PLAN.ID AS model_id,
-    PLAN.model_name,
-    PLAN.abbreviation AS model_abbreviation,
-    PLAN.status AS model_status,
-    basics.performance_period_starts AS model_start_date --noqa
-
-
-
-FROM operational_solution AS SOL
-LEFT JOIN possible_operational_solution AS posSOL ON posSOL.id = SOL.solution_type
-LEFT JOIN operational_need AS NEED ON NEED.id = SOL.operational_need_id
-LEFT JOIN possible_operational_need AS posNEED ON posNEED.id = NEED.need_type
-LEFT JOIN model_plan AS PLAN ON NEED.model_plan_id = PLAN.id
-LEFT JOIN plan_basics AS BASICS ON BASICS.model_plan_id = PLAN.id
-WHERE
-
-    SOL.ID = :sol_id
+    posneed.need_name,
+    plan.id AS model_id,
+    plan.model_name,
+    plan.abbreviation AS model_abbreviation,
+    plan.status AS model_status,
+    timeline.performance_period_starts AS model_start_date --noqa
+FROM operational_solution AS sol
+LEFT JOIN possible_operational_solution AS possol
+    ON possol.id = sol.solution_type
+LEFT JOIN operational_need AS need ON need.id = sol.operational_need_id
+LEFT JOIN possible_operational_need AS posneed ON posneed.id = need.need_type
+LEFT JOIN model_plan AS plan ON need.model_plan_id = plan.id
+LEFT JOIN plan_timeline AS timeline ON timeline.model_plan_id = plan.id
+WHERE sol.id = :sol_id;

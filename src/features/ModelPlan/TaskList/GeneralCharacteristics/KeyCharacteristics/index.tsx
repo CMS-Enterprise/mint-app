@@ -52,6 +52,7 @@ const KeyCharacteristics = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
+    phasedIn: phasedInConfig,
     agencyOrStateHelp: agencyOrStateHelpConfig,
     alternativePaymentModelTypes: alternativePaymentModelTypesConfig,
     keyCharacteristics: keyCharacteristicsConfig,
@@ -75,6 +76,8 @@ const KeyCharacteristics = () => {
 
   const {
     id,
+    phasedIn,
+    phasedInNote,
     agencyOrStateHelp,
     agencyOrStateHelpOther,
     agencyOrStateHelpNote,
@@ -106,6 +109,8 @@ const KeyCharacteristics = () => {
   const initialValues: KeyCharacteristicsFormType = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
+    phasedIn: phasedIn ?? null,
+    phasedInNote: phasedInNote ?? '',
     agencyOrStateHelp: agencyOrStateHelp ?? [],
     agencyOrStateHelpOther: agencyOrStateHelpOther ?? '',
     agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
@@ -186,6 +191,26 @@ const KeyCharacteristics = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
+                  <FieldGroup className="margin-top-4">
+                    <Label htmlFor="phasedIn">
+                      {generalCharacteristicsT('phasedIn.label')}
+                    </Label>
+
+                    <span className="usa-hint display-block text-normal margin-top-1">
+                      {generalCharacteristicsT('phasedIn.sublabel')}
+                    </span>
+
+                    <BooleanRadio
+                      field="phasedIn"
+                      id="phased-in"
+                      value={values.phasedIn}
+                      setFieldValue={setFieldValue}
+                      options={phasedInConfig.options}
+                    />
+                  </FieldGroup>
+
+                  <AddNote id="phased-in-note" field="phasedInNote" />
+
                   <FieldGroup>
                     <Label htmlFor="plan-characteristics-agency-or-state-help">
                       {generalCharacteristicsT('agencyOrStateHelp.label')}

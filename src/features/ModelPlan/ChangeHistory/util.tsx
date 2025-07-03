@@ -49,6 +49,7 @@ export type ChangeType =
 
 export type TranslationTables =
   | TableName.MODEL_PLAN
+  | TableName.PLAN_TIMELINE
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
@@ -75,6 +76,7 @@ export type TranslationTables =
 
 export type TableWithStatus =
   | TableName.PLAN_BASICS
+  | TableName.PLAN_TIMELINE
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
   | TableName.PLAN_BENEFICIARIES
@@ -87,6 +89,7 @@ export const isTableWithStatus = (
 ): tableName is TableWithStatus => {
   return [
     TableName.PLAN_BASICS,
+    TableName.PLAN_TIMELINE,
     TableName.PLAN_GENERAL_CHARACTERISTICS,
     TableName.PLAN_PARTICIPANTS_AND_PROVIDERS,
     TableName.PLAN_BENEFICIARIES,
@@ -490,17 +493,18 @@ const readyForReviewFields = [
 
 // Removes the fields that are ready for review from the list of translatedFields changes
 export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
-  // Allow MTO_INFO changes to pass through, as there is no official status, but calculated on FE by ready for review fields
-  if (changes.find(change => change.tableName === TableName.MTO_INFO))
-    return changes;
-
   const filteredReviewChanges: ChangeRecordType[] = [];
 
   changes.forEach(change => {
     const singleChange = { ...change };
-    singleChange.translatedFields = singleChange.translatedFields.filter(
-      field => !readyForReviewFields.includes(field.fieldName)
-    );
+
+    // Allow MTO_INFO changes to pass through, as there is no official status, but calculated on FE by ready for review fields
+    if (singleChange.tableName !== TableName.MTO_INFO) {
+      // If the table is not MTO_INFO, filter out the ready for review fields
+      singleChange.translatedFields = singleChange.translatedFields.filter(
+        field => !readyForReviewFields.includes(field.fieldName)
+      );
+    }
     filteredReviewChanges.push(singleChange);
   });
 

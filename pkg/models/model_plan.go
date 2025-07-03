@@ -174,6 +174,8 @@ const (
 	ModelShareSectionAll ModelShareSection = "ALL"
 	// Just share the model plan
 	ModelShareSectionModelPlan ModelShareSection = "MODEL_PLAN"
+	// Share the model timeline
+	ModelShareSectionModelTimeline ModelShareSection = "TIMELINE"
 	// Share all MTO info
 	ModelShareSectionMtoAll ModelShareSection = "MTO_ALL"
 	// Only share MTO Milestones
@@ -185,6 +187,7 @@ const (
 var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 	ModelShareSectionAll:           "model-basics",
 	ModelShareSectionModelPlan:     "model-basics",
+	ModelShareSectionModelTimeline: "model-timeline",
 	ModelShareSectionMtoAll:        "milestones",
 	ModelShareSectionMtoMilestones: "milestones",
 	ModelShareSectionMtoSolutions:  "solutions-and-it-systems",
@@ -194,6 +197,7 @@ var ModelShareSectionToRouteTranslation = map[ModelShareSection]string{
 var ModelShareSectionHumanized = map[ModelShareSection]string{
 	ModelShareSectionAll:           "more",
 	ModelShareSectionModelPlan:     "Model Plan",
+	ModelShareSectionModelTimeline: "Model timeline",
 	ModelShareSectionMtoAll:        "model-to-operations matrix",
 	ModelShareSectionMtoMilestones: "model-to-operations matrix",
 	ModelShareSectionMtoSolutions:  "model-to-operations matrix",

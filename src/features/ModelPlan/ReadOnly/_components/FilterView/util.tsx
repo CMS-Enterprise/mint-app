@@ -57,15 +57,6 @@ export const checkGroupMap = (
   return component;
 };
 
-export const highLevelTimelineQuestions = [
-  'completeICIP',
-  'clearanceStarts',
-  'announced',
-  'applicationsStart',
-  'performancePeriodStarts',
-  'wrapUpEnds'
-];
-
 export const hasQuestions = (
   allQuestions: string[],
   questionsInQuestion: string[]

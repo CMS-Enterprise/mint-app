@@ -20,6 +20,8 @@ SELECT
     has_components_or_tracks,
     has_components_or_tracks_differ,
     has_components_or_tracks_note,
+    phased_in,
+    phased_in_note,
     agency_or_state_help,
     agency_or_state_help_other,
     agency_or_state_help_note,

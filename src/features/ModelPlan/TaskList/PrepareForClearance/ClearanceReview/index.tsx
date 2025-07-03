@@ -14,6 +14,7 @@ import ReadOnlyModelBasics from 'features/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyOpsEvalAndLearning from 'features/ModelPlan/ReadOnly/OpsEvalAndLearning';
 import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/ParticipantsAndProviders';
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
+import ReadOnlyModelTimeline from 'features/ModelPlan/ReadOnly/Timeline';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   PrepareForClearanceStatus,
@@ -25,13 +26,15 @@ import {
   UpdateClearanceOpsEvalAndLearningMutationFn,
   UpdateClearanceParticipantsAndProvidersMutationFn,
   UpdateClearancePaymentsMutationFn,
+  UpdateClearanceTimelineMutationFn,
   useGetClearanceStatusesQuery,
   useUpdateClearanceBasicsMutation,
   useUpdateClearanceBeneficiariesMutation,
   useUpdateClearanceCharacteristicsMutation,
   useUpdateClearanceOpsEvalAndLearningMutation,
   useUpdateClearanceParticipantsAndProvidersMutation,
-  useUpdateClearancePaymentsMutation
+  useUpdateClearancePaymentsMutation,
+  useUpdateClearanceTimelineMutation
 } from 'gql/generated/graphql';
 import {
   findLockedSection,
@@ -56,6 +59,7 @@ type ClearanceReviewProps = {
 };
 
 type MutationObjectType = {
+  'model-timeline': UpdateClearanceTimelineMutationFn;
   basics: UpdateClearanceBasicsMutationFn;
   characteristics: UpdateClearanceCharacteristicsMutationFn;
   'participants-and-providers': UpdateClearanceParticipantsAndProvidersMutationFn;
@@ -75,6 +79,7 @@ type RouteMapType = {
 
 // Mappping for url param to gql objects
 const routeMap: RouteMapType = {
+  'model-timeline': 'timeline',
   basics: 'basics',
   characteristics: 'generalCharacteristics',
   'participants-and-providers': 'participantsAndProviders',
@@ -89,6 +94,10 @@ const renderReviewTaskSection = (
   section: string
 ): JSX.Element => {
   switch (section) {
+    case 'model-timeline':
+      return (
+        <ReadOnlyModelTimeline modelID={modelID} clearance editDates={false} />
+      );
     case 'basics':
       return <ReadOnlyModelBasics modelID={modelID} clearance />;
     case 'characteristics':
@@ -113,7 +122,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const { t } = useTranslation('general');
   const { t: p } = useTranslation('prepareForClearance');
-  const { t: i } = useTranslation('opSolutionsMisc');
+  const { t: generalT } = useTranslation('general');
   const history = useHistory();
 
   // Subscription locks context for task list
@@ -127,6 +136,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const taskListSections = tArray<Record<string, string>>(
     'modelPlanTaskList:numberedList'
   );
+
+  const formRoute =
+    section === 'model-timeline'
+      ? `/models/${modelID}/collaboration-area/${section}`
+      : `/models/${modelID}/collaboration-area/task-list/${section}`;
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
@@ -146,6 +160,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
       modelPlanSection as keyof ClearanceStatusesModelPlanFormType
     ].status === TaskStatus.READY_FOR_CLEARANCE;
 
+  const [updateTimeline] = useUpdateClearanceTimelineMutation();
+
   const [updateBasics] = useUpdateClearanceBasicsMutation();
 
   const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
@@ -162,6 +178,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   // Object to dynamically call each task list mutation within handleFormSubmit
   const clearanceMutations: MutationObjectType = {
+    'model-timeline': updateTimeline,
     basics: updateBasics,
     characteristics: updateCharacteristics,
     'participants-and-providers': updateParticipantsAndProviders,
@@ -203,10 +220,10 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
           className="margin-top-neg-2 margin-bottom-1"
           data-testid="clearance-modal-header"
         >
-          {!locked ? p('modal.heading') : i('modal.heading')}
+          {!locked ? p('modal.heading') : generalT('lockedModal.heading')}
         </PageHeading>
         <p className="margin-bottom-3">
-          {!locked ? p('modal.subheading') : i('modal.subHeading')}
+          {!locked ? p('modal.subheading') : generalT('lockedModal.subHeading')}
         </p>
         <UswdsReactLink
           data-testid="return-to-task-list"
@@ -217,7 +234,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               : `/models/${modelID}/collaboration-area/task-list`
           }
         >
-          {!locked ? p('modal.update') : i('modal.return')}
+          {!locked ? p('modal.update') : generalT('lockedModal.return')}
         </UswdsReactLink>
         <Button type="button" unstyled onClick={() => setModalOpen(false)}>
           {p('modal.goBack')}
@@ -242,7 +259,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             items={[
               BreadcrumbItemOptions.HOME,
               BreadcrumbItemOptions.COLLABORATION_AREA,
-              BreadcrumbItemOptions.TASK_LIST,
+              ...(section === 'model-timeline'
+                ? []
+                : [BreadcrumbItemOptions.TASK_LIST]),
               BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
             ]}
             customItem={p(`reviewBreadcrumbs.${routeMap[section]}`)}
@@ -260,7 +279,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
           {renderModal(taskListLocked)}
 
-          {renderReviewTaskSection(modelID, section)}
+          <div className="margin-top-3">
+            {renderReviewTaskSection(modelID, section)}
+          </div>
 
           <div className="margin-top-6 margin-bottom-3">
             <Button
@@ -293,9 +314,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 if (taskListLocked || readyForClearance) {
                   setModalOpen(true);
                 } else {
-                  history.push(
-                    `/models/${modelID}/collaboration-area/task-list/${section}`
-                  );
+                  history.push(formRoute);
                 }
               }}
             >

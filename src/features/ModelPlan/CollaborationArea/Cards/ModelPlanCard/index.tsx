@@ -5,15 +5,13 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Grid
+  CardHeader
 } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
-  GetModelPlanQuery,
+  GetCollaborationAreaQuery,
   TaskStatus,
-  useGetModelPlanQuery,
   UserAccount
 } from 'gql/generated/graphql';
 
@@ -21,7 +19,6 @@ import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import ShareExportModal from 'components/ShareExport';
-import Spinner from 'components/Spinner';
 import TaskListSectionKeys from 'constants/enums';
 import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
@@ -31,11 +28,12 @@ import '../cards.scss';
 
 type ModelPlanCardType = {
   modelID: string;
+  modelPlan: GetCollaborationAreaQuery['modelPlan'];
   setStatusMessage: (message: StatusMessageType) => void;
 };
 
 export const getLastModifiedSection = (
-  modelPlan: GetModelPlanQuery['modelPlan'] | undefined
+  modelPlan: GetCollaborationAreaQuery['modelPlan'] | undefined
 ) => {
   if (!modelPlan) return null;
   let latestSection: any;
@@ -58,23 +56,18 @@ export const getLastModifiedSection = (
   return latestSection;
 };
 
-const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
+const ModelPlanCard = ({
+  modelID,
+  modelPlan,
+  setStatusMessage
+}: ModelPlanCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
-  const { data, loading } = useGetModelPlanQuery({
-    variables: {
-      id: modelID
-    }
-  });
 
-  const lastModifiedSection = getLastModifiedSection(data?.modelPlan);
-
-  const modelPlan = data?.modelPlan;
+  const lastModifiedSection = getLastModifiedSection(modelPlan);
 
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
   const sectionStartedCounter = useMemo(() => {
-    if (loading || !modelPlan) return 0;
-
     const sections = [
       modelPlan.basics.status,
       modelPlan.generalCharacteristics.status,
@@ -85,19 +78,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;
-  }, [loading, modelPlan]);
-
-  if (loading && !modelPlan)
-    return (
-      <Grid
-        desktop={{ col: 6 }}
-        className="padding-1 display-flex flex-column flex-align-center flex-justify-center height-mobile"
-      >
-        <Spinner />
-      </Grid>
-    );
-
-  if (!modelPlan) return null;
+  }, [modelPlan]);
 
   return (
     <>

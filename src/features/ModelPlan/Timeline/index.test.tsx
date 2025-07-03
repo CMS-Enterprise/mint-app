@@ -7,17 +7,17 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import {
-  GetMilestonesDocument,
-  GetMilestonesQuery,
+  GetTimelineDocument,
+  GetTimelineQuery,
   TaskStatus
 } from 'gql/generated/graphql';
 
-import Milestones from './index';
+import Timeline from './index';
 
-type GetMilestonesType = GetMilestonesQuery['modelPlan']['basics'];
+type GetTimelineType = GetTimelineQuery['modelPlan']['timeline'];
 
-const milestonesMockData: GetMilestonesType = {
-  __typename: 'PlanBasics',
+const timelineMockData: GetTimelineType = {
+  __typename: 'PlanTimeline',
   id: '123',
   completeICIP: '2029-05-12T15:01:39.190679Z',
   clearanceStarts: '2030-06-12T15:01:39.190679Z',
@@ -29,21 +29,21 @@ const milestonesMockData: GetMilestonesType = {
   performancePeriodEnds: '2029-012-28T15:01:39.190679Z',
   wrapUpEnds: '2030-05-08T15:01:39.190679Z',
   highLevelNote: 'High level note',
-  phasedIn: true,
-  phasedInNote: 'Phased in note',
   readyForReviewByUserAccount: {
     __typename: 'UserAccount',
     commonName: 'ASDF',
     id: '000'
   },
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  createdDts: '2022-05-12T15:01:39.190679Z',
+  modifiedDts: '2022-05-12T15:01:39.190679Z',
   status: TaskStatus.IN_PROGRESS
 };
 
 const mocks = [
   {
     request: {
-      query: GetMilestonesDocument,
+      query: GetTimelineDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
@@ -52,24 +52,24 @@ const mocks = [
           __typename: 'ModelPlan',
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          basics: milestonesMockData
+          timeline: timelineMockData
         }
       }
     }
   }
 ];
 
-describe('Model Basics Milestones page', () => {
+describe('Model Timeline page', () => {
   it('renders without errors and matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/milestones'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-timeline'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/milestones">
-            <Milestones />
+          <Route path="/models/:modelID/collaboration-area/model-timeline">
+            <Timeline />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -77,7 +77,7 @@ describe('Model Basics Milestones page', () => {
 
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
 
-    expect(await screen.findByText('Phased in note')).toBeInTheDocument();
+    expect(await screen.findByText('High level note')).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();
   });

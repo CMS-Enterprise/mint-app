@@ -12,11 +12,11 @@ import {
 } from '@trussworks/react-uswds';
 import Discussions from 'features/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 
 import '../../index.scss';
 
-type DiscussionsType = GetModelPlanQuery['modelPlan']['discussions'][0];
+type DiscussionsType = GetCollaborationAreaQuery['modelPlan']['discussions'][0];
 
 type DiscussionsCardType = {
   discussions: DiscussionsType[];

@@ -78,7 +78,7 @@ const ModelsApproachingClearance = () => {
                   {currentItems.map(model => (
                     <Card key={model.id}>
                       <CalendarDate
-                        dateISO={model.basics.clearanceStarts}
+                        dateISO={model.timeline.clearanceStarts}
                         link={`/models/${model.id}/read-view`}
                         linkText={`${model.modelName}${
                           model.abbreviation ? ` (${model.abbreviation})` : ''

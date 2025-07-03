@@ -302,6 +302,45 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
           </div>
         </div>
         <div
+          class="usa-form-group margin-top-8 margin-bottom-3"
+        >
+          <div
+            class="usa-summary-box bg-white border-base-light padding-2"
+            data-testid="summary-box"
+          >
+            <div
+              class="usa-summary-box__body"
+            >
+              <p
+                class="margin-0"
+              >
+                Model Plan status
+              </p>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="milestones-status"
+                  id="milestones-status"
+                  name="status"
+                  type="checkbox"
+                  value="IN_PROGRESS"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="milestones-status"
+                >
+                  This section of the Model Plan (Model basics) is ready for review.
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
           class="margin-top-6 margin-bottom-3"
         >
           <button
@@ -316,7 +355,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
             data-testid="button"
             type="submit"
           >
-            Next
+            Save and start next Model Plan section
           </button>
         </div>
         <button
@@ -350,7 +389,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
       <span
         class="mint-page-number__page-num"
       >
-        Page 2 of 3
+        Page 2 of 2
       </span>
     </div>
   </div>

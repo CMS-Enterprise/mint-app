@@ -10,7 +10,8 @@ import {
 import {
   GetOverviewDocument,
   GetOverviewQuery,
-  ModelType
+  ModelType,
+  TaskStatus
 } from 'gql/generated/graphql';
 
 import Overview from './index';
@@ -25,7 +26,14 @@ const overviewMockData: GetOverviewType = {
   problem: 'My problem',
   goal: 'A goal',
   testInterventions: 'Intervention',
-  note: 'Test note'
+  note: 'Test note',
+  readyForReviewByUserAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    commonName: 'Test User'
+  },
+  readyForReviewDts: '2022-06-03T19:32:24.412662Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const mocks = [

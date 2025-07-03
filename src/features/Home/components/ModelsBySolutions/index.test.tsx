@@ -39,9 +39,13 @@ const mocks: MockedResponse<
               basics: {
                 id: '6a3c2f25-81ce-4364-b631-4c3b08eeb5af',
                 modelCategory: null,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: null,
                 performancePeriodEnds: null,
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },
@@ -58,9 +62,13 @@ const mocks: MockedResponse<
               basics: {
                 id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
                 modelCategory: null,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: null,
                 performancePeriodEnds: null,
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },
@@ -77,9 +85,13 @@ const mocks: MockedResponse<
               basics: {
                 id: '3f77db11-da8c-4282-a5c7-c50282833244',
                 modelCategory: null,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: null,
                 performancePeriodEnds: null,
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },
@@ -96,9 +108,13 @@ const mocks: MockedResponse<
               basics: {
                 id: '9a9547e2-b1d0-4ff7-a86b-9dc9339500fa',
                 modelCategory: ModelCategory.STATE_BASED,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: '2024-07-24T05:00:00Z',
                 performancePeriodEnds: '2024-07-31T05:00:00Z',
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },
@@ -115,9 +131,13 @@ const mocks: MockedResponse<
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: null,
                 performancePeriodEnds: null,
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },
@@ -134,9 +154,13 @@ const mocks: MockedResponse<
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: null,
                 performancePeriodEnds: null,
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },
@@ -153,9 +177,13 @@ const mocks: MockedResponse<
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
+                __typename: 'PlanBasics'
+              },
+              timeline: {
+                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
                 performancePeriodStarts: null,
                 performancePeriodEnds: null,
-                __typename: 'PlanBasics'
+                __typename: 'PlanTimeline'
               },
               __typename: 'ModelPlan'
             },

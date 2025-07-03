@@ -46,18 +46,6 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'basics.goal',
   'basics.testInterventions',
   'basics.note',
-  'basics.completeICIP',
-  'basics.clearanceStarts',
-  'basics.clearanceEnds',
-  'basics.announced',
-  'basics.applicationsStart',
-  'basics.applicationsEnd',
-  'basics.performancePeriodStarts',
-  'basics.performancePeriodEnds',
-  'basics.highLevelNote',
-  'basics.wrapUpEnds',
-  'basics.phasedIn',
-  'basics.phasedInNote',
   'basics.readyForReviewByUserAccount.commonName',
   'basics.readyForReviewDts',
   'basics.status',
@@ -99,6 +87,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
+  'generalCharacteristics.phasedIn',
+  'generalCharacteristics.phasedInNote',
   'generalCharacteristics.agencyOrStateHelp', // array
   'generalCharacteristics.agencyOrStateHelpOther',
   'generalCharacteristics.agencyOrStateHelpNote',
@@ -509,6 +499,22 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   }
 ];
 
+const csvFieldsModeTimeline = (t: TFunction): (CSVLabel | string)[] => [
+  'timeline.completeICIP',
+  'timeline.clearanceStarts',
+  'timeline.clearanceEnds',
+  'timeline.announced',
+  'timeline.applicationsStart',
+  'timeline.applicationsEnd',
+  'timeline.performancePeriodStarts',
+  'timeline.performancePeriodEnds',
+  'timeline.highLevelNote',
+  'timeline.wrapUpEnds',
+  'timeline.readyForReviewByUserAccount.commonName',
+  'timeline.readyForReviewDts',
+  'timeline.status'
+];
+
 const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
   'mtoMilestone.name',
   'mtoMilestone.isDraft',
@@ -553,6 +559,7 @@ const csvFields = (
   return {
     ALL: [...csvFieldsModelPlan(t), ...csvFieldsMTO(t)],
     [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan(t),
+    [ModelShareSection.TIMELINE]: csvFieldsModeTimeline(t),
     [ModelShareSection.MTO_ALL]: csvFieldsMTO(t),
     [ModelShareSection.MTO_MILESTONES]: csvFieldsMTOMilestone(t),
     [ModelShareSection.MTO_SOLUTIONS]: csvFieldsMTOSolution(t)

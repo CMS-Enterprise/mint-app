@@ -87,9 +87,13 @@ describe('The Model Plan Task List', () => {
       __typename: 'PlanBasics',
       id: '123',
       modifiedDts: null,
-      clearanceStarts: '2022-05-12T15:01:39.190679Z',
       readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
       status: 'READY'
+    },
+    timeline: {
+      __typename: 'PlanTimeline',
+      id: '456',
+      clearanceStarts: '2022-05-12T15:01:39.190679Z'
     },
     opsEvalAndLearning: {
       __typename: 'PlanOpsEvalAndLearning',

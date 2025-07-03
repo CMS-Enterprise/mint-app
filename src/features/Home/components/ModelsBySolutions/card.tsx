@@ -24,7 +24,7 @@ const ModelSolutionCard = ({
   const { t: customHomeT } = useTranslation('customHome');
   const basicsConfig = usePlanTranslation('basics');
 
-  const { id, basics, modelName, abbreviation, status } = modelPlan;
+  const { id, basics, timeline, modelName, abbreviation, status } = modelPlan;
 
   return (
     <Card
@@ -69,8 +69,11 @@ const ModelSolutionCard = ({
                   {customHomeT('solutionCard.startDate')}
                 </p>
                 <p className="margin-top-0 margin-bottom-0">
-                  {basics.performancePeriodStarts ? (
-                    formatDateUtc(basics.performancePeriodStarts, 'MM/dd/yyyy')
+                  {timeline.performancePeriodStarts ? (
+                    formatDateUtc(
+                      timeline.performancePeriodStarts,
+                      'MM/dd/yyyy'
+                    )
                   ) : (
                     <i className="text-base">
                       {customHomeT('solutionCard.tbd')}
@@ -84,8 +87,8 @@ const ModelSolutionCard = ({
                   {customHomeT('solutionCard.endDate')}
                 </p>
                 <p className="margin-top-0 margin-bottom-0">
-                  {basics.performancePeriodEnds ? (
-                    formatDateUtc(basics.performancePeriodEnds, 'MM/dd/yyyy')
+                  {timeline.performancePeriodEnds ? (
+                    formatDateUtc(timeline.performancePeriodEnds, 'MM/dd/yyyy')
                   ) : (
                     <i className="text-base">
                       {customHomeT('solutionCard.tbd')}

@@ -116,6 +116,89 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       data-testid="fieldset"
     >
       <div
+        class="usa-form-group margin-top-4"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="phasedIn"
+        >
+          If timelines are tight, might there be pieces of the model that can be phased in over time?
+        </label>
+        <span
+          class="usa-hint display-block text-normal margin-top-1"
+        >
+          That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.
+        </span>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="phased-in-true"
+              id="phased-in-true"
+              name="phasedIn"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="phased-in-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="phased-in-false"
+              id="phased-in-false"
+              name="phasedIn"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="phased-in-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6"
+      >
+        <div
+          class="usa-form-group"
+        >
+          <label
+            class="usa-label"
+            for="phased-in-note"
+            id="label-phased-in-note"
+          >
+            Notes
+          </label>
+          <textarea
+            aria-labelledby="label-phased-in-note hint-phased-in-note"
+            class="usa-textarea"
+            data-testid="phased-in-note"
+            id="phased-in-note"
+            name="phasedInNote"
+          >
+            This can't be phased in
+          </textarea>
+        </div>
+      </div>
+      <div
         class="usa-form-group"
       >
         <label

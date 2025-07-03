@@ -138,6 +138,11 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
 }
 
+// Timeline is the resolver for the timeline field.
+func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.PlanTimeline, error) {
+	return PlanTimelineGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
 // MostRecentEdit is the resolver for the mostRecentEdit field.
 func (r *modelPlanResolver) MostRecentEdit(ctx context.Context, obj *models.ModelPlan) (*models.TranslatedAudit, error) {
 	logger := appcontext.ZLogger(ctx)

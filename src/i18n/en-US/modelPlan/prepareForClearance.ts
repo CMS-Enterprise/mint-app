@@ -3,6 +3,7 @@ const prepareForClearance = {
   subheading: 'Select which sections are ready for clearance.',
   breadcrumb: 'Prepare for clearance',
   reviewBreadcrumbs: {
+    timeline: 'Review model timeline',
     basics: 'Review model basics',
     generalCharacteristics: 'Review general characteristics',
     participantsAndProviders: 'Review participants and providers',

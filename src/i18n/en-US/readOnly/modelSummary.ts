@@ -16,6 +16,7 @@ const modelSummary = {
     'other-model-info': 'Other model information'
   },
   navigation: {
+    'model-timeline': 'Model timeline',
     'model-basics': 'Model basics',
     'general-characteristics': 'General characteristics',
     'participants-and-providers': 'Participants and providers',
