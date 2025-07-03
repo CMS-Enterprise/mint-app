@@ -123,7 +123,7 @@ describe('The Model Plan General Characteristics Form', () => {
     // Page - /characteristics/key-charactertics
 
     cy.get('#phased-in-true')
-      .first()
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
