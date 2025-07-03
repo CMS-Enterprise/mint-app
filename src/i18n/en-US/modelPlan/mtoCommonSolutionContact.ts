@@ -169,6 +169,8 @@ export const mtoCommonSolutionContactMisc = {
     'Fields marked with an asterisk ( <s>*</s> ) are required.',
   actionWarning: 'This action cannot be undone.',
   cancel: 'Cancel',
+  duplicateError:
+    '<bold>{{-contact}}</bold> is already added to this solution and cannot be added again. Please edit the existing entry.',
   alert:
     'This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.'
 };

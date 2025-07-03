@@ -30,6 +30,7 @@ import { TeamMemberModeType } from '../MailboxAndTeamMemberModal';
 
 type FormValues = {
   userName: string;
+  displayName: string;
   role: string;
   isPrimary: boolean;
   receiveEmails: boolean;
@@ -57,6 +58,7 @@ const TeamMemberForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
+      userName: teamMember.name,
       role: teamMember.role || '',
       isPrimary: teamMember.isPrimary,
       receiveEmails: teamMember.receiveEmails
@@ -67,7 +69,7 @@ const TeamMemberForm = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty, dirtyFields },
+    formState: { isSubmitting, isDirty },
     watch,
     setValue
   } = methods;
@@ -89,11 +91,13 @@ const TeamMemberForm = ({
     ]
   });
 
-  const [hasMutationError, setHasMutationError] = useState(false);
+  const [mutationError, setMutationError] = useState<
+    'duplicate' | 'generic' | null
+  >(null);
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
   const disabledSubmitBtn =
-    isSubmitting || !isDirty || Object.keys(dirtyFields).length === 0;
+    !watch('userName') || !watch('role') || isSubmitting || !isDirty;
 
   if (!selectedSolution) {
     return null;
@@ -129,7 +133,7 @@ const TeamMemberForm = ({
             <Trans
               i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
-                contact: formData.userName || teamMember.name
+                contact: formData.displayName || teamMember.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -139,8 +143,9 @@ const TeamMemberForm = ({
           closeModal();
         }
       })
-      .catch(() => {
-        setHasMutationError(true);
+      .catch(error => {
+        const duplicateError = error.message.includes('duplicate');
+        setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
   };
 
@@ -152,14 +157,26 @@ const TeamMemberForm = ({
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {hasMutationError && (
+        {mutationError !== null && (
           <Alert
             type="error"
             slim
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT(`${mode}.error`)}
+            {mutationError === 'generic' ? (
+              miscT(`${mode}.error`)
+            ) : (
+              <Trans
+                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
+                values={{
+                  contact: methods.getValues('displayName')
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
+            )}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -189,9 +206,13 @@ const TeamMemberForm = ({
                     displayName: teamMember.name,
                     email: teamMember.email
                   }}
-                  onChange={oktaUser =>
-                    setValue('userName', oktaUser ? oktaUser.username : '')
-                  }
+                  onChange={oktaUser => {
+                    setValue(
+                      'displayName',
+                      oktaUser ? oktaUser.displayName : ''
+                    );
+                    setValue('userName', oktaUser ? oktaUser.username : '');
+                  }}
                   className={classNames({
                     'disabled-input': isEditMode
                   })}
@@ -314,7 +335,7 @@ const TeamMemberForm = ({
         <div className="margin-top-3 display-flex">
           <Button
             type="submit"
-            disabled={!watch('userName') || !watch('role') || disabledSubmitBtn}
+            disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
             {miscT(`${mode}.cta`)}

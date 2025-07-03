@@ -66,6 +66,8 @@ export const mtoCommonSolutionContractorMisc = {
     'Fields marked with an asterisk ( <s>*</s> ) are required.',
   actionWarning: 'This action cannot be undone.',
   cancel: 'Cancel',
+  duplicateError:
+    '<bold>{{-contractor}}</bold> is already added to this solution and cannot be added again. Please edit the existing entry.',
   alert:
     'This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.'
 };

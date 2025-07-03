@@ -67,7 +67,7 @@ const TeamMailboxForm = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty, dirtyFields, isValid },
+    formState: { isSubmitting, isDirty, isValid },
     watch
   } = methods;
 
@@ -87,14 +87,12 @@ const TeamMailboxForm = ({
       }
     ]
   });
-  const [hasMutationError, setHasMutationError] = useState(false);
+  const [mutationError, setMutationError] = useState<
+    'duplicate' | 'generic' | null
+  >(null);
   const isAddMode = mode === 'addTeamMailbox';
   const isEditMode = mode === 'editTeamMailbox';
-  const disabledSubmitBtn =
-    isSubmitting ||
-    !isDirty ||
-    Object.keys(dirtyFields).length === 0 ||
-    !isValid;
+  const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
 
   if (!selectedSolution) {
     return null;
@@ -142,8 +140,9 @@ const TeamMailboxForm = ({
           closeModal();
         }
       })
-      .catch(() => {
-        setHasMutationError(true);
+      .catch(error => {
+        const duplicateError = error.message.includes('duplicate');
+        setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
   };
 
@@ -155,14 +154,26 @@ const TeamMailboxForm = ({
         id="team-mailbox-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {hasMutationError && (
+        {mutationError !== null && (
           <Alert
             type="error"
             slim
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT(`${mode}.error`)}
+            {mutationError === 'generic' ? (
+              miscT(`${mode}.error`)
+            ) : (
+              <Trans
+                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
+                values={{
+                  contact: methods.getValues('mailboxAddress')
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
+            )}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
