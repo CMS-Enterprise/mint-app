@@ -61,8 +61,9 @@ type MTOCommonSolutionContact struct {
 	MailboxTitle   *string              `db:"mailbox_title" json:"mailboxTitle"`
 	MailboxAddress *string              `db:"mailbox_address" json:"mailboxAddress"`
 	// These are convenience fields, they are not stored in the database, they are sourced from user account
-	Name  string `db:"name" json:"name"`
-	Email string `db:"email" json:"email"`
+	Name     string  `db:"name" json:"name"`
+	Email    string  `db:"email" json:"email"`
+	Username *string `db:"username" json:"username"`
 	// -----------------------------------------------------------------------------------------------------
 	userIDRelationPtr
 	IsTeam        bool    `db:"is_team" json:"isTeam"`
