@@ -18,7 +18,8 @@ SELECT
     posc.modified_by,
     posc.modified_dts,
     COALESCE(user_account.email, posc.mailbox_address) AS email,
-    COALESCE(user_account.common_name, posc.mailbox_title) AS name
+    COALESCE(user_account.common_name, posc.mailbox_title) AS name,
+    user_account.username
 FROM QUERIED_IDS AS qIDs
 INNER JOIN mto_common_solution_contact AS posc ON posc.mto_common_solution_key = qIDs.key
 LEFT JOIN user_account ON posc.user_id = user_account.id;

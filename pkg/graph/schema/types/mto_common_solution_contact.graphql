@@ -5,6 +5,7 @@ type MTOCommonSolutionContact {
 
   name: String!
   email: String!
+  username: String
   mailboxTitle: String
   mailboxAddress: String
   userAccount: UserAccount

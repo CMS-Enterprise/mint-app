@@ -59,6 +59,7 @@ SELECT
     inserted.modified_by,
     inserted.modified_dts,
     COALESCE(user_account.email, inserted.mailbox_address) AS email,
-    COALESCE(user_account.common_name, inserted.mailbox_title) AS name
+    COALESCE(user_account.common_name, inserted.mailbox_title) AS name,
+    user_account.username
 FROM inserted
 LEFT JOIN user_account ON inserted.user_id = user_account.id;
