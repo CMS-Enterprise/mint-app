@@ -79,7 +79,7 @@
     "dbField": "high_level_note",
     "label": "Notes",
     "isNote": true,
-    "parentReferencesLabel": "Timeline",
+    "parentReferencesLabel": "Model timeline",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 3.09

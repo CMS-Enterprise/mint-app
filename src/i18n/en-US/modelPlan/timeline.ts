@@ -132,7 +132,7 @@ export const timeline: TranslationTimeline = {
     dbField: 'high_level_note',
     label: 'Notes',
     isNote: true,
-    parentReferencesLabel: 'Timeline',
+    parentReferencesLabel: 'Model timeline',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 1.09
