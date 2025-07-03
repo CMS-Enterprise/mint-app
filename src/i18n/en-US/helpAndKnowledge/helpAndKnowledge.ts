@@ -2423,7 +2423,12 @@ const helpAndKnowledge = {
   notReceivesNotificationsTooltips:
     'This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
   moreContacts: 'More points of contact',
-  systemOwner: 'System owner',
+  systemOwner: 'Business Owner and/or System Owner',
+  systemOwnerDescription:
+    'The CMS group or division that is the Business Owner and/or System Owner for this solution or IT system.',
+  addOwner: 'Add owner information',
+  noOwners: 'No Business Owner or System Owner is listed for this solution.',
+  removeOwner: 'Remove owner',
   contractors: 'Contractors',
   contractor: 'Contractor',
   contractTitle: 'Contract title',
