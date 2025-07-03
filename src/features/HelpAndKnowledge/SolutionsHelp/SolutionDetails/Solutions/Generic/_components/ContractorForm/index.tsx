@@ -24,7 +24,7 @@ import dirtyInput from 'utils/formUtil';
 import { ModeType } from '../ContractorModal';
 
 type FormValues = {
-  contractorTitle: string | null;
+  contractorTitle: string;
   contractorName: string;
 };
 
@@ -47,10 +47,9 @@ const ContractorForm = ({
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      contractorTitle: contractor.contractorTitle,
+      contractorTitle: contractor.contractorTitle || '',
       contractorName: contractor.contractorName
     },
-
     mode: 'onChange'
   });
 
@@ -58,7 +57,7 @@ const ContractorForm = ({
     control,
     handleSubmit,
     reset,
-    formState: { isValid }
+    formState: { isSubmitting, isDirty, isValid }
   } = methods;
 
   const { selectedSolution } = useModalSolutionState();
@@ -68,6 +67,7 @@ const ContractorForm = ({
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
+  const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
 
   if (!selectedSolution) {
     return null;
@@ -98,9 +98,7 @@ const ContractorForm = ({
               id: contractor.id,
               changes: {
                 contractorTitle:
-                  contractorTitle === undefined
-                    ? undefined
-                    : contractorTitle || null,
+                  contractorTitle === '' ? null : contractorTitle,
                 contractorName
               }
             },
@@ -184,7 +182,7 @@ const ContractorForm = ({
                   {...field}
                   id="contractor-title"
                   data-testid="contractor-title"
-                  value={field.value || ''}
+                  value={field.value}
                 />
               </FormGroup>
             )}
@@ -222,7 +220,7 @@ const ContractorForm = ({
         <div className="margin-top-3 display-flex">
           <Button
             type="submit"
-            disabled={!isValid}
+            disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
             {miscT(`${mode}.cta`)}

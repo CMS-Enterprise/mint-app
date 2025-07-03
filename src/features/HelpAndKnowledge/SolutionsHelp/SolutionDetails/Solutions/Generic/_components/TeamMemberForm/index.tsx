@@ -58,6 +58,7 @@ const TeamMemberForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
+      userName: teamMember.name,
       role: teamMember.role || '',
       isPrimary: teamMember.isPrimary,
       receiveEmails: teamMember.receiveEmails
@@ -68,7 +69,7 @@ const TeamMemberForm = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty, dirtyFields },
+    formState: { isSubmitting, isDirty },
     watch,
     setValue
   } = methods;
@@ -96,7 +97,7 @@ const TeamMemberForm = ({
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
   const disabledSubmitBtn =
-    isSubmitting || !isDirty || Object.keys(dirtyFields).length === 0;
+    !watch('userName') || !watch('role') || isSubmitting || !isDirty;
 
   if (!selectedSolution) {
     return null;
@@ -132,7 +133,7 @@ const TeamMemberForm = ({
             <Trans
               i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
-                contact: formData.userName || teamMember.name
+                contact: formData.displayName || teamMember.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -334,7 +335,7 @@ const TeamMemberForm = ({
         <div className="margin-top-3 display-flex">
           <Button
             type="submit"
-            disabled={!watch('userName') || !watch('role') || disabledSubmitBtn}
+            disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
             {miscT(`${mode}.cta`)}

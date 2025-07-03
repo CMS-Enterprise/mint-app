@@ -67,7 +67,7 @@ const TeamMailboxForm = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty, dirtyFields, isValid },
+    formState: { isSubmitting, isDirty, isValid },
     watch
   } = methods;
 
@@ -92,11 +92,7 @@ const TeamMailboxForm = ({
   >(null);
   const isAddMode = mode === 'addTeamMailbox';
   const isEditMode = mode === 'editTeamMailbox';
-  const disabledSubmitBtn =
-    isSubmitting ||
-    !isDirty ||
-    Object.keys(dirtyFields).length === 0 ||
-    !isValid;
+  const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
 
   if (!selectedSolution) {
     return null;
