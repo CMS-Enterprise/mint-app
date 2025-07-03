@@ -202,35 +202,6 @@ describe('exportTranslation Util', () => {
         formType: 'TEXTAREA',
         order: 2.06
       },
-      phasedIn: {
-        gqlField: 'phasedIn',
-        goField: 'PhasedIn',
-        dbField: 'phased_in',
-        label:
-          'If timelines are tight, might there be pieces of the model that can be phased in over time?',
-        sublabel:
-          'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
-        questionTooltip:
-          'That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter.',
-        dataType: 'BOOLEAN',
-        formType: 'RADIO',
-        order: 3.11,
-        options: {
-          true: 'Yes',
-          false: 'No'
-        }
-      },
-      phasedInNote: {
-        gqlField: 'phasedInNote',
-        goField: 'PhasedInNote',
-        dbField: 'phased_in_note',
-        label: 'Notes',
-        isNote: true,
-        otherParentField: 'phased_in',
-        dataType: 'STRING',
-        formType: 'TEXTAREA',
-        order: 3.12
-      },
       readyForReviewBy: {
         gqlField: 'readyForReviewBy',
         goField: 'ReadyForReviewBy',

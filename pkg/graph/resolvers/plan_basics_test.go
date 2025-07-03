@@ -33,8 +33,6 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.Nil(basics.CMMIGroups)
 	suite.Nil(basics.TestInterventions)
 	suite.Nil(basics.Note)
-	suite.Nil(basics.PhasedIn)
-	suite.Nil(basics.PhasedInNote)
 }
 
 func (suite *ResolverSuite) TestPlanBasicsDataLoader() {
@@ -80,7 +78,6 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 		"goal":           "Some goal",
 		"cmsCenters":     []string{"CMMI"},
 		"cmmiGroups":     []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		"phasedIn":       true,
 	}
 
 	updatedBasics, err := UpdatePlanBasics(
@@ -101,7 +98,6 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
 	suite.EqualValues(changes["cmsCenters"], updatedBasics.CMSCenters)
 	suite.EqualValues(changes["cmmiGroups"], updatedBasics.CMMIGroups)
-	suite.EqualValues(changes["phasedIn"], *updatedBasics.PhasedIn)
 	suite.Nil(updatedBasics.TestInterventions)
 	suite.Nil(updatedBasics.Note)
 }

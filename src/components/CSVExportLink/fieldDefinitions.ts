@@ -46,8 +46,6 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'basics.goal',
   'basics.testInterventions',
   'basics.note',
-  'basics.phasedIn',
-  'basics.phasedInNote',
   'basics.readyForReviewByUserAccount.commonName',
   'basics.readyForReviewDts',
   'basics.status',
@@ -89,6 +87,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'generalCharacteristics.communityPartnersInvolved',
   'generalCharacteristics.communityPartnersInvolvedDescription',
   'generalCharacteristics.communityPartnersInvolvedNote',
+  'generalCharacteristics.phasedIn',
+  'generalCharacteristics.phasedInNote',
   'generalCharacteristics.agencyOrStateHelp', // array
   'generalCharacteristics.agencyOrStateHelpOther',
   'generalCharacteristics.agencyOrStateHelpNote',

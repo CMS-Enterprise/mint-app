@@ -24,9 +24,6 @@ type PlanBasics struct {
 	Goal              *string `json:"goal" db:"goal" statusWeight:"1"`
 	TestInterventions *string `json:"testInterventions" db:"test_interventions" statusWeight:"1"`
 	Note              *string `json:"note" db:"note"`
-
-	PhasedIn     *bool   `json:"phasedIn" db:"phased_in" statusWeight:"1"` //default to false
-	PhasedInNote *string `json:"phasedInNote" db:"phased_in_note"`
 }
 
 // NewPlanBasics returns a new plan basics object

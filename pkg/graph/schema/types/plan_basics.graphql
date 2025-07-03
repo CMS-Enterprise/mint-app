@@ -19,9 +19,6 @@ type PlanBasics {
   testInterventions: String
   note: String
 
-  phasedIn: Boolean
-  phasedInNote: String
-
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -59,8 +56,6 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   testInterventions: String
   note: String
 
-  phasedIn: Boolean
-  phasedInNote: String
   status: TaskStatusInput
 }
 

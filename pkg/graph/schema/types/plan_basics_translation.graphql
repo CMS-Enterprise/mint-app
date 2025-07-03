@@ -20,9 +20,6 @@ type PlanBasicsTranslation {
     @goTag(key: "db", value: "test_interventions")
   note: TranslationField! @goTag(key: "db", value: "note")
 
-  phasedIn: TranslationFieldWithOptions! @goTag(key: "db", value: "phased_in")
-  phasedInNote: TranslationField! @goTag(key: "db", value: "phased_in_note")
-
   readyForReviewBy: TranslationField!
     @goTag(key: "db", value: "ready_for_review_by")
   readyForReviewDts: TranslationField!

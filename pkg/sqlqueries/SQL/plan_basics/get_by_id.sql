@@ -13,8 +13,6 @@ SELECT
     goal,
     test_interventions,
     note,
-    phased_in,
-    phased_in_note,
     created_by,
     created_dts,
     modified_by,
