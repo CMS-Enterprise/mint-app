@@ -202,14 +202,14 @@ const KeyCharacteristics = () => {
 
                     <BooleanRadio
                       field="phasedIn"
-                      id="phasedIn"
+                      id="phased-in"
                       value={values.phasedIn}
                       setFieldValue={setFieldValue}
                       options={phasedInConfig.options}
                     />
                   </FieldGroup>
 
-                  <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
+                  <AddNote id="phased-in-note" field="phasedInNote" />
 
                   <FieldGroup>
                     <Label htmlFor="plan-characteristics-agency-or-state-help">

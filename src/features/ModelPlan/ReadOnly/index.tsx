@@ -530,6 +530,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                                 ? 12
                                 : 8
                           }}
+                          className={classnames({
+                            'padding-x-05':
+                              subinfo !== 'documents' &&
+                              subinfo !== 'crs-and-tdl' &&
+                              subinfo !== 'milestones' &&
+                              subinfo !== 'solutions-and-it-systems'
+                          })}
                         >
                           {subComponent.component}
                         </Grid>

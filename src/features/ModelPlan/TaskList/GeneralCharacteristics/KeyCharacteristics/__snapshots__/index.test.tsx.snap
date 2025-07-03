@@ -140,15 +140,15 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="phasedIn-true"
-              id="phasedIn-true"
+              data-testid="phased-in-true"
+              id="phased-in-true"
               name="phasedIn"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="phasedIn-true"
+              for="phased-in-true"
             >
               Yes
             </label>
@@ -159,15 +159,15 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="phasedIn-false"
-              id="phasedIn-false"
+              data-testid="phased-in-false"
+              id="phased-in-false"
               name="phasedIn"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="phasedIn-false"
+              for="phased-in-false"
             >
               No
             </label>
@@ -177,28 +177,26 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       <div
         class="margin-top-3 margin-bottom-6"
       >
-        <button
-          class="usa-button usa-button usa-button--unstyled"
-          data-testid="ModelType-phasedInNote-add-note-toggle"
-          type="button"
+        <div
+          class="usa-form-group"
         >
-          <svg
-            aria-hidden="true"
-            aria-label="add"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <label
+            class="usa-label"
+            for="phased-in-note"
+            id="label-phased-in-note"
           >
-            <path
-              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-            />
-          </svg>
-          Add an additional note
-        </button>
+            Notes
+          </label>
+          <textarea
+            aria-labelledby="label-phased-in-note hint-phased-in-note"
+            class="usa-textarea"
+            data-testid="phased-in-note"
+            id="phased-in-note"
+            name="phasedInNote"
+          >
+            This can't be phased in
+          </textarea>
+        </div>
       </div>
       <div
         class="usa-form-group"
