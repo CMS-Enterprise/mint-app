@@ -65,7 +65,9 @@ const ContractorForm = ({
   const { showMessage } = useMessage();
   const [create] = useCreateMtoCommonSolutionContractorMutation();
   const [update] = useUpdateMtoCommonSolutionContractorMutation();
-  const [hasMutationError, setHasMutationError] = useState(false);
+  const [mutationError, setMutationError] = useState<
+    'duplicate' | 'generic' | null
+  >(null);
 
   if (!selectedSolution) {
     return null;
@@ -125,8 +127,9 @@ const ContractorForm = ({
           closeModal();
         }
       })
-      .catch(() => {
-        setHasMutationError(true);
+      .catch(error => {
+        const duplicateError = error.message.includes('duplicate');
+        setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
   };
 
@@ -138,14 +141,26 @@ const ContractorForm = ({
         id="contractor-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {hasMutationError && (
+        {mutationError !== null && (
           <Alert
             type="error"
             slim
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT(`${mode}.error`)}
+            {mutationError === 'generic' ? (
+              miscT(`${mode}.error`)
+            ) : (
+              <Trans
+                i18nKey="mtoCommonSolutionContractorMisc:duplicateError"
+                values={{
+                  contractor: methods.getValues('contractorName')
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
+            )}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution}>

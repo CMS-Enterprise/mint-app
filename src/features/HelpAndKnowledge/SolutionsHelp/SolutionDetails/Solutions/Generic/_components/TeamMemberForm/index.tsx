@@ -30,6 +30,7 @@ import { TeamMemberModeType } from '../MailboxAndTeamMemberModal';
 
 type FormValues = {
   userName: string;
+  displayName: string;
   role: string;
   isPrimary: boolean;
   receiveEmails: boolean;
@@ -89,7 +90,9 @@ const TeamMemberForm = ({
     ]
   });
 
-  const [hasMutationError, setHasMutationError] = useState(false);
+  const [mutationError, setMutationError] = useState<
+    'duplicate' | 'generic' | null
+  >(null);
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
   const disabledSubmitBtn =
@@ -139,8 +142,9 @@ const TeamMemberForm = ({
           closeModal();
         }
       })
-      .catch(() => {
-        setHasMutationError(true);
+      .catch(error => {
+        const duplicateError = error.message.includes('duplicate');
+        setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
   };
 
@@ -152,14 +156,26 @@ const TeamMemberForm = ({
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {hasMutationError && (
+        {mutationError !== null && (
           <Alert
             type="error"
             slim
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT(`${mode}.error`)}
+            {mutationError === 'generic' ? (
+              miscT(`${mode}.error`)
+            ) : (
+              <Trans
+                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
+                values={{
+                  contact: methods.getValues('displayName')
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
+            )}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -189,9 +205,13 @@ const TeamMemberForm = ({
                     displayName: teamMember.name,
                     email: teamMember.email
                   }}
-                  onChange={oktaUser =>
-                    setValue('userName', oktaUser ? oktaUser.username : '')
-                  }
+                  onChange={oktaUser => {
+                    setValue(
+                      'displayName',
+                      oktaUser ? oktaUser.displayName : ''
+                    );
+                    setValue('userName', oktaUser ? oktaUser.username : '');
+                  }}
                   className={classNames({
                     'disabled-input': isEditMode
                   })}
