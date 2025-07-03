@@ -18,7 +18,8 @@ SELECT
     contact.modified_by,
     contact.modified_dts,
     COALESCE(user_account.email, contact.mailbox_address) AS email,
-    COALESCE(user_account.common_name, contact.mailbox_title) AS name
+    COALESCE(user_account.common_name, contact.mailbox_title) AS name,
+    user_account.username
 FROM QUERIED_IDS AS qIDs
 INNER JOIN mto_common_solution_contact AS contact ON contact.id = qIDs.id
 LEFT JOIN user_account ON contact.user_id = user_account.id;

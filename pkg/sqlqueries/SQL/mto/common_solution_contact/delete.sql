@@ -32,6 +32,7 @@ SELECT
     retVal.modified_by,
     retVal.modified_dts,
     COALESCE(user_account.email, retVal.mailbox_address) AS email,
-    COALESCE(user_account.common_name, retVal.mailbox_title) AS name
+    COALESCE(user_account.common_name, retVal.mailbox_title) AS name,
+    user_account.username
 FROM retVal
 LEFT JOIN user_account ON retVal.user_id = user_account.id;

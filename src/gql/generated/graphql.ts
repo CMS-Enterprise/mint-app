@@ -829,6 +829,7 @@ export type MtoCommonSolutionContact = {
   role?: Maybe<Scalars['String']['output']>;
   userAccount?: Maybe<UserAccount>;
   userID?: Maybe<Scalars['UUID']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 /** MTOCommonSolutionContactInformation holds all the contact information relevant to a specific MTO Common Solution */
