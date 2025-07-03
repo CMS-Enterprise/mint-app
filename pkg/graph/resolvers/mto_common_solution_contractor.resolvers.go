@@ -18,7 +18,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionContractor(ctx, logger, principal, r.store, key, contractorTitle, contractorName)
+	return CreateMTOCommonSolutionContractor(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, contractorTitle, contractorName)
 }
 
 // UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.
@@ -26,7 +26,7 @@ func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdateMTOCommonSolutionContractor(ctx, logger, principal, r.store, id, changes)
+	return UpdateMTOCommonSolutionContractor(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, changes)
 }
 
 // DeleteMTOCommonSolutionContractor is the resolver for the deleteMTOCommonSolutionContractor field.
@@ -34,7 +34,7 @@ func (r *mutationResolver) DeleteMTOCommonSolutionContractor(ctx context.Context
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeleteMTOCommonSolutionContractor(ctx, logger, principal, r.store, id)
+	return DeleteMTOCommonSolutionContractor(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id)
 }
 
 // MtoCommonSolutionContractor is the resolver for the mtoCommonSolutionContractor field.
