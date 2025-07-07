@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query getTimeline($id: UUID!) {
+  query GetTimeline($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName

@@ -78,12 +78,14 @@ export const findLockedSection = (
 
 // Parses task list route to map to modelPlanSectionMap
 const lockedRouteParser = (route: string): string => {
+  const modelPlanRoute: string = route.split('/')[4];
+
   if (
-    route.split('/')[4] === 'data-exchange-approach' ||
-    route.split('/')[4] === 'model-to-operations' ||
-    route.split('/')[4] === 'model-timeline'
+    modelPlanRoute === 'data-exchange-approach' ||
+    modelPlanRoute === 'model-to-operations' ||
+    modelPlanRoute === 'model-timeline'
   ) {
-    return route.split('/')[4];
+    return modelPlanRoute;
   }
   return route.split('/')[5];
 };
@@ -98,15 +100,14 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
   const history = useHistory();
 
   const modelID: string = to.split('/')[2];
+  const modelPlanRoute: string = to.split('/')[4];
+  const isReadView: boolean = to.split('/')[3] === 'read-view';
 
   const isLockable: boolean =
-    to.split('/')[4] === 'task-list' ||
-    (to.split('/')[4] === 'data-exchange-approach' &&
-      to.split('/')[3] !== 'read-view') ||
-    (to.split('/')[4] === 'model-timeline' &&
-      to.split('/')[3] !== 'read-view') ||
-    (to.split('/')[4] === 'model-to-operations' &&
-      to.split('/')[3] !== 'read-view');
+    modelPlanRoute === 'task-list' ||
+    (modelPlanRoute === 'data-exchange-approach' && !isReadView) ||
+    (modelPlanRoute === 'model-timeline' && !isReadView) ||
+    (modelPlanRoute === 'model-to-operations' && !isReadView);
 
   const taskListRoute = lockedRouteParser(to);
 
