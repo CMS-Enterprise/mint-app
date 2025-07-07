@@ -10,6 +10,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
       aliasQuery(req, 'GetModelPlan');
       aliasQuery(req, 'GetClearanceStatuses');
       aliasQuery(req, 'GetAllBasics');
+      aliasQuery(req, 'GetTimeline');
       aliasQuery(req, 'GetAllParticipantsAndProviders');
       aliasQuery(req, 'GetAllOpsEvalAndLearning');
     });
@@ -42,8 +43,19 @@ describe('The Model Plan Prepare for Clearance Form', () => {
       );
     });
 
-    // Basics Clearance Check
+    // Timeline Clearance Check
 
+    cy.get('[data-testid="clearance-timeline"]').click({ force: true });
+
+    cy.wait(['@GetClearanceStatuses', '@GetTimeline'])
+      .then(verifyStatus)
+      .wait(500);
+
+    cy.get('[data-testid="mark-task-list-for-clearance"]').click({
+      force: true
+    });
+
+    // Basics Clearance Check
     cy.get('[data-testid="clearance-basics"]').click({ force: true });
 
     cy.wait(['@GetClearanceStatuses', '@GetAllBasics'])
@@ -189,20 +201,20 @@ describe('The Model Plan Prepare for Clearance Form', () => {
 
     cy.get('#prepare-for-clearance-payments').should('be.checked');
 
-    cy.get('[data-testid="update-clearance"]').click({ force: true });
+    // Don't need to update, all should be checked already
+    cy.get('[data-testid="dont-update-clearance"]').click({ force: true });
 
     // Task List Check
 
-    // TODO: Uncomment when timeline prepare for clearance is implemented
-    // cy.wait('@GetModelPlan')
-    //   .its('response.statusCode')
-    //   .should('eq', 200)
-    //   .wait(500);
+    cy.wait('@GetModelPlan')
+      .its('response.statusCode')
+      .should('eq', 200)
+      .wait(500);
 
-    // cy.get('[data-testid="task-list-intake-form-prepareForClearance"]').within(
-    //   () => {
-    //     cy.get('[data-testid="tasklist-tag"]').contains('Ready for clearance');
-    //   }
-    // );
+    cy.get('[data-testid="task-list-intake-form-prepareForClearance"]').within(
+      () => {
+        cy.get('[data-testid="tasklist-tag"]').contains('Ready for clearance');
+      }
+    );
   });
 });
