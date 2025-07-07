@@ -14,7 +14,7 @@ import (
 func GetEchimpCRAndTdlsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, modelPlanID uuid.UUID) ([]models.EChimpCRAndTDLS, error) {
 
 	if echimpS3Client.ExpectNoBucket() {
-		return []models.EChimpCRAndTDLS{}, nil // In dev, we don't expect a bucket to exist, so return Return empty slice in dev, nil
+		return nil, nil // In dev, we don't expect a bucket to exist, so return nil
 	}
 
 	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
