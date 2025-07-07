@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Alert,
   Button,
   Fieldset,
   Form,
@@ -19,7 +20,6 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
-import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
 import useMessage from 'hooks/useMessage';
@@ -28,12 +28,16 @@ import dirtyInput from 'utils/formUtil';
 
 import { TeamMemberModeType } from '../MailboxAndTeamMemberModal';
 
-type FormValues = {
-  userName: string;
-  displayName: string;
-  role: string;
-  isPrimary: boolean;
-  receiveEmails: boolean;
+type UnwrapNullable<
+  T extends Record<P, unknown> | null | undefined,
+  P extends PropertyKey
+> = T extends Record<P, unknown> ? T[P] : '';
+
+type FormValues = Pick<
+  SolutionContactType,
+  'name' | 'role' | 'isPrimary' | 'receiveEmails'
+> & {
+  userName: UnwrapNullable<SolutionContactType['userAccount'], 'username'>;
 };
 
 const TeamMemberForm = ({
@@ -47,7 +51,12 @@ const TeamMemberForm = ({
     isTeam: false,
     isPrimary: false,
     role: '',
-    receiveEmails: false
+    receiveEmails: false,
+    userAccount: {
+      __typename: 'UserAccount',
+      id: 'not a real userAccount id',
+      username: ''
+    }
   }
 }: {
   mode: TeamMemberModeType;
@@ -58,7 +67,8 @@ const TeamMemberForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
-      userName: teamMember.name,
+      userName: teamMember.userAccount?.username,
+      name: teamMember.name,
       role: teamMember.role || '',
       isPrimary: teamMember.isPrimary,
       receiveEmails: teamMember.receiveEmails
@@ -111,7 +121,7 @@ const TeamMemberForm = ({
           variables: {
             key: selectedSolution.enum,
             userName: formData.userName,
-            role: formData.role,
+            role: formData.role || '',
             isPrimary: formData.isPrimary,
             receiveEmails: formData.receiveEmails
           }
@@ -133,7 +143,7 @@ const TeamMemberForm = ({
             <Trans
               i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
-                contact: formData.displayName || teamMember.name
+                contact: formData.name || teamMember.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -172,7 +182,7 @@ const TeamMemberForm = ({
               <Trans
                 i18nKey="mtoCommonSolutionContactMisc:duplicateError"
                 values={{
-                  contact: methods.getValues('displayName')
+                  contact: methods.getValues('name')
                 }}
                 components={{
                   bold: <span className="text-bold" />
@@ -204,15 +214,12 @@ const TeamMemberForm = ({
                   ariaLabelledBy="label-team-member-name"
                   ariaDescribedBy="hint-team-member-name"
                   value={{
-                    username: teamMember.name,
+                    username: teamMember.userAccount?.username || '',
                     displayName: teamMember.name,
                     email: teamMember.email
                   }}
                   onChange={oktaUser => {
-                    setValue(
-                      'displayName',
-                      oktaUser ? oktaUser.displayName : ''
-                    );
+                    setValue('name', oktaUser ? oktaUser.displayName : '');
                     setValue('userName', oktaUser ? oktaUser.username : '');
                   }}
                   className={classNames({
@@ -314,6 +321,7 @@ const TeamMemberForm = ({
         </Fieldset>
         <Alert
           type="info"
+          headingLevel="h1"
           slim
           className="margin-top-0 margin-bottom-2"
           hidden={!watch('isPrimary') && !watch('receiveEmails')}

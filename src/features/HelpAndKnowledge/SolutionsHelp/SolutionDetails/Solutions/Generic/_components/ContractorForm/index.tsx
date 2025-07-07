@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Alert,
   Button,
   Fieldset,
   Form,
@@ -16,17 +17,16 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
-import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
 import { ModeType } from '../ContractorModal';
 
-type FormValues = {
-  contractorTitle: string;
-  contractorName: string;
-};
+type FormValues = Pick<
+  SolutionContractorType,
+  'contractorTitle' | 'contractorName'
+>;
 
 const ContractorForm = ({
   mode,
@@ -126,7 +126,7 @@ const ContractorForm = ({
       })
       .catch(error => {
         const duplicateError = error.message.includes(
-          'uniq_user_id_per_solution_key'
+          'uniq_contractor_name_per_solution_key'
         );
         setMutationError(duplicateError ? 'duplicate' : 'generic');
       });

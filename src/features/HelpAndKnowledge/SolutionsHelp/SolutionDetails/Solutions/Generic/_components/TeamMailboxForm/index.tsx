@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Alert,
   Button,
   Fieldset,
   Form,
@@ -18,7 +19,6 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
-import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
@@ -26,12 +26,10 @@ import dirtyInput from 'utils/formUtil';
 
 import { TeamMailboxModeType } from '../MailboxAndTeamMemberModal';
 
-type FormValues = {
-  mailboxAddress: string;
-  mailboxTitle: string;
-  isPrimary: boolean;
-  receiveEmails: boolean;
-};
+type FormValues = Pick<
+  SolutionContactType,
+  'mailboxAddress' | 'mailboxTitle' | 'isPrimary' | 'receiveEmails'
+>;
 
 const TeamMailboxForm = ({
   mode,
@@ -107,8 +105,8 @@ const TeamMailboxForm = ({
       ? create({
           variables: {
             key: selectedSolution.enum,
-            mailboxTitle: formData.mailboxTitle,
-            mailboxAddress: formData.mailboxAddress,
+            mailboxTitle: formData.mailboxTitle || '',
+            mailboxAddress: formData.mailboxAddress || '',
             isPrimary: formData.isPrimary,
             receiveEmails: formData.receiveEmails
           }
@@ -142,7 +140,7 @@ const TeamMailboxForm = ({
       })
       .catch(error => {
         const duplicateError = error.message.includes(
-          'uniq_user_id_per_solution_key'
+          'uniq_mailbox_address_per_solution_key'
         );
         setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
@@ -302,6 +300,7 @@ const TeamMailboxForm = ({
         <Alert
           type="info"
           slim
+          headingLevel="h1"
           className="margin-top-0 margin-bottom-2"
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
         >
