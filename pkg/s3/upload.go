@@ -29,9 +29,10 @@ const (
 
 // Config holds the configuration to interact with s3
 type Config struct {
-	Bucket  string
-	Region  string
-	IsLocal bool
+	Bucket         string
+	Region         string
+	IsLocal        bool
+	ExpectNoBucket bool
 }
 
 // S3Client is an MINT s3 client wrapper
@@ -168,6 +169,11 @@ func (c S3Client) SetTagValueForKey(key string, tagName string, tagValue string)
 // GetBucket returns a *string containing the S3 Bucket as defined by the S3Configuration
 func (c S3Client) GetBucket() *string {
 	return aws.String(c.config.Bucket)
+}
+
+// ExpectNoBucketEnabled returns true if the S3 config's ExpectNoBucket value is set
+func (c S3Client) ExpectNoBucket() bool {
+	return c.config.ExpectNoBucket
 }
 
 // UploadFile uploads a io.Reader to the bucket configured in the S3Client
