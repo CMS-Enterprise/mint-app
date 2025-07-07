@@ -13,6 +13,17 @@ export const GenericPointsOfContact = ({
   solution: HelpSolutionType;
 }) => {
   const { pointsOfContact, contractors } = solution;
+  // TODO: replace test data with query result once implemented
+  const testOwnersData = [
+    {
+      name: 'Medicare Plan Payment Group, Division of Payment Operations',
+      system: 'Center for Medicare'
+    },
+    {
+      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      system: 'Office of Information Technology'
+    }
+  ];
 
   return (
     <div>
@@ -20,7 +31,7 @@ export const GenericPointsOfContact = ({
 
       <>
         <Divider className="margin-y-6" />
-        <Owners owners={solution.systemOwner ? [solution.systemOwner] : []} />
+        <Owners owners={testOwnersData} />
       </>
 
       <>
