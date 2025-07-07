@@ -121,8 +121,7 @@ describe('Read Only Model Plan Summary', () => {
 });
 
 describe('Status Tag updates', () => {
-  // TODO: Add to timeline readonly test when implemented
-  test.skip('renders "ICIP complete" tag and alert', async () => {
+  it('renders "ICIP complete" tag and alert', async () => {
     mocks[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
     const { getByTestId } = render(
       <MemoryRouter
