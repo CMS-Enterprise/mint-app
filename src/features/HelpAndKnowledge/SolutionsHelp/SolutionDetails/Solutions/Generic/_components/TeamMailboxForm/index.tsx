@@ -141,7 +141,9 @@ const TeamMailboxForm = ({
         }
       })
       .catch(error => {
-        const duplicateError = error.message.includes('duplicate');
+        const duplicateError = error.message.includes(
+          'uniq_user_id_per_solution_key'
+        );
         setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
   };
