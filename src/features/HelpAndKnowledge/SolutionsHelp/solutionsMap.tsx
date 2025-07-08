@@ -1063,16 +1063,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'National Committee for Quality Assurance',
     acronym: 'NCQA',
     type: 'Other',
-    systemOwner: {
-      name: 'Center for Medicare and Medicaid Innovation (CMMI)',
-      system: 'Business Owner'
-    },
-    contractors: [
-      {
-        name: '',
-        system: 'National Committee for Quality Assurance (NCQA)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }

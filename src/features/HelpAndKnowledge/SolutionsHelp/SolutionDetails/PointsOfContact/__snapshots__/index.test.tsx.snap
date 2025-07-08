@@ -1404,60 +1404,7 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
     >
       Points of contact
     </h2>
-    <div>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        System owner
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <div
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            Business Owner
-          </div>
-          <div
-            class="usa-card__footer padding-0"
-            data-testid="CardFooter"
-          >
-            <h3
-              class="margin-0 line-height-sans-2"
-            >
-              Center for Medicare and Medicaid Innovation (CMMI)
-            </h3>
-          </div>
-        </div>
-      </li>
-      <div
-        class="mint-divider margin-y-6"
-      />
-      <h2>
-        Contractors
-      </h2>
-      <li
-        class="usa-card margin-bottom-0"
-        data-testid="Card"
-      >
-        <div
-          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
-        >
-          <div
-            class="usa-card__header font-body-xs padding-0"
-            data-testid="CardHeader"
-          >
-            National Committee for Quality Assurance (NCQA)
-          </div>
-        </div>
-      </li>
-    </div>
+    <div />
   </div>
 </DocumentFragment>
 `;
