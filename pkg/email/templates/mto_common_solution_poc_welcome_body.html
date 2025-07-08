@@ -1,0 +1,49 @@
+{{template "shared_header.html"}}
+
+<p class="access-blurb">
+  This email was sent via MINT.
+  You may update your MINT <a href="{{.ClientAddress}}/notifications/settings" class="access-blurb-link" style="font-weight: normal;">notification settings</a> 
+  if you wish to adjust the emails you receive from MINT.
+  If you need help getting access to MINT, learn how <a href="{{.ClientAddress}}/how-to-get-access" class="link" style="font-weight: normal"></a>here</a>.
+</p>
+
+<hr/>
+
+<p>
+  MINT contains helpful information about a variety of operational solutions and IT systems, including points of contact.
+  You have been added as a point of contact for {{.SolutionName}}.
+</p>
+
+<br/>
+
+<p>
+  <strong>Primary contact:</strong> {{.IsPrimary}}<br/>
+  <strong>Will receive notifications from MINT:</strong> {{.ReceivesNotifications}}
+</p>
+
+<br/>
+
+<h2>
+  <a href="{{.ClientAddress}}/help-and-knowledge/operational-solutions?solution-key={{.Key}}" style="font-weight: bold;">View operational solution in MINT</a>
+</h2>
+
+<br/>
+
+<p>
+  If you believe this to be an error, please email the MINT Team at 
+  <a href="mailto:MINTTeam@cms.hhs.gov" style="font-weight: normal;">MINTTeam@cms.hhs.gov</a>.<br/>
+  You may also edit point of contact information or remove yourself as a point of contact via MINT.
+</p>
+
+<br/>
+<hr/>
+
+<p>
+  If you are receiving email notifications from MINT, you will be notified if a new CMMI model elects to use {{.SolutionAcronym}}.
+</p>
+
+<br/>
+
+{{template "shared_access_banner.html"}}
+
+{{template "shared_footer.html"}}

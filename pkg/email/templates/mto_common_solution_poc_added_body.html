@@ -1,0 +1,30 @@
+{{template "shared_header.html"}}
+{{template "shared_mto_common_solution_header.html"}}
+
+<hr/>
+
+<p>A new point of contact has been added to {{.SolutionName}}. You may double-check the details below.</p>
+
+<br/>
+
+<p><strong>Contact name:</strong> {{.ContactName}}</p>
+<p><strong>Contact email:</strong> {{.ContactEmail}}</p>
+<p><strong>Contact role:</strong> {{.ContactRole}}</p>
+<p><strong>Primary contact:</strong> {{.IsPrimary}}</p>
+<p><strong>Will receive notifications from MINT:</strong> {{.WillReceiveNotifications}}</p>
+
+<br/>
+
+<h2>
+  <a href="{{.ClientAddress}}/help-and-knowledge/operational-solutions?solution-key={{.Key}}" target="_blank">View operational solution in MINT</a>
+</h2>
+
+<br/>
+
+<p>If you believe this to be an error, please check with the operational solution team. You may edit point of contact information in MINT if it is incorrect.</p>
+
+<hr/>
+
+{{template "shared_mint_mailbox_footer.html"}}
+
+{{template "shared_footer.html"}}
