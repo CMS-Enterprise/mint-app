@@ -67,7 +67,7 @@ const TeamMemberForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
-      userName: teamMember.userAccount?.username,
+      userName: teamMember.userAccount?.username || '',
       name: teamMember.name,
       role: teamMember.role || '',
       isPrimary: teamMember.isPrimary,
