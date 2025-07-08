@@ -257,7 +257,7 @@ const MTOTable = ({
   }, [formattedData]);
 
   const totalPages = useMemo(() => {
-    return Math.floor(itemLength / itemsPerPage);
+    return Math.ceil(itemLength / itemsPerPage);
   }, [itemLength, itemsPerPage]);
 
   // Function to map data indexes to be conditionally rendered based on the current page and items per page
@@ -1038,7 +1038,7 @@ export const getRenderedRowIndexes = (
         const initPageIndex = pageNum === 1 ? 0 : 1;
 
         // -1 here to still render out any empty categories that are on the first page and are ordered first/fall before the first shown index
-        // +1 here to still render out any empty categories that ordered last/fall before the first shown index
+        // +2 here to still render out any empty categories that ordered last/fall after the last shown index
         const isInRange =
           catIndex > minShownCategoryIndex - initPageIndex &&
           catIndex < maxShownCategoryIndex + 2;
