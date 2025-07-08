@@ -1020,7 +1020,7 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
-        if (totalPages === 1) {
+        if (totalPages <= 1) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
           return;
