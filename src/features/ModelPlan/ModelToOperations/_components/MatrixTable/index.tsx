@@ -257,7 +257,7 @@ const MTOTable = ({
   }, [formattedData]);
 
   const totalPages = useMemo(() => {
-    return Math.ceil(itemLength / itemsPerPage);
+    return Math.floor(itemLength / itemsPerPage);
   }, [itemLength, itemsPerPage]);
 
   // Function to map data indexes to be conditionally rendered based on the current page and items per page
@@ -1020,7 +1020,7 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
-        if (totalPages <= 1) {
+        if (totalPages === 0) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
           return;
@@ -1041,7 +1041,7 @@ export const getRenderedRowIndexes = (
         // +1 here to still render out any empty categories that ordered last/fall before the first shown index
         const isInRange =
           catIndex > minShownCategoryIndex - initPageIndex &&
-          catIndex < maxShownCategoryIndex + 1;
+          catIndex < maxShownCategoryIndex + 2;
 
         // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
         if (isInRange) {
