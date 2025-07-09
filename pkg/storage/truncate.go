@@ -13,6 +13,8 @@ import (
 func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	// Using table names as constants defined in this file for better maintainability
 	tables := []string{
+		string(models.TNMTOCommonSolutionContact),
+		string(models.TNMTOCommonSolutionContractor),
 		string(models.TNTag),
 		string(models.TNNdaAgreement),
 		string(models.TNDiscussionReply),
