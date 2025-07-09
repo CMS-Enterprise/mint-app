@@ -28,7 +28,7 @@ describe('Operation Solution Help Tag', () => {
     expect(tag).toHaveTextContent('Data');
     expect(tag).toHaveAttribute(
       'href',
-      '/help-and-knowledge/operational-solutions?category=data'
+      '/help-and-knowledge/operational-solutions?category=DATA'
     );
   });
 

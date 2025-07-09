@@ -524,15 +524,13 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Bene
             class="padding-left-4 margin-top-0"
           />
           <p>
-            Since BCDA leverages 4i, model teams are encouraged to learn more about the 
             <button
               class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
-              timing and steps involved for using 4i
+               
             </button>
-            .
           </p>
         </li>
         <li

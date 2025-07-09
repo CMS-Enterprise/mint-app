@@ -12,7 +12,7 @@ describe('Operational Solution Category Card', () => {
         <CategoryCard categoryKey={MtoCommonSolutionSubject.DATA} />
       </MemoryRouter>
     );
-    expect(getByText('Data reporting')).toBeInTheDocument();
+    expect(getByText('Data')).toBeInTheDocument();
     expect(getByText('Learn more')).toBeInTheDocument();
   });
 

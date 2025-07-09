@@ -752,13 +752,6 @@ export const OperationalSolutionCategories: Record<
   [MtoCommonSolutionSubject.QUALITY]: 'quality'
 };
 
-export const OperationSolutionType: Record<MtoSolutionType, string> = {
-  [MtoSolutionType.CONTRACTOR]: 'Contracts and contractors',
-  [MtoSolutionType.CROSS_CUTTING_GROUP]: 'Cross-cutting group',
-  [MtoSolutionType.IT_SYSTEM]: 'IT system',
-  [MtoSolutionType.OTHER]: 'Other'
-};
-
 export const operationalSolutionSubCategoryMap: Record<
   MtoCommonSolutionSubject,
   OperationalSolutionSubCategories[] | null

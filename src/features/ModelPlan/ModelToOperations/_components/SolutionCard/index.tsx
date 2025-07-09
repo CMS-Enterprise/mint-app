@@ -24,6 +24,7 @@ export const SolutionCard = ({
   className?: string;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -73,7 +74,7 @@ export const SolutionCard = ({
           />
         ) : (
           <p className="margin-top-0 margin-bottom-05 text-base-dark">
-            {solution?.type}
+            {helpAndKnowledgeT(`solutionType.${solution?.type}`)}
           </p>
         )}
 

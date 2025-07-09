@@ -6,7 +6,8 @@ import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/Solutio
 import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/Timeline';
 import {
   MtoCommonSolutionKey,
-  MtoCommonSolutionSubject
+  MtoCommonSolutionSubject,
+  MtoSolutionType
 } from 'gql/generated/graphql';
 
 import { OperationalSolutionSubCategories } from 'types/operationalSolutionCategories';
@@ -2363,6 +2364,13 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   }
 };
 
+export const solutionType: Record<MtoSolutionType, string> = {
+  [MtoSolutionType.CONTRACTOR]: 'Contracts and contractors',
+  [MtoSolutionType.CROSS_CUTTING_GROUP]: 'Cross-cutting group',
+  [MtoSolutionType.IT_SYSTEM]: 'IT system',
+  [MtoSolutionType.OTHER]: 'Other'
+};
+
 const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
   home: 'Home',
@@ -2459,7 +2467,8 @@ const helpAndKnowledge = {
   viewOnSharePoint: 'View on SharePoint',
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',
-  sortDesc: 'By title (Z-A)'
+  sortDesc: 'By title (Z-A)',
+  solutionType
 };
 
 export default helpAndKnowledge;
