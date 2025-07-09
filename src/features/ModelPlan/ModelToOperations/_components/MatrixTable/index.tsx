@@ -994,6 +994,8 @@ export const getRenderedRowIndexes = (
     milestone: []
   };
 
+  let milestoneCount = 0;
+
   // Initialize the shownIndexes object with structure of fetched data
   sliceItemsCopy.forEach((category, catIndex) => {
     shownIndexes.subCategory[catIndex] = [];
@@ -1006,6 +1008,7 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       subCategory.milestones.forEach((milestone, milIndex) => {
+        milestoneCount += 1;
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
@@ -1020,7 +1023,7 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
-        if (totalPages === 0) {
+        if (totalPages === 1 && milestoneCount > 0) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
           return;
