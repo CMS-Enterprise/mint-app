@@ -36,7 +36,6 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetModelToOperationsMatrixDocument,
   GetMtoAllMilestonesQuery,
@@ -168,10 +167,6 @@ const EditSolutionForm = ({
   const solution = useMemo(() => {
     return data?.mtoSolution;
   }, [data]);
-
-  const solutionRoute: string | undefined = helpSolutions.find(
-    sol => sol.enum === solution?.key
-  )?.route;
 
   const { data: allMilestoneData } = useGetMtoAllMilestonesQuery({
     variables: {
@@ -747,7 +742,7 @@ const EditSolutionForm = ({
                   {solution.addedFromSolutionLibrary && (
                     <div className="margin-top-2">
                       <UswdsReactLink
-                        to={`/help-and-knowledge/operational-solutions?page=1&solution=${solutionRoute}&section=about`}
+                        to={`/help-and-knowledge/operational-solutions?page=1&solution-key=${solution?.key}&section=about`}
                         target="_blank"
                         variant="external"
                       >

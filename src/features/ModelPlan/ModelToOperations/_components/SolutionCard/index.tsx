@@ -29,11 +29,11 @@ export const SolutionCard = ({
   const params = new URLSearchParams(history.location.search);
 
   // Set the solution route params
-  params.set('solution', solution.route);
+  params.set('solution-key', solution.key);
   params.set('section', 'about');
 
   const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.enum
+    solution.key
   );
 
   return (
@@ -43,7 +43,7 @@ export const SolutionCard = ({
           solution={selectedSolution}
           openedFrom={prevPathname}
           closeRoute={() => {
-            params.delete('solution');
+            params.delete('solution-key');
             params.delete('section');
             return `${history.location.pathname}`;
           }}
@@ -68,7 +68,7 @@ export const SolutionCard = ({
             checked={checked}
             onBlur={() => null}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setChecked(solution.enum as MtoCommonSolutionKey);
+              setChecked(solution.key as MtoCommonSolutionKey);
             }}
           />
         ) : (

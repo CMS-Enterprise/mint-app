@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react';
 import {
-  HelpSolutionBaseType,
   helpSolutions,
   HelpSolutionsType,
   HelpSolutionType
@@ -15,7 +14,7 @@ import {
 import { getKeys } from 'types/translation';
 
 type UseHelpSolutionType = {
-  helpSolutions: HelpSolutionBaseType[];
+  helpSolutions: HelpSolutionType[];
   loading: boolean;
 };
 

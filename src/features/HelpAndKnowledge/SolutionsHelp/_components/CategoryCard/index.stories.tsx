@@ -1,6 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { Meta } from '@storybook/react';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import CategoryCard from '.';
 
@@ -17,5 +18,5 @@ export default {
 } as Meta<typeof CategoryCard>;
 
 export const Default = () => (
-  <CategoryCard category="Data reporting" route="data" />
+  <CategoryCard categoryKey={MtoCommonSolutionSubject.DATA} />
 );

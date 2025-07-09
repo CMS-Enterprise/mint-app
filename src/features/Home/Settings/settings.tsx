@@ -10,7 +10,7 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import NotFound from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -65,9 +65,9 @@ const SettingsForm = () => {
   const selectedSolutions = useMemo(() => {
     const possibleSolutions = data?.userViewCustomization.solutions || [];
 
-    return [...helpSolutions]
+    return [...helpSolutionsArray]
       .filter(solution =>
-        possibleSolutions.includes(solution.enum as MtoCommonSolutionKey)
+        possibleSolutions.includes(solution.key as MtoCommonSolutionKey)
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);

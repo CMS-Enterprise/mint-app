@@ -1,19 +1,22 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import GenericTimeline from '.';
 
 describe('Generic Timeline Components', () => {
-  it.each(helpSolutions)(
+  it.each(helpSolutionsArray)(
     `matches the snapshot`,
     async solutionTimelineComponent => {
-      if (solutionTimelineComponent.key !== 'outlookMailbox') {
+      if (
+        solutionTimelineComponent.key !== MtoCommonSolutionKey.OUTLOOK_MAILBOX
+      ) {
         const { asFragment } = render(
           <MemoryRouter
             initialEntries={[
-              `/help-and-knowledge/operational-solutions?solution=${solutionTimelineComponent.route}&section=timeline`
+              `/help-and-knowledge/operational-solutions?solution-key=${solutionTimelineComponent.key}&section=timeline`
             ]}
           >
             <Route path="/help-and-knowledge/operational-solutions">

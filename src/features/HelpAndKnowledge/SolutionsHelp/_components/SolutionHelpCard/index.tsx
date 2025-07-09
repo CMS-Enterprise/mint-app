@@ -108,7 +108,7 @@ const SolutionHelpCard = ({
               aria-label={`${t('aboutSolutionAriaLabel')} ${solution.name}`}
               to={`/help-and-knowledge/operational-solutions${location.search}${
                 location.search ? '&' : '?'
-              }solution=${solution.route}&section=about`}
+              }solution-key=${solution.key}&section=about`}
             >
               {t('aboutSolution')}
               <Icon.ArrowForward

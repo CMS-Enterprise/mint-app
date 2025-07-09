@@ -10,6 +10,7 @@ import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
 } from 'types/operationalSolutionCategories';
+import { getKeys } from 'types/translation';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
@@ -106,7 +107,9 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
         <Innovation4TimeLine
-          solution={{ key: 'innovation' } as HelpSolutionType}
+          solution={
+            { key: MtoCommonSolutionKey.INNOVATION } as HelpSolutionType
+          }
         />
       )
     }
@@ -292,7 +295,7 @@ export const helpSolutions: HelpSolutionsType = {
     }
   },
   [MtoCommonSolutionKey.HPMS]: {
-    y: MtoCommonSolutionKey.HPMS,
+    key: MtoCommonSolutionKey.HPMS,
     categories: [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D],
     acronym: 'HPMS',
     type: MtoSolutionType.IT_SYSTEM,
@@ -480,7 +483,7 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
         <SalesforceApplicationReviewTimeline
-          solution={{ key: 'ars' } as HelpSolutionType}
+          solution={{ key: MtoCommonSolutionKey.ARS } as HelpSolutionType}
         />
       )
     }
@@ -502,7 +505,7 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
         <SalesforceApplicationReviewTimeline
-          solution={{ key: 'ars' } as HelpSolutionType}
+          solution={{ key: MtoCommonSolutionKey.ARS } as HelpSolutionType}
         />
       )
     }
@@ -520,7 +523,7 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
         <SalesforceApplicationReviewTimeline
-          solution={{ key: 'ars' } as HelpSolutionType}
+          solution={{ key: MtoCommonSolutionKey.ARS } as HelpSolutionType}
         />
       )
     }
@@ -542,7 +545,7 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
         <SalesforceApplicationReviewTimeline
-          solution={{ key: 'ars' } as HelpSolutionType}
+          solution={{ key: MtoCommonSolutionKey.ARS } as HelpSolutionType}
         />
       )
     }
@@ -720,6 +723,11 @@ export const helpSolutions: HelpSolutionsType = {
     }
   }
 };
+
+// This function converts the helpSolutions object into an array of HelpSolutionType
+export const helpSolutionsArray: HelpSolutionType[] = getKeys(
+  helpSolutions
+).map(solution => helpSolutions[solution]);
 
 export const OperationalSolutionCategories: Record<
   MtoCommonSolutionSubject,

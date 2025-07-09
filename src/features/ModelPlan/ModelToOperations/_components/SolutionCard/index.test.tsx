@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -15,7 +16,9 @@ describe('MTO SolutionCard Component', () => {
       <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
         <MemoryRouter>
           <MessageProvider>
-            <SolutionCard solution={helpSolutions[0]} />
+            <SolutionCard
+              solution={helpSolutions[MtoCommonSolutionKey.INNOVATION]}
+            />
           </MessageProvider>
         </MemoryRouter>
       </MockedProvider>
