@@ -7,10 +7,9 @@ import {
 } from 'gql/generated/graphql';
 
 import {
-  MtoCommonSolutionSubject,
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
-} from 'types/MtoCommonSolutionSubject';
+} from 'types/operationalSolutionCategories';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
@@ -41,9 +40,9 @@ export const operationalSolutionCategoryMap: Record<
   'applications-and-participation-interaction-aco-and-kidney':
     MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS,
   'applications-and-participation-interaction-non-aco':
-    MtoCommonSolutionSubject.APPLICATIONS_NON_ACO,
+    MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS,
   'communication-tools-and-help-desk':
-    MtoCommonSolutionSubject.COMMUNICATION_TOOLS,
+    MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK,
   'contract-vehicles': MtoCommonSolutionSubject.CONTRACT_VEHICLES,
   data: MtoCommonSolutionSubject.DATA,
   'evaluation-and-review': MtoCommonSolutionSubject.EVALUATION_AND_REVIEW,
@@ -51,9 +50,39 @@ export const operationalSolutionCategoryMap: Record<
   legal: MtoCommonSolutionSubject.LEGAL,
   'medicare-advantage-and-part-d':
     MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D,
-  'medicare-fee-for-service': MtoCommonSolutionSubject.MEDICARE_FFS,
-  'payments-and-financials': MtoCommonSolutionSubject.PAYMENT_FINANCIALS,
+  'medicare-fee-for-service': MtoCommonSolutionSubject.MEDICARE_FEE_FOR_SERVICE,
+  'payments-and-financials': MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS,
   quality: MtoCommonSolutionSubject.QUALITY
+};
+
+export const OperationalSolutionCategories: Record<
+  MtoCommonSolutionSubject,
+  string
+> = {
+  [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS]:
+    'applications-and-participation-interaction-aco-and-kidney',
+  [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS]:
+    'applications-and-participation-interaction-non-aco',
+  [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK]:
+    'communication-tools-and-help-desk',
+  [MtoCommonSolutionSubject.CONTRACT_VEHICLES]: 'contract-vehicles',
+  [MtoCommonSolutionSubject.DATA]: 'data',
+  [MtoCommonSolutionSubject.EVALUATION_AND_REVIEW]: 'evaluation-and-review',
+  [MtoCommonSolutionSubject.LEARNING]: 'learning',
+  [MtoCommonSolutionSubject.LEGAL]: 'legal',
+  [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D]:
+    'medicare-advantage-and-part-d',
+  [MtoCommonSolutionSubject.MEDICARE_FEE_FOR_SERVICE]:
+    'medicare-fee-for-service',
+  [MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS]: 'payments-and-financials',
+  [MtoCommonSolutionSubject.QUALITY]: 'quality'
+};
+
+export const OperationSolutionType: Record<MtoSolutionType, string> = {
+  [MtoSolutionType.CONTRACTOR]: 'Contracts and contractors',
+  [MtoSolutionType.CROSS_CUTTING_GROUP]: 'Cross-cutting group',
+  [MtoSolutionType.IT_SYSTEM]: 'IT system',
+  [MtoSolutionType.OTHER]: 'Other'
 };
 
 export const operationalSolutionSubCategoryMap: Record<
@@ -123,10 +152,12 @@ export interface HelpSolutionBaseType {
   components: ModalSolutionComponentType;
 }
 
-export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> = {
-  
+export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
+  {
     [MtoCommonSolutionKey.INNOVATION]: {
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS],
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+      ],
       subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
       acronym: '4i',
       type: MtoSolutionType.IT_SYSTEM,
@@ -138,7 +169,9 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       }
     },
     [MtoCommonSolutionKey.ACO_OS]: {
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS],
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+      ],
       subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
       acronym: 'ACO-OS',
       type: MtoSolutionType.IT_SYSTEM,
@@ -160,7 +193,9 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       components: {}
     },
     [MtoCommonSolutionKey.BCDA]: {
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS],
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+      ],
       subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
       acronym: 'BCDA',
       type: MtoSolutionType.IT_SYSTEM,
@@ -191,26 +226,20 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.CDAC,
-      key: 'cdac',
-      route: 'cmmi-data-aggregation-contract',
+    [MtoCommonSolutionKey.CDAC]: {
       categories: [
         MtoCommonSolutionSubject.CONTRACT_VEHICLES,
         MtoCommonSolutionSubject.DATA
       ],
       acronym: 'CDAC',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       name: 'CMMI Data Aggregation Contract',
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.CMS_BOX,
-      key: 'cmsBox',
-      route: 'cms-box',
-      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS],
+    [MtoCommonSolutionKey.CMS_BOX]: {
+      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
       subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
       name: 'CMS Box',
       type: MtoSolutionType.IT_SYSTEM,
@@ -218,11 +247,10 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         timeline: (props: SolutionDetailProps) => <CMSBoxTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.CMS_QUALTRICS,
-      key: 'cmsQualtrics',
-      route: 'cms-qualtrics',
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS],
+    [MtoCommonSolutionKey.CMS_QUALTRICS]: {
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+      ],
       subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
       name: 'CMS Qualtrics',
       type: MtoSolutionType.IT_SYSTEM,
@@ -232,53 +260,33 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.CBOSC,
-      key: 'cbosc',
-      route: 'consolidated-business-operations-support-center',
-      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS],
+    [MtoCommonSolutionKey.CBOSC]: {
+      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
       subCategories: [OperationalSolutionSubCategories.HELP_DESK],
       acronym: 'CBOSC',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Consolidated Business Operations Support Center',
-      systemOwner: {
-        name: 'Business Services Group, Division of System Support, Operations, and Security',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Softrams',
-          system: 'CMMI Technology Solution (CTS)'
-        }
-      ],
       components: {}
     },
-    {
-      enum: MtoCommonSolutionKey.CPI_VETTING,
-      key: 'cpiVetting',
-      route: 'cpi-vetting',
+    [MtoCommonSolutionKey.CPI_VETTING]: {
       categories: [
         MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS,
-        MtoCommonSolutionSubject.APPLICATIONS_NON_ACO
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
       ],
       subCategories: [
         OperationalSolutionSubCategories.APPLICATIONS,
         OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
       ],
       name: 'CPI Vetting',
-      type: 'Other',
-      alertPrimaryContact: true,
+      type: MtoSolutionType.OTHER,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.EFT,
-      key: 'electronicFileTransfer',
-      route: 'electronic-file-transfer',
-      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS],
+    [MtoCommonSolutionKey.EFT]: {
+      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
       subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
       acronym: 'EFT',
       type: MtoSolutionType.IT_SYSTEM,
@@ -289,33 +297,17 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.EDFR,
-      key: 'expandedDataFeedback',
-      route: 'expanded-data-feedback-reporting',
+    [MtoCommonSolutionKey.EDFR]: {
       categories: [MtoCommonSolutionSubject.DATA],
       acronym: 'eDFR',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Expanded Data Feedback Reporting',
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Global Alliant',
-          system: 'Innovation Support Platform (ISP)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.GOVDELIVERY,
-      key: 'govDelivery',
-      route: 'gov-delivery',
-      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS],
+    [MtoCommonSolutionKey.GOVDELIVERY]: {
+      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
       subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
       name: 'GovDelivery',
       type: MtoSolutionType.IT_SYSTEM,
@@ -323,41 +315,30 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.GS,
-      key: 'grantSolutions',
-      route: 'grant-solutions',
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_NON_ACO],
+    [MtoCommonSolutionKey.GS]: {
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
+      ],
       subCategories: [
         OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS
       ],
       acronym: 'GS',
-      type: 'Other',
+      type: MtoSolutionType.OTHER,
       name: 'GrantSolutions',
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.HIGLAS,
-      key: 'higlas',
-      route: 'healthcare-integrated-general-kedger-accounting-system',
-      categories: [MtoCommonSolutionSubject.PAYMENT_FINANCIALS],
+    [MtoCommonSolutionKey.HIGLAS]: {
+      categories: [MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS],
       acronym: 'HIGLAS',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Healthcare Integrated General Ledger Accounting System',
-      systemOwner: {
-        name: 'Accounting Management Group',
-        system: 'Office of Financial Management'
-      },
       components: {
         timeline: (props: SolutionDetailProps) => <HIGLASTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.HDR,
-      key: 'healthDataReporting',
-      route: 'health-data-reporting',
+    [MtoCommonSolutionKey.HDR]: {
       categories: [
         MtoCommonSolutionSubject.DATA,
         MtoCommonSolutionSubject.QUALITY
@@ -365,233 +346,129 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       acronym: 'HDR',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Health Data Reporting',
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Global Alliant',
-          system: 'Innovation Support Platform (ISP)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.HPMS,
-      key: 'healthPlanManagement',
-      route: 'health-plan-management-system',
+    [MtoCommonSolutionKey.HPMS]: {
       categories: [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D],
       acronym: 'HPMS',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Health Plan Management System',
-      systemOwner: {
-        name: 'Division of Plan Data',
-        system: 'Center for Medicare'
-      },
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.IPC,
-      key: 'innovationPayment',
-      route: 'innovation-payment-contract',
+    [MtoCommonSolutionKey.IPC]: {
       categories: [
         MtoCommonSolutionSubject.CONTRACT_VEHICLES,
-        MtoCommonSolutionSubject.PAYMENT_FINANCIALS
+        MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS
       ],
       acronym: 'IPC',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       name: 'Innovation Payment Contractor',
-      systemOwner: {
-        name: 'Business Services Group, Division of Budget Operations & Management',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'National Government Services (NGS)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.ISP,
-      key: 'innovationSupport',
-      route: 'innovation-support-platform',
+    [MtoCommonSolutionKey.ISP]: {
       categories: [
-        MtoCommonSolutionSubject.APPLICATIONS_NON_ACO,
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS,
         MtoCommonSolutionSubject.CONTRACT_VEHICLES
       ],
       subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
       acronym: 'ISP',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       name: 'Innovation Support Platform',
-      contractors: [
-        {
-          name: 'Global Alliant',
-          system: 'Prime'
-        },
-        {
-          name: 'Acument',
-          system: 'Subcontractor'
-        },
-        {
-          name: 'ICF International',
-          system: 'Subcontractor'
-        },
-        {
-          name: 'Tier 1 Consulting',
-          system: 'Subcontractor'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.IDR,
-      key: 'integratedDataRepository',
-      route: 'integrated-data-repository',
+    [MtoCommonSolutionKey.IDR]: {
       categories: [MtoCommonSolutionSubject.DATA],
       acronym: 'IDR',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Integrated Data Repository',
-      systemOwner: {
-        name: 'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
-        system: 'Office of Information Technology'
-      },
-      alertPrimaryContact: true,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.LDG,
-      key: 'learningAndDiffusion',
-      route: 'learning-and-diffusion-group',
+    [MtoCommonSolutionKey.LDG]: {
       categories: [MtoCommonSolutionSubject.LEARNING],
       acronym: 'LDG',
-      type: 'Cross-cutting group',
+      type: MtoSolutionType.CROSS_CUTTING_GROUP,
       name: 'Learning and Diffusion Group',
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.LV,
-      key: 'legalVertical',
-      route: 'legal-vertical',
+    [MtoCommonSolutionKey.LV]: {
       categories: [MtoCommonSolutionSubject.LEGAL],
       acronym: 'LV',
-      type: 'Other',
+      type: MtoSolutionType.OTHER,
       name: 'Legal Vertical',
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.MDM_POR,
-      key: 'masterDataManagementProgramOrganizationRelationship',
-      route: 'master-data-management-program-organization-relationship',
+    [MtoCommonSolutionKey.MDM_POR]: {
       categories: [MtoCommonSolutionSubject.DATA],
       acronym: 'MDM-POR',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Master Data Management Program-Organization Relationship',
-      systemOwner: {
-        name: 'Enterprise Architecture and Data Group',
-        system: 'Office of Information Technology'
-      },
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.MDM_NCBP,
-      key: 'masterDataManagementForNCBP',
-      route: 'master-data-management-for-ncbp',
+    [MtoCommonSolutionKey.MDM_NCBP]: {
       categories: [
         MtoCommonSolutionSubject.DATA,
-        MtoCommonSolutionSubject.PAYMENT_FINANCIALS
+        MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS
       ],
       acronym: 'MDM-NCBP',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Master Data Management for Non-Claims Based Payments',
-      systemOwner: {
-        name: 'Enterprise Architecture and Data Group',
-        system: 'Office of Information Technology'
-      },
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.MIDS,
-      key: 'measureInstrumentDS',
-      route: 'measure-and-instrument-development-and-support',
+    [MtoCommonSolutionKey.MIDS]: {
       categories: [
         MtoCommonSolutionSubject.CONTRACT_VEHICLES,
         MtoCommonSolutionSubject.QUALITY
       ],
       acronym: 'MIDS',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       name: 'Measure and Instrument Development and Support',
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.MARX,
-      key: 'marx',
-      route: 'medicare-advantage-prescription-drug-system',
+    [MtoCommonSolutionKey.MARX]: {
       categories: [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D],
       acronym: 'MARx',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Medicare Advantage Prescription Drug System',
-      systemOwner: {
-        name: 'Medicare Plan Payment Group, Division of Payment Operations',
-        system: 'Center for Medicare'
-      },
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.MODEL_SPACE,
-      key: 'modelSpace',
-      route: 'model-space',
+    [MtoCommonSolutionKey.MODEL_SPACE]: {
       categories: [MtoCommonSolutionSubject.DATA],
       name: 'Model Space',
       type: MtoSolutionType.IT_SYSTEM,
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
-      },
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Global Alliant',
-          system: 'Innovation Support Platform (ISP)'
-        }
-      ]
+      }
     },
-    {
-      enum: MtoCommonSolutionKey.OUTLOOK_MAILBOX,
-      key: 'outlookMailbox',
-      route: 'outlook-mailbox',
-      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS],
+    [MtoCommonSolutionKey.OUTLOOK_MAILBOX]: {
+      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
       subCategories: [OperationalSolutionSubCategories.COMMUNICATION_TOOLS],
       name: 'Outlook Mailbox',
       type: MtoSolutionType.IT_SYSTEM,
@@ -601,37 +478,28 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.QV,
-      key: 'qualityVertical',
-      route: 'quality-vertical',
+    [MtoCommonSolutionKey.QV]: {
       categories: [MtoCommonSolutionSubject.QUALITY],
       acronym: 'QV',
-      type: 'Other',
+      type: MtoSolutionType.OTHER,
       name: 'Quality Vertical',
       components: {
         timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.RMADA,
-      key: 'rmada',
-      route: 'research-measurement-assessment-design-and-analysis',
+    [MtoCommonSolutionKey.RMADA]: {
       categories: [MtoCommonSolutionSubject.CONTRACT_VEHICLES],
       acronym: 'RMADA',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       name: 'Research, Measurement, Assessment, Design, and Analysis',
       components: {
         timeline: (props: SolutionDetailProps) => <RMADATimeline {...props} />
       }
     },
-    {
-      enum: MtoCommonSolutionKey.ARS,
-      key: 'ars',
-      route: 'salesforce-application-review-and-scoring',
+    [MtoCommonSolutionKey.ARS]: {
       categories: [
         MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS,
-        MtoCommonSolutionSubject.APPLICATIONS_NON_ACO
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
       ],
       subCategories: [
         OperationalSolutionSubCategories.APPLICATIONS,
@@ -640,40 +508,17 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       acronym: 'ARS',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Salesforce Application Review and Scoring',
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Softrams',
-          system: 'CMMI Technology Solution (CTS)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => (
           <SalesforceApplicationReviewTimeline {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.CONNECT,
-      key: 'salesforceConnect',
-      route: 'salesforce-connect',
+    [MtoCommonSolutionKey.CONNECT]: {
       categories: [MtoCommonSolutionSubject.LEARNING],
       name: 'Salesforce CONNECT',
       acronym: 'CONNECT',
       type: MtoSolutionType.IT_SYSTEM,
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Softrams',
-          system: 'CMMI Technology Solution (CTS)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => (
           // Timeline is the same as 4Innovation
@@ -683,13 +528,10 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.LOI,
-      key: 'salesforceLOI',
-      route: 'salesforce-letter-of-intent',
+    [MtoCommonSolutionKey.LOI]: {
       categories: [
         MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS,
-        MtoCommonSolutionSubject.APPLICATIONS_NON_ACO
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
       ],
       subCategories: [
         OperationalSolutionSubCategories.APPLICATIONS,
@@ -698,16 +540,6 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       acronym: 'LOI',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Salesforce Letter of Intent',
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Softrams',
-          system: 'CMMI Technology Solution (CTS)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => (
           // Timeline is the same as 4Innovation
@@ -717,25 +549,14 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.POST_PORTAL,
-      key: 'salesforcePortal',
-      route: 'salesforce-project-officer-support-tool-portal',
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_NON_ACO],
+    [MtoCommonSolutionKey.POST_PORTAL]: {
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
+      ],
       subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
       acronym: 'POST / PORTAL',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Salesforce Project Officer Support Tool / Portal',
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Softrams',
-          system: 'CMMI Technology Solution (CTS)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => (
           // Timeline is the same as 4Innovation
@@ -745,13 +566,10 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.RFA,
-      key: 'salesforceRequestApplication',
-      route: 'salesforce-request-for-application',
+    [MtoCommonSolutionKey.RFA]: {
       categories: [
         MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS,
-        MtoCommonSolutionSubject.APPLICATIONS_NON_ACO
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
       ],
       subCategories: [
         OperationalSolutionSubCategories.APPLICATIONS,
@@ -760,16 +578,6 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       acronym: 'RFA',
       type: MtoSolutionType.IT_SYSTEM,
       name: 'Salesforce Request for Application',
-      systemOwner: {
-        name: 'Business Services Group',
-        system: 'Center for Medicare and Medicaid Innovation'
-      },
-      contractors: [
-        {
-          name: 'Softrams',
-          system: 'CMMI Technology Solution (CTS)'
-        }
-      ],
       components: {
         timeline: (props: SolutionDetailProps) => (
           // Timeline is the same as 4Innovation
@@ -779,69 +587,50 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.SHARED_SYSTEMS,
-      key: 'sharedSystems',
-      route: 'shared-systems',
-      categories: [MtoCommonSolutionSubject.MEDICARE_FFS],
+    [MtoCommonSolutionKey.SHARED_SYSTEMS]: {
+      categories: [MtoCommonSolutionSubject.MEDICARE_FEE_FOR_SERVICE],
       name: 'Shared Systems',
       type: MtoSolutionType.IT_SYSTEM,
-      systemOwner: {
-        name: 'Applications Management Group, Division of Shared Systems Management',
-        system: 'Office of Information Technology'
-      },
       components: {
         timeline: (props: SolutionDetailProps) => (
           <SharedSystemsTimeLine {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.RREG,
-      key: 'reasearchAndRapidCycleEvaluationGroup',
-      route: 'research-and-rapid-cycle-evaluation-group',
+    [MtoCommonSolutionKey.RREG]: {
       categories: [MtoCommonSolutionSubject.EVALUATION_AND_REVIEW],
       name: 'Research and Rapid Cycle Evaluation Group',
       acronym: 'RREG',
-      type: 'Cross-cutting group',
+      type: MtoSolutionType.CROSS_CUTTING_GROUP,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.FFRDC,
-      key: 'federallyFundedResearchAndDevelopmentCenter',
-      route: 'federally-funded-research-and-development-center',
+    [MtoCommonSolutionKey.FFRDC]: {
       categories: [MtoCommonSolutionSubject.CONTRACT_VEHICLES],
       name: 'Federal Funded Research and Development Center',
       acronym: 'FFRDC',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.ARDS,
-      key: 'actuarialResearchAndDesignServices',
-      route: 'actuarial-research-and-design-services',
+    [MtoCommonSolutionKey.ARDS]: {
       categories: [MtoCommonSolutionSubject.CONTRACT_VEHICLES],
       name: 'Actuarial Research and Development Services',
       acronym: 'ARDS',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.T_MISS,
-      key: 'transformedMedicaidStatisticalInformationSystem',
-      route: 'transformed-medicaid-statistical-information-system',
+    [MtoCommonSolutionKey.T_MISS]: {
       categories: [MtoCommonSolutionSubject.DATA],
       name: 'Transformed Medicaid Statistical Information System',
       acronym: 'T-MSIS',
@@ -852,10 +641,7 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.EPPE,
-      key: 'enterprisePrivacyPolicyEngine',
-      route: 'enterprise-privacy-policy-engine',
+    [MtoCommonSolutionKey.EPPE]: {
       categories: [MtoCommonSolutionSubject.DATA],
       name: 'Enterprise Privacy Policy Engine Cloud',
       acronym: 'EPPE',
@@ -866,24 +652,18 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.DSEP,
-      key: 'divisionOfStakeholderEngagementAndPolicy',
-      route: 'division-of-stakeholder-engagement-and-policy',
-      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS],
+    [MtoCommonSolutionKey.DSEP]: {
+      categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
       name: 'Division of Stakeholder Engagement and Policy',
       acronym: 'DSEP',
-      type: 'Other',
+      type: MtoSolutionType.OTHER,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.AMS,
-      key: 'cmmiAnalysisAndManagementSystem',
-      route: 'cmmi-analysis-and-management-system',
+    [MtoCommonSolutionKey.AMS]: {
       categories: [MtoCommonSolutionSubject.DATA],
       name: 'CMMI Analysis and Management System',
       acronym: 'AMS',
@@ -894,11 +674,10 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.IC_LANDING,
-      key: 'innovationCenterLandingPage',
-      route: 'innovation-center-landing-page',
-      categories: [MtoCommonSolutionSubject.APPLICATIONS_NON_ACO],
+    [MtoCommonSolutionKey.IC_LANDING]: {
+      categories: [
+        MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
+      ],
       name: 'Innovation Center Landing Page',
       acronym: 'IC Landing',
       type: MtoSolutionType.IT_SYSTEM,
@@ -908,10 +687,7 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.RASS,
-      key: 'riskAdjustmentSuiteOfSystems',
-      route: 'risk-adjustment-suite-of-systems',
+    [MtoCommonSolutionKey.RASS]: {
       categories: [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D],
       name: 'Risk Adjustment Suite of Systems',
       acronym: 'RASS',
@@ -922,10 +698,7 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.DDPS,
-      key: 'drugDataProcessingSystem',
-      route: 'drug-data-processing-system',
+    [MtoCommonSolutionKey.DDPS]: {
       categories: [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D],
       name: 'Drug Data Processing System',
       acronym: 'DDPS',
@@ -936,45 +709,36 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.OACT,
-      key: 'officeOfTheActuary',
-      route: 'office-of-the-actuary',
+    [MtoCommonSolutionKey.OACT]: {
       categories: [MtoCommonSolutionSubject.EVALUATION_AND_REVIEW],
       name: 'Office of the Actuary',
       acronym: 'OACT',
-      type: 'Other',
+      type: MtoSolutionType.OTHER,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.QPP,
-      key: 'qualityPaymentProgram',
-      route: 'quality-payment-program',
+    [MtoCommonSolutionKey.QPP]: {
       categories: [MtoCommonSolutionSubject.QUALITY],
       name: 'Quality Payment Program',
       acronym: 'QPP',
-      type: 'Other',
+      type: MtoSolutionType.OTHER,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
         )
       }
     },
-    {
-      enum: MtoCommonSolutionKey.PAM,
-      key: 'patientActivationMeasure',
-      route: 'patient-activation-measure',
+    [MtoCommonSolutionKey.PAM]: {
       categories: [
         MtoCommonSolutionSubject.QUALITY,
         MtoCommonSolutionSubject.CONTRACT_VEHICLES
       ],
       name: 'Patient Activation Measure',
       acronym: 'PAM',
-      type: 'Contracts and contractors',
+      type: MtoSolutionType.CONTRACTOR,
       components: {
         timeline: (props: SolutionDetailProps) => (
           <GatheringInfoAlert {...props} />
@@ -982,3 +746,62 @@ export const helpSolutions: Record<MtoCommonSolutionKey, HelpSolutionBaseType> =
       }
     }
   };
+
+export const routeToEnumMap: Record<string, MtoCommonSolutionKey> = {
+  '4-innovation': MtoCommonSolutionKey.INNOVATION,
+  'accountable-care-organization': MtoCommonSolutionKey.ACO_OS,
+  'automated-plan-payment-system': MtoCommonSolutionKey.APPS,
+  'beneficiary-claims-data-api': MtoCommonSolutionKey.BCDA,
+  'centralized-data-exchange': MtoCommonSolutionKey.CDX,
+  'chronic-conditions-warehouse': MtoCommonSolutionKey.CCW,
+  'cmmi-data-aggregation-contract': MtoCommonSolutionKey.CDAC,
+  'cms-box': MtoCommonSolutionKey.CMS_BOX,
+  'cms-qualtrics': MtoCommonSolutionKey.CMS_QUALTRICS,
+  'consolidated-business-operations-support-center': MtoCommonSolutionKey.CBOSC,
+  'cpi-vetting': MtoCommonSolutionKey.CPI_VETTING,
+  'electronic-file-transfer': MtoCommonSolutionKey.EFT,
+  'expanded-data-feedback-reporting': MtoCommonSolutionKey.EDFR,
+  'gov-delivery': MtoCommonSolutionKey.GOVDELIVERY,
+  'grant-solutions': MtoCommonSolutionKey.GS,
+  'healthcare-integrated-general-kedger-accounting-system':
+    MtoCommonSolutionKey.HIGLAS,
+  'health-data-reporting': MtoCommonSolutionKey.HDR,
+  'health-plan-management-system': MtoCommonSolutionKey.HPMS,
+  'innovation-payment-contract': MtoCommonSolutionKey.IPC,
+  'innovation-support-platform': MtoCommonSolutionKey.ISP,
+  'integrated-data-repository': MtoCommonSolutionKey.IDR,
+  'learning-and-diffusion-group': MtoCommonSolutionKey.LDG,
+  'legal-vertical': MtoCommonSolutionKey.LV,
+  'master-data-management-program-organization-relationship':
+    MtoCommonSolutionKey.MDM_POR,
+  'master-data-management-for-ncbp': MtoCommonSolutionKey.MDM_NCBP,
+  'measure-and-instrument-development-and-support': MtoCommonSolutionKey.MIDS,
+  'medicare-advantage-prescription-drug-system': MtoCommonSolutionKey.MARX,
+  'model-space': MtoCommonSolutionKey.MODEL_SPACE,
+  'outlook-mailbox': MtoCommonSolutionKey.OUTLOOK_MAILBOX,
+  'quality-vertical': MtoCommonSolutionKey.QV,
+  'research-measurement-assessment-design-and-analysis':
+    MtoCommonSolutionKey.RMADA,
+  'salesforce-application-review-and-scoring': MtoCommonSolutionKey.ARS,
+  'salesforce-connect': MtoCommonSolutionKey.CONNECT,
+  'salesforce-letter-of-intent': MtoCommonSolutionKey.LOI,
+  'salesforce-project-officer-support-tool-portal':
+    MtoCommonSolutionKey.POST_PORTAL,
+  'salesforce-request-for-application': MtoCommonSolutionKey.RFA,
+  'shared-systems': MtoCommonSolutionKey.SHARED_SYSTEMS,
+  'research-and-rapid-cycle-evaluation-group': MtoCommonSolutionKey.RREG,
+  'federally-funded-research-and-development-center':
+    MtoCommonSolutionKey.FFRDC,
+  'actuarial-research-and-design-services': MtoCommonSolutionKey.ARDS,
+  'transformed-medicaid-statistical-information-system':
+    MtoCommonSolutionKey.T_MISS,
+  'enterprise-privacy-policy-engine': MtoCommonSolutionKey.EPPE,
+  'division-of-stakeholder-engagement-and-policy': MtoCommonSolutionKey.DSEP,
+  'cmmi-analysis-and-management-system': MtoCommonSolutionKey.AMS,
+  'innovation-center-landing-page': MtoCommonSolutionKey.IC_LANDING,
+  'risk-adjustment-suite-of-systems': MtoCommonSolutionKey.RASS,
+  'drug-data-processing-system': MtoCommonSolutionKey.DDPS,
+  'office-of-the-actuary': MtoCommonSolutionKey.OACT,
+  'quality-payment-program': MtoCommonSolutionKey.QPP,
+  'patient-activation-measure': MtoCommonSolutionKey.PAM
+};
