@@ -2,16 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
-import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
-
-import { operationalSolutionCategoryMap } from '../../solutionsMap';
+import { getKeys } from 'types/translation';
 
 type CategoryFooterProps = {
   className?: string;
-  currentCategory?: string | null;
+  currentCategory?: MtoCommonSolutionSubject | string | null;
 };
 
 const CategoryFooter = ({
@@ -25,7 +24,7 @@ const CategoryFooter = ({
       <h2 className="margin-bottom-1">{t('browseCategories')}</h2>
 
       <Grid row>
-        {Object.keys(operationalSolutionCategoryMap)
+        {getKeys(MtoCommonSolutionSubject)
           .filter(
             //  If current page is a category, don't list the category
             key => key !== currentCategory
@@ -40,8 +39,8 @@ const CategoryFooter = ({
                 >
                   <span>
                     {t(`categories.${key}.header`)}&nbsp;
-                    {solutionCategories[key as OperationalSolutionCategoryRoute]
-                      ?.subHeader && t(`categories.${key}.subHeader`)}
+                    {solutionCategories[key]?.subHeader &&
+                      t(`categories.${key}.subHeader`)}
                     <Icon.ArrowForward
                       className="margin-left-1 top-2px"
                       aria-label="forward"

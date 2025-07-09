@@ -7,23 +7,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
 import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import {
-  OperationalSolutionCategories,
-  OperationalSolutionCategoryRoute
-} from 'types/operationalSolutionCategories';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
 import SolutionsHeader from './_components/SolutionsHeader';
 import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
+  HelpSolutionBaseType,
   HelpSolutionType,
-  operationalSolutionCategoryMap
+  routeToEnumMap
 } from './solutionsMap';
 
 type OperationalSolutionsHelpProps = {
@@ -32,36 +30,51 @@ type OperationalSolutionsHelpProps = {
 
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRouteParam = (
-  route: OperationalSolutionCategoryRoute,
+  categoryKey: MtoCommonSolutionSubject,
   solutions: HelpSolutionType[]
-): HelpSolutionType[] => {
-  const categoryKey: OperationalSolutionCategories | undefined =
-    operationalSolutionCategoryMap[route];
-
-  if (!categoryKey) return [];
-
-  return [...solutions].filter(solution => {
-    return solution.categories.includes(
-      categoryKey as OperationalSolutionCategories
-    );
+): HelpSolutionBaseType[] => {
+  return solutions.filter(solution => {
+    return solution.categories.includes(categoryKey);
   });
 };
 
 export const findSolutionByRouteParam = (
   route: string | null | undefined,
-  solutions: HelpSolutionType[]
+  solutions: HelpSolutionType[],
+  isEnum: boolean = false
 ): HelpSolutionType | undefined => {
   if (!route) return undefined;
-  return [...solutions].find(solution => solution.route === route);
+  const routeParam = isEnum ? route : routeToEnumMap[route];
+  return [...solutions].find(solution => solution.key === routeParam);
 };
 
-export const findSolutionByRouteEnumParam = (
-  enumParam: string | null | undefined,
-  solutions: HelpSolutionType[]
-): HelpSolutionType | undefined => {
-  if (!enumParam) return undefined;
-  return [...solutions].find(solution => solution.enum === enumParam);
-};
+// export const findSolutionByRouteParam = (
+//   route: string | null | undefined,
+//   solutions: HelpSolutionsType
+// ): HelpSolutionBaseType | undefined => {
+//   if (!route) return undefined;
+//   if (!(route in routeToEnumMap)) return undefined;
+//   const routeEnum: MtoCommonSolutionKey = routeToEnumMap[route];
+//   return solutions[routeEnum];
+// };
+
+// export const findSolutionByRouteEnumParam = (
+//   enumParam: string | null | undefined,
+//   solutions: HelpSolutionType[]
+// ): HelpSolutionType | undefined => {
+//   if (!enumParam) return undefined;
+//   return [...solutions].find(solution => solution.key === enumParam);
+// };
+
+// export const findSolutionByRouteEnumParam = (
+//   enumParam: string | null | undefined,
+//   solutions: HelpSolutionsType
+// ): HelpSolutionBaseType | undefined => {
+//   if (!enumParam) return undefined;
+//   // Checking if enumParam exists as an MtoCommonSolutionKey before type assertion
+//   if (!(enumParam in solutions)) return undefined;
+//   return solutions[enumParam as MtoCommonSolutionKey];
+// };
 
 // Query function to return solutions for matching name and acronym
 export const searchSolutions = (
@@ -83,7 +96,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const params = new URLSearchParams(location.search);
 
-  const category = params.get('category') as OperationalSolutionCategoryRoute;
+  const category = params.get('category') as MtoCommonSolutionSubject;
   const page = params.get('page');
   const solutionEnumParam = params.get('solution-key');
   const modal = params.get('solution') || solutionEnumParam;
@@ -104,7 +117,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const [resultsNum, setResultsNum] = useState<number>(0);
 
   const [querySolutions, setQuerySolutions] =
-    useState<HelpSolutionType[]>(helpSolutions);
+    useState<HelpSolutionBaseType[]>(helpSolutions);
 
   const fromModal: boolean =
     prevPathname.includes('solution=') ||
@@ -137,9 +150,11 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     : findCategoryMapByRouteParam(category, helpSolutions);
 
   // Solution to render in modal
-  const selectedSolution = solutionEnumParam
-    ? findSolutionByRouteEnumParam(solution?.enum || null, helpSolutions)
-    : findSolutionByRouteParam(solution?.route || null, helpSolutions);
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.key || null,
+    helpSolutions,
+    !!solutionEnumParam
+  );
 
   if (loading) {
     return <PageLoading />;

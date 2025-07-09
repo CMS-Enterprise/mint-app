@@ -104,7 +104,7 @@ const MTOTable = ({
 
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(
-    solution?.route || null,
+    solution?.key || null,
     helpSolutions
   );
 

@@ -4,11 +4,9 @@ import {
 } from 'features/HelpAndKnowledge/Articles';
 import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/About';
 import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/Timeline';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
-import {
-  OperationalSolutionCategoryRoute,
-  OperationalSolutionSubCategories
-} from 'types/operationalSolutionCategories';
+import { OperationalSolutionSubCategories } from 'types/operationalSolutionCategories';
 
 interface SolutionModelType {
   about: AboutConfigType;
@@ -31,63 +29,65 @@ type CardInfoType = {
 };
 
 export const solutionCategories: Record<
-  OperationalSolutionCategoryRoute,
+  MtoCommonSolutionSubject,
   SolutionCategoryType
 > = {
-  'applications-and-participation-interaction-aco-and-kidney': {
-    header: 'Applications and participant interaction',
-    subHeader: '(ACO and kidney models)',
-    description:
-      'Learn about the solutions available for applications and participant interaction for ACO and kidney models.'
-  },
-  'applications-and-participation-interaction-non-aco': {
-    header: 'Applications and participant interaction',
-    subHeader: '(non-ACO models)',
-    description:
-      'Learn about the solutions available for cooperative agreement applications, participant agreement applications, and participant interaction for non-ACO models.'
-  },
-  'communication-tools-and-help-desk': {
+  [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS]:
+    {
+      header: 'Applications and participant interaction',
+      subHeader: '(ACO and kidney models)',
+      description:
+        'Learn about the solutions available for applications and participant interaction for ACO and kidney models.'
+    },
+  [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS]:
+    {
+      header: 'Applications and participant interaction',
+      subHeader: '(non-ACO models)',
+      description:
+        'Learn about the solutions available for cooperative agreement applications, participant agreement applications, and participant interaction for non-ACO models.'
+    },
+  [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK]: {
     header: 'Communication tools and help desk',
     description:
       'Learn about the solutions available for communication tools and help desk.'
   },
-  'contract-vehicles': {
+  [MtoCommonSolutionSubject.CONTRACT_VEHICLES]: {
     header: 'Contract vehicles',
     description: 'Learn about the solutions available for contract vehicles.'
   },
-  data: {
+  [MtoCommonSolutionSubject.DATA]: {
     header: 'Data',
     description: 'Learn about the solutions available for data.'
   },
-  'evaluation-and-review': {
+  [MtoCommonSolutionSubject.EVALUATION_AND_REVIEW]: {
     header: 'Evaluation and review',
     description:
       'Learn about the solutions available for evaluation and review.'
   },
-  learning: {
+  [MtoCommonSolutionSubject.LEARNING]: {
     header: 'Learning',
     description: 'Learn about the solutions available for learning.'
   },
-  legal: {
+  [MtoCommonSolutionSubject.LEGAL]: {
     header: 'Legal',
     description: 'Learn about the solutions available for legal.'
   },
-  'medicare-advantage-and-part-d': {
+  [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D]: {
     header: 'Medicare Advantage and Part D',
     description:
       'Learn about the solutions available for Medicare Advantage and Part D.'
   },
-  'medicare-fee-for-service': {
+  [MtoCommonSolutionSubject.MEDICARE_FEE_FOR_SERVICE]: {
     header: 'Medicare Fee-for-Service',
     description:
       'Learn about the solutions available for Medicare Fee-for-Service.'
   },
-  'payments-and-financials': {
+  [MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS]: {
     header: 'Payments and financials',
     description:
       'Learn about the solutions available for payments and financials.'
   },
-  quality: {
+  [MtoCommonSolutionSubject.QUALITY]: {
     header: 'Quality',
     description: 'Learn about the solutions available for quality.'
   }
