@@ -20,6 +20,10 @@ export default gql(/* GraphQL */ `
           isPrimary
           role
           receiveEmails
+          userAccount {
+            id
+            username
+          }
         }
       }
     }

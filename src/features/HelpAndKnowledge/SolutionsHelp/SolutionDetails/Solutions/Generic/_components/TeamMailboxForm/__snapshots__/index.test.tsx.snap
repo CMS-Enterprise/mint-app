@@ -165,7 +165,7 @@ exports[`Team mailbox point of contact form > should matches snapshot 1`] = `
       </div>
     </fieldset>
     <div
-      class="usa-alert usa-alert--info usa-alert--slim flex margin-top-0 margin-bottom-2"
+      class="usa-alert usa-alert--info usa-alert--slim margin-top-0 margin-bottom-2"
       data-testid="alert"
       hidden=""
     >
@@ -175,9 +175,7 @@ exports[`Team mailbox point of contact form > should matches snapshot 1`] = `
         <p
           class="usa-alert__text"
         >
-          <span>
-            This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.
-          </span>
+          This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.
         </p>
       </div>
     </div>
