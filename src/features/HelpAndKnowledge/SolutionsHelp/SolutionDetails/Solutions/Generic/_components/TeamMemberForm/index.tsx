@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Alert,
   Button,
   Fieldset,
   Form,
@@ -19,7 +20,6 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
-import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
 import useMessage from 'hooks/useMessage';
@@ -28,11 +28,16 @@ import dirtyInput from 'utils/formUtil';
 
 import { TeamMemberModeType } from '../MailboxAndTeamMemberModal';
 
-type FormValues = {
-  userName: string;
-  role: string;
-  isPrimary: boolean;
-  receiveEmails: boolean;
+type UnwrapNullable<
+  T extends Record<P, unknown> | null | undefined,
+  P extends PropertyKey
+> = T extends Record<P, unknown> ? T[P] : '';
+
+type FormValues = Pick<
+  SolutionContactType,
+  'name' | 'role' | 'isPrimary' | 'receiveEmails'
+> & {
+  userName: UnwrapNullable<SolutionContactType['userAccount'], 'username'>;
 };
 
 const TeamMemberForm = ({
@@ -46,7 +51,12 @@ const TeamMemberForm = ({
     isTeam: false,
     isPrimary: false,
     role: '',
-    receiveEmails: false
+    receiveEmails: false,
+    userAccount: {
+      __typename: 'UserAccount',
+      id: 'not a real userAccount id',
+      username: ''
+    }
   }
 }: {
   mode: TeamMemberModeType;
@@ -57,6 +67,8 @@ const TeamMemberForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
   const methods = useForm<FormValues>({
     defaultValues: {
+      userName: teamMember.userAccount?.username || '',
+      name: teamMember.name,
       role: teamMember.role || '',
       isPrimary: teamMember.isPrimary,
       receiveEmails: teamMember.receiveEmails
@@ -67,7 +79,7 @@ const TeamMemberForm = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty, dirtyFields },
+    formState: { isSubmitting, isDirty },
     watch,
     setValue
   } = methods;
@@ -89,11 +101,13 @@ const TeamMemberForm = ({
     ]
   });
 
-  const [hasMutationError, setHasMutationError] = useState(false);
+  const [mutationError, setMutationError] = useState<
+    'duplicate' | 'generic' | null
+  >(null);
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
   const disabledSubmitBtn =
-    isSubmitting || !isDirty || Object.keys(dirtyFields).length === 0;
+    !watch('userName') || !watch('role') || isSubmitting || !isDirty;
 
   if (!selectedSolution) {
     return null;
@@ -107,7 +121,7 @@ const TeamMemberForm = ({
           variables: {
             key: selectedSolution.enum,
             userName: formData.userName,
-            role: formData.role,
+            role: formData.role || '',
             isPrimary: formData.isPrimary,
             receiveEmails: formData.receiveEmails
           }
@@ -129,7 +143,7 @@ const TeamMemberForm = ({
             <Trans
               i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
-                contact: formData.userName || teamMember.name
+                contact: formData.name || teamMember.name
               }}
               components={{
                 bold: <span className="text-bold" />
@@ -139,8 +153,11 @@ const TeamMemberForm = ({
           closeModal();
         }
       })
-      .catch(() => {
-        setHasMutationError(true);
+      .catch(error => {
+        const duplicateError = error.message.includes(
+          'uniq_user_id_per_solution_key'
+        );
+        setMutationError(duplicateError ? 'duplicate' : 'generic');
       });
   };
 
@@ -152,14 +169,26 @@ const TeamMemberForm = ({
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {hasMutationError && (
+        {mutationError !== null && (
           <Alert
             type="error"
             slim
             headingLevel="h1"
             className="margin-bottom-2"
           >
-            {miscT(`${mode}.error`)}
+            {mutationError === 'generic' ? (
+              miscT(`${mode}.error`)
+            ) : (
+              <Trans
+                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
+                values={{
+                  contact: methods.getValues('name')
+                }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />
+            )}
           </Alert>
         )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
@@ -185,13 +214,14 @@ const TeamMemberForm = ({
                   ariaLabelledBy="label-team-member-name"
                   ariaDescribedBy="hint-team-member-name"
                   value={{
-                    username: teamMember.name,
+                    username: teamMember.userAccount?.username || '',
                     displayName: teamMember.name,
                     email: teamMember.email
                   }}
-                  onChange={oktaUser =>
-                    setValue('userName', oktaUser ? oktaUser.username : '')
-                  }
+                  onChange={oktaUser => {
+                    setValue('name', oktaUser ? oktaUser.displayName : '');
+                    setValue('userName', oktaUser ? oktaUser.username : '');
+                  }}
                   className={classNames({
                     'disabled-input': isEditMode
                   })}
@@ -291,6 +321,7 @@ const TeamMemberForm = ({
         </Fieldset>
         <Alert
           type="info"
+          headingLevel="h1"
           slim
           className="margin-top-0 margin-bottom-2"
           hidden={!watch('isPrimary') && !watch('receiveEmails')}
@@ -314,7 +345,7 @@ const TeamMemberForm = ({
         <div className="margin-top-3 display-flex">
           <Button
             type="submit"
-            disabled={!watch('userName') || !watch('role') || disabledSubmitBtn}
+            disabled={disabledSubmitBtn}
             className="margin-right-3 margin-top-0"
           >
             {miscT(`${mode}.cta`)}

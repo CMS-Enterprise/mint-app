@@ -297,7 +297,8 @@ export default function OktaUserSelect({
       menuIsOpen={
         ((contacts.length === 0 && (searchTerm?.length || 0) > 2) ||
           !!contacts.length) &&
-        !userSelected
+        !userSelected &&
+        !disabled
       }
       components={{
         Input,
