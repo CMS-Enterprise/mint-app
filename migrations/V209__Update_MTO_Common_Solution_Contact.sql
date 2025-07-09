@@ -12,7 +12,7 @@ ADD COLUMN mailbox_address ZERO_STRING NULL;
 
 -- Add user_id as a foreign key (nullable)
 ALTER TABLE mto_common_solution_contact
-ADD COLUMN user_id UUID REFERENCES user_account(id);
+ADD COLUMN user_id UUID REFERENCES user_account(id) ON DELETE CASCADE;
 
 -- Add receive_emails field with default true
 ALTER TABLE mto_common_solution_contact
