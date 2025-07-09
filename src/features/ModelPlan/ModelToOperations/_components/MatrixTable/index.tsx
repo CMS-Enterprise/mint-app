@@ -1023,6 +1023,7 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
+        // Only want to hit this conditional if the template is empty only one page
         if (totalPages === 1 && milestoneCount > 0) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
