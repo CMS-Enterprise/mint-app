@@ -188,3 +188,94 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContact() {
 	suite.Equal(updatedTitle, *updatedContact.MailboxTitle)
 	suite.Equal(updatedReceiveEmails, updatedContact.ReceiveEmails)
 }
+
+// TestDeleteMTOCommonSolutionContact validates deleting a non-primary contact while ensuring the primary contact remains.
+func (suite *ResolverSuite) TestDeleteMTOCommonSolutionContact() {
+	// Create a primary contact
+	primaryMailboxTitle := "Primary Support Team"
+	primaryMailboxAddress := "primary-support@example.com"
+	isTeam := true
+	receiveEmails := true
+	isPrimary := true
+
+	primaryContact, err := CreateMTOCommonSolutionContactMailbox(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+		models.MTOCSKInnovation,
+		&primaryMailboxTitle,
+		primaryMailboxAddress,
+		isTeam,
+		nil, // Role is nil
+		receiveEmails,
+		isPrimary,
+	)
+	suite.NoError(err)
+	suite.NotNil(primaryContact)
+
+	// Create a non-primary contact
+	nonPrimaryMailboxTitle := "Non-Primary Support Team"
+	nonPrimaryMailboxAddress := "non-primary-support@example.com"
+	isPrimary = false
+
+	nonPrimaryContact, err := CreateMTOCommonSolutionContactMailbox(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+		models.MTOCSKInnovation,
+		&nonPrimaryMailboxTitle,
+		nonPrimaryMailboxAddress,
+		isTeam,
+		nil, // Role is nil
+		receiveEmails,
+		isPrimary,
+	)
+	suite.NoError(err)
+	suite.NotNil(nonPrimaryContact)
+
+	// Delete the non-primary contact
+	deletedContact, err := DeleteMTOCommonSolutionContact(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+		nonPrimaryContact.ID,
+	)
+	suite.NoError(err)
+	suite.NotNil(deletedContact)
+	suite.Equal(nonPrimaryContact.ID, deletedContact.ID)
+
+	// Verify the non-primary contact no longer exists
+	fetchedContact, err := GetMTOCommonSolutionContact(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nonPrimaryContact.ID,
+	)
+	suite.Error(err)
+	suite.Nil(fetchedContact)
+
+	// Verify the primary contact still exists
+	fetchedPrimaryContact, err := GetMTOCommonSolutionContact(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		primaryContact.ID,
+	)
+	suite.NoError(err)
+	suite.NotNil(fetchedPrimaryContact)
+	suite.Equal(primaryContact.ID, fetchedPrimaryContact.ID)
+}
