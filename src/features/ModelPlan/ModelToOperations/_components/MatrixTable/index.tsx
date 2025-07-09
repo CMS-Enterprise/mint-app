@@ -105,7 +105,8 @@ const MTOTable = ({
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(
     solution?.key || null,
-    helpSolutions
+    helpSolutions,
+    true
   );
 
   // Holds the rearranged/dragged state of data pre-sorted

@@ -48,34 +48,6 @@ export const findSolutionByRouteParam = (
   return [...solutions].find(solution => solution.key === routeParam);
 };
 
-// export const findSolutionByRouteParam = (
-//   route: string | null | undefined,
-//   solutions: HelpSolutionsType
-// ): HelpSolutionBaseType | undefined => {
-//   if (!route) return undefined;
-//   if (!(route in routeToEnumMap)) return undefined;
-//   const routeEnum: MtoCommonSolutionKey = routeToEnumMap[route];
-//   return solutions[routeEnum];
-// };
-
-// export const findSolutionByRouteEnumParam = (
-//   enumParam: string | null | undefined,
-//   solutions: HelpSolutionType[]
-// ): HelpSolutionType | undefined => {
-//   if (!enumParam) return undefined;
-//   return [...solutions].find(solution => solution.key === enumParam);
-// };
-
-// export const findSolutionByRouteEnumParam = (
-//   enumParam: string | null | undefined,
-//   solutions: HelpSolutionsType
-// ): HelpSolutionBaseType | undefined => {
-//   if (!enumParam) return undefined;
-//   // Checking if enumParam exists as an MtoCommonSolutionKey before type assertion
-//   if (!(enumParam in solutions)) return undefined;
-//   return solutions[enumParam as MtoCommonSolutionKey];
-// };
-
 // Query function to return solutions for matching name and acronym
 export const searchSolutions = (
   query: string,

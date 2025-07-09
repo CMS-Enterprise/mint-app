@@ -86,7 +86,9 @@ const SolutionDetailsModal = ({
 
   // Used to maintain previous route when opening and navigating through modal
   const [prevRoute] = useState<string | undefined>(
-    openedFrom === 'undefined' || openedFrom?.includes('solution=') // If openedFrom pasted in URL with already set params, set to undefined
+    openedFrom === 'undefined' ||
+      openedFrom?.includes('solution=') ||
+      openedFrom?.includes('solution-key=') // If openedFrom pasted in URL with already set params, set to undefined
       ? undefined
       : openedFrom
   );
@@ -115,10 +117,6 @@ const SolutionDetailsModal = ({
       closeModalRoute = `${closeModalRoute}?view-solution=${readViewParam}`;
     }
 
-    if (solutionEnumParam) {
-      closeModalRoute = setCloseRoute;
-    }
-
     history.push(closeModalRoute, {
       fromModal: true
     });
@@ -137,7 +135,10 @@ const SolutionDetailsModal = ({
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
         overlayClassName={
-          (milestoneParam && solutionParam) || selectSolutions || readViewParam
+          (milestoneParam && solutionParam) ||
+          (milestoneParam && solutionEnumParam) ||
+          selectSolutions ||
+          readViewParam
             ? 'bg-transparent'
             : ''
         }

@@ -144,7 +144,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: 'innovation-payment-contract',
+          link: MtoCommonSolutionKey.IPC,
           external: false
         },
         {
@@ -250,7 +250,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: 'innovation-payment-contract',
+          link: MtoCommonSolutionKey.IPC,
           external: false
         },
         {
@@ -340,7 +340,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -679,7 +679,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -844,7 +844,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -1062,19 +1062,19 @@ The Model team will receive an implementation milestone schedule that identifies
           items: [],
           links: [
             {
-              link: 'centralized-data-exchange',
+              link: MtoCommonSolutionKey.CDX,
               external: false
             },
             {
-              link: 'health-data-reporting',
+              link: MtoCommonSolutionKey.HDR,
               external: false
             },
             {
-              link: 'expanded-data-feedback-reporting',
+              link: MtoCommonSolutionKey.EDFR,
               external: false
             },
             {
-              link: 'model-space',
+              link: MtoCommonSolutionKey.MODEL_SPACE,
               external: false
             }
           ],
@@ -1922,7 +1922,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       },
       links: [
         {
-          link: 'innovation-payment-contract',
+          link: MtoCommonSolutionKey.IPC,
           external: false
         },
         {
@@ -2059,7 +2059,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -2179,11 +2179,11 @@ Model Space offers model teams and their contractors templates or Databricks not
       gatheringInfo: true,
       links: [
         {
-          link: 'quality-payment-program',
+          link: MtoCommonSolutionKey.QPP,
           external: false
         },
         {
-          link: 'integrated-data-repository',
+          link: MtoCommonSolutionKey.IDR,
           external: false
         }
       ]
@@ -2215,7 +2215,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       gatheringInfo: true,
       links: [
         {
-          link: 'medicare-advantage-prescription-drug-system',
+          link: MtoCommonSolutionKey.MARX,
           external: false
         }
       ]

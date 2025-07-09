@@ -84,7 +84,7 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
           <ExternalLink href={link.link}>link</ExternalLink>
         );
       } else {
-        params.set('solution', link.link);
+        params.set('solution-key', link.link);
         linkObj[`link${index + 1}`] = (
           <InternalSolutionButton params={params.toString()}>
             link

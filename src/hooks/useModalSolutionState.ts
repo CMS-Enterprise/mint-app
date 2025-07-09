@@ -42,7 +42,7 @@ const useModalSolutionState = (
 
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(
-    solutionDetail,
+    solutionDetail || solutionDetailModal,
     helpSolutions,
     !!solutionDetailModal
   );
