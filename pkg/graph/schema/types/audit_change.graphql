@@ -12,5 +12,5 @@ type AuditChange {
 
 extend type Query {
   auditChanges(tableName: TableName!, primaryKey: UUID!): [AuditChange!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

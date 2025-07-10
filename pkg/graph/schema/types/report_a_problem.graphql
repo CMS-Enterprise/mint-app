@@ -26,5 +26,5 @@ input ReportAProblemInput {
 
 extend type Mutation {
   reportAProblem(input: ReportAProblemInput!): Boolean!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
