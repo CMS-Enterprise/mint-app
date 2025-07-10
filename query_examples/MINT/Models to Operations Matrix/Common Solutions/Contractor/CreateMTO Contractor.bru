@@ -11,22 +11,43 @@ post {
 }
 
 body:graphql {
-  mutation CreateMTOCommonSolutionContractor {
+  mutation createMTOCommonSolutionContractor($key: MTOCommonSolutionKey!, $contractorTitle: String, $contractorName: String!) {
     createMTOCommonSolutionContractor(
-      key: {{key}}
-      contractorTitle: "{{contractorTitle}}"
-      contractorName: "{{contractorName}}"
+      key: $key,
+      contractorTitle: $contractorTitle,
+      contractorName: $contractorName
     ) {
       id
       key
       contractorTitle
       contractorName
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        email
+      }
+      modifiedByUserAccount {
+        id
+        username
+        email
+      }
     }
   }
 }
 
-vars:pre-request {
-  key: INNOVATION
-  contractorTitle: Best Contractor
-  contractorName: John Doe
+body:graphql:vars {
+  {
+    "key": "INNOVATION",
+    "contractorTitle": "Primary Contractor",
+    "contractorName": "Best Contractor"
+  }
+}
+
+script:post-response {
+  let responseData = res.getBody().data.createMTOCommonSolutionContractor
+  
+  let contractorId = responseData.id
+  
+  bru.setVar("contractorId", contractorId);
 }

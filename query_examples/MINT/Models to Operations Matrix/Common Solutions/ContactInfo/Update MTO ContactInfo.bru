@@ -11,17 +11,15 @@ post {
 }
 
 body:graphql {
-  mutation UpdateMTOCommonSolutionContact {
+  mutation updateMTOCommonSolutionContact($id: UUID!, $input: MTOCommonSolutionContactUpdateChanges!) {
     updateMTOCommonSolutionContact(
-      id: "f8f436e0-4706-4066-a53f-8a3a5e775f85"
-      input: {
-        role: "role"           # or a string if isTeam is false
-        isPrimary: false
-        receiveEmails: false
-      }
+      id: $id,
+      input: $input
     ) {
       id
       key
+      name
+      email
       mailboxTitle
       mailboxAddress
       isTeam
@@ -29,6 +27,20 @@ body:graphql {
       isPrimary
       receiveEmails
       createdBy
+      modifiedBy
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{contactId}}",
+    "input": {
+      "mailboxTitle": "Updated Support Team",
+      "role": "Updated Role",
+      "isPrimary": false,
+      "receiveEmails": false
     }
   }
 }
