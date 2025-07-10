@@ -54,12 +54,12 @@
     "formik": "^2.4.6",
     "graphql": "^15.8.0",
     "html-react-parser": "^5.2.5",
-    "i18next": "^25.3.1",
+    "i18next": "^25.3.2",
     "i18next-browser-languagedetector": "^5.0.0",
     "istanbul-lib-coverage": "^3.2.2",
     "launchdarkly-react-client-sdk": "^3.8.1",
     "lodash": "^4.17.21",
-    "luxon": "^3.6.1",
+    "luxon": "^3.7.1",
     "no-scroll": "^2.1.1",
     "nyc": "^15.0.0",
     "react": "^19.1.0",
@@ -189,7 +189,7 @@
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^2.1.9",
-    "webpack": "^5.99.9"
+    "webpack": "^5.100.0"
   },
   "resolutions": {
     "prismjs": "1.24.0",
