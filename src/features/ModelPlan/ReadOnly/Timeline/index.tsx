@@ -108,7 +108,7 @@ const ReadOnlyModelTimeline = ({
           ) : (
             <ProcessList className="read-only-model-plan__timeline margin-left-neg-1">
               <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <TimelineTimelineItem
+                <TimelineItem
                   label={timelineT('completeICIP.label')}
                   value={completeICIP}
                 />
@@ -138,14 +138,14 @@ const ReadOnlyModelTimeline = ({
 
                 <div className="mobile-lg:display-flex">
                   <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineTimelineItem
+                    <TimelineItem
                       label={timelineT('clearanceStarts.label')}
                       value={clearanceStarts}
                     />
                   </div>
 
                   <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineTimelineItem
+                    <TimelineItem
                       label={timelineT('clearanceEnds.label')}
                       value={clearanceEnds}
                     />
@@ -154,7 +154,7 @@ const ReadOnlyModelTimeline = ({
               </ProcessListItem>
 
               <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <TimelineTimelineItem
+                <TimelineItem
                   label={timelineT('announced.label')}
                   value={announced}
                 />
@@ -170,14 +170,14 @@ const ReadOnlyModelTimeline = ({
 
                 <div className="mobile-lg:display-flex">
                   <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineTimelineItem
+                    <TimelineItem
                       label={timelineT('applicationsStart.label')}
                       value={applicationsStart}
                     />
                   </div>
 
                   <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineTimelineItem
+                    <TimelineItem
                       label={timelineT('applicationsEnd.label')}
                       value={applicationsEnd}
                     />
@@ -209,14 +209,14 @@ const ReadOnlyModelTimeline = ({
 
                 <div className="mobile-lg:display-flex">
                   <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineTimelineItem
+                    <TimelineItem
                       label={timelineT('performancePeriodStarts.label')}
                       value={performancePeriodStarts}
                     />
                   </div>
 
                   <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineTimelineItem
+                    <TimelineItem
                       label={timelineT('performancePeriodEnds.label')}
                       value={performancePeriodEnds}
                     />
@@ -225,7 +225,7 @@ const ReadOnlyModelTimeline = ({
               </ProcessListItem>
 
               <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <TimelineTimelineItem
+                <TimelineItem
                   label={timelineT('wrapUpEnds.label')}
                   value={wrapUpEnds}
                 />
@@ -257,7 +257,7 @@ const dateOrNoAnswer = (value: string | null | undefined) => {
   );
 };
 
-const TimelineTimelineItem = ({
+const TimelineItem = ({
   label,
   value
 }: {
@@ -272,7 +272,7 @@ const TimelineTimelineItem = ({
       {label}
     </ProcessListHeading>
 
-    <p className="margin-y-0 font-body-md line-height-sans-4">
+    <p className="mint-text-normal  margin-y-0 line-height-sans-4">
       {dateOrNoAnswer(value)}
     </p>
   </>

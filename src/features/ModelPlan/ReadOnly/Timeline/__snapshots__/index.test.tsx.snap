@@ -56,7 +56,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
           Complete ICIP
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="mint-text-normal  margin-y-0 line-height-sans-4"
         >
           06/03/2022
         </p>
@@ -128,7 +128,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               Clearance start date
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
             >
               06/03/2022
             </p>
@@ -143,7 +143,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               Clearance end date
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
             >
               06/03/2022
             </p>
@@ -160,7 +160,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
           Announce model
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="mint-text-normal  margin-y-0 line-height-sans-4"
         >
           06/03/2022
         </p>
@@ -187,7 +187,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               Application start date
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
             >
               06/03/2022
             </p>
@@ -202,7 +202,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               Application end date
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
             >
               06/03/2022
             </p>
@@ -276,7 +276,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               Performance start date
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
             >
               06/03/2022
             </p>
@@ -291,7 +291,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               Performance end date
             </p>
             <p
-              class="margin-y-0 font-body-md line-height-sans-4"
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
             >
               06/03/2022
             </p>
@@ -308,7 +308,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
           Model wrap-up end date
         </p>
         <p
-          class="margin-y-0 font-body-md line-height-sans-4"
+          class="mint-text-normal  margin-y-0 line-height-sans-4"
         >
           06/03/2022
         </p>
