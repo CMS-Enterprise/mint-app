@@ -63,10 +63,11 @@ func PlanDataExchangeApproachUpdate(
 			// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
 			// 'isDataExchangeApproachComplete' is different from the existing value
 			if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
-				isSettingToComplete, ok := isDataExchangeApproachComplete.(bool)
-				if !ok {
+				isSettingToCompletePointer, ok := isDataExchangeApproachComplete.(*bool)
+				if !ok || isSettingToCompletePointer == nil {
 					return nil, fmt.Errorf("unable to update plan data exchange approach, isDataExchangeApproachComplete is not a bool")
 				}
+				isSettingToComplete := *isSettingToCompletePointer
 
 				// Check if time has been set or is the default value
 				if existing.MarkedCompleteDts == nil && isSettingToComplete {

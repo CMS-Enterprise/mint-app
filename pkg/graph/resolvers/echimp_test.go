@@ -2,6 +2,8 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
 // Removed when we deprecated a bunch of unused resolvers in https://github.com/CMS-Enterprise/mint-app/pull/1447
@@ -29,4 +31,16 @@ func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
 	suite.NotNil(result)
 	suite.Len(result, 2)
 
+	// Test with an s3 client that expects no bucket
+	// Occurs currently in local development where we don't have an S3 bucket set up for echimp
+	testConfig := s3.Config{
+		Bucket:         "test-bucket",
+		Region:         "us-east-1",
+		IsLocal:        true,
+		ExpectNoBucket: true,
+	}
+	realClient := s3.NewS3Client(testConfig)
+	result, err = GetEchimpCRAndTdlsByModelPlanID(&realClient, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
+	suite.Nil(result)
+	suite.Nil(err)
 }
