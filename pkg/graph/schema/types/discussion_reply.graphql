@@ -4,7 +4,7 @@ DiscussionReply represents a discussion reply
 type DiscussionReply {
   id: UUID!
   discussionID: UUID!
-  content: TaggedContent
+  content: TaggedContent @goField(forceResolver: true)
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!

@@ -81,7 +81,9 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
     links.forEach((link, index) => {
       if (link.external) {
         linkObj[`link${index + 1}`] = (
-          <ExternalLink href={link.link}>link</ExternalLink>
+          <ExternalLink href={link.link} inlineText>
+            link
+          </ExternalLink>
         );
       } else {
         params.set('solution', link.link);

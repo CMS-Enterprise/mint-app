@@ -78,6 +78,17 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 				return resultType.Elem().Interface(), err
 			}
 
+			// If the destination is a pointer to string and the value is an empty string, return nil
+			if b.Kind() == reflect.Ptr && b.Elem().Kind() == reflect.String && (a.Kind() == reflect.String || a.Kind() == reflect.Ptr && a.Elem().Kind() == reflect.String) {
+				// Handle both empty string and pointer to empty string
+				if v == "" {
+					return nil, nil
+				}
+				// If v is a pointer to string and points to an empty string, return nil
+				if strPtr, ok := v.(*string); ok && strPtr != nil && *strPtr == "" {
+					return nil, nil
+				}
+			}
 			return v, nil
 		},
 	})
