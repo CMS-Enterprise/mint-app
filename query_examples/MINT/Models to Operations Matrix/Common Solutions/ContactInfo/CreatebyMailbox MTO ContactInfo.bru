@@ -11,17 +11,17 @@ post {
 }
 
 body:graphql {
-  mutation createMTOCommonSolutionMailboxContact {
+  mutation createMTOCommonSolutionMailboxContact($key: MTOCommonSolutionKey!, $mailboxTitle: String, $mailboxAddress: String!, $isTeam: Boolean!, $role: String, $receiveEmails: Boolean!, $isPrimary: Boolean!) {
     createMTOCommonSolutionMailboxContact(
-      key: {{key}}         
-      mailboxTitle: "{{mailboxTitle}}"
-      mailboxAddress: "{{mailboxAddress}}"
-      isTeam: {{isTeam}}
-      role: null             
-      isPrimary: {{isPrimary}}        
-      receiveEmails: {{receiveEmails}}
+      key: $key,
+      mailboxTitle: $mailboxTitle,
+      mailboxAddress: $mailboxAddress,
+      isTeam: $isTeam,
+      role: $role,
+      receiveEmails: $receiveEmails,
+      isPrimary: $isPrimary
     ) {
-      name 
+      name
       email
       id
       key
@@ -34,14 +34,24 @@ body:graphql {
       createdBy
     }
   }
-  
 }
 
-vars:pre-request {
-  key: IPC
-  mailboxTitle: Support Team
-  mailboxAddress: support@example.com
-  isTeam: true
-  isPrimary: false
-  receiveEmails: true
+body:graphql:vars {
+  {
+    "key": "INNOVATION",
+    "mailboxTitle": "Support Team",
+    "mailboxAddress": "support@example.com",
+    "isTeam": true,
+    "role": null,
+    "receiveEmails": true,
+    "isPrimary": false
+  }
+}
+
+script:post-response {
+  let responseData = res.getBody().data.createMTOCommonSolutionMailboxContact
+  
+  let contactId = responseData.id
+  
+  bru.setVar("contactId", contactId);
 }
