@@ -21,6 +21,11 @@ func (r *mTOCommonSolutionResolver) Contractors(ctx context.Context, obj *models
 	return MTOCommonSolutionContractorsGetByKeyLOADER(ctx, obj.Key)
 }
 
+// SystemOwner is the resolver for the systemOwner field.
+func (r *mTOCommonSolutionResolver) SystemOwner(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionSystemOwner, error) {
+	return MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx, obj.Key)
+}
+
 // ContactInformation is the resolver for the contactInformation field.
 func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionContactInformation, error) {
 	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)

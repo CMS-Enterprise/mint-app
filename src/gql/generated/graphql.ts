@@ -806,6 +806,7 @@ export type MtoCommonSolution = {
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
   subjects: Array<MtoCommonSolutionSubject>;
+  systemOwner?: Maybe<MtoCommonSolutionSystemOwner>;
   type: MtoSolutionType;
 };
 
@@ -947,6 +948,12 @@ export enum MtoCommonSolutionKey {
   T_MISS = 'T_MISS'
 }
 
+/** Enum for owner type */
+export enum MtoCommonSolutionOwnerType {
+  BUSINESS_OWNER = 'BUSINESS_OWNER',
+  SYSTEM_OWNER = 'SYSTEM_OWNER'
+}
+
 export enum MtoCommonSolutionSubject {
   APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS',
   APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS',
@@ -961,6 +968,26 @@ export enum MtoCommonSolutionSubject {
   PAYMENTS_AND_FINANCIALS = 'PAYMENTS_AND_FINANCIALS',
   QUALITY = 'QUALITY'
 }
+
+export type MtoCommonSolutionSystemOwner = {
+  __typename: 'MTOCommonSolutionSystemOwner';
+  cmsComponent: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  ownerType: MtoCommonSolutionOwnerType;
+};
+
+/** Input for creating or updating a common solution system owner */
+export type MtoCommonSolutionSystemOwnerChanges = {
+  cmsComponent: Scalars['String']['input'];
+  ownerType: MtoCommonSolutionOwnerType;
+};
 
 export enum MtoFacilitator {
   APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
@@ -1434,6 +1461,7 @@ export type Mutation = {
   createMTOCategory: MtoCategory;
   createMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   createMTOCommonSolutionMailboxContact: MtoCommonSolutionContact;
+  createMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   createMTOCommonSolutionUserContact: MtoCommonSolutionContact;
   createMTOMilestoneCommon: MtoMilestone;
   createMTOMilestoneCustom: MtoMilestone;
@@ -1457,6 +1485,7 @@ export type Mutation = {
   deleteMTOCategory: Scalars['Boolean']['output'];
   deleteMTOCommonSolutionContact: MtoCommonSolutionContact;
   deleteMTOCommonSolutionContractor: MtoCommonSolutionContractor;
+  deleteMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   deleteMTOMilestone: Scalars['Boolean']['output'];
   deleteMTOSolution: Scalars['Boolean']['output'];
   deletePlanCR: PlanCr;
@@ -1501,6 +1530,7 @@ export type Mutation = {
   updateExistingModelLinks: ExistingModelLinks;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
+  updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   updateMTOMilestone: MtoMilestone;
   updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
@@ -1564,6 +1594,14 @@ export type MutationCreateMtoCommonSolutionMailboxContactArgs = {
   mailboxTitle?: InputMaybe<Scalars['String']['input']>;
   receiveEmails: Scalars['Boolean']['input'];
   role?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonSolutionSystemOwnerArgs = {
+  cmsComponent: Scalars['String']['input'];
+  key: MtoCommonSolutionKey;
+  ownerType: MtoCommonSolutionOwnerType;
 };
 
 
@@ -1662,6 +1700,12 @@ export type MutationDeleteMtoCommonSolutionContactArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeleteMtoCommonSolutionContractorArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCommonSolutionSystemOwnerArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -1810,6 +1854,13 @@ export type MutationUpdateMtoCommonSolutionContactArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateMtoCommonSolutionContractorArgs = {
   changes: MtoCommonSolutionContractorChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCommonSolutionSystemOwnerArgs = {
+  changes: MtoCommonSolutionSystemOwnerChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -3920,6 +3971,7 @@ export type Query = {
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoCommonSolutionContact: MtoCommonSolutionContact;
   mtoCommonSolutionContractor: MtoCommonSolutionContractor;
+  mtoCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
@@ -3995,6 +4047,12 @@ export type QueryMtoCommonSolutionContactArgs = {
 
 /** Query definition for the schema */
 export type QueryMtoCommonSolutionContractorArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoCommonSolutionSystemOwnerArgs = {
   id: Scalars['UUID']['input'];
 };
 

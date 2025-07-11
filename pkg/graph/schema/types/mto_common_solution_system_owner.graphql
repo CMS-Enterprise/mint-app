@@ -1,0 +1,53 @@
+type MTOCommonSolutionSystemOwner {
+  id: UUID!
+  key: MTOCommonSolutionKey!
+
+  ownerType: MTOCommonSolutionOwnerType!
+  cmsComponent: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+Enum for owner type
+"""
+enum MTOCommonSolutionOwnerType {
+  BUSINESS_OWNER
+  SYSTEM_OWNER
+}
+
+"""
+Input for creating or updating a common solution system owner
+"""
+input MTOCommonSolutionSystemOwnerChanges @goModel(model: "map[string]interface{}") {
+  ownerType: MTOCommonSolutionOwnerType!
+  cmsComponent: String!
+}
+
+extend type Query {
+  mtoCommonSolutionSystemOwner(id: UUID!): MTOCommonSolutionSystemOwner!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+
+extend type Mutation {
+  createMTOCommonSolutionSystemOwner(
+    key: MTOCommonSolutionKey!
+    ownerType: MTOCommonSolutionOwnerType!
+    cmsComponent: String!
+  ): MTOCommonSolutionSystemOwner!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  updateMTOCommonSolutionSystemOwner(
+    id: UUID!
+    changes: MTOCommonSolutionSystemOwnerChanges!
+  ): MTOCommonSolutionSystemOwner!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  deleteMTOCommonSolutionSystemOwner(id: UUID!): MTOCommonSolutionSystemOwner!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
