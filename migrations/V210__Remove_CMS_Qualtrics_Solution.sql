@@ -84,6 +84,18 @@ USING (mto_common_solution_key::TEXT::MTO_COMMON_SOLUTION_NEW_KEY);
 ALTER TABLE mto_solution
 ALTER COLUMN mto_common_solution_key TYPE MTO_COMMON_SOLUTION_NEW_KEY 
 USING (mto_common_solution_key::TEXT::MTO_COMMON_SOLUTION_NEW_KEY);
+
+ALTER TABLE user_view_customization
+ALTER COLUMN solutions DROP DEFAULT;
+
+ALTER TABLE user_view_customization
+ALTER COLUMN solutions
+TYPE MTO_COMMON_SOLUTION_NEW_KEY[]
+USING solutions::TEXT[]::MTO_COMMON_SOLUTION_NEW_KEY[];
+
+ALTER TABLE user_view_customization
+ALTER COLUMN solutions SET DEFAULT '{}'::MTO_COMMON_SOLUTION_NEW_KEY[];
+
 -- Drop old enum
 DROP TYPE MTO_COMMON_SOLUTION_KEY CASCADE;
 -- Change new enum name to match old enum

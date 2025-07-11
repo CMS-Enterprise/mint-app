@@ -572,43 +572,6 @@ Examples and impact:`,
       links: ['Go to CMS Box', 'View resources on CMS Intranet']
     }
   },
-  cmsQualtrics: {
-    about: {
-      description:
-        'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.',
-      components: [
-        {
-          header: 'Capabilities',
-          items: [
-            'Customizable survey or application creation',
-            'Survey or application distribution'
-          ]
-        }
-      ]
-    },
-    timeline: {
-      description:
-        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
-      items: [
-        {
-          header: 'Access CMS Qualtrics',
-          description:
-            'Log in to CMS Qualtrics using your CMS user name and password.'
-        },
-        {
-          header: 'Create a survey',
-          description:
-            'Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.'
-        },
-        {
-          header: 'Distribute your survey',
-          description:
-            'Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.'
-        }
-      ],
-      links: ['Go to CMS Qualtrics']
-    }
-  },
   cbosc: {
     about: {
       description:
