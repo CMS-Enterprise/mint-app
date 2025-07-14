@@ -5,6 +5,7 @@ on:
 
 env:
   GIT_HASH: ${{ github.sha }}
+  UNIQUE_TAG: ${{ github.sha }}-${{ github.run_number }}
   GIT_REF_NAME: ${{ github.ref }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 

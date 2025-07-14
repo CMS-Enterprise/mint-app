@@ -8,6 +8,7 @@ env:
   AWS_DEFAULT_REGION: us-west-2
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   GIT_HASH: ${{ github.sha }}
+  UNIQUE_TAG: ${{ github.sha }}-${{ github.run_number }}
 
 jobs:
   rescan_deployed_image:

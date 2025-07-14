@@ -10,6 +10,7 @@ on:
 
 env:
     GIT_HASH: ${{ github.sha }}
+    UNIQUE_TAG: ${{ github.sha }}-${{ github.run_number }}
     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     ENV: ${{ inputs.env }}
 

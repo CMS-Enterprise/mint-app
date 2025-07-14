@@ -9,6 +9,7 @@ on:
 
 env:
   GIT_HASH: ${{ github.sha }}
+  UNIQUE_TAG: ${{ github.sha }}-${{ github.run_number }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   ENV: ${{ inputs.env }}
 
@@ -59,7 +60,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-db-migrate
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          NEW_IMAGE_TAG: ${{ env.UNIQUE_TAG }}
           TASK_FAMILY: "db-migrate-${{ inputs.env }}"
           ECS_CLUSTER: "${{ inputs.env }}-mint-app"
           SECURITY_GROUP_NAME: "ecs-db-migrate-${{ inputs.env }}"
@@ -85,7 +86,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: mint-backend
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          NEW_IMAGE_TAG: ${{ env.UNIQUE_TAG }}
           TASK_FAMILY: "mint-app-${{ inputs.env }}"
           ECS_CLUSTER: "${{ inputs.env }}-mint-app"
           SERVICE_NAME: mint-app
@@ -95,7 +96,7 @@ jobs:
       - name: Wait for /healthcheck to return new version
         env:
           APP_ENV: ${{ inputs.env }}
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+          NEW_IMAGE_TAG: ${{ env.UNIQUE_TAG }}
         run: |
           ./scripts/healthcheck "$NEW_IMAGE_TAG"
       - name: Announce failure
