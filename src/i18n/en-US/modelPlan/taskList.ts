@@ -179,7 +179,8 @@ const modelPlanTaskList = {
     'it-solutions': 'Operational solutions tracker',
     'ops-eval-and-learning': 'Operation, evaluation, and learning',
     'participants-and-providers': 'Participants and providers',
-    payment: 'payment'
+    payment: 'payment',
+    'model-timeline': 'Model timeline'
   },
   lockErrorHeading: 'Sorry, an has error occured.',
   lockErrorInfo: 'Please return to the task list and try again.',
