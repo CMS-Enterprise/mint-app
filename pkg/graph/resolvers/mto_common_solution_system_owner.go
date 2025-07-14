@@ -123,7 +123,7 @@ func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		// Check permissions
 		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
-			return nil, fmt.Errorf("error deleting mto solution system owner. user doesn't have permissions. %s", err)
+			return nil, fmt.Errorf("error deleting MTO common solution system owner: user lacks permissions: %w", err)
 		}
 
 		// Finally, delete the system owner
