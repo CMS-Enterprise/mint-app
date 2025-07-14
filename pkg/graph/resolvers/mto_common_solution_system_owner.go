@@ -89,7 +89,7 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 
 	updatedSystemOwner, err := storage.MTOCommonSolutionUpdateSystemOwner(store, logger, existingSystemOwner)
 	if err != nil {
-		return nil, fmt.Errorf("failed to update contractor with id %s: %w", id, err)
+		return nil, fmt.Errorf("failed to update system owner with id %s: %w", id, err)
 	}
 
 	// TODO add update email here
