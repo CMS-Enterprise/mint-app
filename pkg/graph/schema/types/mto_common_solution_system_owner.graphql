@@ -3,7 +3,7 @@ type MTOCommonSolutionSystemOwner {
   key: MTOCommonSolutionKey!
 
   ownerType: MTOCommonSolutionOwnerType!
-  cmsComponent: String!
+  cmsComponent: CMSComponent! # Updated to use the new enum
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -22,11 +22,41 @@ enum MTOCommonSolutionOwnerType {
 }
 
 """
+Enum for CMS Component
+"""
+enum CMSComponent {
+  OFFICE_OF_THE_ADMINISTRATOR
+  OFFICE_OF_HEALTHCARE_EXPERIENCE_AND_INTEROPERABILITY
+  OFFICE_OF_PROGRAM_OPERATIONS_AND_LOCAL_ENGAGEMENT_OPOLE
+  OFFICE_OF_ENTERPRISE_DATA_AND_ANALYTICS_OEDA
+  OFFICE_OF_EQUAL_OPPORTUNITY_AND_CIVIL_RIGHTS
+  OFFICE_OF_COMMUNICATIONS_OC
+  OFFICE_OF_LEGISLATION
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  OFFICE_OF_MINORITY_HEALTH_OMH
+  OFFICE_OF_THE_ACTUARY_OACT
+  OFFICE_OF_STRATEGIC_OPERATIONS_AND_REGULATORY_AFFAIRS_OSORA
+  OFFICE_OF_INFORMATION_TECHNOLOGY_OIT
+  OFFICE_OF_ACQUISITION_AND_GRANTS_MANAGEMENT_OAGM
+  OFFICES_OF_HEARINGS_AND_INQUIRIES
+  OFFICE_OF_FINANCIAL_MANAGEMENT_OFM
+  OFFICE_OF_STRATEGY_PERFORMANCE_AND_RESULTS_OSPR
+  OFFICE_OF_SECURITY_FACILITIES_AND_LOGISTICS_OPERATIONS_OSFLO
+  OFFICE_OF_HUMAN_CAPITAL
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY_CCSQ
+  CENTER_FOR_MEDICARE_AND_MEDICAID_INNOVATION_CMMI
+  CENTER_FOR_MEDICARE_CM
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES_CMCS
+  CENTER_FOR_PROGRAM_INTEGRITY_CPI
+  CENTER_FOR_CONSUMER_INFORMATION_AND_INSURANCE_OVERSIGHT_CCIIO
+}
+
+"""
 Input for creating or updating a common solution system owner
 """
 input MTOCommonSolutionSystemOwnerChanges @goModel(model: "map[string]interface{}") {
   ownerType: MTOCommonSolutionOwnerType!
-  cmsComponent: String!
+  cmsComponent: CMSComponent! # Updated to use the new enum
 }
 
 extend type Query {
@@ -37,8 +67,7 @@ extend type Query {
 extend type Mutation {
   createMTOCommonSolutionSystemOwner(
     key: MTOCommonSolutionKey!
-    ownerType: MTOCommonSolutionOwnerType!
-    cmsComponent: String!
+    changes: MTOCommonSolutionSystemOwnerChanges!
   ): MTOCommonSolutionSystemOwner!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 

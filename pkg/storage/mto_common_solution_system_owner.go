@@ -41,8 +41,8 @@ func MTOCommonSolutionCreateSystemOwner(np sqlutils.NamedPreparer, _ *zap.Logger
 	return returned, nil
 }
 
-// MTOCommonSolutionGetSystemOwnerByID fetches a system owner by its ID.
-func MTOCommonSolutionGetSystemOwnerByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionSystemOwner, error) {
+// MTOCommonSolutionSystemOwnerGetByID fetches a system owner by its ID.
+func MTOCommonSolutionSystemOwnerGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionSystemOwner, error) {
 	arg := map[string]interface{}{"id": id}
 
 	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionSystemOwner](np, sqlqueries.MTOCommonSolutionSystemOwner.GetByID, arg)
@@ -64,8 +64,8 @@ func MTOCommonSolutionSystemOwnerGetByIDLoader(np sqlutils.NamedPreparer, _ *zap
 	return returned, nil
 }
 
-// MTOCommonSolutionUpdateSystemOwner updates an existing system owner.
-func MTOCommonSolutionUpdateSystemOwner(np sqlutils.NamedPreparer, _ *zap.Logger, systemOwner *models.MTOCommonSolutionSystemOwner) (*models.MTOCommonSolutionSystemOwner, error) {
+// MTOCommonSolutionSystemOwnerUpdate updates an existing system owner.
+func MTOCommonSolutionSystemOwnerUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, systemOwner *models.MTOCommonSolutionSystemOwner) (*models.MTOCommonSolutionSystemOwner, error) {
 	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionSystemOwner](np, sqlqueries.MTOCommonSolutionSystemOwner.Update, systemOwner)
 	if err != nil {
 		return nil, err
@@ -73,8 +73,8 @@ func MTOCommonSolutionUpdateSystemOwner(np sqlutils.NamedPreparer, _ *zap.Logger
 	return returned, nil
 }
 
-// MTOCommonSolutionDeleteSystemOwnerByID deletes a system owner by its ID.
-func MTOCommonSolutionDeleteSystemOwnerByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionSystemOwner, error) {
+// MTOCommonSolutionSystemOwnerDeleteByID deletes a system owner by its ID.
+func MTOCommonSolutionSystemOwnerDeleteByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionSystemOwner, error) {
 	// We need to set the session user variable so that the audit trigger knows who made the delete operation
 	err := setCurrentSessionUserVariable(tx, actorUserID)
 	if err != nil {

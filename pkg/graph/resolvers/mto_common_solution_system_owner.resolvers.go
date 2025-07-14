@@ -10,15 +10,22 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// CmsComponent is the resolver for the cmsComponent field.
+func (r *mTOCommonSolutionSystemOwnerResolver) CmsComponent(ctx context.Context, obj *models.MTOCommonSolutionSystemOwner) (model.CMSComponent, error) {
+	return model.CMSComponent(obj.CMSComponent), nil
+}
+
 // CreateMTOCommonSolutionSystemOwner is the resolver for the createMTOCommonSolutionSystemOwner field.
-func (r *mutationResolver) CreateMTOCommonSolutionSystemOwner(ctx context.Context, key models.MTOCommonSolutionKey, ownerType models.MTOCommonSolutionOwnerType, cmsComponent string) (*models.MTOCommonSolutionSystemOwner, error) {
+func (r *mutationResolver) CreateMTOCommonSolutionSystemOwner(ctx context.Context, key models.MTOCommonSolutionKey, changes map[string]interface{}) (*models.MTOCommonSolutionSystemOwner, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, ownerType, cmsComponent)
+	return CreateMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, changes)
 }
 
 // UpdateMTOCommonSolutionSystemOwner is the resolver for the updateMTOCommonSolutionSystemOwner field.
@@ -44,3 +51,10 @@ func (r *queryResolver) MtoCommonSolutionSystemOwner(ctx context.Context, id uui
 
 	return GetMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, id)
 }
+
+// MTOCommonSolutionSystemOwner returns generated.MTOCommonSolutionSystemOwnerResolver implementation.
+func (r *Resolver) MTOCommonSolutionSystemOwner() generated.MTOCommonSolutionSystemOwnerResolver {
+	return &mTOCommonSolutionSystemOwnerResolver{r}
+}
+
+type mTOCommonSolutionSystemOwnerResolver struct{ *Resolver }

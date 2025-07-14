@@ -11,11 +11,10 @@ post {
 }
 
 body:graphql {
-  mutation createMTOCommonSolutionSystemOwner($key: MTOCommonSolutionKey!, $ownerType: MTOCommonSolutionOwnerType!, $cmsComponent: String!) {
+  mutation createMTOCommonSolutionSystemOwner($key: MTOCommonSolutionKey!, $changes: MTOCommonSolutionSystemOwnerChanges!) {
     createMTOCommonSolutionSystemOwner(
       key: $key,
-      ownerType: $ownerType,
-      cmsComponent: $cmsComponent
+      changes: $changes
     ) {
       id
       key
@@ -32,8 +31,10 @@ body:graphql {
 body:graphql:vars {
   {
     "key": "INNOVATION",
-    "ownerType": "SYSTEM_OWNER",
-    "cmsComponent": "CMS Component Example"
+    "changes": {
+      "ownerType": "SYSTEM_OWNER",
+      "cmsComponent": "CENTER_FOR_MEDICARE_CM"
+    }
   }
 }
 

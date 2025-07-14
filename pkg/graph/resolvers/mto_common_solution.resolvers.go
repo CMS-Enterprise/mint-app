@@ -21,8 +21,8 @@ func (r *mTOCommonSolutionResolver) Contractors(ctx context.Context, obj *models
 	return MTOCommonSolutionContractorsGetByKeyLOADER(ctx, obj.Key)
 }
 
-// SystemOwner is the resolver for the systemOwner field.
-func (r *mTOCommonSolutionResolver) SystemOwner(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionSystemOwner, error) {
+// SystemOwners is the resolver for the systemOwners field.
+func (r *mTOCommonSolutionResolver) SystemOwners(ctx context.Context, obj *models.MTOCommonSolution) ([]*models.MTOCommonSolutionSystemOwner, error) {
 	return MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx, obj.Key)
 }
 

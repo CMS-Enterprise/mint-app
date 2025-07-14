@@ -17,7 +17,7 @@ type mtoCommonSolutionSystemOwnerLoaders struct {
 	// ByID returns a single MTOCommonSolutionSystemOwner by its UUID
 	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolutionSystemOwner]
 	// ByCommonSolutionKey returns a single MTOCommonSolutionSystemOwner by its common solution key
-	ByCommonSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, *models.MTOCommonSolutionSystemOwner]
+	ByCommonSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionSystemOwner]
 }
 
 // MTOCommonSolutionSystemOwner is the singleton instance of all LoaderWrappers related to MTOCommonSolutionSystemOwner
@@ -27,24 +27,23 @@ var MTOCommonSolutionSystemOwner = &mtoCommonSolutionSystemOwnerLoaders{
 }
 
 // batchMTOCommonSolutionSystemOwnerGetBySolutionKey loads System Owners by a list of Keys
-func batchMTOCommonSolutionSystemOwnerGetBySolutionKey(ctx context.Context, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[*models.MTOCommonSolutionSystemOwner] {
+func batchMTOCommonSolutionSystemOwnerGetBySolutionKey(ctx context.Context, commonSolutionKeys []models.MTOCommonSolutionKey) []*dataloader.Result[[]*models.MTOCommonSolutionSystemOwner] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonSolutionKey, *models.MTOCommonSolutionSystemOwner](commonSolutionKeys, err)
+		return errorPerEachKey[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionSystemOwner](commonSolutionKeys, err)
 	}
 
 	data, err := storage.MTOCommonSolutionSystemOwnerGetByCommonSolutionKeyLoader(loaders.DataReader.Store, logger, commonSolutionKeys)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonSolutionKey, *models.MTOCommonSolutionSystemOwner](commonSolutionKeys, err)
+		return errorPerEachKey[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionSystemOwner](commonSolutionKeys, err)
 	}
 
 	getKeyFunc := func(data *models.MTOCommonSolutionSystemOwner) models.MTOCommonSolutionKey {
 		return data.Key
 	}
 
-	// implement one to one
-	return oneToOneDataLoader(commonSolutionKeys, data, getKeyFunc)
+	return oneToManyDataLoader(commonSolutionKeys, data, getKeyFunc)
 }
 
 // batchMTOCommonSolutionSystemOwnerGetByID loads System Owners by a list of IDs

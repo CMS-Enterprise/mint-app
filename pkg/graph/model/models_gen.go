@@ -1136,6 +1136,92 @@ func (e CMSCenter) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+// Enum for CMS Component
+type CMSComponent string
+
+const (
+	CMSComponentOfficeOfTheAdministrator                               CMSComponent = "OFFICE_OF_THE_ADMINISTRATOR"
+	CMSComponentOfficeOfHealthcareExperienceAndInteroperability        CMSComponent = "OFFICE_OF_HEALTHCARE_EXPERIENCE_AND_INTEROPERABILITY"
+	CMSComponentOfficeOfProgramOperationsAndLocalEngagementOpole       CMSComponent = "OFFICE_OF_PROGRAM_OPERATIONS_AND_LOCAL_ENGAGEMENT_OPOLE"
+	CMSComponentOfficeOfEnterpriseDataAndAnalyticsOeda                 CMSComponent = "OFFICE_OF_ENTERPRISE_DATA_AND_ANALYTICS_OEDA"
+	CMSComponentOfficeOfEqualOpportunityAndCivilRights                 CMSComponent = "OFFICE_OF_EQUAL_OPPORTUNITY_AND_CIVIL_RIGHTS"
+	CMSComponentOfficeOfCommunicationsOc                               CMSComponent = "OFFICE_OF_COMMUNICATIONS_OC"
+	CMSComponentOfficeOfLegislation                                    CMSComponent = "OFFICE_OF_LEGISLATION"
+	CMSComponentFederalCoordinatedHealthCareOffice                     CMSComponent = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+	CMSComponentOfficeOfMinorityHealthOmh                              CMSComponent = "OFFICE_OF_MINORITY_HEALTH_OMH"
+	CMSComponentOfficeOfTheActuaryOact                                 CMSComponent = "OFFICE_OF_THE_ACTUARY_OACT"
+	CMSComponentOfficeOfStrategicOperationsAndRegulatoryAffairsOsora   CMSComponent = "OFFICE_OF_STRATEGIC_OPERATIONS_AND_REGULATORY_AFFAIRS_OSORA"
+	CMSComponentOfficeOfInformationTechnologyOit                       CMSComponent = "OFFICE_OF_INFORMATION_TECHNOLOGY_OIT"
+	CMSComponentOfficeOfAcquisitionAndGrantsManagementOagm             CMSComponent = "OFFICE_OF_ACQUISITION_AND_GRANTS_MANAGEMENT_OAGM"
+	CMSComponentOfficesOfHearingsAndInquiries                          CMSComponent = "OFFICES_OF_HEARINGS_AND_INQUIRIES"
+	CMSComponentOfficeOfFinancialManagementOfm                         CMSComponent = "OFFICE_OF_FINANCIAL_MANAGEMENT_OFM"
+	CMSComponentOfficeOfStrategyPerformanceAndResultsOspr              CMSComponent = "OFFICE_OF_STRATEGY_PERFORMANCE_AND_RESULTS_OSPR"
+	CMSComponentOfficeOfSecurityFacilitiesAndLogisticsOperationsOsflo  CMSComponent = "OFFICE_OF_SECURITY_FACILITIES_AND_LOGISTICS_OPERATIONS_OSFLO"
+	CMSComponentOfficeOfHumanCapital                                   CMSComponent = "OFFICE_OF_HUMAN_CAPITAL"
+	CMSComponentCenterForClinicalStandardsAndQualityCcsq               CMSComponent = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY_CCSQ"
+	CMSComponentCenterForMedicareAndMedicaidInnovationCmmi             CMSComponent = "CENTER_FOR_MEDICARE_AND_MEDICAID_INNOVATION_CMMI"
+	CMSComponentCenterForMedicareCm                                    CMSComponent = "CENTER_FOR_MEDICARE_CM"
+	CMSComponentCenterForMedicaidAndChipServicesCmcs                   CMSComponent = "CENTER_FOR_MEDICAID_AND_CHIP_SERVICES_CMCS"
+	CMSComponentCenterForProgramIntegrityCpi                           CMSComponent = "CENTER_FOR_PROGRAM_INTEGRITY_CPI"
+	CMSComponentCenterForConsumerInformationAndInsuranceOversightCciio CMSComponent = "CENTER_FOR_CONSUMER_INFORMATION_AND_INSURANCE_OVERSIGHT_CCIIO"
+)
+
+var AllCMSComponent = []CMSComponent{
+	CMSComponentOfficeOfTheAdministrator,
+	CMSComponentOfficeOfHealthcareExperienceAndInteroperability,
+	CMSComponentOfficeOfProgramOperationsAndLocalEngagementOpole,
+	CMSComponentOfficeOfEnterpriseDataAndAnalyticsOeda,
+	CMSComponentOfficeOfEqualOpportunityAndCivilRights,
+	CMSComponentOfficeOfCommunicationsOc,
+	CMSComponentOfficeOfLegislation,
+	CMSComponentFederalCoordinatedHealthCareOffice,
+	CMSComponentOfficeOfMinorityHealthOmh,
+	CMSComponentOfficeOfTheActuaryOact,
+	CMSComponentOfficeOfStrategicOperationsAndRegulatoryAffairsOsora,
+	CMSComponentOfficeOfInformationTechnologyOit,
+	CMSComponentOfficeOfAcquisitionAndGrantsManagementOagm,
+	CMSComponentOfficesOfHearingsAndInquiries,
+	CMSComponentOfficeOfFinancialManagementOfm,
+	CMSComponentOfficeOfStrategyPerformanceAndResultsOspr,
+	CMSComponentOfficeOfSecurityFacilitiesAndLogisticsOperationsOsflo,
+	CMSComponentOfficeOfHumanCapital,
+	CMSComponentCenterForClinicalStandardsAndQualityCcsq,
+	CMSComponentCenterForMedicareAndMedicaidInnovationCmmi,
+	CMSComponentCenterForMedicareCm,
+	CMSComponentCenterForMedicaidAndChipServicesCmcs,
+	CMSComponentCenterForProgramIntegrityCpi,
+	CMSComponentCenterForConsumerInformationAndInsuranceOversightCciio,
+}
+
+func (e CMSComponent) IsValid() bool {
+	switch e {
+	case CMSComponentOfficeOfTheAdministrator, CMSComponentOfficeOfHealthcareExperienceAndInteroperability, CMSComponentOfficeOfProgramOperationsAndLocalEngagementOpole, CMSComponentOfficeOfEnterpriseDataAndAnalyticsOeda, CMSComponentOfficeOfEqualOpportunityAndCivilRights, CMSComponentOfficeOfCommunicationsOc, CMSComponentOfficeOfLegislation, CMSComponentFederalCoordinatedHealthCareOffice, CMSComponentOfficeOfMinorityHealthOmh, CMSComponentOfficeOfTheActuaryOact, CMSComponentOfficeOfStrategicOperationsAndRegulatoryAffairsOsora, CMSComponentOfficeOfInformationTechnologyOit, CMSComponentOfficeOfAcquisitionAndGrantsManagementOagm, CMSComponentOfficesOfHearingsAndInquiries, CMSComponentOfficeOfFinancialManagementOfm, CMSComponentOfficeOfStrategyPerformanceAndResultsOspr, CMSComponentOfficeOfSecurityFacilitiesAndLogisticsOperationsOsflo, CMSComponentOfficeOfHumanCapital, CMSComponentCenterForClinicalStandardsAndQualityCcsq, CMSComponentCenterForMedicareAndMedicaidInnovationCmmi, CMSComponentCenterForMedicareCm, CMSComponentCenterForMedicaidAndChipServicesCmcs, CMSComponentCenterForProgramIntegrityCpi, CMSComponentCenterForConsumerInformationAndInsuranceOversightCciio:
+		return true
+	}
+	return false
+}
+
+func (e CMSComponent) String() string {
+	return string(e)
+}
+
+func (e *CMSComponent) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CMSComponent(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CMSComponent", str)
+	}
+	return nil
+}
+
+func (e CMSComponent) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type CcmInvolvmentType string
 
 const (

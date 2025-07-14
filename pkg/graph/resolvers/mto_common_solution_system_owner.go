@@ -19,13 +19,13 @@ import (
 
 // MTOCommonSolutionSystemOwnersGetByKeyLOADER loads the system owner for a given MTOCommonSolutionKey using the dataloader.
 // Returns a system owner or an error.
-func MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx context.Context, key models.MTOCommonSolutionKey) (*models.MTOCommonSolutionSystemOwner, error) {
-	owner, err := loaders.MTOCommonSolutionSystemOwner.ByCommonSolutionKey.Load(ctx, key)
+func MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx context.Context, key models.MTOCommonSolutionKey) ([]*models.MTOCommonSolutionSystemOwner, error) {
+	owners, err := loaders.MTOCommonSolutionSystemOwner.ByCommonSolutionKey.Load(ctx, key)
 	if err != nil {
 		return nil, nil // Don't want to error if the system owner is not found on a common solution
 	}
 
-	return owner, nil
+	return owners, nil
 }
 
 // CreateMTOCommonSolutionSystemOwner creates a new systemOwner for a common solution.
@@ -33,19 +33,30 @@ func MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx context.Context, key models
 func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
-	ownerType models.MTOCommonSolutionOwnerType,
-	cmsComponent string,
+	changes map[string]interface{},
 ) (*models.MTOCommonSolutionSystemOwner, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
+	// Explicitly convert ownerType to models.MTOCommonSolutionOwnerType
+	ownerType, ok := changes["ownerType"].(string)
+	if !ok {
+		return nil, fmt.Errorf("ownerType must be a string")
+	}
+
+	// Explicitly convert cmsComponent to models.MTOCommonSolutionOwnerType
+	cmsComponent, ok := changes["cmsComponent"].(string)
+	if !ok {
+		return nil, fmt.Errorf("cmsComponent must be a string")
+	}
+
 	systemOwner := models.NewMTOCommonSolutionSystemOwner(
 		principalAccount.ID,
 		key,
-		ownerType,
-		cmsComponent,
+		models.MTOCommonSolutionOwnerType(ownerType),
+		models.MTOCommonSolutionCMSComponent(cmsComponent),
 	)
 
 	returnedSystemOwner, err := storage.MTOCommonSolutionCreateSystemOwner(
@@ -87,7 +98,7 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		return nil, err
 	}
 
-	updatedSystemOwner, err := storage.MTOCommonSolutionUpdateSystemOwner(store, logger, existingSystemOwner)
+	updatedSystemOwner, err := storage.MTOCommonSolutionSystemOwnerUpdate(store, logger, existingSystemOwner)
 	if err != nil {
 		return nil, fmt.Errorf("failed to update contractor with id %s: %w", id, err)
 	}
@@ -127,7 +138,7 @@ func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		}
 
 		// Finally, delete the system owner
-		returnedSystemOwner, err := storage.MTOCommonSolutionDeleteSystemOwnerByID(tx, principalAccount.ID, logger, id)
+		returnedSystemOwner, err := storage.MTOCommonSolutionSystemOwnerDeleteByID(tx, principalAccount.ID, logger, id)
 		if err != nil {
 			return nil, fmt.Errorf("unable to delete mto system owner. Err %w", err)
 		}
