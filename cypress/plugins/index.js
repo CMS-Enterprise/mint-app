@@ -14,6 +14,8 @@ const cypressOTP = require('cypress-otp');
 const wp = require('@cypress/webpack-preprocessor');
 const apollo = require('@apollo/client');
 const fetch = require('cross-fetch'); // needed to allow apollo-client to make queries from Node environment
+const fs = require('fs');
+const path = require('path');
 
 const {
   LockModelPlanSectionDocument
@@ -52,13 +54,30 @@ function lockTaskListSection({ euaId, modelPlanID, section }) {
   });
 }
 
+function deleteFile(filePath) {
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+    return null;
+  }
+  return null;
+}
+function deleteAllFiles(folderPath) {
+  const files = fs.readdirSync(folderPath);
+  files.forEach(file => {
+    fs.unlinkSync(path.join(folderPath, file));
+  });
+  return null;
+}
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
   on('task', {
     generateOTP: cypressOTP,
-    lockTaskListSection
+    lockTaskListSection,
+    deleteFile,
+    deleteAllFiles
   });
 
   const options = {

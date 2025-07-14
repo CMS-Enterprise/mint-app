@@ -15,6 +15,7 @@ export default defineConfig({
       return require('./cypress/plugins/index')(on, config);
     },
     baseUrl: 'http://localhost:3005',
-    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}'
+    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    downloadsFolder: 'cypress/downloads'
   }
 });
