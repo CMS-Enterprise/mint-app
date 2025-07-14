@@ -157,5 +157,39 @@ describe('CSV File Download', () => {
 
     // Clean up
     cy.task('deleteFile', filePathMTOSolutions);
+
+    // FILTER VIEW - CCW
+
+    const filePathCCW = `${downloadsFolder}/${downloadedFilename}-CCW.csv`;
+
+    // Open the select dropdown for custom csv
+    cy.get('#share-export-modal-export-filter-group').click();
+
+    // Select Model Plan csv
+    cy.get('[data-testid="combo-box-option-ccw"')
+      .contains('Chronic Conditions Warehouse (CCW)')
+      .click();
+
+    // Download
+    cy.get('[data-testid="export-model-plan"').click();
+
+    // Wait for file to be downloaded and verify contents
+    cy.readFile(filePathCCW, { timeout: 15000 }) // waits up to 15s
+      .should('exist')
+      .and('contain', 'Previous names,Performance start date') // selected CSV headers for CCW
+      .and(
+        'contain',
+        'Will the Shared Systems be involved for additional payment of claims?'
+      )
+      .and('not.contain', 'Model ID,Model name,Short name,') // selected CSV headers for task list sections
+      .and(
+        'not.contain',
+        'Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?'
+      ) // selected CSV headers for DEA - NOTE: For now a part of the model plan, but will be extracted later to its own selection
+      .and('not.contain', 'Is this a draft milestone?') // selected CSV headers for MTO
+      .and('not.contain', 'Solution needed by'); // selected CSV headers for MTO
+
+    // Clean up
+    cy.task('deleteFile', filePathCCW);
   });
 });
