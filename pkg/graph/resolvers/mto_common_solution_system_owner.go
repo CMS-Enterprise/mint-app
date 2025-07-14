@@ -100,7 +100,7 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 
 	updatedSystemOwner, err := storage.MTOCommonSolutionSystemOwnerUpdate(store, logger, existingSystemOwner)
 	if err != nil {
-		return nil, fmt.Errorf("failed to update contractor with id %s: %w", id, err)
+		return nil, fmt.Errorf("failed to update system owner with id %s: %w", id, err)
 	}
 
 	// TODO add update email here
@@ -134,7 +134,7 @@ func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		// Check permissions
 		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
-			return nil, fmt.Errorf("error deleting mto solution system owner. user doesn't have permissions. %s", err)
+			return nil, fmt.Errorf("error deleting MTO common solution system owner: user lacks permissions: %w", err)
 		}
 
 		// Finally, delete the system owner
