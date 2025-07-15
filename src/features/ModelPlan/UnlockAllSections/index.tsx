@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 import { useUnlockAllSectionsMutation } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -10,24 +10,33 @@ import { isAssessment } from 'utils/user';
 const UnlockAllSections = () => {
   const flags = useFlags();
   const history = useHistory();
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-  const hasEditAccess: boolean = isAssessment(groups, flags);
+  const { authState } = useOktaAuth();
+  const hasEditAccess: boolean = isAssessment(
+    // @ts-ignore
+    authState?.accessToken?.claims['mint-groups'] || [],
+    flags
+  );
 
   const { modelID } = useParams<{ modelID: string }>();
 
   const [unlockAllSections] = useUnlockAllSectionsMutation();
 
-  const [showAlert, setShowAlert] = React.useState<boolean>(false);
+  const [showAlert, setShowAlert] = React.useState<boolean | null>(null);
 
   useEffect(() => {
     if (!hasEditAccess) {
       history.push(`/models/${modelID}/collaboration-area`);
     } else {
       unlockAllSections({ variables: { modelPlanID: modelID } })
-        .then(() => {
-          history.push(`/models/${modelID}/collaboration-area`);
+        .then(res => {
+          if (!res.errors) {
+            history.push(`/models/${modelID}/collaboration-area`);
+          } else {
+            console.log('Error unlocking sections:', res.errors);
+          }
         })
         .catch(error => {
+          console.log(error);
           setShowAlert(true);
         });
     }
