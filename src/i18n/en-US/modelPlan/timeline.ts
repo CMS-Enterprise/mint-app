@@ -194,6 +194,7 @@ export const timeline: TranslationTimeline = {
     goField: 'Status',
     dbField: 'status',
     label: 'Model Plan status',
+    exportLabel: 'Status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 1.15,
