@@ -79,6 +79,7 @@ type MTOCommonSolution {
   type: MTOSolutionType!
   subjects: [MTOCommonSolutionSubject!]!
   contractors: [MTOCommonSolutionContractor!]!
+  systemOwners: [MTOCommonSolutionSystemOwner!]!
   filterView: ModelViewFilter
 
   #Custom Resolvers

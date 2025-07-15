@@ -16,10 +16,11 @@ type MTOCommonSolutionContractor {
 """
 Input for creating a common solution contractor
 """
-input MTOCommonSolutionContractorChanges @goModel(model: "map[string]interface{}"){
-	  contractorTitle: String
-	  contractorName: String
-	}
+input MTOCommonSolutionContractorChanges
+  @goModel(model: "map[string]interface{}") {
+  contractorTitle: String
+  contractorName: String
+}
 
 extend type Query {
   mtoCommonSolutionContractor(id: UUID!): MTOCommonSolutionContractor!
@@ -28,13 +29,16 @@ extend type Query {
 
 extend type Mutation {
   createMTOCommonSolutionContractor(
-    key: MTOCommonSolutionKey! 
-    contractorTitle: String 
+    key: MTOCommonSolutionKey!
+    contractorTitle: String
     contractorName: String!
-    ): MTOCommonSolutionContractor!
+  ): MTOCommonSolutionContractor!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
-  updateMTOCommonSolutionContractor(id: UUID!, changes: MTOCommonSolutionContractorChanges!): MTOCommonSolutionContractor!
+  updateMTOCommonSolutionContractor(
+    id: UUID!
+    changes: MTOCommonSolutionContractorChanges!
+  ): MTOCommonSolutionContractor!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 
   deleteMTOCommonSolutionContractor(id: UUID!): MTOCommonSolutionContractor!

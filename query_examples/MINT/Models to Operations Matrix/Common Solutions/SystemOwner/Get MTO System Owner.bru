@@ -1,0 +1,29 @@
+meta {
+  name: Get MTO System Owner
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query getMTOCommonSolutionSystemOwner($id: UUID!) {
+    mtoCommonSolutionSystemOwner(id: $id) {
+      id
+      key
+      ownerType
+      cmsComponent
+      createdBy
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{systemOwnerId}}"
+  }
+}

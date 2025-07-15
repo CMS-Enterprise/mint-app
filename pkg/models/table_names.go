@@ -63,6 +63,7 @@ const (
 	TNMTOCommonSolutionContact           TableName = "mto_common_solution_contact"
 	TNMTOCommonSolution                  TableName = "mto_common_solution"
 	TNMTOCommonSolutionContractor        TableName = "mto_common_solution_contractor"
+	TNMTOCommonSolutionSystemOwner       TableName = "mto_common_solution_system_owner"
 
 	TNMTOSuggestedMilestone TableName = "mto_suggested_milestone"
 )
