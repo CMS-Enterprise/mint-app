@@ -3,6 +3,7 @@ package worker
 import (
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
 
 	"github.com/golang/mock/gomock"
@@ -157,7 +158,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		dea.ID,
-		map[string]interface{}{"isDataExchangeApproachComplete": true},
+		map[string]interface{}{"isDataExchangeApproachComplete": helpers.PointerTo(true)},
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		mockEmailService,

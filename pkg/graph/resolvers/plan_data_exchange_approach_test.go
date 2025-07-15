@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -121,7 +122,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.Nil(retApproach.AdditionalDataExchangeConsiderationsDescription)
 
 	changesComplete := map[string]interface{}{
-		"isDataExchangeApproachComplete": true,
+		"isDataExchangeApproachComplete": helpers.PointerTo(true),
 	}
 	// Update and verify that it gets set to completed
 	completeApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changesComplete, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{})
@@ -150,7 +151,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.NotNil(completeApproach.MarkedCompleteDts)
 
 	changesUnComplete := map[string]interface{}{
-		"isDataExchangeApproachComplete": false,
+		"isDataExchangeApproachComplete": helpers.PointerTo(false),
 	}
 
 	uncompletedApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changesUnComplete, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{})

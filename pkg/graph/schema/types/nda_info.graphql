@@ -7,11 +7,10 @@ type NDAInfo {
 }
 
 extend type Query {
-  ndaInfo: NDAInfo!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  ndaInfo: NDAInfo! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
   agreeToNDA(agree: Boolean! = true): NDAInfo!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
