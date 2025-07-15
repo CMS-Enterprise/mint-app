@@ -9,6 +9,9 @@ describe('CSV File Download', () => {
 
     // Clean up any previous files
     const downloadsFolder = Cypress.config('downloadsFolder');
+
+    cy.task('createFolderIfNotExists', downloadsFolder);
+
     const filePathAll = `${downloadsFolder}/${downloadedFilename}-ALL.csv`;
 
     cy.task('deleteAllFiles', downloadsFolder);

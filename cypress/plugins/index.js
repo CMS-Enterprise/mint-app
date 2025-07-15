@@ -61,11 +61,19 @@ function deleteFile(filePath) {
   }
   return null;
 }
+
 function deleteAllFiles(folderPath) {
   const files = fs.readdirSync(folderPath);
   files.forEach(file => {
     fs.unlinkSync(path.join(folderPath, file));
   });
+  return null;
+}
+
+function createFolderIfNotExists(folderPath) {
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true });
+  }
   return null;
 }
 
@@ -77,7 +85,8 @@ module.exports = (on, config) => {
     generateOTP: cypressOTP,
     lockTaskListSection,
     deleteFile,
-    deleteAllFiles
+    deleteAllFiles,
+    createFolderIfNotExists
   });
 
   const options = {

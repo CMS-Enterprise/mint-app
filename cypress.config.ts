@@ -16,6 +16,6 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:3005',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
-    downloadsFolder: 'cypress/exportDownloads'
+    downloadsFolder: 'cypress/downloads'
   }
 });
