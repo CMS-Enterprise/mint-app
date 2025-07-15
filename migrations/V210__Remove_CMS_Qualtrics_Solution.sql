@@ -88,9 +88,6 @@ ALTER TABLE mto_solution
 ALTER COLUMN mto_common_solution_key TYPE MTO_COMMON_SOLUTION_NEW_KEY 
 USING (mto_common_solution_key::TEXT::MTO_COMMON_SOLUTION_NEW_KEY);
 
-UPDATE user_view_customization 
-SET solutions = array_remove(solutions, 'CMS_QUALTRICS');
-
 ALTER TABLE user_view_customization
 ALTER COLUMN solutions DROP DEFAULT;
 
