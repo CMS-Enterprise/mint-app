@@ -122,6 +122,12 @@ const AppRoutes = () => {
           />
 
           <ProtectedRoute
+            path="/models/:modelID/unlock-all-sections"
+            exact
+            component={CollaborationArea}
+          />
+
+          <ProtectedRoute
             path="/models/:modelID/collaboration-area/collaborators"
             component={Collaborators}
           />
