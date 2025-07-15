@@ -1,7 +1,6 @@
 # Base types that represents FE translation structure
 # Translations are exported from FE for change history, and mapped to these types on the BE
 
-
 """
 Represents the data type of the translation field
 """
@@ -208,7 +207,7 @@ type TranslationFieldWithOptionsAndParent {
   gqlField: String!
   goField: String!
   dbField: String!
-  label: String! 
+  label: String!
   readonlyLabel: String
   sublabel: String
   multiSelectLabel: String
@@ -291,11 +290,9 @@ type TranslationFieldWithParentAndChildren {
 }
 
 """
-  Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name
+Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name
 """
 type EnumTranslation {
   generalName: String!
   groupedName: String
 }
-
-

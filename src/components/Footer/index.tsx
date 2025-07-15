@@ -104,7 +104,7 @@ const Footer = () => {
                   target="_blank"
                   to="/report-a-problem"
                   variant="external"
-                  className="font-sans-3xs flex-align-center padding-top-05"
+                  className="font-sans-3xs flex-align-center"
                 >
                   {t('feedback:footer.reportProblem')}
                 </UswdsReactLink>
@@ -121,7 +121,7 @@ const Footer = () => {
                   target="_blank"
                   to="/send-feedback"
                   variant="external"
-                  className="font-sans-3xs flex-align-center padding-top-05"
+                  className="font-sans-3xs flex-align-center"
                 >
                   {t('feedback:footer.sendFeedback')}
                 </UswdsReactLink>
@@ -133,7 +133,8 @@ const Footer = () => {
               >
                 <ExternalLink
                   href="https://cmsgov.slack.com/archives/C04B10ZN6A2"
-                  className="font-sans-3xs flex-align-center padding-top-05"
+                  className="font-sans-3xs flex-align-center"
+                  inlineText
                 >
                   {t('feedback:footer.chatSlack')}
                 </ExternalLink>

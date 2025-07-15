@@ -71,7 +71,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Reports from participants
               <span
@@ -124,7 +124,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
               </li>
             </ul>
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Other
             </li>
@@ -203,7 +203,7 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="font-sans-md line-height-sans-4"
+              class="mint-body-normal"
             >
               Operations data
               <span

@@ -41,22 +41,22 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 	}
 
 	// Explicitly convert ownerType to models.MTOCommonSolutionOwnerType
-	ownerType, ok := changes["ownerType"].(string)
+	ownerType, ok := changes["ownerType"].(*models.MTOCommonSolutionOwnerType)
 	if !ok {
-		return nil, fmt.Errorf("ownerType must be a string")
+		return nil, fmt.Errorf("ownerType must be a valid string value")
 	}
 
 	// Explicitly convert cmsComponent to models.MTOCommonSolutionOwnerType
-	cmsComponent, ok := changes["cmsComponent"].(string)
+	cmsComponent, ok := changes["cmsComponent"].(*models.MTOCommonSolutionCMSComponent)
 	if !ok {
-		return nil, fmt.Errorf("cmsComponent must be a string")
+		return nil, fmt.Errorf("cmsComponent must be a valid enum value")
 	}
 
 	systemOwner := models.NewMTOCommonSolutionSystemOwner(
 		principalAccount.ID,
 		key,
-		models.MTOCommonSolutionOwnerType(ownerType),
-		models.MTOCommonSolutionCMSComponent(cmsComponent),
+		*ownerType,
+		*cmsComponent,
 	)
 
 	returnedSystemOwner, err := storage.MTOCommonSolutionCreateSystemOwner(

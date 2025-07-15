@@ -32,17 +32,14 @@ input PlanTDLChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Query {
-  planTDL(id: UUID!): PlanTDL!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  planTDL(id: UUID!): PlanTDL! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  createPlanTDL(input: PlanTDLCreateInput!): PlanTDL!
-  @hasRole(role: MINT_USER)
+  createPlanTDL(input: PlanTDLCreateInput!): PlanTDL! @hasRole(role: MINT_USER)
 
   updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
-  deletePlanTDL(id: UUID!): PlanTDL!
-  @hasRole(role: MINT_USER)
+  deletePlanTDL(id: UUID!): PlanTDL! @hasRole(role: MINT_USER)
 }

@@ -59,15 +59,18 @@ func (s Server) NewS3Config() s3.Config {
 func (s Server) NewEChimpS3Config() s3.Config {
 	s.checkRequiredConfig(appconfig.AWSRegion)
 
+	expectNoBucket := s.environment.Dev() // In dev, we don't expect a bucket to exist
+
 	// Only check this config if NOT in dev environment
-	if !s.environment.Dev() {
+	if !expectNoBucket {
 		s.checkRequiredConfig(appconfig.AWSS3ECHIMPBucket)
 	}
 
 	return s3.Config{
-		Bucket:  s.Config.GetString(appconfig.AWSS3ECHIMPBucket),
-		Region:  s.Config.GetString(appconfig.AWSRegion),
-		IsLocal: false,
+		Bucket:         s.Config.GetString(appconfig.AWSS3ECHIMPBucket),
+		Region:         s.Config.GetString(appconfig.AWSRegion),
+		IsLocal:        false,
+		ExpectNoBucket: expectNoBucket,
 	}
 }
 

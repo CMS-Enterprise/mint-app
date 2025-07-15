@@ -239,7 +239,6 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
-
   #Page 1
   stakeholders: [StakeholdersType!]
   stakeholdersOther: String
@@ -350,6 +349,8 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Mutation {
-  updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
-  @hasRole(role: MINT_USER)
+  updatePlanOpsEvalAndLearning(
+    id: UUID!
+    changes: PlanOpsEvalAndLearningChanges!
+  ): PlanOpsEvalAndLearning! @hasRole(role: MINT_USER)
 }
