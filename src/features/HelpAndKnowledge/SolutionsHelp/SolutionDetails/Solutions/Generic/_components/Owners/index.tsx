@@ -1,16 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
-import { SystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Alert from 'components/Alert';
 
 import OwnerCard from '../OwnerCard';
 
-const Owners = ({ owners }: { owners: SystemOwnerType[] }) => {
+const Owners = ({ owners }: { owners: SolutionSystemOwnerType[] }) => {
   const { t } = useTranslation('helpAndKnowledge');
   const hasOwners = owners && owners?.length > 0;
-  const sortedOwners = [...owners].sort((a, b) => a.name.localeCompare(b.name));
+  const sortedOwners = [...owners].sort((a, b) =>
+    a.cmsComponent.localeCompare(b.cmsComponent)
+  );
 
   return (
     <div>
@@ -27,9 +29,8 @@ const Owners = ({ owners }: { owners: SystemOwnerType[] }) => {
       </Button>
       {hasOwners ? (
         <div data-testid="owner-cards">
-          {sortedOwners.map((owner, ind) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <OwnerCard owner={owner} key={owner.name + ind} />
+          {sortedOwners.map(owner => (
+            <OwnerCard owner={owner} key={owner.id} />
           ))}
         </div>
       ) : (

@@ -9,6 +9,11 @@ export default gql(/* GraphQL */ `
         contractorTitle
         contractorName
       }
+      systemOwners {
+        id
+        ownerType
+        cmsComponent
+      }
       contactInformation {
         pointsOfContact {
           id

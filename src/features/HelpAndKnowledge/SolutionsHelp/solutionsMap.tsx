@@ -88,15 +88,13 @@ export type SolutionContactType =
 export type SolutionContractorType =
   GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['contractors'][0];
 
+export type SolutionSystemOwnerType =
+  GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['systemOwners'][0];
 export interface HelpSolutionType extends HelpSolutionBaseType {
+  systemOwners?: SolutionSystemOwnerType[];
   contractors?: SolutionContractorType[];
   pointsOfContact?: SolutionContactType[];
 }
-// TODO:replace this type with query generated once query is added
-export type SystemOwnerType = {
-  name: string;
-  system?: string;
-};
 
 export type SolutionGenericType = {
   about: boolean;
