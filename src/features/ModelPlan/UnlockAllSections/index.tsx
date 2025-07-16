@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 import { Button, GridContainer } from '@trussworks/react-uswds';
 import { useUnlockAllSectionsMutation } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -9,6 +10,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import Alert from 'components/Alert';
 import MainContent from 'components/MainContent';
 import useMessage from 'hooks/useMessage';
+import auth from 'i18n/en-US/auth';
 import { isAssessment } from 'utils/user';
 
 const UnlockAllSections = () => {
@@ -22,8 +24,12 @@ const UnlockAllSections = () => {
   const [showAlert, setShowAlert] = useState<boolean | null>(null);
 
   // Check if user is assessment
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
-  const hasEditAccess: boolean = isAssessment(groups, flags);
+  const { authState } = useOktaAuth();
+  const hasEditAccess: boolean = isAssessment(
+    // @ts-ignore
+    authState.groups || authState?.accessToken?.claims['mint-groups'] || [],
+    flags
+  );
 
   const [unlockAllSections] = useUnlockAllSectionsMutation();
 

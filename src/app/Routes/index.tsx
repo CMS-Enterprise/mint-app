@@ -115,17 +115,17 @@ const AppRoutes = () => {
 
           <ProtectedRoute path="/models/new-plan" component={NewPlan} />
 
+          <ProtectedRoute
+            path="/models/:modelID/unlock-all-sections"
+            exact
+            component={UnlockAllSections}
+          />
+
           {/* Collaboration Area Routes */}
           <ProtectedRoute
             path="/models/:modelID/collaboration-area"
             exact
             component={CollaborationArea}
-          />
-
-          <ProtectedRoute
-            path="/models/:modelID/unlock-all-sections"
-            exact
-            component={UnlockAllSections}
           />
 
           <ProtectedRoute
