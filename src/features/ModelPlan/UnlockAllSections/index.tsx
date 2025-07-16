@@ -46,6 +46,12 @@ const UnlockAllSections = () => {
     }
   };
 
+  useEffect(() => {
+    if (!hasEditAccess) {
+      history.push(`/models/${modelID}/collaboration-area`);
+    }
+  }, [hasEditAccess, history, modelID]);
+
   return (
     <MainContent>
       <GridContainer className="padding-top-4">
