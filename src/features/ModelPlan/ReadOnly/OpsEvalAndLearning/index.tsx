@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -7,7 +7,6 @@ import {
 } from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
 import ReadOnlyBody from '../_components/Body';
@@ -25,11 +24,7 @@ const ReadOnlyOpsEvalAndLearning = ({
     'opsEvalAndLearningMisc'
   );
 
-  const { t: prepareForClearanceT } = useTranslation('prepareForClearance');
-
   const opsEvalAndLearningConfig = usePlanTranslation('opsEvalAndLearning');
-
-  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetAllOpsEvalAndLearningQuery({
     variables: {
@@ -296,14 +291,6 @@ const ReadOnlyOpsEvalAndLearning = ({
           allOpsEvalAndLearningData.createdDts
         }
       />
-
-      {clearance && (
-        <p className="font-body-lg margin-top-neg-2 margin-bottom-6">
-          {prepareForClearanceT('forModelPlan', {
-            modelName
-          })}
-        </p>
-      )}
 
       {loading && !data ? (
         <div className="height-viewport">

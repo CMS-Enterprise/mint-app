@@ -252,3 +252,13 @@ func (t *MTOCommonSolutionContactTranslation) TableName() models.TableName {
 func (t *MTOCommonSolutionContactTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*t)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pbt *PlanTimelineTranslation) TableName() models.TableName {
+	return models.TNPlanTimeline
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pbt *PlanTimelineTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pbt)
+}

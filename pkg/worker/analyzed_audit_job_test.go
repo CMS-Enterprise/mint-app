@@ -3,6 +3,7 @@ package worker
 import (
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
 
 	"github.com/golang/mock/gomock"
@@ -107,9 +108,6 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		clearanceChanges,
 		suite.testConfigs.Principal,
 		worker.Store,
-		nil,
-		nil,
-		email.AddressBook{},
 	)
 	suite.NoError(basicsErr)
 	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(worker.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
@@ -157,7 +155,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		dea.ID,
-		map[string]interface{}{"isDataExchangeApproachComplete": true},
+		map[string]interface{}{"isDataExchangeApproachComplete": helpers.PointerTo(true)},
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		mockEmailService,

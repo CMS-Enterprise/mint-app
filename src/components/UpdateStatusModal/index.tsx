@@ -168,7 +168,7 @@ const UpdateStatusModal = ({
             onClick={() => {
               closeModal();
               history.push(
-                `/models/${modelID}/collaboration-area/task-list/basics/milestones`
+                `/models/${modelID}/collaboration-area/model-timeline`
               );
             }}
           >

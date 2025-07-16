@@ -60,10 +60,23 @@ const general = {
   helpText:
     "If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.",
   modelPlanStatus: 'Model Plan status',
+  modelTimelineStatus: 'Model timeline status',
   modelPlanCopy:
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
+  timelineReady: 'The model timeline is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
-  validDate: 'Please use a valid date format.'
+  validDate: 'Please use a valid date format.',
+  lockedModal: {
+    heading:
+      'Someone is currently editing the Model Plan section you’re trying to access.',
+    subHeading: 'Please try again later.',
+    return: 'Return to the task list',
+    goBack: 'Go back'
+  },
+  successfullyUnlock:
+    'All sections have been unlocked successfully. Any users currently editing the Model Plan will maintain their locks on their respective sections.',
+  unlockFailed: 'Unlock failed',
+  unlockAllSections: 'Unlock all model sections'
 };
 
 export default general;

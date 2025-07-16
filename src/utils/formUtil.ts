@@ -60,7 +60,7 @@ export const dirtyInput = (initialValues: any, values: any) => {
       !isEqual(initialValues[field], values[field]) ||
       initialValues[field] === 0
     ) {
-      onlyDirtyInput[field] = values[field];
+      onlyDirtyInput[field] = values[field] === '' ? null : values[field];
     }
   });
   return onlyDirtyInput;

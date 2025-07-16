@@ -9,11 +9,12 @@ import {
   GetModelPlanDiscussionsQuery,
   GetMostRecentRoleSelectionDocument
 } from 'gql/generated/graphql';
+import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 
-import AskAQuestion from './index';
+import AskAQuestion, { RenderQuestionTextType } from './index';
 
 type GetModelPlanDiscussionsType = GetModelPlanDiscussionsQuery['modelPlan'];
 
@@ -157,6 +158,22 @@ describe('Ask a Question Component', () => {
       expect(
         getByText('Type your question or discussion topic')
       ).toBeInTheDocument();
+    });
+  });
+
+  it('renders the correct text for each renderTextFor value', () => {
+    const cases: Array<[RenderQuestionTextType, string]> = [
+      ['need', 'opSolutionsMisc:notSureWhatToDoNext'],
+      ['solution', 'opSolutionsMisc:helpChoosing'],
+      ['status', 'opSolutionsMisc:helpTiming'],
+      ['dataExchangeApproach', 'dataExchangeApproachMisc:needHelpDiscussion'],
+      ['modelToOperations', 'modelToOperationsMisc:needHelpDiscussion'],
+      ['timeline', 'timelineMisc:needHelpDiscussion']
+    ];
+
+    cases.forEach(([value, expected]) => {
+      render(<AskAQuestion modelID="123" renderTextFor={value} />);
+      expect(screen.getByText(i18next.t(expected))).toBeInTheDocument();
     });
   });
 });

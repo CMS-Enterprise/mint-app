@@ -73,6 +73,24 @@ func TestApplyChangesEmptyString(t *testing.T) {
 	assert.Nil(t, son.Parent) // should set to nil
 }
 
+func TestApplyChangesEmptyStringPointer(t *testing.T) {
+
+	mom := "Mom"
+	son := PersonWithPointer{Name: "Son", Parent: &mom}
+	emptyString := ""
+
+	sonChanges := map[string]interface{}{
+		"parent": &emptyString, // passing a pointer to an empty string
+	}
+	err := ApplyChanges(sonChanges, &son)
+
+	if err != nil {
+		t.Errorf("ApplyChanges failed: %s", err)
+	}
+	assert.Equal(t, "Son", son.Name)
+	assert.Nil(t, son.Parent) // should set to nil, not a pointer to an empty string
+}
+
 type AwkwardFirstDate struct {
 	WhenStarted time.Time `json:"whenStarted"`
 	WhenEnded   time.Time `json:"whenEnded"`

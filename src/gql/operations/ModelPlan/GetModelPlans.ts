@@ -22,9 +22,12 @@ export default gql(/* GraphQL */ `
         demoCode
         amsModelID
         modelCategory
+        additionalModelCategories
+      }
+      timeline {
+        id
         clearanceStarts
         performancePeriodStarts
-        additionalModelCategories
         applicationsStart @include(if: $isMAC)
       }
       generalCharacteristics @include(if: $isMAC) {
