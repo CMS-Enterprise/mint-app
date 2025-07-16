@@ -55,8 +55,6 @@ const SettingsForm = () => {
 
   const { state } = useLocation<HomepageLocationStateType>();
 
-  // console.log(state);
-
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
   const { data, loading, error } = useGetHomepageSettingsQuery();

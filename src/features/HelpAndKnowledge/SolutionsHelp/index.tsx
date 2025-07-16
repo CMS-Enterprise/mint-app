@@ -83,7 +83,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { helpSolutions, loading } = useHelpSolution();
 
   // Get the solution map details from solution route param
-  const { prevPathname, selectedSolution: solution } = useModalSolutionState();
+  const { prevPathname, selectedSolution } = useModalSolutionState();
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
@@ -114,19 +114,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query, solution, helpSolutions]);
+  }, [query, selectedSolution, helpSolutions]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category
     ? querySolutions
     : findCategoryMapByRouteParam(category, helpSolutions);
-
-  // Solution to render in modal
-  const selectedSolution = findSolutionByRouteParam(
-    solution?.key || null,
-    helpSolutions,
-    !!solutionEnumParam
-  );
 
   if (loading) {
     return <PageLoading />;
