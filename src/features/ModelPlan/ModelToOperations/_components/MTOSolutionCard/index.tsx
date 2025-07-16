@@ -40,7 +40,7 @@ const MTOSolutionCard = ({
     solutionParam === solution.key
   );
 
-  const mappedSolution = helpSolutions.find(s => s.enum === solution.key);
+  const mappedSolution = helpSolutions[solution.key];
   const location = useLocation();
 
   return (
@@ -139,7 +139,7 @@ const MTOSolutionCard = ({
             aria-label={`${t('helpAndKnowledge:aboutSolutionAriaLabel')} ${mappedSolution?.name}`}
             to={`${location.pathname}${location.search}${
               location.search ? '&' : '?'
-            }solution=${mappedSolution?.route}&section=about`}
+            }solution-key=${mappedSolution?.key}&section=about`}
           >
             {t('solutionLibrary.aboutThisSolution')}
           </UswdsReactLink>

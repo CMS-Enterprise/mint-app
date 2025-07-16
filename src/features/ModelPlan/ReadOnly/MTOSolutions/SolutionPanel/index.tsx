@@ -16,7 +16,6 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import MTORiskIndicatorTag from 'features/ModelPlan/ModelToOperations/_components/MTORiskIndicatorIcon';
 import SolutionStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
 import MTOTag from 'features/ModelPlan/ModelToOperations/_components/MTOTag';
@@ -90,10 +89,6 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
       } as GetMtoSolutionQuery['mtoSolution'])
     );
   }, [data]);
-
-  const solutionRoute: string | undefined = helpSolutions.find(
-    sol => sol.enum === solution?.key
-  )?.route;
 
   const columns: Column<SolutionType>[] = useMemo(
     () => [
@@ -211,7 +206,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
             {solution.addedFromSolutionLibrary && (
               <div className="margin-top-2">
                 <UswdsReactLink
-                  to={`/help-and-knowledge/operational-solutions?page=1&solution=${solutionRoute}&section=about`}
+                  to={`/help-and-knowledge/operational-solutions?page=1&solution-key=${solution?.key}&section=about`}
                   target="_blank"
                   variant="external"
                 >

@@ -2,8 +2,8 @@
 
 import { useMemo } from 'react';
 import {
-  HelpSolutionBaseType,
   helpSolutions,
+  HelpSolutionsType,
   HelpSolutionType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
@@ -11,24 +11,26 @@ import {
   useGetMtoSolutionContactsQuery
 } from 'gql/generated/graphql';
 
+import { getKeys } from 'types/translation';
+
 type UseHelpSolutionType = {
   helpSolutions: HelpSolutionType[];
   loading: boolean;
 };
 
 export const mapContactsToSolutions = (
-  solutions: HelpSolutionBaseType[],
+  solutions: HelpSolutionsType,
   contactSolutions: GetMtoSolutionContactsQuery['mtoCommonSolutions']
 ): HelpSolutionType[] => {
-  return solutions.map(solution => {
+  return getKeys(solutions).map(solution => {
     // Find fetch possible solution that corresponds to the FE `enum` mapped solution
     const foundSolution = contactSolutions?.find(
-      contactSolution => solution.enum === contactSolution.key
+      contactSolution => solution === contactSolution.key
     );
 
     // Add fetch pointsOfContact field to existing FE solution map
     return {
-      ...solution,
+      ...solutions[solution],
       contractors: foundSolution?.contractors,
       pointsOfContact: foundSolution?.contactInformation.pointsOfContact,
       systemOwners: foundSolution?.systemOwners

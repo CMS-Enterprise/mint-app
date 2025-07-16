@@ -168,19 +168,16 @@ exports[`Generic About Components > matches the snapshot > 4innovation 1`] = `
         ?
       </h4>
       <span>
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
+        <span
+          class="usa-link pointer"
+          role="button"
+          tabindex="0"
         >
-          <span
-            class="display-flex flex-align-center line-height-normal"
-            style="column-gap: 0.25rem;"
-          >
+          <span>
             View on SharePoint what is needed to onboard Models to the IPC Portal
             <svg
               aria-label="launch"
-              class="usa-icon"
+              class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
               role="img"
@@ -193,7 +190,7 @@ exports[`Generic About Components > matches the snapshot > 4innovation 1`] = `
               />
             </svg>
           </span>
-        </button>
+        </span>
       </span>
     </div>
   </div>
@@ -368,19 +365,16 @@ exports[`Generic About Components > matches the snapshot > Accountable Care Orga
         ?
       </h4>
       <span>
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
+        <span
+          class="usa-link pointer"
+          role="button"
+          tabindex="0"
         >
-          <span
-            class="display-flex flex-align-center line-height-normal"
-            style="column-gap: 0.25rem;"
-          >
+          <span>
             View on SharePoint what is needed to onboard Models to the IPC Portal
             <svg
               aria-label="launch"
-              class="usa-icon"
+              class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
               role="img"
@@ -393,7 +387,7 @@ exports[`Generic About Components > matches the snapshot > Accountable Care Orga
               />
             </svg>
           </span>
-        </button>
+        </span>
       </span>
     </div>
   </div>
@@ -666,19 +660,16 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
     <span
       class="line-height-normal"
     >
-      <button
-        class="usa-button usa-button--unstyled"
-        data-testid="button"
-        type="button"
+      <span
+        class="usa-link pointer"
+        role="button"
+        tabindex="0"
       >
-        <span
-          class="display-flex flex-align-center line-height-normal"
-          style="column-gap: 0.25rem;"
-        >
+        <span>
           Process diagram depicting the flow of data through CDAC (view on Confluence)
           <svg
             aria-label="launch"
-            class="usa-icon"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -691,7 +682,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
             />
           </svg>
         </span>
-      </button>
+      </span>
     </span>
     <div
       class="margin-top-4"
@@ -2263,19 +2254,16 @@ exports[`Generic About Components > matches the snapshot > Innovation Payment Co
     <span
       class="line-height-normal"
     >
-      <button
-        class="usa-button usa-button--unstyled"
-        data-testid="button"
-        type="button"
+      <span
+        class="usa-link pointer"
+        role="button"
+        tabindex="0"
       >
-        <span
-          class="display-flex flex-align-center line-height-normal"
-          style="column-gap: 0.25rem;"
-        >
+        <span>
           View on SharePoint what is needed to onboard Models to the IPC Portal
           <svg
             aria-label="launch"
-            class="usa-icon"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -2288,7 +2276,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Payment Co
             />
           </svg>
         </span>
-      </button>
+      </span>
     </span>
   </div>
 </DocumentFragment>
@@ -2450,19 +2438,16 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
           class=""
         >
           API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a 
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               data standard for emergency services.
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2475,7 +2460,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class=""
@@ -2536,19 +2521,16 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
       <span
         class="text-pre-wrap "
       >
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
+        <span
+          class="usa-link pointer"
+          role="button"
+          tabindex="0"
         >
-          <span
-            class="display-flex flex-align-center line-height-normal"
-            style="column-gap: 0.25rem;"
-          >
+          <span>
             See a video sample.
             <svg
               aria-label="launch"
-              class="usa-icon"
+              class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
               role="img"
@@ -2561,7 +2543,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
               />
             </svg>
           </span>
-        </button>
+        </span>
       </span>
       <ul
         class="padding-left-4"
@@ -2583,19 +2565,16 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         >
           <span>
             Participant feedback dashboards that supply curated reports to participants based on CMS data (
-            <button
-              class="usa-button usa-button--unstyled"
-              data-testid="button"
-              type="button"
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
             >
-              <span
-                class="display-flex flex-align-center line-height-normal"
-                style="column-gap: 0.25rem;"
-              >
+              <span>
                 see a video sample
                 <svg
                   aria-label="launch"
-                  class="usa-icon"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2608,7 +2587,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
                   />
                 </svg>
               </span>
-            </button>
+            </span>
             ). Dashboards use the Looker commercial tool and can include information such as:
           </span>
           <ul
@@ -3242,19 +3221,16 @@ Model Space offers model teams and their contractors templates or Databricks not
       <span
         class="text-pre-wrap "
       >
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
+        <span
+          class="usa-link pointer"
+          role="button"
+          tabindex="0"
         >
-          <span
-            class="display-flex flex-align-center line-height-normal"
-            style="column-gap: 0.25rem;"
-          >
+          <span>
             View more information about Model Space on Confluence
             <svg
               aria-label="launch"
-              class="usa-icon"
+              class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
               role="img"
@@ -3267,7 +3243,7 @@ Model Space offers model teams and their contractors templates or Databricks not
               />
             </svg>
           </span>
-        </button>
+        </span>
       </span>
       <ul
         class="padding-left-4"
@@ -3523,19 +3499,16 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Quality Vertical Model Resources on SharePoint
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3548,24 +3521,21 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Measure Management System (MMS) Tools
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3578,24 +3548,21 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Quality Payment Program
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3608,7 +3575,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
@@ -3885,19 +3852,16 @@ exports[`Generic About Components > matches the snapshot > Salesforce Applicatio
         <li
           class=""
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View an ARS screenshot
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3910,7 +3874,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Applicatio
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
@@ -3979,19 +3943,16 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View sample 1
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4004,24 +3965,21 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View sample 2
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4034,7 +3992,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
@@ -4132,19 +4090,16 @@ exports[`Generic About Components > matches the snapshot > Salesforce Letter of 
         <li
           class=""
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View an LOI sample
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4157,7 +4112,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Letter of 
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
@@ -4305,19 +4260,16 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View sample 1
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4330,24 +4282,21 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class="list-item"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View sample 2
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4360,7 +4309,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
@@ -4485,19 +4434,16 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
         <li
           class=""
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               View an RFA screenshot
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4510,7 +4456,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
@@ -4531,19 +4477,16 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
         ?
       </h4>
       <span>
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
+        <span
+          class="usa-link pointer"
+          role="button"
+          tabindex="0"
         >
-          <span
-            class="display-flex flex-align-center line-height-normal"
-            style="column-gap: 0.25rem;"
-          >
+          <span>
             View on SharePoint what is needed to onboard Models to the IPC Portal
             <svg
               aria-label="launch"
-              class="usa-icon"
+              class="usa-icon margin-left-05 top-05"
               focusable="false"
               height="1em"
               role="img"
@@ -4556,7 +4499,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
               />
             </svg>
           </span>
-        </button>
+        </span>
       </span>
     </div>
   </div>
@@ -4594,19 +4537,16 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         <li
           class="list-style-none"
         >
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Go to Fee For Service Change Request Resource Center
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -4619,7 +4559,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ul>
     </div>
