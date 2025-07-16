@@ -665,7 +665,7 @@ func countPopulatedPlanTimelineDates(planTimeline *models.PlanTimeline) (int, er
 		planTimeline.WrapUpEnds,
 	}
 	for _, field := range dateFields {
-		if field != nil {
+		if field != nil && !field.IsZero() {
 			count++
 		}
 	}
