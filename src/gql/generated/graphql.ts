@@ -5241,6 +5241,13 @@ export type ModelPlanSubscriptionSubscriptionVariables = Exact<{
 
 export type ModelPlanSubscriptionSubscription = { __typename: 'Subscription', onLockLockableSectionContext: { __typename: 'LockableSectionLockStatusChanged', changeType: ChangeType, actionType: ActionType, lockStatus: { __typename: 'LockableSectionLockStatus', modelPlanID: UUID, section: LockableSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } } } };
 
+export type UnlockAllSectionsMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type UnlockAllSectionsMutation = { __typename: 'Mutation', unlockAllLockableSections: Array<{ __typename: 'LockableSectionLockStatus', modelPlanID: UUID, section: LockableSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } }> };
+
 export type UnlockModelPlanSectionMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
@@ -10307,6 +10314,46 @@ export function useModelPlanSubscriptionSubscription(baseOptions: Apollo.Subscri
       }
 export type ModelPlanSubscriptionSubscriptionHookResult = ReturnType<typeof useModelPlanSubscriptionSubscription>;
 export type ModelPlanSubscriptionSubscriptionResult = Apollo.SubscriptionResult<ModelPlanSubscriptionSubscription>;
+export const UnlockAllSectionsDocument = gql`
+    mutation UnlockAllSections($modelPlanID: UUID!) {
+  unlockAllLockableSections(modelPlanID: $modelPlanID) {
+    modelPlanID
+    section
+    lockedByUserAccount {
+      id
+      username
+      commonName
+    }
+    isAssessment
+  }
+}
+    `;
+export type UnlockAllSectionsMutationFn = Apollo.MutationFunction<UnlockAllSectionsMutation, UnlockAllSectionsMutationVariables>;
+
+/**
+ * __useUnlockAllSectionsMutation__
+ *
+ * To run a mutation, you first call `useUnlockAllSectionsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnlockAllSectionsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unlockAllSectionsMutation, { data, loading, error }] = useUnlockAllSectionsMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useUnlockAllSectionsMutation(baseOptions?: Apollo.MutationHookOptions<UnlockAllSectionsMutation, UnlockAllSectionsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnlockAllSectionsMutation, UnlockAllSectionsMutationVariables>(UnlockAllSectionsDocument, options);
+      }
+export type UnlockAllSectionsMutationHookResult = ReturnType<typeof useUnlockAllSectionsMutation>;
+export type UnlockAllSectionsMutationResult = Apollo.MutationResult<UnlockAllSectionsMutation>;
+export type UnlockAllSectionsMutationOptions = Apollo.BaseMutationOptions<UnlockAllSectionsMutation, UnlockAllSectionsMutationVariables>;
 export const UnlockModelPlanSectionDocument = gql`
     mutation UnlockModelPlanSection($modelPlanID: UUID!, $section: LockableSection!) {
   unlockLockableSection(modelPlanID: $modelPlanID, section: $section)
@@ -14527,6 +14574,7 @@ export const TypedUpdateModelPlanDocument = {"kind":"Document","definitions":[{"
 export const TypedGetLockedModelPlanSectionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLockedModelPlanSections"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockableSectionLocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}}]}}]} as unknown as DocumentNode<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>;
 export const TypedLockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;
 export const TypedModelPlanSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ModelPlanSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockLockableSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<ModelPlanSubscriptionSubscription, ModelPlanSubscriptionSubscriptionVariables>;
+export const TypedUnlockAllSectionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockAllSections"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockAllLockableSections"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}}]}}]} as unknown as DocumentNode<UnlockAllSectionsMutation, UnlockAllSectionsMutationVariables>;
 export const TypedUnlockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockModelPlanSectionMutation, UnlockModelPlanSectionMutationVariables>;
 export const TypedCreateMtoCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"parentID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parentID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"isUncategorized"}}]}}]}}]} as unknown as DocumentNode<CreateMtoCategoryMutation, CreateMtoCategoryMutationVariables>;
 export const TypedCreateMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commonMilestoneKey"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonMilestoneKey"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commonSolutions"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonSolutionKey"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOMilestoneCommon"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"commonMilestoneKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commonMilestoneKey"}}},{"kind":"Argument","name":{"kind":"Name","value":"commonSolutions"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commonSolutions"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateMtoMilestoneMutation, CreateMtoMilestoneMutationVariables>;
