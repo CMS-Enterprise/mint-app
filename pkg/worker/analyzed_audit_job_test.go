@@ -108,9 +108,6 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		clearanceChanges,
 		suite.testConfigs.Principal,
 		worker.Store,
-		nil,
-		nil,
-		email.AddressBook{},
 	)
 	suite.NoError(basicsErr)
 	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(worker.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)

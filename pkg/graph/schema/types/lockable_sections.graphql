@@ -28,6 +28,7 @@ enum LockableSection {
   PREPARE_FOR_CLEARANCE
   DATA_EXCHANGE_APPROACH
   MODELS_TO_OPERATION_MATRIX
+  TIMELINE
 }
 
 type LockableSectionLockStatusChanged {

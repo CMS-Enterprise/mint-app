@@ -1,0 +1,43 @@
+meta {
+  name: Get Timeline
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query getTimeline ($id: UUID!) {
+      modelPlan (id: $id) {
+          id
+          timeline {
+            id
+            completeICIP
+            clearanceStarts
+            clearanceEnds
+            announced
+            applicationsStart
+            applicationsEnd
+            performancePeriodStarts
+            performancePeriodEnds
+            wrapUpEnds
+            highLevelNote
+            datesAddedCount
+            upcomingTimelineDate {
+              date
+              dateField
+            }
+          }
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}

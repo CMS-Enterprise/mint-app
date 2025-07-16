@@ -1,3 +1,4 @@
+import { MockedResponse } from '@apollo/client/testing';
 import {
   AgencyOrStateHelpType,
   AgreementType,
@@ -45,6 +46,9 @@ import {
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
   GetModelSummaryQuery,
+  GetTimelineDocument,
+  GetTimelineQuery,
+  GetTimelineQueryVariables,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -79,6 +83,7 @@ import {
 export const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 type GetAllBasicsTypes = GetAllBasicsQuery['modelPlan']['basics'];
+type GetAllTimelineTypes = GetTimelineQuery['modelPlan']['timeline'];
 type GetAllGeneralCharacteristicsTypes =
   GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 type GetAllParticipantsTypes =
@@ -115,18 +120,6 @@ const modelBasicsData: GetAllBasicsTypes = {
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
   note: "The machine doesn't work yet",
-  completeICIP: '2022-06-03T19:32:24.412662Z',
-  clearanceStarts: '2022-06-03T19:32:24.412662Z',
-  clearanceEnds: '2022-06-03T19:32:24.412662Z',
-  announced: '2022-06-03T19:32:24.412662Z',
-  applicationsStart: '2022-06-03T19:32:24.412662Z',
-  applicationsEnd: '2022-06-03T19:32:24.412662Z',
-  performancePeriodStarts: '2022-06-03T19:32:24.412662Z',
-  performancePeriodEnds: '2022-06-03T19:32:24.412662Z',
-  wrapUpEnds: '2022-06-03T19:32:24.412662Z',
-  highLevelNote: 'Theses are my best guess notes',
-  phasedIn: false,
-  phasedInNote: "This can't be phased in",
   modifiedDts: '2022-06-03T19:32:24.412662Z',
   createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
@@ -140,12 +133,60 @@ export const modelBasicsMocks = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
           nameHistory: ['First Name', 'Second Name'],
           isCollaborator: true,
           basics: modelBasicsData
+        }
+      }
+    }
+  }
+];
+
+const modelTimelineData: GetAllTimelineTypes = {
+  __typename: 'PlanTimeline',
+  id: '123',
+  completeICIP: '2022-06-03T19:32:24.412662Z',
+  clearanceStarts: '2022-06-03T19:32:24.412662Z',
+  clearanceEnds: '2022-06-03T19:32:24.412662Z',
+  announced: '2022-06-03T19:32:24.412662Z',
+  applicationsStart: '2022-06-03T19:32:24.412662Z',
+  applicationsEnd: '2022-06-03T19:32:24.412662Z',
+  performancePeriodStarts: '2022-06-03T19:32:24.412662Z',
+  performancePeriodEnds: '2022-06-03T19:32:24.412662Z',
+  wrapUpEnds: '2022-06-03T19:32:24.412662Z',
+  highLevelNote: 'Theses are my best guess notes',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
+  readyForReviewByUserAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    commonName: 'Test User'
+  },
+  readyForReviewDts: '2022-06-03T19:32:24.412662Z',
+  status: TaskStatus.IN_PROGRESS
+};
+
+export const modelTimelineMocks: MockedResponse<
+  GetTimelineQuery,
+  GetTimelineQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetTimelineDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'Testing Model Summary',
+          timeline: modelTimelineData
         }
       }
     }
@@ -181,6 +222,8 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   hasComponentsOrTracks: true,
   hasComponentsOrTracksDiffer: 'In every way',
   hasComponentsOrTracksNote: 'Tracks note',
+  phasedIn: false,
+  phasedInNote: "This can't be phased in",
   agencyOrStateHelp: [
     AgencyOrStateHelpType.YES_STATE,
     AgencyOrStateHelpType.OTHER
@@ -760,12 +803,18 @@ const summaryData: GetModelSummaryTypes = {
   status: ModelStatus.PLAN_DRAFT,
   basics: {
     __typename: 'PlanBasics',
-    goal: 'This is the goal',
-    performancePeriodStarts: '2022-08-20T04:00:00Z'
+    id: '123',
+    goal: 'This is the goal'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
+    id: '123',
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
+  },
+  timeline: {
+    __typename: 'PlanTimeline',
+    id: '123',
+    performancePeriodStarts: '2022-08-20T04:00:00Z'
   },
   isCollaborator: true,
   echimpCRsAndTDLs: [
@@ -868,7 +917,8 @@ const allMocks = [
   ...opsEvalAndLearningMocks,
   ...participantsAndProvidersMocks,
   ...paymentsMocks,
-  ...collaboratorsMocks
+  ...collaboratorsMocks,
+  ...modelTimelineMocks
 ];
 
 export default allMocks;

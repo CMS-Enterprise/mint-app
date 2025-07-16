@@ -7,7 +7,7 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
@@ -15,7 +15,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import '../../index.scss';
 import './index.scss';
 
-type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
+type DocumentType = GetCollaborationAreaQuery['modelPlan']['documents'][0];
 
 type DocumentsCardType = {
   documents: DocumentType[];

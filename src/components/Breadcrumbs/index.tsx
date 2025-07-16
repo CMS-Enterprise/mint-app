@@ -35,7 +35,8 @@ export enum BreadcrumbItemOptions {
   COLLABORATORS = 'COLLABORATORS',
   DOCUMENTS = 'DOCUMENTS',
   CR_TDLS = 'CR_TDLS',
-  STATUS = 'STATUS'
+  STATUS = 'STATUS',
+  TIMELINE = 'TIMELINE'
 }
 
 export interface BreadcrumbsProps {
@@ -128,6 +129,10 @@ export const commonBreadCrumbs = (
   STATUS: {
     text: 'modelPlanMisc:headingStatus',
     url: `/models/${modelID}}/collaboration-area/status`
+  },
+  TIMELINE: {
+    text: 'timelineMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-timeline`
   }
 });
 

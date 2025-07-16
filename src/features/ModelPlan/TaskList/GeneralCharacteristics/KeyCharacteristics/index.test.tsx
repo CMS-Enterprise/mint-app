@@ -16,6 +16,8 @@ type GetKeyCharacteristicsType =
 const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
+  phasedIn: false,
+  phasedInNote: "This can't be phased in",
   agencyOrStateHelp: [],
   agencyOrStateHelpOther: '',
   agencyOrStateHelpNote: '',
@@ -108,6 +110,12 @@ describe('Model Plan Characteristics', () => {
     await waitFor(() => {
       expect(screen.getByTestId('plan-characteristics-key-other')).toHaveValue(
         'Key other note'
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('phased-in-note')).toHaveValue(
+        "This can't be phased in"
       );
     });
 

@@ -12,7 +12,7 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-// planBasicsLoaders is a struct that holds LoaderWrappers related to Plan Discussions
+// planDiscussionLoaders is a struct that holds LoaderWrappers related to Plan Discussions
 type planDiscussionLoaders struct {
 	// ByModelPlanID Gets a list of plan discussion records associated with a model plan by the supplied model plan id
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.PlanDiscussion]

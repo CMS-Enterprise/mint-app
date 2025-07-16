@@ -28,6 +28,8 @@ SELECT
     gc.has_components_or_tracks,
     gc.has_components_or_tracks_differ,
     gc.has_components_or_tracks_note,
+    gc.phased_in,
+    gc.phased_in_note,
     gc.agency_or_state_help,
     gc.agency_or_state_help_other,
     gc.agency_or_state_help_note,
