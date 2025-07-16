@@ -384,7 +384,7 @@ export const CharacteristicsContent = () => {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
     isNewModel: isNewModel ?? null,
-    existingModel: existingModel ?? null,
+    existingModel: existingModel ?? '',
     resemblesExistingModel: resemblesExistingModel ?? null,
     resemblesExistingModelWhyHow: resemblesExistingModelWhyHow ?? '',
     resemblesExistingModelLinks: resemblesExistingModelLinks ?? [],

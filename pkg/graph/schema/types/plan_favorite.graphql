@@ -14,8 +14,8 @@ type PlanFavorite {
 
 extend type Mutation {
   addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 
   deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

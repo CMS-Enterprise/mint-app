@@ -1,10 +1,8 @@
-
 type MTOCategory {
   # DB Fields
   id: UUID!
   name: String!
   position: Int!
-
 
   # Custom Resolvers
   isUncategorized: Boolean!
@@ -36,14 +34,17 @@ extend type Mutation {
   Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
   Note, the parent must belong to the same model plan, or this will return an error
   """
-  createMTOCategory(modelPlanID: UUID!, name: String!, parentID: UUID): MTOCategory!
-  @hasRole(role: MINT_USER)
+  createMTOCategory(
+    modelPlanID: UUID!
+    name: String!
+    parentID: UUID
+  ): MTOCategory! @hasRole(role: MINT_USER)
   """
   Allows you to rename an MTO category. Notably, name is the only field that can be updated.
   You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
   """
   renameMTOCategory(id: UUID!, name: String!): MTOCategory!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
   """
   Allows you to change the position and parent of an MTO category. Other categories will automatically
@@ -52,20 +53,19 @@ extend type Mutation {
   Note, a subcategory can't become a subcategory and vice versa
   """
   reorderMTOCategory(id: UUID!, newOrder: Int, parentID: UUID): MTOCategory!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
   """
   Automatically attempts to create a series of categories and subcategories by name. If any specific category/subcategory already exists, it will
   still create the others
   """
   createStandardCategories(modelPlanID: UUID!): Boolean!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 
   """
   Deletes an MTO category. If the category has subcategories, it will delete them as well.
   If the target category is a subcategory, it will only delete the subcategory and redirect
   references to the parent category.
   """
-  deleteMTOCategory(id: UUID!): Boolean!
-  @hasRole(role: MINT_USER)
+  deleteMTOCategory(id: UUID!): Boolean! @hasRole(role: MINT_USER)
 }

@@ -806,8 +806,37 @@ export type MtoCommonSolution = {
   key: MtoCommonSolutionKey;
   name: Scalars['String']['output'];
   subjects: Array<MtoCommonSolutionSubject>;
+  systemOwners: Array<MtoCommonSolutionSystemOwner>;
   type: MtoSolutionType;
 };
+
+/** Enum for CMS Component */
+export enum MtoCommonSolutionCmsComponent {
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY_CCSQ = 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY_CCSQ',
+  CENTER_FOR_CONSUMER_INFORMATION_AND_INSURANCE_OVERSIGHT_CCIIO = 'CENTER_FOR_CONSUMER_INFORMATION_AND_INSURANCE_OVERSIGHT_CCIIO',
+  CENTER_FOR_MEDICAID_AND_CHIP_SERVICES_CMCS = 'CENTER_FOR_MEDICAID_AND_CHIP_SERVICES_CMCS',
+  CENTER_FOR_MEDICARE_AND_MEDICAID_INNOVATION_CMMI = 'CENTER_FOR_MEDICARE_AND_MEDICAID_INNOVATION_CMMI',
+  CENTER_FOR_MEDICARE_CM = 'CENTER_FOR_MEDICARE_CM',
+  CENTER_FOR_PROGRAM_INTEGRITY_CPI = 'CENTER_FOR_PROGRAM_INTEGRITY_CPI',
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
+  OFFICES_OF_HEARINGS_AND_INQUIRIES = 'OFFICES_OF_HEARINGS_AND_INQUIRIES',
+  OFFICE_OF_ACQUISITION_AND_GRANTS_MANAGEMENT_OAGM = 'OFFICE_OF_ACQUISITION_AND_GRANTS_MANAGEMENT_OAGM',
+  OFFICE_OF_COMMUNICATIONS_OC = 'OFFICE_OF_COMMUNICATIONS_OC',
+  OFFICE_OF_ENTERPRISE_DATA_AND_ANALYTICS_OEDA = 'OFFICE_OF_ENTERPRISE_DATA_AND_ANALYTICS_OEDA',
+  OFFICE_OF_EQUAL_OPPORTUNITY_AND_CIVIL_RIGHTS = 'OFFICE_OF_EQUAL_OPPORTUNITY_AND_CIVIL_RIGHTS',
+  OFFICE_OF_FINANCIAL_MANAGEMENT_OFM = 'OFFICE_OF_FINANCIAL_MANAGEMENT_OFM',
+  OFFICE_OF_HEALTHCARE_EXPERIENCE_AND_INTEROPERABILITY = 'OFFICE_OF_HEALTHCARE_EXPERIENCE_AND_INTEROPERABILITY',
+  OFFICE_OF_HUMAN_CAPITAL = 'OFFICE_OF_HUMAN_CAPITAL',
+  OFFICE_OF_INFORMATION_TECHNOLOGY_OIT = 'OFFICE_OF_INFORMATION_TECHNOLOGY_OIT',
+  OFFICE_OF_LEGISLATION = 'OFFICE_OF_LEGISLATION',
+  OFFICE_OF_MINORITY_HEALTH_OMH = 'OFFICE_OF_MINORITY_HEALTH_OMH',
+  OFFICE_OF_PROGRAM_OPERATIONS_AND_LOCAL_ENGAGEMENT_OPOLE = 'OFFICE_OF_PROGRAM_OPERATIONS_AND_LOCAL_ENGAGEMENT_OPOLE',
+  OFFICE_OF_SECURITY_FACILITIES_AND_LOGISTICS_OPERATIONS_OSFLO = 'OFFICE_OF_SECURITY_FACILITIES_AND_LOGISTICS_OPERATIONS_OSFLO',
+  OFFICE_OF_STRATEGIC_OPERATIONS_AND_REGULATORY_AFFAIRS_OSORA = 'OFFICE_OF_STRATEGIC_OPERATIONS_AND_REGULATORY_AFFAIRS_OSORA',
+  OFFICE_OF_STRATEGY_PERFORMANCE_AND_RESULTS_OSPR = 'OFFICE_OF_STRATEGY_PERFORMANCE_AND_RESULTS_OSPR',
+  OFFICE_OF_THE_ACTUARY_OACT = 'OFFICE_OF_THE_ACTUARY_OACT',
+  OFFICE_OF_THE_ADMINISTRATOR = 'OFFICE_OF_THE_ADMINISTRATOR'
+}
 
 export type MtoCommonSolutionContact = {
   __typename: 'MTOCommonSolutionContact';
@@ -947,6 +976,12 @@ export enum MtoCommonSolutionKey {
   T_MISS = 'T_MISS'
 }
 
+/** Enum for owner type */
+export enum MtoCommonSolutionOwnerType {
+  BUSINESS_OWNER = 'BUSINESS_OWNER',
+  SYSTEM_OWNER = 'SYSTEM_OWNER'
+}
+
 export enum MtoCommonSolutionSubject {
   APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS',
   APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS = 'APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS',
@@ -961,6 +996,26 @@ export enum MtoCommonSolutionSubject {
   PAYMENTS_AND_FINANCIALS = 'PAYMENTS_AND_FINANCIALS',
   QUALITY = 'QUALITY'
 }
+
+export type MtoCommonSolutionSystemOwner = {
+  __typename: 'MTOCommonSolutionSystemOwner';
+  cmsComponent: MtoCommonSolutionCmsComponent;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  key: MtoCommonSolutionKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  ownerType: MtoCommonSolutionOwnerType;
+};
+
+/** Input for creating or updating a common solution system owner */
+export type MtoCommonSolutionSystemOwnerChanges = {
+  cmsComponent?: InputMaybe<MtoCommonSolutionCmsComponent>;
+  ownerType?: InputMaybe<MtoCommonSolutionOwnerType>;
+};
 
 export enum MtoFacilitator {
   APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
@@ -1434,6 +1489,7 @@ export type Mutation = {
   createMTOCategory: MtoCategory;
   createMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   createMTOCommonSolutionMailboxContact: MtoCommonSolutionContact;
+  createMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   createMTOCommonSolutionUserContact: MtoCommonSolutionContact;
   createMTOMilestoneCommon: MtoMilestone;
   createMTOMilestoneCustom: MtoMilestone;
@@ -1457,6 +1513,7 @@ export type Mutation = {
   deleteMTOCategory: Scalars['Boolean']['output'];
   deleteMTOCommonSolutionContact: MtoCommonSolutionContact;
   deleteMTOCommonSolutionContractor: MtoCommonSolutionContractor;
+  deleteMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   deleteMTOMilestone: Scalars['Boolean']['output'];
   deleteMTOSolution: Scalars['Boolean']['output'];
   deletePlanCR: PlanCr;
@@ -1501,6 +1558,7 @@ export type Mutation = {
   updateExistingModelLinks: ExistingModelLinks;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
+  updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   updateMTOMilestone: MtoMilestone;
   updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
@@ -1564,6 +1622,13 @@ export type MutationCreateMtoCommonSolutionMailboxContactArgs = {
   mailboxTitle?: InputMaybe<Scalars['String']['input']>;
   receiveEmails: Scalars['Boolean']['input'];
   role?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonSolutionSystemOwnerArgs = {
+  changes: MtoCommonSolutionSystemOwnerChanges;
+  key: MtoCommonSolutionKey;
 };
 
 
@@ -1662,6 +1727,12 @@ export type MutationDeleteMtoCommonSolutionContactArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeleteMtoCommonSolutionContractorArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoCommonSolutionSystemOwnerArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -1810,6 +1881,13 @@ export type MutationUpdateMtoCommonSolutionContactArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateMtoCommonSolutionContractorArgs = {
   changes: MtoCommonSolutionContractorChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCommonSolutionSystemOwnerArgs = {
+  changes: MtoCommonSolutionSystemOwnerChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -3920,6 +3998,7 @@ export type Query = {
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoCommonSolutionContact: MtoCommonSolutionContact;
   mtoCommonSolutionContractor: MtoCommonSolutionContractor;
+  mtoCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
@@ -3995,6 +4074,12 @@ export type QueryMtoCommonSolutionContactArgs = {
 
 /** Query definition for the schema */
 export type QueryMtoCommonSolutionContractorArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoCommonSolutionSystemOwnerArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -4421,7 +4506,7 @@ export type TranslatedAuditField = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   new?: Maybe<Scalars['Any']['output']>;
   newTranslated?: Maybe<Scalars['Any']['output']>;
-  /** Translated Label for questions that are no longer applicable  */
+  /** Translated Label for questions that are no longer applicable */
   notApplicableQuestions?: Maybe<Array<Scalars['String']['output']>>;
   old?: Maybe<Scalars['Any']['output']>;
   oldTranslated?: Maybe<Scalars['Any']['output']>;
@@ -4851,7 +4936,7 @@ export type UserNotificationPreferencesChanges = {
   taggedInDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
 };
 
-/** This is a wrapper for all information for a user  */
+/** This is a wrapper for all information for a user */
 export type UserNotifications = {
   __typename: 'UserNotifications';
   /** This includes all notifications */

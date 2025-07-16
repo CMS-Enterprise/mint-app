@@ -995,6 +995,8 @@ export const getRenderedRowIndexes = (
     milestone: []
   };
 
+  let milestoneCount = 0;
+
   // Initialize the shownIndexes object with structure of fetched data
   sliceItemsCopy.forEach((category, catIndex) => {
     shownIndexes.subCategory[catIndex] = [];
@@ -1007,6 +1009,7 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       subCategory.milestones.forEach((milestone, milIndex) => {
+        milestoneCount += 1;
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
@@ -1021,7 +1024,8 @@ export const getRenderedRowIndexes = (
   sliceItemsCopy.forEach((category, catIndex) => {
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
-        if (totalPages === 1) {
+        // Only want to hit this conditional if the template is empty only one page
+        if (totalPages === 1 && milestoneCount > 0) {
           shownIndexes.category.push(catIndex);
           shownIndexes.subCategory[catIndex].push(subIndex);
           return;
@@ -1039,10 +1043,10 @@ export const getRenderedRowIndexes = (
         const initPageIndex = pageNum === 1 ? 0 : 1;
 
         // -1 here to still render out any empty categories that are on the first page and are ordered first/fall before the first shown index
-        // +1 here to still render out any empty categories that ordered last/fall before the first shown index
+        // +2 here to still render out any empty categories that ordered last/fall after the last shown index
         const isInRange =
           catIndex > minShownCategoryIndex - initPageIndex &&
-          catIndex < maxShownCategoryIndex + 1;
+          catIndex < maxShownCategoryIndex + 2;
 
         // If the category has no milesteones, check the existing shownIndexes to see if it falls between the current page and the last page, then render it
         if (isInRange) {

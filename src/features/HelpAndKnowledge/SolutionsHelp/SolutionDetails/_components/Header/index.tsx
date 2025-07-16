@@ -14,19 +14,16 @@ const Header = ({ className, solution }: HeaderProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
   // Maps all related categories into a comma separated string
-  const solutionsHeader = solution.categories.map(
-    (categoryKey, index) =>
-      `${t(`categories.${categoryKey}.header`)} ${
-        (solutionCategories[categoryKey]?.subHeader &&
-          t(`categories.${categoryKey}.subHeader`)) ||
-        ''
-      }${
-        solution.categories.length > 1 &&
-        index !== solution.categories.length - 1
-          ? ', '
-          : ''
-      } `
-  );
+  const solutionsHeader = solution.categories
+    .map(
+      (categoryKey, index) =>
+        `${t(`categories.${categoryKey}.header`)}${
+          (solutionCategories[categoryKey]?.subHeader &&
+            ` ${t(`categories.${categoryKey}.subHeader`)}`) ||
+          ''
+        }`
+    )
+    .join(', ');
 
   return (
     <div

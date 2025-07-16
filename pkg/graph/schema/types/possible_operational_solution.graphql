@@ -17,5 +17,5 @@ type PossibleOperationalSolution {
 
 extend type Query {
   possibleOperationalSolutions: [PossibleOperationalSolution!]!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

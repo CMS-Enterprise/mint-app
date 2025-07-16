@@ -16,13 +16,11 @@ type ModelsToOperationMatrix {
   RecentEdit returns the most recent translated audit for the MTO
   Note, this should not be called when fetching a list of model plans as it is not data loaded
   """
-  recentEdit: TranslatedAudit 
+  recentEdit: TranslatedAudit
   milestonesWithNoLinkedSolutions: [MTOMilestone!]!
 
   info: MTOInfo!
-
 }
-
 
 enum MTOStatus {
   READY
@@ -59,5 +57,5 @@ enum MTORiskIndicator {
 
 extend type Mutation {
   markMTOReadyForReview(modelPlanID: UUID!, readyForReview: Boolean!): MTOInfo!
-  @hasRole(role: MINT_USER)
+    @hasRole(role: MINT_USER)
 }

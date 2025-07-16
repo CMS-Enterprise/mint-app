@@ -1,10 +1,10 @@
 """
 DiscussionReply represents a discussion reply
 """
-type DiscussionReply  {
+type DiscussionReply {
   id: UUID!
   discussionID: UUID!
-  content: TaggedContent
+  content: TaggedContent @goField(forceResolver: true)
   userRole: DiscussionUserRole
   userRoleDescription: String
   isAssessment: Boolean!
@@ -29,5 +29,5 @@ input DiscussionReplyCreateInput {
 
 extend type Mutation {
   createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

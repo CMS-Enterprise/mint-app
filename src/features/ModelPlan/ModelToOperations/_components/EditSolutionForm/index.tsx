@@ -324,7 +324,7 @@ const EditSolutionForm = ({
         facilitatedBy,
         facilitatedByOther,
         ...formChanges
-      } = dirtyInput(solution, formData);
+      } = dirtyInput(formValues, formData);
 
       if (!facilitatedBy?.includes(MtoFacilitator.OTHER)) {
         formChanges.facilitatedByOther = null;
@@ -432,7 +432,8 @@ const EditSolutionForm = ({
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
-      closeModal
+      closeModal,
+      formValues
     ]
   );
 

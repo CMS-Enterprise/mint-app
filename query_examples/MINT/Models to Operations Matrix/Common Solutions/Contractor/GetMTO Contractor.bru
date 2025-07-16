@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  query GetMTOCommonSolutionContractor {
-    mtoCommonSolutionContractor(id: "{{contractorId}}") {
+  query GetMTOCommonSolutionContractor ($id: UUID!) {
+    mtoCommonSolutionContractor(id: $id) {
       id
       key
       contractorTitle
@@ -21,6 +21,8 @@ body:graphql {
   }
 }
 
-vars:pre-request {
-  contractorId: a49644fc-1065-40f7-a0da-9499b664c492
+body:graphql:vars {
+  {
+    "id": "{{contractorId}}"
+  }
 }

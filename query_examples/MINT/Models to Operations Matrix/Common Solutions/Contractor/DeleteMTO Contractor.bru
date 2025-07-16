@@ -11,13 +11,30 @@ post {
 }
 
 body:graphql {
-  mutation DeleteMTOCommonSolutionContractor {
-    deleteMTOCommonSolutionContractor(id: "{{contractorId}}") {
+  mutation deleteMTOCommonSolutionContractor($id: UUID!) {
+    deleteMTOCommonSolutionContractor(id: $id) {
       id
       key
       contractorTitle
       contractorName
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        email
+      }
+      modifiedByUserAccount {
+        id
+        username
+        email
+      }
     }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{contractorId}}"
   }
 }
 

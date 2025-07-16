@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/vektah/gqlparser/v2/ast"
 	mail "github.com/xhit/go-simple-mail/v2"
 
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
@@ -56,11 +57,11 @@ import (
 // This function requires the OktaMiddlewareFactory object because it, in some cases (as described above), needs to perform operations that decode JWTs, which is a responsibility of
 // some of the functions attached to that factory. A refactor to clean up this cross-package dependency was considered but determined to be too much effort. (Don't hurt me)
 func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory) transport.WebsocketInitFunc {
-	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, *transport.InitPayload, error) {
 		authToken := initPayload["authToken"]
 		token, ok := authToken.(string)
 		if !ok || token == "" {
-			return nil, errors.New("authToken not found in transport payload")
+			return nil, &initPayload, errors.New("authToken not found in transport payload")
 		}
 
 		localToken := strings.HasPrefix(token, "Local ")
@@ -203,11 +204,6 @@ func (s *Server) routes(
 		echimpS3config.IsLocal = true
 	}
 
-	// Disable echimp s3 in dev environments
-	if s.environment.Dev() {
-		echimpS3config.IsLocal = true
-	}
-
 	s3Client := s3.NewS3Client(s3Config)
 	echimpS3Client := s3.NewS3Client(echimpS3config)
 
@@ -288,11 +284,11 @@ func (s *Server) routes(
 	graphqlServer.AddTransport(transport.POST{})
 	graphqlServer.AddTransport(transport.MultipartForm{})
 
-	graphqlServer.SetQueryCache(lru.New(1000))
+	graphqlServer.SetQueryCache(lru.New[*ast.QueryDocument](1000))
 
 	graphqlServer.Use(extension.Introspection{})
 	graphqlServer.Use(extension.AutomaticPersistedQuery{
-		Cache: lru.New(100),
+		Cache: lru.New[string](100),
 	})
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))
 	graphqlServer.AroundResponses(NewGQLResponseMiddleware())
