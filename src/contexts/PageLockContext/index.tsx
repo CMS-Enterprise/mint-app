@@ -121,10 +121,7 @@ const PageLockContext = ({ children }: SubscriptionWrapperProps) => {
               subscriptionData: { data }
             }: { subscriptionData: { data: ModelPlanSubscriptionSubscription } }
           ) => {
-            console.log(prev);
             if (!data) return prev;
-
-            console.log(data);
 
             const lockChange = data.onLockLockableSectionContext;
 
