@@ -98,6 +98,8 @@ const PageLockContext = ({ children }: SubscriptionWrapperProps) => {
   const [getModelPlanLocks, { data: subData, subscribeToMore }] =
     useGetLockedModelPlanSectionsLazyQuery();
 
+  console.log(subData);
+
   useEffect(() => {
     if (validModelID && subscribeToMore && shouldFetchLocks) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
@@ -121,7 +123,10 @@ const PageLockContext = ({ children }: SubscriptionWrapperProps) => {
               subscriptionData: { data }
             }: { subscriptionData: { data: ModelPlanSubscriptionSubscription } }
           ) => {
+            console.log(prev);
             if (!data) return prev;
+
+            console.log(data);
 
             const lockChange = data.onLockLockableSectionContext;
 

@@ -1,27 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
+import { GridContainer } from '@trussworks/react-uswds';
 import { useUnlockAllSectionsMutation } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
+import MainContent from 'components/MainContent';
+import useMessage from 'hooks/useMessage';
 import { isAssessment } from 'utils/user';
 
 const UnlockAllSections = () => {
+  const { t } = useTranslation('general');
   const flags = useFlags();
   const history = useHistory();
-  const { authState } = useOktaAuth();
-  const hasEditAccess: boolean = isAssessment(
-    // @ts-ignore
-    authState?.accessToken?.claims['mint-groups'] || [],
-    flags
-  );
+  const { showMessageOnNextPage } = useMessage();
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const [unlockAllSections] = useUnlockAllSectionsMutation();
+  const [showAlert, setShowAlert] = useState<boolean | null>(null);
 
-  const [showAlert, setShowAlert] = React.useState<boolean | null>(null);
+  // Check if user is assessment
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const hasEditAccess: boolean = isAssessment(groups, flags);
+
+  const [unlockAllSections] = useUnlockAllSectionsMutation();
 
   useEffect(() => {
     if (!hasEditAccess) {
@@ -31,18 +35,32 @@ const UnlockAllSections = () => {
         .then(res => {
           if (!res.errors) {
             history.push(`/models/${modelID}/collaboration-area`);
+            showMessageOnNextPage(t('successfullyUnlock'));
           } else {
-            console.log('Error unlocking sections:', res.errors);
+            setShowAlert(true);
           }
         })
         .catch(error => {
-          console.log(error);
           setShowAlert(true);
         });
     }
-  }, [hasEditAccess, history, modelID, unlockAllSections, setShowAlert]);
+  }, [
+    hasEditAccess,
+    history,
+    modelID,
+    unlockAllSections,
+    setShowAlert,
+    showMessageOnNextPage,
+    t
+  ]);
 
-  return <>{showAlert && <Alert type="warning">Unlock failed</Alert>}</>;
+  return (
+    <MainContent>
+      <GridContainer className="padding-top-4">
+        {showAlert && <Alert type="warning">{t('unlockFailed')}</Alert>}
+      </GridContainer>
+    </MainContent>
+  );
 };
 
 export default UnlockAllSections;
