@@ -85,6 +85,13 @@ type MTOCommonSolutionContractorTranslation struct {
 	ContractorName  models.TranslationField `json:"contractorName" db:"contractor_name"`
 }
 
+// Represents a translation of a system/business owner for a common solution
+type MTOCommonSolutionSystemOwnerTranslation struct {
+	Key          models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	OwnerType    models.TranslationFieldWithOptions `json:"ownerType" db:"owner_type"`
+	CmsComponent models.TranslationFieldWithOptions `json:"cmsComponent" db:"cms_component"`
+}
+
 // Represents mto info translation data
 type MTOInfoTranslation struct {
 	ReadyForReviewBy  models.TranslationField `json:"readyForReviewBy" db:"ready_for_review_by"`

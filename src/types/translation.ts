@@ -46,9 +46,12 @@ import {
   MonitoringFileType,
   MtoCategoryTranslation,
   MtoCommonMilestoneKey,
+  MtoCommonSolutionCmsComponent,
   MtoCommonSolutionContactTranslation,
   MtoCommonSolutionContractorTranslation,
   MtoCommonSolutionKey,
+  MtoCommonSolutionOwnerType,
+  MtoCommonSolutionSystemOwnerTranslation,
   MtoFacilitator,
   MtoInfoTranslation,
   MtoMilestoneSolutionLinkTranslation,
@@ -1379,6 +1382,22 @@ type TranslationMTOCommonSolutionContractorCustomGQL = Omit<
 
 export type TranslationMTOCommonSolutionContractorCustom = {
   [K in keyof TranslationMTOCommonSolutionContractorCustomGQL]: TranslationMTOCommonSolutionContractorCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution System/Business owner - Change History purposes only
+export type TranslationMTOCommonSolutionSystemOwnerCustomForm = {
+  key: TranslationFieldProperties;
+  ownerType: TranslationFieldPropertiesWithOptions<MtoCommonSolutionOwnerType>;
+  cmsComponent: TranslationFieldPropertiesWithOptions<MtoCommonSolutionCmsComponent>;
+};
+
+type TranslationMTOCommonSolutionSystemOwnerCustomGQL = Omit<
+  MtoCommonSolutionSystemOwnerTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionSystemOwnerCustom = {
+  [K in keyof TranslationMTOCommonSolutionSystemOwnerCustomGQL]: TranslationMTOCommonSolutionSystemOwnerCustomForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

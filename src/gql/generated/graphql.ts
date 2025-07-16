@@ -1017,6 +1017,14 @@ export type MtoCommonSolutionSystemOwnerChanges = {
   ownerType?: InputMaybe<MtoCommonSolutionOwnerType>;
 };
 
+/** Represents a translation of a system/business owner for a common solution */
+export type MtoCommonSolutionSystemOwnerTranslation = {
+  __typename: 'MTOCommonSolutionSystemOwnerTranslation';
+  cmsComponent: TranslationFieldWithOptions;
+  key: TranslationField;
+  ownerType: TranslationFieldWithOptions;
+};
+
 export enum MtoFacilitator {
   APPLICATION_SUPPORT_CONTRACTOR = 'APPLICATION_SUPPORT_CONTRACTOR',
   CONTRACTING_OFFICERS_REPRESENTATIVE = 'CONTRACTING_OFFICERS_REPRESENTATIVE',
