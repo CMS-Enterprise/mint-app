@@ -632,7 +632,7 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.Upco
 	}
 
 	for name, field := range dateFields {
-		if field != nil && field.After(now) {
+		if field != nil && !field.IsZero() && field.After(now) {
 			if nearest == nil || field.Before(*nearest) {
 				nearest = field
 				nearestField = name
@@ -640,7 +640,7 @@ func getUpcomingPlanTimelineDate(planTimeline *models.PlanTimeline) (*model.Upco
 		}
 	}
 
-	if nearest == nil || nearestField == "" {
+	if nearest == nil || nearestField == "" || nearest.IsZero() {
 		return nil, nil
 	}
 
