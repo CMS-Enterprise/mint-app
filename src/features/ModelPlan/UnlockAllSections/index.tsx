@@ -32,22 +32,18 @@ const UnlockAllSections = () => {
   const [unlockAllSections] = useUnlockAllSectionsMutation();
 
   const unlockAllSectionsHandler = () => {
-    if (!hasEditAccess) {
-      history.push(`/models/${modelID}/collaboration-area`);
-    } else {
-      unlockAllSections({ variables: { modelPlanID: modelID } })
-        .then(res => {
-          if (!res.errors) {
-            history.push(`/models/${modelID}/collaboration-area`);
-            showMessageOnNextPage(t('successfullyUnlock'));
-          } else {
-            setShowAlert(true);
-          }
-        })
-        .catch(error => {
+    unlockAllSections({ variables: { modelPlanID: modelID } })
+      .then(res => {
+        if (!res.errors) {
+          history.push(`/models/${modelID}/collaboration-area`);
+          showMessageOnNextPage(t('successfullyUnlock'));
+        } else {
           setShowAlert(true);
-        });
-    }
+        }
+      })
+      .catch(error => {
+        setShowAlert(true);
+      });
   };
 
   useEffect(() => {
