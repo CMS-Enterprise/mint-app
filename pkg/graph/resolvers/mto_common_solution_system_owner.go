@@ -297,7 +297,7 @@ func sendSystemOwnerAddedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"}, // Replace with actual recipients
+		[]string{addressBook.MINTTeamEmail},
 		nil,
 		emailSubject,
 		"text/html",
@@ -350,7 +350,7 @@ func sendSystemOwnerEditedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"}, // Replace with actual recipients
+		[]string{addressBook.MINTTeamEmail},
 		nil,
 		emailSubject,
 		"text/html",
@@ -401,7 +401,7 @@ func sendSystemOwnerRemovedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"}, // Replace with actual recipients
+		[]string{addressBook.MINTTeamEmail},
 		nil,
 		emailSubject,
 		"text/html",
