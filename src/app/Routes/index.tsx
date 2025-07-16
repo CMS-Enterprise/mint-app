@@ -37,6 +37,7 @@ import PrepareForClearance from 'features/ModelPlan/TaskList/PrepareForClearance
 import SubmitRequest from 'features/ModelPlan/TaskList/SubmitRequest';
 import Timeline from 'features/ModelPlan/Timeline';
 import Unfollow from 'features/ModelPlan/Unfollow';
+import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
 import NotFound from 'features/NotFound';
@@ -114,6 +115,12 @@ const AppRoutes = () => {
           />
 
           <ProtectedRoute path="/models/new-plan" component={NewPlan} />
+
+          <ProtectedRoute
+            path="/models/:modelID/unlock-all-sections"
+            exact
+            component={UnlockAllSections}
+          />
 
           {/* Collaboration Area Routes */}
           <ProtectedRoute

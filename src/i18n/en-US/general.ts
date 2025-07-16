@@ -72,7 +72,11 @@ const general = {
     subHeading: 'Please try again later.',
     return: 'Return to the task list',
     goBack: 'Go back'
-  }
+  },
+  successfullyUnlock:
+    'All sections have been unlocked successfully. Any users currently editing the Model Plan will maintain their locks on their respective sections.',
+  unlockFailed: 'Unlock failed',
+  unlockAllSections: 'Unlock all model sections'
 };
 
 export default general;
