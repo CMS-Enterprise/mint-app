@@ -65,9 +65,9 @@ const general = {
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
   validDate: 'Please use a valid date format.',
   successfullyUnlock:
-    'All sections have been unlocked successfully. Any users currently editing the Model Plan will be maintain their locks on their respective sections.',
+    'All sections have been unlocked successfully. Any users currently editing the Model Plan will maintain their locks on their respective sections.',
   unlockFailed: 'Unlock failed',
-  unlockAllSections: 'Unlock all model plan sections'
+  unlockAllSections: 'Unlock all model sections'
 };
 
 export default general;
