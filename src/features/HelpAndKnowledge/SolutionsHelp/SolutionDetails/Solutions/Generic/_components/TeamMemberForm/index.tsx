@@ -119,7 +119,7 @@ const TeamMemberForm = ({
     const promise = isAddMode
       ? create({
           variables: {
-            key: selectedSolution.enum,
+            key: selectedSolution.key,
             userName: formData.userName,
             role: formData.role || '',
             isPrimary: formData.isPrimary,

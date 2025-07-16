@@ -37,7 +37,7 @@ exports[`Operation Solution Help Card > matches snapshot 1`] = `
                 aria-label="Articles under the Applications and participant interaction category"
                 class="usa-link margin-right-05 margin-bottom-1 display-block"
                 data-testid="solutions-tag"
-                href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
+                href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
               >
                 <span
                   class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -78,7 +78,7 @@ exports[`Operation Solution Help Card > matches snapshot 1`] = `
             <a
               aria-label="Click to learn more about this solution: 4innovation"
               class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-              href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
+              href="/help-and-knowledge/operational-solutions?solution-key=INNOVATION&section=about"
             >
               About this solution
               <svg

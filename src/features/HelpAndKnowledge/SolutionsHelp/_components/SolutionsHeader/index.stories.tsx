@@ -17,7 +17,7 @@ export default {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsHeader
             resultsNum={9}
-            resultsMax={helpSolutions.length}
+            resultsMax={Object.keys(helpSolutions).length}
             setQuery={(query: string) => null}
             query=""
           />
@@ -32,7 +32,7 @@ export const Default = () => (
     <Route path="/help-and-knowledge/operational-solutions">
       <SolutionsHeader
         resultsNum={9}
-        resultsMax={helpSolutions.length}
+        resultsMax={Object.keys(helpSolutions).length}
         setQuery={(query: string) => null}
         query=""
       />

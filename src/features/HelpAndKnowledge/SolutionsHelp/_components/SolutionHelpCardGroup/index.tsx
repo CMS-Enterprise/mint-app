@@ -2,13 +2,11 @@ import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import usePagination from 'hooks/usePagination';
-import {
-  OperationalSolutionCategoryRoute,
-  OperationalSolutionSubCategories
-} from 'types/operationalSolutionCategories';
+import { OperationalSolutionSubCategories } from 'types/operationalSolutionCategories';
 
 import {
   HelpSolutionType,
@@ -21,7 +19,7 @@ import './index.scss';
 type SolutionHelpCardGroupProps = {
   className?: string;
   solutions: HelpSolutionType[];
-  category?: OperationalSolutionCategoryRoute | null;
+  category?: MtoCommonSolutionSubject | null;
   setResultsNum: (offset: number) => void;
 };
 
@@ -31,7 +29,7 @@ function Solutions({
   category
 }: {
   currentSolutions: HelpSolutionType[];
-  category?: OperationalSolutionCategoryRoute | null;
+  category?: MtoCommonSolutionSubject | null;
 }) {
   const { t } = useTranslation('helpAndKnowledge');
 

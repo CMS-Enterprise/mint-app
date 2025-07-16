@@ -49,7 +49,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       aria-label="Articles under the Applications and participant interaction category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
+                      href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -88,7 +88,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   <a
                     aria-label="Click to learn more about this solution: 4innovation"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=4-innovation&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=INNOVATION&section=about"
                   >
                     About this solution
                     <svg
@@ -151,7 +151,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       aria-label="Articles under the Applications and participant interaction category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
+                      href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -190,7 +190,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   <a
                     aria-label="Click to learn more about this solution: Accountable Care Organization - Operational System"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=ACO_OS&section=about"
                   >
                     About this solution
                     <svg
@@ -253,7 +253,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       aria-label="Articles under the Contract vehicles category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=contract-vehicles"
+                      href="/help-and-knowledge/operational-solutions?category=CONTRACT_VEHICLES"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -284,7 +284,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   <a
                     aria-label="Click to learn more about this solution: Actuarial Research and Development Services"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=actuarial-research-and-design-services&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=ARDS&section=about"
                   >
                     About this solution
                     <svg
@@ -347,7 +347,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       aria-label="Articles under the Medicare Advantage and Part D category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
+                      href="/help-and-knowledge/operational-solutions?category=MEDICARE_ADVANTAGE_AND_PART_D"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -383,7 +383,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   <a
                     aria-label="Click to learn more about this solution: Automated Plan Payment System"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=automated-plan-payment-system&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=APPS&section=about"
                   >
                     About this solution
                     <svg
@@ -446,7 +446,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       aria-label="Articles under the Applications and participant interaction category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
+                      href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -485,7 +485,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   <a
                     aria-label="Click to learn more about this solution: Beneficiary Claims Data API"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=beneficiary-claims-data-api&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=BCDA&section=about"
                   >
                     About this solution
                     <svg
@@ -548,7 +548,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                       aria-label="Articles under the Data category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=data"
+                      href="/help-and-knowledge/operational-solutions?category=DATA"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -596,7 +596,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                   <a
                     aria-label="Click to learn more about this solution: Centralized Data Exchange"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=CDX&section=about"
                   >
                     About this solution
                     <svg
@@ -659,7 +659,7 @@ The business function of CDX is a centralized data exchange to enable interopera
                       aria-label="Articles under the Data category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=data"
+                      href="/help-and-knowledge/operational-solutions?category=DATA"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -699,7 +699,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   <a
                     aria-label="Click to learn more about this solution: Chronic Conditions Warehouse"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=chronic-conditions-warehouse&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=CCW&section=about"
                   >
                     About this solution
                     <svg
@@ -762,7 +762,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                       aria-label="Articles under the Data category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=data"
+                      href="/help-and-knowledge/operational-solutions?category=DATA"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -814,7 +814,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   <a
                     aria-label="Click to learn more about this solution: CMMI Analysis and Management System"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=cmmi-analysis-and-management-system&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=AMS&section=about"
                   >
                     About this solution
                     <svg
@@ -877,7 +877,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                       aria-label="Articles under the Contract vehicles category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=contract-vehicles"
+                      href="/help-and-knowledge/operational-solutions?category=CONTRACT_VEHICLES"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -890,7 +890,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                       aria-label="Articles under the Data category"
                       class="usa-link margin-right-05 margin-bottom-1 display-block"
                       data-testid="solutions-tag"
-                      href="/help-and-knowledge/operational-solutions?category=data"
+                      href="/help-and-knowledge/operational-solutions?category=DATA"
                     >
                       <span
                         class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
@@ -928,7 +928,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                   <a
                     aria-label="Click to learn more about this solution: CMMI Data Aggregation Contract"
                     class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-                    href="/help-and-knowledge/operational-solutions?solution=cmmi-data-aggregation-contract&section=about"
+                    href="/help-and-knowledge/operational-solutions?solution-key=CDAC&section=about"
                   >
                     About this solution
                     <svg

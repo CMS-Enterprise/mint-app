@@ -24,16 +24,17 @@ export const SolutionCard = ({
   className?: string;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
   // Set the solution route params
-  params.set('solution', solution.route);
+  params.set('solution-key', solution.key);
   params.set('section', 'about');
 
   const { prevPathname, selectedSolution, renderModal } = useModalSolutionState(
-    solution.enum
+    solution.key
   );
 
   return (
@@ -43,7 +44,7 @@ export const SolutionCard = ({
           solution={selectedSolution}
           openedFrom={prevPathname}
           closeRoute={() => {
-            params.delete('solution');
+            params.delete('solution-key');
             params.delete('section');
             return `${history.location.pathname}`;
           }}
@@ -68,12 +69,12 @@ export const SolutionCard = ({
             checked={checked}
             onBlur={() => null}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setChecked(solution.enum as MtoCommonSolutionKey);
+              setChecked(solution.key as MtoCommonSolutionKey);
             }}
           />
         ) : (
           <p className="margin-top-0 margin-bottom-05 text-base-dark">
-            {solution?.type}
+            {helpAndKnowledgeT(`solutionType.${solution?.type}`)}
           </p>
         )}
 

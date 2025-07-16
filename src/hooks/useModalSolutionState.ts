@@ -3,10 +3,7 @@ Hook used to get the state/route of the modal for IT lead solution details
 */
 
 import { useLocation } from 'react-router-dom';
-import {
-  findSolutionByRouteEnumParam,
-  findSolutionByRouteParam
-} from 'features/HelpAndKnowledge/SolutionsHelp';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
@@ -26,7 +23,7 @@ export const findSolutionByKey = (
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
   if (!key) return undefined;
-  return [...solutions].find(solution => solution.enum === key);
+  return [...solutions].find(solution => solution.key === key);
 };
 
 const useModalSolutionState = (
@@ -44,16 +41,18 @@ const useModalSolutionState = (
   const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
 
   // Solution to render in modal
-  const selectedSolution = solutionDetailModal
-    ? findSolutionByRouteEnumParam(solutionDetailModal, helpSolutions)
-    : findSolutionByRouteParam(solutionDetail, helpSolutions);
+  const selectedSolution = findSolutionByRouteParam(
+    solutionDetail || solutionDetailModal,
+    helpSolutions,
+    !!solutionDetailModal
+  );
 
   const solutionMap = findSolutionByKey(
     solutionKey as MtoCommonSolutionKey | null,
     helpSolutions
   );
 
-  const renderModal = solutionMap?.enum === solutionKey;
+  const renderModal = solutionMap?.key === solutionKey;
 
   return { prevPathname, selectedSolution, renderModal, loading };
 };

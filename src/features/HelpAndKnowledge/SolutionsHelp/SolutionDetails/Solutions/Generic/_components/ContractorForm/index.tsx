@@ -83,7 +83,7 @@ const ContractorForm = ({
       mode === 'addContractor'
         ? create({
             variables: {
-              key: selectedSolution.enum,
+              key: selectedSolution.key,
               contractorTitle,
               contractorName
             },

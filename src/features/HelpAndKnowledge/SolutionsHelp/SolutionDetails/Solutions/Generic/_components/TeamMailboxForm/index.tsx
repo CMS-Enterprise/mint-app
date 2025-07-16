@@ -104,7 +104,7 @@ const TeamMailboxForm = ({
     const promise = isAddMode
       ? create({
           variables: {
-            key: selectedSolution.enum,
+            key: selectedSolution.key,
             mailboxTitle: formData.mailboxTitle || '',
             mailboxAddress: formData.mailboxAddress || '',
             isPrimary: formData.isPrimary,

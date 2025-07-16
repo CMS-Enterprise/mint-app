@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import BCDATimeLine from './index';
 
@@ -14,7 +15,7 @@ describe('The MTOWarning component', () => {
         ]}
       >
         <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
-          <BCDATimeLine solution={helpSolutions[3]} />
+          <BCDATimeLine solution={helpSolutions[MtoCommonSolutionKey.BCDA]} />
         </Route>
       </MemoryRouter>
     );
