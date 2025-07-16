@@ -1,22 +1,4 @@
 {
-  "email": {
-    "gqlField": "email",
-    "goField": "Email",
-    "dbField": "email",
-    "label": "Email",
-    "dataType": "STRING",
-    "formType": "TEXT",
-    "order": 1
-  },
-  "isPrimary": {
-    "gqlField": "isPrimary",
-    "goField": "IsPrimary",
-    "dbField": "is_primary",
-    "label": "Is Primary",
-    "dataType": "BOOLEAN",
-    "formType": "CHECKBOX",
-    "order": 1.1
-  },
   "key": {
     "gqlField": "key",
     "goField": "Key",
@@ -27,14 +9,47 @@
     "tableReference": "mto_common_solution",
     "order": 1.2
   },
-  "name": {
-    "gqlField": "name",
-    "goField": "Name",
-    "dbField": "name",
-    "label": "Name",
+  "mailboxTitle": {
+    "gqlField": "mailboxTitle",
+    "goField": "MailboxTitle",
+    "dbField": "mailbox_title",
+    "label": "Mailbox title",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.3
+    "order": 1.6
+  },
+  "mailboxAddress": {
+    "gqlField": "mailboxAddress",
+    "goField": "MailboxAddress",
+    "dbField": "mailbox_address",
+    "label": "Mailbox address",
+    "sublabel": "Add cms.hhs.gov team mailboxes.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.7
+  },
+  "userId": {
+    "gqlField": "userId",
+    "goField": "UserId",
+    "dbField": "user_id",
+    "label": "User ID",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 1.8
+  },
+  "isTeam": {
+    "gqlField": "isTeam",
+    "goField": "IsTeam",
+    "dbField": "is_team",
+    "label": "Is this contact a team mailbox?",
+    "sublabel": "Select 'Yes' if this contact represents a team mailbox rather than an individual.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.5,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
   },
   "role": {
     "gqlField": "role",
@@ -45,13 +60,52 @@
     "formType": "TEXT",
     "order": 1.4
   },
-  "isTeam": {
-    "gqlField": "isTeam",
-    "goField": "IsTeam",
-    "dbField": "is_team",
-    "label": "Is Team",
+  "isPrimary": {
+    "gqlField": "isPrimary",
+    "goField": "IsPrimary",
+    "dbField": "is_primary",
+    "label": "Primary point of contact",
+    "sublabel": "If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list.",
     "dataType": "BOOLEAN",
-    "formType": "CHECKBOX",
-    "order": 1.5
+    "formType": "RADIO",
+    "order": 1.1,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "questionTooltip": "The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
+  },
+  "receiveEmails": {
+    "gqlField": "receiveEmails",
+    "goField": "ReceiveEmails",
+    "dbField": "receive_emails",
+    "label": "Receive emails?",
+    "sublabel": "If you check this box, this user or mailbox will receive update notifications from MINT when models select this operational solution. Primary points of contact will always receive notifications.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.9,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "Name",
+    "sublabel": "This field searches CMS’ EUA database.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.3
+  },
+  "email": {
+    "gqlField": "email",
+    "goField": "Email",
+    "dbField": "email",
+    "label": "Email",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1
   }
 }

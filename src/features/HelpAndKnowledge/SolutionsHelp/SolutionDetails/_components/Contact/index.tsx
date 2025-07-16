@@ -28,38 +28,13 @@ export const Contact = ({
   const paramValues = location.search.substring(1).split('&');
   const isOnPointsOfContact = paramValues.includes('section=points-of-contact');
 
-  const shortenRole = (role: string) => {
-    if (role.includes('Director')) {
-      if (role.includes('Deputy Director')) {
-        return 'Deputy Director';
-      }
-      return 'Director';
-    }
-    if (role.includes('Chief Quality Officer')) {
-      return 'Chief Quality Officer';
-    }
-    return role;
-  };
-
   return (
     <div className="point-of-contact">
-      <p className="font-body-xs margin-top-0 margin-bottom-3">
-        {t('contact')}
-      </p>
+      <p className="font-body-xs margin-y-0">{t('primaryPointOfContact')}</p>
 
-      <h3
-        className={`system-profile__subheader margin-top-0 ${
-          contact?.role ? 'margin-bottom-05' : 'margin-bottom-1'
-        }`}
-      >
+      <h3 className="system-profile__subheader margin-top-1 margin-bottom-05">
         {contact?.name}
       </h3>
-
-      {contact?.role && (
-        <p className="margin-top-0 margin-bottom-1">
-          {shortenRole(contact.role)}
-        </p>
-      )}
 
       <Link
         aria-label={h('contactInfo.sendAnEmail')}

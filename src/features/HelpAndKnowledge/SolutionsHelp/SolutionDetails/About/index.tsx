@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { HelpSolutionType } from '../../solutionsMap';
-import GenericAbout from '../Solutions/Generic/about';
+import { GenericAbout } from '../Solutions/Generic/About';
 
 export const About = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');

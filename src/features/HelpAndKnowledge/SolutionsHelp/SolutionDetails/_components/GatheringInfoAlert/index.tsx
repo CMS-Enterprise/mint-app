@@ -18,9 +18,9 @@ const GatheringInfoAlert = ({
 
   const timelineConfig = timelineTranslationUtil(solution.key);
 
-  const primaryContact = solution.alertPrimaryContact
-    ? solution.pointsOfContact?.find(contact => contact.isPrimary)
-    : undefined;
+  const primaryContact = solution.pointsOfContact?.find(
+    contact => contact.isPrimary
+  );
 
   const contactName = primaryContact?.name || 'the MINT Team';
 

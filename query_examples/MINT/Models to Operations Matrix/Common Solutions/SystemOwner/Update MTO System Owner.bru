@@ -1,0 +1,36 @@
+meta {
+  name: Update MTO System Owner
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation updateMTOCommonSolutionSystemOwner($id: UUID!, $changes: MTOCommonSolutionSystemOwnerChanges!) {
+    updateMTOCommonSolutionSystemOwner(
+      id: $id,
+      changes: $changes
+    ) {
+      id
+      key
+      ownerType
+      cmsComponent
+      createdBy
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{systemOwnerId}}",
+    "changes": {
+      "ownerType": "BUSINESS_OWNER",
+      "cmsComponent": "OFFICE_OF_LEGISLATION"
+    }
+  }
+}

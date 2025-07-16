@@ -1,0 +1,48 @@
+meta {
+  name: GetAllMTO ContactInfo
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetAllContractors {
+    mtoCommonSolutions {
+      contactInformation {
+        primaryContact {
+          name
+          email
+          isTeam
+          role
+          isPrimary
+          userAccount {
+            id
+            username
+            givenName
+            familyName
+          }
+        }
+        pointsOfContact {
+          name
+          email
+          isTeam
+          role
+          isPrimary
+          userAccount {
+            id
+            username
+            givenName
+            familyName
+          }
+          userID
+        }
+      }
+    }
+  }
+  
+}

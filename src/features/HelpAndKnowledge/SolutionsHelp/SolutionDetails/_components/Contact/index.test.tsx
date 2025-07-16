@@ -10,9 +10,12 @@ const contact: SolutionContactType = {
   id: '123',
   name: 'Aliza Kim',
   email: 'aliza.kim@cms.hhs.gov',
+  mailboxTitle: '',
+  mailboxAddress: '',
   isTeam: false,
   role: 'Project Lead',
-  isPrimary: true
+  isPrimary: true,
+  receiveEmails: false
 };
 
 describe('Operation Solution Contact', () => {

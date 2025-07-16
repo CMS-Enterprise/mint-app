@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Contractor form > should matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none"
+    data-testid="contractor-form"
+    id="contractor-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="contractor-title"
+        >
+          Contract Title
+        </label>
+        <input
+          class="usa-input"
+          data-testid="contractor-title"
+          id="contractor-title"
+          name="contractorTitle"
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-0 margin-bottom-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          data-testid="label"
+          for="contractor-name"
+        >
+          Contractor Name 
+          <abbr
+            class="usa-hint usa-hint--required"
+            title="required"
+          >
+            *
+          </abbr>
+        </label>
+        <input
+          class="usa-input"
+          data-testid="contractor-name"
+          id="contractor-name"
+          name="contractorName"
+          type="text"
+          value=""
+        />
+      </div>
+    </fieldset>
+    <div
+      class="margin-top-3 display-flex"
+    >
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        type="submit"
+      >
+        Add contractor
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-0"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+</DocumentFragment>
+`;

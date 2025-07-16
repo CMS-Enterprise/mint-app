@@ -10,6 +10,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import Alert from 'components/Alert';
 import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useMessage from 'hooks/useMessage';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
@@ -74,6 +75,7 @@ const SolutionDetailsModal = ({
   const solutionParam = params.get('solution');
   const readViewParam = params.get('view-solution');
   const selectSolutions = params.get('select-solutions');
+  const solutionEnumParam = params.get('solution-key');
   const section = params.get('section') || 'about';
 
   const { t } = useTranslation('helpAndKnowledge');
@@ -90,6 +92,7 @@ const SolutionDetailsModal = ({
   );
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const { message, clearMessage } = useMessage();
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
@@ -104,11 +107,16 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
+    clearMessage();
     let closeModalRoute = prevRoute || setCloseRoute;
 
     // Return to read view if opened from there
     if (readViewParam) {
       closeModalRoute = `${closeModalRoute}?view-solution=${readViewParam}`;
+    }
+
+    if (solutionEnumParam) {
+      closeModalRoute = setCloseRoute;
     }
 
     history.push(closeModalRoute, {
@@ -136,6 +144,16 @@ const SolutionDetailsModal = ({
       >
         <Header solution={solution} />
 
+        {message && (
+          <Alert
+            slim
+            type="success"
+            className="margin-x-4 margin-top-2"
+            closeAlert={clearMessage}
+          >
+            {message}
+          </Alert>
+        )}
         {isMobile && (
           <MobileNav
             subComponents={subComponents(solution, location, setCloseRoute)}

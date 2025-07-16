@@ -2,8 +2,8 @@ import {
   ArticleCategories,
   HelpArticle
 } from 'features/HelpAndKnowledge/Articles';
-import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
-import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/About';
+import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/Timeline';
 
 import {
   OperationalSolutionCategoryRoute,
@@ -2409,10 +2409,32 @@ const helpAndKnowledge = {
     timeline: 'Timeline',
     'points-of-contact': 'Points of contact'
   },
+  primaryPointOfContact: 'Primary point of contact',
+  mailboxesAndTeamMembers: 'Mailboxes and team members',
+  addTeamMailbox: 'Add a team mailbox',
+  addTeamMember: 'Add a team member',
+  edit: 'Edit',
+  removePointOfContact: 'Remove point of contact',
   backToSolutions: 'Back to solutions',
+  receivesNotifications: 'Receives notifications',
+  receivesNotificationsTooltip:
+    'This point of contact will receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
+  notReceivesNotifications: 'Does not receive notifications',
+  notReceivesNotificationsTooltips:
+    'This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
   moreContacts: 'More points of contact',
-  systemOwner: 'System owner',
+  systemOwner: 'Business Owner and/or System Owner',
+  systemOwnerDescription:
+    'The CMS group or division that is the Business Owner and/or System Owner for this solution or IT system.',
+  addOwner: 'Add owner information',
+  noOwners: 'No Business Owner or System Owner is listed for this solution.',
+  removeOwner: 'Remove owner',
   contractors: 'Contractors',
+  contractor: 'Contractor',
+  contractTitle: 'Contract title',
+  addContractor: 'Add a contractor',
+  removeContractor: 'Remove contractor',
+  noContractors: 'No contractor is listed for this solution.',
   gatheringInfoAlert: {
     header: 'We’re still gathering information about ',
     description:

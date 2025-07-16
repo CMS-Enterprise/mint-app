@@ -286,7 +286,6 @@ export default function OktaUserSelect({
             ((searchTerm && searchTerm.length > 0) || loading) &&
             !userSelected
         },
-        { 'opacity-70': disabled },
         className
       )}
       isDisabled={disabled}
@@ -298,7 +297,8 @@ export default function OktaUserSelect({
       menuIsOpen={
         ((contacts.length === 0 && (searchTerm?.length || 0) > 2) ||
           !!contacts.length) &&
-        !userSelected
+        !userSelected &&
+        !disabled
       }
       components={{
         Input,
@@ -306,7 +306,7 @@ export default function OktaUserSelect({
         ClearIndicator,
         Option,
         Menu,
-        NoOptionsMessage
+        NoOptionsMessage: disabled ? () => null : NoOptionsMessage
       }}
       options={contacts.map((contact: OktaUserType) => ({
         label: `${contact.displayName}, ${contact.username}`,

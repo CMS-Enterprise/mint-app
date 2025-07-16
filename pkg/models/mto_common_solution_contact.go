@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 )
 
-// MTOCommonSolutionContactInformation is a wrapper method that enables efficient fetching and sortinf of MTOCommonSolutionContact information
+// MTOCommonSolutionContactInformation is a wrapper method that enables efficient fetching and sorting of MTOCommonSolutionContact information
 type MTOCommonSolutionContactInformation struct {
 	PointsOfContact []*MTOCommonSolutionContact `json:"pointsOfContact"`
 }
@@ -56,10 +57,41 @@ func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPO
 
 type MTOCommonSolutionContact struct {
 	baseStruct
-	Key       MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
-	Name      string               `db:"name" json:"name"`
-	Email     string               `db:"email" json:"email"`
-	IsTeam    bool                 `db:"is_team" json:"isTeam"`
-	Role      *string              `db:"role" json:"role"`
-	IsPrimary bool                 `db:"is_primary" json:"isPrimary"`
+	Key            MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
+	MailboxTitle   *string              `db:"mailbox_title" json:"mailboxTitle"`
+	MailboxAddress *string              `db:"mailbox_address" json:"mailboxAddress"`
+	// These are convenience fields, they are not stored in the database, they are sourced from user account
+	Name  string `db:"name" json:"name"`
+	Email string `db:"email" json:"email"`
+	// -----------------------------------------------------------------------------------------------------
+	userIDRelationPtr
+	IsTeam        bool    `db:"is_team" json:"isTeam"`
+	Role          *string `db:"role" json:"role"`
+	IsPrimary     bool    `db:"is_primary" json:"isPrimary"`
+	ReceiveEmails bool    `db:"receive_emails" json:"receiveEmails"`
+}
+
+// NewMTOCommonSolutionContact returns a new MTOCommonSolutionContact object
+func NewMTOCommonSolutionContact(
+	createdBy uuid.UUID,
+	key MTOCommonSolutionKey,
+	mailboxTitle *string,
+	mailboxAddress *string,
+	userID *uuid.UUID,
+	isTeam bool,
+	role *string,
+	isPrimary bool,
+	receiveEmails bool,
+) *MTOCommonSolutionContact {
+	return &MTOCommonSolutionContact{
+		baseStruct:        NewBaseStruct(createdBy),
+		Key:               key,
+		MailboxTitle:      mailboxTitle,
+		MailboxAddress:    mailboxAddress,
+		userIDRelationPtr: NewUserIDRelationPtr(userID),
+		IsTeam:            isTeam,
+		Role:              role,
+		IsPrimary:         isPrimary,
+		ReceiveEmails:     receiveEmails,
+	}
 }

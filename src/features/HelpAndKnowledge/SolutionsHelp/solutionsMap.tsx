@@ -17,7 +17,7 @@ import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/Centrali
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
 import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
-import GenericTimeline from './SolutionDetails/Solutions/Generic/timeline';
+import GenericTimeline from './SolutionDetails/Solutions/Generic/Timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
 import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
 import RMADATimeline from './SolutionDetails/Solutions/RMADA';
@@ -85,10 +85,14 @@ export const operationalSolutionSubCategoryMap: Record<
 export type SolutionContactType =
   GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['contactInformation']['pointsOfContact'][0];
 
+export type SolutionContractorType =
+  GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['contractors'][0];
+
 export interface HelpSolutionType extends HelpSolutionBaseType {
+  contractors?: SolutionContractorType[];
   pointsOfContact?: SolutionContactType[];
 }
-
+// TODO:replace this type with query generated once query is added
 export type SystemOwnerType = {
   name: string;
   system?: string;
@@ -121,9 +125,6 @@ export interface HelpSolutionBaseType {
     | 'Contracts and contractors'
     | 'Other';
   name: string;
-  alertPrimaryContact?: boolean; // Alert primary contact with missing info
-  systemOwner?: SystemOwnerType;
-  contractors?: SystemOwnerType[];
   components: ModalSolutionComponentType;
 }
 
@@ -137,17 +138,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: '4i',
     type: 'IT system',
     name: '4innovation',
-    systemOwner: {
-      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
-      system: 'Office of Information Technology'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system:
-          'Innovative Design, Development, and Operations Contract (IDDOC)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         <Innovation4TimeLine {...props} />
@@ -163,17 +153,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'ACO-OS',
     type: 'IT system',
     name: 'Accountable Care Organization - Operational System',
-    systemOwner: {
-      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
-      system: 'Office of Information Technology'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system:
-          'Innovative Design, Development, and Operations Contract (IDDOC)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
@@ -191,10 +170,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'APPS',
     type: 'IT system',
     name: 'Automated Plan Payment System',
-    systemOwner: {
-      name: 'Medicare Plan Payment Group, Division of Payment Operations',
-      system: 'Center for Medicare'
-    },
     components: {}
   },
   {
@@ -206,10 +181,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'BCDA',
     type: 'IT system',
     name: 'Beneficiary Claims Data API',
-    systemOwner: {
-      name: 'Data Analytics and Strategy Group',
-      system: 'Office of Enterprise Data and Analytics'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => <BCDATimeLine {...props} />
     }
@@ -222,16 +193,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'CDX',
     type: 'IT system',
     name: 'Centralized Data Exchange',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Global Alliant',
-        system: 'Innovation Support Platform (ISP)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         <CentralizedDataExhangeTimeline {...props} />
@@ -246,16 +207,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'CCW',
     type: 'IT system',
     name: 'Chronic Conditions Warehouse',
-    systemOwner: {
-      name: 'Research Data Development Group',
-      system: 'Office of Enterprise Data and Analytics'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         <ChronicConditionsTimeline {...props} />
@@ -312,16 +263,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'CBOSC',
     type: 'IT system',
     name: 'Consolidated Business Operations Support Center',
-    systemOwner: {
-      name: 'Business Services Group, Division of System Support, Operations, and Security',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {}
   },
   {
@@ -338,7 +279,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     ],
     name: 'CPI Vetting',
     type: 'Other',
-    alertPrimaryContact: true,
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
@@ -368,16 +308,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'eDFR',
     type: 'IT system',
     name: 'Expanded Data Feedback Reporting',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Global Alliant',
-        system: 'Innovation Support Platform (ISP)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -417,10 +347,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'HIGLAS',
     type: 'IT system',
     name: 'Healthcare Integrated General Ledger Accounting System',
-    systemOwner: {
-      name: 'Accounting Management Group',
-      system: 'Office of Financial Management'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => <HIGLASTimeline {...props} />
     }
@@ -436,16 +362,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'HDR',
     type: 'IT system',
     name: 'Health Data Reporting',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Global Alliant',
-        system: 'Innovation Support Platform (ISP)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -458,10 +374,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'HPMS',
     type: 'IT system',
     name: 'Health Plan Management System',
-    systemOwner: {
-      name: 'Division of Plan Data',
-      system: 'Center for Medicare'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
@@ -479,15 +391,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'IPC',
     type: 'Contracts and contractors',
     name: 'Innovation Payment Contractor',
-    systemOwner: {
-      name: 'Business Services Group, Division of Budget Operations & Management',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'National Government Services (NGS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -504,24 +407,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'ISP',
     type: 'Contracts and contractors',
     name: 'Innovation Support Platform',
-    contractors: [
-      {
-        name: 'Global Alliant',
-        system: 'Prime'
-      },
-      {
-        name: 'Acument',
-        system: 'Subcontractor'
-      },
-      {
-        name: 'ICF International',
-        system: 'Subcontractor'
-      },
-      {
-        name: 'Tier 1 Consulting',
-        system: 'Subcontractor'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -534,11 +419,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'IDR',
     type: 'IT system',
     name: 'Integrated Data Repository',
-    systemOwner: {
-      name: 'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
-      system: 'Office of Information Technology'
-    },
-    alertPrimaryContact: true,
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
@@ -577,10 +457,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'MDM-POR',
     type: 'IT system',
     name: 'Master Data Management Program-Organization Relationship',
-    systemOwner: {
-      name: 'Enterprise Architecture and Data Group',
-      system: 'Office of Information Technology'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -596,10 +472,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'MDM-NCBP',
     type: 'IT system',
     name: 'Master Data Management for Non-Claims Based Payments',
-    systemOwner: {
-      name: 'Enterprise Architecture and Data Group',
-      system: 'Office of Information Technology'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -627,10 +499,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'MARx',
     type: 'IT system',
     name: 'Medicare Advantage Prescription Drug System',
-    systemOwner: {
-      name: 'Medicare Plan Payment Group, Division of Payment Operations',
-      system: 'Center for Medicare'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
@@ -646,17 +514,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
-    },
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Global Alliant',
-        system: 'Innovation Support Platform (ISP)'
-      }
-    ]
+    }
   },
   {
     enum: MtoCommonSolutionKey.OUTLOOK_MAILBOX,
@@ -711,16 +569,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'ARS',
     type: 'IT system',
     name: 'Salesforce Application Review and Scoring',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         <SalesforceApplicationReviewTimeline {...props} />
@@ -735,16 +583,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     name: 'Salesforce CONNECT',
     acronym: 'CONNECT',
     type: 'IT system',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
@@ -769,16 +607,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'LOI',
     type: 'IT system',
     name: 'Salesforce Letter of Intent',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
@@ -797,16 +625,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'POST / PORTAL',
     type: 'IT system',
     name: 'Salesforce Project Officer Support Tool / Portal',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
@@ -831,16 +649,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'RFA',
     type: 'IT system',
     name: 'Salesforce Request for Application',
-    systemOwner: {
-      name: 'Business Services Group',
-      system: 'Center for Medicare and Medicaid Innovation'
-    },
-    contractors: [
-      {
-        name: 'Softrams',
-        system: 'CMMI Technology Solution (CTS)'
-      }
-    ],
     components: {
       timeline: (props: SolutionDetailProps) => (
         // Timeline is the same as 4Innovation
@@ -857,10 +665,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_FFS],
     name: 'Shared Systems',
     type: 'IT system',
-    systemOwner: {
-      name: 'Applications Management Group, Division of Shared Systems Management',
-      system: 'Office of Information Technology'
-    },
     components: {
       timeline: (props: SolutionDetailProps) => (
         <SharedSystemsTimeLine {...props} />
