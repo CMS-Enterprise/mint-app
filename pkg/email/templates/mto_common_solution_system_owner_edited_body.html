@@ -1,0 +1,35 @@
+{{template "shared_header.html"}}
+{{template "shared_mto_common_solution_header.html"}}
+
+<hr/>
+
+<p>
+    Information about the CMS component(s) that are the System Owner or Business Owner for {{.SolutionName}} has been updated. You may double-check the details below.
+</p>
+
+<br/>
+
+
+<p><strong>CMS component(s):</strong> 
+{{range $index, $component := .CmsComponents}}
+  {{if $index}}, {{end}}{{.}}
+{{end}}
+</p>
+
+<br/>
+
+<h2>
+  <a href="{{.ClientAddress}}/help-and-knowledge/operational-solutions?solution-key={{.Key}}">View operational solution in MINT</a>
+</h2>
+
+<br/>
+
+<p>
+  If you believe this to be an error, please check with the operational solution team. You may edit point of contact information in MINT if it is incorrect.
+</p>
+
+<hr/>
+
+{{template "shared_mint_mailbox_footer.html"}}
+
+{{template "shared_footer.html"}}

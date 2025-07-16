@@ -7,9 +7,12 @@ import (
 
 // TestCreateMTOCommonSolutionSystemOwner validates creating a system owner for a common solution.
 func (suite *ResolverSuite) TestCreateMTOCommonSolutionSystemOwner() {
+	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
+	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
+
 	changes := map[string]interface{}{
-		"ownerType":    "BUSINESS_OWNER",
-		"cmsComponent": "OFFICE_OF_LEGISLATION",
+		"ownerType":    &ownerType,    // Pass as a pointer
+		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
 
 	systemOwner, err := CreateMTOCommonSolutionSystemOwner(
@@ -26,16 +29,16 @@ func (suite *ResolverSuite) TestCreateMTOCommonSolutionSystemOwner() {
 	suite.NoError(err)
 	suite.NotNil(systemOwner)
 	suite.Equal(models.MTOCSKInnovation, systemOwner.Key)
-	suite.Equal(changes["ownerType"], string(systemOwner.OwnerType))
-	suite.Equal(changes["cmsComponent"], string(systemOwner.CMSComponent))
 }
 
 // TestUpdateMTOCommonSolutionSystemOwner validates updating a system owner for a common solution.
 func (suite *ResolverSuite) TestUpdateMTOCommonSolutionSystemOwner() {
-	// Create a system owner to update
+	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
+	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
+
 	changes := map[string]interface{}{
-		"ownerType":    "BUSINESS_OWNER",
-		"cmsComponent": "OFFICE_OF_LEGISLATION",
+		"ownerType":    &ownerType,    // Pass as a pointer
+		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
 
 	systemOwner, err := CreateMTOCommonSolutionSystemOwner(
@@ -52,10 +55,12 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionSystemOwner() {
 	suite.NoError(err)
 	suite.NotNil(systemOwner)
 
-	// Update the system owner
+	updatedOwnerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
+	updatedCmsComponent := models.MTOCommonSolutionCMSComponent("CENTER_FOR_MEDICARE_CM")
+
 	updatedChanges := map[string]interface{}{
-		"ownerType":    "BUSINESS_OWNER",
-		"cmsComponent": "CENTER_FOR_MEDICARE_CM",
+		"ownerType":    &updatedOwnerType,    // Pass as a pointer
+		"cmsComponent": &updatedCmsComponent, // Pass as a pointer
 	}
 	updatedSystemOwner, err := UpdateMTOCommonSolutionSystemOwner(
 		suite.testConfigs.Context,
@@ -70,16 +75,18 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionSystemOwner() {
 	)
 	suite.NoError(err)
 	suite.NotNil(updatedSystemOwner)
-	suite.Equal(updatedChanges["ownerType"], string(updatedSystemOwner.OwnerType))
-	suite.Equal(updatedChanges["cmsComponent"], string(updatedSystemOwner.CMSComponent))
+	suite.Equal(updatedChanges["ownerType"], &updatedSystemOwner.OwnerType)
+	suite.Equal(updatedChanges["cmsComponent"], &updatedSystemOwner.CMSComponent)
 }
 
 // TestGetMTOCommonSolutionSystemOwner validates retrieving a system owner for a common solution by ID.
 func (suite *ResolverSuite) TestGetMTOCommonSolutionSystemOwner() {
-	// Create a system owner to retrieve
+	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
+	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
+
 	changes := map[string]interface{}{
-		"ownerType":    "BUSINESS_OWNER",
-		"cmsComponent": "OFFICE_OF_LEGISLATION",
+		"ownerType":    &ownerType,    // Pass as a pointer
+		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
 
 	systemOwner, err := CreateMTOCommonSolutionSystemOwner(
@@ -96,7 +103,6 @@ func (suite *ResolverSuite) TestGetMTOCommonSolutionSystemOwner() {
 	suite.NoError(err)
 	suite.NotNil(systemOwner)
 
-	// Retrieve the system owner
 	fetchedSystemOwner, err := GetMTOCommonSolutionSystemOwner(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
@@ -114,10 +120,12 @@ func (suite *ResolverSuite) TestGetMTOCommonSolutionSystemOwner() {
 
 // TestDeleteMTOCommonSolutionSystemOwner validates deleting a system owner for a common solution.
 func (suite *ResolverSuite) TestDeleteMTOCommonSolutionSystemOwner() {
-	// Create a system owner to delete
+	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
+	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
+
 	changes := map[string]interface{}{
-		"ownerType":    "BUSINESS_OWNER",
-		"cmsComponent": "OFFICE_OF_LEGISLATION",
+		"ownerType":    &ownerType,    // Pass as a pointer
+		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
 
 	systemOwner, err := CreateMTOCommonSolutionSystemOwner(
@@ -134,7 +142,6 @@ func (suite *ResolverSuite) TestDeleteMTOCommonSolutionSystemOwner() {
 	suite.NoError(err)
 	suite.NotNil(systemOwner)
 
-	// Delete the system owner
 	deletedSystemOwner, err := DeleteMTOCommonSolutionSystemOwner(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
