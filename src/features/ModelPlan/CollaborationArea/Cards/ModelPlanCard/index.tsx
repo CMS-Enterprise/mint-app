@@ -168,6 +168,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
             <Button
               type="button"
               className="usa-button usa-button--outline"
+              data-testid="share-export-button"
               onClick={() => setIsExportModalOpen(true)}
             >
               {collaborationAreaT('modelPlanCard.shareButton')}

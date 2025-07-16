@@ -85,7 +85,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         </a>
         <button
           class="usa-button usa-button usa-button--outline"
-          data-testid="button"
+          data-testid="share-export-button"
           type="button"
         >
           Share or export Model Plan
