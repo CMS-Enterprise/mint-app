@@ -12,7 +12,6 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Divider from 'components/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import { FavoriteIcon } from 'components/FavoriteCard';
-import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -199,10 +198,6 @@ const CollaborationArea = () => {
                 className="margin-top-2"
               />
             </Grid>
-
-            <UswdsReactLink to={`/models/${modelID}/unlock-all-sections`}>
-              UNLOCK
-            </UswdsReactLink>
 
             <Divider className="margin-y-6" />
 
