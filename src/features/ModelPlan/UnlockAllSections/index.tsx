@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { GridContainer } from '@trussworks/react-uswds';
+import { Button, GridContainer } from '@trussworks/react-uswds';
 import { useUnlockAllSectionsMutation } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -27,7 +27,7 @@ const UnlockAllSections = () => {
 
   const [unlockAllSections] = useUnlockAllSectionsMutation();
 
-  useEffect(() => {
+  const unlockAllSectionsHandler = () => {
     if (!hasEditAccess) {
       history.push(`/models/${modelID}/collaboration-area`);
     } else {
@@ -44,20 +44,16 @@ const UnlockAllSections = () => {
           setShowAlert(true);
         });
     }
-  }, [
-    hasEditAccess,
-    history,
-    modelID,
-    unlockAllSections,
-    setShowAlert,
-    showMessageOnNextPage,
-    t
-  ]);
+  };
 
   return (
     <MainContent>
       <GridContainer className="padding-top-4">
         {showAlert && <Alert type="warning">{t('unlockFailed')}</Alert>}
+
+        <Button onClick={() => unlockAllSectionsHandler()}>
+          {t('unlockAllSections')}
+        </Button>
       </GridContainer>
     </MainContent>
   );
