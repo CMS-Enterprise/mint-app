@@ -49,6 +49,10 @@ enum MTOCommonSolutionKey {
   OACT
   QPP
   PAM
+  NCQA
+  RMD
+  MS_FORMS
+  RESDAC_CMDS
 }
 
 enum MTOSolutionType {

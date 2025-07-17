@@ -69,6 +69,10 @@ const (
 	MTOCSKOact           MTOCommonSolutionKey = "OACT"
 	MTOCSKQpp            MTOCommonSolutionKey = "QPP"
 	MTOCSKPam            MTOCommonSolutionKey = "PAM"
+	MTOCSKNcqa           MTOCommonSolutionKey = "NCQA"
+	MTOCSKRmd            MTOCommonSolutionKey = "RMD"
+	MTOCSKMsForms        MTOCommonSolutionKey = "MS_FORMS"
+	MTOCSKResdacCmds     MTOCommonSolutionKey = "RESDAC_CMDS"
 )
 
 type MTOCommonSolutionSubject string
