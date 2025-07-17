@@ -1020,13 +1020,6 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=cms-qualtrics&section=about"
-                    >
-                      CMS Qualtrics
-                    </a>
-                    , 
-                    <a
-                      class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-letter-of-intent&section=about"
                     >
                       Salesforce LOI

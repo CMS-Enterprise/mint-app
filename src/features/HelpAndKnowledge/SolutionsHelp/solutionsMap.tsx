@@ -16,7 +16,6 @@ import BCDATimeLine from './SolutionDetails/Solutions/BCDA';
 import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
-import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
 import GenericTimeline from './SolutionDetails/Solutions/Generic/timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
 import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
@@ -287,20 +286,6 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     type: 'IT system',
     components: {
       timeline: (props: SolutionDetailProps) => <CMSBoxTimeline {...props} />
-    }
-  },
-  {
-    enum: MtoCommonSolutionKey.CMS_QUALTRICS,
-    key: 'cmsQualtrics',
-    route: 'cms-qualtrics',
-    categories: [OperationalSolutionCategories.APPLICATIONS_ACO],
-    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
-    name: 'CMS Qualtrics',
-    type: 'IT system',
-    components: {
-      timeline: (props: SolutionDetailProps) => (
-        <CMSQualtricsTimeline {...props} />
-      )
     }
   },
   {

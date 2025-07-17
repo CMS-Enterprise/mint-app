@@ -31,7 +31,6 @@ func (suite *ResolverSuite) TestMTOMCommonSolutionContactLoader() {
 		{Key: models.MTOCSKCdx, Expected: 1},
 		{Key: models.MTOCSKCcw, Expected: 1},
 		{Key: models.MTOCSKCmsBox, Expected: 1},
-		{Key: models.MTOCSKCmsQualtrics, Expected: 1},
 		{Key: models.MTOCSKCbosc, Expected: 3},
 	}
 

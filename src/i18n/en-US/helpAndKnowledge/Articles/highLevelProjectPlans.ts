@@ -215,10 +215,6 @@ const highLevelProjectPlans = {
               route: 'grant-solutions'
             },
             {
-              copy: '<ml>CMS Qualtrics</ml>',
-              route: 'cms-qualtrics'
-            },
-            {
               copy: '<ml>Salesforce LOI</ml>',
               route: 'salesforce-letter-of-intent'
             },

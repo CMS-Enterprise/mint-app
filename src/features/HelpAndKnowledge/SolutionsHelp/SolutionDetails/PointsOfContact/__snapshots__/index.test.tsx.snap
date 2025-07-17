@@ -294,19 +294,6 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 </DocumentFragment>
 `;
 
-exports[`Operational Solutions Points of Contact Components > matches the snapshot > CMS Qualtrics 1`] = `
-<DocumentFragment>
-  <div>
-    <h2
-      class="margin-top-0"
-    >
-      Points of contact
-    </h2>
-    <div />
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Operational Solutions Points of Contact Components > matches the snapshot > CPI Vetting 1`] = `
 <DocumentFragment>
   <div>
