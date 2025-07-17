@@ -90,7 +90,7 @@ describe('CSV File Download', () => {
     // Wait for file to be downloaded and verify contents
     cy.readFile(filePathModelTimeline, { timeout: 15000 }) // waits up to 15s
       .should('exist')
-      .and('contain', 'Complete ICIP,Clearance start date') // selected CSV headers for task list sections
+      .and('contain', 'Complete ICIP,Clearance start date') // selected CSV headers for timeline sections
       .and('not.contain', 'Model ID,Model name,Previous names,Short name,') // selected CSV headers for task list sections
       .and(
         'not.contain',
@@ -99,7 +99,7 @@ describe('CSV File Download', () => {
       .and('not.contain', 'Is this a draft milestone?'); // selected CSV headers for MTO
 
     // Clean up
-    cy.task('deleteFile', filePathModelPlan);
+    cy.task('deleteFile', filePathModelTimeline);
 
     // MTO ALL
 
