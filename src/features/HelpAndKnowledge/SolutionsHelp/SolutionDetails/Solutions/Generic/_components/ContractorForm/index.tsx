@@ -25,7 +25,7 @@ import { ModeType } from '../ContractorModal';
 
 type FormValues = Pick<
   SolutionContractorType,
-  'contractorTitle' | 'contractorName'
+  'contractTitle' | 'contractorName'
 >;
 
 const ContractorForm = ({
@@ -34,7 +34,7 @@ const ContractorForm = ({
   contractor = {
     __typename: 'MTOCommonSolutionContractor',
     id: 'not a real id',
-    contractorTitle: '',
+    contractTitle: '',
     contractorName: ''
   }
 }: {
@@ -47,7 +47,7 @@ const ContractorForm = ({
 
   const methods = useForm<FormValues>({
     defaultValues: {
-      contractorTitle: contractor.contractorTitle || '',
+      contractTitle: contractor.contractTitle || '',
       contractorName: contractor.contractorName
     },
     mode: 'onChange'
@@ -74,17 +74,14 @@ const ContractorForm = ({
   }
 
   const onSubmit = (formData: FormValues) => {
-    const { contractorTitle, contractorName } = dirtyInput(
-      contractor,
-      formData
-    );
+    const { contractTitle, contractorName } = dirtyInput(contractor, formData);
 
     const promise =
       mode === 'addContractor'
         ? create({
             variables: {
               key: selectedSolution.key,
-              contractorTitle,
+              contractTitle,
               contractorName
             },
             refetchQueries: [
@@ -97,7 +94,7 @@ const ContractorForm = ({
             variables: {
               id: contractor.id,
               changes: {
-                contractorTitle,
+                contractTitle,
                 contractorName
               }
             },
@@ -164,7 +161,7 @@ const ContractorForm = ({
         )}
         <Fieldset disabled={!selectedSolution}>
           <Controller
-            name="contractorTitle"
+            name="contractTitle"
             control={control}
             rules={{
               required: false
@@ -175,7 +172,7 @@ const ContractorForm = ({
                   htmlFor="contractor-title"
                   className="mint-body-normal maxw-none margin-bottom-1"
                 >
-                  {contractorT('contractorTitle.label')}
+                  {contractorT('contractTitle.label')}
                 </Label>
 
                 <TextInput

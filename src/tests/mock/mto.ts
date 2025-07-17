@@ -351,7 +351,7 @@ export const possibleSolutionsMock: MockedResponse<
                 __typename: 'MTOCommonSolutionContractor',
                 id: 'UUID',
                 contractorName: 'Best Contractor',
-                contractorTitle: 'MIS'
+                contractTitle: 'MIS'
               }
             ],
             contactInformation: {

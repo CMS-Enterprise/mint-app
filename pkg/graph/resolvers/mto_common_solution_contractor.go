@@ -33,7 +33,7 @@ func MTOCommonSolutionContractorsGetByKeyLOADER(ctx context.Context, key models.
 func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
-	contractorTitle *string,
+	contractTitle *string,
 	contractorName string,
 ) (*models.MTOCommonSolutionContractor, error) {
 	principalAccount := principal.Account()
@@ -44,7 +44,7 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 	contractor := models.NewMTOCommonSolutionContractor(
 		principalAccount.ID,
 		key,
-		contractorTitle,
+		contractTitle,
 		contractorName,
 	)
 

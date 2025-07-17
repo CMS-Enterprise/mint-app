@@ -6,7 +6,7 @@ export default gql(/* GraphQL */ `
       key
       contractors {
         id
-        contractorTitle
+        contractTitle
         contractorName
       }
       contactInformation {

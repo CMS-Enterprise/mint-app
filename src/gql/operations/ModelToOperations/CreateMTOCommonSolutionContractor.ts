@@ -3,17 +3,17 @@ import { gql } from '@apollo/client';
 export default gql(/* GraphQL */ `
   mutation CreateMTOCommonSolutionContractor(
     $key: MTOCommonSolutionKey!
-    $contractorTitle: String
+    $contractTitle: String
     $contractorName: String!
   ) {
     createMTOCommonSolutionContractor(
       key: $key
-      contractorTitle: $contractorTitle
+      contractTitle: $contractTitle
       contractorName: $contractorName
     ) {
       id
       key
-      contractorTitle
+      contractTitle
       contractorName
     }
   }

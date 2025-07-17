@@ -20,22 +20,22 @@ func (mtoCSCI *MTOCommonSolutionContractorInformation) ContractorsList() ([]*MTO
 
 type MTOCommonSolutionContractor struct {
 	baseStruct
-	Key             MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
-	ContractorTitle *string              `db:"contractor_title" json:"contractorTitle"`
-	ContractorName  string               `db:"contractor_name" json:"contractorName"`
+	Key            MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
+	ContractTitle  *string              `db:"contractor_title" json:"contractTitle"`
+	ContractorName string               `db:"contractor_name" json:"contractorName"`
 }
 
 // NewMTOCommonSolutionContractor returns a new MTOCommonSolutionContractor object
 func NewMTOCommonSolutionContractor(
 	createdBy uuid.UUID,
 	key MTOCommonSolutionKey,
-	contractorTitle *string,
+	contractTitle *string,
 	contractorName string,
 ) *MTOCommonSolutionContractor {
 	return &MTOCommonSolutionContractor{
-		baseStruct:      NewBaseStruct(createdBy),
-		Key:             key,
-		ContractorTitle: contractorTitle,
-		ContractorName:  contractorName,
+		baseStruct:     NewBaseStruct(createdBy),
+		Key:            key,
+		ContractTitle:  contractTitle,
+		ContractorName: contractorName,
 	}
 }

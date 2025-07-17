@@ -9,11 +9,11 @@ type ContractorAddedSubjectContent struct {
 
 // ContractorAddedBodyContent defines the parameters necessary for the email body.
 type ContractorAddedBodyContent struct {
-	ClientAddress   string
-	Key             string
-	SolutionName    string
-	ContractorName  string
-	ContractorTitle string
+	ClientAddress  string
+	Key            string
+	SolutionName   string
+	ContractorName string
+	contractTitle  string
 }
 
 // NewContractorAddedBodyContent constructs the email body content when a contractor is added.
@@ -24,14 +24,14 @@ func NewContractorAddedBodyContent(
 ) ContractorAddedBodyContent {
 	title := "Not Provided"
 
-	if contractor.ContractorTitle != nil {
-		title = *contractor.ContractorTitle
+	if contractor.ContractTitle != nil {
+		title = *contractor.ContractTitle
 	}
 	return ContractorAddedBodyContent{
-		ClientAddress:   clientAddress,
-		Key:             string(contractor.Key),
-		SolutionName:    solutionName,
-		ContractorName:  contractor.ContractorName,
-		ContractorTitle: title,
+		ClientAddress:  clientAddress,
+		Key:            string(contractor.Key),
+		SolutionName:   solutionName,
+		ContractorName: contractor.ContractorName,
+		contractTitle:  title,
 	}
 }

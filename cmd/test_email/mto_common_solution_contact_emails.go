@@ -270,11 +270,11 @@ func sendMTOCommonSolutionContractorAddedTestEmail(
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
-	contractorTitle := "Lead Leader"
+	contractTitle := "Lead Leader"
 	contractor := models.MTOCommonSolutionContractor{
-		ContractorName:  "Acme Health Solutions",
-		ContractorTitle: &contractorTitle,
-		Key:             "INNOVATION",
+		ContractorName: "Acme Health Solutions",
+		ContractTitle:  &contractTitle,
+		Key:            "INNOVATION",
 	}
 	solutionName := "4innovation (4i)"
 
@@ -338,7 +338,7 @@ func sendMTOCommonSolutionContractorEditedTestEmail(
 ) {
 	contractor := models.MTOCommonSolutionContractor{
 		ContractorName: "Acme Health Solutions",
-		// Purposefully not setting ContractorTitle to test the default value
+		// Purposefully not setting contractTitle to test the default value
 		Key: "INNOVATION",
 	}
 	solutionName := "4innovation (4i)"
@@ -401,11 +401,11 @@ func sendMTOCommonSolutionContractorRemovedTestEmail(
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
-	contractorTitle := "Secondary Lead Leader"
+	contractTitle := "Secondary Lead Leader"
 	contractor := models.MTOCommonSolutionContractor{
-		ContractorName:  "Acme Health Solutions",
-		ContractorTitle: &contractorTitle,
-		Key:             "INNOVATION",
+		ContractorName: "Acme Health Solutions",
+		ContractTitle:  &contractTitle,
+		Key:            "INNOVATION",
 	}
 	solutionName := "4innovation (4i)"
 
