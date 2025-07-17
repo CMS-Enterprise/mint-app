@@ -6,6 +6,7 @@ import "github.com/cms-enterprise/mint-app/pkg/models"
 type SystemOwnerRemovedSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
+	OwnerType       string
 }
 
 // SystemOwnerRemovedBodyContent defines the parameters necessary for the email body.
