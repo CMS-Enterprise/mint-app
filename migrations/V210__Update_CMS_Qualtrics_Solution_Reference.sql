@@ -1,5 +1,5 @@
 -- Not recording below changes
-ALTER TABLE plan_collaborator
+ALTER TABLE mto_solution
 DISABLE TRIGGER audit_trigger;
 
 -- Replace existed CMS_QUALTRICS from common solution to custom solution
@@ -17,6 +17,9 @@ WHERE
     solution.mto_common_solution_key = contact.mto_common_solution_key
     AND solution.mto_common_solution_key = 'CMS_QUALTRICS';
 
+-- Not recording below changes
+ALTER TABLE user_view_customization
+DISABLE TRIGGER audit_trigger;
 -- Remove CMS_QUALTRICS from existed value in solutions
 UPDATE user_view_customization
 SET
@@ -25,5 +28,8 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE 'CMS_QUALTRICS' = ANY(solutions);
 
-ALTER TABLE plan_collaborator
+ALTER TABLE mto_solution
+ENABLE TRIGGER audit_trigger;
+
+ALTER TABLE user_view_customization
 ENABLE TRIGGER audit_trigger;

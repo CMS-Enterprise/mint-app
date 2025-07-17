@@ -54,7 +54,15 @@ CREATE TYPE MTO_COMMON_SOLUTION_NEW_KEY AS ENUM (
 -- Disable (temp) primary contact and audit triggers
 ALTER TABLE mto_common_solution_contact 
 DISABLE TRIGGER trg_ensure_primary_contact_MTO;
-ALTER TABLE plan_collaborator
+ALTER TABLE mto_common_solution_contact 
+DISABLE TRIGGER audit_trigger;
+ALTER TABLE mto_solution
+DISABLE TRIGGER audit_trigger;
+-- ALTER TABLE mto_common_milestone_solution_link 
+-- DISABLE TRIGGER audit_trigger;
+-- ALTER TABLE mto_common_solution
+-- DISABLE TRIGGER audit_trigger;
+ALTER TABLE user_view_customization
 DISABLE TRIGGER audit_trigger;
 
 -- Delete primary contact for CMS_QUALTRICS solution
@@ -107,7 +115,15 @@ ALTER TYPE MTO_COMMON_SOLUTION_NEW_KEY RENAME TO MTO_COMMON_SOLUTION_KEY;
 -- Enable primary contact and audit trigger
 ALTER TABLE mto_common_solution_contact 
 ENABLE TRIGGER trg_ensure_primary_contact_MTO;
-ALTER TABLE plan_collaborator
+ALTER TABLE mto_common_solution_contact
+ENABLE TRIGGER audit_trigger;
+ALTER TABLE mto_solution
+ENABLE TRIGGER audit_trigger;
+-- ALTER TABLE mto_common_milestone_solution_link 
+-- ENABLE TRIGGER audit_trigger;
+-- ALTER TABLE mto_common_solution
+-- ENABLE TRIGGER audit_trigger;
+ALTER TABLE user_view_customization
 ENABLE TRIGGER audit_trigger;
 
 -- Add back contraint in mto_common_milestone_solution_link
