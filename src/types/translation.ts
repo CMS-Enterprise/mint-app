@@ -1421,6 +1421,7 @@ export type TranslationPlan = {
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
   mtoSolution: TranslationMTOSolutionCustom;
+  mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
 };
 
 export type TranslationPlanSection =
@@ -1453,5 +1454,6 @@ export enum PlanSection {
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',
-  MTO_SOLUTION = 'mtoSolution'
+  MTO_SOLUTION = 'mtoSolution',
+  MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner'
 }

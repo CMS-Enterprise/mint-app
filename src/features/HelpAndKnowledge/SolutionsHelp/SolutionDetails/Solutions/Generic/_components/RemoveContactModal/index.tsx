@@ -3,7 +3,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Button } from '@trussworks/react-uswds';
 import {
   SolutionContactType,
-  SolutionContractorType
+  SolutionContractorType,
+  SolutionSystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   useDeleteMtoCommonSolutionContactMutation,
@@ -29,13 +30,18 @@ const getUseMutation = (contactType: ContactType) => {
 };
 
 const getContactName = (
-  contact: SolutionContactType | SolutionContractorType
+  contact:
+    | SolutionContactType
+    | SolutionContractorType
+    | SolutionSystemOwnerType
 ) => {
   switch (contact.__typename) {
     case 'MTOCommonSolutionContact':
       return contact.name;
     case 'MTOCommonSolutionContractor':
       return contact.contractorName;
+    case 'MTOCommonSolutionSystemOwner':
+      return contact.cmsComponent;
     default:
       throw new Error(`contact object ${contact} is incorrect`);
   }
@@ -49,7 +55,10 @@ const RemoveContactModal = ({
 }: {
   isModalOpen: boolean;
   closeModal: () => void;
-  pointOfContact: SolutionContactType | SolutionContractorType;
+  pointOfContact:
+    | SolutionContactType
+    | SolutionContractorType
+    | SolutionSystemOwnerType;
   contactType: ContactType;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContactMisc');

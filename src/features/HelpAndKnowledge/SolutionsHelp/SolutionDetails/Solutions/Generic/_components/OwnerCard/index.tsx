@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, CardBody } from '@trussworks/react-uswds';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
+import OwnerModal from '../OwnerModal';
+import RemoveContactModal from '../RemoveContactModal';
+
 const OwnerCard = ({ owner }: { owner: SolutionSystemOwnerType }) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const [isEditOwnerModalOpen, setIsEditOwnerModalOpen] = useState(false);
+  const [isRemoveOwnerModalOpen, setIsRemoveOwnerModalOpen] = useState(false);
 
   return (
     <div className="margin-bottom-3">
+      <OwnerModal
+        isModalOpen={isEditOwnerModalOpen}
+        mode="editSystemOwner"
+        owner={owner}
+        closeModal={() => setIsEditOwnerModalOpen(false)}
+      />
+      <RemoveContactModal
+        isModalOpen={isRemoveOwnerModalOpen}
+        closeModal={() => setIsRemoveOwnerModalOpen(false)}
+        pointOfContact={owner}
+        contactType="owner"
+      />
       <Card
         key={owner.id}
         className="margin-bottom-0"
@@ -29,7 +46,7 @@ const OwnerCard = ({ owner }: { owner: SolutionSystemOwnerType }) => {
           type="button"
           className="margin-right-2"
           unstyled
-          onClick={() => {}}
+          onClick={() => setIsEditOwnerModalOpen(true)}
         >
           {t('edit')}
         </Button>
@@ -37,7 +54,7 @@ const OwnerCard = ({ owner }: { owner: SolutionSystemOwnerType }) => {
           type="button"
           className="text-error"
           unstyled
-          onClick={() => {}}
+          onClick={() => setIsRemoveOwnerModalOpen(true)}
         >
           {t('removeOwner')}
         </Button>

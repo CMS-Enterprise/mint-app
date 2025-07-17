@@ -14,22 +14,9 @@ const mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCusto
       dbField: 'mto_common_solution_key',
       label: 'MTO Common Solution',
       dataType: TranslationDataType.ENUM,
-      formType: TranslationFormType.TEXT,
+      formType: TranslationFormType.SELECT,
       tableReference: TableName.MTO_COMMON_SOLUTION,
       order: 1.1
-    },
-    ownerType: {
-      gqlField: 'ownerType',
-      goField: 'OwnerType',
-      dbField: 'owner_type',
-      label: 'Owner type',
-      dataType: TranslationDataType.ENUM,
-      formType: TranslationFormType.RADIO,
-      options: {
-        BUSINESS_OWNER: 'Business Owner',
-        SYSTEM_OWNER: 'System Owner'
-      },
-      order: 1.2
     },
     cmsComponent: {
       gqlField: 'cmsComponent',
@@ -80,11 +67,24 @@ const mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCusto
         CENTER_FOR_CONSUMER_INFORMATION_AND_INSURANCE_OVERSIGHT_CCIIO:
           'Center for Consumer Information and Insurance Oversight (CCIIO)'
       },
+      order: 1.2
+    },
+    ownerType: {
+      gqlField: 'ownerType',
+      goField: 'OwnerType',
+      dbField: 'owner_type',
+      label: 'Owner type',
+      dataType: TranslationDataType.ENUM,
+      formType: TranslationFormType.RADIO,
+      options: {
+        BUSINESS_OWNER: 'Business Owner',
+        SYSTEM_OWNER: 'System Owner'
+      },
       order: 1.3
     }
   };
 
-export const mtoCommonSolutionOwnerMisc = {
+export const mtoCommonSolutionSystemOwnerMisc = {
   addSystemOwner: {
     title: 'Add owner information',
     description:
