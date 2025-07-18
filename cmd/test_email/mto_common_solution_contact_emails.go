@@ -461,3 +461,204 @@ func sendContractorRemovedEmail(
 	}
 	return nil
 }
+
+func sendMTOCommonSolutionSystemOwnerAddedTestEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	systemOwner := models.MTOCommonSolutionSystemOwner{
+		CMSComponent: "OFFICE_OF_THE_ACTUARY_OACT",
+		OwnerType:    "SYSTEM_OWNER",
+		Key:          "INNOVATION",
+	}
+	solutionName := "4innovation (4i)"
+
+	err := sendSystemOwnerAddedEmail(emailService, templateService, addressBook, &systemOwner, solutionName)
+	noErr(err)
+}
+
+func sendSystemOwnerAddedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	systemOwner *models.MTOCommonSolutionSystemOwner,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerAddedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.SystemOwnerAddedSubjectContent{
+		SolutionAcronym: string(systemOwner.Key),
+		SolutionName:    solutionName,
+	}
+	bodyContent := email.NewSystemOwnerAddedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*systemOwner,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{"test@mint.cms.gov"},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func sendMTOCommonSolutionSystemOwnerEditedTestEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	systemOwner := models.MTOCommonSolutionSystemOwner{
+		CMSComponent: "OFFICE_OF_THE_ACTUARY_OACT",
+		OwnerType:    "BUSINESS_OWNER",
+		Key:          "INNOVATION",
+	}
+	solutionName := "4innovation (4i)"
+	cmsComponents := []models.MTOCommonSolutionCMSComponent{"OFFICE_OF_THE_ACTUARY_OACT", "CENTER_FOR_MEDICARE_CM"}
+
+	err := sendSystemOwnerEditedEmail(emailService, templateService, addressBook, &systemOwner, solutionName, cmsComponents)
+	noErr(err)
+}
+
+func sendSystemOwnerEditedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	systemOwner *models.MTOCommonSolutionSystemOwner,
+	solutionName string,
+	cmsComponents []models.MTOCommonSolutionCMSComponent,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerEditedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.SystemOwnerEditedSubjectContent{
+		SolutionAcronym: string(systemOwner.Key),
+		SolutionName:    solutionName,
+	}
+	bodyContent := email.NewSystemOwnerEditedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*systemOwner,
+		solutionName,
+		cmsComponents,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{"test@mint.cms.gov"},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func sendMTOCommonSolutionSystemOwnerRemovedTestEmail(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	systemOwner := models.MTOCommonSolutionSystemOwner{
+		CMSComponent: "OFFICE_OF_THE_ACTUARY_OACT",
+		OwnerType:    "SYSTEM_OWNER",
+		Key:          "INNOVATION",
+	}
+	solutionName := "4innovation (4i)"
+
+	err := sendSystemOwnerRemovedEmail(emailService, templateService, addressBook, &systemOwner, solutionName)
+	noErr(err)
+}
+
+func sendSystemOwnerRemovedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	systemOwner *models.MTOCommonSolutionSystemOwner,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerRemovedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.SystemOwnerRemovedSubjectContent{
+		SolutionAcronym: string(systemOwner.Key),
+		SolutionName:    solutionName,
+	}
+	bodyContent := email.NewSystemOwnerRemovedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*systemOwner,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{"test@mint.cms.gov"},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}

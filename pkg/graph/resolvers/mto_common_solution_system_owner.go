@@ -43,7 +43,7 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 	// Explicitly convert ownerType to models.MTOCommonSolutionOwnerType
 	ownerType, ok := changes["ownerType"].(*models.MTOCommonSolutionOwnerType)
 	if !ok {
-		return nil, fmt.Errorf("ownerType must be a valid string value")
+		return nil, fmt.Errorf("ownerType must be a valid enum value")
 	}
 
 	// Explicitly convert cmsComponent to models.MTOCommonSolutionOwnerType
@@ -68,7 +68,32 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		return nil, err
 	}
 
-	// TODO add emails here for create
+	// Send email for system owner creation
+	if emailService != nil && emailTemplateService != nil {
+		// Load the MTOCommonSolution to get its name for the email
+		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedSystemOwner.Key)
+		if err != nil {
+			return nil, err
+		}
+
+		go func() {
+			sendEmailErr := sendSystemOwnerAddedEmail(
+				emailService,
+				emailTemplateService,
+				addressBook,
+				returnedSystemOwner,
+				mtoSolution.Name,
+			)
+			if sendEmailErr != nil {
+				logger.Error(
+					"failed to send system owner added email",
+					zap.String("key", string(key)),
+					zap.String("cmsComponent", string(returnedSystemOwner.CMSComponent)),
+					zap.Error(sendEmailErr),
+				)
+			}
+		}()
+	}
 
 	return returnedSystemOwner, nil
 }
@@ -103,7 +128,44 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		return nil, fmt.Errorf("failed to update system owner with id %s: %w", id, err)
 	}
 
-	// TODO add update email here
+	// Send email for system owner update
+	if emailService != nil && emailTemplateService != nil {
+		// Load the MTOCommonSolution to get its name for the email
+		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, updatedSystemOwner.Key)
+		if err != nil {
+			return nil, err
+		}
+
+		go func() {
+
+			systemOwnersForKey, err := MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx, updatedSystemOwner.Key)
+			if err != nil {
+				return
+			}
+
+			var cmsComponents []models.MTOCommonSolutionCMSComponent
+			for _, systemOwner := range systemOwnersForKey {
+				cmsComponents = append(cmsComponents, systemOwner.CMSComponent)
+			}
+
+			sendEmailErr := sendSystemOwnerEditedEmail(
+				emailService,
+				emailTemplateService,
+				addressBook,
+				updatedSystemOwner,
+				mtoSolution.Name,
+				cmsComponents,
+			)
+			if sendEmailErr != nil {
+				logger.Error(
+					"failed to send system owner edited email",
+					zap.String("key", string(updatedSystemOwner.Key)),
+					zap.String("cmsComponent", string(updatedSystemOwner.CMSComponent)),
+					zap.Error(sendEmailErr),
+				)
+			}
+		}()
+	}
 
 	return updatedSystemOwner, nil
 }
@@ -148,7 +210,32 @@ func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		return nil, err
 	}
 
-	// TODO add delete email here
+	// Send email for system owner deletion
+	if emailService != nil && emailTemplateService != nil {
+		// Load the MTOCommonSolution to get its name for the email
+		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedSystemOwner.Key)
+		if err != nil {
+			return nil, err
+		}
+
+		go func() {
+			sendEmailErr := sendSystemOwnerRemovedEmail(
+				emailService,
+				emailTemplateService,
+				addressBook,
+				returnedSystemOwner,
+				mtoSolution.Name,
+			)
+			if sendEmailErr != nil {
+				logger.Error(
+					"failed to send system owner removed email",
+					zap.String("key", string(returnedSystemOwner.Key)),
+					zap.String("cmsComponent", string(returnedSystemOwner.CMSComponent)),
+					zap.Error(sendEmailErr),
+				)
+			}
+		}()
+	}
 
 	return returnedSystemOwner, nil
 }
@@ -169,4 +256,159 @@ func GetMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, pr
 	}
 
 	return systemOwner, nil
+}
+
+// sendSystemOwnerAddedEmail sends an email when a system owner is added.
+func sendSystemOwnerAddedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	systemOwner *models.MTOCommonSolutionSystemOwner,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerAddedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.SystemOwnerAddedSubjectContent{
+		SolutionAcronym: string(systemOwner.Key),
+		SolutionName:    solutionName,
+	}
+	bodyContent := email.NewSystemOwnerAddedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*systemOwner,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.MINTTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// sendSystemOwnerEditedEmail sends an email when a system owner is edited.
+func sendSystemOwnerEditedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	systemOwner *models.MTOCommonSolutionSystemOwner,
+	solutionName string,
+	cmsComponents []models.MTOCommonSolutionCMSComponent,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerEditedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.SystemOwnerEditedSubjectContent{
+		SolutionAcronym: string(systemOwner.Key),
+		SolutionName:    solutionName,
+	}
+	bodyContent := email.NewSystemOwnerEditedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*systemOwner,
+		solutionName,
+		cmsComponents,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.MINTTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// sendSystemOwnerRemovedEmail sends an email when a system owner is removed.
+func sendSystemOwnerRemovedEmail(
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	systemOwner *models.MTOCommonSolutionSystemOwner,
+	solutionName string,
+) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerRemovedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.SystemOwnerRemovedSubjectContent{
+		SolutionAcronym: string(systemOwner.Key),
+		SolutionName:    solutionName,
+	}
+	bodyContent := email.NewSystemOwnerRemovedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		*systemOwner,
+		solutionName,
+	)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.MINTTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
