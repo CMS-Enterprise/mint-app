@@ -8,13 +8,15 @@ import {
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   useDeleteMtoCommonSolutionContactMutation,
-  useDeleteMtoCommonSolutionContractorMutation
+  useDeleteMtoCommonSolutionContractorMutation,
+  useDeleteMtoCommonSolutionSystemOwnerMutation
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 
 type ContactType = 'teamOrMember' | 'owner' | 'contractor';
 
@@ -22,28 +24,12 @@ const getUseMutation = (contactType: ContactType) => {
   switch (contactType) {
     case 'teamOrMember':
       return useDeleteMtoCommonSolutionContactMutation;
+    case 'owner':
+      return useDeleteMtoCommonSolutionSystemOwnerMutation;
     case 'contractor':
       return useDeleteMtoCommonSolutionContractorMutation;
     default:
       throw new Error(`contact type ${contactType} is incorrect`);
-  }
-};
-
-const getContactName = (
-  contact:
-    | SolutionContactType
-    | SolutionContractorType
-    | SolutionSystemOwnerType
-) => {
-  switch (contact.__typename) {
-    case 'MTOCommonSolutionContact':
-      return contact.name;
-    case 'MTOCommonSolutionContractor':
-      return contact.contractorName;
-    case 'MTOCommonSolutionSystemOwner':
-      return contact.cmsComponent;
-    default:
-      throw new Error(`contact object ${contact} is incorrect`);
   }
 };
 
@@ -62,15 +48,32 @@ const RemoveContactModal = ({
   contactType: ContactType;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContactMisc');
+  const { t: systemOwnerT } = useTranslation(
+    'mtoCommonSolutionSystemOwnerMisc'
+  );
+  const { cmsComponent: cmsComponentConfig } = usePlanTranslation(
+    'mtoCommonSolutionSystemOwner'
+  );
   const { t: contractorT } = useTranslation('mtoCommonSolutionContractorMisc');
   const useMutation = getUseMutation(contactType);
   const [deleteContact] = useMutation();
   const { showMessage } = useMessage();
   const [hasMutationError, setHasMutationError] = useState(false);
 
-  const contactName = getContactName(pointOfContact);
+  const getContactName = () => {
+    switch (pointOfContact.__typename) {
+      case 'MTOCommonSolutionContact':
+        return pointOfContact.name;
+      case 'MTOCommonSolutionContractor':
+        return pointOfContact.contractorName;
+      case 'MTOCommonSolutionSystemOwner':
+        return cmsComponentConfig.options[pointOfContact.cmsComponent];
+      default:
+        throw new Error(`contact object ${pointOfContact} is incorrect`);
+    }
+  };
+  const contactName = getContactName();
 
-  // Field matching keys in removePointOfContact and removeContractor
   const getModalStrings = (
     field: 'title' | 'text' | 'cta' | 'success' | 'error'
   ) => {
@@ -79,6 +82,11 @@ const RemoveContactModal = ({
         return {
           i18nKey: `mtoCommonSolutionContactMisc:removePointOfContact.${field}`,
           text: contactT(`removePointOfContact.${field}`)
+        };
+      case 'owner':
+        return {
+          i18nKey: `mtoCommonSolutionSystemOwnerMisc:removeSystemOwner.${field}`,
+          text: systemOwnerT(`removeSystemOwner.${field}`)
         };
       case 'contractor':
         return {

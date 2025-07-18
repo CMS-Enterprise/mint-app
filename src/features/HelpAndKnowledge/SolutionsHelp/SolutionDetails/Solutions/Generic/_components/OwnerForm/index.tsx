@@ -10,12 +10,10 @@ import {
   FormGroup,
   Label,
   Radio
-  //   Select
 } from '@trussworks/react-uswds';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   MtoCommonSolutionCmsComponent,
-  MtoCommonSolutionOwnerType,
   useCreateMtoCommonSolutionSystemOwnerMutation,
   useUpdateMtoCommonSolutionSystemOwnerMutation
 } from 'gql/generated/graphql';
@@ -29,20 +27,23 @@ import dirtyInput from 'utils/formUtil';
 
 import { ModeType } from '../OwnerModal';
 
-type FormValues = Pick<SolutionSystemOwnerType, 'cmsComponent' | 'ownerType'>;
-// type FormValues = {
-//   cmsComponent?: MtoCommonSolutionCmsComponent;
-//   ownerType?: MtoCommonSolutionOwnerType;
-// };
+type FormValues = Partial<
+  Pick<SolutionSystemOwnerType, 'cmsComponent' | 'ownerType'>
+>;
+
+const isValidCmsComponent = (
+  value: string | undefined
+): value is MtoCommonSolutionCmsComponent => {
+  return (
+    value !== undefined &&
+    (Object.values(MtoCommonSolutionCmsComponent) as string[]).includes(value)
+  );
+};
+
 const OwnerForm = ({
   mode,
   closeModal,
-  owner = {
-    __typename: 'MTOCommonSolutionSystemOwner',
-    id: 'not a real id',
-    cmsComponent: MtoCommonSolutionCmsComponent.CENTER_FOR_MEDICARE_CM,
-    ownerType: MtoCommonSolutionOwnerType.SYSTEM_OWNER
-  }
+  owner
 }: {
   mode: ModeType;
   closeModal: () => void;
@@ -65,7 +66,9 @@ const OwnerForm = ({
     control,
     handleSubmit,
     reset,
-    formState: { isSubmitting, isDirty, isValid }
+    formState: { isSubmitting, isDirty },
+    setValue,
+    watch
   } = methods;
 
   const { selectedSolution } = useModalSolutionState();
@@ -87,33 +90,41 @@ const OwnerForm = ({
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
-  const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
-  const cmsComponentOptions = getKeys(cmsComponentConfig.options).map(
-    option => ({ value: option, label: cmsComponentConfig.options[option] })
-  );
+
+  const disabledSubmitBtn =
+    !watch('cmsComponent') || !watch('ownerType') || isSubmitting || !isDirty;
+  const sortedCmsComponentConfig = [
+    ...getKeys(cmsComponentConfig.options)
+  ].sort();
+  const cmsComponentOptions = sortedCmsComponentConfig.map(option => ({
+    value: option,
+    label: cmsComponentConfig.options[option]
+  }));
+  const cmsComponentInput = methods.getValues('cmsComponent');
 
   if (!selectedSolution) {
     return null;
   }
-  //   console.log('field', methods.getValues());
+
   const onSubmit = (formData: FormValues) => {
     const { cmsComponent, ownerType } = dirtyInput(owner, formData);
-    const changesInput = { cmsComponent, ownerType };
 
-    const promise =
-      mode === 'addSystemOwner'
-        ? create({
-            variables: {
-              key: selectedSolution.key,
-              changes: changesInput
+    const promise = owner
+      ? update({
+          variables: {
+            id: owner.id,
+            changes: { cmsComponent, ownerType }
+          }
+        })
+      : create({
+          variables: {
+            key: selectedSolution.key,
+            changes: {
+              cmsComponent: formData.cmsComponent,
+              ownerType: formData.ownerType
             }
-          })
-        : update({
-            variables: {
-              id: owner.id,
-              changes: changesInput
-            }
-          });
+          }
+        });
     promise
       .then(response => {
         if (!response?.errors) {
@@ -121,13 +132,16 @@ const OwnerForm = ({
             <Trans
               i18nKey={`mtoCommonSolutionSystemOwnerMisc:${mode}.success`}
               values={{
-                owner: formData.cmsComponent
+                owner: cmsComponentInput
+                  ? cmsComponentConfig.options[cmsComponentInput]
+                  : ''
               }}
               components={{
                 bold: <span className="text-bold" />
               }}
             />
           );
+
           closeModal();
         }
       })
@@ -160,7 +174,9 @@ const OwnerForm = ({
               <Trans
                 i18nKey="mtoCommonSolutionSystemOwnerMisc:duplicateError"
                 values={{
-                  owner: methods.getValues('cmsComponent')
+                  owner: cmsComponentInput
+                    ? cmsComponentConfig.options[cmsComponentInput]
+                    : ''
                 }}
                 components={{
                   bold: <span className="text-bold" />
@@ -178,7 +194,7 @@ const OwnerForm = ({
             control={control}
             rules={{
               required: true,
-              validate: value => value !== null
+              validate: value => value !== undefined
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
@@ -191,33 +207,20 @@ const OwnerForm = ({
                 </Label>
 
                 <ComboBox
+                  {...field}
                   id="cms-component"
                   name="cms-component"
                   onChange={value => {
-                    //   if (value !== '' && value !== undefined) {
-                    //     setFilteredGroup(value);
-                    //   }
-                    //   if (value === undefined) {
-                    //     setFilteredGroup('');
-                    //   }
+                    const verifiedValue = isValidCmsComponent(value)
+                      ? value
+                      : undefined;
+                    setValue('cmsComponent', verifiedValue, {
+                      shouldDirty: true
+                    });
                   }}
-                  //   defaultValue={filteredView || ''}
+                  defaultValue={owner?.cmsComponent}
                   options={cmsComponentOptions}
                 />
-
-                {/* <Select
-                  id="cms-component"
-                  className="margin-bottom-2 margin-top-0"
-                  name="cms-component"
-                  data-testid="cms-component"
-                >
-                  <option />
-                  {getKeys(cmsComponentConfig.options).map(option => (
-                    <option key={`cms-component-${option}`} value={option}>
-                      {cmsComponentConfig.options[option]}
-                    </option>
-                  ))}
-                </Select> */}
               </FormGroup>
             )}
           />
@@ -227,7 +230,7 @@ const OwnerForm = ({
             control={control}
             rules={{
               required: true,
-              validate: value => value !== null
+              validate: value => value !== undefined
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">

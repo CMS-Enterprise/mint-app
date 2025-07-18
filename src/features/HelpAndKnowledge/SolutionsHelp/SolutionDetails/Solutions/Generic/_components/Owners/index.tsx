@@ -12,9 +12,16 @@ const Owners = ({ owners }: { owners: SolutionSystemOwnerType[] }) => {
   const { t } = useTranslation('helpAndKnowledge');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const hasOwners = owners && owners?.length > 0;
-  const sortedOwners = [...owners].sort((a, b) =>
-    a.cmsComponent.localeCompare(b.cmsComponent)
-  );
+  const sortedOwners = [...owners].sort((a, b) => {
+    const comparation = a.cmsComponent.localeCompare(b.cmsComponent);
+    if (comparation > 0) {
+      return 1;
+    }
+    if (comparation < 0) {
+      return -1;
+    }
+    return a.ownerType.localeCompare(b.ownerType);
+  });
 
   return (
     <div>

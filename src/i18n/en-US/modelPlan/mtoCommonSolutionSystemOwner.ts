@@ -103,9 +103,9 @@ export const mtoCommonSolutionSystemOwnerMisc = {
   },
   removeSystemOwner: {
     title: 'Are you sure you want to remove this owner?',
-    text: '<bold>Business Owner or System Owner to be removed:</bold> {{-owner}}',
+    text: '<bold>Business Owner or System Owner to be removed:</bold><br/>{{-contact}}',
     cta: 'Remove owner',
-    success: 'You removed <bold>{{-owner}}</bold> as an owner.',
+    success: 'You removed <bold>{{-contact}}</bold> as an owner.',
     error:
       'There was an issue removing this owner. Please try again, and if the problem persists, try again later.'
   },
