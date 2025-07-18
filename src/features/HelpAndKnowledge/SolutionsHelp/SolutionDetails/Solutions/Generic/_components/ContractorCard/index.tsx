@@ -42,9 +42,9 @@ const ContractorCard = ({
           <h3 className="margin-bottom-0 line-height-sans-2">
             {t('contractor')}: {contractor.contractorName}
           </h3>
-          {contractor?.contractorTitle && (
+          {contractor?.contractTitle && (
             <p className="margin-top-1 line-height-sans-5">
-              {t('contractTitle')}: {contractor.contractorTitle}
+              {t('contractTitle')}: {contractor.contractTitle}
             </p>
           )}
         </CardBody>

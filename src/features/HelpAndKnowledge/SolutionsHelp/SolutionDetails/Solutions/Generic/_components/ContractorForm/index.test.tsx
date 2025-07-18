@@ -15,7 +15,7 @@ const contractor: SolutionContractorType = {
   __typename: 'MTOCommonSolutionContractor',
   id: '123',
   contractorName: 'MIT',
-  contractorTitle: 'Zinnia Purple'
+  contractTitle: 'Zinnia Purple'
 };
 
 describe('Contractor form', () => {

@@ -18,9 +18,9 @@ const mtoCommonSolutionContractor: TranslationMTOCommonSolutionContractorCustom 
       tableReference: TableName.MTO_COMMON_SOLUTION,
       order: 1.1
     },
-    contractorTitle: {
-      gqlField: 'contractorTitle',
-      goField: 'ContractorTitle',
+    contractTitle: {
+      gqlField: 'contractTitle',
+      goField: 'contractTitle',
       dbField: 'contractor_title',
       label: 'Contract Title',
       dataType: TranslationDataType.STRING,

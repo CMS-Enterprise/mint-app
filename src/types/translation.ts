@@ -1371,7 +1371,7 @@ export type TranslationMTOCommonSolutionContactCustom = {
 // MTO Common Solution Contractor - Change History purposes only
 export type TranslationMTOCommonSolutionContractorCustomForm = {
   key: TranslationFieldProperties;
-  contractorTitle: TranslationFieldProperties;
+  contractTitle: TranslationFieldProperties;
   contractorName: TranslationFieldProperties;
 };
 

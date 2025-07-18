@@ -11,15 +11,15 @@ post {
 }
 
 body:graphql {
-  mutation createMTOCommonSolutionContractor($key: MTOCommonSolutionKey!, $contractorTitle: String, $contractorName: String!) {
+  mutation createMTOCommonSolutionContractor($key: MTOCommonSolutionKey!, $contractTitle: String, $contractorName: String!) {
     createMTOCommonSolutionContractor(
       key: $key,
-      contractorTitle: $contractorTitle,
+      contractTitle: $contractTitle,
       contractorName: $contractorName
     ) {
       id
       key
-      contractorTitle
+      contractTitle
       contractorName
       createdBy
       createdByUserAccount {
@@ -39,7 +39,7 @@ body:graphql {
 body:graphql:vars {
   {
     "key": "INNOVATION",
-    "contractorTitle": "Primary Contractor",
+    "contractTitle": "Primary Contractor",
     "contractorName": "Best Contractor"
   }
 }

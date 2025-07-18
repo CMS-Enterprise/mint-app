@@ -5,7 +5,7 @@ export default gql(/* GraphQL */ `
     deleteMTOCommonSolutionContractor(id: $id) {
       id
       key
-      contractorTitle
+      contractTitle
       contractorName
     }
   }

@@ -14,13 +14,13 @@ const contractors: SolutionContractorType[] = [
     __typename: 'MTOCommonSolutionContractor',
     id: '123',
     contractorName: 'MIT',
-    contractorTitle: 'Zinnia Purple'
+    contractTitle: 'Zinnia Purple'
   },
   {
     __typename: 'MTOCommonSolutionContractor',
     id: '456',
     contractorName: 'MINT',
-    contractorTitle: 'Aliza Kim'
+    contractTitle: 'Aliza Kim'
   }
 ];
 

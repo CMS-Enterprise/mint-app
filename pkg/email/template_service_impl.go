@@ -235,6 +235,33 @@ var MTOCommonSolutionContractorRemovedBodyTemplate string
 //go:embed templates/mto_common_solution_contractor_removed_subject.html
 var MTOCommonSolutionContractorRemovedSubjectTemplate string
 
+// SystemOwnerAddedTemplateName is the template name for the system owner added email
+const SystemOwnerAddedTemplateName string = "mto_common_solution_system_owner_added"
+
+//go:embed templates/mto_common_solution_system_owner_added_subject.html
+var systemOwnerAddedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_system_owner_added_body.html
+var systemOwnerAddedBodyTemplate string
+
+// SystemOwnerEditedTemplateName is the template name for the system owner edited email
+const SystemOwnerEditedTemplateName string = "mto_common_solution_system_owner_edited"
+
+//go:embed templates/mto_common_solution_system_owner_edited_subject.html
+var systemOwnerEditedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_system_owner_edited_body.html
+var systemOwnerEditedBodyTemplate string
+
+// SystemOwnerRemovedTemplateName is the template name for the system owner removed email
+const SystemOwnerRemovedTemplateName string = "mto_common_solution_system_owner_removed"
+
+//go:embed templates/mto_common_solution_system_owner_removed_subject.html
+var systemOwnerRemovedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_system_owner_removed_body.html
+var systemOwnerRemovedBodyTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -363,6 +390,18 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	if err := t.loadEmailTemplate(MTOCommonSolutionContractorRemovedTemplateName, MTOCommonSolutionContractorRemovedSubjectTemplate, MTOCommonSolutionContractorRemovedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(SystemOwnerAddedTemplateName, systemOwnerAddedSubjectTemplate, systemOwnerAddedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(SystemOwnerEditedTemplateName, systemOwnerEditedSubjectTemplate, systemOwnerEditedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(SystemOwnerRemovedTemplateName, systemOwnerRemovedSubjectTemplate, systemOwnerRemovedBodyTemplate); err != nil {
 		return err
 	}
 

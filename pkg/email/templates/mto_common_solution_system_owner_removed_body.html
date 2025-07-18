@@ -1,0 +1,33 @@
+{{template "shared_header.html"}}
+{{template "shared_mto_common_solution_header.html"}}
+
+<hr/>
+
+<p>
+  A point of contact for {{.SolutionName}} has been removed. You may double-check the details below.
+</p>
+
+<br/>
+
+<p>
+  <strong>Removed contact type:</strong> System Owner<br>
+  <strong>Removed contact:</strong> {{.CmsComponent}}
+</p>
+
+<br/>
+
+<h2>
+  <a href="{{.ClientAddress}}/help-and-knowledge/operational-solutions?solution-key={{.Key}}" style="font-weight: bold;">View operational solution in MINT</a>
+</h2>
+
+<br/>
+
+<p>
+  If you believe this to be an error, please check with the operational solution team. You may edit point of contact information in MINT if it is incorrect.
+</p>
+
+<hr/>
+
+{{template "shared_mint_mailbox_footer.html"}}
+
+{{template "shared_footer.html"}}

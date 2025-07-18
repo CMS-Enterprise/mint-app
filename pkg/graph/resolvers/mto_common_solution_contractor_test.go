@@ -8,7 +8,7 @@ import (
 // TestCreateMTOCommonSolutionContractor validates creating a contractor for a common solution.
 func (suite *ResolverSuite) TestCreateMTOCommonSolutionContractor() {
 	contractorName := "Acme Health Solutions"
-	contractorTitle := "Primary Contractor"
+	contractTitle := "Primary Contractor"
 	key := models.MTOCSKInnovation
 
 	contractor, err := CreateMTOCommonSolutionContractor(
@@ -20,13 +20,13 @@ func (suite *ResolverSuite) TestCreateMTOCommonSolutionContractor() {
 		nil,
 		email.AddressBook{},
 		key,
-		&contractorTitle,
+		&contractTitle,
 		contractorName,
 	)
 	suite.NoError(err)
 	suite.NotNil(contractor)
 	suite.Equal(contractorName, contractor.ContractorName)
-	suite.Equal(contractorTitle, *contractor.ContractorTitle)
+	suite.Equal(contractTitle, *contractor.ContractTitle)
 	suite.Equal(key, contractor.Key)
 }
 
@@ -34,7 +34,7 @@ func (suite *ResolverSuite) TestCreateMTOCommonSolutionContractor() {
 func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContractor() {
 	// Create a contractor to update
 	contractorName := "Acme Health Solutions"
-	contractorTitle := "Primary Contractor"
+	contractTitle := "Primary Contractor"
 	key := models.MTOCSKInnovation
 
 	contractor, err := CreateMTOCommonSolutionContractor(
@@ -46,7 +46,7 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContractor() {
 		nil,
 		email.AddressBook{},
 		key,
-		&contractorTitle,
+		&contractTitle,
 		contractorName,
 	)
 	suite.NoError(err)
@@ -65,13 +65,13 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContractor() {
 		email.AddressBook{},
 		contractor.ID,
 		map[string]interface{}{
-			"contractorTitle": updatedTitle,
-			"contractorName":  updatedName,
+			"contractTitle":  updatedTitle,
+			"contractorName": updatedName,
 		},
 	)
 	suite.NoError(err)
 	suite.NotNil(updatedContractor)
-	suite.Equal(updatedTitle, *updatedContractor.ContractorTitle)
+	suite.Equal(updatedTitle, *updatedContractor.ContractTitle)
 	suite.Equal(updatedName, updatedContractor.ContractorName)
 }
 
@@ -79,7 +79,7 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContractor() {
 func (suite *ResolverSuite) TestGetMTOCommonSolutionContractor() {
 	// Create a contractor to retrieve
 	contractorName := "Acme Health Solutions"
-	contractorTitle := "Primary Contractor"
+	contractTitle := "Primary Contractor"
 	key := models.MTOCSKInnovation
 
 	contractor, err := CreateMTOCommonSolutionContractor(
@@ -91,7 +91,7 @@ func (suite *ResolverSuite) TestGetMTOCommonSolutionContractor() {
 		nil,
 		email.AddressBook{},
 		key,
-		&contractorTitle,
+		&contractTitle,
 		contractorName,
 	)
 	suite.NoError(err)
@@ -109,14 +109,14 @@ func (suite *ResolverSuite) TestGetMTOCommonSolutionContractor() {
 	suite.NotNil(fetchedContractor)
 	suite.Equal(contractor.ID, fetchedContractor.ID)
 	suite.Equal(contractorName, fetchedContractor.ContractorName)
-	suite.Equal(contractorTitle, *fetchedContractor.ContractorTitle)
+	suite.Equal(contractTitle, *fetchedContractor.ContractTitle)
 }
 
 // TestDeleteMTOCommonSolutionContractor validates deleting a contractor for a common solution.
 func (suite *ResolverSuite) TestDeleteMTOCommonSolutionContractor() {
 	// Create a contractor to delete
 	contractorName := "Acme Health Solutions"
-	contractorTitle := "Primary Contractor"
+	contractTitle := "Primary Contractor"
 	key := models.MTOCSKInnovation
 
 	contractor, err := CreateMTOCommonSolutionContractor(
@@ -128,7 +128,7 @@ func (suite *ResolverSuite) TestDeleteMTOCommonSolutionContractor() {
 		nil,
 		email.AddressBook{},
 		key,
-		&contractorTitle,
+		&contractTitle,
 		contractorName,
 	)
 	suite.NoError(err)

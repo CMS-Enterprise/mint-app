@@ -2,7 +2,7 @@ type MTOCommonSolutionContractor {
   id: UUID!
   key: MTOCommonSolutionKey!
 
-  contractorTitle: String
+  contractTitle: String
   contractorName: String!
 
   createdBy: UUID!
@@ -18,7 +18,7 @@ Input for creating a common solution contractor
 """
 input MTOCommonSolutionContractorChanges
   @goModel(model: "map[string]interface{}") {
-  contractorTitle: String
+  contractTitle: String
   contractorName: String
 }
 
@@ -30,7 +30,7 @@ extend type Query {
 extend type Mutation {
   createMTOCommonSolutionContractor(
     key: MTOCommonSolutionKey!
-    contractorTitle: String
+    contractTitle: String
     contractorName: String!
   ): MTOCommonSolutionContractor!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])

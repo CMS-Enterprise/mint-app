@@ -33,7 +33,7 @@ const teamMember: SolutionContactType = {
 const contractor: SolutionContractorType = {
   __typename: 'MTOCommonSolutionContractor',
   id: '123',
-  contractorTitle: 'TAGAWA',
+  contractTitle: 'TAGAWA',
   contractorName: 'Rose Blue'
 };
 

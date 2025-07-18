@@ -14,7 +14,7 @@ const mocks = [...possibleSolutionsMock];
 const contractor: SolutionContractorType = {
   __typename: 'MTOCommonSolutionContractor',
   id: '123',
-  contractorTitle: 'MIT',
+  contractTitle: 'MIT',
   contractorName: 'Aliza Kim'
 };
 
