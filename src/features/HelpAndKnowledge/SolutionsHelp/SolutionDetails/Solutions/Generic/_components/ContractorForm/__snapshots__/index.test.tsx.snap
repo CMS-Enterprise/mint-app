@@ -18,14 +18,14 @@ exports[`Contractor form > should matches snapshot 1`] = `
         <label
           class="usa-label mint-body-normal maxw-none margin-bottom-1"
           data-testid="label"
-          for="contractor-title"
+          for="contract-title"
         >
           Contract Title
         </label>
         <input
           class="usa-input"
-          data-testid="contractor-title"
-          id="contractor-title"
+          data-testid="contract-title"
+          id="contract-title"
           name="contractTitle"
           type="text"
           value=""

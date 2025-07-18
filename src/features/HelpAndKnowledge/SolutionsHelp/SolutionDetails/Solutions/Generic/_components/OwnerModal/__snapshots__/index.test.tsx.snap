@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Owner Form Component > should matches snapshot 1`] = `<DocumentFragment />`;
-
-exports[`Owner Modal Component > should matches snapshot 1`] = `<DocumentFragment />`;
-
-exports[`Owner Modal Component > should render edit owner modal 1`] = `<DocumentFragment />`;
