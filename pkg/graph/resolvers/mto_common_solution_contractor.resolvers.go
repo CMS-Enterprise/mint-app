@@ -14,11 +14,11 @@ import (
 )
 
 // CreateMTOCommonSolutionContractor is the resolver for the createMTOCommonSolutionContractor field.
-func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, key models.MTOCommonSolutionKey, contractorTitle *string, contractorName string) (*models.MTOCommonSolutionContractor, error) {
+func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context, key models.MTOCommonSolutionKey, contractTitle *string, contractorName string) (*models.MTOCommonSolutionContractor, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionContractor(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, contractorTitle, contractorName)
+	return CreateMTOCommonSolutionContractor(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, contractTitle, contractorName)
 }
 
 // UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.

@@ -8,7 +8,7 @@ export default gql(/* GraphQL */ `
     updateMTOCommonSolutionContractor(id: $id, changes: $changes) {
       id
       key
-      contractorTitle
+      contractTitle
       contractorName
       createdBy
     }
