@@ -169,7 +169,7 @@ const ContractorForm = ({
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
-                  htmlFor="contractor-title"
+                  htmlFor="contract-title"
                   className="mint-body-normal maxw-none margin-bottom-1"
                 >
                   {contractorT('contractTitle.label')}
@@ -178,8 +178,8 @@ const ContractorForm = ({
                 <TextInput
                   type="text"
                   {...field}
-                  id="contractor-title"
-                  data-testid="contractor-title"
+                  id="contract-title"
+                  data-testid="contract-title"
                   value={field.value}
                 />
               </FormGroup>

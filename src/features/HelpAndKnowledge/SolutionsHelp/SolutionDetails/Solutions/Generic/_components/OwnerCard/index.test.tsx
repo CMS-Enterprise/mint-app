@@ -2,16 +2,22 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { SystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  MtoCommonSolutionCmsComponent,
+  MtoCommonSolutionOwnerType
+} from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
 import OwnerCard from '.';
 
-const owner: SystemOwnerType = {
-  name: 'MIT',
-  system: 'Zinnia Purple'
+const owner: SolutionSystemOwnerType = {
+  __typename: 'MTOCommonSolutionSystemOwner',
+  id: 'not a real id',
+  cmsComponent: MtoCommonSolutionCmsComponent.OFFICE_OF_COMMUNICATIONS_OC,
+  ownerType: MtoCommonSolutionOwnerType.BUSINESS_OWNER
 };
 
 const mocks = [...possibleSolutionsMock];

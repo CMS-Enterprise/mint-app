@@ -4,8 +4,13 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import {
   SolutionContactType,
-  SolutionContractorType
+  SolutionContractorType,
+  SolutionSystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  MtoCommonSolutionCmsComponent,
+  MtoCommonSolutionOwnerType
+} from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -30,6 +35,13 @@ const contractor: SolutionContractorType = {
   id: '123',
   contractTitle: 'TAGAWA',
   contractorName: 'Rose Blue'
+};
+
+const owner: SolutionSystemOwnerType = {
+  __typename: 'MTOCommonSolutionSystemOwner',
+  id: 'not a real id',
+  cmsComponent: MtoCommonSolutionCmsComponent.OFFICE_OF_COMMUNICATIONS_OC,
+  ownerType: MtoCommonSolutionOwnerType.BUSINESS_OWNER
 };
 
 const mocks = [...possibleSolutionsMock];
@@ -82,6 +94,35 @@ describe('RemoveContactModal Component', () => {
       </MemoryRouter>
     );
     expect(getByText('Contractor to be removed:')).toBeInTheDocument();
+    expect(
+      queryByText('Point of contact to be removed:')
+    ).not.toBeInTheDocument();
+  });
+
+  it('should render owner context when given owner point of contact', () => {
+    const { getByText, queryByText } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MessageProvider>
+            <Route path="/help-and-knowledge/operational-solutions">
+              <RemoveContactModal
+                isModalOpen
+                closeModal={() => {}}
+                pointOfContact={owner}
+                contactType="owner"
+              />
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+    expect(
+      getByText('Business Owner or System Owner to be removed:')
+    ).toBeInTheDocument();
     expect(
       queryByText('Point of contact to be removed:')
     ).not.toBeInTheDocument();

@@ -51,6 +51,9 @@ import mtoCommonSolutionContact, {
 import mtoCommonSolutionContractor, {
   mtoCommonSolutionContractorMisc
 } from './modelPlan/mtoCommonSolutionContractor';
+import mtoCommonSolutionSystemOwner, {
+  mtoCommonSolutionSystemOwnerMisc
+} from './modelPlan/mtoCommonSolutionSystemOwner';
 import mtoMilestone from './modelPlan/mtoMilestone';
 import mtoSolution from './modelPlan/mtoSolution';
 import operationalNeeds from './modelPlan/operationalNeeds';
@@ -136,6 +139,8 @@ const enUS = {
   mtoCommonSolutionContactMisc,
   mtoCommonSolutionContractor,
   mtoCommonSolutionContractorMisc,
+  mtoCommonSolutionSystemOwner,
+  mtoCommonSolutionSystemOwnerMisc,
   mtoSolution,
   operationalNeeds,
   solutions,
