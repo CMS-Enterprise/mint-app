@@ -6,7 +6,6 @@ import "github.com/cms-enterprise/mint-app/pkg/models"
 type SystemOwnerRemovedSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
-	OwnerType       string
 }
 
 // SystemOwnerRemovedBodyContent defines the parameters necessary for the email body.
@@ -30,7 +29,7 @@ func NewSystemOwnerRemovedBodyContent(
 		SolutionAcronym: string(systemOwner.Key),
 		Key:             string(systemOwner.Key),
 		SolutionName:    solutionName,
-		CmsComponent:    string(systemOwner.CMSComponent),
-		OwnerType:       string(systemOwner.OwnerType),
+		CmsComponent:    ToTitleCase(string(systemOwner.CMSComponent)),
+		OwnerType:       ToTitleCase(string(systemOwner.OwnerType)),
 	}
 }

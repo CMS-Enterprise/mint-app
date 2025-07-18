@@ -29,7 +29,7 @@ func NewSystemOwnerAddedBodyContent(
 		Key:             string(systemOwner.Key),
 		SolutionAcronym: string(systemOwner.Key),
 		SolutionName:    solutionName,
-		CmsComponent:    string(systemOwner.CMSComponent),
-		OwnerType:       string(systemOwner.OwnerType),
+		CmsComponent:    ToTitleCase(string(systemOwner.CMSComponent)),
+		OwnerType:       ToTitleCase(string(systemOwner.OwnerType)),
 	}
 }

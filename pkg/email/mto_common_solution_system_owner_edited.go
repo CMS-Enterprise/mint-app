@@ -27,7 +27,7 @@ func NewSystemOwnerEditedBodyContent(
 	// Convert cmsComponents to a slice of strings
 	stringCmsComponents := make([]string, len(cmsComponents))
 	for i, component := range cmsComponents {
-		stringCmsComponents[i] = string(component)
+		stringCmsComponents[i] = ToTitleCase(string(component))
 	}
 
 	return SystemOwnerEditedBodyContent{

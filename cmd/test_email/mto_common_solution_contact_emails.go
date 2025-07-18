@@ -632,7 +632,6 @@ func sendSystemOwnerRemovedEmail(
 	subjectContent := email.SystemOwnerRemovedSubjectContent{
 		SolutionAcronym: string(systemOwner.Key),
 		SolutionName:    solutionName,
-		OwnerType:       string(systemOwner.OwnerType),
 	}
 	bodyContent := email.NewSystemOwnerRemovedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
