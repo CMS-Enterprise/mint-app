@@ -247,6 +247,7 @@ const OwnerForm = ({
                     <Radio
                       {...field}
                       id={option}
+                      data-testid={option}
                       value={option}
                       label={ownerTypeConfig.options[option]}
                       checked={field.value === option}
