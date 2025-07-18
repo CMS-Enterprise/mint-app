@@ -2,7 +2,7 @@
 CREATE TABLE mto_common_solution_contractor (
     id UUID PRIMARY KEY NOT NULL,
     mto_common_solution_key MTO_COMMON_SOLUTION_KEY REFERENCES mto_common_solution(key) NOT NULL,
-    contractor_title ZERO_STRING NULL,
+    contract_title ZERO_STRING NULL,
     contractor_name ZERO_STRING NOT NULL,
 
     -- META DATA

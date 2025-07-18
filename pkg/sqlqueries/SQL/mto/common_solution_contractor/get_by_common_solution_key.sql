@@ -6,7 +6,7 @@ WITH QUERIED_IDS AS (
 SELECT
     id,
     mto_common_solution_key,
-    contractor_title,
+    contract_title,
     contractor_name,
     created_by,
     created_dts,
