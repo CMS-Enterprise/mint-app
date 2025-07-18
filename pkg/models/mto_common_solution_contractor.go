@@ -21,7 +21,7 @@ func (mtoCSCI *MTOCommonSolutionContractorInformation) ContractorsList() ([]*MTO
 type MTOCommonSolutionContractor struct {
 	baseStruct
 	Key            MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
-	ContractTitle  *string              `db:"contractor_title" json:"contractTitle"`
+	ContractTitle  *string              `db:"contract_title" json:"contractTitle"`
 	ContractorName string               `db:"contractor_name" json:"contractorName"`
 }
 

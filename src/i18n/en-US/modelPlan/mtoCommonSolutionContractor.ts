@@ -21,7 +21,7 @@ const mtoCommonSolutionContractor: TranslationMTOCommonSolutionContractorCustom 
     contractTitle: {
       gqlField: 'contractTitle',
       goField: 'contractTitle',
-      dbField: 'contractor_title',
+      dbField: 'contract_title',
       label: 'Contract Title',
       dataType: TranslationDataType.STRING,
       formType: TranslationFormType.TEXT,

@@ -81,7 +81,7 @@ type MTOCommonSolutionContactTranslation struct {
 // Represents a translation of a contractor for a common solution
 type MTOCommonSolutionContractorTranslation struct {
 	Key            models.TranslationField `json:"key" db:"mto_common_solution_key"`
-	ContractTitle  models.TranslationField `json:"contractTitle" db:"contractor_title"`
+	ContractTitle  models.TranslationField `json:"contractTitle" db:"contract_title"`
 	ContractorName models.TranslationField `json:"contractorName" db:"contractor_name"`
 }
 
