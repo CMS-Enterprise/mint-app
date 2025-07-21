@@ -87,19 +87,23 @@ const OwnerForm = ({
       }
     ]
   });
+
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
 
   const disabledSubmitBtn =
     !watch('cmsComponent') || !watch('ownerType') || isSubmitting || !isDirty;
+
   const sortedCmsComponentConfig = [
     ...getKeys(cmsComponentConfig.options)
   ].sort();
+
   const cmsComponentOptions = sortedCmsComponentConfig.map(option => ({
     value: option,
     label: cmsComponentConfig.options[option]
   }));
+
   const cmsComponentInput = methods.getValues('cmsComponent');
 
   if (!selectedSolution) {
@@ -125,6 +129,7 @@ const OwnerForm = ({
             }
           }
         });
+
     promise
       .then(response => {
         if (!response?.errors) {
@@ -200,11 +205,15 @@ const OwnerForm = ({
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
                   htmlFor="cms-component"
-                  className="mint-body-normal maxw-none margin-bottom-1"
+                  className="mint-body-normal maxw-none margin-bottom-0"
                   requiredMarker
                 >
                   {ownerT('cmsComponent.label')}
                 </Label>
+
+                <span className="text-base-dark">
+                  {ownerT('cmsComponent.sublabel')}
+                </span>
 
                 <ComboBox
                   {...field}
@@ -236,7 +245,7 @@ const OwnerForm = ({
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
                   htmlFor="owner-type"
-                  className="mint-body-normal maxw-none margin-bottom-1"
+                  className="mint-body-normal maxw-none margin-bottom-0"
                   requiredMarker
                 >
                   {ownerT('ownerType.label')}
