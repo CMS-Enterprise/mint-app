@@ -95,95 +95,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > 4innovati
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -333,95 +257,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Accountab
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -571,95 +419,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Actuarial
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -809,95 +581,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Automated
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -1047,95 +743,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Beneficia
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -1285,95 +905,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMMI Anal
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -1523,95 +1067,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMMI Data
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -1761,95 +1229,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMS Box 1
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -1999,95 +1391,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > CMS Qualt
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -2237,95 +1553,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > CPI Vetti
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -2475,95 +1715,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Centraliz
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -2713,95 +1877,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Chronic C
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -2951,95 +2039,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Consolida
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -3189,95 +2201,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Division 
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -3427,95 +2363,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Drug Data
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -3665,95 +2525,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Electroni
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -3903,95 +2687,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Enterpris
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -4141,95 +2849,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Expanded 
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -4379,95 +3011,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Federal F
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -4617,95 +3173,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > GovDelive
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -4855,95 +3335,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > GrantSolu
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -5093,95 +3497,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Health Da
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -5331,95 +3659,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Health Pl
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -5569,95 +3821,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Healthcar
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -5807,95 +3983,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -6045,95 +4145,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -6283,95 +4307,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Innovatio
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -6521,95 +4469,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Integrate
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -6759,95 +4631,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Learning 
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -6997,95 +4793,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Legal Ver
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -7235,95 +4955,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Master Da
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -7473,95 +5117,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Master Da
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -7711,95 +5279,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Measure a
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -7949,95 +5441,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Medicare 
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -8187,95 +5603,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Model Spa
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -8425,95 +5765,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Office of
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -8663,95 +5927,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Outlook M
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -8901,95 +6089,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Patient A
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -9139,95 +6251,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Quality P
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -9377,95 +6413,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Quality V
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -9615,95 +6575,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Research 
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -9853,95 +6737,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Research,
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -10091,95 +6899,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Risk Adju
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -10329,95 +7061,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -10567,95 +7223,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -10805,95 +7385,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -11043,95 +7547,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -11281,95 +7709,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Salesforc
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -11519,95 +7871,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Shared Sy
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -11757,95 +8033,19 @@ exports[`Generic Points of Contact Components > matches the snapshot > Transform
         Add owner information
       </button>
       <div
-        data-testid="owner-cards"
+        class="usa-alert usa-alert--info usa-alert--slim flex"
+        data-testid="alert"
       >
         <div
-          class="margin-bottom-3"
+          class="usa-alert__body"
         >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
+          <p
+            class="usa-alert__text"
           >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Enterprise Systems Solutions Group, Division of Applications Development and Support
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Office of Information Technology
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-3"
-        >
-          <li
-            class="usa-card margin-bottom-0"
-            data-testid="Card"
-          >
-            <div
-              class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-            >
-              <div
-                class="usa-card__body padding-0 margin-bottom-0"
-                data-testid="CardBody"
-              >
-                <h3
-                  class="margin-bottom-0 line-height-sans-2"
-                >
-                  Medicare Plan Payment Group, Division of Payment Operations
-                </h3>
-                <p
-                  class="margin-top-1 line-height-sans-5"
-                >
-                  Center for Medicare
-                </p>
-              </div>
-            </div>
-          </li>
-          <div>
-            <button
-              class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="button"
-              type="button"
-            >
-              Edit
-            </button>
-            <button
-              class="usa-button usa-button--unstyled text-error"
-              data-testid="button"
-              type="button"
-            >
-              Remove owner
-            </button>
-          </div>
+            <span>
+              No Business Owner or System Owner is listed for this solution.
+            </span>
+          </p>
         </div>
       </div>
     </div>

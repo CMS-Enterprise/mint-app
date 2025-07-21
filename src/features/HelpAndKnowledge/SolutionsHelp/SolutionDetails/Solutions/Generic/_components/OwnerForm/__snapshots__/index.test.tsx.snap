@@ -19,7 +19,7 @@ exports[`Owner Form Component > should matches snapshot 1`] = `
         data-testid="formGroup"
       >
         <label
-          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          class="usa-label mint-body-normal maxw-none margin-bottom-0"
           data-testid="label"
           for="cms-component"
         >
@@ -31,6 +31,11 @@ exports[`Owner Form Component > should matches snapshot 1`] = `
             *
           </abbr>
         </label>
+        <span
+          class="text-base-dark"
+        >
+          Select from the list of CMS offices and centers.
+        </span>
         <div
           class="usa-combo-box"
           data-enhanced="true"
@@ -578,7 +583,7 @@ exports[`Owner Form Component > should matches snapshot 1`] = `
         data-testid="formGroup"
       >
         <label
-          class="usa-label mint-body-normal maxw-none margin-bottom-1"
+          class="usa-label mint-body-normal maxw-none margin-bottom-0"
           data-testid="label"
           for="owner-type"
         >
