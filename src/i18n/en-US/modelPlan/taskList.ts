@@ -86,6 +86,13 @@ const modelPlanTaskList = {
     confirmationText_noName: 'The request has been removed'
   },
   numberedList: {
+    timeline: {
+      heading: 'Model timeline',
+      team: 'Start filling out as much of the model timeline as you know and reach out to the MINT Team if you need help. The model timeline includes the key milestones and dates for your model.',
+      assessment:
+        'The Model Team will fill out as much of the model timeline as they know and reach out to you if they need help.',
+      path: 'model-timeline'
+    },
     basics: {
       heading: 'Model basics',
       team: 'Start filling out as much of the basic model information as you know and reach out to the MINT Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
@@ -172,7 +179,8 @@ const modelPlanTaskList = {
     'it-solutions': 'Operational solutions tracker',
     'ops-eval-and-learning': 'Operation, evaluation, and learning',
     'participants-and-providers': 'Participants and providers',
-    payment: 'payment'
+    payment: 'payment',
+    'model-timeline': 'Model timeline'
   },
   lockErrorHeading: 'Sorry, an has error occured.',
   lockErrorInfo: 'Please return to the task list and try again.',

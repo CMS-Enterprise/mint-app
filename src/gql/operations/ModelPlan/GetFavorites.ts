@@ -12,6 +12,9 @@ export default gql(/* GraphQL */ `
       basics {
         id
         goal
+      }
+      timeline {
+        id
         performancePeriodStarts
       }
       collaborators {

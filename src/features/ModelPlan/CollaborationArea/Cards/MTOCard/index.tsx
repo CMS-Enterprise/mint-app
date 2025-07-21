@@ -9,7 +9,10 @@ import {
   CardHeader
 } from '@trussworks/react-uswds';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
+import {
+  GetCollaborationAreaQuery,
+  LockableSection
+} from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import Modal from 'components/Modal';
@@ -20,7 +23,7 @@ import { formatDateLocal } from 'utils/date';
 
 export type MtoCardProps = {
   modelID: string;
-  mtoMatrix: GetModelPlanQuery['modelPlan']['mtoMatrix'];
+  mtoMatrix: GetCollaborationAreaQuery['modelPlan']['mtoMatrix'];
 };
 
 const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {

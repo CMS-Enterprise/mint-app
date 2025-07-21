@@ -342,16 +342,19 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
 	suite.NoError(err)
 
-	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	timeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	dateStr := "2020-05-13T20:47:50.12Z"
+	dateVal, err := time.Parse(time.RFC3339Nano, dateStr)
 	suite.NoError(err)
 	changes := map[string]interface{}{
-		"performancePeriodStarts": "2020-05-13T20:47:50.12Z",
+		"performancePeriodStarts": dateVal,
 	}
 
-	basics, err = UpdatePlanBasics(
+	timeline, err = UpdatePlanTimeline(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		basics.ID,
+		timeline.ID,
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -368,7 +371,7 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 	suite.NoError(err)
 
 	suite.EqualValues(plan.Abbreviation, solutionSelectedDetails.ModelAbbreviation)
-	suite.EqualValues(basics.PerformancePeriodStarts, solutionSelectedDetails.ModelStartDate)
+	suite.EqualValues(timeline.PerformancePeriodStarts, solutionSelectedDetails.ModelStartDate)
 	suite.EqualValues(plan.ModelName, solutionSelectedDetails.ModelName)
 	suite.EqualValues(plan.Status, solutionSelectedDetails.ModelStatus)
 	suite.EqualValues(sol.Status, solutionSelectedDetails.SolutionStatus)

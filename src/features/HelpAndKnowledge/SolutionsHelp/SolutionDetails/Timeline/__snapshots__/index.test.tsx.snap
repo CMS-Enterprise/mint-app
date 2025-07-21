@@ -2567,19 +2567,16 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
 
 
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Go to Onboarding Request Form for MDM-POR
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2592,7 +2589,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2617,19 +2614,16 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
 
 
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Go to ICD and Onboarding Mapping for MDM-POR
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2642,7 +2636,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ol>
     </div>
@@ -2701,19 +2695,16 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
 
 
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Go to Onboarding Request Form for MDM-NCBP
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2726,7 +2717,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2751,19 +2742,16 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
 
 
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Go to ICD and Onboarding Mapping for MDM-NCBP
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2776,7 +2764,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
                 />
               </svg>
             </span>
-          </button>
+          </span>
         </li>
       </ol>
     </div>
@@ -3054,19 +3042,16 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mode
           </h3>
           Access your Model Space in Databricks.
 
-          <button
-            class="usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
+          <span
+            class="usa-link pointer"
+            role="button"
+            tabindex="0"
           >
-            <span
-              class="display-flex flex-align-center line-height-normal"
-              style="column-gap: 0.25rem;"
-            >
+            <span>
               Go to Databricks
               <svg
                 aria-label="launch"
-                class="usa-icon"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3079,7 +3064,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mode
                 />
               </svg>
             </span>
-          </button>
+          </span>
            
         </li>
       </ol>

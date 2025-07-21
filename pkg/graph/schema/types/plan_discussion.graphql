@@ -4,7 +4,7 @@ PlanDiscussion represents plan discussion
 type PlanDiscussion {
   id: UUID!
   modelPlanID: UUID!
-  content: TaggedContent
+  content: TaggedContent @goField(forceResolver: true)
   userRole: DiscussionUserRole
   userRoleDescription: String
   replies: [DiscussionReply!]!

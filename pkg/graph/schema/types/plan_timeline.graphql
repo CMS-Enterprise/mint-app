@@ -1,0 +1,66 @@
+type UpcomingTimelineDate {
+  date: Time!
+  dateField: String!
+}
+
+"""
+Represents PlanTimeline
+"""
+type PlanTimeline {
+  id: UUID!
+  modelPlanID: UUID!
+
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  upcomingTimelineDate: UpcomingTimelineDate
+  datesAddedCount: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+"""
+PlanTimelineChanges represents the possible changes you can make to a Timeline object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanTimeline(id: UUID!, changes: PlanTimelineChanges!): PlanTimeline!
+    @hasRole(role: MINT_USER)
+}

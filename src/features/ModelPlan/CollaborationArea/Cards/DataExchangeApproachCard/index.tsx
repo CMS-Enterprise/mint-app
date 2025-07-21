@@ -9,7 +9,10 @@ import {
   CardHeader
 } from '@trussworks/react-uswds';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
+import {
+  GetCollaborationAreaQuery,
+  LockableSection
+} from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -19,7 +22,7 @@ import { formatDateLocal } from 'utils/date';
 import '../cards.scss';
 
 export type DataExchangeApproachType =
-  GetModelPlanQuery['modelPlan']['dataExchangeApproach'];
+  GetCollaborationAreaQuery['modelPlan']['dataExchangeApproach'];
 
 type DataExchangeApproachCardType = {
   modelID: string;

@@ -10,6 +10,7 @@ import (
 	"github.com/guregu/null/zero"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/spf13/cobra"
@@ -190,24 +191,36 @@ func (s *Seeder) SeedData() {
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT", nil)
 	s.updatePlanBasics(
 		s.Config.Context,
-		nil,
-		nil,
-		email.AddressBook{},
 		planWithBasics,
 		map[string]interface{}{
-			"modelType":       []models.ModelType{models.MTVoluntary},
-			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI"},
-			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"phasedIn":        true,
-			"clearanceStarts": now,
-			"highLevelNote":   "Some high level note",
+			"modelType":  []models.ModelType{models.MTVoluntary},
+			"goal":       "Some goal",
+			"cmsCenters": []string{"CMMI"},
+			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
 	s.updateModelPlan(planWithBasics, map[string]interface{}{
 		"abbreviation": "basics",
+		"status":       models.ModelStatusActive,
+	})
+
+	// Seed a plan with some information already in it
+	planWithTimeline := s.createModelPlan("Plan with Timeline", "MINT", nil)
+	s.updatePlanTimeline(
+		s.Config.Context,
+		nil,
+		nil,
+		email.AddressBook{},
+		planWithTimeline,
+		map[string]interface{}{
+			"completeICIP":    "2020-05-13T20:47:50.12Z",
+			"clearanceStarts": now.AddDate(0, 0, 10),
+			"highLevelNote":   "Some high level note",
+		},
+	)
+	s.updateModelPlan(planWithTimeline, map[string]interface{}{
+		"abbreviation": "timeline",
 		"status":       models.ModelStatusActive,
 	})
 
@@ -258,7 +271,7 @@ func (s *Seeder) SeedData() {
 
 			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits",
 
-			"isDataExchangeApproachComplete": true,
+			"isDataExchangeApproachComplete": helpers.PointerTo(true),
 		},
 	)
 
@@ -397,21 +410,14 @@ func (s *Seeder) SeedData() {
 		})
 	s.updatePlanBasics(
 		s.Config.Context,
-		s.Config.EmailService,
-		s.Config.EmailTemplateService,
-		s.Config.AddressBook,
 		sampleModelPlan,
 		map[string]interface{}{
-			"amsModelID":      "123",
-			"demoCode":        "1",
-			"modelType":       []models.ModelType{models.MTVoluntary},
-			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI"},
-			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"phasedIn":        true,
-			"clearanceStarts": now,
-			"highLevelNote":   "Some high level note",
+			"amsModelID": "123",
+			"demoCode":   "1",
+			"modelType":  []models.ModelType{models.MTVoluntary},
+			"goal":       "Some goal",
+			"cmsCenters": []string{"CMMI"},
+			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 		},
 	)
 
@@ -448,19 +454,14 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusPaused,
 	})
 
-	s.updatePlanBasics(
+	s.updatePlanTimeline(
 		s.Config.Context,
 		nil,
 		nil,
 		email.AddressBook{},
 		planApproachingClearance,
 		map[string]interface{}{
-			"modelType":       []models.ModelType{models.MTVoluntary},
-			"goal":            "Some goal",
-			"cmsCenters":      []string{"CMMI"},
-			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
-			"phasedIn":        true,
 			"clearanceStarts": now.AddDate(0, 3, 0),
 			"highLevelNote":   "Some high level note",
 		},

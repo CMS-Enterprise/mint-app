@@ -23,7 +23,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         class="collaboration-area__status flex-align-center"
       >
         <div
-          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning width-fit-content"
           data-testid="tasklist-tag"
         >
           <span>
@@ -85,7 +85,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         </a>
         <button
           class="usa-button usa-button usa-button--outline"
-          data-testid="button"
+          data-testid="share-export-button"
           type="button"
         >
           Share or export Model Plan

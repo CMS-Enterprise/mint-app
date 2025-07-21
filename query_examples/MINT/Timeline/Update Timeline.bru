@@ -1,0 +1,52 @@
+meta {
+  name: Update Timeline
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation UpdateTimeline ($id: UUID!, $changes: PlanTimelineChanges!) {
+      updatePlanTimeline (id: $id, changes: $changes) {
+          id
+          completeICIP
+          clearanceStarts
+          clearanceEnds
+          announced
+          applicationsStart
+          applicationsEnd
+          performancePeriodStarts
+          performancePeriodEnds
+          wrapUpEnds
+          highLevelNote
+          datesAddedCount
+          upcomingTimelineDate {
+            date
+            dateField
+          }
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{timelineID}}",
+    "changes": {
+        "completeICIP": "2026-09-01T00:00:00Z",
+        "clearanceStarts": "2021-09-01T00:00:00Z",
+        "clearanceEnds": "2021-10-01T00:00:00Z",
+        "announced": "2021-11-01T00:00:00Z",
+        "applicationsStart": "2021-12-01T00:00:00Z",
+        "applicationsEnd": "2022-09-01T00:00:00Z",
+        "performancePeriodStarts": "2023-09-01T00:00:00Z",
+        "performancePeriodEnds": "2024-09-01T00:00:00Z",
+        "wrapUpEnds": "2025-09-01T00:00:00Z",
+        "highLevelNote": "high level note"
+    }
+  }
+}

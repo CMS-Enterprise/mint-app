@@ -13,6 +13,11 @@ export default gql(/* GraphQL */ `
         goal
         testInterventions
         note
+        readyForReviewByUserAccount {
+          ...ReadyForReviewUserFragment
+        }
+        readyForReviewDts
+        status
       }
     }
   }
