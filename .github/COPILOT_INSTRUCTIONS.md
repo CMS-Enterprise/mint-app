@@ -38,7 +38,7 @@ This document provides specific instructions for GitHub Copilot when reviewing p
 
 #### Required Patterns to Check
 - **Base Struct Pattern**: All models should extend `baseStruct` with proper UUID ID
-- **Store Pattern**: CRUD operations should follow `func (s *Store) ModelCreate(np sqlutils.NamedPreparer, logger *zap.Logger, model *models.Model) (*models.Model, error)` pattern
+**Store Pattern**: CRUD operations should follow `func (s *Store) {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error)` pattern (e.g., `ModelPlanCreate`, `UserAccountCreate`)
 - **Handler Pattern**: All handlers should extend `HandlerBase` and use structured error responses
 - **Principal Pattern**: Authentication checks should use `Principal` interface
 - **Logging Pattern**: Use structured logging with Zap, include context and trace IDs
@@ -54,9 +54,9 @@ result, _ := someFunction()
 // ❌ Hardcoded strings instead of constants
 if role == "admin" {
 
-// ❌ Missing logging in error cases
+// ❌ Bare error passthrough (acceptable currently, but prefer wrapped errors)
 if err != nil {
-    return nil, err
+    return nil, err  // Consider: errors.Wrap(err, "context about operation")
 }
 
 // ❌ Non-descriptive function names
@@ -69,14 +69,19 @@ func SensitiveOperation() {}
 #### Go Best Practices to Enforce
 ```go
 // ✅ Proper transaction handling
-func (s *Store) ModelCreate(np sqlutils.NamedPreparer, logger *zap.Logger, model *models.Model) (*models.Model, error) {
+func (s *Store) {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error) {
     // Implementation
 }
 
-// ✅ Structured error handling with logging
+// ✅ Preferred: Error wrapping with context (moving toward this pattern)
 if err != nil {
     logger.Error("Failed to create model", zap.Error(err), zap.String("operation", "ModelCreate"))
     return nil, errors.Wrap(err, "failed to create model")
+}
+
+// ✅ Acceptable: Simple passthrough (current common pattern)
+if err != nil {
+    return nil, err
 }
 
 // ✅ Proper authorization pattern
