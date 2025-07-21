@@ -23,6 +23,7 @@ import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
+import isEnumValue from 'utils/enum';
 import dirtyInput from 'utils/formUtil';
 
 import { ModeType } from '../OwnerModal';
@@ -30,15 +31,6 @@ import { ModeType } from '../OwnerModal';
 type FormValues = Partial<
   Pick<SolutionSystemOwnerType, 'cmsComponent' | 'ownerType'>
 >;
-
-const isValidCmsComponent = (
-  value: string | undefined
-): value is MtoCommonSolutionCmsComponent => {
-  return (
-    value !== undefined &&
-    (Object.values(MtoCommonSolutionCmsComponent) as string[]).includes(value)
-  );
-};
 
 const OwnerForm = ({
   mode,
@@ -73,6 +65,7 @@ const OwnerForm = ({
 
   const { selectedSolution } = useModalSolutionState();
   const { showMessage } = useMessage();
+
   const [create] = useCreateMtoCommonSolutionSystemOwnerMutation({
     refetchQueries: [
       {
@@ -80,6 +73,7 @@ const OwnerForm = ({
       }
     ]
   });
+
   const [update] = useUpdateMtoCommonSolutionSystemOwnerMutation({
     refetchQueries: [
       {
@@ -220,7 +214,10 @@ const OwnerForm = ({
                   id="cms-component"
                   name="cms-component"
                   onChange={value => {
-                    const verifiedValue = isValidCmsComponent(value)
+                    const verifiedValue = isEnumValue(
+                      MtoCommonSolutionCmsComponent,
+                      value
+                    )
                       ? value
                       : undefined;
                     setValue('cmsComponent', verifiedValue, {
