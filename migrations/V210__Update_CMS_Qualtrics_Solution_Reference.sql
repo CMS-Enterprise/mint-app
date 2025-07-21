@@ -6,7 +6,7 @@ DISABLE TRIGGER audit_trigger;
 UPDATE mto_solution AS solution
 SET 
     mto_common_solution_key = NULL,
-    name = 'CMS QUALTRICS',
+    name = 'CMS Qualtrics',
     type = 'IT_SYSTEM',
     modified_by = '00000001-0001-0001-0001-000000000001', -- System Account
     modified_dts = CURRENT_TIMESTAMP,

@@ -58,10 +58,6 @@ ALTER TABLE mto_common_solution_contact
 DISABLE TRIGGER audit_trigger;
 ALTER TABLE mto_solution
 DISABLE TRIGGER audit_trigger;
--- ALTER TABLE mto_common_milestone_solution_link 
--- DISABLE TRIGGER audit_trigger;
--- ALTER TABLE mto_common_solution
--- DISABLE TRIGGER audit_trigger;
 ALTER TABLE user_view_customization
 DISABLE TRIGGER audit_trigger;
 
@@ -119,10 +115,6 @@ ALTER TABLE mto_common_solution_contact
 ENABLE TRIGGER audit_trigger;
 ALTER TABLE mto_solution
 ENABLE TRIGGER audit_trigger;
--- ALTER TABLE mto_common_milestone_solution_link 
--- ENABLE TRIGGER audit_trigger;
--- ALTER TABLE mto_common_solution
--- ENABLE TRIGGER audit_trigger;
 ALTER TABLE user_view_customization
 ENABLE TRIGGER audit_trigger;
 
