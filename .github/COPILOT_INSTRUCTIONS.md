@@ -69,7 +69,7 @@ func SensitiveOperation() {}
 #### Go Best Practices to Enforce
 ```go
 // ✅ Proper transaction handling
-func (s *Store) {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error) {
+func {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error) {
     // Implementation
 }
 
