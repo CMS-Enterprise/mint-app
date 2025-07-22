@@ -76,9 +76,9 @@ func {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} 
     // Implementation
 }
 
-// ✅ Preferred: Error wrapping with context (moving toward this pattern)
+// ✅ Preferred: Error wrapping with context (moving toward this pattern). Make sure this error is actionable and should create an alert, otherwise use logger.warn
 if err != nil {
-    logger.Error("Failed to create model", zap.Error(err), zap.String("operation", "ModelCreate"))
+    logger.("Failed to create model", zap.Error(err))
     return nil, errors.Wrap(err, "failed to create model")
 }
 
@@ -86,6 +86,10 @@ if err != nil {
 if err != nil {
     return nil, err
 }
+
+// ✅ Preferred: Passing a logger at the highest level of a function chain, to allow field decorations to be passed to descendant functions
+  ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, logger *zap.Logger)
+
 
 ```
 
