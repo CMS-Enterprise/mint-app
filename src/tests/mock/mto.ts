@@ -31,7 +31,9 @@ import {
   GetMtoSolutionsAndMilestonesQuery,
   GetMtoSolutionsAndMilestonesQueryVariables,
   MtoCommonMilestoneKey,
+  MtoCommonSolutionCmsComponent,
   MtoCommonSolutionKey,
+  MtoCommonSolutionOwnerType,
   MtoCommonSolutionSubject,
   MtoFacilitator,
   MtoMilestoneStatus,
@@ -346,6 +348,15 @@ export const possibleSolutionsMock: MockedResponse<
           {
             __typename: 'MTOCommonSolution',
             key: MtoCommonSolutionKey.ACO_OS,
+            systemOwners: [
+              {
+                __typename: 'MTOCommonSolutionSystemOwner',
+                id: 'UUID',
+                ownerType: MtoCommonSolutionOwnerType.SYSTEM_OWNER,
+                cmsComponent:
+                  MtoCommonSolutionCmsComponent.CENTER_FOR_MEDICARE_CM
+              }
+            ],
             contractors: [
               {
                 __typename: 'MTOCommonSolutionContractor',

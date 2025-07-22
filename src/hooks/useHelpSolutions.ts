@@ -32,7 +32,8 @@ export const mapContactsToSolutions = (
     return {
       ...solutions[solution],
       contractors: foundSolution?.contractors,
-      pointsOfContact: foundSolution?.contactInformation.pointsOfContact
+      pointsOfContact: foundSolution?.contactInformation.pointsOfContact,
+      systemOwners: foundSolution?.systemOwners
     };
   });
 };

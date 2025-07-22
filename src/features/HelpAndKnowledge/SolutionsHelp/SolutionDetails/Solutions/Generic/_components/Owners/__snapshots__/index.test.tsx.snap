@@ -54,12 +54,12 @@ exports[`Owners Component > should matches snapshot 1`] = `
               <h3
                 class="margin-bottom-0 line-height-sans-2"
               >
-                MINT
+                Office of Communications (OC)
               </h3>
               <p
                 class="margin-top-1 line-height-sans-5"
               >
-                CMM
+                Business Owner
               </p>
             </div>
           </div>
@@ -98,12 +98,12 @@ exports[`Owners Component > should matches snapshot 1`] = `
               <h3
                 class="margin-bottom-0 line-height-sans-2"
               >
-                MIT
+                Office of Communications (OC)
               </h3>
               <p
                 class="margin-top-1 line-height-sans-5"
               >
-                Zinnia Purple
+                System Owner
               </p>
             </div>
           </div>

@@ -41,7 +41,7 @@ describe('Contractor form', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('contractor-title')).toHaveValue('Zinnia Purple');
+      expect(getByTestId('contract-title')).toHaveValue('Zinnia Purple');
       expect(getByTestId('contractor-name')).toHaveValue('MIT');
     });
   });
