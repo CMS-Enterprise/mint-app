@@ -16,7 +16,7 @@ import (
 )
 
 // UpdatePlanPayments is the resolver for the updatePlanPayments field.
-func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error) {
+func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanPayments, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 

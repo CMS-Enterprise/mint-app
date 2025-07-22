@@ -22,7 +22,7 @@ func (r *mutationResolver) CreatePlanCr(ctx context.Context, input model.PlanCRC
 }
 
 // UpdatePlanCr is the resolver for the updatePlanCR field.
-func (r *mutationResolver) UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCR, error) {
+func (r *mutationResolver) UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanCR, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return PlanCRUpdate(logger, id, changes, principal, r.store)

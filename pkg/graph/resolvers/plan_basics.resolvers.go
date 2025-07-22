@@ -16,7 +16,7 @@ import (
 )
 
 // UpdatePlanBasics is the resolver for the updatePlanBasics field.
-func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
+func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanBasics, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 

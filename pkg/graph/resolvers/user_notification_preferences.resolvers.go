@@ -13,7 +13,7 @@ import (
 )
 
 // UpdateUserNotificationPreferences is the resolver for the updateUserNotificationPreferences field.
-func (r *mutationResolver) UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error) {
+func (r *mutationResolver) UpdateUserNotificationPreferences(ctx context.Context, changes map[string]any) (*models.UserNotificationPreferences, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
