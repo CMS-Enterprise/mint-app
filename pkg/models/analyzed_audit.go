@@ -48,6 +48,7 @@ type AnalyzedAuditChange struct {
 	ModelLeads               *AnalyzedModelLeads               `json:"modelLeads,omitempty"`
 	PlanDiscussions          *AnalyzedPlanDiscussions          `json:"planDiscussion,omitempty"`
 	PlanDataExchangeApproach *AnalyzedPlanDataExchangeApproach `json:"planDataExchangeApproach,omitempty"`
+	MTOUpdates               *AnalyzedMTOUpdates               `json:"mtoUpdates,omitempty"`
 }
 
 // IsEmpty returns if AnalyzedAuditChange struct is empty
@@ -442,4 +443,21 @@ func (a *AnalyzedPlanDataExchangeApproach) Humanize() string {
 	}
 
 	return ""
+}
+
+type AnalyzedMTOUpdates struct {
+	ReadyForReview bool   `json:"readyForReview,omitempty"`
+	ContentUpdates string `json:"contentUpdates,omitempty"`
+}
+
+// Humanize returns MTO updates in a human-readable format
+func (a *AnalyzedMTOUpdates) Humanize() []string {
+	var updates []string
+	if a.ReadyForReview {
+		updates = append(updates, "MTO is ready for review")
+	}
+	if a.ContentUpdates != "" {
+		updates = append(updates, fmt.Sprintf("MTO content updates: %s", a.ContentUpdates))
+	}
+	return updates
 }
