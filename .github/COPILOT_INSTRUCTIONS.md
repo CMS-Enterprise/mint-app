@@ -34,12 +34,13 @@ This document provides specific instructions for GitHub Copilot when reviewing p
 
 ## Technology-Specific Guidelines
 
+### Graphql Schema File Reviews
+
 ### Go Backend Review
 
 #### Required Patterns to Check
 - **Base Struct Pattern**: All models should extend `baseStruct` with proper UUID ID
-**Store Pattern**: CRUD operations should follow `func (s *Store) {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error)` pattern (e.g., `ModelPlanCreate`, `UserAccountCreate`)
-- **Handler Pattern**: All handlers should extend `HandlerBase` and use structured error responses
+**Store Pattern**: CRUD operations should follow `func {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error)` pattern (e.g., `ModelPlanCreate`, `UserAccountCreate`)
 - **Principal Pattern**: Authentication checks should use `Principal` interface
 - **Logging Pattern**: Use structured logging with Zap, include context and trace IDs
 
