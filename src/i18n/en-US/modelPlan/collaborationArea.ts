@@ -62,6 +62,16 @@ const collaborationArea = {
     modelMilestonesAdded: 'Model milestones added: {{count}}',
     goToMatrix: 'Go to matrix',
     shareOrExport: 'Share or export matrix'
+  },
+  timelineCard: {
+    heading: 'Model timeline',
+    body: 'Add all your essential model dates, such as when you anticipate completing your ICIP, going through clearance, announcing the model, and when it will be active. As you iterate on the plans for your model, please be sure to keep this space up-to-date.',
+    datesAddedCount: '{{datesAddedCount}}/9 dates added',
+    upcomingDate: '<bold>Upcoming date:</bold> {{dateField}} ({{date}})',
+    mostRecentEdit: 'Most recent edit on {{-date}} by ',
+    startTimeline: 'Start timeline',
+    editTimeline: 'Edit timeline',
+    shareButton: 'Share or export timeline'
   }
 };
 

@@ -217,18 +217,6 @@ type PlanBasicsTranslation struct {
 	Goal                      models.TranslationField            `json:"goal" db:"goal"`
 	TestInterventions         models.TranslationField            `json:"testInterventions" db:"test_interventions"`
 	Note                      models.TranslationField            `json:"note" db:"note"`
-	CompleteIcip              models.TranslationField            `json:"completeICIP" db:"complete_icip"`
-	ClearanceStarts           models.TranslationField            `json:"clearanceStarts" db:"clearance_starts"`
-	ClearanceEnds             models.TranslationField            `json:"clearanceEnds" db:"clearance_ends"`
-	Announced                 models.TranslationField            `json:"announced" db:"announced"`
-	ApplicationsStart         models.TranslationField            `json:"applicationsStart" db:"applications_starts"`
-	ApplicationsEnd           models.TranslationField            `json:"applicationsEnd" db:"applications_ends"`
-	PerformancePeriodStarts   models.TranslationField            `json:"performancePeriodStarts" db:"performance_period_starts"`
-	PerformancePeriodEnds     models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
-	WrapUpEnds                models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
-	HighLevelNote             models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
-	PhasedIn                  models.TranslationFieldWithOptions `json:"phasedIn" db:"phased_in"`
-	PhasedInNote              models.TranslationField            `json:"phasedInNote" db:"phased_in_note"`
 	ReadyForReviewBy          models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts         models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	ReadyForClearanceBy       models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
@@ -411,6 +399,8 @@ type PlanGeneralCharacteristicsTranslation struct {
 	HasComponentsOrTracks                        models.TranslationFieldWithOptions            `json:"hasComponentsOrTracks" db:"has_components_or_tracks"`
 	HasComponentsOrTracksDiffer                  models.TranslationField                       `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
 	HasComponentsOrTracksNote                    models.TranslationField                       `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
+	PhasedIn                                     models.TranslationFieldWithOptions            `json:"phasedIn" db:"phased_in"`
+	PhasedInNote                                 models.TranslationField                       `json:"phasedInNote" db:"phased_in_note"`
 	AgencyOrStateHelp                            models.TranslationFieldWithOptions            `json:"agencyOrStateHelp" db:"agency_or_state_help"`
 	AgencyOrStateHelpOther                       models.TranslationField                       `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
 	AgencyOrStateHelpNote                        models.TranslationField                       `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
@@ -745,6 +735,25 @@ type PlanTDLTranslation struct {
 	Note          models.TranslationField `json:"note" db:"note"`
 }
 
+// Represents plan timeline translation data
+type PlanTimelineTranslation struct {
+	CompleteIcip            models.TranslationField            `json:"completeICIP" db:"complete_icip"`
+	ClearanceStarts         models.TranslationField            `json:"clearanceStarts" db:"clearance_starts"`
+	ClearanceEnds           models.TranslationField            `json:"clearanceEnds" db:"clearance_ends"`
+	Announced               models.TranslationField            `json:"announced" db:"announced"`
+	ApplicationsStart       models.TranslationField            `json:"applicationsStart" db:"applications_starts"`
+	ApplicationsEnd         models.TranslationField            `json:"applicationsEnd" db:"applications_ends"`
+	PerformancePeriodStarts models.TranslationField            `json:"performancePeriodStarts" db:"performance_period_starts"`
+	PerformancePeriodEnds   models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
+	WrapUpEnds              models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
+	HighLevelNote           models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
+	ReadyForReviewBy        models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts       models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy     models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts    models.TranslationField            `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
+	Status                  models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
 type PrepareForClearance struct {
 	Status             PrepareForClearanceStatus `json:"status"`
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
@@ -779,6 +788,11 @@ type SendFeedbackEmailInput struct {
 }
 
 type Subscription struct {
+}
+
+type UpcomingTimelineDate struct {
+	Date      time.Time `json:"date"`
+	DateField string    `json:"dateField"`
 }
 
 type ActionType string

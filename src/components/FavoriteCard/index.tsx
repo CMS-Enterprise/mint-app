@@ -37,6 +37,7 @@ const FavoriteCard = ({
   const {
     id,
     basics,
+    timeline,
     collaborators,
     echimpCRsAndTDLs,
     modelName,
@@ -117,8 +118,8 @@ const FavoriteCard = ({
           <Grid tablet={{ col: 4 }} mobile={{ col: isMobile ? 6 : 12 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.startDate`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
-              {basics.performancePeriodStarts ? (
-                formatDateUtc(basics.performancePeriodStarts, 'MMMM d, yyyy')
+              {timeline.performancePeriodStarts ? (
+                formatDateUtc(timeline.performancePeriodStarts, 'MMMM d, yyyy')
               ) : (
                 <i>{t('favorite.toBeDetermined')}</i>
               )}

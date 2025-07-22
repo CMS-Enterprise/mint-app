@@ -27,18 +27,6 @@ export default gql(/* GraphQL */ `
         goal
         testInterventions
         note
-        completeICIP
-        clearanceStarts
-        clearanceEnds
-        announced
-        applicationsStart
-        applicationsEnd
-        performancePeriodStarts
-        performancePeriodEnds
-        highLevelNote
-        wrapUpEnds
-        phasedIn
-        phasedInNote
         readyForReviewByUserAccount {
           commonName
         }
@@ -87,6 +75,8 @@ export default gql(/* GraphQL */ `
         communityPartnersInvolved
         communityPartnersInvolvedDescription
         communityPartnersInvolvedNote
+        phasedIn
+        phasedInNote
         agencyOrStateHelp
         agencyOrStateHelpOther
         agencyOrStateHelpNote
@@ -414,6 +404,25 @@ export default gql(/* GraphQL */ `
         paymentStartDate
         paymentStartDateNote
         readyForReviewByUserAccount {
+          commonName
+        }
+        readyForReviewDts
+        status
+      }
+      timeline {
+        id
+        completeICIP
+        clearanceStarts
+        clearanceEnds
+        announced
+        applicationsStart
+        applicationsEnd
+        performancePeriodStarts
+        performancePeriodEnds
+        highLevelNote
+        wrapUpEnds
+        readyForReviewByUserAccount {
+          id
           commonName
         }
         readyForReviewDts

@@ -35,7 +35,9 @@ import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'features/ModelPlan/TaskList/Payment';
 import PrepareForClearance from 'features/ModelPlan/TaskList/PrepareForClearance';
 import SubmitRequest from 'features/ModelPlan/TaskList/SubmitRequest';
+import Timeline from 'features/ModelPlan/Timeline';
 import Unfollow from 'features/ModelPlan/Unfollow';
+import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
 import NotFound from 'features/NotFound';
@@ -114,6 +116,12 @@ const AppRoutes = () => {
 
           <ProtectedRoute path="/models/new-plan" component={NewPlan} />
 
+          <ProtectedRoute
+            path="/models/:modelID/unlock-all-sections"
+            exact
+            component={UnlockAllSections}
+          />
+
           {/* Collaboration Area Routes */}
           <ProtectedRoute
             path="/models/:modelID/collaboration-area"
@@ -141,6 +149,18 @@ const AppRoutes = () => {
             exact
             title="Model Status"
             component={Status}
+          />
+
+          {/* Timeline Routes */}
+          <Redirect
+            exact
+            from="/models/:modelID/collaboration-area/task-list/basics/milestones"
+            to="/models/:modelID/collaboration-area/model-timeline"
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-timeline"
+            component={Timeline}
           />
 
           {/* Data Echange Approach Routes */}

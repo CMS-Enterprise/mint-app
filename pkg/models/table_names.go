@@ -64,8 +64,8 @@ const (
 	TNMTOCommonSolution                  TableName = "mto_common_solution"
 	TNMTOCommonSolutionContractor        TableName = "mto_common_solution_contractor"
 	TNMTOCommonSolutionSystemOwner       TableName = "mto_common_solution_system_owner"
-
-	TNMTOSuggestedMilestone TableName = "mto_suggested_milestone"
+	TNPlanTimeline                       TableName = "plan_timeline"
+	TNMTOSuggestedMilestone              TableName = "mto_suggested_milestone"
 )
 
 // MTOTables is a list of all tables that are related to the MTO section

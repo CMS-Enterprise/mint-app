@@ -92,6 +92,7 @@ import {
   PlanParticipantsAndProvidersTranslation,
   PlanPaymentsTranslation,
   PlanTdlTranslation,
+  PlanTimelineTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -336,19 +337,6 @@ export type TranslationBasicsForm = {
   goal: TranslationFieldProperties;
   testInterventions: TranslationFieldProperties;
   note: TranslationFieldProperties;
-  // Milestones
-  completeICIP: TranslationFieldProperties;
-  clearanceStarts: TranslationFieldProperties;
-  clearanceEnds: TranslationFieldProperties;
-  announced: TranslationFieldProperties;
-  applicationsStart: TranslationFieldProperties;
-  applicationsEnd: TranslationFieldProperties;
-  performancePeriodStarts: TranslationFieldProperties;
-  performancePeriodEnds: TranslationFieldProperties;
-  highLevelNote: TranslationFieldProperties;
-  wrapUpEnds: TranslationFieldProperties;
-  phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
-  phasedInNote: TranslationFieldProperties;
   readyForReviewBy: TranslationFieldProperties;
   readyForReviewDts: TranslationFieldProperties;
   readyForClearanceBy: TranslationFieldProperties;
@@ -400,6 +388,8 @@ export type TranslationGeneralCharacteristicsForm = {
   hasComponentsOrTracksDiffer: TranslationFieldProperties;
   hasComponentsOrTracksNote: TranslationFieldProperties;
   // Key Characteristics
+  phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
+  phasedInNote: TranslationFieldProperties;
   agencyOrStateHelp: TranslationFieldPropertiesWithOptions<AgencyOrStateHelpType>;
   agencyOrStateHelpOther: TranslationFieldProperties;
   agencyOrStateHelpNote: TranslationFieldProperties;
@@ -1400,9 +1390,42 @@ export type TranslationMTOCommonSolutionSystemOwnerCustom = {
   [K in keyof TranslationMTOCommonSolutionSystemOwnerCustomGQL]: TranslationMTOCommonSolutionSystemOwnerCustomForm[K]; // FE form type
 };
 
+// Timeline
+export type TranslationTimelineForm = {
+  completeICIP: TranslationFieldProperties;
+  clearanceStarts: TranslationFieldProperties;
+  clearanceEnds: TranslationFieldProperties;
+  announced: TranslationFieldProperties;
+  applicationsStart: TranslationFieldProperties;
+  applicationsEnd: TranslationFieldProperties;
+  performancePeriodStarts: TranslationFieldProperties;
+  performancePeriodEnds: TranslationFieldProperties;
+  highLevelNote: TranslationFieldProperties;
+  wrapUpEnds: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+};
+
+type TranslationTimelineGQL = Omit<
+  PlanTimelineTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationTimeline = {
+  [K in keyof TranslationTimelineGQL]: TranslationTimelineForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
+  timeline: TranslationTimeline;
   generalCharacteristics: TranslationGeneralCharacteristics;
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
@@ -1426,6 +1449,7 @@ export type TranslationPlan = {
 
 export type TranslationPlanSection =
   | TranslationPlan['basics']
+  | TranslationPlan['timeline']
   | TranslationPlan['beneficiaries']
   | TranslationPlan['generalCharacteristics']
   | TranslationPlan['participantsAndProviders']
@@ -1437,6 +1461,7 @@ export type TranslationPlanSection =
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
   BASICS = 'basics',
+  TIMELINE = 'timeline',
   GENERAL_CHARACTERISTICS = 'generalCharacteristics',
   PARTICPANTS_AND_PROVIDERS = 'participantsAndProviders',
   BENEFICIARIES = 'beneficiaries',

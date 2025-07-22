@@ -8,7 +8,7 @@ import {
   Grid
 } from '@trussworks/react-uswds';
 import {
-  GetModelCollaboratorsQuery,
+  GetCollaborationAreaQuery,
   useGetModelCollaboratorsQuery
 } from 'gql/generated/graphql';
 
@@ -20,7 +20,7 @@ import Spinner from 'components/Spinner';
 type ModelPlanCardType = {
   modelID: string;
   // Can optionally pass in collaborators, or have collaboratos query in the component iteself
-  collaborators?: GetModelCollaboratorsQuery['modelPlan']['collaborators'];
+  collaborators?: GetCollaborationAreaQuery['modelPlan']['collaborators'];
 };
 
 const TeamCard = ({ modelID, collaborators }: ModelPlanCardType) => {

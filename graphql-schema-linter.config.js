@@ -60,7 +60,8 @@ module.exports = {
       'MTOSolutionTranslation',
       'MTOCommonSolutionContactTranslation',
       'MTOCommonSolutionContractorTranslation',
-      'MTOCommonSolutionSystemOwnerTranslation'
+      'MTOCommonSolutionSystemOwnerTranslation',
+      'PlanTimelineTranslation'
     ],
     'enum-values-all-caps': ['TableName']
   }

@@ -1,24 +1,30 @@
 import { ModelShareSection } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
-import { getKeys } from 'types/translation';
-
 type ExportSectionOption = {
   value: ModelShareSection;
   label: string;
 };
 
-const exportSectionOptions: ExportSectionOption[] = getKeys(
-  ModelShareSection
-).map(key => ({
-  value: ModelShareSection[key],
-  label: i18next.t(
-    `generalReadOnly:modal.exportSections.${ModelShareSection[key]}`
-  )
-}));
+const modelShareSections: ModelShareSection[] = [
+  ModelShareSection.ALL,
+  ModelShareSection.MODEL_PLAN,
+  ModelShareSection.TIMELINE,
+  ModelShareSection.MTO_ALL,
+  ModelShareSection.MTO_MILESTONES,
+  ModelShareSection.MTO_SOLUTIONS
+];
+
+const exportSectionOptions: ExportSectionOption[] = modelShareSections.map(
+  section => ({
+    value: section,
+    label: i18next.t(`generalReadOnly:modal.exportSections.${section}`)
+  })
+);
 
 export const modelSectionRouteKey: string[] = [
   'model-basics',
+  'model-timeline',
   'general-characteristics',
   'participants-and-providers',
   'beneficiaries',
@@ -41,6 +47,7 @@ export const modelPlanSectionMappings: Record<
 > = {
   [ModelShareSection.ALL]: [
     'model-basics',
+    'model-timeline',
     'general-characteristics',
     'participants-and-providers',
     'beneficiaries',
@@ -62,6 +69,7 @@ export const modelPlanSectionMappings: Record<
     'operations-evaluation-and-learning',
     'payment'
   ],
+  [ModelShareSection.TIMELINE]: ['model-timeline'],
   [ModelShareSection.MTO_ALL]: ['milestones', 'solutions-and-it-systems'],
   [ModelShareSection.MTO_MILESTONES]: ['milestones'],
   [ModelShareSection.MTO_SOLUTIONS]: ['solutions-and-it-systems']

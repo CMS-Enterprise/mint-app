@@ -27,9 +27,6 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 		changes,
 		principal,
 		r.store,
-		r.emailService,
-		r.emailTemplateService,
-		r.addressBook,
 	)
 }
 

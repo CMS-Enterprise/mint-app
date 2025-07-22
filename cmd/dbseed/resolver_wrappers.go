@@ -58,14 +58,46 @@ func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interf
 	return updated
 }
 
+// updatePlanTimeline is a wrapper for resolvers.PlanTimelineGetByModelPlanID and resolvers.UpdatePlanTimeline
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always update the Plan Timeline object with the principal value of the Model Plan's "createdBy"
+func (s *Seeder) updatePlanTimeline(
+	ctx context.Context,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	mp *models.ModelPlan,
+	changes map[string]interface{},
+) *models.PlanTimeline {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	timeline, err := resolvers.PlanTimelineGetByModelPlanIDLOADER(s.Config.Context, mp.ID)
+	if err != nil {
+		panic(err)
+	}
+
+	updated, err := resolvers.UpdatePlanTimeline(
+		ctx,
+		s.Config.Logger,
+		timeline.ID,
+		changes,
+		princ,
+		s.Config.Store,
+		emailService,
+		emailTemplateService,
+		addressBook,
+	)
+	if err != nil {
+		panic(err)
+	}
+	return updated
+}
+
 // updatePlanBasics is a wrapper for resolvers.PlanBasicsGetByModelPlanID and resolvers.UpdatePlanBasics
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
 func (s *Seeder) updatePlanBasics(
 	ctx context.Context,
-	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
-	addressBook email.AddressBook,
 	mp *models.ModelPlan,
 	changes map[string]interface{},
 ) *models.PlanBasics {
@@ -83,9 +115,6 @@ func (s *Seeder) updatePlanBasics(
 		changes,
 		princ,
 		s.Config.Store,
-		emailService,
-		emailTemplateService,
-		addressBook,
 	)
 	if err != nil {
 		panic(err)

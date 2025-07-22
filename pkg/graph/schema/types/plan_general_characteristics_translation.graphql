@@ -51,6 +51,8 @@ type PlanGeneralCharacteristicsTranslation {
     @goTag(key: "db", value: "has_components_or_tracks_note")
 
   # Page 2
+  phasedIn: TranslationFieldWithOptions! @goTag(key: "db", value: "phased_in")
+  phasedInNote: TranslationField! @goTag(key: "db", value: "phased_in_note")
   agencyOrStateHelp: TranslationFieldWithOptions!
     @goTag(key: "db", value: "agency_or_state_help")
   agencyOrStateHelpOther: TranslationField!
