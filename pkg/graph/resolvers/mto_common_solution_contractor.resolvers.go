@@ -22,7 +22,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionContractor(ctx context.Context
 }
 
 // UpdateMTOCommonSolutionContractor is the resolver for the updateMTOCommonSolutionContractor field.
-func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOCommonSolutionContractor, error) {
+func (r *mutationResolver) UpdateMTOCommonSolutionContractor(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonSolutionContractor, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 

@@ -16,7 +16,7 @@ import (
 )
 
 // UpdatePlanOpsEvalAndLearning is the resolver for the updatePlanOpsEvalAndLearning field.
-func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
+func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanOpsEvalAndLearning, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)

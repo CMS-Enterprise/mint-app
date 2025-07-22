@@ -18,7 +18,6 @@ import BCDATimeLine from './SolutionDetails/Solutions/BCDA';
 import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
-import CMSQualtricsTimeline from './SolutionDetails/Solutions/CMSQualtrics';
 import GenericTimeline from './SolutionDetails/Solutions/Generic/Timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
 import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
@@ -177,20 +176,6 @@ export const helpSolutions: HelpSolutionsType = {
     type: MtoSolutionType.IT_SYSTEM,
     components: {
       timeline: (props: SolutionDetailProps) => <CMSBoxTimeline {...props} />
-    }
-  },
-  [MtoCommonSolutionKey.CMS_QUALTRICS]: {
-    key: MtoCommonSolutionKey.CMS_QUALTRICS,
-    categories: [
-      MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
-    ],
-    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
-    name: 'CMS Qualtrics',
-    type: MtoSolutionType.IT_SYSTEM,
-    components: {
-      timeline: (props: SolutionDetailProps) => (
-        <CMSQualtricsTimeline {...props} />
-      )
     }
   },
   [MtoCommonSolutionKey.CBOSC]: {
@@ -788,7 +773,6 @@ export const routeToEnumMap: Record<string, MtoCommonSolutionKey> = {
   'chronic-conditions-warehouse': MtoCommonSolutionKey.CCW,
   'cmmi-data-aggregation-contract': MtoCommonSolutionKey.CDAC,
   'cms-box': MtoCommonSolutionKey.CMS_BOX,
-  'cms-qualtrics': MtoCommonSolutionKey.CMS_QUALTRICS,
   'consolidated-business-operations-support-center': MtoCommonSolutionKey.CBOSC,
   'cpi-vetting': MtoCommonSolutionKey.CPI_VETTING,
   'electronic-file-transfer': MtoCommonSolutionKey.EFT,

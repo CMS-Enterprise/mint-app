@@ -14,7 +14,7 @@ import (
 )
 
 // CreateMTOCommonSolutionSystemOwner is the resolver for the createMTOCommonSolutionSystemOwner field.
-func (r *mutationResolver) CreateMTOCommonSolutionSystemOwner(ctx context.Context, key models.MTOCommonSolutionKey, changes map[string]interface{}) (*models.MTOCommonSolutionSystemOwner, error) {
+func (r *mutationResolver) CreateMTOCommonSolutionSystemOwner(ctx context.Context, key models.MTOCommonSolutionKey, changes map[string]any) (*models.MTOCommonSolutionSystemOwner, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
@@ -22,7 +22,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionSystemOwner(ctx context.Contex
 }
 
 // UpdateMTOCommonSolutionSystemOwner is the resolver for the updateMTOCommonSolutionSystemOwner field.
-func (r *mutationResolver) UpdateMTOCommonSolutionSystemOwner(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.MTOCommonSolutionSystemOwner, error) {
+func (r *mutationResolver) UpdateMTOCommonSolutionSystemOwner(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonSolutionSystemOwner, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 

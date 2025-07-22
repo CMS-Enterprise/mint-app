@@ -15,7 +15,7 @@ import (
 )
 
 // UpdatePlanDataExchangeApproach is the resolver for the updatePlanDataExchangeApproach field.
-func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDataExchangeApproach, error) {
+func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanDataExchangeApproach, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 

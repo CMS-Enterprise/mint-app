@@ -82,7 +82,7 @@ func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPla
 }
 
 // UpdateMTOSolution is the resolver for the updateMTOSolution field.
-func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]interface{}, milestoneLinks *model.MTOMilestoneLinks) (*models.MTOSolution, error) {
+func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]any, milestoneLinks *model.MTOMilestoneLinks) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 

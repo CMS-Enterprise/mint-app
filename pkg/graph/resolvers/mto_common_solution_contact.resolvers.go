@@ -31,7 +31,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionUserContact(ctx context.Contex
 }
 
 // UpdateMTOCommonSolutionContact is the resolver for the updateMTOCommonSolutionContact field.
-func (r *mutationResolver) UpdateMTOCommonSolutionContact(ctx context.Context, id uuid.UUID, input map[string]interface{}) (*models.MTOCommonSolutionContact, error) {
+func (r *mutationResolver) UpdateMTOCommonSolutionContact(ctx context.Context, id uuid.UUID, input map[string]any) (*models.MTOCommonSolutionContact, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
