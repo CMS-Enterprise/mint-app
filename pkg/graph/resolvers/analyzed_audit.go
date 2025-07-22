@@ -104,6 +104,11 @@ func generateChanges(audits []*models.AuditChange, store *storage.Store) (*model
 		return nil, err
 	}
 
+	mtoUpdates, err := analyzeMTOChanges(audits)
+	if err != nil {
+		return nil, err
+	}
+
 	analyzedModelPlan := models.AnalyzedAuditChange{
 		ModelPlan:       modelPlanAudits,
 		Documents:       documentsAudits,
@@ -111,6 +116,7 @@ func generateChanges(audits []*models.AuditChange, store *storage.Store) (*model
 		PlanSections:    sectionsAudits,
 		ModelLeads:      modelLeadAudits,
 		PlanDiscussions: discussionAudits,
+		MTOUpdates:      mtoUpdates,
 	}
 
 	return &analyzedModelPlan, nil
@@ -340,4 +346,32 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 ) ([]*models.AnalyzedAudit, error) {
 
 	return storage.AnalyzedAuditGetByModelPlanIDsAndDate(store, logger, modelPlanIDs, date)
+}
+
+// analyzeMTOChanges analyzes if there were any MTO changes
+func analyzeMTOChanges(audits []*models.AuditChange) (*models.AnalyzedMTOUpdates, error) {
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, _ int) bool {
+		return lo.Contains(models.MTOTables, models.TableName(audit.TableName))
+	})
+
+	var readyForReview bool
+	var contentUpdates []string
+
+	for _, audit := range filteredAudits {
+		if status, ok := audit.Fields["status"]; ok && status.New == "READY_FOR_REVIEW" {
+			readyForReview = true
+		}
+		if content, ok := audit.Fields["content"]; ok && content.New != nil {
+			contentUpdates = append(contentUpdates, content.New.(string))
+		}
+	}
+
+	if !readyForReview && len(contentUpdates) == 0 {
+		return nil, nil
+	}
+
+	return &models.AnalyzedMTOUpdates{
+		ReadyForReview: readyForReview,
+		ContentUpdates: strings.Join(contentUpdates, ", "),
+	}, nil
 }
