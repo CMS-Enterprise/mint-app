@@ -35,12 +35,14 @@ This document provides specific instructions for GitHub Copilot when reviewing p
 ## Technology-Specific Guidelines
 
 ### Graphql Schema File Reviews
+- **Job Code Authorization**: Queries and mutations should use the directive `@hasRole(role: {role})` or `@hasAnyRole(roles: [{role}, {role}])`
+- **Proper File Organization**: All schema files should be specific to an entity. Queries and mutations for that entity should be in the appropriate file.
 
 ### Go Backend Review
 
 #### Required Patterns to Check
 - **Base Struct Pattern**: All models should extend `baseStruct` with proper UUID ID
-**Store Pattern**: CRUD operations should follow `func {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error)` pattern (e.g., `ModelPlanCreate`, `UserAccountCreate`)
+- **Store Pattern**: CRUD operations should follow `func {EntityName}Create(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{EntityName}) (*models.{EntityName}, error)` pattern (e.g., `ModelPlanCreate`, `UserAccountCreate`) in the storage package.
 - **Principal Pattern**: Authentication checks should use `Principal` interface
 - **Logging Pattern**: Use structured logging with Zap, include context and trace IDs
 
