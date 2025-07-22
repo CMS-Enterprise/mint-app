@@ -87,14 +87,6 @@ if err != nil {
     return nil, err
 }
 
-// ✅ Proper authorization pattern
-func (r *mutationResolver) CreateModel(ctx context.Context, input *model.ModelPlanCreateInput) (*model.ModelPlan, error) {
-    principal := authentication.GetPrincipal(ctx)
-    if !principal.AllowUSER() {
-        return nil, errors.New("unauthorized")
-    }
-    // Implementation
-}
 ```
 
 ### React/TypeScript Frontend Review
