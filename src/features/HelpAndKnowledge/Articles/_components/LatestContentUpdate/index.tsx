@@ -5,17 +5,17 @@ import { formatDateUtc } from 'utils/date';
 
 const owner: string = 'cms-enterprise';
 const repo: string = 'mint-app';
-const filePath: string =
-  'src/i18n/en-US/helpAndKnowledge/Articles/evaluatingDataExchangeApproach.ts';
+const filePath: string = 'src/i18n/en-US/helpAndKnowledge/Articles/';
 
-function LatestContentUpdate() {
+function LatestContentUpdate({ file }: { file: string }) {
   const { t } = useTranslation('helpAndKnowledge');
+
   const [commitDate, setCommitDate] = useState<string | null>(null);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     // GitHub API endpoint for commits affecting a specific file
-    const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${filePath}&per_page=1`;
+    const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${filePath}${file}&per_page=1`;
 
     fetch(url)
       .then(res => {
@@ -32,7 +32,7 @@ function LatestContentUpdate() {
         }
       })
       .catch(() => setError(true));
-  }, []);
+  }, [file]);
 
   if (error) return null;
   if (!commitDate) return null;

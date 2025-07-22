@@ -189,7 +189,7 @@ const UsingMilestoneLibrary = () => {
               {/* Still need help */}
               <StillNeedMTOHelp />
 
-              <LatestContentUpdate />
+              <LatestContentUpdate file="usingMilestoneLibrary.ts" />
             </div>
           </Grid>
         </GridContainer>

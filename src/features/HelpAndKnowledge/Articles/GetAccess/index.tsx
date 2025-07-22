@@ -21,6 +21,8 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHashScroll from 'hooks/useHashScroll';
 import { tArray } from 'utils/translation';
 
+import LatestContentUpdate from '../_components/LatestContentUpdate';
+
 type GetAccessContentProps = {
   help?: boolean;
 };
@@ -478,6 +480,8 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
             </dt>
           </Alert>
         </div>
+
+        <LatestContentUpdate file="getAccess.ts" />
       </main>
     </div>
   );

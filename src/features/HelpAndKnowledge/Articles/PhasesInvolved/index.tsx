@@ -17,6 +17,7 @@ import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 type StepsType = {
@@ -84,10 +85,11 @@ export const PhasesInvolved = () => {
                 ))}
               </ProcessList>
             </Grid>
+
+            <LatestContentUpdate file="phasesInvolved.ts" />
           </Grid>
         </GridContainer>
       </MainContent>
-
       <RelatedArticles
         currentArticle={HelpArticle.PHASES_INVOLVED}
         specificArticles={[
