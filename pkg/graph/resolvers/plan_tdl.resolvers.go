@@ -22,7 +22,7 @@ func (r *mutationResolver) CreatePlanTdl(ctx context.Context, input model.PlanTD
 }
 
 // UpdatePlanTdl is the resolver for the updatePlanTDL field.
-func (r *mutationResolver) UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTDL, error) {
+func (r *mutationResolver) UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanTDL, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return PlanTDLUpdate(logger, id, changes, principal, r.store)
