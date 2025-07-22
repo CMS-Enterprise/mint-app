@@ -2399,7 +2399,8 @@ const helpAndKnowledge = {
   viewOnSharePoint: 'View on SharePoint',
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',
-  sortDesc: 'By title (Z-A)'
+  sortDesc: 'By title (Z-A)',
+  lastUpdated: 'Last updated {{date}}'
 };
 
 export default helpAndKnowledge;
