@@ -25,7 +25,6 @@ const (
 	MTOCSKCdx            MTOCommonSolutionKey = "CDX"
 	MTOCSKCcw            MTOCommonSolutionKey = "CCW"
 	MTOCSKCmsBox         MTOCommonSolutionKey = "CMS_BOX"
-	MTOCSKCmsQualtrics   MTOCommonSolutionKey = "CMS_QUALTRICS"
 	MTOCSKCbosc          MTOCommonSolutionKey = "CBOSC"
 	MTOCSKCpiVetting     MTOCommonSolutionKey = "CPI_VETTING"
 	MTOCSKEft            MTOCommonSolutionKey = "EFT"
