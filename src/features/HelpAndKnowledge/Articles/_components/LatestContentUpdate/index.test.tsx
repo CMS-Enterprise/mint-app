@@ -15,12 +15,6 @@ beforeEach(() => {
   vi.restoreAllMocks();
 });
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (_key: string, opts?: any) => `Last updated ${opts?.date ?? ''}`
-  })
-}));
-
 describe('LatestContentUpdate', () => {
   const file = 'testFile.ts';
   const variables = {
@@ -46,12 +40,17 @@ describe('LatestContentUpdate', () => {
                   {
                     node: {
                       committedDate: commitDate,
-                      oid: 'abc123'
-                    }
+                      oid: '3cc14baf396710b8e9f714ad4f17df57aa26c784',
+                      __typename: 'Commit'
+                    },
+                    __typename: 'CommitEdge'
                   }
-                ]
-              }
-            }
+                ],
+                __typename: 'CommitHistoryConnection'
+              },
+              __typename: 'Commit'
+            },
+            __typename: 'Repository'
           }
         }
       }
@@ -70,7 +69,11 @@ describe('LatestContentUpdate', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Last updated 01/01/2024')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
+        )
+      ).toBeInTheDocument();
     });
   });
 
@@ -110,7 +113,6 @@ describe('LatestContentUpdate', () => {
 
   it('renders nothing if query errors', async () => {
     vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(() => '');
-
     const errorMocks = [
       {
         request: {
