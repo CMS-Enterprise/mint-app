@@ -42,7 +42,10 @@ const MailboxesAndTeamMembers = ({
       <h2 className="margin-top-0 margin-bottom-2">
         {t('mailboxesAndTeamMembers')}
       </h2>
-      <div className="height-3 margin-bottom-2">
+      <div
+        className="height-3 margin-bottom-2"
+        style={{ minHeight: 'fit-content' }}
+      >
         <Button
           type="button"
           unstyled
