@@ -108,7 +108,7 @@ const TeamMailboxForm = ({
             mailboxTitle: formData.mailboxTitle || '',
             mailboxAddress: formData.mailboxAddress || '',
             isPrimary: formData.isPrimary,
-            receiveEmails: formData.receiveEmails
+            receiveEmails: formData.isPrimary ? true : formData.receiveEmails
           }
         })
       : update({
@@ -117,7 +117,7 @@ const TeamMailboxForm = ({
             input: {
               mailboxTitle,
               isPrimary,
-              receiveEmails
+              receiveEmails: isPrimary ? true : receiveEmails
             }
           }
         });
