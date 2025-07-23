@@ -15,6 +15,12 @@ beforeEach(() => {
   vi.restoreAllMocks();
 });
 
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (_key: string, opts?: any) => `Last updated ${opts?.date ?? ''}`
+  })
+}));
+
 describe('LatestContentUpdate', () => {
   const file = 'testFile.ts';
   const variables = {
@@ -64,11 +70,7 @@ describe('LatestContentUpdate', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByText(
-          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Last updated 01/01/2024')).toBeInTheDocument();
     });
   });
 
