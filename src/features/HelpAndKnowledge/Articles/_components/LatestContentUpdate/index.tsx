@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
+import githubApolloClient from 'app/Clients/github';
+import GetLastCommit from 'gql/externalOperations/Github/GetLastCommit';
 
 import { filePath, owner, repo } from 'constants/github';
 import { formatDateUtc } from 'utils/date';
@@ -7,33 +10,23 @@ import { formatDateUtc } from 'utils/date';
 function LatestContentUpdate({ file }: { file: string }) {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const [commitDate, setCommitDate] = useState<string | null>(null);
-  const [error, setError] = useState<boolean>(false);
+  const { data, loading, error } = useQuery(GetLastCommit, {
+    client: githubApolloClient,
+    variables: {
+      owner,
+      repo,
+      path: `${filePath}${file}`
+    }
+  });
 
-  useEffect(() => {
-    // GitHub API endpoint for commits affecting a specific file
-    const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${filePath}${file}&per_page=1`;
-
-    fetch(url)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Failed to fetch commit data');
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data.length > 0) {
-          setCommitDate(
-            formatDateUtc(data[0].commit.committer.date, 'MM/dd/yyyy')
-          );
-        } else {
-          setError(true);
-        }
-      })
-      .catch(() => setError(true));
-  }, [file]);
-
+  if (loading) return null;
   if (error) return null;
+
+  const commitDate = formatDateUtc(
+    data?.repository?.object?.history?.edges?.[0]?.node?.committedDate,
+    'MM/dd/yyyy'
+  );
+
   if (!commitDate) return null;
 
   return (
