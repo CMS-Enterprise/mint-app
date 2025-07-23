@@ -5,15 +5,15 @@ import i18next from 'i18next';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
 import { filePath, owner, repo } from 'constants/github';
+import * as dateUtils from 'utils/date';
 
 import '@testing-library/jest-dom';
 
 import LatestContentUpdate from './index';
 
-// Mock formatDateUtc for predictable output
-vi.mock('utils/date', () => ({
-  formatDateUtc: () => '01/01/2024'
-}));
+beforeEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('LatestContentUpdate', () => {
   const file = 'testFile.ts';
@@ -52,7 +52,29 @@ describe('LatestContentUpdate', () => {
     }
   ];
 
+  it('renders last updated date when query is successful', async () => {
+    vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(
+      () => '01/01/2024'
+    );
+
+    render(
+      <VerboseMockedProvider mocks={mocks}>
+        <LatestContentUpdate file={file} />
+      </VerboseMockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
   it('renders nothing if query returns no commits', async () => {
+    vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(() => '');
+
     const noCommitMocks = [
       {
         request: {
@@ -85,6 +107,8 @@ describe('LatestContentUpdate', () => {
   });
 
   it('renders nothing if query errors', async () => {
+    vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(() => '');
+
     const errorMocks = [
       {
         request: {
@@ -103,22 +127,6 @@ describe('LatestContentUpdate', () => {
 
     await waitFor(() => {
       expect(screen.queryByText(/Last updated/)).not.toBeInTheDocument();
-    });
-  });
-
-  it('renders last updated date when query is successful', async () => {
-    render(
-      <VerboseMockedProvider mocks={mocks}>
-        <LatestContentUpdate file={file} />
-      </VerboseMockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
-        )
-      ).toBeInTheDocument();
     });
   });
 });
