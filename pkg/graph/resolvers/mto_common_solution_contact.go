@@ -595,7 +595,7 @@ func sendSolutionContactMintMailboxPOCRemoved(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{contact.Email},
+		[]string{addressBook.MINTTeamEmail},
 		nil,
 		emailSubject,
 		"text/html",
