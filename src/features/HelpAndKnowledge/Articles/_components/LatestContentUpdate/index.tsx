@@ -38,7 +38,7 @@ function LatestContentUpdate({ file }: { file: string }) {
   if (!commitDate) return null;
 
   return (
-    <div className="text-base text-italic border-top border-gray-10 padding-top-2 margin-bottom-4">
+    <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
       {t('lastUpdated', { date: commitDate })}
     </div>
   );
