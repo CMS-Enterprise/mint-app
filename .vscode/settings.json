@@ -73,4 +73,23 @@
   /* Formatter */
   "sqlfluff.format.arguments": ["--FIX-EVEN-UNPARSABLE"],
   "sqlfluff.format.enabled": true,
+		// #region Cspell Settings
+    "cSpell.enabled": true,
+      "cSpell.diagnosticLevel": "Hint", // This makes it so spelling doesn't show up in the problems tab, but it isn't as obvious in the editor. Need to handle that in theme customization levels
+		"cSpell.customDictionaries": {
+			"project-words": {
+			  "name": "project-words",
+			  "path": "project_words.txt",
+			  "description": "Words used in this project",
+			  "addWords": true
+			},
+			"mint spelling file": {
+				"name": "Mint Spelling file",
+				"path": ".spelling",
+				"description": "the .spelling file part of the mint repo. Used by the spell check linter",
+				"addWords": true,
+				"scope": "folder"
+			}
+		},
+    // #endregion Cspell Settings
 }
