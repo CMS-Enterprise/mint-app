@@ -19,14 +19,13 @@ function LatestContentUpdate({ file }: { file: string }) {
     }
   });
 
-  if (loading) return null;
-  if (error) return null;
-
   const commitDate = formatDateUtc(
     data?.repository?.object?.history?.edges?.[0]?.node?.committedDate,
     'MM/dd/yyyy'
   );
 
+  if (loading) return null;
+  if (error) return null;
   if (!commitDate) return null;
 
   return (

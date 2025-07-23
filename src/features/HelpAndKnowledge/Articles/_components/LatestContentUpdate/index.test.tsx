@@ -12,52 +12,52 @@ import '@testing-library/jest-dom';
 
 import LatestContentUpdate from './index';
 
+const file = 'testFile.ts';
+const variables = {
+  owner,
+  repo,
+  path: `${filePath}${file}`
+};
+
+const commitDate = '2024-09-30T17:29:16Z';
+
+const mocks = [
+  {
+    request: {
+      query: GetLastCommit,
+      variables
+    },
+    result: {
+      data: {
+        repository: {
+          object: {
+            history: {
+              edges: [
+                {
+                  node: {
+                    committedDate: commitDate,
+                    oid: '3cc14baf396710b8e9f714ad4f17df57aa26c784',
+                    __typename: 'Commit'
+                  },
+                  __typename: 'CommitEdge'
+                }
+              ],
+              __typename: 'CommitHistoryConnection'
+            },
+            __typename: 'Commit'
+          },
+          __typename: 'Repository'
+        }
+      }
+    }
+  }
+];
+
 beforeEach(() => {
   vi.restoreAllMocks();
 });
 
 describe('LatestContentUpdate', () => {
-  const file = 'testFile.ts';
-  const variables = {
-    owner,
-    repo,
-    path: `${filePath}${file}`
-  };
-
-  const commitDate = '2024-09-30T17:29:16Z';
-
-  const mocks = [
-    {
-      request: {
-        query: GetLastCommit,
-        variables
-      },
-      result: {
-        data: {
-          repository: {
-            object: {
-              history: {
-                edges: [
-                  {
-                    node: {
-                      committedDate: commitDate,
-                      oid: '3cc14baf396710b8e9f714ad4f17df57aa26c784',
-                      __typename: 'Commit'
-                    },
-                    __typename: 'CommitEdge'
-                  }
-                ],
-                __typename: 'CommitHistoryConnection'
-              },
-              __typename: 'Commit'
-            },
-            __typename: 'Repository'
-          }
-        }
-      }
-    }
-  ];
-
   it('renders last updated date when query is successful', async () => {
     vi.spyOn(dateUtils, 'formatDateUtc').mockReturnValue('09/24/2024');
 
@@ -132,5 +132,25 @@ describe('LatestContentUpdate', () => {
     await waitFor(() => {
       expect(screen.queryByText(/Last updated/)).not.toBeInTheDocument();
     });
+  });
+
+  it('matches snapshot when query is successful', async () => {
+    vi.spyOn(dateUtils, 'formatDateUtc').mockReturnValue('09/24/2024');
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <LatestContentUpdate file={filePath} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.queryAllByText(
+          i18next.t('helpAndKnowledge:lastUpdated', { date: '09/24/2024' })
+        )[0]
+      ).toBeInTheDocument();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
