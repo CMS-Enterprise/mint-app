@@ -13,7 +13,7 @@ type ContractorEditedBodyContent struct {
 	Key            string
 	SolutionName   string
 	ContractorName string
-	contractTitle  string
+	ContractTitle  string
 }
 
 // NewContractorEditedBodyContent constructs the email body content when a contractor is edited.
@@ -32,6 +32,6 @@ func NewContractorEditedBodyContent(
 		Key:            string(contractor.Key),
 		SolutionName:   solutionName,
 		ContractorName: contractor.ContractorName,
-		contractTitle:  title,
+		ContractTitle:  title,
 	}
 }
