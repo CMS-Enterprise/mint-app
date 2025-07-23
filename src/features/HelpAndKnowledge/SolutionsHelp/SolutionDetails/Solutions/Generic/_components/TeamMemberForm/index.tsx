@@ -123,7 +123,7 @@ const TeamMemberForm = ({
             userName: formData.userName,
             role: formData.role || '',
             isPrimary: formData.isPrimary,
-            receiveEmails: formData.receiveEmails
+            receiveEmails: formData.isPrimary ? true : formData.receiveEmails
           }
         })
       : update({
@@ -132,7 +132,7 @@ const TeamMemberForm = ({
             input: {
               role,
               isPrimary,
-              receiveEmails
+              receiveEmails: isPrimary ? true : receiveEmails
             }
           }
         });
