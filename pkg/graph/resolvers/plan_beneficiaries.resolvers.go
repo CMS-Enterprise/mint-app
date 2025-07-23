@@ -16,7 +16,7 @@ import (
 )
 
 // UpdatePlanBeneficiaries is the resolver for the updatePlanBeneficiaries field.
-func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error) {
+func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanBeneficiaries, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)

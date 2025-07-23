@@ -177,7 +177,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.
-func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error) {
+func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 

@@ -13,7 +13,7 @@ import (
 )
 
 // UpdateUserViewCustomization is the resolver for the updateUserViewCustomization field.
-func (r *mutationResolver) UpdateUserViewCustomization(ctx context.Context, changes map[string]interface{}) (*models.UserViewCustomization, error) {
+func (r *mutationResolver) UpdateUserViewCustomization(ctx context.Context, changes map[string]any) (*models.UserViewCustomization, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 

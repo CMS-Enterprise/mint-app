@@ -26,6 +26,8 @@ repos:
         exclude: >
           (?x)^(
             .github/PULL_REQUEST_TEMPLATE.md|
+            .github/COPILOT_INSTRUCTIONS.md|
+            .github/COPILOT_REVIEW.md|
             node_modules/|
             vendor
           )$
