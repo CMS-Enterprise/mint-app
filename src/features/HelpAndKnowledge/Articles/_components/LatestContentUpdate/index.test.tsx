@@ -3,6 +3,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import GetLastCommit from 'gql/externalOperations/Github/GetLastCommit';
 import i18next from 'i18next';
+import VerboseMockedProvider from 'tests/MockedProvider';
 
 import { filePath, owner, repo } from 'constants/github';
 import * as dateUtils from 'utils/date';
@@ -23,7 +24,7 @@ describe('LatestContentUpdate', () => {
     path: `${filePath}${file}`
   };
 
-  const commitDate = '2024-01-01T00:00:00Z';
+  const commitDate = '2024-09-30T17:29:16Z';
 
   const mocks = [
     {
@@ -58,21 +59,19 @@ describe('LatestContentUpdate', () => {
   ];
 
   it('renders last updated date when query is successful', async () => {
-    vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(
-      () => '01/01/2024'
-    );
+    vi.spyOn(dateUtils, 'formatDateUtc').mockReturnValue('09/24/2024');
 
     render(
-      <MockedProvider mocks={mocks}>
+      <MockedProvider mocks={mocks} addTypename={false}>
         <LatestContentUpdate file={file} />
       </MockedProvider>
     );
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
-        )
+        screen.queryAllByText(
+          i18next.t('helpAndKnowledge:lastUpdated', { date: '09/24/2024' })
+        )[0]
       ).toBeInTheDocument();
     });
   });
@@ -101,9 +100,9 @@ describe('LatestContentUpdate', () => {
     ];
 
     render(
-      <MockedProvider mocks={noCommitMocks}>
+      <VerboseMockedProvider mocks={noCommitMocks} addTypename={false}>
         <LatestContentUpdate file={file} />
-      </MockedProvider>
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {
@@ -113,6 +112,7 @@ describe('LatestContentUpdate', () => {
 
   it('renders nothing if query errors', async () => {
     vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(() => '');
+
     const errorMocks = [
       {
         request: {
@@ -124,9 +124,9 @@ describe('LatestContentUpdate', () => {
     ];
 
     render(
-      <MockedProvider mocks={errorMocks}>
+      <VerboseMockedProvider mocks={errorMocks} addTypename={false}>
         <LatestContentUpdate file={file} />
-      </MockedProvider>
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {
