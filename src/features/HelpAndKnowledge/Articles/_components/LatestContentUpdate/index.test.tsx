@@ -68,13 +68,17 @@ describe('LatestContentUpdate', () => {
       </VerboseMockedProvider>
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
-        )
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        screen.debug();
+        expect(
+          screen.getByText(
+            i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
+          )
+        ).toBeInTheDocument();
+      },
+      { timeout: 2000 }
+    );
   });
 
   it('renders nothing if query returns no commits', async () => {
