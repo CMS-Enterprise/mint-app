@@ -1,8 +1,8 @@
 import React from 'react';
+import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import GetLastCommit from 'gql/externalOperations/Github/GetLastCommit';
 import i18next from 'i18next';
-import VerboseMockedProvider from 'tests/MockedProvider';
 
 import { filePath, owner, repo } from 'constants/github';
 import * as dateUtils from 'utils/date';
@@ -63,22 +63,18 @@ describe('LatestContentUpdate', () => {
     );
 
     render(
-      <VerboseMockedProvider mocks={mocks}>
+      <MockedProvider mocks={mocks}>
         <LatestContentUpdate file={file} />
-      </VerboseMockedProvider>
+      </MockedProvider>
     );
 
-    await waitFor(
-      () => {
-        screen.debug();
-        expect(
-          screen.getByText(
-            i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
-          )
-        ).toBeInTheDocument();
-      },
-      { timeout: 2000 }
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          i18next.t('helpAndKnowledge:lastUpdated', { date: '01/01/2024' })
+        )
+      ).toBeInTheDocument();
+    });
   });
 
   it('renders nothing if query returns no commits', async () => {
@@ -105,9 +101,9 @@ describe('LatestContentUpdate', () => {
     ];
 
     render(
-      <VerboseMockedProvider mocks={noCommitMocks}>
+      <MockedProvider mocks={noCommitMocks}>
         <LatestContentUpdate file={file} />
-      </VerboseMockedProvider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -128,9 +124,9 @@ describe('LatestContentUpdate', () => {
     ];
 
     render(
-      <VerboseMockedProvider mocks={errorMocks}>
+      <MockedProvider mocks={errorMocks}>
         <LatestContentUpdate file={file} />
-      </VerboseMockedProvider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
