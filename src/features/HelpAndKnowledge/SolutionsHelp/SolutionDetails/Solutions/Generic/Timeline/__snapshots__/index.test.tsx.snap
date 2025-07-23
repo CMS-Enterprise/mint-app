@@ -330,55 +330,6 @@ exports[`Generic Timeline Components > matches the snapshot > CMS Box 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Generic Timeline Components > matches the snapshot > CMS Qualtrics 1`] = `
-<DocumentFragment>
-  <div
-    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
-  >
-    <p>
-      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at &lt;email&gt;MINTTeam@cms.hhs.gov&lt;/email&gt;.
-    </p>
-    <ol
-      class="usa-process-list padding-top-1"
-    >
-      <li
-        class="usa-process-list__item operational-solution-details__timeline-item"
-      >
-        <h3
-          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-          data-testid="processListHeading"
-        >
-          Access CMS Qualtrics
-        </h3>
-        Log in to CMS Qualtrics using your CMS user name and password.
-      </li>
-      <li
-        class="usa-process-list__item operational-solution-details__timeline-item"
-      >
-        <h3
-          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-          data-testid="processListHeading"
-        >
-          Create a survey
-        </h3>
-        Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.
-      </li>
-      <li
-        class="usa-process-list__item operational-solution-details__timeline-item"
-      >
-        <h3
-          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-          data-testid="processListHeading"
-        >
-          Distribute your survey
-        </h3>
-        Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.
-      </li>
-    </ol>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Generic Timeline Components > matches the snapshot > CPI Vetting 1`] = `
 <DocumentFragment>
   <div
