@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { filePath, owner, repo } from 'constants/github';
 import { formatDateUtc } from 'utils/date';
-
-const owner: string = 'cms-enterprise';
-const repo: string = 'mint-app';
-const filePath: string = 'src/i18n/en-US/helpAndKnowledge/Articles/';
 
 function LatestContentUpdate({ file }: { file: string }) {
   const { t } = useTranslation('helpAndKnowledge');
@@ -19,7 +16,9 @@ function LatestContentUpdate({ file }: { file: string }) {
 
     fetch(url)
       .then(res => {
-        if (!res.ok) setError(true);
+        if (!res.ok) {
+          throw new Error('Failed to fetch commit data');
+        }
         return res.json();
       })
       .then(data => {
