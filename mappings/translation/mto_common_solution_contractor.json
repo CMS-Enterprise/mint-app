@@ -13,7 +13,7 @@
     "gqlField": "contractTitle",
     "goField": "contractTitle",
     "dbField": "contract_title",
-    "label": "Contract Title",
+    "label": "Contract title",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.2
@@ -22,7 +22,7 @@
     "gqlField": "contractorName",
     "goField": "ContractorName",
     "dbField": "contractor_name",
-    "label": "Contractor Name",
+    "label": "Contractor name",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.3

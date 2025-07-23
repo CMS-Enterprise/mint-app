@@ -20,7 +20,7 @@ exports[`Contractor form > should matches snapshot 1`] = `
           data-testid="label"
           for="contract-title"
         >
-          Contract Title
+          Contract title
         </label>
         <input
           class="usa-input"
@@ -40,7 +40,7 @@ exports[`Contractor form > should matches snapshot 1`] = `
           data-testid="label"
           for="contractor-name"
         >
-          Contractor Name 
+          Contractor name 
           <abbr
             class="usa-hint usa-hint--required"
             title="required"

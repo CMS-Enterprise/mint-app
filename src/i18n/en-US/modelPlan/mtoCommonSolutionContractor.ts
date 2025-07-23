@@ -22,7 +22,7 @@ const mtoCommonSolutionContractor: TranslationMTOCommonSolutionContractorCustom 
       gqlField: 'contractTitle',
       goField: 'contractTitle',
       dbField: 'contract_title',
-      label: 'Contract Title',
+      label: 'Contract title',
       dataType: TranslationDataType.STRING,
       formType: TranslationFormType.TEXT,
       order: 1.2
@@ -31,7 +31,7 @@ const mtoCommonSolutionContractor: TranslationMTOCommonSolutionContractorCustom 
       gqlField: 'contractorName',
       goField: 'ContractorName',
       dbField: 'contractor_name',
-      label: 'Contractor Name',
+      label: 'Contractor name',
       dataType: TranslationDataType.STRING,
       formType: TranslationFormType.TEXT,
       order: 1.3
