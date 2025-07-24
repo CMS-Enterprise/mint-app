@@ -66,8 +66,7 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	suite.EqualValues(sol.ID, retSol.ID)
 
 	// Get MTO Common Solution
-	id := uuid.New()
-	mtoSol, err := MTOCommonSolutionGetByIDLoader(suite.testConfigs.Context, &id)
+	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey("CONNECT"))
 	suite.NoError(err)
 	suite.NotNil(mtoSol)
 
