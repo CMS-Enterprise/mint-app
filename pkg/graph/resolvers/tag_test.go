@@ -58,12 +58,25 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	suite.NoError(err)
 	suite.NotNil(sol)
 
-	retSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, nil, &sol.ID)
+	retSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypePossibleSolution, nil, &sol.ID)
 	suite.NoError(err)
 	retSol, ok := retSolEnt.(*models.PossibleOperationalSolution)
 	suite.True(ok, "Could not cast the Tagged Entity to Possible Operational Solution")
 
 	suite.EqualValues(sol.ID, retSol.ID)
+
+	// Get MTO Common Solution
+	id := uuid.New()
+	mtoSol, err := MTOCommonSolutionGetByIDLoader(suite.testConfigs.Context, &id)
+	suite.NoError(err)
+	suite.NotNil(mtoSol)
+
+	retMtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, mtoSol.ID, nil)
+	suite.NoError(err)
+	retMtoSol, ok := retMtoSolEnt.(*models.MTOCommonSolution)
+	suite.True(ok, "Could not cast the Tagged Entity to MTO Common Solution")
+
+	suite.EqualValues(mtoSol.ID, retMtoSol.ID)
 
 }
 
@@ -98,10 +111,9 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	suite.NoError(err)
 	suite.EqualValues(tag2User.ID, *taggedContent.Mentions[1].EntityUUID)
 
-	// tag3Sol, err := Possible(suite.testConfigs.Logger, suite.testConfigs.Store, tag2EUA)
-	tag3Sol, err := suite.testConfigs.Store.PossibleOperationalSolutionGetByKey(suite.testConfigs.Logger, models.OperationalSolutionKey(tag3ID))
+	tag3Sol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(tag3ID))
 	suite.NoError(err)
-	suite.EqualValues(tag3Sol.ID, *taggedContent.Mentions[2].EntityIntID)
+	suite.EqualValues(tag3Sol.ID, *taggedContent.Mentions[2].EntityUUID)
 
 	// if the data-id-db tag is set, the content will still be updated with the correct id in the database, regardless of what was provided
 	tag4EUA := "SKZO"
