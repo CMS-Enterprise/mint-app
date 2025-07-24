@@ -56,7 +56,9 @@ const authLink = setContext((request, { headers }) => {
 const [protocol, gqlAddressWithoutProtocol] = (
   import.meta.env.VITE_GRAPHQL_ADDRESS as string
 ).split('://');
+
 const wsProtocol = protocol === 'https' ? 'wss' : 'ws'; // Use WSS when connecting over HTTPs
+
 const wsLink = new WebSocketLink(
   new SubscriptionClient(`${wsProtocol}://${gqlAddressWithoutProtocol}`, {
     reconnect: true,

@@ -1,33 +1,41 @@
 import React from 'react';
-import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
-import GetLastCommit from 'gql/externalOperations/Github/GetLastCommit';
-import i18next from 'i18next';
-import VerboseMockedProvider from 'tests/MockedProvider';
+import { render, screen } from '@testing-library/react';
 
-import { filePath, owner, repo } from 'constants/github';
-import * as dateUtils from 'utils/date';
+vi.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string, { date }: { date: string }) => `Last updated: ${date}`
+  })
+}));
 
-import '@testing-library/jest-dom';
+vi.mock('utils/date', () => ({
+  formatDateUtc: vi.fn(() => '09/24/2024')
+}));
 
-import LatestContentUpdate from './index';
+// Since githubApolloClient is used in the component and not wrapped in an ApolloProvider, we need to manually mock useQuery
+// Rather than using the MockedProvider from @apollo/client/testing
+let useQueryMock: ReturnType<typeof vi.fn>;
 
-const file = 'testFile.ts';
-const variables = {
-  owner,
-  repo,
-  path: `${filePath}${file}`
-};
+vi.mock('@apollo/client', async () => {
+  const actual = await import('@apollo/client');
+  useQueryMock = vi.fn();
+  return {
+    ...actual,
+    useQuery: useQueryMock
+  };
+});
 
-const commitDate = '2024-09-30T17:29:16Z';
+const file: string = 'testFile.ts';
+const commitDate: string = '2024-09-30T17:29:16Z';
 
-const mocks = [
-  {
-    request: {
-      query: GetLastCommit,
-      variables
-    },
-    result: {
+describe('LatestContentUpdate', () => {
+  afterEach(() => {
+    vi.resetModules();
+  });
+
+  it('renders last updated date when query is successful', async () => {
+    // We need to import the component after mocking useQuery to ensure the mock is available
+    const { default: LatestContentUpdate } = await import('./index');
+    useQueryMock.mockReturnValue({
       data: {
         repository: {
           object: {
@@ -36,7 +44,7 @@ const mocks = [
                 {
                   node: {
                     committedDate: commitDate,
-                    oid: '3cc14baf396710b8e9f714ad4f17df57aa26c784',
+                    oid: 'SOME_COMMIT_ID',
                     __typename: 'Commit'
                   },
                   __typename: 'CommitEdge'
@@ -48,109 +56,56 @@ const mocks = [
           },
           __typename: 'Repository'
         }
-      }
-    }
-  }
-];
-
-beforeEach(() => {
-  vi.restoreAllMocks();
-});
-
-describe('LatestContentUpdate', () => {
-  it('renders last updated date when query is successful', async () => {
-    vi.spyOn(dateUtils, 'formatDateUtc').mockReturnValue('09/24/2024');
-
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <LatestContentUpdate file={file} />
-      </MockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.queryAllByText(
-          i18next.t('helpAndKnowledge:lastUpdated', { date: '09/24/2024' })
-        )[0]
-      ).toBeInTheDocument();
+      },
+      loading: false,
+      error: undefined
     });
+    render(<LatestContentUpdate file={file} />);
+    expect(screen.getByText('Last updated: 09/24/2024')).toBeInTheDocument();
   });
 
-  it('renders nothing if query returns no commits', async () => {
-    vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(() => '');
-
-    const noCommitMocks = [
-      {
-        request: {
-          query: GetLastCommit,
-          variables
-        },
-        result: {
-          data: {
-            repository: {
-              object: {
-                history: {
-                  edges: []
-                }
-              }
+  it('renders null if query returns no commits', async () => {
+    const { default: LatestContentUpdate } = await import('./index');
+    useQueryMock.mockReturnValue({
+      data: {
+        repository: {
+          object: {
+            history: {
+              edges: []
             }
           }
         }
-      }
-    ];
-
-    render(
-      <VerboseMockedProvider mocks={noCommitMocks} addTypename={false}>
-        <LatestContentUpdate file={file} />
-      </VerboseMockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.queryByText(/Last updated/)).not.toBeInTheDocument();
+      },
+      loading: false,
+      error: undefined
     });
+
+    const { formatDateUtc } = await import('utils/date');
+    (formatDateUtc as ReturnType<typeof vi.fn>).mockReturnValue('');
+
+    render(<LatestContentUpdate file={file} />);
+    expect(screen.queryByText('Last updated:')).not.toBeInTheDocument();
   });
 
-  it('renders nothing if query errors', async () => {
-    vi.spyOn(dateUtils, 'formatDateUtc').mockImplementationOnce(() => '');
-
-    const errorMocks = [
-      {
-        request: {
-          query: GetLastCommit,
-          variables
-        },
-        error: new Error('Network error')
-      }
-    ];
-
-    render(
-      <VerboseMockedProvider mocks={errorMocks} addTypename={false}>
-        <LatestContentUpdate file={file} />
-      </VerboseMockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.queryByText(/Last updated/)).not.toBeInTheDocument();
+  it('renders null if query returns error', async () => {
+    const { default: LatestContentUpdate } = await import('./index');
+    useQueryMock.mockReturnValue({
+      data: undefined,
+      loading: false,
+      error: new Error('Test error')
     });
+    render(<LatestContentUpdate file={file} />);
+    expect(screen.queryByText('Last updated:')).not.toBeInTheDocument();
   });
 
-  it('matches snapshot when query is successful', async () => {
-    vi.spyOn(dateUtils, 'formatDateUtc').mockReturnValue('09/24/2024');
-
-    const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <LatestContentUpdate file={filePath} />
-      </MockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.queryAllByText(
-          i18next.t('helpAndKnowledge:lastUpdated', { date: '09/24/2024' })
-        )[0]
-      ).toBeInTheDocument();
+  it('renders null when query is loading', async () => {
+    const { default: LatestContentUpdate } = await import('./index');
+    useQueryMock.mockReturnValue({
+      data: undefined,
+      loading: true,
+      error: undefined
     });
-
-    expect(asFragment()).toMatchSnapshot();
+    render(<LatestContentUpdate file={file} />);
+    expect(screen.queryByText('Last updated:')).not.toBeInTheDocument();
   });
 });

@@ -20,7 +20,12 @@ const githubLink = new HttpLink({
 
 const githubApolloClient = new ApolloClient({
   link: githubLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network'
+    }
+  }
 });
 
 export default githubApolloClient;
