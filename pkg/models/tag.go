@@ -23,7 +23,7 @@ func (tt TagType) Validate() error {
 // These constants represent the different values of TagType
 const (
 	TagTypeUserAccount       TagType = "USER_ACCOUNT"
-	TagTypeMTOCommonSolution TagType = "POSSIBLE_SOLUTION"
+	TagTypeMTOCommonSolution TagType = "MTO_COMMON_SOLUTION"
 )
 
 // Tag represents a reference to another data structure in the database
