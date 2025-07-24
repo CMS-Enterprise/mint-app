@@ -1,15 +1,10 @@
 package storage
 
 import (
-	"database/sql"
-	"errors"
-	"fmt"
-
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/apperrors"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -58,39 +53,13 @@ func MTOCommonSolutionGetByCommonMilestoneKeyLoader(np sqlutils.NamedPreparer, _
 
 }
 
-// PossibleOperationalSolutionGetByID returns a possible solution associated to a specific id
-func (s *Store) MTOCommonSolutionGetByID(logger *zap.Logger, id int) (*models.MTOCommonSolution, error) {
+// MTOCommonSolutionGetByID returns a MTO Common Solution associated to a specific id
+func MTOCommonSolutionGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id *uuid.UUID) (*models.MTOCommonSolution, error) {
 
-	opSol := models.MTOCommonSolution{}
-	stmt, err := s.db.PrepareNamed(sqlqueries.MTOCommonSolution.GetByID)
+	args := map[string]interface{}{"id": id}
+	returned, err := sqlutils.GetProcedure[models.MTOCommonSolution](np, sqlqueries.MTOCommonSolution.GetByID, args)
 	if err != nil {
-		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
+		return nil, err
 	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{"id": id}
-
-	err = stmt.Get(&opSol, arg)
-
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Warn("no possible solution was found for the given ID : %s",
-				zap.Int("id", id))
-			return nil, fmt.Errorf("no possible solution plan found for the given id: %w", err)
-		}
-
-		logger.Error(
-			"failed to fetch possible operational solution",
-			zap.Error(err),
-			zap.Int("id", id),
-		)
-
-		return nil, &apperrors.QueryError{
-			Err:       fmt.Errorf("failed to fetch the possible operational solution: %w", err),
-			Model:     opSol,
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return &opSol, nil
+	return returned, nil
 }

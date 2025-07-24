@@ -16,6 +16,8 @@ func (tt TagType) Validate() error {
 		return nil
 	case TagTypeMTOCommonSolution:
 		return nil
+	case TagTypePossibleSolution:
+		return nil
 	}
 	return fmt.Errorf("%s is not a valid value for TagType", tt)
 }
@@ -23,6 +25,7 @@ func (tt TagType) Validate() error {
 // These constants represent the different values of TagType
 const (
 	TagTypeUserAccount       TagType = "USER_ACCOUNT"
+	TagTypePossibleSolution  TagType = "POSSIBLE_SOLUTION"
 	TagTypeMTOCommonSolution TagType = "MTO_COMMON_SOLUTION"
 )
 

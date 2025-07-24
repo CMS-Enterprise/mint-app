@@ -4,10 +4,8 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -30,8 +28,8 @@ func MTOCommonSolutionGetByKeyLOADER(ctx context.Context, key models.MTOCommonSo
 }
 
 // MTOCommonSolutionGetByID returns a possible operational Solutions according to it's id
-func MTOCommonSolutionGetByID(logger *zap.Logger, store *storage.Store, id int) (*models.MTOCommonSolution, error) {
-	return store.MTOCommonSolutionGetByID(logger, id)
+func MTOCommonSolutionGetByIDLoader(ctx context.Context, id *uuid.UUID) (*models.MTOCommonSolution, error) {
+	return loaders.MTOCommonSolution.ByID.Load(ctx, *id)
 }
 
 // MTOCommonSolutionGetByCommonMilestoneKeyLOADER returns all common Solutions associated with a common Milestone by it's key. Currently, it doesn't provide any contextual data.
