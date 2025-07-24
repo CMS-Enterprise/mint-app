@@ -14,7 +14,7 @@ func (tt TagType) Validate() error {
 	switch tt {
 	case TagTypeUserAccount:
 		return nil
-	case TagTypePossibleSolution:
+	case TagTypeMTOCommonSolution:
 		return nil
 	}
 	return fmt.Errorf("%s is not a valid value for TagType", tt)
@@ -22,8 +22,8 @@ func (tt TagType) Validate() error {
 
 // These constants represent the different values of TagType
 const (
-	TagTypeUserAccount      TagType = "USER_ACCOUNT"
-	TagTypePossibleSolution TagType = "POSSIBLE_SOLUTION"
+	TagTypeUserAccount       TagType = "USER_ACCOUNT"
+	TagTypeMTOCommonSolution TagType = "POSSIBLE_SOLUTION"
 )
 
 // Tag represents a reference to another data structure in the database

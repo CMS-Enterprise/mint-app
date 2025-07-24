@@ -65,7 +65,7 @@ func TaggedEntityGet(
 	switch tagType {
 	case models.TagTypeUserAccount:
 		return UserAccountGetByIDLOADER(ctx, *EntityUUID)
-	case models.TagTypePossibleSolution:
+	case models.TagTypeMTOCommonSolution:
 		return PossibleOperationalSolutionGetByID(logger, store, *EntityIntID)
 	default:
 		return nil, fmt.Errorf(" no tagged entity configured for table: %s", tagType)
@@ -89,7 +89,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 				return err
 			}
 
-		case models.TagTypePossibleSolution:
+		case models.TagTypeMTOCommonSolution:
 			err := processPossibleSolutionHTMLMention(ctx, store, mention)
 			if err != nil {
 				return err
@@ -126,9 +126,9 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 	return nil
 }
 
-// Processes an HTML mention by getting Possible Solution information from the DB for a mention that is of  Tag Type  TagTypePossibleSolution.
+// Processes an HTML mention by getting Possible Solution information from the DB for a mention that is of  Tag Type  TagTypeMTOCommonSolution.
 func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Store, mention *models.HTMLMention) error {
-	if mention.Type != models.TagTypePossibleSolution {
+	if mention.Type != models.TagTypeMTOCommonSolution {
 		return fmt.Errorf(" invalid operation. attempted to fetch possible solution information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
 	}
 	logger := appcontext.ZLogger(ctx)

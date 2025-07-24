@@ -18,6 +18,9 @@ type MTOCommonSolution struct {
 
 type MTOCommonSolutionKey string
 
+// IsTaggedEntity is a method to satisfy the IsTaggedEntity interface for MTOCommonSolution.
+func (MTOCommonSolution) IsTaggedEntity() {}
+
 const (
 	MTOCSKInnovation     MTOCommonSolutionKey = "INNOVATION"
 	MTOCSKAcoOs          MTOCommonSolutionKey = "ACO_OS"
