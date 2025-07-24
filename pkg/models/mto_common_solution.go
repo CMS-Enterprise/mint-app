@@ -3,6 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type MTOCommonSolution struct {
+	ID         int                                 `json:"id" db:"id"`
 	Name       string                              `json:"name" db:"name"`
 	Key        MTOCommonSolutionKey                `json:"key" db:"key"`
 	Type       MTOSolutionType                     `json:"type" db:"type"`
