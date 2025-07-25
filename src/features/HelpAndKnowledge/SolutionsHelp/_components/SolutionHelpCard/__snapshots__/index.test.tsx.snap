@@ -56,7 +56,7 @@ exports[`Operation Solution Help Card > matches snapshot 1`] = `
               The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for the CMS Innovation Center to onboard, support, and manage ACO and kidney models and their participants to improve the quality of care and reduce service costs. The 4i platform is built with modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.
             </p>
             <div
-              class="tablet:grid-col-6 margin-bottom-2"
+              class="tablet:grid-col-12 margin-bottom-2"
               data-testid="grid"
             >
               <p
