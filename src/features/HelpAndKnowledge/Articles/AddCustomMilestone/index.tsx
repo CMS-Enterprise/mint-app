@@ -17,6 +17,7 @@ import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import RelatedArticles from '../_components/RelatedArticles';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
@@ -131,6 +132,8 @@ export const AddCustomMilestone = () => {
               <StillNeedMTOHelp />
             </div>
           </Grid>
+
+          <LatestContentUpdate file="addCustomMilestone.ts" />
         </GridContainer>
       </MainContent>
 

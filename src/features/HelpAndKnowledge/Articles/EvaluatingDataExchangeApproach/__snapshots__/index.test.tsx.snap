@@ -447,189 +447,189 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
         </div>
       </div>
     </div>
-  </main>
-  <div
-    class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
-  >
     <div
-      class="grid-container padding-top-4 padding-bottom-10"
-      data-testid="gridContainer"
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
     >
-      <h2
-        class="margin-top-0 margin-bottom-1"
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
       >
-        Related help resources
-      </h2>
-      <dt
-        class="margin-bottom-4"
-      >
-        Below are some additional help resources that you may find useful.
-      </dt>
-      <ul
-        class="usa-card-group"
-        data-testid="CardGroup"
-      >
-        <li
-          class="usa-card desktop:grid-col-4 article article-card--isLink"
-          data-testid="article-card"
+        <h2
+          class="margin-top-0 margin-bottom-1"
         >
-          <div
-            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          Related help resources
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help resources that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
           >
             <div
-              class="usa-card__header padding-0"
-              data-testid="CardHeader"
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <h3
-                class="line-height-body-4 margin-bottom-1"
+              <div
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
               >
-                About 2-page concept papers and review meetings
-              </h3>
-            </div>
-            <a
-              class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=model-concept-and-design"
-            >
-              <span
-                aria-label="Articles under the Model concept and design category"
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                data-testid="tag"
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  About 2-page concept papers and review meetings
+                </h3>
+              </div>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=model-concept-and-design"
               >
-                Model concept and design
-              </span>
-            </a>
-            <div
-              class="usa-card__body padding-x-0 article__body padding-top-2"
-              data-testid="CardBody"
-            >
-              <p>
-                Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
-              </p>
-            </div>
-            <div
-              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-              data-testid="CardFooter"
-            >
-              <button
-                aria-label="Read About 2-page concept papers and review meetings article"
-                class="usa-button usa-button--outline"
-                type="button"
+                <span
+                  aria-label="Articles under the Model concept and design category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Model concept and design
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
               >
-                Read
-              </button>
+                <p>
+                  Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read About 2-page concept papers and review meetings article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
             </div>
-          </div>
-        </li>
-        <li
-          class="usa-card desktop:grid-col-4 article article-card--isLink"
-          data-testid="article-card"
-        >
-          <div
-            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
           >
             <div
-              class="usa-card__header padding-0"
-              data-testid="CardHeader"
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <h3
-                class="line-height-body-4 margin-bottom-1"
+              <div
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
               >
-                About 6-page concept papers and review meetings
-              </h3>
-            </div>
-            <a
-              class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=model-concept-and-design"
-            >
-              <span
-                aria-label="Articles under the Model concept and design category"
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                data-testid="tag"
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  About 6-page concept papers and review meetings
+                </h3>
+              </div>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=model-concept-and-design"
               >
-                Model concept and design
-              </span>
-            </a>
-            <div
-              class="usa-card__body padding-x-0 article__body padding-top-2"
-              data-testid="CardBody"
-            >
-              <p>
-                Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
-              </p>
-            </div>
-            <div
-              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-              data-testid="CardFooter"
-            >
-              <button
-                aria-label="Read About 6-page concept papers and review meetings article"
-                class="usa-button usa-button--outline"
-                type="button"
+                <span
+                  aria-label="Articles under the Model concept and design category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Model concept and design
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
               >
-                Read
-              </button>
+                <p>
+                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read About 6-page concept papers and review meetings article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
             </div>
-          </div>
-        </li>
-        <li
-          class="usa-card desktop:grid-col-4 article article-card--isLink"
-          data-testid="article-card"
-        >
-          <div
-            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
           >
             <div
-              class="usa-card__header padding-0"
-              data-testid="CardHeader"
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
             >
-              <h3
-                class="line-height-body-4 margin-bottom-1"
+              <div
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
               >
-                High-level project plan
-              </h3>
-            </div>
-            <a
-              class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=getting-started"
-            >
-              <span
-                aria-label="Articles under the Getting started category"
-                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                data-testid="tag"
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  High-level project plan
+                </h3>
+              </div>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
               >
-                Getting started
-              </span>
-            </a>
-            <div
-              class="usa-card__body padding-x-0 article__body padding-top-2"
-              data-testid="CardBody"
-            >
-              <p>
-                Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
-              </p>
-            </div>
-            <div
-              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-              data-testid="CardFooter"
-            >
-              <button
-                aria-label="Read High-level project plan article"
-                class="usa-button usa-button--outline"
-                type="button"
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
               >
-                Read
-              </button>
+                <p>
+                  Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read High-level project plan article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-      <a
-        class="usa-link"
-        href="/help-and-knowledge/articles"
-      >
-        View all help resources
-      </a>
+          </li>
+        </ul>
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help resources
+        </a>
+      </div>
     </div>
-  </div>
+  </main>
 </DocumentFragment>
 `;

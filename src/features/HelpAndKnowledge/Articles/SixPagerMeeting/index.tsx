@@ -30,6 +30,7 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
 import NeedHelp from '../_components/NeedHelp';
 import SimpleList from '../_components/SimpleList';
@@ -683,10 +684,12 @@ const SixPagerMeeting = () => {
             </div>
 
             <NeedHelp />
+
+            <LatestContentUpdate file="sixPageMeeting.ts" />
           </Grid>
         </GridContainer>
       </MainContent>
-      <div className="margin-top-6">
+      <div className="margin-top-2">
         <RelatedArticles
           currentArticle={HelpArticle.SIX_PAGER_MEETING}
           specificArticles={[

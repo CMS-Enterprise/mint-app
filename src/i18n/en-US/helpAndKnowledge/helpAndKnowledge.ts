@@ -2431,6 +2431,7 @@ const helpAndKnowledge = {
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',
   sortDesc: 'By title (Z-A)',
+  lastUpdated: 'Last updated {{date}}',
   solutionType
 };
 

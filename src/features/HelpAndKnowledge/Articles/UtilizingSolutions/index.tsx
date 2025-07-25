@@ -19,6 +19,7 @@ import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 type ListItem = {
@@ -167,6 +168,8 @@ export const UtilizingSolutions = () => {
               </SummaryBoxContent>
             </SummaryBox>
           </Grid>
+
+          <LatestContentUpdate file="utilizingSolutions.ts" />
         </GridContainer>
       </MainContent>
 
