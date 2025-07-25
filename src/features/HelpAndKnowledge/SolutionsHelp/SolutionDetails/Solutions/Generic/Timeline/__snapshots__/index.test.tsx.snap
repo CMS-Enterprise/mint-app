@@ -1659,9 +1659,24 @@ exports[`Generic Timeline Components > matches the snapshot > National Committee
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <p>
+      Consultation with the COR and Project Lead will be required to verify that the quality measure under consideration is incorporated within the existing contract scope.
+    </p>
     <ol
       class="usa-process-list padding-top-1"
-    />
+    >
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Contact NCQA point of contact
+        </h3>
+        Reach out to the NCQA primary point of contact to get started.
+      </li>
+    </ol>
   </div>
 </DocumentFragment>
 `;

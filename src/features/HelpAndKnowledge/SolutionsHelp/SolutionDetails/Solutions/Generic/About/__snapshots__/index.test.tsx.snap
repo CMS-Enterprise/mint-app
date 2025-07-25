@@ -3127,11 +3127,57 @@ exports[`Generic About Components > matches the snapshot > Microsoft Forms 1`] =
   <div
     class="operational-solution-details line-height-body-5 font-body-md"
   >
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  MS Forms
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
     <p
       class="margin-top-0 text-pre-wrap margin-bottom-0"
-    >
-      helpAndKnowledge:solutions.MS_FORMS.about.description
-    </p>
+    />
   </div>
 </DocumentFragment>
 `;
@@ -3238,8 +3284,25 @@ exports[`Generic About Components > matches the snapshot > National Committee fo
     <p
       class="margin-top-0 text-pre-wrap margin-bottom-0"
     >
-      helpAndKnowledge:solutions.NCQA.about.description
+      The Innovation Center models use quality measures to assess quality of care and support monitoring and evaluation activities in support of Section 1115A(a)(3) of the Social Security Act. The National Committee for Quality Assurance (NCQA) owns the proprietary rights to the system that collects HEDIS® data, and exclusive licensing rights, and is the only organization authorized to add measurement specifications and to provide technical assistance to health plans and auditors to ensure the appropriate use of NCQA measures. NCQA develops the measures and makes all of the updates to HEDIS®, it is the only qualified entity capable of and authorized to provide the needed technical assistance to organizations that use HEDIS® and NCQA measures.
     </p>
+    <div
+      class="margin-top-4"
+    >
+      <h3
+        class="margin-bottom-2"
+      >
+        Services provided
+      </h3>
+      <span
+        class="text-pre-wrap "
+      >
+        Technical assistance on the appropriate use of NCQA measures. Provides the HEDIS manual.
+      </span>
+      <ul
+        class="padding-left-4"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -3579,11 +3642,57 @@ exports[`Generic About Components > matches the snapshot > Rapid Measure Develop
   <div
     class="operational-solution-details line-height-body-5 font-body-md"
   >
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  RMD
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
     <p
       class="margin-top-0 text-pre-wrap margin-bottom-0"
-    >
-      helpAndKnowledge:solutions.RMD.about.description
-    </p>
+    />
   </div>
 </DocumentFragment>
 `;
@@ -3593,11 +3702,57 @@ exports[`Generic About Components > matches the snapshot > ResDAC CMMI Model Dat
   <div
     class="operational-solution-details line-height-body-5 font-body-md"
   >
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  ResDAC-CMDS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
     <p
       class="margin-top-0 text-pre-wrap margin-bottom-0"
-    >
-      helpAndKnowledge:solutions.RESDAC_CMDS.about.description
-    </p>
+    />
   </div>
 </DocumentFragment>
 `;
