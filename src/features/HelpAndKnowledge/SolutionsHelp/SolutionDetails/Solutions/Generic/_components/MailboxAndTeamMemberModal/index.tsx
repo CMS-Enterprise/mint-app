@@ -1,13 +1,18 @@
-import React from 'react';
-import { Trans } from 'react-i18next';
+import React, { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Button } from '@trussworks/react-uswds';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
-import TeamMailboxForm from '../TeamMailboxForm';
-import TeamMemberForm from '../TeamMemberForm';
+import TeamMailboxForm, {
+  FormValues as TeamMailboxFormValues
+} from '../TeamMailboxForm';
+import TeamMemberForm, {
+  FormValues as TeamMemberFormValues
+} from '../TeamMemberForm';
 
 export type ModeType = TeamMemberModeType | TeamMailboxModeType;
 // Matching keys in mtoCommonSolutionContactMisc
@@ -25,6 +30,21 @@ const MailboxAndTeamMemberModal = ({
   mode: ModeType;
   contact?: SolutionContactType;
 }) => {
+  const { t: contactMiscT } = useTranslation('mtoCommonSolutionContactMisc');
+  const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
+  const [submitTeamMemberForm, setSubmitTeamMemberForm] = useState<
+    (formData: TeamMemberFormValues) => void
+  >(() => {});
+  const [submitTeamMailboxForm, setSubmitTeamMailboxForm] = useState<
+    (formData: TeamMailboxFormValues) => void
+  >(() => {});
+
+  const isTeamMemberMode =
+    mode === 'addTeamMember' || mode === 'editTeamMember';
+
+  const isTeamMailboxMode =
+    mode === 'addTeamMailbox' || mode === 'editTeamMailbox';
+
   return (
     <Modal
       isOpen={isOpen}
@@ -46,21 +66,47 @@ const MailboxAndTeamMemberModal = ({
         </p>
       </div>
 
-      {(mode === 'addTeamMailbox' || mode === 'editTeamMailbox') && (
+      {isTeamMailboxMode && (
         <TeamMailboxForm
           mode={mode}
           closeModal={closeModal}
           teamMailbox={contact}
+          setSubmitForm={setSubmitTeamMailboxForm}
+          setDisableButton={setDisableSubmitBtn}
         />
       )}
 
-      {(mode === 'addTeamMember' || mode === 'editTeamMember') && (
+      {isTeamMemberMode && (
         <TeamMemberForm
           mode={mode}
           closeModal={closeModal}
           teamMember={contact}
+          setSubmitForm={setSubmitTeamMemberForm}
+          setDisableButton={setDisableSubmitBtn}
         />
       )}
+
+      <div className="mint-modal__footer">
+        <Button
+          form={isTeamMemberMode ? 'team-member-form' : 'team-mailbox-form'}
+          type="submit"
+          disabled={disabledSubmitBtn}
+          className="margin-right-3 margin-top-0"
+          onClick={
+            isTeamMemberMode ? submitTeamMemberForm : submitTeamMailboxForm
+          }
+        >
+          {contactMiscT(`${mode}.cta`)}
+        </Button>
+        <Button
+          type="button"
+          className="margin-top-0"
+          unstyled
+          onClick={closeModal}
+        >
+          {contactMiscT('cancel')}
+        </Button>
+      </div>
     </Modal>
   );
 };

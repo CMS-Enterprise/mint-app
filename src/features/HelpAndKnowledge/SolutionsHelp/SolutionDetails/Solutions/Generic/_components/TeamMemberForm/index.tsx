@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -33,7 +33,7 @@ type UnwrapNullable<
   P extends PropertyKey
 > = T extends Record<P, unknown> ? T[P] : '';
 
-type FormValues = Pick<
+export type FormValues = Pick<
   SolutionContactType,
   'name' | 'role' | 'isPrimary' | 'receiveEmails'
 > & {
@@ -57,11 +57,17 @@ const TeamMemberForm = ({
       id: 'not a real userAccount id',
       username: ''
     }
-  }
+  },
+  setSubmitForm,
+  setDisableButton
 }: {
   mode: TeamMemberModeType;
   closeModal: () => void;
   teamMember?: SolutionContactType;
+  setSubmitForm: React.Dispatch<
+    React.SetStateAction<(formData: FormValues) => void>
+  >;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
@@ -81,6 +87,7 @@ const TeamMemberForm = ({
     handleSubmit,
     formState: { isSubmitting, isDirty },
     watch,
+    getValues,
     setValue
   } = methods;
 
@@ -106,8 +113,22 @@ const TeamMemberForm = ({
   >(null);
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
-  const disabledSubmitBtn =
-    !watch('userName') || !watch('role') || isSubmitting || !isDirty;
+  // const usernamee = getValues('userName');
+  // console.log('user name', usernamee);
+
+  useEffect(() => {
+    // console.log('is there', getValues('userName'));
+    setDisableButton(
+      !watch('userName') || !watch('role') || isSubmitting || !isDirty
+    );
+  }, [isDirty, isSubmitting, watch, setDisableButton, getValues]);
+  // const disabledSubmitBtn =
+  //   !watch('userName') || !watch('role') || isSubmitting || !isDirty;
+
+  useEffect(() => {
+    setSubmitForm(() => onSubmit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!selectedSolution) {
     return null;
@@ -342,7 +363,7 @@ const TeamMemberForm = ({
             }}
           />
         </Alert>
-        <div className="margin-top-3 display-flex">
+        {/* <div className="margin-top-3 display-flex">
           <Button
             type="submit"
             disabled={disabledSubmitBtn}
@@ -358,7 +379,7 @@ const TeamMemberForm = ({
           >
             {miscT('cancel')}
           </Button>
-        </div>
+        </div> */}
       </Form>
     </FormProvider>
   );

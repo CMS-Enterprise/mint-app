@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -26,7 +26,7 @@ import dirtyInput from 'utils/formUtil';
 
 import { TeamMailboxModeType } from '../MailboxAndTeamMemberModal';
 
-type FormValues = Pick<
+export type FormValues = Pick<
   SolutionContactType,
   'mailboxAddress' | 'mailboxTitle' | 'isPrimary' | 'receiveEmails'
 >;
@@ -44,11 +44,17 @@ const TeamMailboxForm = ({
     isTeam: true,
     isPrimary: false,
     receiveEmails: false
-  }
+  },
+  setSubmitForm,
+  setDisableButton
 }: {
   mode: TeamMailboxModeType;
   closeModal: () => void;
   teamMailbox?: SolutionContactType;
+  setSubmitForm: React.Dispatch<
+    React.SetStateAction<(formData: FormValues) => void>
+  >;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
@@ -90,7 +96,15 @@ const TeamMailboxForm = ({
   >(null);
   const isAddMode = mode === 'addTeamMailbox';
   const isEditMode = mode === 'editTeamMailbox';
-  const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
+
+  useEffect(() => {
+    setDisableButton(isSubmitting || !isDirty || !isValid);
+  }, [isSubmitting, isDirty, isValid, setDisableButton]);
+
+  useEffect(() => {
+    setSubmitForm(() => onSubmit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!selectedSolution) {
     return null;
@@ -320,7 +334,7 @@ const TeamMailboxForm = ({
             }}
           />
         </Alert>
-        <div className="margin-top-3 display-flex">
+        {/* <div className="margin-top-3 display-flex">
           <Button
             type="submit"
             disabled={disabledSubmitBtn}
@@ -336,7 +350,7 @@ const TeamMailboxForm = ({
           >
             {miscT('cancel')}
           </Button>
-        </div>
+        </div> */}
       </Form>
     </FormProvider>
   );
