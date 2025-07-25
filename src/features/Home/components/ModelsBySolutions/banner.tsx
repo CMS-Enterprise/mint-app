@@ -34,9 +34,7 @@ const ModelsBySolutionsBanner = ({
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const selectedSolution = helpSolutions.find(
-    solution => solution.enum === solutionKey
-  );
+  const selectedSolution = helpSolutions[solutionKey];
 
   return (
     <div className="models-by-solutions">

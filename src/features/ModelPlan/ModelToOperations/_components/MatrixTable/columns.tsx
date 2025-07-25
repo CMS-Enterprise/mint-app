@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
@@ -372,7 +372,7 @@ export const columns: ColumnType[] = [
               {row.solutions.map((solution, index) => {
                 const solutionAcornym = findSolutionByKey(
                   solution.key!,
-                  helpSolutions
+                  helpSolutionsArray
                 )?.acronym;
 
                 return (
@@ -401,13 +401,13 @@ export const columns: ColumnType[] = [
             {row.solutions.map((solution, index) => {
               const solutionMap = findSolutionByKey(
                 solution.key!,
-                helpSolutions
+                helpSolutionsArray
               );
 
-              const detailRoute = solutionMap?.route
+              const detailRoute = solutionMap?.key
                 ? `${initLocation}${search}${
                     search ? '&' : '?'
-                  }solution=${solutionMap?.route || ''}&section=about`
+                  }solution-key=${solutionMap?.key || ''}&section=about`
                 : `${initLocation}${search}`;
               return (
                 <React.Fragment key={solution.id}>

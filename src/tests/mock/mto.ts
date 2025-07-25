@@ -31,7 +31,9 @@ import {
   GetMtoSolutionsAndMilestonesQuery,
   GetMtoSolutionsAndMilestonesQueryVariables,
   MtoCommonMilestoneKey,
+  MtoCommonSolutionCmsComponent,
   MtoCommonSolutionKey,
+  MtoCommonSolutionOwnerType,
   MtoCommonSolutionSubject,
   MtoFacilitator,
   MtoMilestoneStatus,
@@ -47,11 +49,14 @@ export const pointsOfContact = [
   {
     __typename: 'PossibleOperationalSolutionContact',
     id: '1267967874323',
+    mailboxTitle: '',
+    mailboxAddress: '',
     name: 'John Mint',
     email: 'john.mint@oddball.io',
     isTeam: false,
     role: 'Project lead',
-    isPrimary: true
+    isPrimary: true,
+    receiveEmails: true
   }
 ];
 
@@ -343,17 +348,37 @@ export const possibleSolutionsMock: MockedResponse<
           {
             __typename: 'MTOCommonSolution',
             key: MtoCommonSolutionKey.ACO_OS,
+            systemOwners: [
+              {
+                __typename: 'MTOCommonSolutionSystemOwner',
+                id: 'UUID',
+                ownerType: MtoCommonSolutionOwnerType.SYSTEM_OWNER,
+                cmsComponent:
+                  MtoCommonSolutionCmsComponent.CENTER_FOR_MEDICARE_CM
+              }
+            ],
+            contractors: [
+              {
+                __typename: 'MTOCommonSolutionContractor',
+                id: 'UUID',
+                contractorName: 'Best Contractor',
+                contractTitle: 'MIS'
+              }
+            ],
             contactInformation: {
               __typename: 'MTOCommonSolutionContactInformation',
               pointsOfContact: [
                 {
                   __typename: 'MTOCommonSolutionContact',
                   id: '123',
-                  name: 'test',
+                  name: 'Test Last',
                   email: 'email@email.com',
+                  mailboxTitle: 'Mint Team',
+                  mailboxAddress: 'mint-team@email.com',
                   isTeam: true,
                   isPrimary: true,
-                  role: 'role'
+                  role: null,
+                  receiveEmails: true
                 }
               ]
             }

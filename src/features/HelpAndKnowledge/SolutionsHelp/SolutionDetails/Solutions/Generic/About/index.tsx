@@ -8,9 +8,9 @@ import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/ut
 
 import ExternalLink from 'components/ExternalLink';
 
-import GatheringInfoAlert from '../../_components/GatheringInfoAlert';
+import GatheringInfoAlert from '../../../_components/GatheringInfoAlert';
 
-import '../index.scss';
+import '../../index.scss';
 
 type ListItemType = {
   header: string;
@@ -86,7 +86,7 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
           </ExternalLink>
         );
       } else {
-        params.set('solution', link.link);
+        params.set('solution-key', link.link);
         linkObj[`link${index + 1}`] = (
           <InternalSolutionButton params={params.toString()}>
             link

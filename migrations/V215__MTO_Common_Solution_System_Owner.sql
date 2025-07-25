@@ -1,0 +1,56 @@
+-- Create the MTO_COMMON_SOLUTION_OWNER_TYPE enum
+CREATE TYPE MTO_COMMON_SOLUTION_OWNER_TYPE AS ENUM (
+    'SYSTEM_OWNER',
+    'BUSINESS_OWNER'
+);
+
+-- Create the CMS_COMPONENT enum with ALL CAPS values
+CREATE TYPE CMS_COMPONENT AS ENUM (
+    'OFFICE_OF_THE_ADMINISTRATOR',
+    'OFFICE_OF_HEALTHCARE_EXPERIENCE_AND_INTEROPERABILITY',
+    'OFFICE_OF_PROGRAM_OPERATIONS_AND_LOCAL_ENGAGEMENT_OPOLE',
+    'OFFICE_OF_ENTERPRISE_DATA_AND_ANALYTICS_OEDA',
+    'OFFICE_OF_EQUAL_OPPORTUNITY_AND_CIVIL_RIGHTS',
+    'OFFICE_OF_COMMUNICATIONS_OC',
+    'OFFICE_OF_LEGISLATION',
+    'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
+    'OFFICE_OF_MINORITY_HEALTH_OMH',
+    'OFFICE_OF_THE_ACTUARY_OACT',
+    'OFFICE_OF_STRATEGIC_OPERATIONS_AND_REGULATORY_AFFAIRS_OSORA',
+    'OFFICE_OF_INFORMATION_TECHNOLOGY_OIT',
+    'OFFICE_OF_ACQUISITION_AND_GRANTS_MANAGEMENT_OAGM',
+    'OFFICES_OF_HEARINGS_AND_INQUIRIES',
+    'OFFICE_OF_FINANCIAL_MANAGEMENT_OFM',
+    'OFFICE_OF_STRATEGY_PERFORMANCE_AND_RESULTS_OSPR',
+    'OFFICE_OF_SECURITY_FACILITIES_AND_LOGISTICS_OPERATIONS_OSFLO',
+    'OFFICE_OF_HUMAN_CAPITAL',
+    'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY_CCSQ',
+    'CENTER_FOR_MEDICARE_AND_MEDICAID_INNOVATION_CMMI',
+    'CENTER_FOR_MEDICARE_CM',
+    'CENTER_FOR_MEDICAID_AND_CHIP_SERVICES_CMCS',
+    'CENTER_FOR_PROGRAM_INTEGRITY_CPI',
+    'CENTER_FOR_CONSUMER_INFORMATION_AND_INSURANCE_OVERSIGHT_CCIIO'
+);
+
+-- Create the mto_common_solution_system_owner table
+CREATE TABLE mto_common_solution_system_owner (
+    id UUID PRIMARY KEY NOT NULL,
+    mto_common_solution_key MTO_COMMON_SOLUTION_KEY REFERENCES mto_common_solution(key) ON DELETE CASCADE NOT NULL,
+    owner_type MTO_COMMON_SOLUTION_OWNER_TYPE NOT NULL,
+    cms_component CMS_COMPONENT NOT NULL, -- Updated to use the new enum type
+
+    -- META DATA
+    created_by UUID NOT NULL REFERENCES user_account(id),
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES user_account(id),
+    modified_dts TIMESTAMP WITH TIME ZONE
+);
+
+COMMENT ON TABLE mto_common_solution_system_owner IS 'Table for storing system owner information related to MTO common solutions.';
+
+-- Add constraint to ensure no duplicate rows with the same key, type, and component
+ALTER TABLE mto_common_solution_system_owner
+ADD CONSTRAINT uniq_system_owner_key_type_component UNIQUE (mto_common_solution_key, owner_type, cms_component);
+
+-- Add audit triggers for the table
+SELECT audit.AUDIT_TABLE('public', 'mto_common_solution_system_owner', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]);

@@ -73,14 +73,14 @@ exports[`LinkSolutionForm > renders and matches snapshot 1`] = `
                   <input
                     checked=""
                     class="usa-checkbox__input"
-                    id="bcda"
-                    name="bcda"
+                    id="BCDA"
+                    name="BCDA"
                     type="checkbox"
-                    value="bcda"
+                    value="BCDA"
                   />
                   <label
                     class="usa-checkbox__label"
-                    for="bcda"
+                    for="BCDA"
                   >
                     Select this solution
                   </label>

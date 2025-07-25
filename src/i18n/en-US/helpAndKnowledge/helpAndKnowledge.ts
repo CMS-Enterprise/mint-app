@@ -2,22 +2,22 @@ import {
   ArticleCategories,
   HelpArticle
 } from 'features/HelpAndKnowledge/Articles';
-import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
-import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
-
+import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/About';
+import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/Timeline';
 import {
-  OperationalSolutionCategoryRoute,
-  OperationalSolutionSubCategories
-} from 'types/operationalSolutionCategories';
+  MtoCommonSolutionKey,
+  MtoCommonSolutionSubject,
+  MtoSolutionType
+} from 'gql/generated/graphql';
+
+import { OperationalSolutionSubCategories } from 'types/operationalSolutionCategories';
 
 interface SolutionModelType {
   about: AboutConfigType;
   timeline?: TimelineConfigType; // optional as some timelines are identical and are reused between solutions
 }
 
-type SolutionTType = {
-  [key: string]: SolutionModelType;
-};
+type SolutionTType = Record<MtoCommonSolutionKey, SolutionModelType>;
 
 type SolutionCategoryType = {
   header: string;
@@ -31,63 +31,65 @@ type CardInfoType = {
 };
 
 export const solutionCategories: Record<
-  OperationalSolutionCategoryRoute,
+  MtoCommonSolutionSubject,
   SolutionCategoryType
 > = {
-  'applications-and-participation-interaction-aco-and-kidney': {
-    header: 'Applications and participant interaction',
-    subHeader: '(ACO and kidney models)',
-    description:
-      'Learn about the solutions available for applications and participant interaction for ACO and kidney models.'
-  },
-  'applications-and-participation-interaction-non-aco': {
-    header: 'Applications and participant interaction',
-    subHeader: '(non-ACO models)',
-    description:
-      'Learn about the solutions available for cooperative agreement applications, participant agreement applications, and participant interaction for non-ACO models.'
-  },
-  'communication-tools-and-help-desk': {
+  [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS]:
+    {
+      header: 'Applications and participant interaction',
+      subHeader: '(ACO and kidney models)',
+      description:
+        'Learn about the solutions available for applications and participant interaction for ACO and kidney models.'
+    },
+  [MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS]:
+    {
+      header: 'Applications and participant interaction',
+      subHeader: '(non-ACO models)',
+      description:
+        'Learn about the solutions available for cooperative agreement applications, participant agreement applications, and participant interaction for non-ACO models.'
+    },
+  [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK]: {
     header: 'Communication tools and help desk',
     description:
       'Learn about the solutions available for communication tools and help desk.'
   },
-  'contract-vehicles': {
+  [MtoCommonSolutionSubject.CONTRACT_VEHICLES]: {
     header: 'Contract vehicles',
     description: 'Learn about the solutions available for contract vehicles.'
   },
-  data: {
+  [MtoCommonSolutionSubject.DATA]: {
     header: 'Data',
     description: 'Learn about the solutions available for data.'
   },
-  'evaluation-and-review': {
+  [MtoCommonSolutionSubject.EVALUATION_AND_REVIEW]: {
     header: 'Evaluation and review',
     description:
       'Learn about the solutions available for evaluation and review.'
   },
-  learning: {
+  [MtoCommonSolutionSubject.LEARNING]: {
     header: 'Learning',
     description: 'Learn about the solutions available for learning.'
   },
-  legal: {
+  [MtoCommonSolutionSubject.LEGAL]: {
     header: 'Legal',
     description: 'Learn about the solutions available for legal.'
   },
-  'medicare-advantage-and-part-d': {
+  [MtoCommonSolutionSubject.MEDICARE_ADVANTAGE_AND_PART_D]: {
     header: 'Medicare Advantage and Part D',
     description:
       'Learn about the solutions available for Medicare Advantage and Part D.'
   },
-  'medicare-fee-for-service': {
+  [MtoCommonSolutionSubject.MEDICARE_FEE_FOR_SERVICE]: {
     header: 'Medicare Fee-for-Service',
     description:
       'Learn about the solutions available for Medicare Fee-for-Service.'
   },
-  'payments-and-financials': {
+  [MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS]: {
     header: 'Payments and financials',
     description:
       'Learn about the solutions available for payments and financials.'
   },
-  quality: {
+  [MtoCommonSolutionSubject.QUALITY]: {
     header: 'Quality',
     description: 'Learn about the solutions available for quality.'
   }
@@ -108,7 +110,7 @@ const solutionSubCategories: Record<OperationalSolutionSubCategories, string> =
   };
 
 const solutions: SolutionTType = {
-  innovation: {
+  [MtoCommonSolutionKey.INNOVATION]: {
     about: {
       description:
         'The CMS Innovation Center has a growing portfolio of models that test various payment and service delivery models and aim to achieve better care for patients, smarter spending, and healthier communities. The 4Innovation (4i) is a dynamic platform for the CMS Innovation Center to onboard, support, and manage ACO and kidney models and their participants to improve the quality of care and reduce service costs. The 4i platform is built with modern scalable architecture, services, and solutions and operates in the CMS AWS Cloud enclave. The development strategy is based on a robust Human-Centered Design, User Experience Framework, and SAFe agile methodologies.',
@@ -143,7 +145,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: 'innovation-payment-contract',
+          link: MtoCommonSolutionKey.IPC,
           external: false
         },
         {
@@ -214,7 +216,7 @@ const solutions: SolutionTType = {
       ]
     }
   },
-  accountableCare: {
+  [MtoCommonSolutionKey.ACO_OS]: {
     about: {
       description:
         'The Accountable Care Organization – Operational System (ACO-OS) is the system of record for ACO and kidney models (which includes VT APM, ACO REACH, KCC, PCF) and the Medicare Shared Savings Program in CM. The system stores and exchanges ACO/entity demographic, provider, claim, and beneficiary data with ACOs/entities and CMS systems such as Master Data Management (MDM), Enterprise Data Lake (EDL), and Fee-for-Service (FFS) Shared System Maintainers (SSMs). The ACO-OS generates and shares the claims data each month for over 14,000,000 Medicare beneficiaries. The claims data and reports generated by ACO-OS are shared through the Data Hub feature in the 4i platform for CMMI models and ACO-Management System (ACO-MS) for Medicare Shared Savings Program.',
@@ -249,7 +251,7 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: 'innovation-payment-contract',
+          link: MtoCommonSolutionKey.IPC,
           external: false
         },
         {
@@ -259,7 +261,7 @@ const solutions: SolutionTType = {
       ]
     }
   },
-  automatedPlanPayment: {
+  [MtoCommonSolutionKey.APPS]: {
     about: {
       description: `The Automated Plan Payment System (APPS) calculates plan level monthly payment for Medicare Advantage, Program of All-Inclusive Care for the Elderly (PACE), Medicare- Medicaid Plans, section 1876 and 1833 cost-based Managed Care Organizations, Part D Prescription Drug Sponsors, and specific CMS Demonstration initiatives. APPS facilitates payments to the US Treasury via the Health Insurance General Ledger Accounting System (HIGLAS) in the Office of Financial Management (OFM). APPS stores plan company banking information so OFM and Treasury can disperse payments through Electronic Funds Transfer (EFT).`,
       components: [
@@ -291,7 +293,7 @@ const solutions: SolutionTType = {
       ]
     }
   },
-  bcda: {
+  [MtoCommonSolutionKey.BCDA]: {
     about: {
       description: `The Beneficiary Claims Data API (BCDA) gives organizations the insights they need to provide high quality, coordinated care. BCDA uses the FHIR® standard as a simple, flexible, and effective way for Medicare Shared Savings Program, ACO REACH, and other Alternative Payment Model participants to receive Medicare Part A, B, and D claims.`,
       components: [
@@ -329,7 +331,7 @@ const solutions: SolutionTType = {
       ]
     }
   },
-  centralizedDataExhange: {
+  [MtoCommonSolutionKey.CDX]: {
     about: {
       description: `Centralized Data Exchange (CDX) is a part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it enables CMMI-to-Participant Interoperability and application integration with other CMS systems. The Centralized Data Exchange (CDX) serves as an IT capability that enables the Innovation Center (IC) models to send and receive data with internal and external model participants using Application Programming Interfaces (APIs). It provides an improved ability to send and receive ad hoc files with internal and external users that takes advantage of modern, cloud-based technologies with one centralized file exchange.
 
@@ -339,7 +341,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -398,7 +400,7 @@ The business function of CDX is a centralized data exchange to enable interopera
       links: ['CMS Enterprise Portal']
     }
   },
-  ccWarehouse: {
+  [MtoCommonSolutionKey.CCW]: {
     about: {
       description: `The Chronic Conditions Data Warehouse (CCW) is a research database designed to make Medicare, Medicaid, Assessments, Part C, and Part D Prescription Drug Event data more readily available to support research designed to improve the quality of care and reduce costs and utilization.
 
@@ -485,7 +487,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
       links: ['Data Disclosures and Data Use Agreements']
     }
   },
-  cdac: {
+  [MtoCommonSolutionKey.CDAC]: {
     about: {
       description: `The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
         
@@ -549,7 +551,7 @@ Examples and impact:`,
       ]
     }
   },
-  cmsBox: {
+  [MtoCommonSolutionKey.CMS_BOX]: {
     about: {
       description:
         'CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. '
@@ -572,7 +574,7 @@ Examples and impact:`,
       links: ['Go to CMS Box', 'View resources on CMS Intranet']
     }
   },
-  cbosc: {
+  [MtoCommonSolutionKey.CBOSC]: {
     about: {
       description:
         'The Consolidated Business Operations Support Center (CBOSC) contract provides IT and programmatic help desk inquiry support, help desk operations and Business Operations support for the Innovation Center Models, the Alternative Payment Model (APM) track of the Quality Payment Program (QPP) and CM. CBOSC manages intake, resolution and escalation of all inquiries related to Innovations and Shared Savings Program Business Operations centrally. Support is provided through Pre-Implementation, Post-Implementation, Operation, Reporting, and Information Support phases as models test innovative payment and service delivery models to reduce program expenditures while preserving or enhancing the quality of care furnished to individuals.'
@@ -619,7 +621,7 @@ Examples and impact:`,
       ]
     }
   },
-  cpiVetting: {
+  [MtoCommonSolutionKey.CPI_VETTING]: {
     about: {
       description: `CPI Vetting is a process conducted by the Center for Program Integrity (CPI). Their mission is to detect and combat fraud, waste and abuse of the Medicare and Medicaid programs.
 
@@ -628,20 +630,20 @@ They make sure CMS is paying the right provider the right amount for services co
 CMMI works with CPI to screen participant and provider candidates prior to those candidates joining the model.`
     }
   },
-  electronicFileTransfer: {
+  [MtoCommonSolutionKey.EFT]: {
     about: {
       description:
         'Electronic File Transfer (EFT) is a secure file transfer protocol used to move files from one destination to another internally or externally.'
     }
   },
-  expandedDataFeedback: {
+  [MtoCommonSolutionKey.EDFR]: {
     about: {
       description:
         'Expanded Data Feedback Reporting (eDFR) is part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it provides transparency to stakeholders including the primary care physicians participating in CMMI Alternative Payment Models (APM) in the form of feedback for healthcare delivered from a utilization, cost, and quality perspective. The metrics are calculated based on Medicare provider and claims data. The system renders the information visually on dashboards and reports.',
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -700,7 +702,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
       ]
     }
   },
-  govDelivery: {
+  [MtoCommonSolutionKey.GOVDELIVERY]: {
     about: {
       description:
         'GovDelivery is a listserv used to communicate with model participants and other interested stakeholders.',
@@ -742,7 +744,7 @@ CMMI works with CPI to screen participant and provider candidates prior to those
       ]
     }
   },
-  grantSolutions: {
+  [MtoCommonSolutionKey.GS]: {
     about: {
       description: `GrantSolutions (GS) is a tool used to manage grants from funding opportunity planning, through the issuance of awards, to grant closeout.
 
@@ -765,7 +767,7 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
       ]
     }
   },
-  higlas: {
+  [MtoCommonSolutionKey.HIGLAS]: {
     about: {
       description: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.
 
@@ -796,7 +798,7 @@ Specific to CMMI, HIGLAS has two integrated points:`,
       items: []
     }
   },
-  healthDataReporting: {
+  [MtoCommonSolutionKey.HDR]: {
     about: {
       description: `Health Data Reporting (HDR) is part of the <link1>Innovation Support Platform (ISP)</link1> Suite of tools for non-ACO models; it is a configurable, Innovation Center-wide solution that supports the collection and validation of health-related data for analysis by CMMI models.
 
@@ -806,7 +808,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -883,7 +885,7 @@ If the model will use HDR’s pre-fill option, the model team’s implementation
       ]
     }
   },
-  healthPlanManagement: {
+  [MtoCommonSolutionKey.HPMS]: {
     about: {
       description: `The Centers for Medicare & Medicaid Services' (CMS) Health Plan Management System (HPMS) is a web-enabled information system that serves a critical role in the ongoing operations of the Medicare Advantage (MA) and Part D programs.
 
@@ -941,7 +943,7 @@ Health Plan Management System, all health insurance companies participating in t
       items: []
     }
   },
-  innovationPayment: {
+  [MtoCommonSolutionKey.IPC]: {
     about: {
       description:
         'The Innovation Payment Contractor (IPC) assists CMMI in making payments to eligible participants in multiple tests of Models of care and program innovations to improve quality and value-based care.',
@@ -1014,7 +1016,7 @@ The Model team will receive an implementation milestone schedule that identifies
       ]
     }
   },
-  innovationSupport: {
+  [MtoCommonSolutionKey.ISP]: {
     about: {
       description:
         'The Innovation Support Platform (ISP) is a contract with three integrated IT systems that support the participant interaction that occurs after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
@@ -1024,19 +1026,19 @@ The Model team will receive an implementation milestone schedule that identifies
           items: [],
           links: [
             {
-              link: 'centralized-data-exchange',
+              link: MtoCommonSolutionKey.CDX,
               external: false
             },
             {
-              link: 'health-data-reporting',
+              link: MtoCommonSolutionKey.HDR,
               external: false
             },
             {
-              link: 'expanded-data-feedback-reporting',
+              link: MtoCommonSolutionKey.EDFR,
               external: false
             },
             {
-              link: 'model-space',
+              link: MtoCommonSolutionKey.MODEL_SPACE,
               external: false
             }
           ],
@@ -1182,7 +1184,7 @@ The Model team will receive an implementation milestone schedule that identifies
       ]
     }
   },
-  integratedDataRepository: {
+  [MtoCommonSolutionKey.IDR]: {
     about: {
       description: `The Integrated Data Repository (IDR) is a multi-platform and high-volume data warehouse comprising integrated views of data across Medicare Parts A, B, C, and D, Beneficiary Entitlement, Enrollment and Utilization data. Provider reference information, Drug data, Contracts for Plans, and Medicaid and Children’s Health Insurance Program (CHIP).
 
@@ -1213,7 +1215,7 @@ The data in the IDR is leveraged by various components across the agency to faci
       ]
     }
   },
-  learningAndDiffusion: {
+  [MtoCommonSolutionKey.LDG]: {
     about: {
       description:
         'The Learning and Diffusion Group (LDG) is a team within CMMI that facilitates learning within models and disseminates the lessons learned across models so that participants can benefit from the experiences of other models. LDG has two divisions: the Division of Model Learning Systems (DMLS) and the Division of Analysis and Networks (DAN).',
@@ -1254,7 +1256,7 @@ The data in the IDR is leveraged by various components across the agency to faci
       ]
     }
   },
-  legalVertical: {
+  [MtoCommonSolutionKey.LV]: {
     about: {
       description: `The mission of the Legal Vertical is to facilitate an effective and coordinated working relationship between CMMI and Office of General Council (OGC), the legal counsel to CMMI, and to provide an internal resource on legal issues.
 
@@ -1298,7 +1300,7 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
       ]
     }
   },
-  masterDataManagementProgramOrganizationRelationship: {
+  [MtoCommonSolutionKey.MDM_POR]: {
     about: {
       description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities provider(e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, business intelligence reports and data lake mesh, and data share to IDRC Snowflake.
 
@@ -1377,7 +1379,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
       ]
     }
   },
-  masterDataManagementForNCBP: {
+  [MtoCommonSolutionKey.MDM_NCBP]: {
     about: {
       description: `Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data.
 
@@ -1443,7 +1445,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
       ]
     }
   },
-  measureInstrumentDS: {
+  [MtoCommonSolutionKey.MIDS]: {
     about: {
       description:
         'CMMI awarded a task order off of CCSQ’s Quality Measure Development and Analytic Support (QMDAS) contract and titled the task order the Measure Instrument Development and Support contract, or MIDS for short. MIDS is a quality measure contract that supports model teams’ development of de novo measures and re-specification of existing measures for use in CMMI’s Alternative Payment Models (APMs). The MIDS contract is used to support measuring and incentivizing quality in the Center’s healthcare delivery models, assisting models in their quality strategy and design of measures.',
@@ -1497,7 +1499,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
       ]
     }
   },
-  marx: {
+  [MtoCommonSolutionKey.MARX]: {
     about: {
       description: `The Medicare Advantage (MA) & Prescription Drug (Part D) system maintains enrollment, payment, and premium data for Medicare beneficiary enrollments in Medicare Part C and D Plans. The Medicare Advantage (MA) & Prescription Drug (Part D) systems provide services to beneficiaries, Plans, and CMS.
 
@@ -1529,7 +1531,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       items: []
     }
   },
-  outlookMailbox: {
+  [MtoCommonSolutionKey.OUTLOOK_MAILBOX]: {
     about: {
       description:
         'Set up an email address through Outlook Mailbox, so all your model communications will funnel into a single place.'
@@ -1571,7 +1573,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       ]
     }
   },
-  qualityVertical: {
+  [MtoCommonSolutionKey.QV]: {
     about: {
       description:
         'The Quality Vertical is responsible for developing and implementing the Center’s overall quality strategy and disseminating that information vertically. They do this by working with model teams as they develop and implement their model quality strategies.',
@@ -1630,7 +1632,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       ]
     }
   },
-  rmada: {
+  [MtoCommonSolutionKey.RMADA]: {
     about: {
       description: `Research, Measurement, Assessment, Design, and Analysis (RMADA) Indefinite Delivery Indefinite Quantity 2 (IDIQ) umbrella contract, the Centers for Medicare & Medicaid Services (CMS) shall award task orders (TOs) for a wide range of analytic support and technical assistance activities that support models and demonstration programs created or derived under the auspices of the Patient Protection & Affordable Care Act (ACA), the Medicare Access and CHIP Reauthorization Act (MACRA), other non-ACA statutes, and future health reform legislation. Supporting all aspects of model design and operations (with the exception of information technology);`,
       items: [
@@ -1657,7 +1659,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       links: ['Procurement Administrative Lead Time (PALT)']
     }
   },
-  ars: {
+  [MtoCommonSolutionKey.ARS]: {
     about: {
       description:
         'The Salesforce Application Review and Scoring (ARS) allows model teams to track a panel’s review and scoring of the submitted applications to a participation agreement model.',
@@ -1718,7 +1720,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       links: ['Go to Salesforce CMT']
     }
   },
-  salesforceConnect: {
+  [MtoCommonSolutionKey.CONNECT]: {
     about: {
       description:
         'Salesforce CONNECT creates a social media-like environment to facilitate participant-to-participant and CMS-to-participant collaboration. ',
@@ -1751,7 +1753,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       ]
     }
   },
-  salesforceLOI: {
+  [MtoCommonSolutionKey.LOI]: {
     about: {
       description:
         'The Salesforce Letter of Intent (LOI) is a website that allows model teams to collect information to gauge the level of industry interest in a participation agreement model.',
@@ -1788,7 +1790,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       ]
     }
   },
-  salesforcePortal: {
+  [MtoCommonSolutionKey.POST_PORTAL]: {
     about: {
       description:
         'The Project Officer Support Tool helps model teams manage participants after model go-live. Work with BSG to determine what combination of Salesforce POST and ISP tools you need.',
@@ -1838,7 +1840,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       ]
     }
   },
-  salesforceRequestApplication: {
+  [MtoCommonSolutionKey.RFA]: {
     about: {
       description:
         'The Salesforce Request for Application (RFA) allows model teams to collect applications from organizations that want to participate in a participation agreement model.',
@@ -1884,7 +1886,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       },
       links: [
         {
-          link: 'innovation-payment-contract',
+          link: MtoCommonSolutionKey.IPC,
           external: false
         },
         {
@@ -1894,7 +1896,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       ]
     }
   },
-  sharedSystems: {
+  [MtoCommonSolutionKey.SHARED_SYSTEMS]: {
     about: {
       description: `The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME).
 
@@ -2013,7 +2015,7 @@ There are two types of CRs:`,
       ]
     }
   },
-  modelSpace: {
+  [MtoCommonSolutionKey.MODEL_SPACE]: {
     about: {
       description: `Model Space is a secure analytic platform that enables model teams and their contractors to access, share, and analyze data. As part of the <link1>Innovation Support Platform (ISP)</link1>, Model Space provides a single, secure platform for data-related tasks. It offers access to shared resources and technical assistance. Leveraging Databricks, a secure cloud-based data platform, each Model team and their contractor receives a dedicated space in Databricks, accessible only to them via a CMS user account.
 
@@ -2021,7 +2023,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       links: [
         {
           external: false,
-          link: `innovation-support-platform`
+          link: MtoCommonSolutionKey.ISP
         }
       ],
       components: [
@@ -2081,32 +2083,32 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  reasearchAndRapidCycleEvaluationGroup: {
+  [MtoCommonSolutionKey.RREG]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  federallyFundedResearchAndDevelopmentCenter: {
+  [MtoCommonSolutionKey.FFRDC]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  actuarialResearchAndDesignServices: {
+  [MtoCommonSolutionKey.ARDS]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  transformedMedicaidStatisticalInformationSystem: {
+  [MtoCommonSolutionKey.T_MISS]: {
     about: {
       description:
         'T-MSIS collects Medicaid and Children’s Health Insurance Program (CHIP) data from U.S. states, territories, and the District of Columbia into the largest national resource of beneficiary information. This data is crucial for research and policy on Medicaid and CHIP and helping the Centers for Medicare & Medicaid Services (CMS) conduct program oversight, administration, and integrity. To meet the reporting needs of states and CMS stakeholders, T-MSIS features an operations dashboard for state and territory use to validate a timely, accurate, and complete data set.',
       gatheringInfo: true
     }
   },
-  enterprisePrivacyPolicyEngine: {
+  [MtoCommonSolutionKey.EPPE]: {
     about: {
       description:
         'Enforces the controlled access to, disclosures of, transference and disposition of personally identifiable information (PII) contained in CMS Systems of Record (SOR) in accordance with the statutory mandates of the Privacy Act, HIPAA and FISMA. Additionally, EPPE will standardize and automate the Data Use Agreements (DUA) process.',
@@ -2128,30 +2130,30 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  divisionOfStakeholderEngagementAndPolicy: {
+  [MtoCommonSolutionKey.DSEP]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  cmmiAnalysisAndManagementSystem: {
+  [MtoCommonSolutionKey.AMS]: {
     about: {
       description:
         'The CMMI Analytics & Management System (AMS), a.k.a Alternative Payment Model (APM) Management System, supports CMMI for the <link1>Quality Payment Program (QPP)</link1>; Portfolio Management and Cross Model Management; and Reporting, Analytics, and Audits. AMS serves as the central repository for CMMI model data including model design elements, model participation, quality measures, and a model’s participation in the QPP. Within <link2>Integrated Data Repository (IDR)</link2>, AMS also has a Business Data Mart storing model participation data enabling users to perform analysis on model participants and linking to other data sources. AMS supports QPP by storing relevant data and making it available to the Merit-Based Incentive Payment System (MIPS). The system also provides targeted data search capabilities for all data stored within AMS as well as user friendly dashboards to enable users to perform broader data searches. Lastly, AMS provides users with a BI platform (Looker) to perform more targeted and complex analysis.',
       gatheringInfo: true,
       links: [
         {
-          link: 'quality-payment-program',
+          link: MtoCommonSolutionKey.QPP,
           external: false
         },
         {
-          link: 'integrated-data-repository',
+          link: MtoCommonSolutionKey.IDR,
           external: false
         }
       ]
     }
   },
-  innovationCenterLandingPage: {
+  [MtoCommonSolutionKey.IC_LANDING]: {
     about: {
       description:
         'The Innovation Center web application will provide a single point of entry to access CMMI applications by CMMI users including the CMMI Program Team, CMMI Support Contractor for Application Administration, Helpdesk Administrator, Operational Contractor, CMMI Model Participants (Providers), and their delegates. Innovation Center will serve as a common Landing Page where CMMI applications can be hosted for easier access. Innovation Center will utilize the Enterprise Identity Management (IDM) and the Enterprise Portal Shared Services and implement the CMS approved Technical Reference Architecture. The Innovation Center will allow the addition of new health innovation models thereby reducing the time and effort to make a new model operational. This is simply the landing page for CMMI on the Enterprise Portal. ',
@@ -2170,20 +2172,20 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  riskAdjustmentSuiteOfSystems: {
+  [MtoCommonSolutionKey.RASS]: {
     about: {
       description:
         'The Risk Adjustment Suite of System (RASS) supports CMS processes that apply risk adjustments to payments to Medicare Advantage and Part D plans. This system was implemented to receive, process, store risk adjustment data using the CMS HCC, ESRD, Part D models developed by CMS to calculate risk scores which would be used by <link1>Medicare Advantage Rx (MARx)</link1> to compute plan payments.',
       gatheringInfo: true,
       links: [
         {
-          link: 'medicare-advantage-prescription-drug-system',
+          link: MtoCommonSolutionKey.MARX,
           external: false
         }
       ]
     }
   },
-  drugDataProcessingSystem: {
+  [MtoCommonSolutionKey.DDPS]: {
     about: {
       description:
         'The Prescription Drug Event Front End System (PDFS) performs the initial file processing of the Prescription Drug Event data submitted by the Part D Plans. Upon completion of the initial file processing, the Prescription Drug Event data is then sent to the Drug Data Processing System (DDPS) for validation and authentication of the Medicare payment of covered drugs made by the Part D plans for their enrolled Medicare beneficiaries. The data is then loaded into the Integrated Data Repository (IDR), to support drug, beneficiary, and plan analysis of incurred payments and payment reconciliation. ',
@@ -2201,19 +2203,19 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  officeOfTheActuary: {
+  [MtoCommonSolutionKey.OACT]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  qualityPaymentProgram: {
+  [MtoCommonSolutionKey.QPP]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  patientActivationMeasure: {
+  [MtoCommonSolutionKey.PAM]: {
     about: {
       description: '',
       gatheringInfo: true
@@ -2325,6 +2327,13 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   }
 };
 
+export const solutionType: Record<MtoSolutionType, string> = {
+  [MtoSolutionType.CONTRACTOR]: 'Contracts and contractors',
+  [MtoSolutionType.CROSS_CUTTING_GROUP]: 'Cross-cutting group',
+  [MtoSolutionType.IT_SYSTEM]: 'IT system',
+  [MtoSolutionType.OTHER]: 'Other'
+};
+
 const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
   home: 'Home',
@@ -2372,10 +2381,32 @@ const helpAndKnowledge = {
     timeline: 'Timeline',
     'points-of-contact': 'Points of contact'
   },
+  primaryPointOfContact: 'Primary point of contact',
+  mailboxesAndTeamMembers: 'Mailboxes and team members',
+  addTeamMailbox: 'Add a team mailbox',
+  addTeamMember: 'Add a team member',
+  edit: 'Edit',
+  removePointOfContact: 'Remove point of contact',
   backToSolutions: 'Back to solutions',
+  receivesNotifications: 'Receives notifications',
+  receivesNotificationsTooltip:
+    'This point of contact will receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
+  notReceivesNotifications: 'Does not receive notifications',
+  notReceivesNotificationsTooltips:
+    'This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO).',
   moreContacts: 'More points of contact',
-  systemOwner: 'System owner',
+  systemOwner: 'Business Owner and/or System Owner',
+  systemOwnerDescription:
+    'The CMS group or division that is the Business Owner and/or System Owner for this solution or IT system.',
+  addOwner: 'Add owner information',
+  noOwners: 'No Business Owner or System Owner is listed for this solution.',
+  removeOwner: 'Remove owner',
   contractors: 'Contractors',
+  contractor: 'Contractor',
+  contractTitle: 'Contract title',
+  addContractor: 'Add a contractor',
+  removeContractor: 'Remove contractor',
+  noContractors: 'No contractor is listed for this solution.',
   gatheringInfoAlert: {
     header: 'We’re still gathering information about ',
     description:
@@ -2400,7 +2431,8 @@ const helpAndKnowledge = {
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',
   sortDesc: 'By title (Z-A)',
-  lastUpdated: 'Last updated {{date}}'
+  lastUpdated: 'Last updated {{date}}',
+  solutionType
 };
 
 export default helpAndKnowledge;

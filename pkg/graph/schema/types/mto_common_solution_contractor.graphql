@@ -1,0 +1,46 @@
+type MTOCommonSolutionContractor {
+  id: UUID!
+  key: MTOCommonSolutionKey!
+
+  contractTitle: String
+  contractorName: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+Input for creating a common solution contractor
+"""
+input MTOCommonSolutionContractorChanges
+  @goModel(model: "map[string]interface{}") {
+  contractTitle: String
+  contractorName: String
+}
+
+extend type Query {
+  mtoCommonSolutionContractor(id: UUID!): MTOCommonSolutionContractor!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+
+extend type Mutation {
+  createMTOCommonSolutionContractor(
+    key: MTOCommonSolutionKey!
+    contractTitle: String
+    contractorName: String!
+  ): MTOCommonSolutionContractor!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  updateMTOCommonSolutionContractor(
+    id: UUID!
+    changes: MTOCommonSolutionContractorChanges!
+  ): MTOCommonSolutionContractor!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  deleteMTOCommonSolutionContractor(id: UUID!): MTOCommonSolutionContractor!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

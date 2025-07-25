@@ -13,16 +13,16 @@ exports[`Operational Solution Category Card > matches snapshot 1`] = `
         class="usa-card__header text-bold padding-y-0 flex-2"
         data-testid="CardHeader"
       >
-        Data reporting
+        Data
       </div>
       <div
         class="usa-card__body padding-y-0 flex-1 operational-solution-help__fill-card-space"
         data-testid="CardBody"
       >
         <a
-          aria-label="Learn more about Data reporting"
+          aria-label="Learn more about Data"
           class="usa-link display-flex flex-align-center"
-          href="/help-and-knowledge/operational-solutions?category=data"
+          href="/help-and-knowledge/operational-solutions?category=DATA"
         >
           Learn more
           <svg
