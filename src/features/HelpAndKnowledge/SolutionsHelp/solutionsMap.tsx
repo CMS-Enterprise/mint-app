@@ -24,7 +24,6 @@ import OutlookMailboxTimeLine from './SolutionDetails/Solutions/OutlookMailbox';
 import RMADATimeline from './SolutionDetails/Solutions/RMADA';
 import SalesforceApplicationReviewTimeline from './SolutionDetails/Solutions/SalesforceApplicationReview';
 import SharedSystemsTimeLine from './SolutionDetails/Solutions/SharedSystems';
-import { M } from 'vite/dist/node/types.d-aGj9QkWt';
 
 export type SolutionDetailProps = {
   solution: HelpSolutionType;
