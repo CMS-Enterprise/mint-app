@@ -79,16 +79,17 @@
 		"cSpell.customDictionaries": {
 			"project-words": {
 			  "name": "project-words",
-			  "path": "project_words.txt",
+			  "path": "${workspaceFolder}/project_words.txt",
 			  "description": "Words used in this project",
-			  "addWords": true
+			  "addWords": true,
+        "scope": "workspace"
 			},
 			"mint spelling file": {
 				"name": "Mint Spelling file",
-				"path": ".spelling",
+				"path": "${workspaceFolder}/.spelling",
 				"description": "the .spelling file part of the mint repo. Used by the spell check linter",
 				"addWords": true,
-				"scope": "folder"
+				"scope": "workspace"
 			}
 		},
     // #endregion Cspell Settings
