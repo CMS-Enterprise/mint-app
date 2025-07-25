@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Alert,
-  Button,
   Fieldset,
   Form,
   FormGroup,
@@ -23,7 +22,7 @@ import dirtyInput from 'utils/formUtil';
 
 import { ModeType } from '../ContractorModal';
 
-type FormValues = Pick<
+export type ContractorFormValues = Pick<
   SolutionContractorType,
   'contractTitle' | 'contractorName'
 >;
@@ -36,16 +35,26 @@ const ContractorForm = ({
     id: 'not a real id',
     contractTitle: '',
     contractorName: ''
-  }
+  },
+  setSubmitForm,
+  setDisableButton
 }: {
   mode: ModeType;
   closeModal: () => void;
   contractor?: SolutionContractorType;
+  setSubmitForm: React.Dispatch<
+    React.SetStateAction<(formData: ContractorFormValues) => void>
+  >;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
   const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
 
-  const methods = useForm<FormValues>({
+  const { selectedSolution } = useModalSolutionState();
+
+  const { showMessage } = useMessage();
+
+  const methods = useForm<ContractorFormValues>({
     defaultValues: {
       contractTitle: contractor.contractTitle || '',
       contractorName: contractor.contractorName
@@ -56,24 +65,45 @@ const ContractorForm = ({
   const {
     control,
     handleSubmit,
-    reset,
     formState: { isSubmitting, isDirty, isValid }
   } = methods;
 
-  const { selectedSolution } = useModalSolutionState();
-  const { showMessage } = useMessage();
-  const [create] = useCreateMtoCommonSolutionContractorMutation();
-  const [update] = useUpdateMtoCommonSolutionContractorMutation();
+  const [create] = useCreateMtoCommonSolutionContractorMutation({
+    refetchQueries: [
+      {
+        query: GetMTOSolutionContacts
+      }
+    ]
+  });
+
+  const [update] = useUpdateMtoCommonSolutionContractorMutation({
+    refetchQueries: [
+      {
+        query: GetMTOSolutionContacts
+      }
+    ]
+  });
+
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
+
   const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
+
+  useEffect(() => {
+    setDisableButton(disabledSubmitBtn);
+  }, [setDisableButton, disabledSubmitBtn]);
+
+  useEffect(() => {
+    setSubmitForm(() => onSubmit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!selectedSolution) {
     return null;
   }
 
-  const onSubmit = (formData: FormValues) => {
+  const onSubmit = (formData: ContractorFormValues) => {
     const { contractTitle, contractorName } = dirtyInput(contractor, formData);
 
     const promise =
@@ -83,12 +113,7 @@ const ContractorForm = ({
               key: selectedSolution.key,
               contractTitle,
               contractorName
-            },
-            refetchQueries: [
-              {
-                query: GetMTOSolutionContacts
-              }
-            ]
+            }
           })
         : update({
             variables: {
@@ -97,13 +122,9 @@ const ContractorForm = ({
                 contractTitle,
                 contractorName
               }
-            },
-            refetchQueries: [
-              {
-                query: GetMTOSolutionContacts
-              }
-            ]
+            }
           });
+
     promise
       .then(response => {
         if (!response?.errors) {
@@ -214,27 +235,6 @@ const ContractorForm = ({
             )}
           />
         </Fieldset>
-
-        <div className="margin-top-3 display-flex">
-          <Button
-            type="submit"
-            disabled={disabledSubmitBtn}
-            className="margin-right-3 margin-top-0"
-          >
-            {miscT(`${mode}.cta`)}
-          </Button>
-          <Button
-            type="button"
-            className="margin-top-0"
-            unstyled
-            onClick={() => {
-              reset();
-              closeModal();
-            }}
-          >
-            {miscT('cancel')}
-          </Button>
-        </div>
       </Form>
     </FormProvider>
   );

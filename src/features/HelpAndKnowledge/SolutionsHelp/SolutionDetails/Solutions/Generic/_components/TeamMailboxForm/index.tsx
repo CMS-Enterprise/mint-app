@@ -26,7 +26,7 @@ import dirtyInput from 'utils/formUtil';
 
 import { TeamMailboxModeType } from '../MailboxAndTeamMemberModal';
 
-export type FormValues = Pick<
+export type TeamMailboxFormValues = Pick<
   SolutionContactType,
   'mailboxAddress' | 'mailboxTitle' | 'isPrimary' | 'receiveEmails'
 >;
@@ -52,13 +52,18 @@ const TeamMailboxForm = ({
   closeModal: () => void;
   teamMailbox?: SolutionContactType;
   setSubmitForm: React.Dispatch<
-    React.SetStateAction<(formData: FormValues) => void>
+    React.SetStateAction<(formData: TeamMailboxFormValues) => void>
   >;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
-  const methods = useForm<FormValues>({
+
+  const { selectedSolution } = useModalSolutionState();
+
+  const { showMessage } = useMessage();
+
+  const methods = useForm<TeamMailboxFormValues>({
     defaultValues: {
       mailboxAddress: teamMailbox.mailboxAddress || '',
       mailboxTitle: teamMailbox.mailboxTitle || '',
@@ -75,8 +80,6 @@ const TeamMailboxForm = ({
     watch
   } = methods;
 
-  const { selectedSolution } = useModalSolutionState();
-  const { showMessage } = useMessage();
   const [create] = useCreateMtoCommonSolutionMailboxContactMutation({
     refetchQueries: [
       {
@@ -84,6 +87,7 @@ const TeamMailboxForm = ({
       }
     ]
   });
+
   const [update] = useUpdateMtoCommonSolutionContactMutation({
     refetchQueries: [
       {
@@ -91,15 +95,19 @@ const TeamMailboxForm = ({
       }
     ]
   });
+
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
+
   const isAddMode = mode === 'addTeamMailbox';
   const isEditMode = mode === 'editTeamMailbox';
 
+  const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
+
   useEffect(() => {
-    setDisableButton(isSubmitting || !isDirty || !isValid);
-  }, [isSubmitting, isDirty, isValid, setDisableButton]);
+    setDisableButton(disabledSubmitBtn);
+  }, [setDisableButton, disabledSubmitBtn]);
 
   useEffect(() => {
     setSubmitForm(() => onSubmit);
@@ -110,7 +118,7 @@ const TeamMailboxForm = ({
     return null;
   }
 
-  const onSubmit = (formData: FormValues) => {
+  const onSubmit = (formData: TeamMailboxFormValues) => {
     const { mailboxTitle, isPrimary, receiveEmails } = dirtyInput(
       teamMailbox,
       formData
@@ -334,23 +342,6 @@ const TeamMailboxForm = ({
             }}
           />
         </Alert>
-        {/* <div className="margin-top-3 display-flex">
-          <Button
-            type="submit"
-            disabled={disabledSubmitBtn}
-            className="margin-right-3 margin-top-0"
-          >
-            {miscT(`${mode}.cta`)}
-          </Button>
-          <Button
-            type="button"
-            className="margin-top-0"
-            unstyled
-            onClick={closeModal}
-          >
-            {miscT('cancel')}
-          </Button>
-        </div> */}
       </Form>
     </FormProvider>
   );

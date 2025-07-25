@@ -7,12 +7,8 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
-import TeamMailboxForm, {
-  FormValues as TeamMailboxFormValues
-} from '../TeamMailboxForm';
-import TeamMemberForm, {
-  FormValues as TeamMemberFormValues
-} from '../TeamMemberForm';
+import TeamMailboxForm, { TeamMailboxFormValues } from '../TeamMailboxForm';
+import TeamMemberForm, { TeamMemberFormValues } from '../TeamMemberForm';
 
 export type ModeType = TeamMemberModeType | TeamMailboxModeType;
 // Matching keys in mtoCommonSolutionContactMisc
@@ -31,10 +27,13 @@ const MailboxAndTeamMemberModal = ({
   contact?: SolutionContactType;
 }) => {
   const { t: contactMiscT } = useTranslation('mtoCommonSolutionContactMisc');
+
   const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
+
   const [submitTeamMemberForm, setSubmitTeamMemberForm] = useState<
     (formData: TeamMemberFormValues) => void
   >(() => {});
+
   const [submitTeamMailboxForm, setSubmitTeamMailboxForm] = useState<
     (formData: TeamMailboxFormValues) => void
   >(() => {});
@@ -86,7 +85,7 @@ const MailboxAndTeamMemberModal = ({
         />
       )}
 
-      <div className="mint-modal__footer">
+      <div className="margin-top-3 display-flex">
         <Button
           form={isTeamMemberMode ? 'team-member-form' : 'team-mailbox-form'}
           type="submit"

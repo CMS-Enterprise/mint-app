@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Alert,
-  Button,
   ComboBox,
   Fieldset,
   Form,
@@ -28,25 +27,35 @@ import dirtyInput from 'utils/formUtil';
 
 import { ModeType } from '../OwnerModal';
 
-type FormValues = Partial<
+export type OwnerFormValues = Partial<
   Pick<SolutionSystemOwnerType, 'cmsComponent' | 'ownerType'>
 >;
 
 const OwnerForm = ({
   mode,
   closeModal,
-  owner
+  owner,
+  setSubmitForm,
+  setDisableButton
 }: {
   mode: ModeType;
   closeModal: () => void;
   owner?: SolutionSystemOwnerType;
+  setSubmitForm: React.Dispatch<
+    React.SetStateAction<(formData: OwnerFormValues) => void>
+  >;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: ownerT } = useTranslation('mtoCommonSolutionSystemOwner');
   const { t: miscT } = useTranslation('mtoCommonSolutionSystemOwnerMisc');
   const { cmsComponent: cmsComponentConfig, ownerType: ownerTypeConfig } =
     usePlanTranslation('mtoCommonSolutionSystemOwner');
 
-  const methods = useForm<FormValues>({
+  const { selectedSolution } = useModalSolutionState();
+
+  const { showMessage } = useMessage();
+
+  const methods = useForm<OwnerFormValues>({
     defaultValues: {
       cmsComponent: owner?.cmsComponent,
       ownerType: owner?.ownerType
@@ -57,14 +66,10 @@ const OwnerForm = ({
   const {
     control,
     handleSubmit,
-    reset,
     formState: { isSubmitting, isDirty },
     setValue,
     watch
   } = methods;
-
-  const { selectedSolution } = useModalSolutionState();
-  const { showMessage } = useMessage();
 
   const [create] = useCreateMtoCommonSolutionSystemOwnerMutation({
     refetchQueries: [
@@ -86,9 +91,6 @@ const OwnerForm = ({
     'duplicate' | 'generic' | null
   >(null);
 
-  const disabledSubmitBtn =
-    !watch('cmsComponent') || !watch('ownerType') || isSubmitting || !isDirty;
-
   const sortedCmsComponentConfig = [
     ...getKeys(cmsComponentConfig.options)
   ].sort();
@@ -100,11 +102,23 @@ const OwnerForm = ({
 
   const cmsComponentInput = methods.getValues('cmsComponent');
 
+  const disabledSubmitBtn =
+    !watch('cmsComponent') || !watch('ownerType') || isSubmitting || !isDirty;
+
+  useEffect(() => {
+    setDisableButton(disabledSubmitBtn);
+  }, [setDisableButton, disabledSubmitBtn]);
+
+  useEffect(() => {
+    setSubmitForm(() => onSubmit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!selectedSolution) {
     return null;
   }
 
-  const onSubmit = (formData: FormValues) => {
+  const onSubmit = (formData: OwnerFormValues) => {
     const { cmsComponent, ownerType } = dirtyInput(owner, formData);
 
     const promise = owner
@@ -265,27 +279,6 @@ const OwnerForm = ({
             )}
           />
         </Fieldset>
-
-        <div className="margin-top-3 display-flex">
-          <Button
-            type="submit"
-            disabled={disabledSubmitBtn}
-            className="margin-right-3 margin-top-0"
-          >
-            {miscT(`${mode}.cta`)}
-          </Button>
-          <Button
-            type="button"
-            className="margin-top-0"
-            unstyled
-            onClick={() => {
-              reset();
-              closeModal();
-            }}
-          >
-            {miscT('cancel')}
-          </Button>
-        </div>
       </Form>
     </FormProvider>
   );

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { Button } from '@trussworks/react-uswds';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import OwnerForm from '../OwnerForm';
+import OwnerForm, { OwnerFormValues } from '../OwnerForm';
 
 // Matching keys in mtoCommonSolutionSystemOwnerMisc
 export type ModeType = 'addSystemOwner' | 'editSystemOwner';
@@ -22,6 +23,13 @@ const OwnerModal = ({
   owner?: SolutionSystemOwnerType;
 }) => {
   const { t } = useTranslation('mtoCommonSolutionSystemOwnerMisc');
+  const { t: miscT } = useTranslation('mtoCommonSolutionSystemOwnerMisc');
+
+  const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
+
+  const [submitOwnerForm, setSubmitOwnerForm] = useState<
+    (formData: OwnerFormValues) => void
+  >(() => {});
 
   return (
     <Modal
@@ -44,7 +52,35 @@ const OwnerModal = ({
         </p>
       </div>
 
-      <OwnerForm mode={mode} closeModal={closeModal} owner={owner} />
+      <OwnerForm
+        mode={mode}
+        closeModal={closeModal}
+        owner={owner}
+        setSubmitForm={setSubmitOwnerForm}
+        setDisableButton={setDisableSubmitBtn}
+      />
+
+      <div className="margin-top-3 display-flex">
+        <Button
+          form="owner-form"
+          type="submit"
+          className="margin-right-3 margin-top-0"
+          disabled={disabledSubmitBtn}
+          onClick={submitOwnerForm}
+        >
+          {miscT(`${mode}.cta`)}
+        </Button>
+        <Button
+          type="button"
+          className="margin-top-0"
+          unstyled
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          {miscT('cancel')}
+        </Button>
+      </div>
     </Modal>
   );
 };

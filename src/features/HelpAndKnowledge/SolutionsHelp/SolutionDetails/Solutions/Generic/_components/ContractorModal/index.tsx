@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { Button } from '@trussworks/react-uswds';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import ContractorForm from '../ContractorForm';
+import ContractorForm, { ContractorFormValues } from '../ContractorForm';
 
 // Matching keys in mtoCommonSolutionContractorMisc
 export type ModeType = 'addContractor' | 'editContractor';
@@ -22,6 +23,13 @@ const ContractorModal = ({
   contractor?: SolutionContractorType;
 }) => {
   const { t } = useTranslation('mtoCommonSolutionContractorMisc');
+  const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
+
+  const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
+
+  const [submitContractorForm, setSubmitContractorForm] = useState<
+    (formData: ContractorFormValues) => void
+  >(() => {});
 
   return (
     <Modal
@@ -48,7 +56,31 @@ const ContractorModal = ({
         mode={mode}
         closeModal={closeModal}
         contractor={contractor}
+        setSubmitForm={setSubmitContractorForm}
+        setDisableButton={setDisableSubmitBtn}
       />
+
+      <div className="margin-top-3 display-flex">
+        <Button
+          form="contractor-form"
+          type="submit"
+          className="margin-right-3 margin-top-0"
+          disabled={disabledSubmitBtn}
+          onClick={submitContractorForm}
+        >
+          {miscT(`${mode}.cta`)}
+        </Button>
+        <Button
+          type="button"
+          className="margin-top-0"
+          unstyled
+          onClick={() => {
+            closeModal();
+          }}
+        >
+          {miscT('cancel')}
+        </Button>
+      </div>
     </Modal>
   );
 };
