@@ -13,6 +13,7 @@ type CheckboxFieldProps = {
   onBlur: () => void;
   value: string;
   inputProps?: JSX.IntrinsicElements['input'];
+  icon?: JSX.Element;
 };
 
 const CheckboxField = ({
@@ -26,7 +27,8 @@ const CheckboxField = ({
   onChange,
   onBlur,
   value,
-  inputProps
+  inputProps,
+  icon
 }: CheckboxFieldProps) => {
   const checkboxClassNames = classnames('mint-checkbox', 'usa-checkbox', {
     'easy-checkbox--disabled': disabled
@@ -53,6 +55,8 @@ const CheckboxField = ({
       >
         {label}
       </label>
+      {icon}
+
       <p
         className={classnames(
           'margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line',

@@ -79,12 +79,12 @@ const SelectSolutionForm = () => {
   const mappedSolutions = useMemo(
     () =>
       milestone?.commonMilestone?.commonSolutions.map(solution => {
-        return helpSolutions.find(s => s.enum === solution.key);
+        return helpSolutions[solution.key];
       }) || [],
     [milestone?.commonMilestone]
   );
 
-  const mappedSolutionKeys = mappedSolutions.map(solution => solution?.enum);
+  const mappedSolutionKeys = mappedSolutions.map(solution => solution?.key);
 
   // All the common solutions but filter out the suggested solution
   const commonSolutions =
@@ -106,7 +106,7 @@ const SelectSolutionForm = () => {
       options: mappedSolutions.map(solution => {
         return {
           label: solution?.name || '',
-          value: solution?.enum || ''
+          value: solution?.key || ''
         };
       })
     },

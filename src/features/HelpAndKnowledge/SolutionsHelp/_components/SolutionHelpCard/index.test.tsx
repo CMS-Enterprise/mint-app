@@ -1,6 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import { pointsOfContact, possibleSolutionsMock } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
@@ -12,7 +13,7 @@ const mocks = [...possibleSolutionsMock];
 
 describe('Operation Solution Help Card', () => {
   const solutionToTest = {
-    ...helpSolutions[0],
+    ...helpSolutions[MtoCommonSolutionKey.INNOVATION],
     pointsOfContact
   } as HelpSolutionType;
 

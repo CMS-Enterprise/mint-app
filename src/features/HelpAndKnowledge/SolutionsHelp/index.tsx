@@ -7,23 +7,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
 import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import {
-  OperationalSolutionCategories,
-  OperationalSolutionCategoryRoute
-} from 'types/operationalSolutionCategories';
 
 import CategoryFooter from './_components/CategoryFooter';
 import SolutionHelpCardGroup from './_components/SolutionHelpCardGroup';
 import SolutionsHeader from './_components/SolutionsHeader';
 import SolutionDetailsModal from './SolutionDetails/Modal';
 import {
+  HelpSolutionBaseType,
   HelpSolutionType,
-  operationalSolutionCategoryMap
+  routeToEnumMap
 } from './solutionsMap';
 
 type OperationalSolutionsHelpProps = {
@@ -32,27 +30,22 @@ type OperationalSolutionsHelpProps = {
 
 // Return all solutions relevant to the current cateory
 export const findCategoryMapByRouteParam = (
-  route: OperationalSolutionCategoryRoute,
+  categoryKey: MtoCommonSolutionSubject,
   solutions: HelpSolutionType[]
-): HelpSolutionType[] => {
-  const categoryKey: OperationalSolutionCategories | undefined =
-    operationalSolutionCategoryMap[route];
-
-  if (!categoryKey) return [];
-
-  return [...solutions].filter(solution => {
-    return solution.categories.includes(
-      categoryKey as OperationalSolutionCategories
-    );
+): HelpSolutionBaseType[] => {
+  return solutions.filter(solution => {
+    return solution.categories.includes(categoryKey);
   });
 };
 
 export const findSolutionByRouteParam = (
   route: string | null | undefined,
-  solutions: HelpSolutionType[]
+  solutions: HelpSolutionType[],
+  isEnum: boolean = false
 ): HelpSolutionType | undefined => {
   if (!route) return undefined;
-  return [...solutions].find(solution => solution.route === route);
+  const routeParam = isEnum ? route : routeToEnumMap[route];
+  return [...solutions].find(solution => solution.key === routeParam);
 };
 
 // Query function to return solutions for matching name and acronym
@@ -75,9 +68,10 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
 
   const params = new URLSearchParams(location.search);
 
-  const category = params.get('category') as OperationalSolutionCategoryRoute;
+  const category = params.get('category') as MtoCommonSolutionSubject;
   const page = params.get('page');
-  const modal = params.get('solution');
+  const solutionEnumParam = params.get('solution-key');
+  const modal = params.get('solution') || solutionEnumParam;
 
   if (!page) {
     params.set('page', '1');
@@ -89,15 +83,17 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { helpSolutions, loading } = useHelpSolution();
 
   // Get the solution map details from solution route param
-  const { prevPathname, selectedSolution: solution } = useModalSolutionState();
+  const { prevPathname, selectedSolution } = useModalSolutionState();
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
 
   const [querySolutions, setQuerySolutions] =
-    useState<HelpSolutionType[]>(helpSolutions);
+    useState<HelpSolutionBaseType[]>(helpSolutions);
 
-  const fromModal: boolean = prevPathname.includes('solution=');
+  const fromModal: boolean =
+    prevPathname.includes('solution=') ||
+    prevPathname.includes('solution-key=');
 
   // Resets the query on route or category change
   // Also preserves the query/scroll when the modal is open/closed
@@ -118,18 +114,12 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query, solution, helpSolutions]);
+  }, [query, selectedSolution, helpSolutions]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category
     ? querySolutions
     : findCategoryMapByRouteParam(category, helpSolutions);
-
-  // Solution to render in modal
-  const selectedSolution = findSolutionByRouteParam(
-    solution?.route || null,
-    helpSolutions
-  );
 
   if (loading) {
     return <PageLoading />;

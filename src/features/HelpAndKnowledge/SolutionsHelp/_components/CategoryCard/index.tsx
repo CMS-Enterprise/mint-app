@@ -2,20 +2,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardBody, CardHeader, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
-import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
 
 import './index.scss';
 
 type CategoryCardProps = {
   className?: string;
-  category: string;
-  route: OperationalSolutionCategoryRoute;
+  categoryKey: MtoCommonSolutionSubject;
 };
 
-const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
+const CategoryCard = ({ className, categoryKey }: CategoryCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
   return (
     <Card
@@ -25,20 +24,20 @@ const CategoryCard = ({ className, category, route }: CategoryCardProps) => {
       )}
     >
       <CardHeader className="text-bold padding-y-0 flex-2">
-        {category}
+        {t(`categories.${categoryKey}.header`)}
       </CardHeader>
 
-      {solutionCategories[route].subHeader && (
+      {solutionCategories[categoryKey].subHeader && (
         <span className="padding-x-3">
-          {t(`categories.${route}.subHeader`)}
+          {t(`categories.${categoryKey}.subHeader`)}
         </span>
       )}
 
       <CardBody className="padding-y-0 flex-1 operational-solution-help__fill-card-space">
         <UswdsReactLink
           className="display-flex flex-align-center"
-          to={`/help-and-knowledge/operational-solutions?category=${route}`}
-          aria-label={`${t('learnMore')} about ${category}`}
+          to={`/help-and-knowledge/operational-solutions?category=${categoryKey}`}
+          aria-label={`${t('learnMore')} about ${t(`categories.${categoryKey}.header`)}`}
         >
           {t('learnMore')}
           <Icon.ArrowForward className="margin-left-1" aria-label="forward" />

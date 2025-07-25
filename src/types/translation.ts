@@ -46,8 +46,12 @@ import {
   MonitoringFileType,
   MtoCategoryTranslation,
   MtoCommonMilestoneKey,
+  MtoCommonSolutionCmsComponent,
   MtoCommonSolutionContactTranslation,
+  MtoCommonSolutionContractorTranslation,
   MtoCommonSolutionKey,
+  MtoCommonSolutionOwnerType,
+  MtoCommonSolutionSystemOwnerTranslation,
   MtoFacilitator,
   MtoInfoTranslation,
   MtoMilestoneSolutionLinkTranslation,
@@ -1337,9 +1341,13 @@ export type TransltionMTOCommonSolutionContactCustomForm = {
   key: TranslationFieldProperties;
   name: TranslationFieldProperties;
   email: TranslationFieldProperties;
-  isTeam: TranslationFieldProperties;
+  isTeam: TranslationFieldPropertiesWithOptions<Bool>;
   role: TranslationFieldProperties;
-  isPrimary: TranslationFieldProperties;
+  isPrimary: TranslationFieldPropertiesWithOptions<Bool>;
+  mailboxAddress: TranslationFieldProperties;
+  mailboxTitle: TranslationFieldProperties;
+  receiveEmails: TranslationFieldPropertiesWithOptions<Bool>;
+  userId: TranslationFieldProperties;
 };
 type TranslationMTOCommonSolutionContactCustomGQL = Omit<
   MtoCommonSolutionContactTranslation, // graphql gen type
@@ -1348,6 +1356,38 @@ type TranslationMTOCommonSolutionContactCustomGQL = Omit<
 
 export type TranslationMTOCommonSolutionContactCustom = {
   [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution Contractor - Change History purposes only
+export type TranslationMTOCommonSolutionContractorCustomForm = {
+  key: TranslationFieldProperties;
+  contractTitle: TranslationFieldProperties;
+  contractorName: TranslationFieldProperties;
+};
+
+type TranslationMTOCommonSolutionContractorCustomGQL = Omit<
+  MtoCommonSolutionContractorTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionContractorCustom = {
+  [K in keyof TranslationMTOCommonSolutionContractorCustomGQL]: TranslationMTOCommonSolutionContractorCustomForm[K]; // FE form type
+};
+
+// MTO Common Solution System/Business owner - Change History purposes only
+export type TranslationMTOCommonSolutionSystemOwnerCustomForm = {
+  key: TranslationFieldProperties;
+  ownerType: TranslationFieldPropertiesWithOptions<MtoCommonSolutionOwnerType>;
+  cmsComponent: TranslationFieldPropertiesWithOptions<MtoCommonSolutionCmsComponent>;
+};
+
+type TranslationMTOCommonSolutionSystemOwnerCustomGQL = Omit<
+  MtoCommonSolutionSystemOwnerTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOCommonSolutionSystemOwnerCustom = {
+  [K in keyof TranslationMTOCommonSolutionSystemOwnerCustomGQL]: TranslationMTOCommonSolutionSystemOwnerCustomForm[K]; // FE form type
 };
 
 // Timeline
@@ -1404,6 +1444,7 @@ export type TranslationPlan = {
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
   mtoSolution: TranslationMTOSolutionCustom;
+  mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
 };
 
 export type TranslationPlanSection =
@@ -1438,5 +1479,6 @@ export enum PlanSection {
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',
-  MTO_SOLUTION = 'mtoSolution'
+  MTO_SOLUTION = 'mtoSolution',
+  MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner'
 }

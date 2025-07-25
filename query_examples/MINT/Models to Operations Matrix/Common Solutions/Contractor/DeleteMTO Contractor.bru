@@ -1,0 +1,43 @@
+meta {
+  name: DeleteMTO Contractor
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation deleteMTOCommonSolutionContractor($id: UUID!) {
+    deleteMTOCommonSolutionContractor(id: $id) {
+      id
+      key
+      contractTitle
+      contractorName
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        email
+      }
+      modifiedByUserAccount {
+        id
+        username
+        email
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{contractorId}}"
+  }
+}
+
+vars:pre-request {
+  contractorId: a49644fc-1065-40f7-a0da-9499b664c492
+}

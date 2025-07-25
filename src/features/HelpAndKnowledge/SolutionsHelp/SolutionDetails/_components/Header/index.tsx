@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
-import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
 
 type HeaderProps = {
   className?: string;
@@ -19,8 +18,7 @@ const Header = ({ className, solution }: HeaderProps) => {
     .map(
       (categoryKey, index) =>
         `${t(`categories.${categoryKey}.header`)}${
-          (solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
-            ?.subHeader &&
+          (solutionCategories[categoryKey]?.subHeader &&
             ` ${t(`categories.${categoryKey}.subHeader`)}`) ||
           ''
         }`

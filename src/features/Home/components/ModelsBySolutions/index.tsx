@@ -4,7 +4,8 @@ import { Header, Icon, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   HelpSolutionBaseType,
-  helpSolutions
+  helpSolutions,
+  helpSolutionsArray
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import ModelsBySolutionTable from 'features/Home/components/ModelsBySolutions/table';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
@@ -26,8 +27,8 @@ const ModelsBySolutions = ({
 
   const orderedsolutionKeys = useMemo(() => {
     return [...solutionKeys].sort((a, b) =>
-      (helpSolutions.find(sol => sol.enum === a)?.name || '').localeCompare(
-        helpSolutions.find(sol => sol.enum === b)?.name || ''
+      (helpSolutionsArray.find(sol => sol.key === a)?.name || '').localeCompare(
+        helpSolutionsArray.find(sol => sol.key === b)?.name || ''
       )
     );
   }, [solutionKeys]);
@@ -52,11 +53,7 @@ const ModelsBySolutions = ({
         'usa-current': isCurrentSolution === solutionKey
       })}
     >
-      <span>
-        {getSolutionNameorAcronym(
-          helpSolutions.find(solution => solution.enum === solutionKey)
-        )}
-      </span>
+      <span>{getSolutionNameorAcronym(helpSolutions[solutionKey])}</span>
     </button>
   ));
 
@@ -117,9 +114,7 @@ const ModelsBySolutions = ({
             {orderedsolutionKeys.map(solution => {
               return (
                 <option key={solution} value={solution}>
-                  {getSolutionNameorAcronym(
-                    helpSolutions.find(sol => sol.enum === solution)
-                  )}
+                  {getSolutionNameorAcronym(helpSolutions[solution])}
                 </option>
               );
             })}

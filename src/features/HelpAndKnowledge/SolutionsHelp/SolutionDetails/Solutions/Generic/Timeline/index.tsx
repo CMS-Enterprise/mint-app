@@ -8,9 +8,9 @@ import {
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
-import { getTransLinkComponents, LinkType } from './about';
+import { getTransLinkComponents, LinkType } from '../About';
 
-import '../index.scss';
+import '../../index.scss';
 
 export type TimelineItemType = {
   header: string;

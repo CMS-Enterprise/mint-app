@@ -26,7 +26,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
 
   // Map the common solutions to the FE help solutions
   const mappedSolutions = milestone.commonSolutions.map(solution => {
-    return helpSolutions.find(s => s.enum === solution.key);
+    return helpSolutions[solution.key];
   });
 
   // Map the translated text for facilitated by roles into a joined string

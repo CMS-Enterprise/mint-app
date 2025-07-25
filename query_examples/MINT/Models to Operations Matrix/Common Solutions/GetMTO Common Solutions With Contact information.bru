@@ -28,18 +28,22 @@ body:graphql {
           type
           contactInformation {
               primaryContact {
-                  name
-                  email
+                  # name
+                  # email
                   isTeam
                   role
                   isPrimary
               }
               pointsOfContact {
-                  name
-                  email
                   isTeam
                   role
                   isPrimary
+                	userAccount{
+                     id
+               			 username
+                		 givenName
+                     familyName
+                  }
               }
           }
           subjects

@@ -1,8 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
-
-import { OperationalSolutionCategories } from 'types/operationalSolutionCategories';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -19,7 +18,7 @@ export default {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
             route={operationalSolutionCategoryMap.data}
-            category={OperationalSolutionCategories.DATA}
+            category={MtoCommonSolutionSubject.DATA}
           />
         </Route>
       </MemoryRouter>
@@ -32,7 +31,7 @@ export const Default = () => (
     <Route path="/help-and-knowledge/operational-solutions">
       <SolutionsTag
         route={operationalSolutionCategoryMap.data}
-        category={OperationalSolutionCategories.DATA}
+        category={MtoCommonSolutionSubject.DATA}
       />
     </Route>
   </MemoryRouter>
