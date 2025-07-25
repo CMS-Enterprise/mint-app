@@ -2220,6 +2220,49 @@ Model Space offers model teams and their contractors templates or Databricks not
       description: '',
       gatheringInfo: true
     }
+  },
+  [MtoCommonSolutionKey.NCQA]: {
+    about: {
+      description:
+        'The Innovation Center models use quality measures to assess quality of care and support monitoring and evaluation activities in support of Section 1115A(a)(3) of the Social Security Act. The National Committee for Quality Assurance (NCQA) owns the proprietary rights to the system that collects HEDIS® data, and exclusive licensing rights, and is the only organization authorized to add measurement specifications and to provide technical assistance to health plans and auditors to ensure the appropriate use of NCQA measures. NCQA develops the measures and makes all of the updates to HEDIS®, it is the only qualified entity capable of and authorized to provide the needed technical assistance to organizations that use HEDIS® and NCQA measures.',
+      components: [
+        {
+          header: 'Services provided',
+          description:
+            'Technical assistance on the appropriate use of NCQA measures. Provides the HEDIS manual.',
+          items: []
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Consultation with the COR and Project Lead will be required to verify that the quality measure under consideration is incorporated within the existing contract scope.',
+      items: [
+        {
+          header: 'Contact NCQA point of contact',
+          description:
+            'Reach out to the NCQA primary point of contact to get started.'
+        }
+      ]
+    }
+  },
+  [MtoCommonSolutionKey.RMD]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
+  },
+  [MtoCommonSolutionKey.MS_FORMS]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
+  },
+  [MtoCommonSolutionKey.RESDAC_CMDS]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
   }
 };
 
@@ -2431,6 +2474,7 @@ const helpAndKnowledge = {
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',
   sortDesc: 'By title (Z-A)',
+  lastUpdated: 'Last updated {{date}}',
   solutionType
 };
 

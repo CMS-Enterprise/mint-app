@@ -40,6 +40,7 @@ jobs:
           STATIC_S3_BUCKET: ${{ secrets.STATIC_S3_BUCKET }}
           VITE_BEACON_ID: ${{ secrets.VITE_BEACON_ID }}
           VITE_GA_TRACKING_ID: ${{ secrets.VITE_GA_TRACKING_ID }}
+          VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
         run: |
           ./scripts/build_static.sh
       - name: Upload Frontend assets
