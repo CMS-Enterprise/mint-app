@@ -12,6 +12,7 @@ CBOSC
 CBSA
 Cclf
 CCNS
+cedardev
 cmmi
 COLLAB
 Containsf
@@ -37,6 +38,7 @@ Failf
 Falsef
 FINANCIALS
 fkey
+flagdata
 Gainshare
 genericize
 genericmodel
@@ -60,6 +62,7 @@ logfields
 logutilities
 MAPD
 mdspell
+minioadmin
 MTOCSS
 multipayer
 NCBP
