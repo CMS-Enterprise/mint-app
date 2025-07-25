@@ -10,7 +10,8 @@
         "bruno-api-client.bruno",
         "GraphQL.vscode-graphql",
         "streetsidesoftware.code-spell-checker",
-        "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries"
+        "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
+        "dorzey.vscode-sqlfluff"
 
     ]
   }
