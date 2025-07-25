@@ -703,6 +703,62 @@ export const helpSolutions: HelpSolutionsType = {
         <GatheringInfoAlert {...props} />
       )
     }
+  },
+  [MtoCommonSolutionKey.NCQA]: {
+    key: MtoCommonSolutionKey.NCQA,
+    categories: [
+      MtoCommonSolutionSubject.QUALITY,
+      MtoCommonSolutionSubject.CONTRACT_VEHICLES
+    ],
+    name: 'National Committee for Quality Assurance',
+    acronym: 'NCQA',
+    type: MtoSolutionType.OTHER,
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  [MtoCommonSolutionKey.RMD]: {
+    key: MtoCommonSolutionKey.RMD,
+    categories: [
+      MtoCommonSolutionSubject.QUALITY,
+      MtoCommonSolutionSubject.CONTRACT_VEHICLES
+    ],
+    name: 'Rapid Measure Development',
+    acronym: 'RMD',
+    type: MtoSolutionType.CONTRACTOR,
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  [MtoCommonSolutionKey.MS_FORMS]: {
+    key: MtoCommonSolutionKey.MS_FORMS,
+    categories: [
+      MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+    ],
+    name: 'Microsoft Forms',
+    acronym: 'MS Forms',
+    type: MtoSolutionType.IT_SYSTEM,
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
+  [MtoCommonSolutionKey.RESDAC_CMDS]: {
+    key: MtoCommonSolutionKey.RESDAC_CMDS,
+    categories: [MtoCommonSolutionSubject.DATA],
+    name: 'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
+    acronym: 'ResDAC-CMDS',
+    type: MtoSolutionType.OTHER,
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
   }
 };
 

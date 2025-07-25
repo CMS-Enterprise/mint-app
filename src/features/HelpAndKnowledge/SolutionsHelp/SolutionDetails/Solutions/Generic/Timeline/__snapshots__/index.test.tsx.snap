@@ -1557,6 +1557,18 @@ exports[`Generic Timeline Components > matches the snapshot > Medicare Advantage
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > Microsoft Forms 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = `
 <DocumentFragment>
   <div
@@ -1636,6 +1648,33 @@ exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = 
           </span>
         </span>
          
+      </li>
+    </ol>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > National Committee for Quality Assurance 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <p>
+      Consultation with the COR and Project Lead will be required to verify that the quality measure under consideration is incorporated within the existing contract scope.
+    </p>
+    <ol
+      class="usa-process-list padding-top-1"
+    >
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Contact NCQA point of contact
+        </h3>
+        Reach out to the NCQA primary point of contact to get started.
       </li>
     </ol>
   </div>
@@ -1723,6 +1762,30 @@ exports[`Generic Timeline Components > matches the snapshot > Quality Vertical 1
         Before entering clearance, the model’s quality measures must be reviewed by QV.
       </li>
     </ol>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Rapid Measure Development 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > ResDAC CMMI Model Data Sharing Model Participation Data Initiative 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
   </div>
 </DocumentFragment>
 `;
