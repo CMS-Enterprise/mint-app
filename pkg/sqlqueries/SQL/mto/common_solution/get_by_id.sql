@@ -1,12 +1,10 @@
 SELECT
+    id,
     name,
-    key AS "key",
+    key,
     type,
     subjects,
-    filter_view,
-    model_plan_id,
-    mto_common_milestone_key,
-    is_added
+    filter_view
 FROM
     mto_common_solution
 WHERE id = :id;

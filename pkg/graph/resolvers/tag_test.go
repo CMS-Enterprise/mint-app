@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -70,9 +72,11 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	suite.NoError(err)
 	suite.NotNil(mtoSol)
 
-	retMtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, mtoSol.ID, nil)
+	fmt.Printf("mtoSol: %+v\n", mtoSol)
+
+	mtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, mtoSol.ID, nil)
 	suite.NoError(err)
-	retMtoSol, ok := retMtoSolEnt.(*models.MTOCommonSolution)
+	retMtoSol, ok := mtoSolEnt.(*models.MTOCommonSolution)
 	suite.True(ok, "Could not cast the Tagged Entity to MTO Common Solution")
 
 	suite.EqualValues(mtoSol.ID, retMtoSol.ID)
