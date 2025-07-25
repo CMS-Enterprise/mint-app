@@ -9,6 +9,7 @@ import {
 } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
+import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import '../index.scss';
 
@@ -29,7 +30,7 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const params = new URLSearchParams(history.location.search);
 
   if (isMTORoute) {
-    params.set('solution', '4-innovation');
+    params.set('solution-key', MtoCommonSolutionKey.INNOVATION);
   }
 
   return (

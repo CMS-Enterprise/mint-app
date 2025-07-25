@@ -275,9 +275,8 @@ const ITSystemsTable = ({
             );
           }
 
-          const mappedSolution = helpSolutions.find(
-            s => s.enum === row.original.key
-          );
+          const mappedSolution =
+            helpSolutions[row.original.key as MtoCommonSolutionKey];
 
           if (!row.original.addedFromSolutionLibrary) {
             return <>{row.original.name}</>;
@@ -287,7 +286,7 @@ const ITSystemsTable = ({
             <UswdsReactLink
               to={`${location.pathname}${location.search}${
                 location.search ? '&' : '?'
-              }solution=${mappedSolution?.route}&section=about`}
+              }solution-key=${mappedSolution?.key}&section=about`}
             >
               {row.original.name}
             </UswdsReactLink>

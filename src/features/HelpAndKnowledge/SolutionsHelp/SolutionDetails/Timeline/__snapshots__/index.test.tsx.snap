@@ -524,15 +524,13 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Bene
             class="padding-left-4 margin-top-0"
           />
           <p>
-            Since BCDA leverages 4i, model teams are encouraged to learn more about the 
             <button
               class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
-              timing and steps involved for using 4i
+               
             </button>
-            .
           </p>
         </li>
         <li
@@ -790,115 +788,6 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               </span>
             </button>
           </p>
-        </li>
-      </ol>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`Operational Solutions Timeline Components > matches the snapshot > CMS Qualtrics 1`] = `
-<DocumentFragment>
-  <div>
-    <h2
-      class="margin-top-0"
-    >
-      Timeline
-    </h2>
-    <div
-      class="operational-solution-details line-height-body-5 font-body-md"
-    >
-      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
-      <button
-        class="usa-button usa-button--unstyled"
-        data-testid="button"
-        type="button"
-      >
-        <span
-          class="display-flex flex-align-center line-height-normal"
-          style="column-gap: 0.25rem;"
-        >
-          MINTTeam@cms.hhs.gov
-          <svg
-            aria-label="launch"
-            class="usa-icon"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-            />
-          </svg>
-        </span>
-      </button>
-      .
-      <ol
-        class="usa-process-list"
-      >
-        <li
-          class="usa-process-list__item operational-solution-details__timeline-item"
-        >
-          <h3
-            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-            data-testid="processListHeading"
-          >
-            Access CMS Qualtrics
-          </h3>
-          Log in to CMS Qualtrics using your CMS user name and password.
-          <p>
-            <button
-              class="usa-button usa-button--unstyled"
-              data-testid="button"
-              type="button"
-            >
-              <span
-                class="display-flex flex-align-center line-height-normal"
-                style="column-gap: 0.25rem;"
-              >
-                Go to CMS Qualtrics
-                <svg
-                  aria-label="launch"
-                  class="usa-icon"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                  />
-                </svg>
-              </span>
-            </button>
-          </p>
-        </li>
-        <li
-          class="usa-process-list__item operational-solution-details__timeline-item"
-        >
-          <h3
-            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-            data-testid="processListHeading"
-          >
-            Create a survey
-          </h3>
-          Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.
-        </li>
-        <li
-          class="usa-process-list__item operational-solution-details__timeline-item"
-        >
-          <h3
-            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-            data-testid="processListHeading"
-          >
-            Distribute your survey
-          </h3>
-          Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.
         </li>
       </ol>
     </div>
@@ -3082,26 +2971,52 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Nati
       Timeline
     </h2>
     <div
-      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+      class="usa-alert usa-alert--info flex line-height-body-5"
+      data-testid="alert"
     >
-      <p>
-        Consultation with the COR and Project Lead will be required to verify that the quality measure under consideration is incorporated within the existing contract scope.
-      </p>
-      <ol
-        class="usa-process-list padding-top-1"
+      <div
+        class="usa-alert__body"
       >
-        <li
-          class="usa-process-list__item operational-solution-details__timeline-item"
+        <h4
+          class="usa-alert__heading"
         >
-          <h3
-            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
-            data-testid="processListHeading"
-          >
-            Contact NCQA point of contact
-          </h3>
-          Reach out to the NCQA primary point of contact to get started.
-        </li>
-      </ol>
+          We’re still gathering information about  NCQA
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </DocumentFragment>

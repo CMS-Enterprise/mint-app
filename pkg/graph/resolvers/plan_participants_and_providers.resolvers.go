@@ -16,7 +16,7 @@ import (
 )
 
 // UpdatePlanParticipantsAndProviders is the resolver for the updatePlanParticipantsAndProviders field.
-func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
+func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanParticipantsAndProviders, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)

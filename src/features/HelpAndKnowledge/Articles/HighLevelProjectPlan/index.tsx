@@ -37,8 +37,9 @@ const HighLevelProjectPlan = () => {
 
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(
-    solution?.route || null,
-    helpSolutions
+    solution?.key || null,
+    helpSolutions,
+    true
   );
 
   const accordionTitles = tArray<string>(

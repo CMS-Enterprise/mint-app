@@ -1,4 +1,4 @@
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { TagType } from 'gql/generated/graphql';
 // Possible Util to extract only mentions from content
 export const getMentions = (data: any) => {
@@ -34,10 +34,10 @@ export const getContent = (editorData: any) => {
 };
 
 export const formatedSolutionMentions = (query?: string) => {
-  let mappedSolutions = helpSolutions.map(solution => {
+  let mappedSolutions = helpSolutionsArray.map(solution => {
     const acronym = solution.acronym ? ` (${solution.acronym})` : '';
     return {
-      username: solution.enum,
+      username: solution.key,
       displayName: `${solution.name}${acronym}`,
       tagType: TagType.POSSIBLE_SOLUTION
     };

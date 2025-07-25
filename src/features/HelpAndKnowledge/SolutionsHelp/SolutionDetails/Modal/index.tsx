@@ -10,6 +10,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import Alert from 'components/Alert';
 import Sidepanel from 'components/Sidepanel';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useMessage from 'hooks/useMessage';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
@@ -74,6 +75,7 @@ const SolutionDetailsModal = ({
   const solutionParam = params.get('solution');
   const readViewParam = params.get('view-solution');
   const selectSolutions = params.get('select-solutions');
+  const solutionEnumParam = params.get('solution-key');
   const section = params.get('section') || 'about';
 
   const { t } = useTranslation('helpAndKnowledge');
@@ -84,12 +86,15 @@ const SolutionDetailsModal = ({
 
   // Used to maintain previous route when opening and navigating through modal
   const [prevRoute] = useState<string | undefined>(
-    openedFrom === 'undefined' || openedFrom?.includes('solution=') // If openedFrom pasted in URL with already set params, set to undefined
+    openedFrom === 'undefined' ||
+      openedFrom?.includes('solution=') ||
+      openedFrom?.includes('solution-key=') // If openedFrom pasted in URL with already set params, set to undefined
       ? undefined
       : openedFrom
   );
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const { message, clearMessage } = useMessage();
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary
@@ -104,6 +109,7 @@ const SolutionDetailsModal = ({
 
   // On modal close, returns to previous route state if present
   const closeModal = () => {
+    clearMessage();
     let closeModalRoute = prevRoute || setCloseRoute;
 
     // Return to read view if opened from there
@@ -129,13 +135,26 @@ const SolutionDetailsModal = ({
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
         overlayClassName={
-          (milestoneParam && solutionParam) || selectSolutions || readViewParam
+          (milestoneParam && solutionParam) ||
+          (milestoneParam && solutionEnumParam) ||
+          selectSolutions ||
+          readViewParam
             ? 'bg-transparent'
             : ''
         }
       >
         <Header solution={solution} />
 
+        {message && (
+          <Alert
+            slim
+            type="success"
+            className="margin-x-4 margin-top-2"
+            closeAlert={clearMessage}
+          >
+            {message}
+          </Alert>
+        )}
         {isMobile && (
           <MobileNav
             subComponents={subComponents(solution, location, setCloseRoute)}

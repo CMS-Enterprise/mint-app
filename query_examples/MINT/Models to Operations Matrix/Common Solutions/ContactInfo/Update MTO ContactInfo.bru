@@ -1,0 +1,46 @@
+meta {
+  name: Update MTO ContactInfo
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation updateMTOCommonSolutionContact($id: UUID!, $input: MTOCommonSolutionContactUpdateChanges!) {
+    updateMTOCommonSolutionContact(
+      id: $id,
+      input: $input
+    ) {
+      id
+      key
+      name
+      email
+      mailboxTitle
+      mailboxAddress
+      isTeam
+      role
+      isPrimary
+      receiveEmails
+      createdBy
+      modifiedBy
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{contactId}}",
+    "input": {
+      "mailboxTitle": "Updated Support Team",
+      "role": "Updated Role",
+      "isPrimary": false,
+      "receiveEmails": false
+    }
+  }
+}

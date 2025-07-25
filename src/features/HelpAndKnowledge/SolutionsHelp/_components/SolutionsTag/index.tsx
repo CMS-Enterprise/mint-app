@@ -1,20 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/Tag';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
-import {
-  OperationalSolutionCategories,
-  OperationalSolutionCategoryRoute
-} from 'types/operationalSolutionCategories';
 
 type SolutionsTagProps = {
   className?: string;
   isBold?: boolean;
-  route: OperationalSolutionCategoryRoute;
-  category: OperationalSolutionCategories;
+  route: MtoCommonSolutionSubject;
+  category: MtoCommonSolutionSubject;
   inline?: boolean;
 };
 
@@ -50,8 +47,9 @@ export default function SolutionsTag({
       >
         {t(`categories.${category}.header`)}
 
-        {solutionCategories[category as OperationalSolutionCategoryRoute]
-          ?.subHeader && <span> {t(`categories.${category}.subHeader`)}</span>}
+        {solutionCategories[category]?.subHeader && (
+          <span> {t(`categories.${category}.subHeader`)}</span>
+        )}
       </Tag>
     </UswdsReactLink>
   );

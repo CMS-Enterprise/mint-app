@@ -16,7 +16,7 @@ import (
 )
 
 // UpdatePlanTimeline is the resolver for the updatePlanTimeline field.
-func (r *mutationResolver) UpdatePlanTimeline(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanTimeline, error) {
+func (r *mutationResolver) UpdatePlanTimeline(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanTimeline, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 

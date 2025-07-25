@@ -1,0 +1,53 @@
+meta {
+  name: CreateMTO Contractor
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation createMTOCommonSolutionContractor($key: MTOCommonSolutionKey!, $contractTitle: String, $contractorName: String!) {
+    createMTOCommonSolutionContractor(
+      key: $key,
+      contractTitle: $contractTitle,
+      contractorName: $contractorName
+    ) {
+      id
+      key
+      contractTitle
+      contractorName
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        email
+      }
+      modifiedByUserAccount {
+        id
+        username
+        email
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "key": "INNOVATION",
+    "contractTitle": "Primary Contractor",
+    "contractorName": "Best Contractor"
+  }
+}
+
+script:post-response {
+  let responseData = res.getBody().data.createMTOCommonSolutionContractor
+  
+  let contractorId = responseData.id
+  
+  bru.setVar("contractorId", contractorId);
+}

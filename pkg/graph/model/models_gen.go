@@ -66,12 +66,30 @@ type MTOCategoryTranslation struct {
 
 // Represents a translation of a contact for a common solution
 type MTOCommonSolutionContactTranslation struct {
-	Key       models.TranslationField `json:"key" db:"mto_common_solution_key"`
-	Name      models.TranslationField `json:"name" db:"name"`
-	Email     models.TranslationField `json:"email" db:"email"`
-	IsTeam    models.TranslationField `json:"isTeam" db:"is_team"`
-	Role      models.TranslationField `json:"role" db:"role"`
-	IsPrimary models.TranslationField `json:"isPrimary" db:"is_primary"`
+	Key            models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	Name           models.TranslationField            `json:"name" db:"name"`
+	Email          models.TranslationField            `json:"email" db:"email"`
+	MailboxTitle   models.TranslationField            `json:"mailboxTitle" db:"mailbox_title"`
+	MailboxAddress models.TranslationField            `json:"mailboxAddress" db:"mailbox_address"`
+	UserID         models.TranslationField            `json:"userId" db:"user_id"`
+	IsTeam         models.TranslationFieldWithOptions `json:"isTeam" db:"is_team"`
+	Role           models.TranslationField            `json:"role" db:"role"`
+	IsPrimary      models.TranslationFieldWithOptions `json:"isPrimary" db:"is_primary"`
+	ReceiveEmails  models.TranslationFieldWithOptions `json:"receiveEmails" db:"receive_emails"`
+}
+
+// Represents a translation of a contractor for a common solution
+type MTOCommonSolutionContractorTranslation struct {
+	Key            models.TranslationField `json:"key" db:"mto_common_solution_key"`
+	ContractTitle  models.TranslationField `json:"contractTitle" db:"contract_title"`
+	ContractorName models.TranslationField `json:"contractorName" db:"contractor_name"`
+}
+
+// Represents a translation of a system/business owner for a common solution
+type MTOCommonSolutionSystemOwnerTranslation struct {
+	Key          models.TranslationField            `json:"key" db:"mto_common_solution_key"`
+	OwnerType    models.TranslationFieldWithOptions `json:"ownerType" db:"owner_type"`
+	CmsComponent models.TranslationFieldWithOptions `json:"cmsComponent" db:"cms_component"`
 }
 
 // Represents mto info translation data

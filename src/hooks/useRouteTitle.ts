@@ -2,6 +2,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import ReactGA from 'react-ga4';
 import { useLocation } from 'react-router-dom';
+import { routeToEnumMap } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { tObject } from 'utils/translation';
@@ -25,7 +26,17 @@ const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
       const params = new URLSearchParams(search);
 
       const category = params.get('category');
-      const solution = params.get('solution');
+      let solution = params.get('solution');
+      const solutionKey = params.get('solution-key');
+
+      // For updated enum routes, map back to legacy routes for GA4 titles
+      if (solutionKey) {
+        Object.keys(routeToEnumMap).forEach(value => {
+          if (routeToEnumMap[value] === solutionKey) {
+            solution = value;
+          }
+        });
+      }
 
       // Array of all route params
       const currentRouteParams = pathname.replace(/\/+$/, '').split('/');

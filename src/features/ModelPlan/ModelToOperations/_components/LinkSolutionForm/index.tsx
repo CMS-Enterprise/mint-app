@@ -16,7 +16,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetMtoAllSolutionsQuery,
   GetMtoMilestoneQuery,
@@ -61,12 +61,12 @@ const LinkSolutionForm = ({
   const mappedSolutions = useMemo(
     () =>
       milestone.commonMilestone?.commonSolutions.map(solution => {
-        return helpSolutions.find(s => s.enum === solution.key);
+        return helpSolutionsArray.find(s => s.key === solution.key);
       }) || [],
     [milestone.commonMilestone]
   );
 
-  const mappedSolutionKeys = mappedSolutions.map(solution => solution?.enum);
+  const mappedSolutionKeys = mappedSolutions.map(solution => solution?.key);
 
   const commonSolutions =
     allSolutions?.commonSolutions.filter(
@@ -144,8 +144,8 @@ const LinkSolutionForm = ({
     });
 
     const suggestedSolutions = mappedSolutions
-      .filter(s => commonSolutionKeys.includes(s?.enum as MtoCommonSolutionKey))
-      .map(s => s?.enum) as MtoCommonSolutionKey[];
+      .filter(s => commonSolutionKeys.includes(s?.key as MtoCommonSolutionKey))
+      .map(s => s?.key) as MtoCommonSolutionKey[];
 
     setSolutionIDs(custom);
     setCommonSolutionKeys([
@@ -235,9 +235,7 @@ const LinkSolutionForm = ({
                     key={solution.key}
                     solution={solution}
                     setChecked={setChecked}
-                    checked={commonSolutionKeys.includes(
-                      solution.enum as MtoCommonSolutionKey
-                    )}
+                    checked={commonSolutionKeys.includes(solution.key)}
                   />
                 ) : null
               )}

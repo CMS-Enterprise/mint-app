@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 
-import { helpSolutions } from '../../solutionsMap';
+import { helpSolutionsArray } from '../../solutionsMap';
 
 import SolutionHelpCardGroup from '.';
 
@@ -16,7 +16,7 @@ export default {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionHelpCardGroup
-            solutions={helpSolutions}
+            solutions={helpSolutionsArray}
             setResultsNum={() => null}
           />
         </Route>
@@ -26,5 +26,8 @@ export default {
 } as Meta<typeof SolutionHelpCardGroup>;
 
 export const Default = () => (
-  <SolutionHelpCardGroup solutions={helpSolutions} setResultsNum={() => null} />
+  <SolutionHelpCardGroup
+    solutions={helpSolutionsArray}
+    setResultsNum={() => null}
+  />
 );
