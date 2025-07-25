@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -71,8 +69,6 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey("CONNECT"))
 	suite.NoError(err)
 	suite.NotNil(mtoSol)
-
-	fmt.Printf("mtoSol: %+v\n", mtoSol)
 
 	mtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, mtoSol.ID, nil)
 	suite.NoError(err)
