@@ -91,7 +91,7 @@ const SolutionHelpCard = ({
             )}
 
             <Grid
-              tablet={{ col: 6 }}
+              tablet={{ col: 12 }}
               className={classNames({ 'margin-bottom-2': solution.name })}
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
