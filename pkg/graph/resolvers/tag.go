@@ -155,7 +155,7 @@ func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Stor
 // Processes an HTML mention by getting MTO Common Solution information from the DB for a mention that is of  Tag Type TagTypeMTOCommonSolution.
 func processMTOCommonSolutionHTMLMention(ctx context.Context, mention *models.HTMLMention) error {
 	if mention.Type != models.TagTypeMTOCommonSolution {
-		return fmt.Errorf(" invalid operation. attempted to fetch MTO common solution information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
+		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeMTOCommonSolution)
 	}
 	sol, err := MTOCommonSolutionGetByKeyLOADER(ctx, models.MTOCommonSolutionKey(mention.EntityRaw))
 	if err != nil {
