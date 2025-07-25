@@ -27,7 +27,7 @@ func (suite *NotificationsSuite) TestActivityTaggedInDiscussionCreate() {
 	tag3ID := "CONNECT"
 	tag3MockID := 4
 	tag3Label := "Salesforce CONNECT"
-	tag3Type := models.TagTypePossibleSolution
+	tag3Type := models.TagTypeMTOCommonSolution
 	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
 	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.` + tag1 + tag1
 	// We have made a mention with 5 Mentions. This should only create 5 tags in the database

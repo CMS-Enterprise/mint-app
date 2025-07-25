@@ -5,6 +5,7 @@ WITH QUERIED_IDS AS (
 
 
 SELECT
+    mto_common_solution.id,
     mto_common_solution.name,
     mto_common_solution.key,
     mto_common_solution.type,

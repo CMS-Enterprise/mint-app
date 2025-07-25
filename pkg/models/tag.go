@@ -14,6 +14,8 @@ func (tt TagType) Validate() error {
 	switch tt {
 	case TagTypeUserAccount:
 		return nil
+	case TagTypeMTOCommonSolution:
+		return nil
 	case TagTypePossibleSolution:
 		return nil
 	}
@@ -22,8 +24,9 @@ func (tt TagType) Validate() error {
 
 // These constants represent the different values of TagType
 const (
-	TagTypeUserAccount      TagType = "USER_ACCOUNT"
-	TagTypePossibleSolution TagType = "POSSIBLE_SOLUTION"
+	TagTypeUserAccount       TagType = "USER_ACCOUNT"
+	TagTypePossibleSolution  TagType = "POSSIBLE_SOLUTION"
+	TagTypeMTOCommonSolution TagType = "MTO_COMMON_SOLUTION"
 )
 
 // Tag represents a reference to another data structure in the database

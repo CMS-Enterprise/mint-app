@@ -181,24 +181,24 @@ func sendPlanDiscussionTagEmails(
 				errs = append(errs, err) //non blocking
 				continue
 			}
-		case models.TagTypePossibleSolution:
+		case models.TagTypeMTOCommonSolution:
 
-			soln, ok := entity.(*models.PossibleOperationalSolution)
+			soln, ok := entity.(*models.MTOCommonSolution)
 			if !ok {
-				errs = append(errs, fmt.Errorf("tagged entity was expected to be a possible solution, but was not able to be cast to PossibleOperationalSolution. entity: %v", entity))
+				errs = append(errs, fmt.Errorf("tagged entity was expected to be a MTO common solution, but was not able to be cast to MTOCommonSolution. entity: %v", entity))
 			}
 
 			config := emailService.GetConfig()
 
-			pocs, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, *mention.EntityIntID)
+			pocInfo, err := MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, soln.Key)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
 			}
-			// var pocEmailAddress []string
-			pocEmailAddress, err := models.GetPOCEmailAddresses(pocs, config.GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
+
+			pocEmailAddress, err := pocInfo.EmailAddresses(config.GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
 			if err != nil {
-				errs = append(errs, err)
+				errs = append(errs, err) //non blocking
 				continue
 			}
 
@@ -276,7 +276,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
 	createdByUserRole string,
-	solution *models.PossibleOperationalSolution,
+	solution *models.MTOCommonSolution,
 	pocEmailAddress []string,
 ) error {
 
@@ -284,7 +284,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionTaggedPossibleSolutionTemplateName)
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionTaggedMTOCommonSolutionTemplateName)
 	if err != nil {
 		return err
 	}

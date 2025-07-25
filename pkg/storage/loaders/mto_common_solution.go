@@ -23,6 +23,8 @@ type mtoCommonSolutionLoaders struct {
 
 	// ByCommonMilestoneKey returns a list of mto Common Solution records by it's keys. It does not currently have contextual data
 	ByCommonMilestoneKey LoaderWrapper[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution]
+
+	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolution]
 }
 
 // MTOCommonSolution is the singleton instance of all LoaderWrappers related to MTO Common Solutions
@@ -30,6 +32,7 @@ var MTOCommonSolution = &mtoCommonSolutionLoaders{
 	ByModelPlanID:        NewLoaderWrapper(batchMTOCommonSolutionGetByModelPlanID),
 	ByKey:                NewLoaderWrapper(batchMTOCommonSolutionGetByKey),
 	ByCommonMilestoneKey: NewLoaderWrapper(batchMTOCommonSolutionGetByCommonMilestoneKey),
+	ByID:                 NewLoaderWrapper(batchMTOCommonSolutionGetByID),
 }
 
 //Future Enhancement (mto) revisit this and see if you can refactor the dataloader to take *uuid.UUID. The only part that doesn't work is onePerMany,
@@ -108,4 +111,24 @@ func batchMTOCommonSolutionGetByCommonMilestoneKey(ctx context.Context, commonMi
 	// implement one to many
 	return oneToManyDataLoader(commonMilestoneKeys, data, getKeyFunc)
 
+}
+
+func batchMTOCommonSolutionGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolution] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolution](ids, err)
+	}
+	data, err := storage.MTOCommonSolutionGetByID(loaders.DataReader.Store, logger, &ids[0])
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolution](ids, err)
+	}
+	getKeyFunc := func(data *models.MTOCommonSolution) uuid.UUID {
+		if data.ID != nil {
+			return *data.ID
+		}
+		// We use UUID.Nil for a nil value as a map to pointers doesn't compare the value
+		return uuid.Nil
+	}
+	return oneToOneDataLoader(ids, []*models.MTOCommonSolution{data}, getKeyFunc)
 }

@@ -67,6 +67,9 @@ func TaggedEntityGet(
 		return UserAccountGetByIDLOADER(ctx, *EntityUUID)
 	case models.TagTypePossibleSolution:
 		return PossibleOperationalSolutionGetByID(logger, store, *EntityIntID)
+	case models.TagTypeMTOCommonSolution:
+		return MTOCommonSolutionGetByIDLoader(ctx, EntityUUID)
+
 	default:
 		return nil, fmt.Errorf(" no tagged entity configured for table: %s", tagType)
 	}
@@ -91,6 +94,12 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 
 		case models.TagTypePossibleSolution:
 			err := processPossibleSolutionHTMLMention(ctx, store, mention)
+			if err != nil {
+				return err
+			}
+
+		case models.TagTypeMTOCommonSolution:
+			err := processMTOCommonSolutionHTMLMention(ctx, mention)
 			if err != nil {
 				return err
 			}
@@ -126,7 +135,7 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 	return nil
 }
 
-// Processes an HTML mention by getting Possible Solution information from the DB for a mention that is of  Tag Type  TagTypePossibleSolution.
+// Processes an HTML mention by getting Possible Solution information from the DB for a mention that is of  Tag Type TagTypePossibleSolution.
 func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Store, mention *models.HTMLMention) error {
 	if mention.Type != models.TagTypePossibleSolution {
 		return fmt.Errorf(" invalid operation. attempted to fetch possible solution information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
@@ -143,6 +152,22 @@ func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Stor
 	return nil
 }
 
+// Processes an HTML mention by getting MTO Common Solution information from the DB for a mention that is of  Tag Type TagTypeMTOCommonSolution.
+func processMTOCommonSolutionHTMLMention(ctx context.Context, mention *models.HTMLMention) error {
+	if mention.Type != models.TagTypeMTOCommonSolution {
+		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeMTOCommonSolution)
+	}
+	sol, err := MTOCommonSolutionGetByKeyLOADER(ctx, models.MTOCommonSolutionKey(mention.EntityRaw))
+	if err != nil {
+		return err
+	}
+	mention.EntityUUID = sol.ID
+	mention.EntityDB = sol.ID
+	taggedEntity := models.TaggedEntity(sol)
+	mention.Entity = &taggedEntity
+	return nil
+}
+
 // updateMentionAndRawContent updates the string representation of a mention,
 // it then updates the Raw Content of the tagged HTML itself to replace the old representation of the mention with the new
 func updateMentionAndRawContent(mention *models.HTMLMention, tHTML *models.TaggedHTML) error {
@@ -152,7 +177,7 @@ func updateMentionAndRawContent(mention *models.HTMLMention, tHTML *models.Tagge
 		return fmt.Errorf("unable to transform the HTML mention into a string html representation. error : %w", err)
 	}
 
-	// Update the Tagged HTML Raw content by replacing the tags old value, with the new representation
+	// Update the Tagged HTML Raw content by replacing the tags old value, with	 the new representation
 	newTotalRaw := strings.ReplaceAll(string(tHTML.RawContent), string(mention.RawHTML), string(newHTML))
 	tHTML.RawContent = models.HTML(newTotalRaw)
 

@@ -15,7 +15,7 @@ import { sortBy } from 'lodash';
 import Alert from 'components/Alert';
 
 import suggestion from './suggestion';
-import { getMentions } from './util';
+import { formatedSolutionMentions, getMentions } from './util';
 
 import './index.scss';
 
@@ -88,25 +88,25 @@ const MentionTextArea = ({
     // If "@" trigger is typed without a following query, return on the solution contacts
 
     // TODO: Add back in once emails are configured to handle MTO solutions
-    // if (!query) return formatedSolutionMentions();
+    if (!query) return formatedSolutionMentions(query);
     if (query.length < 2) return [];
 
     return getUsersLazyQuery({
       variables: { searchTerm: query }
-    }).then(res =>
-      sortBy(
-        res?.data?.searchOktaUsers?.map(user => {
-          return {
-            username: user.username,
-            displayName: `${user.displayName} (${user.username})`,
-            tagType: TagType.USER_ACCOUNT
-          };
-        }) || [],
-        // TODO: Add back in once emails are configured to handle MTO solutions
-        // .concat(formatedSolutionMentions(query)),
+    }).then(res => {
+      const users =
+        res?.data?.searchOktaUsers?.map(user => ({
+          username: user.username,
+          displayName: `${user.displayName} (${user.username})`,
+          tagType: TagType.USER_ACCOUNT
+        })) || [];
+
+      // TODO: Add back in once emails are configured to handle MTO solutions
+      return sortBy(
+        users.concat(formatedSolutionMentions(query)),
         'displayName'
-      )
-    );
+      );
+    });
   };
 
   const editor = useEditor(

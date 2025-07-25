@@ -11,10 +11,14 @@ var mtoCommonSolutionGetByMilestoneKeyLoaderSQL string
 //go:embed SQL/mto/common_solution/get_by_model_plan_id_LOADER.sql
 var mtoCommonSolutionGetByModelPlanIDLoaderSQL string
 
+//go:embed SQL/mto/common_solution/get_by_id.sql
+var mtoCommonSolutionGetByIDSQL string
+
 type mtoCommonSolutionScripts struct {
 	GetByKeyLoader                string
 	GetByCommonMilestoneKeyLoader string
 	GetByModelPlanIDLoader        string
+	GetByID                       string
 }
 
 // MTOCommonSolution contains all the SQL queries for the MTO common solution
@@ -22,4 +26,5 @@ var MTOCommonSolution = mtoCommonSolutionScripts{
 	GetByKeyLoader:                mtoCommonSolutionGetByKeyLoaderSQL,
 	GetByCommonMilestoneKeyLoader: mtoCommonSolutionGetByMilestoneKeyLoaderSQL,
 	GetByModelPlanIDLoader:        mtoCommonSolutionGetByModelPlanIDLoaderSQL,
+	GetByID:                       mtoCommonSolutionGetByIDSQL,
 }

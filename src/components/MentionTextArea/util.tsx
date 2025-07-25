@@ -39,7 +39,7 @@ export const formatedSolutionMentions = (query?: string) => {
     return {
       username: solution.key,
       displayName: `${solution.name}${acronym}`,
-      tagType: TagType.POSSIBLE_SOLUTION
+      tagType: TagType.MTO_COMMON_SOLUTION
     };
   });
 
