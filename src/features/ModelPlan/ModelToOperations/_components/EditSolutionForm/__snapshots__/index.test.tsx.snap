@@ -75,7 +75,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
               >
                 <a
                   class="usa-link usa-link--external"
-                  href="/help-and-knowledge/operational-solutions?page=1&solution=beneficiary-claims-data-api&section=about"
+                  href="/help-and-knowledge/operational-solutions?page=1&solution-key=BCDA&section=about"
                   target="_blank"
                 >
                   Learn more about this solution

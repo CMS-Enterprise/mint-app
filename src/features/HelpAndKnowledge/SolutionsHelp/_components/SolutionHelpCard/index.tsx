@@ -3,16 +3,16 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Card, CardGroup, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
-import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
 import { tObject } from 'utils/translation';
 
 import {
   AboutConfigType,
   getTransLinkComponents
-} from '../../SolutionDetails/Solutions/Generic/about';
+} from '../../SolutionDetails/Solutions/Generic/About';
 import { HelpSolutionType } from '../../solutionsMap';
 import SolutionsTag from '../SolutionsTag';
 
@@ -20,7 +20,7 @@ import './index.scss';
 
 type SolutionCardProps = {
   className?: string;
-  category?: OperationalSolutionCategoryRoute | null;
+  category?: MtoCommonSolutionSubject | null;
   solution: HelpSolutionType;
 };
 
@@ -91,7 +91,7 @@ const SolutionHelpCard = ({
             )}
 
             <Grid
-              tablet={{ col: 6 }}
+              tablet={{ col: 12 }}
               className={classNames({ 'margin-bottom-2': solution.name })}
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
@@ -108,7 +108,7 @@ const SolutionHelpCard = ({
               aria-label={`${t('aboutSolutionAriaLabel')} ${solution.name}`}
               to={`/help-and-knowledge/operational-solutions${location.search}${
                 location.search ? '&' : '?'
-              }solution=${solution.route}&section=about`}
+              }solution-key=${solution.key}&section=about`}
             >
               {t('aboutSolution')}
               <Icon.ArrowForward

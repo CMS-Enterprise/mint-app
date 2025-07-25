@@ -1,0 +1,30 @@
+{
+  "key": {
+    "gqlField": "key",
+    "goField": "Key",
+    "dbField": "mto_common_solution_key",
+    "label": "MTO Common Solution",
+    "dataType": "ENUM",
+    "formType": "TEXT",
+    "tableReference": "mto_common_solution",
+    "order": 1.1
+  },
+  "contractTitle": {
+    "gqlField": "contractTitle",
+    "goField": "contractTitle",
+    "dbField": "contract_title",
+    "label": "Contract title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.2
+  },
+  "contractorName": {
+    "gqlField": "contractorName",
+    "goField": "ContractorName",
+    "dbField": "contractor_name",
+    "label": "Contractor name",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.3
+  }
+}

@@ -21,6 +21,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
 
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
@@ -187,6 +188,8 @@ const UsingMilestoneLibrary = () => {
 
               {/* Still need help */}
               <StillNeedMTOHelp />
+
+              <LatestContentUpdate file="usingMilestoneLibrary.ts" />
             </div>
           </Grid>
         </GridContainer>

@@ -1,18 +1,3 @@
-export enum OperationalSolutionCategories {
-  APPLICATIONS_ACO = 'applications-and-participation-interaction-aco-and-kidney',
-  APPLICATIONS_NON_ACO = 'applications-and-participation-interaction-non-aco',
-  COMMUNICATION_TOOLS = 'communication-tools-and-help-desk',
-  CONTRACT_VEHICLES = 'contract-vehicles',
-  DATA = 'data',
-  EVALUATION_AND_REVIEW = 'evaluation-and-review',
-  LEARNING = 'learning',
-  LEGAL = 'legal',
-  MEDICARE_ADVANTAGE_D = 'medicare-advantage-and-part-d',
-  MEDICARE_FFS = 'medicare-fee-for-service',
-  PAYMENT_FINANCIALS = 'payments-and-financials',
-  QUALITY = 'quality'
-}
-
 export enum OperationalSolutionSubCategories {
   APPLICATIONS = 'APPLICATIONS',
   PARTICIPANT_INTERACTION = 'PARTICIPANT_INTERACTION',

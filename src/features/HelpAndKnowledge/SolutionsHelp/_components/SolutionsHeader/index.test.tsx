@@ -15,7 +15,7 @@ describe('Operation Solution Help Header', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsHeader
             resultsNum={9}
-            resultsMax={helpSolutions.length}
+            resultsMax={Object.keys(helpSolutions).length}
             setQuery={(query: string) => null}
             query=""
           />
@@ -25,7 +25,7 @@ describe('Operation Solution Help Header', () => {
 
     // Page results info
     expect(
-      getByText('Showing 9 of 49 operational solutions')
+      getByText('Showing 9 of 53 operational solutions')
     ).toBeInTheDocument();
   });
 
@@ -37,7 +37,7 @@ describe('Operation Solution Help Header', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsHeader
             resultsNum={1}
-            resultsMax={helpSolutions.length}
+            resultsMax={Object.keys(helpSolutions).length}
             setQuery={(query: string) => null}
             query="4inn"
           />
@@ -58,7 +58,7 @@ describe('Operation Solution Help Header', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsHeader
             resultsNum={9}
-            resultsMax={helpSolutions.length}
+            resultsMax={Object.keys(helpSolutions).length}
             setQuery={(query: string) => null}
             query=""
           />

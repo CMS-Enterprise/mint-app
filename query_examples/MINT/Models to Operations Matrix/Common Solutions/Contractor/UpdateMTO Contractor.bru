@@ -1,0 +1,46 @@
+meta {
+  name: UpdateMTO Contractor
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation updateMTOCommonSolutionContractor($id: UUID!, $changes: MTOCommonSolutionContractorChanges!) {
+    updateMTOCommonSolutionContractor(
+      id: $id,
+      changes: $changes
+    ) {
+      id
+      key
+      contractTitle
+      contractorName
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        email
+      }
+      modifiedByUserAccount {
+        id
+        username
+        email
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{contractorId}}",
+    "changes": {
+      "contractTitle": "Updated Contractor Title",
+      "contractorName": "Updated Contractor Name"
+    }
+  }
+}

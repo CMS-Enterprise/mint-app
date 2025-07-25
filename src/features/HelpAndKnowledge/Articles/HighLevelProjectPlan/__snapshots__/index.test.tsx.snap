@@ -92,7 +92,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
           Click to expand each accordion to reveal more information about each phase within the project plan.
         </p>
         <div
-          class="usa-accordion"
+          class="usa-accordion margin-bottom-4"
           data-allow-multiple="true"
           data-testid="accordion"
         >

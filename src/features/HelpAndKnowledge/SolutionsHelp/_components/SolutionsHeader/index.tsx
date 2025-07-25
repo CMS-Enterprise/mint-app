@@ -2,20 +2,18 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
-import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
-
-import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
 import './index.scss';
 
 type OperationalSolutionsHelpProps = {
   className?: string;
-  category?: OperationalSolutionCategoryRoute | null;
+  category?: MtoCommonSolutionSubject;
   resultsNum: number;
   resultsMax: number;
   setQuery: (query: string) => void;
@@ -32,24 +30,17 @@ const SolutionsHeader = ({
 }: OperationalSolutionsHelpProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const categoryKey: OperationalSolutionCategoryRoute | '' = category
-    ? operationalSolutionCategoryMap[category]
-    : '';
-
   const breadcrumbs = [
     BreadcrumbItemOptions.HELP_CENTER,
     BreadcrumbItemOptions.HELP_SOLUTIONS
   ];
 
   let crumbText = '';
-  if (categoryKey) {
-    crumbText = t(`categories.${categoryKey}.header`);
+  if (category) {
+    crumbText = t(`categories.${category}.header`);
 
-    if (
-      solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
-        ?.subHeader
-    ) {
-      crumbText += ` ${t(`categories.${categoryKey}.subHeader`)}`;
+    if (solutionCategories[category]?.subHeader) {
+      crumbText += ` ${t(`categories.${category}.subHeader`)}`;
     }
   }
 
@@ -68,21 +59,20 @@ const SolutionsHeader = ({
         />
 
         <PageHeading className="margin-0">
-          {categoryKey
-            ? t(`categories.${categoryKey}.header`)
+          {category
+            ? t(`categories.${category}.header`)
             : t('operationalSolutions')}
         </PageHeading>
 
-        {solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
-          ?.subHeader && (
+        {category && solutionCategories[category]?.subHeader && (
           <span className="font-body-xl">
-            {t(`categories.${categoryKey}.subHeader`)}
+            {t(`categories.${category}.subHeader`)}
           </span>
         )}
 
         <p className="margin-bottom-4 font-body-lg">
-          {categoryKey
-            ? t(`categories.${categoryKey}.description`)
+          {category
+            ? t(`categories.${category}.description`)
             : t('operationalSolutionsInfo')}
         </p>
 

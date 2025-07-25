@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Header from './index';
 
 describe('Operation Solution Detail Header', () => {
   it('renders solution name and category', () => {
-    const { getByText } = render(<Header solution={helpSolutions[0]} />);
+    const { getByText } = render(<Header solution={helpSolutionsArray[0]} />);
 
     expect(getByText('4innovation')).toBeInTheDocument();
     expect(
@@ -17,7 +17,7 @@ describe('Operation Solution Detail Header', () => {
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(<Header solution={helpSolutions[0]} />);
+    const { asFragment } = render(<Header solution={helpSolutionsArray[0]} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

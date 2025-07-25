@@ -1,23 +1,22 @@
-import { MtoCommonSolutionKey } from 'gql/generated/graphql';
+import {
+  MtoCommonSolutionKey,
+  MtoCommonSolutionSubject
+} from 'gql/generated/graphql';
 
-import { OperationalSolutionCategories } from 'types/operationalSolutionCategories';
-
-import { helpSolutions, HelpSolutionType } from './solutionsMap';
+import { helpSolutionsArray, HelpSolutionType } from './solutionsMap';
 import { findCategoryMapByRouteParam, searchSolutions } from '.';
 
 describe('solution help utils', () => {
   it('returns a corresponding category solutions by route', () => {
-    const route: OperationalSolutionCategories =
-      OperationalSolutionCategories.LEGAL;
-
-    const foundSolutions = findCategoryMapByRouteParam(route, helpSolutions);
+    const foundSolutions = findCategoryMapByRouteParam(
+      MtoCommonSolutionSubject.LEGAL,
+      helpSolutionsArray
+    );
 
     const expectedSolutions = [
       {
-        enum: MtoCommonSolutionKey.LV,
-        key: 'legalVertical',
-        route: 'legal-vertical',
-        categories: [OperationalSolutionCategories.LEGAL],
+        key: MtoCommonSolutionKey.LV,
+        categories: [MtoCommonSolutionSubject.LEGAL],
         acronym: 'LV',
         name: 'Legal Vertical'
       }
@@ -25,20 +24,24 @@ describe('solution help utils', () => {
 
     expect(foundSolutions.length).toEqual(expectedSolutions.length);
     expect(foundSolutions.length).toEqual(1);
-    expect(foundSolutions[0].enum).toEqual(expectedSolutions[0].enum);
+    expect(foundSolutions[0].key).toEqual(expectedSolutions[0].key);
   });
 
   it('returns a corresponding solutions by query string', () => {
     const query: string = '4inn';
 
-    const expectedSolutions: HelpSolutionType[] = [helpSolutions[0]];
+    const expectedSolutions: HelpSolutionType[] = [helpSolutionsArray[0]];
 
-    expect(searchSolutions(query, helpSolutions)).toEqual(expectedSolutions);
+    expect(searchSolutions(query, helpSolutionsArray)).toEqual(
+      expectedSolutions
+    );
 
     const query2: string = 'gfwefesd';
 
     const expectedSolutions2: HelpSolutionType[] = [];
 
-    expect(searchSolutions(query2, helpSolutions)).toEqual(expectedSolutions2);
+    expect(searchSolutions(query2, helpSolutionsArray)).toEqual(
+      expectedSolutions2
+    );
   });
 });

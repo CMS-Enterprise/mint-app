@@ -48,6 +48,10 @@ enum MTOCommonSolutionKey {
   OACT
   QPP
   PAM
+  NCQA
+  RMD
+  MS_FORMS
+  RESDAC_CMDS
 }
 
 enum MTOSolutionType {
@@ -77,6 +81,8 @@ type MTOCommonSolution {
   key: MTOCommonSolutionKey!
   type: MTOSolutionType!
   subjects: [MTOCommonSolutionSubject!]!
+  contractors: [MTOCommonSolutionContractor!]!
+  systemOwners: [MTOCommonSolutionSystemOwner!]!
   filterView: ModelViewFilter
 
   #Custom Resolvers

@@ -1,0 +1,9 @@
+"""
+Represents a translation of a system/business owner for a common solution
+"""
+type MTOCommonSolutionSystemOwnerTranslation {
+  key: TranslationField! @goTag(key: "db", value: "mto_common_solution_key")
+  ownerType: TranslationFieldWithOptions! @goTag(key: "db", value: "owner_type")
+  cmsComponent: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "cms_component")
+}

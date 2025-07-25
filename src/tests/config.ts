@@ -20,3 +20,9 @@ Object.defineProperty(window, 'DragEvent', {
   writable: true,
   value: vi.fn()
 });
+
+vi.mock('src/app/Clients/github', () => ({
+  default: {
+    query: vi.fn()
+  }
+}));
