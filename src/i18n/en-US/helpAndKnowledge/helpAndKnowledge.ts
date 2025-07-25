@@ -2221,7 +2221,7 @@ Model Space offers model teams and their contractors templates or Databricks not
       gatheringInfo: true
     }
   },
-  nationalCommitteeForQualityAssurance: {
+  [MtoCommonSolutionKey.NCQA]: {
     about: {
       description:
         'The Innovation Center models use quality measures to assess quality of care and support monitoring and evaluation activities in support of Section 1115A(a)(3) of the Social Security Act. The National Committee for Quality Assurance (NCQA) owns the proprietary rights to the system that collects HEDIS® data, and exclusive licensing rights, and is the only organization authorized to add measurement specifications and to provide technical assistance to health plans and auditors to ensure the appropriate use of NCQA measures. NCQA develops the measures and makes all of the updates to HEDIS®, it is the only qualified entity capable of and authorized to provide the needed technical assistance to organizations that use HEDIS® and NCQA measures.',
@@ -2246,19 +2246,19 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  rapidMeasureDevelopment: {
+  [MtoCommonSolutionKey.RMD]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  microsoftForms: {
+  [MtoCommonSolutionKey.MS_FORMS]: {
     about: {
       description: '',
       gatheringInfo: true
     }
   },
-  resdacCMMIModelDataSharingModelParticipationDataInitiative: {
+  [MtoCommonSolutionKey.RESDAC_CMDS]: {
     about: {
       description: '',
       gatheringInfo: true
