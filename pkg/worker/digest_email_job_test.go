@@ -1,9 +1,11 @@
 package worker
 
 import (
+	"context"
 	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -217,7 +219,13 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		suite.NoError(err2)
 		perf := faktory_worker.NewTestExecutor(pool)
 
-		err2 = perf.Execute(job1, worker.DigestEmailJob)
+		err2 = perf.Execute(job1, func(ctx context.Context, args ...interface{}) error {
+			// Initialize data loaders and attach them to the context
+			dataLoaders := loaders.NewDataLoaders(suite.testConfigs.Store)
+			ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
+
+			return worker.DigestEmailJob(ctx, args...)
+		})
 		suite.NoError(err2)
 
 		return err2
