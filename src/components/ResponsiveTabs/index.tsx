@@ -6,7 +6,7 @@ import './index.scss';
 type ResponsiveTabsProps = {
   activeTab: string;
   tabs: string[];
-  children: React.ReactNode | React.ReactNodeArray;
+  children: React.ReactNode;
   handleTabClick: (tab: string) => void;
 };
 

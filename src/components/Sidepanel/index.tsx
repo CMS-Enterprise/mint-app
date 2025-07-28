@@ -8,7 +8,7 @@ import './index.scss';
 
 type SidepanelProps = {
   ariaLabel: string;
-  children: React.ReactNode | React.ReactNodeArray;
+  children: React.ReactNode;
   classname?: string;
   overlayClassName?: string;
   closeModal: () => void;

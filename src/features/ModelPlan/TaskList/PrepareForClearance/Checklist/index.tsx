@@ -430,7 +430,7 @@ export const SectionClearanceLabel = ({
   className,
   commonName,
   readyForClearanceDts
-}: SectionClearanceLabelProps): JSX.Element => {
+}: SectionClearanceLabelProps): React.ReactElement => {
   const { t } = useTranslation('prepareForClearance');
 
   return (

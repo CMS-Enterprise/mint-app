@@ -15,7 +15,7 @@ type PaginationProps = {
   sliceFn?: (items: any[], start: number, end: number) => any[];
   itemLength?: number;
   showPageIfOne?: boolean; // Show page component even if there is only one page
-} & JSX.IntrinsicElements['div'];
+} & React.HTMLAttributes<HTMLDivElement>;
 
 type PaginationState = {
   currentPage: number;
@@ -36,8 +36,8 @@ const usePagination = <T extends any[]>({
 }: PaginationProps): {
   currentItems: T;
   pagination: PaginationState;
-  Pagination: JSX.Element;
-  Results: JSX.Element;
+  Pagination: React.ReactNode;
+  Results: React.ReactNode;
 } => {
   const location = useLocation();
   const history = useHistory();

@@ -92,7 +92,7 @@ const routeMap: RouteMapType = {
 const renderReviewTaskSection = (
   modelID: string,
   section: string
-): JSX.Element => {
+): React.ReactElement => {
   switch (section) {
     case 'model-timeline':
       return (

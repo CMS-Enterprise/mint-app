@@ -27,7 +27,7 @@ type AlertProps = {
   closeAlert?: (closed: any) => void;
   validation?: boolean; // Adds usa-alert--validation class, convert p to span to allow list nesting,
   clearMessage?: () => void;
-} & JSX.IntrinsicElements['div'];
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const Alert = ({
   type,

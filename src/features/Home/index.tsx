@@ -79,7 +79,7 @@ const Home = () => {
     }).then(() => refetch());
   };
 
-  const homepageComponents: Record<ViewCustomizationType, JSX.Element> = {
+  const homepageComponents: Record<ViewCustomizationType, React.ReactNode> = {
     [ViewCustomizationType.MY_MODEL_PLANS]: (
       <>
         <Divider className="margin-y-6" />

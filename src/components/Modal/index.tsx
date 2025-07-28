@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactNodeArray } from 'react';
+import React, { ReactNode } from 'react';
 import ReactModal from 'react-modal';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -7,7 +7,7 @@ import noScroll from 'no-scroll';
 import './index.scss';
 
 type ModalProps = {
-  children: ReactNode | ReactNodeArray;
+  children: ReactNode;
   navigation?: boolean;
   isOpen: boolean;
   className?: string;
@@ -43,8 +43,11 @@ const Modal = ({
     }
   };
 
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const ModalComponent = ReactModal as any;
+
   return (
-    <ReactModal
+    <ModalComponent
       isOpen={isOpen}
       overlayClassName={classNames('mint-modal__overlay', {
         'overflow-y-scroll': !fixed,
@@ -100,7 +103,7 @@ const Modal = ({
       ) : (
         <>{children}</>
       )}
-    </ReactModal>
+    </ModalComponent>
   );
 };
 

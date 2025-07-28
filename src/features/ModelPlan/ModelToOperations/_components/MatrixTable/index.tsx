@@ -833,7 +833,7 @@ export const moveRow = (
   }: {
     variables: ReorderMtoCategoryMutationVariables;
   }) => Promise<any>,
-  setError?: (element: JSX.Element) => void,
+  setError?: (element: React.ReactElement) => void,
   clearMessage?: () => void
 ) => {
   // Clone the existing data

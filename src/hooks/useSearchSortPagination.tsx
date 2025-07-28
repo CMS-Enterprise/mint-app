@@ -14,7 +14,7 @@ type SearchSortPaginationProps<T, K> = {
   filterFunction: (query: string, items: T[]) => T[];
   sortFunction: (items: T[], sort: K) => T[];
   defaultItemsPerPage?: number;
-} & JSX.IntrinsicElements['div'];
+} & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * useSearchSortPagination is a hook that handles search, sort, and pagination for a list of items.
