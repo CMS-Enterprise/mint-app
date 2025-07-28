@@ -51,7 +51,7 @@ const PeopleImpact = () => {
     beneficiarySelectionMethod: beneficiarySelectionMethodConfig
   } = usePlanTranslation('beneficiaries');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
   const history = useHistory();

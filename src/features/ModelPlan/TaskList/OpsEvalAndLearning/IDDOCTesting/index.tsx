@@ -53,7 +53,7 @@ const IDDOCTesting = () => {
   const { dataMonitoringFileTypes: dataMonitoringFileTypesConfig } =
     usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const history = useHistory();

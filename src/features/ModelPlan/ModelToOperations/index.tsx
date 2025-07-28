@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
@@ -18,33 +18,34 @@ const ModelToOperations = () => {
     <MainContent className="mint-body-normal" data-testid="model-to-operations">
       <MTOModalProvider>
         <MTOModal />
-        <Switch>
-          <ProtectedRoute
+        <Routes>
+          <Route
             path="/models/:modelID/collaboration-area/model-to-operations/matrix"
-            component={MTOHome}
-            exact
+            element={ProtectedRoute({ element: <MTOHome /> })}
           />
 
-          <ProtectedRoute
+          <Route
             path="/models/:modelID/collaboration-area/model-to-operations/milestone-library"
-            component={MilestoneLibrary}
-            exact
+            element={ProtectedRoute({ element: <MilestoneLibrary /> })}
           />
 
-          <ProtectedRoute
+          <Route
             path="/models/:modelID/collaboration-area/model-to-operations/solution-library"
-            component={SolutionLibrary}
-            exact
+            element={ProtectedRoute({ element: <SolutionLibrary /> })}
           />
 
-          <Redirect
-            exact
-            from="/models/:modelID/collaboration-area/model-to-operations"
-            to="/models/:modelID/collaboration-area/model-to-operations/matrix"
+          <Route
+            path="/models/:modelID/collaboration-area/model-to-operations"
+            element={
+              <Navigate
+                to="/models/:modelID/collaboration-area/model-to-operations/matrix"
+                replace
+              />
+            }
           />
 
-          <Route path="*" render={() => <NotFoundPartial />} />
-        </Switch>
+          <Route path="*" element={<NotFoundPartial />} />
+        </Routes>
       </MTOModalProvider>
     </MainContent>
   );

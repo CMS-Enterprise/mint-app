@@ -76,7 +76,7 @@ const SuggestedMilestoneToggle = ({
 }: SuggestedMilestoneToggleType) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   // Toggle the collapsed state of milestone question/answer
   const [infoToggle, setInfoToggle] = useState<boolean>(false);

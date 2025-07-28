@@ -41,7 +41,7 @@ const Involvements = () => {
     communityPartnersInvolved: communityPartnersInvolvedConfig
   } = usePlanTranslation('generalCharacteristics');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InvolvementsFormType>>(null);
   const history = useHistory();

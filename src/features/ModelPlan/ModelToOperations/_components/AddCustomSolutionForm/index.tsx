@@ -45,7 +45,7 @@ const CustomSolutionForm = () => {
 
   const history = useHistory();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 

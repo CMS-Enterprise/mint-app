@@ -34,7 +34,7 @@ const Status = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
 

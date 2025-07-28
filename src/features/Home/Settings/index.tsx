@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import ProtectedRoute from 'components/ProtectedRoute';
 
@@ -9,23 +9,22 @@ import SettingsOrder from './settingsOrder';
 
 export const HomePageSettings = () => {
   return (
-    <Switch>
-      <ProtectedRoute
+    <Routes>
+      <Route
         path="/homepage-settings"
-        exact
-        component={SettingsForm}
+        element={ProtectedRoute({ element: <SettingsForm /> })}
       />
 
-      <ProtectedRoute
+      <Route
         path="/homepage-settings/order"
-        component={SettingsOrder}
+        element={ProtectedRoute({ element: <SettingsOrder /> })}
       />
 
-      <ProtectedRoute
+      <Route
         path="/homepage-settings/solutions"
-        component={SelectSolutionSettings}
+        element={ProtectedRoute({ element: <SelectSolutionSettings /> })}
       />
-    </Switch>
+    </Routes>
   );
 };
 

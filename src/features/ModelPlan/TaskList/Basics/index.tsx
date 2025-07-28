@@ -67,7 +67,7 @@ const BasicsContent = () => {
     cmmiGroups: cmmiGroupsConfig
   } = usePlanTranslation('basics');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 

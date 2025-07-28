@@ -61,7 +61,7 @@ const KeyCharacteristics = () => {
     planContractUpdated: planContractUpdatedConfig
   } = usePlanTranslation('generalCharacteristics');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<KeyCharacteristicsFormType>>(null);
   const history = useHistory();

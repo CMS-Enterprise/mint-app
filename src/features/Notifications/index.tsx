@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 
 import ProtectedRoute from 'components/ProtectedRoute';
@@ -9,21 +9,19 @@ import NotificationSettings from './Settings';
 
 const Notifications = () => {
   return (
-    <Switch>
-      <ProtectedRoute
+    <Routes>
+      <Route
         path="/notifications"
-        component={NotificationsHome}
-        exact
+        element={ProtectedRoute({ element: <NotificationsHome /> })}
       />
 
-      <ProtectedRoute
+      <Route
         path="/notifications/settings"
-        component={NotificationSettings}
-        exact
+        element={ProtectedRoute({ element: <NotificationSettings /> })}
       />
 
-      <Route path="*" render={() => <NotFoundPartial />} />
-    </Switch>
+      <Route path="*" element={<NotFoundPartial />} />
+    </Routes>
   );
 };
 

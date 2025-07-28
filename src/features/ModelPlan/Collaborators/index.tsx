@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Route,
-  Switch,
+  Routes,
   useHistory,
   useLocation,
   useParams
@@ -70,7 +70,7 @@ const SuccessRemovalMessage = ({
 };
 
 export const CollaboratorsContent = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
@@ -308,21 +308,19 @@ export const CollaboratorsContent = () => {
 
 const Collaborators = () => {
   return (
-    <Switch>
-      <ProtectedRoute
+    <Routes>
+      <Route
         path="/models/:modelID/collaboration-area/collaborators"
-        exact
-        render={() => <CollaboratorsContent />}
+        element={ProtectedRoute({ element: <CollaboratorsContent /> })}
       />
-      <ProtectedRoute
+      <Route
         path="/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?"
-        exact
-        render={() => <AddCollaborator />}
+        element={ProtectedRoute({ element: <AddCollaborator /> })}
       />
 
       {/* 404 */}
-      <Route path="*" render={() => <NotFound />} />
-    </Switch>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

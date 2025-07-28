@@ -63,7 +63,7 @@ const Evaluation = () => {
     shareCclfData: shareCclfDataConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
   const history = useHistory();

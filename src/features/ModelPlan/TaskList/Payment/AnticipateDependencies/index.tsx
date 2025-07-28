@@ -53,7 +53,7 @@ const AnticipateDependencies = () => {
       isContractorAwareTestDataRequirementsConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<AnticipateDependenciesFormType>>(null);
   const history = useHistory();

@@ -46,7 +46,7 @@ const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { modelName } = useContext(ModelInfoContext);
 

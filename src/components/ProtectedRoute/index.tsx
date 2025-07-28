@@ -1,34 +1,27 @@
-import React, { ComponentProps } from 'react';
-import { Route } from 'react-router-dom';
-import { SecureRoute } from '@okta/okta-react';
-import NotFound from 'features/NotFound';
-
-// Prop used to pass Launch Darkly flag support to the component or disabled the route completely
-type ShouldBeEnabled = { enabled?: boolean };
-
-type ProtectedRouteProps = ComponentProps<typeof SecureRoute> & {
-  children?: React.ReactNode;
-} & ShouldBeEnabled;
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 
 /**
- * This component is a wrapper around Okta's SecureRoute component that adds support for Launch Darkly flags.
- * If the flag/enabled prop is false, the user will be redirected to the NotFound page.
- *
- * @param {boolean} enabled used to pass Launch Darkly flag support to the component
- * @param {RouteProps} routeProps {...routeProps} the react-router-dom route props
- * @param {OnAuthRequiredFunction} onAuthRequired the onAuthRequired function for Okta
- * @param {React.ComponentType<{ error: Error }>} errorComponent the error component for Okta
- * @returns JSX.Element
+ * ProtectedRoute is a function that returns the protected element if enabled and authenticated,
+ * otherwise returns a <Navigate /> to the not found or login page.
+ * Usage: <Route element={ProtectedRoute({ element: <Component />, enabled })} />
  */
-const ProtectedRoute = (props: ProtectedRouteProps): JSX.Element => {
-  const { enabled = true, children, ...routeProps } = props;
-
-  // If the flag is disabled, redirect to the NotFound page
+function ProtectedRoute({
+  element,
+  enabled = true
+}: {
+  element: React.ReactNode;
+  enabled?: boolean;
+}) {
+  const { authState } = useOktaAuth();
   if (!enabled) {
-    return <Route component={NotFound} />;
+    return <Navigate to="/not-found" replace />;
   }
-
-  return <SecureRoute {...routeProps}>{children}</SecureRoute>;
-};
+  if (!authState?.isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return element;
+}
 
 export default ProtectedRoute;

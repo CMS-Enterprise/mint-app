@@ -54,7 +54,7 @@ export const ParticipantOptions = () => {
     selectionMethod: selectionMethodConfig
   } = usePlanTranslation('participantsAndProviders');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantOptionsFormType>>(null);
   const history = useHistory();

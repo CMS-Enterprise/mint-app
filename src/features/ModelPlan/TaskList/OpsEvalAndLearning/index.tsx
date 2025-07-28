@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useHistory, useParams } from 'react-router-dom';
+import { Route, Routes, useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -117,7 +117,7 @@ export const OpsEvalAndLearningContent = () => {
     iddocSupport: iddocSupportConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<OpsEvalAndLearningFormType>>(null);
 
@@ -481,54 +481,47 @@ export const OpsEvalAndLearning = () => {
     <MainContent data-testid="model-ops-eval-and-learning">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Switch>
-            <ProtectedRoute
+          <Routes>
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
-              exact
-              render={() => <OpsEvalAndLearningContent />}
+              element={ProtectedRoute({
+                element: <OpsEvalAndLearningContent />
+              })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc"
-              exact
-              render={() => <IDDOC />}
+              element={ProtectedRoute({ element: <IDDOC /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing"
-              exact
-              render={() => <IDDOCTesting />}
+              element={ProtectedRoute({ element: <IDDOCTesting /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring"
-              exact
-              render={() => <IDDOCMonitoring />}
+              element={ProtectedRoute({ element: <IDDOCMonitoring /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance"
-              exact
-              render={() => <Performance />}
+              element={ProtectedRoute({ element: <Performance /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation"
-              exact
-              render={() => <Evaluation />}
+              element={ProtectedRoute({ element: <Evaluation /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality"
-              exact
-              render={() => <CCWAndQuality />}
+              element={ProtectedRoute({ element: <CCWAndQuality /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing"
-              exact
-              render={() => <DataSharing />}
+              element={ProtectedRoute({ element: <DataSharing /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning"
-              exact
-              render={() => <Learning />}
+              element={ProtectedRoute({ element: <Learning /> })}
             />
-            <Route path="*" render={() => <NotFoundPartial />} />
-          </Switch>
+            <Route path="*" element={<NotFoundPartial />} />
+          </Routes>
         </Grid>
       </GridContainer>
     </MainContent>

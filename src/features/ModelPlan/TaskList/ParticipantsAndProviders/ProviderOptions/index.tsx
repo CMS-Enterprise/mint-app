@@ -60,7 +60,7 @@ export const ProviderOptions = () => {
     providerOverlap: providerOverlapConfig
   } = usePlanTranslation('participantsAndProviders');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<

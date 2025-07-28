@@ -56,7 +56,7 @@ const Frequency = () => {
     precedenceRules: beneficiaryPrecedenceConfig
   } = usePlanTranslation('beneficiaries');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();

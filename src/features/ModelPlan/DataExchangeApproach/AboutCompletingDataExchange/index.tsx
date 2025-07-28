@@ -15,7 +15,7 @@ const AboutCompletingDataExchange = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
 

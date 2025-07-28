@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 
@@ -22,7 +22,7 @@ type DocumentStatusType = 'success' | 'error';
 export const DocumentsContent = () => {
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t } = useTranslation('documentsMisc');
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [documentMessage, setDocumentMessage] = useState('');
   const [documentStatus, setDocumentStatus] =
@@ -109,22 +109,20 @@ export const DocumentsContent = () => {
 
 const Documents = () => {
   return (
-    <Switch>
+    <Routes>
       {/* Model Plan Documents Pages */}
-      <ProtectedRoute
+      <Route
         path="/models/:modelID/collaboration-area/documents"
-        exact
-        render={() => <DocumentsContent />}
+        element={ProtectedRoute({ element: <DocumentsContent /> })}
       />
-      <ProtectedRoute
+      <Route
         path="/models/:modelID/collaboration-area/documents/add-document"
-        exact
-        render={() => <AddDocument />}
+        element={ProtectedRoute({ element: <AddDocument /> })}
       />
 
       {/* 404 */}
-      <Route path="*" render={() => <NotFound />} />
-    </Switch>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

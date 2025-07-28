@@ -55,7 +55,7 @@ export const Communication = () => {
     willRiskChange: willRiskChangeConfig
   } = usePlanTranslation('participantsAndProviders');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
   const history = useHistory();

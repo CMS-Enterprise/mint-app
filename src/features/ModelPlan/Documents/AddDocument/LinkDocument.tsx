@@ -37,7 +37,7 @@ const LinkDocument = ({
   const { documentType: documentTypeConfig, restricted: restrictedConfig } =
     usePlanTranslation('documents');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const history = useHistory();
 
   const { showMessageOnNextPage } = useMessage();

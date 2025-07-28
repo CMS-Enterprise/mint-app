@@ -55,7 +55,7 @@ const Complexity = () => {
     anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ComplexityFormType>>(null);
   const history = useHistory();

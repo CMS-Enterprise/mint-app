@@ -16,7 +16,7 @@ const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const history = useHistory();
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { clearMessage } = useMessage();
 

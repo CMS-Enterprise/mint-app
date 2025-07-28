@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 
@@ -10,29 +10,31 @@ import PrepareForClearanceCheckList from './Checklist';
 import ClearanceReview from './ClearanceReview';
 
 export const PrepareForClearance = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   return (
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Switch>
+          <Routes>
             {/* Model Plan Prepare for clearance Pages */}
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
-              exact
-              render={() => <PrepareForClearanceCheckList modelID={modelID} />}
+              element={ProtectedRoute({
+                element: <PrepareForClearanceCheckList modelID={modelID} />
+              })}
             />
 
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
-              exact
-              render={() => <ClearanceReview modelID={modelID} />}
+              element={ProtectedRoute({
+                element: <ClearanceReview modelID={modelID} />
+              })}
             />
 
             {/* 404 */}
-            <Route path="*" render={() => <NotFoundPartial />} />
-          </Switch>
+            <Route path="*" element={<NotFoundPartial />} />
+          </Routes>
         </Grid>
       </GridContainer>
     </MainContent>

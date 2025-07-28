@@ -67,7 +67,7 @@ const CollectingAndSendingData = () => {
     dataToSendToParticipants: dataToSendToParticipantsConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
 

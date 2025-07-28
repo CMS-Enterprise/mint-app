@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
@@ -80,275 +80,313 @@ const AppRoutes = () => {
   useScrollTop();
 
   return (
-    <Switch>
+    <Routes>
       {/* Auth Routes */}
-      <Redirect exact from="/login" to="/signin" />
+      <Route path="/login" element={<Navigate to="/signin" replace />} />
 
-      <Route path="/signin" exact component={Login} />
+      <Route path="/signin" element={<Login />} />
 
-      <ProtectedRoute path="/pre-decisional-notice" component={NDA} />
+      <Route
+        path="/pre-decisional-notice"
+        element={ProtectedRoute({ element: <NDA /> })}
+      />
 
       {/* Home Routes */}
       <Route
         path="/"
-        exact
-        render={() => {
-          if (!authState?.isAuthenticated) {
-            return <Landing />;
-          }
-          return <Home />;
-        }}
+        element={authState?.isAuthenticated ? <Home /> : <Landing />}
       />
 
-      <ProtectedRoute path="/homepage-settings" component={HomePageSettings} />
+      <Route
+        path="/homepage-settings"
+        element={ProtectedRoute({ element: <HomePageSettings /> })}
+      />
 
-      <ProtectedRoute path="/notifications" component={Notifications} />
+      <Route
+        path="/notifications"
+        element={ProtectedRoute({ element: <Notifications /> })}
+      />
 
       {/* Model Plan Routes */}
-      <ProtectedRoute path="/models">
-        <Switch>
-          {/* New Plan Routes */}
-          <ProtectedRoute
-            path="/models/steps-overview"
-            exact
-            component={StepsOverview}
-          />
+      <Route
+        path="/models/*"
+        element={
+          <Routes>
+            {/* New Plan Routes */}
+            <Route
+              path="steps-overview"
+              element={ProtectedRoute({ element: <StepsOverview /> })}
+            />
 
-          <ProtectedRoute path="/models/new-plan" component={NewPlan} />
+            <Route
+              path="new-plan"
+              element={ProtectedRoute({ element: <NewPlan /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/unlock-all-sections"
-            exact
-            component={UnlockAllSections}
-          />
+            <Route
+              path=":modelID/unlock-all-sections"
+              element={ProtectedRoute({ element: <UnlockAllSections /> })}
+            />
 
-          {/* Collaboration Area Routes */}
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area"
-            exact
-            component={CollaborationArea}
-          />
+            {/* Collaboration Area Routes */}
+            <Route
+              path=":modelID/collaboration-area"
+              element={ProtectedRoute({ element: <CollaborationArea /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/collaborators"
-            component={Collaborators}
-          />
+            <Route
+              path=":modelID/collaboration-area/collaborators"
+              element={ProtectedRoute({ element: <Collaborators /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/documents"
-            component={Documents}
-          />
+            <Route
+              path=":modelID/collaboration-area/documents"
+              element={ProtectedRoute({ element: <Documents /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/cr-and-tdl"
-            component={CRTDL}
-          />
+            <Route
+              path=":modelID/collaboration-area/cr-and-tdl"
+              element={ProtectedRoute({ element: <CRTDL /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/status"
-            exact
-            title="Model Status"
-            component={Status}
-          />
+            <Route
+              path=":modelID/collaboration-area/status"
+              element={ProtectedRoute({ element: <Status /> })}
+            />
 
-          {/* Timeline Routes */}
-          <Redirect
-            exact
-            from="/models/:modelID/collaboration-area/task-list/basics/milestones"
-            to="/models/:modelID/collaboration-area/model-timeline"
-          />
+            {/* Timeline Routes */}
+            <Route
+              path=":modelID/collaboration-area/task-list/basics/milestones"
+              element={
+                <Navigate
+                  to="/models/:modelID/collaboration-area/model-timeline"
+                  replace
+                />
+              }
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/model-timeline"
-            component={Timeline}
-          />
+            <Route
+              path=":modelID/collaboration-area/model-timeline"
+              element={ProtectedRoute({ element: <Timeline /> })}
+            />
 
-          {/* Data Echange Approach Routes */}
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/data-exchange-approach"
-            component={DataEchangeApproach}
-          />
+            {/* Data Exchange Approach Routes */}
+            <Route
+              path=":modelID/collaboration-area/data-exchange-approach"
+              element={ProtectedRoute({ element: <DataEchangeApproach /> })}
+            />
 
-          {/* Model to Operation Routes */}
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/model-to-operations"
-            component={ModelToOperations}
-          />
+            {/* Model to Operation Routes */}
+            <Route
+              path=":modelID/collaboration-area/model-to-operations"
+              element={ProtectedRoute({ element: <ModelToOperations /> })}
+            />
 
-          {/* Task List Routes */}
-          <Redirect
-            exact
-            from="/models/:modelID/task-list"
-            to="/models/:modelID/collaboration-area/task-list"
-          />
+            {/* Task List Routes */}
+            <Route
+              path=":modelID/task-list"
+              element={
+                <Navigate
+                  to="/models/:modelID/collaboration-area/task-list"
+                  replace
+                />
+              }
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list"
-            exact
-            component={TaskList}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list"
+              element={<TaskList />}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/basics"
-            component={Basics}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/basics"
+              element={ProtectedRoute({ element: <Basics /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/beneficiaries"
-            component={Beneficiaries}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/beneficiaries"
+              element={ProtectedRoute({ element: <Beneficiaries /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/characteristics"
-            component={Characteristics}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/characteristics"
+              element={ProtectedRoute({ element: <Characteristics /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/cost-estimate"
-            component={CostEstimate}
-            enabled={false} // This route is not yet implemented
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/cost-estimate"
+              element={ProtectedRoute({
+                element: <CostEstimate />,
+                enabled: false
+              })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
-            component={OpsEvalAndLearning}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/ops-eval-and-learning"
+              element={ProtectedRoute({ element: <OpsEvalAndLearning /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
-            component={Participants}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/participants-and-providers"
+              element={ProtectedRoute({ element: <Participants /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/payment"
-            component={Payment}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/payment"
+              element={ProtectedRoute({ element: <Payment /> })}
+            />
 
-          {/* Redirect from legacy Operational Needs Track to new MTO Matrix.  TODO: Can remove at some point once fully converted */}
-          <Redirect
-            from="/models/:modelID/collaboration-area/task-list/it-solutions"
-            to="/models/:modelID/collaboration-area/model-to-operations"
-          />
-          {/* Read view redirect from legacy Operational Needs Track to new MTO Matrix  */}
-          <Redirect
-            from="/models/:modelID/read-view/it-solutions"
-            to="/models/:modelID/read-view/milestones"
-          />
+            {/* Redirect from legacy Operational Needs Track to new MTO Matrix.  TODO: Can remove at some point once fully converted */}
+            <Route
+              path=":modelID/collaboration-area/task-list/it-solutions"
+              element={
+                <Navigate
+                  to="/models/:modelID/collaboration-area/model-to-operations"
+                  replace
+                />
+              }
+            />
+            {/* Read view redirect from legacy Operational Needs Track to new MTO Matrix  */}
+            <Route
+              path=":modelID/read-view/it-solutions"
+              element={
+                <Navigate to="/models/:modelID/read-view/milestones" replace />
+              }
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
-            component={PrepareForClearance}
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/prepare-for-clearance"
+              element={ProtectedRoute({ element: <PrepareForClearance /> })}
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaboration-area/task-list/submit-request"
-            component={SubmitRequest}
-            enabled={false} // This route is not yet implemented
-          />
+            <Route
+              path=":modelID/collaboration-area/task-list/submit-request"
+              element={ProtectedRoute({
+                element: <SubmitRequest />,
+                enabled: false
+              })}
+            />
 
-          {/* Model/Read View Routes */}
-          <ProtectedRoute path="/models" exact component={ModelPlan} />
+            {/* Model/Read View Routes */}
+            <Route
+              path=""
+              element={ProtectedRoute({ element: <ModelPlan /> })}
+            />
 
-          <Redirect
-            exact
-            from="/models/:modelID/read-only"
-            to="/models/:modelID/read-view"
-          />
+            {/* Redirects for legacy/renamed routes */}
+            <Route
+              path=":modelID/read-only"
+              element={<Navigate to="/models/:modelID/read-view" replace />}
+            />
 
-          <Redirect
-            exact
-            from="/models/:modelID/read-view"
-            to="/models/:modelID/read-view/model-basics"
-          />
+            <Route
+              path=":modelID/read-view"
+              element={
+                <Navigate
+                  to="/models/:modelID/read-view/model-basics"
+                  replace
+                />
+              }
+            />
 
-          <Redirect
-            exact
-            from="/models/:modelID/read-view/it-systems-and-solutions"
-            to="/models/:modelID/read-view/solutions-and-it-systems"
-          />
+            <Route
+              path=":modelID/read-view/it-systems-and-solutions"
+              element={
+                <Navigate
+                  to="/models/:modelID/read-view/solutions-and-it-systems"
+                  replace
+                />
+              }
+            />
 
-          <ProtectedRoute // Wrap redirect as child of route to pass on query parameters
-            path="/models/:modelID/read-only/:subinfo?"
-            render={match => (
-              <Redirect
-                to={{
-                  // /models/:modelID/read-view/:subinfo? syntax does not work with pathname prop, so we replace 'only' with 'view'
-                  pathname: match.location.pathname.replace('only', 'view'),
-                  search: match.location.search
-                }}
-              />
-            )}
-          />
+            <Route
+              path=":modelID/read-only/:subinfo?"
+              element={
+                <Navigate to="/models/:modelID/read-view/:subinfo?" replace />
+              }
+            />
 
-          <ProtectedRoute
-            path="/models/:modelID/read-view/:subinfo?"
-            exact
-            component={ReadOnly}
-          />
+            <Route
+              path=":modelID/read-view/:subinfo?"
+              element={ProtectedRoute({ element: <ReadOnly /> })}
+            />
 
-          <Redirect
-            exact
-            from="/models/:modelID"
-            to="/models/:modelID/read-view"
-          />
+            <Route
+              path=":modelID"
+              element={<Navigate to="/models/:modelID/read-view" replace />}
+            />
 
-          {/* Change History Routes */}
-          <ProtectedRoute
-            path="/models/:modelID/change-history"
-            component={ChangeHistory}
-          />
+            {/* Change History Routes */}
+            <Route
+              path=":modelID/change-history"
+              element={ProtectedRoute({ element: <ChangeHistory /> })}
+            />
 
-          {/* Locked Task List Section */}
-          <ProtectedRoute
-            path="/models/:modelID/locked-task-list-section"
-            component={LockedTaskListSection}
-          />
+            {/* Locked Task List Section */}
+            <Route
+              path=":modelID/locked-task-list-section"
+              element={ProtectedRoute({ element: <LockedTaskListSection /> })}
+            />
 
-          {/* 404 */}
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </ProtectedRoute>
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        }
+      />
 
       {/* Help and Knowledge Center Routes */}
-      <ProtectedRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
+      <Route
+        path="/help-and-knowledge"
+        element={ProtectedRoute({ element: <HelpAndKnowledge /> })}
+      />
 
       {/* Misc Routes */}
-      <ProtectedRoute path="/user-diagnostics" component={UserInfo} />
+      <Route
+        path="/user-diagnostics"
+        element={ProtectedRoute({ element: <UserInfo /> })}
+      />
 
-      <ProtectedRoute path="/report-a-problem" component={ReportAProblem} />
+      <Route
+        path="/report-a-problem"
+        element={ProtectedRoute({ element: <ReportAProblem /> })}
+      />
 
-      <ProtectedRoute path="/send-feedback" component={SendFeedback} />
+      <Route
+        path="/send-feedback"
+        element={ProtectedRoute({ element: <SendFeedback /> })}
+      />
 
-      <ProtectedRoute path="/feedback-received" component={FeedbackReceived} />
+      <Route
+        path="/feedback-received"
+        element={ProtectedRoute({ element: <FeedbackReceived /> })}
+      />
 
-      <ProtectedRoute path="/unfollow" exact component={Unfollow} />
+      <Route
+        path="/unfollow"
+        element={ProtectedRoute({ element: <Unfollow /> })}
+      />
 
-      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
+      {flags.sandbox && <Route path="/sandbox" element={<Sandbox />} />}
 
       {/* Static Page Routes  */}
-      <Route path="/privacy-policy" exact component={PrivacyPolicy} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
-      <Route path="/cookies" exact component={Cookies} />
+      <Route path="/cookies" element={<Cookies />} />
 
       <Route
         path="/accessibility-statement"
-        exact
-        component={AccessibilityStatement}
+        element={<AccessibilityStatement />}
       />
 
-      <Route
-        exact
-        path="/terms-and-conditions"
-        component={TermsAndConditions}
-      />
+      <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
 
-      <Route exact path="/how-to-get-access" component={GetAccess} />
+      <Route path="/how-to-get-access" element={<GetAccess />} />
 
-      <Route path="/implicit/callback" component={LoginCallback} />
+      <Route path="/implicit/callback" element={<LoginCallback />} />
 
       {/* 404 */}
-      <Route path="*" component={NotFound} />
-    </Switch>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

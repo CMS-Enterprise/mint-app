@@ -33,7 +33,7 @@ const DocumentUpload = ({
   solutionDetailsLink?: string;
   solutionID?: string;
 }) => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');

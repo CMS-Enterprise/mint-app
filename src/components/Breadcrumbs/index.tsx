@@ -140,7 +140,7 @@ export const commonBreadCrumbs = (
 const Breadcrumbs = ({ items, customItem, className }: BreadcrumbsProps) => {
   const { t } = useTranslation();
 
-  const { modelID } = useParams<{
+  const { modelID = '' } = useParams<{
     modelID: string;
     operationalNeedID?: string;
   }>();

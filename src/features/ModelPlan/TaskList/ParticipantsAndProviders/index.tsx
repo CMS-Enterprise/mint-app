@@ -66,7 +66,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantsAndProvidersFormType>>(null);
 

@@ -82,7 +82,7 @@ const ChangeHistory = () => {
     chReleaseDate = '';
   }
 
-  const { modelID } = useParams<{
+  const { modelID = '' } = useParams<{
     modelID: string;
   }>();
 

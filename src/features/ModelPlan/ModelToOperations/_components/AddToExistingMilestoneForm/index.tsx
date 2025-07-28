@@ -45,7 +45,7 @@ const AddToExistingMilestoneForm = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { message, showMessage, clearMessage, showErrorMessageInModal } =
     useMessage();

@@ -50,7 +50,7 @@ const BeneficiaryCostSharing = () => {
     waiverOnlyAppliesPartOfPayment: waiverOnlyAppliesPartOfPaymentConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BeneficiaryCostSharingFormType>>(null);
   const history = useHistory();

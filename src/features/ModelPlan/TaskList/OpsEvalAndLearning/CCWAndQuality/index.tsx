@@ -61,7 +61,7 @@ const CCWAndQuality = () => {
     qualityPerformanceImpactsPayment: qualityPerformanceImpactsPaymentConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetCCWAndQualityFormType>>(null);
   const history = useHistory();

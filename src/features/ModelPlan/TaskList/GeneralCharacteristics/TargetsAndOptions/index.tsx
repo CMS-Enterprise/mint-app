@@ -61,7 +61,7 @@ const TargetsAndOptions = () => {
       multiplePatricipationAgreementsNeededConfig
   } = usePlanTranslation('generalCharacteristics');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<TargetsAndOptionsFormType>>(null);
   const history = useHistory();

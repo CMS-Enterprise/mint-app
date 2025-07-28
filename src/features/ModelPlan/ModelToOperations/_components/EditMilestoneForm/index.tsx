@@ -135,7 +135,7 @@ const EditMilestoneForm = ({
 
   const history = useHistory();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const params = new URLSearchParams(history.location.search);
 

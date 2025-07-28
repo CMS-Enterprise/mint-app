@@ -58,7 +58,7 @@ const FundingSource = () => {
     payType: payTypeConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
   const history = useHistory();

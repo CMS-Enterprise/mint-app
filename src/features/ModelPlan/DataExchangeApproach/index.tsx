@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 
 import AskAQuestion from 'components/AskAQuestion';
@@ -17,7 +17,7 @@ import NewMethodologiesAndConsiderations from './NewMethologiesAndConsiderations
 const DataEchangeApproach = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -52,33 +52,31 @@ const DataEchangeApproach = () => {
         renderTextFor="dataExchangeApproach"
       />
 
-      <Switch>
-        <ProtectedRoute
+      <Routes>
+        <Route
           path="/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange"
-          component={AboutCompletingDataExchange}
-          exact
+          element={ProtectedRoute({ element: <AboutCompletingDataExchange /> })}
         />
 
-        <ProtectedRoute
+        <Route
           path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
-          component={CollectingAndSendingData}
-          exact
+          element={ProtectedRoute({ element: <CollectingAndSendingData /> })}
         />
 
-        <ProtectedRoute
+        <Route
           path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
-          component={CollectionAndAggregation}
-          exact
+          element={ProtectedRoute({ element: <CollectionAndAggregation /> })}
         />
 
-        <ProtectedRoute
+        <Route
           path="/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations"
-          component={NewMethodologiesAndConsiderations}
-          exact
+          element={ProtectedRoute({
+            element: <NewMethodologiesAndConsiderations />
+          })}
         />
 
-        <Route path="*" render={() => <NotFoundPartial />} />
-      </Switch>
+        <Route path="*" element={<NotFoundPartial />} />
+      </Routes>
     </MainContent>
   );
 };

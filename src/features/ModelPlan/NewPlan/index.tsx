@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Routes, useHistory } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -154,13 +154,13 @@ const NewPlanContent = () => {
 
 const NewPlan = () => {
   return (
-    <Switch>
+    <Routes>
       {/* New Plan Pages */}
-      <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
+      <Route path="/models/new-plan" element={<NewPlanContent />} />
 
       {/* 404 */}
-      <Route path="*" render={() => <NotFound />} />
-    </Switch>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

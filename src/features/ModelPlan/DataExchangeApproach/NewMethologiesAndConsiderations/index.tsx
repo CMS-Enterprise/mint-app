@@ -72,7 +72,7 @@ const NewMethodologiesAndConsiderations = () => {
     isDataExchangeApproachComplete: isDataExchangeApproachCompleteConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
 

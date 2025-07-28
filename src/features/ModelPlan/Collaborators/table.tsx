@@ -35,7 +35,7 @@ const CollaboratorsTable = ({
   setRemoveCollaborator,
   isLastLead
 }: TableProps) => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { t: collaboratorsT } = useTranslation('collaborators');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');

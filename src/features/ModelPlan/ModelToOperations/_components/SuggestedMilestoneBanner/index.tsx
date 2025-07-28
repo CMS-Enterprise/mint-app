@@ -15,7 +15,7 @@ const SuggestedMilestoneBanner = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   return (
     <div className="bg-accent-cool-lighter shadow-2 position-relative">
       <GridContainer className="padding-y-2">

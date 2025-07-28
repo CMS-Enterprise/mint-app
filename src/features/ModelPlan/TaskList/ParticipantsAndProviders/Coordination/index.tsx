@@ -60,7 +60,7 @@ export const Coordination = () => {
     participantsIds: participantsIdsConfig
   } = usePlanTranslation('participantsAndProviders');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
   const history = useHistory();

@@ -61,7 +61,7 @@ const AddCommonMilestoneForm = ({
   const params = new URLSearchParams(history.location.search);
   const milestoneKey = params.get('add-milestone') as MtoCommonMilestoneKey;
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { message, showMessage, clearMessage } = useMessage();
 

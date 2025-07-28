@@ -19,7 +19,7 @@ const TaskListButton = ({
   status
 }: TaskListButtonProps) => {
   const { t } = useTranslation('modelPlanTaskList');
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const history = useHistory();
 
   const ctaCopy = () => {

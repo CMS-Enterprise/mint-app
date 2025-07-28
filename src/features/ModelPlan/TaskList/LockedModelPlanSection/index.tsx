@@ -19,7 +19,7 @@ const LockedModelPlanSection = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const location = useLocation<LocationState>();
   const { error, route } = location?.state;
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   return (
     <MainContent className="mint-not-found grid-container">

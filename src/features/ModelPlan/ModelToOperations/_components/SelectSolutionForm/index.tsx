@@ -38,7 +38,7 @@ type FormValues = {
 };
 
 const SelectSolutionForm = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
   const { commonSolutions: commonSolutionsConfig } =
     usePlanTranslation('mtoMilestone');

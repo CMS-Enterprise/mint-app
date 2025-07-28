@@ -63,7 +63,7 @@ const MTOTable = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);

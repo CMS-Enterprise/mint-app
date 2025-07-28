@@ -17,7 +17,7 @@ const UnlockAllSections = () => {
   const history = useHistory();
   const { showMessageOnNextPage } = useMessage();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const [showAlert, setShowAlert] = useState<boolean | null>(null);
 

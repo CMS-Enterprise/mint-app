@@ -43,7 +43,7 @@ const CustomMilestoneForm = () => {
   const isMilestoneLibraryRoute =
     location.pathname.includes('milestone-library');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 

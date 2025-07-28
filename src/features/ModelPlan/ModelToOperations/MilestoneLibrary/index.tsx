@@ -42,7 +42,7 @@ export type MilestoneCardType =
 const MilestoneLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { data, loading, error } = useGetMtoMilestonesQuery({
     variables: {
@@ -127,7 +127,7 @@ const MilstoneCardGroup = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
 

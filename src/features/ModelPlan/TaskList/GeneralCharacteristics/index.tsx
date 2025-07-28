@@ -9,7 +9,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import {
   Route,
-  Switch,
+  Routes,
   useHistory,
   useLocation,
   useParams
@@ -94,7 +94,7 @@ export const CharacteristicsContent = () => {
     hasComponentsOrTracks: hasComponentsOrTracksConfig
   } = usePlanTranslation('generalCharacteristics');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef =
     useRef<FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>>(null);
@@ -951,34 +951,29 @@ export const Characteristics = () => {
     <MainContent data-testid="model-characteristics">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Switch>
-            <ProtectedRoute
+          <Routes>
+            <Route
               path="/models/:modelID/collaboration-area/task-list/characteristics"
-              exact
-              render={() => <CharacteristicsContent />}
+              element={ProtectedRoute({ element: <CharacteristicsContent /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics"
-              exact
-              render={() => <KeyCharacteristics />}
+              element={ProtectedRoute({ element: <KeyCharacteristics /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/characteristics/involvements"
-              exact
-              render={() => <Involvements />}
+              element={ProtectedRoute({ element: <Involvements /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/characteristics/targets-and-options"
-              exact
-              render={() => <TargetsAndOptions />}
+              element={ProtectedRoute({ element: <TargetsAndOptions /> })}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/characteristics/authority"
-              exact
-              render={() => <Authority />}
+              element={ProtectedRoute({ element: <Authority /> })}
             />
-            <Route path="*" render={() => <NotFoundPartial />} />
-          </Switch>
+            <Route path="*" element={<NotFoundPartial />} />
+          </Routes>
         </Grid>
       </GridContainer>
     </MainContent>

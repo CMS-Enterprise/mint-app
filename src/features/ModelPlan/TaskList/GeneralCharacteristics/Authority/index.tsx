@@ -58,7 +58,7 @@ const Authority = () => {
     waiversRequiredTypes: waiversRequiredTypesConfig
   } = usePlanTranslation('generalCharacteristics');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();

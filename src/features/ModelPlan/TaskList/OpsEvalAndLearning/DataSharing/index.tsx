@@ -52,7 +52,7 @@ const DataSharing = () => {
     qualityReportingFrequency: qualityReportingFrequencyConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
   const history = useHistory();

@@ -57,7 +57,7 @@ const Performance = () => {
     appealOther: appealOtherConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PerformanceFormType>>(null);
 

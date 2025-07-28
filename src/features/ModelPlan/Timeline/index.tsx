@@ -53,7 +53,7 @@ const Timeline = () => {
   const { t: timelineMiscT } = useTranslation('timelineMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
