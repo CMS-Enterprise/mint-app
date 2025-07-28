@@ -4,8 +4,8 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Route,
   Routes,
-  useNavigate,
   useLocation,
+  useNavigate,
   useParams
 } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';

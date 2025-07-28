@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type NDAWrapperProps = {
   children: React.ReactNode;

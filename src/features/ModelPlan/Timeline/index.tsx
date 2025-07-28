@@ -524,9 +524,7 @@ const Timeline = () => {
                             type="button"
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
-                              navigate(
-                                `/models/${modelID}/collaboration-area`
-                              )
+                              navigate(`/models/${modelID}/collaboration-area`)
                             }
                           >
                             <Icon.ArrowBack

@@ -132,9 +132,7 @@ const TimelineCard = ({
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              navigate(
-                `/models/${modelID}/collaboration-area/model-timeline`
-              )
+              navigate(`/models/${modelID}/collaboration-area/model-timeline`)
             }
             data-testid="to-timeline"
           >

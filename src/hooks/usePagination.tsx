@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 

@@ -167,9 +167,7 @@ const UpdateStatusModal = ({
             unstyled
             onClick={() => {
               closeModal();
-              navigate(
-                `/models/${modelID}/collaboration-area/model-timeline`
-              );
+              navigate(`/models/${modelID}/collaboration-area/model-timeline`);
             }}
           >
             {modelPlanTaskListT('statusModal.goToTimeline')}

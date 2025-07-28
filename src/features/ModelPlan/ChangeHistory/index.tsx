@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Grid,
   GridContainer,

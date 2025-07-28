@@ -152,9 +152,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/task-list/payment`
-          );
+          navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
         }}
         enableReinitialize
         innerRef={formikRef}

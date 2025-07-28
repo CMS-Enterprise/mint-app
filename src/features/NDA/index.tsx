@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { useUpdateNdaMutation } from 'gql/generated/graphql';

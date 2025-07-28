@@ -10,8 +10,8 @@ import { useTranslation } from 'react-i18next';
 import {
   Route,
   Routes,
-  useNavigate,
   useLocation,
+  useNavigate,
   useParams
 } from 'react-router-dom';
 import {
