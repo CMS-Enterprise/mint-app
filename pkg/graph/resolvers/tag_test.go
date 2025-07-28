@@ -112,7 +112,7 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 
 	tag3Sol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(tag3ID))
 	suite.NoError(err)
-	suite.EqualValues(tag3Sol.ID, taggedContent.Mentions[2].EntityUUID)
+	suite.EqualValues(tag3Sol.ID, *taggedContent.Mentions[2].EntityUUID)
 
 	// if the data-id-db tag is set, the content will still be updated with the correct id in the database, regardless of what was provided
 	tag4EUA := "SKZO"
