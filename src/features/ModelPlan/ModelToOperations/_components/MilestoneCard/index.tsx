@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -36,7 +36,8 @@ const MilestoneCard = ({
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const milestoneParam = params.get('add-milestone');
 

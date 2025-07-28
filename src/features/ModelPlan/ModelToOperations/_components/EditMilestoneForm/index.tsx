@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -133,11 +133,10 @@ const EditMilestoneForm = ({
     riskIndicator: riskIndicatorConfig
   } = usePlanTranslation('mtoMilestone');
 
-  const navigate = useNavigate();
-
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const editMilestoneID = params.get('edit-milestone');
 

@@ -34,10 +34,7 @@ const EditMTOSolutionProvider = ({
 
   const navigate = useNavigate();
 
-  const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history.location.search]
-  );
+  const params = useMemo(() => new URLSearchParams(window.location.search), []);
 
   const solutionParam = params.get('edit-solution');
 
@@ -66,8 +63,7 @@ const EditMTOSolutionProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       if (closeDestination) {
-        navigate({
-          pathname: closeDestination,
+        navigate(closeDestination, {
           state: {
             scroll: true
           }
@@ -83,7 +79,7 @@ const EditMTOSolutionProvider = ({
       setIsModalOpen(false);
       submitted.current = false;
     }
-  }, [isDirty, submitted, history, params, closeDestination]);
+  }, [isDirty, submitted, params, closeDestination, navigate]);
 
   useEffect(() => {
     if (closeDestination) {

@@ -66,7 +66,8 @@ const MTOTable = ({
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const navigate = useNavigate();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const { showMessage: setError, clearMessage } = useMessage();
 
@@ -88,7 +89,6 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const location = useLocation();
   const [initLocation] = useState<string>(location.pathname);
 
   const { helpSolutions } = useHelpSolution();

@@ -57,9 +57,11 @@ const SolutionLibrary = () => {
 
   // Query parameters
   const location = useLocation();
-  const { prevPathname, selectedSolution } = useModalSolutionState();
   const navigate = useNavigate();
-  const params = new URLSearchParams(history.location.search);
+
+  const { prevPathname, selectedSolution } = useModalSolutionState();
+
+  const params = new URLSearchParams(location.search);
   const hideAddedSolutions = params.get('hide-added-solutions') === 'true';
 
   let viewParam: SolutionViewType = 'all';

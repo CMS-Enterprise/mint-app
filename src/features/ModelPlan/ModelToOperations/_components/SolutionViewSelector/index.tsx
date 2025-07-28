@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup, Label, Select } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -30,7 +30,8 @@ const SolutionViewSelector = ({
   const { t } = useTranslation('modelToOperationsMisc');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const navigate = useNavigate();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const viewParamName = type === 'table' ? 'type' : 'view';
 

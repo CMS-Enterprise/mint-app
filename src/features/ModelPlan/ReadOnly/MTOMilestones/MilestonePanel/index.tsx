@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -55,7 +55,8 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
   const navigate = useNavigate();
 
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const viewMilestoneID = params.get('view-milestone');
 

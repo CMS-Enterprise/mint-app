@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Column,
   usePagination as usePaginationTable,
@@ -73,11 +73,11 @@ const ITSystemsTable = ({
 
   const navigate = useNavigate();
 
-  const { location } = history;
+  const location = useLocation();
 
   const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history.location.search]
+    () => new URLSearchParams(location.search),
+    [location.search]
   );
 
   const { openEditSolutionModal, setSolutionID } = useContext(
@@ -476,7 +476,7 @@ const ITSystemsTable = ({
     setSolutionID,
     mtoSolutionT,
     readView,
-    history
+    navigate
   ]);
 
   const filteredColumns = useMemo(() => {
@@ -642,7 +642,7 @@ const ITSystemsTable = ({
                             type="button"
                             {...column.getSortByToggleProps()}
                           >
-                            {column.render('Header')}
+                            {column.render('Header') as React.ReactNode}
                             {column.canSort && getHeaderSortIcon(column, false)}
                           </button>
                         </th>
@@ -673,7 +673,7 @@ const ITSystemsTable = ({
                                 }}
                                 key={cell.getCellProps().key}
                               >
-                                {cell.render('Cell')}
+                                {cell.render('Cell') as React.ReactNode}
                               </th>
                             );
                           }
@@ -691,7 +691,7 @@ const ITSystemsTable = ({
                               }}
                               key={cell.getCellProps().key}
                             >
-                              {cell.render('Cell')}
+                              {cell.render('Cell') as React.ReactNode}
                             </td>
                           );
                         })}

@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -53,8 +53,8 @@ const AddToExistingMilestoneForm = ({
   const navigate = useNavigate();
 
   const params = useMemo(() => {
-    return new URLSearchParams(history.location.search);
-  }, [history.location.search]);
+    return new URLSearchParams(location.search);
+  }, [location.search]);
 
   const { data, loading } = useGetMtoAllMilestonesQuery({
     variables: {

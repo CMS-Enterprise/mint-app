@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { UsePaginationInstanceProps, UsePaginationState } from 'react-table';
 import classnames from 'classnames';
 
@@ -28,8 +28,9 @@ const TablePagination = ({
   const { t } = useTranslation('systemProfile');
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const params = new URLSearchParams(history.location.search);
+  const params = new URLSearchParams(location.search);
 
   const classNames = classnames(
     'usa-pagination',

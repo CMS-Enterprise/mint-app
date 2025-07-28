@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
@@ -18,10 +18,11 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history]
+    () => new URLSearchParams(location.search),
+    [location.search]
   );
 
   // Map the common solutions to the FE help solutions

@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -56,9 +56,8 @@ const AddCommonMilestoneForm = ({
   const { commonSolutions: commonSolutionsConfig } =
     usePlanTranslation('mtoMilestone');
 
-  const navigate = useNavigate();
-
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const milestoneKey = params.get('add-milestone') as MtoCommonMilestoneKey;
 
   const { modelID = '' } = useParams<{ modelID: string }>();

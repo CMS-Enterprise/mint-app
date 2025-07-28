@@ -32,7 +32,8 @@ const MTOSolutionCard = ({
   const { errorMessageInModal, clearMessage } = useMessage();
   const navigate = useNavigate();
 
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const solutionParam = params.get('add-solution');
 
@@ -41,7 +42,6 @@ const MTOSolutionCard = ({
   );
 
   const mappedSolution = helpSolutions[solution.key];
-  const location = useLocation();
 
   return (
     <>

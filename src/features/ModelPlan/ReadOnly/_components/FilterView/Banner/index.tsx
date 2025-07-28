@@ -59,7 +59,7 @@ const FilterViewBanner = ({
                   type="button"
                   unstyled
                   className="text-white text-no-wrap"
-                  onClick={() => navigate(`${history.location.pathname}`)}
+                  onClick={() => navigate(`${window.location.pathname}`)}
                 >
                   {t('clearFilter')}
                 </Button>

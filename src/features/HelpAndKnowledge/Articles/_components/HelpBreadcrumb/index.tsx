@@ -20,7 +20,7 @@ export default function HelpBreadcrumb({
   newTabOnly = false
 }: HelpBreadcrumbProps) {
   const navigate = useNavigate();
-  const newTab = history.length === 1;
+  const newTab = window.history.length === 1;
   const { t } = useTranslation('helpAndKnowledge');
   const handleClick = () => {
     if (newTab || newTabOnly) {

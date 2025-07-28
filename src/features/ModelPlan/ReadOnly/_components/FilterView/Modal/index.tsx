@@ -32,7 +32,7 @@ const FilterViewModal = ({
       window.scrollTo(0, 0);
     }, 0);
 
-    const { pathname } = history.location;
+    const { pathname } = window.location;
 
     if (value === 'view-all') {
       navigate(pathname);

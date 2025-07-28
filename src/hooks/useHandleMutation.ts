@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
 import {
   OperationVariables,
   TypedDocumentNode,
@@ -61,6 +61,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [pendingLocation, setPendingLocation] = useState<string | null>(null);
 
   const [update, { loading }] = useMutation<TData, OperationVariables>(
     mutation
@@ -68,86 +69,82 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   const { id } = config;
 
+  // Create a blocker function that determines if navigation should be blocked
+  const shouldBlock = (tx: any) => {
+    // Don't call mutation if attempting to access a locked section
+    if (tx.location.pathname.includes('locked-task-list-section')) {
+      return false;
+    }
+
+    if (tx.location.pathname === pathname) {
+      return false;
+    }
+
+    const dirtyChanges = () => {
+      if ('formikRef' in config) {
+        return dirtyInput(
+          config.formikRef.current?.initialValues,
+          config.formikRef.current?.values
+        );
+      }
+      return dirtyInput(config.rhfRef.initialValues, config.rhfRef.values);
+    };
+
+    const changes = dirtyChanges();
+
+    // If no changes, don't call mutation
+    if (Object.keys(changes).length === 0) {
+      return false;
+    }
+
+    // Store the pending location for later navigation
+    setPendingLocation(tx.location.pathname);
+
+    if (changes.status) {
+      changes.status = sanitizeStatus(changes.status);
+    }
+
+    update({
+      variables: {
+        id,
+        changes
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          setDestinationURL(tx.location.pathname);
+          tx.retry();
+        }
+      })
+      .catch(errors => {
+        setDestinationURL(tx.location.pathname);
+        setIsModalOpen(true);
+
+        if ('formikRef' in config) {
+          config.formikRef.current?.setErrors(errors);
+        }
+        tx.retry();
+      });
+
+    return true; // Block the navigation
+  };
+
+  // Use the useBlocker hook
+  const blocker = useBlocker(shouldBlock);
+
   useEffect(() => {
     if (destinationURL && !isModalOpen) {
       navigate(destinationURL);
     }
-  }, [destinationURL, history, isModalOpen]);
+  }, [destinationURL, navigate, isModalOpen]);
 
+  // Handle the blocker state
   useEffect(() => {
-    if (!isModalOpen) {
-      // Blocks the route transition until unblock() is called
-      const unblock = history.block(destination => {
-        // Don't call mutation if attempting to access a locked section
-        if (destination.pathname.includes('locked-task-list-section')) {
-          unblock();
-          navigate({
-            pathname: destination.pathname,
-            state: destination.state
-          });
-          return false;
-        }
-
-        if (destination.pathname === pathname) {
-          return false;
-        }
-
-        const dirtyChanges = () => {
-          if ('formikRef' in config) {
-            return dirtyInput(
-              config.formikRef.current?.initialValues,
-              config.formikRef.current?.values
-            );
-          }
-          return dirtyInput(config.rhfRef.initialValues, config.rhfRef.values);
-        };
-
-        const changes = dirtyChanges();
-
-        // If no changes, don't call mutation
-        if (Object.keys(changes).length === 0) {
-          unblock();
-          navigate({
-            pathname: destination.pathname,
-            state: destination.state
-          });
-          return false;
-        }
-
-        if (changes.status) {
-          changes.status = sanitizeStatus(changes.status);
-        }
-
-        update({
-          variables: {
-            id,
-            changes
-          }
-        })
-          .then(response => {
-            if (!response?.errors) {
-              unblock();
-              setDestinationURL(destination.pathname);
-            }
-          })
-          .catch(errors => {
-            unblock();
-            setDestinationURL(destination.pathname);
-            setIsModalOpen(true);
-
-            if ('formikRef' in config) {
-              config.formikRef.current?.setErrors(errors);
-            }
-          });
-        return false;
-      });
-
-      return () => {
-        unblock();
-      };
+    if (blocker.state === 'blocked' && pendingLocation) {
+      // The navigation was blocked, we can handle it here if needed
+      // The mutation is already running from the shouldBlock function
     }
-    return () => {};
-  }, [history, id, update, isModalOpen, setIsModalOpen, pathname, config]);
+  }, [blocker.state, pendingLocation]);
 
   return {
     mutationError: { isModalOpen, setIsModalOpen, destinationURL },

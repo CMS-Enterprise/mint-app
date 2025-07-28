@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -39,8 +39,8 @@ const Status = () => {
   const navigate = useNavigate();
 
   const params = useMemo(() => {
-    return new URLSearchParams(history.location.search);
-  }, [history.location.search]);
+    return new URLSearchParams(location.search);
+  }, [location.search]);
 
   // Get model status from generated email link
   const modelStatus = params.get('model-status') as ModelStatus;

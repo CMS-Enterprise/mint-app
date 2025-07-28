@@ -24,12 +24,11 @@ const AddDocument = () => {
 
   const navigate = useNavigate();
 
-  const { state } = useLocation<{
-    state: {
+  const { state } = useLocation() as {
+    state?: {
       fromCollaborationArea?: boolean;
     };
-    fromCollaborationArea?: boolean;
-  }>();
+  };
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -89,7 +88,7 @@ const AddDocument = () => {
           <div className="display-block">
             <Button
               type="button"
-              onClick={() => history.goBack()}
+              onClick={() => navigate(-1)}
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <Icon.ArrowBack

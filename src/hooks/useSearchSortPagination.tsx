@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Sort options type for the select dropdown
 type SortProps<K> = {
@@ -49,7 +49,8 @@ const useSearchSortPagination = <T, K extends string>({
   const navigate = useNavigate();
 
   // Query parameters
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const pageParam = params.get('page') || '1';
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps<K>['value'];

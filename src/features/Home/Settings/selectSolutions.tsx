@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -82,23 +82,19 @@ const SelectSolutionSettings = () => {
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   // Passes the current state to the previous page if navigating back
-  useEffect(() => {
-    // Blocks the route transition until unblock() is called
-    const unblock = history.block(destination => {
-      unblock();
-      navigate({
-        pathname: destination.pathname,
-        state:
-          // If the destination is the homepage settings page, pass the current state
-          destination.pathname === '/homepage-settings'
-            ? { homepageSettings: selectedSettings }
-            : undefined
+  const shouldBlock = (tx: any) => {
+    // If the destination is the homepage settings page, pass the current state
+    if (tx.location.pathname === '/homepage-settings') {
+      navigate(tx.location.pathname, {
+        state: { homepageSettings: selectedSettings }
       });
-      return false;
-    });
+    } else {
+      navigate(tx.location.pathname);
+    }
+    return false; // Don't block, just intercept and modify the navigation
+  };
 
-    return () => {};
-  }, [history, selectedSettings]);
+  useBlocker(shouldBlock);
 
   const handleFormSubmit = () => {
     mutate({

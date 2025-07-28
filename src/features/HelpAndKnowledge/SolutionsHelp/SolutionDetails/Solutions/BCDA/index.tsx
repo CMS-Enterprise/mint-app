@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   ProcessList,
@@ -25,9 +25,10 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
 
   const navigate = useNavigate();
 
-  const isMTORoute = history.location.pathname.includes('model-to-operations');
+  const isMTORoute = window.location.pathname.includes('model-to-operations');
 
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   if (isMTORoute) {
     params.set('solution-key', MtoCommonSolutionKey.INNOVATION);

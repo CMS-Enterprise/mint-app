@@ -93,7 +93,8 @@ const ChangeHistory = () => {
   const navigate = useNavigate();
 
   // Query parameters
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const pageParam = params.get('page');
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps['value'];
@@ -397,7 +398,7 @@ const ChangeHistory = () => {
             {/* Pagination */}
             {pageCount > 1 && (
               <Pagination
-                pathname={history.location.pathname}
+                pathname={window.location.pathname}
                 currentPage={currentPage}
                 maxSlots={7}
                 onClickNext={handleNext}

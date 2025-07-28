@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Card, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -27,7 +27,8 @@ export const SolutionCard = ({
   const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
   const navigate = useNavigate();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   // Set the solution route params
   params.set('solution-key', solution.key);
@@ -46,7 +47,7 @@ export const SolutionCard = ({
           closeRoute={() => {
             params.delete('solution-key');
             params.delete('section');
-            return `${history.location.pathname}`;
+            return `${window.location.pathname}`;
           }}
         />
       )}

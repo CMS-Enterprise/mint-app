@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -140,7 +140,8 @@ const MilstoneCardGroup = ({
   } = useContext(MTOModalContext);
 
   // Query parameters
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
   const milestoneParam: string = params.get('milestone') || '';
 
