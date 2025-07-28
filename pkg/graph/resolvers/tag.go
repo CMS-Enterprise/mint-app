@@ -92,17 +92,14 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 				return err
 			}
 
-		case models.TagTypePossibleSolution:
-			err := processPossibleSolutionHTMLMention(ctx, store, mention)
-			if err != nil {
-				return err
-			}
-
 		case models.TagTypeMTOCommonSolution:
 			err := processMTOCommonSolutionHTMLMention(ctx, mention)
 			if err != nil {
 				return err
 			}
+
+		case models.TagTypePossibleSolution:
+			return fmt.Errorf("possible operational solution tag type is no longer supported. Please use MTO common solution instead")
 		}
 
 		// Update the raw representation in the Tagged HTML and in the individual mention
@@ -135,33 +132,16 @@ func processUserAccountHTMLMention(ctx context.Context, store *storage.Store, me
 	return nil
 }
 
-// Processes an HTML mention by getting Possible Solution information from the DB for a mention that is of  Tag Type TagTypePossibleSolution.
-func processPossibleSolutionHTMLMention(ctx context.Context, store *storage.Store, mention *models.HTMLMention) error {
-	if mention.Type != models.TagTypePossibleSolution {
-		return fmt.Errorf(" invalid operation. attempted to fetch possible solution information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeUserAccount)
-	}
-	logger := appcontext.ZLogger(ctx)
-	sol, err := store.PossibleOperationalSolutionGetByKey(logger, models.OperationalSolutionKey(mention.EntityRaw))
-	if err != nil {
-		return err
-	}
-	mention.EntityIntID = &sol.ID
-	mention.EntityDB = mention.EntityIntID
-	taggedEntity := models.TaggedEntity(sol)
-	mention.Entity = &taggedEntity
-	return nil
-}
-
-// Processes an HTML mention by getting MTO Common Solution information from the DB for a mention that is of  Tag Type TagTypeMTOCommonSolution.
+// Processes an HTML mention by getting MTO Common Solution information from the DB for a mention that is of Tag Type TagTypeMTOCommonSolution.
 func processMTOCommonSolutionHTMLMention(ctx context.Context, mention *models.HTMLMention) error {
 	if mention.Type != models.TagTypeMTOCommonSolution {
-		return fmt.Errorf(" invalid operation. attempted to fetch user account information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeMTOCommonSolution)
+		return fmt.Errorf(" invalid operation. attempted to fetch MTO common solution information for a tag type of %s. This is only valid for tag type %s", mention.Type, models.TagTypeMTOCommonSolution)
 	}
 	sol, err := MTOCommonSolutionGetByKeyLOADER(ctx, models.MTOCommonSolutionKey(mention.EntityRaw))
 	if err != nil {
 		return err
 	}
-	mention.EntityUUID = sol.ID
+	mention.EntityUUID = &sol.ID
 	mention.EntityDB = sol.ID
 	taggedEntity := models.TaggedEntity(sol)
 	mention.Entity = &taggedEntity

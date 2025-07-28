@@ -119,16 +119,12 @@ func batchMTOCommonSolutionGetByID(ctx context.Context, ids []uuid.UUID) []*data
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolution](ids, err)
 	}
-	data, err := storage.MTOCommonSolutionGetByID(loaders.DataReader.Store, logger, &ids[0])
+	data, err := storage.MTOCommonSolutionGetByIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolution](ids, err)
 	}
 	getKeyFunc := func(data *models.MTOCommonSolution) uuid.UUID {
-		if data.ID != nil {
-			return *data.ID
-		}
-		// We use UUID.Nil for a nil value as a map to pointers doesn't compare the value
-		return uuid.Nil
+		return data.ID
 	}
-	return oneToOneDataLoader(ids, []*models.MTOCommonSolution{data}, getKeyFunc)
+	return oneToOneDataLoader(ids, data, getKeyFunc)
 }

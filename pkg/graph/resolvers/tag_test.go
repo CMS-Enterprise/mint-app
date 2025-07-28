@@ -66,11 +66,11 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	suite.EqualValues(sol.ID, retSol.ID)
 
 	// Get MTO Common Solution
-	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey("CONNECT"))
+	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(models.MTOCSKConnect))
 	suite.NoError(err)
 	suite.NotNil(mtoSol)
 
-	mtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, mtoSol.ID, nil)
+	mtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, &mtoSol.ID, nil)
 	suite.NoError(err)
 	retMtoSol, ok := mtoSolEnt.(*models.MTOCommonSolution)
 	suite.True(ok, "Could not cast the Tagged Entity to MTO Common Solution")

@@ -4457,7 +4457,7 @@ export type TaggedContent = {
 };
 
 /** TaggedEntity is the actual object represented by a tag in the data base. */
-export type TaggedEntity = PossibleOperationalSolution | UserAccount;
+export type TaggedEntity = MtoCommonSolution | PossibleOperationalSolution | UserAccount;
 
 export type TaggedInDiscussionReplyActivityMeta = {
   __typename: 'TaggedInDiscussionReplyActivityMeta';
