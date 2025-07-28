@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Route,
   Routes,
-  useHistory,
+  useNavigate,
   useLocation,
   useParams
 } from 'react-router-dom';
@@ -99,7 +99,7 @@ export const CharacteristicsContent = () => {
   const formikRef =
     useRef<FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const {
@@ -255,7 +255,7 @@ export const CharacteristicsContent = () => {
         // Don't call mutation if attempting to access a locked section
         if (destination.pathname.includes('locked-task-list-section')) {
           unblock();
-          history.push({
+          navigate({
             pathname: destination.pathname,
             state: destination.state
           });
@@ -347,7 +347,7 @@ export const CharacteristicsContent = () => {
                 resemblesExistingModelLinks: miscellaneousT('apolloFailField')
               });
             } else {
-              history.push(destination.pathname);
+              navigate(destination.pathname);
             }
           })
           .catch(errors => {
@@ -454,7 +454,7 @@ export const CharacteristicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
           );
         }}
@@ -921,7 +921,7 @@ export const CharacteristicsContent = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

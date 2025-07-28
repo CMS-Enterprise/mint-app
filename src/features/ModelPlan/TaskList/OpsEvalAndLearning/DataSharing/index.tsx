@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Icon, Label, Select } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -55,7 +55,7 @@ const DataSharing = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetDataSharingQuery({
     variables: {
@@ -103,11 +103,11 @@ const DataSharing = () => {
       isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
       );
     }
@@ -182,7 +182,7 @@ const DataSharing = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/learning`
           );
         }}
@@ -444,7 +444,7 @@ const DataSharing = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

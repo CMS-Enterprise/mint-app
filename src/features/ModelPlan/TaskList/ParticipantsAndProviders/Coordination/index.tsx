@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -63,7 +63,7 @@ export const Coordination = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetCoordinationQuery({
     variables: {
@@ -166,7 +166,7 @@ export const Coordination = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/participants-and-providers/provider-options`
           );
         }}
@@ -479,7 +479,7 @@ export const Coordination = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        history.push(
+                        navigate(
                           `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
                         );
                       }}
@@ -496,7 +496,7 @@ export const Coordination = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

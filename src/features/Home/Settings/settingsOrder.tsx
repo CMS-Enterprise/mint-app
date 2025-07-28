@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -68,7 +68,7 @@ const SettingsOrder = () => {
   const { t: homepageSettingsT } = useTranslation('homepageSettings');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { showMessageOnNextPage } = useMessage();
 
@@ -111,7 +111,7 @@ const SettingsOrder = () => {
     // Blocks the route transition until unblock() is called
     const unblock = history.block(destination => {
       unblock();
-      history.push({
+      navigate({
         pathname: destination.pathname,
         state:
           // If the destination is the homepage settings page, pass the current state
@@ -144,7 +144,7 @@ const SettingsOrder = () => {
           );
           // Removes router state upon successful mutation
           window.history.replaceState({}, '');
-          history.push('/');
+          navigate('/');
         }
       })
       .catch(() => setMutationError(true));
@@ -304,7 +304,7 @@ const SettingsOrder = () => {
               type="button"
               outline
               className="margin-bottom-4"
-              onClick={() => history.push('/homepage-settings')}
+              onClick={() => navigate('/homepage-settings')}
             >
               {miscellaneousT('back')}
             </Button>

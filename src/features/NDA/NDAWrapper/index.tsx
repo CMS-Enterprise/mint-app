@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type NDAWrapperProps = {
   children: React.ReactNode;
@@ -9,13 +9,13 @@ type NDAWrapperProps = {
 const NDAWrapper = ({ children }: NDAWrapperProps) => {
   const { pathname, search } = useLocation();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const user = useSelector((state: RootStateOrAny) => state.auth);
 
   useEffect(() => {
     if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {
-      history.push({
+      navigate({
         pathname: '/pre-decisional-notice',
         state: {
           nextState:

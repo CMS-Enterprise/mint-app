@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -40,7 +40,7 @@ const usePagination = <T extends any[]>({
   Results: React.ReactNode;
 } => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Query parameters
   const params = useMemo(() => {
@@ -105,7 +105,7 @@ const usePagination = <T extends any[]>({
 
     if (withQueryParams) {
       params.set(withQueryParams, nextPage.toString());
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     setCurrentPageNum(nextPage);
@@ -116,7 +116,7 @@ const usePagination = <T extends any[]>({
 
     if (withQueryParams) {
       params.set(withQueryParams, prevPage.toString());
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     setCurrentPageNum(prevPage);
@@ -128,7 +128,7 @@ const usePagination = <T extends any[]>({
   ) => {
     if (withQueryParams) {
       params.set(withQueryParams, pageNum.toString());
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     setCurrentPageNum(pageNum);

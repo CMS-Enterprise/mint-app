@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -41,7 +41,7 @@ const SelectSolutionSettings = () => {
 
   const formikRef = useRef<FormikProps<SettingsFormType>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { state } = useLocation<HomepageLocationStateType>();
 
@@ -86,7 +86,7 @@ const SelectSolutionSettings = () => {
     // Blocks the route transition until unblock() is called
     const unblock = history.block(destination => {
       unblock();
-      history.push({
+      navigate({
         pathname: destination.pathname,
         state:
           // If the destination is the homepage settings page, pass the current state
@@ -125,7 +125,7 @@ const SelectSolutionSettings = () => {
 
         // Allow state to hydrate before redirecting
         setTimeout(() => {
-          history.push(state?.fromHome ? '/' : '/homepage-settings');
+          navigate(state?.fromHome ? '/' : '/homepage-settings');
         }, 100);
       })
       .catch(() => setMutationError(true));

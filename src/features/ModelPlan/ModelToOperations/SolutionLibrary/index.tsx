@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   CardGroup,
@@ -58,7 +58,7 @@ const SolutionLibrary = () => {
   // Query parameters
   const location = useLocation();
   const { prevPathname, selectedSolution } = useModalSolutionState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = new URLSearchParams(history.location.search);
   const hideAddedSolutions = params.get('hide-added-solutions') === 'true';
 
@@ -297,7 +297,10 @@ const SolutionLibrary = () => {
                           hideAddedSolutions ? 'false' : 'true'
                         );
                         params.set('page', '1');
-                        history.replace({ search: params.toString() });
+                        navigate(
+                          { search: params.toString() },
+                          { replace: true }
+                        );
                       }}
                     />
                   </Grid>
@@ -322,7 +325,10 @@ const SolutionLibrary = () => {
                               onClick={() => {
                                 setQuery('');
                                 params.set('view', 'all');
-                                history.replace({ search: params.toString() });
+                                navigate(
+                                  { search: params.toString() },
+                                  { replace: true }
+                                );
                               }}
                             >
                               {' '}
@@ -430,7 +436,10 @@ const SolutionLibrary = () => {
                             onClick={() => {
                               setQuery('');
                               params.set('view', 'all');
-                              history.replace({ search: params.toString() });
+                              navigate(
+                                { search: params.toString() },
+                                { replace: true }
+                              );
                             }}
                           >
                             {' '}

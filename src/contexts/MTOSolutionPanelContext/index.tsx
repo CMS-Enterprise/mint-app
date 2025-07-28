@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SolutionPanel from 'features/ModelPlan/ReadOnly/MTOSolutions/SolutionPanel';
 
 import Sidepanel from 'components/Sidepanel';
@@ -22,7 +22,7 @@ const MTOSolutionPanelProvider = ({
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const params = new URLSearchParams(history.location.search);
 
@@ -40,13 +40,13 @@ const MTOSolutionPanelProvider = ({
 
   const closeModal = () => {
     params.delete('view-solution');
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setIsModalOpen(false);
   };
 
   const openViewSolutionModal = (id: string) => {
     params.set('view-solution', id);
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setIsModalOpen(true);
   };
 

@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -90,7 +90,7 @@ const ChangeHistory = () => {
 
   const fromReadView = state?.from === 'readview';
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Query parameters
   const params = new URLSearchParams(history.location.search);
@@ -164,7 +164,7 @@ const ChangeHistory = () => {
         params.delete('query');
       }
       params.delete('page');
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     // Return the page to the first page when the query changes
@@ -211,14 +211,14 @@ const ChangeHistory = () => {
   const handleNext = () => {
     const nextPage = currentPage + 1;
     params.set('page', nextPage.toString());
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setCurrentPage(nextPage);
   };
 
   const handlePrevious = () => {
     const prevPage = currentPage - 1;
     params.set('page', prevPage.toString());
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setCurrentPage(prevPage);
   };
 
@@ -227,7 +227,7 @@ const ChangeHistory = () => {
     pageNum: number
   ) => {
     params.set('page', pageNum.toString());
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setCurrentPage(pageNum);
   };
 
@@ -325,7 +325,7 @@ const ChangeHistory = () => {
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setSort(e.target.value as SortProps['value']);
                         params.set('sort', e.target.value);
-                        history.push({ search: params.toString() });
+                        navigate({ search: params.toString() });
                       }}
                     >
                       {sortOptions.map(option => {

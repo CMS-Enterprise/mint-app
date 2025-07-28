@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   ProcessList,
@@ -23,7 +23,7 @@ export interface ProcessListItemProps {
 const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const timelineConfig = timelineTranslationUtil(solution.key);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const isMTORoute = history.location.pathname.includes('model-to-operations');
 
@@ -65,13 +65,13 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
                     unstyled
                     onClick={() => {
                       if (isMTORoute) {
-                        history.push({ search: params.toString() });
+                        navigate({ search: params.toString() });
                         const modalCon = document?.getElementsByClassName(
                           'ReactModal__Overlay'
                         )?.[0];
                         modalCon.scrollTo(0, 0);
                       } else {
-                        history.push(
+                        navigate(
                           '/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline'
                         );
                       }

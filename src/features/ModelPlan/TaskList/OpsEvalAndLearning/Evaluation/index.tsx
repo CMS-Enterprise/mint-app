@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -66,7 +66,7 @@ const Evaluation = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetEvaluationQuery({
     variables: {
@@ -111,11 +111,11 @@ const Evaluation = () => {
       isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
       );
     }
@@ -463,7 +463,7 @@ const Evaluation = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        history.push(
+                        navigate(
                           `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
                         );
                       }}
@@ -480,7 +480,7 @@ const Evaluation = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

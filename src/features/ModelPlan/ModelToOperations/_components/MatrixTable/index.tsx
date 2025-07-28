@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -65,7 +65,7 @@ const MTOTable = ({
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = new URLSearchParams(history.location.search);
 
   const { showMessage: setError, clearMessage } = useMessage();
@@ -734,7 +734,7 @@ const MTOTable = ({
                   onChange={() => {
                     // Reset pagination to the first page when the page size changes
                     params.set('page', '1');
-                    history.replace({ search: params.toString() });
+                    navigate({ search: params.toString() }, { replace: true });
                   }}
                 />
               </div>

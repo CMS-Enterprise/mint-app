@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Button,
@@ -34,7 +34,7 @@ import { tObject } from 'utils/translation';
 const SendFeedback = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [mutationError, setMutationError] = useState<boolean>(false);
 
@@ -58,7 +58,7 @@ const SendFeedback = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push('/feedback-received');
+          navigate('/feedback-received');
         }
       })
       .catch(errors => {

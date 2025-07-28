@@ -7,7 +7,7 @@
 
 import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetIsCollaboratorQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -20,7 +20,7 @@ type ModelAccessWrapperProps = {
 
 const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   const { pathname } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const flags = useFlags();
 
   const modelID: string | undefined = pathname.split('/')[2];
@@ -55,11 +55,11 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       editable &&
       !isAssessment(groups, flags)
     ) {
-      history.replace(`/models/${modelID}/read-only/model-basics`);
+      navigate(`/models/${modelID}/read-only/model-basics`, { replace: true });
     }
   }, [
     pathname,
-    history,
+    navigate,
     isCollaborator,
     loading,
     modelID,

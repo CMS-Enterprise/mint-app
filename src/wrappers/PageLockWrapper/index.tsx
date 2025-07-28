@@ -7,7 +7,7 @@
 
 import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useNavigate } from 'react-router-dom';
 import {
   GetLockedModelPlanSectionsQuery,
   LockableSection,
@@ -97,7 +97,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
   // Get the subscription context - messages (locks, unlocks), loading
   const { lockableSectionLocks, loading } = useContext(SubscriptionContext);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const modelID: string = to.split('/')[2];
   const modelPlanRoute: string = to.split('/')[4];
@@ -173,7 +173,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         }));
       })
       .catch(() => {
-        history.push({
+        navigate({
           pathname: `/models/${modelID}/locked-task-list-section`,
           // Passing error status to default error page
           state: { route: taskListRoute, error: true }
@@ -189,7 +189,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         section
       }
     }).catch(() => {
-      history.push({
+      navigate({
         pathname: `/models/${modelID}/locked-task-list-section`,
         // Passing error status to default error page
         state: { route: taskListRoute, error: true }

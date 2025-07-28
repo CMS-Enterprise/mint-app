@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -57,7 +57,7 @@ const NotificationSettings = () => {
 
   const { showMessage, showMessageOnNextPage } = useMessage();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { message } = useMessage();
   const location = useLocation();
 
@@ -132,7 +132,7 @@ const NotificationSettings = () => {
               {notificationsT('settings.successMessage')}
             </Alert>
           );
-          history.push('/notifications');
+          navigate('/notifications');
         }
       })
       .catch(() => {
@@ -231,7 +231,7 @@ const NotificationSettings = () => {
         </Alert>
       );
       params.delete('unsubscribe_email');
-      history.replace({ search: params.toString() });
+      navigate({ search: params.toString() }, { replace: true });
       return;
     }
 
@@ -322,12 +322,12 @@ const NotificationSettings = () => {
       }
 
       params.delete('unsubscribe_email');
-      history.replace({ search: params.toString() });
+      navigate({ search: params.toString() }, { replace: true });
     }
   }, [
     dataExchangeApproachMarkedComplete,
     datesChanged,
-    history,
+    navigate,
     loading,
     newModelPlan,
     notificationsT,
@@ -547,7 +547,7 @@ const NotificationSettings = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => history.push('/notifications')}
+                        onClick={() => navigate('/notifications')}
                       >
                         <Icon.ArrowBack
                           className="margin-right-1"

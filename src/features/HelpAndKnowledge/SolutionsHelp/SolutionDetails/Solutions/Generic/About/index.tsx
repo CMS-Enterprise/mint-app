@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -106,14 +106,14 @@ const InternalSolutionButton = ({
   params: string;
   children: React.ReactChild;
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Button
       type="button"
       unstyled
       onClick={() => {
-        history.push({ search: params });
+        navigate({ search: params });
         const modalCon = document?.getElementsByClassName(
           'ReactModal__Overlay'
         )?.[0];

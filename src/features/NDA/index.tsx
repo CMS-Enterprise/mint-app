@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { useUpdateNdaMutation } from 'gql/generated/graphql';
@@ -23,7 +23,7 @@ interface LocationProps {
 const NDA = () => {
   const { t } = useTranslation('nda');
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { state: locationState } = useLocation<LocationProps>();
   const [originalRoute, setOriginalRoute] = useState<string>('');
   const { acceptedNDA, ...user } = useSelector(
@@ -40,7 +40,7 @@ const NDA = () => {
     signNDA()
       .then(response => {
         dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
-        history.push(originalRoute || '/');
+        navigate(originalRoute || '/');
       })
       .catch(err => {
         // TODO: No roles assigned error?

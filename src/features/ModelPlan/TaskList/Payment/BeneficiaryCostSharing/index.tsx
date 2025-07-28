@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -53,7 +53,7 @@ const BeneficiaryCostSharing = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BeneficiaryCostSharingFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetBeneficiaryCostSharingQuery({
     variables: {
@@ -85,11 +85,11 @@ const BeneficiaryCostSharing = () => {
         PayType.NON_CLAIMS_BASED_PAYMENTS
       )
     ) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/complexity`
       );
     }
@@ -285,7 +285,7 @@ const BeneficiaryCostSharing = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              history.push(
+                              navigate(
                                 `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
                               );
                             }}
@@ -302,7 +302,7 @@ const BeneficiaryCostSharing = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

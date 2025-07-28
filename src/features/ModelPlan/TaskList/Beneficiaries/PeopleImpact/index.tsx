@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -54,7 +54,7 @@ const PeopleImpact = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetPeopleImpactedQuery({
     variables: {
@@ -134,7 +134,7 @@ const PeopleImpact = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/beneficiaries/beneficiary-frequency`
           );
         }}
@@ -306,7 +306,7 @@ const PeopleImpact = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              history.push(
+                              navigate(
                                 `/models/${modelID}/collaboration-area/task-list/beneficiaries`
                               );
                             }}
@@ -323,7 +323,7 @@ const PeopleImpact = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useHistory } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -27,7 +27,7 @@ const NewPlanContent = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const [mutate] = useCreateModelPlanMutation();
 
   const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
@@ -39,7 +39,7 @@ const NewPlanContent = () => {
     }).then(response => {
       if (!response.errors && response.data) {
         const { id } = response.data.createModelPlan;
-        history.push(`/models/${id}/collaboration-area/collaborators?view=add`);
+        navigate(`/models/${id}/collaboration-area/collaborators?view=add`);
       }
     });
   };

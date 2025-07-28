@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -51,7 +51,7 @@ const SettingsForm = () => {
 
   const flags = useFlags();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { state } = useLocation<HomepageLocationStateType>();
 
@@ -75,7 +75,7 @@ const SettingsForm = () => {
     // Blocks the route transition until unblock() is called
     const unblock = history.block(destination => {
       unblock();
-      history.push({
+      navigate({
         pathname: destination.pathname,
         state:
           // If the destination is the homepage settings page, pass the current state
@@ -133,7 +133,7 @@ const SettingsForm = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
-              history.push('/homepage-settings/order');
+              navigate('/homepage-settings/order');
             }}
             enableReinitialize
             innerRef={formikRef}

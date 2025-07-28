@@ -5,7 +5,7 @@ Each checkbox modifies the 'status' on its respective task list sections
 
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
@@ -119,7 +119,7 @@ const PrepareForClearanceCheckList = ({
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('general');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Used to map, iterate and label task list sections and values from query
   const taskListSections = tArray<Record<string, string>>(
@@ -190,7 +190,7 @@ const PrepareForClearanceCheckList = ({
         const errors = responses?.find(result => result?.errors);
 
         if (!errors) {
-          history.push(`/models/${modelID}/collaboration-area/task-list`);
+          navigate(`/models/${modelID}/collaboration-area/task-list`);
         }
       })
       .catch(errors => {
@@ -396,7 +396,7 @@ const PrepareForClearanceCheckList = ({
                       data-testid="dont-update-clearance"
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
-                        history.push(
+                        navigate(
                           `/models/${modelID}/collaboration-area/task-list`
                         )
                       }

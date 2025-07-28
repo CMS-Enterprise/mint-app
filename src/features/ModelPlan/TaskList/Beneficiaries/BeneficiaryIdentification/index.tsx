@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -57,7 +57,7 @@ const BeneficiaryIdentification = () => {
   const formikRef =
     useRef<FormikProps<BeneficiaryIdentificationFormType>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetBeneficiaryIdentificationQuery({
     variables: {
@@ -147,7 +147,7 @@ const BeneficiaryIdentification = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/beneficiaries/people-impact`
           );
         }}
@@ -460,7 +460,7 @@ const BeneficiaryIdentification = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list/`
                             )
                           }

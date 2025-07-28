@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PrepareForClearanceStatus, TaskStatus } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -20,7 +20,7 @@ const TaskListButton = ({
 }: TaskListButtonProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelID = '' } = useParams<{ modelID: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const ctaCopy = () => {
     if (status === TaskStatus.READY) {
@@ -52,7 +52,7 @@ const TaskListButton = ({
           data-testid={path}
           className="usa-button margin-bottom-2 width-auto"
           onClick={() =>
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/task-list/${path}`
             )
           }

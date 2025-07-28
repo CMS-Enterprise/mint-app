@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -54,7 +54,7 @@ const Collaborators = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { teamRoles: teamRolesConfig } = usePlanTranslation('collaborators');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation<LocationProps>();
 
@@ -134,7 +134,7 @@ const Collaborators = () => {
                 </Alert>
               </>
             );
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
             );
           }
@@ -173,7 +173,7 @@ const Collaborators = () => {
                 </Alert>
               </>
             );
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
             );
           }

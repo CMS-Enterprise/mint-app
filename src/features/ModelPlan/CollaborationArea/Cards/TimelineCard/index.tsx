@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -41,7 +41,7 @@ const TimelineCard = ({
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const {
     modifiedDts,
@@ -132,7 +132,7 @@ const TimelineCard = ({
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              history.push(
+              navigate(
                 `/models/${modelID}/collaboration-area/model-timeline`
               )
             }

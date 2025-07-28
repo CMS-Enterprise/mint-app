@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Sort options type for the select dropdown
 type SortProps<K> = {
@@ -46,7 +46,7 @@ const useSearchSortPagination = <T, K extends string>({
   sortFunction,
   defaultItemsPerPage = 9
 }: SearchSortPaginationProps<T, K>) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Query parameters
   const params = new URLSearchParams(history.location.search);
@@ -107,7 +107,7 @@ const useSearchSortPagination = <T, K extends string>({
       params.delete('query');
     }
 
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
@@ -146,7 +146,7 @@ const useSearchSortPagination = <T, K extends string>({
   useEffect(() => {
     if (currentItems.length === 0 || itemsPerPage === 100000) {
       params.set('page', '1');
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
       setCurrentPage(1);
     }
   }, [currentItems, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -160,14 +160,14 @@ const useSearchSortPagination = <T, K extends string>({
   const handleNext = () => {
     const nextPage = currentPage + 1;
     params.set('page', nextPage.toString());
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setCurrentPage(nextPage);
   };
 
   const handlePrevious = () => {
     const prevPage = currentPage - 1;
     params.set('page', prevPage.toString());
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setCurrentPage(prevPage);
   };
 
@@ -176,7 +176,7 @@ const useSearchSortPagination = <T, K extends string>({
     pageNum: number
   ) => {
     params.set('page', pageNum.toString());
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setCurrentPage(pageNum);
   };
 

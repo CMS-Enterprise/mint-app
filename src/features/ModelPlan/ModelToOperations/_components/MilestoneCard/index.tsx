@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -32,7 +32,7 @@ const MilestoneCard = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
@@ -56,7 +56,7 @@ const MilestoneCard = ({
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
-          history.replace({ search: params.toString() });
+          navigate({ search: params.toString() }, { replace: true });
           clearMessage();
           setIsModalOpen(false);
         }}
@@ -74,7 +74,7 @@ const MilestoneCard = ({
         <AddSolutionToMilestoneForm
           closeModal={() => {
             params.delete('add-milestone', milestone.key);
-            history.replace({ search: params.toString() });
+            navigate({ search: params.toString() }, { replace: true });
             clearMessage();
             setIsModalOpen(false);
           }}
@@ -132,7 +132,7 @@ const MilestoneCard = ({
               onClick={() => {
                 params.delete('milestone');
                 params.set('add-milestone', milestone.key);
-                history.replace({ search: params.toString() });
+                navigate({ search: params.toString() }, { replace: true });
                 setIsModalOpen(true);
               }}
             >
@@ -156,7 +156,7 @@ const MilestoneCard = ({
             onClick={() => {
               setIsSidepanelOpen(true);
               params.set('milestone', milestone.key);
-              history.push({ search: params.toString() });
+              navigate({ search: params.toString() });
             }}
           >
             {t('milestoneLibrary.aboutThisMilestone')}

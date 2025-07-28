@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -57,7 +57,7 @@ export const ParticipantOptions = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantOptionsFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetParticipantOptionsQuery({
     variables: {
@@ -146,7 +146,7 @@ export const ParticipantOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
           );
         }}
@@ -371,7 +371,7 @@ export const ParticipantOptions = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        history.push(
+                        navigate(
                           `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
                         );
                       }}
@@ -388,7 +388,7 @@ export const ParticipantOptions = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

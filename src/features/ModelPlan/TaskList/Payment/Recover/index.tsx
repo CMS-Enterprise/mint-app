@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -67,7 +67,7 @@ const Recover = () => {
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetRecoverQuery({
     variables: {
@@ -181,7 +181,7 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/collaboration-area/task-list`);
+          navigate(`/models/${modelID}/collaboration-area/task-list`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -348,7 +348,7 @@ const Recover = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              history.push(
+                              navigate(
                                 `/models/${modelID}/collaboration-area/task-list/payment/complexity`
                               );
                             }}
@@ -367,7 +367,7 @@ const Recover = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

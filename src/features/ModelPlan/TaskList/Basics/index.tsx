@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Route,
   Switch,
-  useHistory,
+  useNavigate,
   useLocation,
   useParams
 } from 'react-router-dom';
@@ -73,7 +73,7 @@ const BasicsContent = () => {
 
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [destinationURL, setDestinationURL] = useState<string>('');
@@ -111,7 +111,7 @@ const BasicsContent = () => {
         // Don't call mutation if attempting to access a locked section
         if (destination.pathname.includes('locked-task-list-section')) {
           unblock();
-          history.push({
+          navigate({
             pathname: destination.pathname,
             state: destination.state
           });
@@ -160,7 +160,7 @@ const BasicsContent = () => {
           .then(response => {
             if (!response?.errors) {
               unblock();
-              history.push(destination.pathname);
+              navigate(destination.pathname);
             }
           })
           .catch(errors => {
@@ -245,7 +245,7 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/basics/overview`
           );
         }}
@@ -618,7 +618,7 @@ const BasicsContent = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

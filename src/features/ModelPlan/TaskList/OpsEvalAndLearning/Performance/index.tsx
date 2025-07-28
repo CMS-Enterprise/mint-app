@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Icon, Label, Radio } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -61,7 +61,7 @@ const Performance = () => {
 
   const formikRef = useRef<FormikProps<PerformanceFormType>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetPerformanceQuery({
     variables: {
@@ -105,11 +105,11 @@ const Performance = () => {
 
   const backPage = () => {
     if (iddocSupport) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
       );
     }
@@ -178,7 +178,7 @@ const Performance = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
           );
         }}
@@ -426,7 +426,7 @@ const Performance = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

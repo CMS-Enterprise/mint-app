@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -61,7 +61,7 @@ const FundingSource = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetFundingQuery({
     variables: {
@@ -111,15 +111,15 @@ const FundingSource = () => {
     );
 
     if (hasClaimsBasedPayment) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/claims-based-payment`
       );
     } else if (hasNonClaimBasedPayment) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/complexity`
       );
     }
@@ -462,7 +462,7 @@ const FundingSource = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

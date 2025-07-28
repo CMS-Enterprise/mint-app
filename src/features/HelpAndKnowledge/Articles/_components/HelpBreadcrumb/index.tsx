@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -19,14 +19,14 @@ export default function HelpBreadcrumb({
   text,
   newTabOnly = false
 }: HelpBreadcrumbProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const newTab = history.length === 1;
   const { t } = useTranslation('helpAndKnowledge');
   const handleClick = () => {
     if (newTab || newTabOnly) {
       window.close();
     } else {
-      history.replace(home ? '/' : '/help-and-knowledge');
+      navigate(home ? '/' : '/help-and-knowledge', { replace: true });
     }
   };
 

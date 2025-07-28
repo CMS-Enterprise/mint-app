@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import EditMilestoneForm from 'features/ModelPlan/ModelToOperations/_components/EditMilestoneForm';
 
@@ -32,7 +32,7 @@ const EditMTOMilestoneProvider = ({
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const params = useMemo(
     () => new URLSearchParams(history.location.search),
@@ -70,7 +70,7 @@ const EditMTOMilestoneProvider = ({
         const baseRoute = url.pathname; // Extract the base route
         const queryParams = url.search; // Extract the query parameters (if needed)
 
-        history.push({
+        navigate({
           pathname: baseRoute,
           search: queryParams,
           state: {
@@ -81,7 +81,7 @@ const EditMTOMilestoneProvider = ({
       } else {
         params.delete('edit-milestone');
         params.delete('select-solutions');
-        history.push({ search: params.toString() });
+        navigate({ search: params.toString() });
       }
       setLeavePage(false);
       setIsModalOpen(false);
@@ -97,7 +97,7 @@ const EditMTOMilestoneProvider = ({
 
   const openEditMilestoneModal = (id: string) => {
     params.set('edit-milestone', id);
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
     setIsModalOpen(true);
   };
 
@@ -156,10 +156,10 @@ const EditMTOMilestoneProvider = ({
             className="margin-right-4 bg-error"
             onClick={() => {
               if (closeDestination) {
-                history.push(closeDestination);
+                navigate(closeDestination);
               } else {
                 params.delete('edit-milestone');
-                history.replace({ search: params.toString() });
+                navigate({ search: params.toString() }, { replace: true });
               }
               setIsModalOpen(false);
               setIsDirty(false);

@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -36,7 +36,7 @@ const Status = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const params = useMemo(() => {
     return new URLSearchParams(history.location.search);
@@ -68,7 +68,7 @@ const Status = () => {
                 status: statusConfig.options[formikValues.status as ModelStatus]
               })
             );
-            history.push(`/models/${modelID}/collaboration-area/`);
+            navigate(`/models/${modelID}/collaboration-area/`);
           }
         })
         .catch(errors => {
@@ -171,7 +171,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelID}/collaboration-area`)
+                        navigate(`/models/${modelID}/collaboration-area`)
                       }
                     >
                       <Icon.ArrowBack

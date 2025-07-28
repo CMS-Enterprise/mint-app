@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -60,7 +60,7 @@ const NonClaimsBasedPayment = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<NonClaimsBasedPaymentFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetNonClaimsBasedPaymentQuery({
     variables: {
@@ -105,16 +105,16 @@ const NonClaimsBasedPayment = () => {
 
     if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
         );
       } else {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
         );
       }
     } else {
-      history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
+      navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
     }
   };
 
@@ -180,7 +180,7 @@ const NonClaimsBasedPayment = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/payment/complexity`
           );
         }}
@@ -386,7 +386,7 @@ const NonClaimsBasedPayment = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

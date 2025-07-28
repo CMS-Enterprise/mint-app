@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { Icon, Link } from '@trussworks/react-uswds';
 import DevLogin from 'wrappers/AuthenticationWrapper/DevLogin';
@@ -22,7 +22,7 @@ const Login = () => {
   let defaultAuth = false;
   const { oktaAuth, authState } = useOktaAuth();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (isLocalAuthEnabled() && window.localStorage[localAuthStorageKey]) {
     defaultAuth = JSON.parse(
@@ -38,13 +38,13 @@ const Login = () => {
   const onSuccess = (tokens: any) => {
     const referringUri = oktaAuth.getOriginalUri();
     oktaAuth.handleLoginRedirect(tokens).then(() => {
-      history.push(referringUri || '/pre-decisional-notice');
+      navigate(referringUri || '/pre-decisional-notice');
     });
   };
 
   useEffect(() => {
     if (authState?.isAuthenticated) {
-      history.replace('/pre-decisional-notice');
+      navigate('/pre-decisional-notice', { replace: true });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

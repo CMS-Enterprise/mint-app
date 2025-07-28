@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -61,7 +61,7 @@ const Authority = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetAuthorityQuery({
     variables: {
@@ -151,7 +151,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
           );
         }}
@@ -328,7 +328,7 @@ const Authority = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        history.push(
+                        navigate(
                           `/models/${modelID}/collaboration-area/task-list/characteristics/targets-and-options`
                         );
                       }}
@@ -343,7 +343,7 @@ const Authority = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

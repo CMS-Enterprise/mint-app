@@ -6,7 +6,7 @@ Link to each task list section and checks if task list sections are locked
 
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'features/ModelPlan/ReadOnly/GeneralCharacteristics';
@@ -123,7 +123,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const { t } = useTranslation('general');
   const { t: p } = useTranslation('prepareForClearance');
   const { t: generalT } = useTranslation('general');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Subscription locks context for task list
   const { lockableSectionLocks } = useContext(SubscriptionContext);
@@ -196,7 +196,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
           );
         }
@@ -288,7 +288,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               type="button"
               className="usa-button usa-button--outline margin-bottom-1"
               onClick={() => {
-                history.push(
+                navigate(
                   `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
                 );
               }}
@@ -314,7 +314,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 if (taskListLocked || readyForClearance) {
                   setModalOpen(true);
                 } else {
-                  history.push(formRoute);
+                  navigate(formRoute);
                 }
               }}
             >

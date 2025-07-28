@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -38,7 +38,7 @@ const LinkDocument = ({
     usePlanTranslation('documents');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
@@ -89,9 +89,9 @@ const LinkDocument = ({
           messageOnNextPage('documentUploadSuccess', name);
 
           if (solutionDetailsLink) {
-            history.push(solutionDetailsLink);
+            navigate(solutionDetailsLink);
           } else {
-            history.push(`/models/${modelID}/collaboration-area/documents`);
+            navigate(`/models/${modelID}/collaboration-area/documents`);
           }
         } else {
           setFileNameError(name);

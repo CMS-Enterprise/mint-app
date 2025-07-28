@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -55,7 +55,7 @@ const Timeline = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
 
   const { data, loading, error } = useGetTimelineQuery({
@@ -153,7 +153,7 @@ const Timeline = () => {
               <Formik
                 initialValues={initialValues}
                 onSubmit={() => {
-                  history.push(`/models/${modelID}/collaboration-area`);
+                  navigate(`/models/${modelID}/collaboration-area`);
                 }}
                 enableReinitialize
                 validateOnBlur={false}
@@ -524,7 +524,7 @@ const Timeline = () => {
                             type="button"
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
-                              history.push(
+                              navigate(
                                 `/models/${modelID}/collaboration-area`
                               )
                             }

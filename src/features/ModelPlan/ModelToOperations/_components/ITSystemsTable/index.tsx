@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Column,
   usePagination as usePaginationTable,
@@ -71,7 +71,7 @@ const ITSystemsTable = ({
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { location } = history;
 
@@ -367,11 +367,12 @@ const ITSystemsTable = ({
                     }
 
                     // Adds scroll param to existing params
-                    const existingParams = new URLSearchParams(
-                      history.location.search
-                    );
+                    const existingParams = new URLSearchParams(location.search);
                     existingParams.set('scroll-to-bottom', 'true');
-                    history.replace({ search: existingParams.toString() });
+                    navigate(
+                      { search: existingParams.toString() },
+                      { replace: true }
+                    );
                   }}
                 >
                   {t('table.moreMilestones', {
@@ -606,7 +607,7 @@ const ITSystemsTable = ({
                       'hide-milestones-without-solutions',
                       hideMilestonesWithoutSolutions ? 'false' : 'true'
                     );
-                    history.replace({ search: params.toString() });
+                    navigate({ search: params.toString() }, { replace: true });
                   }}
                 />
               </Grid>

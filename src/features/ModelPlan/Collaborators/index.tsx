@@ -4,7 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Route,
   Routes,
-  useHistory,
+  useNavigate,
   useLocation,
   useParams
 } from 'react-router-dom';
@@ -75,7 +75,7 @@ export const CollaboratorsContent = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -128,7 +128,7 @@ export const CollaboratorsContent = () => {
             showMessageOnNextPage(
               <SuccessRemovalMessage modelName={modelName} />
             );
-            history.push('/');
+            navigate('/');
           } else {
             refetch();
           }

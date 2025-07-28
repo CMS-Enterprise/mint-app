@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   OperationVariables,
   TypedDocumentNode,
@@ -56,7 +56,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
   config: HandleMutationConfigType
 ): MutationReturnType {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const [destinationURL, setDestinationURL] = useState<string>('');
@@ -70,7 +70,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   useEffect(() => {
     if (destinationURL && !isModalOpen) {
-      history.push(destinationURL);
+      navigate(destinationURL);
     }
   }, [destinationURL, history, isModalOpen]);
 
@@ -81,7 +81,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
         // Don't call mutation if attempting to access a locked section
         if (destination.pathname.includes('locked-task-list-section')) {
           unblock();
-          history.push({
+          navigate({
             pathname: destination.pathname,
             state: destination.state
           });
@@ -107,7 +107,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
         // If no changes, don't call mutation
         if (Object.keys(changes).length === 0) {
           unblock();
-          history.push({
+          navigate({
             pathname: destination.pathname,
             state: destination.state
           });

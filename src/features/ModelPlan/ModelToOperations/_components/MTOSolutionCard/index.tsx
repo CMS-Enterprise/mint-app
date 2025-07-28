@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -30,7 +30,7 @@ const MTOSolutionCard = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { errorMessageInModal, clearMessage } = useMessage();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const params = new URLSearchParams(history.location.search);
 
@@ -49,7 +49,7 @@ const MTOSolutionCard = ({
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-solution', solution.key);
-          history.replace({ search: params.toString() });
+          navigate({ search: params.toString() }, { replace: true });
           clearMessage();
           setIsModalOpen(false);
         }}
@@ -67,7 +67,7 @@ const MTOSolutionCard = ({
         <AddToExistingMilestoneForm
           closeModal={() => {
             params.delete('add-solution', solution.key);
-            history.replace({ search: params.toString() });
+            navigate({ search: params.toString() }, { replace: true });
             clearMessage();
             setIsModalOpen(false);
           }}
@@ -116,7 +116,7 @@ const MTOSolutionCard = ({
               className="margin-right-2"
               onClick={() => {
                 params.set('add-solution', solution.key);
-                history.replace({ search: params.toString() });
+                navigate({ search: params.toString() }, { replace: true });
                 clearMessage();
                 setIsModalOpen(true);
               }}

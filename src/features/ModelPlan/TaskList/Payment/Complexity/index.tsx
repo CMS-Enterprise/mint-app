@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -58,7 +58,7 @@ const Complexity = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ComplexityFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetComplexityQuery({
     variables: {
@@ -104,21 +104,21 @@ const Complexity = () => {
     );
 
     if (hasNonClaimBasedPayment) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
         );
       } else {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
         );
       }
     } else {
-      history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
+      navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
     }
   };
 
@@ -188,7 +188,7 @@ const Complexity = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(
+          navigate(
             `/models/${modelID}/collaboration-area/task-list/payment/recover-payment`
           );
         }}
@@ -381,7 +381,7 @@ const Complexity = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(
+                            navigate(
                               `/models/${modelID}/collaboration-area/task-list`
                             )
                           }

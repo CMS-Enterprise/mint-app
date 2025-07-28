@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useHistory, useParams } from 'react-router-dom';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -121,7 +121,7 @@ export const OpsEvalAndLearningContent = () => {
 
   const formikRef = useRef<FormikProps<OpsEvalAndLearningFormType>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetOpsEvalAndLearningQuery({
     variables: {
@@ -161,11 +161,11 @@ export const OpsEvalAndLearningContent = () => {
 
   const nextPage = () => {
     if (formikRef?.current?.values.iddocSupport) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
       );
     }
@@ -437,7 +437,7 @@ export const OpsEvalAndLearningContent = () => {
                     type="button"
                     className="usa-button usa-button--unstyled"
                     onClick={() =>
-                      history.push(
+                      navigate(
                         `/models/${modelID}/collaboration-area/task-list`
                       )
                     }

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
   useGetMtoCommonSolutionsQuery,
@@ -15,7 +15,7 @@ import './index.scss';
 const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { clearMessage } = useMessage();
@@ -112,7 +112,7 @@ const MTOTableActions = () => {
                   className="display-block margin-bottom-1"
                   outline
                   onClick={() => {
-                    history.push({
+                    navigate({
                       pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
                       state: { scroll: true }
                     });
@@ -171,7 +171,7 @@ const MTOTableActions = () => {
                   className="display-block margin-bottom-1"
                   outline
                   onClick={() => {
-                    history.push({
+                    navigate({
                       pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
                       state: { scroll: true }
                     });
