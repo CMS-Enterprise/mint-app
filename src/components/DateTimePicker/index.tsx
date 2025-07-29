@@ -18,6 +18,11 @@ type DateTimePickerProps = DatePickerProps & {
   className?: string;
 };
 
+/*
+  This component is a wrapper around the ReactDatePicker component.
+  It is used to display a date picker with an optional warning icon and alert. Default is true
+  The warning icon and alert are only displayed if the date is in the past.
+*/
 const DateTimePicker = ({
   id,
   name,
