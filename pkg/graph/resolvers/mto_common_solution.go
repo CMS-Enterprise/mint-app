@@ -27,7 +27,7 @@ func MTOCommonSolutionGetByKeyLOADER(ctx context.Context, key models.MTOCommonSo
 	return loaders.MTOCommonSolution.ByKey.Load(ctx, key)
 }
 
-// MTOCommonSolutionGetByID returns a possible operational Solutions according to it's id
+// MTOCommonSolutionGetByID returns an MTO common solution according to it's id
 func MTOCommonSolutionGetByIDLoader(ctx context.Context, id *uuid.UUID) (*models.MTOCommonSolution, error) {
 	return loaders.MTOCommonSolution.ByID.Load(ctx, *id)
 }

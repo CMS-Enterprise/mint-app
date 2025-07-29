@@ -98,7 +98,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 				return err
 			}
 
-		// This tag type is no longer supported return an error if TagType is possible solution
+		// This tag type is no longer supported return an error if TagType is POSSIBLE_SOLUTION
 		case models.TagTypePossibleSolution:
 			return fmt.Errorf("possible operational solution tag type is no longer supported. Please use MTO common solution instead")
 		}

@@ -113,18 +113,22 @@ func batchMTOCommonSolutionGetByCommonMilestoneKey(ctx context.Context, commonMi
 
 }
 
+// batchMTOCommonSolutionGetByID returns MTO common solutions associated by a list of ids
 func batchMTOCommonSolutionGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOCommonSolution] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolution](ids, err)
 	}
+
 	data, err := storage.MTOCommonSolutionGetByIDLoader(loaders.DataReader.Store, logger, ids)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOCommonSolution](ids, err)
 	}
+
 	getKeyFunc := func(data *models.MTOCommonSolution) uuid.UUID {
 		return data.ID
 	}
+
 	return oneToOneDataLoader(ids, data, getKeyFunc)
 }

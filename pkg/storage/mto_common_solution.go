@@ -53,7 +53,7 @@ func MTOCommonSolutionGetByCommonMilestoneKeyLoader(np sqlutils.NamedPreparer, _
 
 }
 
-// MTOCommonSolutionGetByIDLoader returns all Common Solutions associated by a list of ids
+// MTOCommonSolutionGetByIDLoader returns all MTO common solutions associated by a list of ids
 func MTOCommonSolutionGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolution, error) {
 
 	args := map[string]interface{}{

@@ -198,7 +198,7 @@ func sendPlanDiscussionTagEmails(
 
 			pocEmailAddress, err := pocInfo.EmailAddresses(config.GetSendTaggedPOCEmails(), addressBook.DevTeamEmail)
 			if err != nil {
-				errs = append(errs, err) //non blocking
+				errs = append(errs, err)
 				continue
 			}
 
