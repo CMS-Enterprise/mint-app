@@ -232,7 +232,7 @@ const AppRoutes = () => {
           {/* Read view redirect from legacy Operational Needs Track to new MTO Matrix  */}
           <Redirect
             from="/models/:modelID/read-view/it-solutions"
-            to="/models/:modelID/read-view/model-to-operations"
+            to="/models/:modelID/read-view/milestones"
           />
 
           <ProtectedRoute
