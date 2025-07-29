@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ReactDatePicker, { DatePickerProps } from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Icon, Tooltip } from '@trussworks/react-uswds';
@@ -38,13 +38,6 @@ const DateTimePicker = ({
 
   const datePickerRef = useRef<ReactDatePicker>(null);
 
-  const CustomDivForwardRef: React.ForwardRefRenderFunction<HTMLDivElement> = (
-    { ...tooltipProps },
-    ref
-  ) => <div ref={ref} {...tooltipProps} />;
-
-  const CustomDiv = forwardRef<HTMLDivElement>(CustomDivForwardRef);
-
   return (
     <div>
       <div className={classNames('display-flex margin-top-1', className)}>
@@ -63,7 +56,10 @@ const DateTimePicker = ({
 
         {isDateInPast && alertIcon && (
           <div className="mint-datetime-picker-warning">
-            <Tooltip label={generalT('dateWarning')} asCustom={CustomDiv}>
+            <Tooltip
+              label={generalT('dateWarning')}
+              className="padding-0 margin-0 margin-top-1 bg-transparent outline-0"
+            >
               <Icon.Warning
                 size={3}
                 className="text-warning-dark"

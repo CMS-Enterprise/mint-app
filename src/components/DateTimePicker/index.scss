@@ -27,3 +27,13 @@
   max-width: 20rem !important;
   width: max-content !important;
 }
+
+/* Make tooltip not focusable */
+.mint-datetime-picker-warning .usa-tooltip {
+  pointer-events: none;
+}
+
+/* Re-enable pointer events for the icon itself if needed */
+.mint-datetime-picker-warning .usa-icon {
+  pointer-events: auto;
+}

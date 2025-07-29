@@ -74,12 +74,13 @@ exports[`DateTimePicker Component > matches snapshot with alertText disabled 1`]
           class="usa-tooltip"
           data-testid="tooltipWrapper"
         >
-          <div
+          <button
             aria-describedby="tooltip-«r15»"
-            class="usa-tooltip__trigger"
+            class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
             title=""
+            type="button"
           >
             <svg
               aria-label="Date is in the past"
@@ -95,7 +96,7 @@ exports[`DateTimePicker Component > matches snapshot with alertText disabled 1`]
                 d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
               />
             </svg>
-          </div>
+          </button>
           <span
             aria-hidden="true"
             class="usa-tooltip__body"
@@ -255,12 +256,13 @@ exports[`DateTimePicker Component > matches snapshot with past date warning 1`] 
           class="usa-tooltip"
           data-testid="tooltipWrapper"
         >
-          <div
+          <button
             aria-describedby="tooltip-«r11»"
-            class="usa-tooltip__trigger"
+            class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
             title=""
+            type="button"
           >
             <svg
               aria-label="Date is in the past"
@@ -276,7 +278,7 @@ exports[`DateTimePicker Component > matches snapshot with past date warning 1`] 
                 d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
               />
             </svg>
-          </div>
+          </button>
           <span
             aria-hidden="true"
             class="usa-tooltip__body"
