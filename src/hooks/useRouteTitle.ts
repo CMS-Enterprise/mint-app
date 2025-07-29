@@ -23,7 +23,7 @@ const excludedPaths: string[] = [
 
 export const isExcludedPath = (path: string) =>
   excludedPaths.some(excludedPath =>
-    path.match(new RegExp(`^/models/[^/]+${excludedPath.replace('/', '\\/')}$`))
+    path.match(new RegExp(`^/models/[^/]+${excludedPath}$`))
   );
 
 const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
