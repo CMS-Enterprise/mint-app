@@ -13,8 +13,8 @@ type DateTimePickerProps = DatePickerProps & {
   label: string;
   formValue: string | undefined | null;
   isDateInPast: boolean;
-  alertIcon?: boolean;
-  alertText?: boolean;
+  alertIcon?: boolean; // Whether to show the warning icon
+  alertText?: boolean; // Whether to show the warning text. Sometimes we want to render the warning text under a different parent/UI element - outside the scope of this component
   className?: string;
 };
 
