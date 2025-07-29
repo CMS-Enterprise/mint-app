@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import ReactDatePicker from 'react-datepicker';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -13,7 +14,7 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetTimelineQuery,
   TypedUpdateTimelineDocument,
@@ -26,6 +27,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
+import DateTimePicker from 'components/DateTimePicker';
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -36,6 +38,7 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import { isDateInPast } from 'utils/date';
 
 import './index.scss';
+import 'react-datepicker/dist/react-datepicker.css';
 
 type TimelineFormType = GetTimelineQuery['modelPlan']['timeline'];
 
@@ -103,6 +106,8 @@ const Timeline = () => {
     highLevelNote: highLevelNote ?? '',
     status
   };
+
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -222,7 +227,7 @@ const Timeline = () => {
                                 className="font-body-sm line-height-sans-4 text-normal"
                               >
                                 <div className="datepicker__wrapper display-block">
-                                  <MINTDatePicker
+                                  {/* <MINTDatePicker
                                     className="margin-top-0"
                                     fieldName="completeICIP"
                                     id="timeline-completeICIP"
@@ -236,6 +241,34 @@ const Timeline = () => {
                                       values.completeICIP
                                     }
                                     half
+                                  /> */}
+
+                                  <Field
+                                    as={DateTimePicker}
+                                    disabled={loading}
+                                    id="completeICIP"
+                                    name="completeICIP"
+                                    label={timelineT('completeICIP.label')}
+                                    // value={
+                                    //   values.completeICIP
+                                    //     ? new Date(values.completeICIP)
+                                    //     : null
+                                    // }
+                                    // selected={
+                                    //   values.completeICIP
+                                    //     ? new Date(values.completeICIP)
+                                    //     : null
+                                    // }
+                                    // onChange={(date: Date | null) =>
+                                    //   setFieldValue('completeICIP', date)
+                                    // }
+                                    value={values.completeICIP}
+                                    onChange={(date: Date | null) =>
+                                      setFieldValue('completeICIP', date)
+                                    }
+                                    isDateInPast={isDateInPast(
+                                      values.completeICIP
+                                    )}
                                   />
                                 </div>
                               </ProcessListHeading>

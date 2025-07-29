@@ -54,6 +54,7 @@ import Alert from 'components/Alert';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
+import DateTimePicker from 'components/DateTimePicker';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -1048,7 +1049,7 @@ const EditSolutionForm = ({
                         </HelpText>
 
                         <div className="position-relative">
-                          <DatePickerFormatted
+                          {/* <DatePickerFormatted
                             {...field}
                             aria-labelledby={convertCamelCaseToKebabCase(
                               'neededBy'
@@ -1056,16 +1057,27 @@ const EditSolutionForm = ({
                             id="solution-needed-by"
                             defaultValue={field.value}
                             suppressMilliseconds
+                          /> */}
+
+                          <DateTimePicker
+                            id="neededBy"
+                            name="neededBy"
+                            label={mtoSolutionT('neededBy.label')}
+                            value={field.value}
+                            onChange={(date: Date | null) =>
+                              field.onChange(date)
+                            }
+                            isDateInPast={isDateInPast(watch('neededBy'))}
                           />
 
-                          {isDateInPast(watch('neededBy')) && (
+                          {/* {isDateInPast(watch('neededBy')) && (
                             <DatePickerWarning
                               label={generalT('dateWarning')}
                             />
-                          )}
+                          )} */}
                         </div>
 
-                        {isDateInPast(watch('neededBy')) && (
+                        {/* {isDateInPast(watch('neededBy')) && (
                           <Alert
                             type="warning"
                             className="margin-top-2"
@@ -1074,7 +1086,7 @@ const EditSolutionForm = ({
                           >
                             {generalT('dateWarning')}
                           </Alert>
-                        )}
+                        )} */}
                       </FormGroup>
                     )}
                   />
