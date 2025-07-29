@@ -11,8 +11,10 @@ type DateTimePickerProps = DatePickerProps & {
   id: string;
   name: string;
   label: string;
-  value: string | undefined | null;
+  formValue: string | undefined | null;
   isDateInPast: boolean;
+  alertIcon?: boolean;
+  alertText?: boolean;
   className?: string;
 };
 
@@ -20,8 +22,10 @@ const DateTimePicker = ({
   id,
   name,
   label,
-  value,
+  formValue,
   isDateInPast,
+  alertIcon = true,
+  alertText = true,
   className,
   ...props
 }: DateTimePickerProps) => {
@@ -38,10 +42,6 @@ const DateTimePicker = ({
 
   const CustomDiv = forwardRef<HTMLDivElement>(CustomDivForwardRef);
 
-  const classes = classNames('mint-datepicker-warning', {
-    'margin-left-1': isDateInPast
-  });
-
   return (
     <div>
       <div className={classNames('display-flex margin-top-1', className)}>
@@ -51,17 +51,18 @@ const DateTimePicker = ({
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}
-          selected={value ? new Date(value) : null}
-          aria-label="Date picker"
+          selected={formValue ? new Date(formValue) : null}
+          aria-label={generalT('datePicker.label')}
+          popperPlacement="bottom-start"
         />
 
-        {isDateInPast && (
-          <div className={classes}>
+        {isDateInPast && alertIcon && (
+          <div className="mint-datetime-picker-warning">
             <Tooltip label={generalT('dateWarning')} asCustom={CustomDiv}>
               <Icon.Warning
                 size={3}
                 className="text-warning-dark"
-                aria-label="warning"
+                aria-label={generalT('datePicker.warning')}
               />
             </Tooltip>
           </div>
@@ -71,20 +72,22 @@ const DateTimePicker = ({
           type="button"
           unstyled
           className="text-black padding-0 margin-left-1 margin-top-0"
-          aria-label="Open date picker"
+          aria-label={generalT('datePicker.open')}
+          disabled={props.disabled}
           onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}
         >
           <Icon.CalendarToday size="3" />
         </Button>
       </div>
 
-      {isDateInPast && (
+      {isDateInPast && alertText && (
         <Alert
           type="warning"
           className="margin-top-2"
           headingLevel="h4"
+          role="alert"
           slim
-          aria-label="Date is in the past"
+          aria-label={generalT('datePicker.warning')}
         >
           {generalT('dateWarning')}
         </Alert>

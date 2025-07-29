@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import ReactDatePicker from 'react-datepicker';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
@@ -106,8 +105,6 @@ const Timeline = () => {
     highLevelNote: highLevelNote ?? '',
     status
   };
-
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -227,49 +224,34 @@ const Timeline = () => {
                                 className="font-body-sm line-height-sans-4 text-normal"
                               >
                                 <div className="datepicker__wrapper display-block">
-                                  {/* <MINTDatePicker
-                                    className="margin-top-0"
-                                    fieldName="completeICIP"
-                                    id="timeline-completeICIP"
-                                    label={timelineT('completeICIP.label')}
-                                    placeHolder
-                                    handleOnBlur={handleOnBlur}
-                                    formikValue={values.completeICIP}
-                                    value={completeICIP}
-                                    shouldShowWarning={
-                                      initialValues.completeICIP !==
-                                      values.completeICIP
-                                    }
-                                    half
-                                  /> */}
+                                  <Grid desktop={{ col: 6 }}>
+                                    <Field
+                                      as={DateTimePicker}
+                                      disabled={loading}
+                                      id="completeICIP"
+                                      name="completeICIP"
+                                      label={timelineT('completeICIP.label')}
+                                      formValue={values.completeICIP}
+                                      onChange={(date: Date | null) =>
+                                        setFieldValue('completeICIP', date)
+                                      }
+                                      isDateInPast={isDateInPast(
+                                        values.completeICIP
+                                      )}
+                                      alertText={false}
+                                    />
+                                  </Grid>
 
-                                  <Field
-                                    as={DateTimePicker}
-                                    disabled={loading}
-                                    id="completeICIP"
-                                    name="completeICIP"
-                                    label={timelineT('completeICIP.label')}
-                                    // value={
-                                    //   values.completeICIP
-                                    //     ? new Date(values.completeICIP)
-                                    //     : null
-                                    // }
-                                    // selected={
-                                    //   values.completeICIP
-                                    //     ? new Date(values.completeICIP)
-                                    //     : null
-                                    // }
-                                    // onChange={(date: Date | null) =>
-                                    //   setFieldValue('completeICIP', date)
-                                    // }
-                                    value={values.completeICIP}
-                                    onChange={(date: Date | null) =>
-                                      setFieldValue('completeICIP', date)
-                                    }
-                                    isDateInPast={isDateInPast(
-                                      values.completeICIP
-                                    )}
-                                  />
+                                  {isDateInPast(values.completeICIP) && (
+                                    <Alert
+                                      type="warning"
+                                      className="margin-top-2"
+                                      headingLevel="h4"
+                                      slim
+                                    >
+                                      {miscellaneousT('dateWarning')}
+                                    </Alert>
+                                  )}
                                 </div>
                               </ProcessListHeading>
                             </ProcessListItem>

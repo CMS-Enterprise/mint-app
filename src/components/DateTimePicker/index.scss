@@ -9,11 +9,11 @@
   padding: 0.5rem;
 }
 
-.mint-datepicker-warning {
+.mint-datetime-picker-warning {
     position: absolute;
-    right: 40px !important;
-    bottom: 3px !important;
+    right: 40px;
     height: 35px;
+    margin-top: 1px;
     display: flex;
     align-items: center;
 }
