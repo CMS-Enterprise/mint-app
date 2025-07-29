@@ -13,10 +13,10 @@ describe('Read view - Data exchange approach', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/data-exchange-approach`]}
+        initialEntries={[`/models/${modelID}/read-view/data-exchange-approach`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/data-exchange-approach">
+          <Route path="/models/:modelID/read-view/data-exchange-approach">
             <ReadOnlyDataExchangeApproach modelID={modelID} />
           </Route>
         </MockedProvider>

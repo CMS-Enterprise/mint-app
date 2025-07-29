@@ -14,11 +14,11 @@ describe('Read Only Model Plan Summary -- Participants And Providers', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/participants-and-providers`
+          `/models/${modelID}/read-view/participants-and-providers`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/participants-and-providers">
+          <Route path="/models/:modelID/read-view/participants-and-providers">
             <ReadOnlyParticipantsAndProviders modelID={modelID} />
           </Route>
         </MockedProvider>
@@ -36,11 +36,11 @@ describe('Read Only Model Plan Summary -- Participants And Providers', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/participants-and-providers`
+          `/models/${modelID}/read-view/participants-and-providers`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/participants-and-providers">
+          <Route path="/models/:modelID/read-view/participants-and-providers">
             <ReadOnlyParticipantsAndProviders modelID={modelID} />
           </Route>
         </MockedProvider>

@@ -93,83 +93,83 @@ export const ReadOnlyComponents = (
 ): subComponentsProps => {
   return {
     'model-basics': {
-      route: `/models/${modelID}/read-only/model-basics`,
+      route: `/models/${modelID}/read-view/model-basics`,
       helpRoute: '/help-and-knowledge/sample-model-plan/model-basics',
       group: 'model-plan',
       component: <ReadOnlyModelBasics modelID={modelID} />
     },
     'model-timeline': {
-      route: `/models/${modelID}/read-only/model-timeline`,
+      route: `/models/${modelID}/read-view/model-timeline`,
       helpRoute: '/help-and-knowledge/sample-model-plan/model-timeline',
       group: 'model-plan',
       component: <ReadOnlyModelTimeline modelID={modelID} />
     },
     'general-characteristics': {
-      route: `/models/${modelID}/read-only/general-characteristics`,
+      route: `/models/${modelID}/read-view/general-characteristics`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/general-characteristics',
       group: 'model-plan',
       component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
     },
     'participants-and-providers': {
-      route: `/models/${modelID}/read-only/participants-and-providers`,
+      route: `/models/${modelID}/read-view/participants-and-providers`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/participants-and-providers',
       group: 'model-plan',
       component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
     },
     beneficiaries: {
-      route: `/models/${modelID}/read-only/beneficiaries`,
+      route: `/models/${modelID}/read-view/beneficiaries`,
       helpRoute: '/help-and-knowledge/sample-model-plan/beneficiaries',
       group: 'model-plan',
       component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
-      route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
+      route: `/models/${modelID}/read-view/operations-evaluation-and-learning`,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/operations-evaluation-and-learning',
       group: 'model-plan',
       component: <ReadOnlyOpsEvalAndLearning modelID={modelID} />
     },
     payment: {
-      route: `/models/${modelID}/read-only/payment`,
+      route: `/models/${modelID}/read-view/payment`,
       helpRoute: '/help-and-knowledge/sample-model-plan/payment',
       group: 'model-plan',
       component: <ReadOnlyPayments modelID={modelID} />
     },
     'data-exchange-approach': {
-      route: `/models/${modelID}/read-only/data-exchange-approach`,
+      route: `/models/${modelID}/read-view/data-exchange-approach`,
       helpRoute: '/help-and-knowledge/sample-model-plan/data-exchange-approach',
       component: <ReadOnlyDataExchangeApproach modelID={modelID} />,
       group: 'model-design-activities'
     },
     milestones: {
-      route: `/models/${modelID}/read-only/milestones`,
+      route: `/models/${modelID}/read-view/milestones`,
       component: <ReadOnlyMTOMilestones modelID={modelID} />,
       helpRoute: '/help-and-knowledge/sample-model-plan/milestones',
       group: 'model-to-operations'
     },
     'solutions-and-it-systems': {
-      route: `/models/${modelID}/read-only/solutions-and-it-systems`,
+      route: `/models/${modelID}/read-view/solutions-and-it-systems`,
       component: <ReadOnlyMTOSolutions modelID={modelID} />,
       helpRoute:
         '/help-and-knowledge/sample-model-plan/solutions-and-it-systems',
       group: 'model-to-operations'
     },
     team: {
-      route: `/models/${modelID}/read-only/team`,
+      route: `/models/${modelID}/read-view/team`,
       helpRoute: '/help-and-knowledge/sample-model-plan/team',
       component: <ReadOnlyTeamInfo modelID={modelID} />,
       group: 'other-model-info'
     },
     discussions: {
-      route: `/models/${modelID}/read-only/discussions`,
+      route: `/models/${modelID}/read-view/discussions`,
       helpRoute: '/help-and-knowledge/sample-model-plan/discussions',
       component: <ReadOnlyDiscussions modelID={modelID} />,
       group: 'other-model-info'
     },
     documents: {
-      route: `/models/${modelID}/read-only/documents`,
+      route: `/models/${modelID}/read-view/documents`,
       helpRoute: '/help-and-knowledge/sample-model-plan/documents',
       component: (
         <ReadOnlyDocuments modelID={modelID} isHelpArticle={isHelpArticle} />
@@ -177,7 +177,7 @@ export const ReadOnlyComponents = (
       group: 'other-model-info'
     },
     'crs-and-tdl': {
-      route: `/models/${modelID}/read-only/crs-and-tdl`,
+      route: `/models/${modelID}/read-view/crs-and-tdl`,
       helpRoute: '/help-and-knowledge/sample-model-plan/crs-and-tdl',
       component: <ReadOnlyCRTDLs />,
       group: 'other-model-info'

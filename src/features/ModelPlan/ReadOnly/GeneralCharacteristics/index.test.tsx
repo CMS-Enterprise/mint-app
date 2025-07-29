@@ -14,11 +14,11 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/general-characteristics`
+          `/models/${modelID}/read-view/general-characteristics`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/general-characteristics">
+          <Route path="/models/:modelID/read-view/general-characteristics">
             <ReadOnlyGeneralCharacteristics modelID={modelID} />
           </Route>
         </MockedProvider>
@@ -40,11 +40,11 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/general-characteristics`
+          `/models/${modelID}/read-view/general-characteristics`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/general-characteristics">
+          <Route path="/models/:modelID/read-view/general-characteristics">
             <ReadOnlyGeneralCharacteristics modelID={modelID} />
           </Route>
         </MockedProvider>

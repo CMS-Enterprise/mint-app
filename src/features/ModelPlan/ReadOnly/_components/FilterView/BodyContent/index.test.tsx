@@ -155,12 +155,12 @@ describe('Read Only Filtered View Body Content', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics?filter-view=cmmi`
+          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/model-basics?filter-view=cmmi`
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/:subinfo">
+            <Route path="/models/:modelID/read-view/:subinfo">
               <ReadOnly />
             </Route>
           </Provider>

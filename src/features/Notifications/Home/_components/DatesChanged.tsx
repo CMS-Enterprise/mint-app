@@ -117,7 +117,7 @@ const DatesChanged = ({
         }
       )}
       <UswdsReactLink
-        to={`/models/${modelPlanID}/read-only`}
+        to={`/models/${modelPlanID}/read-view`}
         className="text-bold"
       >
         {notificationsT('index.datesChanged.cta')}
