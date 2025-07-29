@@ -362,7 +362,9 @@ func analyzeMTOChanges(audits []*models.AuditChange) (*models.AnalyzedMTOUpdates
 			readyForReview = true
 		}
 		if content, ok := audit.Fields["content"]; ok && content.New != nil {
-			contentUpdates = append(contentUpdates, content.New.(string))
+			if str, ok := content.New.(string); ok {
+				contentUpdates = append(contentUpdates, str)
+			}
 		}
 	}
 
