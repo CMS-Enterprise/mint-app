@@ -79,7 +79,7 @@ const DateTimePicker = ({
           className="text-black padding-0 margin-left-1 margin-top-0"
           aria-label={generalT('datePicker.open')}
           disabled={props.disabled}
-          onClick={() => (isOpen ? setIsOpen(false) : setIsOpen(true))}
+          onClick={() => setIsOpen(!isOpen)}
         >
           <Icon.CalendarToday size="3" />
         </Button>

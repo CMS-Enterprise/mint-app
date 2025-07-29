@@ -230,10 +230,7 @@ const Timeline = () => {
                                     <Label
                                       htmlFor="timeline-completeICIP"
                                       className={classNames(
-                                        'usa-legend margin-top-0',
-                                        {
-                                          'text-normal': false
-                                        }
+                                        'usa-legend margin-top-0'
                                       )}
                                     >
                                       {timelineT('completeICIP.label')}
@@ -241,7 +238,7 @@ const Timeline = () => {
 
                                     <div
                                       className="usa-hint"
-                                      id="appointment-date-hint"
+                                      id="timeline-completeICIP-hint"
                                     >
                                       {miscellaneousT('datePlaceholder')}
                                     </div>
