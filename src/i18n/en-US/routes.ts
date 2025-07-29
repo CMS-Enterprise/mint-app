@@ -207,7 +207,6 @@ const routes = {
     'chronic-conditions-warehouse':
       'Help and knowledge center solution - Chronic Conditions Warehouse',
     'cms-box': 'Help and knowledge center solution - CMS Box',
-    'cms-qualtrics': 'Help and knowledge center solution - CMS Qualtrics',
     'consolidated-business-operations-support-center':
       'Help and knowledge center solution - Consolidated Business Operations Support Center',
     'cpi-vetting': 'Help and knowledge center solution - CPI Vetting',

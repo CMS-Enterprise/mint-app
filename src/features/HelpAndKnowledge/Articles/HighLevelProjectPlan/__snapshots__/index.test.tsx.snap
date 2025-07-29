@@ -92,7 +92,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
           Click to expand each accordion to reveal more information about each phase within the project plan.
         </p>
         <div
-          class="usa-accordion"
+          class="usa-accordion margin-bottom-4"
           data-allow-multiple="true"
           data-testid="accordion"
         >
@@ -1016,13 +1016,6 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       href="/help-and-knowledge/high-level-project-plan?solution=grant-solutions&section=about"
                     >
                       GrantSolutions
-                    </a>
-                    , 
-                    <a
-                      class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=cms-qualtrics&section=about"
-                    >
-                      CMS Qualtrics
                     </a>
                     , 
                     <a

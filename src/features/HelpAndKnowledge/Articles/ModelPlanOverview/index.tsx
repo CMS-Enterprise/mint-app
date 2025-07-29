@@ -15,6 +15,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 type ModelPlanOverviewContentProps = {
@@ -115,6 +116,8 @@ export const ModelPlanOverview = () => {
             />
 
             <ModelPlanOverviewContent help />
+
+            <LatestContentUpdate file="modelPlanOverview.ts" />
           </div>
         </div>
       </MainContent>

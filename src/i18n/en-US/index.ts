@@ -45,6 +45,15 @@ import modelToOperations, {
   modelToOperationsMisc
 } from './modelPlan/modelToOperations';
 import mtoCategory from './modelPlan/mtoCategory';
+import mtoCommonSolutionContact, {
+  mtoCommonSolutionContactMisc
+} from './modelPlan/mtoCommonSolutionContact';
+import mtoCommonSolutionContractor, {
+  mtoCommonSolutionContractorMisc
+} from './modelPlan/mtoCommonSolutionContractor';
+import mtoCommonSolutionSystemOwner, {
+  mtoCommonSolutionSystemOwnerMisc
+} from './modelPlan/mtoCommonSolutionSystemOwner';
 import mtoMilestone from './modelPlan/mtoMilestone';
 import mtoSolution from './modelPlan/mtoSolution';
 import operationalNeeds from './modelPlan/operationalNeeds';
@@ -127,6 +136,12 @@ const enUS = {
   modelToOperationsMisc,
   mtoCategory,
   mtoMilestone,
+  mtoCommonSolutionContact,
+  mtoCommonSolutionContactMisc,
+  mtoCommonSolutionContractor,
+  mtoCommonSolutionContractorMisc,
+  mtoCommonSolutionSystemOwner,
+  mtoCommonSolutionSystemOwnerMisc,
   mtoSolution,
   operationalNeeds,
   solutions,

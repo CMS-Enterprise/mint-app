@@ -41,36 +41,24 @@
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "sqlfluff.config": "${workspaceFolder}/.sqlfluff",
-  "sqlfluff.dialect": "mysql",
-  "sqlfluff.env.environmentVariables": [
-    {
-      "key": "example_key",
-      "value": "example_value"
-    }
-  ],
-  "sqlfluff.env.customDotEnvFiles": [
-    "${workspaceFolder}/example.env"
-  ],
-  "sqlfluff.env.useDotEnvFile": true,
-  "sqlfluff.excludeRules": ["L009"],
-  "sqlfluff.executablePath": "/opt/homebrew/bin/sqlfluff",
-  "sqlfluff.ignoreLocalConfig": false,
-  "sqlfluff.ignoreParsing": false,
-  "sqlfluff.rules": [],
-  "sqlfluff.suppressNotifications": false,
-  "sqlfluff.workingDirectory": "",
-  /* Linter */
-  "sqlfluff.linter.arguments": [],
-  "sqlfluff.linter.run": "onType",
-  "sqlfluff.linter.diagnosticSeverity": "error",
-  "sqlfluff.linter.diagnosticSeverityByRule": [
-    {
-      "rule": "L010",
-      "severity": "warning"
-    }
-  ],
-  "sqlfluff.linter.lintEntireProject": true,
-  /* Formatter */
-  "sqlfluff.format.arguments": ["--FIX-EVEN-UNPARSABLE"],
-  "sqlfluff.format.enabled": true,
+		// #region Cspell Settings
+    "cSpell.enabled": true,
+      "cSpell.diagnosticLevel": "Hint", // This makes it so spelling doesn't show up in the problems tab, but it isn't as obvious in the editor. Need to handle that in theme customization levels
+		"cSpell.customDictionaries": {
+			"project-words": {
+			  "name": "project-words",
+			  "path": "${workspaceFolder}/project_words.txt",
+			  "description": "Words used in this project",
+			  "addWords": true,
+        "scope": "workspace"
+			},
+			"mint spelling file": {
+				"name": "Mint Spelling file",
+				"path": "${workspaceFolder}/.spelling",
+				"description": "the .spelling file part of the mint repo. Used by the spell check linter",
+				"addWords": true,
+				"scope": "workspace"
+			}
+		},
+    // #endregion Cspell Settings
 }

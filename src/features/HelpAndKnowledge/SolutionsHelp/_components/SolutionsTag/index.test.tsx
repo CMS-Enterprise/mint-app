@@ -1,8 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
-
-import { OperationalSolutionCategories } from 'types/operationalSolutionCategories';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 
@@ -17,7 +16,7 @@ describe('Operation Solution Help Tag', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
             route={operationalSolutionCategoryMap.data}
-            category={OperationalSolutionCategories.DATA}
+            category={MtoCommonSolutionSubject.DATA}
           />
         </Route>
       </MemoryRouter>
@@ -29,7 +28,7 @@ describe('Operation Solution Help Tag', () => {
     expect(tag).toHaveTextContent('Data');
     expect(tag).toHaveAttribute(
       'href',
-      '/help-and-knowledge/operational-solutions?category=data'
+      '/help-and-knowledge/operational-solutions?category=DATA'
     );
   });
 
@@ -41,7 +40,7 @@ describe('Operation Solution Help Tag', () => {
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionsTag
             route={operationalSolutionCategoryMap.data}
-            category={OperationalSolutionCategories.DATA}
+            category={MtoCommonSolutionSubject.DATA}
           />
         </Route>
       </MemoryRouter>

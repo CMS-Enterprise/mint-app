@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import setup from 'tests/util';
 
-import { helpSolutions } from '../../solutionsMap';
+import { helpSolutionsArray } from '../../solutionsMap';
 
 import SolutionHelpCardGroup from './index';
 
@@ -15,7 +15,7 @@ describe('Operation Solution Help Card Group', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionHelpCardGroup
-            solutions={helpSolutions}
+            solutions={helpSolutionsArray}
             setResultsNum={() => null}
           />
         </Route>
@@ -46,7 +46,7 @@ describe('Operation Solution Help Card Group', () => {
       >
         <Route path="/help-and-knowledge/operational-solutions">
           <SolutionHelpCardGroup
-            solutions={helpSolutions}
+            solutions={helpSolutionsArray}
             setResultsNum={() => null}
           />
         </Route>

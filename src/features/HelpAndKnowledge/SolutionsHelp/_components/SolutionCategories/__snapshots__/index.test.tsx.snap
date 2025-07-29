@@ -52,7 +52,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Applications and participant interaction"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-aco-and-kidney"
+                  href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
                 >
                   Learn more
                   <svg
@@ -103,7 +103,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Applications and participant interaction"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=applications-and-participation-interaction-non-aco"
+                  href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS"
                 >
                   Learn more
                   <svg
@@ -149,7 +149,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Communication tools and help desk"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=communication-tools-and-help-desk"
+                  href="/help-and-knowledge/operational-solutions?category=COMMUNICATION_TOOLS_AND_HELP_DESK"
                 >
                   Learn more
                   <svg
@@ -195,7 +195,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Contract vehicles"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=contract-vehicles"
+                  href="/help-and-knowledge/operational-solutions?category=CONTRACT_VEHICLES"
                 >
                   Learn more
                   <svg
@@ -241,7 +241,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Data"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=data"
+                  href="/help-and-knowledge/operational-solutions?category=DATA"
                 >
                   Learn more
                   <svg
@@ -287,7 +287,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Evaluation and review"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=evaluation-and-review"
+                  href="/help-and-knowledge/operational-solutions?category=EVALUATION_AND_REVIEW"
                 >
                   Learn more
                   <svg
@@ -333,7 +333,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Learning"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=learning"
+                  href="/help-and-knowledge/operational-solutions?category=LEARNING"
                 >
                   Learn more
                   <svg
@@ -379,7 +379,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Legal"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=legal"
+                  href="/help-and-knowledge/operational-solutions?category=LEGAL"
                 >
                   Learn more
                   <svg
@@ -425,7 +425,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Medicare Advantage and Part D"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=medicare-advantage-and-part-d"
+                  href="/help-and-knowledge/operational-solutions?category=MEDICARE_ADVANTAGE_AND_PART_D"
                 >
                   Learn more
                   <svg
@@ -471,7 +471,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Medicare Fee-for-Service"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=medicare-fee-for-service"
+                  href="/help-and-knowledge/operational-solutions?category=MEDICARE_FEE_FOR_SERVICE"
                 >
                   Learn more
                   <svg
@@ -517,7 +517,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Payments and financials"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=payments-and-financials"
+                  href="/help-and-knowledge/operational-solutions?category=PAYMENTS_AND_FINANCIALS"
                 >
                   Learn more
                   <svg
@@ -563,7 +563,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Quality"
                   class="usa-link display-flex flex-align-center"
-                  href="/help-and-knowledge/operational-solutions?category=quality"
+                  href="/help-and-knowledge/operational-solutions?category=QUALITY"
                 >
                   Learn more
                   <svg

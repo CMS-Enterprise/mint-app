@@ -1,0 +1,29 @@
+meta {
+  name: Delete MTO System Owner
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation deleteMTOCommonSolutionSystemOwner($id: UUID!) {
+    deleteMTOCommonSolutionSystemOwner(id: $id) {
+      id
+      key
+      ownerType
+      cmsComponent
+      createdBy
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{systemOwnerId}}"
+  }
+}

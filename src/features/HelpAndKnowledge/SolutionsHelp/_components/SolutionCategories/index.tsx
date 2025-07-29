@@ -2,11 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { OperationalSolutionCategoryRoute } from 'types/operationalSolutionCategories';
+import { getKeys } from 'types/translation';
 
-import { operationalSolutionCategoryMap } from '../../solutionsMap';
 import CategoryCard from '../CategoryCard';
 
 type OperationalSolutionsHelpProps = {
@@ -33,7 +33,7 @@ const OperationalSolutionsHelp = ({
         </p>
 
         <CardGroup className={className}>
-          {Object.keys(operationalSolutionCategoryMap).map(key => {
+          {getKeys(MtoCommonSolutionSubject).map(key => {
             return (
               <Grid
                 tablet={{ col: 6 }}
@@ -41,11 +41,7 @@ const OperationalSolutionsHelp = ({
                 key={key}
                 className="display-flex flex-align-stretch"
               >
-                <CategoryCard
-                  key={key}
-                  category={t(`categories.${key}.header`)}
-                  route={key as OperationalSolutionCategoryRoute}
-                />
+                <CategoryCard categoryKey={key as MtoCommonSolutionSubject} />
               </Grid>
             );
           })}

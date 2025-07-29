@@ -25,7 +25,6 @@ const (
 	MTOCSKCdx            MTOCommonSolutionKey = "CDX"
 	MTOCSKCcw            MTOCommonSolutionKey = "CCW"
 	MTOCSKCmsBox         MTOCommonSolutionKey = "CMS_BOX"
-	MTOCSKCmsQualtrics   MTOCommonSolutionKey = "CMS_QUALTRICS"
 	MTOCSKCbosc          MTOCommonSolutionKey = "CBOSC"
 	MTOCSKCpiVetting     MTOCommonSolutionKey = "CPI_VETTING"
 	MTOCSKEft            MTOCommonSolutionKey = "EFT"
@@ -69,6 +68,10 @@ const (
 	MTOCSKOact           MTOCommonSolutionKey = "OACT"
 	MTOCSKQpp            MTOCommonSolutionKey = "QPP"
 	MTOCSKPam            MTOCommonSolutionKey = "PAM"
+	MTOCSKNcqa           MTOCommonSolutionKey = "NCQA"
+	MTOCSKRmd            MTOCommonSolutionKey = "RMD"
+	MTOCSKMsForms        MTOCommonSolutionKey = "MS_FORMS"
+	MTOCSKResdacCmds     MTOCommonSolutionKey = "RESDAC_CMDS"
 )
 
 type MTOCommonSolutionSubject string

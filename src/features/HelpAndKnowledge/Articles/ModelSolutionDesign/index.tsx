@@ -22,6 +22,7 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 export const ModelSolutionDesign = () => {
@@ -309,9 +310,10 @@ export const ModelSolutionDesign = () => {
               ))}
             </ol>
           </Grid>
+
+          <LatestContentUpdate file="modelSolutionDesign.ts" />
         </GridContainer>
       </MainContent>
-
       <RelatedArticles
         currentArticle={HelpArticle.MODEL_SOLUTION_DESIGN}
         specificArticles={[

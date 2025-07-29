@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { HelpSolutionType } from '../../solutionsMap';
-import GenericTimeline from '../Solutions/Generic/timeline';
+import GenericTimeline from '../Solutions/Generic/Timeline';
 
 export const Timeline = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');

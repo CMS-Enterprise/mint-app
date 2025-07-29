@@ -1,0 +1,28 @@
+meta {
+  name: GetMTO Contractor
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetMTOCommonSolutionContractor ($id: UUID!) {
+    mtoCommonSolutionContractor(id: $id) {
+      id
+      key
+      contractTitle
+      contractorName
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{contractorId}}"
+  }
+}

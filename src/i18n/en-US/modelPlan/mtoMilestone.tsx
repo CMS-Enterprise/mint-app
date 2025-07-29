@@ -176,7 +176,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       CCW: 'Chronic Conditions Warehouse',
       CDAC: 'CMMI Data Aggregation Contract',
       CMS_BOX: 'CMS Box',
-      CMS_QUALTRICS: 'CMS Qualtrics',
       CBOSC: 'Consolidated Business Operations Support Center',
       CPI_VETTING: 'CPI Vetting',
       EFT: 'Electronic File Transfer',
@@ -217,7 +216,12 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       DDPS: 'Drug Data Processing System',
       OACT: 'Office of the Actuary',
       QPP: 'Quality Payment Program',
-      PAM: 'Patient Activation Measure'
+      PAM: 'Patient Activation Measure',
+      NCQA: 'National Committee for Quality Assurance',
+      RMD: 'Rapid Measure Development',
+      MS_FORMS: 'Microsoft Forms',
+      RESDAC_CMDS:
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -243,7 +247,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       CCW: 'Chronic Conditions Warehouse',
       CDAC: 'CMMI Data Aggregation Contract',
       CMS_BOX: 'CMS Box',
-      CMS_QUALTRICS: 'CMS Qualtrics',
       CBOSC: 'Consolidated Business Operations Support Center',
       CPI_VETTING: 'CPI Vetting',
       EFT: 'Electronic File Transfer',
@@ -284,7 +287,12 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       DDPS: 'Drug Data Processing System',
       OACT: 'Office of the Actuary',
       QPP: 'Quality Payment Program',
-      PAM: 'Patient Activation Measure'
+      PAM: 'Patient Activation Measure',
+      NCQA: 'National Committee for Quality Assurance',
+      RMD: 'Rapid Measure Development',
+      MS_FORMS: 'Microsoft Forms',
+      RESDAC_CMDS:
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
     },
     readonlyOptions: {
       INNOVATION: '4i'

@@ -1,0 +1,384 @@
+Script started on Tue Jul 22 09:40:53 2025
+hello from bashrc
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034hbash-3.2$ s[Kgit status
+On branch feature/MINT-3299_editable_solution_pocs
+Your branch is up to date with 'origin/feature/MINT-3299_editable_solution_pocs'.
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+	[32mmodified:   .vscode/settings.json[m
+	[32mmodified:   cmd/dbseed/main.go[m
+	[32mmodified:   cmd/dbseed/resolver_wrappers.go[m
+	[32mmodified:   cypress.config.ts[m
+	[32mdeleted:    cypress/downloads/downloads.html[m
+	[32mrenamed:    cypress/e2e/changeHistory.js -> cypress/e2e/changeHistory.spec.js[m
+	[32mmodified:   cypress/e2e/characteristics.spec.js[m
+	[32mnew file:   cypress/e2e/export.spec.js[m
+	[32mrenamed:    cypress/e2e/homepageSettings.js -> cypress/e2e/homepageSettings.spec.js[m
+	[32mmodified:   cypress/e2e/modelPlan.spec.js[m
+	[32mmodified:   cypress/e2e/notification.spec.js[m
+	[32mmodified:   cypress/e2e/prepareForClearance.spec.js[m
+	[32mnew file:   cypress/e2e/timeline.spec.js[m
+	[32mmodified:   cypress/plugins/index.js[m
+	[32mmodified:   cypress/supports[Kgit status
+On branch feature/MINT-3299_editable_solution_pocs
+Your branch is up to date with 'origin/feature/MINT-3299_editable_solution_pocs'.
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+	[32mmodified:   .vscode/settings.json[m
+	[32mmodified:   cmd/dbseed/main.go[m
+	[32mmodified:   cmd/dbseed/resolver_wrappers.go[m
+	[32mmodified:   cypress.config.ts[m
+	[32mdeleted:    cypress/downloads/downloads.html[m
+	[32mrenamed:    cypress/e2e/changeHistory.js -> cypress/e2e/changeHistory.spec.js[m
+	[32mmodified:   cypress/e2e/characteristics.spec.js[m
+	[32mnew file:   cypress/e2e/export.spec.js[m
+	[32mrenamed:    cypress/e2e/homepageSettings.js -> cypress/e2e/homepageSettings.spec.js[m
+	[32mmodified:   cypress/e2e/modelPlan.spec.js[m
+	[32mmodified:   cypress/e2e/notification.spec.js[m
+	[32mmodified:   cypress/e2e/prepareForClearance.spec.js[m
+	[32mnew file:   cypress/e2e/timeline.spec.js[m
+	[32mmodified:   cypress/plugins/index.js[m
+	[32mmodified:   cypress/support/model-plan-by-name.js[m
+	[32mmodified:   graphql-schema-linter.config.js[m
+	[32mmodified:   mappings/export/exportTranslation.test.ts[m
+	[32mnew file:   mappings/plan_timeline_translation.go[m
+	[32mnew file:   mappings/plan_timeline_translation_test.go[m
+	[32mmodified:   mappings/translation/plan_basics.json[m
+	[32mmodified:   mappings/translation/plan_general_characteristics.json[m
+	[32mnew file:   mappings/translation/plan_timeline.json[m
+	[32mmodified:   mappings/translation/table_name.json[m
+	[32mmodified:   mappings/translation_utilities.go[m
+	[32mnew file:   migrations/V209__Add_Timeline.sql[m
+	[32mnew file:   migrations/V210__Update_Common_Milestone_Solutions_MDM_POR_To_AMS.sql[m
+	[32mmodified:   package.json[m
+	[32mmodified:   pkg/constants/constants.go[m
+	[32mmodified:   pkg/email/templates/model_plan_suggested_phase_body.html[m
+	[32mmodified:   pkg/graph/generated/generated.go[m
+	[32mmodified:   pkg/graph/model/models_gen.go[m
+	[32mmodified:   pkg/graph/model/translation_extensions.go[m
+	[32mmodified:   pkg/graph/resolvers/analyzed_audit.go[m
+	[32mmodified:   pkg/graph/resolvers/model_plan.go[m
+	[32mmodified:   pkg/graph/resolvers/model_plan.resolvers.go[m
+	[32mmodified:   pkg/graph/resolvers/model_plan_phase.go[m
+	[32mmodified:   pkg/graph/resolvers/model_plan_phase_test.go[m
+	[32mmodified:   pkg/graph/resolvers/model_plan_test.go[m
+	[32mmodified:   pkg/graph/resolvers/operational_solution_test.go[m
+	[32mmodified:   pkg/graph/resolvers/plan_basics.go[m
+	[32mmodified:   pkg/graph/resolvers/plan_basics.resolvers.go[m
+	[32mdeleted:    pkg/graph/resolvers/plan_basics_helper.go[m
+	[32mmodified:   pkg/graph/resolvers/plan_basics_test.go[m
+	[32mmodified:   pkg/graph/resolvers/plan_general_characteristics_test.go[m
+	[32mnew file:   pkg/graph/resolvers/plan_timeline.go[m
+	[32mnew fils_translation.graphql[m
+	[32mnew file:   pkg/graph/schema/types/plan_timeline.graphql[m
+	[32mnew file:   pkg/graph/schema/types/plan_timline_translation.graphql[m
+	[32mmodified:   pkg/graph/schema/types/shared_enums.graphql[m
+	[32mmodified:   pkg/models/lockable_section.go[m
+	[32mmodified:   pkg/models/model_plan.go[m
+	[32mmodified:   pkg/models/plan_basics.go[m
+	[32mmodified:   pkg/models/plan_general_characteristics.go[m
+	[32mnew file:   pkg/models/plan_timeline.go[m
+	[32mmodified:   pkg/models/prepare_for_clearance.go[m
+	[32mmodified:   pkg/models/table_names.go[m
+	[32mmodified:   pkg/sqlqueries/SQL/email/mto_solution_selected_details_get.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/email/operational_solution_selected_details_get.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/model_plan/collection_approaching_clearance.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/create.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/get_by_id.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/get_by_model_plan_id.sql[m
+	[32mmodifs_translation.graphql[m
+	[32mnew file:   pkg/graph/schema/types/plan_timeline.graphql[m
+	[32mnew file:   pkg/graph/schema/types/plan_timline_translation.graphql[m
+	[32mmodified:   pkg/graph/schema/types/shared_enums.graphql[m
+	[32mmodified:   pkg/models/lockable_section.go[m
+	[32mmodified:   pkg/models/model_plan.go[m
+	[32mmodified:   pkg/models/plan_basics.go[m
+	[32mmodified:   pkg/models/plan_general_characteristics.go[m
+	[32mnew file:   pkg/models/plan_timeline.go[m
+	[32mmodified:   pkg/models/prepare_for_clearance.go[m
+	[32mmodified:   pkg/models/table_names.go[m
+	[32mmodified:   pkg/sqlqueries/SQL/email/mto_solution_selected_details_get.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/email/operational_solution_selected_details_get.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/model_plan/collection_approaching_clearance.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/create.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/get_by_id.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/get_by_model_plan_id.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/get_by_model_plan_id_LOADER.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_basics/update.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_general_characteristics/create.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_general_characteristics/get_by_id.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_general_characteristics/get_by_model_plan_id_LOADER.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/plan_general_characteristics/update.sql[m
+	[32mnew file:   pkg/sqlqueries/SQL/plan_timeline/create.sql[m
+	[32mnew file:   pkg/sqlqueries/SQL/plan_timeline/get_by_id.sql[m
+	[32mnew file:   pkg/sqlqueries/SQL/plan_timeline/get_by_model_plan_id.sql[m
+	[32mnew file:   pkg/sqlqueries/SQL/plan_timeline/get_by_model_plan_id_LOADER.sql[m
+	[32mnew file:   pkg/sqlqueries/SQL/plan_timeline/update.sql[m
+	[32mmodified:   pkg/sqlqueries/SQL/prepare_for_clearance/get_by_model_plan_id.sql[m
+	[32mnew file:   pkg/sqlqueries/plan_timeline.go[m
+	[32mmodified:   pkg/storage/loaders/plan_discussion_loader.go[m
+	[32mnew file:   pkg/storage/loaders/plan_timeline_loader.go[m
+	[32mmodified:   pkg/storage/plan_data_exchange_approachStore.go[m
+	[32mnew file:   pkg/storage/plan_timelineStore.go[m
+	[32mmodified:   pkg/storage/truncate.go[m
+	[32mmodified:   pkg/worker/analyzed_audit_job_test.go[m
+	[32mmodified:   query_examples/MINT/Model Plan/Create Model Plan.bru[m
+	[32mmodified:   query_examples/MINT/Task List Sections/Update Plan Basics.bru[m
+	[32mmodified:   query_examples/MINT/Task List Sections/Update Plan General Characteristics.bru[m
+	[32mnew file:   query_examples/MINT/Timeline/Get Timeline.bru[m
+	[32mnew file:   query_examples/MINT/Timeline/Update Timeline.bru[m
+	[32mnew file:   query_examples/MINT/Timeline/folder.bru[m
+	[32mmodified:   src/app/Routes/index.tsx[m
+	[32mmodified:   src/components/AskAQuetures/ModelPlan/ChangeHistory/util.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/CRTDLCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/DataExchangeApproachCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/DiscussionsCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/DocumentsCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/MTOCard/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/MTOCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/ModelPlanCard/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/ModelPlanCard/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/ModelPlanCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/TeamCard/index.tsx[m
+	[32mnew file:   src/features/ModelPlan/CollaborationArea/Cards/TimelineCatures/ModelPlan/ChangeHistory/util.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/CRTDLCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/DataExchangeApproachCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/DiscussionsCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/DocumentsCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/MTOCard/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/MTOCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/ModelPlanCard/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/ModelPlanCard/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/ModelPlanCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/Cards/TeamCard/index.tsx[m
+	[32mnew file:   src/features/ModelPlan/CollaborationArea/Cards/TimelineCard/__snapshots__/index.test.tsx.snap[m
+	[32mnew file:   src/features/ModelPlan/CollaborationArea/Cards/TimelineCard/index.test.tsx[m
+	[32mnew file:   src/features/ModelPlan/CollaborationArea/Cards/TimelineCard/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/StatusBanner/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/CollaborationArea/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ModelToOperations/_components/StatusBanner/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/Beneficiaries/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/Beneficiaries/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/DataExchangeapproach/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/GeneralCharacteristics/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/GeneralCharacteristics/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/MTOSolutions/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/ModelBasics/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/ModelBasics/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/OpsEvalAndLearning/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/OpsEvalAndLearning/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/ParticipantsAndProviders/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/ParticipantsAndProviders/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/Payments/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/Payments/index.tsx[m
+	[32mnew file:   src/features/ModelPlan/ReadOnly/TitleAndStatus/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/index.tsx[m
+	[32mdeleted:    src/features/ModelPlan/TaskList/Basics/Milestones/__snapshots__/index.test.tsx.snap[m
+	[32mdeleted:    src/features/ModelPlan/TaskList/Basics/Milestones/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/Overview/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/Overview/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/Overview/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics/index.tsx[m
+	[32mmodified:   src/feature/TitleAndStatus/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/ReadOnly/index.tsx[m
+	[32mdeleted:    src/features/ModelPlan/TaskList/Basics/Milestones/__snapshots__/index.test.tsx.snap[m
+	[32mdeleted:    src/features/ModelPlan/TaskList/Basics/Milestones/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/Overview/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/Overview/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/Overview/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/Basics/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/PrepareForClearance/Checklist/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/PrepareForClearance/Checklist/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/PrepareForClearance/ClearanceReview/__snapshots__/index.test.tsx.snap[m
+	[32mmodified:   src/features/ModelPlan/TaskList/PrepareForClearance/ClearanceReview/index.test.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/PrepareForClearance/ClearanceReview/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/_components/TaskListItem/index.tsx[m
+	[32mmodified:   src/features/ModelPlan/TaskList/index.test.tsx[m
+	[32mnew file:   src/features/ModelPlan/Timeline/__snapshots__/index.test.tsx.snap[m
+	[32mrenamed:    src/features/ModelPlan/TaskList/Basics/Milestones/index.scss -> src/features/ModelPlan/Timeline/index.scss[m
+	[32mrenamed:    src/features/ModelPlan/TaskList/Basics/Milestones/index.test.tsx -> src/features/ModelPlan/Timeline/index.test.tsx[m
+	[32mnew file:   src/features/ModelPlan/Timeline/index.tsx[m
+	[32mnew file:   src/features/ModelPlan/UnlockAllSections/index.tsx[m
+	[32mmodified:   src/gql/generated/graphql.ts[m
+	[32mmodified:   src/gql/operations/Basics/GetAllBasics.ts[m
+	[32mmodified:   src/gql/operations/Basics/GetOverview.ts[m
+	[32mmodified:   src/gql/operations/GeneralCharacteristics/GetAllGeneralCharacteristics.ts[m
+	[32mmodified:   src/gql/operations/GeneralCharacteristics/GetKeyCharacteristics.ts[m
+	[32mmodified:   src/gql/operations/ModelPlan/CreateModelPlan.ts[m
+	[32mmodified:   src/gql/operations/ModelPlan/GetAllModelData.ts[m
+	[32mmodified:   src/gql/operations/ModelPlan/GetAllSingleModelData.ts[m
+	[32mnew file:   src/gql/operations/ModelPlan/GetCollaborationArea.ts[m
+	[32mmodified:   src/gql/operations/ModelPlan/GetFavorites.ts[m
+	[32mmodified:   src/gql/opan/prepareForClearance.ts[m
+	[32mmodified:   src/i18n/en-US/modelPlan/tables.ts[m
+	[32mmodified:   src/i18n/en-US/modelPlan/taskList.ts[m
+	[32mnew file:   src/i18n/en-US/modelPlan/timeline.ts[m
+	[32mmodified:   src/i18n/en-US/readOnly/generalReadOnly.ts[m
+	[32mmodified:   src/i18n/en-US/readOnly/modelSummary.ts[m
+	[32mmodified:   src/tests/mock/general.ts[m
+	[32mmodified:   src/tests/mock/readonly.ts[m
+	[32mmodified:   src/types/translation.ts[m
+	[32mmodified:   src/wrappers/PageLockWrapper/index.tsx[m
+	[32mmodified:   yarn.lock[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	[31mgolangci-lint-full[m
+
+bash-3.2$ trans:wq[K[K[K[K[K[Kand[Ks
+go run ./cmd/dbseed/*go
+]11;?\[6n[?25l[?2004h[38;5;32m╭──────────────────────────────────────────────────────────────────────────────╮[0m
+[38;5;32m│[0m [38;5;32m╭─────────────────╮[0m[38;5;32m╭─────────────╮[0m                                           [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m[48;5;36m [0m[48;5;36mCommon Commands[0m[48;5;36m [0m[38;5;32m│[0m[38;5;32m│[0m My Commands [38;5;32m│[0m                                           [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m┘                 └[0m[38;5;32m┴─────────────┴[0m[38;5;32m──────────────────────────────────────────[0m [38;5;32m│[0m
+[38;5;32m│[0m                      trans:wq[K[K[K[K[K[Kand[Ks
+go run ./cmd/dbseed/*go
+]11;?\[6n[?25l[?2004h[38;5;32m╭──────────────────────────────────────────────────────────────────────────────╮[0m
+[38;5;32m│[0m [38;5;32m╭─────────────────╮[0m[38;5;32m╭─────────────╮[0m                                           [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m[48;5;36m [0m[48;5;36mCommon Commands[0m[48;5;36m [0m[38;5;32m│[0m[38;5;32m│[0m My Commands [38;5;32m│[0m                                           [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m┘                 └[0m[38;5;32m┴─────────────┴[0m[38;5;32m──────────────────────────────────────────[0m [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m│[0m Which commands would you like to execute?                                    [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m╭───────────────────────────────────╮[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m [38;5;36;48;5;22m>[0m [ ] Clean DB                    [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Seed DB                     [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Analyze Audits              [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Translate Audits            [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Export Translation Mappings [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m                                   [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m└───────────────────────────────────┘[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m Press q to quit.                                                             [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m└──────────────────────────────────�[0m                                        [38;5;32m│[0m
+
+
+
+
+
+
+[80D[18A
+
+
+
+
+
+
+
+
+
+
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Translate Audits            [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m [38;5;36;48;5;22m>[0m [ ] Export Translation Mappings [38;5;32m│[0m                                        [38;5;32m│[0m
+
+
+
+
+
+[80D[18A
+
+
+
+
+
+
+
+
+
+
+
+[38;5;32m│[0m [38;5;32m│[0m [38;5;36;48;5;22m>[0m [[38;5;36;48;5;22m✔[0m] [38;5;36;48;5;22mExport Translation Mappings[0m [38;5;32m│[0m                                        [38;5;32m│[0m
+
+
+
+
+
+[80D[2K[1G[1myarn run v1.22.22[22m
+[2K[1G[2m$ ts-node ./mappings/export/exportTranslation.ts[22m
+[2K[1G✨  Done in 0.99s.
+[2J[H[18A[38;5;32m╭──────────────────────────────────────────────────────────────────────────────╮[0m
+ranslate Audits            [38;5;32m│[0m                                        [38;5;32m│[0m
+
+
+
+
+
+
+[80D[18A
+
+
+
+
+
+
+
+
+
+
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Translate Audits            [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m [38;5;36;48;5;22m>[0m [ ] Export Translation Mappings [38;5;32m│[0m                                        [38;5;32m│[0m
+
+
+
+
+
+[80D[18A
+
+
+
+
+
+
+
+
+
+
+
+[38;5;32m│[0m [38;5;32m│[0m [38;5;36;48;5;22m>[0m [[38;5;36;48;5;22m✔[0m] [38;5;36;48;5;22mExport Translation Mappings[0m [38;5;32m│[0m                                        [38;5;32m│[0m
+
+
+
+
+
+[80D[2K[1G[1myarn run v1.22.22[22m
+[2K[1G[2m$ ts-node ./mappings/export/exportTranslation.ts[22m
+[2K[1G✨  Done in 0.99s.
+[2J[H[18A[38;5;32m╭──────────────────────────────────────────────────────────────────────────────╮[0m
+[38;5;32m│[0m [38;5;32m╭─────────────────╮[0m[38;5;32m╭─────────────╮[0m                                           [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m[48;5;36m [0m[48;5;36mCommon Commands[0m[48;5;36m [0m[38;5;32m│[0m[38;5;32m│[0m My Commands [38;5;32m│[0m                                           [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m┘                 └[0m[38;5;32m┴─────────────┴[0m[38;5;32m──────────────────────────────────────────[0m [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m│[0m Which commands would you like to execute?                                    [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m│[0m Ran Export Translation Mappings                                              [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m╭───────────────────────────────────╮[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Clean DB                    [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Seed DB                     [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m   [ ] Analyze Audits              [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m�──────────────────┘[0m
+[K[80D[2K[?2004l[?25h[?1002l[?1003l[?1006lbash-3.2$ git commit -m '[K0m [38;5;36;48;5;22m>[0m [[38;5;36;48;5;22m✔[0m] [38;5;36;48;5;22mExport Translation Mappings[0m [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m│[0m                                   [38;5;32m│[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m [38;5;32m└───────────────────────────────────┘[0m                                        [38;5;32m│[0m
+[38;5;32m│[0m Press q to quit.                                                             [38;5;32m│[0m
+[38;5;32m│[0m                                                                              [38;5;32m│[0m
+[38;5;32m└──────────────────────────────────────────────────────────────────────────────┘[0m
+[K[80D[2K[?2004l[?25h[?1002l[?1003l[?1006lbash-3.2$ git commit -m '[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kpre cpm[K[K[K[Kcommint [K[K[K[K[K[K[K[K-commit 

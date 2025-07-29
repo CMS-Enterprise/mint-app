@@ -20,6 +20,7 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 export const EvaluatingDataExchangeApproach = () => {
@@ -87,19 +88,20 @@ export const EvaluatingDataExchangeApproach = () => {
                 {t('additionalConsiderationsDescription')}
               </p>
             </div>
+
+            <LatestContentUpdate file="evaluatingDataExchangeApproach.ts" />
           </Grid>
         </GridContainer>
+        <RelatedArticles
+          currentArticle={HelpArticle.MODEL_PLAN_OVERVIEW}
+          specificArticles={[
+            HelpArticle.TWO_PAGER_MEETING,
+            HelpArticle.SIX_PAGER_MEETING,
+            HelpArticle.HIGH_LEVEL_PROJECT_PLAN
+          ]}
+          viewAllLink
+        />
       </MainContent>
-
-      <RelatedArticles
-        currentArticle={HelpArticle.MODEL_PLAN_OVERVIEW}
-        specificArticles={[
-          HelpArticle.TWO_PAGER_MEETING,
-          HelpArticle.SIX_PAGER_MEETING,
-          HelpArticle.HIGH_LEVEL_PROJECT_PLAN
-        ]}
-        viewAllLink
-      />
     </PrintPDFWrapper>
   );
 };

@@ -23,7 +23,7 @@ export const findSolutionByKey = (
   solutions: HelpSolutionType[]
 ): HelpSolutionType | undefined => {
   if (!key) return undefined;
-  return [...solutions].find(solution => solution.enum === key);
+  return [...solutions].find(solution => solution.key === key);
 };
 
 const useModalSolutionState = (
@@ -35,14 +35,16 @@ const useModalSolutionState = (
 
   const params = new URLSearchParams(location.search);
   const solutionDetail = params.get('solution');
+  const solutionDetailModal = params.get('solution-key');
 
   const prevLocation = usePrevLocation(location);
   const prevPathname = prevLocation?.pathname + (prevLocation?.search || '');
 
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(
-    solutionDetail,
-    helpSolutions
+    solutionDetail || solutionDetailModal,
+    helpSolutions,
+    !!solutionDetailModal
   );
 
   const solutionMap = findSolutionByKey(
@@ -50,7 +52,7 @@ const useModalSolutionState = (
     helpSolutions
   );
 
-  const renderModal = solutionMap?.enum === solutionKey;
+  const renderModal = solutionMap?.key === solutionKey;
 
   return { prevPathname, selectedSolution, renderModal, loading };
 };
