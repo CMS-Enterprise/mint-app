@@ -8,10 +8,12 @@ import {
   Grid,
   GridContainer,
   Icon,
+  Label,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -224,13 +226,31 @@ const Timeline = () => {
                                 className="font-body-sm line-height-sans-4 text-normal"
                               >
                                 <div className="datepicker__wrapper display-block">
-                                  <Grid desktop={{ col: 6 }}>
+                                  <Grid desktop={{ col: 5 }}>
+                                    <Label
+                                      htmlFor="timeline-completeICIP"
+                                      className={classNames(
+                                        'usa-legend margin-top-0',
+                                        {
+                                          'text-normal': false
+                                        }
+                                      )}
+                                    >
+                                      {timelineT('completeICIP.label')}
+                                    </Label>
+
+                                    <div
+                                      className="usa-hint"
+                                      id="appointment-date-hint"
+                                    >
+                                      {miscellaneousT('datePlaceholder')}
+                                    </div>
+
                                     <Field
                                       as={DateTimePicker}
                                       disabled={loading}
-                                      id="completeICIP"
+                                      id="timeline-completeICIP"
                                       name="completeICIP"
-                                      label={timelineT('completeICIP.label')}
                                       formValue={values.completeICIP}
                                       onChange={(date: Date | null) =>
                                         setFieldValue('completeICIP', date)

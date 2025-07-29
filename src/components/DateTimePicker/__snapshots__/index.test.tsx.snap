@@ -14,6 +14,8 @@ exports[`DateTimePicker Component > matches snapshot 1`] = `
         >
           <input
             class=""
+            id="test-date-picker"
+            name="testDate"
             type="text"
             value="06/15/2023"
           />
@@ -58,6 +60,8 @@ exports[`DateTimePicker Component > matches snapshot with alertText disabled 1`]
         >
           <input
             class=""
+            id="test-date-picker"
+            name="testDate"
             type="text"
             value="06/15/2023"
           />
@@ -143,6 +147,8 @@ exports[`DateTimePicker Component > matches snapshot with custom className 1`] =
         >
           <input
             class=""
+            id="test-date-picker"
+            name="testDate"
             type="text"
             value="06/15/2023"
           />
@@ -188,6 +194,8 @@ exports[`DateTimePicker Component > matches snapshot with disabled state 1`] = `
           <input
             class=""
             disabled=""
+            id="test-date-picker"
+            name="testDate"
             type="text"
             value="06/15/2023"
           />
@@ -233,6 +241,8 @@ exports[`DateTimePicker Component > matches snapshot with past date warning 1`] 
         >
           <input
             class=""
+            id="test-date-picker"
+            name="testDate"
             type="text"
             value="06/15/2023"
           />

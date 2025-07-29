@@ -10,7 +10,6 @@ import './index.scss';
 type DateTimePickerProps = DatePickerProps & {
   id: string;
   name: string;
-  label: string;
   formValue: string | undefined | null;
   isDateInPast: boolean;
   alertIcon?: boolean; // Whether to show the warning icon
@@ -26,7 +25,6 @@ type DateTimePickerProps = DatePickerProps & {
 const DateTimePicker = ({
   id,
   name,
-  label,
   formValue,
   isDateInPast,
   alertIcon = true,
@@ -53,6 +51,8 @@ const DateTimePicker = ({
         <ReactDatePicker
           {...props}
           ref={datePickerRef}
+          id={id}
+          name={name}
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}

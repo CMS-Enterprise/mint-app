@@ -10,7 +10,6 @@ describe('DateTimePicker Component', () => {
   const defaultProps = {
     id: 'test-date-picker',
     name: 'testDate',
-    label: 'Test Date',
     formValue: '2023-06-15T00:00:00Z',
     isDateInPast: false,
     onChange: vi.fn()
@@ -249,7 +248,6 @@ describe('DateTimePicker Component', () => {
         {...defaultProps}
         id="completeICIP"
         name="completeICIP"
-        label="Complete ICIP"
         formValue="2023-06-15T00:00:00Z"
         onChange={(date: Date | null) => {}}
         isDateInPast={false}

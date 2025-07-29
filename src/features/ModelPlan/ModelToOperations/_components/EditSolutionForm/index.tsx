@@ -1047,7 +1047,6 @@ const EditSolutionForm = ({
                           <DateTimePicker
                             id="neededBy"
                             name="neededBy"
-                            label={mtoSolutionT('neededBy.label')}
                             formValue={field.value}
                             onChange={(date: Date | null) =>
                               field.onChange(date)
