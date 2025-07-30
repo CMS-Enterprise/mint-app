@@ -1,9 +1,10 @@
 -- Add new tag type for MTO common solutions
 ALTER TYPE tag_type ADD VALUE 'MTO_COMMON_SOLUTION';
 
-COMMENT ON COLUMN mto_common_solution.id IS 'This is used to allow MTO common solutions to use the entity_uuid on tagged content, same as user_account.  Previously operational solutions were using int as id, moving to UUID allows for better compatibility with other tables ';
 ALTER TABLE mto_common_solution
 ADD COLUMN id UUID;
+
+COMMENT ON COLUMN mto_common_solution.id IS 'This is used to allow MTO common solutions to use the entity_uuid on tagged content, same as user_account.  Previously operational solutions were using int as id, moving to UUID allows for better compatibility with other tables ';
 
 -- Adding a UUID id all MTO common solutions
 UPDATE mto_common_solution
