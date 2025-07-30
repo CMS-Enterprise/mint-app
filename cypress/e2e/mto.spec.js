@@ -259,11 +259,34 @@ describe('Model-to-Operations Matrix', () => {
     });
 
     cy.get('#name').clear().type('Edited Custom Solution', { force: true });
+
+    cy.get('#solution-needed-by').type('07/20/2025');
+    cy.get('#solution-needed-by').should('have.value', '07/20/2025');
+
     cy.contains('Save changes').should('be.not.disabled').click();
+
+    cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
 
     cy.get('table').within(() => {
       cy.get('td').contains('Edited Custom Solution').should('exist');
     });
+
+    cy.get('table').within(() => {
+      cy.get('td')
+        .contains('Custom Solution')
+        .should('exist')
+        .parent('tr')
+        .within(() => {
+          cy.contains('Edit details').click();
+        });
+    });
+
+    cy.get('#solution-needed-by').clear();
+    cy.get('#solution-needed-by').should('have.value', '');
+
+    cy.contains('Save changes').should('be.not.disabled').click();
+
+    cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
   });
 
   it('Add standard categories', () => {
