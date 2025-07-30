@@ -54,7 +54,7 @@ var humanizedTableNames = map[string]string{
 	PlanCr:                       "CR",
 	PlanTdl:                      "TDL",
 	PlanDataExchangeApproach:     "Data exchange approach",
-	PlanTimeline:                 "PlanTimeline",
+	PlanTimeline:                 "Model timeline",
 }
 
 // GetHumanizedTableName returns the humanized name for the given table name
