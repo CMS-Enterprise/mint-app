@@ -49,6 +49,8 @@ const DateTimePicker = ({
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}
+          // @ts-ignore
+          value={formValue ? new Date(formValue) : null}
           selected={formValue ? new Date(formValue) : null}
           aria-label={generalT('datePicker.label')}
           popperPlacement="bottom-start"
