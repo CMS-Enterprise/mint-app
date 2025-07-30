@@ -12,7 +12,6 @@ import './index.scss';
 type DateTimePickerProps = DatePickerProps & {
   id: string;
   name: string;
-  value: string | undefined | null;
   isDateInPast: boolean;
   alertIcon?: boolean; // Whether to show the warning icon
   alertText?: boolean; // Whether to show the warning text. Sometimes we want to render the warning text under a different parent/UI element - outside the scope of this component
@@ -27,7 +26,6 @@ type DateTimePickerProps = DatePickerProps & {
 const DateTimePicker = ({
   id,
   name,
-  value,
   isDateInPast,
   alertIcon = true,
   alertText = true,
@@ -51,11 +49,11 @@ const DateTimePicker = ({
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}
-          selected={value ? new Date(value) : null}
+          selected={props.value ? new Date(props.value) : null}
           value={
-            typeof value === 'string'
-              ? formatDateUtc(value, 'MM/dd/yyyy')
-              : value
+            typeof props.value === 'string'
+              ? formatDateUtc(props.value, 'MM/dd/yyyy')
+              : props.value
           }
           aria-label={generalT('datePicker.label')}
           popperPlacement="bottom-start"

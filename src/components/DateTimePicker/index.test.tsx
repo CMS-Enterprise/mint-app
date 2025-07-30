@@ -36,13 +36,6 @@ describe('DateTimePicker Component', () => {
     expect(dateInput).toHaveValue('06/15/2023');
   });
 
-  it('handles null value correctly', () => {
-    render(<DateTimePicker {...defaultProps} value={null} />);
-
-    const dateInput = screen.getByRole('textbox');
-    expect(dateInput).toHaveValue('');
-  });
-
   it('handles undefined value correctly', () => {
     render(<DateTimePicker {...defaultProps} value={undefined} />);
 
