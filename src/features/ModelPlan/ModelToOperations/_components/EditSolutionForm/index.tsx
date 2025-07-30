@@ -52,8 +52,7 @@ import {
 
 import Alert from 'components/Alert';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
-import DatePickerFormatted from 'components/DatePickerFormatted';
-import DatePickerWarning from 'components/DatePickerWarning';
+import DateTimePicker from 'components/DateTimePicker';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -82,8 +81,6 @@ import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
-
-// export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 
 type FormValues = {
   name: string;
@@ -117,7 +114,6 @@ const EditSolutionForm = ({
 }: EditSolutionFormProps) => {
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
-  const { t: generalT } = useTranslation('general');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -342,7 +338,7 @@ const EditSolutionForm = ({
               facilitatedByOther
             }),
             ...(neededBy !== undefined && {
-              neededBy: neededBy ? new Date(neededBy)?.toISOString() : ''
+              neededBy: neededBy ? new Date(neededBy)?.toISOString() : null
             }),
             ...(!!name && !solution?.addedFromSolutionLibrary && { name }),
             ...(!!type && !solution?.addedFromSolutionLibrary && { type })
@@ -1048,33 +1044,16 @@ const EditSolutionForm = ({
                         </HelpText>
 
                         <div className="position-relative">
-                          <DatePickerFormatted
-                            {...field}
-                            aria-labelledby={convertCamelCaseToKebabCase(
-                              'neededBy'
-                            )}
-                            id="solution-needed-by"
-                            defaultValue={field.value}
-                            suppressMilliseconds
+                          <DateTimePicker
+                            id="neededBy"
+                            name="neededBy"
+                            value={field.value}
+                            onChange={(date: Date | null) =>
+                              field.onChange(date)
+                            }
+                            isDateInPast={isDateInPast(watch('neededBy'))}
                           />
-
-                          {isDateInPast(watch('neededBy')) && (
-                            <DatePickerWarning
-                              label={generalT('dateWarning')}
-                            />
-                          )}
                         </div>
-
-                        {isDateInPast(watch('neededBy')) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-2"
-                            headingLevel="h4"
-                            slim
-                          >
-                            {generalT('dateWarning')}
-                          </Alert>
-                        )}
                       </FormGroup>
                     )}
                   />

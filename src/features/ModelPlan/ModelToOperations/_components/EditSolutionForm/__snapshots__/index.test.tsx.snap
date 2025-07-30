@@ -6,41 +6,6 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
     class="margin-top-8"
   >
     <div
-      class="save-tag"
-    >
-      <div
-        class="bg-warning-lighter padding-y-05 padding-x-1"
-      >
-        <svg
-          aria-label="warning"
-          class="usa-icon margin-right-1 top-2px text-warning"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
-          />
-        </svg>
-        <p
-          class="margin-0 display-inline margin-right-1"
-        >
-          1 unsaved change
-        </p>
-        -
-        <button
-          class="usa-button usa-button--unstyled margin-x-1"
-          data-testid="button"
-          type="button"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-    <div
       class="grid-container padding-8"
       data-testid="gridContainer"
     >
@@ -221,53 +186,45 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                 <div
                   class="position-relative"
                 >
-                  <div
-                    class="usa-date-picker usa-date-picker--initialized"
-                    data-testid="date-picker"
-                  >
-                    <input
-                      aria-hidden="true"
-                      aria-labelledby="needed-by"
-                      class="usa-input usa-sr-only usa-date-picker__internal-input"
-                      data-testid="date-picker-internal-input"
-                      name="neededBy"
-                      readonly=""
-                      tabindex="-1"
-                      type="text"
-                      value="2121-08-01T00:00:00Z"
-                    />
+                  <div>
                     <div
-                      class="usa-date-picker__wrapper"
-                      tabindex="-1"
+                      class="display-flex margin-top-1"
                     >
-                      <input
-                        aria-labelledby="needed-by"
-                        class="usa-input usa-date-picker__external-input"
-                        data-testid="date-picker-external-input"
-                        id="solution-needed-by"
-                        type="text"
-                        value="08/01/2121"
-                      />
+                      <div
+                        class="react-datepicker-wrapper"
+                      >
+                        <div
+                          class="react-datepicker__input-container"
+                        >
+                          <input
+                            class=""
+                            id="neededBy"
+                            name="neededBy"
+                            type="text"
+                            value="08/01/2121"
+                          />
+                        </div>
+                      </div>
                       <button
-                        aria-haspopup="true"
-                        aria-label="Toggle calendar"
-                        class="usa-date-picker__button"
-                        data-testid="date-picker-button"
+                        aria-label="Open date picker"
+                        class="usa-button usa-button--unstyled text-black padding-0 margin-left-1 margin-top-0"
+                        data-testid="button"
                         type="button"
-                      />
-                      <div
-                        class="usa-date-picker__calendar"
-                        data-testid="date-picker-calendar"
-                        hidden=""
-                        role="application"
-                        style="top: 0px;"
-                      />
-                      <div
-                        aria-live="polite"
-                        class="usa-sr-only usa-date-picker__status"
-                        data-testid="date-picker-status"
-                        role="status"
-                      />
+                      >
+                        <svg
+                          class="usa-icon usa-icon--size-3"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"
+                          />
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -638,7 +595,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                               data-testid="tooltipWrapper"
                             >
                               <div
-                                aria-describedby="tooltip-«r0»"
+                                aria-describedby="tooltip-«r1»"
                                 class="usa-tooltip__trigger"
                                 data-testid="triggerElement"
                                 tabindex="0"
@@ -662,7 +619,7 @@ exports[`EditSolutionForm Component > renders correctly and matches snapshot 1`]
                                 aria-hidden="true"
                                 class="usa-tooltip__body"
                                 data-testid="tooltipBody"
-                                id="tooltip-«r0»"
+                                id="tooltip-«r1»"
                                 role="tooltip"
                                 title="Significantly at risk"
                               >
