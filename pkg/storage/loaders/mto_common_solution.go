@@ -24,6 +24,7 @@ type mtoCommonSolutionLoaders struct {
 	// ByCommonMilestoneKey returns a list of mto Common Solution records by it's keys. It does not currently have contextual data
 	ByCommonMilestoneKey LoaderWrapper[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution]
 
+	// ByID returns a list of mto Common Solution records by it's id. It does not currently have contextual data
 	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolution]
 }
 
