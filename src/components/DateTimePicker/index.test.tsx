@@ -10,7 +10,7 @@ describe('DateTimePicker Component', () => {
   const defaultProps = {
     id: 'test-date-picker',
     name: 'testDate',
-    formValue: '2023-06-15T00:00:00Z',
+    value: '2023-06-15T00:00:00Z',
     isDateInPast: false,
     onChange: vi.fn()
   };
@@ -37,21 +37,21 @@ describe('DateTimePicker Component', () => {
   });
 
   it('handles null value correctly', () => {
-    render(<DateTimePicker {...defaultProps} formValue={null} />);
+    render(<DateTimePicker {...defaultProps} value={null} />);
 
     const dateInput = screen.getByRole('textbox');
     expect(dateInput).toHaveValue('');
   });
 
   it('handles undefined value correctly', () => {
-    render(<DateTimePicker {...defaultProps} formValue={undefined} />);
+    render(<DateTimePicker {...defaultProps} value={undefined} />);
 
     const dateInput = screen.getByRole('textbox');
     expect(dateInput).toHaveValue('');
   });
 
   it('handles empty string value', () => {
-    render(<DateTimePicker {...defaultProps} formValue="" />);
+    render(<DateTimePicker {...defaultProps} value="" />);
 
     const dateInput = screen.getByRole('textbox');
     expect(dateInput).toHaveValue('');
@@ -248,7 +248,7 @@ describe('DateTimePicker Component', () => {
         {...defaultProps}
         id="completeICIP"
         name="completeICIP"
-        formValue="2023-06-15T00:00:00Z"
+        value="2023-06-15T00:00:00Z"
         onChange={(date: Date | null) => {}}
         isDateInPast={false}
         alertText={false}

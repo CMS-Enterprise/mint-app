@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Button, Icon, Tooltip } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import { formatDateUtc } from 'utils/date';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 
 type DateTimePickerProps = DatePickerProps & {
   id: string;
   name: string;
-  formValue: string | undefined | null;
+  value: string | undefined | null;
   isDateInPast: boolean;
   alertIcon?: boolean; // Whether to show the warning icon
   alertText?: boolean; // Whether to show the warning text. Sometimes we want to render the warning text under a different parent/UI element - outside the scope of this component
@@ -25,7 +27,7 @@ type DateTimePickerProps = DatePickerProps & {
 const DateTimePicker = ({
   id,
   name,
-  formValue,
+  value,
   isDateInPast,
   alertIcon = true,
   alertText = true,
@@ -49,9 +51,12 @@ const DateTimePicker = ({
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}
-          // @ts-ignore
-          value={formValue ? new Date(formValue) : null}
-          selected={formValue ? new Date(formValue) : null}
+          selected={value ? new Date(value) : null}
+          value={
+            typeof value === 'string'
+              ? formatDateUtc(value, 'MM/dd/yyyy')
+              : value
+          }
           aria-label={generalT('datePicker.label')}
           popperPlacement="bottom-start"
         />

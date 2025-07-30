@@ -248,7 +248,7 @@ const Timeline = () => {
                                       disabled={loading}
                                       id="timeline-completeICIP"
                                       name="completeICIP"
-                                      formValue={values.completeICIP}
+                                      value={values.completeICIP}
                                       onChange={(date: Date | null) =>
                                         setFieldValue('completeICIP', date)
                                       }

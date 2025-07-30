@@ -1047,7 +1047,7 @@ const EditSolutionForm = ({
                           <DateTimePicker
                             id="neededBy"
                             name="neededBy"
-                            formValue={field.value}
+                            value={field.value}
                             onChange={(date: Date | null) =>
                               field.onChange(date)
                             }
