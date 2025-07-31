@@ -485,7 +485,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     <a
                       aria-current="page"
                       class="usa-current"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/model-basics"
                     >
                       Model basics
                     </a>
@@ -494,7 +494,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-timeline"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/model-timeline"
                     >
                       Model timeline
                     </a>
@@ -503,7 +503,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/general-characteristics"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/general-characteristics"
                     >
                       General characteristics
                     </a>
@@ -512,7 +512,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/participants-and-providers"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/participants-and-providers"
                     >
                       Participants and providers
                     </a>
@@ -521,7 +521,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/beneficiaries"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/beneficiaries"
                     >
                       Beneficiaries
                     </a>
@@ -530,7 +530,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/operations-evaluation-and-learning"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/operations-evaluation-and-learning"
                     >
                       Operations, evaluation, and learning
                     </a>
@@ -539,7 +539,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/payment"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/payment"
                     >
                       Payment
                     </a>
@@ -562,7 +562,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/data-exchange-approach"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/data-exchange-approach"
                     >
                       Data exchange approach
                     </a>
@@ -585,7 +585,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/milestones"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/milestones"
                     >
                       Milestones
                     </a>
@@ -594,7 +594,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/solutions-and-it-systems"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/solutions-and-it-systems"
                     >
                       Solutions and IT systems
                     </a>
@@ -617,7 +617,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/team"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/team"
                     >
                       Team
                     </a>
@@ -626,7 +626,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/discussions"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/discussions"
                     >
                       Discussions
                     </a>
@@ -635,7 +635,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/documents"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/documents"
                     >
                       Documents
                     </a>
@@ -644,7 +644,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     class="usa-sidenav__item"
                   >
                     <a
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/crs-and-tdl"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/crs-and-tdl"
                     >
                       FFS CRs and TDLs
                     </a>
@@ -1285,7 +1285,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       <a
                         aria-label="More team members"
                         class="usa-link line-height-body-5 display-flex flex-align-center "
-                        href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/team"
+                        href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/team"
                       >
                         More team members
                         <svg

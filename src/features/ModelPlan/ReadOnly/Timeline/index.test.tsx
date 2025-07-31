@@ -15,11 +15,11 @@ describe('Read Only Model Plan Summary -- Model timeline', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-timeline`]}
+        initialEntries={[`/models/${modelID}/read-view/model-timeline`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/model-timeline">
+            <Route path="/models/:modelID/read-view/model-timeline">
               <ReadOnlyModelTimeline modelID={modelID} />
             </Route>
           </Provider>
@@ -37,11 +37,11 @@ describe('Read Only Model Plan Summary -- Model timeline', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-timeline`]}
+        initialEntries={[`/models/${modelID}/read-view/model-timeline`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/model-timeline">
+            <Route path="/models/:modelID/read-view/model-timeline">
               <ReadOnlyModelTimeline modelID={modelID} />
             </Route>
           </Provider>

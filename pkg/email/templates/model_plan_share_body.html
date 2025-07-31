@@ -53,15 +53,15 @@
 
           <p>
               {{if .ModelShareSectionRoute}}
-              <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/{{.ModelShareSectionRoute}}">
+              <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/{{.ModelShareSectionRoute}}">
                 View {{.ModelShareSectionHumanized}} details in MINT
               </a>
               {{else if .ModelViewFilter}}
-                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/model-basics?filter-view={{.ModelViewFilter}}">
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/model-basics?filter-view={{.ModelViewFilter}}">
                   View {{.HumanizedModelViewFilter}} details in MINT
                 </a>
               {{else}}
-                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only/model-basics">
+                <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/model-basics">
                   View more details in MINT
                 </a>
               {{end}}

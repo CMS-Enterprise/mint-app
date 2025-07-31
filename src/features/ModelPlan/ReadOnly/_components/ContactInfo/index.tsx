@@ -72,7 +72,7 @@ const ContactInfo = ({
         <UswdsReactLink
           aria-label={h('contactInfo.moreTeamMembers')}
           className="line-height-body-5 display-flex flex-align-center "
-          to={`/models/${modelID}/read-only/team`}
+          to={`/models/${modelID}/read-view/team`}
         >
           {h('contactInfo.moreTeamMembers')}
           <Icon.ArrowForward className="margin-left-1" aria-label="forward" />

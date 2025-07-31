@@ -30,7 +30,7 @@ describe('ShareExportModal', () => {
       <Provider store={store}>
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/read-only/model-basics?filter-view=ccw`
+            `/models/${modelID}/read-view/model-basics?filter-view=ccw`
           ]}
         >
           <VerboseMockedProvider
@@ -45,7 +45,7 @@ describe('ShareExportModal', () => {
             ]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/read-only/model-basics">
+            <Route path="/models/:modelID/read-view/model-basics">
               <MessageProvider>
                 <ShareExportModal
                   modelID={modelID}
@@ -91,7 +91,7 @@ describe('ShareExportModal', () => {
       <Provider store={store}>
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/read-only/model-basics?filter-view=ccw`
+            `/models/${modelID}/read-view/model-basics?filter-view=ccw`
           ]}
         >
           <VerboseMockedProvider
@@ -106,7 +106,7 @@ describe('ShareExportModal', () => {
             ]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/read-only/model-basics">
+            <Route path="/models/:modelID/read-view/model-basics">
               <MessageProvider>
                 <ShareExportModal
                   modelID={modelID}
