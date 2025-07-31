@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
@@ -59,6 +60,7 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import TaskListBannerAlert from 'components/TaskListBannerAlert';
+import ErrorMessageProvider from 'contexts/ErrorContext';
 import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 import SubscriptionWrapper from 'contexts/PageLockContext';
@@ -368,38 +370,53 @@ const App = () => {
       </button>
       <BrowserRouter>
         <RouterProvider>
-          <AuthenticationWrapper>
-            <FlagsWrapper>
-              <UserInfoWrapper>
-                <BeaconWrapper>
-                  <SubscriptionWrapper>
-                    <SubscriptionHandler>
-                      <MessageProvider>
-                        <NDAWrapper>
-                          <ModelAccessWrapper>
-                            <ModelInfoWrapper>
-                              <TimeOutWrapper>
-                                <NavContextProvider>
-                                  <PageWrapper>
-                                    <Header />
-                                    <TaskListBannerAlert />
-                                    <AppRoutes />
-                                    <Footer />
-                                  </PageWrapper>
-                                </NavContextProvider>
-                              </TimeOutWrapper>
-                            </ModelInfoWrapper>
-                          </ModelAccessWrapper>
-                        </NDAWrapper>
-                      </MessageProvider>
-                    </SubscriptionHandler>
-                  </SubscriptionWrapper>
-                </BeaconWrapper>
-              </UserInfoWrapper>
-            </FlagsWrapper>
-          </AuthenticationWrapper>
+          <ErrorMessageProvider>
+            <AuthenticationWrapper>
+              <FlagsWrapper>
+                <UserInfoWrapper>
+                  <BeaconWrapper>
+                    <SubscriptionWrapper>
+                      <SubscriptionHandler>
+                        <MessageProvider>
+                          <NDAWrapper>
+                            <ModelAccessWrapper>
+                              <ModelInfoWrapper>
+                                <TimeOutWrapper>
+                                  <NavContextProvider>
+                                    <PageWrapper>
+                                      <Header />
+                                      <TaskListBannerAlert />
+                                      <AppRoutes />
+                                      <Footer />
+                                    </PageWrapper>
+                                  </NavContextProvider>
+                                </TimeOutWrapper>
+                              </ModelInfoWrapper>
+                            </ModelAccessWrapper>
+                          </NDAWrapper>
+                        </MessageProvider>
+                      </SubscriptionHandler>
+                    </SubscriptionWrapper>
+                  </BeaconWrapper>
+                </UserInfoWrapper>
+              </FlagsWrapper>
+            </AuthenticationWrapper>
+          </ErrorMessageProvider>
         </RouterProvider>
       </BrowserRouter>
+
+      <ToastContainer
+        position="top-center"
+        className="width-full"
+        autoClose={false}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        icon={false}
+      />
     </>
   );
 };

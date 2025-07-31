@@ -1,11 +1,16 @@
+import React from 'react';
+import { toast } from 'react-toastify';
 import { ApolloClient, InMemoryCache, split } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { createUploadLink } from 'apollo-upload-client';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
+import Alert from 'components/Alert';
 import { localAuthStorageKey } from 'constants/localAuth';
+import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 const apiHost = new URL(import.meta.env.VITE_API_ADDRESS || '').host;
 
@@ -53,6 +58,32 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
+/**
+ * Error Link
+ *
+ * A link that intercepts GraphQL errors and displays them in a toast notification.
+ * It also allows for overriding the error message for a specific component.
+ */
+const errorLink = onError(({ graphQLErrors }) => {
+  if (graphQLErrors) {
+    const { overrideMessage } = getCurrentErrorMeta();
+
+    graphQLErrors.forEach(err => {
+      toast.error(
+        <div>
+          <Alert
+            type="error"
+            heading="Something went wrong with your request. Please try again."
+            isClosable={false}
+          >
+            {overrideMessage || err.message || 'Something went wrong.'}
+          </Alert>
+        </div>
+      );
+    });
+  }
+});
+
 const [protocol, gqlAddressWithoutProtocol] = (
   import.meta.env.VITE_GRAPHQL_ADDRESS as string
 ).split('://');
@@ -89,7 +120,7 @@ const splitLink = split(
 );
 
 const client = new ApolloClient({
-  link: splitLink,
+  link: errorLink.concat(splitLink),
   cache: new InMemoryCache({
     // Custom cache key for gql entities that have no `id` field, the default cache key for apollo
     typePolicies: {

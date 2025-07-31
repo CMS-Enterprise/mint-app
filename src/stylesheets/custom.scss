@@ -360,3 +360,14 @@ th {
     box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);  
   }
 }
+
+.Toastify__toast {
+  padding: 0 !important;
+  width: 100%;
+  max-width: 71rem;
+  display: block;
+}
+
+.Toastify__toast--error {
+  border-left: none;
+}
