@@ -176,7 +176,7 @@ exports[`Model Timeline page > renders without errors and matches snapshot 1`] =
                                     id="timeline-completeICIP"
                                     name="completeICIP"
                                     type="text"
-                                    value="2029-05-12T15:01:39.190679Z"
+                                    value="05/12/2029"
                                   />
                                 </div>
                               </div>

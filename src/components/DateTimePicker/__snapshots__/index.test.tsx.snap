@@ -75,7 +75,7 @@ exports[`DateTimePicker Component > matches snapshot with alertText disabled 1`]
           data-testid="tooltipWrapper"
         >
           <button
-            aria-describedby="tooltip-«r15»"
+            aria-describedby="tooltip-«r14»"
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
@@ -101,7 +101,7 @@ exports[`DateTimePicker Component > matches snapshot with alertText disabled 1`]
             aria-hidden="true"
             class="usa-tooltip__body"
             data-testid="tooltipBody"
-            id="tooltip-«r15»"
+            id="tooltip-«r14»"
             role="tooltip"
             title="You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate."
           >
@@ -257,7 +257,7 @@ exports[`DateTimePicker Component > matches snapshot with past date warning 1`] 
           data-testid="tooltipWrapper"
         >
           <button
-            aria-describedby="tooltip-«r11»"
+            aria-describedby="tooltip-«r10»"
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
@@ -283,7 +283,7 @@ exports[`DateTimePicker Component > matches snapshot with past date warning 1`] 
             aria-hidden="true"
             class="usa-tooltip__body"
             data-testid="tooltipBody"
-            id="tooltip-«r11»"
+            id="tooltip-«r10»"
             role="tooltip"
             title="You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate."
           >
