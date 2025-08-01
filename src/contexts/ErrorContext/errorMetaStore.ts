@@ -7,7 +7,9 @@
  * store is typically used by the ErrorMessageProvider to manage global error state
  * and provide error handling patterns throughout the application.
  */
-let currentMeta: { overrideMessage?: string } = {};
+import React from 'react';
+
+let currentMeta: { overrideMessage?: string | React.ReactNode } = {};
 
 export const setCurrentErrorMeta = (meta: typeof currentMeta) => {
   currentMeta = meta;

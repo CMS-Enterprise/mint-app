@@ -361,13 +361,24 @@ th {
   }
 }
 
+// Custom toast styling
 .Toastify__toast {
   padding: 0 !important;
   width: 100%;
   max-width: 71rem;
   display: block;
+  min-height: 0;
+  border: 0
 }
 
+// Custom error toast styling
 .Toastify__toast--error {
   border-left: none;
+}
+
+// Custom progress bar styling for success toasts
+.Toastify__toast--success {
+  .Toastify__progress-bar {
+    background-color: #00a91c !important;
+  }
 }

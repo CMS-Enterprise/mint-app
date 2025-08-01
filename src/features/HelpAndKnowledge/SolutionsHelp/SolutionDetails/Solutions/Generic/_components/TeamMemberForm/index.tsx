@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import {
-  Alert,
   Button,
   Fieldset,
   Form,
@@ -20,8 +20,13 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
+import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
+import {
+  useErrorMessage,
+  useErrorMessageWithMessage
+} from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
@@ -85,7 +90,7 @@ const TeamMemberForm = ({
   } = methods;
 
   const { selectedSolution } = useModalSolutionState();
-  const { showMessage } = useMessage();
+
   const [create] = useCreateMtoCommonSolutionUserContactMutation({
     refetchQueries: [
       {
@@ -104,10 +109,14 @@ const TeamMemberForm = ({
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
+
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
   const disabledSubmitBtn =
     !watch('userName') || !watch('role') || isSubmitting || !isDirty;
+
+  // const { setErrorMeta } = useErrorMessage();
+  useErrorMessage('Failed to update team member');
 
   if (!selectedSolution) {
     return null;
@@ -136,10 +145,10 @@ const TeamMemberForm = ({
             }
           }
         });
-    promise
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
+    promise.then(response => {
+      if (!response?.errors) {
+        toast.success(
+          <Alert type="success" isClosable={false}>
             <Trans
               i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
               values={{
@@ -149,16 +158,15 @@ const TeamMemberForm = ({
                 bold: <span className="text-bold" />
               }}
             />
-          );
-          closeModal();
-        }
-      })
-      .catch(error => {
-        const duplicateError = error.message.includes(
-          'uniq_user_id_per_solution_key'
+          </Alert>,
+          {
+            autoClose: 3000,
+            hideProgressBar: false
+          }
         );
-        setMutationError(duplicateError ? 'duplicate' : 'generic');
-      });
+        closeModal();
+      }
+    });
   };
 
   return (

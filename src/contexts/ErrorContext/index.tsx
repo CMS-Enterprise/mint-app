@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { setCurrentErrorMeta } from './errorMetaStore';
 
 type ErrorMeta = {
-  overrideMessage?: string;
+  overrideMessage?: string | React.ReactNode;
 };
 
 // ErrorMessageContext is used to provide the error message to the component
@@ -16,8 +16,21 @@ const ErrorMessageContext = createContext<{
   setErrorMeta: () => {}
 });
 
-// useErrorMessage is used to get the error message from the component
-export const useErrorMessage = () => useContext(ErrorMessageContext);
+// // useErrorMessage is used to get the error message from the component
+// export const useErrorMessage = () => useContext(ErrorMessageContext);
+
+// Hook that accepts a message directly
+export const useErrorMessage = (message?: string | React.ReactNode) => {
+  const { setErrorMeta } = useContext(ErrorMessageContext);
+
+  useEffect(() => {
+    if (message) {
+      setErrorMeta({ overrideMessage: message });
+    }
+  }, [message, setErrorMeta]);
+
+  return useContext(ErrorMessageContext);
+};
 
 /**
  * ErrorMessageProvider

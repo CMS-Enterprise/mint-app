@@ -68,16 +68,22 @@ const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
     const { overrideMessage } = getCurrentErrorMeta();
 
+    const isReactNode = React.isValidElement(overrideMessage);
+
     graphQLErrors.forEach(err => {
       toast.error(
         <div>
-          <Alert
-            type="error"
-            heading="Something went wrong with your request. Please try again."
-            isClosable={false}
-          >
-            {overrideMessage || err.message || 'Something went wrong.'}
-          </Alert>
+          {isReactNode ? (
+            overrideMessage
+          ) : (
+            <Alert
+              type="error"
+              heading="Something went wrong with your request. Please try again."
+              isClosable={false}
+            >
+              {overrideMessage || err.message || 'Something went wrong.'}
+            </Alert>
+          )}
         </div>
       );
     });
