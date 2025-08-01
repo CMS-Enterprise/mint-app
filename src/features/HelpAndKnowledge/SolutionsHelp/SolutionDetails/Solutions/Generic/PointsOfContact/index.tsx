@@ -3,9 +3,9 @@ import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/soluti
 
 import Divider from 'components/Divider';
 
-import Contractors from '../_components/Contractors';
-import MailboxesAndTeamMembers from '../_components/MailboxesAndTeamMembers';
-import Owners from '../_components/Owners';
+import Contractors from '../../../PointsOfContact/_components/Contractors';
+import MailboxesAndTeamMembers from '../../../PointsOfContact/_components/MailboxesAndTeamMembers';
+import Owners from '../../../PointsOfContact/_components/Owners';
 
 export const GenericPointsOfContact = ({
   solution
