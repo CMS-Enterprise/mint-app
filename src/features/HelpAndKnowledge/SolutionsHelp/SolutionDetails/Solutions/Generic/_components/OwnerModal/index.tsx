@@ -36,7 +36,7 @@ const OwnerModal = ({
       isOpen={isModalOpen}
       closeModal={closeModal}
       fixed
-      className="tablet:width-mobile-lg mint-body-normal overflow-auto"
+      className="tablet:width-mobile-lg mint-body-normal"
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
@@ -60,7 +60,7 @@ const OwnerModal = ({
         setDisableButton={setDisableSubmitBtn}
       />
 
-      <div className="margin-top-3 display-flex">
+      <div className="margin-top-2 display-flex mint-modal__footer">
         <Button
           form="owner-form"
           type="submit"

@@ -185,7 +185,7 @@ const TeamMemberForm = ({
   return (
     <FormProvider {...methods}>
       <Form
-        className="maxw-none"
+        className="maxw-none padding-bottom-10"
         data-testid="team-member-form"
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}

@@ -153,7 +153,7 @@ const ContractorForm = ({
   return (
     <FormProvider {...methods}>
       <Form
-        className="maxw-none"
+        className="maxw-none padding-bottom-6"
         data-testid="contractor-form"
         id="contractor-form"
         onSubmit={handleSubmit(onSubmit)}

@@ -171,7 +171,7 @@ const TeamMailboxForm = ({
   return (
     <FormProvider {...methods}>
       <Form
-        className="maxw-none"
+        className="maxw-none padding-bottom-10"
         data-testid="team-mailbox-form"
         id="team-mailbox-form"
         onSubmit={handleSubmit(onSubmit)}
