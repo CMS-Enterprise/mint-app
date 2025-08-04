@@ -9,7 +9,7 @@ import {
   Label,
   Select
 } from '@trussworks/react-uswds';
-import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -37,6 +37,8 @@ const Status = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -129,7 +131,11 @@ const Status = () => {
                         {modelPlanT('status.label')}
                       </Label>
 
-                      <ErrorMessage name="status" />
+                      {errors.status && (
+                        <div className="usa-error-message" role="alert">
+                          {errors.status}
+                        </div>
+                      )}
 
                       <Field
                         as={Select}

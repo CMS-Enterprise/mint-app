@@ -90,7 +90,7 @@ const Unfollow = () => {
     }
   }, [
     error,
-    history,
+    navigate,
     modelIDToRemove,
     modelName,
     removeMutate,

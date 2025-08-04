@@ -81,7 +81,6 @@ const usePagination = <T extends any[]>({
     loading,
     itemsLength,
     itemsPerPage,
-    history,
     params,
     withQueryParams,
     defaultPage

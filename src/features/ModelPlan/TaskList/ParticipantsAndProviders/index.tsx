@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Route, Switch, useNavigate, useParams } from 'react-router-dom';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -444,34 +444,31 @@ export const ParticipantsAndProviders = () => {
     <MainContent data-testid="model-participants-and-providers">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Switch>
-            <ProtectedRoute
+          <Routes>
+            <Route
               path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
-              exact
-              render={() => <ParticipantsAndProvidersContent />}
+              element={
+                <ProtectedRoute element={<ParticipantsAndProvidersContent />} />
+              }
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options"
-              exact
-              render={() => <ParticipantOptions />}
+              element={<ProtectedRoute element={<ParticipantOptions />} />}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication"
-              exact
-              render={() => <Communication />}
+              element={<ProtectedRoute element={<Communication />} />}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/participants-and-providers/coordination"
-              exact
-              render={() => <Coordination />}
+              element={<ProtectedRoute element={<Coordination />} />}
             />
-            <ProtectedRoute
+            <Route
               path="/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options"
-              exact
-              render={() => <ProviderOptions />}
+              element={<ProtectedRoute element={<ProviderOptions />} />}
             />
-            <Route path="*" render={() => <NotFoundPartial />} />
-          </Switch>
+            <Route path="*" element={<NotFoundPartial />} />
+          </Routes>
         </Grid>
       </GridContainer>
     </MainContent>

@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Route,
   Routes,
-  useLocation,
+  useBlocker,
   useNavigate,
   useParams
 } from 'react-router-dom';
@@ -27,7 +27,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ExisitingModelLinkFieldType,
   ExistingModelLinks,
@@ -100,7 +100,6 @@ export const CharacteristicsContent = () => {
     useRef<FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>>(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const {
     data: modelData,
@@ -248,137 +247,117 @@ export const CharacteristicsContent = () => {
 
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
-  useEffect(() => {
-    if (!isModalOpen && id) {
-      // Submit handler for existing links as well as regular form updates
-      const unblock = history.block(destination => {
-        // Don't call mutation if attempting to access a locked section
-        if (destination.pathname.includes('locked-task-list-section')) {
-          unblock();
-          navigate({
-            pathname: destination.pathname,
-            state: destination.state
-          });
-          return false;
-        }
-
-        if (destination.pathname === location.pathname) {
-          return false;
-        }
-
-        const formValues = formikRef?.current?.values;
-
-        // Getting the initial values of model links
-        const {
-          resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
-          participationInModelPreconditionLinks:
-            participationInModelPreconditionLinksInitial,
-          ...initialValues
-        } = formikRef?.current?.initialValues || {};
-
-        // Getting the current form values of model links
-        const {
-          resemblesExistingModelLinks: resemblesExistingModelLinksValues,
-          participationInModelPreconditionLinks:
-            participationInModelPreconditionLinksValues,
-          ...values
-        } = formValues || {};
-
-        // Separates the resemblesExistingModelLinks by type (string/number) to pass into the appropriate mutation
-        const resemblesExistingModelLinksToUpdate = separateLinksByType(
-          resemblesExistingModelLinksValues || [],
-          modelData?.modelPlanCollection || [],
-          existingModelData?.existingModelCollection || []
-        );
-
-        // Separates the participationInModelPreconditionLinks by type (string/number) to pass into the appropriate mutation
-        const participationInModelPreconditionLinksToUpdate =
-          separateLinksByType(
-            participationInModelPreconditionLinksValues || [],
-            modelData?.modelPlanCollection || [],
-            existingModelData?.existingModelCollection || []
-          );
-
-        const genCharUpdates = dirtyInput(initialValues, values);
-
-        // Checking if the existing model is a MINT model plan or an import/existing model plan
-        if (typeof genCharUpdates.existingModel === 'number') {
-          genCharUpdates.existingModelID = genCharUpdates.existingModel;
-        } else if (typeof genCharUpdates.existingModel === 'string') {
-          genCharUpdates.currentModelPlanID = genCharUpdates.existingModel;
-        } else if (genCharUpdates.existingModel === null) {
-          genCharUpdates.existingModelID = null;
-          genCharUpdates.currentModelPlanID = null;
-        }
-
-        // As existingModel is only a FE value/not persisted on BE, we want to remove it from the payload
-        delete genCharUpdates.existingModel;
-
-        Promise.allSettled([
-          update({
-            variables: {
-              id,
-              changes: genCharUpdates
-            }
-          }),
-          updateExistingLinks({
-            variables: {
-              modelPlanID: modelID,
-              fieldName:
-                ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
-              ...resemblesExistingModelLinksToUpdate
-            }
-          }),
-          updateExistingLinks({
-            variables: {
-              modelPlanID: modelID,
-              fieldName:
-                ExisitingModelLinkFieldType.GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH,
-              ...participationInModelPreconditionLinksToUpdate
-            }
-          })
-        ])
-          .then(response => {
-            unblock();
-            const anyError = response.find(res => res.status === 'rejected');
-
-            if (anyError) {
-              formikRef?.current?.setErrors({
-                resemblesExistingModelLinks: miscellaneousT('apolloFailField')
-              });
-            } else {
-              navigate(destination.pathname);
-            }
-          })
-          .catch(errors => {
-            unblock();
-            setDestinationURL(destination.pathname);
-            setIsModalOpen(true);
-
-            formikRef?.current?.setErrors(errors);
-          });
-        return false;
-      });
-
-      return () => {
-        unblock();
-      };
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    if (isModalOpen || !id) {
+      return false;
     }
-    return () => {};
-  }, [
-    history,
-    id,
-    update,
-    isModalOpen,
-    formikRef,
-    setIsModalOpen,
-    existingModelData?.existingModelCollection,
-    miscellaneousT,
-    modelData?.modelPlanCollection,
-    updateExistingLinks,
-    modelID,
-    location.pathname
-  ]);
+
+    // Don't call mutation if attempting to access a locked section
+    if (nextLocation.pathname.includes('locked-task-list-section')) {
+      navigate(nextLocation.pathname);
+      return false;
+    }
+
+    if (nextLocation.pathname === currentLocation.pathname) {
+      return false;
+    }
+
+    const formValues = formikRef?.current?.values;
+
+    // Getting the initial values of model links
+    const {
+      resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
+      participationInModelPreconditionLinks:
+        participationInModelPreconditionLinksInitial,
+      ...initialValues
+    } = formikRef?.current?.initialValues || {};
+
+    // Getting the current form values of model links
+    const {
+      resemblesExistingModelLinks: resemblesExistingModelLinksValues,
+      participationInModelPreconditionLinks:
+        participationInModelPreconditionLinksValues,
+      ...values
+    } = formValues || {};
+
+    // Separates the resemblesExistingModelLinks by type (string/number) to pass into the appropriate mutation
+    const resemblesExistingModelLinksToUpdate = separateLinksByType(
+      resemblesExistingModelLinksValues || [],
+      modelData?.modelPlanCollection || [],
+      existingModelData?.existingModelCollection || []
+    );
+
+    // Separates the participationInModelPreconditionLinks by type (string/number) to pass into the appropriate mutation
+    const participationInModelPreconditionLinksToUpdate = separateLinksByType(
+      participationInModelPreconditionLinksValues || [],
+      modelData?.modelPlanCollection || [],
+      existingModelData?.existingModelCollection || []
+    );
+
+    const genCharUpdates = dirtyInput(initialValues, values);
+
+    // Checking if the existing model is a MINT model plan or an import/existing model plan
+    if (typeof genCharUpdates.existingModel === 'number') {
+      genCharUpdates.existingModelID = genCharUpdates.existingModel;
+    } else if (typeof genCharUpdates.existingModel === 'string') {
+      genCharUpdates.currentModelPlanID = genCharUpdates.existingModel;
+    } else if (genCharUpdates.existingModel === null) {
+      genCharUpdates.existingModelID = null;
+      genCharUpdates.currentModelPlanID = null;
+    }
+
+    // As existingModel is only a FE value/not persisted on BE, we want to remove it from the payload
+    delete genCharUpdates.existingModel;
+
+    Promise.allSettled([
+      update({
+        variables: {
+          id,
+          changes: genCharUpdates
+        }
+      }),
+      updateExistingLinks({
+        variables: {
+          modelPlanID: modelID,
+          fieldName:
+            ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
+          ...resemblesExistingModelLinksToUpdate
+        }
+      }),
+      updateExistingLinks({
+        variables: {
+          modelPlanID: modelID,
+          fieldName:
+            ExisitingModelLinkFieldType.GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH,
+          ...participationInModelPreconditionLinksToUpdate
+        }
+      })
+    ])
+      .then(response => {
+        const anyError = response.find(res => res.status === 'rejected');
+
+        if (anyError) {
+          formikRef?.current?.setErrors({
+            resemblesExistingModelLinks: miscellaneousT('apolloFailField')
+          });
+        } else {
+          navigate(nextLocation.pathname);
+        }
+      })
+      .catch(errors => {
+        setDestinationURL(nextLocation.pathname);
+        setIsModalOpen(true);
+
+        formikRef?.current?.setErrors(errors);
+      });
+    return false;
+  });
+
+  useEffect(() => {
+    return () => {
+      blocker.reset?.();
+    };
+  }, [blocker]);
 
   const initialValues: GetGeneralCharacteristicsFormTypeWithLinks = {
     __typename: 'PlanGeneralCharacteristics',
@@ -471,10 +450,10 @@ export const CharacteristicsContent = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -935,7 +914,7 @@ export const CharacteristicsContent = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

@@ -50,14 +50,14 @@ const UnlockAllSections = () => {
     if (!hasEditAccess) {
       navigate(`/models/${modelID}/collaboration-area`);
     }
-  }, [hasEditAccess, history, modelID]);
+  }, [hasEditAccess, navigate, modelID]);
 
   return (
     <MainContent>
       <GridContainer className="padding-top-4">
         {showAlert && <Alert type="warning">{t('unlockFailed')}</Alert>}
 
-        <Button onClick={() => unlockAllSectionsHandler()}>
+        <Button type="button" onClick={() => unlockAllSectionsHandler()}>
           {t('unlockAllSections')}
         </Button>
       </GridContainer>

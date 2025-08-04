@@ -52,6 +52,8 @@ const AddToExistingMilestoneForm = ({
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search]);

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -370,7 +370,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                               type="button"
                               {...column.getSortByToggleProps()}
                             >
-                              {column.render('Header')}
+                              {column.render('Header') as string}
                               {column.canSort &&
                                 getHeaderSortIcon(column, false)}
                             </button>
@@ -393,7 +393,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                                 key={cell.getCellProps().key}
                                 className="padding-left-0"
                               >
-                                {cell.render('Cell')}
+                                {cell.render('Cell') as string}
                               </td>
                             );
                           })}

@@ -2,9 +2,8 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Route,
-  Switch,
+  Routes,
   useBlocker,
-  useLocation,
   useNavigate,
   useParams
 } from 'react-router-dom';
@@ -22,7 +21,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   CmsCenter,
   GetBasicsQuery,
@@ -75,7 +74,6 @@ const BasicsContent = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -106,89 +104,72 @@ const BasicsContent = () => {
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
 
-  useEffect(() => {
-    if (!isModalOpen && modelID) {
-      const unblock = history.block(destination => {
-        // Don't call mutation if attempting to access a locked section
-        if (destination.pathname.includes('locked-task-list-section')) {
-          unblock();
-          navigate({
-            pathname: destination.pathname,
-            state: destination.state
-          });
-          return false;
-        }
-
-        if (destination.pathname === location.pathname) {
-          return false;
-        }
-
-        if (!formikRef.current?.values.modelName) {
-          formikRef?.current?.setFieldError(
-            'modelName',
-            'Enter the Model name'
-          );
-          return false;
-        }
-
-        const { id: updateId } = formikRef?.current?.initialValues;
-        const basicsId = formikRef?.current?.values.basics.id;
-
-        const changes = dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        );
-
-        const basicsChanges = dirtyInput(
-          formikRef?.current?.initialValues.basics,
-          formikRef?.current?.values.basics
-        );
-
-        const { modelName: updateModelName, abbreviation: updateAbbreviation } =
-          changes;
-
-        update({
-          variables: {
-            id: updateId,
-            changes: {
-              modelName: updateModelName,
-              abbreviation: updateAbbreviation
-            },
-            basicsId,
-            basicsChanges
-          }
-        })
-          .then(response => {
-            if (!response?.errors) {
-              unblock();
-              navigate(destination.pathname);
-            }
-          })
-          .catch(errors => {
-            unblock();
-            setDestinationURL(destination.pathname);
-            setIsModalOpen(true);
-
-            formikRef?.current?.setErrors(errors);
-          });
-        return false;
-      });
-
-      return () => {
-        unblock();
-      };
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    if (isModalOpen || !modelID) {
+      return false;
     }
-    return () => {};
-  }, [
-    history,
-    id,
-    update,
-    isModalOpen,
-    formikRef,
-    setIsModalOpen,
-    modelID,
-    location.pathname
-  ]);
+
+    // Don't call mutation if attempting to access a locked section
+    if (nextLocation.pathname.includes('locked-task-list-section')) {
+      navigate(nextLocation.pathname);
+      return false;
+    }
+
+    if (nextLocation.pathname === currentLocation.pathname) {
+      return false;
+    }
+
+    if (!formikRef.current?.values.modelName) {
+      formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
+      return false;
+    }
+
+    const { id: updateId } = formikRef?.current?.initialValues;
+    const basicsId = formikRef?.current?.values.basics.id;
+
+    const changes = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    const basicsChanges = dirtyInput(
+      formikRef?.current?.initialValues.basics,
+      formikRef?.current?.values.basics
+    );
+
+    const { modelName: updateModelName, abbreviation: updateAbbreviation } =
+      changes;
+
+    update({
+      variables: {
+        id: updateId,
+        changes: {
+          modelName: updateModelName,
+          abbreviation: updateAbbreviation
+        },
+        basicsId,
+        basicsChanges
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          navigate(nextLocation.pathname);
+        }
+      })
+      .catch(errors => {
+        setDestinationURL(nextLocation.pathname);
+        setIsModalOpen(true);
+
+        formikRef?.current?.setErrors(errors);
+      });
+    return false;
+  });
+
+  useEffect(() => {
+    return () => {
+      blocker.reset?.();
+    };
+  }, [blocker]);
 
   const initialValues: ModelPlanInfoFormType = {
     __typename: 'ModelPlan',
@@ -293,8 +274,8 @@ const BasicsContent = () => {
               <GridContainer className="padding-x-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
-                    <Form
-                      onSubmit={e => {
+                    <form
+                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                         handleSubmit(e);
                         window.scrollTo(0, 0);
                       }}
@@ -632,7 +613,7 @@ const BasicsContent = () => {
                           {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
-                    </Form>
+                    </form>
                   </Grid>
 
                   <Grid desktop={{ col: 6 }}>
@@ -674,19 +655,17 @@ export const Basics = () => {
     <MainContent data-testid="model-plan-basics">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Switch>
+          <Routes>
             <Route
               path="/models/:modelID/collaboration-area/task-list/basics"
-              exact
-              component={() => <BasicsContent />}
+              element={<BasicsContent />}
             />
             <Route
               path="/models/:modelID/collaboration-area/task-list/basics/overview"
-              exact
-              render={() => <Overview />}
+              element={<Overview />}
             />
-            <Route path="*" render={() => <NotFoundPartial />} />
-          </Switch>
+            <Route path="*" element={<NotFoundPartial />} />
+          </Routes>
         </Grid>
       </GridContainer>
     </MainContent>

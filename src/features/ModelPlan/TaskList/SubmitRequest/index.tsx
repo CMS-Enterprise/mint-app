@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NotFound, { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
@@ -8,13 +8,13 @@ import ProtectedRoute from 'components/ProtectedRoute';
 export const SubmitRequest = () => {
   return (
     <MainContent className="grid-container" data-testid="model-submit-request">
-      <Switch>
-        <ProtectedRoute
+      <Routes>
+        <Route
           path="/models/:modelID/collaboration-area/task-list/submit-request/page-1" // page-* may change pending UX clarifcation
-          render={() => <NotFound />}
+          element={<ProtectedRoute element={<NotFound />} />}
         />
-        <Route path="*" render={() => <NotFoundPartial />} />
-      </Switch>
+        <Route path="*" element={<NotFoundPartial />} />
+      </Routes>
     </MainContent>
   );
 };
