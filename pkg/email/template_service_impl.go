@@ -115,6 +115,9 @@ var sharedSolutionPOCFooterTemplate string
 //go:embed templates/shared_mto_common_solution_header.html
 var sharedMTOCommonSolutionHeaderTemplate string
 
+//go:embed templates/shared_mint_mailbox_header.html
+var sharedMintMailboxHeader string
+
 //go:embed templates/shared_mint_mailbox_footer.html
 var sharedMintMailboxFooter string
 
@@ -429,6 +432,7 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 		"shared_access_banner.html":              sharedAccessBannerTemplate,
 		"shared_solution_poc_footer.html":        sharedSolutionPOCFooterTemplate,
 		"shared_mto_common_solution_header.html": sharedMTOCommonSolutionHeaderTemplate,
+		"shared_mint_mailbox_header.html":        sharedMintMailboxHeader,
 		"shared_mint_mailbox_footer.html":        sharedMintMailboxFooter,
 	}
 

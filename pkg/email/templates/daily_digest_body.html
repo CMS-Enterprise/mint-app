@@ -1,5 +1,12 @@
 
-{{template "shared_header.html" "Your daily updates"}}
+{{template "shared_header.html"}}
+
+{{template "shared_mint_mailbox_header.html"}}
+<hr/>
+<br/>
+
+<h2>Your daily updates</h2>
+<br/>
 
 {{range $audit := .AnalyzedAudits}}
 
@@ -28,7 +35,7 @@
 <hr />
 <br />
 
-<p> To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page. </p>
+{{template "shared_mint_mailbox_footer.html"}}
 
 {{template "shared_footer.html"}}
                                    
