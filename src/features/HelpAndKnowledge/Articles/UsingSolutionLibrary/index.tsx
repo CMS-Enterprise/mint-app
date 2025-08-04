@@ -18,6 +18,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import RelatedArticles from '../_components/RelatedArticles';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
@@ -169,6 +170,8 @@ export const UsingSolutionLibrary = () => {
               </ProcessList>
 
               <StillNeedMTOHelp />
+
+              <LatestContentUpdate file="usingSolutionLibrary.ts" />
             </div>
           </Grid>
         </GridContainer>

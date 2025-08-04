@@ -13,11 +13,11 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
     render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/operations-evaluation-and-learning`
+          `/models/${modelID}/read-view/operations-evaluation-and-learning`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/operations-evaluation-and-learning">
+          <Route path="/models/:modelID/read-view/operations-evaluation-and-learning">
             <ReadOnlyOpsEvalAndLearning modelID={modelID} />
           </Route>
         </MockedProvider>
@@ -41,11 +41,11 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/read-only/operations-evaluation-and-learning`
+          `/models/${modelID}/read-view/operations-evaluation-and-learning`
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/operations-evaluation-and-learning">
+          <Route path="/models/:modelID/read-view/operations-evaluation-and-learning">
             <ReadOnlyOpsEvalAndLearning modelID={modelID} />
           </Route>
         </MockedProvider>

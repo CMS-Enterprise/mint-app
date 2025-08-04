@@ -23,6 +23,7 @@ import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { tArray } from 'utils/translation';
 
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 import Table from './table';
@@ -131,7 +132,10 @@ const HighLevelProjectPlan = () => {
               bordered={false}
               multiselectable
               items={accordionItems}
+              className="margin-bottom-4"
             />
+
+            <LatestContentUpdate file="highLevelProjectPlans.ts" />
           </Grid>
         </GridContainer>
         <div className="margin-top-6 margin-bottom-neg-7">

@@ -24,11 +24,11 @@ describe('Read Only CR and TDLs page', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/crs-and-tdl`]}
+        initialEntries={[`/models/${modelID}/read-view/crs-and-tdl`]}
       >
         <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
           <MessageProvider>
-            <Route path="/models/:modelID/read-only/crs-and-tdl">
+            <Route path="/models/:modelID/read-view/crs-and-tdl">
               <Provider store={store}>
                 <ReadOnlyCRTDLs />
               </Provider>
@@ -50,11 +50,11 @@ describe('Read Only CR and TDLs page', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/crs-and-tdl`]}
+        initialEntries={[`/models/${modelID}/read-view/crs-and-tdl`]}
       >
         <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
           <MessageProvider>
-            <Route path="/models/:modelID/read-only/crs-and-tdl">
+            <Route path="/models/:modelID/read-view/crs-and-tdl">
               <Provider store={store}>
                 <ReadOnlyCRTDLs />
               </Provider>

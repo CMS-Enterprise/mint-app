@@ -962,6 +962,8 @@ export enum MtoCommonSolutionKey {
   MDM_POR = 'MDM_POR',
   MIDS = 'MIDS',
   MODEL_SPACE = 'MODEL_SPACE',
+  MS_FORMS = 'MS_FORMS',
+  NCQA = 'NCQA',
   OACT = 'OACT',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
   PAM = 'PAM',
@@ -969,8 +971,10 @@ export enum MtoCommonSolutionKey {
   QPP = 'QPP',
   QV = 'QV',
   RASS = 'RASS',
+  RESDAC_CMDS = 'RESDAC_CMDS',
   RFA = 'RFA',
   RMADA = 'RMADA',
+  RMD = 'RMD',
   RREG = 'RREG',
   SHARED_SYSTEMS = 'SHARED_SYSTEMS',
   T_MISS = 'T_MISS'
@@ -4439,6 +4443,7 @@ export type Tag = {
 };
 
 export enum TagType {
+  MTO_COMMON_SOLUTION = 'MTO_COMMON_SOLUTION',
   POSSIBLE_SOLUTION = 'POSSIBLE_SOLUTION',
   USER_ACCOUNT = 'USER_ACCOUNT'
 }
@@ -4452,7 +4457,7 @@ export type TaggedContent = {
 };
 
 /** TaggedEntity is the actual object represented by a tag in the data base. */
-export type TaggedEntity = PossibleOperationalSolution | UserAccount;
+export type TaggedEntity = MtoCommonSolution | PossibleOperationalSolution | UserAccount;
 
 export type TaggedInDiscussionReplyActivityMeta = {
   __typename: 'TaggedInDiscussionReplyActivityMeta';

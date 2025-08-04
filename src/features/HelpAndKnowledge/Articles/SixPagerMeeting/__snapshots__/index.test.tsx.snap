@@ -1949,7 +1949,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
     </div>
   </main>
   <div
-    class="margin-top-6"
+    class="margin-top-2"
   >
     <div
       class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"

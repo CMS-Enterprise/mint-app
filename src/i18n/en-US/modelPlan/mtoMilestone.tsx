@@ -216,7 +216,12 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       DDPS: 'Drug Data Processing System',
       OACT: 'Office of the Actuary',
       QPP: 'Quality Payment Program',
-      PAM: 'Patient Activation Measure'
+      PAM: 'Patient Activation Measure',
+      NCQA: 'National Committee for Quality Assurance',
+      RMD: 'Rapid Measure Development',
+      MS_FORMS: 'Microsoft Forms',
+      RESDAC_CMDS:
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -282,7 +287,12 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       DDPS: 'Drug Data Processing System',
       OACT: 'Office of the Actuary',
       QPP: 'Quality Payment Program',
-      PAM: 'Patient Activation Measure'
+      PAM: 'Patient Activation Measure',
+      NCQA: 'National Committee for Quality Assurance',
+      RMD: 'Rapid Measure Development',
+      MS_FORMS: 'Microsoft Forms',
+      RESDAC_CMDS:
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
     },
     readonlyOptions: {
       INNOVATION: '4i'

@@ -25,6 +25,7 @@ import { getKeys } from 'types/translation';
 import { tArray, tObject } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
+import LatestContentUpdate from '../_components/LatestContentUpdate';
 import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
 import NeedHelp from '../_components/NeedHelp';
 import { ArticleCategories, HelpArticle } from '..';
@@ -557,10 +558,12 @@ const TwoPagerMeeting = () => {
             </div>
 
             <NeedHelp />
+
+            <LatestContentUpdate file="twoPageMeeting.ts" />
           </Grid>
         </GridContainer>
       </MainContent>
-      <div className="margin-top-6">
+      <div className="margin-top-2">
         <RelatedArticles
           currentArticle={HelpArticle.TWO_PAGER_MEETING}
           specificArticles={[
