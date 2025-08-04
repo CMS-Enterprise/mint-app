@@ -368,12 +368,21 @@ th {
   max-width: 71rem;
   display: block;
   min-height: 0;
-  border: 0
+  border: 0;
+}
+
+.Toastify__toast .usa-alert {
+  border-radius: .5rem;
+}
+
+.Toastify__toast .usa-alert .usa-alert__body {
+  border-radius: .5rem;
 }
 
 // Custom error toast styling
 .Toastify__toast--error {
   border-left: none;
+  background-color: transparent;
 }
 
 // Custom progress bar styling for success toasts

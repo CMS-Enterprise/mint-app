@@ -1,5 +1,8 @@
 // ErrorMessageContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import Alert from 'components/Alert';
 
 import { setCurrentErrorMeta } from './errorMetaStore';
 
@@ -30,6 +33,31 @@ export const useErrorMessage = (message?: string | React.ReactNode) => {
   }, [message, setErrorMeta]);
 
   return useContext(ErrorMessageContext);
+};
+
+/**
+ * SuccessAlert
+ *
+ * A toast notification that displays a success message.
+ */
+export const successAlert = ({
+  message,
+  timeout = 5000,
+  type = 'success'
+}: {
+  message: string | React.ReactNode;
+  timeout?: number;
+  type?: 'success' | 'error' | 'warning';
+}) => {
+  return toast.success(
+    <Alert type={type} isClosable={false}>
+      {message}
+    </Alert>,
+    {
+      autoClose: timeout || 5000,
+      hideProgressBar: true
+    }
+  );
 };
 
 /**

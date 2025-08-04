@@ -81,7 +81,9 @@ const errorLink = onError(({ graphQLErrors }) => {
               heading="Something went wrong with your request. Please try again."
               isClosable={false}
             >
-              {overrideMessage || err.message || 'Something went wrong.'}
+              {overrideMessage ||
+                // err.message ||
+                'If the problem persists, please contact support.'}
             </Alert>
           )}
         </div>

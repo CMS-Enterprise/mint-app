@@ -30,7 +30,9 @@ import CheckboxField from 'components/CheckboxField';
 import FieldGroup from 'components/FieldGroup';
 import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import RequiredAsterisk from 'components/RequiredAsterisk';
+import successAlert from 'components/SuccessAlert';
 import TextAreaField from 'components/TextAreaField';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useFetchCSVData from 'hooks/useFetchCSVData';
@@ -225,6 +227,8 @@ const ShareExportModal = ({
     );
   };
 
+  const { setErrorMeta } = useErrorMessage();
+
   const ShareForm = (
     <div data-testid={`${modalElementId}-share-form`}>
       <Form
@@ -263,22 +267,16 @@ const ShareExportModal = ({
           })
             .then(response => {
               if (!response?.errors) {
-                setStatusMessage({
+                successAlert({
                   message: generalReadOnlyT('modal.shareSuccess'),
-                  status: 'success'
+                  timeout: 3000
                 });
                 closeModal();
-              } else {
-                setStatusMessage({
-                  message: generalReadOnlyT('modal.shareError'),
-                  status: 'error'
-                });
               }
             })
             .catch(() => {
-              setStatusMessage({
-                message: generalReadOnlyT('modal.shareError'),
-                status: 'error'
+              setErrorMeta({
+                overrideMessage: generalReadOnlyT('modal.shareError')
               });
             });
         }}
