@@ -30,8 +30,8 @@ type HandleMutationConfigType =
 
 type ModalConfigType = {
   isModalOpen: boolean;
-  setIsModalOpen: (setOpen: boolean) => void;
   destinationURL: string;
+  closeModal: () => void;
 };
 
 type MutationReturnType = {
@@ -146,8 +146,19 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
     }
   }, [blocker.state, pendingLocation]);
 
+  const clearDestinationURL = () => setDestinationURL('');
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    clearDestinationURL();
+  };
+
   return {
-    mutationError: { isModalOpen, setIsModalOpen, destinationURL },
+    mutationError: {
+      isModalOpen,
+      destinationURL,
+      closeModal
+    },
     loading
   };
 }

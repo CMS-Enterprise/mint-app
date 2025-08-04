@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 
 import routes from 'i18n/en-US/routes';
 
-import useRouteTitle from '../useRouteTitle';
+import useRouteTitle, { isExcludedPath } from '../useRouteTitle';
 
 // Mock useLocation hook
 vi.mock('react-router-dom', () => ({
@@ -107,5 +107,33 @@ describe('useRouteTitle', () => {
     const getByText = renderComponent();
 
     expect(getByText('/unknown-route')).toBeInTheDocument();
+  });
+});
+
+describe('isExcludedPath', () => {
+  it('returns true for excluded paths', () => {
+    expect(isExcludedPath('/models/123/read-only')).toBe(true);
+    expect(isExcludedPath('/models/abc/read-view')).toBe(true);
+    expect(
+      isExcludedPath(
+        '/models/uuid-1/collaboration-area/task-list/basics/milestones'
+      )
+    ).toBe(true);
+    expect(isExcludedPath('/models/uuid-2/task-list')).toBe(true);
+    expect(
+      isExcludedPath('/models/uuid-3/collaboration-area/task-list/it-solutions')
+    ).toBe(true);
+    expect(isExcludedPath('/models/uuid-4/read-view/it-solutions')).toBe(true);
+    expect(
+      isExcludedPath('/models/uuid-5/read-view/it-systems-and-solutions')
+    ).toBe(true);
+  });
+
+  it('returns false for non-excluded paths', () => {
+    expect(isExcludedPath('/models/123/other-path')).toBe(false);
+    expect(isExcludedPath('/models/123/read-only/extra')).toBe(false);
+    expect(isExcludedPath('/models/read-only')).toBe(false);
+    expect(isExcludedPath('/read-only')).toBe(false);
+    expect(isExcludedPath('/models/123')).toBe(false);
   });
 });

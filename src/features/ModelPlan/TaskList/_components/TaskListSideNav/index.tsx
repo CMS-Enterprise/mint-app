@@ -134,7 +134,7 @@ const TaskListSideNav = ({
         <h4 className="margin-top-0 margin-bottom-1">{t('sideNav.actions')}</h4>
 
         <UswdsReactLink
-          to={`/models/${modelID}/read-only`}
+          to={`/models/${modelID}/read-view`}
           className="display-block line-height-body-5"
         >
           {t('sideNav.readOnlyView')}

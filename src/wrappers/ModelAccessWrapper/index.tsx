@@ -55,7 +55,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       editable &&
       !isAssessment(groups, flags)
     ) {
-      navigate(`/models/${modelID}/read-only/model-basics`, { replace: true });
+      navigate(`/models/${modelID}/read-view/model-basics`, { replace: true });
     }
   }, [
     pathname,

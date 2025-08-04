@@ -54,7 +54,7 @@ const Modal = ({
         'z-top': zTop
       })}
       className={classNames('mint-modal__content', className, {
-        'overflow-hidden': fixed
+        'overflow-y-visible': fixed
       })}
       onAfterOpen={handleOpenModal}
       onAfterClose={() => {

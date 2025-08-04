@@ -8,6 +8,10 @@
         "eamodio.gitlens",
         "bierner.markdown-mermaid",
         "bruno-api-client.bruno",
-        "GraphQL.vscode-graphql"
+        "GraphQL.vscode-graphql",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries",
+        "dorzey.vscode-sqlfluff"
+
     ]
   }

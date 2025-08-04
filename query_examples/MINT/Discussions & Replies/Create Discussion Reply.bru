@@ -21,7 +21,7 @@ body:graphql {
       createDiscussionReply (input: {
           discussionID: "{{discussionID}}"
           content: "Let me look into it, ok? <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"ADMI\" data-label=\"ADMI\">@Audrey Abrams</span>!"
-          userRole: IT_ARCHITECT
+          userRole: LEADERSHIP
       }) {
           id
           discussionID
@@ -41,7 +41,7 @@ body:graphql {
                           commonName
                           email
                       }
-                      ... on PossibleOperationalSolution {
+                      ... on MTOCommonSolution {
                           name
                           key
                       }

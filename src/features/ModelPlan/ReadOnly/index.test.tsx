@@ -38,11 +38,11 @@ describe('Read Only Model Plan Summary', () => {
   it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/:subinfo">
+            <Route path="/models/:modelID/read-view/:subinfo">
               <ReadOnly />
             </Route>
           </Provider>
@@ -88,11 +88,11 @@ describe('Read Only Model Plan Summary', () => {
   it('matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/:subinfo">
+            <Route path="/models/:modelID/read-view/:subinfo">
               <ReadOnly />
             </Route>
           </Provider>
@@ -125,11 +125,11 @@ describe('Status Tag updates', () => {
     mocks[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
     const { getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/:subinfo">
+            <Route path="/models/:modelID/read-view/:subinfo">
               <ReadOnly />
             </Route>
           </Provider>
@@ -151,11 +151,11 @@ describe('Status Tag updates', () => {
     mocks[0].result.data.modelPlan.status = ModelStatus.CLEARED;
     const { getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-only/:subinfo">
+            <Route path="/models/:modelID/read-view/:subinfo">
               <ReadOnly />
             </Route>
           </Provider>

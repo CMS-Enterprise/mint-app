@@ -362,7 +362,7 @@ const ShareExportModal = ({
                   : '';
 
               navigator.clipboard.writeText(
-                `${window.location.origin}/models/${modelID}/read-only${filterParam}`
+                `${window.location.origin}/models/${modelID}/read-view${filterParam}`
               );
             }}
           >

@@ -3,6 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type MTOCommonSolution struct {
+	ID         uuid.UUID                           `json:"id" db:"id"`
 	Name       string                              `json:"name" db:"name"`
 	Key        MTOCommonSolutionKey                `json:"key" db:"key"`
 	Type       MTOSolutionType                     `json:"type" db:"type"`
@@ -17,6 +18,9 @@ type MTOCommonSolution struct {
 }
 
 type MTOCommonSolutionKey string
+
+// IsTaggedEntity is a method to satisfy the IsTaggedEntity interface for MTOCommonSolution.
+func (MTOCommonSolution) IsTaggedEntity() {}
 
 const (
 	MTOCSKInnovation     MTOCommonSolutionKey = "INNOVATION"
