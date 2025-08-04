@@ -30,9 +30,8 @@ import CheckboxField from 'components/CheckboxField';
 import FieldGroup from 'components/FieldGroup';
 import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import RequiredAsterisk from 'components/RequiredAsterisk';
-import successAlert from 'components/SuccessAlert';
 import TextAreaField from 'components/TextAreaField';
-import { useErrorMessage } from 'contexts/ErrorContext';
+import { statusAlert, useErrorMessage } from 'contexts/ErrorContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useFetchCSVData from 'hooks/useFetchCSVData';
@@ -74,6 +73,8 @@ const ShareExportModal = ({
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
   const { setPrintPDF } = useContext(PrintPDFContext);
+
+  const { setErrorMeta } = useErrorMessage();
 
   const [exportSection, setExportSection] = useState<FitlerGroup>(
     (filteredView as FilterGroup) || ModelShareSection.ALL
@@ -227,8 +228,6 @@ const ShareExportModal = ({
     );
   };
 
-  const { setErrorMeta } = useErrorMessage();
-
   const ShareForm = (
     <div data-testid={`${modalElementId}-share-form`}>
       <Form
@@ -253,6 +252,10 @@ const ShareExportModal = ({
             eventLabel: `Share model plan ${viewFilter || ''}`
           });
 
+          setErrorMeta({
+            overrideMessage: generalReadOnlyT('modal.shareError')
+          });
+
           shareModelPlan({
             variables: {
               modelPlanID: modelID,
@@ -264,21 +267,14 @@ const ShareExportModal = ({
               usernames,
               optionalMessage
             }
-          })
-            .then(response => {
-              if (!response?.errors) {
-                successAlert({
-                  message: generalReadOnlyT('modal.shareSuccess'),
-                  timeout: 3000
-                });
-                closeModal();
-              }
-            })
-            .catch(() => {
-              setErrorMeta({
-                overrideMessage: generalReadOnlyT('modal.shareError')
+          }).then(response => {
+            if (!response?.errors) {
+              statusAlert({
+                message: generalReadOnlyT('modal.shareSuccess')
               });
-            });
+              closeModal();
+            }
+          });
         }}
       >
         <div className="filter-view__body display-block padding-3 padding-x-4">

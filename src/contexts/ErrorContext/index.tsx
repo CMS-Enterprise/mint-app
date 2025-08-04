@@ -36,22 +36,27 @@ export const useErrorMessage = (message?: string | React.ReactNode) => {
 };
 
 /**
- * SuccessAlert
+ * statusAlert
  *
- * A toast notification that displays a success message.
+ * A toast notification that displays a status message.
  */
-export const successAlert = ({
+export const statusAlert = ({
   message,
   timeout = 5000,
   type = 'success'
 }: {
-  message: string | React.ReactNode;
+  message?: string | React.ReactNode;
   timeout?: number;
   type?: 'success' | 'error' | 'warning';
 }) => {
-  return toast.success(
+  const generalMessage =
+    type === 'error'
+      ? 'Something went wrong with your request. Please try again.'
+      : 'The operation was successful';
+
+  return toast[type](
     <Alert type={type} isClosable={false}>
-      {message}
+      {message || generalMessage}
     </Alert>,
     {
       autoClose: timeout || 5000,
