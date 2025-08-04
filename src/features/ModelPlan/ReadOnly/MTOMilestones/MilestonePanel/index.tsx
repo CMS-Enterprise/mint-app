@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -52,8 +52,6 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
   const { status: stausConfig, riskIndicator: riskIndicatorConfig } =
     usePlanTranslation('mtoMilestone');
-
-  const navigate = useNavigate();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);

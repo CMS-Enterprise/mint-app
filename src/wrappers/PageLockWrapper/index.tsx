@@ -6,8 +6,8 @@
  */
 
 import React, { useContext } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { Redirect, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
 import {
   GetLockedModelPlanSectionsQuery,
   LockableSection,
@@ -111,7 +111,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   const taskListRoute = lockedRouteParser(to);
 
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId } = useSelector((state: any) => state.auth);
 
   const validModelID: boolean = isUUID(modelID);
 
@@ -147,13 +147,10 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   if (lockState === LockStatus.LOCKED) {
     return (
-      <Redirect
-        push
-        to={{
-          pathname: `/models/${modelID}/locked-task-list-section`,
-          // Passing the route for breadcrumbs on locked section page
-          state: { route: taskListRoute }
-        }}
+      <Navigate
+        to={`/models/${modelID}/locked-task-list-section`}
+        state={{ route: taskListRoute }}
+        replace
       />
     );
   }
@@ -173,8 +170,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         }));
       })
       .catch(() => {
-        navigate({
-          pathname: `/models/${modelID}/locked-task-list-section`,
+        navigate(`/models/${modelID}/locked-task-list-section`, {
           // Passing error status to default error page
           state: { route: taskListRoute, error: true }
         });
@@ -189,8 +185,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         section
       }
     }).catch(() => {
-      navigate({
-        pathname: `/models/${modelID}/locked-task-list-section`,
+      navigate(`/models/${modelID}/locked-task-list-section`, {
         // Passing error status to default error page
         state: { route: taskListRoute, error: true }
       });
