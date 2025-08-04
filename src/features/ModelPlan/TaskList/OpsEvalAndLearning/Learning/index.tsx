@@ -9,7 +9,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetLearningQuery,
   ModelLearningSystemType,
@@ -94,7 +94,7 @@ const Learning = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -165,10 +165,10 @@ const Learning = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-learning-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -291,7 +291,7 @@ const Learning = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

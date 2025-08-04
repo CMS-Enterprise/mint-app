@@ -10,7 +10,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Form, Formik, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   GetRecoverQuery,
@@ -107,7 +107,7 @@ const Recover = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const initialValues: InitialValueType = {
@@ -217,7 +217,7 @@ const Recover = () => {
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
-                    <Form
+                    <form
                       className="margin-top-6"
                       data-testid="payment-recover-form"
                       onSubmit={e => {
@@ -381,7 +381,7 @@ const Recover = () => {
                           {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
-                    </Form>
+                    </form>
                   </Grid>
                 </Grid>
               </GridContainer>

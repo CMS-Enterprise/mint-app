@@ -130,7 +130,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   // Subscription lock boolean if current section is locked
   const taskListLocked: boolean =
-    findLockedSection(lockableSectionLocks, modelPlanSectionMap[section]) ===
+    findLockedSection(lockableSectionLocks, modelPlanSectionMap[section!]) ===
     LockStatus.LOCKED;
 
   const taskListSections = tArray<Record<string, string>>(
@@ -149,7 +149,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     }
   });
 
-  const modelPlanSection = routeMap[section];
+  const modelPlanSection = routeMap[section!];
 
   const cannotStart: boolean =
     data?.modelPlan?.prepareForClearance?.status ===
@@ -190,7 +190,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const handleFormSubmit = (taskSection: keyof MutationObjectType) => {
     clearanceMutations[taskSection]({
       variables: {
-        id: sectionID,
+        id: sectionID!,
         changes: { status: TaskStatusInput.READY_FOR_CLEARANCE }
       }
     })
@@ -264,7 +264,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 : [BreadcrumbItemOptions.TASK_LIST]),
               BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
             ]}
-            customItem={p(`reviewBreadcrumbs.${routeMap[section]}`)}
+            customItem={p(`reviewBreadcrumbs.${routeMap[section!]}`)}
           />
 
           {errors && (
@@ -280,7 +280,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
           {renderModal(taskListLocked)}
 
           <div className="margin-top-3">
-            {renderReviewTaskSection(modelID, section)}
+            {renderReviewTaskSection(modelID, section!)}
           </div>
 
           <div className="margin-top-6 margin-bottom-3">
@@ -298,7 +298,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             <Button
               type="submit"
               data-testid="mark-task-list-for-clearance"
-              onClick={() => handleFormSubmit(section)}
+              onClick={() => handleFormSubmit(section!)}
             >
               {p('markAsReady')}
             </Button>
@@ -321,7 +321,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               {p('changes', {
                 section:
                   taskListSections[
-                    routeMap[section] as any
+                    routeMap[section!] as any
                   ]?.heading?.toLowerCase()
               })}
               <Icon.ArrowForward

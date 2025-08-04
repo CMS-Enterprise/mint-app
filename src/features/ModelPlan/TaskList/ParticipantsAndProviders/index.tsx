@@ -13,7 +13,7 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetParticipantsAndProvidersQuery,
   ParticipantsType,
@@ -98,7 +98,7 @@ export const ParticipantsAndProvidersContent = () => {
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -179,10 +179,10 @@ export const ParticipantsAndProvidersContent = () => {
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="participants-and-providers__info">
                   <Grid desktop={{ col: 6 }}>
-                    <Form
+                    <form
                       className="margin-top-6"
                       data-testid="participants-and-providers-form"
-                      onSubmit={e => {
+                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                         handleSubmit(e);
                       }}
                     >
@@ -404,7 +404,7 @@ export const ParticipantsAndProvidersContent = () => {
                           {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
-                    </Form>
+                    </form>
                   </Grid>
 
                   <Grid desktop={{ col: 6 }}>

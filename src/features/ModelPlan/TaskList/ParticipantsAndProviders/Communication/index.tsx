@@ -9,7 +9,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetCommunicationQuery,
   ParticipantCommunicationType,
@@ -96,7 +96,7 @@ export const Communication = () => {
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -179,10 +179,10 @@ export const Communication = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-communication-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -358,7 +358,7 @@ export const Communication = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

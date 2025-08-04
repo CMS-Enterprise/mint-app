@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetClearanceStatusesQuery,
   PrepareForClearanceStatus,
@@ -270,7 +270,7 @@ const PrepareForClearanceCheckList = ({
                   </ErrorAlert>
                 )}
 
-                <Form
+                <form
                   className="margin-y-6"
                   data-testid="prepare-for-clearance-form"
                   onSubmit={e => {
@@ -409,7 +409,7 @@ const PrepareForClearanceCheckList = ({
                       {t('dontUpdate')}
                     </Button>
                   </Fieldset>
-                </Form>
+                </form>
               </>
             );
           }}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Icon,
   ProcessList,
@@ -51,7 +51,7 @@ const ReadOnlyModelTimeline = ({
 
   const flags = useFlags();
 
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: any) => state.auth);
   const hasEditAccess: boolean = isAssessment(groups, flags);
 
   const allTimelineData = (data?.modelPlan.timeline ||

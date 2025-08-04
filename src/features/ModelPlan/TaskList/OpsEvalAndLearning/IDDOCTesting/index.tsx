@@ -9,7 +9,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetIddocTestingQuery,
   MonitoringFileType,
@@ -85,7 +85,7 @@ const IDDOCTesting = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -160,10 +160,10 @@ const IDDOCTesting = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-iddoc-testing-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -339,7 +339,7 @@ const IDDOCTesting = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

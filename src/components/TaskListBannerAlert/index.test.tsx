@@ -14,7 +14,7 @@ describe('The Task List Alert Banner', () => {
       >
         <Route
           path="/models/:modelID/collaboration-area/task-list"
-          component={TaskListBannerAlert}
+          element={<TaskListBannerAlert />}
         />
       </MemoryRouter>
     );
@@ -31,7 +31,7 @@ describe('The Task List Alert Banner', () => {
       >
         <Route
           path="/models/:modelID/collaboration-area/task-list"
-          component={TaskListBannerAlert}
+          element={<TaskListBannerAlert />}
         />
       </MemoryRouter>
     );

@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Label } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   DocumentType,
   useUploadNewPlanDocumentMutation
@@ -161,8 +161,8 @@ const DocumentUpload = ({
                 </ErrorAlert>
               )}
               <div>
-                <Form
-                  onSubmit={e => {
+                <form
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                     window.scrollTo(0, 0);
                   }}
@@ -346,7 +346,7 @@ const DocumentUpload = ({
                       {documentsMiscT('submitButton')}
                     </Button>
                   </div>
-                </Form>
+                </form>
               </div>
             </>
           );

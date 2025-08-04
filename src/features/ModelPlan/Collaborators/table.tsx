@@ -219,7 +219,7 @@ const CollaboratorsTable = ({
                     type="button"
                     {...column.getSortByToggleProps()}
                   >
-                    {column.render('Header')}
+                    {column.render('Header') as React.ReactElement}
                     {getHeaderSortIcon(column, false)}
                   </button>
                 </th>
@@ -240,7 +240,7 @@ const CollaboratorsTable = ({
                       }}
                       key={cell.getCellProps().key}
                     >
-                      {cell.render('Cell')}
+                      {cell.render('Cell') as React.ReactElement}
                     </td>
                   );
                 })}

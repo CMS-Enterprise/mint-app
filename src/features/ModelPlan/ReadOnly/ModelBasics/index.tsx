@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Grid, Link as TrussLink } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
@@ -48,7 +48,7 @@ const ReadOnlyModelBasics = ({
 
   const flags = useFlags();
   const isCollaborator = data?.modelPlan?.isCollaborator;
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: any) => state.auth);
   const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
   const allBasicsData = (data?.modelPlan.basics ||

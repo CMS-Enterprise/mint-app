@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -245,7 +245,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const isViewingFilteredGroup = filteredView !== null;
 
   // Used to check if user is assessment for rendering subnav to task list
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: any) => state.auth);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -300,7 +300,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if (isHelpArticle) delete subComponents.discussions;
 
-  const subComponent = subComponents[subinfo];
+  const subComponent = subComponents[subinfo!];
 
   if (!data && loading) {
     return <PageLoading />;
@@ -310,7 +310,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
-  if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
+  if (!isSubpage(subinfo!, flags, isHelpArticle) && !isViewingFilteredGroup) {
     return <NotFound />;
   }
 
@@ -476,7 +476,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
         <MobileNav
           subComponents={subComponents}
-          subinfo={subinfo}
+          subinfo={subinfo!}
           isHelpArticle={isHelpArticle}
           isFilteredView={!!filteredView}
         />

@@ -8,7 +8,7 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery,
@@ -185,8 +185,8 @@ const QuestionAndReply = ({
                   })}
                 </ErrorAlert>
               )}
-              <Form
-                onSubmit={e => {
+              <form
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                   window.scrollTo(0, 0);
                 }}
@@ -336,7 +336,7 @@ const QuestionAndReply = ({
                     </Button>
                   </div>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

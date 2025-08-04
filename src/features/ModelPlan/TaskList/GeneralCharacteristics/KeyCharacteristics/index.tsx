@@ -9,7 +9,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   AgencyOrStateHelpType,
   AlternativePaymentModelType,
@@ -102,7 +102,7 @@ const KeyCharacteristics = () => {
     TypedUpdatePlanGeneralCharacteristicsDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -183,10 +183,10 @@ const KeyCharacteristics = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-key-characteristics-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -524,7 +524,7 @@ const KeyCharacteristics = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

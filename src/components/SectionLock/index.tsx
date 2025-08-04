@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { LockableSection } from 'gql/generated/graphql';
 
 import { AvatarCircle } from 'components/Avatar';
@@ -14,7 +14,7 @@ type SectionLockProps = {
 const SectionLock = ({ section }: SectionLockProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId } = useSelector((state: any) => state.auth);
 
   // Get the lockable sections from the SubscriptionContext
   const { lockableSectionLocks } = useContext(SubscriptionContext);

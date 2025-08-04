@@ -41,7 +41,9 @@ const Header = () => {
   const isGetAccess: boolean = pathname === '/how-to-get-access';
 
   // Detects click outside mobile navigation and close mobile nav
-  useOutsideClick(mobileNavRef, () => setIsMobileSideNavExpanded(false));
+  useOutsideClick(mobileNavRef as React.RefObject<HTMLElement>, () =>
+    setIsMobileSideNavExpanded(false)
+  );
 
   useEffect(() => {
     let isMounted = true;

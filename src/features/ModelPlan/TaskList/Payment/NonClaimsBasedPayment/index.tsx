@@ -10,7 +10,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   GetNonClaimsBasedPaymentQuery,
@@ -91,7 +91,7 @@ const NonClaimsBasedPayment = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const backPage = () => {
@@ -198,7 +198,7 @@ const NonClaimsBasedPayment = () => {
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
-                    <Form
+                    <form
                       className="margin-top-6"
                       data-testid="payment-non-claims-based-payment-form"
                       onSubmit={e => {
@@ -400,7 +400,7 @@ const NonClaimsBasedPayment = () => {
                           {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
-                    </Form>
+                    </form>
                   </Grid>
                 </Grid>
               </GridContainer>

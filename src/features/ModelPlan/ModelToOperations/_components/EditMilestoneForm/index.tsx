@@ -1384,7 +1384,11 @@ const EditMilestoneForm = ({
                                       type="button"
                                       {...column.getSortByToggleProps()}
                                     >
-                                      {column.render('Header')}
+                                      {
+                                        column.render(
+                                          'Header'
+                                        ) as React.ReactElement
+                                      }
                                       {column.canSort &&
                                         getHeaderSortIcon(column, false)}
                                     </button>
@@ -1407,7 +1411,11 @@ const EditMilestoneForm = ({
                                         key={cell.getCellProps().key}
                                         className="padding-left-0"
                                       >
-                                        {cell.render('Cell')}
+                                        {
+                                          cell.render(
+                                            'Cell'
+                                          ) as React.ReactElement
+                                        }
                                       </td>
                                     );
                                   })}

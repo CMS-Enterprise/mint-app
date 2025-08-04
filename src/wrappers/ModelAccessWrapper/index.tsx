@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetIsCollaboratorQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -28,7 +28,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
 
   // Get groups to check is user has MINT_ASSESSMENT_NONPROD or MINT_ASSESSMENT role
   // If so, has full access to both task-list and read-only
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: any) => state.auth);
 
   // Checking if user's location is task-list or collaborators
   // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable

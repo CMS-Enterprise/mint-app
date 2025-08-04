@@ -10,7 +10,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Form, Formik, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   GetAnticipateDependenciesQuery,
@@ -82,7 +82,7 @@ const AnticipateDependencies = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as any
   });
 
   const nextPage = () => {
@@ -184,10 +184,10 @@ const AnticipateDependencies = () => {
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
-                    <Form
+                    <form
                       className="margin-top-6"
                       data-testid="payment-anticipate-dependencies-form"
-                      onSubmit={e => {
+                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                         handleSubmit(e);
                       }}
                     >
@@ -363,7 +363,7 @@ const AnticipateDependencies = () => {
                           {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
-                    </Form>
+                    </form>
                   </Grid>
                 </Grid>
               </GridContainer>

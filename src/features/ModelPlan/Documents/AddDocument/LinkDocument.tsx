@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { DocumentType } from 'gql/generated/graphql';
 import LinkNewPlanDocument from 'gql/operations/Documents/LinkNewPlanDocument';
 
@@ -158,7 +158,11 @@ const LinkDocument = ({
                 </ErrorAlert>
               )}
               <div>
-                <Form onSubmit={e => handleSubmit(e)}>
+                <form
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                    handleSubmit(e)
+                  }
+                >
                   <FieldGroup scrollElement="url" error={!!flatErrors.url}>
                     <Label htmlFor="FileUpload-LinkDocument">
                       {documentsT('url.label')}
@@ -350,7 +354,7 @@ const LinkDocument = ({
                       {documentsMiscT('submitButton')}
                     </Button>
                   </div>
-                </Form>
+                </form>
               </div>
             </>
           );

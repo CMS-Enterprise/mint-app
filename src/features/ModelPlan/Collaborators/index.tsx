@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Route,
   Routes,
@@ -92,7 +92,7 @@ export const CollaboratorsContent = () => {
     useState<ModelPlanCollaboratorType>();
 
   // Current user's EUA id - to warn about removing yourself from model plan
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId } = useSelector((state: any) => state.auth);
 
   const [mutate] = useDeleteModelPlanCollaboratorMutation();
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 type NDAWrapperProps = {
@@ -11,7 +11,7 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
 
   const navigate = useNavigate();
 
-  const user = useSelector((state: RootStateOrAny) => state.auth);
+  const user = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {

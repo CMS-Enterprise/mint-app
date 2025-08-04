@@ -104,7 +104,7 @@ const InternalSolutionButton = ({
   children
 }: {
   params: string;
-  children: React.ReactChild;
+  children: React.ReactNode;
 }) => {
   const navigate = useNavigate();
 

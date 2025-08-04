@@ -96,10 +96,12 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              navigate({
-                pathname: `/models/${modelID}/collaboration-area/model-to-operations`,
-                state: { scroll: true }
-              })
+              navigate(
+                `/models/${modelID}/collaboration-area/model-to-operations`,
+                {
+                  state: { scroll: true }
+                }
+              )
             }
             data-testid="to-model-to-operations"
           >

@@ -11,7 +11,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   CcmInvolvmentType,
   ContractorSupportType,
@@ -155,7 +155,7 @@ export const OpsEvalAndLearningContent = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -243,10 +243,10 @@ export const OpsEvalAndLearningContent = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -450,7 +450,7 @@ export const OpsEvalAndLearningContent = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

@@ -9,7 +9,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
   ModelType,
@@ -75,7 +75,7 @@ const Overview = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdateBasicsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as any
   });
 
   const initialValues: InitialValueType = {
@@ -155,9 +155,9 @@ const Overview = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="tablet:grid-col-6 margin-top-6"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                   window.scrollTo(0, 0);
                 }}
@@ -279,7 +279,7 @@ const Overview = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

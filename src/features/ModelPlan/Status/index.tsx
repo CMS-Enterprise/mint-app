@@ -9,7 +9,7 @@ import {
   Label,
   Select
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -120,8 +120,8 @@ const Status = () => {
               } = formikProps;
               return (
                 <>
-                  <Form
-                    onSubmit={e => {
+                  <form
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
                     }}
@@ -188,7 +188,7 @@ const Status = () => {
 
                       {modelPlanMiscT('return')}
                     </Button>
-                  </Form>
+                  </form>
                 </>
               );
             }}

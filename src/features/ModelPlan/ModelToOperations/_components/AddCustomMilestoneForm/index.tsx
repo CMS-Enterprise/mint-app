@@ -290,10 +290,12 @@ const CustomMilestoneForm = () => {
                     reset();
                     clearMessage();
                     setMTOModalOpen(false);
-                    navigate({
-                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                      state: { scroll: true }
-                    });
+                    navigate(
+                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
+                      {
+                        state: { scroll: true }
+                      }
+                    );
                   }}
                 >
                   {' '}

@@ -43,13 +43,6 @@ import {
 
 import './index.scss';
 
-type LocationProps = {
-  state: {
-    from: string;
-  };
-  from?: string;
-};
-
 // Sort options type for the select dropdown
 type SortProps = {
   value: 'newest' | 'oldest';
@@ -86,7 +79,7 @@ const ChangeHistory = () => {
     modelID: string;
   }>();
 
-  const { state } = useLocation<LocationProps>();
+  const { state } = useLocation();
 
   const fromReadView = state?.from === 'readview';
 

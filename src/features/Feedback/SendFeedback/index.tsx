@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   EaseOfUse,
   MintUses,
@@ -109,9 +109,9 @@ const SendFeedback = () => {
 
             return (
               <Grid desktop={{ col: 6 }}>
-                <Form
+                <form
                   className="margin-top-3"
-                  onSubmit={e => {
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -328,7 +328,7 @@ const SendFeedback = () => {
                       </Button>
                     </div>
                   </Fieldset>
-                </Form>
+                </form>
               </Grid>
             );
           }}

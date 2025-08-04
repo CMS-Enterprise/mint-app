@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetIndividualModelPlanCollaboratorQuery,
   GetModelCollaboratorsQuery,
@@ -40,14 +40,6 @@ type GetCollaboratorsType =
 type CollaboratorFormType =
   GetIndividualModelPlanCollaboratorQuery['planCollaboratorByID'];
 
-type LocationProps = {
-  fromCollaborationArea: boolean;
-  pathname: string;
-  state: {
-    fromCollaborationArea: boolean;
-  };
-};
-
 const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
@@ -56,7 +48,7 @@ const Collaborators = () => {
 
   const navigate = useNavigate();
 
-  const location = useLocation<LocationProps>();
+  const location = useLocation();
 
   const isFromCollaborationArea = location.state?.fromCollaborationArea;
 
@@ -81,7 +73,7 @@ const Collaborators = () => {
   const { data: allCollaboratorsData, loading: queryLoading } =
     useGetModelCollaboratorsQuery({
       variables: {
-        id: modelID
+        id: modelID!
       }
     });
 
@@ -146,7 +138,7 @@ const Collaborators = () => {
       create({
         variables: {
           input: {
-            modelPlanID: modelID,
+            modelPlanID: modelID!,
             userName: username!,
             teamRoles: teamRoles!
           }
@@ -275,8 +267,8 @@ const Collaborators = () => {
                     </ErrorAlert>
                   )}
 
-                  <Form
-                    onSubmit={e => {
+                  <form
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
                     }}
@@ -418,7 +410,7 @@ const Collaborators = () => {
                         )}
                       </div>
                     </Fieldset>
-                  </Form>
+                  </form>
                 </>
               );
             }}

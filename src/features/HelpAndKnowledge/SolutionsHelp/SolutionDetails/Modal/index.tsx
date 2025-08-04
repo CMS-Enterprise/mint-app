@@ -118,7 +118,7 @@ const SolutionDetailsModal = ({
     }
 
     navigate(closeModalRoute, {
-      fromModal: true
+      state: { fromModal: true }
     });
   };
 

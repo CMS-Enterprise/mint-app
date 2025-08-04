@@ -295,7 +295,7 @@ describe('The Model Plan Task List', () => {
             <MessageProvider>
               <Route
                 path="/models/:modelID/collaboration-area/task-list"
-                component={TaskList}
+                element={<TaskList />}
               />
             </MessageProvider>
           </MockedProvider>
@@ -362,7 +362,7 @@ describe('The Model Plan Task List', () => {
             <MessageProvider>
               <Route
                 path="/models/:modelID/collaboration-area/task-list"
-                component={TaskList}
+                element={<TaskList />}
               />
             </MessageProvider>
           </MockedProvider>
@@ -391,7 +391,7 @@ describe('The Model Plan Task List', () => {
             <MessageProvider>
               <Route
                 path="/models/:modelID/collaboration-area/task-list"
-                component={TaskList}
+                element={<TaskList />}
               />
             </MessageProvider>
           </MockedProvider>
@@ -424,7 +424,7 @@ describe('The Model Plan Task List', () => {
               <MessageProvider>
                 <Route
                   path="/models/:modelID/collaboration-area/task-list"
-                  component={TaskList}
+                  element={<TaskList />}
                 />
               </MessageProvider>
             </MockedProvider>

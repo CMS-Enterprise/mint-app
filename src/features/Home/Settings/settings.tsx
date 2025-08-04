@@ -12,7 +12,7 @@ import {
 import classNames from 'classnames';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import NotFound from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
   MtoCommonSolutionKey,
@@ -53,7 +53,7 @@ const SettingsForm = () => {
 
   const navigate = useNavigate();
 
-  const { state } = useLocation<HomepageLocationStateType>();
+  const { state } = useLocation();
 
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
@@ -140,8 +140,8 @@ const SettingsForm = () => {
               const { handleSubmit, setErrors, values } = formikProps;
 
               return (
-                <Form
-                  onSubmit={e => {
+                <form
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -287,7 +287,7 @@ const SettingsForm = () => {
                       {homepageSettingsT('back')}
                     </UswdsReactLink>
                   </div>
-                </Form>
+                </form>
               );
             }}
           </Formik>

@@ -297,10 +297,12 @@ const CustomSolutionForm = () => {
                     type="button"
                     className="usa-button usa-button--unstyled margin-top-0"
                     onClick={() => {
-                      navigate({
-                        pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                        state: { scroll: true }
-                      });
+                      navigate(
+                        `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
+                        {
+                          state: { scroll: true }
+                        }
+                      );
                       setMTOModalOpen(false);
                     }}
                   >

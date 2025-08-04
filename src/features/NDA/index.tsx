@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { useUpdateNdaMutation } from 'gql/generated/graphql';
 import { setUser } from 'stores/reducers/authReducer';
 
@@ -24,9 +24,7 @@ const NDA = () => {
 
   const [originalRoute, setOriginalRoute] = useState<string>('');
 
-  const { acceptedNDA, ...user } = useSelector(
-    (state: RootStateOrAny) => state.auth
-  );
+  const { acceptedNDA, ...user } = useSelector((state: any) => state.auth);
 
   const [signNDA] = useUpdateNdaMutation();
 
@@ -85,8 +83,8 @@ const NDA = () => {
                 const { values, handleSubmit } = formikProps;
 
                 return (
-                  <Form
-                    onSubmit={e => {
+                  <form
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                     }}
                   >
@@ -105,7 +103,7 @@ const NDA = () => {
                     >
                       {t('submit')}
                     </Button>
-                  </Form>
+                  </form>
                 );
               }}
             </Formik>

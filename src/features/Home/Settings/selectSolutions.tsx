@@ -9,7 +9,7 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
   useGetGlobalMtoCommonSolutionsQuery,
@@ -25,10 +25,7 @@ import MainContent from 'components/MainContent';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 
-import {
-  HomepageLocationStateType,
-  HomepageSettingsLocationType
-} from './settings';
+import { HomepageSettingsLocationType } from './settings';
 
 import './index.scss';
 
@@ -43,7 +40,7 @@ const SelectSolutionSettings = () => {
 
   const navigate = useNavigate();
 
-  const { state } = useLocation<HomepageLocationStateType>();
+  const { state } = useLocation();
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
@@ -180,9 +177,9 @@ const SelectSolutionSettings = () => {
 
                   return (
                     <>
-                      <Form
+                      <form
                         data-testid="it-solutions-add-solution"
-                        onSubmit={e => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                         }}
                       >
@@ -223,7 +220,7 @@ const SelectSolutionSettings = () => {
                             </Button>
                           </div>
                         </Fieldset>
-                      </Form>
+                      </form>
                     </>
                   );
                 }}

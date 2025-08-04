@@ -13,7 +13,7 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Form, Formik, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import {
   GetTimelineQuery,
   TypedUpdateTimelineDocument,
@@ -85,7 +85,7 @@ const Timeline = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdateTimelineDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const initialValues: InitialValueType = {
@@ -192,7 +192,7 @@ const Timeline = () => {
                     <div data-testid="model-plan-timeline">
                       <ConfirmLeave />
 
-                      <Form
+                      <form
                         className="desktop:grid-col-8 timeline-form margin-y-6"
                         onSubmit={e => {
                           handleSubmit(e);
@@ -536,7 +536,7 @@ const Timeline = () => {
                             {timelineMiscT('dontUpdate')}
                           </Button>
                         </Fieldset>
-                      </Form>
+                      </form>
                     </div>
                   );
                 }}

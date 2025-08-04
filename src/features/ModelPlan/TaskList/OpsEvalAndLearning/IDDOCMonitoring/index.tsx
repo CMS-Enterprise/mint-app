@@ -10,7 +10,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetIddocMonitoringQuery,
   TypedUpdatePlanOpsEvalAndLearningDocument,
@@ -87,7 +87,7 @@ const IDDOCMonitoring = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -162,10 +162,10 @@ const IDDOCMonitoring = () => {
             <>
               <ConfirmLeave />
 
-              <Form
+              <form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-iddoc-monitoring-form"
-                onSubmit={e => {
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
               >
@@ -318,7 +318,7 @@ const IDDOCMonitoring = () => {
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

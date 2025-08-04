@@ -12,7 +12,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
   DataExchangeApproachMarkedCompleteNotificationType,
@@ -426,7 +426,7 @@ const NotificationSettings = () => {
                     </Grid>
                   </Grid>
 
-                  <Form
+                  <form
                     onSubmit={e => {
                       handleSubmit(e);
                     }}
@@ -558,7 +558,7 @@ const NotificationSettings = () => {
                         {notificationsT('settings.dontUpdate')}
                       </Button>
                     </Fieldset>
-                  </Form>
+                  </form>
                 </>
               );
             }}

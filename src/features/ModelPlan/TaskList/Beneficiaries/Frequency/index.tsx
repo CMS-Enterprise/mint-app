@@ -11,7 +11,7 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetFrequencyQuery,
   TypedUpdateModelPlanBeneficiariesDocument,
@@ -97,7 +97,7 @@ const Frequency = () => {
     TypedUpdateModelPlanBeneficiariesDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -183,10 +183,10 @@ const Frequency = () => {
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
-                    <Form
+                    <form
                       className="margin-top-6"
                       data-testid="beneficiaries-frequency-form"
-                      onSubmit={e => {
+                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                         handleSubmit(e);
                       }}
                     >
@@ -344,7 +344,7 @@ const Frequency = () => {
 
                         {miscellaneousT('saveAndReturn')}
                       </Button>
-                    </Form>
+                    </form>
                   </Grid>
                 </Grid>
               </GridContainer>

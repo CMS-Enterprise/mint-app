@@ -11,7 +11,7 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   BeneficiariesType,
   GetBeneficiaryIdentificationQuery,
@@ -86,7 +86,7 @@ const BeneficiaryIdentification = () => {
     TypedUpdateModelPlanBeneficiariesDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -165,10 +165,10 @@ const BeneficiaryIdentification = () => {
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="beneficiaries__info">
                   <Grid desktop={{ col: 6 }}>
-                    <Form
+                    <form
                       className="margin-top-6"
                       data-testid="beneficiaries-identification-form"
-                      onSubmit={e => {
+                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                         handleSubmit(e);
                       }}
                     >
@@ -474,7 +474,7 @@ const BeneficiaryIdentification = () => {
                           {miscellaneousT('saveAndReturn')}
                         </Button>
                       </Fieldset>
-                    </Form>
+                    </form>
                   </Grid>
                 </Grid>
               </GridContainer>
