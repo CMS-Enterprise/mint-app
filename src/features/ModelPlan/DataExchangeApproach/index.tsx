@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useParams } from 'react-router-dom';
-import { NotFoundPartial } from 'features/NotFound';
+import { Outlet, useParams } from 'react-router-dom';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -52,33 +51,36 @@ const DataEchangeApproach = () => {
         renderTextFor="dataExchangeApproach"
       />
 
-      <Routes>
-        <Route
-          path="/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange"
-          element={ProtectedRoute({ element: <AboutCompletingDataExchange /> })}
-        />
-
-        <Route
-          path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
-          element={ProtectedRoute({ element: <CollectingAndSendingData /> })}
-        />
-
-        <Route
-          path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
-          element={ProtectedRoute({ element: <CollectionAndAggregation /> })}
-        />
-
-        <Route
-          path="/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations"
-          element={ProtectedRoute({
-            element: <NewMethodologiesAndConsiderations />
-          })}
-        />
-
-        <Route path="*" element={<NotFoundPartial />} />
-      </Routes>
+      <Outlet />
     </MainContent>
   );
+};
+
+export const dataExchangeApproachRoutes = {
+  path: '/models/:modelID/collaboration-area/data-exchange-approach',
+  element: (
+    <ProtectedRoute>
+      <DataEchangeApproach />
+    </ProtectedRoute>
+  ),
+  children: [
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange',
+      element: <AboutCompletingDataExchange />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data',
+      element: <CollectingAndSendingData />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
+      element: <CollectionAndAggregation />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations',
+      element: <NewMethodologiesAndConsiderations />
+    }
+  ]
 };
 
 export default DataEchangeApproach;

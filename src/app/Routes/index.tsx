@@ -21,7 +21,7 @@ import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import Collaborators from 'features/ModelPlan/Collaborators';
 import CRTDL from 'features/ModelPlan/CRTDL';
-import DataEchangeApproach from 'features/ModelPlan/DataExchangeApproach';
+import { dataExchangeApproachRoutes } from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
 import ModelToOperations from 'features/ModelPlan/ModelToOperations';
@@ -55,7 +55,6 @@ import Communication from 'features/ModelPlan/TaskList/ParticipantsAndProviders/
 import Coordination from 'features/ModelPlan/TaskList/ParticipantsAndProviders/Coordination';
 import ParticipantOptions from 'features/ModelPlan/TaskList/ParticipantsAndProviders/ParticipantOptions';
 import ProviderOptions from 'features/ModelPlan/TaskList/ParticipantsAndProviders/ProviderOptions';
-import Payment from 'features/ModelPlan/TaskList/Payment';
 import AnticipateDependencies from 'features/ModelPlan/TaskList/Payment/AnticipateDependencies';
 import BeneficiaryCostSharing from 'features/ModelPlan/TaskList/Payment/BeneficiaryCostSharing';
 import ClaimsBasedPayment from 'features/ModelPlan/TaskList/Payment/ClaimsBasedPayment';
@@ -329,14 +328,7 @@ const router = createBrowserRouter([
         )
       },
       // Data Exchange Approach Routes
-      {
-        path: '/models/:modelID/collaboration-area/data-exchange-approach',
-        element: (
-          <ProtectedRoute>
-            <DataEchangeApproach />
-          </ProtectedRoute>
-        )
-      },
+      dataExchangeApproachRoutes,
       // Model to Operations Routes
       {
         path: '/models/:modelID/collaboration-area/model-to-operations',
