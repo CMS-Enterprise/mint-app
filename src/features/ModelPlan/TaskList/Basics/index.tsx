@@ -147,6 +147,14 @@ const Basics = () => {
       changes.status = sanitizeStatus(changes.status);
     }
 
+    // If no changes, don't call mutation
+    if (
+      Object.keys(changes).length === 0 &&
+      Object.keys(basicsChanges).length === 0
+    ) {
+      return false;
+    }
+
     const { modelName: updateModelName, abbreviation: updateAbbreviation } =
       changes;
 
@@ -183,9 +191,9 @@ const Basics = () => {
 
   useEffect(() => {
     if (destinationURL && !isModalOpen) {
-      navigate(destinationURL);
+      blocker?.proceed?.();
     }
-  }, [destinationURL, navigate, isModalOpen]);
+  }, [destinationURL, isModalOpen, blocker]);
 
   // Handle the blocker state
   useEffect(() => {

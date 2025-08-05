@@ -139,9 +139,9 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   useEffect(() => {
     if (destinationURL && !isModalOpen) {
-      navigate(destinationURL);
+      blocker?.proceed?.();
     }
-  }, [destinationURL, navigate, isModalOpen]);
+  }, [destinationURL, blocker, isModalOpen]);
 
   // Handle the blocker state
   useEffect(() => {
