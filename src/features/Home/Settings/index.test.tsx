@@ -124,9 +124,9 @@ describe('moveItem function', () => {
 describe('settings snapshots', () => {
   it('matches setting snapshot', async () => {
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/homepage-settings`]}>
+      <MemoryRouter initialEntries={[`/homepage-settings/form`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/homepage-settings">
+          <Route path="/homepage-settings/form">
             <MessageProvider>
               <HomePageSettings />
             </MessageProvider>

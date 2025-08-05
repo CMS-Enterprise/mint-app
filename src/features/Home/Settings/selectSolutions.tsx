@@ -1,6 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
+import {
+  BlockerFunction,
+  useBlocker,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -79,15 +84,21 @@ const SelectSolutionSettings = () => {
   const [mutationError, setMutationError] = useState<boolean>(false);
 
   // Passes the current state to the previous page if navigating back
-  const shouldBlock = (tx: any) => {
+  const shouldBlock: BlockerFunction = tx => {
+    // Don't block if we're already on a settings page to prevent loops
+    if (tx.currentLocation.pathname.includes('/homepage-settings/solutions')) {
+      return false;
+    }
+
     // If the destination is the homepage settings page, pass the current state
-    if (tx.location.pathname === '/homepage-settings') {
-      navigate(tx.location.pathname, {
+    if (tx.nextLocation.pathname === '/homepage-settings/form') {
+      navigate(tx.nextLocation.pathname, {
         state: { homepageSettings: selectedSettings }
       });
     } else {
-      navigate(tx.location.pathname);
+      navigate(tx.nextLocation.pathname);
     }
+
     return false; // Don't block, just intercept and modify the navigation
   };
 
@@ -118,7 +129,7 @@ const SelectSolutionSettings = () => {
 
         // Allow state to hydrate before redirecting
         setTimeout(() => {
-          navigate(state?.fromHome ? '/' : '/homepage-settings');
+          navigate(state?.fromHome ? '/' : '/homepage-settings/form');
         }, 100);
       })
       .catch(() => setMutationError(true));
@@ -230,7 +241,7 @@ const SelectSolutionSettings = () => {
 
           <div style={{ width: 'fit-content' }}>
             <UswdsReactLink
-              to={state?.fromHome ? '/' : '/homepage-settings'}
+              to={state?.fromHome ? '/' : '/homepage-settings/form'}
               className="display-flex flex-align-center"
             >
               <Icon.ArrowBack className="margin-right-2" aria-label="back" />

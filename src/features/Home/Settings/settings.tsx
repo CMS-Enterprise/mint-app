@@ -1,6 +1,11 @@
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
+import {
+  BlockerFunction,
+  useBlocker,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import {
   Button,
   Card,
@@ -71,18 +76,24 @@ const SettingsForm = () => {
   }, [data?.userViewCustomization]);
 
   // Passes the current state to the previous page if navigating back
-  const shouldBlock = (tx: any) => {
+  const shouldBlock: BlockerFunction = tx => {
+    // Don't block if we're already on a settings page to prevent loops
+    if (tx.currentLocation.pathname.includes('/homepage-settings/form')) {
+      return false;
+    }
+
     // If the destination is the homepage settings page, pass the current state
     if (
-      tx.location.pathname === '/homepage-settings/solutions' ||
-      tx.location.pathname === '/homepage-settings/order'
+      tx.nextLocation.pathname === '/homepage-settings/solutions' ||
+      tx.nextLocation.pathname === '/homepage-settings/order'
     ) {
-      navigate(tx.location.pathname, {
+      navigate(tx.nextLocation.pathname, {
         state: { homepageSettings: formikRef.current?.values }
       });
     } else {
-      navigate(tx.location.pathname);
+      navigate(tx.nextLocation.pathname);
     }
+
     return false; // Don't block, just intercept and modify the navigation
   };
 

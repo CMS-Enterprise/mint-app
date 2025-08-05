@@ -2,7 +2,7 @@ describe('Homepage Settings', () => {
   beforeEach(() => {
     // Using ANON since that user has no customized views
     cy.localLogin({ name: 'ANON' });
-    cy.visit('/homepage-settings');
+    cy.visit('/homepage-settings/form');
   });
 
   it('Updates settings for customizable homepage', () => {

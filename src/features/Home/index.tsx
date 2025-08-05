@@ -244,7 +244,7 @@ const Home = () => {
                     <div>
                       <UswdsReactLink
                         variant="unstyled"
-                        to="/homepage-settings"
+                        to="/homepage-settings/form"
                         className="display-flex flex-align-center"
                       >
                         <Icon.Edit
@@ -282,7 +282,7 @@ const Home = () => {
                     <div className="display-flex flex-align-center">
                       <UswdsReactLink
                         variant="unstyled"
-                        to="/homepage-settings"
+                        to="/homepage-settings/form"
                         className="margin-right-1"
                       >
                         {t('editHomepage')}

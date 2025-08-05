@@ -56,7 +56,7 @@ export const commonBreadCrumbs = (
   },
   HOME_SETTINGS: {
     text: 'homepageSettings:heading',
-    url: '/homepage-settings'
+    url: '/homepage-settings/form'
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',

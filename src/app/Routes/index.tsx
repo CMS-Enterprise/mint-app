@@ -14,8 +14,11 @@ import ReportAProblem from 'features/Feedback/ReportAProblem';
 import SendFeedback from 'features/Feedback/SendFeedback';
 import HelpAndKnowledge from 'features/HelpAndKnowledge';
 import GetAccess from 'features/HelpAndKnowledge/Articles/GetAccess';
+import ModelPlanOverview from 'features/HelpAndKnowledge/Articles/ModelPlanOverview';
 import Home from 'features/Home';
-import HomePageSettings from 'features/Home/Settings';
+import HomePageSettings, {
+  homePageSettingsRoutes
+} from 'features/Home/Settings';
 import Login from 'features/Login';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
@@ -140,6 +143,7 @@ const ReadOnlyRedirect = () => {
 
 const ReadViewRedirect = () => {
   const { modelID } = useParams();
+  console.log('modelID', modelID);
   return <Navigate to={`/models/${modelID}/read-view/model-basics`} replace />;
 };
 
@@ -223,14 +227,7 @@ const router = createBrowserRouter([
         path: '/',
         element: <Home />
       },
-      {
-        path: '/homepage-settings',
-        element: (
-          <ProtectedRoute>
-            <HomePageSettings />
-          </ProtectedRoute>
-        )
-      },
+      homePageSettingsRoutes,
       {
         path: '/notifications',
         element: (
@@ -241,10 +238,18 @@ const router = createBrowserRouter([
       },
       // Model Plan Routes
       {
-        path: '/models/:modelID',
+        path: '/models',
         element: (
           <ProtectedRoute>
             <ModelPlan />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID',
+        element: (
+          <ProtectedRoute>
+            <ModelPlanOverview />
           </ProtectedRoute>
         )
       },
@@ -608,7 +613,6 @@ const router = createBrowserRouter([
         )
       },
       // Read View Routes
-      readViewRoutes,
       {
         path: '/models/:modelID/read-only',
         element: <ReadOnlyRedirect />
@@ -617,6 +621,7 @@ const router = createBrowserRouter([
         path: '/models/:modelID/read-view',
         element: <ReadViewRedirect />
       },
+      readViewRoutes,
       {
         path: '/models/:modelID/read-view/it-systems-and-solutions',
         element: <ITSystemsRedirect />
