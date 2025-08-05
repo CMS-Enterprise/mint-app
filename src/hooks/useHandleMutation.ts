@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
+import {
+  BlockerFunction,
+  useBlocker,
+  useLocation,
+  useNavigate
+} from 'react-router-dom';
 import {
   OperationVariables,
   TypedDocumentNode,
@@ -70,13 +75,13 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   const { id } = config;
 
   // Create a blocker function that determines if navigation should be blocked
-  const shouldBlock = (tx: any) => {
+  const shouldBlock: BlockerFunction = tx => {
     // Don't call mutation if attempting to access a locked section
-    if (tx.location.pathname.includes('locked-task-list-section')) {
+    if (tx.nextLocation.pathname.includes('locked-task-list-section')) {
       return false;
     }
 
-    if (tx.location.pathname === pathname) {
+    if (tx.nextLocation.pathname === pathname) {
       return false;
     }
 
@@ -98,7 +103,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
     }
 
     // Store the pending location for later navigation
-    setPendingLocation(tx.location.pathname);
+    setPendingLocation(tx.nextLocation.pathname);
 
     if (changes.status) {
       changes.status = sanitizeStatus(changes.status);
@@ -112,18 +117,18 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
     })
       .then(response => {
         if (!response?.errors) {
-          setDestinationURL(tx.location.pathname);
-          tx.retry();
+          setDestinationURL(tx.nextLocation.pathname);
+          blocker?.proceed?.();
         }
       })
       .catch(errors => {
-        setDestinationURL(tx.location.pathname);
+        setDestinationURL(tx.nextLocation.pathname);
         setIsModalOpen(true);
 
         if ('formikRef' in config) {
           config.formikRef.current?.setErrors(errors);
         }
-        tx.retry();
+        blocker?.proceed?.();
       });
 
     return true; // Block the navigation

@@ -17,17 +17,17 @@ export const Beneficiaries = () => {
         <Grid desktop={{ col: 12 }}>
           <Routes>
             <Route
-              path="/models/:modelID/collaboration-area/task-list/beneficiaries" // page-* may change pending UX clarifcation
+              path="" // page-* may change pending UX clarifcation
               element={
                 <ProtectedRoute element={<BeneficiaryIdentification />} />
               }
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/beneficiaries/people-impact"
+              path="people-impact"
               element={<ProtectedRoute element={<PeopleImpact />} />}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency"
+              path="beneficiary-frequency"
               element={<ProtectedRoute element={<Frequency />} />}
             />
             <Route path="*" element={<NotFoundPartial />} />

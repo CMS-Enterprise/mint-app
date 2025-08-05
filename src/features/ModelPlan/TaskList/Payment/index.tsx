@@ -45,31 +45,31 @@ export const Payment = () => {
     <MainContent className="grid-container" data-testid="model-payment">
       <Routes>
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment"
+          path=""
           element={ProtectedRoute({ element: <FundingSource /> })}
         />
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment"
+          path="claims-based-payment"
           element={ProtectedRoute({ element: <ClaimsBasedPayment /> })}
         />
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment"
+          path="non-claims-based-payment"
           element={ProtectedRoute({ element: <NonClaimsBasedPayment /> })}
         />
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies"
+          path="anticipating-dependencies"
           element={ProtectedRoute({ element: <AnticipateDependencies /> })}
         />
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing"
+          path="beneficiary-cost-sharing"
           element={ProtectedRoute({ element: <BeneficiaryCostSharing /> })}
         />
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment/complexity"
+          path="complexity"
           element={ProtectedRoute({ element: <Complexity /> })}
         />
         <Route
-          path="/models/:modelID/collaboration-area/task-list/payment/recover-payment"
+          path="recover-payment"
           element={ProtectedRoute({ element: <Recover /> })}
         />
         <Route path="*" element={<NotFoundPartial />} />

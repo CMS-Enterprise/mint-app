@@ -19,14 +19,14 @@ export const PrepareForClearance = () => {
           <Routes>
             {/* Model Plan Prepare for clearance Pages */}
             <Route
-              path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
+              path=""
               element={ProtectedRoute({
                 element: <PrepareForClearanceCheckList modelID={modelID} />
               })}
             />
 
             <Route
-              path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
+              path=":section/:sectionID"
               element={ProtectedRoute({
                 element: <ClearanceReview modelID={modelID} />
               })}

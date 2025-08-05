@@ -483,41 +483,41 @@ export const OpsEvalAndLearning = () => {
         <Grid desktop={{ col: 12 }}>
           <Routes>
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
+              path=""
               element={ProtectedRoute({
                 element: <OpsEvalAndLearningContent />
               })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc"
+              path="iddoc"
               element={ProtectedRoute({ element: <IDDOC /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing"
+              path="iddoc-testing"
               element={ProtectedRoute({ element: <IDDOCTesting /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring"
+              path="iddoc-monitoring"
               element={ProtectedRoute({ element: <IDDOCMonitoring /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance"
+              path="performance"
               element={ProtectedRoute({ element: <Performance /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation"
+              path="evaluation"
               element={ProtectedRoute({ element: <Evaluation /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality"
+              path="ccw-and-quality"
               element={ProtectedRoute({ element: <CCWAndQuality /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing"
+              path="data-sharing"
               element={ProtectedRoute({ element: <DataSharing /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning"
+              path="learning"
               element={ProtectedRoute({ element: <Learning /> })}
             />
             <Route path="*" element={<NotFoundPartial />} />

@@ -10,13 +10,10 @@ export const CostEstimate = () => {
     <MainContent className="grid-container" data-testid="model-cost-estimate">
       <Routes>
         <Route
-          path="/models/:modelID/collaboration-area/task-list/cost-estimate/page-1"
+          path="page-1"
           element={ProtectedRoute({ element: <NotFound /> })}
         />
-        <Route
-          path="/models/:modelID/collaboration-area/task-list/cost-estimate"
-          element={<NotFound />}
-        />
+        <Route path="" element={<NotFound />} />
         <Route path="*" element={<NotFoundPartial />} />
       </Routes>
     </MainContent>

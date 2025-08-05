@@ -932,23 +932,23 @@ export const Characteristics = () => {
         <Grid desktop={{ col: 12 }}>
           <Routes>
             <Route
-              path="/models/:modelID/collaboration-area/task-list/characteristics"
+              path=""
               element={ProtectedRoute({ element: <CharacteristicsContent /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics"
+              path="key-characteristics"
               element={ProtectedRoute({ element: <KeyCharacteristics /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/characteristics/involvements"
+              path="involvements"
               element={ProtectedRoute({ element: <Involvements /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/characteristics/targets-and-options"
+              path="targets-and-options"
               element={ProtectedRoute({ element: <TargetsAndOptions /> })}
             />
             <Route
-              path="/models/:modelID/collaboration-area/task-list/characteristics/authority"
+              path="authority"
               element={ProtectedRoute({ element: <Authority /> })}
             />
             <Route path="*" element={<NotFoundPartial />} />

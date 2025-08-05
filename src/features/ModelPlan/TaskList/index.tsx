@@ -10,7 +10,7 @@ import React, {
 import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -361,6 +361,9 @@ const TaskList = () => {
             </Grid>
           </Grid>
         )}
+
+        {/* Render child routes */}
+        <Outlet />
       </GridContainer>
     </MainContent>
   );
