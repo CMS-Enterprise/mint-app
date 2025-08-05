@@ -19,16 +19,15 @@ import HomePageSettings from 'features/Home/Settings';
 import Login from 'features/Login';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
-import Collaborators from 'features/ModelPlan/Collaborators';
-import CRTDL, { crtdlRoutes } from 'features/ModelPlan/CRTDL';
+import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
+import { crtdlRoutes } from 'features/ModelPlan/CRTDL';
 import { dataExchangeApproachRoutes } from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
+import AddDocument from 'features/ModelPlan/Documents/AddDocument';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
-import ModelToOperations, {
-  modelToOperationsRoutes
-} from 'features/ModelPlan/ModelToOperations';
+import { modelToOperationsRoutes } from 'features/ModelPlan/ModelToOperations';
 import NewPlan from 'features/ModelPlan/NewPlan';
-import ReadOnly from 'features/ModelPlan/ReadOnly';
+import { readViewRoutes } from 'features/ModelPlan/ReadOnly';
 import Status from 'features/ModelPlan/Status';
 import StepsOverview from 'features/ModelPlan/StepsOverview';
 import TaskList from 'features/ModelPlan/TaskList';
@@ -141,7 +140,7 @@ const ReadOnlyRedirect = () => {
 
 const ReadViewRedirect = () => {
   const { modelID } = useParams();
-  return <Navigate to={`/models/${modelID}/read-view`} replace />;
+  return <Navigate to={`/models/${modelID}/read-view/model-basics`} replace />;
 };
 
 const ITSystemsRedirect = () => {
@@ -282,14 +281,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      {
-        path: '/models/:modelID/collaboration-area/collaborators/*',
-        element: (
-          <ProtectedRoute>
-            <Collaborators />
-          </ProtectedRoute>
-        )
-      },
+      collaboratorsRoutes,
       {
         path: '/models/:modelID/collaboration-area/status',
         element: (
@@ -307,8 +299,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      // CR and TDL Routes
-      crtdlRoutes,
+      {
+        path: '/models/:modelID/collaboration-area/documents/add-document',
+        element: (
+          <ProtectedRoute>
+            <AddDocument />
+          </ProtectedRoute>
+        )
+      },
       // Timeline Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/basics/milestones',
@@ -322,6 +320,8 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // CR and TDL Routes
+      crtdlRoutes,
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
       // Model to Operations Routes
@@ -608,6 +608,7 @@ const router = createBrowserRouter([
         )
       },
       // Read View Routes
+      readViewRoutes,
       {
         path: '/models/:modelID/read-only',
         element: <ReadOnlyRedirect />
@@ -623,14 +624,6 @@ const router = createBrowserRouter([
       {
         path: '/models/:modelID/read-only/:subinfo?',
         element: <ReadOnlySubinfoRedirect />
-      },
-      {
-        path: '/models/:modelID/read-view/:subinfo?',
-        element: (
-          <ProtectedRoute>
-            <ReadOnly />
-          </ProtectedRoute>
-        )
       },
       {
         path: '/help-and-knowledge',

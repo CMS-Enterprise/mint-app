@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams
-} from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -26,7 +20,6 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
@@ -307,21 +300,26 @@ export const CollaboratorsContent = () => {
 };
 
 const Collaborators = () => {
-  return (
-    <Routes>
-      <Route
-        path="/models/:modelID/collaboration-area/collaborators"
-        element={ProtectedRoute({ element: <CollaboratorsContent /> })}
-      />
-      <Route
-        path="/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?"
-        element={ProtectedRoute({ element: <AddCollaborator /> })}
-      />
+  return <Outlet />;
+};
 
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+export const collaboratorsRoutes = {
+  path: '/models/:modelID/collaboration-area/collaborators',
+  element: <Collaborators />,
+  children: [
+    {
+      path: '/models/:modelID/collaboration-area/collaborators',
+      element: <CollaboratorsContent />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?',
+      element: <AddCollaborator />
+    },
+    {
+      path: '*',
+      element: <NotFound />
+    }
+  ]
 };
 
 export default Collaborators;

@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-import NotFound from 'features/NotFound';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -10,16 +9,14 @@ import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 
-import AddDocument from './AddDocument';
 import PlanDocumentsTable from './table';
 
 type DocumentStatusType = 'success' | 'error';
 
-export const DocumentsContent = () => {
+export const Documents = () => {
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t } = useTranslation('documentsMisc');
   const { modelID = '' } = useParams<{ modelID: string }>();
@@ -104,25 +101,6 @@ export const DocumentsContent = () => {
         </Grid>
       </GridContainer>
     </MainContent>
-  );
-};
-
-const Documents = () => {
-  return (
-    <Routes>
-      {/* Model Plan Documents Pages */}
-      <Route
-        path="/models/:modelID/collaboration-area/documents"
-        element={ProtectedRoute({ element: <DocumentsContent /> })}
-      />
-      <Route
-        path="/models/:modelID/collaboration-area/documents/add-document"
-        element={ProtectedRoute({ element: <AddDocument /> })}
-      />
-
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
   );
 };
 

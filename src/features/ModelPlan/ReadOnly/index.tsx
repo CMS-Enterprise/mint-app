@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import NotFound from 'features/NotFound';
@@ -538,7 +538,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                               subinfo !== 'solutions-and-it-systems'
                           })}
                         >
-                          {subComponent.component}
+                          {subComponent?.component || <Outlet />}
                         </Grid>
                         {/* Contact info sidebar */}
                         {subinfo !== 'documents' &&
@@ -568,6 +568,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       </MainContent>
     </PrintPDFWrapper>
   );
+};
+
+export const readViewRoutes = {
+  path: '/models/:modelID/read-view/:subinfo?',
+  element: <ReadOnly />
 };
 
 export default ReadOnly;
