@@ -20,11 +20,13 @@ import Login from 'features/Login';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import Collaborators from 'features/ModelPlan/Collaborators';
-import CRTDL from 'features/ModelPlan/CRTDL';
+import CRTDL, { crtdlRoutes } from 'features/ModelPlan/CRTDL';
 import { dataExchangeApproachRoutes } from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
-import ModelToOperations from 'features/ModelPlan/ModelToOperations';
+import ModelToOperations, {
+  modelToOperationsRoutes
+} from 'features/ModelPlan/ModelToOperations';
 import NewPlan from 'features/ModelPlan/NewPlan';
 import ReadOnly from 'features/ModelPlan/ReadOnly';
 import Status from 'features/ModelPlan/Status';
@@ -306,14 +308,7 @@ const router = createBrowserRouter([
         )
       },
       // CR and TDL Routes
-      {
-        path: '/models/:modelID/collaboration-area/cr-and-tdl',
-        element: (
-          <ProtectedRoute>
-            <CRTDL />
-          </ProtectedRoute>
-        )
-      },
+      crtdlRoutes,
       // Timeline Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/basics/milestones',
@@ -330,14 +325,7 @@ const router = createBrowserRouter([
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
       // Model to Operations Routes
-      {
-        path: '/models/:modelID/collaboration-area/model-to-operations',
-        element: (
-          <ProtectedRoute>
-            <ModelToOperations />
-          </ProtectedRoute>
-        )
-      },
+      modelToOperationsRoutes,
       // Task List Routes
       {
         path: '/models/:modelID/task-list',
