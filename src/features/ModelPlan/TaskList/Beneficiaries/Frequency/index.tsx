@@ -25,6 +25,7 @@ import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
+import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -129,232 +130,238 @@ const Frequency = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="beneficiary-frequency">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.BENEFICIARIES
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.BENEFICIARIES
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {beneficiariesMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {beneficiariesMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<InitialValueType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<InitialValueType>) => {
+            const { handleSubmit, setErrors, setFieldValue, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap>
-                  <Grid desktop={{ col: 6 }}>
-                    <form
-                      className="margin-top-6"
-                      data-testid="beneficiaries-frequency-form"
-                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <FrequencyForm
-                        field="beneficiarySelectionFrequency"
-                        values={values.beneficiarySelectionFrequency}
-                        config={beneficiarySelectionFrequencyConfig}
-                        nameSpace="beneficiaries"
-                        id="beneficiary-selection-frequency"
-                        label={beneficiariesT(
-                          'beneficiarySelectionFrequency.label'
-                        )}
-                        disabled={loading}
-                      />
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    <Grid desktop={{ col: 6 }}>
+                      <form
+                        className="margin-top-6"
+                        data-testid="beneficiaries-frequency-form"
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        <FrequencyForm
+                          field="beneficiarySelectionFrequency"
+                          values={values.beneficiarySelectionFrequency}
+                          config={beneficiarySelectionFrequencyConfig}
+                          nameSpace="beneficiaries"
+                          id="beneficiary-selection-frequency"
+                          label={beneficiariesT(
+                            'beneficiarySelectionFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
 
-                      <FrequencyForm
-                        field="beneficiaryRemovalFrequency"
-                        values={values.beneficiaryRemovalFrequency}
-                        config={beneficiaryRemovalFrequencyConfig}
-                        nameSpace="beneficiaries"
-                        id="beneficiary-removal-frequency"
-                        label={beneficiariesT(
-                          'beneficiaryRemovalFrequency.label'
-                        )}
-                        disabled={loading}
-                      />
+                        <FrequencyForm
+                          field="beneficiaryRemovalFrequency"
+                          values={values.beneficiaryRemovalFrequency}
+                          config={beneficiaryRemovalFrequencyConfig}
+                          nameSpace="beneficiaries"
+                          id="beneficiary-removal-frequency"
+                          label={beneficiariesT(
+                            'beneficiaryRemovalFrequency.label'
+                          )}
+                          disabled={loading}
+                        />
 
-                      <FieldGroup scrollElement="beneficiaryOverlap">
-                        <Label htmlFor="beneficiaries-overlap">
-                          {beneficiariesT('beneficiaryOverlap.label')}
-                        </Label>
+                        <FieldGroup scrollElement="beneficiaryOverlap">
+                          <Label htmlFor="beneficiaries-overlap">
+                            {beneficiariesT('beneficiaryOverlap.label')}
+                          </Label>
 
-                        <MTOWarning id="beneficiaries-overlap-warning" />
+                          <MTOWarning id="beneficiaries-overlap-warning" />
 
-                        <Fieldset>
-                          {getKeys(beneficiaryOverlapConfig.options).map(
+                          <Fieldset>
+                            {getKeys(beneficiaryOverlapConfig.options).map(
+                              key => (
+                                <Fragment key={key}>
+                                  <Field
+                                    as={Radio}
+                                    id={`beneficiaries-overlap-${key}`}
+                                    name="beneficiariesOverlap"
+                                    label={
+                                      beneficiaryOverlapConfig.options[key]
+                                    }
+                                    value={key}
+                                    checked={values.beneficiaryOverlap === key}
+                                    onChange={() => {
+                                      setFieldValue('beneficiaryOverlap', key);
+                                    }}
+                                  />
+                                </Fragment>
+                              )
+                            )}
+                          </Fieldset>
+
+                          <AddNote
+                            id="beneficiaries-overlap-note"
+                            field="beneficiaryOverlapNote"
+                          />
+                        </FieldGroup>
+
+                        <FieldGroup>
+                          <Label htmlFor="precedenceRules">
+                            {beneficiariesT('precedenceRules.label')}
+                          </Label>
+
+                          <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                            {beneficiariesT('precedenceRules.sublabel')}
+                          </p>
+
+                          {getKeys(beneficiaryPrecedenceConfig.options).map(
                             key => (
                               <Fragment key={key}>
                                 <Field
-                                  as={Radio}
-                                  id={`beneficiaries-overlap-${key}`}
-                                  name="beneficiariesOverlap"
-                                  label={beneficiaryOverlapConfig.options[key]}
+                                  as={CheckboxField}
+                                  id={`beneficiaries-precedence-rules-${key}`}
+                                  data-testid={`beneficiaries-precedence-rules-${key}`}
+                                  name="precedenceRules"
+                                  label={
+                                    beneficiaryPrecedenceConfig.options[key]
+                                  }
                                   value={key}
-                                  checked={values.beneficiaryOverlap === key}
-                                  onChange={() => {
-                                    setFieldValue('beneficiaryOverlap', key);
-                                  }}
+                                  checked={values.precedenceRules.includes(key)}
                                 />
+
+                                {values.precedenceRules?.includes(key) && (
+                                  <div className="margin-left-4">
+                                    <span>
+                                      {beneficiariesT(
+                                        `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
+                                      )}
+                                    </span>
+                                    <Field
+                                      as={TextAreaField}
+                                      className="height-15"
+                                      id={`beneficiaries-precedence-rules-${key}-note`}
+                                      data-testid={`beneficiaries-precedence-rules-${key}-note`}
+                                      name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
+                                    />
+                                  </div>
+                                )}
                               </Fragment>
                             )
                           )}
-                        </Fieldset>
 
-                        <AddNote
-                          id="beneficiaries-overlap-note"
-                          field="beneficiaryOverlapNote"
-                        />
-                      </FieldGroup>
+                          <AddNote
+                            id="beneficiaries-precedence-note"
+                            field="precedenceRulesNote"
+                          />
+                        </FieldGroup>
 
-                      <FieldGroup>
-                        <Label htmlFor="precedenceRules">
-                          {beneficiariesT('precedenceRules.label')}
-                        </Label>
-
-                        <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
-                          {beneficiariesT('precedenceRules.sublabel')}
-                        </p>
-
-                        {getKeys(beneficiaryPrecedenceConfig.options).map(
-                          key => (
-                            <Fragment key={key}>
-                              <Field
-                                as={CheckboxField}
-                                id={`beneficiaries-precedence-rules-${key}`}
-                                data-testid={`beneficiaries-precedence-rules-${key}`}
-                                name="precedenceRules"
-                                label={beneficiaryPrecedenceConfig.options[key]}
-                                value={key}
-                                checked={values.precedenceRules.includes(key)}
-                              />
-
-                              {values.precedenceRules?.includes(key) && (
-                                <div className="margin-left-4">
-                                  <span>
-                                    {beneficiariesT(
-                                      `precedenceRules${beneficiaryPrecedenceConfig.options[key]}.label`
-                                    )}
-                                  </span>
-                                  <Field
-                                    as={TextAreaField}
-                                    className="height-15"
-                                    id={`beneficiaries-precedence-rules-${key}-note`}
-                                    data-testid={`beneficiaries-precedence-rules-${key}-note`}
-                                    name={`precedenceRules${beneficiaryPrecedenceConfig.options[key]}`}
-                                  />
-                                </div>
-                              )}
-                            </Fragment>
-                          )
+                        {!loading && values.status && (
+                          <ReadyForReview
+                            id="beneficiaries-status"
+                            field="status"
+                            sectionName={beneficiariesMiscT('heading')}
+                            status={values.status}
+                            setFieldValue={setFieldValue}
+                            readyForReviewBy={
+                              readyForReviewByUserAccount?.commonName
+                            }
+                            readyForReviewDts={readyForReviewDts}
+                          />
                         )}
 
-                        <AddNote
-                          id="beneficiaries-precedence-note"
-                          field="precedenceRulesNote"
-                        />
-                      </FieldGroup>
+                        <div className="margin-top-6 margin-bottom-3">
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--outline margin-bottom-1"
+                            onClick={() => {
+                              navigate(
+                                `/models/${modelID}/collaboration-area/task-list/beneficiaries/people-impact`
+                              );
+                            }}
+                          >
+                            {miscellaneousT('back')}
+                          </Button>
 
-                      {!loading && values.status && (
-                        <ReadyForReview
-                          id="beneficiaries-status"
-                          field="status"
-                          sectionName={beneficiariesMiscT('heading')}
-                          status={values.status}
-                          setFieldValue={setFieldValue}
-                          readyForReviewBy={
-                            readyForReviewByUserAccount?.commonName
-                          }
-                          readyForReviewDts={readyForReviewDts}
-                        />
-                      )}
+                          <Button type="submit" onClick={() => setErrors({})}>
+                            {miscellaneousT('saveAndStartNext')}
+                          </Button>
+                        </div>
 
-                      <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
-                          className="usa-button usa-button--outline margin-bottom-1"
-                          onClick={() => {
+                          className="usa-button usa-button--unstyled"
+                          onClick={() =>
                             navigate(
-                              `/models/${modelID}/collaboration-area/task-list/beneficiaries/people-impact`
-                            );
-                          }}
+                              `/models/${modelID}/collaboration-area/task-list/`
+                            )
+                          }
                         >
-                          {miscellaneousT('back')}
+                          <Icon.ArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                            aria-label="back"
+                          />
+
+                          {miscellaneousT('saveAndReturn')}
                         </Button>
-
-                        <Button type="submit" onClick={() => setErrors({})}>
-                          {miscellaneousT('saveAndStartNext')}
-                        </Button>
-                      </div>
-
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled"
-                        onClick={() =>
-                          navigate(
-                            `/models/${modelID}/collaboration-area/task-list/`
-                          )
-                        }
-                      >
-                        <Icon.ArrowBack
-                          className="margin-right-1"
-                          aria-hidden
-                          aria-label="back"
-                        />
-
-                        {miscellaneousT('saveAndReturn')}
-                      </Button>
-                    </form>
+                      </form>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GridContainer>
-            </>
-          );
-        }}
-      </Formik>
+                </GridContainer>
+              </>
+            );
+          }}
+        </Formik>
 
-      <PageNumber currentPage={3} totalPages={3} className="margin-y-6" />
-    </>
+        <PageNumber currentPage={3} totalPages={3} className="margin-y-6" />
+      </GridContainer>
+    </MainContent>
   );
 };
 

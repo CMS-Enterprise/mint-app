@@ -33,6 +33,9 @@ import TaskList from 'features/ModelPlan/TaskList';
 import Basics from 'features/ModelPlan/TaskList/Basics';
 import Overview from 'features/ModelPlan/TaskList/Basics/Overview';
 import Beneficiaries from 'features/ModelPlan/TaskList/Beneficiaries';
+import BeneficiaryIdentification from 'features/ModelPlan/TaskList/Beneficiaries/BeneficiaryIdentification';
+import Frequency from 'features/ModelPlan/TaskList/Beneficiaries/Frequency';
+import PeopleImpact from 'features/ModelPlan/TaskList/Beneficiaries/PeopleImpact';
 import CostEstimate from 'features/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics';
 import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
@@ -338,14 +341,6 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-        element: (
-          <ProtectedRoute>
-            <Beneficiaries />
-          </ProtectedRoute>
-        )
-      },
-      {
         path: '/models/:modelID/collaboration-area/task-list/characteristics',
         element: (
           <ProtectedRoute>
@@ -390,6 +385,38 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ProviderOptions />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
+        element: (
+          <ProtectedRoute>
+            <BeneficiaryIdentification />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/beneficiaries/people-impact',
+        element: (
+          <ProtectedRoute>
+            <PeopleImpact />
+          </ProtectedRoute>
+        )
+      },
+      // {
+      //   path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-identification',
+      //   element: (
+      //     <ProtectedRoute>
+      //       <BeneficiaryIdentification />
+      //     </ProtectedRoute>
+      //   )
+      // },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
+        element: (
+          <ProtectedRoute>
+            <Frequency />
           </ProtectedRoute>
         )
       },
