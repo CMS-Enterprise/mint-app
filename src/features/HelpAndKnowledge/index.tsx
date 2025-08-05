@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
 import AddCustomMilestone from './Articles/AddCustomMilestone';
@@ -28,120 +28,57 @@ import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
 export const HelpAndKnowledge = () => {
-  return (
-    <Routes>
-      <Route path="/help-and-knowledge">
-        <HelpAndKnowledgeHome />
-      </Route>
+  return <Outlet />;
+};
 
-      <Route path="/help-and-knowledge/articles">
-        <AllArticles />
-      </Route>
-
-      <Route path="/help-and-knowledge/model-plan-overview">
-        <ModelPlanOverview />
-      </Route>
-
-      <Route path="/help-and-knowledge/operational-solutions">
-        <SolutionsHelp />
-      </Route>
-
-      {/* Getting Started Articles */}
-      <Route path="/help-and-knowledge/high-level-project-plan">
-        <HighLevelProjectPlan />
-      </Route>
-
-      <Route path="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings">
-        <TwoPagerMeeting />
-      </Route>
-
-      <Route path="/help-and-knowledge/about-6-page-concept-papers-and-review-meeting">
-        <SixPagerMeeting />
-      </Route>
-
-      <Route path="/help-and-knowledge/evaluating-data-exchange-approach">
-        <EvaluatingDataExchangeApproach />
-      </Route>
-
-      <Route
-        path="/help-and-knowledge/sample-model-plan"
-        element={
-          <Navigate
-            to="/help-and-knowledge/sample-model-plan/model-basics"
-            replace
-          />
-        }
-      />
-
-      {/* IT Implementation Articles */}
-      <Route path="/help-and-knowledge/utilizing-solutions">
-        <UtilizingSolutions />
-      </Route>
-
-      <Route path="/help-and-knowledge/model-and-solution-implementation">
-        <ModelSolutionImplementation />
-      </Route>
-
-      <Route path="/help-and-knowledge/model-and-solution-design">
-        <ModelSolutionDesign />
-      </Route>
-
-      <Route path="/help-and-knowledge/phases-involved">
-        <PhasesInvolved />
-      </Route>
-
-      <Route path="/help-and-knowledge/sample-model-plan/:subinfo">
-        <SampleModelPlan />
-      </Route>
-
-      <Route path="/help-and-knowledge/creating-mto-matrix">
-        <CreatingMTOMatrix />
-      </Route>
-
-      {/* MTO Tutorial Arcticles */}
-      <Route path="/help-and-knowledge/starting-mto-matrix">
-        <StartingMTOMatrix />
-      </Route>
-
-      <Route path="/help-and-knowledge/using-milestone-table">
-        <UsingMilestoneTable />
-      </Route>
-
-      <Route path="/help-and-knowledge/using-table-actions">
-        <UsingTableActions />
-      </Route>
-
-      <Route path="/help-and-knowledge/using-solutions-and-it-systems-table">
-        <UsingSolutionsAndITSystemsTable />
-      </Route>
-
-      <Route path="/help-and-knowledge/add-custom-milestone">
-        <AddCustomMilestone />
-      </Route>
-
-      <Route path="/help-and-knowledge/add-custom-solution">
-        <AddCustomSolution />
-      </Route>
-
-      <Route path="/help-and-knowledge/using-solution-library">
-        <UsingSolutionLibrary />
-      </Route>
-
-      <Route path="/help-and-knowledge/using-milestone-library">
-        <UsingMilestoneLibrary />
-      </Route>
-
-      <Route path="/help-and-knowledge/updating-mto-status">
-        <UpdatingMTOStatus />
-      </Route>
-
-      <Route path="/help-and-knowledge/sharing-exporting-mto">
-        <SharingAndExportingMTO />
-      </Route>
-
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+export const helpAndKnowledgeRoutes = {
+  path: '/help-and-knowledge',
+  element: <HelpAndKnowledge />,
+  children: [
+    { path: '', element: <HelpAndKnowledgeHome /> },
+    { path: 'articles', element: <AllArticles /> },
+    { path: 'model-plan-overview', element: <ModelPlanOverview /> },
+    { path: 'operational-solutions', element: <SolutionsHelp /> },
+    { path: 'high-level-project-plan', element: <HighLevelProjectPlan /> },
+    {
+      path: 'about-2-page-concept-papers-and-review-meetings',
+      element: <TwoPagerMeeting />
+    },
+    {
+      path: 'about-6-page-concept-papers-and-review-meeting',
+      element: <SixPagerMeeting />
+    },
+    {
+      path: 'evaluating-data-exchange-approach',
+      element: <EvaluatingDataExchangeApproach />
+    },
+    { path: 'sample-model-plan', element: <SampleModelPlan /> },
+    { path: 'utilizing-solutions', element: <UtilizingSolutions /> },
+    {
+      path: 'model-and-solution-implementation',
+      element: <ModelSolutionImplementation />
+    },
+    {
+      path: 'model-and-solution-design',
+      element: <ModelSolutionDesign />
+    },
+    { path: 'phases-involved', element: <PhasesInvolved /> },
+    { path: 'sample-model-plan/:subinfo', element: <SampleModelPlan /> },
+    { path: 'creating-mto-matrix', element: <CreatingMTOMatrix /> },
+    { path: 'starting-mto-matrix', element: <StartingMTOMatrix /> },
+    { path: 'using-milestone-table', element: <UsingMilestoneTable /> },
+    { path: 'using-table-actions', element: <UsingTableActions /> },
+    {
+      path: 'using-solutions-and-it-systems-table',
+      element: <UsingSolutionsAndITSystemsTable />
+    },
+    { path: 'add-custom-milestone', element: <AddCustomMilestone /> },
+    { path: 'add-custom-solution', element: <AddCustomSolution /> },
+    { path: 'using-solution-library', element: <UsingSolutionLibrary /> },
+    { path: 'using-milestone-library', element: <UsingMilestoneLibrary /> },
+    { path: 'updating-mto-status', element: <UpdatingMTOStatus /> },
+    { path: 'sharing-exporting-mto', element: <SharingAndExportingMTO /> }
+  ]
 };
 
 export default HelpAndKnowledge;

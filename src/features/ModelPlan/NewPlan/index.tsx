@@ -23,7 +23,7 @@ import PageHeading from 'components/PageHeading';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 
-const NewPlanContent = () => {
+const NewPlan = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
 
@@ -149,18 +149,6 @@ const NewPlanContent = () => {
         </Grid>
       </GridContainer>
     </MainContent>
-  );
-};
-
-const NewPlan = () => {
-  return (
-    <Routes>
-      {/* New Plan Pages */}
-      <Route path="/models/new-plan" element={<NewPlanContent />} />
-
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
   );
 };
 

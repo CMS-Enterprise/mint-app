@@ -12,13 +12,11 @@ import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
 import ReportAProblem from 'features/Feedback/ReportAProblem';
 import SendFeedback from 'features/Feedback/SendFeedback';
-import HelpAndKnowledge from 'features/HelpAndKnowledge';
+import { helpAndKnowledgeRoutes } from 'features/HelpAndKnowledge';
 import GetAccess from 'features/HelpAndKnowledge/Articles/GetAccess';
 import ModelPlanOverview from 'features/HelpAndKnowledge/Articles/ModelPlanOverview';
 import Home from 'features/Home';
-import HomePageSettings, {
-  homePageSettingsRoutes
-} from 'features/Home/Settings';
+import { homePageSettingsRoutes } from 'features/Home/Settings';
 import Login from 'features/Login';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
@@ -72,7 +70,7 @@ import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
 import NotFound from 'features/NotFound';
-import Notifications from 'features/Notifications';
+import Notifications, { notificationsRoutes } from 'features/Notifications';
 import PrivacyPolicy from 'features/PrivacyPolicy';
 import Sandbox from 'features/Sandbox';
 import TermsAndConditions from 'features/TermsAndConditions';
@@ -228,28 +226,13 @@ const router = createBrowserRouter([
         element: <Home />
       },
       homePageSettingsRoutes,
-      {
-        path: '/notifications',
-        element: (
-          <ProtectedRoute>
-            <Notifications />
-          </ProtectedRoute>
-        )
-      },
+      notificationsRoutes,
       // Model Plan Routes
       {
         path: '/models',
         element: (
           <ProtectedRoute>
             <ModelPlan />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID',
-        element: (
-          <ProtectedRoute>
-            <ModelPlanOverview />
           </ProtectedRoute>
         )
       },
@@ -266,6 +249,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <NewPlan />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID',
+        element: (
+          <ProtectedRoute>
+            <ModelPlanOverview />
           </ProtectedRoute>
         )
       },
@@ -630,14 +621,7 @@ const router = createBrowserRouter([
         path: '/models/:modelID/read-only/:subinfo?',
         element: <ReadOnlySubinfoRedirect />
       },
-      {
-        path: '/help-and-knowledge',
-        element: (
-          <ProtectedRoute>
-            <HelpAndKnowledge />
-          </ProtectedRoute>
-        )
-      },
+      helpAndKnowledgeRoutes,
       {
         path: '/help-and-knowledge/articles/get-access',
         element: (
