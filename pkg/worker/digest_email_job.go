@@ -20,6 +20,13 @@ import (
 ####################
 */
 
+const (
+	digestEmailBatchJobName        string = "DigestEmailBatchJob"
+	digestEmailBatchJobSuccessName string = "DigestEmailBatchJobSuccess"
+	digestEmailJobName             string = "DigestEmailJob"
+	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
+)
+
 // DigestEmailBatchJob is the batch job for DigestEmailJobs
 // args[0] date
 func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) error {

@@ -118,47 +118,6 @@ const (
 	auditTranslateQueue string = "auditTranslation"
 )
 
-// These constants represent the names of jobs for translating audits
-const (
-	// translateAuditBatchJobName is the name of the batch job for translating audits
-	translateAuditBatchJobName string = "TranslateAuditBatchJob"
-
-	// translateAuditBatchJobSuccessName is the name of the job that is called when a group of translate Audit Jobs is completed
-	translateAuditBatchJobSuccessName string = "TranslateAuditBatchJobSuccess"
-
-	// translateAuditCronJobName is the name of the job called that initiates the translate audit batch job
-	translateAuditCronJobName string = "TranslateAuditCronJob"
-
-	// translateAuditJobName is the name of the job that creates a translated audit from an audit
-	translateAuditJobName string = "TranslateAuditJob"
-)
-
-// These constants represent the names of jobs for analyzing audits
-const (
-	analyzedAuditJobName             string = "AnalyzedAuditJob"
-	analyzedAuditBatchJobName        string = "AnalyzedAuditBatchJob"
-	analyzedAuditBatchJobSuccessName string = "AnalyzedAuditBatchJobSuccess"
-)
-
-const (
-	dailyDigestCronJobName         string = "DailyDigestCronJob"
-	digestEmailBatchJobName        string = "DigestEmailBatchJob"
-	digestEmailBatchJobSuccessName string = "DigestEmailBatchJobSuccess"
-	digestEmailJobName             string = "DigestEmailJob"
-	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
-)
-
-const (
-	modelStatusUpdateCronJobName         string = "ModelStatusUpdateCronJob"
-	modelStatusUpdateBatchJobName        string = "ModelStatusUpdateBatchJob"
-	modelStatusUpdateBatchJobSuccessName string = "ModelStatusUpdateBatchJobSuccess"
-	modelStatusUpdateJobName             string = "ModelStatusUpdateJob"
-)
-
-const (
-	refreshOktaCronJobName string = "RefreshOktaCronJob"
-)
-
 // Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
