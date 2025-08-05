@@ -6,7 +6,7 @@ import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import OwnerForm, { OwnerFormValues } from '../OwnerForm';
+import OwnerForm from '../OwnerForm';
 
 // Matching keys in mtoCommonSolutionSystemOwnerMisc
 export type ModeType = 'addSystemOwner' | 'editSystemOwner';
@@ -26,10 +26,6 @@ const OwnerModal = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionSystemOwnerMisc');
 
   const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
-
-  const [submitOwnerForm, setSubmitOwnerForm] = useState<
-    (formData: OwnerFormValues) => void
-  >(() => {});
 
   return (
     <Modal
@@ -56,7 +52,6 @@ const OwnerModal = ({
         mode={mode}
         closeModal={closeModal}
         owner={owner}
-        setSubmitForm={setSubmitOwnerForm}
         setDisableButton={setDisableSubmitBtn}
       />
 
@@ -66,7 +61,6 @@ const OwnerModal = ({
           type="submit"
           className="margin-right-3 margin-top-0"
           disabled={disabledSubmitBtn}
-          onClick={submitOwnerForm}
         >
           {miscT(`${mode}.cta`)}
         </Button>
@@ -74,9 +68,7 @@ const OwnerModal = ({
           type="button"
           className="margin-top-0"
           unstyled
-          onClick={() => {
-            closeModal();
-          }}
+          onClick={closeModal}
         >
           {miscT('cancel')}
         </Button>

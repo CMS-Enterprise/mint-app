@@ -36,7 +36,6 @@ describe('Owner Form Component', () => {
               <OwnerForm
                 mode="addSystemOwner"
                 closeModal={() => {}}
-                setSubmitForm={() => {}}
                 setDisableButton={() => {}}
               />
             </Route>
@@ -62,7 +61,6 @@ describe('Owner Form Component', () => {
                 mode="editSystemOwner"
                 closeModal={() => {}}
                 owner={owner}
-                setSubmitForm={() => {}}
                 setDisableButton={() => {}}
               />
             </Route>

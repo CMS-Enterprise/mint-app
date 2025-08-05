@@ -35,15 +35,11 @@ const OwnerForm = ({
   mode,
   closeModal,
   owner,
-  setSubmitForm,
   setDisableButton
 }: {
   mode: ModeType;
   closeModal: () => void;
   owner?: SolutionSystemOwnerType;
-  setSubmitForm: React.Dispatch<
-    React.SetStateAction<(formData: OwnerFormValues) => void>
-  >;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: ownerT } = useTranslation('mtoCommonSolutionSystemOwner');
@@ -109,16 +105,12 @@ const OwnerForm = ({
     setDisableButton(disabledSubmitBtn);
   }, [setDisableButton, disabledSubmitBtn]);
 
-  useEffect(() => {
-    setSubmitForm(() => onSubmit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!selectedSolution) {
-    return null;
-  }
-
   const onSubmit = (formData: OwnerFormValues) => {
+    if (!selectedSolution) {
+      setMutationError('generic');
+      return;
+    }
+
     const { cmsComponent, ownerType } = dirtyInput(owner, formData);
 
     const promise = owner

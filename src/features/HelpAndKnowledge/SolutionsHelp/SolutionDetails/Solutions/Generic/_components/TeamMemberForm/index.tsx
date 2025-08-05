@@ -58,15 +58,11 @@ const TeamMemberForm = ({
       username: ''
     }
   },
-  setSubmitForm,
   setDisableButton
 }: {
   mode: TeamMemberModeType;
   closeModal: () => void;
   teamMember?: SolutionContactType;
-  setSubmitForm: React.Dispatch<
-    React.SetStateAction<(formData: TeamMemberFormValues) => void>
-  >;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
@@ -125,16 +121,12 @@ const TeamMemberForm = ({
     setDisableButton(disabledSubmitBtn);
   }, [setDisableButton, disabledSubmitBtn]);
 
-  useEffect(() => {
-    setSubmitForm(() => onSubmit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!selectedSolution) {
-    return null;
-  }
-
   const onSubmit = (formData: TeamMemberFormValues) => {
+    if (!selectedSolution) {
+      setMutationError('generic');
+      return;
+    }
+
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
 
     const promise = isAddMode

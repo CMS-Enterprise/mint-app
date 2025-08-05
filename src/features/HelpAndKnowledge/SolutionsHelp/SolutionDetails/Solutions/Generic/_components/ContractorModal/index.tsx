@@ -6,7 +6,7 @@ import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import ContractorForm, { ContractorFormValues } from '../ContractorForm';
+import ContractorForm from '../ContractorForm';
 
 // Matching keys in mtoCommonSolutionContractorMisc
 export type ModeType = 'addContractor' | 'editContractor';
@@ -26,10 +26,6 @@ const ContractorModal = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
 
   const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
-
-  const [submitContractorForm, setSubmitContractorForm] = useState<
-    (formData: ContractorFormValues) => void
-  >(() => {});
 
   return (
     <Modal
@@ -56,7 +52,6 @@ const ContractorModal = ({
         mode={mode}
         closeModal={closeModal}
         contractor={contractor}
-        setSubmitForm={setSubmitContractorForm}
         setDisableButton={setDisableSubmitBtn}
       />
 
@@ -66,7 +61,6 @@ const ContractorModal = ({
           type="submit"
           className="margin-right-3 margin-top-0"
           disabled={disabledSubmitBtn}
-          onClick={submitContractorForm}
         >
           {miscT(`${mode}.cta`)}
         </Button>
@@ -74,9 +68,7 @@ const ContractorModal = ({
           type="button"
           className="margin-top-0"
           unstyled
-          onClick={() => {
-            closeModal();
-          }}
+          onClick={closeModal}
         >
           {miscT('cancel')}
         </Button>

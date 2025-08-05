@@ -36,15 +36,11 @@ const ContractorForm = ({
     contractTitle: '',
     contractorName: ''
   },
-  setSubmitForm,
   setDisableButton
 }: {
   mode: ModeType;
   closeModal: () => void;
   contractor?: SolutionContractorType;
-  setSubmitForm: React.Dispatch<
-    React.SetStateAction<(formData: ContractorFormValues) => void>
-  >;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
@@ -94,16 +90,12 @@ const ContractorForm = ({
     setDisableButton(disabledSubmitBtn);
   }, [setDisableButton, disabledSubmitBtn]);
 
-  useEffect(() => {
-    setSubmitForm(() => onSubmit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!selectedSolution) {
-    return null;
-  }
-
   const onSubmit = (formData: ContractorFormValues) => {
+    if (!selectedSolution) {
+      setMutationError('generic');
+      return;
+    }
+
     const { contractTitle, contractorName } = dirtyInput(contractor, formData);
 
     const promise =

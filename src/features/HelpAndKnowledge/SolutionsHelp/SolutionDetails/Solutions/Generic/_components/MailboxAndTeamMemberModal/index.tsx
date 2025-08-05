@@ -7,8 +7,8 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import { mtoCommonSolutionContactMisc } from 'i18n/en-US/modelPlan/mtoCommonSolutionContact';
 
-import TeamMailboxForm, { TeamMailboxFormValues } from '../TeamMailboxForm';
-import TeamMemberForm, { TeamMemberFormValues } from '../TeamMemberForm';
+import TeamMailboxForm from '../TeamMailboxForm';
+import TeamMemberForm from '../TeamMemberForm';
 
 export type ModeType = TeamMemberModeType | TeamMailboxModeType;
 // Matching keys in mtoCommonSolutionContactMisc
@@ -29,14 +29,6 @@ const MailboxAndTeamMemberModal = ({
   const { t: contactMiscT } = useTranslation('mtoCommonSolutionContactMisc');
 
   const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
-
-  const [submitTeamMemberForm, setSubmitTeamMemberForm] = useState<
-    (formData: TeamMemberFormValues) => void
-  >(() => {});
-
-  const [submitTeamMailboxForm, setSubmitTeamMailboxForm] = useState<
-    (formData: TeamMailboxFormValues) => void
-  >(() => {});
 
   const isTeamMemberMode =
     mode === 'addTeamMember' || mode === 'editTeamMember';
@@ -70,7 +62,6 @@ const MailboxAndTeamMemberModal = ({
           mode={mode}
           closeModal={closeModal}
           teamMailbox={contact}
-          setSubmitForm={setSubmitTeamMailboxForm}
           setDisableButton={setDisableSubmitBtn}
         />
       )}
@@ -80,7 +71,6 @@ const MailboxAndTeamMemberModal = ({
           mode={mode}
           closeModal={closeModal}
           teamMember={contact}
-          setSubmitForm={setSubmitTeamMemberForm}
           setDisableButton={setDisableSubmitBtn}
         />
       )}
@@ -91,9 +81,6 @@ const MailboxAndTeamMemberModal = ({
           type="submit"
           disabled={disabledSubmitBtn}
           className="margin-right-3 margin-top-0"
-          onClick={
-            isTeamMemberMode ? submitTeamMemberForm : submitTeamMailboxForm
-          }
         >
           {contactMiscT(`${mode}.cta`)}
         </Button>

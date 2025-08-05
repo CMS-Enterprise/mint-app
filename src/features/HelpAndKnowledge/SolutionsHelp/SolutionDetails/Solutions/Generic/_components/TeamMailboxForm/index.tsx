@@ -45,15 +45,11 @@ const TeamMailboxForm = ({
     isPrimary: false,
     receiveEmails: false
   },
-  setSubmitForm,
   setDisableButton
 }: {
   mode: TeamMailboxModeType;
   closeModal: () => void;
   teamMailbox?: SolutionContactType;
-  setSubmitForm: React.Dispatch<
-    React.SetStateAction<(formData: TeamMailboxFormValues) => void>
-  >;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
@@ -109,20 +105,17 @@ const TeamMailboxForm = ({
     setDisableButton(disabledSubmitBtn);
   }, [setDisableButton, disabledSubmitBtn]);
 
-  useEffect(() => {
-    setSubmitForm(() => onSubmit);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (!selectedSolution) {
-    return null;
-  }
-
   const onSubmit = (formData: TeamMailboxFormValues) => {
+    if (!selectedSolution) {
+      setMutationError('generic');
+      return;
+    }
+
     const { mailboxTitle, isPrimary, receiveEmails } = dirtyInput(
       teamMailbox,
       formData
     );
+
     const promise = isAddMode
       ? create({
           variables: {
