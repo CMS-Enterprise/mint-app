@@ -110,258 +110,260 @@ const IDDOCTesting = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="ops-eval-and-learning-iddoc-testing">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {opsEvalAndLearningMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {opsEvalAndLearningMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<IDDOCTestingFormType>) => {
-          const { handleSubmit, setErrors, values } = formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<IDDOCTestingFormType>) => {
+            const { handleSubmit, setErrors, values } = formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <form
-                className="desktop:grid-col-6 margin-top-6"
-                data-testid="ops-eval-and-learning-iddoc-testing-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <h3>{opsEvalAndLearningMiscT('testingQuestions')}</h3>
+                <form
+                  className="desktop:grid-col-6 margin-top-6"
+                  data-testid="ops-eval-and-learning-iddoc-testing-form"
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <Fieldset disabled={!!error || loading}>
+                    <h3>{opsEvalAndLearningMiscT('testingQuestions')}</h3>
 
-                  <Alert
-                    type="info"
-                    slim
-                    data-testid="mandatory-fields-alert"
-                    className="margin-bottom-4"
-                  >
-                    <span className="mandatory-fields-alert__text">
-                      {opsEvalAndLearningMiscT('ssmRequest')}
-                    </span>
-                  </Alert>
+                    <Alert
+                      type="info"
+                      slim
+                      data-testid="mandatory-fields-alert"
+                      className="margin-bottom-4"
+                    >
+                      <span className="mandatory-fields-alert__text">
+                        {opsEvalAndLearningMiscT('ssmRequest')}
+                      </span>
+                    </Alert>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-uat-needs">
-                      {opsEvalAndLearningT('uatNeeds.label')}
-                    </Label>
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-uat-needs">
+                        {opsEvalAndLearningT('uatNeeds.label')}
+                      </Label>
 
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="ops-eval-and-learning-uat-needs"
-                      name="uatNeeds"
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        id="ops-eval-and-learning-uat-needs"
+                        name="uatNeeds"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-stc-needs">
+                        {opsEvalAndLearningT('stcNeeds.label')}
+                      </Label>
+
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        id="ops-eval-and-learning-stc-needs"
+                        data-testid="ops-eval-and-learning-stc-needs"
+                        name="stcNeeds"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-testing-timelines">
+                        {opsEvalAndLearningT('testingTimelines.label')}
+                      </Label>
+
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        id="ops-eval-and-learning-testing-timelines"
+                        name="testingTimelines"
+                      />
+                    </FieldGroup>
+
+                    <AddNote
+                      id="ops-eval-and-learning-testing-note"
+                      field="testingNote"
                     />
-                  </FieldGroup>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-stc-needs">
-                      {opsEvalAndLearningT('stcNeeds.label')}
-                    </Label>
+                    <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="ops-eval-and-learning-stc-needs"
-                      data-testid="ops-eval-and-learning-stc-needs"
-                      name="stcNeeds"
-                    />
-                  </FieldGroup>
+                    <FieldGroup>
+                      <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
+                        {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
+                      </Label>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-testing-timelines">
-                      {opsEvalAndLearningT('testingTimelines.label')}
-                    </Label>
+                      {getKeys(dataMonitoringFileTypesConfig.options).map(
+                        type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`ops-eval-and-learning-data-monitoring-file-${type}`}
+                                name="dataMonitoringFileTypes"
+                                label={
+                                  dataMonitoringFileTypesConfig.options[type]
+                                }
+                                value={type}
+                                checked={values?.dataMonitoringFileTypes.includes(
+                                  type
+                                )}
+                              />
 
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="ops-eval-and-learning-testing-timelines"
-                      name="testingTimelines"
-                    />
-                  </FieldGroup>
+                              {type === MonitoringFileType.OTHER &&
+                                values.dataMonitoringFileTypes.includes(
+                                  MonitoringFileType.OTHER
+                                ) && (
+                                  <div className="margin-left-4">
+                                    <Label
+                                      htmlFor="ops-eval-and-learning-data-monitoring-file-other"
+                                      className="text-normal"
+                                    >
+                                      {opsEvalAndLearningT(
+                                        'dataMonitoringFileOther.label'
+                                      )}
+                                    </Label>
 
-                  <AddNote
-                    id="ops-eval-and-learning-testing-note"
-                    field="testingNote"
-                  />
+                                    <Field
+                                      as={TextInput}
+                                      id="ops-eval-and-learning-data-monitoring-file-other"
+                                      name="dataMonitoringFileOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          );
+                        }
+                      )}
+                    </FieldGroup>
 
-                  <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-data-response-type">
+                        {opsEvalAndLearningT('dataResponseType.label')}
+                      </Label>
 
-                  <FieldGroup>
-                    <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
-                      {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
-                    </Label>
+                      <Field
+                        as={TextInput}
+                        id="ops-eval-and-learning-data-response-type"
+                        maxLength={50}
+                        name="dataResponseType"
+                      />
+                    </FieldGroup>
 
-                    {getKeys(dataMonitoringFileTypesConfig.options).map(
-                      type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`ops-eval-and-learning-data-monitoring-file-${type}`}
-                              name="dataMonitoringFileTypes"
-                              label={
-                                dataMonitoringFileTypesConfig.options[type]
-                              }
-                              value={type}
-                              checked={values?.dataMonitoringFileTypes.includes(
-                                type
-                              )}
-                            />
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-data-file-frequency">
+                        {opsEvalAndLearningT('dataResponseFileFrequency.label')}
+                      </Label>
 
-                            {type === MonitoringFileType.OTHER &&
-                              values.dataMonitoringFileTypes.includes(
-                                MonitoringFileType.OTHER
-                              ) && (
-                                <div className="margin-left-4">
-                                  <Label
-                                    htmlFor="ops-eval-and-learning-data-monitoring-file-other"
-                                    className="text-normal"
-                                  >
-                                    {opsEvalAndLearningT(
-                                      'dataMonitoringFileOther.label'
-                                    )}
-                                  </Label>
+                      <Field
+                        as={TextInput}
+                        id="ops-eval-and-learning-data-file-frequency"
+                        maxLength={50}
+                        name="dataResponseFileFrequency"
+                      />
+                    </FieldGroup>
 
-                                  <Field
-                                    as={TextInput}
-                                    id="ops-eval-and-learning-data-monitoring-file-other"
-                                    name="dataMonitoringFileOther"
-                                  />
-                                </div>
-                              )}
-                          </Fragment>
-                        );
-                      }
-                    )}
-                  </FieldGroup>
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => {
+                          navigate(
+                            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc`
+                          );
+                        }}
+                      >
+                        {miscellaneousT('back')}
+                      </Button>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-data-response-type">
-                      {opsEvalAndLearningT('dataResponseType.label')}
-                    </Label>
+                      <Button type="submit" onClick={() => setErrors({})}>
+                        {miscellaneousT('next')}
+                      </Button>
+                    </div>
 
-                    <Field
-                      as={TextInput}
-                      id="ops-eval-and-learning-data-response-type"
-                      maxLength={50}
-                      name="dataResponseType"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-data-file-frequency">
-                      {opsEvalAndLearningT('dataResponseFileFrequency.label')}
-                    </Label>
-
-                    <Field
-                      as={TextInput}
-                      id="ops-eval-and-learning-data-file-frequency"
-                      maxLength={50}
-                      name="dataResponseFileFrequency"
-                    />
-                  </FieldGroup>
-
-                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => {
+                      className="usa-button usa-button--unstyled"
+                      onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc`
-                        );
-                      }}
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
                     >
-                      {miscellaneousT('back')}
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
+
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
+                  </Fieldset>
+                </form>
+              </>
+            );
+          }}
+        </Formik>
 
-                    <Button type="submit" onClick={() => setErrors({})}>
-                      {miscellaneousT('next')}
-                    </Button>
-                  </div>
-
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() =>
-                      navigate(
-                        `/models/${modelID}/collaboration-area/task-list`
-                      )
-                    }
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
-
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
-                </Fieldset>
-              </form>
-            </>
-          );
-        }}
-      </Formik>
-
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            3,
-            iddocSupport,
-            isCCWInvolvement(ccmInvolvment) ||
-              isQualityMeasures(dataNeededForMonitoring)
-          )}
-          totalPages={renderTotalPages(
-            iddocSupport,
-            isCCWInvolvement(ccmInvolvment) ||
-              isQualityMeasures(dataNeededForMonitoring)
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              3,
+              iddocSupport,
+              isCCWInvolvement(ccmInvolvment) ||
+                isQualityMeasures(dataNeededForMonitoring)
+            )}
+            totalPages={renderTotalPages(
+              iddocSupport,
+              isCCWInvolvement(ccmInvolvment) ||
+                isQualityMeasures(dataNeededForMonitoring)
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 

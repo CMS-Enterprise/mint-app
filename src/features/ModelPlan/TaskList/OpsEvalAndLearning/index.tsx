@@ -1,10 +1,9 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
-  Grid,
   GridContainer,
   Icon,
   Label,
@@ -35,22 +34,12 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import ProtectedRoute from 'components/ProtectedRoute';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
-
-import CCWAndQuality from './CCWAndQuality';
-import DataSharing from './DataSharing';
-import Evaluation from './Evaluation';
-import IDDOC from './IDDOC';
-import IDDOCMonitoring from './IDDOCMonitoring';
-import IDDOCTesting from './IDDOCTesting';
-import Learning from './Learning';
-import Performance from './Performance';
 
 type OpsEvalAndLearningFormType =
   GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
@@ -102,7 +91,7 @@ export const isQualityMeasures = (
   );
 };
 
-export const OpsEvalAndLearningContent = () => {
+export const OpsEvalAndLearning = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
 
   const { t: opsEvalAndLearningMiscT } = useTranslation(
@@ -194,335 +183,285 @@ export const OpsEvalAndLearningContent = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="ops-eval-and-learning">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {opsEvalAndLearningMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {opsEvalAndLearningMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          nextPage();
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<OpsEvalAndLearningFormType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            nextPage();
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<OpsEvalAndLearningFormType>) => {
+            const { handleSubmit, setErrors, setFieldValue, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <form
-                className="desktop:grid-col-6 margin-top-6"
-                data-testid="ops-eval-and-learning-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <FieldGroup className="margin-top-4">
-                    <Label
-                      htmlFor="ops-eval-and-learning-stakeholders"
-                      id="label-ops-eval-and-learning-stakeholders"
-                    >
-                      {opsEvalAndLearningT('stakeholders.label')}
-                    </Label>
-
-                    <Field
-                      as={MultiSelect}
-                      id="ops-eval-and-learning-stakeholders"
-                      name="stakeholders"
-                      ariaLabel="label-ops-eval-and-learning-stakeholders"
-                      role="combobox"
-                      options={composeMultiSelectOptions(
-                        stakeholdersConfig.options
-                      )}
-                      selectedLabel={opsEvalAndLearningT(
-                        'stakeholders.multiSelectLabel'
-                      )}
-                      onChange={(value: string[] | []) => {
-                        setFieldValue('stakeholders', value);
-                      }}
-                      initialValues={initialValues.stakeholders}
-                    />
-
-                    {values.stakeholders.includes(StakeholdersType.OTHER) && (
-                      <>
-                        <Label
-                          htmlFor="ops-eval-and-learning-stakeholders-other"
-                          className="margin-y-1 margin-top-3"
-                        >
-                          {opsEvalAndLearningT('stakeholdersOther.label')}
-                        </Label>
-
-                        <Field
-                          as={TextInput}
-                          data-testid="ops-eval-and-learning-stakeholders-other"
-                          id="ops-eval-and-learning-key-other"
-                          maxLength={50}
-                          name="stakeholdersOther"
-                        />
-                      </>
-                    )}
-
-                    <AddNote
-                      id="ops-eval-and-learning-stakeholders-note"
-                      field="stakeholdersNote"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup
-                    scrollElement="helpdeskUse"
-                    className="margin-y-4 margin-bottom-8"
-                  >
-                    <Label htmlFor="ops-eval-and-learning-help-desk-use">
-                      {opsEvalAndLearningT('helpdeskUse.label')}
-                    </Label>
-
-                    <MTOWarning id="ops-eval-and-learning-help-desk-use-warning" />
-
-                    <BooleanRadio
-                      field="helpdeskUse"
-                      id="ops-eval-and-learning-help-desk-use"
-                      value={values.helpdeskUse}
-                      setFieldValue={setFieldValue}
-                      options={helpdeskUseConfig.options}
-                    />
-
-                    <AddNote
-                      id="ops-eval-and-learning-help-desk-use-note"
-                      field="helpdeskUseNote"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup scrollElement="ops-eval-and-learning-contractor-support">
-                    <Label htmlFor="ops-eval-and-learning-contractor-support">
-                      {opsEvalAndLearningT('contractorSupport.label')}
-                    </Label>
-
-                    {getKeys(contractorSupportConfig.options).map(type => {
-                      return (
-                        <Fragment key={type}>
-                          <Field
-                            as={CheckboxField}
-                            id={`ops-eval-and-learning-contractor-support-${type}`}
-                            name="contractorSupport"
-                            label={contractorSupportConfig.options[type]}
-                            value={type}
-                            checked={values?.contractorSupport.includes(type)}
-                          />
-
-                          {type === ContractorSupportType.OTHER &&
-                            values.contractorSupport.includes(
-                              ContractorSupportType.OTHER
-                            ) && (
-                              <div className="margin-left-4">
-                                <Label
-                                  htmlFor="ops-eval-and-learning-contractor-support-other"
-                                  className="text-normal"
-                                >
-                                  {opsEvalAndLearningT(
-                                    'contractorSupportOther.label'
-                                  )}
-                                </Label>
-
-                                <Field
-                                  as={TextInput}
-                                  id="ops-eval-and-learning-contractor-support-other"
-                                  name="contractorSupportOther"
-                                />
-                              </div>
-                            )}
-                        </Fragment>
-                      );
-                    })}
-
-                    <FieldGroup>
+                <form
+                  className="desktop:grid-col-6 margin-top-6"
+                  data-testid="ops-eval-and-learning-form"
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <Fieldset disabled={!!error || loading}>
+                    <FieldGroup className="margin-top-4">
                       <Label
-                        htmlFor="ops-eval-and-learning-contractor-support-how"
-                        className="text-normal margin-top-4"
+                        htmlFor="ops-eval-and-learning-stakeholders"
+                        id="label-ops-eval-and-learning-stakeholders"
                       >
-                        {opsEvalAndLearningT('contractorSupportHow.label')}
+                        {opsEvalAndLearningT('stakeholders.label')}
                       </Label>
 
-                      <p className="text-base margin-y-1">
-                        {opsEvalAndLearningT('contractorSupportHow.sublabel')}
-                      </p>
-
                       <Field
-                        as={TextAreaField}
-                        className="height-card"
-                        id="ops-eval-and-learning-contractor-support-how"
-                        data-testid="ops-eval-and-learning-contractor-support-how"
-                        name="contractorSupportHow"
+                        as={MultiSelect}
+                        id="ops-eval-and-learning-stakeholders"
+                        name="stakeholders"
+                        ariaLabel="label-ops-eval-and-learning-stakeholders"
+                        role="combobox"
+                        options={composeMultiSelectOptions(
+                          stakeholdersConfig.options
+                        )}
+                        selectedLabel={opsEvalAndLearningT(
+                          'stakeholders.multiSelectLabel'
+                        )}
+                        onChange={(value: string[] | []) => {
+                          setFieldValue('stakeholders', value);
+                        }}
+                        initialValues={initialValues.stakeholders}
+                      />
+
+                      {values.stakeholders.includes(StakeholdersType.OTHER) && (
+                        <>
+                          <Label
+                            htmlFor="ops-eval-and-learning-stakeholders-other"
+                            className="margin-y-1 margin-top-3"
+                          >
+                            {opsEvalAndLearningT('stakeholdersOther.label')}
+                          </Label>
+
+                          <Field
+                            as={TextInput}
+                            data-testid="ops-eval-and-learning-stakeholders-other"
+                            id="ops-eval-and-learning-key-other"
+                            maxLength={50}
+                            name="stakeholdersOther"
+                          />
+                        </>
+                      )}
+
+                      <AddNote
+                        id="ops-eval-and-learning-stakeholders-note"
+                        field="stakeholdersNote"
                       />
                     </FieldGroup>
 
-                    <AddNote
-                      id="ops-eval-and-learning-contractor-support-note"
-                      field="contractorSupportNote"
-                    />
-                  </FieldGroup>
+                    <FieldGroup
+                      scrollElement="helpdeskUse"
+                      className="margin-y-4 margin-bottom-8"
+                    >
+                      <Label htmlFor="ops-eval-and-learning-help-desk-use">
+                        {opsEvalAndLearningT('helpdeskUse.label')}
+                      </Label>
 
-                  <FieldGroup
-                    className="margin-y-4 margin-bottom-8"
-                    scrollElement="iddocSupport"
-                  >
-                    <Label htmlFor="ops-eval-and-learning-iddoc-support">
-                      {opsEvalAndLearningT('iddocSupport.label')}
-                    </Label>
+                      <MTOWarning id="ops-eval-and-learning-help-desk-use-warning" />
 
-                    <MTOWarning id="ops-eval-and-learning-iddoc-support-warning" />
+                      <BooleanRadio
+                        field="helpdeskUse"
+                        id="ops-eval-and-learning-help-desk-use"
+                        value={values.helpdeskUse}
+                        setFieldValue={setFieldValue}
+                        options={helpdeskUseConfig.options}
+                      />
 
-                    <p className="text-base margin-y-1">
-                      {opsEvalAndLearningT('iddocSupport.sublabel')}
-                    </p>
+                      <AddNote
+                        id="ops-eval-and-learning-help-desk-use-note"
+                        field="helpdeskUseNote"
+                      />
+                    </FieldGroup>
 
-                    <p className="text-base margin-y-1 margin-top-2">
-                      {opsEvalAndLearningMiscT('additionalQuestionsInfo')}
-                    </p>
+                    <FieldGroup scrollElement="ops-eval-and-learning-contractor-support">
+                      <Label htmlFor="ops-eval-and-learning-contractor-support">
+                        {opsEvalAndLearningT('contractorSupport.label')}
+                      </Label>
 
-                    <BooleanRadio
-                      field="iddocSupport"
-                      id="ops-eval-and-learning-iddoc-support"
-                      value={values.iddocSupport}
-                      setFieldValue={setFieldValue}
-                      options={iddocSupportConfig.options}
-                    />
+                      {getKeys(contractorSupportConfig.options).map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`ops-eval-and-learning-contractor-support-${type}`}
+                              name="contractorSupport"
+                              label={contractorSupportConfig.options[type]}
+                              value={type}
+                              checked={values?.contractorSupport.includes(type)}
+                            />
 
-                    <AddNote
-                      id="ops-eval-and-learning-iddoc-support-note"
-                      field="iddocSupportNote"
-                    />
-                  </FieldGroup>
+                            {type === ContractorSupportType.OTHER &&
+                              values.contractorSupport.includes(
+                                ContractorSupportType.OTHER
+                              ) && (
+                                <div className="margin-left-4">
+                                  <Label
+                                    htmlFor="ops-eval-and-learning-contractor-support-other"
+                                    className="text-normal"
+                                  >
+                                    {opsEvalAndLearningT(
+                                      'contractorSupportOther.label'
+                                    )}
+                                  </Label>
 
-                  <div className="margin-top-6 margin-bottom-3">
-                    <Button type="submit" onClick={() => setErrors({})}>
-                      {miscellaneousT('next')}
+                                  <Field
+                                    as={TextInput}
+                                    id="ops-eval-and-learning-contractor-support-other"
+                                    name="contractorSupportOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      })}
+
+                      <FieldGroup>
+                        <Label
+                          htmlFor="ops-eval-and-learning-contractor-support-how"
+                          className="text-normal margin-top-4"
+                        >
+                          {opsEvalAndLearningT('contractorSupportHow.label')}
+                        </Label>
+
+                        <p className="text-base margin-y-1">
+                          {opsEvalAndLearningT('contractorSupportHow.sublabel')}
+                        </p>
+
+                        <Field
+                          as={TextAreaField}
+                          className="height-card"
+                          id="ops-eval-and-learning-contractor-support-how"
+                          data-testid="ops-eval-and-learning-contractor-support-how"
+                          name="contractorSupportHow"
+                        />
+                      </FieldGroup>
+
+                      <AddNote
+                        id="ops-eval-and-learning-contractor-support-note"
+                        field="contractorSupportNote"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      className="margin-y-4 margin-bottom-8"
+                      scrollElement="iddocSupport"
+                    >
+                      <Label htmlFor="ops-eval-and-learning-iddoc-support">
+                        {opsEvalAndLearningT('iddocSupport.label')}
+                      </Label>
+
+                      <MTOWarning id="ops-eval-and-learning-iddoc-support-warning" />
+
+                      <p className="text-base margin-y-1">
+                        {opsEvalAndLearningT('iddocSupport.sublabel')}
+                      </p>
+
+                      <p className="text-base margin-y-1 margin-top-2">
+                        {opsEvalAndLearningMiscT('additionalQuestionsInfo')}
+                      </p>
+
+                      <BooleanRadio
+                        field="iddocSupport"
+                        id="ops-eval-and-learning-iddoc-support"
+                        value={values.iddocSupport}
+                        setFieldValue={setFieldValue}
+                        options={iddocSupportConfig.options}
+                      />
+
+                      <AddNote
+                        id="ops-eval-and-learning-iddoc-support-note"
+                        field="iddocSupportNote"
+                      />
+                    </FieldGroup>
+
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button type="submit" onClick={() => setErrors({})}>
+                        {miscellaneousT('next')}
+                      </Button>
+                    </div>
+
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled"
+                      onClick={() =>
+                        navigate(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
+                    >
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
-                  </div>
+                  </Fieldset>
+                </form>
+              </>
+            );
+          }}
+        </Formik>
 
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() =>
-                      navigate(
-                        `/models/${modelID}/collaboration-area/task-list`
-                      )
-                    }
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
-                </Fieldset>
-              </form>
-            </>
-          );
-        }}
-      </Formik>
-
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            1,
-            iddocSupport,
-            isCCWInvolvement(ccmInvolvment) ||
-              isQualityMeasures(dataNeededForMonitoring)
-          )}
-          totalPages={renderTotalPages(
-            iddocSupport,
-            isCCWInvolvement(ccmInvolvment) ||
-              isQualityMeasures(dataNeededForMonitoring)
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
-  );
-};
-
-export const OpsEvalAndLearning = () => {
-  return (
-    <MainContent data-testid="model-ops-eval-and-learning">
-      <GridContainer>
-        <Grid desktop={{ col: 12 }}>
-          <Routes>
-            <Route
-              path=""
-              element={ProtectedRoute({
-                element: <OpsEvalAndLearningContent />
-              })}
-            />
-            <Route
-              path="iddoc"
-              element={ProtectedRoute({ element: <IDDOC /> })}
-            />
-            <Route
-              path="iddoc-testing"
-              element={ProtectedRoute({ element: <IDDOCTesting /> })}
-            />
-            <Route
-              path="iddoc-monitoring"
-              element={ProtectedRoute({ element: <IDDOCMonitoring /> })}
-            />
-            <Route
-              path="performance"
-              element={ProtectedRoute({ element: <Performance /> })}
-            />
-            <Route
-              path="evaluation"
-              element={ProtectedRoute({ element: <Evaluation /> })}
-            />
-            <Route
-              path="ccw-and-quality"
-              element={ProtectedRoute({ element: <CCWAndQuality /> })}
-            />
-            <Route
-              path="data-sharing"
-              element={ProtectedRoute({ element: <DataSharing /> })}
-            />
-            <Route
-              path="learning"
-              element={ProtectedRoute({ element: <Learning /> })}
-            />
-            <Route path="*" element={<NotFoundPartial />} />
-          </Routes>
-        </Grid>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              1,
+              iddocSupport,
+              isCCWInvolvement(ccmInvolvment) ||
+                isQualityMeasures(dataNeededForMonitoring)
+            )}
+            totalPages={renderTotalPages(
+              iddocSupport,
+              isCCWInvolvement(ccmInvolvment) ||
+                isQualityMeasures(dataNeededForMonitoring)
+            )}
+            className="margin-y-6"
+          />
+        )}
       </GridContainer>
     </MainContent>
   );

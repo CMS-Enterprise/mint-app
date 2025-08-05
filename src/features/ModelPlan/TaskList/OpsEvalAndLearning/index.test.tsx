@@ -10,7 +10,7 @@ import {
 
 import {
   isCCWInvolvement,
-  OpsEvalAndLearningContent,
+  OpsEvalAndLearning,
   renderCurrentPage,
   renderTotalPages
 } from './index';
@@ -112,7 +112,7 @@ describe('Model Plan Ops Eval and Learning', () => {
       >
         <MockedProvider mocks={opsEvalAndLearningMock} addTypename={false}>
           <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
-            <OpsEvalAndLearningContent />
+            <OpsEvalAndLearning />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -140,7 +140,7 @@ describe('Model Plan Ops Eval and Learning', () => {
       >
         <MockedProvider mocks={opsEvalAndLearningMock} addTypename={false}>
           <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
-            <OpsEvalAndLearningContent />
+            <OpsEvalAndLearning />
           </Route>
         </MockedProvider>
       </MemoryRouter>

@@ -32,22 +32,38 @@ import StepsOverview from 'features/ModelPlan/StepsOverview';
 import TaskList from 'features/ModelPlan/TaskList';
 import Basics from 'features/ModelPlan/TaskList/Basics';
 import Overview from 'features/ModelPlan/TaskList/Basics/Overview';
-import Beneficiaries from 'features/ModelPlan/TaskList/Beneficiaries';
 import BeneficiaryIdentification from 'features/ModelPlan/TaskList/Beneficiaries/BeneficiaryIdentification';
 import Frequency from 'features/ModelPlan/TaskList/Beneficiaries/Frequency';
 import PeopleImpact from 'features/ModelPlan/TaskList/Beneficiaries/PeopleImpact';
-import CostEstimate from 'features/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics';
+import Authority from 'features/ModelPlan/TaskList/GeneralCharacteristics/Authority';
+import Involvements from 'features/ModelPlan/TaskList/GeneralCharacteristics/Involvements';
+import KeyCharacteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics';
+import TargetsAndOptions from 'features/ModelPlan/TaskList/GeneralCharacteristics/TargetsAndOptions';
 import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
 import OpsEvalAndLearning from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
+import CCWAndQuality from 'features/ModelPlan/TaskList/OpsEvalAndLearning/CCWAndQuality';
+import DataSharing from 'features/ModelPlan/TaskList/OpsEvalAndLearning/DataSharing';
+import Evaluation from 'features/ModelPlan/TaskList/OpsEvalAndLearning/Evaluation';
+import IDDOC from 'features/ModelPlan/TaskList/OpsEvalAndLearning/IDDOC';
+import IDDOCMonitoring from 'features/ModelPlan/TaskList/OpsEvalAndLearning/IDDOCMonitoring';
+import IDDOCTesting from 'features/ModelPlan/TaskList/OpsEvalAndLearning/IDDOCTesting';
+import Learning from 'features/ModelPlan/TaskList/OpsEvalAndLearning/Learning';
+import Performance from 'features/ModelPlan/TaskList/OpsEvalAndLearning/Performance';
 import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import Communication from 'features/ModelPlan/TaskList/ParticipantsAndProviders/Communication';
 import Coordination from 'features/ModelPlan/TaskList/ParticipantsAndProviders/Coordination';
 import ParticipantOptions from 'features/ModelPlan/TaskList/ParticipantsAndProviders/ParticipantOptions';
 import ProviderOptions from 'features/ModelPlan/TaskList/ParticipantsAndProviders/ProviderOptions';
 import Payment from 'features/ModelPlan/TaskList/Payment';
+import AnticipateDependencies from 'features/ModelPlan/TaskList/Payment/AnticipateDependencies';
+import BeneficiaryCostSharing from 'features/ModelPlan/TaskList/Payment/BeneficiaryCostSharing';
+import ClaimsBasedPayment from 'features/ModelPlan/TaskList/Payment/ClaimsBasedPayment';
+import Complexity from 'features/ModelPlan/TaskList/Payment/Complexity';
+import FundingSource from 'features/ModelPlan/TaskList/Payment/FundingSource';
+import NonClaimsBasedPayment from 'features/ModelPlan/TaskList/Payment/NonClaimsBasedPayment';
+import Recover from 'features/ModelPlan/TaskList/Payment/Recover';
 import PrepareForClearance from 'features/ModelPlan/TaskList/PrepareForClearance';
-import SubmitRequest from 'features/ModelPlan/TaskList/SubmitRequest';
 import Timeline from 'features/ModelPlan/Timeline';
 import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
@@ -225,6 +241,14 @@ const router = createBrowserRouter([
       },
       // Model Plan Routes
       {
+        path: '/models/:modelID',
+        element: (
+          <ProtectedRoute>
+            <ModelPlan />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: '/models/steps-overview',
         element: (
           <ProtectedRoute>
@@ -248,6 +272,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Collaboration Area Routes
       {
         path: '/models/:modelID/collaboration-area',
         element: (
@@ -265,6 +290,15 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: '/models/:modelID/collaboration-area/status',
+        element: (
+          <ProtectedRoute>
+            <Status />
+          </ProtectedRoute>
+        )
+      },
+      // Document Routes
+      {
         path: '/models/:modelID/collaboration-area/documents',
         element: (
           <ProtectedRoute>
@@ -272,6 +306,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // CR and TDL Routes
       {
         path: '/models/:modelID/collaboration-area/cr-and-tdl',
         element: (
@@ -280,14 +315,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      {
-        path: '/models/:modelID/collaboration-area/status',
-        element: (
-          <ProtectedRoute>
-            <Status />
-          </ProtectedRoute>
-        )
-      },
+      // Timeline Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/basics/milestones',
         element: <TimelineRedirect />
@@ -300,6 +328,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Data Exchange Approach Routes
       {
         path: '/models/:modelID/collaboration-area/data-exchange-approach',
         element: (
@@ -308,6 +337,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Model to Operations Routes
       {
         path: '/models/:modelID/collaboration-area/model-to-operations',
         element: (
@@ -316,6 +346,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Task List Routes
       {
         path: '/models/:modelID/task-list',
         element: <TaskListRedirect />
@@ -324,6 +355,7 @@ const router = createBrowserRouter([
         path: '/models/:modelID/collaboration-area/task-list',
         element: <TaskList />
       },
+      // Basics Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/basics',
         element: (
@@ -340,6 +372,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Characteristics Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/characteristics',
         element: (
@@ -348,6 +381,39 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics',
+        element: (
+          <ProtectedRoute>
+            <KeyCharacteristics />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/characteristics/involvements',
+        element: (
+          <ProtectedRoute>
+            <Involvements />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/characteristics/targets-and-options',
+        element: (
+          <ProtectedRoute>
+            <TargetsAndOptions />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/characteristics/authority',
+        element: (
+          <ProtectedRoute>
+            <Authority />
+          </ProtectedRoute>
+        )
+      },
+      // Participants and Providers Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
         element: (
@@ -388,6 +454,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Beneficiaries Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
         element: (
@@ -404,14 +471,6 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      // {
-      //   path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-identification',
-      //   element: (
-      //     <ProtectedRoute>
-      //       <BeneficiaryIdentification />
-      //     </ProtectedRoute>
-      //   )
-      // },
       {
         path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
         element: (
@@ -420,14 +479,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      // {
-      //   path: '/models/:modelID/collaboration-area/task-list/cost-estimate',
-      //   element: (
-      //     <ProtectedRoute enabled={false}>
-      //       <CostEstimate />
-      //     </ProtectedRoute>
-      //   )
-      // },
+      // Ops Eval and Learning Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
         element: (
@@ -437,13 +489,127 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/models/:modelID/collaboration-area/task-list/payment',
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc',
         element: (
           <ProtectedRoute>
-            <Payment />
+            <IDDOC />
           </ProtectedRoute>
         )
       },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing',
+        element: (
+          <ProtectedRoute>
+            <IDDOCTesting />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring',
+        element: (
+          <ProtectedRoute>
+            <IDDOCMonitoring />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance',
+        element: (
+          <ProtectedRoute>
+            <Performance />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation',
+        element: (
+          <ProtectedRoute>
+            <Evaluation />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality',
+        element: (
+          <ProtectedRoute>
+            <CCWAndQuality />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing',
+        element: (
+          <ProtectedRoute>
+            <DataSharing />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning',
+        element: (
+          <ProtectedRoute>
+            <Learning />
+          </ProtectedRoute>
+        )
+      },
+      // Payment Routes
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment',
+        element: (
+          <ProtectedRoute>
+            <FundingSource />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment/claims-based-payment',
+        element: (
+          <ProtectedRoute>
+            <ClaimsBasedPayment />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment',
+        element: (
+          <ProtectedRoute>
+            <NonClaimsBasedPayment />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
+        element: (
+          <ProtectedRoute>
+            <AnticipateDependencies />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing',
+        element: (
+          <ProtectedRoute>
+            <BeneficiaryCostSharing />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment/complexity',
+        element: (
+          <ProtectedRoute>
+            <Complexity />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/payment/recover-payment',
+        element: (
+          <ProtectedRoute>
+            <Recover />
+          </ProtectedRoute>
+        )
+      },
+      // IT Solutions Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/it-solutions',
         element: <ITSolutionsRedirect />
@@ -452,6 +618,7 @@ const router = createBrowserRouter([
         path: '/models/:modelID/read-view/it-solutions',
         element: <ReadViewITSolutionsRedirect />
       },
+      // Prepare for Clearance Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
         element: (
@@ -460,22 +627,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      // {
-      //   path: '/models/:modelID/collaboration-area/task-list/submit-request',
-      //   element: (
-      //     <ProtectedRoute enabled={false}>
-      //       <SubmitRequest />
-      //     </ProtectedRoute>
-      //   )
-      // },
-      {
-        path: '/models/:modelID',
-        element: (
-          <ProtectedRoute>
-            <ModelPlan />
-          </ProtectedRoute>
-        )
-      },
+      // Read View Routes
       {
         path: '/models/:modelID/read-only',
         element: <ReadOnlyRedirect />
@@ -497,6 +649,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ReadOnly />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/help-and-knowledge',
+        element: (
+          <ProtectedRoute>
+            <HelpAndKnowledge />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/help-and-knowledge/articles/get-access',
+        element: (
+          <ProtectedRoute>
+            <GetAccess />
           </ProtectedRoute>
         )
       },
@@ -538,22 +706,6 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <FeedbackReceived />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/help-and-knowledge',
-        element: (
-          <ProtectedRoute>
-            <HelpAndKnowledge />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/help-and-knowledge/articles/get-access',
-        element: (
-          <ProtectedRoute>
-            <GetAccess />
           </ProtectedRoute>
         )
       },

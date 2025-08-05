@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
+  GridContainer,
   Icon,
   Label,
   TextInput
@@ -26,6 +27,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -130,90 +132,92 @@ const TargetsAndOptions = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
-        ]}
-      />
+    <MainContent data-testid="general-characteristics-targets-and-options">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {generalCharacteristicsMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {generalCharacteristicsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/task-list/characteristics/authority`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<TargetsAndOptionsFormType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/characteristics/authority`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<TargetsAndOptionsFormType>) => {
+            const { handleSubmit, setErrors, setFieldValue, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <form
-                className="desktop:grid-col-6 margin-top-6"
-                data-testid="plan-characteristics-targets-and-options-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="plan-characteristics-geographies-targeted">
-                      {generalCharacteristicsT('geographiesTargeted.label')}
-                    </Label>
+                <form
+                  className="desktop:grid-col-6 margin-top-6"
+                  data-testid="plan-characteristics-targets-and-options-form"
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <Fieldset disabled={!!error || loading}>
+                    <FieldGroup className="margin-y-4 margin-bottom-8">
+                      <Label htmlFor="plan-characteristics-geographies-targeted">
+                        {generalCharacteristicsT('geographiesTargeted.label')}
+                      </Label>
 
-                    <BooleanRadio
-                      field="geographiesTargeted"
-                      id="plan-characteristics-geographies-targeted"
-                      value={values.geographiesTargeted}
-                      setFieldValue={setFieldValue}
-                      options={geographiesTargetedConfig.options}
-                    />
+                      <BooleanRadio
+                        field="geographiesTargeted"
+                        id="plan-characteristics-geographies-targeted"
+                        value={values.geographiesTargeted}
+                        setFieldValue={setFieldValue}
+                        options={geographiesTargetedConfig.options}
+                      />
 
-                    {values.geographiesTargeted && (
-                      <>
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="plan-characteristics-geographies-type"
-                            className="text-normal"
-                          >
-                            {generalCharacteristicsT(
-                              'geographiesTargetedTypes.label'
-                            )}
-                          </Label>
+                      {values.geographiesTargeted && (
+                        <>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="plan-characteristics-geographies-type"
+                              className="text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'geographiesTargetedTypes.label'
+                              )}
+                            </Label>
 
-                          {getKeys(geographiesTargetedTypesConfig.options).map(
-                            type => (
+                            {getKeys(
+                              geographiesTargetedTypesConfig.options
+                            ).map(type => (
                               <Fragment key={type}>
                                 <Field
                                   as={CheckboxField}
@@ -314,212 +318,211 @@ const TargetsAndOptions = () => {
                                     </FieldGroup>
                                   )}
                               </Fragment>
-                            )
-                          )}
-                        </FieldGroup>
+                            ))}
+                          </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="plan-characteristics-geographies-applied-to"
+                              className="text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'geographiesTargetedAppliedTo.label'
+                              )}
+                            </Label>
+
+                            {getKeys(
+                              geographiesTargetedAppliedToConfig.options
+                            ).map(type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`plan-characteristics-geographies-applied-to-${type}`}
+                                    name="geographiesTargetedAppliedTo"
+                                    label={
+                                      geographiesTargetedAppliedToConfig
+                                        .options[type]
+                                    }
+                                    value={type}
+                                    checked={values.geographiesTargetedAppliedTo.includes(
+                                      type
+                                    )}
+                                  />
+
+                                  {type === GeographyApplication.OTHER &&
+                                    values.geographiesTargetedAppliedTo.includes(
+                                      type
+                                    ) && (
+                                      <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-0">
+                                        <Label
+                                          htmlFor="plan-characteristics-geographies-applied-to-other"
+                                          className="text-normal"
+                                        >
+                                          {generalCharacteristicsT(
+                                            'geographiesTargetedAppliedToOther.label'
+                                          )}
+                                        </Label>
+                                        <Field
+                                          as={TextInput}
+                                          id="plan-characteristics-geographies-applied-to-other"
+                                          name="geographiesTargetedAppliedToOther"
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                </Fragment>
+                              );
+                            })}
+                          </FieldGroup>
+                        </>
+                      )}
+                      <AddNote
+                        id="plan-characteristics-geographies-targeted-note"
+                        field="geographiesTargetedNote"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup className="margin-y-4">
+                      <Label htmlFor="plan-characteristics-participation">
+                        {generalCharacteristicsT('participationOptions.label')}
+                      </Label>
+
+                      <BooleanRadio
+                        field="participationOptions"
+                        id="plan-characteristics-participation"
+                        value={values.participationOptions}
+                        setFieldValue={setFieldValue}
+                        options={participationOptionsConfig.options}
+                      />
+                    </FieldGroup>
+
+                    <AddNote
+                      id="plan-characteristics-participation-note"
+                      field="participationOptionsNote"
+                    />
+
+                    <FieldGroup scrollElement="agreementTypes">
+                      <Label htmlFor="plan-characteristics-agreement-type">
+                        {generalCharacteristicsT('agreementTypes.label')}
+                      </Label>
+
+                      <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
+
+                      <p className="text-base margin-y-1">
+                        {generalCharacteristicsT('agreementTypes.sublabel')}
+                      </p>
+
+                      {getKeys(agreementTypesConfig.options).map(type => (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`plan-characteristics-agreement-type-${type}`}
+                            name="agreementTypes"
+                            label={agreementTypesConfig.options[type]}
+                            value={type}
+                            checked={values.agreementTypes.includes(type)}
+                          />
+                          {type === AgreementType.OTHER &&
+                            values.agreementTypes.includes(type) && (
+                              <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-0">
+                                <Label
+                                  htmlFor="plan-characteristics-agreement-type-other"
+                                  className="text-normal"
+                                >
+                                  {generalCharacteristicsT(
+                                    'agreementTypesOther.label'
+                                  )}
+                                </Label>
+
+                                <Field
+                                  as={TextInput}
+                                  id="plan-characteristics-agreement-type-other"
+                                  name="agreementTypesOther"
+                                />
+                              </FieldGroup>
+                            )}
+                        </Fragment>
+                      ))}
+                    </FieldGroup>
+
+                    {values.agreementTypes.includes(
+                      AgreementType.PARTICIPATION
+                    ) && (
+                      <>
+                        <FieldGroup className="margin-y-4">
                           <Label
-                            htmlFor="plan-characteristics-geographies-applied-to"
+                            htmlFor="plan-characteristics-multiple-participation-needed"
                             className="text-normal"
                           >
                             {generalCharacteristicsT(
-                              'geographiesTargetedAppliedTo.label'
+                              'multiplePatricipationAgreementsNeeded.label'
                             )}
                           </Label>
 
-                          {getKeys(
-                            geographiesTargetedAppliedToConfig.options
-                          ).map(type => {
-                            return (
-                              <Fragment key={type}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`plan-characteristics-geographies-applied-to-${type}`}
-                                  name="geographiesTargetedAppliedTo"
-                                  label={
-                                    geographiesTargetedAppliedToConfig.options[
-                                      type
-                                    ]
-                                  }
-                                  value={type}
-                                  checked={values.geographiesTargetedAppliedTo.includes(
-                                    type
-                                  )}
-                                />
+                          <p className="text-base margin-y-1">
+                            {generalCharacteristicsT(
+                              'multiplePatricipationAgreementsNeeded.sublabel'
+                            )}
+                          </p>
 
-                                {type === GeographyApplication.OTHER &&
-                                  values.geographiesTargetedAppliedTo.includes(
-                                    type
-                                  ) && (
-                                    <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-0">
-                                      <Label
-                                        htmlFor="plan-characteristics-geographies-applied-to-other"
-                                        className="text-normal"
-                                      >
-                                        {generalCharacteristicsT(
-                                          'geographiesTargetedAppliedToOther.label'
-                                        )}
-                                      </Label>
-                                      <Field
-                                        as={TextInput}
-                                        id="plan-characteristics-geographies-applied-to-other"
-                                        name="geographiesTargetedAppliedToOther"
-                                      />
-                                    </FieldGroup>
-                                  )}
-                              </Fragment>
-                            );
-                          })}
+                          <BooleanRadio
+                            field="multiplePatricipationAgreementsNeeded"
+                            id="plan-characteristics-multiple-participation-needed"
+                            value={values.multiplePatricipationAgreementsNeeded}
+                            setFieldValue={setFieldValue}
+                            options={
+                              multiplePatricipationAgreementsNeededConfig.options
+                            }
+                          />
                         </FieldGroup>
                       </>
                     )}
                     <AddNote
-                      id="plan-characteristics-geographies-targeted-note"
-                      field="geographiesTargetedNote"
+                      id="plan-characteristics-multiple-participation-needed-note"
+                      field="multiplePatricipationAgreementsNeededNote"
                     />
-                  </FieldGroup>
 
-                  <FieldGroup className="margin-y-4">
-                    <Label htmlFor="plan-characteristics-participation">
-                      {generalCharacteristicsT('participationOptions.label')}
-                    </Label>
-
-                    <BooleanRadio
-                      field="participationOptions"
-                      id="plan-characteristics-participation"
-                      value={values.participationOptions}
-                      setFieldValue={setFieldValue}
-                      options={participationOptionsConfig.options}
-                    />
-                  </FieldGroup>
-
-                  <AddNote
-                    id="plan-characteristics-participation-note"
-                    field="participationOptionsNote"
-                  />
-
-                  <FieldGroup scrollElement="agreementTypes">
-                    <Label htmlFor="plan-characteristics-agreement-type">
-                      {generalCharacteristicsT('agreementTypes.label')}
-                    </Label>
-
-                    <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
-
-                    <p className="text-base margin-y-1">
-                      {generalCharacteristicsT('agreementTypes.sublabel')}
-                    </p>
-
-                    {getKeys(agreementTypesConfig.options).map(type => (
-                      <Fragment key={type}>
-                        <Field
-                          as={CheckboxField}
-                          id={`plan-characteristics-agreement-type-${type}`}
-                          name="agreementTypes"
-                          label={agreementTypesConfig.options[type]}
-                          value={type}
-                          checked={values.agreementTypes.includes(type)}
-                        />
-                        {type === AgreementType.OTHER &&
-                          values.agreementTypes.includes(type) && (
-                            <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-0">
-                              <Label
-                                htmlFor="plan-characteristics-agreement-type-other"
-                                className="text-normal"
-                              >
-                                {generalCharacteristicsT(
-                                  'agreementTypesOther.label'
-                                )}
-                              </Label>
-
-                              <Field
-                                as={TextInput}
-                                id="plan-characteristics-agreement-type-other"
-                                name="agreementTypesOther"
-                              />
-                            </FieldGroup>
-                          )}
-                      </Fragment>
-                    ))}
-                  </FieldGroup>
-
-                  {values.agreementTypes.includes(
-                    AgreementType.PARTICIPATION
-                  ) && (
-                    <>
-                      <FieldGroup className="margin-y-4">
-                        <Label
-                          htmlFor="plan-characteristics-multiple-participation-needed"
-                          className="text-normal"
-                        >
-                          {generalCharacteristicsT(
-                            'multiplePatricipationAgreementsNeeded.label'
-                          )}
-                        </Label>
-
-                        <p className="text-base margin-y-1">
-                          {generalCharacteristicsT(
-                            'multiplePatricipationAgreementsNeeded.sublabel'
-                          )}
-                        </p>
-
-                        <BooleanRadio
-                          field="multiplePatricipationAgreementsNeeded"
-                          id="plan-characteristics-multiple-participation-needed"
-                          value={values.multiplePatricipationAgreementsNeeded}
-                          setFieldValue={setFieldValue}
-                          options={
-                            multiplePatricipationAgreementsNeededConfig.options
-                          }
-                        />
-                      </FieldGroup>
-                    </>
-                  )}
-                  <AddNote
-                    id="plan-characteristics-multiple-participation-needed-note"
-                    field="multiplePatricipationAgreementsNeededNote"
-                  />
-
-                  <div className="margin-top-6 margin-bottom-3">
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => {
+                          navigate(
+                            `/models/${modelID}/collaboration-area/task-list/characteristics/involvements`
+                          );
+                        }}
+                      >
+                        {miscellaneousT('back')}
+                      </Button>
+                      <Button type="submit" onClick={() => setErrors({})}>
+                        {miscellaneousT('next')}
+                      </Button>
+                    </div>
                     <Button
                       type="button"
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => {
+                      className="usa-button usa-button--unstyled"
+                      onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list/characteristics/involvements`
-                        );
-                      }}
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
                     >
-                      {miscellaneousT('back')}
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
-                    <Button type="submit" onClick={() => setErrors({})}>
-                      {miscellaneousT('next')}
-                    </Button>
-                  </div>
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() =>
-                      navigate(
-                        `/models/${modelID}/collaboration-area/task-list`
-                      )
-                    }
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
-                </Fieldset>
-              </form>
-            </>
-          );
-        }}
-      </Formik>
-      <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
-    </>
+                  </Fieldset>
+                </form>
+              </>
+            );
+          }}
+        </Formik>
+        <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
+      </GridContainer>
+    </MainContent>
   );
 };
 

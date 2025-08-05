@@ -7,18 +7,11 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Route,
-  Routes,
-  useBlocker,
-  useNavigate,
-  useParams
-} from 'react-router-dom';
+import { useBlocker, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   ComboBox,
   Fieldset,
-  Grid,
   GridContainer,
   Icon,
   Label,
@@ -54,16 +47,10 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import ProtectedRoute from 'components/ProtectedRoute';
 import TextAreaField from 'components/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
-
-import Authority from './Authority';
-import Involvements from './Involvements';
-import KeyCharacteristics from './KeyCharacteristics';
-import TargetsAndOptions from './TargetsAndOptions';
 
 type GeneralCharacteristicsFormType =
   GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
@@ -78,7 +65,7 @@ interface GetGeneralCharacteristicsFormTypeWithLinks
   existingModel: string | number | null;
 }
 
-export const CharacteristicsContent = () => {
+export const Characteristics = () => {
   const { t: generalCharacteristicsT } = useTranslation(
     'generalCharacteristics'
   );
@@ -341,7 +328,7 @@ export const CharacteristicsContent = () => {
             resemblesExistingModelLinks: miscellaneousT('apolloFailField')
           });
         } else {
-          navigate(nextLocation.pathname);
+          blocker?.proceed?.();
         }
       })
       .catch(errors => {
@@ -397,563 +384,538 @@ export const CharacteristicsContent = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
-        url={destinationURL}
-      />
+    <MainContent data-testid="general-characteristics">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          url={destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {generalCharacteristicsMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {generalCharacteristicsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(
-          formikProps: FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
-        ) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(
+            formikProps: FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
+          ) => {
+            const { handleSubmit, setErrors, setFieldValue, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <form
-                className="desktop:grid-col-6 margin-top-6"
-                data-testid="plan-characteristics-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset
-                  disabled={
-                    !!error || loading || modelLoading || existingModelLoading
-                  }
+                <form
+                  className="desktop:grid-col-6 margin-top-6"
+                  data-testid="plan-characteristics-form"
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    handleSubmit(e);
+                  }}
                 >
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="plan-characteristics-is-new-model">
-                      {generalCharacteristicsT('isNewModel.label')}
-                    </Label>
+                  <Fieldset
+                    disabled={
+                      !!error || loading || modelLoading || existingModelLoading
+                    }
+                  >
+                    <FieldGroup className="margin-y-4 margin-bottom-8">
+                      <Label htmlFor="plan-characteristics-is-new-model">
+                        {generalCharacteristicsT('isNewModel.label')}
+                      </Label>
 
-                    <BooleanRadio
-                      field="isNewModel"
-                      id="plan-characteristics-is-new-model"
-                      value={values.isNewModel}
-                      setFieldValue={setFieldValue}
-                      options={isNewModelConfig.options}
-                      childName="existingModel"
-                    />
+                      <BooleanRadio
+                        field="isNewModel"
+                        id="plan-characteristics-is-new-model"
+                        value={values.isNewModel}
+                        setFieldValue={setFieldValue}
+                        options={isNewModelConfig.options}
+                        childName="existingModel"
+                      />
 
-                    {values.isNewModel === false && (
-                      <FieldGroup>
-                        <Label
-                          htmlFor="plan-characteristics-existing-model"
-                          className="margin-bottom-1 text-normal"
-                        >
-                          {generalCharacteristicsT('existingModel.label')}
-                        </Label>
+                      {values.isNewModel === false && (
+                        <FieldGroup>
+                          <Label
+                            htmlFor="plan-characteristics-existing-model"
+                            className="margin-bottom-1 text-normal"
+                          >
+                            {generalCharacteristicsT('existingModel.label')}
+                          </Label>
 
-                        <p className="text-base margin-0">
-                          {generalCharacteristicsT('existingModel.sublabel')}
-                        </p>
+                          <p className="text-base margin-0">
+                            {generalCharacteristicsT('existingModel.sublabel')}
+                          </p>
 
-                        {!loading && (
-                          <Field
-                            as={ComboBox}
-                            disabled={!!modelError || !!existingModelError}
-                            data-test-id="plan-characteristics-existing-model"
-                            id="plan-characteristics-existing-model"
-                            name="existingModel"
-                            className={classNames({
-                              disabled: !!modelError || !!existingModelError
-                            })}
-                            inputProps={{
-                              id: 'plan-characteristics-existing-model',
-                              name: 'existingModel',
-                              'aria-describedby':
-                                'plan-characteristics-existing-model'
-                            }}
-                            options={modelPlanOptionsWithoutOther}
-                            defaultValue={
-                              modelPlanOptions.find(
-                                modelPlan => modelPlan.value === existingModel
-                              )?.value || undefined
-                            }
-                            onChange={(modelPlanID: string | number) => {
-                              const model = modelPlanOptions.find(
-                                modelPlan => modelPlan.value === modelPlanID
-                              );
-                              if (model) {
-                                setFieldValue('existingModel', model.value);
-                              } else {
-                                setFieldValue('existingModel', null);
+                          {!loading && (
+                            <Field
+                              as={ComboBox}
+                              disabled={!!modelError || !!existingModelError}
+                              data-test-id="plan-characteristics-existing-model"
+                              id="plan-characteristics-existing-model"
+                              name="existingModel"
+                              className={classNames({
+                                disabled: !!modelError || !!existingModelError
+                              })}
+                              inputProps={{
+                                id: 'plan-characteristics-existing-model',
+                                name: 'existingModel',
+                                'aria-describedby':
+                                  'plan-characteristics-existing-model'
+                              }}
+                              options={modelPlanOptionsWithoutOther}
+                              defaultValue={
+                                modelPlanOptions.find(
+                                  modelPlan => modelPlan.value === existingModel
+                                )?.value || undefined
                               }
-                            }}
-                          />
-                        )}
-                      </FieldGroup>
-                    )}
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label
-                      htmlFor="plan-characteristics-resembles-existing-model"
-                      className="maxw-none"
-                    >
-                      {generalCharacteristicsT('resemblesExistingModel.label')}
-                    </Label>
-
-                    {getKeys(resemblesExistingModelConfig.options).map(key => (
-                      <Fragment key={key}>
-                        <Field
-                          as={Radio}
-                          id={`plan-characteristics-resembles-existing-model-${key}`}
-                          data-testid={`plan-characteristics-resembles-existing-model-${key}`}
-                          name="resemblesExistingModel"
-                          label={resemblesExistingModelConfig.options[key]}
-                          value={key}
-                          checked={values.resemblesExistingModel === key}
-                        />
-
-                        {/* Conditional question if Other is selected */}
-                        {key === YesNoOtherType.OTHER &&
-                          values.resemblesExistingModel ===
-                            YesNoOtherType.OTHER && (
-                            <div className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor="plan-characteristics-resembles-model-other-specify"
-                                className="text-normal"
-                              >
-                                {generalCharacteristicsT(
-                                  'resemblesExistingModelOtherSpecify.label'
-                                )}
-                              </Label>
-
-                              <Field
-                                as={TextInput}
-                                id="plan-characteristics-resembles-existing-model-other-specify"
-                                data-testid="plan-characteristics-resembles-existing-model-other-specify"
-                                disabled={
-                                  values.resemblesExistingModel !==
-                                  YesNoOtherType.OTHER
+                              onChange={(modelPlanID: string | number) => {
+                                const model = modelPlanOptions.find(
+                                  modelPlan => modelPlan.value === modelPlanID
+                                );
+                                if (model) {
+                                  setFieldValue('existingModel', model.value);
+                                } else {
+                                  setFieldValue('existingModel', null);
                                 }
-                                name="resemblesExistingModelOtherSpecify"
-                              />
-                            </div>
-                          )}
-                      </Fragment>
-                    ))}
-
-                    {/* Conditional question if Yes or No is selected */}
-                    {(values.resemblesExistingModel === YesNoOtherType.YES ||
-                      values.resemblesExistingModel === YesNoOtherType.NO) && (
-                      <div className="margin-top-3">
-                        <Label
-                          htmlFor="plan-characteristics-resembles-model-why-how"
-                          className="text-normal"
-                        >
-                          {generalCharacteristicsT(
-                            'resemblesExistingModelWhyHow.label'
-                          )}
-                        </Label>
-
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          id="plan-characteristics-resembles-existing-model-why-how"
-                          data-testid="plan-characteristics-resembles-existing-model--why-how"
-                          name="resemblesExistingModelWhyHow"
-                        />
-                      </div>
-                    )}
-
-                    {/* Conditional question if Yes is selected */}
-                    {values.resemblesExistingModel === YesNoOtherType.YES && (
-                      <>
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="plan-characteristics-resembles-which-model"
-                            className="text-normal maxw-none"
-                            id="label-plan-characteristics-resembles-which-model"
-                          >
-                            {generalCharacteristicsT(
-                              'resemblesExistingModelWhich.label'
-                            )}
-                          </Label>
-
-                          <p className="text-base margin-y-1">
-                            {generalCharacteristicsT(
-                              'resemblesExistingModelWhich.sublabel'
-                            )}
-                          </p>
-
-                          <Field
-                            as={MultiSelect}
-                            id="plan-characteristics-resembles-which-model"
-                            ariaLabel="label-plan-characteristics-resembles-which-model"
-                            name="resemblesExistingModelLinks"
-                            options={modelPlanOptions}
-                            selectedLabel={generalCharacteristicsT(
-                              'resemblesExistingModelWhich.multiSelectLabel'
-                            )}
-                            onChange={(value: string[]) => {
-                              setFieldValue(
-                                'resemblesExistingModelLinks',
-                                value
-                              );
-                              setFieldValue(
-                                'resemblesExistingModelOtherSelected',
-                                value.includes('other')
-                              );
-                            }}
-                            initialValues={
-                              initialValues.resemblesExistingModelLinks
-                            }
-                          />
-
-                          {values.resemblesExistingModelLinks.includes(
-                            'other'
-                          ) && (
-                            <div className="margin-top-1">
-                              <Label
-                                htmlFor="plan-characteristics-resembles-model-other-option"
-                                className="text-normal"
-                              >
-                                {generalCharacteristicsT(
-                                  'resemblesExistingModelOtherOption.label'
-                                )}
-                              </Label>
-
-                              <Field
-                                as={TextInput}
-                                id="plan-characteristics-resembles-existing-model-other-option"
-                                data-testid="plan-characteristics-resembles-existing-model-other-option"
-                                name="resemblesExistingModelOtherOption"
-                              />
-                            </div>
+                              }}
+                            />
                           )}
                         </FieldGroup>
-
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="plan-characteristics-resembles-how-model"
-                            className="text-normal"
-                          >
-                            {generalCharacteristicsT(
-                              'resemblesExistingModelHow.label'
-                            )}
-                          </Label>
-
-                          <Field
-                            as={TextAreaField}
-                            className="height-15"
-                            id="plan-characteristics-resembles-how-model"
-                            name="resemblesExistingModelHow"
-                          />
-                        </FieldGroup>
-                      </>
-                    )}
-
-                    <AddNote
-                      id="plan-characteristics-resemble-existing-note"
-                      field="resemblesExistingModelNote"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label
-                      htmlFor="plan-characteristics-participation-model-precondition"
-                      className="maxw-none"
-                    >
-                      {generalCharacteristicsT(
-                        'participationInModelPrecondition.label'
                       )}
-                    </Label>
+                    </FieldGroup>
 
-                    {getKeys(
-                      participationInModelPreconditionConfig.options
-                    ).map(key => (
-                      <Fragment key={key}>
-                        <Field
-                          as={Radio}
-                          id={`plan-characteristics-participation-model-precondition-${key}`}
-                          data-testid={`plan-characteristics-participation-model-precondition-${key}`}
-                          name="participationInModelPrecondition"
-                          label={
-                            participationInModelPreconditionConfig.options[key]
-                          }
-                          value={key}
-                          checked={
-                            values.participationInModelPrecondition === key
-                          }
-                        />
+                    <FieldGroup className="margin-y-4 margin-bottom-8">
+                      <Label
+                        htmlFor="plan-characteristics-resembles-existing-model"
+                        className="maxw-none"
+                      >
+                        {generalCharacteristicsT(
+                          'resemblesExistingModel.label'
+                        )}
+                      </Label>
 
-                        {/* Conditional question if Other is selected */}
-                        {key === YesNoOtherType.OTHER &&
-                          values.participationInModelPrecondition ===
-                            YesNoOtherType.OTHER && (
-                            <div className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor="plan-characteristics-participation-model-precondition-other-specify"
-                                className="text-normal"
-                              >
-                                {generalCharacteristicsT(
-                                  'participationInModelPreconditionOtherSpecify.label'
-                                )}
-                              </Label>
+                      {getKeys(resemblesExistingModelConfig.options).map(
+                        key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`plan-characteristics-resembles-existing-model-${key}`}
+                              data-testid={`plan-characteristics-resembles-existing-model-${key}`}
+                              name="resemblesExistingModel"
+                              label={resemblesExistingModelConfig.options[key]}
+                              value={key}
+                              checked={values.resemblesExistingModel === key}
+                            />
 
-                              <Field
-                                as={TextInput}
-                                id="plan-characteristics-participation-model-precondition-other-specify"
-                                data-testid="plan-characteristics-participation-model-precondition-other-specify"
-                                disabled={
-                                  values.participationInModelPrecondition !==
-                                  YesNoOtherType.OTHER
-                                }
-                                name="participationInModelPreconditionOtherSpecify"
-                              />
-                            </div>
-                          )}
-                      </Fragment>
-                    ))}
+                            {/* Conditional question if Other is selected */}
+                            {key === YesNoOtherType.OTHER &&
+                              values.resemblesExistingModel ===
+                                YesNoOtherType.OTHER && (
+                                <div className="margin-left-4 margin-top-1">
+                                  <Label
+                                    htmlFor="plan-characteristics-resembles-model-other-specify"
+                                    className="text-normal"
+                                  >
+                                    {generalCharacteristicsT(
+                                      'resemblesExistingModelOtherSpecify.label'
+                                    )}
+                                  </Label>
 
-                    {/* Conditional question if Yes is selected */}
-                    {values.participationInModelPrecondition ===
-                      YesNoOtherType.YES && (
-                      <>
-                        <FieldGroup className="margin-top-4">
+                                  <Field
+                                    as={TextInput}
+                                    id="plan-characteristics-resembles-existing-model-other-specify"
+                                    data-testid="plan-characteristics-resembles-existing-model-other-specify"
+                                    disabled={
+                                      values.resemblesExistingModel !==
+                                      YesNoOtherType.OTHER
+                                    }
+                                    name="resemblesExistingModelOtherSpecify"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        )
+                      )}
+
+                      {/* Conditional question if Yes or No is selected */}
+                      {(values.resemblesExistingModel === YesNoOtherType.YES ||
+                        values.resemblesExistingModel ===
+                          YesNoOtherType.NO) && (
+                        <div className="margin-top-3">
                           <Label
-                            htmlFor="plan-characteristics-participation-model-precondition-which"
-                            className="text-normal maxw-none"
-                            id="label-plan-characteristics-participation-model-precondition-which"
-                          >
-                            {generalCharacteristicsT(
-                              'participationInModelPreconditionWhich.label'
-                            )}
-                          </Label>
-
-                          <p className="text-base margin-y-1">
-                            {generalCharacteristicsT(
-                              'participationInModelPreconditionWhich.sublabel'
-                            )}
-                          </p>
-
-                          <Field
-                            as={MultiSelect}
-                            id="plan-characteristics-participation-model-precondition-which"
-                            ariaLabel="label-plan-characteristics-participation-model-precondition-which"
-                            name="participationInModelPreconditionLinks"
-                            options={modelPlanOptions}
-                            selectedLabel={generalCharacteristicsT(
-                              'participationInModelPreconditionWhich.multiSelectLabel'
-                            )}
-                            onChange={(value: string[]) => {
-                              setFieldValue(
-                                'participationInModelPreconditionLinks',
-                                value
-                              );
-                              setFieldValue(
-                                'participationInModelPreconditionOtherSelected',
-                                value.includes('other')
-                              );
-                            }}
-                            initialValues={
-                              initialValues.participationInModelPreconditionLinks
-                            }
-                          />
-
-                          {values.participationInModelPreconditionLinks.includes(
-                            'other'
-                          ) && (
-                            <div className="margin-top-1">
-                              <Label
-                                htmlFor="plan-characteristics-participation-model-precondition-other-option"
-                                className="text-normal"
-                              >
-                                {generalCharacteristicsT(
-                                  'participationInModelPreconditionOtherOption.label'
-                                )}
-                              </Label>
-
-                              <Field
-                                as={TextInput}
-                                id="plan-characteristics-participation-model-precondition-other-option"
-                                data-testid="plan-characteristics-participation-model-precondition-other-option"
-                                name="participationInModelPreconditionOtherOption"
-                              />
-                            </div>
-                          )}
-                        </FieldGroup>
-
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="plan-characteristics-participation-model-precondition-why-how"
+                            htmlFor="plan-characteristics-resembles-model-why-how"
                             className="text-normal"
                           >
                             {generalCharacteristicsT(
-                              'participationInModelPreconditionWhyHow.label'
+                              'resemblesExistingModelWhyHow.label'
                             )}
                           </Label>
 
                           <Field
                             as={TextAreaField}
                             className="height-15"
-                            id="plan-characteristics-participation-model-precondition-why-how"
-                            name="participationInModelPreconditionWhyHow"
+                            id="plan-characteristics-resembles-existing-model-why-how"
+                            data-testid="plan-characteristics-resembles-existing-model--why-how"
+                            name="resemblesExistingModelWhyHow"
                           />
-                        </FieldGroup>
-                      </>
-                    )}
+                        </div>
+                      )}
 
-                    <AddNote
-                      id="plan-characteristics-participation-model-precondition-note"
-                      field="participationInModelPreconditionNote"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="plan-characteristics-has-component-or-tracks">
-                      {generalCharacteristicsT('hasComponentsOrTracks.label')}
-                    </Label>
-
-                    <BooleanRadio
-                      field="hasComponentsOrTracks"
-                      id="plan-characteristics-has-component-or-tracks"
-                      value={values.hasComponentsOrTracks}
-                      setFieldValue={setFieldValue}
-                      options={hasComponentsOrTracksConfig.options}
-                      childName="hasComponentsOrTracksDiffer"
-                    >
-                      {values.hasComponentsOrTracks === true ? (
-                        <div className="display-flex margin-left-4 margin-bottom-1">
-                          <FieldGroup
-                            className="flex-1"
-                            scrollElement="hasComponentsOrTracksDiffer"
-                          >
+                      {/* Conditional question if Yes is selected */}
+                      {values.resemblesExistingModel === YesNoOtherType.YES && (
+                        <>
+                          <FieldGroup className="margin-top-4">
                             <Label
-                              htmlFor="plan-characteristics-tracks-differ-how"
-                              className="margin-bottom-1 text-normal"
+                              htmlFor="plan-characteristics-resembles-which-model"
+                              className="text-normal maxw-none"
+                              id="label-plan-characteristics-resembles-which-model"
                             >
                               {generalCharacteristicsT(
-                                'hasComponentsOrTracksDiffer.label'
+                                'resemblesExistingModelWhich.label'
+                              )}
+                            </Label>
+
+                            <p className="text-base margin-y-1">
+                              {generalCharacteristicsT(
+                                'resemblesExistingModelWhich.sublabel'
+                              )}
+                            </p>
+
+                            <Field
+                              as={MultiSelect}
+                              id="plan-characteristics-resembles-which-model"
+                              ariaLabel="label-plan-characteristics-resembles-which-model"
+                              name="resemblesExistingModelLinks"
+                              options={modelPlanOptions}
+                              selectedLabel={generalCharacteristicsT(
+                                'resemblesExistingModelWhich.multiSelectLabel'
+                              )}
+                              onChange={(value: string[]) => {
+                                setFieldValue(
+                                  'resemblesExistingModelLinks',
+                                  value
+                                );
+                                setFieldValue(
+                                  'resemblesExistingModelOtherSelected',
+                                  value.includes('other')
+                                );
+                              }}
+                              initialValues={
+                                initialValues.resemblesExistingModelLinks
+                              }
+                            />
+
+                            {values.resemblesExistingModelLinks.includes(
+                              'other'
+                            ) && (
+                              <div className="margin-top-1">
+                                <Label
+                                  htmlFor="plan-characteristics-resembles-model-other-option"
+                                  className="text-normal"
+                                >
+                                  {generalCharacteristicsT(
+                                    'resemblesExistingModelOtherOption.label'
+                                  )}
+                                </Label>
+
+                                <Field
+                                  as={TextInput}
+                                  id="plan-characteristics-resembles-existing-model-other-option"
+                                  data-testid="plan-characteristics-resembles-existing-model-other-option"
+                                  name="resemblesExistingModelOtherOption"
+                                />
+                              </div>
+                            )}
+                          </FieldGroup>
+
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="plan-characteristics-resembles-how-model"
+                              className="text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'resemblesExistingModelHow.label'
                               )}
                             </Label>
 
                             <Field
                               as={TextAreaField}
-                              className="margin-top-0 height-15"
-                              data-testid="plan-characteristics-tracks-differ-how"
-                              id="plan-characteristics-tracks-differ-how"
-                              name="hasComponentsOrTracksDiffer"
+                              className="height-15"
+                              id="plan-characteristics-resembles-how-model"
+                              name="resemblesExistingModelHow"
                             />
                           </FieldGroup>
-                        </div>
-                      ) : (
-                        <></>
+                        </>
                       )}
-                    </BooleanRadio>
 
-                    <AddNote
-                      id="plan-characteristics-has-component-or-tracks-note"
-                      field="hasComponentsOrTracksNote"
-                    />
-                  </FieldGroup>
+                      <AddNote
+                        id="plan-characteristics-resemble-existing-note"
+                        field="resemblesExistingModelNote"
+                      />
+                    </FieldGroup>
 
-                  <div className="margin-top-6 margin-bottom-3">
-                    <Button type="submit" onClick={() => setErrors({})}>
-                      {miscellaneousT('next')}
+                    <FieldGroup className="margin-y-4 margin-bottom-8">
+                      <Label
+                        htmlFor="plan-characteristics-participation-model-precondition"
+                        className="maxw-none"
+                      >
+                        {generalCharacteristicsT(
+                          'participationInModelPrecondition.label'
+                        )}
+                      </Label>
+
+                      {getKeys(
+                        participationInModelPreconditionConfig.options
+                      ).map(key => (
+                        <Fragment key={key}>
+                          <Field
+                            as={Radio}
+                            id={`plan-characteristics-participation-model-precondition-${key}`}
+                            data-testid={`plan-characteristics-participation-model-precondition-${key}`}
+                            name="participationInModelPrecondition"
+                            label={
+                              participationInModelPreconditionConfig.options[
+                                key
+                              ]
+                            }
+                            value={key}
+                            checked={
+                              values.participationInModelPrecondition === key
+                            }
+                          />
+
+                          {/* Conditional question if Other is selected */}
+                          {key === YesNoOtherType.OTHER &&
+                            values.participationInModelPrecondition ===
+                              YesNoOtherType.OTHER && (
+                              <div className="margin-left-4 margin-top-1">
+                                <Label
+                                  htmlFor="plan-characteristics-participation-model-precondition-other-specify"
+                                  className="text-normal"
+                                >
+                                  {generalCharacteristicsT(
+                                    'participationInModelPreconditionOtherSpecify.label'
+                                  )}
+                                </Label>
+
+                                <Field
+                                  as={TextInput}
+                                  id="plan-characteristics-participation-model-precondition-other-specify"
+                                  data-testid="plan-characteristics-participation-model-precondition-other-specify"
+                                  disabled={
+                                    values.participationInModelPrecondition !==
+                                    YesNoOtherType.OTHER
+                                  }
+                                  name="participationInModelPreconditionOtherSpecify"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      ))}
+
+                      {/* Conditional question if Yes is selected */}
+                      {values.participationInModelPrecondition ===
+                        YesNoOtherType.YES && (
+                        <>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="plan-characteristics-participation-model-precondition-which"
+                              className="text-normal maxw-none"
+                              id="label-plan-characteristics-participation-model-precondition-which"
+                            >
+                              {generalCharacteristicsT(
+                                'participationInModelPreconditionWhich.label'
+                              )}
+                            </Label>
+
+                            <p className="text-base margin-y-1">
+                              {generalCharacteristicsT(
+                                'participationInModelPreconditionWhich.sublabel'
+                              )}
+                            </p>
+
+                            <Field
+                              as={MultiSelect}
+                              id="plan-characteristics-participation-model-precondition-which"
+                              ariaLabel="label-plan-characteristics-participation-model-precondition-which"
+                              name="participationInModelPreconditionLinks"
+                              options={modelPlanOptions}
+                              selectedLabel={generalCharacteristicsT(
+                                'participationInModelPreconditionWhich.multiSelectLabel'
+                              )}
+                              onChange={(value: string[]) => {
+                                setFieldValue(
+                                  'participationInModelPreconditionLinks',
+                                  value
+                                );
+                                setFieldValue(
+                                  'participationInModelPreconditionOtherSelected',
+                                  value.includes('other')
+                                );
+                              }}
+                              initialValues={
+                                initialValues.participationInModelPreconditionLinks
+                              }
+                            />
+
+                            {values.participationInModelPreconditionLinks.includes(
+                              'other'
+                            ) && (
+                              <div className="margin-top-1">
+                                <Label
+                                  htmlFor="plan-characteristics-participation-model-precondition-other-option"
+                                  className="text-normal"
+                                >
+                                  {generalCharacteristicsT(
+                                    'participationInModelPreconditionOtherOption.label'
+                                  )}
+                                </Label>
+
+                                <Field
+                                  as={TextInput}
+                                  id="plan-characteristics-participation-model-precondition-other-option"
+                                  data-testid="plan-characteristics-participation-model-precondition-other-option"
+                                  name="participationInModelPreconditionOtherOption"
+                                />
+                              </div>
+                            )}
+                          </FieldGroup>
+
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="plan-characteristics-participation-model-precondition-why-how"
+                              className="text-normal"
+                            >
+                              {generalCharacteristicsT(
+                                'participationInModelPreconditionWhyHow.label'
+                              )}
+                            </Label>
+
+                            <Field
+                              as={TextAreaField}
+                              className="height-15"
+                              id="plan-characteristics-participation-model-precondition-why-how"
+                              name="participationInModelPreconditionWhyHow"
+                            />
+                          </FieldGroup>
+                        </>
+                      )}
+
+                      <AddNote
+                        id="plan-characteristics-participation-model-precondition-note"
+                        field="participationInModelPreconditionNote"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup className="margin-y-4 margin-bottom-8">
+                      <Label htmlFor="plan-characteristics-has-component-or-tracks">
+                        {generalCharacteristicsT('hasComponentsOrTracks.label')}
+                      </Label>
+
+                      <BooleanRadio
+                        field="hasComponentsOrTracks"
+                        id="plan-characteristics-has-component-or-tracks"
+                        value={values.hasComponentsOrTracks}
+                        setFieldValue={setFieldValue}
+                        options={hasComponentsOrTracksConfig.options}
+                        childName="hasComponentsOrTracksDiffer"
+                      >
+                        {values.hasComponentsOrTracks === true ? (
+                          <div className="display-flex margin-left-4 margin-bottom-1">
+                            <FieldGroup
+                              className="flex-1"
+                              scrollElement="hasComponentsOrTracksDiffer"
+                            >
+                              <Label
+                                htmlFor="plan-characteristics-tracks-differ-how"
+                                className="margin-bottom-1 text-normal"
+                              >
+                                {generalCharacteristicsT(
+                                  'hasComponentsOrTracksDiffer.label'
+                                )}
+                              </Label>
+
+                              <Field
+                                as={TextAreaField}
+                                className="margin-top-0 height-15"
+                                data-testid="plan-characteristics-tracks-differ-how"
+                                id="plan-characteristics-tracks-differ-how"
+                                name="hasComponentsOrTracksDiffer"
+                              />
+                            </FieldGroup>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </BooleanRadio>
+
+                      <AddNote
+                        id="plan-characteristics-has-component-or-tracks-note"
+                        field="hasComponentsOrTracksNote"
+                      />
+                    </FieldGroup>
+
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button type="submit" onClick={() => setErrors({})}>
+                        {miscellaneousT('next')}
+                      </Button>
+                    </div>
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled"
+                      onClick={() =>
+                        navigate(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
+                    >
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
+
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
-                  </div>
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() =>
-                      navigate(
-                        `/models/${modelID}/collaboration-area/task-list`
-                      )
-                    }
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
+                  </Fieldset>
+                </form>
+              </>
+            );
+          }}
+        </Formik>
 
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
-                </Fieldset>
-              </form>
-            </>
-          );
-        }}
-      </Formik>
-
-      <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
-    </>
-  );
-};
-
-export const Characteristics = () => {
-  return (
-    <MainContent data-testid="model-characteristics">
-      <GridContainer>
-        <Grid desktop={{ col: 12 }}>
-          <Routes>
-            <Route
-              path=""
-              element={ProtectedRoute({ element: <CharacteristicsContent /> })}
-            />
-            <Route
-              path="key-characteristics"
-              element={ProtectedRoute({ element: <KeyCharacteristics /> })}
-            />
-            <Route
-              path="involvements"
-              element={ProtectedRoute({ element: <Involvements /> })}
-            />
-            <Route
-              path="targets-and-options"
-              element={ProtectedRoute({ element: <TargetsAndOptions /> })}
-            />
-            <Route
-              path="authority"
-              element={ProtectedRoute({ element: <Authority /> })}
-            />
-            <Route path="*" element={<NotFoundPartial />} />
-          </Routes>
-        </Grid>
+        <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
       </GridContainer>
     </MainContent>
   );

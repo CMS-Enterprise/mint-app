@@ -1,18 +1,3 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { NotFoundPartial } from 'features/NotFound';
-
-import MainContent from 'components/MainContent';
-import ProtectedRoute from 'components/ProtectedRoute';
-
-import AnticipateDependencies from './AnticipateDependencies';
-import BeneficiaryCostSharing from './BeneficiaryCostSharing';
-import ClaimsBasedPayment from './ClaimsBasedPayment';
-import Complexity from './Complexity';
-import FundingSource from './FundingSource';
-import NonClaimsBasedPayment from './NonClaimsBasedPayment';
-import Recover from './Recover';
-
 // Used to render the current page based on certain answers populated within this task list item
 export const renderCurrentPage = (
   currentPage: number,
@@ -39,43 +24,3 @@ export const renderTotalPages = (
   if (hasReductionCostSharing) totalPages += 1;
   return totalPages;
 };
-
-export const Payment = () => {
-  return (
-    <MainContent className="grid-container" data-testid="model-payment">
-      <Routes>
-        <Route
-          path=""
-          element={ProtectedRoute({ element: <FundingSource /> })}
-        />
-        <Route
-          path="claims-based-payment"
-          element={ProtectedRoute({ element: <ClaimsBasedPayment /> })}
-        />
-        <Route
-          path="non-claims-based-payment"
-          element={ProtectedRoute({ element: <NonClaimsBasedPayment /> })}
-        />
-        <Route
-          path="anticipating-dependencies"
-          element={ProtectedRoute({ element: <AnticipateDependencies /> })}
-        />
-        <Route
-          path="beneficiary-cost-sharing"
-          element={ProtectedRoute({ element: <BeneficiaryCostSharing /> })}
-        />
-        <Route
-          path="complexity"
-          element={ProtectedRoute({ element: <Complexity /> })}
-        />
-        <Route
-          path="recover-payment"
-          element={ProtectedRoute({ element: <Recover /> })}
-        />
-        <Route path="*" element={<NotFoundPartial />} />
-      </Routes>
-    </MainContent>
-  );
-};
-
-export default Payment;

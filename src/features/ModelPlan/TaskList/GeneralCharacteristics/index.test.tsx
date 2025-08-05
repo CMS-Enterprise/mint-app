@@ -11,7 +11,7 @@ import {
   YesNoOtherType
 } from 'gql/generated/graphql';
 
-import { CharacteristicsContent, separateLinksByType } from './index';
+import { Characteristics, separateLinksByType } from './index';
 
 const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] =
   {
@@ -106,7 +106,7 @@ describe('Model Plan Characteristics', () => {
       >
         <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
           <Route path="/models/:modelID/collaboration-area/task-list/characteristics">
-            <CharacteristicsContent />
+            <Characteristics />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -150,7 +150,7 @@ describe('Model Plan Characteristics', () => {
       >
         <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
           <Route path="/models/:modelID/collaboration-area/task-list/characteristics">
-            <CharacteristicsContent />
+            <Characteristics />
           </Route>
         </MockedProvider>
       </MemoryRouter>

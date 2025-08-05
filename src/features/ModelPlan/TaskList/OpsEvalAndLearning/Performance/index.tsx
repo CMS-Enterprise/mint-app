@@ -1,7 +1,14 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Fieldset, Icon, Label, Radio } from '@trussworks/react-uswds';
+import {
+  Button,
+  Fieldset,
+  GridContainer,
+  Icon,
+  Label,
+  Radio
+} from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
@@ -17,6 +24,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -142,327 +150,329 @@ const Performance = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="ops-eval-and-learning-performance">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {opsEvalAndLearningMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {opsEvalAndLearningMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<PerformanceFormType>) => {
-          const { handleSubmit, setErrors, values, setFieldValue } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<PerformanceFormType>) => {
+            const { handleSubmit, setErrors, values, setFieldValue } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <form
-                className="desktop:grid-col-6 margin-top-6"
-                data-testid="ops-eval-and-learning-performance-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <FieldGroup scrollElement="benchmarkForPerformance">
-                    <Label htmlFor="ops-eval-and-learning-benchmark-performance">
-                      {opsEvalAndLearningT('benchmarkForPerformance.label')}
-                    </Label>
+                <form
+                  className="desktop:grid-col-6 margin-top-6"
+                  data-testid="ops-eval-and-learning-performance-form"
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <Fieldset disabled={!!error || loading}>
+                    <FieldGroup scrollElement="benchmarkForPerformance">
+                      <Label htmlFor="ops-eval-and-learning-benchmark-performance">
+                        {opsEvalAndLearningT('benchmarkForPerformance.label')}
+                      </Label>
 
-                    <MTOWarning id="ops-eval-and-learning-benchmark-performance-warning" />
+                      <MTOWarning id="ops-eval-and-learning-benchmark-performance-warning" />
 
-                    <Fieldset>
-                      {getKeys(benchmarkForPerformanceConfig.options).map(
-                        key => (
-                          <Field
-                            as={Radio}
-                            key={key}
-                            id={`ops-eval-and-learning-benchmark-performance-${key}`}
-                            name="dataFullTimeOrIncremental"
-                            label={benchmarkForPerformanceConfig.options[key]}
-                            value={key}
-                            checked={values.benchmarkForPerformance === key}
-                            onChange={() => {
-                              setFieldValue('benchmarkForPerformance', key);
-                            }}
-                          />
-                        )
-                      )}
-                    </Fieldset>
+                      <Fieldset>
+                        {getKeys(benchmarkForPerformanceConfig.options).map(
+                          key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`ops-eval-and-learning-benchmark-performance-${key}`}
+                              name="dataFullTimeOrIncremental"
+                              label={benchmarkForPerformanceConfig.options[key]}
+                              value={key}
+                              checked={values.benchmarkForPerformance === key}
+                              onChange={() => {
+                                setFieldValue('benchmarkForPerformance', key);
+                              }}
+                            />
+                          )
+                        )}
+                      </Fieldset>
 
-                    <AddNote
-                      id="ops-eval-and-learning-benchmark-performance-note"
-                      field="benchmarkForPerformanceNote"
-                    />
-                  </FieldGroup>
+                      <AddNote
+                        id="ops-eval-and-learning-benchmark-performance-note"
+                        field="benchmarkForPerformanceNote"
+                      />
+                    </FieldGroup>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-compute-performance">
-                      {opsEvalAndLearningT('computePerformanceScores.label')}
-                    </Label>
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-compute-performance">
+                        {opsEvalAndLearningT('computePerformanceScores.label')}
+                      </Label>
 
-                    <BooleanRadio
-                      field="computePerformanceScores"
-                      id="ops-eval-and-learning-compute-performance"
-                      value={values.computePerformanceScores}
-                      setFieldValue={setFieldValue}
-                      options={computePerformanceScoresConfig.options}
-                    />
+                      <BooleanRadio
+                        field="computePerformanceScores"
+                        id="ops-eval-and-learning-compute-performance"
+                        value={values.computePerformanceScores}
+                        setFieldValue={setFieldValue}
+                        options={computePerformanceScoresConfig.options}
+                      />
 
-                    <AddNote
-                      id="ops-eval-and-learning-compute-performance-note"
-                      field="computePerformanceScoresNote"
-                    />
-                  </FieldGroup>
+                      <AddNote
+                        id="ops-eval-and-learning-compute-performance-note"
+                        field="computePerformanceScoresNote"
+                      />
+                    </FieldGroup>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-risk-adjustments">
-                      {opsEvalAndLearningMiscT('riskAdjustments')}
-                    </Label>
+                    <FieldGroup className="margin-top-6">
+                      <Label htmlFor="ops-eval-and-learning-risk-adjustments">
+                        {opsEvalAndLearningMiscT('riskAdjustments')}
+                      </Label>
 
-                    <Label
-                      htmlFor="ops-eval-and-learning-risk-adjustment-performance"
-                      className="text-normal margin-top-2"
+                      <Label
+                        htmlFor="ops-eval-and-learning-risk-adjustment-performance"
+                        className="text-normal margin-top-2"
+                      >
+                        {opsEvalAndLearningT('riskAdjustPerformance.label')}
+                      </Label>
+
+                      <BooleanRadio
+                        field="riskAdjustPerformance"
+                        id="ops-eval-and-learning-risk-adjustment-performance"
+                        value={values.riskAdjustPerformance}
+                        setFieldValue={setFieldValue}
+                        options={riskAdjustPerformanceConfig.options}
+                      />
+
+                      <Label
+                        htmlFor="ops-eval-and-learning-risk-adjustment-feedback"
+                        className="text-normal"
+                      >
+                        {opsEvalAndLearningT('riskAdjustFeedback.label')}
+                      </Label>
+
+                      <BooleanRadio
+                        field="riskAdjustFeedback"
+                        id="ops-eval-and-learning-risk-adjustment-feedback"
+                        value={values.riskAdjustFeedback}
+                        setFieldValue={setFieldValue}
+                        options={riskAdjustFeedbackConfig.options}
+                      />
+
+                      <Label
+                        htmlFor="ops-eval-and-learning-risk-adjustment-payment"
+                        className="text-normal"
+                      >
+                        {opsEvalAndLearningT('riskAdjustPayments.label')}
+                      </Label>
+
+                      <BooleanRadio
+                        field="riskAdjustPayments"
+                        id="ops-eval-and-learning-risk-adjustment-payment"
+                        value={values.riskAdjustPayments}
+                        setFieldValue={setFieldValue}
+                        options={riskAdjustPaymentsConfig.options}
+                      />
+
+                      <Label
+                        htmlFor="ops-eval-and-learning-risk-adjustment-other"
+                        className="text-normal"
+                      >
+                        {opsEvalAndLearningT('riskAdjustOther.label')}
+                      </Label>
+
+                      <BooleanRadio
+                        field="riskAdjustOther"
+                        id="ops-eval-and-learning-risk-adjustment-other"
+                        value={values.riskAdjustOther}
+                        setFieldValue={setFieldValue}
+                        options={riskAdjustOtherConfig.options}
+                      />
+
+                      <AddNote
+                        id="ops-eval-and-learning-risk-adjustment-note"
+                        field="riskAdjustNote"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      className="margin-top-6"
+                      scrollElement="participantAppeal"
                     >
-                      {opsEvalAndLearningT('riskAdjustPerformance.label')}
-                    </Label>
+                      <Label htmlFor="ops-eval-and-learning-appeals">
+                        {opsEvalAndLearningMiscT('participantAppeal')}
+                      </Label>
 
-                    <BooleanRadio
-                      field="riskAdjustPerformance"
-                      id="ops-eval-and-learning-risk-adjustment-performance"
-                      value={values.riskAdjustPerformance}
-                      setFieldValue={setFieldValue}
-                      options={riskAdjustPerformanceConfig.options}
-                    />
+                      <MTOWarning
+                        id="ops-eval-and-learning-appeal-performance-warning"
+                        className="margin-top-2"
+                      />
 
-                    <Label
-                      htmlFor="ops-eval-and-learning-risk-adjustment-feedback"
-                      className="text-normal"
-                    >
-                      {opsEvalAndLearningT('riskAdjustFeedback.label')}
-                    </Label>
+                      <Alert slim type="info">
+                        {opsEvalAndLearningMiscT('appealsWarning')}
+                      </Alert>
 
-                    <BooleanRadio
-                      field="riskAdjustFeedback"
-                      id="ops-eval-and-learning-risk-adjustment-feedback"
-                      value={values.riskAdjustFeedback}
-                      setFieldValue={setFieldValue}
-                      options={riskAdjustFeedbackConfig.options}
-                    />
+                      <Label
+                        htmlFor="ops-eval-and-learning-appeal-performance"
+                        className="text-normal margin-top-2"
+                      >
+                        {opsEvalAndLearningT('appealPerformance.label')}
+                      </Label>
 
-                    <Label
-                      htmlFor="ops-eval-and-learning-risk-adjustment-payment"
-                      className="text-normal"
-                    >
-                      {opsEvalAndLearningT('riskAdjustPayments.label')}
-                    </Label>
+                      <BooleanRadio
+                        field="appealPerformance"
+                        id="ops-eval-and-learning-appeal-performance"
+                        value={values.appealPerformance}
+                        setFieldValue={setFieldValue}
+                        options={appealPerformanceConfig.options}
+                      />
 
-                    <BooleanRadio
-                      field="riskAdjustPayments"
-                      id="ops-eval-and-learning-risk-adjustment-payment"
-                      value={values.riskAdjustPayments}
-                      setFieldValue={setFieldValue}
-                      options={riskAdjustPaymentsConfig.options}
-                    />
+                      <Label
+                        htmlFor="ops-eval-and-learning-appeal-feedback"
+                        className="text-normal"
+                      >
+                        {opsEvalAndLearningT('appealFeedback.label')}
+                      </Label>
 
-                    <Label
-                      htmlFor="ops-eval-and-learning-risk-adjustment-other"
-                      className="text-normal"
-                    >
-                      {opsEvalAndLearningT('riskAdjustOther.label')}
-                    </Label>
+                      <BooleanRadio
+                        field="appealFeedback"
+                        id="ops-eval-and-learning-appeal-feedback"
+                        value={values.appealFeedback}
+                        setFieldValue={setFieldValue}
+                        options={appealFeedbackConfig.options}
+                      />
 
-                    <BooleanRadio
-                      field="riskAdjustOther"
-                      id="ops-eval-and-learning-risk-adjustment-other"
-                      value={values.riskAdjustOther}
-                      setFieldValue={setFieldValue}
-                      options={riskAdjustOtherConfig.options}
-                    />
+                      <Label
+                        htmlFor="ops-eval-and-learning-appeal-payment"
+                        className="text-normal"
+                      >
+                        {opsEvalAndLearningT('appealPayments.label')}
+                      </Label>
 
-                    <AddNote
-                      id="ops-eval-and-learning-risk-adjustment-note"
-                      field="riskAdjustNote"
-                    />
-                  </FieldGroup>
+                      <BooleanRadio
+                        field="appealPayments"
+                        id="ops-eval-and-learning-appeal-payment"
+                        value={values.appealPayments}
+                        setFieldValue={setFieldValue}
+                        options={appealPaymentsConfig.options}
+                      />
 
-                  <FieldGroup
-                    className="margin-top-6"
-                    scrollElement="participantAppeal"
-                  >
-                    <Label htmlFor="ops-eval-and-learning-appeals">
-                      {opsEvalAndLearningMiscT('participantAppeal')}
-                    </Label>
+                      <Label
+                        htmlFor="ops-eval-and-learning-appeal-other"
+                        className="text-normal"
+                      >
+                        {opsEvalAndLearningT('appealOther.label')}
+                      </Label>
 
-                    <MTOWarning
-                      id="ops-eval-and-learning-appeal-performance-warning"
-                      className="margin-top-2"
-                    />
+                      <BooleanRadio
+                        field="appealOther"
+                        id="ops-eval-and-learning-appeal-other"
+                        value={values.appealOther}
+                        setFieldValue={setFieldValue}
+                        options={appealOtherConfig.options}
+                      />
 
-                    <Alert slim type="info">
-                      {opsEvalAndLearningMiscT('appealsWarning')}
-                    </Alert>
+                      <AddNote
+                        id="ops-eval-and-learning-appeal-note"
+                        field="appealNote"
+                      />
+                    </FieldGroup>
 
-                    <Label
-                      htmlFor="ops-eval-and-learning-appeal-performance"
-                      className="text-normal margin-top-2"
-                    >
-                      {opsEvalAndLearningT('appealPerformance.label')}
-                    </Label>
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => {
+                          backPage();
+                        }}
+                      >
+                        {miscellaneousT('back')}
+                      </Button>
 
-                    <BooleanRadio
-                      field="appealPerformance"
-                      id="ops-eval-and-learning-appeal-performance"
-                      value={values.appealPerformance}
-                      setFieldValue={setFieldValue}
-                      options={appealPerformanceConfig.options}
-                    />
+                      <Button type="submit" onClick={() => setErrors({})}>
+                        {miscellaneousT('next')}
+                      </Button>
+                    </div>
 
-                    <Label
-                      htmlFor="ops-eval-and-learning-appeal-feedback"
-                      className="text-normal"
-                    >
-                      {opsEvalAndLearningT('appealFeedback.label')}
-                    </Label>
-
-                    <BooleanRadio
-                      field="appealFeedback"
-                      id="ops-eval-and-learning-appeal-feedback"
-                      value={values.appealFeedback}
-                      setFieldValue={setFieldValue}
-                      options={appealFeedbackConfig.options}
-                    />
-
-                    <Label
-                      htmlFor="ops-eval-and-learning-appeal-payment"
-                      className="text-normal"
-                    >
-                      {opsEvalAndLearningT('appealPayments.label')}
-                    </Label>
-
-                    <BooleanRadio
-                      field="appealPayments"
-                      id="ops-eval-and-learning-appeal-payment"
-                      value={values.appealPayments}
-                      setFieldValue={setFieldValue}
-                      options={appealPaymentsConfig.options}
-                    />
-
-                    <Label
-                      htmlFor="ops-eval-and-learning-appeal-other"
-                      className="text-normal"
-                    >
-                      {opsEvalAndLearningT('appealOther.label')}
-                    </Label>
-
-                    <BooleanRadio
-                      field="appealOther"
-                      id="ops-eval-and-learning-appeal-other"
-                      value={values.appealOther}
-                      setFieldValue={setFieldValue}
-                      options={appealOtherConfig.options}
-                    />
-
-                    <AddNote
-                      id="ops-eval-and-learning-appeal-note"
-                      field="appealNote"
-                    />
-                  </FieldGroup>
-
-                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => {
-                        backPage();
-                      }}
+                      className="usa-button usa-button--unstyled"
+                      onClick={() =>
+                        navigate(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
                     >
-                      {miscellaneousT('back')}
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
+
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
+                  </Fieldset>
+                </form>
+              </>
+            );
+          }}
+        </Formik>
 
-                    <Button type="submit" onClick={() => setErrors({})}>
-                      {miscellaneousT('next')}
-                    </Button>
-                  </div>
-
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() =>
-                      navigate(
-                        `/models/${modelID}/collaboration-area/task-list`
-                      )
-                    }
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
-
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
-                </Fieldset>
-              </form>
-            </>
-          );
-        }}
-      </Formik>
-
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            5,
-            iddocSupport,
-            isCCWInvolvement(ccmInvolvment) ||
-              isQualityMeasures(dataNeededForMonitoring)
-          )}
-          totalPages={renderTotalPages(
-            iddocSupport,
-            isCCWInvolvement(ccmInvolvment) ||
-              isQualityMeasures(dataNeededForMonitoring)
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              5,
+              iddocSupport,
+              isCCWInvolvement(ccmInvolvment) ||
+                isQualityMeasures(dataNeededForMonitoring)
+            )}
+            totalPages={renderTotalPages(
+              iddocSupport,
+              isCCWInvolvement(ccmInvolvment) ||
+                isQualityMeasures(dataNeededForMonitoring)
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 

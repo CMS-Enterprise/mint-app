@@ -26,6 +26,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -132,267 +133,271 @@ const AnticipateDependencies = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="payment-anticipate-dependencies">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.PAYMENTS
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.PAYMENTS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {paymentsMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {paymentsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          nextPage();
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<AnticipateDependenciesFormType>) => {
-          const { handleSubmit, setFieldValue, setErrors, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            nextPage();
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<AnticipateDependenciesFormType>) => {
+            const { handleSubmit, setFieldValue, setErrors, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <GridContainer>
+                <ConfirmLeave />
 
-              <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap>
-                  <Grid desktop={{ col: 6 }}>
-                    <form
-                      className="margin-top-6"
-                      data-testid="payment-anticipate-dependencies-form"
-                      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <Fieldset disabled={!!error || loading}>
-                        <PageHeading
-                          headingLevel="h3"
-                          className="margin-bottom-3"
-                        >
-                          {paymentsMiscT('claimSpecificQuestionsContinued')}
-                        </PageHeading>
-
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="willBePaymentAdjustments"
-                            className="maxw-none"
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    <Grid desktop={{ col: 6 }}>
+                      <form
+                        className="margin-top-6"
+                        data-testid="payment-anticipate-dependencies-form"
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        <Fieldset disabled={!!error || loading}>
+                          <PageHeading
+                            headingLevel="h3"
+                            className="margin-bottom-3"
                           >
-                            {paymentsT('willBePaymentAdjustments.label')}
-                          </Label>
+                            {paymentsMiscT('claimSpecificQuestionsContinued')}
+                          </PageHeading>
 
-                          <p className="text-base margin-y-1">
-                            {paymentsT('willBePaymentAdjustments.sublabel')}
-                          </p>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="willBePaymentAdjustments"
+                              className="maxw-none"
+                            >
+                              {paymentsT('willBePaymentAdjustments.label')}
+                            </Label>
 
-                          <BooleanRadio
-                            field="willBePaymentAdjustments"
-                            id="payment-will-be-payment-adjustments"
-                            value={values.willBePaymentAdjustments}
-                            setFieldValue={setFieldValue}
-                            options={
-                              creatingDependenciesBetweenServicesConfig.options
-                            }
-                          />
+                            <p className="text-base margin-y-1">
+                              {paymentsT('willBePaymentAdjustments.sublabel')}
+                            </p>
 
-                          <AddNote
-                            id="payment-will-be-payment-adjustments-note"
-                            field="willBePaymentAdjustmentsNote"
-                          />
-                        </FieldGroup>
+                            <BooleanRadio
+                              field="willBePaymentAdjustments"
+                              id="payment-will-be-payment-adjustments"
+                              value={values.willBePaymentAdjustments}
+                              setFieldValue={setFieldValue}
+                              options={
+                                creatingDependenciesBetweenServicesConfig.options
+                              }
+                            />
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="creatingDependenciesBetweenServices"
-                            className="maxw-none"
-                          >
-                            {paymentsT(
-                              'creatingDependenciesBetweenServices.label'
-                            )}
-                          </Label>
+                            <AddNote
+                              id="payment-will-be-payment-adjustments-note"
+                              field="willBePaymentAdjustmentsNote"
+                            />
+                          </FieldGroup>
 
-                          <p className="text-base margin-y-1">
-                            {paymentsT(
-                              'creatingDependenciesBetweenServices.sublabel'
-                            )}
-                          </p>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="creatingDependenciesBetweenServices"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'creatingDependenciesBetweenServices.label'
+                              )}
+                            </Label>
 
-                          <BooleanRadio
-                            field="creatingDependenciesBetweenServices"
-                            id="payment-creating-dependencies-between-services"
-                            value={values.creatingDependenciesBetweenServices}
-                            setFieldValue={setFieldValue}
-                            options={
-                              creatingDependenciesBetweenServicesConfig.options
-                            }
-                          />
+                            <p className="text-base margin-y-1">
+                              {paymentsT(
+                                'creatingDependenciesBetweenServices.sublabel'
+                              )}
+                            </p>
 
-                          <AddNote
-                            id="payment-creating-dependencies-between-services-note"
-                            field="creatingDependenciesBetweenServicesNote"
-                          />
-                        </FieldGroup>
+                            <BooleanRadio
+                              field="creatingDependenciesBetweenServices"
+                              id="payment-creating-dependencies-between-services"
+                              value={values.creatingDependenciesBetweenServices}
+                              setFieldValue={setFieldValue}
+                              options={
+                                creatingDependenciesBetweenServicesConfig.options
+                              }
+                            />
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="needsClaimsDataCollection"
-                            className="maxw-none"
-                          >
-                            {paymentsT('needsClaimsDataCollection.label')}
-                          </Label>
+                            <AddNote
+                              id="payment-creating-dependencies-between-services-note"
+                              field="creatingDependenciesBetweenServicesNote"
+                            />
+                          </FieldGroup>
 
-                          <p className="text-base margin-y-1">
-                            {paymentsT('needsClaimsDataCollection.sublabel')}
-                          </p>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="needsClaimsDataCollection"
+                              className="maxw-none"
+                            >
+                              {paymentsT('needsClaimsDataCollection.label')}
+                            </Label>
 
-                          <BooleanRadio
-                            field="needsClaimsDataCollection"
-                            id="payment-needs-claims-data-collection"
-                            value={values.needsClaimsDataCollection}
-                            setFieldValue={setFieldValue}
-                            options={needsClaimsDataCollectionConfig.options}
-                          />
+                            <p className="text-base margin-y-1">
+                              {paymentsT('needsClaimsDataCollection.sublabel')}
+                            </p>
 
-                          <AddNote
-                            id="payment-needs-claims-data-collection-note"
-                            field="needsClaimsDataCollectionNote"
-                          />
-                        </FieldGroup>
+                            <BooleanRadio
+                              field="needsClaimsDataCollection"
+                              id="payment-needs-claims-data-collection"
+                              value={values.needsClaimsDataCollection}
+                              setFieldValue={setFieldValue}
+                              options={needsClaimsDataCollectionConfig.options}
+                            />
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="providingThirdPartyFile"
-                            className="maxw-none"
-                          >
-                            {paymentsT('providingThirdPartyFile.label')}
-                          </Label>
+                            <AddNote
+                              id="payment-needs-claims-data-collection-note"
+                              field="needsClaimsDataCollectionNote"
+                            />
+                          </FieldGroup>
 
-                          <BooleanRadio
-                            field="providingThirdPartyFile"
-                            id="payment-providing-third-party-file"
-                            value={values.providingThirdPartyFile}
-                            setFieldValue={setFieldValue}
-                            options={providingThirdPartyFileConfig.options}
-                          />
-                        </FieldGroup>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="providingThirdPartyFile"
+                              className="maxw-none"
+                            >
+                              {paymentsT('providingThirdPartyFile.label')}
+                            </Label>
 
-                        <Alert type="info" slim className="margin-y-6">
-                          {paymentsMiscT('alert')}
-                        </Alert>
+                            <BooleanRadio
+                              field="providingThirdPartyFile"
+                              id="payment-providing-third-party-file"
+                              value={values.providingThirdPartyFile}
+                              setFieldValue={setFieldValue}
+                              options={providingThirdPartyFileConfig.options}
+                            />
+                          </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="isContractorAwareTestDataRequirements"
-                            className="maxw-none"
-                          >
-                            {paymentsT(
-                              'isContractorAwareTestDataRequirements.label'
-                            )}
-                          </Label>
+                          <Alert type="info" slim className="margin-y-6">
+                            {paymentsMiscT('alert')}
+                          </Alert>
 
-                          <BooleanRadio
-                            field="isContractorAwareTestDataRequirements"
-                            id="payment-contractor-aware-test-data-requirements"
-                            value={values.isContractorAwareTestDataRequirements}
-                            setFieldValue={setFieldValue}
-                            options={
-                              isContractorAwareTestDataRequirementsConfig.options
-                            }
-                          />
-                        </FieldGroup>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="isContractorAwareTestDataRequirements"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'isContractorAwareTestDataRequirements.label'
+                              )}
+                            </Label>
 
-                        <div className="margin-top-6 margin-bottom-3">
+                            <BooleanRadio
+                              field="isContractorAwareTestDataRequirements"
+                              id="payment-contractor-aware-test-data-requirements"
+                              value={
+                                values.isContractorAwareTestDataRequirements
+                              }
+                              setFieldValue={setFieldValue}
+                              options={
+                                isContractorAwareTestDataRequirementsConfig.options
+                              }
+                            />
+                          </FieldGroup>
+
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--outline margin-bottom-1"
+                              onClick={() => {
+                                navigate(
+                                  `/models/${modelID}/collaboration-area/task-list/payment/claims-based-payment`
+                                );
+                              }}
+                            >
+                              {miscellaneousT('back')}
+                            </Button>
+
+                            <Button type="submit" onClick={() => setErrors({})}>
+                              {miscellaneousT('next')}
+                            </Button>
+                          </div>
+
                           <Button
                             type="button"
-                            className="usa-button usa-button--outline margin-bottom-1"
-                            onClick={() => {
+                            className="usa-button usa-button--unstyled"
+                            onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list/payment/claims-based-payment`
-                              );
-                            }}
+                                `/models/${modelID}/collaboration-area/task-list`
+                              )
+                            }
                           >
-                            {miscellaneousT('back')}
+                            <Icon.ArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                              aria-label="back"
+                            />
+
+                            {miscellaneousT('saveAndReturn')}
                           </Button>
-
-                          <Button type="submit" onClick={() => setErrors({})}>
-                            {miscellaneousT('next')}
-                          </Button>
-                        </div>
-
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled"
-                          onClick={() =>
-                            navigate(
-                              `/models/${modelID}/collaboration-area/task-list`
-                            )
-                          }
-                        >
-                          <Icon.ArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                            aria-label="back"
-                          />
-
-                          {miscellaneousT('saveAndReturn')}
-                        </Button>
-                      </Fieldset>
-                    </form>
+                        </Fieldset>
+                      </form>
+                    </Grid>
                   </Grid>
-                </Grid>
+                </GridContainer>
               </GridContainer>
-            </>
-          );
-        }}
-      </Formik>
+            );
+          }}
+        </Formik>
 
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            3,
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          totalPages={renderTotalPages(
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              3,
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            totalPages={renderTotalPages(
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 export default AnticipateDependencies;
