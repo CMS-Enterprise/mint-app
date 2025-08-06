@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/generated/graphql';
@@ -37,14 +37,24 @@ const mocks = [
 
 describe('Send feedback form', () => {
   it('submits the "Send feedback" form successfully', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: 'send-feedback',
+          element: (
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <SendFeedback />
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['send-feedback']
+      }
+    );
+
     const { findByText, getByRole, getByTestId, getByText, user } = setup(
-      <MemoryRouter initialEntries={['send-feedback']}>
-        <Route path="send-feedback">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <SendFeedback />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+      <RouterProvider router={router} />
     );
 
     // Fill out form
@@ -77,15 +87,23 @@ describe('Send feedback form', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={['send-feedback']}>
-        <Route path="send-feedback">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <SendFeedback />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: 'send-feedback',
+          element: (
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <SendFeedback />
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['send-feedback']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     // Snapshot form submission complete state
     expect(asFragment()).toMatchSnapshot();

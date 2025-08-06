@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { GetNotificationsDocument } from 'gql/generated/graphql';
@@ -84,16 +84,26 @@ const notificationsMock = [
 
 describe('Notification Page', () => {
   it('renders without errors', async () => {
-    setup(
-      <MemoryRouter initialEntries={[`/notifications`]}>
-        <MockedProvider mocks={notificationsMock} addTypename={false}>
-          <Route path="/notifications">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/notifications',
+          element: (
             <MessageProvider>
               <NotificationsHome />
             </MessageProvider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/notifications`]
+      }
+    );
+
+    setup(
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -104,16 +114,26 @@ describe('Notification Page', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/notifications`]}>
-        <MockedProvider mocks={notificationsMock} addTypename={false}>
-          <Route path="/notifications">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/notifications',
+          element: (
             <MessageProvider>
               <NotificationsHome />
             </MessageProvider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/notifications`]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

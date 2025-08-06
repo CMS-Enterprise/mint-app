@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -20,39 +20,40 @@ const contact: SolutionContactType = {
 
 describe('Operation Solution Contact', () => {
   it('renders contact name', () => {
-    const { getByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: <Contact contact={contact} />
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]}
-      >
-        <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<Contact contact={contact}  />}
-          />
-        </Routes>
-      </MemoryRouter>
+        ]
+      }
     );
+
+    const { getByText } = render(<RouterProvider router={router} />);
     expect(getByText('Aliza Kim')).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: <Contact contact={contact} />
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]}
-      >
-        <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<Contact contact={contact}  />}
-          />
-        </Routes>
-      </MemoryRouter>
+        ]
+      }
     );
 
+    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

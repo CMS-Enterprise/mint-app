@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   fireEvent,
@@ -281,25 +281,28 @@ describe('The Model Plan Task List', () => {
   ];
 
   it('renders without crashing', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list',
+          element: <TaskList />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelPlan.id}/collaboration-area/task-list`]
+      }
+    );
+
     const { getByTestId } = render(
       <Provider store={store}>
-        <MemoryRouter
-          initialEntries={[
-            `/models/${modelPlan.id}/collaboration-area/task-list`
-          ]}
+        <MockedProvider
+          mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
+          addTypename={false}
         >
-          <MockedProvider
-            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-            addTypename={false}
-          >
-            <MessageProvider>
-              <Route
-                path="/models/:modelID/collaboration-area/task-list"
-                element={<TaskList />}
-              />
-            </MessageProvider>
-          </MockedProvider>
-        </MemoryRouter>
+          <MessageProvider>
+            <RouterProvider router={router} />
+          </MessageProvider>
+        </MockedProvider>
       </Provider>
     );
 
@@ -324,11 +327,11 @@ describe('The Model Plan Task List', () => {
           >
             <MessageProvider>
               <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/task-list"
-            element={<TaskList  />}
-          />
-        </Routes>
+                <Route
+                  path="/models/:modelID/collaboration-area/task-list"
+                  element={<TaskList />}
+                />
+              </Routes>
             </MessageProvider>
           </MockedProvider>
         </MemoryRouter>
