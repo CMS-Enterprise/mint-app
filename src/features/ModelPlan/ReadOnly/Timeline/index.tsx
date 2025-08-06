@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   Icon,
   ProcessList,
@@ -26,7 +27,7 @@ import TitleAndStatus from '../_components/TitleAndStatus';
 import './index.scss';
 
 export type ReadOnlyProps = {
-  modelID: string;
+  modelID?: string;
   clearance?: boolean;
   editDates?: boolean;
   filteredView?: FilterGroup;
@@ -40,12 +41,13 @@ const ReadOnlyModelTimeline = ({
 }: ReadOnlyProps) => {
   const { t: timelineT } = useTranslation('timeline');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
-
   const modelTimelineConfig = usePlanTranslation('timeline');
+
+  const { modelID: modelIDFromParams } = useParams();
 
   const { data, loading, error } = useGetTimelineQuery({
     variables: {
-      id: modelID
+      id: modelID || modelIDFromParams || ''
     }
   });
 

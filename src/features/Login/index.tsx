@@ -39,17 +39,23 @@ const Login = () => {
     const referringUri = oktaAuth.getOriginalUri();
 
     oktaAuth.handleLoginRedirect(tokens).then(() => {
-      navigate('/pre-decisional-notice', {
-        state: {
-          nextState: referringUri || '/'
-        }
-      });
+      // Only navigate if we're not already on the pre-decisional-notice page
+      if (window.location.pathname !== '/pre-decisional-notice') {
+        navigate('/pre-decisional-notice', {
+          state: {
+            nextState: referringUri || '/'
+          }
+        });
+      }
     });
   };
 
   useEffect(() => {
     if (authState?.isAuthenticated) {
-      navigate('/pre-decisional-notice', { replace: true });
+      // Only redirect if we're not already on the pre-decisional-notice page
+      if (window.location.pathname !== '/pre-decisional-notice') {
+        navigate('/pre-decisional-notice', { replace: true });
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

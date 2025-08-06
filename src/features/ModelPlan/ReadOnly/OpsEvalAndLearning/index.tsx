@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllOpsEvalAndLearningQuery,
@@ -24,11 +25,13 @@ const ReadOnlyOpsEvalAndLearning = ({
     'opsEvalAndLearningMisc'
   );
 
+  const { modelID: modelIDFromParams } = useParams();
+
   const opsEvalAndLearningConfig = usePlanTranslation('opsEvalAndLearning');
 
   const { data, loading, error } = useGetAllOpsEvalAndLearningQuery({
     variables: {
-      id: modelID
+      id: modelID || modelIDFromParams || ''
     }
   });
 

@@ -6,7 +6,7 @@ import {
   RouterProvider,
   useParams
 } from 'react-router-dom';
-import { LoginCallback } from '@okta/okta-react';
+import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
@@ -17,6 +17,7 @@ import GetAccess from 'features/HelpAndKnowledge/Articles/GetAccess';
 import ModelPlanOverview from 'features/HelpAndKnowledge/Articles/ModelPlanOverview';
 import Home from 'features/Home';
 import { homePageSettingsRoutes } from 'features/Home/Settings';
+import Landing from 'features/Landing';
 import Login from 'features/Login';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
@@ -70,7 +71,7 @@ import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
 import NotFound from 'features/NotFound';
-import Notifications, { notificationsRoutes } from 'features/Notifications';
+import { notificationsRoutes } from 'features/Notifications';
 import PrivacyPolicy from 'features/PrivacyPolicy';
 import Sandbox from 'features/Sandbox';
 import TermsAndConditions from 'features/TermsAndConditions';
@@ -102,62 +103,19 @@ const handleSkipNav = () => {
 };
 
 // Wrapper components to handle parameter interpolation
-const TaskListRedirect = () => {
+const Redirect = ({ route }: { route: string }) => {
   const { modelID } = useParams();
-  return (
-    <Navigate to={`/models/${modelID}/collaboration-area/task-list`} replace />
-  );
-};
-
-const TimelineRedirect = () => {
-  const { modelID } = useParams();
-  return (
-    <Navigate
-      to={`/models/${modelID}/collaboration-area/model-timeline`}
-      replace
-    />
-  );
-};
-
-const ITSolutionsRedirect = () => {
-  const { modelID } = useParams();
-  return (
-    <Navigate
-      to={`/models/${modelID}/collaboration-area/model-to-operations`}
-      replace
-    />
-  );
-};
-
-const ReadViewITSolutionsRedirect = () => {
-  const { modelID } = useParams();
-  return <Navigate to={`/models/${modelID}/read-view/milestones`} replace />;
-};
-
-const ReadOnlyRedirect = () => {
-  const { modelID } = useParams();
-  return <Navigate to={`/models/${modelID}/read-view`} replace />;
-};
-
-const ReadViewRedirect = () => {
-  const { modelID } = useParams();
-  console.log('modelID', modelID);
-  return <Navigate to={`/models/${modelID}/read-view/model-basics`} replace />;
-};
-
-const ITSystemsRedirect = () => {
-  const { modelID } = useParams();
-  return (
-    <Navigate
-      to={`/models/${modelID}/read-view/it-systems-and-solutions`}
-      replace
-    />
-  );
+  return <Navigate to={`/models/${modelID}/${route}`} replace />;
 };
 
 const ReadOnlySubinfoRedirect = () => {
   const { modelID, subinfo } = useParams();
   return <Navigate to={`/models/${modelID}/read-view/${subinfo}`} replace />;
+};
+
+const ProtectedHome = () => {
+  const { authState } = useOktaAuth();
+  return authState?.isAuthenticated ? <Home /> : <Landing />;
 };
 
 // Create the router configuration
@@ -223,7 +181,7 @@ const router = createBrowserRouter([
       // Home Routes
       {
         path: '/',
-        element: <Home />
+        element: <ProtectedHome />
       },
       homePageSettingsRoutes,
       notificationsRoutes,
@@ -306,7 +264,9 @@ const router = createBrowserRouter([
       // Timeline Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/basics/milestones',
-        element: <TimelineRedirect />
+        element: (
+          <Redirect route="collaboration-area/task-list/basics/milestones" />
+        )
       },
       {
         path: '/models/:modelID/collaboration-area/model-timeline',
@@ -325,7 +285,7 @@ const router = createBrowserRouter([
       // Task List Routes
       {
         path: '/models/:modelID/task-list',
-        element: <TaskListRedirect />
+        element: <Redirect route="collaboration-area/model-timeline" />
       },
       {
         path: '/models/:modelID/collaboration-area/task-list',
@@ -585,15 +545,17 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
       // IT Solutions Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/it-solutions',
-        element: <ITSolutionsRedirect />
+        element: <Redirect route="collaboration-area/model-to-operations" />
       },
       {
         path: '/models/:modelID/read-view/it-solutions',
-        element: <ReadViewITSolutionsRedirect />
+        element: <Redirect route="read-view/milestones" />
       },
+
       // Prepare for Clearance Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
@@ -603,24 +565,27 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
       // Read View Routes
       {
         path: '/models/:modelID/read-only',
-        element: <ReadOnlyRedirect />
+        element: <Redirect route="read-view" />
       },
       {
         path: '/models/:modelID/read-view',
-        element: <ReadViewRedirect />
+        element: <Redirect route="read-view/model-basics" />
       },
       readViewRoutes,
       {
         path: '/models/:modelID/read-view/it-systems-and-solutions',
-        element: <ITSystemsRedirect />
+        element: <Redirect route="read-view/it-systems-and-solutions" />
       },
       {
         path: '/models/:modelID/read-only/:subinfo?',
         element: <ReadOnlySubinfoRedirect />
       },
+
+      // Help and Knowledge Routes
       helpAndKnowledgeRoutes,
       {
         path: '/help-and-knowledge/articles/get-access',
@@ -630,6 +595,8 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
+      // Change History Routes
       {
         path: '/models/:modelID/change-history',
         element: (
@@ -638,6 +605,8 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
+      // Locked Task List Section Routes
       {
         path: '/models/:modelID/locked-task-list-section',
         element: (
@@ -646,7 +615,12 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
       // Other Routes
+      {
+        path: '/how-to-get-access',
+        element: <GetAccess />
+      },
       {
         path: '/accessibility-statement',
         element: <AccessibilityStatement />

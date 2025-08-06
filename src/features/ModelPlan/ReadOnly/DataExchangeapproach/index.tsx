@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllDataExchangeApproachQuery,
@@ -22,11 +23,13 @@ const ReadOnlyDataExchangeApproach = ({
     'dataExchangeApproachMisc'
   );
 
+  const { modelID: modelIDFromParams } = useParams();
+
   const dataExchangeApproachConfig = usePlanTranslation('dataExchangeApproach');
 
   const { data, loading, error } = useGetAllDataExchangeApproachQuery({
     variables: {
-      id: modelID
+      id: modelID || modelIDFromParams || ''
     }
   });
 

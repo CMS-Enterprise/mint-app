@@ -15,12 +15,14 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
 
   useEffect(() => {
     if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {
-      navigate('/pre-decisional-notice', {
-        state: {
-          nextState:
-            pathname !== '/pre-decisional-notice' && pathname + (search || '')
-        }
-      });
+      // Only redirect if we're not already on the pre-decisional-notice page
+      if (pathname !== '/pre-decisional-notice') {
+        navigate('/pre-decisional-notice', {
+          state: {
+            nextState: pathname + (search || '')
+          }
+        });
+      }
     }
   }, [navigate, pathname, search, user?.acceptedNDA]);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllParticipantsAndProvidersQuery,
@@ -21,14 +22,15 @@ const ReadOnlyParticipantsAndProviders = ({
   const { t: participantsAndProvidersMiscT } = useTranslation(
     'participantsAndProvidersMisc'
   );
-
   const participantsAndProvidersConfig = usePlanTranslation(
     'participantsAndProviders'
   );
 
+  const { modelID: modelIDFromParams } = useParams();
+
   const { data, loading, error } = useGetAllParticipantsAndProvidersQuery({
     variables: {
-      id: modelID
+      id: modelID || modelIDFromParams || ''
     }
   });
 
