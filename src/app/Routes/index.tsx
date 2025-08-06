@@ -94,6 +94,7 @@ import SubscriptionWrapper from 'contexts/PageLockContext';
 
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { NavContextProvider } from '../../contexts/NavContext';
+import { OktaSessionProvider } from '../../contexts/OktaSessionContext';
 
 const handleSkipNav = () => {
   const mainContent = document.getElementById('main-content')!;
@@ -122,6 +123,7 @@ const ProtectedHome = () => {
 const router = createBrowserRouter([
   {
     path: '/',
+    errorElement: <NotFound />,
     element: (
       <>
         <div className="usa-overlay" />
@@ -129,34 +131,36 @@ const router = createBrowserRouter([
           Skip to main content
         </button>
         <AuthenticationWrapper>
-          <FlagsWrapper>
-            <UserInfoWrapper>
-              <BeaconWrapper>
-                <SubscriptionWrapper>
-                  <SubscriptionHandler>
-                    <MessageProvider>
-                      <NDAWrapper>
-                        <ModelAccessWrapper>
-                          <ModelInfoWrapper>
-                            <TimeOutWrapper>
-                              <NavContextProvider>
-                                <PageWrapper>
-                                  <Header />
-                                  <TaskListBannerAlert />
-                                  <Outlet />
-                                  <Footer />
-                                </PageWrapper>
-                              </NavContextProvider>
-                            </TimeOutWrapper>
-                          </ModelInfoWrapper>
-                        </ModelAccessWrapper>
-                      </NDAWrapper>
-                    </MessageProvider>
-                  </SubscriptionHandler>
-                </SubscriptionWrapper>
-              </BeaconWrapper>
-            </UserInfoWrapper>
-          </FlagsWrapper>
+          <OktaSessionProvider>
+            <FlagsWrapper>
+              <UserInfoWrapper>
+                <BeaconWrapper>
+                  <SubscriptionWrapper>
+                    <SubscriptionHandler>
+                      <MessageProvider>
+                        <NDAWrapper>
+                          <ModelAccessWrapper>
+                            <ModelInfoWrapper>
+                              <TimeOutWrapper>
+                                <NavContextProvider>
+                                  <PageWrapper>
+                                    <Header />
+                                    <TaskListBannerAlert />
+                                    <Outlet />
+                                    <Footer />
+                                  </PageWrapper>
+                                </NavContextProvider>
+                              </TimeOutWrapper>
+                            </ModelInfoWrapper>
+                          </ModelAccessWrapper>
+                        </NDAWrapper>
+                      </MessageProvider>
+                    </SubscriptionHandler>
+                  </SubscriptionWrapper>
+                </BeaconWrapper>
+              </UserInfoWrapper>
+            </FlagsWrapper>
+          </OktaSessionProvider>
         </AuthenticationWrapper>
       </>
     ),

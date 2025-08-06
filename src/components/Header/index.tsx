@@ -14,10 +14,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
 import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useOktaSession from 'hooks/useOktaSession';
 import useOutsideClick from 'hooks/useOutsideClick';
 
 import { NavContext } from '../../contexts/NavContext';
+import { useOktaSession } from '../../contexts/OktaSessionContext';
 
 import './index.scss';
 

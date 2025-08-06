@@ -7,7 +7,7 @@ import GetNDA from 'gql/operations/Miscellaneous/GetNDA';
 import { setUser } from 'stores/reducers/authReducer';
 
 import { localAuthStorageKey } from 'constants/localAuth';
-import useOktaSession from 'hooks/useOktaSession';
+import { useOktaSession } from 'contexts/OktaSessionContext';
 import { isLocalAuthEnabled } from 'utils/auth';
 
 type UserInfoWrapperProps = {
@@ -85,11 +85,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   }, [authState?.isAuthenticated, data]);
 
   // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development
-  if (
-    !window.localStorage[localAuthStorageKey] &&
-    oktaAuth.authStateManager.getAuthState() === null &&
-    !hasSession
-  ) {
+  if (!window.localStorage[localAuthStorageKey] && !hasSession) {
     return null;
   }
 

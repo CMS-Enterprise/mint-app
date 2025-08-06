@@ -88,7 +88,7 @@ const ReadOnlyModelTimeline = ({
         heading={timelineMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allTimelineData.modifiedDts || allTimelineData.createdDts
         }
