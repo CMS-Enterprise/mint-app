@@ -459,10 +459,10 @@ func (a *AnalyzedMTOUpdates) Humanize() []string {
 
 	var updates []string
 	if a.ReadyForReview {
-		updates = append(updates, "MTO is ready for review")
+		updates = append(updates, "Model-to-operations matrix (MTO) is ready for review")
 	}
 	if len(a.Updates) > 0 {
-		updates = append(updates, fmt.Sprintf("MTO updates: %s", strings.Join(a.Updates, ", ")))
+		updates = append(updates, "Updates to model-to-operations matrix (MTO)")
 	}
 	return updates
 }
