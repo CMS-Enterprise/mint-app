@@ -91,6 +91,8 @@ import TaskListBannerAlert from 'components/TaskListBannerAlert';
 import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 import SubscriptionWrapper from 'contexts/PageLockContext';
+import useRouteTitle from 'hooks/useRouteTitle';
+import useScrollTop from 'hooks/useScrollTop';
 
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { NavContextProvider } from '../../contexts/NavContext';
@@ -119,13 +121,23 @@ const ProtectedHome = () => {
   return authState?.isAuthenticated ? <Home /> : <Landing />;
 };
 
+const AppWrapper = ({ children }: { children: React.ReactNode }) => {
+  // Fetches translated title for route and sends to GA
+  useRouteTitle({ sendGA: true });
+
+  // Scroll to top
+  useScrollTop();
+
+  return <>{children}</>;
+};
+
 // Create the router configuration
 const router = createBrowserRouter([
   {
     path: '/',
     errorElement: <NotFound />,
     element: (
-      <>
+      <AppWrapper>
         <div className="usa-overlay" />
         <button type="button" className="skipnav z-top" onClick={handleSkipNav}>
           Skip to main content
@@ -162,7 +174,7 @@ const router = createBrowserRouter([
             </FlagsWrapper>
           </OktaSessionProvider>
         </AuthenticationWrapper>
-      </>
+      </AppWrapper>
     ),
     children: [
       // Auth Routes
