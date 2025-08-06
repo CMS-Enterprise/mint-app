@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
@@ -22,20 +22,28 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Read Only CR and TDLs page', () => {
   it('renders without errors', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/crs-and-tdl',
+          element: (
+            <Provider store={store}>
+              <ReadOnlyCRTDLs />
+            </Provider>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/crs-and-tdl`]
+      }
+    );
+
     render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-view/crs-and-tdl`]}
-      >
-        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelID/read-view/crs-and-tdl">
-              <Provider store={store}>
-                <ReadOnlyCRTDLs />
-              </Provider>
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -48,20 +56,28 @@ describe('Read Only CR and TDLs page', () => {
   });
 
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/crs-and-tdl',
+          element: (
+            <Provider store={store}>
+              <ReadOnlyCRTDLs />
+            </Provider>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/crs-and-tdl`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-view/crs-and-tdl`]}
-      >
-        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelID/read-view/crs-and-tdl">
-              <Provider store={store}>
-                <ReadOnlyCRTDLs />
-              </Provider>
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
+      </MockedProvider>
     );
     await waitFor(() => {
       expect(screen.getByText('FFS CRs and TDLs')).toBeInTheDocument();

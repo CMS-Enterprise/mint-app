@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import i18next from 'i18next';
@@ -9,16 +9,24 @@ import MilestonePanel from './index';
 
 describe('MilestonePanel Component', () => {
   it('renders correctly with milestone data', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <MilestonePanel closeModal={vi.fn()} />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/read-view/milestones?view-milestone=123`
-        ]}
-      >
-        <MockedProvider addTypename={false} mocks={milestoneMock('123')}>
-          <MilestonePanel closeModal={vi.fn()} />
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider addTypename={false} mocks={milestoneMock('123')}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     // Wait for the milestone data to load
@@ -42,16 +50,24 @@ describe('MilestonePanel Component', () => {
       result.data.mtoMilestone.solutions = [];
     }
 
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <MilestonePanel closeModal={vi.fn()} />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/read-view/milestones?view-milestone=123`
-        ]}
-      >
-        <MockedProvider addTypename={false} mocks={noSolutionsMock}>
-          <MilestonePanel closeModal={vi.fn()} />
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider addTypename={false} mocks={noSolutionsMock}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     // Wait for the milestone data to load
     await waitFor(() => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -11,21 +11,22 @@ import ReadOnlyGeneralCharacteristics from './index';
 
 describe('Read Only Model Plan Summary -- General Characteristics', () => {
   it('renders without errors', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/general-characteristics',
+          element: <ReadOnlyGeneralCharacteristics modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/general-characteristics`]
+      }
+    );
+
     render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/read-view/general-characteristics`
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Routes>
-          <Route
-            path="/models/:modelID/read-view/general-characteristics"
-            element={<ReadOnlyGeneralCharacteristics modelID={modelID}  />}
-          />
-        </Routes>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -40,21 +41,22 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
     });
   });
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/general-characteristics',
+          element: <ReadOnlyGeneralCharacteristics modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/general-characteristics`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/read-view/general-characteristics`
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Routes>
-          <Route
-            path="/models/:modelID/read-view/general-characteristics"
-            element={<ReadOnlyGeneralCharacteristics modelID={modelID}  />}
-          />
-        </Routes>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     await waitFor(() => {
       expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(

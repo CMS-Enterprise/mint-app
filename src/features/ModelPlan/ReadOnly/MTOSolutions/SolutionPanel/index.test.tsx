@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import i18next from 'i18next';
@@ -9,16 +9,24 @@ import SolutionPanel from './index';
 
 describe('SolutionPanel Component', () => {
   it('renders correctly with solution data', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <SolutionPanel closeModal={vi.fn()} />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/read-view/solutions?view-solution=1`
-        ]}
-      >
-        <MockedProvider addTypename={false} mocks={[solutionMock('1')]}>
-          <SolutionPanel closeModal={vi.fn()} />
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider addTypename={false} mocks={[solutionMock('1')]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     // Wait for the solution data to load
@@ -40,16 +48,24 @@ describe('SolutionPanel Component', () => {
       result.data.mtoSolution.milestones = [];
     }
 
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <SolutionPanel closeModal={vi.fn()} />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/read-view/solutions?view-solution=1`
-        ]}
-      >
-        <MockedProvider addTypename={false} mocks={[noSolutionsMock]}>
-          <SolutionPanel closeModal={vi.fn()} />
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider addTypename={false} mocks={[noSolutionsMock]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     // Wait for the solution data to load
     await waitFor(() => {

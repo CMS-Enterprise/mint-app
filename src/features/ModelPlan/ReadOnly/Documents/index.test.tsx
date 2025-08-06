@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -68,21 +68,26 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Model Plan Documents page', () => {
   it('renders without errors', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/documents',
+          element: <ReadOnlyDocuments modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/documents`]
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/documents`]}>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <MessageProvider>
-              <Routes>
-          <Route
-            path="/models/:modelID/read-view/documents"
-            element={<ReadOnlyDocuments modelID={modelID}  />}
-          />
-        </Routes>
-            </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <MessageProvider>
+            <RouterProvider router={router} />
+          </MessageProvider>
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -94,21 +99,26 @@ describe('Model Plan Documents page', () => {
   });
 
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/documents',
+          element: <ReadOnlyDocuments modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/documents`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/documents`]}>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <MessageProvider>
-              <Routes>
-          <Route
-            path="/models/:modelID/read-view/documents"
-            element={<ReadOnlyDocuments modelID={modelID}  />}
-          />
-        </Routes>
-            </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <MessageProvider>
+            <RouterProvider router={router} />
+          </MessageProvider>
+        </Provider>
+      </MockedProvider>
     );
     await waitFor(() => {
       expect(screen.getByText('My Document')).toBeInTheDocument();
