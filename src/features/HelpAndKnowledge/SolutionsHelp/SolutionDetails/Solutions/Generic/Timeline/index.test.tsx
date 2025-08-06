@@ -20,11 +20,13 @@ describe('Generic Timeline Components', () => {
             ]}
           >
             <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<GenericTimeline solution={solutionTimelineComponent}  />}
-          />
-        </Routes>
+              <Route
+                path="/help-and-knowledge/operational-solutions"
+                element={
+                  <GenericTimeline solution={solutionTimelineComponent} />
+                }
+              />
+            </Routes>
           </MemoryRouter>
         );
         expect(asFragment()).toMatchSnapshot(solutionTimelineComponent.name);

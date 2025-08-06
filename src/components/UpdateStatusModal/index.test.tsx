@@ -2,7 +2,6 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { CollaboratorsContent } from 'features/ModelPlan/Collaborators';
 import {
   ModelPhase,
   ModelStatus,

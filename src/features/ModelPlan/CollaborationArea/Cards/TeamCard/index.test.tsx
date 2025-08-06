@@ -1,24 +1,12 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
-import configureMockStore from 'redux-mock-store';
 import { collaboratorsMocks } from 'tests/mock/readonly';
 
-import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
 import TeamCard from './index';
-
-const mockAuthReducer = {
-  isUserSet: true,
-  groups: [ASSESSMENT],
-  euaId: 'ABCD'
-};
-
-const mockStore = configureMockStore();
-const store = mockStore({ auth: mockAuthReducer });
 
 describe('TeamCard component', () => {
   it('displays role count correctly', async () => {
