@@ -660,7 +660,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/feedback/received',
+        path: '/feedback-received',
         element: (
           <ProtectedRoute>
             <FeedbackReceived />
@@ -673,7 +673,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/report-a-problem',
-        element: <ReportAProblem />
+        element: (
+          <ProtectedRoute>
+            <ReportAProblem />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/sandbox',

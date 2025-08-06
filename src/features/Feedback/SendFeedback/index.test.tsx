@@ -6,6 +6,8 @@ import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/generated/graphql';
 import CreateSendFeedback from 'gql/operations/Feedback/CreateSendFeedback';
 import setup from 'tests/util';
 
+import FeedbackReceived from '../FeedbackReceived';
+
 import SendFeedback from '.';
 
 const mocks = [
@@ -40,16 +42,20 @@ describe('Send feedback form', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'send-feedback',
+          path: '/send-feedback',
           element: (
             <MockedProvider mocks={mocks} addTypename={false}>
               <SendFeedback />
             </MockedProvider>
           )
+        },
+        {
+          path: '/feedback-received',
+          element: <FeedbackReceived />
         }
       ],
       {
-        initialEntries: ['send-feedback']
+        initialEntries: ['/send-feedback']
       }
     );
 
@@ -90,16 +96,20 @@ describe('Send feedback form', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'send-feedback',
+          path: '/send-feedback',
           element: (
             <MockedProvider mocks={mocks} addTypename={false}>
               <SendFeedback />
             </MockedProvider>
           )
+        },
+        {
+          path: '/feedback-received',
+          element: <FeedbackReceived />
         }
       ],
       {
-        initialEntries: ['send-feedback']
+        initialEntries: ['/send-feedback']
       }
     );
 

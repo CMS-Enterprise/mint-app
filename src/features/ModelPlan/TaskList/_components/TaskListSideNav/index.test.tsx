@@ -74,7 +74,7 @@ describe('The TaskListSideNavActions', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/:modelID/collaboration-area/task-list',
+          path: '/models/:modelID/collaboration-area/task-list',
           element: (
             <MessageProvider>
               <TaskListSideNav
@@ -88,7 +88,7 @@ describe('The TaskListSideNavActions', () => {
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
         ]
       }
     );

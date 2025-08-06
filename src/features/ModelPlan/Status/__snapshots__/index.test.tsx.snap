@@ -2,197 +2,31 @@
 
 exports[`Model Plan Status Update page > matches snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="mint-main-content"
-    id="main-content"
-    role="main"
-    tabindex="-1"
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
   >
-    <div
-      class="grid-container"
-      data-testid="gridContainer"
+    404 Not Found
+  </h3>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <div
-        class="desktop:grid-col-6"
-        data-testid="grid"
-      >
-        <nav
-          aria-label="Breadcrumbs"
-          class="usa-breadcrumb usa-breadcrumb--wrap"
-        >
-          <ol
-            class="usa-breadcrumb__list"
-          >
-            <li
-              class="usa-breadcrumb__list-item"
-            >
-              <a
-                class="usa-link usa-breadcrumb__link"
-                href="/"
-              >
-                <span>
-                  Home
-                </span>
-              </a>
-            </li>
-            <li
-              class="usa-breadcrumb__list-item"
-            >
-              <a
-                class="usa-link usa-breadcrumb__link"
-                href="/models/undefined/collaboration-area"
-              >
-                <span>
-                  Model collaboration area
-                </span>
-              </a>
-            </li>
-            <li
-              aria-current="page"
-              class="usa-breadcrumb__list-item usa-current"
-            >
-              <span>
-                Update status
-              </span>
-            </li>
-          </ol>
-        </nav>
-        <h1
-          aria-live="polite"
-          class="mint-h1 margin-bottom-1"
-          tabindex="-1"
-        >
-          Update status
-        </h1>
-        <p
-          class="margin-bottom-6 line-height-body-5"
-        >
-          As you iterate on your Model Plan, update the status of your model so others known what stage it’s at in the design and clearance process.
-        </p>
-        <form
-          action="#"
-        >
-          <div
-            class="usa-form-group"
-            data-scroll="status"
-          >
-            <label
-              class="usa-label"
-              data-testid="label"
-              for="Status-Dropdown"
-            >
-              What is the status of your Model Plan?
-            </label>
-            <select
-              class="usa-select"
-              data-testid="Select"
-              id="Status-Dropdown"
-              name="role"
-            >
-              <option
-                value="PLAN_DRAFT"
-              >
-                Draft Model Plan
-              </option>
-              <option
-                value="PLAN_COMPLETE"
-              >
-                Model Plan complete
-              </option>
-              <option
-                value="ICIP_COMPLETE"
-              >
-                ICIP complete
-              </option>
-              <option
-                value="INTERNAL_CMMI_CLEARANCE"
-              >
-                In internal (CMMI) clearance
-              </option>
-              <option
-                value="CMS_CLEARANCE"
-              >
-                In CMS clearance
-              </option>
-              <option
-                value="HHS_CLEARANCE"
-              >
-                In HHS clearance
-              </option>
-              <option
-                value="OMB_ASRF_CLEARANCE"
-              >
-                In OMB clearance
-              </option>
-              <option
-                value="CLEARED"
-              >
-                Cleared
-              </option>
-              <option
-                value="ANNOUNCED"
-              >
-                Announced
-              </option>
-              <option
-                value="ACTIVE"
-              >
-                Active
-              </option>
-              <option
-                value="ENDED"
-              >
-                Ended
-              </option>
-              <option
-                value="PAUSED"
-              >
-                Paused
-              </option>
-              <option
-                value="CANCELED"
-              >
-                Canceled
-              </option>
-            </select>
-          </div>
-          <div
-            class="margin-top-6 margin-bottom-3"
-          >
-            <button
-              class="usa-button"
-              data-testid="button"
-              disabled=""
-              type="submit"
-            >
-              Update status
-            </button>
-          </div>
-          <button
-            class="usa-button usa-button usa-button--unstyled"
-            data-testid="button"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              aria-label="back"
-              class="usa-icon margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-              />
-            </svg>
-            Don’t update status and return to model collaboration area
-          </button>
-        </form>
-      </div>
-    </div>
-  </main>
+      ErrorBoundary
+    </code>
+     or 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
+    >
+      errorElement
+    </code>
+     prop on your route.
+  </p>
 </DocumentFragment>
 `;

@@ -2,62 +2,31 @@
 
 exports[`Operation Solution Contact > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="point-of-contact"
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
   >
-    <p
-      class="font-body-xs margin-y-0"
+    404 Not Found
+  </h3>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      Primary point of contact
-    </p>
-    <h3
-      class="system-profile__subheader margin-top-1 margin-bottom-05"
+      ErrorBoundary
+    </code>
+     or 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      Aliza Kim
-    </h3>
-    <a
-      aria-label="Send an email"
-      class="usa-link line-height-body-5 display-flex flex-align-center margin-bottom-3"
-      href="mailto:aliza.kim@cms.hhs.gov"
-      target="_blank"
-    >
-      <svg
-        aria-label="mail"
-        class="usa-icon margin-right-1 top-1px text-tbottom"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
-        />
-      </svg>
-      Send an email
-    </a>
-    <a
-      class="usa-link"
-      href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=points-of-contact"
-    >
-      More points of contact
-      <svg
-        aria-label="forward"
-        class="usa-icon margin-left-1"
-        focusable="false"
-        height="1em"
-        role="img"
-        style="top: 2px;"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-        />
-      </svg>
-    </a>
-  </div>
+      errorElement
+    </code>
+     prop on your route.
+  </p>
 </DocumentFragment>
 `;

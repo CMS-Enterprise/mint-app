@@ -9,6 +9,8 @@ import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
 import VerboseMockedProvider from 'tests/MockedProvider';
 import setup from 'tests/util';
 
+import FeedbackReceived from '../FeedbackReceived';
+
 import ReportAProblem from '.';
 
 const mocks = [
@@ -49,6 +51,10 @@ describe('Report a problem form', () => {
               <ReportAProblem />
             </VerboseMockedProvider>
           )
+        },
+        {
+          path: '/feedback-received',
+          element: <FeedbackReceived />
         }
       ],
       {
