@@ -9,6 +9,10 @@ import MessageProvider from 'contexts/MessageContext';
 
 import AddToExistingMilestoneForm from '.';
 
+// ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+// eslint-disable-next-line
+console.error = vi.fn();
+
 describe('Custom Catergory form', () => {
   it('runs without errors and matches snapshot', async () => {
     const router = createMemoryRouter(
@@ -16,11 +20,13 @@ describe('Custom Catergory form', () => {
         {
           path: '/models/:modelID/',
           element: (
-            <AddToExistingMilestoneForm
-              closeModal={() => {}}
-              solutionName="Test Solution"
-              solutionKey={MtoCommonSolutionKey.ACO_OS}
-            />
+            <MessageProvider>
+              <AddToExistingMilestoneForm
+                closeModal={() => {}}
+                solutionName="Test Solution"
+                solutionKey={MtoCommonSolutionKey.ACO_OS}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -30,11 +36,9 @@ describe('Custom Catergory form', () => {
     );
 
     render(
-      <MessageProvider>
-        <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {
@@ -63,11 +67,13 @@ describe('Custom Catergory form', () => {
         {
           path: '/models/:modelID/',
           element: (
-            <AddToExistingMilestoneForm
-              closeModal={() => {}}
-              solutionName="Test Solution"
-              solutionKey={MtoCommonSolutionKey.ACO_OS}
-            />
+            <MessageProvider>
+              <AddToExistingMilestoneForm
+                closeModal={() => {}}
+                solutionName="Test Solution"
+                solutionKey={MtoCommonSolutionKey.ACO_OS}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -77,11 +83,9 @@ describe('Custom Catergory form', () => {
     );
 
     const { asFragment } = render(
-      <MessageProvider>
-        <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

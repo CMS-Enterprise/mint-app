@@ -4,7 +4,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
-    data-testid="model-task-list-basics"
+    data-testid="model-plan-basics"
     id="main-content"
     role="main"
     tabindex="-1"

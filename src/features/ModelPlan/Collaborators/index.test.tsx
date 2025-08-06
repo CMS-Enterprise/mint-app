@@ -74,7 +74,11 @@ describe('Collaborator/Team Member page w/table', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/collaborators',
-          element: <CollaboratorsContent />
+          element: (
+            <MessageProvider>
+              <CollaboratorsContent />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -87,9 +91,7 @@ describe('Collaborator/Team Member page w/table', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </Provider>
       </MockedProvider>
     );
@@ -110,12 +112,16 @@ describe('Collaborator/Team Member page w/table', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/collaborators',
-          element: <CollaboratorsContent />
+          element: (
+            <MessageProvider>
+              <CollaboratorsContent />
+            </MessageProvider>
+          )
         }
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
         ]
       }
     );
@@ -123,9 +129,7 @@ describe('Collaborator/Team Member page w/table', () => {
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </Provider>
       </MockedProvider>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import {
@@ -46,52 +46,72 @@ const owner: SolutionSystemOwnerType = {
 
 const mocks = [...possibleSolutionsMock];
 
+// ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+// eslint-disable-next-line
+console.error = vi.fn();
+
 describe('RemoveContactModal Component', () => {
   it('should render team member context when given team member point of contact', () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <RemoveContactModal
                 isModalOpen
                 closeModal={() => {}}
                 pointOfContact={teamMember}
                 contactType="teamOrMember"
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+
+    const { getByText, queryByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     expect(getByText('Point of contact to be removed:')).toBeInTheDocument();
     expect(queryByText('Contractor to be removed:')).not.toBeInTheDocument();
   });
 
   it('should render contractor context when given contractor point of contact', () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <RemoveContactModal
                 isModalOpen
                 closeModal={() => {}}
                 pointOfContact={contractor}
                 contactType="contractor"
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+
+    const { getByText, queryByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     expect(getByText('Contractor to be removed:')).toBeInTheDocument();
     expect(
@@ -100,25 +120,33 @@ describe('RemoveContactModal Component', () => {
   });
 
   it('should render owner context when given owner point of contact', () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <RemoveContactModal
                 isModalOpen
                 closeModal={() => {}}
                 pointOfContact={owner}
                 contactType="owner"
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+
+    const { getByText, queryByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     expect(
       getByText('Business Owner or System Owner to be removed:')
@@ -129,25 +157,33 @@ describe('RemoveContactModal Component', () => {
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <RemoveContactModal
                 isModalOpen
                 closeModal={() => {}}
                 pointOfContact={teamMember}
                 contactType="teamOrMember"
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

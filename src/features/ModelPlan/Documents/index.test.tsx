@@ -91,7 +91,11 @@ describe('Model Plan Documents page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/documents',
-          element: <Documents />
+          element: (
+            <MessageProvider>
+              <Documents />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -104,9 +108,7 @@ describe('Model Plan Documents page', () => {
     const { asFragment } = render(
       <MockedProvider mocks={documentMocks} addTypename={false}>
         <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </Provider>
       </MockedProvider>
     );

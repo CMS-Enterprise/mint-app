@@ -232,7 +232,7 @@ const Basics = () => {
   }
 
   return (
-    <MainContent data-testid="model-task-list-basics">
+    <MainContent data-testid="model-plan-basics">
       <GridContainer>
         <MutationErrorModal
           isOpen={isModalOpen}

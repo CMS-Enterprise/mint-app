@@ -72,7 +72,11 @@ describe('Model Plan Documents page', () => {
       [
         {
           path: '/models/:modelID/read-view/documents',
-          element: <ReadOnlyDocuments modelID={modelID} />
+          element: (
+            <MessageProvider>
+              <ReadOnlyDocuments modelID={modelID} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -83,9 +87,7 @@ describe('Model Plan Documents page', () => {
     render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </Provider>
       </MockedProvider>
     );
@@ -103,7 +105,11 @@ describe('Model Plan Documents page', () => {
       [
         {
           path: '/models/:modelID/read-view/documents',
-          element: <ReadOnlyDocuments modelID={modelID} />
+          element: (
+            <MessageProvider>
+              <ReadOnlyDocuments modelID={modelID} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -114,9 +120,7 @@ describe('Model Plan Documents page', () => {
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </Provider>
       </MockedProvider>
     );

@@ -26,18 +26,24 @@ const contractors: SolutionContractorType[] = [
 
 const mocks = [...possibleSolutionsMock];
 
+// ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+// eslint-disable-next-line
+console.error = vi.fn();
+
 describe('ContractorModal Component', () => {
   it('should render add contractor context when render', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <ContractorModal
-              isModalOpen
-              closeModal={() => {}}
-              mode="addContractor"
-            />
+            <MessageProvider>
+              <ContractorModal
+                isModalOpen
+                closeModal={() => {}}
+                mode="addContractor"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -50,9 +56,7 @@ describe('ContractorModal Component', () => {
 
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText('Add a contractor')).toBeInTheDocument();
@@ -63,14 +67,16 @@ describe('ContractorModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <ContractorModal
-              isModalOpen
-              closeModal={() => {}}
-              contractor={contractors[0]}
-              mode="editContractor"
-            />
+            <MessageProvider>
+              <ContractorModal
+                isModalOpen
+                closeModal={() => {}}
+                contractor={contractors[0]}
+                mode="editContractor"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -83,9 +89,7 @@ describe('ContractorModal Component', () => {
 
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText('Edit contractor')).toBeInTheDocument();
@@ -96,14 +100,16 @@ describe('ContractorModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <ContractorModal
-              isModalOpen
-              closeModal={() => {}}
-              contractor={contractors[0]}
-              mode="addContractor"
-            />
+            <MessageProvider>
+              <ContractorModal
+                isModalOpen
+                closeModal={() => {}}
+                contractor={contractors[0]}
+                mode="addContractor"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -116,9 +122,7 @@ describe('ContractorModal Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

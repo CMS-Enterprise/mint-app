@@ -82,23 +82,25 @@ describe('LinkSolutionForm', () => {
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
           element: (
-            <LinkSolutionForm
-              milestone={milestone}
-              commonSolutionKeys={[MtoCommonSolutionKey.BCDA]}
-              setCommonSolutionKeys={() => null}
-              solutionIDs={[]}
-              setSolutionIDs={() => null}
-              allSolutions={{
-                __typename: 'ModelsToOperationMatrix',
-                commonSolutions: [],
-                info: {
-                  __typename: 'MTOInfo',
-                  id: '123'
-                },
-                solutions: []
-              }}
-              setCloseDestination={() => null}
-            />
+            <MessageProvider>
+              <LinkSolutionForm
+                milestone={milestone}
+                commonSolutionKeys={[MtoCommonSolutionKey.BCDA]}
+                setCommonSolutionKeys={() => null}
+                solutionIDs={[]}
+                setSolutionIDs={() => null}
+                allSolutions={{
+                  __typename: 'ModelsToOperationMatrix',
+                  commonSolutions: [],
+                  info: {
+                    __typename: 'MTOInfo',
+                    id: '123'
+                  },
+                  solutions: []
+                }}
+                setCloseDestination={() => null}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -110,18 +112,16 @@ describe('LinkSolutionForm', () => {
     );
 
     const { asFragment } = render(
-      <MessageProvider>
-        <MockedProvider
-          mocks={[
-            ...milestoneMock('123'),
-            ...categoryMock,
-            ...possibleSolutionsMock
-          ]}
-          addTypename={false}
-        >
-          <RouterProvider router={router} />
-        </MockedProvider>
-      </MessageProvider>
+      <MockedProvider
+        mocks={[
+          ...milestoneMock('123'),
+          ...categoryMock,
+          ...possibleSolutionsMock
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(screen.getByRole('checkbox')).toBeChecked();

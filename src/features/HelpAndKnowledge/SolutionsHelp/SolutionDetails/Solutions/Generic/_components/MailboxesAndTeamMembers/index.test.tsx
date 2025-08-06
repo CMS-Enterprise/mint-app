@@ -43,8 +43,12 @@ describe('MailboxAndTeamMembers Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
-          element: <MailboxAndTeamMembers pointsOfContact={contacts} />
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <MailboxAndTeamMembers pointsOfContact={contacts} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -56,9 +60,7 @@ describe('MailboxAndTeamMembers Component', () => {
 
     const { getAllByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
@@ -71,8 +73,12 @@ describe('MailboxAndTeamMembers Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
-          element: <MailboxAndTeamMembers pointsOfContact={contacts} />
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <MailboxAndTeamMembers pointsOfContact={contacts} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -84,9 +90,7 @@ describe('MailboxAndTeamMembers Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

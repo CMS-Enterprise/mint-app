@@ -116,7 +116,7 @@ const BeneficiaryCostSharing = () => {
   }
 
   return (
-    <MainContent data-testid="payment-beneficiary-cost-sharing">
+    <MainContent data-testid="model-payment">
       <GridContainer>
         <MutationErrorModal
           isOpen={mutationError.isModalOpen}
