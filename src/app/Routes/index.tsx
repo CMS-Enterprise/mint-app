@@ -634,7 +634,7 @@ const router = createBrowserRouter([
         element: <Cookies />
       },
       {
-        path: '/feedback',
+        path: '/send-feedback',
         element: (
           <ProtectedRoute>
             <SendFeedback />
