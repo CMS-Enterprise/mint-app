@@ -25,14 +25,16 @@ describe('Component', () => {
         {
           path: '/models/:modelID/',
           element: (
-            <ActionMenu
-              rowType="milestone"
-              milestoneID="123"
-              subCategoryID="1234"
-              primaryCategoryID="12345"
-              MoveDown={<></>}
-              MoveUp={<></>}
-            />
+            <MessageProvider>
+              <ActionMenu
+                rowType="milestone"
+                milestoneID="123"
+                subCategoryID="1234"
+                primaryCategoryID="12345"
+                MoveDown={<></>}
+                MoveUp={<></>}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -41,11 +43,7 @@ describe('Component', () => {
       }
     );
 
-    const { asFragment } = render(
-      <MessageProvider>
-        <RouterProvider router={router} />
-      </MessageProvider>
-    );
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -56,14 +54,18 @@ describe('Component', () => {
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
           element: (
-            <ActionMenu
-              rowType="milestone"
-              milestoneID="123"
-              subCategoryID="1234"
-              primaryCategoryID="12345"
-              MoveDown={<></>}
-              MoveUp={<></>}
-            />
+            <MessageProvider>
+              <EditMTOMilestoneProvider>
+                <ActionMenu
+                  rowType="milestone"
+                  milestoneID="123"
+                  subCategoryID="1234"
+                  primaryCategoryID="12345"
+                  MoveDown={<></>}
+                  MoveUp={<></>}
+                />
+              </EditMTOMilestoneProvider>
+            </MessageProvider>
           )
         }
       ],
@@ -83,11 +85,7 @@ describe('Component', () => {
         ]}
         addTypename={false}
       >
-        <MessageProvider>
-          <EditMTOMilestoneProvider>
-            <RouterProvider router={router} />
-          </EditMTOMilestoneProvider>
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

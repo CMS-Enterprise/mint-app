@@ -27,9 +27,11 @@ describe('Read Only CR and TDLs page', () => {
         {
           path: '/models/:modelID/read-view/crs-and-tdl',
           element: (
-            <Provider store={store}>
-              <ReadOnlyCRTDLs />
-            </Provider>
+            <MessageProvider>
+              <Provider store={store}>
+                <ReadOnlyCRTDLs />
+              </Provider>
+            </MessageProvider>
           )
         }
       ],
@@ -40,9 +42,7 @@ describe('Read Only CR and TDLs page', () => {
 
     render(
       <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
@@ -62,7 +62,9 @@ describe('Read Only CR and TDLs page', () => {
           path: '/models/:modelID/read-view/crs-and-tdl',
           element: (
             <Provider store={store}>
-              <ReadOnlyCRTDLs />
+              <MessageProvider>
+                <ReadOnlyCRTDLs />
+              </MessageProvider>
             </Provider>
           )
         }
@@ -74,9 +76,7 @@ describe('Read Only CR and TDLs page', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     await waitFor(() => {

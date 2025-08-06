@@ -27,8 +27,12 @@ describe('Owner Form Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
-          element: <OwnerForm mode="addSystemOwner" closeModal={() => {}} />
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <OwnerForm mode="addSystemOwner" closeModal={() => {}} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -40,9 +44,7 @@ describe('Owner Form Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
@@ -50,24 +52,31 @@ describe('Owner Form Component', () => {
   });
 
   it('should render passed in owner info', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <OwnerForm
                 mode="editSystemOwner"
                 closeModal={() => {}}
                 owner={owner}
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+    const { getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

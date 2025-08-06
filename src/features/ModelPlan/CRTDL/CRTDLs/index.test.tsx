@@ -27,9 +27,11 @@ describe('CR and TDLs page', () => {
         {
           path: '/models/:modelID/collaboration-area/cr-and-tdl',
           element: (
-            <Provider store={store}>
-              <CRTDLs />
-            </Provider>
+            <MessageProvider>
+              <Provider store={store}>
+                <CRTDLs />
+              </Provider>
+            </MessageProvider>
           )
         }
       ],
@@ -40,9 +42,7 @@ describe('CR and TDLs page', () => {
 
     render(
       <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
@@ -62,9 +62,11 @@ describe('CR and TDLs page', () => {
         {
           path: '/models/:modelID/collaboration-area/cr-and-tdl',
           element: (
-            <Provider store={store}>
-              <CRTDLs />
-            </Provider>
+            <MessageProvider>
+              <Provider store={store}>
+                <CRTDLs />
+              </Provider>
+            </MessageProvider>
           )
         }
       ],
@@ -75,9 +77,7 @@ describe('CR and TDLs page', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

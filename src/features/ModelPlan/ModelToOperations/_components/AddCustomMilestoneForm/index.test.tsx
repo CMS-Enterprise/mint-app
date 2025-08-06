@@ -63,7 +63,11 @@ describe('Custom Milestone form', () => {
       [
         {
           path: '/models/:modelID/',
-          element: <CustomMilestoneForm />
+          element: (
+            <MessageProvider>
+              <CustomMilestoneForm />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -72,11 +76,9 @@ describe('Custom Milestone form', () => {
     );
 
     const { getAllByTestId, getByTestId, asFragment } = render(
-      <MessageProvider>
-        <VerboseMockedProvider mocks={mocks} addTypename={false}>
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <VerboseMockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

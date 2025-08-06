@@ -26,7 +26,11 @@ describe('TeamCard component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area',
-          element: <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+          element: (
+            <MessageProvider>
+              <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -38,11 +42,7 @@ describe('TeamCard component', () => {
 
     const { asFragment, getByTestId, getByText, queryByTestId } = render(
       <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-        <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
-        </Provider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
@@ -62,23 +62,23 @@ describe('TeamCard component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area',
-          element: <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+          element: (
+            <MessageProvider>
+              <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+            </MessageProvider>
+          )
         }
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
         ]
       }
     );
 
     const { asFragment, getByTestId } = render(
       <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-        <Provider store={store}>
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
-        </Provider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
