@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -87,25 +87,28 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Model Plan Documents page', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/documents',
+          element: <Documents />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents'
-        ]}
-      >
-        <MockedProvider mocks={documentMocks} addTypename={false}>
-          <Provider store={store}>
-            <MessageProvider>
-              <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/documents"
-            element={<Documents  />}
-          />
-        </Routes>
-            </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={documentMocks} addTypename={false}>
+        <Provider store={store}>
+          <MessageProvider>
+            <RouterProvider router={router} />
+          </MessageProvider>
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(() => {

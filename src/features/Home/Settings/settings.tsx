@@ -58,7 +58,7 @@ const SettingsForm = () => {
 
   const navigate = useNavigate();
 
-  const { state } = useLocation();
+  const location = useLocation();
 
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
@@ -75,30 +75,6 @@ const SettingsForm = () => {
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
 
-  // Passes the current state to the previous page if navigating back
-  const shouldBlock: BlockerFunction = tx => {
-    // Don't block if we're already on a settings page to prevent loops
-    if (tx.currentLocation.pathname.includes('/homepage-settings/form')) {
-      return false;
-    }
-
-    // If the destination is the homepage settings page, pass the current state
-    if (
-      tx.nextLocation.pathname === '/homepage-settings/solutions' ||
-      tx.nextLocation.pathname === '/homepage-settings/order'
-    ) {
-      navigate(tx.nextLocation.pathname, {
-        state: { homepageSettings: formikRef.current?.values }
-      });
-    } else {
-      navigate(tx.nextLocation.pathname);
-    }
-
-    return false; // Don't block, just intercept and modify the navigation
-  };
-
-  useBlocker(shouldBlock);
-
   // Get the settings options from the translation file
   const settingOptions = tObject<keyof HomepageSettingsType, any>(
     'homepageSettings:settings'
@@ -106,7 +82,7 @@ const SettingsForm = () => {
 
   const initialValues: HomepageSettingsFormType = {
     viewCustomization:
-      state?.homepageSettings?.viewCustomization ||
+      location.state?.homepageSettings?.viewCustomization ||
       data?.userViewCustomization.viewCustomization ||
       []
   };
@@ -142,7 +118,9 @@ const SettingsForm = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
-              navigate('/homepage-settings/order');
+              navigate('/homepage-settings/order', {
+                state: { homepageSettings: formikRef.current?.values }
+              });
             }}
             enableReinitialize
             innerRef={formikRef}

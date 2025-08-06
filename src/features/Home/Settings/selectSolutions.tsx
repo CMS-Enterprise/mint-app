@@ -83,27 +83,6 @@ const SelectSolutionSettings = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  // Passes the current state to the previous page if navigating back
-  const shouldBlock: BlockerFunction = tx => {
-    // Don't block if we're already on a settings page to prevent loops
-    if (tx.currentLocation.pathname.includes('/homepage-settings/solutions')) {
-      return false;
-    }
-
-    // If the destination is the homepage settings page, pass the current state
-    if (tx.nextLocation.pathname === '/homepage-settings/form') {
-      navigate(tx.nextLocation.pathname, {
-        state: { homepageSettings: selectedSettings }
-      });
-    } else {
-      navigate(tx.nextLocation.pathname);
-    }
-
-    return false; // Don't block, just intercept and modify the navigation
-  };
-
-  useBlocker(shouldBlock);
-
   const handleFormSubmit = () => {
     mutate({
       variables: {

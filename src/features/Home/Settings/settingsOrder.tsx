@@ -1,11 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  BlockerFunction,
-  useBlocker,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -107,26 +102,6 @@ const SettingsOrder = () => {
       });
     }
   }, [data?.userViewCustomization, loading, selectedSettings]);
-
-  // Passes the current state to the previous page if navigating back
-  const shouldBlock: BlockerFunction = tx => {
-    // Don't block if we're already on a settings page to prevent loops
-    if (tx.currentLocation.pathname.includes('/homepage-settings/order')) {
-      return false;
-    }
-
-    // If the destination is the homepage settings page, pass the current state
-    if (tx.nextLocation.pathname === '/homepage-settings/form') {
-      navigate(tx.nextLocation.pathname, {
-        state: { homepageSettings: selectedSettings }
-      });
-    } else {
-      navigate(tx.nextLocation.pathname);
-    }
-    return false; // Don't block, just intercept and modify the navigation
-  };
-
-  useBlocker(shouldBlock);
 
   const handleSubmit = () => {
     mutate({
@@ -307,7 +282,11 @@ const SettingsOrder = () => {
               type="button"
               outline
               className="margin-bottom-4"
-              onClick={() => navigate('/homepage-settings/form')}
+              onClick={() =>
+                navigate('/homepage-settings/form', {
+                  state: { homepageSettings: selectedSettings }
+                })
+              }
             >
               {miscellaneousT('back')}
             </Button>
