@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  BlockerFunction,
-  useBlocker,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
+import { BlockerFunction, useBlocker, useLocation } from 'react-router-dom';
 import {
   OperationVariables,
   TypedDocumentNode,
@@ -61,7 +56,6 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
   config: HandleMutationConfigType
 ): MutationReturnType {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const [destinationURL, setDestinationURL] = useState<string>('');

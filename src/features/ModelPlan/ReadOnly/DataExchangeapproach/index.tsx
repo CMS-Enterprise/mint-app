@@ -51,7 +51,7 @@ const ReadOnlyDataExchangeApproach = ({
         heading={dataExchangeApproachMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allDataExchangeApproachData.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allDataExchangeApproachData.modifiedDts ||
           allDataExchangeApproachData.createdDts

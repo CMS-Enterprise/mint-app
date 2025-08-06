@@ -49,7 +49,7 @@ const ReadOnlyMTOSolutions = ({ modelID }: { modelID?: string }) => {
         subHeading={t('solutions')}
         isViewingFilteredView={false}
         status={modelToOperationsMatrix.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 

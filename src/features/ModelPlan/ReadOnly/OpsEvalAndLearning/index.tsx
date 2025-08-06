@@ -288,7 +288,7 @@ const ReadOnlyOpsEvalAndLearning = ({
         heading={opsEvalAndLearningMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allOpsEvalAndLearningData.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allOpsEvalAndLearningData.modifiedDts ||
           allOpsEvalAndLearningData.createdDts

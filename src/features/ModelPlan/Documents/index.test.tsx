@@ -13,7 +13,7 @@ import configureMockStore from 'redux-mock-store';
 import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
-import { DocumentsContent } from './index';
+import { Documents } from './index';
 
 type GetModelPlanDocumentsType = GetModelPlanDocumentsQuery;
 
@@ -97,7 +97,7 @@ describe('Model Plan Documents page', () => {
           <Provider store={store}>
             <MessageProvider>
               <Route path="/models/:modelID/collaboration-area/documents">
-                <DocumentsContent />
+                <Documents />
               </Route>
             </MessageProvider>
           </Provider>

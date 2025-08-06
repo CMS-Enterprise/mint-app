@@ -71,8 +71,8 @@ const SideNav = ({
     }, 0);
   };
 
-  const isLinkActive = (key: any, location: any) => {
-    const params = new URLSearchParams(location.search);
+  const isLinkActive = (key: any, linkLocation: any) => {
+    const params = new URLSearchParams(linkLocation.search);
     const section = params.get('section');
     return paramActive
       ? section === key

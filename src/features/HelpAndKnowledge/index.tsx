@@ -1,6 +1,5 @@
 import React from 'react';
-import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
-import NotFound from 'features/NotFound';
+import { Outlet } from 'react-router-dom';
 
 import AddCustomMilestone from './Articles/AddCustomMilestone';
 import AddCustomSolution from './Articles/AddCustomSolution';

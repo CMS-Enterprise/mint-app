@@ -48,7 +48,7 @@ const ReadOnlyBeneficiaries = ({
         heading={beneficiariesMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allbeneficiariesData.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allbeneficiariesData.modifiedDts || allbeneficiariesData.createdDts
         }

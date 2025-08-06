@@ -185,7 +185,7 @@ const ReadOnlyPayments = ({
         heading={paymentsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allPaymentData.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allPaymentData.modifiedDts || allPaymentData.createdDts
         }

@@ -88,7 +88,7 @@ const ReadOnlyModelBasics = ({
         heading={basicsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allBasicsData.modifiedDts || allBasicsData.createdDts
         }

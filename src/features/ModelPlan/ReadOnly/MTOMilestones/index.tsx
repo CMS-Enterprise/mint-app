@@ -51,7 +51,7 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
         subHeading={t('milestones')}
         isViewingFilteredView={false}
         status={modelToOperationsMatrix.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 

@@ -53,7 +53,7 @@ const ReadOnlyParticipantsAndProviders = ({
         heading={participantsAndProvidersMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allparticipantsAndProvidersData.status}
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allparticipantsAndProvidersData.modifiedDts ||
           allparticipantsAndProvidersData.createdDts

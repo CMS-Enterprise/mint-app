@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -8,7 +8,6 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import NotFound from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import { useCreateModelPlanMutation } from 'gql/generated/graphql';
 

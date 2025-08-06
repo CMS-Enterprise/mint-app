@@ -8,7 +8,7 @@ import {
   ParticipantsType
 } from 'gql/generated/graphql';
 
-import { ParticipantsAndProvidersContent } from './index';
+import { ParticipantsAndProviders } from './index';
 
 type GetParticipantsAndProvidersType =
   GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
@@ -63,7 +63,7 @@ describe('Model Plan Participants and Providers', () => {
           addTypename={false}
         >
           <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers">
-            <ParticipantsAndProvidersContent />
+            <ParticipantsAndProviders />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -104,7 +104,7 @@ describe('Model Plan Participants and Providers', () => {
           addTypename={false}
         >
           <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers">
-            <ParticipantsAndProvidersContent />
+            <ParticipantsAndProviders />
           </Route>
         </MockedProvider>
       </MemoryRouter>

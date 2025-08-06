@@ -302,8 +302,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if (isHelpArticle) delete subComponents.discussions;
 
-  const subComponent = subComponents[subinfo!];
-
   if (!data && loading) {
     return <PageLoading />;
   }
