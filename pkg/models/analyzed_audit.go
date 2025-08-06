@@ -110,6 +110,7 @@ func (a AnalyzedAuditChange) Humanize() []string {
 	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDataExchangeApproach.Humanize())
+	humanizedAuditChanges = append(humanizedAuditChanges, a.MTOUpdates.Humanize()...)
 
 	return lo.Compact(humanizedAuditChanges)
 }
@@ -446,18 +447,22 @@ func (a *AnalyzedPlanDataExchangeApproach) Humanize() string {
 }
 
 type AnalyzedMTOUpdates struct {
-	ReadyForReview bool   `json:"readyForReview,omitempty"`
-	ContentUpdates string `json:"contentUpdates,omitempty"`
+	ReadyForReview bool     `json:"readyForReview,omitempty"`
+	Updates        []string `json:"updates,omitempty"`
 }
 
 // Humanize returns MTO updates in a human-readable format
 func (a *AnalyzedMTOUpdates) Humanize() []string {
+	if a == nil {
+		return nil
+	}
+
 	var updates []string
 	if a.ReadyForReview {
 		updates = append(updates, "MTO is ready for review")
 	}
-	if a.ContentUpdates != "" {
-		updates = append(updates, fmt.Sprintf("MTO content updates: %s", a.ContentUpdates))
+	if len(a.Updates) > 0 {
+		updates = append(updates, fmt.Sprintf("MTO updates: %s", strings.Join(a.Updates, ", ")))
 	}
 	return updates
 }

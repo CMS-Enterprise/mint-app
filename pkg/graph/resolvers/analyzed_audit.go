@@ -350,30 +350,33 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 
 // analyzeMTOChanges analyzes if there were any MTO changes
 func analyzeMTOChanges(audits []*models.AuditChange) (*models.AnalyzedMTOUpdates, error) {
+	// Filter audits for MTO-related tables
 	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, _ int) bool {
 		return lo.Contains(models.MTOTables, models.TableName(audit.TableName))
 	})
 
-	var readyForReview bool
-	var contentUpdates []string
+	// Initialize variables to track changes
+	var updatedFields []string
 
+	// Analyze filtered audits
 	for _, audit := range filteredAudits {
-		if status, ok := audit.Fields["status"]; ok && status.New == "READY_FOR_REVIEW" {
-			readyForReview = true
-		}
-		if content, ok := audit.Fields["content"]; ok && content.New != nil {
-			if str, ok := content.New.(string); ok {
-				contentUpdates = append(contentUpdates, str)
-			}
+		// Collect all updated fields
+		for fieldName := range audit.Fields {
+			updatedFields = append(updatedFields, fieldName)
 		}
 	}
 
-	if !readyForReview && len(contentUpdates) == 0 {
+	// Remove duplicates from the updated fields list
+	updatedFields = lo.Uniq(updatedFields)
+
+	// Return nil if no relevant changes are found
+	if len(updatedFields) == 0 {
 		return nil, nil
 	}
 
+	// Construct and return the result
 	return &models.AnalyzedMTOUpdates{
-		ReadyForReview: readyForReview,
-		ContentUpdates: strings.Join(contentUpdates, ", "),
+		ReadyForReview: false, // No need to check for READY_FOR_REVIEW since it's not required
+		Updates:        updatedFields,
 	}, nil
 }

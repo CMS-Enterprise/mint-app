@@ -24,6 +24,7 @@ type AnalyzedAuditChange {
   planSections: AnalyzedPlanSections
   modelLeads: AnalyzedModelLeads
   planDiscussions: AnalyzedPlanDiscussions
+  mtoUpdates: AnalyzedMTOUpdates
 }
 type AnalyzedModelPlan {
   """
@@ -59,6 +60,11 @@ type AnalyzedModelLeadInfo {
   id: UUID!
   userAccount: UserAccount!
   commonName: String!
+}
+
+type AnalyzedMTOUpdates {
+  readyForReview: Boolean!
+  updates: [String]
 }
 
 extend type Query {
