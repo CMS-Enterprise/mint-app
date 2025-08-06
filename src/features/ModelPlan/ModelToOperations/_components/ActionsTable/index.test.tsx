@@ -19,7 +19,11 @@ describe('MTO Table Actions Component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/model-to-operations',
-          element: <MTOTableActions />
+          element: (
+            <MessageProvider>
+              <MTOTableActions />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -39,9 +43,7 @@ describe('MTO Table Actions Component', () => {
         ]}
         addTypename={false}
       >
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

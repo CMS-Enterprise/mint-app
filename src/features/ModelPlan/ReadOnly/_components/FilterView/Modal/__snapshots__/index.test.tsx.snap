@@ -1,0 +1,341 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Filter View Modal > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="filter-view-modal"
+  >
+    <div
+      class="filter-view__body padding-top-3 padding-bottom-4"
+    >
+      <h3
+        class="margin-y-0"
+      >
+        Filter this Model Plan content
+      </h3>
+      <p
+        class="margin-top-0 margin-bottom-3 font-body-sm text-base"
+      >
+        Filter down to the content your group cares the most about.
+      </p>
+      <form
+        class="usa-form maxw-none margin-bottom-5"
+        data-testid="form"
+      >
+        <label
+          class="usa-label margin-y-0 text-normal"
+          data-testid="label"
+          for="filter-group"
+        >
+          Select a group
+        </label>
+        <div
+          class="usa-combo-box"
+          data-enhanced="true"
+          data-testid="combo-box"
+        >
+          <select
+            aria-hidden="true"
+            class="usa-select usa-sr-only usa-combo-box__select"
+            data-testid="combo-box-select"
+            name="filter-group"
+            tabindex="-1"
+          >
+            <option
+              value="ccw"
+            >
+              Chronic Conditions Warehouse (CCW)
+            </option>
+            <option
+              value="cmmi"
+            >
+              CMMI Cost Estimate
+            </option>
+            <option
+              value="cbosc"
+            >
+              Consolidated Business Operations Support Center (CBOSC)
+            </option>
+            <option
+              value="dfsdm"
+            >
+              Division of Financial Services and Debt Management (DFSDM)
+            </option>
+            <option
+              value="ipc"
+            >
+              Innovation Payment Contractor (IPC)
+            </option>
+            <option
+              value="iddoc"
+            >
+              Innovative Design, Development, and Operations Contract (IDDOC)
+            </option>
+            <option
+              value="mdm"
+            >
+              Master Data Management (MDM)
+            </option>
+            <option
+              value="oact"
+            >
+              Office of the Actuary (OACT)
+            </option>
+            <option
+              value="pbg"
+            >
+              Provider Billing Group (PBG)
+            </option>
+          </select>
+          <input
+            aria-activedescendant=""
+            aria-autocomplete="list"
+            aria-controls="filter-group--list"
+            aria-describedby="filter-group--assistiveHint"
+            aria-expanded="false"
+            aria-owns="filter-group--list"
+            autocapitalize="off"
+            autocomplete="off"
+            class="usa-combo-box__input"
+            data-testid="combo-box-input"
+            id="filter-group"
+            role="combobox"
+            type="text"
+            value=""
+          />
+          <span
+            class="usa-combo-box__clear-input__wrapper"
+            tabindex="-1"
+          >
+            <button
+              aria-label="Clear the select contents"
+              class="usa-combo-box__clear-input"
+              data-testid="combo-box-clear-button"
+              hidden=""
+              type="button"
+            >
+               
+            </button>
+          </span>
+          <span
+            class="usa-combo-box__input-button-separator"
+          >
+             
+          </span>
+          <span
+            class="usa-combo-box__toggle-list__wrapper"
+            tabindex="-1"
+          >
+            <button
+              aria-label="Toggle the dropdown list"
+              class="usa-combo-box__toggle-list"
+              data-testid="combo-box-toggle"
+              tabindex="-1"
+              type="button"
+            >
+               
+            </button>
+          </span>
+          <ul
+            class="usa-combo-box__list"
+            data-testid="combo-box-option-list"
+            hidden=""
+            id="filter-group--list"
+            role="listbox"
+            tabindex="-1"
+          >
+            <li
+              aria-posinset="1"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-ccw"
+              data-value="ccw"
+              id="filter-group--list--option-0"
+              role="option"
+              tabindex="-1"
+              value="ccw"
+            >
+              Chronic Conditions Warehouse (CCW)
+            </li>
+            <li
+              aria-posinset="2"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-cmmi"
+              data-value="cmmi"
+              id="filter-group--list--option-1"
+              role="option"
+              tabindex="-1"
+              value="cmmi"
+            >
+              CMMI Cost Estimate
+            </li>
+            <li
+              aria-posinset="3"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-cbosc"
+              data-value="cbosc"
+              id="filter-group--list--option-2"
+              role="option"
+              tabindex="-1"
+              value="cbosc"
+            >
+              Consolidated Business Operations Support Center (CBOSC)
+            </li>
+            <li
+              aria-posinset="4"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-dfsdm"
+              data-value="dfsdm"
+              id="filter-group--list--option-3"
+              role="option"
+              tabindex="-1"
+              value="dfsdm"
+            >
+              Division of Financial Services and Debt Management (DFSDM)
+            </li>
+            <li
+              aria-posinset="5"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-ipc"
+              data-value="ipc"
+              id="filter-group--list--option-4"
+              role="option"
+              tabindex="-1"
+              value="ipc"
+            >
+              Innovation Payment Contractor (IPC)
+            </li>
+            <li
+              aria-posinset="6"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-iddoc"
+              data-value="iddoc"
+              id="filter-group--list--option-5"
+              role="option"
+              tabindex="-1"
+              value="iddoc"
+            >
+              Innovative Design, Development, and Operations Contract (IDDOC)
+            </li>
+            <li
+              aria-posinset="7"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-mdm"
+              data-value="mdm"
+              id="filter-group--list--option-6"
+              role="option"
+              tabindex="-1"
+              value="mdm"
+            >
+              Master Data Management (MDM)
+            </li>
+            <li
+              aria-posinset="8"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-oact"
+              data-value="oact"
+              id="filter-group--list--option-7"
+              role="option"
+              tabindex="-1"
+              value="oact"
+            >
+              Office of the Actuary (OACT)
+            </li>
+            <li
+              aria-posinset="9"
+              aria-selected="false"
+              aria-setsize="9"
+              class="usa-combo-box__list-option"
+              data-testid="combo-box-option-pbg"
+              data-value="pbg"
+              id="filter-group--list--option-8"
+              role="option"
+              tabindex="-1"
+              value="pbg"
+            >
+              Provider Billing Group (PBG)
+            </li>
+          </ul>
+          <div
+            class="usa-combo-box__status usa-sr-only"
+            role="status"
+          />
+          <span
+            class="usa-sr-only"
+            data-testid="combo-box-assistive-hint"
+            id="filter-group--assistiveHint"
+          >
+            When autocomplete results are available use up and down arrows to review
+           and enter to select. Touch device users, explore by touch or with swipe
+           gestures.
+          </span>
+        </div>
+      </form>
+      <div
+        class="usa-alert usa-alert--info usa-alert--no-icon"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span
+              class="margin-y-0 font-body-sm text-bold display-block"
+            >
+              Don’t see your group listed?
+            </span>
+            Contact the MINT Team at 
+            <a
+              class="usa-link"
+              href="mailto:MINTTeam@cms.hhs.gov"
+            >
+              MINTTeam@cms.hhs.gov
+            </a>
+            , so we can learn more about your group.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="filter-view__footer margin-x-neg-4 border-top-1px border-base-lighter"
+    >
+      <div
+        class="padding-x-4 padding-top-2 display-flex flex-justify"
+      >
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          View all content
+        </button>
+        <button
+          class="usa-button margin-x-0"
+          data-testid="filter-view-submit"
+          disabled=""
+          type="button"
+        >
+          View filtered content
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

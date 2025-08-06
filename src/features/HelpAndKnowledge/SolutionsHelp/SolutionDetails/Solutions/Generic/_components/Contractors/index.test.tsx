@@ -31,8 +31,12 @@ describe('Contractors Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
-          element: <Contractors contractors={[]} />
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <Contractors contractors={[]} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -44,9 +48,7 @@ describe('Contractors Component', () => {
 
     const { queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
@@ -59,8 +61,12 @@ describe('Contractors Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
-          element: <Contractors contractors={contractors} />
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <Contractors contractors={contractors} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -72,9 +78,7 @@ describe('Contractors Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

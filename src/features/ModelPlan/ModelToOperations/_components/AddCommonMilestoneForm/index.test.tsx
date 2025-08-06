@@ -14,22 +14,24 @@ describe('Add common milestone form', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/',
+          path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
           element: (
-            <AddCommonMilestoneForm
-              milestone={{
-                __typename: 'MTOCommonMilestone',
-                name: 'Milestone 1',
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
-                isAdded: false,
-                isSuggested: false,
-                categoryName: 'Category 1',
-                subCategoryName: 'SubCategory 1',
-                facilitatedByRole: [],
-                commonSolutions: []
-              }}
-              closeModal={() => {}}
-            />
+            <MessageProvider>
+              <AddCommonMilestoneForm
+                milestone={{
+                  __typename: 'MTOCommonMilestone',
+                  name: 'Milestone 1',
+                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  isAdded: false,
+                  isSuggested: false,
+                  categoryName: 'Category 1',
+                  subCategoryName: 'SubCategory 1',
+                  facilitatedByRole: [],
+                  commonSolutions: []
+                }}
+                closeModal={() => {}}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -41,11 +43,9 @@ describe('Add common milestone form', () => {
     );
 
     const { asFragment } = render(
-      <MessageProvider>
-        <VerboseMockedProvider mocks={[]} addTypename={false}>
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <VerboseMockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

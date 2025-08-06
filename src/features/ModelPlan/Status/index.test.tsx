@@ -14,11 +14,9 @@ describe('Model Plan Status Update page', () => {
         {
           path: '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/status',
           element: (
-            <MockedProvider>
-              <MessageProvider>
-                <Status />
-              </MessageProvider>
-            </MockedProvider>
+            <MessageProvider>
+              <Status />
+            </MessageProvider>
           )
         }
       ],
@@ -29,7 +27,11 @@ describe('Model Plan Status Update page', () => {
       }
     );
 
-    const { asFragment } = render(<RouterProvider router={router} />);
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });

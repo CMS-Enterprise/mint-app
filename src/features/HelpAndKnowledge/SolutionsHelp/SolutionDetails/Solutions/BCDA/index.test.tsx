@@ -1,5 +1,6 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
@@ -24,7 +25,11 @@ describe('The MTOWarning component', () => {
       }
     );
 
-    const { asFragment } = render(<RouterProvider router={router} />);
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });

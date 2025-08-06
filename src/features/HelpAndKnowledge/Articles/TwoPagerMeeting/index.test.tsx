@@ -1,5 +1,6 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
@@ -10,18 +11,28 @@ const mocks = [...possibleSolutionsMock];
 
 describe('TwoPagerMeeting', () => {
   it('matches the snapshot', async () => {
-    const { asFragment, getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
+          element: (
+            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+              <TwoPagerMeeting />
+            </VerboseMockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings'
-        ]}
-      >
-        <Route path="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings">
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <TwoPagerMeeting />
-          </VerboseMockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment, getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));

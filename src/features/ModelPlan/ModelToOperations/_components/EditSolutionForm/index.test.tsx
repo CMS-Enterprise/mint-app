@@ -24,13 +24,15 @@ describe('EditSolutionForm Component', () => {
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
           element: (
-            <EditSolutionForm
-              closeModal={vi.fn()}
-              setIsDirty={vi.fn()}
-              setCloseDestination={vi.fn()}
-              setFooter={() => {}}
-              submitted={{ current: false }}
-            />
+            <MessageProvider>
+              <EditSolutionForm
+                closeModal={vi.fn()}
+                setIsDirty={vi.fn()}
+                setCloseDestination={vi.fn()}
+                setFooter={() => {}}
+                submitted={{ current: false }}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -46,9 +48,7 @@ describe('EditSolutionForm Component', () => {
         mocks={[solutionMock('1', addedFromSolutionLibrary), allMilestonesMock]}
         addTypename={false}
       >
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
   };

@@ -1,7 +1,10 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import MessageProvider from 'contexts/MessageContext';
 
 import Contact from './index';
 
@@ -24,7 +27,11 @@ describe('Operation Solution Contact', () => {
       [
         {
           path: '/help-and-knowledge/operational-solutions/solutions',
-          element: <Contact contact={contact} />
+          element: (
+            <MessageProvider>
+              <Contact contact={contact} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -34,7 +41,11 @@ describe('Operation Solution Contact', () => {
       }
     );
 
-    const { getByText } = render(<RouterProvider router={router} />);
+    const { getByText } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
     expect(getByText('Aliza Kim')).toBeInTheDocument();
   });
 
@@ -43,7 +54,11 @@ describe('Operation Solution Contact', () => {
       [
         {
           path: '/help-and-knowledge/operational-solutions/solutions',
-          element: <Contact contact={contact} />
+          element: (
+            <MessageProvider>
+              <Contact contact={contact} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -53,7 +68,11 @@ describe('Operation Solution Contact', () => {
       }
     );
 
-    const { asFragment } = render(<RouterProvider router={router} />);
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });

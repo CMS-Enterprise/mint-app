@@ -13,24 +13,28 @@ describe('Select a Solution form', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/',
-          element: <SelectSolutionForm />
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <MessageProvider>
+              <SelectSolutionForm />
+            </MessageProvider>
+          )
         }
       ],
       {
-        initialEntries: [`/models/${modelID}/`]
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all`
+        ]
       }
     );
 
     const { getByText, asFragment } = render(
-      <MessageProvider>
-        <VerboseMockedProvider
-          mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
-          addTypename={false}
-        >
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <VerboseMockedProvider
+        mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

@@ -29,8 +29,12 @@ describe('MailboxAndTeamMemberCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
-          element: <MailboxAndTeamMemberCard pointOfContact={contact} />
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <MailboxAndTeamMemberCard pointOfContact={contact} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -42,9 +46,7 @@ describe('MailboxAndTeamMemberCard Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

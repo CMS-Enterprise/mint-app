@@ -24,7 +24,11 @@ describe('ContractorCard Component', () => {
       [
         {
           path: '/help-and-knowledge/operational-solutions',
-          element: <ContractorCard contractor={contractor} />
+          element: (
+            <MessageProvider>
+              <ContractorCard contractor={contractor} />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -36,9 +40,7 @@ describe('ContractorCard Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

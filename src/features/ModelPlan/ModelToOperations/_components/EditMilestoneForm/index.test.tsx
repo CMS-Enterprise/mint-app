@@ -20,13 +20,15 @@ describe('EditMilestoneForm', () => {
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
           element: (
-            <EditMilestoneForm
-              closeModal={() => {}}
-              setIsDirty={() => {}}
-              setCloseDestination={vi.fn()}
-              setFooter={() => {}}
-              submitted={{ current: false }}
-            />
+            <MessageProvider>
+              <EditMilestoneForm
+                closeModal={() => {}}
+                setIsDirty={() => {}}
+                setCloseDestination={vi.fn()}
+                setFooter={() => {}}
+                submitted={{ current: false }}
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -38,18 +40,16 @@ describe('EditMilestoneForm', () => {
     );
 
     const { asFragment } = render(
-      <MessageProvider>
-        <MockedProvider
-          mocks={[
-            ...milestoneMock('123'),
-            ...categoryMock,
-            ...allMTOSolutionsMock
-          ]}
-          addTypename={false}
-        >
-          <RouterProvider router={router} />
-        </MockedProvider>
-      </MessageProvider>
+      <MockedProvider
+        mocks={[
+          ...milestoneMock('123'),
+          ...categoryMock,
+          ...allMTOSolutionsMock
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

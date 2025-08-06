@@ -15,24 +15,25 @@ describe('Custom Catergory form', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/',
-          element: <RemoveCategoryForm />
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <MessageProvider>
+              <RemoveCategoryForm />
+            </MessageProvider>
+          )
         }
       ],
       {
-        initialEntries: [`/models/${modelID}/`]
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all`
+        ]
       }
     );
 
     const { asFragment } = render(
-      <MessageProvider>
-        <VerboseMockedProvider
-          mocks={[...[...categoryMock]]}
-          addTypename={false}
-        >
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <VerboseMockedProvider mocks={[...[...categoryMock]]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

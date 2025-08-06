@@ -1,8 +1,8 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { categoryMock, modelID } from 'tests/mock/mto';
-import VerboseMockedProvider from 'tests/MockedProvider';
+import { modelID } from 'tests/mock/readonly';
 
 import MessageProvider from 'contexts/MessageContext';
 
@@ -14,7 +14,11 @@ describe('Custom Catergory form', () => {
       [
         {
           path: '/models/:modelID/',
-          element: <AddTemplateModal />
+          element: (
+            <MessageProvider>
+              <AddTemplateModal />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -23,14 +27,9 @@ describe('Custom Catergory form', () => {
     );
 
     const { asFragment } = render(
-      <MessageProvider>
-        <VerboseMockedProvider
-          mocks={[...[...categoryMock]]}
-          addTypename={false}
-        >
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
-      </MessageProvider>
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

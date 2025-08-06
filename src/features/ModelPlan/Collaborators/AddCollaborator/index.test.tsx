@@ -14,7 +14,11 @@ describe('Adding a collaborator page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/collaborators/add-collaborator',
-          element: <AddCollaborator />
+          element: (
+            <MessageProvider>
+              <AddCollaborator />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -25,11 +29,9 @@ describe('Adding a collaborator page', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MessageProvider>
-        <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-          <RouterProvider router={router} />
-        </MockedProvider>
-      </MessageProvider>
+      <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
