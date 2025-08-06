@@ -23,7 +23,7 @@ describe('Operation Solution Contact', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: <Contact contact={contact} />
         }
       ],
@@ -42,7 +42,7 @@ describe('Operation Solution Contact', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: <Contact contact={contact} />
         }
       ],

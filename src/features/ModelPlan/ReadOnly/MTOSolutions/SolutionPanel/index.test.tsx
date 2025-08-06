@@ -12,7 +12,7 @@ describe('SolutionPanel Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/read-view/solutions',
           element: <SolutionPanel closeModal={vi.fn()} />
         }
       ],
@@ -51,7 +51,7 @@ describe('SolutionPanel Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/read-view/solutions',
           element: <SolutionPanel closeModal={vi.fn()} />
         }
       ],

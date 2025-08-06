@@ -12,7 +12,7 @@ describe('MilestonePanel Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/read-view/milestones',
           element: <MilestonePanel closeModal={vi.fn()} />
         }
       ],
@@ -53,7 +53,7 @@ describe('MilestonePanel Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/read-view/milestones',
           element: <MilestonePanel closeModal={vi.fn()} />
         }
       ],

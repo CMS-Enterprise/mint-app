@@ -25,13 +25,13 @@ describe('TeamCard component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/:modelID/collaboration-area',
+          path: '/models/:modelID/collaboration-area',
           element: <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
         }
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
         ]
       }
     );
@@ -61,7 +61,7 @@ describe('TeamCard component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/:modelID/collaboration-area',
+          path: '/models/:modelID/collaboration-area',
           element: <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
         }
       ],

@@ -13,13 +13,13 @@ describe('Adding a collaborator page', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/:modelID/collaboration-area/collaborators/add-collaborator',
+          path: '/models/:modelID/collaboration-area/collaborators/add-collaborator',
           element: <AddCollaborator />
         }
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators/add-collaborator?view=add'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators/add-collaborator?view=add'
         ]
       }
     );

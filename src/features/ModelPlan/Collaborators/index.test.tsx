@@ -73,13 +73,13 @@ describe('Collaborator/Team Member page w/table', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/:modelID/collaboration-area/collaborators',
+          path: '/models/:modelID/collaboration-area/collaborators',
           element: <CollaboratorsContent />
         }
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
         ]
       }
     );
@@ -109,7 +109,7 @@ describe('Collaborator/Team Member page w/table', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/:modelID/collaboration-area/collaborators',
+          path: '/models/:modelID/collaboration-area/collaborators',
           element: <CollaboratorsContent />
         }
       ],
