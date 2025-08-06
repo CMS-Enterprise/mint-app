@@ -128,7 +128,17 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   // Scroll to top
   useScrollTop();
 
-  return <>{children}</>;
+  return (
+    <>
+      <div className="usa-overlay" />
+
+      <button type="button" className="skipnav z-top" onClick={handleSkipNav}>
+        Skip to main content
+      </button>
+
+      {children}
+    </>
+  );
 };
 
 // Create the router configuration
@@ -138,10 +148,6 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     element: (
       <AppWrapper>
-        <div className="usa-overlay" />
-        <button type="button" className="skipnav z-top" onClick={handleSkipNav}>
-          Skip to main content
-        </button>
         <AuthenticationWrapper>
           <OktaSessionProvider>
             <FlagsWrapper>
