@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -68,9 +68,12 @@ describe('Model Timeline page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/model-timeline">
-            <Timeline />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/model-timeline"
+            element={<Timeline  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

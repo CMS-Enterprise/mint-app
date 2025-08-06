@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { commonMilestonesMock, suggestedMilestonesMock } from 'tests/mock/mto';
@@ -18,9 +18,12 @@ describe('MilestoneCardGroup Component', () => {
             '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library'
           ]}
         >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/milestone-library">
-            <MilestoneLibrary />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/model-to-operations/milestone-library"
+            element={<MilestoneLibrary  />}
+          />
+        </Routes>
         </MemoryRouter>
       </MockedProvider>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
@@ -13,12 +13,15 @@ describe('Operation Solution Help Tag', () => {
       <MemoryRouter
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionsTag
+        <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<SolutionsTag
             route={operationalSolutionCategoryMap.data}
             category={MtoCommonSolutionSubject.DATA}
+           />}
           />
-        </Route>
+        </Routes>
       </MemoryRouter>
     );
 
@@ -37,12 +40,15 @@ describe('Operation Solution Help Tag', () => {
       <MemoryRouter
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionsTag
+        <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<SolutionsTag
             route={operationalSolutionCategoryMap.data}
             category={MtoCommonSolutionSubject.DATA}
+           />}
           />
-        </Route>
+        </Routes>
       </MemoryRouter>
     );
 

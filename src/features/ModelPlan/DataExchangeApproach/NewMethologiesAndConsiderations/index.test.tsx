@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 import {
@@ -55,9 +55,12 @@ describe('TestComponent', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-consideration">
-            <NewMethologiesAndConsiderations />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-consideration"
+            element={<NewMethologiesAndConsiderations  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

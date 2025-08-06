@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 import CategoryFooter from './index';
@@ -12,9 +12,12 @@ describe('Operation Solutio Category Footer', () => {
           '/help-and-knowledge/operational-solutions/categories/communication-tools'
         ]}
       >
-        <Route path="/help-and-knowledge/operational-solutions/categories/communication-tools">
-          <CategoryFooter />
-        </Route>
+        <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions/categories/communication-tools"
+            element={<CategoryFooter  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
     expect(queryByText('Communication Tools')).not.toBeInTheDocument();
@@ -25,9 +28,12 @@ describe('Operation Solutio Category Footer', () => {
       <MemoryRouter
         initialEntries={['/help-and-knowledge/operational-solutions']}
       >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <CategoryFooter />
-        </Route>
+        <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<CategoryFooter  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 

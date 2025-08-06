@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import { GetMtoCategoriesDocument } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
@@ -63,9 +63,12 @@ describe('Custom Milestone form', () => {
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/">
-              <CustomMilestoneForm />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/"
+            element={<CustomMilestoneForm  />}
+          />
+        </Routes>
           </VerboseMockedProvider>
         </MessageProvider>
       </MemoryRouter>

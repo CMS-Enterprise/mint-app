@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -65,9 +65,12 @@ describe('Model Plan -- Claims Based Payment', () => {
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment">
-            <ClaimsBasedPayment />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment"
+            element={<ClaimsBasedPayment  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -93,9 +96,12 @@ describe('Model Plan -- Claims Based Payment', () => {
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment">
-            <ClaimsBasedPayment />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment"
+            element={<ClaimsBasedPayment  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

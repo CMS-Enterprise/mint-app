@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { collaboratorsMocks as mocks, modelID } from 'tests/mock/readonly';
@@ -11,9 +11,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelID}/read-view/team`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/team">
-            <ReadOnlyTeamInfo modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/team"
+            element={<ReadOnlyTeamInfo modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -29,9 +32,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/read-view/team`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/team">
-            <ReadOnlyTeamInfo modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/team"
+            element={<ReadOnlyTeamInfo modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

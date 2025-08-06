@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 import MTOOptionsPanel from '.';
@@ -12,9 +12,12 @@ describe('MTOOptionsPanel', () => {
           '/models/123/collaboration-area/model-to-operations/matrix'
         ]}
       >
-        <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
-          <MTOOptionsPanel />
-        </Route>
+        <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
+            element={<MTOOptionsPanel  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -19,9 +19,12 @@ describe('AboutCompletingDataExchange', () => {
         ]}
       >
         <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange">
-            <AboutCompletingDataExchange />
-          </Route>
+          <Routes>
+            <Route
+              path="/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange"
+              element={<AboutCompletingDataExchange />}
+            />
+          </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -73,9 +73,12 @@ describe('Model Plan Documents page', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="/models/:modelID/read-view/documents">
-                <ReadOnlyDocuments modelID={modelID} />
-              </Route>
+              <Routes>
+          <Route
+            path="/models/:modelID/read-view/documents"
+            element={<ReadOnlyDocuments modelID={modelID}  />}
+          />
+        </Routes>
             </MessageProvider>
           </Provider>
         </MockedProvider>
@@ -96,9 +99,12 @@ describe('Model Plan Documents page', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="/models/:modelID/read-view/documents">
-                <ReadOnlyDocuments modelID={modelID} />
-              </Route>
+              <Routes>
+          <Route
+            path="/models/:modelID/read-view/documents"
+            element={<ReadOnlyDocuments modelID={modelID}  />}
+          />
+        </Routes>
             </MessageProvider>
           </Provider>
         </MockedProvider>

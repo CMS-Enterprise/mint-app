@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { collaboratorsMocks } from 'tests/mock/readonly';
@@ -18,9 +18,12 @@ describe('Adding a collaborator page', () => {
       >
         <MessageProvider>
           <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-            <Route path="models/:modelID/collaboration-area/collaborators/add-collaborator">
-              <AddCollaborator />
-            </Route>
+            <Routes>
+          <Route
+            path="models/:modelID/collaboration-area/collaborators/add-collaborator"
+            element={<AddCollaborator  />}
+          />
+        </Routes>
           </MockedProvider>
         </MessageProvider>
       </MemoryRouter>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -79,9 +79,12 @@ describe('Collaborator/Team Member page w/table', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="models/:modelID/collaboration-area/collaborators">
-                <CollaboratorsContent />
-              </Route>
+              <Routes>
+          <Route
+            path="models/:modelID/collaboration-area/collaborators"
+            element={<CollaboratorsContent  />}
+          />
+        </Routes>
             </MessageProvider>
           </Provider>
         </MockedProvider>
@@ -109,9 +112,12 @@ describe('Collaborator/Team Member page w/table', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="models/:modelID/collaboration-area/collaborators">
-                <CollaboratorsContent />
-              </Route>
+              <Routes>
+          <Route
+            path="models/:modelID/collaboration-area/collaborators"
+            element={<CollaboratorsContent  />}
+          />
+        </Routes>
             </MessageProvider>
           </Provider>
         </MockedProvider>

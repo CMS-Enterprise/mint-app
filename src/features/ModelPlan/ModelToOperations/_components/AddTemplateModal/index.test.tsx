@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { categoryMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
@@ -17,9 +17,12 @@ describe('Custom Catergory form', () => {
             mocks={[...[...categoryMock]]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/">
-              <AddTemplateModal />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/"
+            element={<AddTemplateModal  />}
+          />
+        </Routes>
           </VerboseMockedProvider>
         </MessageProvider>
       </MemoryRouter>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { BeneficiariesType } from 'gql/generated/graphql';
@@ -15,9 +15,12 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
         initialEntries={[`/models/${modelID}/read-view/beneficiaries`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/beneficiaries">
-            <ReadOnlyBeneficiaries modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/beneficiaries"
+            element={<ReadOnlyBeneficiaries modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -41,9 +44,12 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
         initialEntries={[`/models/${modelID}/read-view/beneficiaries`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/beneficiaries">
-            <ReadOnlyBeneficiaries modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/beneficiaries"
+            element={<ReadOnlyBeneficiaries modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

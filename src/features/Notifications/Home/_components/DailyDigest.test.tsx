@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   AnalyzedAudit as AnalyzedAuditsTypes,
@@ -78,9 +78,12 @@ describe('Daily Digest in Notifications', () => {
   it('renders without errors', async () => {
     setup(
       <MemoryRouter initialEntries={[`/notifications`]}>
-        <Route path="/notifications">
-          <DailyDigest analyzedAudits={dailyDigestProps} />
-        </Route>
+        <Routes>
+          <Route
+            path="/notifications"
+            element={<DailyDigest analyzedAudits={dailyDigestProps}  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -113,9 +116,12 @@ describe('Daily Digest in Notifications', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`/notifications`]}>
-        <Route path="/notifications">
-          <DailyDigest analyzedAudits={dailyDigestProps} />
-        </Route>
+        <Routes>
+          <Route
+            path="/notifications"
+            element={<DailyDigest analyzedAudits={dailyDigestProps}  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 

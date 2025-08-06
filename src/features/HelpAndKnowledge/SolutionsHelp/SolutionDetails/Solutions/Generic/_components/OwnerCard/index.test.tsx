@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -32,9 +32,12 @@ describe('Owners Component', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
-              <OwnerCard owner={owner} />
-            </Route>
+            <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<OwnerCard owner={owner}  />}
+          />
+        </Routes>
           </MessageProvider>
         </MockedProvider>
       </MemoryRouter>

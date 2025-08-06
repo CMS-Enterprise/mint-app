@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -31,9 +31,12 @@ describe('MTO Table Actions Component', () => {
           ]}
         >
           <MessageProvider>
-            <Route path="/models/:modelID/collaboration-area/model-to-operations">
-              <MTOTableActions />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/model-to-operations"
+            element={<MTOTableActions  />}
+          />
+        </Routes>
           </MessageProvider>
         </MemoryRouter>
       </MockedProvider>

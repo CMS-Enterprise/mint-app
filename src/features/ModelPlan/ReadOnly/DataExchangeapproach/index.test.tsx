@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -16,9 +16,12 @@ describe('Read view - Data exchange approach', () => {
         initialEntries={[`/models/${modelID}/read-view/data-exchange-approach`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/data-exchange-approach">
-            <ReadOnlyDataExchangeApproach modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/data-exchange-approach"
+            element={<ReadOnlyDataExchangeApproach modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

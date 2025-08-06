@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -48,9 +48,12 @@ describe('MailboxAndTeamMembers Component', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
-              <MailboxAndTeamMembers pointsOfContact={contacts} />
-            </Route>
+            <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<MailboxAndTeamMembers pointsOfContact={contacts}  />}
+          />
+        </Routes>
           </MessageProvider>
         </MockedProvider>
       </MemoryRouter>
@@ -70,9 +73,12 @@ describe('MailboxAndTeamMembers Component', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
-              <MailboxAndTeamMembers pointsOfContact={contacts} />
-            </Route>
+            <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<MailboxAndTeamMembers pointsOfContact={contacts}  />}
+          />
+        </Routes>
           </MessageProvider>
         </MockedProvider>
       </MemoryRouter>

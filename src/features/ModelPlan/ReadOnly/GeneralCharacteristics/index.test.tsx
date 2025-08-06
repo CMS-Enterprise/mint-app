@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -18,9 +18,12 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/general-characteristics">
-            <ReadOnlyGeneralCharacteristics modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/general-characteristics"
+            element={<ReadOnlyGeneralCharacteristics modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -44,9 +47,12 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-view/general-characteristics">
-            <ReadOnlyGeneralCharacteristics modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/read-view/general-characteristics"
+            element={<ReadOnlyGeneralCharacteristics modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

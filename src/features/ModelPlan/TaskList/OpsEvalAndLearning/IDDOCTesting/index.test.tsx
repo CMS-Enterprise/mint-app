@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -56,9 +56,12 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
         ]}
       >
         <MockedProvider mocks={iddocTestingMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing">
-            <IDDOCTesting />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing"
+            element={<IDDOCTesting  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -84,9 +87,12 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
         ]}
       >
         <MockedProvider mocks={iddocTestingMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing">
-            <IDDOCTesting />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing"
+            element={<IDDOCTesting  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

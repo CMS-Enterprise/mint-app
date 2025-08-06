@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -64,9 +64,12 @@ describe('Basics overview page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false} showWarnings>
-          <Route path="/models/:modelID/collaboration-area/task-list/overview">
-            <Overview />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/overview"
+            element={<Overview  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

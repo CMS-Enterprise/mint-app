@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -15,9 +15,12 @@ describe('Generic About Components', () => {
             `/help-and-knowledge/operational-solutions?solution-key=${solutionAboutComponent.key}&section=about`
           ]}
         >
-          <Route path="/help-and-knowledge/operational-solutions">
-            <GenericAbout solution={solutionAboutComponent} />
-          </Route>
+          <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<GenericAbout solution={solutionAboutComponent}  />}
+          />
+        </Routes>
         </MemoryRouter>
       );
       expect(asFragment()).toMatchSnapshot(solutionAboutComponent.name);

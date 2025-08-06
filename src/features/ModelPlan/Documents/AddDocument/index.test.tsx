@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 
@@ -17,9 +17,12 @@ describe('Model Plan Add Documents page', () => {
           ]}
         >
           <MessageProvider>
-            <Route path="/models/:modelID/collaboration-area/documents/add-document">
-              <AddDocument />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/documents/add-document"
+            element={<AddDocument  />}
+          />
+        </Routes>
           </MessageProvider>
         </MemoryRouter>
       </MockedProvider>

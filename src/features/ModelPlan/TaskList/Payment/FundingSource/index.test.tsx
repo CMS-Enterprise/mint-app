@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   FundingSource as FundingSourceType,
@@ -73,9 +73,12 @@ describe('Model Plan Payment', () => {
         ]}
       >
         <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment">
-            <FundingSource />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment"
+            element={<FundingSource  />}
+          />
+        </Routes>
         </VerboseMockedProvider>
       </MemoryRouter>
     );
@@ -102,9 +105,12 @@ describe('Model Plan Payment', () => {
         ]}
       >
         <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment">
-            <FundingSource />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment"
+            element={<FundingSource  />}
+          />
+        </Routes>
         </VerboseMockedProvider>
       </MemoryRouter>
     );

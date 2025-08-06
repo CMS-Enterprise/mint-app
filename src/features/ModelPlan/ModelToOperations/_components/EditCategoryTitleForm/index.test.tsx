@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { categoryMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
@@ -18,9 +18,12 @@ describe('Custom Catergory form', () => {
             mocks={[...[...categoryMock]]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/">
-              <EditCategoryTitleForm />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/"
+            element={<EditCategoryTitleForm  />}
+          />
+        </Routes>
           </VerboseMockedProvider>
         </MessageProvider>
       </MemoryRouter>

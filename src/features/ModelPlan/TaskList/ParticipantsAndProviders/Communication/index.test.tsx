@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -74,9 +74,12 @@ describe('Model Plan Communication', () => {
         ]}
       >
         <MockedProvider mocks={communicationMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication">
-            <Communication />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication"
+            element={<Communication  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -102,9 +105,12 @@ describe('Model Plan Communication', () => {
         ]}
       >
         <MockedProvider mocks={communicationMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication">
-            <Communication />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication"
+            element={<Communication  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

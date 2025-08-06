@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -61,9 +61,12 @@ describe('Model Plan Basics page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/basics">
-            <Basics />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/basics"
+            element={<Basics  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -84,9 +87,12 @@ describe('Model Plan Basics page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/basics">
-            <Basics />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/basics"
+            element={<Basics  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -143,9 +149,12 @@ describe('Model Plan Basics page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/basics">
-            <Basics />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/basics"
+            element={<Basics  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   fireEvent,
@@ -323,9 +323,12 @@ describe('The Model Plan Task List', () => {
             addTypename={false}
           >
             <MessageProvider>
-              <Route path="/models/:modelID/collaboration-area/task-list">
-                <TaskList />
-              </Route>
+              <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list"
+            element={<TaskList  />}
+          />
+        </Routes>
             </MessageProvider>
           </MockedProvider>
         </MemoryRouter>

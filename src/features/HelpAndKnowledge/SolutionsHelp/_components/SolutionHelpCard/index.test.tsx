@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import { pointsOfContact, possibleSolutionsMock } from 'tests/mock/mto';

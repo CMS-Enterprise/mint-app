@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import { allMTOSolutionsMock, milestoneMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
@@ -17,9 +17,12 @@ describe('Select a Solution form', () => {
             mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
             addTypename={false}
           >
-            <Route path="/models/:modelID/">
-              <SelectSolutionForm />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/"
+            element={<SelectSolutionForm  />}
+          />
+        </Routes>
           </VerboseMockedProvider>
         </MessageProvider>
       </MemoryRouter>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -160,9 +160,12 @@ describe('Read Only Filtered View Body Content', () => {
       >
         <MockedProvider mocks={mock} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-view/:subinfo">
-              <ReadOnly />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/read-view/:subinfo"
+            element={<ReadOnly  />}
+          />
+        </Routes>
           </Provider>
         </MockedProvider>
       </MemoryRouter>

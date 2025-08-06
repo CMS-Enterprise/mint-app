@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -53,9 +53,12 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing">
-            <BeneficiaryCostSharing />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing"
+            element={<BeneficiaryCostSharing  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -87,9 +90,12 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing">
-            <BeneficiaryCostSharing />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing"
+            element={<BeneficiaryCostSharing  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

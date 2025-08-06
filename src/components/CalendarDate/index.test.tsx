@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { DateTime } from 'luxon';
 
@@ -13,9 +13,14 @@ describe('CalendarDate', () => {
 
     render(
       <MemoryRouter>
-        <Route path="/">
-          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-        </Route>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+            }
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -33,9 +38,14 @@ describe('CalendarDate', () => {
 
     render(
       <MemoryRouter>
-        <Route path="/">
-          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-        </Route>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+            }
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -51,9 +61,14 @@ describe('CalendarDate', () => {
 
     render(
       <MemoryRouter>
-        <Route path="/">
-          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-        </Route>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+            }
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -68,9 +83,14 @@ describe('CalendarDate', () => {
 
     render(
       <MemoryRouter>
-        <Route path="/">
-          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-        </Route>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+            }
+          />
+        </Routes>
       </MemoryRouter>
     );
 

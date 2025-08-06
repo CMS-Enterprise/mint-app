@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { MtoStatus } from 'gql/generated/graphql';
@@ -16,12 +16,15 @@ describe('MTOStatusBanner Component', () => {
             '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
           ]}
         >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
-            <MTOStatusBanner
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
+            element={<MTOStatusBanner
               status={MtoStatus.IN_PROGRESS}
               lastUpdated="2022-01-01"
-            />
-          </Route>
+             />}
+          />
+        </Routes>
         </MemoryRouter>
       </MockedProvider>
     );

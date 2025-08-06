@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -28,9 +28,12 @@ describe('ContractorCard Component', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
-              <ContractorCard contractor={contractor} />
-            </Route>
+            <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<ContractorCard contractor={contractor}  />}
+          />
+        </Routes>
           </MessageProvider>
         </MockedProvider>
       </MemoryRouter>

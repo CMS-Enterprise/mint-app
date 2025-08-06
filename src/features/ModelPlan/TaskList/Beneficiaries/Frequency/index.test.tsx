@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -75,9 +75,12 @@ describe('Model Plan Beneficiaries', () => {
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency">
-            <Frequency />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency"
+            element={<Frequency  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -103,9 +106,12 @@ describe('Model Plan Beneficiaries', () => {
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency">
-            <Frequency />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency"
+            element={<Frequency  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

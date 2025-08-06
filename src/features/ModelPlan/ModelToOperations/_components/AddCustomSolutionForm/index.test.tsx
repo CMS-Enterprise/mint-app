@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import { categoryMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
@@ -15,9 +15,12 @@ describe('Custom Solution form', () => {
       <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
         <MessageProvider>
           <VerboseMockedProvider mocks={[...categoryMock]} addTypename={false}>
-            <Route path="/models/:modelID/">
-              <CustomSolutionForm />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/"
+            element={<CustomSolutionForm  />}
+          />
+        </Routes>
           </VerboseMockedProvider>
         </MessageProvider>
       </MemoryRouter>

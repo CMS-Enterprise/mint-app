@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
@@ -56,9 +56,12 @@ describe('CollectionAndAggregation', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation">
-            <CollectionAndAggregation />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
+            element={<CollectionAndAggregation  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -78,9 +81,12 @@ describe('CollectionAndAggregation', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation">
-            <CollectionAndAggregation />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
+            element={<CollectionAndAggregation  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

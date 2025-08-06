@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
@@ -57,9 +57,12 @@ describe('CollectingAndSendingData', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data">
-            <CollectingAndSendingData />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
+            element={<CollectingAndSendingData  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -79,9 +82,12 @@ describe('CollectingAndSendingData', () => {
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data">
-            <CollectingAndSendingData />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
+            element={<CollectingAndSendingData  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

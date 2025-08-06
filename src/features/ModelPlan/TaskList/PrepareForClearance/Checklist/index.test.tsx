@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -52,9 +52,12 @@ describe('Prepare for clearance checklist', () => {
         ]}
       >
         <MockedProvider mocks={clearanceMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
-            <PrepareForClearanceCheckList modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
+            element={<PrepareForClearanceCheckList modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -95,9 +98,12 @@ describe('Prepare for clearance checklist', () => {
         ]}
       >
         <MockedProvider mocks={clearanceMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
-            <PrepareForClearanceCheckList modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
+            element={<PrepareForClearanceCheckList modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

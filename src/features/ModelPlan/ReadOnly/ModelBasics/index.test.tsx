@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ModelCategory } from 'gql/generated/graphql';
@@ -21,9 +21,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-view/model-basics">
-              <ReadOnlyModelBasics modelID={modelID} />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/read-view/model-basics"
+            element={<ReadOnlyModelBasics modelID={modelID}  />}
+          />
+        </Routes>
           </Provider>
         </MockedProvider>
       </MemoryRouter>
@@ -53,9 +56,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-view/model-basics">
-              <ReadOnlyModelBasics modelID={modelID} />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/read-view/model-basics"
+            element={<ReadOnlyModelBasics modelID={modelID}  />}
+          />
+        </Routes>
           </Provider>
         </MockedProvider>
       </MemoryRouter>

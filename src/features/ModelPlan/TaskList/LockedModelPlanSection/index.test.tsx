@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
 import LockedModelPlanSection from '.';
@@ -17,9 +17,12 @@ describe('Locked Task List Section Page', () => {
           }
         ]}
       >
-        <Route path="/models/:modelID/locked-task-list-section">
-          <LockedModelPlanSection />
-        </Route>
+        <Routes>
+          <Route
+            path="/models/:modelID/locked-task-list-section"
+            element={<LockedModelPlanSection  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -40,9 +43,12 @@ describe('Locked Task List Section Page', () => {
           }
         ]}
       >
-        <Route path="/models/:modelID/locked-task-list-section">
-          <LockedModelPlanSection />
-        </Route>
+        <Routes>
+          <Route
+            path="/models/:modelID/locked-task-list-section"
+            element={<LockedModelPlanSection  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -63,9 +69,12 @@ describe('Locked Task List Section Page', () => {
           }
         ]}
       >
-        <Route path="/models/:modelID/locked-task-list-section">
-          <LockedModelPlanSection />
-        </Route>
+        <Routes>
+          <Route
+            path="/models/:modelID/locked-task-list-section"
+            element={<LockedModelPlanSection  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 

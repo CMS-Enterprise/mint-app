@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -67,9 +67,12 @@ describe('Model Plan Ops Eval and Learning', () => {
         ]}
       >
         <MockedProvider mocks={evaluationMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation">
-            <Evaluation />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation"
+            element={<Evaluation  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -95,9 +98,12 @@ describe('Model Plan Ops Eval and Learning', () => {
         ]}
       >
         <MockedProvider mocks={evaluationMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation">
-            <Evaluation />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation"
+            element={<Evaluation  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

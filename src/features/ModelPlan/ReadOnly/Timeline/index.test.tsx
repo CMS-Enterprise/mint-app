@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
@@ -19,9 +19,12 @@ describe('Read Only Model Plan Summary -- Model timeline', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-view/model-timeline">
-              <ReadOnlyModelTimeline modelID={modelID} />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/read-view/model-timeline"
+            element={<ReadOnlyModelTimeline modelID={modelID}  />}
+          />
+        </Routes>
           </Provider>
         </MockedProvider>
       </MemoryRouter>
@@ -41,9 +44,12 @@ describe('Read Only Model Plan Summary -- Model timeline', () => {
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/read-view/model-timeline">
-              <ReadOnlyModelTimeline modelID={modelID} />
-            </Route>
+            <Routes>
+          <Route
+            path="/models/:modelID/read-view/model-timeline"
+            element={<ReadOnlyModelTimeline modelID={modelID}  />}
+          />
+        </Routes>
           </Provider>
         </MockedProvider>
       </MemoryRouter>

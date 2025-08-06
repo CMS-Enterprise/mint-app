@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -111,9 +111,12 @@ describe('ClearanceReview component', () => {
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
+            element={<ClearanceReview modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -137,9 +140,12 @@ describe('ClearanceReview component', () => {
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
+            element={<ClearanceReview modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -165,9 +171,12 @@ describe('ClearanceReview component', () => {
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
+            element={<ClearanceReview modelID={modelID}  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

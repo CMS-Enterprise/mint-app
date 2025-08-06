@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
@@ -10,9 +10,12 @@ describe('New Model Plan page', () => {
     render(
       <MemoryRouter initialEntries={['/models/new-plan']}>
         <MockedProvider>
-          <Route path="/models/new-plan">
-            <NewPlan />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/new-plan"
+            element={<NewPlan  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -26,9 +29,12 @@ describe('New Model Plan page', () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={['/models/new-plan']}>
         <MockedProvider>
-          <Route path="/models/new-plan">
-            <NewPlan />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/new-plan"
+            element={<NewPlan  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );

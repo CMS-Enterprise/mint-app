@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import i18next from 'i18next';
 
@@ -11,9 +11,12 @@ describe('ResourcesByCategory', () => {
   it('renders the component correctly with no current category', () => {
     render(
       <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <ResourcesByCategory />
-        </Route>
+        <Routes>
+          <Route
+            path="/help-and-knowledge/articles"
+            element={<ResourcesByCategory  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -25,12 +28,15 @@ describe('ResourcesByCategory', () => {
   it('renders the component correctly with a current category', () => {
     render(
       <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <ResourcesByCategory
+        <Routes>
+          <Route
+            path="/help-and-knowledge/articles"
+            element={<ResourcesByCategory
             currentCategory={ArticleCategories.GETTING_STARTED}
             className="custom-class"
+           />}
           />
-        </Route>
+        </Routes>
       </MemoryRouter>
     );
 
@@ -42,9 +48,12 @@ describe('ResourcesByCategory', () => {
   it('renders the correct amount of articles in the categories', () => {
     render(
       <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <ResourcesByCategory />
-        </Route>
+        <Routes>
+          <Route
+            path="/help-and-knowledge/articles"
+            element={<ResourcesByCategory  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -70,12 +79,15 @@ describe('ResourcesByCategory', () => {
   it('matches the snapshot', () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <ResourcesByCategory
+        <Routes>
+          <Route
+            path="/help-and-knowledge/articles"
+            element={<ResourcesByCategory
             currentCategory={ArticleCategories.GETTING_STARTED}
             className="custom-class"
+           />}
           />
-        </Route>
+        </Routes>
       </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();

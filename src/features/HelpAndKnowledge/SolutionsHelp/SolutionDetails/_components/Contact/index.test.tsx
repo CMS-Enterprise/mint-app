@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -26,9 +26,12 @@ describe('Operation Solution Contact', () => {
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
         ]}
       >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <Contact contact={contact} />
-        </Route>
+        <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<Contact contact={contact}  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
     expect(getByText('Aliza Kim')).toBeInTheDocument();
@@ -41,9 +44,12 @@ describe('Operation Solution Contact', () => {
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
         ]}
       >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <Contact contact={contact} />
-        </Route>
+        <Routes>
+          <Route
+            path="/help-and-knowledge/operational-solutions"
+            element={<Contact contact={contact}  />}
+          />
+        </Routes>
       </MemoryRouter>
     );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -56,9 +56,12 @@ describe('Model Plan -- Anticipate Dependencies', () => {
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies">
-            <AnticipateDependencies />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies"
+            element={<AnticipateDependencies  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -84,9 +87,12 @@ describe('Model Plan -- Anticipate Dependencies', () => {
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies">
-            <AnticipateDependencies />
-          </Route>
+          <Routes>
+          <Route
+            path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies"
+            element={<AnticipateDependencies  />}
+          />
+        </Routes>
         </MockedProvider>
       </MemoryRouter>
     );
