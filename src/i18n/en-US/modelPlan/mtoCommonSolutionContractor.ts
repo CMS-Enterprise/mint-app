@@ -48,7 +48,7 @@ export const mtoCommonSolutionContractorMisc = {
   },
   editContractor: {
     title: 'Edit contractor',
-    cta: 'Save Changes',
+    cta: 'Save changes',
     success:
       'You updated contractor information for <bold>{{-contractor}}</bold>.',
     error:
