@@ -107,15 +107,27 @@ describe('DataExchangeApproachCard', () => {
       commonName: 'John Doe'
     };
 
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <DataExchangeApproachCard
+              modelID="123"
+              dataExhangeApproachData={modifiedMock}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <DataExchangeApproachCard
-            modelID="123"
-            dataExhangeApproachData={modifiedMock}
-          />{' '}
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     expect(
@@ -125,15 +137,27 @@ describe('DataExchangeApproachCard', () => {
   });
 
   it('renders the correct links', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <DataExchangeApproachCard
+              modelID="123"
+              dataExhangeApproachData={dataExchangeApproachMock}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <DataExchangeApproachCard
-            modelID="123"
-            dataExhangeApproachData={dataExchangeApproachMock}
-          />{' '}
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     expect(

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -24,20 +24,26 @@ const mocks = [...possibleSolutionsMock];
 
 describe('Owner Form Component', () => {
   it('should matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: <OwnerForm mode="addSystemOwner" closeModal={() => {}} />
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
-              <OwnerForm mode="addSystemOwner" closeModal={() => {}} />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();
