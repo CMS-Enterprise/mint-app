@@ -11,7 +11,7 @@ describe('The MTOWarning component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
+          path: '/help-and-knowledge/operational-solutions',
           element: (
             <BCDATimeLine solution={helpSolutions[MtoCommonSolutionKey.BCDA]} />
           )

@@ -276,6 +276,7 @@ export default function OktaUserSelect({
   return (
     <Select
       id={id}
+      data-testid="cedar-contact-select"
       name={name}
       className={classNames(
         'margin-top-1',

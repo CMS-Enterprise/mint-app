@@ -9,7 +9,7 @@ describe('The Task List Alert Banner', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list',
+          path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
           element: <TaskListBannerAlert />
         }
       ],

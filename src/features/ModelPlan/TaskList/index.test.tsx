@@ -285,7 +285,11 @@ describe('The Model Plan Task List', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list',
-          element: <TaskList />
+          element: (
+            <MessageProvider>
+              <TaskList />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -299,9 +303,7 @@ describe('The Model Plan Task List', () => {
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
           addTypename={false}
         >
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </MockedProvider>
       </Provider>
     );
@@ -318,7 +320,11 @@ describe('The Model Plan Task List', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list',
-          element: <TaskList />
+          element: (
+            <MessageProvider>
+              <TaskList />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -332,9 +338,7 @@ describe('The Model Plan Task List', () => {
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
           addTypename={false}
         >
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </MockedProvider>
       </Provider>
     );
@@ -359,7 +363,11 @@ describe('The Model Plan Task List', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list',
-          element: <TaskList />
+          element: (
+            <MessageProvider>
+              <TaskList />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -373,9 +381,7 @@ describe('The Model Plan Task List', () => {
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
           addTypename={false}
         >
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </MockedProvider>
       </Provider>
     );
@@ -391,7 +397,11 @@ describe('The Model Plan Task List', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list',
-          element: <TaskList />
+          element: (
+            <MessageProvider>
+              <TaskList />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -405,9 +415,7 @@ describe('The Model Plan Task List', () => {
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
           addTypename={false}
         >
-          <MessageProvider>
-            <RouterProvider router={router} />
-          </MessageProvider>
+          <RouterProvider router={router} />
         </MockedProvider>
       </Provider>
     );
@@ -427,7 +435,11 @@ describe('The Model Plan Task List', () => {
         [
           {
             path: '/models/:modelID/collaboration-area/task-list',
-            element: <TaskList />
+            element: (
+              <MessageProvider>
+                <TaskList />
+              </MessageProvider>
+            )
           }
         ],
         {
@@ -443,9 +455,7 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
             addTypename={false}
           >
-            <MessageProvider>
-              <RouterProvider router={router} />
-            </MessageProvider>
+            <RouterProvider router={router} />
           </MockedProvider>
         </Provider>
       );

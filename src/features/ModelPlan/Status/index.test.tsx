@@ -12,7 +12,7 @@ describe('Model Plan Status Update page', () => {
     const router = createMemoryRouter(
       [
         {
-          path: 'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/status',
+          path: '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/status',
           element: (
             <MockedProvider>
               <MessageProvider>
@@ -24,7 +24,7 @@ describe('Model Plan Status Update page', () => {
       ],
       {
         initialEntries: [
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/status'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/status'
         ]
       }
     );

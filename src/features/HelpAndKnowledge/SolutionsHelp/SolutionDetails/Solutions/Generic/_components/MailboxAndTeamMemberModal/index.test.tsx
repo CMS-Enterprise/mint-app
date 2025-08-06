@@ -19,7 +19,12 @@ const contact: SolutionContactType = {
   isTeam: false,
   role: 'Project Lead',
   isPrimary: true,
-  receiveEmails: false
+  receiveEmails: false,
+  userAccount: {
+    __typename: 'UserAccount',
+    id: '123',
+    username: 'AWER'
+  }
 };
 
 const mocks = [...possibleSolutionsMock];
@@ -29,14 +34,16 @@ describe('MailboxAndTeamMemberModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <MailboxAndTeamMemberModal
-              isOpen
-              closeModal={() => {}}
-              contact={contact}
-              mode="addTeamMailbox"
-            />
+            <MessageProvider>
+              <MailboxAndTeamMemberModal
+                isOpen
+                closeModal={() => {}}
+                contact={contact}
+                mode="addTeamMailbox"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -49,9 +56,7 @@ describe('MailboxAndTeamMemberModal Component', () => {
 
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText('Add a team mailbox')).toBeInTheDocument();
@@ -64,14 +69,16 @@ describe('MailboxAndTeamMemberModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <MailboxAndTeamMemberModal
-              isOpen
-              closeModal={() => {}}
-              contact={contact}
-              mode="addTeamMember"
-            />
+            <MessageProvider>
+              <MailboxAndTeamMemberModal
+                isOpen
+                closeModal={() => {}}
+                contact={contact}
+                mode="addTeamMember"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -84,9 +91,7 @@ describe('MailboxAndTeamMemberModal Component', () => {
 
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText('Add a team member')).toBeInTheDocument();
@@ -99,14 +104,16 @@ describe('MailboxAndTeamMemberModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <MailboxAndTeamMemberModal
-              isOpen
-              closeModal={() => {}}
-              contact={contact}
-              mode="editTeamMailbox"
-            />
+            <MessageProvider>
+              <MailboxAndTeamMemberModal
+                isOpen
+                closeModal={() => {}}
+                contact={contact}
+                mode="editTeamMailbox"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -119,9 +126,7 @@ describe('MailboxAndTeamMemberModal Component', () => {
 
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText('Edit a team mailbox')).toBeInTheDocument();
@@ -134,14 +139,16 @@ describe('MailboxAndTeamMemberModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <MailboxAndTeamMemberModal
-              isOpen
-              closeModal={() => {}}
-              contact={contact}
-              mode="editTeamMember"
-            />
+            <MessageProvider>
+              <MailboxAndTeamMemberModal
+                isOpen
+                closeModal={() => {}}
+                contact={contact}
+                mode="editTeamMember"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -154,9 +161,7 @@ describe('MailboxAndTeamMemberModal Component', () => {
 
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText('Edit a team member')).toBeInTheDocument();
@@ -169,14 +174,16 @@ describe('MailboxAndTeamMemberModal Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
-            <MailboxAndTeamMemberModal
-              isOpen
-              closeModal={() => {}}
-              contact={contact}
-              mode="addTeamMember"
-            />
+            <MessageProvider>
+              <MailboxAndTeamMemberModal
+                isOpen
+                closeModal={() => {}}
+                contact={contact}
+                mode="addTeamMember"
+              />
+            </MessageProvider>
           )
         }
       ],
@@ -189,9 +196,7 @@ describe('MailboxAndTeamMemberModal Component', () => {
 
     const { asFragment } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <MessageProvider>
-          <RouterProvider router={router} />
-        </MessageProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 
