@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
@@ -50,21 +50,24 @@ const mock = [
 
 describe('CollectingAndSendingData', () => {
   it('renders correctly and matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data',
+          element: <CollectingAndSendingData />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/data-exchange-approach/collecting-and-sending-data'
-        ]}
-      >
-        <MockedProvider mocks={mock} addTypename={false}>
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
-            element={<CollectingAndSendingData  />}
-          />
-        </Routes>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     // Check if the label and help text are rendered
@@ -75,21 +78,24 @@ describe('CollectingAndSendingData', () => {
   });
 
   it('disables MultiSelect when checkbox is checked', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data',
+          element: <CollectingAndSendingData />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/data-exchange-approach/collecting-and-sending-data'
-        ]}
-      >
-        <MockedProvider mocks={mock} addTypename={false}>
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
-            element={<CollectingAndSendingData  />}
-          />
-        </Routes>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(await screen.findByText('send note')).toBeInTheDocument();

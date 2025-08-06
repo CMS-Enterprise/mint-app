@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -70,25 +70,28 @@ const mocks = [
 
 describe('Collaborator/Team Member page w/table', () => {
   it('displays a table with collaborator', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: 'models/:modelID/collaboration-area/collaborators',
+          element: <CollaboratorsContent />
+        }
+      ],
+      {
+        initialEntries: [
           'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <MessageProvider>
-              <Routes>
-          <Route
-            path="models/:modelID/collaboration-area/collaborators"
-            element={<CollaboratorsContent  />}
-          />
-        </Routes>
-            </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <MessageProvider>
+            <RouterProvider router={router} />
+          </MessageProvider>
+        </Provider>
+      </MockedProvider>
     );
 
     expect(await screen.findByRole('table')).toBeInTheDocument();
@@ -103,25 +106,28 @@ describe('Collaborator/Team Member page w/table', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: 'models/:modelID/collaboration-area/collaborators',
+          element: <CollaboratorsContent />
+        }
+      ],
+      {
+        initialEntries: [
           'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <MessageProvider>
-              <Routes>
-          <Route
-            path="models/:modelID/collaboration-area/collaborators"
-            element={<CollaboratorsContent  />}
-          />
-        </Routes>
-            </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <MessageProvider>
+            <RouterProvider router={router} />
+          </MessageProvider>
+        </Provider>
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
