@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import {
@@ -71,14 +71,11 @@ const changeHistoryMock = [
 
 describe('The TaskListSideNavActions', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
-        ]}
-      >
-        <MockedProvider mocks={[...changeHistoryMock]} addTypename={false}>
-          <Route path="models/:modelID/collaboration-area/task-list">
+    const router = createMemoryRouter(
+      [
+        {
+          path: 'models/:modelID/collaboration-area/task-list',
+          element: (
             <MessageProvider>
               <TaskListSideNav
                 modelPlan={modelPlan}
@@ -86,9 +83,20 @@ describe('The TaskListSideNavActions', () => {
                 setStatusMessage={() => null}
               />
             </MessageProvider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={[...changeHistoryMock]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

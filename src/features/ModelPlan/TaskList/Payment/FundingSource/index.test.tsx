@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   FundingSource as FundingSourceType,
@@ -66,21 +66,24 @@ const paymentMock = [
 
 describe('Model Plan Payment', () => {
   it('renders without errors', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/payment',
+          element: <FundingSource />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelPlanID}/collaboration-area/task-list/payment`
-        ]}
-      >
-        <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/task-list/payment"
-            element={<FundingSource  />}
-          />
-        </Routes>
-        </VerboseMockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByTestId } = render(
+      <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {
@@ -98,21 +101,24 @@ describe('Model Plan Payment', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/payment',
+          element: <FundingSource />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelPlanID}/collaboration-area/task-list/payment`
-        ]}
-      >
-        <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/task-list/payment"
-            element={<FundingSource  />}
-          />
-        </Routes>
-        </VerboseMockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment, getByTestId } = render(
+      <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {
