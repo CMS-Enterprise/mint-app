@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MtoCommonMilestoneKey } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
@@ -11,33 +11,41 @@ import AddCommonMilestoneForm from './index';
 
 describe('Add common milestone form', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: (
+            <AddCommonMilestoneForm
+              milestone={{
+                __typename: 'MTOCommonMilestone',
+                name: 'Milestone 1',
+                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                isAdded: false,
+                isSuggested: false,
+                categoryName: 'Category 1',
+                subCategoryName: 'SubCategory 1',
+                facilitatedByRole: [],
+                commonSolutions: []
+              }}
+              closeModal={() => {}}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
-        ]}
-      >
-        <MessageProvider>
-          <VerboseMockedProvider mocks={[]} addTypename={false}>
-            <Route path="/models/:modelID/">
-              <AddCommonMilestoneForm
-                milestone={{
-                  __typename: 'MTOCommonMilestone',
-                  name: 'Milestone 1',
-                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
-                  isAdded: false,
-                  isSuggested: false,
-                  categoryName: 'Category 1',
-                  subCategoryName: 'SubCategory 1',
-                  facilitatedByRole: [],
-                  commonSolutions: []
-                }}
-                closeModal={() => {}}
-              />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MessageProvider>
+        <VerboseMockedProvider mocks={[]} addTypename={false}>
+          <RouterProvider router={router} />
+        </VerboseMockedProvider>
+      </MessageProvider>
     );
 
     await waitFor(() => {

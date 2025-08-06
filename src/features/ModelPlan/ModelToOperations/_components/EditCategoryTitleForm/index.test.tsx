@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { categoryMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
@@ -11,22 +11,27 @@ import EditCategoryTitleForm from './index';
 
 describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: <EditCategoryTitleForm />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[...[...categoryMock]]}
-            addTypename={false}
-          >
-            <Routes>
-          <Route
-            path="/models/:modelID/"
-            element={<EditCategoryTitleForm  />}
-          />
-        </Routes>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+      <MessageProvider>
+        <VerboseMockedProvider
+          mocks={[...[...categoryMock]]}
+          addTypename={false}
+        >
+          <RouterProvider router={router} />
+        </VerboseMockedProvider>
+      </MessageProvider>
     );
 
     await waitFor(() => {

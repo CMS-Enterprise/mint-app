@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import { allMTOSolutionsMock, milestoneMock, modelID } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
@@ -10,22 +10,27 @@ import SelectSolutionForm from './index';
 
 describe('Select a Solution form', () => {
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: <SelectSolutionForm />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
     const { getByText, asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
-            addTypename={false}
-          >
-            <Routes>
-          <Route
-            path="/models/:modelID/"
-            element={<SelectSolutionForm  />}
-          />
-        </Routes>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+      <MessageProvider>
+        <VerboseMockedProvider
+          mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
+          addTypename={false}
+        >
+          <RouterProvider router={router} />
+        </VerboseMockedProvider>
+      </MessageProvider>
     );
 
     await waitFor(() => {

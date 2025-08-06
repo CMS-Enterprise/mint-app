@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import { GetMtoCategoriesDocument } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
@@ -59,19 +59,24 @@ const mocks = [
 
 describe('Custom Milestone form', () => {
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: <CustomMilestoneForm />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
     const { getAllByTestId, getByTestId, asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <Routes>
-          <Route
-            path="/models/:modelID/"
-            element={<CustomMilestoneForm  />}
-          />
-        </Routes>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+      <MessageProvider>
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <RouterProvider router={router} />
+        </VerboseMockedProvider>
+      </MessageProvider>
     );
 
     await waitFor(() => {

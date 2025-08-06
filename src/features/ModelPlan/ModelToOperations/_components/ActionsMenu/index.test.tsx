@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 import {
@@ -20,55 +20,75 @@ describe('Component', () => {
   console.error = vi.fn();
 
   it('renders correctly and matches snapshot', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: (
+            <ActionMenu
+              rowType="milestone"
+              milestoneID="123"
+              subCategoryID="1234"
+              primaryCategoryID="12345"
+              MoveDown={<></>}
+              MoveUp={<></>}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <ActionMenu
-            rowType="milestone"
-            milestoneID="123"
-            subCategoryID="1234"
-            primaryCategoryID="12345"
-            MoveDown={<></>}
-            MoveUp={<></>}
-          />
-        </MessageProvider>
-      </MemoryRouter>
+      <MessageProvider>
+        <RouterProvider router={router} />
+      </MessageProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('opens and closes the modal based on URL parameter', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <ActionMenu
+              rowType="milestone"
+              milestoneID="123"
+              subCategoryID="1234"
+              primaryCategoryID="12345"
+              MoveDown={<></>}
+              MoveUp={<></>}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones&edit-milestone=123`
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider
+        mocks={[
+          ...milestoneMock('123'),
+          ...categoryMock,
+          ...allMTOSolutionsMock
         ]}
+        addTypename={false}
       >
-        <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
-          <MockedProvider
-            mocks={[
-              ...milestoneMock('123'),
-              ...categoryMock,
-              ...allMTOSolutionsMock
-            ]}
-            addTypename={false}
-          >
-            <MessageProvider>
-              <EditMTOMilestoneProvider>
-                <ActionMenu
-                  rowType="milestone"
-                  milestoneID="123"
-                  subCategoryID="1234"
-                  primaryCategoryID="12345"
-                  MoveDown={<></>}
-                  MoveUp={<></>}
-                />
-              </EditMTOMilestoneProvider>
-            </MessageProvider>
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        <MessageProvider>
+          <EditMTOMilestoneProvider>
+            <RouterProvider router={router} />
+          </EditMTOMilestoneProvider>
+        </MessageProvider>
+      </MockedProvider>
     );
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();

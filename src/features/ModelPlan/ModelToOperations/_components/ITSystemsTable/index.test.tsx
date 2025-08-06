@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 import {
@@ -14,23 +14,31 @@ import ITSystemsTable from './index';
 
 describe('ITSystemsTable Component', () => {
   it('renders correctly and matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-        ]}
-      >
-        <MockedProvider
-          mocks={[...possibleSolutionsMock, ...solutionAndMilestoneMock]}
-          addTypename={false}
-        >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
             <MessageProvider>
               <ITSystemsTable />
             </MessageProvider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider
+        mocks={[...possibleSolutionsMock, ...solutionAndMilestoneMock]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     // Wait for the component to finish loading

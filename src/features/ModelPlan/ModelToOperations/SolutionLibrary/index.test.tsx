@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import {
@@ -14,22 +14,30 @@ import SolutionLibrary from '.';
 
 describe('SolutionLibrary Component', () => {
   it('renders correctly and matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/solution-library',
+          element: (
+            <MessageProvider>
+              <SolutionLibrary />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
+        ]
+      }
+    );
+
     const { asFragment, getByText } = render(
       <MockedProvider
         mocks={[...commonSolutionsMock, ...possibleSolutionsMock]}
         addTypename={false}
       >
-        <MemoryRouter
-          initialEntries={[
-            `/models/${modelID}/collaboration-area/model-to-operations/solution-library`
-          ]}
-        >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/solution-library">
-            <MessageProvider>
-              <SolutionLibrary />
-            </MessageProvider>
-          </Route>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

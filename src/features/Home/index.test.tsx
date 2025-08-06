@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import {
   render,
@@ -138,26 +138,36 @@ describe('The home page', () => {
   const store = mockStore({ auth: mockAuthReducer });
 
   it('renders empty message for no settings selected', async () => {
-    const { getByText, getByTestId } = render(
-      <MemoryRouter initialEntries={[`/`]}>
-        <VerboseMockedProvider
-          mocks={[
-            ...settingsMock,
-            ...favoritesMock,
-            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
-            ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
-          ]}
-          addTypename={false}
-        >
-          <Route path="/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
             <Provider store={store}>
               <MessageProvider>
                 <HomeNew />
               </MessageProvider>
             </Provider>
-          </Route>
-        </VerboseMockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByText, getByTestId } = render(
+      <VerboseMockedProvider
+        mocks={[
+          ...settingsMock,
+          ...favoritesMock,
+          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+          ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
@@ -177,26 +187,36 @@ describe('The home page', () => {
       ]
     );
 
-    const { getByTestId } = render(
-      <MemoryRouter initialEntries={[`/`]}>
-        <MockedProvider
-          mocks={[
-            ...settingsWithOrder,
-            ...favoritesMock,
-            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
-            ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
-          ]}
-          addTypename={false}
-        >
-          <Route path="/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
             <Provider store={store}>
               <MessageProvider>
                 <HomeNew />
               </MessageProvider>
             </Provider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByTestId } = render(
+      <MockedProvider
+        mocks={[
+          ...settingsWithOrder,
+          ...favoritesMock,
+          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+          ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
@@ -217,26 +237,36 @@ describe('The home page', () => {
       ]
     );
 
-    const { asFragment, getByTestId } = render(
-      <MemoryRouter initialEntries={[`/`]}>
-        <MockedProvider
-          mocks={[
-            ...settingsWithOrder,
-            ...favoritesMock,
-            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
-            ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
-          ]}
-          addTypename={false}
-        >
-          <Route path="/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
             <Provider store={store}>
               <MessageProvider>
                 <HomeNew />
               </MessageProvider>
             </Provider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { asFragment, getByTestId } = render(
+      <MockedProvider
+        mocks={[
+          ...settingsWithOrder,
+          ...favoritesMock,
+          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+          ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(async () => {

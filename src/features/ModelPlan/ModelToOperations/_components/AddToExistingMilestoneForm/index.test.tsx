@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import { allMilestonesMock, modelID } from 'tests/mock/mto';
@@ -11,23 +11,30 @@ import AddToExistingMilestoneForm from '.';
 
 describe('Custom Catergory form', () => {
   it('runs without errors and matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: (
+            <AddToExistingMilestoneForm
+              closeModal={() => {}}
+              solutionName="Test Solution"
+              solutionKey={MtoCommonSolutionKey.ACO_OS}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[allMilestonesMock]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/">
-              <AddToExistingMilestoneForm
-                closeModal={() => {}}
-                solutionName="Test Solution"
-                solutionKey={MtoCommonSolutionKey.ACO_OS}
-              />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+      <MessageProvider>
+        <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+          <RouterProvider router={router} />
+        </VerboseMockedProvider>
+      </MessageProvider>
     );
 
     await waitFor(() => {
@@ -51,23 +58,30 @@ describe('Custom Catergory form', () => {
       allMilestonesMock.result.data.modelPlan.mtoMatrix.milestones = [];
     }
 
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: (
+            <AddToExistingMilestoneForm
+              closeModal={() => {}}
+              solutionName="Test Solution"
+              solutionKey={MtoCommonSolutionKey.ACO_OS}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[allMilestonesMock]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/">
-              <AddToExistingMilestoneForm
-                closeModal={() => {}}
-                solutionName="Test Solution"
-                solutionKey={MtoCommonSolutionKey.ACO_OS}
-              />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+      <MessageProvider>
+        <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+          <RouterProvider router={router} />
+        </VerboseMockedProvider>
+      </MessageProvider>
     );
 
     await waitFor(() => {

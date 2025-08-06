@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -19,32 +19,37 @@ describe('EditSolutionForm Component', () => {
   console.error = vi.fn();
 
   const renderForm = (addedFromSolutionLibrary: boolean = true) => {
-    return render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <EditSolutionForm
+              closeModal={vi.fn()}
+              setIsDirty={vi.fn()}
+              setCloseDestination={vi.fn()}
+              setFooter={() => {}}
+              submitted={{ current: false }}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all&edit-solution=1`
-        ]}
+        ]
+      }
+    );
+
+    return render(
+      <MockedProvider
+        mocks={[solutionMock('1', addedFromSolutionLibrary), allMilestonesMock]}
+        addTypename={false}
       >
-        <MockedProvider
-          mocks={[
-            solutionMock('1', addedFromSolutionLibrary),
-            allMilestonesMock
-          ]}
-          addTypename={false}
-        >
-          <MessageProvider>
-            <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
-              <EditSolutionForm
-                closeModal={vi.fn()}
-                setIsDirty={vi.fn()}
-                setCloseDestination={vi.fn()}
-                setFooter={() => {}}
-                submitted={{ current: false }}
-              />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
+      </MockedProvider>
     );
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -28,23 +28,26 @@ const mocks = [...possibleSolutionsMock];
 
 describe('Contractors Component', () => {
   it('should renders no contractors alert info when there are no contractors', () => {
-    const { queryByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: <Contractors contractors={[]} />
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<Contractors contractors={[]}  />}
-          />
-        </Routes>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { queryByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
+      </MockedProvider>
     );
 
     expect(
@@ -53,23 +56,26 @@ describe('Contractors Component', () => {
   });
 
   it('should matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: <Contractors contractors={contractors} />
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<Contractors contractors={contractors}  />}
-          />
-        </Routes>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

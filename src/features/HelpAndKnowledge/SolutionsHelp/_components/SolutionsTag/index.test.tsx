@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
@@ -9,21 +9,24 @@ import SolutionsTag from './index';
 
 describe('Operation Solution Help Tag', () => {
   it('rendered correct information without query', () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={['/help-and-knowledge/operational-solutions']}
-      >
-        <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<SolutionsTag
-            route={operationalSolutionCategoryMap.data}
-            category={MtoCommonSolutionSubject.DATA}
-           />}
-          />
-        </Routes>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: (
+            <SolutionsTag
+              route={operationalSolutionCategoryMap.data}
+              category={MtoCommonSolutionSubject.DATA}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/operational-solutions']
+      }
     );
+
+    const { getByTestId } = render(<RouterProvider router={router} />);
 
     const tag = getByTestId('solutions-tag');
 
@@ -36,21 +39,24 @@ describe('Operation Solution Help Tag', () => {
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={['/help-and-knowledge/operational-solutions']}
-      >
-        <Routes>
-          <Route
-            path="/help-and-knowledge/operational-solutions"
-            element={<SolutionsTag
-            route={operationalSolutionCategoryMap.data}
-            category={MtoCommonSolutionSubject.DATA}
-           />}
-          />
-        </Routes>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: (
+            <SolutionsTag
+              route={operationalSolutionCategoryMap.data}
+              category={MtoCommonSolutionSubject.DATA}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/operational-solutions']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

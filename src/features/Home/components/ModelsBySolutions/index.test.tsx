@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import {
@@ -197,16 +197,26 @@ const mocks: MockedResponse<
 
 describe('ModelsBySolution Table and Card', () => {
   it('renders solution models banner and cards and matches snapshot', async () => {
-    const { getByText, getByTestId, user, asFragment } = setup(
-      <MemoryRouter initialEntries={['/']}>
-        <Route path="/">
-          <MockedProvider mocks={mocks} addTypename={false}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
             <ModelsBySolutionTable
               solutionKey={MtoCommonSolutionKey.INNOVATION}
             />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByText, getByTestId, user, asFragment } = setup(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('spinner'));

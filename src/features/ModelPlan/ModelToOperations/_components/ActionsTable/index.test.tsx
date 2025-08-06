@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -15,6 +15,20 @@ import MTOTableActions from '.';
 
 describe('MTO Table Actions Component', () => {
   it('renders correctly and matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations',
+          element: <MTOTableActions />
+        }
+      ],
+      {
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations`
+        ]
+      }
+    );
+
     const { asFragment } = render(
       <MockedProvider
         mocks={[
@@ -25,20 +39,9 @@ describe('MTO Table Actions Component', () => {
         ]}
         addTypename={false}
       >
-        <MemoryRouter
-          initialEntries={[
-            `/models/${modelID}/collaboration-area/model-to-operations`
-          ]}
-        >
-          <MessageProvider>
-            <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/model-to-operations"
-            element={<MTOTableActions  />}
-          />
-        </Routes>
-          </MessageProvider>
-        </MemoryRouter>
+        <MessageProvider>
+          <RouterProvider router={router} />
+        </MessageProvider>
       </MockedProvider>
     );
 

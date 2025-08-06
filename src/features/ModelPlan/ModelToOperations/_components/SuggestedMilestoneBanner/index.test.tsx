@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 
@@ -19,22 +19,27 @@ const suggestedMilestone: {
 
 describe('SuggestedMilestoneBanner component', () => {
   it('renders correctly and has one suggested milestone and matches snapshot', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <SuggestedMilestoneBanner
+              suggestedMilestones={[...suggestedMilestone]}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
     const { getByText, asFragment } = render(
       <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
-            element={<SuggestedMilestoneBanner
-              suggestedMilestones={[...suggestedMilestone]}
-             />}
-          />
-        </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText(/There is 1 suggested milestone/i)).toBeInTheDocument();
@@ -42,25 +47,30 @@ describe('SuggestedMilestoneBanner component', () => {
   });
 
   it('renders correctly and has two suggested milestones and matches snapshot', () => {
-    const { getByText, asFragment } = render(
-      <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
-            element={<SuggestedMilestoneBanner
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <SuggestedMilestoneBanner
               suggestedMilestones={[
                 ...suggestedMilestone,
                 ...suggestedMilestone
               ]}
-             />}
-          />
-        </Routes>
-        </MemoryRouter>
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
+    const { getByText, asFragment } = render(
+      <MockedProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText(/There are 2 suggested milestones/i)).toBeInTheDocument();
@@ -68,17 +78,12 @@ describe('SuggestedMilestoneBanner component', () => {
   });
 
   it('renders 1 suggested milestone and does not show isAdded milestones', () => {
-    const { getByText, asFragment } = render(
-      <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
-            element={<SuggestedMilestoneBanner
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <SuggestedMilestoneBanner
               suggestedMilestones={[
                 ...suggestedMilestone,
                 {
@@ -87,10 +92,20 @@ describe('SuggestedMilestoneBanner component', () => {
                   isAdded: true
                 }
               ]}
-             />}
-          />
-        </Routes>
-        </MemoryRouter>
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
+    const { getByText, asFragment } = render(
+      <MockedProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText(/There are 2 suggested milestones/i)).toBeInTheDocument();
@@ -98,20 +113,23 @@ describe('SuggestedMilestoneBanner component', () => {
   });
 
   it('renders correctly and has no suggested milestones and matches snapshot', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: <SuggestedMilestoneBanner suggestedMilestones={[]} />
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
     const { getByText, asFragment } = render(
       <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Routes>
-          <Route
-            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
-            element={<SuggestedMilestoneBanner suggestedMilestones={[]}  />}
-          />
-        </Routes>
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(getByText(/There aren't currently/i)).toBeInTheDocument();

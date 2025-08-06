@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 import {
@@ -77,43 +77,51 @@ const milestone: MilestoneType = {
 
 describe('LinkSolutionForm', () => {
   it('renders and matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <LinkSolutionForm
+              milestone={milestone}
+              commonSolutionKeys={[MtoCommonSolutionKey.BCDA]}
+              setCommonSolutionKeys={() => null}
+              solutionIDs={[]}
+              setSolutionIDs={() => null}
+              allSolutions={{
+                __typename: 'ModelsToOperationMatrix',
+                commonSolutions: [],
+                info: {
+                  __typename: 'MTOInfo',
+                  id: '123'
+                },
+                solutions: []
+              }}
+              setCloseDestination={() => null}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones&edit-milestone=123`
-        ]}
-      >
-        <MessageProvider>
-          <MockedProvider
-            mocks={[
-              ...milestoneMock('123'),
-              ...categoryMock,
-              ...possibleSolutionsMock
-            ]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
-              <LinkSolutionForm
-                milestone={milestone}
-                commonSolutionKeys={[MtoCommonSolutionKey.BCDA]}
-                setCommonSolutionKeys={() => null}
-                solutionIDs={[]}
-                setSolutionIDs={() => null}
-                allSolutions={{
-                  __typename: 'ModelsToOperationMatrix',
-                  commonSolutions: [],
-                  info: {
-                    __typename: 'MTOInfo',
-                    id: '123'
-                  },
-                  solutions: []
-                }}
-                setCloseDestination={() => null}
-              />
-            </Route>
-          </MockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MessageProvider>
+        <MockedProvider
+          mocks={[
+            ...milestoneMock('123'),
+            ...categoryMock,
+            ...possibleSolutionsMock
+          ]}
+          addTypename={false}
+        >
+          <RouterProvider router={router} />
+        </MockedProvider>
+      </MessageProvider>
     );
 
     expect(screen.getByRole('checkbox')).toBeChecked();
