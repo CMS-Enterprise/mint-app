@@ -41,7 +41,14 @@ export const OktaSessionProvider = ({ children }: OktaSessionProviderProps) => {
       }
 
       try {
-        const sessionExists = await oktaAuthContext.oktaAuth.session?.exists();
+        // Add timeout to prevent hanging
+        const sessionExists = await Promise.race([
+          oktaAuthContext.oktaAuth.session?.exists(),
+          new Promise<boolean>((_, reject) =>
+            setTimeout(() => reject(new Error('Session check timeout')), 5000)
+          )
+        ]);
+
         setHasSession(sessionExists);
       } catch (error) {
         setHasSession(false);

@@ -84,10 +84,10 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated, data]);
 
-  // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development
-  if (!window.localStorage[localAuthStorageKey] && !hasSession) {
-    return null;
-  }
+  // // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development
+  // if (!window.localStorage[localAuthStorageKey] && hasSession === undefined) {
+  //   return null;
+  // }
 
   return <>{children}</>;
 };
