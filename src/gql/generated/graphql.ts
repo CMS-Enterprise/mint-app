@@ -129,7 +129,6 @@ export type AnalyzedAuditChange = {
   documents?: Maybe<AnalyzedDocuments>;
   modelLeads?: Maybe<AnalyzedModelLeads>;
   modelPlan?: Maybe<AnalyzedModelPlan>;
-  mtoUpdates?: Maybe<AnalyzedMtoUpdates>;
   planDiscussions?: Maybe<AnalyzedPlanDiscussions>;
   planSections?: Maybe<AnalyzedPlanSections>;
 };
@@ -142,12 +141,6 @@ export type AnalyzedCrTdls = {
 export type AnalyzedDocuments = {
   __typename: 'AnalyzedDocuments';
   count?: Maybe<Scalars['Int']['output']>;
-};
-
-export type AnalyzedMtoUpdates = {
-  __typename: 'AnalyzedMTOUpdates';
-  readyForReview: Scalars['Boolean']['output'];
-  updates?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
 };
 
 export type AnalyzedModelLeadInfo = {

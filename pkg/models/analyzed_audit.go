@@ -48,7 +48,6 @@ type AnalyzedAuditChange struct {
 	ModelLeads               *AnalyzedModelLeads               `json:"modelLeads,omitempty"`
 	PlanDiscussions          *AnalyzedPlanDiscussions          `json:"planDiscussion,omitempty"`
 	PlanDataExchangeApproach *AnalyzedPlanDataExchangeApproach `json:"planDataExchangeApproach,omitempty"`
-	MTOUpdates               *AnalyzedMTOUpdates               `json:"mtoUpdates,omitempty"`
 }
 
 // IsEmpty returns if AnalyzedAuditChange struct is empty
@@ -110,7 +109,6 @@ func (a AnalyzedAuditChange) Humanize() []string {
 	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDataExchangeApproach.Humanize())
-	humanizedAuditChanges = append(humanizedAuditChanges, a.MTOUpdates.Humanize()...)
 
 	return lo.Compact(humanizedAuditChanges)
 }
@@ -444,75 +442,4 @@ func (a *AnalyzedPlanDataExchangeApproach) Humanize() string {
 	}
 
 	return ""
-}
-
-type AnalyzedMTOUpdates struct {
-	ReadyForReview []TableName `json:"readyForReview,omitempty"`
-	Updates        []TableName `json:"updates,omitempty"`
-}
-
-const (
-	// AnalyzedMTOHumanizedUpdated is a human readable
-	// sentence template for MTO updates
-	AnalyzedMTOHumanizedUpdated = "Updates to model-to-operations matrix (MTO)"
-
-	// AnalyzedMTOHumanizedReview is a human readable
-	// sentence template for a single MTO ready for review
-	AnalyzedMTOHumanizedReview = "Model-to-operations matrix (MTO) is ready for review"
-
-	// AnalyzedMTOHumanizedReviews is a human readable
-	// sentence template for multiple MTOs ready for review
-	AnalyzedMTOHumanizedReviews = "Model-to-operations matrices (MTO) are ready for review"
-)
-
-// Humanize returns MTO updates in a human-readable format
-func (a *AnalyzedMTOUpdates) Humanize() []string {
-	if a == nil {
-		return nil
-	}
-
-	var humanizedAnalyzedMTOChanges []string
-
-	// Section updates
-	if len(a.Updates) > 0 {
-		// updatedSectionNames := a.humanizeDatabaseTableNames(a.Updates)
-
-		humanizedAnalyzedMTOChanges = append(humanizedAnalyzedMTOChanges,
-			fmt.Sprint(AnalyzedMTOHumanizedUpdated))
-	}
-
-	// Ready for review
-	if len(a.ReadyForReview) > 0 {
-		updatedSectionNames := a.humanizeDatabaseTableNames(a.ReadyForReview)
-
-		if len(updatedSectionNames) == 1 {
-			humanizedAnalyzedMTOChanges = append(humanizedAnalyzedMTOChanges,
-				fmt.Sprint(AnalyzedMTOHumanizedReview))
-		} else {
-			humanizedAnalyzedMTOChanges = append(humanizedAnalyzedMTOChanges,
-				fmt.Sprint(AnalyzedMTOHumanizedReviews))
-		}
-	}
-
-	return humanizedAnalyzedMTOChanges
-}
-
-// IsEmpty returns if AnalyzedMTOUpdates fields are empty
-func (a AnalyzedMTOUpdates) IsEmpty() bool {
-	return len(a.Updates) == 0 &&
-		len(a.ReadyForReview) == 0
-}
-
-func (a AnalyzedMTOUpdates) humanizeDatabaseTableNames(x []TableName) []string {
-	return lo.Map(x, func(name TableName, _ int) string {
-		return a.getHumanizedTableName(name)
-	})
-}
-
-func (a AnalyzedMTOUpdates) getHumanizedTableName(name TableName) string {
-	//Future Enhancement: Utilize the shared mapping package instead of utilizing the constants package
-	humanizedName, _ := constants.GetHumanizedTableName(string(name))
-	//TODO: extract translation logic from the models package, so we can use mappings in the models package
-	// humanizedName, _ :=mappings.TranslateTableName(name)
-	return strings.Trim(humanizedName, " ")
 }

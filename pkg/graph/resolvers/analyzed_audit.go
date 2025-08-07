@@ -104,11 +104,6 @@ func generateChanges(audits []*models.AuditChange, store *storage.Store) (*model
 		return nil, err
 	}
 
-	mtoUpdates, err := analyzeMTOChanges(audits)
-	if err != nil {
-		return nil, err
-	}
-
 	analyzedModelPlan := models.AnalyzedAuditChange{
 		ModelPlan:       modelPlanAudits,
 		Documents:       documentsAudits,
@@ -116,7 +111,6 @@ func generateChanges(audits []*models.AuditChange, store *storage.Store) (*model
 		PlanSections:    sectionsAudits,
 		ModelLeads:      modelLeadAudits,
 		PlanDiscussions: discussionAudits,
-		MTOUpdates:      mtoUpdates,
 	}
 
 	return &analyzedModelPlan, nil
@@ -282,6 +276,9 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		models.TNPlanDataExchangeApproach,
 		models.TNPlanTimeline,
 	}
+
+	sections = append(sections, models.MTOTables...)
+
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return lo.Contains(sections, m.TableName)
 	})
@@ -346,36 +343,4 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 ) ([]*models.AnalyzedAudit, error) {
 
 	return storage.AnalyzedAuditGetByModelPlanIDsAndDate(store, logger, modelPlanIDs, date)
-}
-
-// analyzeMTOChanges analyzes if there were any MTO changes
-func analyzeMTOChanges(audits []*models.AuditChange) (*models.AnalyzedMTOUpdates, error) {
-	// Filter audits for MTO-related tables
-	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, _ int) bool {
-		return lo.Contains(models.MTOTables, audit.TableName)
-	})
-
-	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) models.TableName {
-		return m.TableName
-	}))
-
-	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
-		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") {
-			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
-				return m.TableName, true
-			}
-		}
-		return "", false
-	}))
-
-	analyzedMTOChanges := models.AnalyzedMTOUpdates{
-		ReadyForReview: readyForReview,
-		Updates:        updatedSections,
-	}
-
-	if analyzedMTOChanges.IsEmpty() {
-		return nil, nil
-	}
-	return &analyzedMTOChanges, nil
 }

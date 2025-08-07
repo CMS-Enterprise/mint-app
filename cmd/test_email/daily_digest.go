@@ -8,7 +8,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
-// sendTestDailyDigestEmail demonstrates sending a daily digest test email with MTOUpdates included.
+// sendTestDailyDigestEmail sends a test daily digest email including MTO, data exchange, and plan section updates.
 func sendTestDailyDigestEmail(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
@@ -18,12 +18,21 @@ func sendTestDailyDigestEmail(
 		ModelName: "Test Model Plan",
 		Date:      time.Now(),
 		Changes: models.AnalyzedAuditChange{
-			MTOUpdates: &models.AnalyzedMTOUpdates{
-				ReadyForReview: []models.TableName{models.TNMTOSolution, models.TNMTOMilestoneSolutionLink},
-				Updates:        []models.TableName{models.TNMTOSolution, models.TNMTOSolution},
-			},
-			PlanDiscussions: &models.AnalyzedPlanDiscussions{
+			PlanDataExchangeApproach: &models.AnalyzedPlanDataExchangeApproach{
 				Activity: true,
+			},
+			PlanSections: &models.AnalyzedPlanSections{
+				Updated: []models.TableName{
+					models.TNPlanBasics,
+					models.TNPlanOpsEvalAndLearning,
+					models.TNModelPlan,
+					models.TNMTOCategory,
+				},
+				ReadyForReview: []models.TableName{
+					models.TNPlanTimeline,
+					models.TNPlanOpsEvalAndLearning,
+					models.TNMTOSolution,
+				},
 			},
 		},
 	}

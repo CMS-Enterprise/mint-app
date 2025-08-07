@@ -40,6 +40,12 @@ const (
 	TNMTOInfo                    = "mto_info"
 )
 
+const (
+	// MTOHumanizedName is the humanized name for the MTO section
+	// since we don't care about the specific column name we will use a generic name
+	MTOHumanizedName = "Model-to-operations matrix (MTO)"
+)
+
 // Constants for humanized table names
 var humanizedTableNames = map[string]string{
 	PlanCollaborator:             "Collaborator",
@@ -60,11 +66,12 @@ var humanizedTableNames = map[string]string{
 	PlanTdl:                      "TDL",
 	PlanDataExchangeApproach:     "Data exchange approach",
 	PlanTimeline:                 "Model timeline",
-	TNMTOCategory:                "MTO category",
-	TNMTOMilestone:               "MTO milestone",
-	TNMTOSolution:                "MTO solution",
-	TNMTOMilestoneSolutionLink:   "MTO milestone-solution link",
-	TNMTOInfo:                    "MTO info",
+	// Since MTO is more. agroup of tables we just specify model-to-operations matrix (MTO) for humanized name
+	TNMTOCategory:              MTOHumanizedName,
+	TNMTOMilestone:             MTOHumanizedName,
+	TNMTOSolution:              MTOHumanizedName,
+	TNMTOMilestoneSolutionLink: MTOHumanizedName,
+	TNMTOInfo:                  MTOHumanizedName,
 }
 
 // GetHumanizedTableName returns the humanized name for the given table name

@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
@@ -14,16 +13,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// ReadyForReview is the resolver for the readyForReview field.
-func (r *analyzedMTOUpdatesResolver) ReadyForReview(ctx context.Context, obj *models.AnalyzedMTOUpdates) (bool, error) {
-	panic(fmt.Errorf("not implemented: ReadyForReview - readyForReview"))
-}
-
-// Updates is the resolver for the updates field.
-func (r *analyzedMTOUpdatesResolver) Updates(ctx context.Context, obj *models.AnalyzedMTOUpdates) ([]*string, error) {
-	panic(fmt.Errorf("not implemented: Updates - updates"))
-}
 
 // UserAccount is the resolver for the userAccount field.
 func (r *analyzedModelLeadInfoResolver) UserAccount(ctx context.Context, obj *models.AnalyzedModelLeadInfo) (*authentication.UserAccount, error) {
@@ -41,15 +30,9 @@ func (r *queryResolver) AnalyzedAudits(ctx context.Context, dateAnalyzed time.Ti
 	return audits, nil
 }
 
-// AnalyzedMTOUpdates returns generated.AnalyzedMTOUpdatesResolver implementation.
-func (r *Resolver) AnalyzedMTOUpdates() generated.AnalyzedMTOUpdatesResolver {
-	return &analyzedMTOUpdatesResolver{r}
-}
-
 // AnalyzedModelLeadInfo returns generated.AnalyzedModelLeadInfoResolver implementation.
 func (r *Resolver) AnalyzedModelLeadInfo() generated.AnalyzedModelLeadInfoResolver {
 	return &analyzedModelLeadInfoResolver{r}
 }
 
-type analyzedMTOUpdatesResolver struct{ *Resolver }
 type analyzedModelLeadInfoResolver struct{ *Resolver }
