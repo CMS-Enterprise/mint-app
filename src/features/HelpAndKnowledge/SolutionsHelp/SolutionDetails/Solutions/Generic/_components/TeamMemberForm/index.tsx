@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -33,7 +33,7 @@ type UnwrapNullable<
   P extends PropertyKey
 > = T extends Record<P, unknown> ? T[P] : '';
 
-type FormValues = Pick<
+export type TeamMemberFormValues = Pick<
   SolutionContactType,
   'name' | 'role' | 'isPrimary' | 'receiveEmails'
 > & {
@@ -57,15 +57,22 @@ const TeamMemberForm = ({
       id: 'not a real userAccount id',
       username: ''
     }
-  }
+  },
+  setDisableButton
 }: {
   mode: TeamMemberModeType;
   closeModal: () => void;
   teamMember?: SolutionContactType;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContact');
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
-  const methods = useForm<FormValues>({
+
+  const { selectedSolution } = useModalSolutionState();
+
+  const { showMessage } = useMessage();
+
+  const methods = useForm<TeamMemberFormValues>({
     defaultValues: {
       userName: teamMember.userAccount?.username || '',
       name: teamMember.name,
@@ -84,8 +91,6 @@ const TeamMemberForm = ({
     setValue
   } = methods;
 
-  const { selectedSolution } = useModalSolutionState();
-  const { showMessage } = useMessage();
   const [create] = useCreateMtoCommonSolutionUserContactMutation({
     refetchQueries: [
       {
@@ -93,6 +98,7 @@ const TeamMemberForm = ({
       }
     ]
   });
+
   const [update] = useUpdateMtoCommonSolutionContactMutation({
     refetchQueries: [
       {
@@ -104,16 +110,23 @@ const TeamMemberForm = ({
   const [mutationError, setMutationError] = useState<
     'duplicate' | 'generic' | null
   >(null);
+
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
+
   const disabledSubmitBtn =
     !watch('userName') || !watch('role') || isSubmitting || !isDirty;
 
-  if (!selectedSolution) {
-    return null;
-  }
+  useEffect(() => {
+    setDisableButton(disabledSubmitBtn);
+  }, [setDisableButton, disabledSubmitBtn]);
 
-  const onSubmit = (formData: FormValues) => {
+  const onSubmit = (formData: TeamMemberFormValues) => {
+    if (!selectedSolution) {
+      setMutationError('generic');
+      return;
+    }
+
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
 
     const promise = isAddMode
@@ -164,7 +177,7 @@ const TeamMemberForm = ({
   return (
     <FormProvider {...methods}>
       <Form
-        className="maxw-none"
+        className="maxw-none padding-bottom-10"
         data-testid="team-member-form"
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
@@ -342,23 +355,6 @@ const TeamMemberForm = ({
             }}
           />
         </Alert>
-        <div className="margin-top-3 display-flex">
-          <Button
-            type="submit"
-            disabled={disabledSubmitBtn}
-            className="margin-right-3 margin-top-0"
-          >
-            {miscT(`${mode}.cta`)}
-          </Button>
-          <Button
-            type="button"
-            className="margin-top-0"
-            unstyled
-            onClick={closeModal}
-          >
-            {miscT('cancel')}
-          </Button>
-        </div>
       </Form>
     </FormProvider>
   );

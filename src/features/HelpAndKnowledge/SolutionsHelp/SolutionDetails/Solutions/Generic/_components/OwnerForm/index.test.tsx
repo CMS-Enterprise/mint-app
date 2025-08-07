@@ -30,7 +30,11 @@ describe('Owner Form Component', () => {
           path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
             <MessageProvider>
-              <OwnerForm mode="addSystemOwner" closeModal={() => {}} />
+              <OwnerForm
+                mode="addSystemOwner"
+                closeModal={() => {}}
+                setDisableButton={() => {}}
+              />
             </MessageProvider>
           )
         }
@@ -62,6 +66,7 @@ describe('Owner Form Component', () => {
                 mode="editSystemOwner"
                 closeModal={() => {}}
                 owner={owner}
+                setDisableButton={() => {}}
               />
             </MessageProvider>
           )

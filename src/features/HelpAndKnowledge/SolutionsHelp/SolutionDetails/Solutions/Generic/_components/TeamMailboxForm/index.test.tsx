@@ -41,6 +41,7 @@ describe('Team mailbox point of contact form', () => {
                 mode="editTeamMailbox"
                 closeModal={() => {}}
                 teamMailbox={team}
+                setDisableButton={() => {}}
               />
             </MessageProvider>
           )
@@ -80,6 +81,7 @@ describe('Team mailbox point of contact form', () => {
                 mode="editTeamMailbox"
                 closeModal={() => {}}
                 teamMailbox={{ ...team, isPrimary: true, receiveEmails: true }}
+                setDisableButton={() => {}}
               />
             </MessageProvider>
           )
@@ -115,6 +117,7 @@ describe('Team mailbox point of contact form', () => {
                 mode="addTeamMailbox"
                 closeModal={() => {}}
                 teamMailbox={team}
+                setDisableButton={() => {}}
               />
             </MessageProvider>
           )

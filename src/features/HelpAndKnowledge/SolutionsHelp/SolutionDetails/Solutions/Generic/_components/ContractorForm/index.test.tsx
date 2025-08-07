@@ -30,6 +30,7 @@ describe('Contractor form', () => {
                 mode="editContractor"
                 closeModal={() => {}}
                 contractor={contractor}
+                setDisableButton={() => {}}
               />
             </MessageProvider>
           )
@@ -64,6 +65,7 @@ describe('Contractor form', () => {
                 mode="addContractor"
                 closeModal={() => {}}
                 contractor={undefined}
+                setDisableButton={() => {}}
               />
             </MessageProvider>
           )

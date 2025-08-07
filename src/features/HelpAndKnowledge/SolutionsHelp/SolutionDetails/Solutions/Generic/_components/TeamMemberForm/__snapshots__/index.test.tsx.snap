@@ -3,7 +3,7 @@
 exports[`Team member point of contact form > should matches snapshot 1`] = `
 <DocumentFragment>
   <form
-    class="usa-form maxw-none"
+    class="usa-form maxw-none padding-bottom-10"
     data-testid="team-member-form"
     id="team-member-form"
   >
@@ -302,25 +302,6 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
           This point of contact will receive notifications when this solution is selected. Please make sure this individual should receive these notifications before you proceed.
         </p>
       </div>
-    </div>
-    <div
-      class="margin-top-3 display-flex"
-    >
-      <button
-        class="usa-button margin-right-3 margin-top-0"
-        data-testid="button"
-        disabled=""
-        type="submit"
-      >
-        Add team member
-      </button>
-      <button
-        class="usa-button usa-button--unstyled margin-top-0"
-        data-testid="button"
-        type="button"
-      >
-        Cancel
-      </button>
     </div>
   </form>
 </DocumentFragment>
