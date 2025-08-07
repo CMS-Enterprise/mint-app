@@ -1,5 +1,8 @@
 {{template "shared_header.html"}}
 
+{{template "shared_non_mint_mailbox_short_header.html"}}
+<hr>
+
 <h3>New reply in</h3>
 <p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
 <br/>
@@ -16,9 +19,10 @@
         <br/>
 
         {{ if gt .ReplyCount 2 }}
-            <i class="subtitle">{{ len (slice (printf "%*s" .ReplyCount "") 2) }} earlier {{if eq .ReplyCount 3}} reply {{end}} {{if gt .ReplyCount 3}} replies {{end}} not shown</i>
-            <br/>
-            <br/>
+          <h3>New reply:</h3>
+          <i class="subtitle">{{ len (slice (printf "%*s" .ReplyCount "") 2) }} total {{if eq .ReplyCount 3}} reply {{end}} {{if gt .ReplyCount 3}} replies {{end}} to this discussion</i>
+          <br/>
+          <br/>
         {{end}}
 
         {{range $i, $reply := .Replies}}
@@ -43,7 +47,10 @@
 <br/>
 <br/>
 <hr/>
+
 <br/>
-{{template "shared_mint_mailbox_footer.html"}}
+<p>
+  You are receiving this email because a reply was added to the discussion you started for a model in MINT.
+</p>
 
 {{template "shared_footer.html"}}

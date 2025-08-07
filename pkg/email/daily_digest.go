@@ -8,6 +8,7 @@ import (
 type DailyDigestBodyContent struct {
 	AnalyzedAudits []*models.AnalyzedAudit
 	ClientAddress  string
+	IsGeneralUser  bool
 }
 
 // DailyDigestSubjectContent defines the parameters necessary for the corresponding email subject

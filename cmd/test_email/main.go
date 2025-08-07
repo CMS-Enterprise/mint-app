@@ -225,6 +225,7 @@ func sendModelPlanCreatedEmailTest(
 		ModelName:     "Test Model Plan",
 		ModelID:       "00",
 		UserName:      "Test User",
+		IsGeneralUser: true,
 	})
 	noErr(err)
 

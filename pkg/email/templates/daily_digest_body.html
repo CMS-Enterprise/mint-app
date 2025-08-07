@@ -1,7 +1,10 @@
-
 {{template "shared_header.html"}}
 
-{{template "shared_mint_mailbox_header.html"}}
+{{if .IsGeneralUser}}
+  {{template "shared_non_mint_mailbox_header.html"}}
+{{else}}
+  {{template "shared_mint_mailbox_header.html"}}
+{{end}}
 <hr/>
 <br/>
 
@@ -24,18 +27,23 @@
 
 <br />
 
-<a href="{{$.ClientAddress}}/models/{{$audit.ModelPlanID}}/change-history"> View all recent changes in MINT </a>
+<a href="{{$.ClientAddress}}/models/{{$audit.ModelPlanID}}/change-history"> View this model in MINT </a>
 
 <br />
 <br />
 
 {{end}}
 
-<br />
 <hr />
 <br />
 
-{{template "shared_mint_mailbox_footer.html"}}
+{{if .IsGeneralUser}}
+  <p>To stop receiving notifications for a specific model, unfollow that model.</p>
+  <br/>
+  {{template "shared_access_banner.html" .}}
+{{else if (not .IsGeneralUser)}}
+  {{template "shared_mint_mailbox_footer.html"}}
+{{end}}
 
 {{template "shared_footer.html"}}
                                    

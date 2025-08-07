@@ -84,7 +84,7 @@ func DailyDigestNotificationSend(
 	}
 
 	// Generate email subject and body from template
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, emailService)
+	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, emailService, recipientEmail != addressBook.MINTTeamEmail)
 	if err != nil {
 		return err
 	}
@@ -151,7 +151,9 @@ func getDigestAnalyzedAudits(
 func generateDigestEmail(
 	analyzedAudits []*models.AnalyzedAudit,
 	emailTemplateService email.TemplateService,
-	emailService oddmail.EmailService) (string, string, error) {
+	emailService oddmail.EmailService,
+	isGeneralUser bool,
+) (string, string, error) {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigestTemplateName)
 	if err != nil {
 		return "", "", err
@@ -165,6 +167,7 @@ func generateDigestEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
 		AnalyzedAudits: analyzedAudits,
 		ClientAddress:  emailService.GetConfig().GetClientAddress(),
+		IsGeneralUser:  isGeneralUser,
 	})
 	if err != nil {
 		return "", "", err
