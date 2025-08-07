@@ -54,10 +54,6 @@ import { tArray } from 'utils/translation';
 
 import { ClearanceStatusesModelPlanFormType } from '../Checklist';
 
-type ClearanceReviewProps = {
-  modelID: string;
-};
-
 type MutationObjectType = {
   'model-timeline': UpdateClearanceTimelineMutationFn;
   basics: UpdateClearanceBasicsMutationFn;
