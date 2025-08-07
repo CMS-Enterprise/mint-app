@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
@@ -51,7 +52,7 @@ const ReadOnlyModelBasics = ({
 
   const flags = useFlags();
   const isCollaborator = data?.modelPlan?.isCollaborator;
-  const { groups } = useSelector((state: any) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
   const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
   const allBasicsData = (data?.modelPlan.basics ||

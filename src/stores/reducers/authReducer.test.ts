@@ -7,7 +7,10 @@ describe('The auth reducer', () => {
       euaId: '',
       groups: [],
       isUserSet: false,
-      acceptedNDA: false
+      acceptedNDA: {
+        agreed: false,
+        agreedDts: ''
+      }
     });
   });
 
@@ -19,7 +22,10 @@ describe('The auth reducer', () => {
       euaId: '',
       groups: [],
       isUserSet: false,
-      acceptedNDA: false
+      acceptedNDA: {
+        agreed: false,
+        agreedDts: ''
+      }
     };
     const mockAction = setUser({
       name: 'Jane Smith',
@@ -33,6 +39,9 @@ describe('The auth reducer', () => {
     expect(newState.euaId).toEqual('ABCD');
     expect(newState.groups).toEqual(['my-test-group']);
     expect(newState.isUserSet).toEqual(true);
-    expect(newState.acceptedNDA).toEqual(true);
+    expect(newState.acceptedNDA).toEqual({
+      agreed: true,
+      agreedDts: ''
+    });
   });
 });

@@ -12,6 +12,7 @@ import { NotFoundPartial } from 'features/NotFound';
 import { GetTimelineQuery, useGetTimelineQuery } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import PageLoading from 'components/PageLoading';
 import Tooltip from 'components/Tooltip';
@@ -53,7 +54,7 @@ const ReadOnlyModelTimeline = ({
 
   const flags = useFlags();
 
-  const { groups } = useSelector((state: any) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
   const hasEditAccess: boolean = isAssessment(groups, flags);
 
   const allTimelineData = (data?.modelPlan.timeline ||

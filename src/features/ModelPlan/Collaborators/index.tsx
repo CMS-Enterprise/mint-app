@@ -11,6 +11,7 @@ import {
   useDeleteModelPlanCollaboratorMutation,
   useGetModelCollaboratorsQuery
 } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -85,7 +86,7 @@ export const CollaboratorsContent = () => {
     useState<ModelPlanCollaboratorType>();
 
   // Current user's EUA id - to warn about removing yourself from model plan
-  const { euaId } = useSelector((state: any) => state.auth);
+  const { euaId } = useSelector((state: AppState) => state.auth);
 
   const [mutate] = useDeleteModelPlanCollaboratorMutation();
 

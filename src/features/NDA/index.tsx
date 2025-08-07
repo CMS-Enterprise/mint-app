@@ -6,6 +6,7 @@ import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Formik, FormikProps } from 'formik';
 import { useUpdateNdaMutation } from 'gql/generated/graphql';
 import { setUser } from 'stores/reducers/authReducer';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -24,7 +25,7 @@ const NDA = () => {
 
   const [originalRoute, setOriginalRoute] = useState<string>('');
 
-  const { acceptedNDA, ...user } = useSelector((state: any) => state.auth);
+  const { acceptedNDA, ...user } = useSelector((state: AppState) => state.auth);
 
   const [signNDA] = useUpdateNdaMutation();
 

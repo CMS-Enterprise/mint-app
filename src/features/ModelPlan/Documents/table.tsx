@@ -23,6 +23,7 @@ import {
   useGetModelPlanDocumentsQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import ExternalDocumentLink from 'components/ExternalDocumentLink';
@@ -87,7 +88,7 @@ const PlanDocumentsTable = ({
 
   const documents = data?.modelPlan?.documents || ([] as GetDocumentType[]);
   const isCollaborator = data?.modelPlan?.isCollaborator;
-  const { groups } = useSelector((state: any) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
   const hasEditAccess: boolean =
     !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 

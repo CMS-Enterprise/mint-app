@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { LockableSection } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import SectionLockComponent from 'components/SectionLock';
 import { SubscriptionContext } from 'contexts/PageLockContext';
@@ -18,7 +19,7 @@ type SectionLockType = {
  */
 
 const useSectionLock = ({ section }: SectionLockType) => {
-  const { euaId } = useSelector((state: any) => state.auth);
+  const { euaId } = useSelector((state: AppState) => state.auth);
 
   // Get the lockable sections from the SubscriptionContext
   const { lockableSectionLocks } = useContext(SubscriptionContext);

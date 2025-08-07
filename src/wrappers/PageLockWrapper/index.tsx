@@ -14,6 +14,7 @@ import {
   useLockModelPlanSectionMutation,
   useUnlockModelPlanSectionMutation
 } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { RouterContext } from 'contexts/RouterContext';
@@ -111,7 +112,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   const taskListRoute = lockedRouteParser(to);
 
-  const { euaId } = useSelector((state: any) => state.auth);
+  const { euaId } = useSelector((state: AppState) => state.auth);
 
   const validModelID: boolean = isUUID(modelID);
 

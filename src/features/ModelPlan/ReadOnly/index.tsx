@@ -12,6 +12,7 @@ import {
   useGetModelSummaryQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import { FavoriteIcon } from 'components/FavoriteCard';
@@ -247,7 +248,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const isViewingFilteredGroup = filteredView !== null;
 
   // Used to check if user is assessment for rendering subnav to task list
-  const { groups } = useSelector((state: any) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null

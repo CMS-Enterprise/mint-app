@@ -27,6 +27,7 @@ import {
   useGetModelPlanQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -121,7 +122,7 @@ const TaskList = () => {
     null
   );
 
-  const { euaId, groups } = useSelector((state: any) => state.auth);
+  const { euaId, groups } = useSelector((state: AppState) => state.auth);
 
   // Used to conditonally render role specific text in task list
   const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';

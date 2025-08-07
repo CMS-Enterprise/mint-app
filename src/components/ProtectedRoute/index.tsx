@@ -13,11 +13,11 @@ interface ProtectedRouteProps {
   enabled?: boolean;
 }
 
-function ProtectedRoute({
+const ProtectedRoute = ({
   children,
   element,
   enabled = true
-}: ProtectedRouteProps) {
+}: ProtectedRouteProps) => {
   const { authState } = useOktaAuth();
 
   if (!enabled) {
@@ -29,6 +29,6 @@ function ProtectedRoute({
   }
 
   return <>{children || element}</>;
-}
+};
 
 export default ProtectedRoute;
