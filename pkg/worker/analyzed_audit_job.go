@@ -19,6 +19,12 @@ import (
 ######################
 */
 
+const (
+	analyzedAuditJobName             string = "AnalyzedAuditJob"
+	analyzedAuditBatchJobName        string = "AnalyzedAuditBatchJob"
+	analyzedAuditBatchJobSuccessName string = "AnalyzedAuditBatchJobSuccess"
+)
+
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
 // args[0] date, args[1] modelPlanID
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {

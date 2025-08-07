@@ -87,6 +87,7 @@
     "questionTooltip": {
       "type": "div",
       "key": null,
+      "ref": null,
       "props": {
         "style": {
           "fontSize": "0.875rem",
@@ -98,12 +99,14 @@
           {
             "type": "ul",
             "key": null,
+            "ref": null,
             "props": {
               "className": "margin-0 padding-left-3",
               "children": [
                 {
                   "type": "li",
                   "key": null,
+                  "ref": null,
                   "props": {
                     "children": "Not started: No work has started on any part of this milestone"
                   },
@@ -113,6 +116,7 @@
                 {
                   "type": "li",
                   "key": null,
+                  "ref": null,
                   "props": {
                     "children": "In progress: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)"
                   },
@@ -122,6 +126,7 @@
                 {
                   "type": "li",
                   "key": null,
+                  "ref": null,
                   "props": {
                     "children": "Completed: Work for this milestone and all of its selected solutions is finished"
                   },
@@ -157,6 +162,7 @@
     "questionTooltip": {
       "type": "div",
       "key": null,
+      "ref": null,
       "props": {
         "style": {
           "fontSize": "0.875rem",
@@ -168,12 +174,14 @@
           {
             "type": "ul",
             "key": null,
+            "ref": null,
             "props": {
               "className": "margin-0 padding-left-3",
               "children": [
                 {
                   "type": "li",
                   "key": null,
+                  "ref": null,
                   "props": {
                     "children": "No risk (on track)"
                   },
@@ -183,6 +191,7 @@
                 {
                   "type": "li",
                   "key": null,
+                  "ref": null,
                   "props": {
                     "children": "Some risk (off track)"
                   },
@@ -192,6 +201,7 @@
                 {
                   "type": "li",
                   "key": null,
+                  "ref": null,
                   "props": {
                     "children": "Significantly at risk"
                   },

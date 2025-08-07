@@ -8,8 +8,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
-	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -21,6 +19,13 @@ import (
 # DigestEmail Jobs #
 ####################
 */
+
+const (
+	digestEmailBatchJobName        string = "DigestEmailBatchJob"
+	digestEmailBatchJobSuccessName string = "DigestEmailBatchJobSuccess"
+	digestEmailJobName             string = "DigestEmailJob"
+	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
+)
 
 // DigestEmailBatchJob is the batch job for DigestEmailJobs
 // args[0] date
@@ -92,12 +97,10 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	helper := faktory_worker.HelperFor(ctx)
 	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
 	logger.Info("preparing to send daily digest email")
-	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
-	}
+
 	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
 	// This is not needed currently.
-	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	if sendErr != nil {
 		logger.Error("error sending daily digest notification", zap.Error(sendErr))
 	}

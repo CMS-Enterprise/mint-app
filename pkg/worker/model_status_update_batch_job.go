@@ -14,6 +14,11 @@ import (
 
 var modelStatusUpdateJobMaxRetry = 2
 
+const (
+	modelStatusUpdateBatchJobName        string = "ModelStatusUpdateBatchJob"
+	modelStatusUpdateBatchJobSuccessName string = "ModelStatusUpdateBatchJobSuccess"
+)
+
 // ModelStatusUpdateBatchJob is the job the cron job initiates to check if models need a status update.
 // It will batch all child jobs, and when complete it will fire a callback
 func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {

@@ -8,6 +8,11 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 )
 
+const (
+	// translateAuditCronJobName is the name of the job called that initiates the translate audit batch job
+	translateAuditCronJobName string = "TranslateAuditCronJob"
+)
+
 // TranslateAuditCronJob is the job the cron schedule calls
 func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...interface{}) error {
 

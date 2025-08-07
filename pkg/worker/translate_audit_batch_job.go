@@ -19,6 +19,14 @@ import (
 
 var translatedAuditJobMaxRetry = 2
 
+const (
+	// translateAuditBatchJobName is the name of the batch job for translating audits
+	translateAuditBatchJobName string = "TranslateAuditBatchJob"
+
+	// translateAuditBatchJobSuccessName is the name of the job that is called when a group of translate Audit Jobs is completed
+	translateAuditBatchJobSuccessName string = "TranslateAuditBatchJobSuccess"
+)
+
 // TranslateAuditBatchJob batches all the TranslateAuditJobs. When all are complete it will fire a callback
 // args are not currently being used.
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {

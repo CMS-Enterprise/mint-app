@@ -8,6 +8,10 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 )
 
+const (
+	modelStatusUpdateCronJobName string = "ModelStatusUpdateCronJob"
+)
+
 // ModelStatusUpdateCronJob is the job the cron schedule calls to check if models
 func (w *Worker) ModelStatusUpdateCronJob(ctx context.Context, args ...interface{}) error {
 
