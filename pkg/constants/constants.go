@@ -33,6 +33,11 @@ const (
 	PlanTdl                      = "plan_tdl"
 	PlanDataExchangeApproach     = "plan_data_exchange_approach"
 	PlanTimeline                 = "plan_timeline"
+	TNMTOCategory                = "mto_category"
+	TNMTOMilestone               = "mto_milestone"
+	TNMTOSolution                = "mto_solution"
+	TNMTOMilestoneSolutionLink   = "mto_milestone_solution_link"
+	TNMTOInfo                    = "mto_info"
 )
 
 // Constants for humanized table names
@@ -55,6 +60,11 @@ var humanizedTableNames = map[string]string{
 	PlanTdl:                      "TDL",
 	PlanDataExchangeApproach:     "Data exchange approach",
 	PlanTimeline:                 "Model timeline",
+	TNMTOCategory:                "MTO category",
+	TNMTOMilestone:               "MTO milestone",
+	TNMTOSolution:                "MTO solution",
+	TNMTOMilestoneSolutionLink:   "MTO milestone-solution link",
+	TNMTOInfo:                    "MTO info",
 }
 
 // GetHumanizedTableName returns the humanized name for the given table name

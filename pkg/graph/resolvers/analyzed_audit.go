@@ -352,31 +352,30 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 func analyzeMTOChanges(audits []*models.AuditChange) (*models.AnalyzedMTOUpdates, error) {
 	// Filter audits for MTO-related tables
 	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, _ int) bool {
-		return lo.Contains(models.MTOTables, models.TableName(audit.TableName))
+		return lo.Contains(models.MTOTables, audit.TableName)
 	})
 
-	// Initialize variables to track changes
-	var updatedFields []string
+	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) models.TableName {
+		return m.TableName
+	}))
 
-	// Analyze filtered audits
-	for _, audit := range filteredAudits {
-		// Collect all updated fields
-		for fieldName := range audit.Fields {
-			updatedFields = append(updatedFields, fieldName)
+	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
+		keys := lo.Keys(m.Fields)
+		if lo.Contains(keys, "status") {
+			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
+				return m.TableName, true
+			}
 		}
+		return "", false
+	}))
+
+	analyzedMTOChanges := models.AnalyzedMTOUpdates{
+		ReadyForReview: readyForReview,
+		Updates:        updatedSections,
 	}
 
-	// Remove duplicates from the updated fields list
-	updatedFields = lo.Uniq(updatedFields)
-
-	// Return nil if no relevant changes are found
-	if len(updatedFields) == 0 {
+	if analyzedMTOChanges.IsEmpty() {
 		return nil, nil
 	}
-
-	// Construct and return the result
-	return &models.AnalyzedMTOUpdates{
-		ReadyForReview: false, // No need to check for READY_FOR_REVIEW since it's not required
-		Updates:        updatedFields,
-	}, nil
+	return &analyzedMTOChanges, nil
 }

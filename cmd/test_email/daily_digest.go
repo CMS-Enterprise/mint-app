@@ -19,8 +19,8 @@ func sendTestDailyDigestEmail(
 		Date:      time.Now(),
 		Changes: models.AnalyzedAuditChange{
 			MTOUpdates: &models.AnalyzedMTOUpdates{
-				ReadyForReview: true,
-				Updates:        []string{"status", "content"},
+				ReadyForReview: []models.TableName{models.TNMTOSolution, models.TNMTOMilestoneSolutionLink},
+				Updates:        []models.TableName{models.TNMTOSolution, models.TNMTOSolution},
 			},
 			PlanDiscussions: &models.AnalyzedPlanDiscussions{
 				Activity: true,
