@@ -108,7 +108,7 @@ describe('ClearanceReview component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
-          element: <ClearanceReview modelID={modelID} />
+          element: <ClearanceReview />
         }
       ],
       {
@@ -140,7 +140,7 @@ describe('ClearanceReview component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
-          element: <ClearanceReview modelID={modelID} />
+          element: <ClearanceReview />
         }
       ],
       {
@@ -174,7 +174,7 @@ describe('ClearanceReview component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
-          element: <ClearanceReview modelID={modelID} />
+          element: <ClearanceReview />
         }
       ],
       {

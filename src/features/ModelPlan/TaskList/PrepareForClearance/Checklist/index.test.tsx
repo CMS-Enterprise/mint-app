@@ -49,7 +49,7 @@ describe('Prepare for clearance checklist', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-          element: <PrepareForClearanceCheckList modelID={modelID} />
+          element: <PrepareForClearanceCheckList />
         }
       ],
       {
@@ -98,7 +98,7 @@ describe('Prepare for clearance checklist', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-          element: <PrepareForClearanceCheckList modelID={modelID} />
+          element: <PrepareForClearanceCheckList />
         }
       ],
       {
