@@ -219,7 +219,6 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 
 		// Use the fetched job1 from the queue instead of creating a new job
 
-
 		err2 = suite.ExecuteWithLoaders(perf, job1, worker.DigestEmailJob)
 		suite.NoError(err2)
 
