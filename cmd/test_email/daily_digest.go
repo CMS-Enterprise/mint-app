@@ -27,6 +27,7 @@ func sendTestDailyDigestEmail(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNModelPlan,
 					models.TNMTOCategory,
+					models.TNMTOMilestone,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,
