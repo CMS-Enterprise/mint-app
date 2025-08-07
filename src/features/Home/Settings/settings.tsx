@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -178,12 +178,9 @@ const SettingsForm = () => {
                               ViewCustomizationType.MODELS_BY_SOLUTION &&
                               selectedSolutions.length === 0 && (
                                 <UswdsReactLink
-                                  to={{
-                                    pathname: '/homepage-settings/solutions',
-                                    state: {
-                                      homepageSettings: formikRef.current
-                                        ?.values as any
-                                    }
+                                  to="/homepage-settings/solutions"
+                                  state={{
+                                    homepageSettings: values
                                   }}
                                   data-testid="add-solutions-settings"
                                   className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
@@ -209,13 +206,11 @@ const SettingsForm = () => {
                                     {selectedSolutions.join(', ')}
                                   </p>
                                   <span className="margin-right-105">|</span>
+
                                   <UswdsReactLink
-                                    to={{
-                                      pathname: '/homepage-settings/solutions',
-                                      state: {
-                                        homepageSettings: formikRef.current
-                                          ?.values as any
-                                      }
+                                    to="/homepage-settings/solutions"
+                                    state={{
+                                      homepageSettings: values
                                     }}
                                     className="text-bold display-flex flex-align-center settings__update"
                                   >

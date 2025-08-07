@@ -85,6 +85,9 @@ const SelectSolutionSettings = () => {
       }
     })
       .then(() => {
+        // Create updated settings with the new state
+        let updatedSettings = selectedSettings;
+
         // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
         if (
           formikRef.current?.values?.solutions &&
@@ -93,18 +96,21 @@ const SelectSolutionSettings = () => {
             ViewCustomizationType.MODELS_BY_SOLUTION
           )
         ) {
-          setSelectedSettings({
+          updatedSettings = {
             viewCustomization: [
               ...(selectedSettings?.viewCustomization || []),
               ViewCustomizationType.MODELS_BY_SOLUTION
             ]
-          });
+          };
+          setSelectedSettings(updatedSettings);
         }
 
-        // Allow state to hydrate before redirecting
-        setTimeout(() => {
-          navigate(state?.fromHome ? '/' : '/homepage-settings/form');
-        }, 100);
+        // Navigate with the updated settings
+        navigate(state?.fromHome ? '/' : '/homepage-settings/form', {
+          state: {
+            homepageSettings: updatedSettings
+          }
+        });
       })
       .catch(() => setMutationError(true));
   };
