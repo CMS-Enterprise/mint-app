@@ -65,8 +65,9 @@ import Complexity from 'features/ModelPlan/TaskList/Payment/Complexity';
 import FundingSource from 'features/ModelPlan/TaskList/Payment/FundingSource';
 import NonClaimsBasedPayment from 'features/ModelPlan/TaskList/Payment/NonClaimsBasedPayment';
 import Recover from 'features/ModelPlan/TaskList/Payment/Recover';
-import PrepareForClearance from 'features/ModelPlan/TaskList/PrepareForClearance';
+import { prepareForClearanceRoutes } from 'features/ModelPlan/TaskList/PrepareForClearance';
 import Timeline from 'features/ModelPlan/Timeline';
+import Unfollow from 'features/ModelPlan/Unfollow';
 import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
@@ -91,6 +92,7 @@ import TaskListBannerAlert from 'components/TaskListBannerAlert';
 import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 import SubscriptionWrapper from 'contexts/PageLockContext';
+import RouterProviderWrapper from 'contexts/RouterContext';
 import useRouteTitle from 'hooks/useRouteTitle';
 import useScrollTop from 'hooks/useScrollTop';
 
@@ -148,38 +150,40 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     element: (
       <AppWrapper>
-        <AuthenticationWrapper>
-          <OktaSessionProvider>
-            <FlagsWrapper>
-              <UserInfoWrapper>
-                <BeaconWrapper>
-                  <SubscriptionWrapper>
-                    <SubscriptionHandler>
-                      <MessageProvider>
-                        <NDAWrapper>
-                          <ModelAccessWrapper>
-                            <ModelInfoWrapper>
-                              <TimeOutWrapper>
-                                <NavContextProvider>
-                                  <PageWrapper>
-                                    <Header />
-                                    <TaskListBannerAlert />
-                                    <Outlet />
-                                    <Footer />
-                                  </PageWrapper>
-                                </NavContextProvider>
-                              </TimeOutWrapper>
-                            </ModelInfoWrapper>
-                          </ModelAccessWrapper>
-                        </NDAWrapper>
-                      </MessageProvider>
-                    </SubscriptionHandler>
-                  </SubscriptionWrapper>
-                </BeaconWrapper>
-              </UserInfoWrapper>
-            </FlagsWrapper>
-          </OktaSessionProvider>
-        </AuthenticationWrapper>
+        <RouterProviderWrapper>
+          <AuthenticationWrapper>
+            <OktaSessionProvider>
+              <FlagsWrapper>
+                <UserInfoWrapper>
+                  <BeaconWrapper>
+                    <SubscriptionWrapper>
+                      <SubscriptionHandler>
+                        <MessageProvider>
+                          <NDAWrapper>
+                            <ModelAccessWrapper>
+                              <ModelInfoWrapper>
+                                <TimeOutWrapper>
+                                  <NavContextProvider>
+                                    <PageWrapper>
+                                      <Header />
+                                      <TaskListBannerAlert />
+                                      <Outlet />
+                                      <Footer />
+                                    </PageWrapper>
+                                  </NavContextProvider>
+                                </TimeOutWrapper>
+                              </ModelInfoWrapper>
+                            </ModelAccessWrapper>
+                          </NDAWrapper>
+                        </MessageProvider>
+                      </SubscriptionHandler>
+                    </SubscriptionWrapper>
+                  </BeaconWrapper>
+                </UserInfoWrapper>
+              </FlagsWrapper>
+            </OktaSessionProvider>
+          </AuthenticationWrapper>
+        </RouterProviderWrapper>
       </AppWrapper>
     ),
     children: [
@@ -248,6 +252,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
       // Collaboration Area Routes
       {
         path: '/models/:modelID/collaboration-area',
@@ -579,14 +584,7 @@ const router = createBrowserRouter([
       },
 
       // Prepare for Clearance Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-        element: (
-          <ProtectedRoute>
-            <PrepareForClearance />
-          </ProtectedRoute>
-        )
-      },
+      prepareForClearanceRoutes,
 
       // Read View Routes
       {
@@ -634,6 +632,16 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <LockedTaskListSection />
+          </ProtectedRoute>
+        )
+      },
+
+      // Unfollow route
+      {
+        path: '/unfollow',
+        element: (
+          <ProtectedRoute>
+            <Unfollow />
           </ProtectedRoute>
         )
       },
@@ -688,7 +696,7 @@ const router = createBrowserRouter([
         element: <TermsAndConditions />
       },
       {
-        path: '/user-info',
+        path: '/user-diagnostics',
         element: (
           <ProtectedRoute>
             <UserInfo />

@@ -5,7 +5,7 @@ Each checkbox modifies the 'status' on its respective task list sections
 
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
@@ -109,15 +109,11 @@ const convertReadyStatus = (status: TaskStatus): TaskStatusInput => {
   }
 };
 
-type PrepareForClearanceCheckListProps = {
-  modelID: string;
-};
-
-const PrepareForClearanceCheckList = ({
-  modelID
-}: PrepareForClearanceCheckListProps) => {
+const PrepareForClearanceCheckList = () => {
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('general');
+
+  const { modelID } = useParams<{ modelID: string }>();
 
   const navigate = useNavigate();
 

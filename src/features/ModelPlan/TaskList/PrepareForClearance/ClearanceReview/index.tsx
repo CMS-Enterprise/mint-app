@@ -115,11 +115,11 @@ const renderReviewTaskSection = (
   }
 };
 
-export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
+export const ClearanceReview = () => {
   const [errors, setErrors] = useState<string>();
   const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
-
+  const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('general');
   const { t: p } = useTranslation('prepareForClearance');
   const { t: generalT } = useTranslation('general');

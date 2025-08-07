@@ -136,7 +136,7 @@ describe('Model-to-Operations Matrix', () => {
           });
         cy.contains('Add to matrix').should('exist');
         // Open up Solutions Sidepanel
-        cy.contains('About this solution').should('exist').click();
+        cy.contains('About this solution').should('exist').click().click();
       });
 
     cy.get('@solutionHeading').then(solutionHeading => {
