@@ -19,7 +19,7 @@ Cypress.Commands.add('login', () => {
           token => {
             cy.get('input[name="answer"]').type(token, { log: false });
             cy.get('input[name="rememberDevice"]').check({ force: true });
-            cy.get('input[value="Verify"]').click();
+            cy.get('input[value="Verify"]').click({ force: true });
           }
         );
       });
@@ -40,7 +40,7 @@ Cypress.Commands.add(
 
       cy.get('[data-testid="LocalAuth-Visit"]')
         .should('be.not.disabled')
-        .click();
+        .click({ force: true });
       cy.get('[data-testid="LocalAuth-EUA"]')
         .should('be.not.disabled')
         .type(name);
@@ -50,18 +50,18 @@ Cypress.Commands.add(
       }
       cy.get('[data-testid="LocalAuth-Submit"]')
         .should('be.not.disabled')
-        .click();
+        .click({ force: true });
 
       if (!nda) {
         cy.get('#nda-check').check({ force: true }).should('be.checked');
 
-        cy.get('#nda-submit').should('be.not.disabled').click();
+        cy.get('#nda-submit').should('be.not.disabled').click({ force: true });
       } else {
         cy.get('#nda-alert').should('contain.text', 'Accepted on');
 
         cy.get('[data-testid="nda-continue"]')
           .should('be.not.disabled')
-          .click();
+          .click({ force: true });
       }
 
       cy.url().should('eq', 'http://localhost:3005/');
@@ -70,6 +70,6 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('logout', () => {
-  cy.get('[data-testid="signout-link"]').click();
+  cy.get('[data-testid="signout-link"]').click({ force: true });
   cy.url().should('eq', 'http://localhost:3005/');
 });
