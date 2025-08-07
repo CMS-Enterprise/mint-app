@@ -14,10 +14,12 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
 
   const user = useSelector((state: AppState) => state.auth);
 
-  console.log('user', user);
-
   useEffect(() => {
-    if (!user?.acceptedNDA?.agreed && user.isUserSet) {
+    if (
+      user?.acceptedNDA &&
+      user?.acceptedNDA?.agreed === false &&
+      user.isUserSet
+    ) {
       // Only redirect if we're not already on the pre-decisional-notice page
       if (pathname !== '/pre-decisional-notice') {
         navigate('/pre-decisional-notice', {
