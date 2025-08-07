@@ -115,8 +115,7 @@ const TeamMemberForm = ({
   const disabledSubmitBtn =
     !watch('userName') || !watch('role') || isSubmitting || !isDirty;
 
-  // const { setErrorMeta } = useErrorMessage();
-  useErrorMessage('Failed to update team member');
+  const { setErrorMeta } = useErrorMessage();
 
   if (!selectedSolution) {
     return null;
@@ -124,6 +123,10 @@ const TeamMemberForm = ({
 
   const onSubmit = (formData: FormValues) => {
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
+
+    setErrorMeta({
+      overrideMessage: `${formData.userName} is already added to this solution and cannot be added again. Please edit the existing entry.`
+    });
 
     const promise = isAddMode
       ? create({
