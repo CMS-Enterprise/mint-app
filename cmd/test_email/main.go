@@ -65,6 +65,7 @@ func main() {
 
 	// Daily Digest Email
 	sendTestDailyDigestEmail(emailService, templateService, addressBook)
+	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook)
 }
 
 func noErr(err error) {
