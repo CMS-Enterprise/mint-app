@@ -262,10 +262,8 @@ const SelectSolutionForm = () => {
                       components={{
                         solution: (
                           <UswdsReactLink
-                            to={{
-                              pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                              state: { scroll: true }
-                            }}
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                            state={{ scroll: true }}
                             onClick={() => setMTOModalOpen(false)}
                           >
                             {' '}

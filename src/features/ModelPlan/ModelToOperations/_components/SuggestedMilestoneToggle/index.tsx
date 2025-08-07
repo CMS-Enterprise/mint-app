@@ -242,12 +242,8 @@ const SuggestedMilestoneToggle = ({
                   {t('milestoneLibrary.changeAnswer')}
                   <UswdsReactLink
                     className="display-block"
-                    to={{
-                      pathname: `/models/${modelID}/collaboration-area/task-list/${milestoneConfig?.route}`,
-                      state: {
-                        scrollElement: fieldToScroll.toString()
-                      }
-                    }}
+                    to={`/models/${modelID}/collaboration-area/task-list/${milestoneConfig?.route}`}
+                    state={{ scrollElement: fieldToScroll.toString() }}
                   >
                     {t('milestoneLibrary.goToQuestion')}
                   </UswdsReactLink>

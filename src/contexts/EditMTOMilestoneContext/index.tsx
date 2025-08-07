@@ -2,12 +2,11 @@ import React, {
   createContext,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import EditMilestoneForm from 'features/ModelPlan/ModelToOperations/_components/EditMilestoneForm';
 
@@ -33,12 +32,8 @@ const EditMTOMilestoneProvider = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const params = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search]
-  );
+  const [params, setParams] = useSearchParams();
 
   const milestoneParam = params.get('edit-milestone');
 
@@ -96,7 +91,7 @@ const EditMTOMilestoneProvider = ({
 
   const openEditMilestoneModal = (id: string) => {
     params.set('edit-milestone', id);
-    navigate({ search: params.toString() });
+    setParams(params);
     setIsModalOpen(true);
   };
 

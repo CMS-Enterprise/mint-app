@@ -2,12 +2,11 @@ import React, {
   createContext,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import EditSolutionForm from 'features/ModelPlan/ModelToOperations/_components/EditSolutionForm';
 
@@ -34,7 +33,7 @@ const EditMTOSolutionProvider = ({
 
   const navigate = useNavigate();
 
-  const params = useMemo(() => new URLSearchParams(window.location.search), []);
+  const [params, setParams] = useSearchParams();
 
   const solutionParam = params.get('edit-solution');
 
@@ -73,13 +72,13 @@ const EditMTOSolutionProvider = ({
         params.delete('edit-solution');
         params.delete('scroll-to-bottom');
         params.delete('select-milestones');
-        navigate({ search: params.toString() });
+        setParams(params);
       }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  }, [isDirty, submitted, params, closeDestination, navigate]);
+  }, [isDirty, submitted, params, closeDestination, navigate, setParams]);
 
   useEffect(() => {
     if (closeDestination) {
@@ -89,7 +88,7 @@ const EditMTOSolutionProvider = ({
 
   const openEditSolutionModal = (id: string) => {
     params.set('edit-solution', id);
-    navigate({ search: params.toString() });
+    setParams(params);
     setIsModalOpen(true);
   };
 

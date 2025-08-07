@@ -37,10 +37,8 @@ const SuggestedMilestoneBanner = ({
                   components={{
                     s: (
                       <UswdsReactLink
-                        to={{
-                          pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                          state: { scroll: true }
-                        }}
+                        to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                        state={{ scroll: true }}
                       />
                     ),
                     arrow: (
