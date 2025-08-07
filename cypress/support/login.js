@@ -38,6 +38,8 @@ Cypress.Commands.add(
       // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
       cy.visit('/login', { timeout: 120000 });
 
+      cy.wait(500);
+
       cy.get('[data-testid="LocalAuth-Visit"]')
         .should('be.not.disabled')
         .click({ force: true });
@@ -46,7 +48,9 @@ Cypress.Commands.add(
         .type(name);
 
       if (role) {
-        cy.get(`input[value="${role}"]`).should('be.not.disabled').check();
+        cy.get(`input[value="${role}"]`).should('be.not.disabled').check({
+          force: true
+        });
       }
       cy.get('[data-testid="LocalAuth-Submit"]')
         .should('be.not.disabled')
