@@ -9,6 +9,7 @@ import './index.scss';
 interface TagProps {
   children: React.ReactNode;
   arialabel?: string;
+  className?: string;
 }
 
 export const Tag = ({
