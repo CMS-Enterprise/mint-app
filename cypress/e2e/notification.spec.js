@@ -325,7 +325,9 @@ describe('Notification Center', () => {
       'updated the dates for Empty Plan.'
     );
 
-    cy.contains('button', 'View changes').click();
+    cy.contains('button', 'View changes')
+      .should('be.not.disabled')
+      .click({ force: true });
 
     cy.get('[data-testid="notification--dates-changed"]').should('exist');
 

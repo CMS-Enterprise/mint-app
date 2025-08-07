@@ -144,7 +144,7 @@ describe('Model-to-Operations Matrix', () => {
         // Open up Solutions Sidepanel
         cy.contains('About this solution')
           .should('exist')
-          .click({ force: true })
+          .should('be.not.disabled')
           .click({ force: true });
       });
 
