@@ -144,7 +144,7 @@ export const ClearanceReview = () => {
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID,
+      id: modelID || '',
       includePrepareForClearance: true
     }
   });
@@ -280,7 +280,7 @@ export const ClearanceReview = () => {
           {renderModal(taskListLocked)}
 
           <div className="margin-top-3">
-            {renderReviewTaskSection(modelID, section!)}
+            {renderReviewTaskSection(modelID || '', section!)}
           </div>
 
           <div className="margin-top-6 margin-bottom-3">

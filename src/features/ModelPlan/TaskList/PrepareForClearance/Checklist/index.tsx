@@ -128,7 +128,7 @@ const PrepareForClearanceCheckList = () => {
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID,
+      id: modelID || '',
       includePrepareForClearance: false
     }
   });
