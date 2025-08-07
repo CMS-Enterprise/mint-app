@@ -39,9 +39,6 @@ describe('The auth reducer', () => {
     expect(newState.euaId).toEqual('ABCD');
     expect(newState.groups).toEqual(['my-test-group']);
     expect(newState.isUserSet).toEqual(true);
-    expect(newState.acceptedNDA).toEqual({
-      agreed: true,
-      agreedDts: ''
-    });
+    expect(newState.acceptedNDA).toEqual(true);
   });
 });

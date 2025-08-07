@@ -14,8 +14,10 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
 
   const user = useSelector((state: AppState) => state.auth);
 
+  console.log('user', user);
+
   useEffect(() => {
-    if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {
+    if (!user?.acceptedNDA?.agreed && user.isUserSet) {
       // Only redirect if we're not already on the pre-decisional-notice page
       if (pathname !== '/pre-decisional-notice') {
         navigate('/pre-decisional-notice', {
@@ -25,7 +27,8 @@ const NDAWrapper = ({ children }: NDAWrapperProps) => {
         });
       }
     }
-  }, [navigate, pathname, search, user?.acceptedNDA]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, search, user?.acceptedNDA]);
 
   return <>{children}</>;
 };
