@@ -66,7 +66,7 @@ var humanizedTableNames = map[string]string{
 	PlanTdl:                      "TDL",
 	PlanDataExchangeApproach:     "Data exchange approach",
 	PlanTimeline:                 "Model timeline",
-	// Since MTO is more. agroup of tables we just specify model-to-operations matrix (MTO) for humanized name
+	// Since MTO is more a group of tables we just specify model-to-operations matrix (MTO) for humanized name
 	TNMTOCategory:              MTOHumanizedName,
 	TNMTOMilestone:             MTOHumanizedName,
 	TNMTOSolution:              MTOHumanizedName,
