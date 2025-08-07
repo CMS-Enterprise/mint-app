@@ -38,22 +38,30 @@ Cypress.Commands.add(
       // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
       cy.visit('/login', { timeout: 120000 });
 
-      cy.get('[data-testid="LocalAuth-Visit"]').click();
-      cy.get('[data-testid="LocalAuth-EUA"]').type(name);
+      cy.get('[data-testid="LocalAuth-Visit"]')
+        .should('be.not.disabled')
+        .click();
+      cy.get('[data-testid="LocalAuth-EUA"]')
+        .should('be.not.disabled')
+        .type(name);
 
       if (role) {
-        cy.get(`input[value="${role}"]`).check();
+        cy.get(`input[value="${role}"]`).should('be.not.disabled').check();
       }
-      cy.get('[data-testid="LocalAuth-Submit"]').click();
+      cy.get('[data-testid="LocalAuth-Submit"]')
+        .should('be.not.disabled')
+        .click();
 
       if (!nda) {
         cy.get('#nda-check').check({ force: true }).should('be.checked');
 
-        cy.get('#nda-submit').click();
+        cy.get('#nda-submit').should('be.not.disabled').click();
       } else {
         cy.get('#nda-alert').should('contain.text', 'Accepted on');
 
-        cy.get('[data-testid="nda-continue"]').click();
+        cy.get('[data-testid="nda-continue"]')
+          .should('be.not.disabled')
+          .click();
       }
 
       cy.url().should('eq', 'http://localhost:3005/');

@@ -281,7 +281,7 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
-    cy.get('#solution-needed-by').clear();
+    cy.get('#solution-needed-by').should('be.not.disabled').clear();
     cy.get('#solution-needed-by').should('have.value', '');
 
     cy.contains('Save changes').should('be.not.disabled').click();
