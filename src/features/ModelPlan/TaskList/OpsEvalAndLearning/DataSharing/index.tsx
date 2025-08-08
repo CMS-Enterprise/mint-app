@@ -38,7 +38,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '..';
+} from '../Support';
 
 type GetDataSharingFormType =
   GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];

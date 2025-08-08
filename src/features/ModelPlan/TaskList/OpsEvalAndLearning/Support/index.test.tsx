@@ -10,9 +10,9 @@ import {
 
 import {
   isCCWInvolvement,
-  OpsEvalAndLearning,
   renderCurrentPage,
-  renderTotalPages
+  renderTotalPages,
+  Support
 } from './index';
 
 type GetOpsEvalAndLearningType =
@@ -108,7 +108,7 @@ describe('Model Plan Ops Eval and Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
-          element: <OpsEvalAndLearning />
+          element: <Support />
         }
       ],
       {
@@ -142,7 +142,7 @@ describe('Model Plan Ops Eval and Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
-          element: <OpsEvalAndLearning />
+          element: <Support />
         }
       ],
       {

@@ -33,38 +33,13 @@ import { readViewRoutes } from 'features/ModelPlan/ReadOnly';
 import Status from 'features/ModelPlan/Status';
 import StepsOverview from 'features/ModelPlan/StepsOverview';
 import TaskList from 'features/ModelPlan/TaskList';
-import Basics from 'features/ModelPlan/TaskList/Basics';
-import Overview from 'features/ModelPlan/TaskList/Basics/Overview';
-import BeneficiaryIdentification from 'features/ModelPlan/TaskList/Beneficiaries/BeneficiaryIdentification';
-import Frequency from 'features/ModelPlan/TaskList/Beneficiaries/Frequency';
-import PeopleImpact from 'features/ModelPlan/TaskList/Beneficiaries/PeopleImpact';
-import Characteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics';
-import Authority from 'features/ModelPlan/TaskList/GeneralCharacteristics/Authority';
-import Involvements from 'features/ModelPlan/TaskList/GeneralCharacteristics/Involvements';
-import KeyCharacteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics/KeyCharacteristics';
-import TargetsAndOptions from 'features/ModelPlan/TaskList/GeneralCharacteristics/TargetsAndOptions';
+import basicsRoutes from 'features/ModelPlan/TaskList/Basics';
+import beneficiariesRoutes from 'features/ModelPlan/TaskList/Beneficiaries';
+import generalCharacteristicsRoutes from 'features/ModelPlan/TaskList/GeneralCharacteristics';
 import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
-import OpsEvalAndLearning from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
-import CCWAndQuality from 'features/ModelPlan/TaskList/OpsEvalAndLearning/CCWAndQuality';
-import DataSharing from 'features/ModelPlan/TaskList/OpsEvalAndLearning/DataSharing';
-import Evaluation from 'features/ModelPlan/TaskList/OpsEvalAndLearning/Evaluation';
-import IDDOC from 'features/ModelPlan/TaskList/OpsEvalAndLearning/IDDOC';
-import IDDOCMonitoring from 'features/ModelPlan/TaskList/OpsEvalAndLearning/IDDOCMonitoring';
-import IDDOCTesting from 'features/ModelPlan/TaskList/OpsEvalAndLearning/IDDOCTesting';
-import Learning from 'features/ModelPlan/TaskList/OpsEvalAndLearning/Learning';
-import Performance from 'features/ModelPlan/TaskList/OpsEvalAndLearning/Performance';
-import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
-import Communication from 'features/ModelPlan/TaskList/ParticipantsAndProviders/Communication';
-import Coordination from 'features/ModelPlan/TaskList/ParticipantsAndProviders/Coordination';
-import ParticipantOptions from 'features/ModelPlan/TaskList/ParticipantsAndProviders/ParticipantOptions';
-import ProviderOptions from 'features/ModelPlan/TaskList/ParticipantsAndProviders/ProviderOptions';
-import AnticipateDependencies from 'features/ModelPlan/TaskList/Payment/AnticipateDependencies';
-import BeneficiaryCostSharing from 'features/ModelPlan/TaskList/Payment/BeneficiaryCostSharing';
-import ClaimsBasedPayment from 'features/ModelPlan/TaskList/Payment/ClaimsBasedPayment';
-import Complexity from 'features/ModelPlan/TaskList/Payment/Complexity';
-import FundingSource from 'features/ModelPlan/TaskList/Payment/FundingSource';
-import NonClaimsBasedPayment from 'features/ModelPlan/TaskList/Payment/NonClaimsBasedPayment';
-import Recover from 'features/ModelPlan/TaskList/Payment/Recover';
+import opsEvalAndLearningRoutes from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
+import participantsAndProvidersRoutes from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
+import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
 import { prepareForClearanceRoutes } from 'features/ModelPlan/TaskList/PrepareForClearance';
 import Timeline from 'features/ModelPlan/Timeline';
 import Unfollow from 'features/ModelPlan/Unfollow';
@@ -305,10 +280,13 @@ const router = createBrowserRouter([
       },
       // CR and TDL Routes
       crtdlRoutes,
+
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
+
       // Model to Operations Routes
       modelToOperationsRoutes,
+
       // Task List Routes
       {
         path: '/models/:modelID/task-list',
@@ -319,259 +297,25 @@ const router = createBrowserRouter([
         element: <TaskList />
       },
       // Basics Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/basics',
-        element: (
-          <ProtectedRoute>
-            <Basics />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/basics/overview',
-        element: (
-          <ProtectedRoute>
-            <Overview />
-          </ProtectedRoute>
-        )
-      },
+      basicsRoutes,
+
       // Characteristics Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/characteristics',
-        element: (
-          <ProtectedRoute>
-            <Characteristics />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics',
-        element: (
-          <ProtectedRoute>
-            <KeyCharacteristics />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/characteristics/involvements',
-        element: (
-          <ProtectedRoute>
-            <Involvements />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/characteristics/targets-and-options',
-        element: (
-          <ProtectedRoute>
-            <TargetsAndOptions />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/characteristics/authority',
-        element: (
-          <ProtectedRoute>
-            <Authority />
-          </ProtectedRoute>
-        )
-      },
+      generalCharacteristicsRoutes,
+
       // Participants and Providers Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
-        element: (
-          <ProtectedRoute>
-            <Participants />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options',
-        element: (
-          <ProtectedRoute>
-            <ParticipantOptions />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/communication',
-        element: (
-          <ProtectedRoute>
-            <Communication />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/coordination',
-        element: (
-          <ProtectedRoute>
-            <Coordination />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
-        element: (
-          <ProtectedRoute>
-            <ProviderOptions />
-          </ProtectedRoute>
-        )
-      },
+      participantsAndProvidersRoutes,
+
       // Beneficiaries Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-        element: (
-          <ProtectedRoute>
-            <BeneficiaryIdentification />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/beneficiaries/people-impact',
-        element: (
-          <ProtectedRoute>
-            <PeopleImpact />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
-        element: (
-          <ProtectedRoute>
-            <Frequency />
-          </ProtectedRoute>
-        )
-      },
+      beneficiariesRoutes,
+
       // Ops Eval and Learning Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
-        element: (
-          <ProtectedRoute>
-            <OpsEvalAndLearning />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc',
-        element: (
-          <ProtectedRoute>
-            <IDDOC />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing',
-        element: (
-          <ProtectedRoute>
-            <IDDOCTesting />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring',
-        element: (
-          <ProtectedRoute>
-            <IDDOCMonitoring />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance',
-        element: (
-          <ProtectedRoute>
-            <Performance />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation',
-        element: (
-          <ProtectedRoute>
-            <Evaluation />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality',
-        element: (
-          <ProtectedRoute>
-            <CCWAndQuality />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing',
-        element: (
-          <ProtectedRoute>
-            <DataSharing />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning',
-        element: (
-          <ProtectedRoute>
-            <Learning />
-          </ProtectedRoute>
-        )
-      },
+      opsEvalAndLearningRoutes,
+
       // Payment Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment',
-        element: (
-          <ProtectedRoute>
-            <FundingSource />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment/claims-based-payment',
-        element: (
-          <ProtectedRoute>
-            <ClaimsBasedPayment />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment',
-        element: (
-          <ProtectedRoute>
-            <NonClaimsBasedPayment />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
-        element: (
-          <ProtectedRoute>
-            <AnticipateDependencies />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing',
-        element: (
-          <ProtectedRoute>
-            <BeneficiaryCostSharing />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment/complexity',
-        element: (
-          <ProtectedRoute>
-            <Complexity />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list/payment/recover-payment',
-        element: (
-          <ProtectedRoute>
-            <Recover />
-          </ProtectedRoute>
-        )
-      },
+      paymentRoutes,
+
+      // Prepare for Clearance Routes
+      prepareForClearanceRoutes,
 
       // IT Solutions Routes
       {
@@ -583,9 +327,6 @@ const router = createBrowserRouter([
         element: <Redirect route="read-view/milestones" />
       },
 
-      // Prepare for Clearance Routes
-      prepareForClearanceRoutes,
-
       // Read View Routes
       {
         path: '/models/:modelID/read-only',
@@ -595,7 +336,9 @@ const router = createBrowserRouter([
         path: '/models/:modelID/read-view',
         element: <Redirect route="read-view/model-basics" />
       },
+
       readViewRoutes,
+
       {
         path: '/models/:modelID/read-view/it-systems-and-solutions',
         element: <Redirect route="read-view/it-systems-and-solutions" />
@@ -607,6 +350,7 @@ const router = createBrowserRouter([
 
       // Help and Knowledge Routes
       helpAndKnowledgeRoutes,
+
       {
         path: '/help-and-knowledge/articles/get-access',
         element: (

@@ -1,3 +1,16 @@
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+
+import ProtectedRoute from 'components/ProtectedRoute';
+
+import AnticipateDependencies from './AnticipateDependencies';
+import BeneficiaryCostSharing from './BeneficiaryCostSharing';
+import ClaimsBasedPayment from './ClaimsBasedPayment';
+import Complexity from './Complexity';
+import FundingSource from './FundingSource';
+import NonClaimsBasedPayment from './NonClaimsBasedPayment';
+import Recover from './Recover';
+
 // Used to render the current page based on certain answers populated within this task list item
 export const renderCurrentPage = (
   currentPage: number,
@@ -24,3 +37,48 @@ export const renderTotalPages = (
   if (hasReductionCostSharing) totalPages += 1;
   return totalPages;
 };
+
+const Payment = () => {
+  return <Outlet />;
+};
+
+const paymentRoutes = {
+  path: '/models/:modelID/collaboration-area/task-list/payment',
+  element: (
+    <ProtectedRoute>
+      <Payment />
+    </ProtectedRoute>
+  ),
+  children: [
+    {
+      path: '',
+      element: <FundingSource />
+    },
+    {
+      path: 'claims-based-payment',
+      element: <ClaimsBasedPayment />
+    },
+    {
+      path: 'non-claims-based-payment',
+      element: <NonClaimsBasedPayment />
+    },
+    {
+      path: 'anticipating-dependencies',
+      element: <AnticipateDependencies />
+    },
+    {
+      path: 'beneficiary-cost-sharing',
+      element: <BeneficiaryCostSharing />
+    },
+    {
+      path: 'complexity',
+      element: <Complexity />
+    },
+    {
+      path: 'recover-payment',
+      element: <Recover />
+    }
+  ]
+};
+
+export default paymentRoutes;

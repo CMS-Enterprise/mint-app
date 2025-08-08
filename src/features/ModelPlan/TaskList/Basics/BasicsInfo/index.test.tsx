@@ -10,7 +10,7 @@ import {
   ModelCategory
 } from 'gql/generated/graphql';
 
-import Basics from './index';
+import BasicsInfo from './index';
 
 type GetModelPlanInfoType = GetBasicsQuery['modelPlan'];
 
@@ -58,7 +58,7 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <Basics />
+          element: <BasicsInfo />
         }
       ],
       {
@@ -87,7 +87,7 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <Basics />
+          element: <BasicsInfo />
         }
       ],
       {
@@ -152,7 +152,7 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <Basics />
+          element: <BasicsInfo />
         }
       ],
       {

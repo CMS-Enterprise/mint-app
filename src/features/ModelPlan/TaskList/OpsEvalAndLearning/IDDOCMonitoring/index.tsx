@@ -37,7 +37,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '..';
+} from '../Support';
 
 type IDDOCMonitoringFormType =
   GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];

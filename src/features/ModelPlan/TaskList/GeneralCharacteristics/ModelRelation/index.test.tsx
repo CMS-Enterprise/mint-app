@@ -11,7 +11,7 @@ import {
   YesNoOtherType
 } from 'gql/generated/graphql';
 
-import { Characteristics, separateLinksByType } from './index';
+import ModelRelation, { separateLinksByType } from './index';
 
 const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] =
   {
@@ -102,7 +102,7 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics',
-          element: <Characteristics />
+          element: <ModelRelation />
         }
       ],
       {
@@ -152,7 +152,7 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics',
-          element: <Characteristics />
+          element: <ModelRelation />
         }
       ],
       {

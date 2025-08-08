@@ -23,7 +23,7 @@ describe('ContractorCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions',
+          path: '/help-and-knowledge/operational-solutions/ ',
           element: (
             <MessageProvider>
               <ContractorCard contractor={contractor} />

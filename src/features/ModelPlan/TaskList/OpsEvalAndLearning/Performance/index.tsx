@@ -39,7 +39,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '..';
+} from '../Support';
 
 type PerformanceFormType =
   GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];

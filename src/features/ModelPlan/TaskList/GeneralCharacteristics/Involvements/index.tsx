@@ -355,9 +355,9 @@ const Involvements = () => {
             );
           }}
         </Formik>
-      </GridContainer>
 
-      <PageNumber currentPage={3} totalPages={5} className="margin-y-6" />
+        <PageNumber currentPage={3} totalPages={5} className="margin-y-6" />
+      </GridContainer>
     </MainContent>
   );
 };

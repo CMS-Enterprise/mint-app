@@ -45,7 +45,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '..';
+} from '../Support';
 
 type EvaluationFormType = GetEvaluationQuery['modelPlan']['opsEvalAndLearning'];
 

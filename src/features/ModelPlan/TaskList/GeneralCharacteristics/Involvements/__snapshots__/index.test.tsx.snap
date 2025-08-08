@@ -444,16 +444,16 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           </button>
         </fieldset>
       </form>
-    </div>
-    <div
-      class="mint-page-number margin-y-6"
-      data-testid="page-num"
-    >
-      <span
-        class="mint-page-number__page-num"
+      <div
+        class="mint-page-number margin-y-6"
+        data-testid="page-num"
       >
-        Page 3 of 5
-      </span>
+        <span
+          class="mint-page-number__page-num"
+        >
+          Page 3 of 5
+        </span>
+      </div>
     </div>
   </main>
 </DocumentFragment>

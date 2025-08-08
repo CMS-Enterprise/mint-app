@@ -41,7 +41,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '..';
+} from '../Support';
 
 type GetCCWAndQualityFormType =
   GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
