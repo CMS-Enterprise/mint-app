@@ -62,6 +62,10 @@ func main() {
 	// Model Plan Suggested Phase Emails
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, templateService, addressBook)
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, templateService, addressBook)
+
+	// Daily Digest Email
+	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
+	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
 }
 
 func noErr(err error) {
