@@ -159,9 +159,10 @@ const LinkDocument = ({
               )}
               <div>
                 <form
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                    handleSubmit(e)
-                  }
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }}
                 >
                   <FieldGroup scrollElement="url" error={!!flatErrors.url}>
                     <Label htmlFor="FileUpload-LinkDocument">
