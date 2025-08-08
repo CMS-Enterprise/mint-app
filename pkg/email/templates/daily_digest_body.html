@@ -1,10 +1,6 @@
 {{template "shared_header.html"}}
 
-{{if .IsGeneralUser}}
-  {{template "shared_non_mint_mailbox_header.html"}}
-{{else}}
-  {{template "shared_mint_mailbox_header.html"}}
-{{end}}
+{{template "shared_non_mint_mailbox_header.html"}}
 <hr/>
 <br/>
 
@@ -37,13 +33,8 @@
 <hr />
 <br />
 
-{{if .IsGeneralUser}}
-  <p>To stop receiving notifications for a specific model, unfollow that model.</p>
-  <br/>
-  {{template "shared_access_banner.html" .}}
-{{else if (not .IsGeneralUser)}}
-  {{template "shared_mint_mailbox_footer.html"}}
-{{end}}
+<p>To stop receiving notifications for a specific model, unfollow that model.</p>
+<br/>
+{{template "shared_access_banner.html" .}}
 
 {{template "shared_footer.html"}}
-                                   

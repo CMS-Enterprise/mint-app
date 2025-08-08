@@ -57,7 +57,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 
 	// Test generateDailyDigestEmail email to check content
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, mockEmailService, true)
+	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, mockEmailService)
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
