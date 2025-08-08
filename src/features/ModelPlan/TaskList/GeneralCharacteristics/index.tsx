@@ -26,7 +26,7 @@ const generalCharacteristicsRoutes = {
       element: <ModelRelation />
     },
     {
-      path: 'overview',
+      path: 'key-characteristics',
       element: <KeyCharacteristics />
     },
     {
