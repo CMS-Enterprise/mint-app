@@ -24,10 +24,10 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const timelineConfig = timelineTranslationUtil(solution.key);
 
   const navigate = useNavigate();
-
-  const isMTORoute = window.location.pathname.includes('model-to-operations');
-
   const location = useLocation();
+
+  const isMTORoute = location.pathname.includes('model-to-operations');
+
   const params = new URLSearchParams(location.search);
 
   if (isMTORoute) {

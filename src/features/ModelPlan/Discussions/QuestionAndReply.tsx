@@ -187,6 +187,7 @@ const QuestionAndReply = ({
               )}
               <form
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  e.preventDefault();
                   handleSubmit(e);
                   window.scrollTo(0, 0);
                 }}

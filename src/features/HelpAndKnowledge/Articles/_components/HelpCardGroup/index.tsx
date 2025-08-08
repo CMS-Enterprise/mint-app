@@ -193,7 +193,7 @@ const HelpCardGroup = ({
       <div className="display-flex">
         {!homeItems && resources.length > itemsPerPage && pageCount > 1 && (
           <Pagination
-            pathname={window.location.pathname}
+            pathname={location.pathname}
             currentPage={currentPage}
             maxSlots={7}
             onClickNext={handleNext}

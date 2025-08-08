@@ -391,7 +391,7 @@ const ChangeHistory = () => {
             {/* Pagination */}
             {pageCount > 1 && (
               <Pagination
-                pathname={window.location.pathname}
+                pathname={location.pathname}
                 currentPage={currentPage}
                 maxSlots={7}
                 onClickNext={handleNext}
