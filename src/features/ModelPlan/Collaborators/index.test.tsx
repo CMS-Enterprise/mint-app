@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -70,22 +70,30 @@ const mocks = [
 
 describe('Collaborator/Team Member page w/table', () => {
   it('displays a table with collaborator', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/collaborators',
+          element: (
             <MessageProvider>
-              <Route path="models/:modelID/collaboration-area/collaborators">
-                <CollaboratorsContent />
-              </Route>
+              <CollaboratorsContent />
             </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     expect(await screen.findByRole('table')).toBeInTheDocument();
@@ -100,22 +108,30 @@ describe('Collaborator/Team Member page w/table', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/collaborators',
+          element: (
             <MessageProvider>
-              <Route path="models/:modelID/collaboration-area/collaborators">
-                <CollaboratorsContent />
-              </Route>
+              <CollaboratorsContent />
             </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));

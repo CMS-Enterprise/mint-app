@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -53,9 +53,8 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
   const { status: stausConfig, riskIndicator: riskIndicatorConfig } =
     usePlanTranslation('mtoMilestone');
 
-  const history = useHistory();
-
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const viewMilestoneID = params.get('view-milestone');
 
@@ -392,7 +391,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                               type="button"
                               {...column.getSortByToggleProps()}
                             >
-                              {column.render('Header')}
+                              {column.render('Header') as React.ReactElement}
                               {column.canSort &&
                                 getHeaderSortIcon(column, false)}
                             </button>
@@ -415,7 +414,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                                 key={cell.getCellProps().key}
                                 className="padding-left-0"
                               >
-                                {cell.render('Cell')}
+                                {cell.render('Cell') as React.ReactElement}
                               </td>
                             );
                           })}

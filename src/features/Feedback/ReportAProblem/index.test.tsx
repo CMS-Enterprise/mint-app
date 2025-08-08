@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import {
   ReportAProblemSection,
@@ -8,6 +8,8 @@ import {
 import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
 import VerboseMockedProvider from 'tests/MockedProvider';
 import setup from 'tests/util';
+
+import FeedbackReceived from '../FeedbackReceived';
 
 import ReportAProblem from '.';
 
@@ -40,14 +42,28 @@ window.scrollTo = vi.fn;
 
 describe('Report a problem form', () => {
   it('submits the "Report a problem" form successfully', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/report-a-problem',
+          element: (
+            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+              <ReportAProblem />
+            </VerboseMockedProvider>
+          )
+        },
+        {
+          path: '/feedback-received',
+          element: <FeedbackReceived />
+        }
+      ],
+      {
+        initialEntries: ['/report-a-problem']
+      }
+    );
+
     const { findByText, getByRole, getByTestId, user } = setup(
-      <MemoryRouter initialEntries={['/report-a-problem']}>
-        <Route path="/report-a-problem">
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <ReportAProblem />
-          </VerboseMockedProvider>
-        </Route>
-      </MemoryRouter>
+      <RouterProvider router={router} />
     );
 
     // Fill out form
@@ -85,15 +101,23 @@ describe('Report a problem form', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={['/report-a-problem']}>
-        <Route path="/report-a-problem">
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <ReportAProblem />
-          </VerboseMockedProvider>
-        </Route>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/report-a-problem',
+          element: (
+            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+              <ReportAProblem />
+            </VerboseMockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/report-a-problem']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     // Snapshot form submission complete state
     expect(asFragment()).toMatchSnapshot();

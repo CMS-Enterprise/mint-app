@@ -14,7 +14,7 @@ type TextAreaFieldProps = {
   onBlur: () => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
-} & JSX.IntrinsicElements['textarea'];
+} & React.ComponentProps<'textarea'>;
 
 const TextAreaField = ({
   className,

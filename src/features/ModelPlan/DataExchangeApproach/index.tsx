@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useParams } from 'react-router-dom';
-import { NotFoundPartial } from 'features/NotFound';
+import { Outlet, useParams } from 'react-router-dom';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -17,7 +16,7 @@ import NewMethodologiesAndConsiderations from './NewMethologiesAndConsiderations
 const DataEchangeApproach = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -52,35 +51,36 @@ const DataEchangeApproach = () => {
         renderTextFor="dataExchangeApproach"
       />
 
-      <Switch>
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange"
-          component={AboutCompletingDataExchange}
-          exact
-        />
-
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data"
-          component={CollectingAndSendingData}
-          exact
-        />
-
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation"
-          component={CollectionAndAggregation}
-          exact
-        />
-
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations"
-          component={NewMethodologiesAndConsiderations}
-          exact
-        />
-
-        <Route path="*" render={() => <NotFoundPartial />} />
-      </Switch>
+      <Outlet />
     </MainContent>
   );
+};
+
+export const dataExchangeApproachRoutes = {
+  path: '/models/:modelID/collaboration-area/data-exchange-approach',
+  element: (
+    <ProtectedRoute>
+      <DataEchangeApproach />
+    </ProtectedRoute>
+  ),
+  children: [
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange',
+      element: <AboutCompletingDataExchange />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data',
+      element: <CollectingAndSendingData />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
+      element: <CollectionAndAggregation />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations',
+      element: <NewMethodologiesAndConsiderations />
+    }
+  ]
 };
 
 export default DataEchangeApproach;

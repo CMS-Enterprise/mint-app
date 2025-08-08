@@ -1,7 +1,10 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import MessageProvider from 'contexts/MessageContext';
 
 import Contact from './index';
 
@@ -20,33 +23,56 @@ const contact: SolutionContactType = {
 
 describe('Operation Solution Contact', () => {
   it('renders contact name', () => {
-    const { getByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <Contact contact={contact} />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]}
-      >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <Contact contact={contact} />
-        </Route>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
     expect(getByText('Aliza Kim')).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
+              <Contact contact={contact} />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]}
-      >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <Contact contact={contact} />
-        </Route>
-      </MemoryRouter>
+        ]
+      }
     );
 
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });

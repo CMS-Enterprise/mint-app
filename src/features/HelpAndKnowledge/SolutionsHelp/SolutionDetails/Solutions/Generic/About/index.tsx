@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -53,17 +53,17 @@ export interface AboutConfigType {
 const returnListType = (
   ordered: boolean | undefined,
   none?: boolean
-): keyof JSX.IntrinsicElements => {
+): keyof React.JSX.IntrinsicElements => {
   if (none) {
-    return 'span' as keyof JSX.IntrinsicElements;
+    return 'span' as keyof React.JSX.IntrinsicElements;
   }
-  return `${ordered ? 'o' : 'u'}l` as keyof JSX.IntrinsicElements;
+  return `${ordered ? 'o' : 'u'}l` as keyof React.JSX.IntrinsicElements;
 };
 
 const returnHeadingLevel = (
   level: 'h4' | undefined
-): keyof JSX.IntrinsicElements =>
-  (level || 'h3') as keyof JSX.IntrinsicElements;
+): keyof React.JSX.IntrinsicElements =>
+  (level || 'h3') as keyof React.JSX.IntrinsicElements;
 
 /*
 Formats Trans component from array of links to be embedded
@@ -104,16 +104,16 @@ const InternalSolutionButton = ({
   children
 }: {
   params: string;
-  children: React.ReactChild;
+  children: React.ReactNode;
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Button
       type="button"
       unstyled
       onClick={() => {
-        history.push({ search: params });
+        navigate({ search: params });
         const modalCon = document?.getElementsByClassName(
           'ReactModal__Overlay'
         )?.[0];

@@ -12,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -129,11 +129,10 @@ const EditSolutionForm = ({
     solutionType: solutionTypeConfig
   } = usePlanTranslation('mtoSolution');
 
-  const history = useHistory();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { modelID } = useParams<{ modelID: string }>();
-
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const editSolutionID = params.get('edit-solution');
 
@@ -1243,7 +1242,11 @@ const EditSolutionForm = ({
                                       type="button"
                                       {...column.getSortByToggleProps()}
                                     >
-                                      {column.render('Header')}
+                                      {
+                                        column.render(
+                                          'Header'
+                                        ) as React.ReactElement
+                                      }
                                       {column.canSort &&
                                         getHeaderSortIcon(column, false)}
                                     </button>
@@ -1266,7 +1269,11 @@ const EditSolutionForm = ({
                                         key={cell.getCellProps().key}
                                         className="padding-left-0"
                                       >
-                                        {cell.render('Cell')}
+                                        {
+                                          cell.render(
+                                            'Cell'
+                                          ) as React.ReactElement
+                                        }
                                       </td>
                                     );
                                   })}

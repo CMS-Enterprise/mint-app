@@ -39,6 +39,7 @@ exports[`Operation Solution Contact > matches snapshot 1`] = `
     </a>
     <a
       class="usa-link"
+      data-discover="true"
       href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=points-of-contact"
     >
       More points of contact

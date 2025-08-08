@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { MtoStatus } from 'gql/generated/graphql';
@@ -15,21 +15,29 @@ describe('MTO Ready for review', () => {
   console.error = vi.fn();
 
   it('rendered correct in progress text', () => {
-    const { getByText } = render(
-      <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
             <MTOReadyForReview
               isOpen
               closeModal={mockCloseModal}
               status={MtoStatus.IN_PROGRESS}
             />
-          </Route>
-        </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(
@@ -48,21 +56,29 @@ describe('MTO Ready for review', () => {
   });
 
   it('rendered correct ready for review text', () => {
-    const { getByText } = render(
-      <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
             <MTOReadyForReview
               isOpen
               closeModal={mockCloseModal}
               status={MtoStatus.READY_FOR_REVIEW}
             />
-          </Route>
-        </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
     expect(
@@ -83,21 +99,29 @@ describe('MTO Ready for review', () => {
   });
 
   it('matches the snapshot', () => {
-    const { asFragment } = render(
-      <MockedProvider>
-        <MemoryRouter
-          initialEntries={[
-            '/models/00000000-0000-0000-0000-000000000005/collaboration-area/model-to-operations/matrix?view=milestones'
-          ]}
-        >
-          <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
             <MTOReadyForReview
               isOpen
               closeModal={mockCloseModal}
               status={MtoStatus.IN_PROGRESS}
             />
-          </Route>
-        </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/00000000-0000-0000-0000-000000000005/collaboration-area/model-to-operations/matrix?view=milestones'
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     );
 

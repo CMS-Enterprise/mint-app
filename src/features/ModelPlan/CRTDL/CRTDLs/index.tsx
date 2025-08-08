@@ -16,7 +16,7 @@ export const CRTDLs = () => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
   const { t: miscT } = useTranslation('miscellaneous');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { modelName } = useContext(ModelInfoContext);
 
   return (

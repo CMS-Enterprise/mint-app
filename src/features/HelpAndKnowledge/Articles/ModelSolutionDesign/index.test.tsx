@@ -1,16 +1,24 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 import ModelSolutionDesign from '.';
 
 describe('ModelSolutionDesign', () => {
   it('matches the snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter>
-        <ModelSolutionDesign />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <ModelSolutionDesign />
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

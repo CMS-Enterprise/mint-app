@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
@@ -50,7 +50,7 @@ const Discussions = ({
 
   // Used to replace query params after reply has been asnwered from linked email
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const queryParams = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -155,9 +155,14 @@ const Discussions = ({
           if (discussionType === 'reply' && reply?.id) {
             setDiscussionReplyID(null);
             queryParams.delete('discussionID');
-            history.replace({
-              search: queryParams.toString()
-            });
+            navigate(
+              {
+                search: queryParams.toString()
+              },
+              {
+                replace: true
+              }
+            );
             refetch().then(() => {
               setInitQuestion(false);
               setDiscussionType('discussion');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 
 import DocumentsCard from './index';
@@ -8,13 +8,19 @@ const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 describe('Model Collaboration Area -- Documents Card', () => {
   it('renders empty state', () => {
-    render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/documents`]}
-      >
-        <DocumentsCard modelID={modelID} documents={[]} />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/documents',
+          element: <DocumentsCard modelID={modelID} documents={[]} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/documents`]
+      }
     );
+
+    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByRole('heading', {
@@ -27,23 +33,31 @@ describe('Model Collaboration Area -- Documents Card', () => {
   });
 
   it('renders only "one link added" state', () => {
-    render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/documents`]}
-      >
-        <DocumentsCard
-          modelID={modelID}
-          documents={[
-            {
-              __typename: 'PlanDocument',
-              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-              fileName: 'My MINT document',
-              fileType: 'externalLink'
-            }
-          ]}
-        />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/documents',
+          element: (
+            <DocumentsCard
+              modelID={modelID}
+              documents={[
+                {
+                  __typename: 'PlanDocument',
+                  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                  fileName: 'My MINT document',
+                  fileType: 'externalLink'
+                }
+              ]}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/documents`]
+      }
     );
+
+    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByRole('heading', {
@@ -57,23 +71,31 @@ describe('Model Collaboration Area -- Documents Card', () => {
   });
 
   it('renders only "one uploaded" state', () => {
-    render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/documents`]}
-      >
-        <DocumentsCard
-          modelID={modelID}
-          documents={[
-            {
-              __typename: 'PlanDocument',
-              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-              fileName: 'My MINT document',
-              fileType: 'pdf'
-            }
-          ]}
-        />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/documents',
+          element: (
+            <DocumentsCard
+              modelID={modelID}
+              documents={[
+                {
+                  __typename: 'PlanDocument',
+                  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                  fileName: 'My MINT document',
+                  fileType: 'pdf'
+                }
+              ]}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/documents`]
+      }
     );
+
+    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByRole('heading', {
@@ -87,29 +109,37 @@ describe('Model Collaboration Area -- Documents Card', () => {
   });
 
   it('renders both types of document state', () => {
-    render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/documents`]}
-      >
-        <DocumentsCard
-          modelID={modelID}
-          documents={[
-            {
-              __typename: 'PlanDocument',
-              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-              fileName: 'My MINT document',
-              fileType: 'externalLink'
-            },
-            {
-              __typename: 'PlanDocument',
-              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-              fileName: 'My MINT document',
-              fileType: 'pdf'
-            }
-          ]}
-        />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/documents',
+          element: (
+            <DocumentsCard
+              modelID={modelID}
+              documents={[
+                {
+                  __typename: 'PlanDocument',
+                  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                  fileName: 'My MINT document',
+                  fileType: 'externalLink'
+                },
+                {
+                  __typename: 'PlanDocument',
+                  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                  fileName: 'My MINT document',
+                  fileType: 'pdf'
+                }
+              ]}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/documents`]
+      }
     );
+
+    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByRole('heading', {
@@ -123,29 +153,37 @@ describe('Model Collaboration Area -- Documents Card', () => {
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/documents`]}
-      >
-        <DocumentsCard
-          modelID={modelID}
-          documents={[
-            {
-              __typename: 'PlanDocument',
-              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-              fileName: 'My MINT document',
-              fileType: 'externalLink'
-            },
-            {
-              __typename: 'PlanDocument',
-              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-              fileName: 'My MINT document',
-              fileType: 'pdf'
-            }
-          ]}
-        />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/documents',
+          element: (
+            <DocumentsCard
+              modelID={modelID}
+              documents={[
+                {
+                  __typename: 'PlanDocument',
+                  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                  fileName: 'My MINT document',
+                  fileType: 'externalLink'
+                },
+                {
+                  __typename: 'PlanDocument',
+                  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                  fileName: 'My MINT document',
+                  fileType: 'pdf'
+                }
+              ]}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/documents`]
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

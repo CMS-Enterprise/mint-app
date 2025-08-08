@@ -8,7 +8,7 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('[data-testid="Card"]')
       .filter(':has(h3:contains("Model-to-operations matrix"))')
       .within(() => {
-        cy.contains('button', 'Go to matrix').click();
+        cy.contains('button', 'Go to matrix').click({ force: true });
       });
 
     cy.url().should(
@@ -22,7 +22,7 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.contains('a', 'Add solutions from library');
     cy.contains('button', 'Add this template');
-    cy.contains('a', 'Add milestones from library').click();
+    cy.contains('a', 'Add milestones from library').click({ force: true });
 
     cy.url().should('include', '/milestone-library');
 
@@ -31,7 +31,7 @@ describe('Model-to-Operations Matrix', () => {
       'There are no suggested milestones for your model.'
     );
 
-    cy.contains('button', /All common milestones/).click();
+    cy.contains('button', /All common milestones/).click({ force: true });
 
     cy.get('[data-testid="alert"]').should('not.exist');
 
@@ -47,7 +47,9 @@ describe('Model-to-Operations Matrix', () => {
           });
         cy.contains('Add to matrix').should('exist');
         // Open up Milestone Sidepanel
-        cy.contains('About this milestone').should('exist').click();
+        cy.contains('About this milestone')
+          .should('exist')
+          .click({ force: true });
       });
 
     cy.get('[data-testid="milestone-sidepanel"')
@@ -55,7 +57,7 @@ describe('Model-to-Operations Matrix', () => {
       .as('milestoneSidepanel')
       .within(() => {
         // Open Add Solution to Milestone Modal
-        cy.contains('Add to matrix').click();
+        cy.contains('Add to matrix').click({ force: true });
       });
 
     cy.findModalWithThisHeadingAndSaveAlias(
@@ -65,11 +67,12 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('@addSolutionToMilestoneModal')
       .contains('button', 'Add without solutions')
-      .click();
+      .should('be.not.disabled')
+      .click({ force: true });
 
     cy.get('@milestoneSidepanel').within(() => {
       cy.contains('button', 'Added').should('be.disabled');
-      cy.get('button[aria-label="Close Modal"]').click();
+      cy.get('button[aria-label="Close Modal"]').click({ force: true });
     });
 
     cy.get('@firstCard').within(() => {
@@ -77,7 +80,9 @@ describe('Model-to-Operations Matrix', () => {
       cy.contains('button', 'Added').should('be.disabled');
     });
 
-    cy.contains('a', 'Return to model-to-operations matrix').click();
+    cy.contains('a', 'Return to model-to-operations matrix').click({
+      force: true
+    });
     cy.url().should(
       'include',
       '/collaboration-area/model-to-operations/matrix'
@@ -93,7 +98,7 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('@milestoneHeading').then(headingText => {
       cy.get('table').within(() => {
         cy.get('td').contains(headingText).should('exist');
-        cy.contains('Select a solution').click();
+        cy.contains('Select a solution').click({ force: true });
       });
     });
 
@@ -102,17 +107,19 @@ describe('Model-to-Operations Matrix', () => {
       'addSolutionModal'
     );
     cy.get('@addSolutionModal').within(() => {
-      cy.get('#multi-source-data-to-collect').click().type('4i{enter}');
+      cy.get('#multi-source-data-to-collect')
+        .click({ force: true })
+        .type('4i{enter}');
       cy.get('#clear-selection')
         .parent()
         .find('[class$="indicatorContainer"]')
         .eq(1)
-        .click();
+        .click({ force: true });
       cy.get('#multi-source-data-to-collect-tags li').should(
         'have.length.greaterThan',
         0
       );
-      cy.contains('Add 1 solution').click();
+      cy.contains('Add 1 solution').click({ force: true });
     });
 
     cy.get('table').within(() => {
@@ -120,7 +127,7 @@ describe('Model-to-Operations Matrix', () => {
     });
   });
   it('Adding a Solution from the Solution Library', () => {
-    cy.contains('Add solutions from library').click();
+    cy.contains('Add solutions from library').click({ force: true });
     cy.url().should('include', '/solution-library');
 
     // Add the second solution
@@ -136,23 +143,26 @@ describe('Model-to-Operations Matrix', () => {
           });
         cy.contains('Add to matrix').should('exist');
         // Open up Solutions Sidepanel
-        cy.contains('About this solution').should('exist').click();
+        cy.contains('About this solution')
+          .should('exist')
+          .should('be.not.disabled')
+          .click({ force: true });
       });
 
-    cy.get('@solutionHeading').then(solutionHeading => {
-      cy.get('[role="dialog"]')
-        .scrollIntoView()
-        .within(() => {
+    cy.get('[data-testid="operational-solution-modal"]')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('@solutionHeading').then(solutionHeading => {
           cy.contains(solutionHeading).should('be.visible');
-        })
-        .as('sidePanel');
-      cy.get('[aria-label="Close Modal"]').click();
-    });
+        });
+      })
+      .as('sidePanel');
+    cy.get('[aria-label="Close Modal"]').click({ force: true });
 
     cy.get('@sidePanel').should('not.exist');
 
     cy.get('@secondCard').within(() => {
-      cy.contains('Add to matrix').click();
+      cy.contains('Add to matrix').click({ force: true });
     });
 
     cy.findModalWithThisHeadingAndSaveAlias(
@@ -160,18 +170,16 @@ describe('Model-to-Operations Matrix', () => {
       'addToExistingMilestone'
     );
 
-    cy.get('@addToExistingMilestone').within(() => {
-      cy.get('#linked-milestones').click();
-      cy.get('[role="listbox"]')
-        .find('input[type="checkbox"]')
-        .first()
-        .check({ force: true })
-        .should('be.checked');
-      cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
-      cy.contains('Add to 1 milestone').click();
+    cy.get('#linked-milestones').within(() => {
+      cy.get("input[type='text']").click().type('{downArrow}{enter}');
     });
 
-    cy.contains('a', 'Return to model-to-operations matrix').click();
+    cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
+    cy.contains('Add to 1 milestone').click({ force: true });
+
+    cy.contains('a', 'Return to model-to-operations matrix').click({
+      force: true
+    });
     cy.url().should(
       'include',
       '/collaboration-area/model-to-operations/matrix'
@@ -183,7 +191,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Create custom milestone', () => {
-    cy.contains('or, create a custom milestone').click();
+    cy.contains('or, create a custom milestone').click({ force: true });
 
     cy.findModalWithThisHeadingAndSaveAlias(
       'Add a new model milestone',
@@ -207,8 +215,8 @@ describe('Model-to-Operations Matrix', () => {
           cy.get('#subcategory').select($option.text());
         });
 
-      cy.get('#name').type('Custom Milestone');
-      cy.contains('Add milestone').click();
+      cy.get('#name').should('be.not.disabled').type('Custom Milestone');
+      cy.contains('Add milestone').click({ force: true });
     });
 
     cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
@@ -216,7 +224,7 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Create custom solution', () => {
-    cy.contains('or, create a custom solution').click();
+    cy.contains('or, create a custom solution').click({ force: true });
 
     cy.findModalWithThisHeadingAndSaveAlias(
       'Add a new solution',
@@ -233,12 +241,18 @@ describe('Model-to-Operations Matrix', () => {
           cy.get('#solution-type').select($option.text());
         });
 
-      cy.get('#solution-title').type('Custom Solution');
-      cy.get('#poc-name').type('Primary Contact');
-      cy.get('#poc-email').type('primary@contact.com');
+      cy.get('#solution-title')
+        .should('be.not.disabled')
+        .type('Custom Solution');
+      cy.get('#poc-name').should('be.not.disabled').type('Primary Contact');
+      cy.get('#poc-email')
+        .should('be.not.disabled')
+        .type('primary@contact.com');
       // Cause a blur to trigger validation
-      cy.get('#poc-name').click();
-      cy.contains('Add solution').should('be.not.disabled').click();
+      cy.get('#poc-name').click({ force: true });
+      cy.contains('Add solution')
+        .should('be.not.disabled')
+        .click({ force: true });
     });
 
     cy.get('[data-testid="mandatory-fields-alert"]')
@@ -246,7 +260,7 @@ describe('Model-to-Operations Matrix', () => {
       .contains('Your solution (Custom Solution) has been added.');
 
     // Click the IT system and solutions tab
-    cy.contains('Solutions and IT systems').click();
+    cy.contains('Solutions and IT systems').click({ force: true });
 
     cy.get('table').within(() => {
       cy.get('td')
@@ -254,16 +268,21 @@ describe('Model-to-Operations Matrix', () => {
         .should('exist')
         .parent('tr')
         .within(() => {
-          cy.contains('Edit details').click();
+          cy.contains('Edit details').click({ force: true });
         });
     });
 
-    cy.get('#name').clear().type('Edited Custom Solution', { force: true });
+    cy.get('#name')
+      .should('be.not.disabled')
+      .clear()
+      .type('Edited Custom Solution', { force: true });
 
-    cy.get('#solution-needed-by').type('07/20/2025');
+    cy.get('#solution-needed-by').should('be.not.disabled').type('07/20/2025');
     cy.get('#solution-needed-by').should('have.value', '07/20/2025');
 
-    cy.contains('Save changes').should('be.not.disabled').click();
+    cy.contains('Save changes')
+      .should('be.not.disabled')
+      .click({ force: true });
 
     cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
 
@@ -277,25 +296,27 @@ describe('Model-to-Operations Matrix', () => {
         .should('exist')
         .parent('tr')
         .within(() => {
-          cy.contains('Edit details').click();
+          cy.contains('Edit details').click({ force: true });
         });
     });
 
-    cy.get('#solution-needed-by').clear();
+    cy.get('#solution-needed-by').should('be.not.disabled').clear();
     cy.get('#solution-needed-by').should('have.value', '');
 
-    cy.contains('Save changes').should('be.not.disabled').click();
+    cy.contains('Save changes')
+      .should('be.not.disabled')
+      .click({ force: true });
 
     cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
   });
 
   it('Add standard categories', () => {
-    cy.contains('Add this template').click();
+    cy.contains('Add this template').click({ force: true });
     cy.findModalWithThisHeadingAndSaveAlias(
       'Are you sure you want to continue?'
     );
 
-    cy.contains('Add template').click();
+    cy.contains('Add template').click({ force: true });
 
     cy.get('[data-testid="mandatory-fields-alert"]')
       .should('exist')

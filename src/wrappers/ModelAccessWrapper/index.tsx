@@ -6,10 +6,11 @@
  */
 
 import React, { useEffect } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetIsCollaboratorQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import { isUUID } from 'utils/modelPlan';
 import { isAssessment, isMAC } from 'utils/user';
@@ -20,7 +21,7 @@ type ModelAccessWrapperProps = {
 
 const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   const { pathname } = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const flags = useFlags();
 
   const modelID: string | undefined = pathname.split('/')[2];
@@ -28,7 +29,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
 
   // Get groups to check is user has MINT_ASSESSMENT_NONPROD or MINT_ASSESSMENT role
   // If so, has full access to both task-list and read-only
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
 
   // Checking if user's location is task-list or collaborators
   // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
@@ -55,11 +56,11 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       editable &&
       !isAssessment(groups, flags)
     ) {
-      history.replace(`/models/${modelID}/read-view/model-basics`);
+      navigate(`/models/${modelID}/read-view/model-basics`, { replace: true });
     }
   }, [
     pathname,
-    history,
+    navigate,
     isCollaborator,
     loading,
     modelID,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Grid, Icon, Link } from '@trussworks/react-uswds';
 import { TeamRole, useGetModelCollaboratorsQuery } from 'gql/generated/graphql';
 
@@ -15,9 +15,9 @@ const AboutCompletingDataExchange = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const expandItems = tArray(
     'dataExchangeApproachMisc:aboutCompletingDataExchange.whyDoINeedThisFormItems'
@@ -129,7 +129,7 @@ const AboutCompletingDataExchange = () => {
         <Button
           type="button"
           onClick={() =>
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`
             )
           }
@@ -141,7 +141,7 @@ const AboutCompletingDataExchange = () => {
       <Button
         type="button"
         className="usa-button usa-button--unstyled"
-        onClick={() => history.push(`/models/${modelID}/collaboration-area`)}
+        onClick={() => navigate(`/models/${modelID}/collaboration-area`)}
       >
         <Icon.ArrowBack
           className="margin-right-1"

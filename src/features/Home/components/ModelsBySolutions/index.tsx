@@ -65,10 +65,8 @@ const ModelsBySolutions = ({
         heading={customHomeT(`settings.MODELS_BY_SOLUTION.noResultsHeading`)}
       >
         <UswdsReactLink
-          to={{
-            pathname: '/homepage-settings/solutions',
-            state: { fromHome: true }
-          }}
+          to="/homepage-settings/solutions"
+          state={{ fromHome: true }}
           className="display-flex flex-align-center text-bold"
         >
           <span className="margin-right-1">

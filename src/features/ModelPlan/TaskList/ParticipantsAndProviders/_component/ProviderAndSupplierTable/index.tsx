@@ -96,7 +96,7 @@ function Table({
                     type="button"
                     {...column.getSortByToggleProps()}
                   >
-                    {column.render('Header')}
+                    {column.render('Header') as React.ReactElement}
                     {getHeaderSortIcon(column, false)}
                   </button>
                 </th>
@@ -112,7 +112,7 @@ function Table({
                 {row.cells.map(cell => {
                   return (
                     <td {...cell.getCellProps()} key={cell.getCellProps().key}>
-                      {cell.render('Cell')}
+                      {cell.render('Cell') as React.ReactElement}
                     </td>
                   );
                 })}

@@ -41,6 +41,7 @@ exports[`SuggestedMilestoneBanner component > renders 1 suggested milestone and 
           There are 2 suggested milestones for your model based on answers in the Model Plan. 
           <a
             class="usa-link"
+            data-discover="true"
             href="/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/milestone-library"
           >
             View suggested milestones
@@ -107,6 +108,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has no sugge
           There aren't currently any suggested milestones for your model. MINT may suggest model milestones as you and your team fill out more of your 
           <a
             class="usa-link"
+            data-discover="true"
             href="/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/task-list"
           >
             Model Plan
@@ -160,6 +162,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has one sugg
           There is 1 suggested milestone for your model based on answers in the Model Plan. 
           <a
             class="usa-link"
+            data-discover="true"
             href="/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/milestone-library"
           >
             View suggested milestones
@@ -226,6 +229,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has two sugg
           There are 2 suggested milestones for your model based on answers in the Model Plan. 
           <a
             class="usa-link"
+            data-discover="true"
             href="/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-to-operations/milestone-library"
           >
             View suggested milestones

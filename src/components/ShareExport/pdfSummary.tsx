@@ -33,7 +33,7 @@ const PDFSummary = ({
 
   const flags = useFlags();
 
-  const { modelID } = useParams<{
+  const { modelID = '' } = useParams<{
     modelID: string;
   }>();
 

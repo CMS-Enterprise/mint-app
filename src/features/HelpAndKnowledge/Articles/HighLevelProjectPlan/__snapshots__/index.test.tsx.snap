@@ -46,6 +46,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
+          data-discover="true"
           href="/help-and-knowledge/articles?category=getting-started"
         >
           <span
@@ -995,7 +996,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
                     >
                       RMADA
                     </a>
@@ -1013,21 +1015,24 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=grant-solutions&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=grant-solutions&section=about"
                     >
                       GrantSolutions
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-letter-of-intent&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-letter-of-intent&section=about"
                     >
                       Salesforce LOI
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-request-for-application&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-request-for-application&section=about"
                     >
                       Salesforce RFA
                     </a>
@@ -1045,14 +1050,16 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=grant-solutions&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=grant-solutions&section=about"
                     >
                       GrantSolutions
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-application-review-and-scoring&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-application-review-and-scoring&section=about"
                     >
                       Salesforce ARS
                     </a>
@@ -1070,14 +1077,16 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
                     >
                       CCW
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=integrated-data-repository&section=about"
                     >
                       IDR
                     </a>
@@ -1108,21 +1117,24 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=outlook-mailbox&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=outlook-mailbox&section=about"
                     >
                       Outlook Mailbox
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=gov-delivery&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=gov-delivery&section=about"
                     >
                       GovDelivery
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
                     >
                       Salesforce POST
                     </a>
@@ -1140,7 +1152,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=cpi-vetting&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=cpi-vetting&section=about"
                     >
                       CPI Vetting
                     </a>
@@ -1158,7 +1171,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=4-innovation&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=4-innovation&section=about"
                     >
                       4i
                     </a>
@@ -1180,7 +1194,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=medicare-advantage-prescription-drug-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=medicare-advantage-prescription-drug-system&section=about"
                     >
                       MARx
                     </a>
@@ -1201,7 +1216,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=health-plan-management-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=health-plan-management-system&section=about"
                     >
                       HPMS
                     </a>
@@ -1222,7 +1238,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=health-plan-management-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=health-plan-management-system&section=about"
                     >
                       HPMS
                     </a>
@@ -1240,7 +1257,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=consolidated-business-operations-support-center&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=consolidated-business-operations-support-center&section=about"
                     >
                       CBOSC
                     </a>
@@ -1272,7 +1290,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
                     >
                       MDM-POR
                     </a>
@@ -1290,7 +1309,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
                     >
                       MDM-POR
                     </a>
@@ -1386,7 +1406,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=quality-vertical&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=quality-vertical&section=about"
                     >
                       Quality Vertical
                     </a>
@@ -1405,7 +1426,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     CCSQ contracts and systems, 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=health-data-reporting&section=about"
                     >
                       HDR
                     </a>
@@ -1424,7 +1446,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=4-innovation&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=4-innovation&section=about"
                     >
                       4i
                     </a>
@@ -1443,14 +1466,16 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
                     >
                       CCW
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=integrated-data-repository&section=about"
                     >
                       IDR
                     </a>
@@ -1469,7 +1494,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     Existing CMS data and process, 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=health-data-reporting&section=about"
                     >
                       HDR
                     </a>
@@ -1488,35 +1514,40 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
                     >
                       CCW
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=centralized-data-exchange&section=about"
                     >
                       CDX
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=health-data-reporting&section=about"
                     >
                       HDR
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=integrated-data-repository&section=about"
                     >
                       IDR
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
                     >
                       Salesforce POST
                     </a>
@@ -1534,28 +1565,32 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
                     >
                       CCW
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=centralized-data-exchange&section=about"
                     >
                       CDX
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=health-data-reporting&section=about"
                     >
                       HDR
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
                     >
                       Salesforce POST
                     </a>
@@ -1573,56 +1608,64 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=4-innovation&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=4-innovation&section=about"
                     >
                       4i
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=beneficiary-claims-data-api&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=beneficiary-claims-data-api&section=about"
                     >
                       BCDA
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=centralized-data-exchange&section=about"
                     >
                       CDX
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=cms-box&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=cms-box&section=about"
                     >
                       CMS Box
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=expanded-data-feedback-reporting&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=expanded-data-feedback-reporting&section=about"
                     >
                       eDFR
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=electronic-file-transfer&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=electronic-file-transfer&section=about"
                     >
                       EFT
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
                     >
                       RMADA
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
                     >
                       Salesforce POST
                     </a>
@@ -1654,7 +1697,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=legal-vertical&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=legal-vertical&section=about"
                     >
                       Legal Vertical
                     </a>
@@ -1721,14 +1765,16 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=shared-systems&section=about"
                     >
                       Shared Systems 
                     </a>
                      / CR, 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
                     >
                       HIGLAS
                     </a>
@@ -1746,7 +1792,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=shared-systems&section=about"
                     >
                       Shared Systems 
                     </a>
@@ -1778,28 +1825,32 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=automated-plan-payment-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=automated-plan-payment-system&section=about"
                     >
                       APPS
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
                     >
                       HIGLAS
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=innovation-payment-contract&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=innovation-payment-contract&section=about"
                     >
                       IPC
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-for-ncbp&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=master-data-management-for-ncbp&section=about"
                     >
                       MDM-NCBP
                     </a>
@@ -1817,7 +1868,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
                     >
                       RMADA
                     </a>
@@ -1835,21 +1887,24 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=automated-plan-payment-system&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=automated-plan-payment-system&section=about"
                     >
                       APPS
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=innovation-payment-contract&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=innovation-payment-contract&section=about"
                     >
                       IPC
                     </a>
                     , 
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=shared-systems&section=about"
                     >
                       Shared Systems 
                     </a>
@@ -1916,7 +1971,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
                     >
                       LDG
                     </a>
@@ -1934,7 +1990,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
                     >
                       LDG
                     </a>
@@ -1952,7 +2009,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
                     >
                       RMADA
                     </a>
@@ -1971,7 +2029,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-connect&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-connect&section=about"
                     >
                       Salesforce CONNECT
                     </a>
@@ -1989,7 +2048,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-connect&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=salesforce-connect&section=about"
                     >
                       Salesforce CONNECT
                     </a>
@@ -2056,7 +2116,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
                     >
                       RMADA
                     </a>
@@ -2074,7 +2135,8 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
                     >
                       CCW
                     </a>
@@ -2129,6 +2191,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=model-concept-and-design"
                 >
                   <span
@@ -2180,6 +2243,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
@@ -2231,6 +2295,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
@@ -2266,6 +2331,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
           </ul>
           <a
             class="usa-link"
+            data-discover="true"
             href="/help-and-knowledge/articles"
           >
             View all help resources

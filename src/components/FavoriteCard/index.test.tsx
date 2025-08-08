@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import {
   GetFavoritesQuery,
@@ -57,20 +57,40 @@ const mockRemove = () => null;
 
 describe('FavoriteCard', () => {
   it('matches the snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter>
-        <FavoriteCard modelPlan={mockModel} removeFavorite={mockRemove} />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <FavoriteCard modelPlan={mockModel} removeFavorite={mockRemove} />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders model plan info translated text', () => {
-    const { getByText } = render(
-      <MemoryRouter>
-        <FavoriteCard modelPlan={mockModel} removeFavorite={mockRemove} />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <FavoriteCard modelPlan={mockModel} removeFavorite={mockRemove} />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
     );
+
+    const { getByText } = render(<RouterProvider router={router} />);
 
     expect(getByText('Plan For General Characteristics')).toBeInTheDocument();
     expect(getByText('The goal')).toBeInTheDocument();

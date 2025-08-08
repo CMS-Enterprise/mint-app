@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { LockableSection } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import SectionLockComponent from 'components/SectionLock';
 import { SubscriptionContext } from 'contexts/PageLockContext';
@@ -13,12 +14,12 @@ type SectionLockType = {
  * Custom hook to manage the lock state of a section.
  * * @param {LockableSection} param.section - The section to check the lock state for.
  *
- * @returns {JSX.Element | null} SectionLock - The component to render the lock state.
+ * @returns {React.ReactElement | null} SectionLock - The component to render the lock state.
  * @returns {boolean} isLocked - A boolean indicating if the section is locked by another user.
  */
 
 const useSectionLock = ({ section }: SectionLockType) => {
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId } = useSelector((state: AppState) => state.auth);
 
   // Get the lockable sections from the SubscriptionContext
   const { lockableSectionLocks } = useContext(SubscriptionContext);

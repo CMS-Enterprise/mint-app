@@ -46,7 +46,7 @@ export type StatusMessageType = {
 const CollaborationArea = () => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { message } = useMessage();
 

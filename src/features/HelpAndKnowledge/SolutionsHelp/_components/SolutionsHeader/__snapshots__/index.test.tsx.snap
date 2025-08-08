@@ -21,6 +21,7 @@ exports[`Operation Solution Help Header > matches snapshot 1`] = `
           >
             <a
               class="usa-link usa-breadcrumb__link"
+              data-discover="true"
               href="/help-and-knowledge"
             >
               <span>

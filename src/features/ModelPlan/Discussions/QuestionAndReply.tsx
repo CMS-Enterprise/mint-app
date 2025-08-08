@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -8,7 +8,7 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery,
@@ -67,7 +67,7 @@ const QuestionAndReply = ({
 
   const { userRole: userRoleConfig } = usePlanTranslation('discussions');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
@@ -185,8 +185,9 @@ const QuestionAndReply = ({
                   })}
                 </ErrorAlert>
               )}
-              <Form
-                onSubmit={e => {
+              <form
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  e.preventDefault();
                   handleSubmit(e);
                   window.scrollTo(0, 0);
                 }}
@@ -301,9 +302,14 @@ const QuestionAndReply = ({
                         ) {
                           setDiscussionReplyID(null);
                           queryParams.delete('discussionID');
-                          history.replace({
-                            search: queryParams.toString()
-                          });
+                          navigate(
+                            {
+                              search: queryParams.toString()
+                            },
+                            {
+                              replace: true
+                            }
+                          );
                           setInitQuestion(false);
                         }
                         if (renderType && setDiscussionType) {
@@ -331,7 +337,7 @@ const QuestionAndReply = ({
                     </Button>
                   </div>
                 </Fieldset>
-              </Form>
+              </form>
             </>
           );
         }}

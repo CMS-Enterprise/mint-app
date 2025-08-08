@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import NotFound from 'features/NotFound';
@@ -12,6 +12,7 @@ import {
   useGetModelSummaryQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import { FavoriteIcon } from 'components/FavoriteCard';
@@ -225,10 +226,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const { t: filterViewT } = useTranslation('filterView');
 
-  const { modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '', subinfo } =
+  const { modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '' } =
     useParams<{
       modelID: string;
-      subinfo: ModelSubSectionRouteKey;
     }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
@@ -240,12 +240,15 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const params = new URLSearchParams(location.search);
   const filteredViewParam = params.get('filter-view');
 
+  const pathSegments = location.pathname.split('/');
+  const subinfo = pathSegments[pathSegments.length - 1];
+
   const filteredView = getValidFilterViewParam(filteredViewParam);
 
   const isViewingFilteredGroup = filteredView !== null;
 
   // Used to check if user is assessment for rendering subnav to task list
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -300,8 +303,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if (isHelpArticle) delete subComponents.discussions;
 
-  const subComponent = subComponents[subinfo];
-
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -310,7 +311,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
-  if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {
+  if (!isSubpage(subinfo!, flags, isHelpArticle) && !isViewingFilteredGroup) {
     return <NotFound />;
   }
 
@@ -476,7 +477,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
         <MobileNav
           subComponents={subComponents}
-          subinfo={subinfo}
+          subinfo={subinfo!}
           isHelpArticle={isHelpArticle}
           isFilteredView={!!filteredView}
         />
@@ -538,7 +539,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                               subinfo !== 'solutions-and-it-systems'
                           })}
                         >
-                          {subComponent.component}
+                          <Outlet />
                         </Grid>
                         {/* Contact info sidebar */}
                         {subinfo !== 'documents' &&
@@ -568,6 +569,69 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       </MainContent>
     </PrintPDFWrapper>
   );
+};
+
+export const readViewRoutes = {
+  path: '/models/:modelID/read-view',
+  element: <ReadOnly />,
+  children: [
+    {
+      path: '/models/:modelID/read-view/model-basics',
+      element: <ReadOnlyModelBasics />
+    },
+    {
+      path: '/models/:modelID/read-view/model-timeline',
+      element: <ReadOnlyModelTimeline />
+    },
+    {
+      path: '/models/:modelID/read-view/general-characteristics',
+      element: <ReadOnlyGeneralCharacteristics />
+    },
+    {
+      path: '/models/:modelID/read-view/participants-and-providers',
+      element: <ReadOnlyParticipantsAndProviders />
+    },
+    {
+      path: '/models/:modelID/read-view/beneficiaries',
+      element: <ReadOnlyBeneficiaries />
+    },
+    {
+      path: '/models/:modelID/read-view/operations-evaluation-and-learning',
+      element: <ReadOnlyOpsEvalAndLearning />
+    },
+    {
+      path: '/models/:modelID/read-view/payment',
+      element: <ReadOnlyPayments />
+    },
+    {
+      path: '/models/:modelID/read-view/data-exchange-approach',
+      element: <ReadOnlyDataExchangeApproach />
+    },
+    {
+      path: '/models/:modelID/read-view/milestones',
+      element: <ReadOnlyMTOMilestones />
+    },
+    {
+      path: '/models/:modelID/read-view/solutions-and-it-systems',
+      element: <ReadOnlyMTOSolutions />
+    },
+    {
+      path: '/models/:modelID/read-view/team',
+      element: <ReadOnlyTeamInfo />
+    },
+    {
+      path: '/models/:modelID/read-view/discussions',
+      element: <ReadOnlyDiscussions />
+    },
+    {
+      path: '/models/:modelID/read-view/documents',
+      element: <ReadOnlyDocuments />
+    },
+    {
+      path: '/models/:modelID/read-view/crs-and-tdl',
+      element: <ReadOnlyCRTDLs />
+    }
+  ]
 };
 
 export default ReadOnly;

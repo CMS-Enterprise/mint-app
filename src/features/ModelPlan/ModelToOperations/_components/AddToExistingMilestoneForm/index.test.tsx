@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import { allMilestonesMock, modelID } from 'tests/mock/mto';
@@ -9,25 +9,36 @@ import MessageProvider from 'contexts/MessageContext';
 
 import AddToExistingMilestoneForm from '.';
 
+// ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+// eslint-disable-next-line
+console.error = vi.fn();
+
 describe('Custom Catergory form', () => {
   it('runs without errors and matches snapshot', async () => {
-    render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[allMilestonesMock]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: (
+            <MessageProvider>
               <AddToExistingMilestoneForm
                 closeModal={() => {}}
                 solutionName="Test Solution"
                 solutionKey={MtoCommonSolutionKey.ACO_OS}
               />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
+    render(
+      <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {
@@ -51,23 +62,30 @@ describe('Custom Catergory form', () => {
       allMilestonesMock.result.data.modelPlan.mtoMatrix.milestones = [];
     }
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[allMilestonesMock]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/',
+          element: (
+            <MessageProvider>
               <AddToExistingMilestoneForm
                 closeModal={() => {}}
                 solutionName="Test Solution"
                 solutionKey={MtoCommonSolutionKey.ACO_OS}
               />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/`]
+      }
+    );
+
+    const { asFragment } = render(
+      <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

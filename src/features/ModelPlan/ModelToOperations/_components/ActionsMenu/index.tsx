@@ -21,8 +21,8 @@ const ActionMenu = ({
   toggleRow
 }: {
   rowType: MTORowType;
-  MoveUp: React.ReactChild;
-  MoveDown: React.ReactChild;
+  MoveUp: React.ReactNode;
+  MoveDown: React.ReactNode;
   milestoneID: string;
   primaryCategoryID: string;
   subCategoryID?: string;
