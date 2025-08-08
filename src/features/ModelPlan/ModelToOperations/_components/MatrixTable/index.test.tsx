@@ -618,7 +618,7 @@ describe('getRenderedRowIndexes', () => {
     const currentPage = 1;
 
     const expectedOutput = {
-      category: [0],
+      category: [0, 1],
       subCategory: [[1], []],
       milestone: [[[], [0]], []]
     };

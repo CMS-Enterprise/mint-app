@@ -80,7 +80,7 @@ describe('Owner Modal Component', () => {
 
     await waitFor(() => {
       expect(getByText('Edit owner information')).toBeInTheDocument();
-      expect(getByText('Save Changes')).toBeInTheDocument();
+      expect(getByText('Save changes')).toBeInTheDocument();
       expect(queryByText('Add owner information')).not.toBeInTheDocument();
     });
   });
