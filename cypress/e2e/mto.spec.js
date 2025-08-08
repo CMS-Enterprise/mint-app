@@ -67,6 +67,7 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('@addSolutionToMilestoneModal')
       .contains('button', 'Add without solutions')
+      .should('be.not.disabled')
       .click({ force: true });
 
     cy.get('@milestoneSidepanel').within(() => {
@@ -148,15 +149,15 @@ describe('Model-to-Operations Matrix', () => {
           .click({ force: true });
       });
 
-    cy.get('@solutionHeading').then(solutionHeading => {
-      cy.get('[role="dialog"]')
-        .scrollIntoView()
-        .within(() => {
+    cy.get('[data-testid="operational-solution-modal"]')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('@solutionHeading').then(solutionHeading => {
           cy.contains(solutionHeading).should('be.visible');
-        })
-        .as('sidePanel');
-      cy.get('[aria-label="Close Modal"]').click({ force: true });
-    });
+        });
+      })
+      .as('sidePanel');
+    cy.get('[aria-label="Close Modal"]').click({ force: true });
 
     cy.get('@sidePanel').should('not.exist');
 
@@ -169,16 +170,12 @@ describe('Model-to-Operations Matrix', () => {
       'addToExistingMilestone'
     );
 
-    cy.get('@addToExistingMilestone').within(() => {
-      cy.get('#linked-milestones').click({ force: true });
-      cy.get('[role="listbox"]')
-        .find('input[type="checkbox"]')
-        .first()
-        .check({ force: true })
-        .should('be.checked');
-      cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
-      cy.contains('Add to 1 milestone').click({ force: true });
+    cy.get('#linked-milestones').within(() => {
+      cy.get("input[type='text']").click().type('{downArrow}{enter}');
     });
+
+    cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
+    cy.contains('Add to 1 milestone').click({ force: true });
 
     cy.contains('a', 'Return to model-to-operations matrix').click({
       force: true
@@ -218,7 +215,7 @@ describe('Model-to-Operations Matrix', () => {
           cy.get('#subcategory').select($option.text());
         });
 
-      cy.get('#name').type('Custom Milestone');
+      cy.get('#name').should('be.not.disabled').type('Custom Milestone');
       cy.contains('Add milestone').click({ force: true });
     });
 
@@ -244,9 +241,13 @@ describe('Model-to-Operations Matrix', () => {
           cy.get('#solution-type').select($option.text());
         });
 
-      cy.get('#solution-title').type('Custom Solution');
-      cy.get('#poc-name').type('Primary Contact');
-      cy.get('#poc-email').type('primary@contact.com');
+      cy.get('#solution-title')
+        .should('be.not.disabled')
+        .type('Custom Solution');
+      cy.get('#poc-name').should('be.not.disabled').type('Primary Contact');
+      cy.get('#poc-email')
+        .should('be.not.disabled')
+        .type('primary@contact.com');
       // Cause a blur to trigger validation
       cy.get('#poc-name').click({ force: true });
       cy.contains('Add solution')
@@ -271,9 +272,12 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
-    cy.get('#name').clear().type('Edited Custom Solution', { force: true });
+    cy.get('#name')
+      .should('be.not.disabled')
+      .clear()
+      .type('Edited Custom Solution', { force: true });
 
-    cy.get('#solution-needed-by').type('07/20/2025');
+    cy.get('#solution-needed-by').should('be.not.disabled').type('07/20/2025');
     cy.get('#solution-needed-by').should('have.value', '07/20/2025');
 
     cy.contains('Save changes')

@@ -57,7 +57,11 @@ const MTOSolutionCard = ({
         className="tablet:width-mobile-lg mint-body-normal"
       >
         <div className="margin-bottom-2">
-          <PageHeading headingLevel="h3" className="margin-y-0">
+          <PageHeading
+            headingLevel="h3"
+            className="margin-y-0"
+            data-testid={`${solution.key}-solution-name`}
+          >
             {t('modal.addToExistingMilestone.title')}
           </PageHeading>
         </div>
