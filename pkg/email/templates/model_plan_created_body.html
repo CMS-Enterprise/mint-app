@@ -1,17 +1,27 @@
-{{template "shared_header.html" "New Model Plan"}}
+{{template "shared_header.html"}}
+
+{{if .IsGeneralUser}}
+  {{template "shared_non_mint_mailbox_short_header.html"}}
+{{else}}
+  {{template "shared_mint_mailbox_header.html"}}
+{{end}}
+<hr/>
+<br/>
+
+<h2>New model</h2>
+<br/>
 
 <h3>{{.ModelName}}</h3>
 <p>Created by {{.UserName}}</p>
 <br/>
 <p>
-  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">View this Model Plan in MINT</a>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">View this model in MINT</a>
 </p>
-<br/>
 
-{{if .ShowFooter}}
-  <hr>
-  <br/>
-  <p>
-    You are currently subscribed to notifications about new Model Plans. If you no longer wish to receive these email notifications, please <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN">unsubscribe</a> or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
-  </p>
+<hr>
+<br/>
+{{if .IsGeneralUser}}
+  {{template "shared_subscribed_footer.html"}}
+{{else}}
+  {{template "shared_mint_mailbox_footer.html"}}
 {{end}}

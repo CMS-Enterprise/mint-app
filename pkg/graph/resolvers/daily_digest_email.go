@@ -18,6 +18,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
+// This file sends a daily digest email to a user based on models they follow. DailyDigest email sent to MINT team email is handled by AggregatedDigestEmailJob in the worker package.
+
 // DailyDigestNotificationSend sends a single email for a user for a given day based on their favorited models
 // It will also call the notification package for Daily Digest Complete Activity
 func DailyDigestNotificationSend(
@@ -151,7 +153,8 @@ func getDigestAnalyzedAudits(
 func generateDigestEmail(
 	analyzedAudits []*models.AnalyzedAudit,
 	emailTemplateService email.TemplateService,
-	emailService oddmail.EmailService) (string, string, error) {
+	emailService oddmail.EmailService,
+) (string, string, error) {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigestTemplateName)
 	if err != nil {
 		return "", "", err

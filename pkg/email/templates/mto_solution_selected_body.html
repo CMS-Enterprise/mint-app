@@ -1,4 +1,8 @@
 {{template "shared_header.html"}}
+
+{{template "shared_non_mint_mailbox_header.html"}}
+<hr>
+
 <p>
   As a part of implementation planning, a CMMI model team has indicated that they plan to use {{.SolutionName}} to implement their model. Please keep in mind that, depending on the model and its start date, model teams may have varied implementation timelines. You may learn more about this model below, or by visiting MINT.
 </p>
@@ -50,5 +54,9 @@
 <hr/>
 <br/>
 {{template "shared_solution_poc_footer.html" .}}
+
+<br/>
+<br/>
+{{template "shared_access_banner.html" .}}
 
 {{template "shared_footer.html"}}

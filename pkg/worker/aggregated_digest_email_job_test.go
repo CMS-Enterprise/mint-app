@@ -83,7 +83,7 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
-	suite.EqualValues("Daily updates on Model Plans", emailSubject)
+	suite.EqualValues("Updates on the models you're following", emailSubject)
 
 	// Check if email contains model name
 	suite.True(strings.Contains(emailBody, mp.ModelName))

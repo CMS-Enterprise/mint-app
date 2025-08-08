@@ -277,7 +277,7 @@ func sendModelPlanCreatedEmail(
 	addressBook email.AddressBook,
 	receiverEmails []string,
 	modelPlan *models.ModelPlan,
-	showFooter bool,
+	isGeneralUser bool,
 ) error {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
 	if err != nil {
@@ -300,7 +300,7 @@ func sendModelPlanCreatedEmail(
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		UserName:      createdByAccount.CommonName,
-		ShowFooter:    showFooter,
+		IsGeneralUser: isGeneralUser,
 	})
 	if err != nil {
 		return err
