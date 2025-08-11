@@ -1,9 +1,9 @@
 {{template "shared_header.html"}}
 
 {{if .IsGeneralUser}}
-  {{template "shared_non_mint_mailbox_short_header.html"}}
+  {{template "shared_non_mint_mailbox_short_header.html" .}}
 {{else}}
-  {{template "shared_mint_mailbox_header.html"}}
+  {{template "shared_mint_mailbox_header.html" .}}
 {{end}}
 <hr/>
 <br/>
@@ -21,7 +21,7 @@
 <hr>
 <br/>
 {{if .IsGeneralUser}}
-  {{template "shared_subscribed_footer.html"}}
+  {{template "shared_subscribed_footer.html" .}}
 {{else}}
   {{template "shared_mint_mailbox_footer.html"}}
 {{end}}
