@@ -69,7 +69,7 @@ func (r *userNotificationPreferencesResolver) DataExchangeApproachMarkedComplete
 
 // IncorrectModelStatus is the resolver for the incorrectModelStatus field.
 func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
-	panic(fmt.Errorf("not implemented: IncorrectModelStatus - incorrectModelStatus"))
+	return obj.IncorrectModelStatus, nil
 }
 
 // IncorrectModelStatusNotificationType is the resolver for the incorrectModelStatusNotificationType field.
