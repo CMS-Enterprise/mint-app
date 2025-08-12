@@ -194,3 +194,43 @@ func UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesDataExchangeApproachMarkedComplete, arg)
 }
+
+// UserAccountGetLeadModelPlans returns model_plan_id values where the user is a lead.
+func UserAccountGetLeadModelPlans(np sqlutils.NamedPreparer, userID uuid.UUID) ([]uuid.UUID, error) {
+	var ids []uuid.UUID
+
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetLeadModelPlans)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"user_id": userID,
+	}
+
+	if err := stmt.Select(&ids, arg); err != nil {
+		return nil, err
+	}
+	return ids, nil
+}
+
+// UserAccountGetLeadModelPlanCount returns the count of model plans where the user is a lead.
+func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUID) (int, error) {
+	var count int
+
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetLeadModelPlanCount)
+	if err != nil {
+		return 0, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"user_id": userID,
+	}
+
+	if err := stmt.Get(&count, arg); err != nil {
+		return 0, err
+	}
+	return count, nil
+}

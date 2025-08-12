@@ -38,6 +38,11 @@ func (r *currentUserResolver) NotificationPreferences(ctx context.Context, obj *
 	// return UserNotificationPreferencesGetByUserID(ctx, r.store, princ.Account().ID)
 }
 
+// LeadModelPlanCount is the resolver for the leadModelPlanCount field.
+func (r *currentUserResolver) LeadModelPlanCount(ctx context.Context, obj *models.CurrentUser) (int, error) {
+	return GetLeadModelPlanCount(ctx, r.store, appcontext.Principal(ctx).Account().ID)
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*models.CurrentUser, error) {
 	return &models.CurrentUser{}, nil
