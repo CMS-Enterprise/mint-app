@@ -43,6 +43,7 @@ func CurrentUserNotificationsGet(ctx context.Context, np sqlutils.NamedPreparer)
 	return notifications.UserNotificationCollectionGetByUser(ctx, np, princ)
 }
 
+// GetLeadModelPlanCount returns the number of model plans where the specified user is a lead.
 func GetLeadModelPlanCount(ctx context.Context, store *storage.Store,
 	userID uuid.UUID,
 ) (int, error) {
