@@ -14,6 +14,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
 
+const (
+	// translateAuditJobName is the name of the job that creates a translated audit from an audit
+	translateAuditJobName string = "TranslateAuditJob"
+)
+
 // TranslateAuditJob is the job to translate an individual audit into an analyzed audit, and note that the translation is done in the processing table
 // args[0] the id of the audit change (int, but float in faktory)
 // args[0] the id of the queue (UUID)

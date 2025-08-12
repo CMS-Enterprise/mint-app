@@ -9,9 +9,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/dataloadertestconfigs"
 
 	"github.com/99designs/gqlgen/graphql"
 	faktory "github.com/contribsys/faktory/client"
+	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -46,6 +49,8 @@ func (suite *WorkerSuite) SetupTest() {
 	//GET USER ACCOUNT EACH TIME!
 	princ := suite.getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
+
+	suite.testConfigs.Context = dataloadertestconfigs.DecorateTestContextWithDataLoader(suite.testConfigs.Context, suite.testConfigs.Store)
 
 	// Flush faktory after each test
 	client, err := faktory.Open()
@@ -237,4 +242,15 @@ func (suite *WorkerSuite) getTestPrincipal(store *storage.Store, userName string
 	}
 	return princ
 
+}
+
+func (suite *WorkerSuite) ExecuteWithLoaders(
+	perf faktory_worker.PerformExecutor,
+	job *faktory.Job,
+	fn func(ctx context.Context, args ...interface{}) error,
+) error {
+	return perf.Execute(job, func(ctx context.Context, args ...interface{}) error {
+		ctxWithLoaders := loaders.CTXWithLoaders(ctx, loaders.NewDataLoaders(suite.testConfigs.Store))
+		return fn(ctxWithLoaders, args...)
+	})
 }
