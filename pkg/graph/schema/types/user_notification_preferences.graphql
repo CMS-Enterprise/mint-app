@@ -15,12 +15,6 @@ enum DataExchangeApproachMarkedCompleteNotificationType {
   MY_MODELS
 }
 
-enum IncorrectModelStatusNotificationType {
-  ALL_MODELS
-  FOLLOWED_MODELS
-  MY_MODELS
-}
-
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
 """
@@ -49,7 +43,6 @@ type UserNotificationPreferences {
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
-  incorrectModelStatusNotificationType: IncorrectModelStatusNotificationType
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -85,7 +78,6 @@ input UserNotificationPreferencesChanges
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
-  incorrectModelStatusNotificationType: IncorrectModelStatusNotificationType
 }
 
 extend type Mutation {

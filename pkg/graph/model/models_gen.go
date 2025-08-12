@@ -1889,63 +1889,6 @@ func (e GeographyType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-type IncorrectModelStatusNotificationType string
-
-const (
-	IncorrectModelStatusNotificationTypeAllModels      IncorrectModelStatusNotificationType = "ALL_MODELS"
-	IncorrectModelStatusNotificationTypeFollowedModels IncorrectModelStatusNotificationType = "FOLLOWED_MODELS"
-	IncorrectModelStatusNotificationTypeMyModels       IncorrectModelStatusNotificationType = "MY_MODELS"
-)
-
-var AllIncorrectModelStatusNotificationType = []IncorrectModelStatusNotificationType{
-	IncorrectModelStatusNotificationTypeAllModels,
-	IncorrectModelStatusNotificationTypeFollowedModels,
-	IncorrectModelStatusNotificationTypeMyModels,
-}
-
-func (e IncorrectModelStatusNotificationType) IsValid() bool {
-	switch e {
-	case IncorrectModelStatusNotificationTypeAllModels, IncorrectModelStatusNotificationTypeFollowedModels, IncorrectModelStatusNotificationTypeMyModels:
-		return true
-	}
-	return false
-}
-
-func (e IncorrectModelStatusNotificationType) String() string {
-	return string(e)
-}
-
-func (e *IncorrectModelStatusNotificationType) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IncorrectModelStatusNotificationType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IncorrectModelStatusNotificationType", str)
-	}
-	return nil
-}
-
-func (e IncorrectModelStatusNotificationType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IncorrectModelStatusNotificationType) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IncorrectModelStatusNotificationType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
 type KeyCharacteristic string
 
 const (

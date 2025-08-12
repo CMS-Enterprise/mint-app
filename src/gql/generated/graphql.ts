@@ -661,12 +661,6 @@ export enum GeographyType {
   STATE = 'STATE'
 }
 
-export enum IncorrectModelStatusNotificationType {
-  ALL_MODELS = 'ALL_MODELS',
-  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
-  MY_MODELS = 'MY_MODELS'
-}
-
 export enum KeyCharacteristic {
   EPISODE_BASED = 'EPISODE_BASED',
   MEDICAID_MODEL = 'MEDICAID_MODEL',
@@ -4989,7 +4983,6 @@ export type UserNotificationPreferences = {
   datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
   incorrectModelStatus: Array<UserNotificationPreferenceFlag>;
-  incorrectModelStatusNotificationType?: Maybe<IncorrectModelStatusNotificationType>;
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -5010,7 +5003,6 @@ export type UserNotificationPreferencesChanges = {
   datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
   incorrectModelStatus?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
-  incorrectModelStatusNotificationType?: InputMaybe<IncorrectModelStatusNotificationType>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newModelPlan?: InputMaybe<Array<UserNotificationPreferenceFlag>>;

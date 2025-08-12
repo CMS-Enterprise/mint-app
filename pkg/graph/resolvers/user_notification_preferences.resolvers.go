@@ -6,11 +6,9 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -70,11 +68,6 @@ func (r *userNotificationPreferencesResolver) DataExchangeApproachMarkedComplete
 // IncorrectModelStatus is the resolver for the incorrectModelStatus field.
 func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.IncorrectModelStatus, nil
-}
-
-// IncorrectModelStatusNotificationType is the resolver for the incorrectModelStatusNotificationType field.
-func (r *userNotificationPreferencesResolver) IncorrectModelStatusNotificationType(ctx context.Context, obj *models.UserNotificationPreferences) (*model.IncorrectModelStatusNotificationType, error) {
-	return obj.IncorrectModelStatusNotificationType, nil
 }
 
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
