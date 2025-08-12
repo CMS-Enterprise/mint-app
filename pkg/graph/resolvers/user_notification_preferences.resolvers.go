@@ -74,7 +74,7 @@ func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.C
 
 // IncorrectModelStatusNotificationType is the resolver for the incorrectModelStatusNotificationType field.
 func (r *userNotificationPreferencesResolver) IncorrectModelStatusNotificationType(ctx context.Context, obj *models.UserNotificationPreferences) (*model.IncorrectModelStatusNotificationType, error) {
-	panic(fmt.Errorf("not implemented: IncorrectModelStatusNotificationType - incorrectModelStatusNotificationType"))
+	return obj.IncorrectModelStatusNotificationType, nil
 }
 
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
