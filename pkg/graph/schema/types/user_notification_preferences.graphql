@@ -77,7 +77,7 @@ input UserNotificationPreferencesChanges
   dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
-  suggestedPhase: [UserNotificationPreferenceFlag!]
+  incorrectModelStatus: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
