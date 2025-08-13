@@ -1,4 +1,11 @@
-{{template "shared_header.html" "Data exchange approach complete:"}}
+{{template "shared_header.html"}}
+
+{{template "shared_non_mint_mailbox_short_header.html"}}
+<hr/>
+<br/>
+
+<h2>Data exchange approach complete:</h2>
+<br/>
 
 <h3>{{.ModelName}}</h3>
 <p>Marked complete by {{.MarkedCompletedByUserCommonName}}</p>
@@ -12,7 +19,10 @@
   <hr>
   <br/>
   <p>
-    You are currently subscribed to notifications when data exchange approaches are completed. If you no longer wish to receive these email notifications, please <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE">unsubscribe</a> or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+    You are currently subscribed to notifications about completed data exchange approaches. If you no longer wish to receive these email notifications, please
+    <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE" style="font-weight: normal">unsubscribe</a>
+    or change your
+    <a href="{{.ClientAddress}}/notifications/settings" style="font-weight: normal">notification settings</a>.
   </p>
 {{end}}
 
