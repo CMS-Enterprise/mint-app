@@ -62,15 +62,7 @@ export const composeMultiSelectOptions = (
 export const sortedSelectOptions = (
   options: { value: string; label: string }[]
 ) => {
-  return [...options].sort((a, b) => {
-    if (a.label < b.label) {
-      return -1;
-    }
-    if (a.label > b.label) {
-      return 1;
-    }
-    return 0;
-  });
+  return [...options].sort((a, b) => a.label.localeCompare(b.label));
 };
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
