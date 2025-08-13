@@ -293,6 +293,7 @@ export type CurrentUser = {
   __typename: 'CurrentUser';
   account: UserAccount;
   launchDarkly: LaunchDarklySettings;
+  leadModelPlanCount: Scalars['Int']['output'];
   notificationPreferences: UserNotificationPreferences;
   notifications: UserNotifications;
 };
@@ -4981,6 +4982,7 @@ export type UserNotificationPreferences = {
   datesChanged: Array<UserNotificationPreferenceFlag>;
   datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
+  incorrectModelStatus: Array<UserNotificationPreferenceFlag>;
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -5000,6 +5002,7 @@ export type UserNotificationPreferencesChanges = {
   dataExchangeApproachMarkedCompleteNotificationType?: InputMaybe<DataExchangeApproachMarkedCompleteNotificationType>;
   datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
+  incorrectModelStatus?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newModelPlan?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
