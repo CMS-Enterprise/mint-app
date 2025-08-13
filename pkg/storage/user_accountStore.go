@@ -204,5 +204,8 @@ func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUI
 	if err != nil {
 		return 0, err
 	}
-	return *count, nil
+    if count == nil {
+        return 0, fmt.Errorf("unexpected nil pointer for count")
+    }
+    return *count, nil
 }
