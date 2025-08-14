@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import protectedRoute from 'components/ProtectedRoute';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 import Authority from './Authority';
 import Involvements from './Involvements';
@@ -15,7 +15,11 @@ const GeneralCharacteristics = () => {
 
 const generalCharacteristicsRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/characteristics',
-  element: protectedRoute(<GeneralCharacteristics />),
+  element: (
+    <ProtectedRoute>
+      <GeneralCharacteristics />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: '',

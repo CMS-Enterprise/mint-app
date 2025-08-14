@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import protectedRoute from 'components/ProtectedRoute';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 import BeneficiaryIdentification from './BeneficiaryIdentification';
 import Frequency from './Frequency';
@@ -13,7 +13,11 @@ const Beneficiaries = () => {
 
 const beneficiariesRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-  element: protectedRoute(<Beneficiaries />),
+  element: (
+    <ProtectedRoute>
+      <Beneficiaries />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: '',

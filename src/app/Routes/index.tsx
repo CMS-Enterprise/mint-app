@@ -63,7 +63,7 @@ import UserInfoWrapper from 'wrappers/UserInfoWrapper';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
-import protectedRoute from 'components/ProtectedRoute';
+import ProtectedRoute from 'components/ProtectedRoute';
 import TaskListBannerAlert from 'components/TaskListBannerAlert';
 import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
@@ -173,7 +173,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/pre-decisional-notice',
-        element: protectedRoute(<NDA />)
+        element: (
+          <ProtectedRoute>
+            <NDA />
+          </ProtectedRoute>
+        )
       },
       // Home Routes
       {
@@ -185,43 +189,79 @@ const router = createBrowserRouter([
       // Model Plan Routes
       {
         path: '/models',
-        element: protectedRoute(<ModelPlan />)
+        element: (
+          <ProtectedRoute>
+            <ModelPlan />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/models/steps-overview',
-        element: protectedRoute(<StepsOverview />)
+        element: (
+          <ProtectedRoute>
+            <StepsOverview />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/models/new-plan',
-        element: protectedRoute(<NewPlan />)
+        element: (
+          <ProtectedRoute>
+            <NewPlan />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/models/:modelID',
-        element: protectedRoute(<ModelPlanOverview />)
+        element: (
+          <ProtectedRoute>
+            <ModelPlanOverview />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/models/:modelID/unlock-all-sections',
-        element: protectedRoute(<UnlockAllSections />)
+        element: (
+          <ProtectedRoute>
+            <UnlockAllSections />
+          </ProtectedRoute>
+        )
       },
 
       // Collaboration Area Routes
       {
         path: '/models/:modelID/collaboration-area',
-        element: protectedRoute(<CollaborationArea />)
+        element: (
+          <ProtectedRoute>
+            <CollaborationArea />
+          </ProtectedRoute>
+        )
       },
       collaboratorsRoutes,
       {
         path: '/models/:modelID/collaboration-area/status',
-        element: protectedRoute(<Status />)
+        element: (
+          <ProtectedRoute>
+            <Status />
+          </ProtectedRoute>
+        )
       },
       // Document Routes
       {
         path: '/models/:modelID/collaboration-area/documents',
-        element: protectedRoute(<Documents />)
+        element: (
+          <ProtectedRoute>
+            <Documents />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/models/:modelID/collaboration-area/documents/add-document',
-        element: protectedRoute(<AddDocument />)
+        element: (
+          <ProtectedRoute>
+            <AddDocument />
+          </ProtectedRoute>
+        )
       },
       // Timeline Routes
       {
@@ -232,7 +272,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/models/:modelID/collaboration-area/model-timeline',
-        element: protectedRoute(<Timeline />)
+        element: (
+          <ProtectedRoute>
+            <Timeline />
+          </ProtectedRoute>
+        )
       },
       // CR and TDL Routes
       crtdlRoutes,
@@ -309,25 +353,41 @@ const router = createBrowserRouter([
 
       {
         path: '/help-and-knowledge/articles/get-access',
-        element: protectedRoute(<GetAccess />)
+        element: (
+          <ProtectedRoute>
+            <GetAccess />
+          </ProtectedRoute>
+        )
       },
 
       // Change History Routes
       {
         path: '/models/:modelID/change-history',
-        element: protectedRoute(<ChangeHistory />)
+        element: (
+          <ProtectedRoute>
+            <ChangeHistory />
+          </ProtectedRoute>
+        )
       },
 
       // Locked Task List Section Routes
       {
         path: '/models/:modelID/locked-task-list-section',
-        element: protectedRoute(<LockedTaskListSection />)
+        element: (
+          <ProtectedRoute>
+            <LockedTaskListSection />
+          </ProtectedRoute>
+        )
       },
 
       // Unfollow route
       {
         path: '/unfollow',
-        element: protectedRoute(<Unfollow />)
+        element: (
+          <ProtectedRoute>
+            <Unfollow />
+          </ProtectedRoute>
+        )
       },
 
       // Other Routes
@@ -345,11 +405,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/send-feedback',
-        element: protectedRoute(<SendFeedback />)
+        element: (
+          <ProtectedRoute>
+            <SendFeedback />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/feedback-received',
-        element: protectedRoute(<FeedbackReceived />)
+        element: (
+          <ProtectedRoute>
+            <FeedbackReceived />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/privacy-policy',
@@ -357,7 +425,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/report-a-problem',
-        element: protectedRoute(<ReportAProblem />)
+        element: (
+          <ProtectedRoute>
+            <ReportAProblem />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/sandbox',
@@ -369,7 +441,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/user-diagnostics',
-        element: protectedRoute(<UserInfo />)
+        element: (
+          <ProtectedRoute>
+            <UserInfo />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/implicit/callback',
