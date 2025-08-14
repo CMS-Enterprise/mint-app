@@ -87,10 +87,13 @@ const Complexity = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<ComplexityFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const backPage = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(

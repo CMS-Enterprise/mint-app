@@ -92,11 +92,11 @@ const Learning = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<GetLearningFormType>(
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

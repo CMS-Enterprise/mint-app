@@ -75,11 +75,11 @@ const PeopleImpact = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<PeopleImpactedFormType>(
     TypedUpdateModelPlanBeneficiariesDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

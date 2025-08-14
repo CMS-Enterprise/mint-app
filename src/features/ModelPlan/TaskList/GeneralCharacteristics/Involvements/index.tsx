@@ -74,11 +74,11 @@ const Involvements = () => {
     communityPartnersInvolvedNote
   } = (data?.modelPlan?.generalCharacteristics || {}) as InvolvementsFormType;
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<InvolvementsFormType>(
     TypedUpdatePlanGeneralCharacteristicsDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

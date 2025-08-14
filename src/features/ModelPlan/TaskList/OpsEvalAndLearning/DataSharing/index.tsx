@@ -98,11 +98,11 @@ const DataSharing = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<GetDataSharingFormType>(
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

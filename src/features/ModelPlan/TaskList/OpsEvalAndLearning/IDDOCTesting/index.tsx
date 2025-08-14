@@ -83,11 +83,11 @@ const IDDOCTesting = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<IDDOCTestingFormType>(
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

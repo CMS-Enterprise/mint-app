@@ -89,11 +89,11 @@ export const Participants = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<ParticipantsAndProvidersFormType>(
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

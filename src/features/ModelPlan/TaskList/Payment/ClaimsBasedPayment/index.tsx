@@ -92,10 +92,13 @@ const ClaimsBasedPayment = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<ClaimsBasedPaymentFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: ClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',

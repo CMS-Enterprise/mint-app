@@ -81,10 +81,13 @@ const AnticipateDependencies = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as any
-  });
+  const { mutationError } = useHandleMutation<AnticipateDependenciesFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const nextPage = () => {
     const hasReductionToCostSharing =

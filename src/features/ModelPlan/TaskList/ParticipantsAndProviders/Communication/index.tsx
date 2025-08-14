@@ -94,11 +94,11 @@ export const Communication = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<CommunicationFormType>(
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

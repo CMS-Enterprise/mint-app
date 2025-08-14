@@ -25,10 +25,13 @@ describe('The Model Plan General Characteristics Form', () => {
       .should('be.checked');
 
     cy.get('#plan-characteristics-existing-model')
+      .as('existingModel')
       .should('be.visible')
-      .click()
-      .type('Plan with B{downArrow}{enter}')
-      .should('have.value', 'Plan with Basics');
+      .click();
+
+    cy.get('@existingModel').type('Plan with B{downArrow}{enter}');
+
+    cy.get('@existingModel').should('have.value', 'Plan with Basics');
 
     // Resembles Questions
     cy.get('#plan-characteristics-resembles-existing-model-YES')

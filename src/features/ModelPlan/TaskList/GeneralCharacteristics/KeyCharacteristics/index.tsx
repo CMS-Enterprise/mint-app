@@ -100,11 +100,11 @@ const KeyCharacteristics = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<KeyCharacteristicsFormType>(
     TypedUpdatePlanGeneralCharacteristicsDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

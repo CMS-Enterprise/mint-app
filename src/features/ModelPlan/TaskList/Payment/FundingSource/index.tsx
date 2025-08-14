@@ -97,10 +97,13 @@ const FundingSource = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<FundingFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const nextPage = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(

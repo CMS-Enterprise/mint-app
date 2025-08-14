@@ -86,11 +86,11 @@ export const ParticipantOptions = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<ParticipantOptionsFormType>(
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

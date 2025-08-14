@@ -75,10 +75,13 @@ const Overview = () => {
     status
   } = (data?.modelPlan?.basics || {}) as BasicsFormType;
 
-  const { mutationError } = useHandleMutation(TypedUpdateBasicsDocument, {
-    id,
-    formikRef: formikRef as any
-  });
+  const { mutationError } = useHandleMutation<InitialValueType>(
+    TypedUpdateBasicsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanBasics',

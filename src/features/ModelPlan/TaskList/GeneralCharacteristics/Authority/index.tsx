@@ -90,11 +90,11 @@ const Authority = () => {
     status
   } = (data?.modelPlan?.generalCharacteristics || {}) as AuthorityFormType;
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<AuthorityFormType>(
     TypedUpdatePlanGeneralCharacteristicsDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

@@ -85,11 +85,11 @@ const IDDOCMonitoring = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<IDDOCMonitoringFormType>(
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

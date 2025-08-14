@@ -108,11 +108,11 @@ export const ProviderOptions = () => {
 
   useScrollElement(!loading);
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError } = useHandleMutation<ProviderOptionsFormType>(
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 

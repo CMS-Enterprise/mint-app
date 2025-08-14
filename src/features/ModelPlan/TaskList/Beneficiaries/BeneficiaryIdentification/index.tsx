@@ -83,13 +83,14 @@ const BeneficiaryIdentification = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(
-    TypedUpdateModelPlanBeneficiariesDocument,
-    {
-      id,
-      formikRef: formikRef as any
-    }
-  );
+  const { mutationError } =
+    useHandleMutation<BeneficiaryIdentificationFormType>(
+      TypedUpdateModelPlanBeneficiariesDocument,
+      {
+        id,
+        formikRef
+      }
+    );
 
   const initialValues: BeneficiaryIdentificationFormType = {
     __typename: 'PlanBeneficiaries',

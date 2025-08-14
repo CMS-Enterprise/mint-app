@@ -106,10 +106,13 @@ const Recover = () => {
 
   useScrollElement(!loading);
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<RecoverFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanPayments',

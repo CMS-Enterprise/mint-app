@@ -75,10 +75,13 @@ const BeneficiaryCostSharing = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<BeneficiaryCostSharingFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const nextPage = () => {
     if (

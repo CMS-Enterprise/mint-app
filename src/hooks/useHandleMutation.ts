@@ -11,22 +11,22 @@ import { DocumentNode } from 'graphql';
 import dirtyInput from 'utils/formUtil';
 import sanitizeStatus from 'utils/status';
 
-type HandleFormikMutationConfigType = {
+type HandleFormikMutationConfigType<T> = {
   id: string;
-  formikRef: React.RefObject<FormikProps<any>>;
+  formikRef: React.RefObject<FormikProps<T> | null>;
 };
 
-type HandleRHFMutationConfigType = {
+type HandleRHFMutationConfigType<T> = {
   id: string;
   rhfRef: {
-    initialValues: any;
-    values: any;
+    initialValues: T;
+    values: T;
   };
 };
 
-type HandleMutationConfigType =
-  | HandleFormikMutationConfigType
-  | HandleRHFMutationConfigType;
+type HandleMutationConfigType<T> =
+  | HandleFormikMutationConfigType<T>
+  | HandleRHFMutationConfigType<T>;
 
 type ModalConfigType = {
   isModalOpen: boolean;
@@ -52,9 +52,9 @@ type MutationReturnType = {
  * @returns MutationReturnType
  */
 
-function useHandleMutation<TData = any, TVariables = OperationVariables>(
+function useHandleMutation<T, TData = any, TVariables = OperationVariables>(
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
-  config: HandleMutationConfigType
+  config: HandleMutationConfigType<T>
 ): MutationReturnType {
   const { pathname } = useLocation();
 

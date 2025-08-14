@@ -83,10 +83,13 @@ const Timeline = () => {
     status
   } = (data?.modelPlan?.timeline || {}) as TimelineFormType;
 
-  const { mutationError } = useHandleMutation(TypedUpdateTimelineDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<InitialValueType>(
+    TypedUpdateTimelineDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanTimeline',

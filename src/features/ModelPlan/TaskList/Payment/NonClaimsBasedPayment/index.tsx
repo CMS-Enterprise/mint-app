@@ -90,10 +90,13 @@ const NonClaimsBasedPayment = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
-    id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
-  });
+  const { mutationError } = useHandleMutation<NonClaimsBasedPaymentFormType>(
+    TypedUpdatePaymentsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const backPage = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
