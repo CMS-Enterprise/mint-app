@@ -79,6 +79,7 @@ func ShouldSendEmailForPhaseSuggestion(
 
 // TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
 func TrySendEmailForPhaseSuggestion(
+	ctx context.Context,
 	logger *zap.Logger,
 	store *storage.Store,
 	emailRecipients []string,
@@ -266,6 +267,7 @@ func TrySendEmailForPhaseSuggestionByModelPlanID(
 	}
 
 	return TrySendEmailForPhaseSuggestion(
+		ctx,
 		logger,
 		store,
 		emailRecipients,

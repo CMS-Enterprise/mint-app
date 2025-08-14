@@ -80,6 +80,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 		Times(1)
 
 	err = TrySendEmailForPhaseSuggestion(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 		emailRecipients,
