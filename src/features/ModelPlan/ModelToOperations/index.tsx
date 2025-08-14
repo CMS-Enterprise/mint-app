@@ -35,11 +35,7 @@ const MTORedirect = () => {
 
 export const modelToOperationsRoutes = {
   path: '/models/:modelID/collaboration-area/model-to-operations',
-  element: (
-    <ProtectedRoute>
-      <ModelToOperations />
-    </ProtectedRoute>
-  ),
+  element: ProtectedRoute(<ModelToOperations />),
   children: [
     {
       path: '/models/:modelID/collaboration-area/model-to-operations/matrix',

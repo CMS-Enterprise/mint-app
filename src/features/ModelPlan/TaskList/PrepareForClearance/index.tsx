@@ -22,19 +22,11 @@ export const PrepareForClearance = () => {
 
 export const prepareForClearanceRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-  element: (
-    <ProtectedRoute>
-      <PrepareForClearance />
-    </ProtectedRoute>
-  ),
+  element: ProtectedRoute(<PrepareForClearance />),
   children: [
     {
       path: '',
-      element: (
-        <ProtectedRoute>
-          <PrepareForClearanceCheckList />
-        </ProtectedRoute>
-      )
+      element: ProtectedRoute(<PrepareForClearanceCheckList />)
     },
     {
       path: ':section/:sectionID',

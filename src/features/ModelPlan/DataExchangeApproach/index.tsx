@@ -58,11 +58,7 @@ const DataEchangeApproach = () => {
 
 export const dataExchangeApproachRoutes = {
   path: '/models/:modelID/collaboration-area/data-exchange-approach',
-  element: (
-    <ProtectedRoute>
-      <DataEchangeApproach />
-    </ProtectedRoute>
-  ),
+  element: ProtectedRoute(<DataEchangeApproach />),
   children: [
     {
       path: '/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange',
