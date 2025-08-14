@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Menu } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { useArchiveModelPlanMutation } from 'gql/generated/graphql';
@@ -25,7 +25,7 @@ const ShareExportButton = ({
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -81,7 +81,7 @@ const ShareExportButton = ({
               </Alert>
             </>
           );
-          history.push(`/`);
+          navigate(`/`);
         }
       })
       .catch(() => {

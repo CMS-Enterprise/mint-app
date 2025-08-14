@@ -11,7 +11,7 @@ import {
 } from 'gql/generated/graphql';
 
 type TaskListDescriptionProps = {
-  children?: React.ReactNode | React.ReactNodeArray;
+  children?: React.ReactNode;
 };
 
 export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
@@ -87,7 +87,7 @@ export const TaskListStatusTag = ({
 };
 
 type TaskListItemProps = {
-  children?: React.ReactNode | React.ReactNodeArray;
+  children?: React.ReactNode;
   heading: string;
   status: TaskStatus | PrepareForClearanceStatus;
   testId: string;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
 import { ArticleCategories } from '../..';
@@ -8,10 +8,20 @@ import HelpCategoryTag from './index';
 
 describe('HelpCategoryTag', () => {
   it('renders without errors', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <HelpCategoryTag type={ArticleCategories.GETTING_STARTED} />
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     const { getByText, getByTestId } = render(
-      <MemoryRouter>
-        <HelpCategoryTag type={ArticleCategories.GETTING_STARTED} />
-      </MemoryRouter>
+      <RouterProvider router={router} />
     );
 
     await waitFor(() => {

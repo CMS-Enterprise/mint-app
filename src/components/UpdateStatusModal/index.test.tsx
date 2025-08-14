@@ -1,4 +1,5 @@
 import React from 'react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
@@ -53,17 +54,32 @@ describe('UpdateStatusModal', () => {
   };
 
   beforeEach(() => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/collaborators',
+          element: (
+            <UpdateStatusModal
+              modelID="123"
+              isOpen
+              closeModal={mockCloseModal}
+              currentStatus={ModelStatus.PLAN_DRAFT}
+              suggestedPhase={mockSuggestedPhase}
+              setStatusMessage={() => null}
+              refetch={() => null}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add'
+        ]
+      }
+    );
     render(
       <MockedProvider mocks={statusMock} addTypename={false}>
-        <UpdateStatusModal
-          modelID="123"
-          isOpen
-          closeModal={mockCloseModal}
-          currentStatus={ModelStatus.PLAN_DRAFT}
-          suggestedPhase={mockSuggestedPhase}
-          setStatusMessage={() => null}
-          refetch={() => null}
-        />
+        <RouterProvider router={router} />
       </MockedProvider>
     );
   });

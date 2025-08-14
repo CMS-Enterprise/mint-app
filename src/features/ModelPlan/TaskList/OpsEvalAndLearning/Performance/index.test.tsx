@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -62,18 +62,24 @@ const performanceMock = [
 
 describe('Model Plan Ops Eval and Learning Performance', () => {
   it('renders without errors', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance',
+          element: <Performance />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/performance'
-        ]}
-      >
-        <MockedProvider mocks={performanceMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance">
-            <Performance />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={performanceMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -90,18 +96,24 @@ describe('Model Plan Ops Eval and Learning Performance', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance',
+          element: <Performance />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/performance'
-        ]}
-      >
-        <MockedProvider mocks={performanceMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance">
-            <Performance />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={performanceMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

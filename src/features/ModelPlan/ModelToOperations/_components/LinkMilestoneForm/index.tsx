@@ -31,7 +31,7 @@ const LinkMilestoneForm = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: solutionT } = useTranslation('mtoSolution');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -114,10 +114,8 @@ const LinkMilestoneForm = ({
               components={{
                 milestone: (
                   <UswdsReactLink
-                    to={{
-                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                      state: { scroll: true }
-                    }}
+                    to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                    state={{ scroll: true }}
                   >
                     {' '}
                   </UswdsReactLink>

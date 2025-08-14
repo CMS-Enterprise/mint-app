@@ -15,7 +15,7 @@ const SuggestedMilestoneBanner = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   return (
     <div className="bg-accent-cool-lighter shadow-2 position-relative">
       <GridContainer className="padding-y-2">
@@ -37,10 +37,8 @@ const SuggestedMilestoneBanner = ({
                   components={{
                     s: (
                       <UswdsReactLink
-                        to={{
-                          pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                          state: { scroll: true }
-                        }}
+                        to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                        state={{ scroll: true }}
                       />
                     ),
                     arrow: (

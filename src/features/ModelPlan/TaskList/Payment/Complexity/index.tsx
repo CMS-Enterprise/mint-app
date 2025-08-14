@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -12,7 +12,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   GetComplexityQuery,
@@ -28,6 +28,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
+import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -55,10 +56,10 @@ const Complexity = () => {
     anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ComplexityFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetComplexityQuery({
     variables: {
@@ -88,7 +89,7 @@ const Complexity = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const backPage = () => {
@@ -104,21 +105,21 @@ const Complexity = () => {
     );
 
     if (hasNonClaimBasedPayment) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
         );
       } else {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
         );
       }
     } else {
-      history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
+      navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
     }
   };
 
@@ -152,279 +153,283 @@ const Complexity = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="payment-complexity">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.PAYMENTS
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.PAYMENTS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {paymentsMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {paymentsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          history.push(
-            `/models/${modelID}/collaboration-area/task-list/payment/recover-payment`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<ComplexityFormType>) => {
-          const { handleSubmit, setFieldValue, setErrors, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/payment/recover-payment`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<ComplexityFormType>) => {
+            const { handleSubmit, setFieldValue, setErrors, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap>
-                  <Grid desktop={{ col: 6 }}>
-                    <Form
-                      className="margin-top-6"
-                      data-testid="payment-complexity-form"
-                      onSubmit={e => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <Fieldset disabled={!!error || loading}>
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="payment-complexity"
-                            className="maxw-none"
-                          >
-                            {paymentsT(
-                              'expectedCalculationComplexityLevel.label'
-                            )}
-                          </Label>
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    <Grid desktop={{ col: 6 }}>
+                      <form
+                        className="margin-top-6"
+                        data-testid="payment-complexity-form"
+                        onSubmit={e => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        <Fieldset disabled={!!error || loading}>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="payment-complexity"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'expectedCalculationComplexityLevel.label'
+                              )}
+                            </Label>
 
-                          <Fieldset>
-                            {getKeys(
-                              expectedCalculationComplexityLevelConfig.options
-                            ).map(key => (
-                              <Field
-                                as={Radio}
-                                key={key}
-                                id={`payment-complexity-${key}`}
-                                data-testid={`payment-complexity-${key}`}
-                                name="expectedCalculationComplexityLevel"
-                                label={
-                                  expectedCalculationComplexityLevelConfig
-                                    .options[key]
-                                }
-                                value={key}
-                                checked={
-                                  values.expectedCalculationComplexityLevel ===
-                                  key
-                                }
-                              />
-                            ))}
-                          </Fieldset>
+                            <Fieldset>
+                              {getKeys(
+                                expectedCalculationComplexityLevelConfig.options
+                              ).map(key => (
+                                <Field
+                                  as={Radio}
+                                  key={key}
+                                  id={`payment-complexity-${key}`}
+                                  data-testid={`payment-complexity-${key}`}
+                                  name="expectedCalculationComplexityLevel"
+                                  label={
+                                    expectedCalculationComplexityLevelConfig
+                                      .options[key]
+                                  }
+                                  value={key}
+                                  checked={
+                                    values.expectedCalculationComplexityLevel ===
+                                    key
+                                  }
+                                />
+                              ))}
+                            </Fieldset>
 
-                          <AddNote
-                            id="payment-complexity-note"
-                            field="expectedCalculationComplexityLevelNote"
-                          />
-                        </FieldGroup>
+                            <AddNote
+                              id="payment-complexity-note"
+                              field="expectedCalculationComplexityLevelNote"
+                            />
+                          </FieldGroup>
 
-                        <FieldGroup className="margin-y-4 margin-bottom-8">
-                          <Label htmlFor="payment-claims-processing-precendece">
-                            {paymentsT('claimsProcessingPrecedence.label')}
-                          </Label>
+                          <FieldGroup className="margin-y-4 margin-bottom-8">
+                            <Label htmlFor="payment-claims-processing-precendece">
+                              {paymentsT('claimsProcessingPrecedence.label')}
+                            </Label>
 
-                          <BooleanRadio
-                            field="claimsProcessingPrecedence"
-                            id="payment-claims-processing-precendece"
-                            value={values.claimsProcessingPrecedence}
-                            setFieldValue={setFieldValue}
-                            options={claimsProcessingPrecedenceConfig.options}
-                            childName="claimsProcessingPrecedenceOther"
-                          >
-                            {values.claimsProcessingPrecedence === true ? (
-                              <div className="display-flex margin-left-4 margin-bottom-1">
-                                <FieldGroup
-                                  className="flex-1 margin-top-1"
-                                  scrollElement="claimsProcessingPrecedenceOther"
-                                >
+                            <BooleanRadio
+                              field="claimsProcessingPrecedence"
+                              id="payment-claims-processing-precendece"
+                              value={values.claimsProcessingPrecedence}
+                              setFieldValue={setFieldValue}
+                              options={claimsProcessingPrecedenceConfig.options}
+                              childName="claimsProcessingPrecedenceOther"
+                            >
+                              {values.claimsProcessingPrecedence === true ? (
+                                <div className="display-flex margin-left-4 margin-bottom-1">
+                                  <FieldGroup
+                                    className="flex-1 margin-top-1"
+                                    scrollElement="claimsProcessingPrecedenceOther"
+                                  >
+                                    <Label
+                                      htmlFor="payment-claims-processing-precendece-other"
+                                      className="margin-bottom-1 text-normal"
+                                    >
+                                      {paymentsT(
+                                        'claimsProcessingPrecedenceOther.label'
+                                      )}
+                                    </Label>
+
+                                    <Field
+                                      as={TextInput}
+                                      data-testid="payment-claims-processing-precendece-other"
+                                      id="payment-claims-processing-precendece-other"
+                                      name="claimsProcessingPrecedenceOther"
+                                    />
+                                  </FieldGroup>
+                                </div>
+                              ) : (
+                                <></>
+                              )}
+                            </BooleanRadio>
+
+                            <AddNote
+                              id="payment-claims-processing-precendece-note"
+                              field="claimsProcessingPrecedenceNote"
+                            />
+                          </FieldGroup>
+
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="payment-multiple-payments"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'canParticipantsSelectBetweenPaymentMechanisms.label'
+                              )}
+                            </Label>
+
+                            <BooleanRadio
+                              field="canParticipantsSelectBetweenPaymentMechanisms"
+                              id="payment-multiple-payments"
+                              value={
+                                values.canParticipantsSelectBetweenPaymentMechanisms
+                              }
+                              setFieldValue={setFieldValue}
+                              options={
+                                canParticipantsSelectBetweenPaymentMechanismsConfig.options
+                              }
+                              childName="canParticipantsSelectBetweenPaymentMechanismsHow"
+                            >
+                              {values.canParticipantsSelectBetweenPaymentMechanisms ? (
+                                <FieldGroup className="margin-left-4 margin-y-1">
                                   <Label
-                                    htmlFor="payment-claims-processing-precendece-other"
-                                    className="margin-bottom-1 text-normal"
+                                    htmlFor="payment-multiple-payments-how"
+                                    className="text-normal"
                                   >
                                     {paymentsT(
-                                      'claimsProcessingPrecedenceOther.label'
+                                      'canParticipantsSelectBetweenPaymentMechanismsHow.label'
                                     )}
                                   </Label>
 
                                   <Field
                                     as={TextInput}
-                                    data-testid="payment-claims-processing-precendece-other"
-                                    id="payment-claims-processing-precendece-other"
-                                    name="claimsProcessingPrecedenceOther"
+                                    id="payment-multiple-payments-how"
+                                    data-testid="payment-multiple-payments-how"
+                                    name="canParticipantsSelectBetweenPaymentMechanismsHow"
                                   />
                                 </FieldGroup>
-                              </div>
-                            ) : (
-                              <></>
-                            )}
-                          </BooleanRadio>
+                              ) : (
+                                <></>
+                              )}
+                            </BooleanRadio>
 
-                          <AddNote
-                            id="payment-claims-processing-precendece-note"
-                            field="claimsProcessingPrecedenceNote"
+                            <AddNote
+                              id="payment-multiple-payments-note"
+                              field="canParticipantsSelectBetweenPaymentMechanismsNote"
+                            />
+                          </FieldGroup>
+
+                          <FrequencyForm
+                            field="anticipatedPaymentFrequency"
+                            values={values.anticipatedPaymentFrequency}
+                            config={anticipatedPaymentFrequencyConfig}
+                            nameSpace="payments"
+                            id="anticipated-payment-frequency"
+                            label={paymentsT(
+                              'anticipatedPaymentFrequency.label'
+                            )}
+                            disabled={loading}
                           />
-                        </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="payment-multiple-payments"
-                            className="maxw-none"
-                          >
-                            {paymentsT(
-                              'canParticipantsSelectBetweenPaymentMechanisms.label'
-                            )}
-                          </Label>
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--outline margin-bottom-1"
+                              onClick={() => {
+                                backPage();
+                              }}
+                            >
+                              {miscellaneousT('back')}
+                            </Button>
 
-                          <BooleanRadio
-                            field="canParticipantsSelectBetweenPaymentMechanisms"
-                            id="payment-multiple-payments"
-                            value={
-                              values.canParticipantsSelectBetweenPaymentMechanisms
-                            }
-                            setFieldValue={setFieldValue}
-                            options={
-                              canParticipantsSelectBetweenPaymentMechanismsConfig.options
-                            }
-                            childName="canParticipantsSelectBetweenPaymentMechanismsHow"
-                          >
-                            {values.canParticipantsSelectBetweenPaymentMechanisms ? (
-                              <FieldGroup className="margin-left-4 margin-y-1">
-                                <Label
-                                  htmlFor="payment-multiple-payments-how"
-                                  className="text-normal"
-                                >
-                                  {paymentsT(
-                                    'canParticipantsSelectBetweenPaymentMechanismsHow.label'
-                                  )}
-                                </Label>
+                            <Button type="submit" onClick={() => setErrors({})}>
+                              {miscellaneousT('next')}
+                            </Button>
+                          </div>
 
-                                <Field
-                                  as={TextInput}
-                                  id="payment-multiple-payments-how"
-                                  data-testid="payment-multiple-payments-how"
-                                  name="canParticipantsSelectBetweenPaymentMechanismsHow"
-                                />
-                              </FieldGroup>
-                            ) : (
-                              <></>
-                            )}
-                          </BooleanRadio>
-
-                          <AddNote
-                            id="payment-multiple-payments-note"
-                            field="canParticipantsSelectBetweenPaymentMechanismsNote"
-                          />
-                        </FieldGroup>
-
-                        <FrequencyForm
-                          field="anticipatedPaymentFrequency"
-                          values={values.anticipatedPaymentFrequency}
-                          config={anticipatedPaymentFrequencyConfig}
-                          nameSpace="payments"
-                          id="anticipated-payment-frequency"
-                          label={paymentsT('anticipatedPaymentFrequency.label')}
-                          disabled={loading}
-                        />
-
-                        <div className="margin-top-6 margin-bottom-3">
                           <Button
                             type="button"
-                            className="usa-button usa-button--outline margin-bottom-1"
-                            onClick={() => {
-                              backPage();
-                            }}
+                            className="usa-button usa-button--unstyled"
+                            onClick={() =>
+                              navigate(
+                                `/models/${modelID}/collaboration-area/task-list`
+                              )
+                            }
                           >
-                            {miscellaneousT('back')}
+                            <Icon.ArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                              aria-label="back"
+                            />
+
+                            {miscellaneousT('saveAndReturn')}
                           </Button>
-
-                          <Button type="submit" onClick={() => setErrors({})}>
-                            {miscellaneousT('next')}
-                          </Button>
-                        </div>
-
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/collaboration-area/task-list`
-                            )
-                          }
-                        >
-                          <Icon.ArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                            aria-label="back"
-                          />
-
-                          {miscellaneousT('saveAndReturn')}
-                        </Button>
-                      </Fieldset>
-                    </Form>
+                        </Fieldset>
+                      </form>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GridContainer>
-            </>
-          );
-        }}
-      </Formik>
+                </GridContainer>
+              </>
+            );
+          }}
+        </Formik>
 
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            6,
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          totalPages={renderTotalPages(
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              6,
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            totalPages={renderTotalPages(
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 

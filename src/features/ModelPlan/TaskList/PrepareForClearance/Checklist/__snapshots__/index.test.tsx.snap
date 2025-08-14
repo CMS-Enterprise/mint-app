@@ -15,6 +15,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
         >
           <a
             class="usa-link usa-breadcrumb__link"
+            data-discover="true"
             href="/"
           >
             <span>
@@ -27,6 +28,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
         >
           <a
             class="usa-link usa-breadcrumb__link"
+            data-discover="true"
             href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area"
           >
             <span>
@@ -39,6 +41,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
         >
           <a
             class="usa-link usa-breadcrumb__link"
+            data-discover="true"
             href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list"
           >
             <span>
@@ -77,7 +80,6 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
         After you’ve iterated on your Model Plan, make sure the information that’s included in your Model Plan matches any documentation that you’re using for clearance.
       </p>
       <form
-        action="#"
         class="margin-y-6"
         data-testid="prepare-for-clearance-form"
       >
@@ -124,6 +126,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-timeline"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/model-timeline/123"
                 >
@@ -173,6 +176,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-basics"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/basics/123"
                 >
@@ -221,6 +225,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-generalCharacteristics"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/characteristics/123"
                 >
@@ -269,6 +274,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-participantsAndProviders"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/participants-and-providers/123"
                 >
@@ -317,6 +323,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-beneficiaries"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/beneficiaries/123"
                 >
@@ -365,6 +372,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-opsEvalAndLearning"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/ops-eval-and-learning/123"
                 >
@@ -413,6 +421,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-discover="true"
                   data-testid="clearance-payments"
                   href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/payment/123"
                 >

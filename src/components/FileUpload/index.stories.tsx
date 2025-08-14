@@ -67,8 +67,10 @@ export const WithFormik = () => {
       {(formikProps: FormikProps<FileInputForm>) => {
         const { setFieldValue } = formikProps;
 
+        // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+        const FormComponent = Form as any;
         return (
-          <Form>
+          <FormComponent>
             <Label htmlFor="Storybook-FileInput">Document</Label>
             <HelpText id="Storybook-FileInputHelp">
               This document can be a PDF or DOC and can be no larger than 5 MB.
@@ -84,7 +86,7 @@ export const WithFormik = () => {
                 setFieldValue('document', event.currentTarget.files[0]);
               }}
             />
-          </Form>
+          </FormComponent>
         );
       }}
     </Formik>
