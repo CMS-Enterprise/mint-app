@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllPaymentsQuery,
@@ -24,13 +23,11 @@ const ReadOnlyPayments = ({
 }: ReadOnlyProps) => {
   const { t: paymentsMiscT } = useTranslation('paymentsMisc');
 
-  const { modelID: modelIDFromParams } = useParams();
-
   const paymentsConfig = usePlanTranslation('payments');
 
   const { data, loading, error } = useGetAllPaymentsQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 
@@ -185,7 +182,7 @@ const ReadOnlyPayments = ({
         heading={paymentsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allPaymentData.status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={
           allPaymentData.modifiedDts || allPaymentData.createdDts
         }

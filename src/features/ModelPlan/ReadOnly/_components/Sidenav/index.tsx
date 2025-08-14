@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -25,7 +25,7 @@ const SideNav = ({
 }: SideNavProps) => {
   const { t: modelSumamryT } = useTranslation('modelSummary');
   const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
-  const location = useLocation();
+
   const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
 
   const scrollToAboveReadOnlyBodyContent = () => {
@@ -71,8 +71,8 @@ const SideNav = ({
     }, 0);
   };
 
-  const isLinkActive = (key: any, linkLocation: any) => {
-    const params = new URLSearchParams(linkLocation.search);
+  const isActive = (key: any, location: any) => {
+    const params = new URLSearchParams(location.search);
     const section = params.get('section');
     return paramActive
       ? section === key
@@ -90,12 +90,11 @@ const SideNav = ({
             : subComponents[key].helpRoute
         }
         key={key}
-        className={({ isActive }) =>
-          classNames({
-            'usa-current': !isMobile && isActive,
-            'subNav--current': isMobile && isActive
-          })
-        }
+        isActive={(_, location) => isActive(key, location)}
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -115,12 +114,11 @@ const SideNav = ({
             : subComponents[key].helpRoute
         }
         key={key}
-        className={({ isActive }) =>
-          classNames({
-            'usa-current': !isMobile && isActive,
-            'subNav--current': isMobile && isActive
-          })
-        }
+        isActive={(_, location) => isActive(key, location)}
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -138,12 +136,11 @@ const SideNav = ({
             : subComponents[key].helpRoute
         }
         key={key}
-        className={({ isActive }) =>
-          classNames({
-            'usa-current': !isMobile && isActive,
-            'subNav--current': isMobile && isActive
-          })
-        }
+        isActive={(_, location) => isActive(key, location)}
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -161,12 +158,11 @@ const SideNav = ({
             : subComponents[key].helpRoute
         }
         key={key}
-        className={({ isActive }) =>
-          classNames({
-            'usa-current': !isMobile && isActive,
-            'subNav--current': isMobile && isActive
-          })
-        }
+        isActive={(_, location) => isActive(key, location)}
+        activeClassName={classNames({
+          'usa-current': !isMobile,
+          'subNav--current': isMobile
+        })}
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
@@ -179,11 +175,8 @@ const SideNav = ({
       <NavLink
         to={subComponents[key].helpRoute}
         key={key}
-        className={() => {
-          return classNames({
-            'usa-current': isLinkActive(key, location)
-          });
-        }}
+        isActive={(_, location) => isActive(key, location)}
+        activeClassName="usa-current"
         onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -29,7 +29,7 @@ export type MtoCardProps = {
 const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -96,12 +96,10 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              navigate(
-                `/models/${modelID}/collaboration-area/model-to-operations`,
-                {
-                  state: { scroll: true }
-                }
-              )
+              history.push({
+                pathname: `/models/${modelID}/collaboration-area/model-to-operations`,
+                state: { scroll: true }
+              })
             }
             data-testid="to-model-to-operations"
           >

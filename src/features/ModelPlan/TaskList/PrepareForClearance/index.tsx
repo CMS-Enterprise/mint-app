@@ -1,6 +1,7 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Route, Switch, useParams } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
@@ -9,38 +10,33 @@ import PrepareForClearanceCheckList from './Checklist';
 import ClearanceReview from './ClearanceReview';
 
 export const PrepareForClearance = () => {
+  const { modelID } = useParams<{ modelID: string }>();
+
   return (
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Outlet />
+          <Switch>
+            {/* Model Plan Prepare for clearance Pages */}
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
+              exact
+              render={() => <PrepareForClearanceCheckList modelID={modelID} />}
+            />
+
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
+              exact
+              render={() => <ClearanceReview modelID={modelID} />}
+            />
+
+            {/* 404 */}
+            <Route path="*" render={() => <NotFoundPartial />} />
+          </Switch>
         </Grid>
       </GridContainer>
     </MainContent>
   );
-};
-
-export const prepareForClearanceRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-  element: (
-    <ProtectedRoute>
-      <PrepareForClearance />
-    </ProtectedRoute>
-  ),
-  children: [
-    {
-      path: '',
-      element: (
-        <ProtectedRoute>
-          <PrepareForClearanceCheckList />
-        </ProtectedRoute>
-      )
-    },
-    {
-      path: ':section/:sectionID',
-      element: <ClearanceReview />
-    }
-  ]
 };
 
 export default PrepareForClearance;

@@ -46,7 +46,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
-          data-discover="true"
           href="/help-and-knowledge/articles?category=it-implementation"
         >
           <span
@@ -102,7 +101,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-right-1"
-                  data-discover="true"
                   href="/help-and-knowledge/model-and-solution-design"
                 >
                   Learn more about this phase
@@ -153,7 +151,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-right-1"
-                  data-discover="true"
                   href="/help-and-knowledge/model-and-solution-implementation"
                 >
                   Learn more about this phase
@@ -219,7 +216,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -271,7 +267,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -323,7 +318,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -359,7 +353,6 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
       </ul>
       <a
         class="usa-link"
-        data-discover="true"
         href="/help-and-knowledge/articles"
       >
         View all help resources

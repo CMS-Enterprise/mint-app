@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Card,
   CardBody,
@@ -31,12 +31,12 @@ const ArticleCard = ({
   tag = true
 }: ArticleCardProps) => {
   const { t } = useTranslation(translation);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const clickHandler = (e: React.MouseEvent<HTMLElement>, url: string) => {
     const target = e.target as Element;
     if (isLink && target.getAttribute('data-testid') !== 'tag') {
-      navigate(`/help-and-knowledge${url}`);
+      history.push(`/help-and-knowledge${url}`);
     }
   };
 

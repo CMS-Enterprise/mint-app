@@ -20,7 +20,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
         >
           <span>
@@ -48,7 +47,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS"
         >
           <span>
@@ -76,7 +74,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=COMMUNICATION_TOOLS_AND_HELP_DESK"
         >
           <span>
@@ -104,7 +101,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=CONTRACT_VEHICLES"
         >
           <span>
@@ -132,7 +128,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=DATA"
         >
           <span>
@@ -160,7 +155,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=EVALUATION_AND_REVIEW"
         >
           <span>
@@ -188,7 +182,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=LEARNING"
         >
           <span>
@@ -216,7 +209,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=LEGAL"
         >
           <span>
@@ -244,7 +236,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=MEDICARE_ADVANTAGE_AND_PART_D"
         >
           <span>
@@ -272,7 +263,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=MEDICARE_FEE_FOR_SERVICE"
         >
           <span>
@@ -300,7 +290,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=PAYMENTS_AND_FINANCIALS"
         >
           <span>
@@ -328,7 +317,6 @@ exports[`Operation Solutio Category Footer > matches snapshot 1`] = `
       >
         <a
           class="usa-link fit-content display-flex flex-align-center margin-y-1"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=QUALITY"
         >
           <span>

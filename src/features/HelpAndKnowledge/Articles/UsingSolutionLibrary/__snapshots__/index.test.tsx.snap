@@ -50,7 +50,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
             </h1>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=mto-tutorials"
             >
               <span
@@ -129,7 +128,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 </p>
                 <a
                   class="usa-link display-block margin-y-05"
-                  data-discover="true"
                   href="/help-and-knowledge/using-table-actions"
                 >
                   Using the table actions area 
@@ -150,7 +148,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
                 </a>
                 <a
                   class="usa-link display-block"
-                  data-discover="true"
                   href="/help-and-knowledge/starting-mto-matrix"
                 >
                   Starting an MTO for a new model 
@@ -345,7 +342,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
-                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 <span
@@ -397,7 +393,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
-                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 <span
@@ -449,7 +444,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
-                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 <span
@@ -485,7 +479,6 @@ exports[`UsingSolutionLibrary > matches the snapshot 1`] = `
         </ul>
         <a
           class="usa-link"
-          data-discover="true"
           href="/help-and-knowledge/articles"
         >
           View all help resources

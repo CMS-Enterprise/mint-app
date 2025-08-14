@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -36,14 +36,14 @@ type FormValues = {
 const CustomMilestoneForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const location = useLocation();
   // Used to render conditional text in the alert that differs between the Milestone Library and the MTO Matrix
   const isMilestoneLibraryRoute =
     location.pathname.includes('milestone-library');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
@@ -290,12 +290,10 @@ const CustomMilestoneForm = () => {
                     reset();
                     clearMessage();
                     setMTOModalOpen(false);
-                    navigate(
-                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                      {
-                        state: { scroll: true }
-                      }
-                    );
+                    history.push({
+                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
+                      state: { scroll: true }
+                    });
                   }}
                 >
                   {' '}

@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -43,6 +43,13 @@ import {
 
 import './index.scss';
 
+type LocationProps = {
+  state: {
+    from: string;
+  };
+  from?: string;
+};
+
 // Sort options type for the select dropdown
 type SortProps = {
   value: 'newest' | 'oldest';
@@ -75,19 +82,18 @@ const ChangeHistory = () => {
     chReleaseDate = '';
   }
 
-  const { modelID = '' } = useParams<{
+  const { modelID } = useParams<{
     modelID: string;
   }>();
 
-  const { state } = useLocation();
+  const { state } = useLocation<LocationProps>();
 
   const fromReadView = state?.from === 'readview';
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   // Query parameters
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
   const pageParam = params.get('page');
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps['value'];
@@ -158,7 +164,7 @@ const ChangeHistory = () => {
         params.delete('query');
       }
       params.delete('page');
-      navigate({ search: params.toString() });
+      history.push({ search: params.toString() });
     }
 
     // Return the page to the first page when the query changes
@@ -205,14 +211,14 @@ const ChangeHistory = () => {
   const handleNext = () => {
     const nextPage = currentPage + 1;
     params.set('page', nextPage.toString());
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setCurrentPage(nextPage);
   };
 
   const handlePrevious = () => {
     const prevPage = currentPage - 1;
     params.set('page', prevPage.toString());
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setCurrentPage(prevPage);
   };
 
@@ -221,7 +227,7 @@ const ChangeHistory = () => {
     pageNum: number
   ) => {
     params.set('page', pageNum.toString());
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setCurrentPage(pageNum);
   };
 
@@ -319,7 +325,7 @@ const ChangeHistory = () => {
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setSort(e.target.value as SortProps['value']);
                         params.set('sort', e.target.value);
-                        navigate({ search: params.toString() });
+                        history.push({ search: params.toString() });
                       }}
                     >
                       {sortOptions.map(option => {
@@ -391,7 +397,7 @@ const ChangeHistory = () => {
             {/* Pagination */}
             {pageCount > 1 && (
               <Pagination
-                pathname={location.pathname}
+                pathname={history.location.pathname}
                 currentPage={currentPage}
                 maxSlots={7}
                 onClickNext={handleNext}

@@ -109,10 +109,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="fieldset"]').should('not.be.disabled');
 
-    cy.get('#ModelType-VOLUNTARY')
-      .should('not.be.disabled')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#ModelType-VOLUNTARY').check({ force: true }).should('be.checked');
 
     cy.get('#ModelType-Problem')
       .first()

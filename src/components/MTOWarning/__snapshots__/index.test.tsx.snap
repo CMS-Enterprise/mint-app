@@ -17,7 +17,6 @@ exports[`The MTOWarning component > matches snapshot 1`] = `
           Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
           <a
             class="usa-link usa-button usa-button--unstyled"
-            data-discover="true"
             href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
           >
             Go to your MTO

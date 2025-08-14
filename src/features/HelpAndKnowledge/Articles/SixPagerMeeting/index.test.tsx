@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 import VerboseMockedProvider from 'tests/MockedProvider';
@@ -10,24 +10,12 @@ const mocks = [...possibleSolutionsMock];
 
 describe('SixPagerMeeting', () => {
   it('matches the snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
-              <SixPagerMeeting />
-            </VerboseMockedProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
-    );
-
     const { asFragment, getByTestId } = render(
-      <RouterProvider router={router} />
+      <MemoryRouter>
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <SixPagerMeeting />
+        </VerboseMockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));

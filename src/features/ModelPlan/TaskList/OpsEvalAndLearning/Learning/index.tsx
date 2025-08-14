@@ -1,16 +1,15 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
-  GridContainer,
   Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetLearningQuery,
   ModelLearningSystemType,
@@ -24,7 +23,6 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -41,7 +39,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '../Support';
+} from '..';
 
 type GetLearningFormType = GetLearningQuery['modelPlan']['opsEvalAndLearning'];
 
@@ -56,7 +54,7 @@ const Learning = () => {
   const { modelLearningSystems: modelLearningSystemsConfig } =
     usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -65,7 +63,7 @@ const Learning = () => {
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { data, loading, error } = useGetLearningQuery({
     variables: {
@@ -96,7 +94,7 @@ const Learning = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 
@@ -118,208 +116,206 @@ const Learning = () => {
   }
 
   return (
-    <MainContent data-testid="ops-eval-and-learning-learning">
-      <GridContainer>
-        <MutationErrorModal
-          isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.closeModal()}
-          url={mutationError.destinationURL}
-        />
+    <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.closeModal()}
+        url={mutationError.destinationURL}
+      />
 
-        <Breadcrumbs
-          items={[
-            BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST,
-            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-          ]}
-        />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
-          {opsEvalAndLearningMiscT('heading')}
-        </PageHeading>
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {opsEvalAndLearningMiscT('heading')}
+      </PageHeading>
 
-        <p
-          className="margin-top-0 margin-bottom-1 font-body-lg"
-          data-testid="model-plan-name"
-        >
-          {miscellaneousT('for')} {modelName}
-        </p>
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        {miscellaneousT('for')} {modelName}
+      </p>
 
-        <p className="margin-bottom-2 font-body-md line-height-sans-4">
-          {miscellaneousT('helpText')}
-        </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {miscellaneousT('helpText')}
+      </p>
 
-        <AskAQuestion modelID={modelID} />
+      <AskAQuestion modelID={modelID} />
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {
-            navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
-          }}
-          enableReinitialize
-          innerRef={formikRef}
-        >
-          {(formikProps: FormikProps<InitialValueType>) => {
-            const { handleSubmit, setFieldValue, setErrors, values } =
-              formikProps;
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/payment`
+          );
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<InitialValueType>) => {
+          const { handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
 
-            return (
-              <>
-                <ConfirmLeave />
+          return (
+            <>
+              <ConfirmLeave />
 
-                <form
-                  className="desktop:grid-col-6 margin-top-6"
-                  data-testid="ops-eval-and-learning-learning-form"
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <Fieldset disabled={!!error || loading}>
-                    <FieldGroup scrollElement="modelLearningSystems">
-                      <Label htmlFor="ops-eval-and-learning-learning-systems">
-                        {opsEvalAndLearningT('modelLearningSystems.label')}
-                      </Label>
+              <Form
+                className="desktop:grid-col-6 margin-top-6"
+                data-testid="ops-eval-and-learning-learning-form"
+                onSubmit={e => {
+                  handleSubmit(e);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup scrollElement="modelLearningSystems">
+                    <Label htmlFor="ops-eval-and-learning-learning-systems">
+                      {opsEvalAndLearningT('modelLearningSystems.label')}
+                    </Label>
 
-                      <MTOWarning id="ops-eval-and-learning-learning-systems-warning" />
+                    <MTOWarning id="ops-eval-and-learning-learning-systems-warning" />
 
-                      {getKeys(modelLearningSystemsConfig.options).map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`ops-eval-and-learning-learning-systems-${type}`}
-                              name="modelLearningSystems"
-                              label={modelLearningSystemsConfig.options[type]}
-                              value={type}
-                              checked={values?.modelLearningSystems.includes(
-                                type
-                              )}
-                            />
+                    {getKeys(modelLearningSystemsConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
+                          <Field
+                            as={CheckboxField}
+                            id={`ops-eval-and-learning-learning-systems-${type}`}
+                            name="modelLearningSystems"
+                            label={modelLearningSystemsConfig.options[type]}
+                            value={type}
+                            checked={values?.modelLearningSystems.includes(
+                              type
+                            )}
+                          />
 
-                            {type === ModelLearningSystemType.OTHER &&
-                              values.modelLearningSystems.includes(
-                                ModelLearningSystemType.OTHER
-                              ) && (
-                                <div className="margin-left-4">
-                                  <Label
-                                    htmlFor="ops-eval-and-learning-learning-systems-other"
-                                    className="text-normal maxw-none"
-                                  >
-                                    {opsEvalAndLearningT(
-                                      'modelLearningSystemsOther.label'
-                                    )}
-                                  </Label>
+                          {type === ModelLearningSystemType.OTHER &&
+                            values.modelLearningSystems.includes(
+                              ModelLearningSystemType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="ops-eval-and-learning-learning-systems-other"
+                                  className="text-normal maxw-none"
+                                >
+                                  {opsEvalAndLearningT(
+                                    'modelLearningSystemsOther.label'
+                                  )}
+                                </Label>
 
-                                  <Field
-                                    as={TextInput}
-                                    id="ops-eval-and-learning-learning-systems-other"
-                                    name="modelLearningSystemsOther"
-                                  />
-                                </div>
-                              )}
-                          </Fragment>
-                        );
-                      })}
+                                <Field
+                                  as={TextInput}
+                                  id="ops-eval-and-learning-learning-systems-other"
+                                  name="modelLearningSystemsOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
 
-                      <AddNote
-                        id="ops-eval-and-learning-learning-systems-note"
-                        field="modelLearningSystemsNote"
-                      />
-                    </FieldGroup>
+                    <AddNote
+                      id="ops-eval-and-learning-learning-systems-note"
+                      field="modelLearningSystemsNote"
+                    />
+                  </FieldGroup>
 
-                    <FieldGroup>
-                      <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
-                        {opsEvalAndLearningT('anticipatedChallenges.label')}
-                      </Label>
+                  <FieldGroup>
+                    <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
+                      {opsEvalAndLearningT('anticipatedChallenges.label')}
+                    </Label>
 
-                      <p className="text-base margin-y-1 margin-top-2 line-height-body-4">
-                        {opsEvalAndLearningT('anticipatedChallenges.sublabel')}
-                      </p>
+                    <p className="text-base margin-y-1 margin-top-2 line-height-body-4">
+                      {opsEvalAndLearningT('anticipatedChallenges.sublabel')}
+                    </p>
 
-                      <Field
-                        as={TextAreaField}
-                        className="height-card"
-                        id="ops-eval-and-learning-learning-anticipated-challenges"
-                        data-testid="ops-eval-and-learning-learning-anticipated-challenges"
-                        name="anticipatedChallenges"
-                      />
-                    </FieldGroup>
+                    <Field
+                      as={TextAreaField}
+                      className="height-card"
+                      id="ops-eval-and-learning-learning-anticipated-challenges"
+                      data-testid="ops-eval-and-learning-learning-anticipated-challenges"
+                      name="anticipatedChallenges"
+                    />
+                  </FieldGroup>
 
-                    {!loading && values.status && (
-                      <ReadyForReview
-                        id="ops-eval-and-learning-learning-status"
-                        field="status"
-                        sectionName={opsEvalAndLearningMiscT('heading')}
-                        status={values.status}
-                        setFieldValue={setFieldValue}
-                        readyForReviewBy={
-                          readyForReviewByUserAccount?.commonName
-                        }
-                        readyForReviewDts={readyForReviewDts}
-                      />
-                    )}
+                  {!loading && values.status && (
+                    <ReadyForReview
+                      id="ops-eval-and-learning-learning-status"
+                      field="status"
+                      sectionName={opsEvalAndLearningMiscT('heading')}
+                      status={values.status}
+                      setFieldValue={setFieldValue}
+                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
+                      readyForReviewDts={readyForReviewDts}
+                    />
+                  )}
 
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          navigate(
-                            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
-                          );
-                        }}
-                      >
-                        {miscellaneousT('back')}
-                      </Button>
-
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {miscellaneousT('saveAndStartNext')}
-                      </Button>
-                    </div>
-
+                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
-                        )
-                      }
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
+                        );
+                      }}
                     >
-                      <Icon.ArrowBack
-                        className="margin-right-1"
-                        aria-hidden
-                        aria-label="back"
-                      />
-
-                      {miscellaneousT('saveAndReturn')}
+                      {miscellaneousT('back')}
                     </Button>
-                  </Fieldset>
-                </form>
-              </>
-            );
-          }}
-        </Formik>
 
-        {data && (
-          <PageNumber
-            currentPage={renderCurrentPage(
-              9,
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            totalPages={renderTotalPages(
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            className="margin-y-6"
-          />
-        )}
-      </GridContainer>
-    </MainContent>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('saveAndStartNext')}
+                    </Button>
+                  </div>
+
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
+                  >
+                    <Icon.ArrowBack
+                      className="margin-right-1"
+                      aria-hidden
+                      aria-label="back"
+                    />
+
+                    {miscellaneousT('saveAndReturn')}
+                  </Button>
+                </Fieldset>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
+
+      {data && (
+        <PageNumber
+          currentPage={renderCurrentPage(
+            9,
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          totalPages={renderTotalPages(
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          className="margin-y-6"
+        />
+      )}
+    </>
   );
 };
 

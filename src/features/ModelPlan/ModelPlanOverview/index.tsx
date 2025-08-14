@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -167,4 +168,4 @@ const ModelPlan = () => {
   );
 };
 
-export default ModelPlan;
+export default withRouter(ModelPlan);

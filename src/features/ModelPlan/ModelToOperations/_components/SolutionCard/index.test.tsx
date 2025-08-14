@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -12,27 +12,15 @@ import { SolutionCard } from '.';
 
 describe('MTO SolutionCard Component', () => {
   it('renders correctly and matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <MessageProvider>
-              <SolutionCard
-                solution={helpSolutions[MtoCommonSolutionKey.INNOVATION]}
-              />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
-    );
-
     const { asFragment, getByText } = render(
       <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
-        <RouterProvider router={router} />
+        <MemoryRouter>
+          <MessageProvider>
+            <SolutionCard
+              solution={helpSolutions[MtoCommonSolutionKey.INNOVATION]}
+            />
+          </MessageProvider>
+        </MemoryRouter>
       </MockedProvider>
     );
 

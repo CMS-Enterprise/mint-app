@@ -8,7 +8,7 @@ import './index.scss';
 
 type SidepanelProps = {
   ariaLabel: string;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNodeArray;
   classname?: string;
   overlayClassName?: string;
   closeModal: () => void;
@@ -46,69 +46,73 @@ const Sidepanel = ({
     }
   };
 
-  return React.createElement(
-    ReactModal as any,
-    {
-      isOpen,
-      overlayClassName: classNames(
+  return (
+    <ReactModal
+      isOpen={isOpen}
+      overlayClassName={classNames(
         'mint-sidepanel__overlay',
         {
           'overflow-y-auto': !showScroll,
           'overflow-y-scroll': showScroll
         },
         overlayClassName
-      ),
-      className: classNames('mint-sidepanel__content', classname, {
+      )}
+      className={classNames('mint-sidepanel__content', classname, {
         'overflow-hidden': fixed
-      }),
-      onAfterOpen: handleOpenModal,
-      onAfterClose: () => {
+      })}
+      onAfterOpen={handleOpenModal}
+      onAfterClose={() => {
         if (noScrollable) {
           noScroll.off();
         }
-      },
-      onRequestClose: closeModal,
-      shouldCloseOnOverlayClick: true,
-      contentLabel: ariaLabel,
-      appElement: document.getElementById('root')! as HTMLElement,
-      testId: 'side-panel'
-    },
-    <div data-testid={testid}>
-      <div
-        className={classNames(
-          'mint-sidepanel__x-button-container display-flex text-base flex-align-center',
-          {
-            'mint-modal__fixed-top': fixed
-          }
-        )}
-      >
-        <button
-          type="button"
-          data-testid="close-discussions"
-          className="mint-sidepanel__x-button margin-right-1"
-          aria-label="Close Modal"
-          onClick={closeModal}
-        >
-          {backButton ? (
-            <Icon.ArrowBack size={4} className="text-base" aria-label="back" />
-          ) : (
-            <Icon.Close size={4} className="text-base" aria-label="close" />
+      }}
+      onRequestClose={closeModal}
+      shouldCloseOnOverlayClick
+      contentLabel={ariaLabel}
+      appElement={document.getElementById('root')! as HTMLElement}
+      testId="side-panel"
+    >
+      <div data-testid={testid}>
+        <div
+          className={classNames(
+            'mint-sidepanel__x-button-container display-flex text-base flex-align-center',
+            {
+              'mint-modal__fixed-top': fixed
+            }
           )}
-        </button>
-        <h4 className="margin-0">{modalHeading}</h4>
-      </div>
+        >
+          <button
+            type="button"
+            data-testid="close-discussions"
+            className="mint-sidepanel__x-button margin-right-1"
+            aria-label="Close Modal"
+            onClick={closeModal}
+          >
+            {backButton ? (
+              <Icon.ArrowBack
+                size={4}
+                className="text-base"
+                aria-label="back"
+              />
+            ) : (
+              <Icon.Close size={4} className="text-base" aria-label="close" />
+            )}
+          </button>
+          <h4 className="margin-0">{modalHeading}</h4>
+        </div>
 
-      <div
-        className={classNames('mint-modal__body', {
-          'overflow-y-auto': fixed,
-          'padding-x-0': !fixed
-        })}
-      >
-        {children}
-      </div>
+        <div
+          className={classNames('mint-modal__body', {
+            'overflow-y-auto': fixed,
+            'padding-x-0': !fixed
+          })}
+        >
+          {children}
+        </div>
 
-      <div className="fixed-bottom">{footer}</div>
-    </div>
+        <div className="fixed-bottom">{footer}</div>
+      </div>
+    </ReactModal>
   );
 };
 

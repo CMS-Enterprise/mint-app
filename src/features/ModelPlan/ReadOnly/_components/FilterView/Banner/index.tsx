@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, GridContainer, Icon } from '@trussworks/react-uswds';
 
 import Tooltip from 'components/Tooltip';
@@ -23,8 +23,7 @@ const FilterViewBanner = ({
   const { t } = useTranslation('filterView');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const history = useHistory();
 
   return (
     <div
@@ -60,7 +59,7 @@ const FilterViewBanner = ({
                   type="button"
                   unstyled
                   className="text-white text-no-wrap"
-                  onClick={() => navigate(`${location.pathname}`)}
+                  onClick={() => history.push(`${history.location.pathname}`)}
                 >
                   {t('clearFilter')}
                 </Button>

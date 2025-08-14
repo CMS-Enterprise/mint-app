@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   fireEvent,
@@ -281,30 +281,25 @@ describe('The Model Plan Task List', () => {
   ];
 
   it('renders without crashing', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <MessageProvider>
-              <TaskList />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelPlan.id}/collaboration-area/task-list`]
-      }
-    );
-
     const { getByTestId } = render(
       <Provider store={store}>
-        <MockedProvider
-          mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelPlan.id}/collaboration-area/task-list`
+          ]}
         >
-          <RouterProvider router={router} />
-        </MockedProvider>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
+            addTypename={false}
+          >
+            <MessageProvider>
+              <Route
+                path="/models/:modelID/collaboration-area/task-list"
+                component={TaskList}
+              />
+            </MessageProvider>
+          </MockedProvider>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -316,30 +311,24 @@ describe('The Model Plan Task List', () => {
   });
 
   it('reads from sessionStorage and renders modal', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <MessageProvider>
-              <TaskList />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelPlan.id}/collaboration-area/task-list`]
-      }
-    );
-
     const { getByTestId } = render(
       <Provider store={store}>
-        <MockedProvider
-          mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelPlan.id}/collaboration-area/task-list`
+          ]}
         >
-          <RouterProvider router={router} />
-        </MockedProvider>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
+            addTypename={false}
+          >
+            <MessageProvider>
+              <Route path="/models/:modelID/collaboration-area/task-list">
+                <TaskList />
+              </Route>
+            </MessageProvider>
+          </MockedProvider>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -359,30 +348,25 @@ describe('The Model Plan Task List', () => {
 
   it('displays the model plan task list steps', async () => {
     modelPlan.modelName = '';
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <MessageProvider>
-              <TaskList />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelPlan.id}/collaboration-area/task-list`]
-      }
-    );
-
     const { getByTestId } = render(
       <Provider store={store}>
-        <MockedProvider
-          mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelPlan.id}/collaboration-area/task-list`
+          ]}
         >
-          <RouterProvider router={router} />
-        </MockedProvider>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
+            addTypename={false}
+          >
+            <MessageProvider>
+              <Route
+                path="/models/:modelID/collaboration-area/task-list"
+                component={TaskList}
+              />
+            </MessageProvider>
+          </MockedProvider>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -393,30 +377,25 @@ describe('The Model Plan Task List', () => {
 
   it('displays the model plan name', async () => {
     modelPlan.modelName = "PM Butler's great plan";
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <MessageProvider>
-              <TaskList />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelPlan.id}/collaboration-area/task-list`]
-      }
-    );
-
     const { getByTestId } = render(
       <Provider store={store}>
-        <MockedProvider
-          mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelPlan.id}/collaboration-area/task-list`
+          ]}
         >
-          <RouterProvider router={router} />
-        </MockedProvider>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
+            addTypename={false}
+          >
+            <MessageProvider>
+              <Route
+                path="/models/:modelID/collaboration-area/task-list"
+                component={TaskList}
+              />
+            </MessageProvider>
+          </MockedProvider>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -431,32 +410,25 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      const router = createMemoryRouter(
-        [
-          {
-            path: '/models/:modelID/collaboration-area/task-list',
-            element: (
-              <MessageProvider>
-                <TaskList />
-              </MessageProvider>
-            )
-          }
-        ],
-        {
-          initialEntries: [
-            `/models/${modelPlan.id}/collaboration-area/task-list`
-          ]
-        }
-      );
-
       const { getByTestId } = render(
         <Provider store={store}>
-          <MockedProvider
-            mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-            addTypename={false}
+          <MemoryRouter
+            initialEntries={[
+              `/models/${modelPlan.id}/collaboration-area/task-list`
+            ]}
           >
-            <RouterProvider router={router} />
-          </MockedProvider>
+            <MockedProvider
+              mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
+              addTypename={false}
+            >
+              <MessageProvider>
+                <Route
+                  path="/models/:modelID/collaboration-area/task-list"
+                  component={TaskList}
+                />
+              </MessageProvider>
+            </MockedProvider>
+          </MemoryRouter>
         </Provider>
       );
 

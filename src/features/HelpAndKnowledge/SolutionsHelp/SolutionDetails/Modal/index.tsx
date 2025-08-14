@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import { subComponentsProps } from 'features/ModelPlan/ReadOnly';
 import MobileNav from 'features/ModelPlan/ReadOnly/_components/MobileNav';
@@ -80,7 +80,7 @@ const SolutionDetailsModal = ({
 
   const { t } = useTranslation('helpAndKnowledge');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const [isOpen, setIsOpen] = useState<boolean>(!!solution);
 
@@ -117,8 +117,8 @@ const SolutionDetailsModal = ({
       closeModalRoute = `${closeModalRoute}?view-solution=${readViewParam}`;
     }
 
-    navigate(closeModalRoute, {
-      state: { fromModal: true }
+    history.push(closeModalRoute, {
+      fromModal: true
     });
   };
 

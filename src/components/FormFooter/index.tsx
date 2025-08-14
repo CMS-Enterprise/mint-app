@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 
 type SubmittionFooterProps = {
@@ -20,7 +20,7 @@ const FormFooter = ({
 }: SubmittionFooterProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   return (
     <>
@@ -31,7 +31,7 @@ const FormFooter = ({
             className="usa-button usa-button--outline"
             disabled={disabled}
             onClick={() => {
-              navigate(backPage);
+              history.push(backPage);
             }}
           >
             {miscellaneousT('back')}
@@ -49,7 +49,7 @@ const FormFooter = ({
         type="button"
         className="usa-button usa-button--unstyled"
         disabled={disabled}
-        onClick={() => navigate(homeRoute)}
+        onClick={() => history.push(homeRoute)}
       >
         <Icon.ArrowBack
           className="margin-right-1"

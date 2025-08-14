@@ -378,12 +378,7 @@ export const possibleSolutionsMock: MockedResponse<
                   isTeam: true,
                   isPrimary: true,
                   role: null,
-                  receiveEmails: true,
-                  userAccount: {
-                    __typename: 'UserAccount',
-                    id: '123',
-                    username: 'AWER'
-                  }
+                  receiveEmails: true
                 }
               ]
             }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -30,10 +30,9 @@ const MTOSolutionCard = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { errorMessageInModal, clearMessage } = useMessage();
-  const navigate = useNavigate();
+  const history = useHistory();
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
 
   const solutionParam = params.get('add-solution');
 
@@ -42,6 +41,7 @@ const MTOSolutionCard = ({
   );
 
   const mappedSolution = helpSolutions[solution.key];
+  const location = useLocation();
 
   return (
     <>
@@ -49,7 +49,7 @@ const MTOSolutionCard = ({
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-solution', solution.key);
-          navigate({ search: params.toString() }, { replace: true });
+          history.replace({ search: params.toString() });
           clearMessage();
           setIsModalOpen(false);
         }}
@@ -57,11 +57,7 @@ const MTOSolutionCard = ({
         className="tablet:width-mobile-lg mint-body-normal"
       >
         <div className="margin-bottom-2">
-          <PageHeading
-            headingLevel="h3"
-            className="margin-y-0"
-            data-testid={`${solution.key}-solution-name`}
-          >
+          <PageHeading headingLevel="h3" className="margin-y-0">
             {t('modal.addToExistingMilestone.title')}
           </PageHeading>
         </div>
@@ -71,7 +67,7 @@ const MTOSolutionCard = ({
         <AddToExistingMilestoneForm
           closeModal={() => {
             params.delete('add-solution', solution.key);
-            navigate({ search: params.toString() }, { replace: true });
+            history.replace({ search: params.toString() });
             clearMessage();
             setIsModalOpen(false);
           }}
@@ -120,7 +116,7 @@ const MTOSolutionCard = ({
               className="margin-right-2"
               onClick={() => {
                 params.set('add-solution', solution.key);
-                navigate({ search: params.toString() }, { replace: true });
+                history.replace({ search: params.toString() });
                 clearMessage();
                 setIsModalOpen(true);
               }}

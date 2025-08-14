@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -8,7 +8,7 @@ import {
   ParticipantsType
 } from 'gql/generated/graphql';
 
-import Participants from './index';
+import { ParticipantsAndProvidersContent } from './index';
 
 type GetParticipantsAndProvidersType =
   GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
@@ -52,24 +52,21 @@ const participantsAndProvidersMock = [
 
 describe('Model Plan Participants and Providers', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
-          element: <Participants />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers'
-        ]
-      }
-    );
-
     render(
-      <MockedProvider mocks={participantsAndProvidersMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers'
+        ]}
+      >
+        <MockedProvider
+          mocks={participantsAndProvidersMock}
+          addTypename={false}
+        >
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers">
+            <ParticipantsAndProvidersContent />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -96,24 +93,21 @@ describe('Model Plan Participants and Providers', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
-          element: <Participants />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={participantsAndProvidersMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers'
+        ]}
+      >
+        <MockedProvider
+          mocks={participantsAndProvidersMock}
+          addTypename={false}
+        >
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers">
+            <ParticipantsAndProvidersContent />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

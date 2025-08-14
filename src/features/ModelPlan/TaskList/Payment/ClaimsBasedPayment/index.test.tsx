@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -58,24 +58,18 @@ const paymentsMock = [
 
 describe('Model Plan -- Claims Based Payment', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/payment/claims-based-payment',
-          element: <ClaimsBasedPayment />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/claims-based-payment'
-        ]
-      }
-    );
-
     render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/claims-based-payment'
+        ]}
+      >
+        <MockedProvider mocks={paymentsMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment">
+            <ClaimsBasedPayment />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -92,24 +86,18 @@ describe('Model Plan -- Claims Based Payment', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/payment/claims-based-payment',
-          element: <ClaimsBasedPayment />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/claims-based-payment'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/claims-based-payment'
+        ]}
+      >
+        <MockedProvider mocks={paymentsMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment">
+            <ClaimsBasedPayment />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

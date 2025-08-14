@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   ProcessList,
@@ -23,12 +23,11 @@ export interface ProcessListItemProps {
 const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const timelineConfig = timelineTranslationUtil(solution.key);
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const history = useHistory();
 
-  const isMTORoute = location.pathname.includes('model-to-operations');
+  const isMTORoute = history.location.pathname.includes('model-to-operations');
 
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
 
   if (isMTORoute) {
     params.set('solution-key', MtoCommonSolutionKey.INNOVATION);
@@ -66,13 +65,13 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
                     unstyled
                     onClick={() => {
                       if (isMTORoute) {
-                        navigate({ search: params.toString() });
+                        history.push({ search: params.toString() });
                         const modalCon = document?.getElementsByClassName(
                           'ReactModal__Overlay'
                         )?.[0];
                         modalCon.scrollTo(0, 0);
                       } else {
-                        navigate(
+                        history.push(
                           '/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline'
                         );
                       }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -54,24 +54,18 @@ const beneficiaryMock = [
 
 describe('Model Plan Beneficiaries', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-          element: <BeneficiaryIdentification />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries'
-        ]
-      }
-    );
-
     render(
-      <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries'
+        ]}
+      >
+        <MockedProvider mocks={beneficiaryMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries">
+            <BeneficiaryIdentification />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -86,24 +80,18 @@ describe('Model Plan Beneficiaries', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-          element: <BeneficiaryIdentification />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries'
+        ]}
+      >
+        <MockedProvider mocks={beneficiaryMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries">
+            <BeneficiaryIdentification />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() =>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useOktaAuth } from '@okta/okta-react';
 import {
   Button,
   Grid,
@@ -20,9 +19,8 @@ import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useOktaSession from 'hooks/useOktaSession';
 import { tArray } from 'utils/translation';
-
-import { useOktaSession } from '../../contexts/OktaSessionContext';
 
 import './index.scss';
 
@@ -53,8 +51,7 @@ export const Landing = () => {
 export const LandingHeader = () => {
   const { t } = useTranslation('landing');
 
-  const { hasSession } = useOktaSession();
-  const { oktaAuth } = useOktaAuth();
+  const { hasSession, oktaAuth } = useOktaSession();
 
   return (
     <div className="landing bg-primary-darker text-white">

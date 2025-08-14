@@ -14,7 +14,7 @@ import useMessage from 'hooks/useMessage';
 const RemoveCategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const {
     mtoModalState: { categoryID, subCategoryID, rowType },

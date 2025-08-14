@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ModelPlanFilter } from 'gql/generated/graphql';
@@ -24,33 +24,23 @@ describe('Read Only Model Plan Overivew', () => {
   const store = mockStore({ auth: mockAuthReducer });
 
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models',
-          element: (
+    render(
+      <MemoryRouter initialEntries={['/models']}>
+        <MockedProvider
+          mocks={[
+            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, false),
+            ...favoritesPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL)
+          ]}
+        >
+          <Route path="/models">
             <Provider store={store}>
               <MessageProvider>
                 <ModelPlan />
               </MessageProvider>
             </Provider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/models']
-      }
-    );
-
-    render(
-      <MockedProvider
-        mocks={[
-          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, false),
-          ...favoritesPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL)
-        ]}
-      >
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

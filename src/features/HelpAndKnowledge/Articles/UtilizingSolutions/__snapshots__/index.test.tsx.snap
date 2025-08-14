@@ -46,7 +46,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
-          data-discover="true"
           href="/help-and-knowledge/articles?category=it-implementation"
         >
           <span
@@ -235,7 +234,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             >
               <a
                 class="usa-link margin-top-2 display-inline-block"
-                data-discover="true"
                 href="/help-and-knowledge/operational-solutions?page=1"
               >
                 Check out the operational solutions
@@ -458,7 +456,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -510,7 +507,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -562,7 +558,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
-              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -598,7 +593,6 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
       </ul>
       <a
         class="usa-link"
-        data-discover="true"
         href="/help-and-knowledge/articles"
       >
         View all help resources

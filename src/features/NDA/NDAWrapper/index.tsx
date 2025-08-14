@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { AppState } from 'stores/reducers/rootReducer';
+import { RootStateOrAny, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
 type NDAWrapperProps = {
   children: React.ReactNode;
@@ -10,27 +9,21 @@ type NDAWrapperProps = {
 const NDAWrapper = ({ children }: NDAWrapperProps) => {
   const { pathname, search } = useLocation();
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
-  const user = useSelector((state: AppState) => state.auth);
+  const user = useSelector((state: RootStateOrAny) => state.auth);
 
   useEffect(() => {
-    if (
-      user?.acceptedNDA &&
-      user?.acceptedNDA?.agreed === false &&
-      user.isUserSet
-    ) {
-      // Only redirect if we're not already on the pre-decisional-notice page
-      if (pathname !== '/pre-decisional-notice') {
-        navigate('/pre-decisional-notice', {
-          state: {
-            nextState: pathname + (search || '')
-          }
-        });
-      }
+    if (user?.acceptedNDA && user?.acceptedNDA?.agreed === false) {
+      history.push({
+        pathname: '/pre-decisional-notice',
+        state: {
+          nextState:
+            pathname !== '/pre-decisional-notice' && pathname + (search || '')
+        }
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate, search, user?.acceptedNDA]);
+  }, [history, pathname, search, user?.acceptedNDA]);
 
   return <>{children}</>;
 };

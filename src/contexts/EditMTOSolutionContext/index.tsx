@@ -2,11 +2,12 @@ import React, {
   createContext,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import EditSolutionForm from 'features/ModelPlan/ModelToOperations/_components/EditSolutionForm';
 
@@ -31,9 +32,12 @@ const EditMTOSolutionProvider = ({
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
-  const [params, setParams] = useSearchParams();
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const solutionParam = params.get('edit-solution');
 
@@ -62,7 +66,8 @@ const EditMTOSolutionProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       if (closeDestination) {
-        navigate(closeDestination, {
+        history.push({
+          pathname: closeDestination,
           state: {
             scroll: true
           }
@@ -72,13 +77,13 @@ const EditMTOSolutionProvider = ({
         params.delete('edit-solution');
         params.delete('scroll-to-bottom');
         params.delete('select-milestones');
-        setParams(params);
+        history.push({ search: params.toString() });
       }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  }, [isDirty, submitted, params, closeDestination, navigate, setParams]);
+  }, [isDirty, submitted, history, params, closeDestination]);
 
   useEffect(() => {
     if (closeDestination) {
@@ -88,7 +93,7 @@ const EditMTOSolutionProvider = ({
 
   const openEditSolutionModal = (id: string) => {
     params.set('edit-solution', id);
-    setParams(params);
+    history.push({ search: params.toString() });
     setIsModalOpen(true);
   };
 
@@ -144,10 +149,10 @@ const EditMTOSolutionProvider = ({
             className="margin-right-4 bg-error"
             onClick={() => {
               if (closeDestination) {
-                navigate(closeDestination);
+                history.push(closeDestination);
               } else {
                 params.delete('edit-solution');
-                navigate({ search: params.toString() }, { replace: true });
+                history.replace({ search: params.toString() });
               }
               setIsModalOpen(false);
               setIsDirty(false);

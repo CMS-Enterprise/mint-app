@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -14,29 +14,21 @@ import ReadOnlyMTOSolutions from './index';
 
 describe('Read view MTO milestones', () => {
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/milestones',
-          element: (
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/milestones`]}
+      >
+        <MockedProvider
+          mocks={[...solutionAndMilestoneMock, ...possibleSolutionsMock]}
+          addTypename={false}
+        >
+          <Route path="/models/:modelID/read-view/milestones">
             <MessageProvider>
               <ReadOnlyMTOSolutions modelID={modelID} />
             </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/milestones`]
-      }
-    );
-
-    const { asFragment } = render(
-      <MockedProvider
-        mocks={[...solutionAndMilestoneMock, ...possibleSolutionsMock]}
-        addTypename={false}
-      >
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

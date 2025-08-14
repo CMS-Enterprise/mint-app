@@ -38,7 +38,7 @@ type TruncatedTextProps = CharLimitProps | LineClampProps;
  * @param {number} [lineClamp] - Optional line clamp to limit the number of lines shown. Cannot be used with `charLimit`.
  * @param {string} [className] - Additional class names for styling.
  * @throws Will throw an error if both `charLimit` and `lineClamp` are provided, or if neither is provided.
- * @returns {React.ReactNode} The truncated text component with optional "Read more" / "Read less" functionality.
+ * @returns {JSX.Element} The truncated text component with optional "Read more" / "Read less" functionality.
  */
 const TruncatedText = ({
   id,

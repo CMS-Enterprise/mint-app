@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -12,7 +12,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
   DataExchangeApproachMarkedCompleteNotificationType,
@@ -57,7 +57,7 @@ const NotificationSettings = () => {
 
   const { showMessage, showMessageOnNextPage } = useMessage();
 
-  const navigate = useNavigate();
+  const history = useHistory();
   const { message } = useMessage();
   const location = useLocation();
 
@@ -132,7 +132,7 @@ const NotificationSettings = () => {
               {notificationsT('settings.successMessage')}
             </Alert>
           );
-          navigate('/notifications');
+          history.push('/notifications');
         }
       })
       .catch(() => {
@@ -231,7 +231,7 @@ const NotificationSettings = () => {
         </Alert>
       );
       params.delete('unsubscribe_email');
-      navigate({ search: params.toString() }, { replace: true });
+      history.replace({ search: params.toString() });
       return;
     }
 
@@ -322,12 +322,12 @@ const NotificationSettings = () => {
       }
 
       params.delete('unsubscribe_email');
-      navigate({ search: params.toString() }, { replace: true });
+      history.replace({ search: params.toString() });
     }
   }, [
     dataExchangeApproachMarkedComplete,
     datesChanged,
-    navigate,
+    history,
     loading,
     newModelPlan,
     notificationsT,
@@ -426,7 +426,7 @@ const NotificationSettings = () => {
                     </Grid>
                   </Grid>
 
-                  <form
+                  <Form
                     onSubmit={e => {
                       handleSubmit(e);
                     }}
@@ -547,7 +547,7 @@ const NotificationSettings = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => navigate('/notifications')}
+                        onClick={() => history.push('/notifications')}
                       >
                         <Icon.ArrowBack
                           className="margin-right-1"
@@ -558,7 +558,7 @@ const NotificationSettings = () => {
                         {notificationsT('settings.dontUpdate')}
                       </Button>
                     </Fieldset>
-                  </form>
+                  </Form>
                 </>
               );
             }}

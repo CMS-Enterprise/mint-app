@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Button, Label } from '@trussworks/react-uswds';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DocumentType,
   useUploadNewPlanDocumentMutation
@@ -33,8 +33,8 @@ const DocumentUpload = ({
   solutionDetailsLink?: string;
   solutionID?: string;
 }) => {
-  const { modelID = '' } = useParams<{ modelID: string }>();
-  const navigate = useNavigate();
+  const { modelID } = useParams<{ modelID: string }>();
+  const history = useHistory();
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');
 
@@ -85,9 +85,9 @@ const DocumentUpload = ({
             messageOnNextPage('documentUploadSuccess', file.name);
 
             if (solutionDetailsLink) {
-              navigate(solutionDetailsLink);
+              history.push(solutionDetailsLink);
             } else {
-              navigate(`/models/${modelID}/collaboration-area/documents`);
+              history.push(`/models/${modelID}/collaboration-area/documents`);
             }
           } else {
             setMutationError(true);
@@ -161,9 +161,8 @@ const DocumentUpload = ({
                 </ErrorAlert>
               )}
               <div>
-                <form
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    e.preventDefault();
+                <Form
+                  onSubmit={e => {
                     handleSubmit(e);
                     window.scrollTo(0, 0);
                   }}
@@ -347,7 +346,7 @@ const DocumentUpload = ({
                       {documentsMiscT('submitButton')}
                     </Button>
                   </div>
-                </form>
+                </Form>
               </div>
             </>
           );

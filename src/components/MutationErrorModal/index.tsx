@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 
 import Alert from 'components/Alert';
@@ -20,7 +20,7 @@ const MutationErrorModal = ({
 }: MutationErrorModalType) => {
   const { t: generalT } = useTranslation('general');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   return (
     <Modal
@@ -58,7 +58,7 @@ const MutationErrorModal = ({
             unstyled
             onClick={() => {
               closeModal();
-              navigate(url);
+              history.push(url);
             }}
           >
             {generalT('mutationError.leave')}

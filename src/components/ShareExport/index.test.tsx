@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import { echimpCRsAndTDLsMock } from 'tests/mock/general';
@@ -26,45 +26,37 @@ const store = mockStore({ auth: { euaId: 'MINT' } });
 
 describe('ShareExportModal', () => {
   it('renders modal with prepopulated filter', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/model-basics',
-          element: (
-            <MessageProvider>
-              <ShareExportModal
-                modelID={modelID}
-                closeModal={() => null}
-                filteredView="ccw"
-                setStatusMessage={() => null}
-              />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/read-view/model-basics?filter-view=ccw`
-        ]
-      }
-    );
-
     const { user, getByText, getByTestId } = setup(
       <Provider store={store}>
-        <VerboseMockedProvider
-          mocks={[
-            ...allMocks,
-            ...dataExchangeApproachMocks,
-            ...summaryMock,
-            ...mtoMatrixMock,
-            ...possibleSolutionsMock,
-            ...solutionAndMilestoneMock,
-            ...echimpCRsAndTDLsMock
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/read-view/model-basics?filter-view=ccw`
           ]}
-          addTypename={false}
         >
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
+          <VerboseMockedProvider
+            mocks={[
+              ...allMocks,
+              ...dataExchangeApproachMocks,
+              ...summaryMock,
+              ...mtoMatrixMock,
+              ...possibleSolutionsMock,
+              ...solutionAndMilestoneMock,
+              ...echimpCRsAndTDLsMock
+            ]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/read-view/model-basics">
+              <MessageProvider>
+                <ShareExportModal
+                  modelID={modelID}
+                  closeModal={() => null}
+                  filteredView="ccw"
+                  setStatusMessage={() => null}
+                />
+              </MessageProvider>
+            </Route>
+          </VerboseMockedProvider>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -95,45 +87,37 @@ describe('ShareExportModal', () => {
   });
 
   it.skip('matches the snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/model-basics',
-          element: (
-            <MessageProvider>
-              <ShareExportModal
-                modelID={modelID}
-                closeModal={() => null}
-                filteredView="ccw"
-                setStatusMessage={() => null}
-              />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/read-view/model-basics?filter-view=ccw`
-        ]
-      }
-    );
-
     const { asFragment, getByText } = setup(
       <Provider store={store}>
-        <VerboseMockedProvider
-          mocks={[
-            ...allMocks,
-            ...dataExchangeApproachMocks,
-            ...summaryMock,
-            ...mtoMatrixMock,
-            ...possibleSolutionsMock,
-            ...solutionAndMilestoneMock,
-            ...echimpCRsAndTDLsMock
+        <MemoryRouter
+          initialEntries={[
+            `/models/${modelID}/read-view/model-basics?filter-view=ccw`
           ]}
-          addTypename={false}
         >
-          <RouterProvider router={router} />
-        </VerboseMockedProvider>
+          <VerboseMockedProvider
+            mocks={[
+              ...allMocks,
+              ...dataExchangeApproachMocks,
+              ...summaryMock,
+              ...mtoMatrixMock,
+              ...possibleSolutionsMock,
+              ...solutionAndMilestoneMock,
+              ...echimpCRsAndTDLsMock
+            ]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/read-view/model-basics">
+              <MessageProvider>
+                <ShareExportModal
+                  modelID={modelID}
+                  closeModal={() => null}
+                  filteredView="ccw"
+                  setStatusMessage={() => null}
+                />
+              </MessageProvider>
+            </Route>
+          </VerboseMockedProvider>
+        </MemoryRouter>
       </Provider>
     );
 

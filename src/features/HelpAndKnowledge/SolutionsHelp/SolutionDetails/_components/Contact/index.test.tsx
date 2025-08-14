@@ -1,10 +1,7 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-
-import MessageProvider from 'contexts/MessageContext';
 
 import Contact from './index';
 
@@ -23,56 +20,33 @@ const contact: SolutionContactType = {
 
 describe('Operation Solution Contact', () => {
   it('renders contact name', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions/solutions',
-          element: (
-            <MessageProvider>
-              <Contact contact={contact} />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]
-      }
-    );
-
     const { getByText } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
+        ]}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <Contact contact={contact} />
+        </Route>
+      </MemoryRouter>
     );
     expect(getByText('Aliza Kim')).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions/solutions',
-          element: (
-            <MessageProvider>
-              <Contact contact={contact} />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
           '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]
-      }
+        ]}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <Contact contact={contact} />
+        </Route>
+      </MemoryRouter>
     );
 
-    const { asFragment } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
-    );
     expect(asFragment()).toMatchSnapshot();
   });
 });

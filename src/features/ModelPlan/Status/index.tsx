@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -9,7 +9,7 @@ import {
   Label,
   Select
 } from '@trussworks/react-uswds';
-import { Field, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -34,15 +34,13 @@ const Status = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
-
-  const location = useLocation();
+  const history = useHistory();
 
   const params = useMemo(() => {
-    return new URLSearchParams(location.search);
-  }, [location.search]);
+    return new URLSearchParams(history.location.search);
+  }, [history.location.search]);
 
   // Get model status from generated email link
   const modelStatus = params.get('model-status') as ModelStatus;
@@ -70,7 +68,7 @@ const Status = () => {
                 status: statusConfig.options[formikValues.status as ModelStatus]
               })
             );
-            navigate(`/models/${modelID}/collaboration-area/`);
+            history.push(`/models/${modelID}/collaboration-area/`);
           }
         })
         .catch(errors => {
@@ -120,8 +118,8 @@ const Status = () => {
               } = formikProps;
               return (
                 <>
-                  <form
-                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  <Form
+                    onSubmit={e => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
                     }}
@@ -131,11 +129,7 @@ const Status = () => {
                         {modelPlanT('status.label')}
                       </Label>
 
-                      {errors.status && (
-                        <div className="usa-error-message" role="alert">
-                          {errors.status}
-                        </div>
-                      )}
+                      <ErrorMessage name="status" />
 
                       <Field
                         as={Select}
@@ -177,7 +171,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        navigate(`/models/${modelID}/collaboration-area`)
+                        history.push(`/models/${modelID}/collaboration-area`)
                       }
                     >
                       <Icon.ArrowBack
@@ -188,7 +182,7 @@ const Status = () => {
 
                       {modelPlanMiscT('return')}
                     </Button>
-                  </form>
+                  </Form>
                 </>
               );
             }}

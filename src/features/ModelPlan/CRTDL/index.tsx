@@ -1,32 +1,23 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
-
-import MainContent from 'components/MainContent';
 
 import CRTDLs from './CRTDLs';
 
 const CRTDL = () => {
   return (
-    <MainContent className="grid-container" data-testid="model-crtdl">
-      <Outlet />
-    </MainContent>
-  );
-};
+    <Switch>
+      {/* Model Plan CRTDL Pages */}
+      <Route
+        path="/models/:modelID/collaboration-area/cr-and-tdl"
+        exact
+        render={() => <CRTDLs />}
+      />
 
-export const crtdlRoutes = {
-  path: '/models/:modelID/collaboration-area/cr-and-tdl',
-  element: <CRTDL />,
-  children: [
-    {
-      path: '/models/:modelID/collaboration-area/cr-and-tdl',
-      element: <CRTDLs />
-    },
-    {
-      path: '*',
-      element: <NotFound />
-    }
-  ]
+      {/* 404 */}
+      <Route path="*" render={() => <NotFound />} />
+    </Switch>
+  );
 };
 
 export default CRTDL;

@@ -28,7 +28,7 @@ describe('OktaUserSelect', () => {
   };
 
   it('selects contact from dropdown', async () => {
-    const { user, asFragment, getByRole, findByText } = setup(
+    const { user, asFragment, getByTestId, findByText } = setup(
       <MockedProvider mocks={[oktaUsersQuery]} addTypename={false}>
         <OktaUserSelect
           id="cedarContactSelect"
@@ -39,7 +39,7 @@ describe('OktaUserSelect', () => {
     );
 
     // Type first name into select field input
-    const input = getByRole('combobox');
+    const input = getByTestId('cedar-contact-select');
     await user.type(input, 'Adeline');
 
     // Get mocked Okta result

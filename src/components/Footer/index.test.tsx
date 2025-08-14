@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 
 import Footer from './index';
@@ -22,19 +22,13 @@ vi.mock('@okta/okta-react', () => ({
 
 describe('The Footer component', () => {
   it('renders without crashing', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/report-a-problem',
-          element: <Footer />
-        }
-      ],
-      {
-        initialEntries: ['/report-a-problem']
-      }
+    render(
+      <MemoryRouter initialEntries={['/report-a-problem']}>
+        <Route path="/report-a-problem">
+          <Footer />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(screen.getByRole('contentinfo')).toBeInTheDocument();
   });

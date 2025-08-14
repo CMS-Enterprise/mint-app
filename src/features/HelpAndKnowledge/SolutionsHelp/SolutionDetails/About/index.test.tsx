@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 import { helpSolutionsArray } from '../../solutionsMap';
@@ -10,21 +10,17 @@ describe('Operational Solutions About Components', () => {
   it.each(helpSolutionsArray)(
     `matches the snapshot`,
     async solutionAboutComponent => {
-      const router = createMemoryRouter(
-        [
-          {
-            path: '/help-and-knowledge/operational-solutions',
-            element: <About solution={solutionAboutComponent} />
-          }
-        ],
-        {
-          initialEntries: [
+      const { asFragment } = render(
+        <MemoryRouter
+          initialEntries={[
             `/help-and-knowledge/operational-solutions?solution-key=${solutionAboutComponent.key}&section=about`
-          ]
-        }
+          ]}
+        >
+          <Route path="/help-and-knowledge/operational-solutions">
+            <About solution={solutionAboutComponent} />
+          </Route>
+        </MemoryRouter>
       );
-
-      const { asFragment } = render(<RouterProvider router={router} />);
       expect(asFragment()).toMatchSnapshot(solutionAboutComponent.name);
     }
   );

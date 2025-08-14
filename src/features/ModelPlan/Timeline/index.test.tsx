@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -61,24 +61,18 @@ const mocks = [
 
 describe('Model Timeline page', () => {
   it('renders without errors and matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/model-timeline',
-          element: <Timeline />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-timeline'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-timeline'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/model-timeline">
+            <Timeline />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));

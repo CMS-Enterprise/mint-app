@@ -22,7 +22,6 @@ exports[`Operational Solution Category Card > matches snapshot 1`] = `
         <a
           aria-label="Learn more about Data"
           class="usa-link display-flex flex-align-center"
-          data-discover="true"
           href="/help-and-knowledge/operational-solutions?category=DATA"
         >
           Learn more

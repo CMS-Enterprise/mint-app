@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
 import LockedModelPlanSection from '.';
@@ -8,24 +8,20 @@ const modelID = '53e06174-83b9-462a-86d0-3a936f3c2670';
 
 describe('Locked Task List Section Page', () => {
   it('renders a page that is locked', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/locked-task-list-section',
-          element: <LockedModelPlanSection />
-        }
-      ],
-      {
-        initialEntries: [
+    const { getByTestId } = render(
+      <MemoryRouter
+        initialEntries={[
           {
             pathname: `/models/${modelID}/locked-task-list-section`,
             state: { error: false, route: 'basics' }
           }
-        ]
-      }
+        ]}
+      >
+        <Route path="/models/:modelID/locked-task-list-section">
+          <LockedModelPlanSection />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { getByTestId } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(getByTestId('page-locked')).toHaveTextContent(
@@ -35,24 +31,20 @@ describe('Locked Task List Section Page', () => {
   });
 
   it('renders a page that is errored', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/locked-task-list-section',
-          element: <LockedModelPlanSection />
-        }
-      ],
-      {
-        initialEntries: [
+    const { getByTestId } = render(
+      <MemoryRouter
+        initialEntries={[
           {
             pathname: `/models/${modelID}/locked-task-list-section`,
             state: { error: true, route: 'basics' }
           }
-        ]
-      }
+        ]}
+      >
+        <Route path="/models/:modelID/locked-task-list-section">
+          <LockedModelPlanSection />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { getByTestId } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(getByTestId('page-error')).toHaveTextContent(
@@ -62,24 +54,20 @@ describe('Locked Task List Section Page', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/locked-task-list-section',
-          element: <LockedModelPlanSection />
-        }
-      ],
-      {
-        initialEntries: [
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
           {
             pathname: `/models/${modelID}/locked-task-list-section`,
             state: { error: false, route: 'basics' }
           }
-        ]
-      }
+        ]}
+      >
+        <Route path="/models/:modelID/locked-task-list-section">
+          <LockedModelPlanSection />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

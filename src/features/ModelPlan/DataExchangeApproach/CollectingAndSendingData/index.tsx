@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Fieldset,
   Form,
@@ -67,9 +67,9 @@ const CollectingAndSendingData = () => {
     dataToSendToParticipants: dataToSendToParticipantsConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { data, loading, error } = useGetCollectingAndSendingDataQuery({
     variables: { id: modelID }
@@ -139,7 +139,7 @@ const CollectingAndSendingData = () => {
         <Form
           id="collect-and-send-data-form"
           onSubmit={handleSubmit(() => {
-            navigate(
+            history.push(
               `/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
             );
           })}

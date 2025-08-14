@@ -65,8 +65,10 @@ const ReadViewStatusBanner = ({
           <div className="display-flex flex-align-center flex-wrap">
             {changeHistoryLink && (
               <UswdsReactLink
-                to={`/models/${modelID}/change-history`}
-                state={{ from: 'readview' }}
+                to={{
+                  pathname: `/models/${modelID}/change-history`,
+                  state: { from: 'readview' }
+                }}
                 className={classNames(
                   'display-flex flex-align-center padding-right-2',
                   {

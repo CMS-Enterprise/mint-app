@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import {
   GetMtoAllMilestonesQuery,
@@ -77,26 +77,16 @@ describe('LinkMilestoneForm Component', () => {
   const mockSetMilestoneIDs = vi.fn();
 
   const renderComponent = (milestoneIDs: string[] = []) => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <LinkMilestoneForm
-              solution={mockSolution}
-              milestoneIDs={milestoneIDs}
-              setMilestoneIDs={mockSetMilestoneIDs}
-              allMilestones={mockAllMilestones}
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    return render(
+      <MemoryRouter>
+        <LinkMilestoneForm
+          solution={mockSolution}
+          milestoneIDs={milestoneIDs}
+          setMilestoneIDs={mockSetMilestoneIDs}
+          allMilestones={mockAllMilestones}
+        />
+      </MemoryRouter>
     );
-
-    return render(<RouterProvider router={router} />);
   };
 
   it('renders populated milestones correctly and displays grouped milestones', async () => {

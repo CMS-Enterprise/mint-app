@@ -6,15 +6,14 @@
  */
 
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import {
   GetLockedModelPlanSectionsQuery,
   LockableSection,
   useLockModelPlanSectionMutation,
   useUnlockModelPlanSectionMutation
 } from 'gql/generated/graphql';
-import { AppState } from 'stores/reducers/rootReducer';
 
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { RouterContext } from 'contexts/RouterContext';
@@ -98,7 +97,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
   // Get the subscription context - messages (locks, unlocks), loading
   const { lockableSectionLocks, loading } = useContext(SubscriptionContext);
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const modelID: string = to.split('/')[2];
   const modelPlanRoute: string = to.split('/')[4];
@@ -112,7 +111,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   const taskListRoute = lockedRouteParser(to);
 
-  const { euaId } = useSelector((state: AppState) => state.auth);
+  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
   const validModelID: boolean = isUUID(modelID);
 
@@ -148,10 +147,13 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   if (lockState === LockStatus.LOCKED) {
     return (
-      <Navigate
-        to={`/models/${modelID}/locked-task-list-section`}
-        state={{ route: taskListRoute }}
-        replace
+      <Redirect
+        push
+        to={{
+          pathname: `/models/${modelID}/locked-task-list-section`,
+          // Passing the route for breadcrumbs on locked section page
+          state: { route: taskListRoute }
+        }}
       />
     );
   }
@@ -171,7 +173,8 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         }));
       })
       .catch(() => {
-        navigate(`/models/${modelID}/locked-task-list-section`, {
+        history.push({
+          pathname: `/models/${modelID}/locked-task-list-section`,
           // Passing error status to default error page
           state: { route: taskListRoute, error: true }
         });
@@ -186,7 +189,8 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         section
       }
     }).catch(() => {
-      navigate(`/models/${modelID}/locked-task-list-section`, {
+      history.push({
+        pathname: `/models/${modelID}/locked-task-list-section`,
         // Passing error status to default error page
         state: { route: taskListRoute, error: true }
       });

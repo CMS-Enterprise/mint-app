@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
@@ -17,12 +17,11 @@ type MilestonePanelProps = {
 const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const history = useHistory();
 
   const params = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search]
+    () => new URLSearchParams(history.location.search),
+    [history]
   );
 
   // Map the common solutions to the FE help solutions
@@ -80,7 +79,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                   className="margin-right-2"
                   onClick={() => {
                     params.set('add-milestone', milestone.key);
-                    navigate({ search: params.toString() }, { replace: true });
+                    history.replace({ search: params.toString() });
                   }}
                 >
                   {t('milestoneLibrary.addToMatrix')}

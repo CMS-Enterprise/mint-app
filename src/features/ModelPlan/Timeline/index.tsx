@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -13,7 +13,7 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import {
   GetTimelineQuery,
   TypedUpdateTimelineDocument,
@@ -53,9 +53,9 @@ const Timeline = () => {
   const { t: timelineMiscT } = useTranslation('timelineMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
+  const history = useHistory();
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
 
   const { data, loading, error } = useGetTimelineQuery({
@@ -85,7 +85,7 @@ const Timeline = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdateTimelineDocument, {
     id,
-    formikRef: formikRef as React.RefObject<FormikProps<any>>
+    formikRef
   });
 
   const initialValues: InitialValueType = {
@@ -153,7 +153,7 @@ const Timeline = () => {
               <Formik
                 initialValues={initialValues}
                 onSubmit={() => {
-                  navigate(`/models/${modelID}/collaboration-area`);
+                  history.push(`/models/${modelID}/collaboration-area`);
                 }}
                 enableReinitialize
                 validateOnBlur={false}
@@ -192,7 +192,7 @@ const Timeline = () => {
                     <div data-testid="model-plan-timeline">
                       <ConfirmLeave />
 
-                      <form
+                      <Form
                         className="desktop:grid-col-8 timeline-form margin-y-6"
                         onSubmit={e => {
                           handleSubmit(e);
@@ -524,7 +524,9 @@ const Timeline = () => {
                             type="button"
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
-                              navigate(`/models/${modelID}/collaboration-area`)
+                              history.push(
+                                `/models/${modelID}/collaboration-area`
+                              )
                             }
                           >
                             <Icon.ArrowBack
@@ -536,7 +538,7 @@ const Timeline = () => {
                             {timelineMiscT('dontUpdate')}
                           </Button>
                         </Fieldset>
-                      </form>
+                      </Form>
                     </div>
                   );
                 }}

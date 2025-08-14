@@ -70,6 +70,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
                   autocomplete="off"
                   autocorrect="off"
                   class="cedar-contact-select__input"
+                  data-testid="cedar-contact-select"
                   id="react-select-team-member-name-input"
                   role="combobox"
                   spellcheck="false"

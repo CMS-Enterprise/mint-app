@@ -1,16 +1,9 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Button,
-  Fieldset,
-  GridContainer,
-  Icon,
-  Label,
-  Select
-} from '@trussworks/react-uswds';
+import { useHistory, useParams } from 'react-router-dom';
+import { Button, Fieldset, Icon, Label, Select } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DataStartsType,
   GetDataSharingQuery,
@@ -24,7 +17,6 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
-import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -38,7 +30,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '../Support';
+} from '..';
 
 type GetDataSharingFormType =
   GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
@@ -60,10 +52,10 @@ const DataSharing = () => {
     qualityReportingFrequency: qualityReportingFrequencyConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { data, loading, error } = useGetDataSharingQuery({
     variables: {
@@ -102,7 +94,7 @@ const DataSharing = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 
@@ -111,11 +103,11 @@ const DataSharing = () => {
       isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
-      navigate(
+      history.push(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
-      navigate(
+      history.push(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
       );
     }
@@ -154,353 +146,341 @@ const DataSharing = () => {
   }
 
   return (
-    <MainContent data-testid="ops-eval-and-learning-data-sharing">
-      <GridContainer>
-        <MutationErrorModal
-          isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.closeModal()}
-          url={mutationError.destinationURL}
-        />
+    <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.closeModal()}
+        url={mutationError.destinationURL}
+      />
 
-        <Breadcrumbs
-          items={[
-            BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST,
-            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-          ]}
-        />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
-          {opsEvalAndLearningMiscT('heading')}
-        </PageHeading>
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {opsEvalAndLearningMiscT('heading')}
+      </PageHeading>
 
-        <p
-          className="margin-top-0 margin-bottom-1 font-body-lg"
-          data-testid="model-plan-name"
-        >
-          {miscellaneousT('for')} {modelName}
-        </p>
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        {miscellaneousT('for')} {modelName}
+      </p>
 
-        <p className="margin-bottom-2 font-body-md line-height-sans-4">
-          {miscellaneousT('helpText')}
-        </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {miscellaneousT('helpText')}
+      </p>
 
-        <AskAQuestion modelID={modelID} />
+      <AskAQuestion modelID={modelID} />
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {
-            navigate(
-              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/learning`
-            );
-          }}
-          enableReinitialize
-          innerRef={formikRef}
-        >
-          {(formikProps: FormikProps<GetDataSharingFormType>) => {
-            const { handleSubmit, setErrors, values, setFieldValue } =
-              formikProps;
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/learning`
+          );
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<GetDataSharingFormType>) => {
+          const { handleSubmit, setErrors, values, setFieldValue } =
+            formikProps;
 
-            return (
-              <>
-                <ConfirmLeave />
+          return (
+            <>
+              <ConfirmLeave />
 
-                <form
-                  className="desktop:grid-col-6 margin-top-6"
-                  data-testid="ops-eval-and-learning-data-sharing-form"
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <Fieldset disabled={!!error || loading}>
-                    <FieldGroup>
-                      <strong>
-                        {opsEvalAndLearningMiscT('reportingTiming')}
-                      </strong>
+              <Form
+                className="desktop:grid-col-6 margin-top-6"
+                data-testid="ops-eval-and-learning-data-sharing-form"
+                onSubmit={e => {
+                  handleSubmit(e);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup>
+                    <strong>
+                      {opsEvalAndLearningMiscT('reportingTiming')}
+                    </strong>
 
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-sharing-starts"
-                        className="text-normal margin-top-2"
-                      >
-                        {opsEvalAndLearningT('dataSharingStarts.label')}
-                      </Label>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-sharing-starts"
+                      className="text-normal margin-top-2"
+                    >
+                      {opsEvalAndLearningT('dataSharingStarts.label')}
+                    </Label>
 
-                      <p className="text-base margin-y-1 line-height-body-4">
-                        {opsEvalAndLearningT('dataSharingStarts.sublabel')}
-                      </p>
+                    <p className="text-base margin-y-1 line-height-body-4">
+                      {opsEvalAndLearningT('dataSharingStarts.sublabel')}
+                    </p>
 
-                      <Field
-                        as={Select}
-                        id="ops-eval-and-learning-data-sharing-starts"
-                        name="dataSharingStarts"
-                        value={values.dataSharingStarts || ''}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setFieldValue('dataSharingStarts', e.target.value);
-                        }}
-                      >
-                        <option key="default-select" disabled value="">
-                          {`-${miscellaneousT('select')}-`}
-                        </option>
+                    <Field
+                      as={Select}
+                      id="ops-eval-and-learning-data-sharing-starts"
+                      name="dataSharingStarts"
+                      value={values.dataSharingStarts || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('dataSharingStarts', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${miscellaneousT('select')}-`}
+                      </option>
 
-                        {getKeys(dataSharingStartsConfig.options).map(type => {
+                      {getKeys(dataSharingStartsConfig.options).map(type => {
+                        return (
+                          <option key={type} value={type}>
+                            {dataSharingStartsConfig.options[type]}
+                          </option>
+                        );
+                      })}
+                    </Field>
+
+                    {values.dataSharingStarts === DataStartsType.OTHER && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-sharing-starts-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT('dataSharingStartsOther.label')}
+                        </Label>
+
+                        <Field
+                          as={TextAreaField}
+                          className="maxw-none mint-textarea"
+                          id="ops-eval-and-learning-data-sharing-starts-other"
+                          maxLength={5000}
+                          name="dataSharingStartsOther"
+                        />
+                      </div>
+                    )}
+                  </FieldGroup>
+
+                  <FrequencyForm
+                    field="dataSharingFrequency"
+                    values={values.dataSharingFrequency}
+                    config={dataSharingFrequencyConfig}
+                    nameSpace="opsEvalAndLearning"
+                    id="ops-eval-and-learning-data-sharing-frequency"
+                    label={opsEvalAndLearningT('dataSharingFrequency.label')}
+                    disabled={loading}
+                    boldLabel={false}
+                    addNote={false}
+                  />
+
+                  <AddNote
+                    id="ops-eval-and-learning-data-sharing-starts-note"
+                    field="dataSharingStartsNote"
+                  />
+
+                  <FieldGroup>
+                    <strong>
+                      {opsEvalAndLearningMiscT('dataCollectionTiming')}
+                    </strong>
+
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-collection-starts"
+                      className="text-normal margin-top-2"
+                    >
+                      {opsEvalAndLearningT('dataCollectionStarts.label')}
+                    </Label>
+
+                    <Field
+                      as={Select}
+                      id="ops-eval-and-learning-data-collection-starts"
+                      name="dataCollectionStarts"
+                      value={values.dataCollectionStarts || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('dataCollectionStarts', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${miscellaneousT('select')}-`}
+                      </option>
+
+                      {getKeys(dataCollectionStartsConfig.options).map(type => {
+                        return (
+                          <option key={type} value={type}>
+                            {dataCollectionStartsConfig.options[type]}
+                          </option>
+                        );
+                      })}
+                    </Field>
+
+                    {values.dataCollectionStarts === DataStartsType.OTHER && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-collection-starts-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT(
+                            'dataCollectionStartsOther.label'
+                          )}
+                        </Label>
+
+                        <Field
+                          as={TextAreaField}
+                          className="maxw-none mint-textarea"
+                          id="ops-eval-and-learning-data-collection-starts-other"
+                          maxLength={5000}
+                          name="dataCollectionStartsOther"
+                        />
+                      </div>
+                    )}
+                  </FieldGroup>
+
+                  <FrequencyForm
+                    field="dataCollectionFrequency"
+                    values={values.dataCollectionFrequency}
+                    config={dataCollectionFrequencyConfig}
+                    nameSpace="opsEvalAndLearning"
+                    id="ops-eval-and-learning-data-collection-frequency"
+                    label={opsEvalAndLearningT('dataCollectionFrequency.label')}
+                    disabled={loading}
+                    boldLabel={false}
+                  />
+
+                  <FieldGroup>
+                    <strong>
+                      {opsEvalAndLearningMiscT('qualityReportTiming')}
+                    </strong>
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-reporting-starts"
+                      className="text-normal margin-top-2"
+                    >
+                      {opsEvalAndLearningT('qualityReportingStarts.label')}
+                    </Label>
+
+                    <Field
+                      as={Select}
+                      id="ops-eval-and-learning-data-reporting-starts"
+                      name="qualityReportingStarts"
+                      value={values.qualityReportingStarts || ''}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setFieldValue('qualityReportingStarts', e.target.value);
+                      }}
+                    >
+                      <option key="default-select" disabled value="">
+                        {`-${miscellaneousT('select')}-`}
+                      </option>
+
+                      {getKeys(qualityReportingStartsConfig.options).map(
+                        type => {
                           return (
                             <option key={type} value={type}>
-                              {dataSharingStartsConfig.options[type]}
+                              {qualityReportingStartsConfig.options[type]}
                             </option>
                           );
-                        })}
-                      </Field>
-
-                      {values.dataSharingStarts === DataStartsType.OTHER && (
-                        <div className="margin-top-3">
-                          <Label
-                            htmlFor="ops-eval-and-learning-data-sharing-starts-other"
-                            className="text-normal"
-                          >
-                            {opsEvalAndLearningT(
-                              'dataSharingStartsOther.label'
-                            )}
-                          </Label>
-
-                          <Field
-                            as={TextAreaField}
-                            className="maxw-none mint-textarea"
-                            id="ops-eval-and-learning-data-sharing-starts-other"
-                            maxLength={5000}
-                            name="dataSharingStartsOther"
-                          />
-                        </div>
+                        }
                       )}
-                    </FieldGroup>
+                    </Field>
+
+                    {values.qualityReportingStarts === DataStartsType.OTHER && (
+                      <div className="margin-top-3">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-reporting-starts-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT(
+                            'qualityReportingStartsOther.label'
+                          )}
+                        </Label>
+
+                        <Field
+                          as={TextAreaField}
+                          className="maxw-none mint-textarea"
+                          id="ops-eval-and-learning-data-reporting-starts-other"
+                          data-testid="ops-eval-and-learning-data-reporting-starts-other"
+                          maxLength={5000}
+                          name="qualityReportingStartsOther"
+                        />
+                      </div>
+                    )}
 
                     <FrequencyForm
-                      field="dataSharingFrequency"
-                      values={values.dataSharingFrequency}
-                      config={dataSharingFrequencyConfig}
+                      field="qualityReportingFrequency"
+                      values={values.qualityReportingFrequency}
+                      config={qualityReportingFrequencyConfig}
                       nameSpace="opsEvalAndLearning"
-                      id="ops-eval-and-learning-data-sharing-frequency"
-                      label={opsEvalAndLearningT('dataSharingFrequency.label')}
+                      id="ops-eval-and-learning-quality-reporting-frequency"
+                      label={opsEvalAndLearningT(
+                        'qualityReportingFrequency.label'
+                      )}
                       disabled={loading}
                       boldLabel={false}
                       addNote={false}
                     />
 
                     <AddNote
-                      id="ops-eval-and-learning-data-sharing-starts-note"
-                      field="dataSharingStartsNote"
+                      id="ops-eval-and-learning-data-reporting-frequency-note"
+                      field="qualityReportingStartsNote"
                     />
+                  </FieldGroup>
 
-                    <FieldGroup>
-                      <strong>
-                        {opsEvalAndLearningMiscT('dataCollectionTiming')}
-                      </strong>
-
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-collection-starts"
-                        className="text-normal margin-top-2"
-                      >
-                        {opsEvalAndLearningT('dataCollectionStarts.label')}
-                      </Label>
-
-                      <Field
-                        as={Select}
-                        id="ops-eval-and-learning-data-collection-starts"
-                        name="dataCollectionStarts"
-                        value={values.dataCollectionStarts || ''}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setFieldValue('dataCollectionStarts', e.target.value);
-                        }}
-                      >
-                        <option key="default-select" disabled value="">
-                          {`-${miscellaneousT('select')}-`}
-                        </option>
-
-                        {getKeys(dataCollectionStartsConfig.options).map(
-                          type => {
-                            return (
-                              <option key={type} value={type}>
-                                {dataCollectionStartsConfig.options[type]}
-                              </option>
-                            );
-                          }
-                        )}
-                      </Field>
-
-                      {values.dataCollectionStarts === DataStartsType.OTHER && (
-                        <div className="margin-top-3">
-                          <Label
-                            htmlFor="ops-eval-and-learning-data-collection-starts-other"
-                            className="text-normal"
-                          >
-                            {opsEvalAndLearningT(
-                              'dataCollectionStartsOther.label'
-                            )}
-                          </Label>
-
-                          <Field
-                            as={TextAreaField}
-                            className="maxw-none mint-textarea"
-                            id="ops-eval-and-learning-data-collection-starts-other"
-                            maxLength={5000}
-                            name="dataCollectionStartsOther"
-                          />
-                        </div>
-                      )}
-                    </FieldGroup>
-
-                    <FrequencyForm
-                      field="dataCollectionFrequency"
-                      values={values.dataCollectionFrequency}
-                      config={dataCollectionFrequencyConfig}
-                      nameSpace="opsEvalAndLearning"
-                      id="ops-eval-and-learning-data-collection-frequency"
-                      label={opsEvalAndLearningT(
-                        'dataCollectionFrequency.label'
-                      )}
-                      disabled={loading}
-                      boldLabel={false}
-                    />
-
-                    <FieldGroup>
-                      <strong>
-                        {opsEvalAndLearningMiscT('qualityReportTiming')}
-                      </strong>
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-reporting-starts"
-                        className="text-normal margin-top-2"
-                      >
-                        {opsEvalAndLearningT('qualityReportingStarts.label')}
-                      </Label>
-
-                      <Field
-                        as={Select}
-                        id="ops-eval-and-learning-data-reporting-starts"
-                        name="qualityReportingStarts"
-                        value={values.qualityReportingStarts || ''}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setFieldValue(
-                            'qualityReportingStarts',
-                            e.target.value
-                          );
-                        }}
-                      >
-                        <option key="default-select" disabled value="">
-                          {`-${miscellaneousT('select')}-`}
-                        </option>
-
-                        {getKeys(qualityReportingStartsConfig.options).map(
-                          type => {
-                            return (
-                              <option key={type} value={type}>
-                                {qualityReportingStartsConfig.options[type]}
-                              </option>
-                            );
-                          }
-                        )}
-                      </Field>
-
-                      {values.qualityReportingStarts ===
-                        DataStartsType.OTHER && (
-                        <div className="margin-top-3">
-                          <Label
-                            htmlFor="ops-eval-and-learning-data-reporting-starts-other"
-                            className="text-normal"
-                          >
-                            {opsEvalAndLearningT(
-                              'qualityReportingStartsOther.label'
-                            )}
-                          </Label>
-
-                          <Field
-                            as={TextAreaField}
-                            className="maxw-none mint-textarea"
-                            id="ops-eval-and-learning-data-reporting-starts-other"
-                            data-testid="ops-eval-and-learning-data-reporting-starts-other"
-                            maxLength={5000}
-                            name="qualityReportingStartsOther"
-                          />
-                        </div>
-                      )}
-
-                      <FrequencyForm
-                        field="qualityReportingFrequency"
-                        values={values.qualityReportingFrequency}
-                        config={qualityReportingFrequencyConfig}
-                        nameSpace="opsEvalAndLearning"
-                        id="ops-eval-and-learning-quality-reporting-frequency"
-                        label={opsEvalAndLearningT(
-                          'qualityReportingFrequency.label'
-                        )}
-                        disabled={loading}
-                        boldLabel={false}
-                        addNote={false}
-                      />
-
-                      <AddNote
-                        id="ops-eval-and-learning-data-reporting-frequency-note"
-                        field="qualityReportingStartsNote"
-                      />
-                    </FieldGroup>
-
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          backPage();
-                        }}
-                      >
-                        {miscellaneousT('back')}
-                      </Button>
-
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {miscellaneousT('next')}
-                      </Button>
-                    </div>
-
+                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
-                        )
-                      }
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        backPage();
+                      }}
                     >
-                      <Icon.ArrowBack
-                        className="margin-right-1"
-                        aria-hidden
-                        aria-label="back"
-                      />
-
-                      {miscellaneousT('saveAndReturn')}
+                      {miscellaneousT('back')}
                     </Button>
-                  </Fieldset>
-                </form>
-              </>
-            );
-          }}
-        </Formik>
 
-        {data && (
-          <PageNumber
-            currentPage={renderCurrentPage(
-              8,
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            totalPages={renderTotalPages(
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            className="margin-y-6"
-          />
-        )}
-      </GridContainer>
-    </MainContent>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
+                  >
+                    <Icon.ArrowBack
+                      className="margin-right-1"
+                      aria-hidden
+                      aria-label="back"
+                    />
+
+                    {miscellaneousT('saveAndReturn')}
+                  </Button>
+                </Fieldset>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
+
+      {data && (
+        <PageNumber
+          currentPage={renderCurrentPage(
+            8,
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          totalPages={renderTotalPages(
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          className="margin-y-6"
+        />
+      )}
+    </>
   );
 };
 

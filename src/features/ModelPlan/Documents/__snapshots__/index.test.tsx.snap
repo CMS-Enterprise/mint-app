@@ -29,7 +29,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/"
               >
                 <span>
@@ -42,7 +41,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
               >
                 <span>
@@ -80,7 +78,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
         </p>
         <a
           class="usa-link display-inline-flex flex-align-center margin-y-3"
-          data-discover="true"
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/"
         >
           <svg
@@ -107,7 +104,6 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
         </h4>
         <a
           class="usa-button"
-          data-discover="true"
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents/add-document"
         >
           Add a document

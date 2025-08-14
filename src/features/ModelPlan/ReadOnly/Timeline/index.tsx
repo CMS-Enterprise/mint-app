@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Icon,
   ProcessList,
@@ -12,7 +11,6 @@ import { NotFoundPartial } from 'features/NotFound';
 import { GetTimelineQuery, useGetTimelineQuery } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { AppState } from 'stores/reducers/rootReducer';
 
 import PageLoading from 'components/PageLoading';
 import Tooltip from 'components/Tooltip';
@@ -28,7 +26,7 @@ import TitleAndStatus from '../_components/TitleAndStatus';
 import './index.scss';
 
 export type ReadOnlyProps = {
-  modelID?: string;
+  modelID: string;
   clearance?: boolean;
   editDates?: boolean;
   filteredView?: FilterGroup;
@@ -42,19 +40,18 @@ const ReadOnlyModelTimeline = ({
 }: ReadOnlyProps) => {
   const { t: timelineT } = useTranslation('timeline');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
-  const modelTimelineConfig = usePlanTranslation('timeline');
 
-  const { modelID: modelIDFromParams } = useParams();
+  const modelTimelineConfig = usePlanTranslation('timeline');
 
   const { data, loading, error } = useGetTimelineQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 
   const flags = useFlags();
 
-  const { groups } = useSelector((state: AppState) => state.auth);
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean = isAssessment(groups, flags);
 
   const allTimelineData = (data?.modelPlan.timeline ||
@@ -89,7 +86,7 @@ const ReadOnlyModelTimeline = ({
         heading={timelineMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={
           allTimelineData.modifiedDts || allTimelineData.createdDts
         }

@@ -25,7 +25,7 @@ const MTOReadyForReview = ({
 }: MTOReadyForReviewType) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const [error, setError] = useState<boolean>(false);
 

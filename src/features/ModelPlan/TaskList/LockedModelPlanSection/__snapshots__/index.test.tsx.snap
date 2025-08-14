@@ -20,7 +20,6 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
         >
           <a
             class="usa-link usa-breadcrumb__link"
-            data-discover="true"
             href="/"
           >
             <span>
@@ -33,7 +32,6 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
         >
           <a
             class="usa-link usa-breadcrumb__link"
-            data-discover="true"
             href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area"
           >
             <span>
@@ -67,7 +65,6 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
       </p>
       <a
         class="usa-button margin-top-6"
-        data-discover="true"
         href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area/task-list"
       >
         Return to the task list

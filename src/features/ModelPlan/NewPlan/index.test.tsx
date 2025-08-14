@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
@@ -7,22 +7,14 @@ import NewPlan from './index';
 
 describe('New Model Plan page', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/new-plan',
-          element: <NewPlan />
-        }
-      ],
-      {
-        initialEntries: ['/models/new-plan']
-      }
-    );
-
     render(
-      <MockedProvider>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter initialEntries={['/models/new-plan']}>
+        <MockedProvider>
+          <Route path="/models/new-plan">
+            <NewPlan />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -31,22 +23,14 @@ describe('New Model Plan page', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/new-plan',
-          element: <NewPlan />
-        }
-      ],
-      {
-        initialEntries: ['/models/new-plan']
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter initialEntries={['/models/new-plan']}>
+        <MockedProvider>
+          <Route path="/models/new-plan">
+            <NewPlan />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     expect(asFragment()).toMatchSnapshot();

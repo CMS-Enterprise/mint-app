@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -63,11 +63,10 @@ const MTOTable = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
 
   const { showMessage: setError, clearMessage } = useMessage();
 
@@ -89,6 +88,7 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
+  const location = useLocation();
   const [initLocation] = useState<string>(location.pathname);
 
   const { helpSolutions } = useHelpSolution();
@@ -734,7 +734,7 @@ const MTOTable = ({
                   onChange={() => {
                     // Reset pagination to the first page when the page size changes
                     params.set('page', '1');
-                    navigate({ search: params.toString() }, { replace: true });
+                    history.replace({ search: params.toString() });
                   }}
                 />
               </div>
@@ -833,7 +833,7 @@ export const moveRow = (
   }: {
     variables: ReorderMtoCategoryMutationVariables;
   }) => Promise<any>,
-  setError?: (element: React.ReactElement) => void,
+  setError?: (element: JSX.Element) => void,
   clearMessage?: () => void
 ) => {
   // Clone the existing data

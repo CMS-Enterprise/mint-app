@@ -45,7 +45,7 @@ const bypassScroll = (
 };
 
 function useScrollTop() {
-  const location = useLocation();
+  const location = useLocation<LocationProps>();
   const prevLocation = usePrevLocation(location);
 
   useLayoutEffect(() => {

@@ -77,8 +77,10 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
       </CardBody>
       <CardFooter>
         <UswdsReactLink
-          to={`/models/${modelID}/collaboration-area/documents/add-document`}
-          state={{ fromCollaborationArea: true }}
+          to={{
+            pathname: `/models/${modelID}/collaboration-area/documents/add-document`,
+            state: { fromCollaborationArea: true }
+          }}
           className="usa-button"
           variant="unstyled"
           data-testid="to-add-document"

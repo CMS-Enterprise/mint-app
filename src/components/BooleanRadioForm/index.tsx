@@ -16,7 +16,7 @@ type AddNoteType = {
     shouldValidate?: boolean | undefined
   ) => void;
   disabled?: boolean;
-  children?: React.ReactNode;
+  children?: JSX.Element;
   childName?: string;
   className?: string;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -13,7 +13,7 @@ import configureMockStore from 'redux-mock-store';
 import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
-import { Documents } from './index';
+import { DocumentsContent } from './index';
 
 type GetModelPlanDocumentsType = GetModelPlanDocumentsQuery;
 
@@ -87,30 +87,22 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Model Plan Documents page', () => {
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/documents',
-          element: (
-            <MessageProvider>
-              <Documents />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={documentMocks} addTypename={false}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents'
+        ]}
+      >
+        <MockedProvider mocks={documentMocks} addTypename={false}>
+          <Provider store={store}>
+            <MessageProvider>
+              <Route path="/models/:modelID/collaboration-area/documents">
+                <DocumentsContent />
+              </Route>
+            </MessageProvider>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

@@ -1,24 +1,14 @@
-import React from 'react';
 import { Row } from 'react-table';
 
 /**
  * Get text from jsx node.
  */
 // Copied from https://stackoverflow.com/questions/50428910/get-text-content-from-node-in-react
-function getJsxText(node: React.ReactElement): string | undefined {
+function getJsxText(node: JSX.Element): string | undefined {
   if (typeof node === 'string') return node;
   if (typeof node === 'number') return String(node);
-  if (Array.isArray(node)) return node.map(getJsxText).join('');
-  if (typeof node === 'object' && node !== null) {
-    // Type guard for ReactElement
-    if (
-      'props' in node &&
-      node.props &&
-      typeof (node as any).props === 'object'
-    ) {
-      return getJsxText((node as any).props.children);
-    }
-  }
+  if (node instanceof Array) return node.map(getJsxText).join('');
+  if (typeof node === 'object' && node) return getJsxText(node.props.children);
   return undefined;
 }
 

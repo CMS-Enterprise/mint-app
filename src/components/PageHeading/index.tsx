@@ -7,7 +7,7 @@ type PageHeadingProps = {
   children: React.ReactNode;
   className?: string;
   headingLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-} & React.ComponentProps<'h1'>;
+} & JSX.IntrinsicElements['h1'];
 
 /**
  * By default, this is h1 that belongs on every view page.

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import i18next from 'i18next';
 
@@ -9,19 +9,13 @@ import ResourcesByCategory from './index';
 
 describe('ResourcesByCategory', () => {
   it('renders the component correctly with no current category', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/articles',
-          element: <ResourcesByCategory />
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/articles']
-      }
+    render(
+      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
+        <Route path="/help-and-knowledge/articles">
+          <ResourcesByCategory />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByText(i18next.t('helpAndKnowledge:browseByCategory'))
@@ -29,24 +23,16 @@ describe('ResourcesByCategory', () => {
   });
 
   it('renders the component correctly with a current category', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/articles',
-          element: (
-            <ResourcesByCategory
-              currentCategory={ArticleCategories.GETTING_STARTED}
-              className="custom-class"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/articles']
-      }
+    render(
+      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
+        <Route path="/help-and-knowledge/articles">
+          <ResourcesByCategory
+            currentCategory={ArticleCategories.GETTING_STARTED}
+            className="custom-class"
+          />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(
       screen.getByText(i18next.t('helpAndKnowledge:otherCategories'))
@@ -54,19 +40,13 @@ describe('ResourcesByCategory', () => {
   });
 
   it('renders the correct amount of articles in the categories', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/articles',
-          element: <ResourcesByCategory />
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/articles']
-      }
+    render(
+      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
+        <Route path="/help-and-knowledge/articles">
+          <ResourcesByCategory />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(
       screen.getAllByText(
@@ -88,24 +68,16 @@ describe('ResourcesByCategory', () => {
   });
 
   it('matches the snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/articles',
-          element: (
-            <ResourcesByCategory
-              currentCategory={ArticleCategories.GETTING_STARTED}
-              className="custom-class"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/articles']
-      }
+    const { asFragment } = render(
+      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
+        <Route path="/help-and-knowledge/articles">
+          <ResourcesByCategory
+            currentCategory={ArticleCategories.GETTING_STARTED}
+            className="custom-class"
+          />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

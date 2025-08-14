@@ -7,11 +7,19 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
+interface LocationState {
+  state: {
+    error: boolean;
+    route: string;
+  };
+  error: boolean;
+  route: string;
+}
 const LockedModelPlanSection = () => {
   const { t } = useTranslation('modelPlanTaskList');
-  const location = useLocation();
+  const location = useLocation<LocationState>();
   const { error, route } = location?.state;
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   return (
     <MainContent className="mint-not-found grid-container">

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navigate, Outlet, useParams } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
@@ -17,47 +18,36 @@ const ModelToOperations = () => {
     <MainContent className="mint-body-normal" data-testid="model-to-operations">
       <MTOModalProvider>
         <MTOModal />
-        <Outlet />
+        <Switch>
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-to-operations/matrix"
+            component={MTOHome}
+            exact
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-to-operations/milestone-library"
+            component={MilestoneLibrary}
+            exact
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-to-operations/solution-library"
+            component={SolutionLibrary}
+            exact
+          />
+
+          <Redirect
+            exact
+            from="/models/:modelID/collaboration-area/model-to-operations"
+            to="/models/:modelID/collaboration-area/model-to-operations/matrix"
+          />
+
+          <Route path="*" render={() => <NotFoundPartial />} />
+        </Switch>
       </MTOModalProvider>
     </MainContent>
   );
-};
-
-const MTORedirect = () => {
-  const { modelID } = useParams();
-  return (
-    <Navigate
-      to={`/models/${modelID}/collaboration-area/model-to-operations/matrix`}
-      replace
-    />
-  );
-};
-
-export const modelToOperationsRoutes = {
-  path: '/models/:modelID/collaboration-area/model-to-operations',
-  element: (
-    <ProtectedRoute>
-      <ModelToOperations />
-    </ProtectedRoute>
-  ),
-  children: [
-    {
-      path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
-      element: <MTOHome />
-    },
-    {
-      path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
-      element: <MilestoneLibrary />
-    },
-    {
-      path: '/models/:modelID/collaboration-area/model-to-operations/solution-library',
-      element: <SolutionLibrary />
-    },
-    {
-      path: '/models/:modelID/collaboration-area/model-to-operations',
-      element: <MTORedirect />
-    }
-  ]
 };
 
 export default ModelToOperations;

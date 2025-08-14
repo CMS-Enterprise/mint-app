@@ -464,7 +464,6 @@ exports[`Get Access Article > matches snapshot 1`] = `
                   After you’ve received an email that your job code request is approved, you can 
                   <a
                     class="usa-link"
-                    data-discover="true"
                     href="/signin"
                   >
                     sign in to MINT
@@ -684,7 +683,6 @@ exports[`Get Access Article > matches snapshot 1`] = `
                   After your role request is approved, you can 
                   <a
                     class="usa-link"
-                    data-discover="true"
                     href="/signin"
                   >
                     sign in to MINT
