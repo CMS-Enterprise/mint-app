@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import ProtectedRoute from 'components/ProtectedRoute';
+
 import AddCustomMilestone from './Articles/AddCustomMilestone';
 import AddCustomSolution from './Articles/AddCustomSolution';
 import AllArticles from './Articles/AllArticles';
@@ -32,7 +34,11 @@ export const HelpAndKnowledge = () => {
 
 export const helpAndKnowledgeRoutes = {
   path: '/help-and-knowledge',
-  element: <HelpAndKnowledge />,
+  element: (
+    <ProtectedRoute>
+      <HelpAndKnowledge />
+    </ProtectedRoute>
+  ),
   children: [
     { path: '', element: <HelpAndKnowledgeHome /> },
     { path: 'articles', element: <AllArticles /> },

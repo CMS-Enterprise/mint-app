@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import ProtectedRoute from 'components/ProtectedRoute';
+
 import NotificationsHome from './Home';
 import NotificationSettings from './Settings';
 
@@ -10,7 +12,11 @@ const Notifications = () => {
 
 export const notificationsRoutes = {
   path: '/notifications',
-  element: <Notifications />,
+  element: (
+    <ProtectedRoute>
+      <Notifications />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: '',

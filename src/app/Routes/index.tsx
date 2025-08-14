@@ -95,7 +95,13 @@ const ReadOnlySubinfoRedirect = () => {
 
 const ProtectedHome = () => {
   const { authState } = useOktaAuth();
-  return authState?.isAuthenticated ? <Home /> : <Landing />;
+  return authState?.isAuthenticated ? (
+    <ProtectedRoute>
+      <Home />
+    </ProtectedRoute>
+  ) : (
+    <Landing />
+  );
 };
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -294,7 +300,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/models/:modelID/collaboration-area/task-list',
-        element: <TaskList />
+        element: (
+          <ProtectedRoute>
+            <TaskList />
+          </ProtectedRoute>
+        )
       },
       // Basics Routes
       basicsRoutes,
@@ -420,10 +430,6 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/privacy-policy',
-        element: <PrivacyPolicy />
-      },
-      {
         path: '/report-a-problem',
         element: (
           <ProtectedRoute>
@@ -432,8 +438,8 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/sandbox',
-        element: <Sandbox />
+        path: '/privacy-policy',
+        element: <PrivacyPolicy />
       },
       {
         path: '/terms-and-conditions',
@@ -446,6 +452,10 @@ const router = createBrowserRouter([
             <UserInfo />
           </ProtectedRoute>
         )
+      },
+      {
+        path: '/sandbox',
+        element: <Sandbox />
       },
       {
         path: '/implicit/callback',

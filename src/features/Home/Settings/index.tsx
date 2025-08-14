@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import ProtectedRoute from 'components/ProtectedRoute';
+
 import SelectSolutionSettings from './selectSolutions';
 import SettingsForm from './settings';
 import SettingsOrder from './settingsOrder';
@@ -11,7 +13,11 @@ export const HomePageSettings = () => {
 
 export const homePageSettingsRoutes = {
   path: '/homepage-settings',
-  element: <HomePageSettings />,
+  element: (
+    <ProtectedRoute>
+      <HomePageSettings />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: 'form',
