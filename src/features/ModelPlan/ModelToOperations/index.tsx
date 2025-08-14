@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Outlet, useParams } from 'react-router-dom';
 
 import MainContent from 'components/MainContent';
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 import { MTOModalProvider } from 'contexts/MTOModalContext';
 
 import MTOModal from './_components/FormModal';
@@ -35,7 +35,7 @@ const MTORedirect = () => {
 
 export const modelToOperationsRoutes = {
   path: '/models/:modelID/collaboration-area/model-to-operations',
-  element: ProtectedRoute(<ModelToOperations />),
+  element: protectedRoute(<ModelToOperations />),
   children: [
     {
       path: '/models/:modelID/collaboration-area/model-to-operations/matrix',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 
 import Communication from './Communication';
 import Coordination from './Coordination';
@@ -15,7 +15,7 @@ const ParticipantsAndProviders = () => {
 
 const participantsAndProvidersRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
-  element: ProtectedRoute(<ParticipantsAndProviders />),
+  element: protectedRoute(<ParticipantsAndProviders />),
   children: [
     {
       path: '',

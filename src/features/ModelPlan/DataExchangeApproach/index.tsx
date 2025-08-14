@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import AboutCompletingDataExchange from './AboutCompletingDataExchange';
@@ -58,7 +58,7 @@ const DataEchangeApproach = () => {
 
 export const dataExchangeApproachRoutes = {
   path: '/models/:modelID/collaboration-area/data-exchange-approach',
-  element: ProtectedRoute(<DataEchangeApproach />),
+  element: protectedRoute(<DataEchangeApproach />),
   children: [
     {
       path: '/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange',
