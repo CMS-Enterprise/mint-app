@@ -12,11 +12,7 @@ const Basics = () => {
 
 const basicsRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/basics',
-  element: (
-    <ProtectedRoute>
-      <Basics />
-    </ProtectedRoute>
-  ),
+  element: ProtectedRoute(<Basics />),
   children: [
     {
       path: '',
