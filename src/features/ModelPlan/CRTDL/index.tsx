@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 import CRTDLs from './CRTDLs';
 
@@ -16,7 +17,11 @@ const CRTDL = () => {
 
 export const crtdlRoutes = {
   path: '/models/:modelID/collaboration-area/cr-and-tdl',
-  element: <CRTDL />,
+  element: (
+    <ProtectedRoute>
+      <CRTDL />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: '/models/:modelID/collaboration-area/cr-and-tdl',
