@@ -10,6 +10,7 @@
  */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 
@@ -25,6 +26,7 @@ const ProtectedRoute = ({
   enabled?: boolean;
 }) => {
   const { oktaAuth, authState } = useOktaAuth();
+  const { t } = useTranslation();
   const location = useLocation();
 
   // Check if local auth is being used
@@ -42,16 +44,16 @@ const ProtectedRoute = ({
 
   // If oktaAuth is null, something is wrong with the authentication setup
   if (!oktaAuth) {
-    return <div>Authentication setup error. Please refresh the page.</div>;
+    return <div>{t('auth.protectedRoute.error')}</div>;
   }
 
   // Show loading state while auth state is being determined
   if (!authState) {
-    return <div>Loading authentication...</div>;
+    return <div>{t('auth.protectedRoute.loading')}</div>;
   }
 
   if (authState.isPending) {
-    return <div>Authenticating...</div>;
+    return <div>{t('auth.protectedRoute.isPending')}</div>;
   }
 
   if (!authState?.isAuthenticated) {

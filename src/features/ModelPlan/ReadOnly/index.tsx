@@ -20,6 +20,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
+import ProtectedRoute from 'components/ProtectedRoute';
 import SectionWrapper from 'components/SectionContainer';
 import ShareExportModal from 'components/ShareExport';
 import {
@@ -573,7 +574,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
 export const readViewRoutes = {
   path: '/models/:modelID/read-view',
-  element: <ReadOnly />,
+  element: (
+    <ProtectedRoute>
+      <ReadOnly />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: '/models/:modelID/read-view/model-basics',
