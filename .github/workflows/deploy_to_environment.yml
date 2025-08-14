@@ -118,7 +118,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
       - name: Download Frontend assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.env }}-frontend-assets
           path: build/

@@ -272,7 +272,7 @@ jobs:
           scripts/dev down
           scripts/dev up:backend
       - name: Download Frontend assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: e2e-frontend-assets
           path: build/
