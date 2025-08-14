@@ -56,7 +56,7 @@ export const commonBreadCrumbs = (
   },
   HOME_SETTINGS: {
     text: 'homepageSettings:heading',
-    url: '/homepage-settings'
+    url: '/homepage-settings/form'
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',
@@ -140,7 +140,7 @@ export const commonBreadCrumbs = (
 const Breadcrumbs = ({ items, customItem, className }: BreadcrumbsProps) => {
   const { t } = useTranslation();
 
-  const { modelID } = useParams<{
+  const { modelID = '' } = useParams<{
     modelID: string;
     operationalNeedID?: string;
   }>();

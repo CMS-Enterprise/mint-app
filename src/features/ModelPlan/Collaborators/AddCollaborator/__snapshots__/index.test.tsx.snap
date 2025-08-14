@@ -23,6 +23,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           >
             <a
               class="usa-link usa-breadcrumb__link"
+              data-discover="true"
               href="/"
             >
               <span>
@@ -35,6 +36,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           >
             <a
               class="usa-link usa-breadcrumb__link"
+              data-discover="true"
               href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators"
             >
               <span>
@@ -78,9 +80,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           </span>
            ) are required.
         </p>
-        <form
-          action="#"
-        >
+        <form>
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"
@@ -154,7 +154,6 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                         autocomplete="off"
                         autocorrect="off"
                         class="cedar-contact-select__input"
-                        data-testid="cedar-contact-select"
                         id="react-select-model-team-cedar-contact-input"
                         role="combobox"
                         spellcheck="false"
@@ -364,6 +363,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
         </form>
         <a
           class="usa-link"
+          data-discover="true"
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators?view=add"
         >
           <span>

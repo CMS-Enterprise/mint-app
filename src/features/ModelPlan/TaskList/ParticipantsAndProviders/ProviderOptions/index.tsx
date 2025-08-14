@@ -1,16 +1,17 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
+  GridContainer,
   Icon,
   Label,
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetProviderOptionsQuery,
   OverlapType,
@@ -27,6 +28,7 @@ import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
+import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -60,7 +62,7 @@ export const ProviderOptions = () => {
     providerOverlap: providerOverlapConfig
   } = usePlanTranslation('participantsAndProviders');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -69,7 +71,7 @@ export const ProviderOptions = () => {
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetProviderOptionsQuery({
     variables: {
@@ -110,7 +112,7 @@ export const ProviderOptions = () => {
     TypedUpdatePlanParticipantsAndProvidersDocument,
     {
       id,
-      formikRef
+      formikRef: formikRef as any
     }
   );
 
@@ -144,309 +146,318 @@ export const ProviderOptions = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="model-participants-and-providers-provider-options">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.PARTICIPANTS_AND_PROVIDERS
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.PARTICIPANTS_AND_PROVIDERS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {participantsAndProvidersMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {participantsAndProvidersMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          history.push(
-            `/models/${modelID}/collaboration-area/task-list/beneficiaries`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<InitialValueType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/task-list/beneficiaries`
+            );
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<InitialValueType>) => {
+            const { handleSubmit, setErrors, setFieldValue, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <Form
-                className="desktop:grid-col-6 margin-top-6"
-                data-testid="participants-and-providers-providers-form"
-                onSubmit={e => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <FrequencyForm
-                    field="providerAdditionFrequency"
-                    values={values.providerAdditionFrequency}
-                    config={providerAdditionFrequencyConfig}
-                    nameSpace="participantsAndProviders"
-                    id="participants-and-providers-additional-frequency"
-                    label={participantsAndProvidersT(
-                      'providerAdditionFrequency.label'
-                    )}
-                    disabled={loading}
-                  />
-
-                  <FieldGroup className="margin-top-4">
-                    <Label
-                      htmlFor="participants-and-providers-provider-add-method"
-                      id="label-participants-and-providers-provider-add-method"
-                    >
-                      {participantsAndProvidersT('providerAddMethod.label')}
-                    </Label>
-
-                    <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
-                      {participantsAndProvidersT('providerAddMethod.sublabel')}
-                    </p>
-
-                    <Field
-                      as={MultiSelect}
-                      id="participants-and-providers-provider-add-method"
-                      name="providerAddMethod"
-                      ariaLabel="label-participants-and-providers-provider-add-method"
-                      options={composeMultiSelectOptions(
-                        providerAddMethodConfig.options
+                <form
+                  className="desktop:grid-col-6 margin-top-6"
+                  data-testid="participants-and-providers-providers-form"
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <Fieldset disabled={!!error || loading}>
+                    <FrequencyForm
+                      field="providerAdditionFrequency"
+                      values={values.providerAdditionFrequency}
+                      config={providerAdditionFrequencyConfig}
+                      nameSpace="participantsAndProviders"
+                      id="participants-and-providers-additional-frequency"
+                      label={participantsAndProvidersT(
+                        'providerAdditionFrequency.label'
                       )}
-                      selectedLabel={participantsAndProvidersT(
-                        'providerAddMethod.multiSelectLabel'
-                      )}
-                      onChange={(value: string[] | []) => {
-                        setFieldValue('providerAddMethod', value);
-                      }}
-                      initialValues={initialValues.providerAddMethod}
+                      disabled={loading}
                     />
 
-                    {(values?.providerAddMethod || []).includes(
-                      ProviderAddType.OTHER
-                    ) && (
-                      <FieldGroup>
-                        <Label
-                          htmlFor="participants-and-providers-provider-add-method-other"
-                          className="text-normal"
-                        >
-                          {participantsAndProvidersT(
-                            'providerAddMethodOther.label'
-                          )}
-                        </Label>
+                    <FieldGroup className="margin-top-4">
+                      <Label
+                        htmlFor="participants-and-providers-provider-add-method"
+                        id="label-participants-and-providers-provider-add-method"
+                      >
+                        {participantsAndProvidersT('providerAddMethod.label')}
+                      </Label>
 
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          id="participants-and-providers-provider-add-method-other"
-                          data-testid="participants-and-providers-provider-add-method-other"
-                          name="providerAddMethodOther"
-                        />
-                      </FieldGroup>
-                    )}
+                      <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                        {participantsAndProvidersT(
+                          'providerAddMethod.sublabel'
+                        )}
+                      </p>
 
-                    <AddNote
-                      id="participants-and-providers-provider-add-method-note"
-                      field="providerAddMethodNote"
-                    />
-                  </FieldGroup>
+                      <Field
+                        as={MultiSelect}
+                        id="participants-and-providers-provider-add-method"
+                        name="providerAddMethod"
+                        ariaLabel="label-participants-and-providers-provider-add-method"
+                        options={composeMultiSelectOptions(
+                          providerAddMethodConfig.options
+                        )}
+                        selectedLabel={participantsAndProvidersT(
+                          'providerAddMethod.multiSelectLabel'
+                        )}
+                        onChange={(value: string[] | []) => {
+                          setFieldValue('providerAddMethod', value);
+                        }}
+                        initialValues={initialValues.providerAddMethod}
+                      />
 
-                  <FieldGroup className="margin-top-4">
-                    <Label htmlFor="participants-and-providers-leave-method">
-                      {participantsAndProvidersT('providerLeaveMethod.label')}
-                    </Label>
-
-                    <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
-                      {participantsAndProvidersT(
-                        'providerLeaveMethod.sublabel'
-                      )}
-                    </p>
-
-                    {getKeys(providerLeaveMethodConfig.options).map(type => {
-                      return (
-                        <Fragment key={type}>
-                          <Field
-                            as={CheckboxField}
-                            id={`participants-and-providers-leave-method-${type}`}
-                            name="providerLeaveMethod"
-                            label={providerLeaveMethodConfig.options[type]}
-                            value={type}
-                            checked={values?.providerLeaveMethod.includes(type)}
-                          />
-
-                          {type === ProviderLeaveType.OTHER &&
-                            values.providerLeaveMethod.includes(
-                              ProviderLeaveType.OTHER
-                            ) && (
-                              <div className="margin-left-4">
-                                <Label
-                                  htmlFor="participants-and-providers-leave-method-other"
-                                  className="text-normal"
-                                >
-                                  {participantsAndProvidersT(
-                                    'providerLeaveMethodOther.label'
-                                  )}
-                                </Label>
-
-                                <Field
-                                  as={TextInput}
-                                  id="participants-and-providers-leave-method-other"
-                                  name="providerLeaveMethodOther"
-                                />
-                              </div>
+                      {(values?.providerAddMethod || []).includes(
+                        ProviderAddType.OTHER
+                      ) && (
+                        <FieldGroup>
+                          <Label
+                            htmlFor="participants-and-providers-provider-add-method-other"
+                            className="text-normal"
+                          >
+                            {participantsAndProvidersT(
+                              'providerAddMethodOther.label'
                             )}
-                        </Fragment>
-                      );
-                    })}
-                    <AddNote
-                      id="participants-and-providers-leave-method-note"
-                      field="providerLeaveMethodNote"
-                    />
-                  </FieldGroup>
+                          </Label>
 
-                  <FrequencyForm
-                    field="providerRemovalFrequency"
-                    values={values.providerRemovalFrequency}
-                    config={providerRemovalFrequencyConfig}
-                    nameSpace="participantsAndProviders"
-                    id="participants-and-providers-removal-frequency"
-                    label={participantsAndProvidersT(
-                      'providerRemovalFrequency.label'
-                    )}
-                    disabled={loading}
-                  />
-
-                  <FieldGroup
-                    className="margin-y-4 margin-bottom-8"
-                    scrollElement="providerOverlap"
-                  >
-                    <Label htmlFor="participants-and-providers-provider-overlap">
-                      {participantsAndProvidersT('providerOverlap.label')}
-                    </Label>
-
-                    <MTOWarning id="participants-and-providers-provider-overlap-warning" />
-
-                    <Fieldset>
-                      {getKeys(providerOverlapConfig.options).map(key => (
-                        <Fragment key={key}>
                           <Field
-                            as={Radio}
-                            id={`participants-and-providers-provider-overlap-${key}`}
-                            name="providerOverlap"
-                            label={providerOverlapConfig.options[key]}
-                            value={key}
-                            checked={values.providerOverlap === key}
+                            as={TextAreaField}
+                            className="height-15"
+                            id="participants-and-providers-provider-add-method-other"
+                            data-testid="participants-and-providers-provider-add-method-other"
+                            name="providerAddMethodOther"
                           />
-                        </Fragment>
-                      ))}
-                    </Fieldset>
+                        </FieldGroup>
+                      )}
 
-                    {(values.providerOverlap ===
-                      OverlapType.YES_NEED_POLICIES ||
-                      values.providerOverlap === OverlapType.YES_NO_ISSUES) && (
-                      <FieldGroup>
-                        <Label
-                          htmlFor="participants-and-providers-provider-overlap-hierarchy"
-                          className="text-normal margin-top-4"
-                        >
-                          {participantsAndProvidersT(
-                            'providerOverlapHierarchy.label'
-                          )}
-                        </Label>
+                      <AddNote
+                        id="participants-and-providers-provider-add-method-note"
+                        field="providerAddMethodNote"
+                      />
+                    </FieldGroup>
 
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          id="participants-and-providers-provider-overlap-hierarchy"
-                          name="providerOverlapHierarchy"
-                        />
-                      </FieldGroup>
+                    <FieldGroup className="margin-top-4">
+                      <Label htmlFor="participants-and-providers-leave-method">
+                        {participantsAndProvidersT('providerLeaveMethod.label')}
+                      </Label>
+
+                      <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
+                        {participantsAndProvidersT(
+                          'providerLeaveMethod.sublabel'
+                        )}
+                      </p>
+
+                      {getKeys(providerLeaveMethodConfig.options).map(type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`participants-and-providers-leave-method-${type}`}
+                              name="providerLeaveMethod"
+                              label={providerLeaveMethodConfig.options[type]}
+                              value={type}
+                              checked={values?.providerLeaveMethod.includes(
+                                type
+                              )}
+                            />
+
+                            {type === ProviderLeaveType.OTHER &&
+                              values.providerLeaveMethod.includes(
+                                ProviderLeaveType.OTHER
+                              ) && (
+                                <div className="margin-left-4">
+                                  <Label
+                                    htmlFor="participants-and-providers-leave-method-other"
+                                    className="text-normal"
+                                  >
+                                    {participantsAndProvidersT(
+                                      'providerLeaveMethodOther.label'
+                                    )}
+                                  </Label>
+
+                                  <Field
+                                    as={TextInput}
+                                    id="participants-and-providers-leave-method-other"
+                                    name="providerLeaveMethodOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
+                      })}
+                      <AddNote
+                        id="participants-and-providers-leave-method-note"
+                        field="providerLeaveMethodNote"
+                      />
+                    </FieldGroup>
+
+                    <FrequencyForm
+                      field="providerRemovalFrequency"
+                      values={values.providerRemovalFrequency}
+                      config={providerRemovalFrequencyConfig}
+                      nameSpace="participantsAndProviders"
+                      id="participants-and-providers-removal-frequency"
+                      label={participantsAndProvidersT(
+                        'providerRemovalFrequency.label'
+                      )}
+                      disabled={loading}
+                    />
+
+                    <FieldGroup
+                      className="margin-y-4 margin-bottom-8"
+                      scrollElement="providerOverlap"
+                    >
+                      <Label htmlFor="participants-and-providers-provider-overlap">
+                        {participantsAndProvidersT('providerOverlap.label')}
+                      </Label>
+
+                      <MTOWarning id="participants-and-providers-provider-overlap-warning" />
+
+                      <Fieldset>
+                        {getKeys(providerOverlapConfig.options).map(key => (
+                          <Fragment key={key}>
+                            <Field
+                              as={Radio}
+                              id={`participants-and-providers-provider-overlap-${key}`}
+                              name="providerOverlap"
+                              label={providerOverlapConfig.options[key]}
+                              value={key}
+                              checked={values.providerOverlap === key}
+                            />
+                          </Fragment>
+                        ))}
+                      </Fieldset>
+
+                      {(values.providerOverlap ===
+                        OverlapType.YES_NEED_POLICIES ||
+                        values.providerOverlap ===
+                          OverlapType.YES_NO_ISSUES) && (
+                        <FieldGroup>
+                          <Label
+                            htmlFor="participants-and-providers-provider-overlap-hierarchy"
+                            className="text-normal margin-top-4"
+                          >
+                            {participantsAndProvidersT(
+                              'providerOverlapHierarchy.label'
+                            )}
+                          </Label>
+
+                          <Field
+                            as={TextAreaField}
+                            className="height-15"
+                            id="participants-and-providers-provider-overlap-hierarchy"
+                            name="providerOverlapHierarchy"
+                          />
+                        </FieldGroup>
+                      )}
+
+                      <AddNote
+                        id="participants-and-providers-provider-overlap-note"
+                        field="providerOverlapNote"
+                      />
+                    </FieldGroup>
+
+                    {!loading && values.status && (
+                      <ReadyForReview
+                        id="participants-and-providers-provider-status"
+                        field="status"
+                        sectionName={participantsAndProvidersMiscT('heading')}
+                        status={values.status}
+                        setFieldValue={setFieldValue}
+                        readyForReviewBy={
+                          readyForReviewByUserAccount?.commonName
+                        }
+                        readyForReviewDts={readyForReviewDts}
+                      />
                     )}
 
-                    <AddNote
-                      id="participants-and-providers-provider-overlap-note"
-                      field="providerOverlapNote"
-                    />
-                  </FieldGroup>
+                    <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => {
+                          navigate(
+                            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/coordination`
+                          );
+                        }}
+                      >
+                        {miscellaneousT('back')}
+                      </Button>
 
-                  {!loading && values.status && (
-                    <ReadyForReview
-                      id="participants-and-providers-provider-status"
-                      field="status"
-                      sectionName={participantsAndProvidersMiscT('heading')}
-                      status={values.status}
-                      setFieldValue={setFieldValue}
-                      readyForReviewBy={readyForReviewByUserAccount?.commonName}
-                      readyForReviewDts={readyForReviewDts}
-                    />
-                  )}
+                      <Button type="submit" onClick={() => setErrors({})}>
+                        {miscellaneousT('saveAndStartNext')}
+                      </Button>
+                    </div>
 
-                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      onClick={() => {
-                        history.push(
-                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers/coordination`
-                        );
-                      }}
+                      className="usa-button usa-button--unstyled"
+                      onClick={() =>
+                        navigate(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
                     >
-                      {miscellaneousT('back')}
+                      <Icon.ArrowBack
+                        className="margin-right-1"
+                        aria-hidden
+                        aria-label="back"
+                      />
+
+                      {miscellaneousT('saveAndReturn')}
                     </Button>
+                  </Fieldset>
+                </form>
+              </>
+            );
+          }}
+        </Formik>
 
-                    <Button type="submit" onClick={() => setErrors({})}>
-                      {miscellaneousT('saveAndStartNext')}
-                    </Button>
-                  </div>
-
-                  <Button
-                    type="button"
-                    className="usa-button usa-button--unstyled"
-                    onClick={() =>
-                      history.push(
-                        `/models/${modelID}/collaboration-area/task-list`
-                      )
-                    }
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
-
-                    {miscellaneousT('saveAndReturn')}
-                  </Button>
-                </Fieldset>
-              </Form>
-            </>
-          );
-        }}
-      </Formik>
-
-      <PageNumber currentPage={5} totalPages={5} className="margin-y-6" />
-    </>
+        <PageNumber currentPage={5} totalPages={5} className="margin-y-6" />
+      </GridContainer>
+    </MainContent>
   );
 };
 

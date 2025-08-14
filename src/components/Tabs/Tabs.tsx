@@ -33,8 +33,8 @@ const Tabs = ({ defaultActiveTab, children }: TabsProps) => {
   const tabsRef = useRef<HTMLUListElement>(null);
   const [tabEls = [], setTabEls] = useState<NodeList>();
   const tabObjs = children.map(child => ({
-    id: child.props.id,
-    name: child.props.tabName
+    id: (child.props as any).id,
+    name: (child.props as any).tabName
   }));
   const [activeTab, setActiveTab] = useState(
     defaultActiveTab || tabObjs[0].name
@@ -147,10 +147,8 @@ const Tabs = ({ defaultActiveTab, children }: TabsProps) => {
         })}
       </ul>
       {React.Children.map(children, child => {
-        if (child.props.tabName === activeTab) {
-          return React.cloneElement(child, {
-            isActive: true
-          });
+        if ((child.props as any).tabName === activeTab) {
+          return React.cloneElement(child);
         }
         return child;
       })}

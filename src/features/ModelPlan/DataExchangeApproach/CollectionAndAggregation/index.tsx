@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Fieldset,
   Form,
@@ -73,9 +73,9 @@ const CollectionAndAggregation = () => {
     multiSourceDataToCollect: multiSourceDataToCollectConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetCollectionAndAggregationQuery({
     variables: { id: modelID }
@@ -144,7 +144,7 @@ const CollectionAndAggregation = () => {
         <Form
           id="collection-and-aggregation-form"
           onSubmit={handleSubmit(() => {
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
             );
           })}

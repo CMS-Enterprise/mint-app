@@ -12,8 +12,8 @@ type CheckboxFieldProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
   value: string;
-  inputProps?: JSX.IntrinsicElements['input'];
-  icon?: JSX.Element;
+  inputProps?: React.ComponentProps<'input'>;
+  icon?: React.ReactNode;
 };
 
 const CheckboxField = ({

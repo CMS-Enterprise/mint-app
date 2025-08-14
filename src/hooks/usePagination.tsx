@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -15,7 +15,7 @@ type PaginationProps = {
   sliceFn?: (items: any[], start: number, end: number) => any[];
   itemLength?: number;
   showPageIfOne?: boolean; // Show page component even if there is only one page
-} & JSX.IntrinsicElements['div'];
+} & React.HTMLAttributes<HTMLDivElement>;
 
 type PaginationState = {
   currentPage: number;
@@ -36,11 +36,11 @@ const usePagination = <T extends any[]>({
 }: PaginationProps): {
   currentItems: T;
   pagination: PaginationState;
-  Pagination: JSX.Element;
-  Results: JSX.Element;
+  Pagination: React.ReactNode;
+  Results: React.ReactNode;
 } => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Query parameters
   const params = useMemo(() => {
@@ -81,7 +81,6 @@ const usePagination = <T extends any[]>({
     loading,
     itemsLength,
     itemsPerPage,
-    history,
     params,
     withQueryParams,
     defaultPage
@@ -105,7 +104,7 @@ const usePagination = <T extends any[]>({
 
     if (withQueryParams) {
       params.set(withQueryParams, nextPage.toString());
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     setCurrentPageNum(nextPage);
@@ -116,7 +115,7 @@ const usePagination = <T extends any[]>({
 
     if (withQueryParams) {
       params.set(withQueryParams, prevPage.toString());
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     setCurrentPageNum(prevPage);
@@ -128,7 +127,7 @@ const usePagination = <T extends any[]>({
   ) => {
     if (withQueryParams) {
       params.set(withQueryParams, pageNum.toString());
-      history.push({ search: params.toString() });
+      navigate({ search: params.toString() });
     }
 
     setCurrentPageNum(pageNum);

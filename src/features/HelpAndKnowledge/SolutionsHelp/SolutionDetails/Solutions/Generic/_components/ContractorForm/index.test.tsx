@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -20,25 +20,32 @@ const contractor: SolutionContractorType = {
 
 describe('Contractor form', () => {
   it('should render edit the contractor info accordingly', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <ContractorForm
                 mode="editContractor"
                 closeModal={() => {}}
                 contractor={contractor}
                 setDisableButton={() => {}}
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+    const { getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -48,25 +55,32 @@ describe('Contractor form', () => {
   });
 
   it('should matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <ContractorForm
                 mode="addContractor"
                 closeModal={() => {}}
                 contractor={undefined}
                 setDisableButton={() => {}}
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

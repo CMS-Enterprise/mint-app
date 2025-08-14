@@ -8,7 +8,7 @@ type DateInputProps = {
   value: string;
   error?: boolean;
   className?: string;
-} & JSX.IntrinsicElements['input'];
+} & React.ComponentProps<'input'>;
 
 const DateInputMonth = ({
   id,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { GetPollNotificationsDocument } from 'gql/generated/graphql';
@@ -41,12 +41,22 @@ describe('The Header component when logged in', () => {
   }));
 
   it('renders without crashing', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Header />
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <MockedProvider mocks={notificationsMock} addTypename={false}>
-          <Header />
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -73,12 +83,22 @@ describe('When logged in', () => {
   }));
 
   it('displays a login button', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <Header />
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <MockedProvider mocks={notificationsMock} addTypename={false}>
-          <Header />
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

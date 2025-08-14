@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -8,8 +8,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import NotFound from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { useCreateModelPlanMutation } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -23,11 +22,11 @@ import PageHeading from 'components/PageHeading';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 
-const NewPlanContent = () => {
+const NewPlan = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const [mutate] = useCreateModelPlanMutation();
 
   const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
@@ -39,7 +38,7 @@ const NewPlanContent = () => {
     }).then(response => {
       if (!response.errors && response.data) {
         const { id } = response.data.createModelPlan;
-        history.push(`/models/${id}/collaboration-area/collaborators?view=add`);
+        navigate(`/models/${id}/collaboration-area/collaborators?view=add`);
       }
     });
   };
@@ -99,8 +98,8 @@ const NewPlanContent = () => {
                       })}
                     </ErrorAlert>
                   )}
-                  <Form
-                    onSubmit={e => {
+                  <form
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
                     }}
@@ -141,7 +140,7 @@ const NewPlanContent = () => {
                         {miscellaneousT('next')}
                       </Button>
                     </div>
-                  </Form>
+                  </form>
                 </>
               );
             }}
@@ -149,18 +148,6 @@ const NewPlanContent = () => {
         </Grid>
       </GridContainer>
     </MainContent>
-  );
-};
-
-const NewPlan = () => {
-  return (
-    <Switch>
-      {/* New Plan Pages */}
-      <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
-
-      {/* 404 */}
-      <Route path="*" render={() => <NotFound />} />
-    </Switch>
   );
 };
 
