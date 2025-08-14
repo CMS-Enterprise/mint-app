@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
-import protectedRoute from 'components/ProtectedRoute';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 import PrepareForClearanceCheckList from './Checklist';
 import ClearanceReview from './ClearanceReview';
@@ -22,11 +22,15 @@ export const PrepareForClearance = () => {
 
 export const prepareForClearanceRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-  element: protectedRoute(<PrepareForClearance />),
+  element: (
+    <ProtectedRoute>
+      <PrepareForClearance />
+    </ProtectedRoute>
+  ),
   children: [
     {
       path: '',
-      element: protectedRoute(<PrepareForClearanceCheckList />)
+      element: <PrepareForClearanceCheckList />
     },
     {
       path: ':section/:sectionID',

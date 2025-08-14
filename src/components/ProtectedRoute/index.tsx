@@ -16,15 +16,14 @@ import { useOktaAuth } from '@okta/okta-react';
 import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
 
-interface ProtectedRouteOptions {
-  enabled?: boolean;
-}
-
 // Internal component that handles the protection logic
-const ProtectedRouteWrapper: React.FC<{
+const ProtectedRoute = ({
+  children,
+  enabled = true
+}: {
   children: React.ReactNode;
-  enabled: boolean;
-}> = ({ children, enabled }) => {
+  enabled?: boolean;
+}) => {
   const { oktaAuth, authState } = useOktaAuth();
   const location = useLocation();
 
@@ -65,16 +64,4 @@ const ProtectedRouteWrapper: React.FC<{
   return <>{children}</>;
 };
 
-// Main function that wraps components with authentication protection
-const protectedRoute = (
-  component: React.ReactNode,
-  options: ProtectedRouteOptions = {}
-): React.ReactNode => {
-  const { enabled = true } = options;
-
-  return (
-    <ProtectedRouteWrapper enabled={enabled}>{component}</ProtectedRouteWrapper>
-  );
-};
-
-export default protectedRoute;
+export default ProtectedRoute;
