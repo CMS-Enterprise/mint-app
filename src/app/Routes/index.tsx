@@ -63,6 +63,7 @@ import UserInfoWrapper from 'wrappers/UserInfoWrapper';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
+import protectedRoute from 'components/ProtectedRoute';
 import TaskListBannerAlert from 'components/TaskListBannerAlert';
 import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
@@ -71,7 +72,6 @@ import RouterProviderWrapper from 'contexts/RouterContext';
 import useRouteTitle from 'hooks/useRouteTitle';
 import useScrollTop from 'hooks/useScrollTop';
 
-import ProtectedRoute from '../../components/ProtectedRoute';
 import { NavContextProvider } from '../../contexts/NavContext';
 import { OktaSessionProvider } from '../../contexts/OktaSessionContext';
 
@@ -173,7 +173,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/pre-decisional-notice',
-        element: ProtectedRoute(<NDA />)
+        element: protectedRoute(<NDA />)
       },
       // Home Routes
       {
@@ -185,43 +185,43 @@ const router = createBrowserRouter([
       // Model Plan Routes
       {
         path: '/models',
-        element: ProtectedRoute(<ModelPlan />)
+        element: protectedRoute(<ModelPlan />)
       },
       {
         path: '/models/steps-overview',
-        element: ProtectedRoute(<StepsOverview />)
+        element: protectedRoute(<StepsOverview />)
       },
       {
         path: '/models/new-plan',
-        element: ProtectedRoute(<NewPlan />)
+        element: protectedRoute(<NewPlan />)
       },
       {
         path: '/models/:modelID',
-        element: ProtectedRoute(<ModelPlanOverview />)
+        element: protectedRoute(<ModelPlanOverview />)
       },
       {
         path: '/models/:modelID/unlock-all-sections',
-        element: ProtectedRoute(<UnlockAllSections />)
+        element: protectedRoute(<UnlockAllSections />)
       },
 
       // Collaboration Area Routes
       {
         path: '/models/:modelID/collaboration-area',
-        element: ProtectedRoute(<CollaborationArea />)
+        element: protectedRoute(<CollaborationArea />)
       },
       collaboratorsRoutes,
       {
         path: '/models/:modelID/collaboration-area/status',
-        element: ProtectedRoute(<Status />)
+        element: protectedRoute(<Status />)
       },
       // Document Routes
       {
         path: '/models/:modelID/collaboration-area/documents',
-        element: ProtectedRoute(<Documents />)
+        element: protectedRoute(<Documents />)
       },
       {
         path: '/models/:modelID/collaboration-area/documents/add-document',
-        element: ProtectedRoute(<AddDocument />)
+        element: protectedRoute(<AddDocument />)
       },
       // Timeline Routes
       {
@@ -232,7 +232,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/models/:modelID/collaboration-area/model-timeline',
-        element: ProtectedRoute(<Timeline />)
+        element: protectedRoute(<Timeline />)
       },
       // CR and TDL Routes
       crtdlRoutes,
@@ -309,25 +309,25 @@ const router = createBrowserRouter([
 
       {
         path: '/help-and-knowledge/articles/get-access',
-        element: ProtectedRoute(<GetAccess />)
+        element: protectedRoute(<GetAccess />)
       },
 
       // Change History Routes
       {
         path: '/models/:modelID/change-history',
-        element: ProtectedRoute(<ChangeHistory />)
+        element: protectedRoute(<ChangeHistory />)
       },
 
       // Locked Task List Section Routes
       {
         path: '/models/:modelID/locked-task-list-section',
-        element: ProtectedRoute(<LockedTaskListSection />)
+        element: protectedRoute(<LockedTaskListSection />)
       },
 
       // Unfollow route
       {
         path: '/unfollow',
-        element: ProtectedRoute(<Unfollow />)
+        element: protectedRoute(<Unfollow />)
       },
 
       // Other Routes
@@ -345,11 +345,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/send-feedback',
-        element: ProtectedRoute(<SendFeedback />)
+        element: protectedRoute(<SendFeedback />)
       },
       {
         path: '/feedback-received',
-        element: ProtectedRoute(<FeedbackReceived />)
+        element: protectedRoute(<FeedbackReceived />)
       },
       {
         path: '/privacy-policy',
@@ -357,7 +357,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/report-a-problem',
-        element: ProtectedRoute(<ReportAProblem />)
+        element: protectedRoute(<ReportAProblem />)
       },
       {
         path: '/sandbox',
@@ -369,7 +369,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/user-diagnostics',
-        element: ProtectedRoute(<UserInfo />)
+        element: protectedRoute(<UserInfo />)
       },
       {
         path: '/implicit/callback',

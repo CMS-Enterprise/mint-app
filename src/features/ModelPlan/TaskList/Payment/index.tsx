@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 
 import AnticipateDependencies from './AnticipateDependencies';
 import BeneficiaryCostSharing from './BeneficiaryCostSharing';
@@ -44,7 +44,7 @@ const Payment = () => {
 
 const paymentRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/payment',
-  element: ProtectedRoute(<Payment />),
+  element: protectedRoute(<Payment />),
   children: [
     {
       path: '',

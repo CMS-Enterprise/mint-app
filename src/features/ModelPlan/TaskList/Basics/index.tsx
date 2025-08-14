@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 
 import BasicsInfo from './BasicsInfo';
 import Overview from './Overview';
@@ -12,7 +12,7 @@ const Basics = () => {
 
 const basicsRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/basics',
-  element: ProtectedRoute(<Basics />),
+  element: protectedRoute(<Basics />),
   children: [
     {
       path: '',

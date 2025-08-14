@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 
 import CCWAndQuality from './CCWAndQuality';
 import DataSharing from './DataSharing';
@@ -19,7 +19,7 @@ const OpsEvalAndLearning = () => {
 
 const opsEvalAndLearningRoutes = {
   path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
-  element: ProtectedRoute(<OpsEvalAndLearning />),
+  element: protectedRoute(<OpsEvalAndLearning />),
   children: [
     {
       path: '',

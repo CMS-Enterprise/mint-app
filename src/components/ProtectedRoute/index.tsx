@@ -1,13 +1,12 @@
-/*!
- * Copyright (c) 2017-Present, Okta, Inc. and/or its affiliates. All rights reserved.
- * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
+/**
+ * A function that wraps components with authentication protection. This is needed because @okta/okta-react deprecated <SecureRoute> with react-router v6.
+ * If the enabled option is false, the user will be redirected to the NotFound page.
+ * If the user is not authenticated, they will be redirected to the signin page.
  *
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and limitations under the License.
+ * @param {React.ReactNode} component - The component to wrap with protection
+ * @param {object} options - Configuration options
+ * @param {boolean} options.enabled - Whether the route is enabled (defaults to true)
+ * @returns {React.ReactNode} The protected component
  */
 
 import React from 'react';
@@ -17,18 +16,15 @@ import { useOktaAuth } from '@okta/okta-react';
 import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
 
-interface ProtectedRouteProps {
-  children?: React.ReactNode;
-  element?: React.ReactNode;
+interface ProtectedRouteOptions {
   enabled?: boolean;
 }
 
-// Main component that handles the protection logic
-const ProtectedRouteComponent: React.FC<ProtectedRouteProps> = ({
-  children,
-  element,
-  enabled = true
-}) => {
+// Internal component that handles the protection logic
+const ProtectedRouteWrapper: React.FC<{
+  children: React.ReactNode;
+  enabled: boolean;
+}> = ({ children, enabled }) => {
   const { oktaAuth, authState } = useOktaAuth();
   const location = useLocation();
 
@@ -42,7 +38,7 @@ const ProtectedRouteComponent: React.FC<ProtectedRouteProps> = ({
 
   // If using local auth, skip Okta auth state checks
   if (isLocalAuth) {
-    return <>{children || element}</>;
+    return <>{children}</>;
   }
 
   // If oktaAuth is null, something is wrong with the authentication setup
@@ -66,36 +62,19 @@ const ProtectedRouteComponent: React.FC<ProtectedRouteProps> = ({
   }
 
   // Render the protected content
-  return <>{children || element}</>;
+  return <>{children}</>;
 };
 
-// Function version that can wrap components - for cleaner route syntax
-const ProtectedRoute = (
+// Main function that wraps components with authentication protection
+const protectedRoute = (
   component: React.ReactNode,
-  options: { enabled?: boolean } = {}
+  options: ProtectedRouteOptions = {}
 ): React.ReactNode => {
-  return <ProtectedRouteComponent element={component} {...options} />;
+  const { enabled = true } = options;
+
+  return (
+    <ProtectedRouteWrapper enabled={enabled}>{component}</ProtectedRouteWrapper>
+  );
 };
 
-// Attach the component to the function so it can be used as both
-(ProtectedRoute as any).Component = ProtectedRouteComponent;
-
-// For TypeScript, we need to extend the function interface
-interface ProtectedRouteFunction {
-  (
-    component: React.ReactNode,
-    options?: { enabled?: boolean }
-  ): React.ReactNode;
-  Component: React.FC<ProtectedRouteProps>;
-  (props: ProtectedRouteProps): JSX.Element;
-}
-
-// Cast and export as both function and component
-const ProtectedRouteExport = ProtectedRoute as ProtectedRouteFunction;
-
-// Make it work as a React component too
-Object.setPrototypeOf(ProtectedRouteExport, ProtectedRouteComponent);
-Object.assign(ProtectedRouteExport, ProtectedRouteComponent);
-
-export { ProtectedRouteComponent };
-export default ProtectedRouteExport;
+export default protectedRoute;

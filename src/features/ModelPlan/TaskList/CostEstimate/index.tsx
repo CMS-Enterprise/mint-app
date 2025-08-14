@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import NotFound, { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
-import ProtectedRoute from 'components/ProtectedRoute';
+import protectedRoute from 'components/ProtectedRoute';
 
 export const CostEstimate = () => {
   return (
@@ -11,7 +11,7 @@ export const CostEstimate = () => {
       <Routes>
         <Route
           path="page-1"
-          element={ProtectedRoute({ element: <NotFound /> })}
+          element={protectedRoute({ element: <NotFound /> })}
         />
         <Route path="" element={<NotFound />} />
         <Route path="*" element={<NotFoundPartial />} />
