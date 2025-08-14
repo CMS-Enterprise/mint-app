@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactNodeArray } from 'react';
 import classnames from 'classnames';
 
 type FieldGroupProps = {
-  children: ReactNode;
+  children: ReactNode | ReactNodeArray;
   className?: string;
   error?: boolean;
   scrollElement?: string;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 const FieldGroup = ({
   children,

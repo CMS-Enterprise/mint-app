@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import PlanDocumentsTable from 'features/ModelPlan/Documents/table';
 
 import Alert from 'components/Alert';
@@ -12,7 +11,7 @@ const ReadOnlyDocuments = ({
   modelID,
   isHelpArticle
 }: {
-  modelID?: string;
+  modelID: string;
   isHelpArticle?: boolean;
 }) => {
   const { t } = useTranslation('documentsMisc');
@@ -20,8 +19,6 @@ const ReadOnlyDocuments = ({
   const [documentMessage, setDocumentMessage] = useState('');
   const [documentStatus, setDocumentStatus] =
     useState<DocumentStatusType>('error');
-
-  const { modelID: modelIDFromParams } = useParams();
 
   return (
     <div
@@ -48,7 +45,7 @@ const ReadOnlyDocuments = ({
       )}
 
       <PlanDocumentsTable
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         setDocumentMessage={setDocumentMessage}
         setDocumentStatus={setDocumentStatus}
         isHelpArticle={isHelpArticle}

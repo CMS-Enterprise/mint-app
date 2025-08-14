@@ -28,7 +28,7 @@ const MTOOptionsCard = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
     useContext(MTOModalContext);

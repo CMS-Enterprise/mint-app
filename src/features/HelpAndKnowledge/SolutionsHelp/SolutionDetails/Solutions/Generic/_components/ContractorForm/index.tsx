@@ -193,7 +193,7 @@ const ContractorForm = ({
                   {...field}
                   id="contract-title"
                   data-testid="contract-title"
-                  value={field.value || ''}
+                  value={field.value}
                 />
               </FormGroup>
             )}

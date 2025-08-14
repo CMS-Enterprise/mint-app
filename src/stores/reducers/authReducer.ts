@@ -1,15 +1,10 @@
 import { Action } from 'redux-actions';
 
-export type AcceptedNDA = {
-  agreed: boolean;
-  agreedDts: string;
-};
-
-export type AuthReducerState = {
+type authReducerState = {
   name: string;
   euaId: string;
   groups: Array<string>;
-  acceptedNDA: AcceptedNDA;
+  acceptedNDA: boolean;
   isUserSet: boolean;
 };
 
@@ -19,21 +14,18 @@ export const setUser = (user: any) => ({
   payload: user
 });
 
-const initialState: AuthReducerState = {
+const initialState: authReducerState = {
   name: '',
   euaId: '',
   groups: [],
-  acceptedNDA: {
-    agreed: false,
-    agreedDts: ''
-  },
+  acceptedNDA: false,
   isUserSet: false
 };
 
 function authReducer(
   state = initialState,
   action: Action<any>
-): AuthReducerState {
+): authReducerState {
   switch (action.type) {
     case SET_USER:
       return {

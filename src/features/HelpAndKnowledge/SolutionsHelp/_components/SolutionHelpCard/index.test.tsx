@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 import { pointsOfContact, possibleSolutionsMock } from 'tests/mock/mto';
@@ -18,23 +18,17 @@ describe('Operation Solution Help Card', () => {
   } as HelpSolutionType;
 
   it('rendered all correct information', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
-              <SolutionHelpCard solution={solutionToTest} />
-            </VerboseMockedProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
+    const { getByText } = render(
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionHelpCard solution={solutionToTest} />
+          </VerboseMockedProvider>
+        </Route>
+      </MemoryRouter>
     );
-
-    const { getByText } = render(<RouterProvider router={router} />);
     expect(getByText('4innovation')).toBeInTheDocument();
     expect(
       getByText('Applications and participant interaction')
@@ -42,23 +36,18 @@ describe('Operation Solution Help Card', () => {
   });
 
   it('matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
-              <SolutionHelpCard solution={solutionToTest} />
-            </VerboseMockedProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <SolutionHelpCard solution={solutionToTest} />
+          </VerboseMockedProvider>
+        </Route>
+      </MemoryRouter>
     );
 
-    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -21,7 +21,6 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
       </div>
       <a
         class="usa-link width-fit-content display-block "
-        data-discover="true"
         href="/help-and-knowledge/articles?category=getting-started"
       >
         <span

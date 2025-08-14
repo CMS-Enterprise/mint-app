@@ -11,7 +11,7 @@ const routes = {
     '/status': 'Update status',
 
     // Homepage settings
-    '/homepage-settings/form': 'Homepage settings',
+    '/homepage-settings': 'Homepage settings',
     '/order': 'Homepage settings order',
     '/solutions': 'Homepage settings solutions',
 

@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -45,18 +45,16 @@ const AddToExistingMilestoneForm = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { message, showMessage, clearMessage, showErrorMessageInModal } =
     useMessage();
 
-  const navigate = useNavigate();
-
-  const location = useLocation();
+  const history = useHistory();
 
   const params = useMemo(() => {
-    return new URLSearchParams(location.search);
-  }, [location.search]);
+    return new URLSearchParams(history.location.search);
+  }, [history.location.search]);
 
   const { data, loading } = useGetMtoAllMilestonesQuery({
     variables: {
@@ -134,7 +132,7 @@ const AddToExistingMilestoneForm = ({
             </>
           );
           params.delete('add-solution', solutionKey);
-          navigate({ search: params.toString() }, { replace: true });
+          history.replace({ search: params.toString() });
           closeModal();
         }
       })

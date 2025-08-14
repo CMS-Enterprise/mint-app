@@ -122,8 +122,10 @@ const TeamCard = ({ modelID, collaborators }: ModelPlanCardType) => {
 
         <CardFooter>
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator`}
-            state={{ fromCollaborationArea: true }}
+            to={{
+              pathname: `/models/${modelID}/collaboration-area/collaborators/add-collaborator`,
+              state: { fromCollaborationArea: true }
+            }}
             className="usa-button"
             variant="unstyled"
             data-testid="add-collaborator"

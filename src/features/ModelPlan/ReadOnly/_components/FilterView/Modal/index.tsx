@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -22,7 +22,7 @@ const FilterViewModal = ({
   closeModal
 }: FilterViewModalProps) => {
   const { t } = useTranslation('filterView');
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const [filteredGroup, setFilteredGroup] = useState('');
 
@@ -32,12 +32,12 @@ const FilterViewModal = ({
       window.scrollTo(0, 0);
     }, 0);
 
-    const { pathname } = window.location;
+    const { pathname } = history.location;
 
     if (value === 'view-all') {
-      navigate(pathname);
+      history.push(pathname);
     } else {
-      navigate(`${pathname}?filter-view=${value}`);
+      history.push(`${pathname}?filter-view=${value}`);
     }
 
     closeModal();

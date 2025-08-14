@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllGeneralCharacteristicsQuery,
@@ -22,15 +21,14 @@ const ReadOnlyGeneralCharacteristics = ({
   const { t: generalCharacteristicsMiscT } = useTranslation(
     'generalCharacteristicsMisc'
   );
+
   const generalCharacteristicsConfig = usePlanTranslation(
     'generalCharacteristics'
   );
 
-  const { modelID: modelIDFromParams } = useParams();
-
   const { data, loading, error } = useGetAllGeneralCharacteristicsQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 
@@ -95,7 +93,7 @@ const ReadOnlyGeneralCharacteristics = ({
         heading={generalCharacteristicsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={
           allgeneralCharacteristicsData.modifiedDts ||
           allgeneralCharacteristicsData.createdDts

@@ -91,6 +91,7 @@ const NavigationBar = ({
           'usa-current': getActiveTab(route.link, pathname)
         })}
         onClick={() => expandMobileSideNav(false)}
+        exact={route.link === '/'}
       >
         <em
           className="usa-logo__text mint-nav__label"
@@ -106,12 +107,11 @@ const NavigationBar = ({
     <div className="mint-nav">
       <NavLink
         to="/notifications"
-        className={({ isActive }) =>
-          classNames(
-            { 'usa-current': isActive, 'align-right': !isMobile },
-            'mint-nav__link  display-flex flex-align-center'
-          )
-        }
+        activeClassName="usa-current"
+        className={classNames(
+          { 'align-right': !isMobile },
+          'mint-nav__link  display-flex flex-align-center'
+        )}
         onClick={() => expandMobileSideNav(false)}
         data-testid="navmenu__notification"
       >

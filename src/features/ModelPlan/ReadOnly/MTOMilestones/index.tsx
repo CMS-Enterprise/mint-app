@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -14,14 +13,12 @@ import PageLoading from 'components/PageLoading';
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 
-const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
+const ReadOnlyMTOMilestones = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-
-  const { modelID: modelIDFromParams } = useParams();
 
   const { data, loading, error } = useGetModelToOperationsMatrixQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 
@@ -51,7 +48,7 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
         subHeading={t('milestones')}
         isViewingFilteredView={false}
         status={modelToOperationsMatrix.status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 

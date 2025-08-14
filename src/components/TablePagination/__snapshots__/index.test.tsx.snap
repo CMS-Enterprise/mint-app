@@ -2,6 +2,7 @@
 
 exports[`TablePagination > render previous and next buttons 1`] = `
 <DocumentFragment>
+   
   <nav
     aria-label="Pagination"
     class="usa-pagination padding-bottom-1"
@@ -15,7 +16,7 @@ exports[`TablePagination > render previous and next buttons 1`] = `
       >
         <button
           aria-label="Previous page"
-          class="usa-pagination__link usa-pagination__previous-pag  "
+          class="usa-pagination__link usa-pagination__previous-page"
           type="button"
         >
           <span

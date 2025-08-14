@@ -46,7 +46,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
-          data-discover="true"
           href="/help-and-knowledge/articles?category=model-concept-and-design"
         >
           <span
@@ -382,7 +381,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               >
                 <a
                   class="usa-link display-flex flex-align-center"
-                  data-discover="true"
                   href="/models/steps-overview"
                 >
                   Create a Model Plan now
@@ -431,7 +429,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <li>
               <a
                 class="usa-link usa-button usa-button--unstyled"
-                data-discover="true"
                 href="/?solution=learning-and-diffusion-group&section=about"
               >
                 Learning and Diffusion Group (LDG)
@@ -1994,7 +1991,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
-                data-discover="true"
                 href="/help-and-knowledge/articles?category=model-concept-and-design"
               >
                 <span
@@ -2046,7 +2042,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
-                data-discover="true"
                 href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
@@ -2098,7 +2093,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
-                data-discover="true"
                 href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
@@ -2134,7 +2128,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
         </ul>
         <a
           class="usa-link"
-          data-discover="true"
           href="/help-and-knowledge/articles"
         >
           View all help resources

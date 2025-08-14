@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -109,17 +108,14 @@ const ReadOnlyTeamInfo = ({
   isViewingFilteredView,
   filteredView
 }: {
-  modelID?: string;
+  modelID: string;
   isViewingFilteredView?: boolean;
   filteredView?: string;
 }) => {
   const { t } = useTranslation('generalReadOnly');
-
-  const { modelID: modelIDFromParams } = useParams();
-
   const { data, loading, error } = useGetModelCollaboratorsQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 

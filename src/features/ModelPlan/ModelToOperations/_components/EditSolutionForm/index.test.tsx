@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -19,12 +19,21 @@ describe('EditSolutionForm Component', () => {
   console.error = vi.fn();
 
   const renderForm = (addedFromSolutionLibrary: boolean = true) => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
-          element: (
-            <MessageProvider>
+    return render(
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all&edit-solution=1`
+        ]}
+      >
+        <MockedProvider
+          mocks={[
+            solutionMock('1', addedFromSolutionLibrary),
+            allMilestonesMock
+          ]}
+          addTypename={false}
+        >
+          <MessageProvider>
+            <Route path="/models/:modelID/collaboration-area/model-to-operations/matrix">
               <EditSolutionForm
                 closeModal={vi.fn()}
                 setIsDirty={vi.fn()}
@@ -32,24 +41,10 @@ describe('EditSolutionForm Component', () => {
                 setFooter={() => {}}
                 submitted={{ current: false }}
               />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all&edit-solution=1`
-        ]
-      }
-    );
-
-    return render(
-      <MockedProvider
-        mocks={[solutionMock('1', addedFromSolutionLibrary), allMilestonesMock]}
-        addTypename={false}
-      >
-        <RouterProvider router={router} />
-      </MockedProvider>
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
     );
   };
 

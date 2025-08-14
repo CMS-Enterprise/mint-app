@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { BeneficiariesType } from 'gql/generated/graphql';
@@ -10,22 +10,16 @@ import ReadOnlyBeneficiaries from './index';
 
 describe('Read Only Model Plan Summary -- Beneficiaries', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/beneficiaries',
-          element: <ReadOnlyBeneficiaries modelID={modelID} />
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/beneficiaries`]
-      }
-    );
-
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/beneficiaries`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/read-view/beneficiaries">
+            <ReadOnlyBeneficiaries modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -42,22 +36,16 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
     });
   });
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/beneficiaries',
-          element: <ReadOnlyBeneficiaries modelID={modelID} />
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/beneficiaries`]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/beneficiaries`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/read-view/beneficiaries">
+            <ReadOnlyBeneficiaries modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
     await waitFor(() => {
       expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(

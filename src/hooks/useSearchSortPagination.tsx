@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Sort options type for the select dropdown
 type SortProps<K> = {
@@ -14,7 +14,7 @@ type SearchSortPaginationProps<T, K> = {
   filterFunction: (query: string, items: T[]) => T[];
   sortFunction: (items: T[], sort: K) => T[];
   defaultItemsPerPage?: number;
-} & React.HTMLAttributes<HTMLDivElement>;
+} & JSX.IntrinsicElements['div'];
 
 /**
  * useSearchSortPagination is a hook that handles search, sort, and pagination for a list of items.
@@ -46,11 +46,10 @@ const useSearchSortPagination = <T, K extends string>({
   sortFunction,
   defaultItemsPerPage = 9
 }: SearchSortPaginationProps<T, K>) => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   // Query parameters
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
   const pageParam = params.get('page') || '1';
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps<K>['value'];
@@ -108,7 +107,7 @@ const useSearchSortPagination = <T, K extends string>({
       params.delete('query');
     }
 
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
@@ -147,7 +146,7 @@ const useSearchSortPagination = <T, K extends string>({
   useEffect(() => {
     if (currentItems.length === 0 || itemsPerPage === 100000) {
       params.set('page', '1');
-      navigate({ search: params.toString() });
+      history.push({ search: params.toString() });
       setCurrentPage(1);
     }
   }, [currentItems, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -161,14 +160,14 @@ const useSearchSortPagination = <T, K extends string>({
   const handleNext = () => {
     const nextPage = currentPage + 1;
     params.set('page', nextPage.toString());
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setCurrentPage(nextPage);
   };
 
   const handlePrevious = () => {
     const prevPage = currentPage - 1;
     params.set('page', prevPage.toString());
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setCurrentPage(prevPage);
   };
 
@@ -177,7 +176,7 @@ const useSearchSortPagination = <T, K extends string>({
     pageNum: number
   ) => {
     params.set('page', pageNum.toString());
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setCurrentPage(pageNum);
   };
 

@@ -85,7 +85,7 @@ export const ClearIndicator = (
       className="usa-button--unstyled"
       aria-label="Clear selection"
     >
-      {React.createElement(components.ClearIndicator as any, props)}
+      <components.ClearIndicator {...props} />
     </button>
   );
 };
@@ -122,7 +122,7 @@ export const MultiSelectTag = ({
       {!(disabledOption && label === disabledLabel) && handleRemove && (
         <Icon.Close
           onClick={() => handleRemove(label)}
-          onKeyDown={(e: React.KeyboardEvent<SVGSVGElement>) => {
+          onKeyDown={(e: React.KeyboardEvent<HTMLSpanElement>) => {
             if (e.key === 'Enter') {
               handleRemove(label);
               // Handler to focus on the first tag after one has been removed
@@ -322,7 +322,7 @@ const MultiSelect = ({
         hideSelectedOptions={false}
         closeMenuOnSelect={false}
         tabSelectsValue={false}
-        onChange={(selectedOptions: MultiValue<MultiSelectOptionProps>) => {
+        onChange={(selectedOptions: MultiSelectOptionProps[]) => {
           setSelected(selectedOptions);
           onChange(selectedOptions.map(option => option.value));
         }}

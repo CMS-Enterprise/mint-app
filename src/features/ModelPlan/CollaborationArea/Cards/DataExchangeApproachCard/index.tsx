@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -35,7 +35,7 @@ const DataExchangeApproachCard = ({
 }: DataExchangeApproachCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { modifiedDts, modifiedByUserAccount, status } =
     dataExhangeApproachData;
@@ -85,7 +85,7 @@ const DataExchangeApproachCard = ({
             className="margin-right-2"
             disabled={isLocked}
             onClick={() =>
-              navigate(
+              history.push(
                 `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
               )
             }

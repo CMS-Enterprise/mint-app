@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllBeneficiariesQuery,
@@ -20,13 +19,12 @@ const ReadOnlyBeneficiaries = ({
   filteredView
 }: ReadOnlyProps) => {
   const { t: beneficiariesMiscT } = useTranslation('beneficiariesMisc');
-  const beneficiariesConfig = usePlanTranslation('beneficiaries');
 
-  const { modelID: modelIDFromParams } = useParams();
+  const beneficiariesConfig = usePlanTranslation('beneficiaries');
 
   const { data, loading, error } = useGetAllBeneficiariesQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 
@@ -48,7 +46,7 @@ const ReadOnlyBeneficiaries = ({
         heading={beneficiariesMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allbeneficiariesData.status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={
           allbeneficiariesData.modifiedDts || allbeneficiariesData.createdDts
         }

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import MilestonePanel from 'features/ModelPlan/ReadOnly/MTOMilestones/MilestonePanel';
 
 import Sidepanel from 'components/Sidepanel';
@@ -22,10 +22,9 @@ const MTOMilestonePanelProvider = ({
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const history = useHistory();
 
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
 
   const milestoneParam = params.get('view-milestone');
 
@@ -41,13 +40,13 @@ const MTOMilestonePanelProvider = ({
 
   const closeModal = () => {
     params.delete('view-milestone');
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setIsModalOpen(false);
   };
 
   const openEditMilestoneModal = (id: string) => {
     params.set('view-milestone', id);
-    navigate({ search: params.toString() });
+    history.push({ search: params.toString() });
     setIsModalOpen(true);
   };
 

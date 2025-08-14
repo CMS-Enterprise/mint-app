@@ -50,6 +50,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
         data-testid="grid"
       >
         <form
+          action="#"
           class="margin-top-3"
         >
           <fieldset

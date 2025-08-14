@@ -1,37 +1,43 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 import { collaboratorsMocks } from 'tests/mock/readonly';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
 import TeamCard from './index';
 
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
 describe('TeamCard component', () => {
   it('displays role count correctly', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area',
-          element: (
-            <MessageProvider>
-              <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
-        ]
-      }
-    );
-
     const { asFragment, getByTestId, getByText, queryByTestId } = render(
-      <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
+        ]}
+      >
+        <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
+          <Provider store={store}>
+            <MessageProvider>
+              <Route path="models/:modelID/collaboration-area">
+                <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+              </Route>
+            </MessageProvider>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('team-loading'));
@@ -46,28 +52,22 @@ describe('TeamCard component', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area',
-          element: (
-            <MessageProvider>
-              <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
-        ]
-      }
-    );
-
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          'models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area'
+        ]}
+      >
+        <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
+          <Provider store={store}>
+            <MessageProvider>
+              <Route path="models/:modelID/collaboration-area">
+                <TeamCard modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+              </Route>
+            </MessageProvider>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('team-loading'));

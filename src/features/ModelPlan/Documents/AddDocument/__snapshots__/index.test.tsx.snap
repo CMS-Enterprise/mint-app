@@ -29,7 +29,6 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/"
               >
                 <span>
@@ -42,7 +41,6 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
               >
                 <span>
@@ -55,7 +53,6 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents"
               >
                 <span>
@@ -135,7 +132,9 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
         </ul>
         <div>
           <div>
-            <form>
+            <form
+              action="#"
+            >
               <div
                 class="usa-form-group"
                 data-scroll="file"

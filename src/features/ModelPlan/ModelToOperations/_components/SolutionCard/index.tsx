@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Card, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -26,9 +26,8 @@ export const SolutionCard = ({
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
 
   // Set the solution route params
   params.set('solution-key', solution.key);
@@ -47,7 +46,7 @@ export const SolutionCard = ({
           closeRoute={() => {
             params.delete('solution-key');
             params.delete('section');
-            return `${location.pathname}`;
+            return `${history.location.pathname}`;
           }}
         />
       )}
@@ -96,7 +95,7 @@ export const SolutionCard = ({
             <Button
               type="button"
               unstyled
-              onClick={() => navigate({ search: params.toString() })}
+              onClick={() => history.push({ search: params.toString() })}
             >
               {t('milestoneLibrary.aboutSolution')}
             </Button>

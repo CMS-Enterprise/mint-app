@@ -23,7 +23,6 @@ exports[`ResourcesByCategory > matches the snapshot 1`] = `
         >
           <a
             class="usa-link"
-            data-discover="true"
             href="/help-and-knowledge/articles"
           >
             All help resources
@@ -44,7 +43,6 @@ exports[`ResourcesByCategory > matches the snapshot 1`] = `
         >
           <a
             class="usa-link"
-            data-discover="true"
             href="/help-and-knowledge/articles?category=it-implementation"
           >
             IT implementation
@@ -66,7 +64,6 @@ exports[`ResourcesByCategory > matches the snapshot 1`] = `
         >
           <a
             class="usa-link"
-            data-discover="true"
             href="/help-and-knowledge/articles?category=model-concept-and-design"
           >
             Model concept and design
@@ -88,7 +85,6 @@ exports[`ResourcesByCategory > matches the snapshot 1`] = `
         >
           <a
             class="usa-link"
-            data-discover="true"
             href="/help-and-knowledge/articles?category=mto-tutorials"
           >
             MINT tutorials

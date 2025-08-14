@@ -6,8 +6,7 @@ import Select, {
   IndicatorsContainerProps,
   InputProps,
   MenuProps,
-  OptionProps,
-  SingleValue
+  OptionProps
 } from 'react-select';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -38,41 +37,42 @@ type OktaUserSelectOption = {
 
 // Override React Select input to fix hidden input on select bug
 const Input = (props: InputProps<OktaUserSelectOption, false>) => {
-  return components.Input({
-    ...props,
-    isHidden: false
-  });
+  return (
+    <components.Input
+      {...props}
+      isHidden={false}
+      data-testid="cedar-contact-select"
+    />
+  );
 };
 
 // Custom option component
 const Option = (props: OptionProps<OktaUserSelectOption, false>) => {
-  const { isFocused, children } = props;
-  return React.createElement(
-    components.Option as any,
-    {
-      ...props,
-      className: classNames('usa-combo-box__list-option', {
+  const { isFocused } = props;
+  return (
+    <components.Option
+      {...props}
+      className={classNames('usa-combo-box__list-option', {
         'usa-combo-box__list-option--focused': isFocused
-      })
-    },
-    children
+      })}
+    />
   );
 };
 
 const NoOptionsMessage = (props: any) => {
   const { t } = useTranslation('general');
-  return React.createElement(
-    components.NoOptionsMessage as any,
-    props,
-    <button
-      type="button"
-      id="no-results"
-      tabIndex={0}
-      className="usa-button--unstyled text-no-underline text-black"
-      aria-label={t('noResults')}
-    >
-      {t('noResults')}
-    </button>
+  return (
+    <components.NoOptionsMessage {...props}>
+      <button
+        type="button"
+        id="no-results"
+        tabIndex={0}
+        className="usa-button--unstyled text-no-underline text-black"
+        aria-label={t('noResults')}
+      >
+        {t('noResults')}
+      </button>
+    </components.NoOptionsMessage>
   );
 };
 
@@ -81,7 +81,7 @@ const Menu = (props: MenuProps<OktaUserSelectOption, false>) => {
     selectProps: { inputValue }
   } = props;
   if (inputValue.length < 2) return null;
-  return React.createElement(components.Menu as any, props);
+  return <components.Menu {...props} />;
 };
 
 const ClearIndicator = (
@@ -105,7 +105,7 @@ const ClearIndicator = (
       className="usa-button--unstyled"
       aria-label="Clear selection"
     >
-      {React.createElement(components.ClearIndicator as any, props)}
+      <components.ClearIndicator {...props} />
     </button>
   );
 };
@@ -130,16 +130,14 @@ const IndicatorsContainer = (
   // Hide indicators if field is disabled
   if (isDisabled) return null;
 
-  return React.createElement(
-    components.IndicatorsContainer as any,
-    { ...props },
-    <>
+  return (
+    <components.IndicatorsContainer {...props}>
       {!loading && resultsWarning && (
         <Icon.Warning className="text-warning" size={3} aria-label="warning" />
       )}
       {loading && <Spinner size="small" className="margin-right-1" />}
       {children}
-    </>
+    </components.IndicatorsContainer>
   );
 };
 
@@ -276,7 +274,6 @@ export default function OktaUserSelect({
   return (
     <Select
       id={id}
-      data-testid="cedar-contact-select"
       name={name}
       className={classNames(
         'margin-top-1',
@@ -304,7 +301,7 @@ export default function OktaUserSelect({
         !disabled
       }
       components={{
-        Input: Input as any,
+        Input,
         IndicatorsContainer,
         ClearIndicator,
         Option,
@@ -327,9 +324,9 @@ export default function OktaUserSelect({
           : undefined
       }
       value={value ? { value, label: formatLabel(value) } : undefined}
-      onChange={(
-        newValue: SingleValue<{ value: OktaUserType; label: string }>
-      ) => updateContact(newValue?.value || null)}
+      onChange={(item: OktaUserSelectOption) =>
+        updateContact(item?.value || null)
+      }
       onInputChange={(
         newValue: string | undefined,
         { action }: { action: string }

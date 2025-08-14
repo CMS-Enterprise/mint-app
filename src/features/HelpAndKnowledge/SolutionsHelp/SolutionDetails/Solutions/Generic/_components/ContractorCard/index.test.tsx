@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { SolutionContractorType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -20,28 +20,20 @@ const contractor: SolutionContractorType = {
 
 describe('ContractorCard Component', () => {
   it('should matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions/ ',
-          element: (
-            <MessageProvider>
-              <ContractorCard contractor={contractor} />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MessageProvider>
+            <Route path="/help-and-knowledge/operational-solutions">
+              <ContractorCard contractor={contractor} />
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     expect(asFragment()).toMatchSnapshot();

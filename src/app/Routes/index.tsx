@@ -1,57 +1,52 @@
 import React from 'react';
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  RouterProvider,
-  useParams
-} from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
 import ReportAProblem from 'features/Feedback/ReportAProblem';
 import SendFeedback from 'features/Feedback/SendFeedback';
-import { helpAndKnowledgeRoutes } from 'features/HelpAndKnowledge';
+import HelpAndKnowledge from 'features/HelpAndKnowledge';
 import GetAccess from 'features/HelpAndKnowledge/Articles/GetAccess';
-import ModelPlanOverview from 'features/HelpAndKnowledge/Articles/ModelPlanOverview';
 import Home from 'features/Home';
-import { homePageSettingsRoutes } from 'features/Home/Settings';
+import HomePageSettings from 'features/Home/Settings';
 import Landing from 'features/Landing';
 import Login from 'features/Login';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
-import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
-import { crtdlRoutes } from 'features/ModelPlan/CRTDL';
-import { dataExchangeApproachRoutes } from 'features/ModelPlan/DataExchangeApproach';
+import Collaborators from 'features/ModelPlan/Collaborators';
+import CRTDL from 'features/ModelPlan/CRTDL';
+import DataEchangeApproach from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
-import AddDocument from 'features/ModelPlan/Documents/AddDocument';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
-import { modelToOperationsRoutes } from 'features/ModelPlan/ModelToOperations';
+import ModelToOperations from 'features/ModelPlan/ModelToOperations';
 import NewPlan from 'features/ModelPlan/NewPlan';
-import { readViewRoutes } from 'features/ModelPlan/ReadOnly';
+import ReadOnly from 'features/ModelPlan/ReadOnly';
 import Status from 'features/ModelPlan/Status';
 import StepsOverview from 'features/ModelPlan/StepsOverview';
 import TaskList from 'features/ModelPlan/TaskList';
-import basicsRoutes from 'features/ModelPlan/TaskList/Basics';
-import beneficiariesRoutes from 'features/ModelPlan/TaskList/Beneficiaries';
-import generalCharacteristicsRoutes from 'features/ModelPlan/TaskList/GeneralCharacteristics';
+import Basics from 'features/ModelPlan/TaskList/Basics';
+import Beneficiaries from 'features/ModelPlan/TaskList/Beneficiaries';
+import CostEstimate from 'features/ModelPlan/TaskList/CostEstimate';
+import Characteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics';
 import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
-import opsEvalAndLearningRoutes from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
-import participantsAndProvidersRoutes from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
-import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
-import { prepareForClearanceRoutes } from 'features/ModelPlan/TaskList/PrepareForClearance';
+import OpsEvalAndLearning from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
+import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
+import Payment from 'features/ModelPlan/TaskList/Payment';
+import PrepareForClearance from 'features/ModelPlan/TaskList/PrepareForClearance';
+import SubmitRequest from 'features/ModelPlan/TaskList/SubmitRequest';
 import Timeline from 'features/ModelPlan/Timeline';
 import Unfollow from 'features/ModelPlan/Unfollow';
 import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
 import NDAWrapper from 'features/NDA/NDAWrapper';
 import NotFound from 'features/NotFound';
-import { notificationsRoutes } from 'features/Notifications';
+import Notifications from 'features/Notifications';
 import PrivacyPolicy from 'features/PrivacyPolicy';
 import Sandbox from 'features/Sandbox';
 import TermsAndConditions from 'features/TermsAndConditions';
 import UserInfo from 'features/UserDiagnostics';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import AuthenticationWrapper from 'wrappers/AuthenticationWrapper';
 import BeaconWrapper from 'wrappers/BeaconWrapper';
 import FlagsWrapper from 'wrappers/FlagsWrapper';
@@ -67,38 +62,17 @@ import TaskListBannerAlert from 'components/TaskListBannerAlert';
 import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 import SubscriptionWrapper from 'contexts/PageLockContext';
-import RouterProviderWrapper from 'contexts/RouterContext';
+import RouterProvider from 'contexts/RouterContext';
 import useRouteTitle from 'hooks/useRouteTitle';
 import useScrollTop from 'hooks/useScrollTop';
 
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { NavContextProvider } from '../../contexts/NavContext';
-import { OktaSessionProvider } from '../../contexts/OktaSessionContext';
 
-const handleSkipNav = () => {
-  const mainContent = document.getElementById('main-content')!;
-  if (mainContent) {
-    mainContent.focus();
-  }
-};
-
-// Wrapper components to handle parameter interpolation
-const Redirect = ({ route }: { route: string }) => {
-  const { modelID } = useParams();
-  return <Navigate to={`/models/${modelID}/${route}`} replace />;
-};
-
-const ReadOnlySubinfoRedirect = () => {
-  const { modelID, subinfo } = useParams();
-  return <Navigate to={`/models/${modelID}/read-view/${subinfo}`} replace />;
-};
-
-const ProtectedHome = () => {
+const AppRoutes = () => {
   const { authState } = useOktaAuth();
-  return authState?.isAuthenticated ? <Home /> : <Landing />;
-};
+  const flags = useFlags();
 
-const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   // Fetches translated title for route and sends to GA
   useRouteTitle({ sendGA: true });
 
@@ -106,362 +80,328 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   useScrollTop();
 
   return (
-    <>
-      <div className="usa-overlay" />
+    <Switch>
+      {/* Auth Routes */}
+      <Redirect exact from="/login" to="/signin" />
 
-      <button type="button" className="skipnav z-top" onClick={handleSkipNav}>
-        Skip to main content
-      </button>
+      <Route path="/signin" exact component={Login} />
 
-      {children}
-    </>
+      <ProtectedRoute path="/pre-decisional-notice" component={NDA} />
+
+      {/* Home Routes */}
+      <Route
+        path="/"
+        exact
+        render={() => {
+          if (!authState?.isAuthenticated) {
+            return <Landing />;
+          }
+          return <Home />;
+        }}
+      />
+
+      <ProtectedRoute path="/homepage-settings" component={HomePageSettings} />
+
+      <ProtectedRoute path="/notifications" component={Notifications} />
+
+      {/* Model Plan Routes */}
+      <ProtectedRoute path="/models">
+        <Switch>
+          {/* New Plan Routes */}
+          <ProtectedRoute
+            path="/models/steps-overview"
+            exact
+            component={StepsOverview}
+          />
+
+          <ProtectedRoute path="/models/new-plan" component={NewPlan} />
+
+          <ProtectedRoute
+            path="/models/:modelID/unlock-all-sections"
+            exact
+            component={UnlockAllSections}
+          />
+
+          {/* Collaboration Area Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area"
+            exact
+            component={CollaborationArea}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/collaborators"
+            component={Collaborators}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/documents"
+            component={Documents}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/cr-and-tdl"
+            component={CRTDL}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/status"
+            exact
+            title="Model Status"
+            component={Status}
+          />
+
+          {/* Timeline Routes */}
+          <Redirect
+            exact
+            from="/models/:modelID/collaboration-area/task-list/basics/milestones"
+            to="/models/:modelID/collaboration-area/model-timeline"
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-timeline"
+            component={Timeline}
+          />
+
+          {/* Data Echange Approach Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/data-exchange-approach"
+            component={DataEchangeApproach}
+          />
+
+          {/* Model to Operation Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/model-to-operations"
+            component={ModelToOperations}
+          />
+
+          {/* Task List Routes */}
+          <Redirect
+            exact
+            from="/models/:modelID/task-list"
+            to="/models/:modelID/collaboration-area/task-list"
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list"
+            exact
+            component={TaskList}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/basics"
+            component={Basics}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/beneficiaries"
+            component={Beneficiaries}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/characteristics"
+            component={Characteristics}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/cost-estimate"
+            component={CostEstimate}
+            enabled={false} // This route is not yet implemented
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
+            component={OpsEvalAndLearning}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
+            component={Participants}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/payment"
+            component={Payment}
+          />
+
+          {/* Redirect from legacy Operational Needs Track to new MTO Matrix.  TODO: Can remove at some point once fully converted */}
+          <Redirect
+            from="/models/:modelID/collaboration-area/task-list/it-solutions"
+            to="/models/:modelID/collaboration-area/model-to-operations"
+          />
+          {/* Read view redirect from legacy Operational Needs Track to new MTO Matrix  */}
+          <Redirect
+            from="/models/:modelID/read-view/it-solutions"
+            to="/models/:modelID/read-view/milestones"
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
+            component={PrepareForClearance}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/submit-request"
+            component={SubmitRequest}
+            enabled={false} // This route is not yet implemented
+          />
+
+          {/* Model/Read View Routes */}
+          <ProtectedRoute path="/models" exact component={ModelPlan} />
+
+          <Redirect
+            exact
+            from="/models/:modelID/read-only"
+            to="/models/:modelID/read-view"
+          />
+
+          <Redirect
+            exact
+            from="/models/:modelID/read-view"
+            to="/models/:modelID/read-view/model-basics"
+          />
+
+          <Redirect
+            exact
+            from="/models/:modelID/read-view/it-systems-and-solutions"
+            to="/models/:modelID/read-view/solutions-and-it-systems"
+          />
+
+          <ProtectedRoute // Wrap redirect as child of route to pass on query parameters
+            path="/models/:modelID/read-only/:subinfo?"
+            render={match => (
+              <Redirect
+                to={{
+                  // /models/:modelID/read-view/:subinfo? syntax does not work with pathname prop, so we replace 'only' with 'view'
+                  pathname: match.location.pathname.replace('only', 'view'),
+                  search: match.location.search
+                }}
+              />
+            )}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/read-view/:subinfo?"
+            exact
+            component={ReadOnly}
+          />
+
+          <Redirect
+            exact
+            from="/models/:modelID"
+            to="/models/:modelID/read-view"
+          />
+
+          {/* Change History Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/change-history"
+            component={ChangeHistory}
+          />
+
+          {/* Locked Task List Section */}
+          <ProtectedRoute
+            path="/models/:modelID/locked-task-list-section"
+            component={LockedTaskListSection}
+          />
+
+          {/* 404 */}
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </ProtectedRoute>
+
+      {/* Help and Knowledge Center Routes */}
+      <ProtectedRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
+
+      {/* Misc Routes */}
+      <ProtectedRoute path="/user-diagnostics" component={UserInfo} />
+
+      <ProtectedRoute path="/report-a-problem" component={ReportAProblem} />
+
+      <ProtectedRoute path="/send-feedback" component={SendFeedback} />
+
+      <ProtectedRoute path="/feedback-received" component={FeedbackReceived} />
+
+      <ProtectedRoute path="/unfollow" exact component={Unfollow} />
+
+      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
+
+      {/* Static Page Routes  */}
+      <Route path="/privacy-policy" exact component={PrivacyPolicy} />
+
+      <Route path="/cookies" exact component={Cookies} />
+
+      <Route
+        path="/accessibility-statement"
+        exact
+        component={AccessibilityStatement}
+      />
+
+      <Route
+        exact
+        path="/terms-and-conditions"
+        component={TermsAndConditions}
+      />
+
+      <Route exact path="/how-to-get-access" component={GetAccess} />
+
+      <Route path="/implicit/callback" component={LoginCallback} />
+
+      {/* 404 */}
+      <Route path="*" component={NotFound} />
+    </Switch>
   );
 };
 
-// Create the router configuration
-const router = createBrowserRouter([
-  {
-    path: '/',
-    errorElement: <NotFound />,
-    element: (
-      <AppWrapper>
-        <RouterProviderWrapper>
-          <AuthenticationWrapper>
-            <OktaSessionProvider>
-              <FlagsWrapper>
-                <UserInfoWrapper>
-                  <BeaconWrapper>
-                    <SubscriptionWrapper>
-                      <SubscriptionHandler>
-                        <MessageProvider>
-                          <NDAWrapper>
-                            <ModelAccessWrapper>
-                              <ModelInfoWrapper>
-                                <TimeOutWrapper>
-                                  <NavContextProvider>
-                                    <PageWrapper>
-                                      <Header />
-                                      <TaskListBannerAlert />
-                                      <Outlet />
-                                      <Footer />
-                                    </PageWrapper>
-                                  </NavContextProvider>
-                                </TimeOutWrapper>
-                              </ModelInfoWrapper>
-                            </ModelAccessWrapper>
-                          </NDAWrapper>
-                        </MessageProvider>
-                      </SubscriptionHandler>
-                    </SubscriptionWrapper>
-                  </BeaconWrapper>
-                </UserInfoWrapper>
-              </FlagsWrapper>
-            </OktaSessionProvider>
-          </AuthenticationWrapper>
-        </RouterProviderWrapper>
-      </AppWrapper>
-    ),
-    children: [
-      // Auth Routes
-      {
-        path: '/login',
-        element: <Navigate to="/signin" replace />
-      },
-      {
-        path: '/signin',
-        element: <Login />
-      },
-      {
-        path: '/pre-decisional-notice',
-        element: (
-          <ProtectedRoute>
-            <NDA />
-          </ProtectedRoute>
-        )
-      },
-      // Home Routes
-      {
-        path: '/',
-        element: <ProtectedHome />
-      },
-      homePageSettingsRoutes,
-      notificationsRoutes,
-      // Model Plan Routes
-      {
-        path: '/models',
-        element: (
-          <ProtectedRoute>
-            <ModelPlan />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/steps-overview',
-        element: (
-          <ProtectedRoute>
-            <StepsOverview />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/new-plan',
-        element: (
-          <ProtectedRoute>
-            <NewPlan />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID',
-        element: (
-          <ProtectedRoute>
-            <ModelPlanOverview />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/unlock-all-sections',
-        element: (
-          <ProtectedRoute>
-            <UnlockAllSections />
-          </ProtectedRoute>
-        )
-      },
-
-      // Collaboration Area Routes
-      {
-        path: '/models/:modelID/collaboration-area',
-        element: (
-          <ProtectedRoute>
-            <CollaborationArea />
-          </ProtectedRoute>
-        )
-      },
-      collaboratorsRoutes,
-      {
-        path: '/models/:modelID/collaboration-area/status',
-        element: (
-          <ProtectedRoute>
-            <Status />
-          </ProtectedRoute>
-        )
-      },
-      // Document Routes
-      {
-        path: '/models/:modelID/collaboration-area/documents',
-        element: (
-          <ProtectedRoute>
-            <Documents />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/documents/add-document',
-        element: (
-          <ProtectedRoute>
-            <AddDocument />
-          </ProtectedRoute>
-        )
-      },
-      // Timeline Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/basics/milestones',
-        element: (
-          <Redirect route="collaboration-area/task-list/basics/milestones" />
-        )
-      },
-      {
-        path: '/models/:modelID/collaboration-area/model-timeline',
-        element: (
-          <ProtectedRoute>
-            <Timeline />
-          </ProtectedRoute>
-        )
-      },
-      // CR and TDL Routes
-      crtdlRoutes,
-
-      // Data Exchange Approach Routes
-      dataExchangeApproachRoutes,
-
-      // Model to Operations Routes
-      modelToOperationsRoutes,
-
-      // Task List Routes
-      {
-        path: '/models/:modelID/task-list',
-        element: <Redirect route="collaboration-area/model-timeline" />
-      },
-      {
-        path: '/models/:modelID/collaboration-area/task-list',
-        element: <TaskList />
-      },
-      // Basics Routes
-      basicsRoutes,
-
-      // Characteristics Routes
-      generalCharacteristicsRoutes,
-
-      // Participants and Providers Routes
-      participantsAndProvidersRoutes,
-
-      // Beneficiaries Routes
-      beneficiariesRoutes,
-
-      // Ops Eval and Learning Routes
-      opsEvalAndLearningRoutes,
-
-      // Payment Routes
-      paymentRoutes,
-
-      // Prepare for Clearance Routes
-      prepareForClearanceRoutes,
-
-      // IT Solutions Routes
-      {
-        path: '/models/:modelID/collaboration-area/task-list/it-solutions',
-        element: <Redirect route="collaboration-area/model-to-operations" />
-      },
-      {
-        path: '/models/:modelID/read-view/it-solutions',
-        element: <Redirect route="read-view/milestones" />
-      },
-
-      // Read View Routes
-      {
-        path: '/models/:modelID/read-only',
-        element: <Redirect route="read-view" />
-      },
-      {
-        path: '/models/:modelID/read-view',
-        element: <Redirect route="read-view/model-basics" />
-      },
-
-      readViewRoutes,
-
-      {
-        path: '/models/:modelID/read-view/it-systems-and-solutions',
-        element: <Redirect route="read-view/it-systems-and-solutions" />
-      },
-      {
-        path: '/models/:modelID/read-only/:subinfo?',
-        element: <ReadOnlySubinfoRedirect />
-      },
-
-      // Help and Knowledge Routes
-      helpAndKnowledgeRoutes,
-
-      {
-        path: '/help-and-knowledge/articles/get-access',
-        element: (
-          <ProtectedRoute>
-            <GetAccess />
-          </ProtectedRoute>
-        )
-      },
-
-      // Change History Routes
-      {
-        path: '/models/:modelID/change-history',
-        element: (
-          <ProtectedRoute>
-            <ChangeHistory />
-          </ProtectedRoute>
-        )
-      },
-
-      // Locked Task List Section Routes
-      {
-        path: '/models/:modelID/locked-task-list-section',
-        element: (
-          <ProtectedRoute>
-            <LockedTaskListSection />
-          </ProtectedRoute>
-        )
-      },
-
-      // Unfollow route
-      {
-        path: '/unfollow',
-        element: (
-          <ProtectedRoute>
-            <Unfollow />
-          </ProtectedRoute>
-        )
-      },
-
-      // Other Routes
-      {
-        path: '/how-to-get-access',
-        element: <GetAccess />
-      },
-      {
-        path: '/accessibility-statement',
-        element: <AccessibilityStatement />
-      },
-      {
-        path: '/cookies',
-        element: <Cookies />
-      },
-      {
-        path: '/send-feedback',
-        element: (
-          <ProtectedRoute>
-            <SendFeedback />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/feedback-received',
-        element: (
-          <ProtectedRoute>
-            <FeedbackReceived />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/privacy-policy',
-        element: <PrivacyPolicy />
-      },
-      {
-        path: '/report-a-problem',
-        element: (
-          <ProtectedRoute>
-            <ReportAProblem />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/sandbox',
-        element: <Sandbox />
-      },
-      {
-        path: '/terms-and-conditions',
-        element: <TermsAndConditions />
-      },
-      {
-        path: '/user-diagnostics',
-        element: (
-          <ProtectedRoute>
-            <UserInfo />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: '/implicit/callback',
-        element: <LoginCallback />
-      },
-      // 404
-      {
-        path: '*',
-        element: <NotFound />
-      }
-    ]
-  }
-]);
-
 const App = () => {
-  return <RouterProvider router={router} />;
+  const handleSkipNav = () => {
+    const mainContent = document.getElementById('main-content')!;
+    if (mainContent) {
+      mainContent.focus();
+    }
+  };
+
+  return (
+    <>
+      <div className="usa-overlay" />
+      <button type="button" className="skipnav z-top" onClick={handleSkipNav}>
+        Skip to main content
+      </button>
+      <BrowserRouter>
+        <RouterProvider>
+          <AuthenticationWrapper>
+            <FlagsWrapper>
+              <UserInfoWrapper>
+                <BeaconWrapper>
+                  <SubscriptionWrapper>
+                    <SubscriptionHandler>
+                      <MessageProvider>
+                        <NDAWrapper>
+                          <ModelAccessWrapper>
+                            <ModelInfoWrapper>
+                              <TimeOutWrapper>
+                                <NavContextProvider>
+                                  <PageWrapper>
+                                    <Header />
+                                    <TaskListBannerAlert />
+                                    <AppRoutes />
+                                    <Footer />
+                                  </PageWrapper>
+                                </NavContextProvider>
+                              </TimeOutWrapper>
+                            </ModelInfoWrapper>
+                          </ModelAccessWrapper>
+                        </NDAWrapper>
+                      </MessageProvider>
+                    </SubscriptionHandler>
+                  </SubscriptionWrapper>
+                </BeaconWrapper>
+              </UserInfoWrapper>
+            </FlagsWrapper>
+          </AuthenticationWrapper>
+        </RouterProvider>
+      </BrowserRouter>
+    </>
+  );
 };
 
 export default App;

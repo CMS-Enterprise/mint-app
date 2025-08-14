@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -70,26 +70,16 @@ const notificationsSettingsMock = [
 
 describe('Notification Settings Page', () => {
   it('renders without errors and unchecks an item', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/notifications/settings',
-          element: (
+    const { user } = setup(
+      <MemoryRouter initialEntries={[`/notifications/settings`]}>
+        <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
+          <Route path="/notifications/settings">
             <MessageProvider>
               <NotificationSettings />
             </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/notifications/settings`]
-      }
-    );
-
-    const { user } = setup(
-      <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -142,26 +132,16 @@ describe('Notification Settings Page', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/notifications/settings',
-          element: (
+    const { asFragment } = render(
+      <MemoryRouter initialEntries={[`/notifications/settings`]}>
+        <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
+          <Route path="/notifications/settings">
             <MessageProvider>
               <NotificationSettings />
             </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [`/notifications/settings`]
-      }
-    );
-
-    const { asFragment } = render(
-      <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

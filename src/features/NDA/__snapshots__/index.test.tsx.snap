@@ -52,7 +52,6 @@ exports[`NDA Page > matches snapshot 1`] = `
           </div>
           <a
             class="usa-button margin-top-1"
-            data-discover="true"
             data-testid="nda-continue"
             href="/"
           >

@@ -1,16 +1,15 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
-  GridContainer,
   Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetIddocQuery,
   TypedUpdatePlanOpsEvalAndLearningDocument,
@@ -24,7 +23,6 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
 import FieldGroup from 'components/FieldGroup';
-import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -37,7 +35,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '../Support';
+} from '..';
 
 type IDDOCFormType = GetIddocQuery['modelPlan']['opsEvalAndLearning'];
 
@@ -54,10 +52,10 @@ const IDDOC = () => {
     captureParticipantInfo: captureParticipantInfoConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { data, loading, error } = useGetIddocQuery({
     variables: {
@@ -86,7 +84,7 @@ const IDDOC = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 
@@ -111,260 +109,256 @@ const IDDOC = () => {
   }
 
   return (
-    <MainContent data-testid="ops-eval-and-learning-iddoc">
-      <GridContainer>
-        <MutationErrorModal
-          isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.closeModal()}
-          url={mutationError.destinationURL}
-        />
+    <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.closeModal()}
+        url={mutationError.destinationURL}
+      />
 
-        <Breadcrumbs
-          items={[
-            BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST,
-            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-          ]}
-        />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
-          {opsEvalAndLearningMiscT('heading')}
-        </PageHeading>
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {opsEvalAndLearningMiscT('heading')}
+      </PageHeading>
 
-        <p
-          className="margin-top-0 margin-bottom-1 font-body-lg"
-          data-testid="model-plan-name"
-        >
-          {miscellaneousT('for')} {modelName}
-        </p>
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        {miscellaneousT('for')} {modelName}
+      </p>
 
-        <p className="margin-bottom-2 font-body-md line-height-sans-4">
-          {miscellaneousT('helpText')}
-        </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {miscellaneousT('helpText')}
+      </p>
 
-        <AskAQuestion modelID={modelID} />
+      <AskAQuestion modelID={modelID} />
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {
-            navigate(
-              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
-            );
-          }}
-          enableReinitialize
-          innerRef={formikRef}
-        >
-          {(formikProps: FormikProps<IDDOCFormType>) => {
-            const {
-              handleSubmit,
-              setErrors,
-              setFieldValue,
-              values,
-              setFieldError
-            } = formikProps;
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
+          );
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<IDDOCFormType>) => {
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values,
+            setFieldError
+          } = formikProps;
 
-            const handleOnBlur = (
-              e: React.ChangeEvent<HTMLInputElement>,
-              field: string
-            ) => {
-              if (e.target.value === '') {
-                setFieldValue(field, null);
-                return;
-              }
-              try {
-                setFieldValue(field, new Date(e.target.value).toISOString());
-              } catch (err) {
-                setFieldError(field, opsEvalAndLearningT('validDate'));
-              }
-            };
+          const handleOnBlur = (
+            e: React.ChangeEvent<HTMLInputElement>,
+            field: string
+          ) => {
+            if (e.target.value === '') {
+              setFieldValue(field, null);
+              return;
+            }
+            try {
+              setFieldValue(field, new Date(e.target.value).toISOString());
+            } catch (err) {
+              setFieldError(field, opsEvalAndLearningT('validDate'));
+            }
+          };
 
-            return (
-              <>
-                <ConfirmLeave />
+          return (
+            <>
+              <ConfirmLeave />
 
-                <form
-                  className="desktop:grid-col-6 margin-top-6"
-                  data-testid="ops-eval-and-learning-iddoc-form"
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <Fieldset disabled={!!error || loading}>
-                    <h3>{opsEvalAndLearningMiscT('iddocHeading')}</h3>
+              <Form
+                className="desktop:grid-col-6 margin-top-6"
+                data-testid="ops-eval-and-learning-iddoc-form"
+                onSubmit={e => {
+                  handleSubmit(e);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
+                  <h3>{opsEvalAndLearningMiscT('iddocHeading')}</h3>
 
-                    <FieldGroup className="margin-y-4 margin-bottom-8">
-                      <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
-                        {opsEvalAndLearningT(
-                          'technicalContactsIdentified.label'
-                        )}
-                      </Label>
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
+                    <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
+                      {opsEvalAndLearningT('technicalContactsIdentified.label')}
+                    </Label>
 
-                      <BooleanRadio
-                        field="technicalContactsIdentified"
-                        id="ops-eval-and-learning-technical-contacts-identified-use"
-                        value={values.technicalContactsIdentified}
-                        setFieldValue={setFieldValue}
-                        options={technicalContactsIdentifiedConfig.options}
-                        childName="technicalContactsIdentifiedDetail"
-                      >
-                        {values.technicalContactsIdentified === true ? (
-                          <div className="margin-left-4 margin-top-1">
-                            <Label
-                              htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
-                              className="text-normal"
-                            >
-                              {opsEvalAndLearningT(
-                                'technicalContactsIdentifiedDetail.label'
-                              )}
-                            </Label>
+                    <BooleanRadio
+                      field="technicalContactsIdentified"
+                      id="ops-eval-and-learning-technical-contacts-identified-use"
+                      value={values.technicalContactsIdentified}
+                      setFieldValue={setFieldValue}
+                      options={technicalContactsIdentifiedConfig.options}
+                      childName="technicalContactsIdentifiedDetail"
+                    >
+                      {values.technicalContactsIdentified === true ? (
+                        <div className="margin-left-4 margin-top-1">
+                          <Label
+                            htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
+                            className="text-normal"
+                          >
+                            {opsEvalAndLearningT(
+                              'technicalContactsIdentifiedDetail.label'
+                            )}
+                          </Label>
 
-                            <Field
-                              as={TextAreaField}
-                              id="ops-eval-and-learning-technical-contacts-identified-detail"
-                              maxLength={5000}
-                              className="mint-textarea"
-                              name="technicalContactsIdentifiedDetail"
-                            />
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-                      </BooleanRadio>
+                          <Field
+                            as={TextAreaField}
+                            id="ops-eval-and-learning-technical-contacts-identified-detail"
+                            maxLength={5000}
+                            className="mint-textarea"
+                            name="technicalContactsIdentifiedDetail"
+                          />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </BooleanRadio>
 
-                      <AddNote
-                        id="ops-eval-and-learning-technical-contacts-identified-use-note"
-                        field="technicalContactsIdentifiedNote"
-                      />
-                    </FieldGroup>
+                    <AddNote
+                      id="ops-eval-and-learning-technical-contacts-identified-use-note"
+                      field="technicalContactsIdentifiedNote"
+                    />
+                  </FieldGroup>
 
-                    <FieldGroup className="margin-y-4 margin-bottom-8">
-                      <Label htmlFor="ops-eval-and-learning-capture-participant-info">
-                        {opsEvalAndLearningT('captureParticipantInfo.label')}
-                      </Label>
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
+                    <Label htmlFor="ops-eval-and-learning-capture-participant-info">
+                      {opsEvalAndLearningT('captureParticipantInfo.label')}
+                    </Label>
 
-                      <p className="text-base margin-bottom-1 margin-top-1">
-                        {opsEvalAndLearningT('captureParticipantInfo.sublabel')}
-                      </p>
-
-                      <BooleanRadio
-                        field="captureParticipantInfo"
-                        id="ops-eval-and-learning-capture-participant-info"
-                        value={values.captureParticipantInfo}
-                        setFieldValue={setFieldValue}
-                        options={captureParticipantInfoConfig.options}
-                      />
-
-                      <AddNote
-                        id="ops-eval-and-learning-capture-participant-info-note"
-                        field="captureParticipantInfoNote"
-                      />
-                    </FieldGroup>
-
-                    <h3>{opsEvalAndLearningMiscT('icdHeading')}</h3>
-
-                    <p className="margin-y-1 margin-top-2 line-height-body-4">
-                      {opsEvalAndLearningMiscT('icdSubheading')}
+                    <p className="text-base margin-bottom-1 margin-top-1">
+                      {opsEvalAndLearningT('captureParticipantInfo.sublabel')}
                     </p>
 
-                    <FieldGroup className="margin-top-4">
-                      <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
-                        {opsEvalAndLearningT('icdOwner.label')}
-                      </Label>
+                    <BooleanRadio
+                      field="captureParticipantInfo"
+                      id="ops-eval-and-learning-capture-participant-info"
+                      value={values.captureParticipantInfo}
+                      setFieldValue={setFieldValue}
+                      options={captureParticipantInfoConfig.options}
+                    />
 
-                      <Field
-                        as={TextInput}
-                        id="ops-eval-and-learning-capture-icd-owner"
-                        data-testid="ops-eval-and-learning-capture-icd-owner"
-                        maxLength={50}
-                        name="icdOwner"
+                    <AddNote
+                      id="ops-eval-and-learning-capture-participant-info-note"
+                      field="captureParticipantInfoNote"
+                    />
+                  </FieldGroup>
+
+                  <h3>{opsEvalAndLearningMiscT('icdHeading')}</h3>
+
+                  <p className="margin-y-1 margin-top-2 line-height-body-4">
+                    {opsEvalAndLearningMiscT('icdSubheading')}
+                  </p>
+
+                  <FieldGroup className="margin-top-4">
+                    <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
+                      {opsEvalAndLearningT('icdOwner.label')}
+                    </Label>
+
+                    <Field
+                      as={TextInput}
+                      id="ops-eval-and-learning-capture-icd-owner"
+                      data-testid="ops-eval-and-learning-capture-icd-owner"
+                      maxLength={50}
+                      name="icdOwner"
+                    />
+                  </FieldGroup>
+
+                  {!loading && (
+                    <>
+                      <MINTDatePicker
+                        fieldName="draftIcdDueDate"
+                        id="ops-eval-and-learning-icd-due-date"
+                        className="margin-top-6"
+                        label={opsEvalAndLearningT('draftIcdDueDate.label')}
+                        placeHolder
+                        handleOnBlur={handleOnBlur}
+                        formikValue={values.draftIcdDueDate}
+                        value={draftIcdDueDate}
+                        shouldShowWarning={
+                          initialValues.draftIcdDueDate !==
+                          values.draftIcdDueDate
+                        }
                       />
-                    </FieldGroup>
 
-                    {!loading && (
-                      <>
-                        <MINTDatePicker
-                          fieldName="draftIcdDueDate"
-                          id="ops-eval-and-learning-icd-due-date"
-                          className="margin-top-6"
-                          label={opsEvalAndLearningT('draftIcdDueDate.label')}
-                          placeHolder
-                          handleOnBlur={handleOnBlur}
-                          formikValue={values.draftIcdDueDate}
-                          value={draftIcdDueDate}
-                          shouldShowWarning={
-                            initialValues.draftIcdDueDate !==
-                            values.draftIcdDueDate
-                          }
-                        />
+                      <AddNote
+                        id="ops-eval-and-learning-icd-due-date-note"
+                        field="icdNote"
+                      />
+                    </>
+                  )}
 
-                        <AddNote
-                          id="ops-eval-and-learning-icd-due-date-note"
-                          field="icdNote"
-                        />
-                      </>
-                    )}
-
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          navigate(
-                            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
-                          );
-                        }}
-                      >
-                        {miscellaneousT('back')}
-                      </Button>
-
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {miscellaneousT('next')}
-                      </Button>
-                    </div>
-
+                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
-                        )
-                      }
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+                        );
+                      }}
                     >
-                      <Icon.ArrowBack
-                        className="margin-right-1"
-                        aria-hidden
-                        aria-label="back"
-                      />
-
-                      {miscellaneousT('saveAndReturn')}
+                      {miscellaneousT('back')}
                     </Button>
-                  </Fieldset>
-                </form>
-              </>
-            );
-          }}
-        </Formik>
 
-        {data && (
-          <PageNumber
-            currentPage={renderCurrentPage(
-              2,
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            totalPages={renderTotalPages(
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            className="margin-y-6"
-          />
-        )}
-      </GridContainer>
-    </MainContent>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
+                  >
+                    <Icon.ArrowBack
+                      className="margin-right-1"
+                      aria-hidden
+                      aria-label="back"
+                    />
+
+                    {miscellaneousT('saveAndReturn')}
+                  </Button>
+                </Fieldset>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
+
+      {data && (
+        <PageNumber
+          currentPage={renderCurrentPage(
+            2,
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          totalPages={renderTotalPages(
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          className="margin-y-6"
+        />
+      )}
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -32,12 +32,11 @@ const MilestoneCard = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { errorMessageInModal, clearMessage } = useMessage();
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
 
   const milestoneParam = params.get('add-milestone');
 
@@ -57,7 +56,7 @@ const MilestoneCard = ({
         isOpen={isModalOpen}
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
-          navigate({ search: params.toString() }, { replace: true });
+          history.replace({ search: params.toString() });
           clearMessage();
           setIsModalOpen(false);
         }}
@@ -75,7 +74,7 @@ const MilestoneCard = ({
         <AddSolutionToMilestoneForm
           closeModal={() => {
             params.delete('add-milestone', milestone.key);
-            navigate({ search: params.toString() }, { replace: true });
+            history.replace({ search: params.toString() });
             clearMessage();
             setIsModalOpen(false);
           }}
@@ -133,7 +132,7 @@ const MilestoneCard = ({
               onClick={() => {
                 params.delete('milestone');
                 params.set('add-milestone', milestone.key);
-                navigate({ search: params.toString() }, { replace: true });
+                history.replace({ search: params.toString() });
                 setIsModalOpen(true);
               }}
             >
@@ -157,7 +156,7 @@ const MilestoneCard = ({
             onClick={() => {
               setIsSidepanelOpen(true);
               params.set('milestone', milestone.key);
-              navigate({ search: params.toString() });
+              history.push({ search: params.toString() });
             }}
           >
             {t('milestoneLibrary.aboutThisMilestone')}

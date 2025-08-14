@@ -7,10 +7,7 @@ describe('The auth reducer', () => {
       euaId: '',
       groups: [],
       isUserSet: false,
-      acceptedNDA: {
-        agreed: false,
-        agreedDts: ''
-      }
+      acceptedNDA: false
     });
   });
 
@@ -22,10 +19,7 @@ describe('The auth reducer', () => {
       euaId: '',
       groups: [],
       isUserSet: false,
-      acceptedNDA: {
-        agreed: false,
-        agreedDts: ''
-      }
+      acceptedNDA: false
     };
     const mockAction = setUser({
       name: 'Jane Smith',

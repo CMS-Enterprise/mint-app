@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { Grid, Link as TrussLink } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { AppState } from 'stores/reducers/rootReducer';
 
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
@@ -21,7 +19,7 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 
 export type ReadOnlyProps = {
-  modelID?: string;
+  modelID: string;
   clearance?: boolean;
   filteredView?: FilterGroup;
 };
@@ -42,17 +40,15 @@ const ReadOnlyModelBasics = ({
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { modelID: modelIDFromParams } = useParams();
-
   const { data, loading, error } = useGetAllBasicsQuery({
     variables: {
-      id: modelID || modelIDFromParams || ''
+      id: modelID
     }
   });
 
   const flags = useFlags();
   const isCollaborator = data?.modelPlan?.isCollaborator;
-  const { groups } = useSelector((state: AppState) => state.auth);
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
   const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
   const allBasicsData = (data?.modelPlan.basics ||
@@ -89,7 +85,7 @@ const ReadOnlyModelBasics = ({
         heading={basicsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={
           allBasicsData.modifiedDts || allBasicsData.createdDts
         }

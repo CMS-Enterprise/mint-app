@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Grid } from '@trussworks/react-uswds';
 import {
   Activity,
@@ -50,7 +50,7 @@ const IndividualNotification = ({
   const [isDailyDigestExpanded, setIsDailyDigestExpanded] = useState(false);
   const [isDatesChangedExpanded, setIsDatesChangedExpanded] = useState(false);
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
 
@@ -77,7 +77,7 @@ const IndividualNotification = ({
       isNewDiscussionReply(metaData)
     ) {
       handleMarkAsRead(() =>
-        navigate(
+        history.push(
           `/models/${metaData.modelPlanID}/read-view/discussions?discussionID=${metaData.discussionID}`
         )
       );
@@ -92,17 +92,17 @@ const IndividualNotification = ({
     }
     if (isAddingCollaborator(metaData)) {
       handleMarkAsRead(() => {
-        navigate(`/models/${metaData.modelPlanID}/collaboration-area`);
+        history.push(`/models/${metaData.modelPlanID}/collaboration-area`);
       });
     }
     if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {
       handleMarkAsRead(() => {
-        navigate(`/models/${metaData.modelPlanID}/read-view`);
+        history.push(`/models/${metaData.modelPlanID}/read-view`);
       });
     }
     if (isDataExchangeApproach(metaData)) {
       handleMarkAsRead(() => {
-        navigate(
+        history.push(
           `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`
         );
       });

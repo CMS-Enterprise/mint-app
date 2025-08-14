@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -49,24 +49,18 @@ const paymentsMock = [
 
 describe('Model Plan -- Anticipate Dependencies', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
-          element: <AnticipateDependencies />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/anticipating-dependencies'
-        ]
-      }
-    );
-
     render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/anticipating-dependencies'
+        ]}
+      >
+        <MockedProvider mocks={paymentsMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies">
+            <AnticipateDependencies />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -83,24 +77,18 @@ describe('Model Plan -- Anticipate Dependencies', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
-          element: <AnticipateDependencies />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/anticipating-dependencies'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/anticipating-dependencies'
+        ]}
+      >
+        <MockedProvider mocks={paymentsMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies">
+            <AnticipateDependencies />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

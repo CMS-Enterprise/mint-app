@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -133,10 +133,11 @@ const EditMilestoneForm = ({
     riskIndicator: riskIndicatorConfig
   } = usePlanTranslation('mtoMilestone');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const history = useHistory();
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const { modelID } = useParams<{ modelID: string }>();
+
+  const params = new URLSearchParams(history.location.search);
 
   const editMilestoneID = params.get('edit-milestone');
 
@@ -1384,11 +1385,7 @@ const EditMilestoneForm = ({
                                       type="button"
                                       {...column.getSortByToggleProps()}
                                     >
-                                      {
-                                        column.render(
-                                          'Header'
-                                        ) as React.ReactElement
-                                      }
+                                      {column.render('Header')}
                                       {column.canSort &&
                                         getHeaderSortIcon(column, false)}
                                     </button>
@@ -1411,11 +1408,7 @@ const EditMilestoneForm = ({
                                         key={cell.getCellProps().key}
                                         className="padding-left-0"
                                       >
-                                        {
-                                          cell.render(
-                                            'Cell'
-                                          ) as React.ReactElement
-                                        }
+                                        {cell.render('Cell')}
                                       </td>
                                     );
                                   })}

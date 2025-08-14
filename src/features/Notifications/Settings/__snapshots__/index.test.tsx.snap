@@ -29,7 +29,6 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/"
               >
                 <span>
@@ -42,7 +41,6 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                data-discover="true"
                 href="/notifications"
               >
                 <span>
@@ -122,7 +120,9 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             </p>
           </div>
         </div>
-        <form>
+        <form
+          action="#"
+        >
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"

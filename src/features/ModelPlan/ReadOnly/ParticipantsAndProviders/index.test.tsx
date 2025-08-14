@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -11,24 +11,18 @@ import ReadOnlyParticipantsAndProviders from './index';
 
 describe('Read Only Model Plan Summary -- Participants And Providers', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/participants-and-providers',
-          element: <ReadOnlyParticipantsAndProviders modelID={modelID} />
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/read-view/participants-and-providers`
-        ]
-      }
-    );
-
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/read-view/participants-and-providers`
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/read-view/participants-and-providers">
+            <ReadOnlyParticipantsAndProviders modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -39,24 +33,18 @@ describe('Read Only Model Plan Summary -- Participants And Providers', () => {
     });
   });
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/participants-and-providers',
-          element: <ReadOnlyParticipantsAndProviders modelID={modelID} />
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/read-view/participants-and-providers`
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/read-view/participants-and-providers`
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/read-view/participants-and-providers">
+            <ReadOnlyParticipantsAndProviders modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
     await waitFor(() => {
       expect(screen.getByText('Medicaid providers')).toBeInTheDocument();

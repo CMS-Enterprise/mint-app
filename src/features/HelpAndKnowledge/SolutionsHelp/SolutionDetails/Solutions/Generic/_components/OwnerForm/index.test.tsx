@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -24,64 +24,49 @@ const mocks = [...possibleSolutionsMock];
 
 describe('Owner Form Component', () => {
   it('should matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions/solutions',
-          element: (
-            <MessageProvider>
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MessageProvider>
+            <Route path="/help-and-knowledge/operational-solutions">
               <OwnerForm
                 mode="addSystemOwner"
                 closeModal={() => {}}
                 setDisableButton={() => {}}
               />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]
-      }
-    );
-
-    const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should render passed in owner info', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions/solutions',
-          element: (
-            <MessageProvider>
+    const { getByTestId } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MessageProvider>
+            <Route path="/help-and-knowledge/operational-solutions">
               <OwnerForm
                 mode="editSystemOwner"
                 closeModal={() => {}}
                 owner={owner}
                 setDisableButton={() => {}}
               />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]
-      }
-    );
-    const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

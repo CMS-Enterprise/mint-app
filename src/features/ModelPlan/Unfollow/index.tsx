@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   useDeletePlanFavoriteMutation,
   useGetBasicsQuery
@@ -11,7 +11,7 @@ import PageLoading from 'components/PageLoading';
 import useMessage from 'hooks/useMessage';
 
 const Unfollow = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { t } = useTranslation('miscellaneous');
   const { search } = useLocation();
   const params = new URLSearchParams(search);
@@ -43,7 +43,7 @@ const Unfollow = () => {
           </span>
         </Alert>
       );
-      navigate('/models');
+      history.push('/models');
     }
     if (modelName) {
       removeMutate({
@@ -67,7 +67,7 @@ const Unfollow = () => {
                 </span>
               </Alert>
             );
-            navigate('/models');
+            history.push('/models');
           }
         })
         .catch(errors => {
@@ -85,12 +85,12 @@ const Unfollow = () => {
               </span>
             </Alert>
           );
-          navigate('/models');
+          history.push('/models');
         });
     }
   }, [
     error,
-    navigate,
+    history,
     modelIDToRemove,
     modelName,
     removeMutate,

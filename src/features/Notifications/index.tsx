@@ -1,26 +1,30 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { NotFoundPartial } from 'features/NotFound';
+
+import ProtectedRoute from 'components/ProtectedRoute';
 
 import NotificationsHome from './Home';
 import NotificationSettings from './Settings';
 
 const Notifications = () => {
-  return <Outlet />;
-};
+  return (
+    <Switch>
+      <ProtectedRoute
+        path="/notifications"
+        component={NotificationsHome}
+        exact
+      />
 
-export const notificationsRoutes = {
-  path: '/notifications',
-  element: <Notifications />,
-  children: [
-    {
-      path: '',
-      element: <NotificationsHome />
-    },
-    {
-      path: 'settings',
-      element: <NotificationSettings />
-    }
-  ]
+      <ProtectedRoute
+        path="/notifications/settings"
+        component={NotificationSettings}
+        exact
+      />
+
+      <Route path="*" render={() => <NotFoundPartial />} />
+    </Switch>
+  );
 };
 
 export default Notifications;

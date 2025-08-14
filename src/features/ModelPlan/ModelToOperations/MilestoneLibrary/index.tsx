@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -42,7 +42,7 @@ export type MilestoneCardType =
 const MilestoneLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { data, loading, error } = useGetMtoMilestonesQuery({
     variables: {
@@ -127,9 +127,9 @@ const MilstoneCardGroup = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { clearMessage, message } = useMessage();
 
@@ -140,8 +140,7 @@ const MilstoneCardGroup = ({
   } = useContext(MTOModalContext);
 
   // Query parameters
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
   const milestoneParam: string = params.get('milestone') || '';
 
@@ -254,7 +253,7 @@ const MilstoneCardGroup = ({
         isOpen={!!selectedMilestone}
         closeModal={() => {
           params.delete('milestone');
-          navigate({ search: params.toString() }, { replace: true });
+          history.replace({ search: params.toString() });
           setIsSidepanelOpen(false);
         }}
         ariaLabel={t('modal.editMilestone.milestoneTitle')}
@@ -305,7 +304,7 @@ const MilstoneCardGroup = ({
                   onClick={() => {
                     params.set('page', '1');
                     params.set('view', 'suggested');
-                    navigate({ search: params.toString() }, { replace: true });
+                    history.replace({ search: params.toString() });
                   }}
                 >
                   {t('milestoneLibrary.suggestedMilestones', {
@@ -320,7 +319,7 @@ const MilstoneCardGroup = ({
                   onClick={() => {
                     params.set('page', '1');
                     params.set('view', 'all');
-                    navigate({ search: params.toString() }, { replace: true });
+                    history.replace({ search: params.toString() });
                   }}
                 >
                   {t('milestoneLibrary.allMilestones', {
@@ -345,7 +344,7 @@ const MilstoneCardGroup = ({
                     'hide-added-milestones',
                     addedMilestonesHidden ? 'false' : 'true'
                   );
-                  navigate({ search: params.toString() }, { replace: true });
+                  history.replace({ search: params.toString() });
                 }}
               />
             </Grid>

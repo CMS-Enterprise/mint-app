@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import { categoryMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
@@ -11,28 +11,16 @@ import CustomSolutionForm from './index';
 
 describe('Custom Solution form', () => {
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
-          element: (
-            <MessageProvider>
-              <CustomSolutionForm />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all`
-        ]
-      }
-    );
-
     const { getAllByTestId, getByTestId, asFragment } = render(
-      <VerboseMockedProvider mocks={[...categoryMock]} addTypename={false}>
-        <RouterProvider router={router} />
-      </VerboseMockedProvider>
+      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
+        <MessageProvider>
+          <VerboseMockedProvider mocks={[...categoryMock]} addTypename={false}>
+            <Route path="/models/:modelID/">
+              <CustomSolutionForm />
+            </Route>
+          </VerboseMockedProvider>
+        </MessageProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

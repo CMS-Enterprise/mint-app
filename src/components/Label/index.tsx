@@ -5,7 +5,7 @@ type LabelProps = {
   children: React.ReactNode;
   htmlFor: string;
   className?: string;
-} & React.ComponentProps<'label'>;
+} & JSX.IntrinsicElements['label'];
 
 const Label = ({ children, htmlFor, className, ...props }: LabelProps) => {
   const classes = classnames('usa-label', className);

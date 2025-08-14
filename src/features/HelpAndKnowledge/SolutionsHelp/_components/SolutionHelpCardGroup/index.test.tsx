@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import setup from 'tests/util';
 
@@ -9,25 +9,17 @@ import SolutionHelpCardGroup from './index';
 
 describe('Operation Solution Help Card Group', () => {
   it('rendered all correct information even after pagination', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <SolutionHelpCardGroup
-              solutions={helpSolutionsArray}
-              setResultsNum={() => null}
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
-    );
-
     const { user, getByText, getByLabelText, queryByText } = setup(
-      <RouterProvider router={router} />
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <SolutionHelpCardGroup
+            solutions={helpSolutionsArray}
+            setResultsNum={() => null}
+          />
+        </Route>
+      </MemoryRouter>
     );
 
     // Solution visible on page one
@@ -48,24 +40,18 @@ describe('Operation Solution Help Card Group', () => {
   });
 
   it('matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <SolutionHelpCardGroup
-              solutions={helpSolutionsArray}
-              setResultsNum={() => null}
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <SolutionHelpCardGroup
+            solutions={helpSolutionsArray}
+            setResultsNum={() => null}
+          />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

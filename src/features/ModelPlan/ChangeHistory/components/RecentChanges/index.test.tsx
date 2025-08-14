@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import {
@@ -67,50 +67,30 @@ vi.mock('./Trans', () => {
 
 describe('RecentChanges', () => {
   it('renders without error', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <RecentChanges modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
-        ]
-      }
-    );
-
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <RecentChanges modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+        </MockedProvider>
+      </MemoryRouter>
     );
   });
 
   it('renders change records', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <RecentChanges modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
-        ]
-      }
-    );
-
     const { getByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <RecentChanges modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+        </MockedProvider>{' '}
+      </MemoryRouter>
     );
 
     await waitFor(() => getByText(/MINT Doe/i));
@@ -120,26 +100,16 @@ describe('RecentChanges', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list',
-          element: (
-            <RecentChanges modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <RecentChanges modelID="ce3405a0-3399-4e3a-88d7-3cfc613d2905" />
+        </MockedProvider>{' '}
+      </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
   });

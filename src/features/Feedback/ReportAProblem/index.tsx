@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Button,
@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ReportAProblemInput,
   ReportAProblemSection,
@@ -32,7 +32,7 @@ import { tObject } from 'utils/translation';
 const ReportAProblem = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const [mutationError, setMutationError] = useState<boolean>(false);
 
@@ -54,7 +54,7 @@ const ReportAProblem = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          navigate('/feedback-received');
+          history.push('/feedback-received');
         }
       })
       .catch(errors => {
@@ -103,9 +103,9 @@ const ReportAProblem = () => {
 
             return (
               <Grid desktop={{ col: 6 }}>
-                <form
+                <Form
                   className="margin-top-3"
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  onSubmit={e => {
                     handleSubmit(e);
                   }}
                 >
@@ -301,7 +301,7 @@ const ReportAProblem = () => {
                       </Button>
                     </div>
                   </Fieldset>
-                </form>
+                </Form>
               </Grid>
             );
           }}

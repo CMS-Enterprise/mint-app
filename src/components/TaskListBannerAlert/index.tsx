@@ -19,11 +19,11 @@ const taskListRoutes: string[] = [
 const isTaskListRoute = (route: string | undefined) =>
   taskListRoutes.includes(route || '');
 
-const TaskListBannerAlert = (): React.ReactNode => {
+const TaskListBannerAlert = () => {
   const { t } = useTranslation('general');
   const location = useLocation();
 
-  const [banner, setBanner] = useState<React.ReactNode>(<></>);
+  const [banner, setBanner] = useState<JSX.Element>(<></>);
 
   const isTaskList = location.pathname.split('/')[4] === 'task-list';
 

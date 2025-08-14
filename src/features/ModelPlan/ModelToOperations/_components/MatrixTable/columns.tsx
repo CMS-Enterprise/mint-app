@@ -127,7 +127,7 @@ export type ColumnType = {
     direction: 'ASC' | 'DESC',
     accessor: keyof MilestoneType
   ) => CategoryType[];
-  Cell?: (cellRow: RowProps | ExtendedRowProps) => React.ReactNode;
+  Cell?: (cellRow: RowProps | ExtendedRowProps) => JSX.Element;
 };
 
 const sortNested = (

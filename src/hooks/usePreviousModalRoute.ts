@@ -14,7 +14,7 @@ interface LocationType {
    This allows components to return to previous states while navigating through modal routes
 */
 const usePreviousModalRoute = (location: LocationType, route: string) => {
-  const ref = useRef<LocationType | undefined>(undefined);
+  const ref = useRef<LocationType>();
 
   useEffect(() => {
     if (!location.pathname.includes(route)) {

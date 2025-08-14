@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -152,26 +152,20 @@ describe('Read Only Filtered View Body Content', () => {
   });
 
   it('renders without crashing', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/:subinfo',
-          element: <ReadOnly />
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/model-basics?filter-view=cmmi`
-        ]
-      }
-    );
-
     const { getByTestId } = render(
-      <MockedProvider mocks={mock} addTypename={false}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          `/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/model-basics?filter-view=cmmi`
+        ]}
+      >
+        <MockedProvider mocks={mock} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-view/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Select } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import {
@@ -36,7 +36,7 @@ const UpdateStatusModal = ({
 }: MutationErrorModalType) => {
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
 
@@ -167,7 +167,9 @@ const UpdateStatusModal = ({
             unstyled
             onClick={() => {
               closeModal();
-              navigate(`/models/${modelID}/collaboration-area/model-timeline`);
+              history.push(
+                `/models/${modelID}/collaboration-area/model-timeline`
+              );
             }}
           >
             {modelPlanTaskListT('statusModal.goToTimeline')}

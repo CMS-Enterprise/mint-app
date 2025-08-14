@@ -44,7 +44,7 @@ export type SolutionGenericType = {
   'points-of-contact': boolean;
 };
 
-type SolutionComponentType = (props: SolutionDetailProps) => React.ReactNode;
+type SolutionComponentType = (props: SolutionDetailProps) => JSX.Element;
 
 export type ModalSolutionComponentType = {
   about?: SolutionComponentType;

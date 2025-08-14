@@ -2,11 +2,12 @@ import React, {
   createContext,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import EditMilestoneForm from 'features/ModelPlan/ModelToOperations/_components/EditMilestoneForm';
 
@@ -31,9 +32,12 @@ const EditMTOMilestoneProvider = ({
 }) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
-  const [params, setParams] = useSearchParams();
+  const params = useMemo(
+    () => new URLSearchParams(history.location.search),
+    [history.location.search]
+  );
 
   const milestoneParam = params.get('edit-milestone');
 
@@ -66,7 +70,9 @@ const EditMTOMilestoneProvider = ({
         const baseRoute = url.pathname; // Extract the base route
         const queryParams = url.search; // Extract the query parameters (if needed)
 
-        navigate(baseRoute + queryParams, {
+        history.push({
+          pathname: baseRoute,
+          search: queryParams,
           state: {
             scroll: true
           }
@@ -75,13 +81,13 @@ const EditMTOMilestoneProvider = ({
       } else {
         params.delete('edit-milestone');
         params.delete('select-solutions');
-        navigate({ search: params.toString() });
+        history.push({ search: params.toString() });
       }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  }, [isDirty, submitted, closeDestination, params, navigate]);
+  }, [isDirty, submitted, closeDestination, history, params]);
 
   useEffect(() => {
     if (closeDestination) {
@@ -91,7 +97,7 @@ const EditMTOMilestoneProvider = ({
 
   const openEditMilestoneModal = (id: string) => {
     params.set('edit-milestone', id);
-    setParams(params);
+    history.push({ search: params.toString() });
     setIsModalOpen(true);
   };
 
@@ -150,10 +156,10 @@ const EditMTOMilestoneProvider = ({
             className="margin-right-4 bg-error"
             onClick={() => {
               if (closeDestination) {
-                navigate(closeDestination);
+                history.push(closeDestination);
               } else {
                 params.delete('edit-milestone');
-                navigate({ search: params.toString() }, { replace: true });
+                history.replace({ search: params.toString() });
               }
               setIsModalOpen(false);
               setIsDirty(false);

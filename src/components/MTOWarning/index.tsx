@@ -17,7 +17,7 @@ interface MTOWarningType {
 const MTOWarning = ({ className, id, route }: MTOWarningType) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const mtoRoute =
     route || `/models/${modelID}/collaboration-area/model-to-operations/matrix`;

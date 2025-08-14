@@ -559,7 +559,7 @@ const ModelPlansTable = ({
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
-                      {column.render('Header') as React.ReactElement}
+                      {column.render('Header')}
                       {getHeaderSortIcon(column, index === 0)}
                     </button>
                   </th>
@@ -591,7 +591,7 @@ const ModelPlansTable = ({
                           }}
                           key={cell.getCellProps().key}
                         >
-                          {cell.render('Cell') as React.ReactElement}
+                          {cell.render('Cell')}
                         </th>
                       );
                     }
@@ -605,7 +605,7 @@ const ModelPlansTable = ({
                         }}
                         key={cell.getCellProps().key}
                       >
-                        {cell.render('Cell') as React.ReactElement}
+                        {cell.render('Cell')}
                       </td>
                     );
                   })}

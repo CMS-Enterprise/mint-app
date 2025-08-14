@@ -68,7 +68,6 @@ exports[`Model Collaboration Area -- Documents Card > matches snapshot 1`] = `
       >
         <a
           class="usa-button"
-          data-discover="true"
           data-testid="to-add-document"
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents/add-document"
         >
@@ -76,7 +75,6 @@ exports[`Model Collaboration Area -- Documents Card > matches snapshot 1`] = `
         </a>
         <a
           class="usa-button usa-button--outline"
-          data-discover="true"
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents"
         >
           View all

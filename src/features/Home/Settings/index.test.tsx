@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import {
@@ -123,76 +123,47 @@ describe('moveItem function', () => {
 
 describe('settings snapshots', () => {
   it('matches setting snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/homepage-settings/form',
-          element: (
+    const { asFragment } = render(
+      <MemoryRouter initialEntries={[`/homepage-settings`]}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/homepage-settings">
             <MessageProvider>
               <HomePageSettings />
             </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/homepage-settings/form']
-      }
-    );
-
-    const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches order snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/homepage-settings/order',
-          element: (
+    const { asFragment } = render(
+      <MemoryRouter initialEntries={[`/homepage-settings/order`]}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/homepage-settings/order">
             <MessageProvider>
+              {' '}
               <SettingsOrder />
             </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/homepage-settings/order']
-      }
-    );
-
-    const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches solutions snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/homepage-settings/solutions',
-          element: (
+    const { asFragment } = render(
+      <MemoryRouter initialEntries={[`/homepage-settings/solutions`]}>
+        <MockedProvider mocks={[...mocks, solutionsMock]} addTypename={false}>
+          <Route path="/homepage-settings/solutions">
             <MessageProvider>
               <SelectSolutionSettings />
             </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/homepage-settings/solutions']
-      }
-    );
-
-    const { asFragment } = render(
-      <MockedProvider mocks={[...mocks, solutionsMock]} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
   });

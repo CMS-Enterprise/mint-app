@@ -102,7 +102,7 @@ const EChimpCardsTable = ({
 }) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const { data, loading } = useGetEchimpCrandTdlQuery({
     variables: {
       id: modelID

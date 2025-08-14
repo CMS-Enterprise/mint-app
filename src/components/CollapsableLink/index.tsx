@@ -11,7 +11,7 @@ type CollapsableLinkProps = {
   className?: string;
   childClassName?: string;
   toggleClassName?: string;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNodeArray;
   label: string;
   closeLabel?: string;
   styleLeftBar?: boolean;

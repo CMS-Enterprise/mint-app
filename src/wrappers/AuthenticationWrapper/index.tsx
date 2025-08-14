@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security } from '@okta/okta-react';
 
@@ -13,7 +13,7 @@ type ParentComponentProps = {
 };
 
 const AuthenticationWrapper = ({ children }: ParentComponentProps) => {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const authClient = new OktaAuth({
     issuer: import.meta.env.VITE_OKTA_ISSUER,
@@ -25,16 +25,14 @@ const AuthenticationWrapper = ({ children }: ParentComponentProps) => {
   });
 
   const handleAuthRequiredRedirect = () => {
-    navigate('/signin');
+    history.push('/signin');
   };
 
   const restoreOriginalUri = async (
     _oktaAuth: OktaAuth,
     originalUri: string
   ) => {
-    navigate(toRelativeUrl(originalUri || '/', window.location.origin), {
-      replace: true
-    });
+    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
 
   return isLocalAuthEnabled() &&

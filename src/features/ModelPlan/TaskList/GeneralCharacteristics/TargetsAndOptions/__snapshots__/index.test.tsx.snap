@@ -2,627 +2,364 @@
 
 exports[`Model Plan Characteristics > matches snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="mint-main-content"
-    data-testid="general-characteristics-targets-and-options"
-    id="main-content"
-    role="main"
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        <span>
+          General characteristics
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
     tabindex="-1"
   >
+    General characteristics
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div>
     <div
-      class="grid-container"
-      data-testid="gridContainer"
+      class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
+      style="gap: 1rem;"
     >
-      <nav
-        aria-label="Breadcrumbs"
-        class="usa-breadcrumb usa-breadcrumb--wrap"
+      <div
+        class="display-flex"
+        data-testid="ask-a-question"
       >
-        <ol
-          class="usa-breadcrumb__list"
+        <svg
+          aria-label="announcement"
+          class="usa-icon text-primary margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <li
-            class="usa-breadcrumb__list-item"
-          >
-            <a
-              class="usa-link usa-breadcrumb__link"
-              data-discover="true"
-              href="/"
-            >
-              <span>
-                Home
-              </span>
-            </a>
-          </li>
-          <li
-            class="usa-breadcrumb__list-item"
-          >
-            <a
-              class="usa-link usa-breadcrumb__link"
-              data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
-            >
-              <span>
-                Model collaboration area
-              </span>
-            </a>
-          </li>
-          <li
-            class="usa-breadcrumb__list-item"
-          >
-            <a
-              class="usa-link usa-breadcrumb__link"
-              data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
-            >
-              <span>
-                Model Plan task list
-              </span>
-            </a>
-          </li>
-          <li
-            aria-current="page"
-            class="usa-breadcrumb__list-item usa-current"
-          >
-            <span>
-              General characteristics
-            </span>
-          </li>
-        </ol>
-      </nav>
-      <h1
-        aria-live="polite"
-        class="mint-h1 margin-top-4 margin-bottom-2"
-        tabindex="-1"
-      >
-        General characteristics
-      </h1>
-      <p
-        class="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        for My excellent plan that I just initiated
-      </p>
-      <p
-        class="margin-bottom-2 font-body-md line-height-sans-4"
-      >
-        If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
-      </p>
-      <div>
-        <div
-          class="padding-2 bg-primary-lighter display-flex flex-wrap flex-justify flex-align-center"
-          style="gap: 1rem;"
+          <path
+            d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+          />
+        </svg>
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="ask-a-question-button"
+          type="button"
         >
-          <div
-            class="display-flex"
-            data-testid="ask-a-question"
-          >
-            <svg
-              aria-label="announcement"
-              class="usa-icon text-primary margin-right-1"
-              focusable="false"
-              height="1em"
-              role="img"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
-              />
-            </svg>
-            <button
-              class="usa-button usa-button--unstyled"
-              data-testid="ask-a-question-button"
-              type="button"
-            >
-              Start a discussion
-            </button>
-          </div>
-        </div>
+          Start a discussion
+        </button>
       </div>
-      <form
-        class="desktop:grid-col-6 margin-top-6"
-        data-testid="plan-characteristics-targets-and-options-form"
+    </div>
+  </div>
+  <form
+    action="#"
+    class="desktop:grid-col-6 margin-top-6"
+    data-testid="plan-characteristics-targets-and-options-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
       >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-geographies-targeted"
+        >
+          Is the model targeted at specific geographies?
+        </label>
         <fieldset
           class="usa-fieldset"
           data-testid="fieldset"
         >
           <div
-            class="usa-form-group margin-y-4 margin-bottom-8"
+            class="usa-radio"
+            data-testid="radio"
           >
+            <input
+              class="usa-radio__input"
+              data-testid="plan-characteristics-geographies-targeted-true"
+              id="plan-characteristics-geographies-targeted-true"
+              name="geographiesTargeted"
+              type="radio"
+              value="TRUE"
+            />
             <label
-              class="usa-label"
-              data-testid="label"
-              for="plan-characteristics-geographies-targeted"
+              class="usa-radio__label"
+              for="plan-characteristics-geographies-targeted-true"
             >
-              Is the model targeted at specific geographies?
+              Yes
             </label>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="plan-characteristics-geographies-targeted-true"
-                  id="plan-characteristics-geographies-targeted-true"
-                  name="geographiesTargeted"
-                  type="radio"
-                  value="TRUE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="plan-characteristics-geographies-targeted-true"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="plan-characteristics-geographies-targeted-false"
-                  id="plan-characteristics-geographies-targeted-false"
-                  name="geographiesTargeted"
-                  type="radio"
-                  value="FALSE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="plan-characteristics-geographies-targeted-false"
-                >
-                  No
-                </label>
-              </div>
-            </fieldset>
-            <div
-              class="usa-form-group margin-top-4"
-            >
-              <label
-                class="usa-label text-normal"
-                data-testid="label"
-                for="plan-characteristics-geographies-type"
-              >
-                Geography type is
-              </label>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-type-STATE"
-                  name="geographiesTargetedTypes"
-                  type="checkbox"
-                  value="STATE"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-type-STATE"
-                >
-                  States and territories
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-type-REGION"
-                  name="geographiesTargetedTypes"
-                  type="checkbox"
-                  value="REGION"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-type-REGION"
-                >
-                  Region
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  checked=""
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-type-OTHER"
-                  name="geographiesTargetedTypes"
-                  type="checkbox"
-                  value="OTHER"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-type-OTHER"
-                >
-                  Other
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-              <div
-                class="usa-form-group margin-left-4 margin-y-2"
-              >
-                <label
-                  class="usa-label text-normal"
-                  data-testid="label"
-                  for="plan-characteristics-geographies-targeted-other"
-                >
-                  Please specify what the other geography type is.
-                </label>
-                <input
-                  class="usa-input"
-                  data-testid="plan-characteristics-geographies-targeted-other"
-                  id="plan-characteristics-geographies-targeted-other"
-                  name="geographiesTargetedTypesOther"
-                  value="Other geography type"
-                />
-              </div>
-            </div>
-            <div
-              class="usa-form-group margin-top-4"
-            >
-              <label
-                class="usa-label text-normal"
-                data-testid="label"
-                for="plan-characteristics-geographies-applied-to"
-              >
-                Geographies are applied to
-              </label>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-applied-to-BENEFICIARIES"
-                  name="geographiesTargetedAppliedTo"
-                  type="checkbox"
-                  value="BENEFICIARIES"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-applied-to-BENEFICIARIES"
-                >
-                  Beneficiaries
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-applied-to-PARTICIPANTS"
-                  name="geographiesTargetedAppliedTo"
-                  type="checkbox"
-                  value="PARTICIPANTS"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-applied-to-PARTICIPANTS"
-                >
-                  Participants
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-applied-to-PROVIDERS"
-                  name="geographiesTargetedAppliedTo"
-                  type="checkbox"
-                  value="PROVIDERS"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-applied-to-PROVIDERS"
-                >
-                  Providers
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-              <div
-                class="mint-checkbox usa-checkbox"
-              >
-                <input
-                  class="usa-checkbox__input"
-                  id="plan-characteristics-geographies-applied-to-OTHER"
-                  name="geographiesTargetedAppliedTo"
-                  type="checkbox"
-                  value="OTHER"
-                />
-                <label
-                  class="usa-checkbox__label"
-                  for="plan-characteristics-geographies-applied-to-OTHER"
-                >
-                  Other
-                </label>
-                <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                />
-              </div>
-            </div>
-            <div
-              class="margin-top-3 margin-bottom-6"
-            >
-              <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="plan-characteristics-geographies-targeted-note-add-note-toggle"
-                type="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  aria-label="add"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
-              </button>
-            </div>
           </div>
           <div
-            class="usa-form-group margin-y-4"
+            class="usa-radio"
+            data-testid="radio"
           >
+            <input
+              class="usa-radio__input"
+              data-testid="plan-characteristics-geographies-targeted-false"
+              id="plan-characteristics-geographies-targeted-false"
+              name="geographiesTargeted"
+              type="radio"
+              value="FALSE"
+            />
             <label
-              class="usa-label"
-              data-testid="label"
-              for="plan-characteristics-participation"
+              class="usa-radio__label"
+              for="plan-characteristics-geographies-targeted-false"
             >
-              Does the model offer different options for participation?
+              No
             </label>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="plan-characteristics-participation-true"
-                  id="plan-characteristics-participation-true"
-                  name="participationOptions"
-                  type="radio"
-                  value="TRUE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="plan-characteristics-participation-true"
-                >
-                  Yes
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  data-testid="plan-characteristics-participation-false"
-                  id="plan-characteristics-participation-false"
-                  name="participationOptions"
-                  type="radio"
-                  value="FALSE"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="plan-characteristics-participation-false"
-                >
-                  No
-                </label>
-              </div>
-            </fieldset>
           </div>
-          <div
-            class="margin-top-3 margin-bottom-6"
+        </fieldset>
+        <div
+          class="usa-form-group margin-top-4"
+        >
+          <label
+            class="usa-label text-normal"
+            data-testid="label"
+            for="plan-characteristics-geographies-type"
           >
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="plan-characteristics-participation-note-add-note-toggle"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                aria-label="add"
-                class="usa-icon margin-right-1"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                />
-              </svg>
-              Add an additional note
-            </button>
-          </div>
+            Geography type is
+          </label>
           <div
-            class="usa-form-group"
-            data-scroll="agreementTypes"
+            class="mint-checkbox usa-checkbox"
           >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-type-STATE"
+              name="geographiesTargetedTypes"
+              type="checkbox"
+              value="STATE"
+            />
             <label
-              class="usa-label"
-              data-testid="label"
-              for="plan-characteristics-agreement-type"
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-type-STATE"
             >
-              What is the agreement type?
+              States and territories
             </label>
-            <div
-              class="usa-alert usa-alert--info flex mto-warning"
-              data-testid="alert"
-              id="ops-eval-and-learning-data-needed-warning"
-            >
-              <div
-                class="usa-alert__body"
-              >
-                <p
-                  class="usa-alert__text"
-                >
-                  <span>
-                    Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
-                    <a
-                      class="usa-link usa-button usa-button--unstyled"
-                      data-discover="true"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
-                    >
-                      Go to your MTO
-                    </a>
-                     to review any suggestions.
-                  </span>
-                </p>
-              </div>
-            </div>
             <p
-              class="text-base margin-y-1"
-            >
-              Note: CMMI writes, Office of General Council (OGC) approves both types of agreements
-            </p>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="plan-characteristics-agreement-type-COOPERATIVE"
-                name="agreementTypes"
-                type="checkbox"
-                value="COOPERATIVE"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="plan-characteristics-agreement-type-COOPERATIVE"
-              >
-                Co-Operative Agreement/Grant
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="plan-characteristics-agreement-type-PARTICIPATION"
-                name="agreementTypes"
-                type="checkbox"
-                value="PARTICIPATION"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="plan-characteristics-agreement-type-PARTICIPATION"
-              >
-                Participation Agreement
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="plan-characteristics-agreement-type-OTHER"
-                name="agreementTypes"
-                type="checkbox"
-                value="OTHER"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="plan-characteristics-agreement-type-OTHER"
-              >
-                Other
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
           </div>
           <div
-            class="margin-top-3 margin-bottom-6"
+            class="mint-checkbox usa-checkbox"
           >
-            <button
-              class="usa-button usa-button usa-button--unstyled"
-              data-testid="plan-characteristics-multiple-participation-needed-note-add-note-toggle"
-              type="button"
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-type-REGION"
+              name="geographiesTargetedTypes"
+              type="checkbox"
+              value="REGION"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-type-REGION"
             >
-              <svg
-                aria-hidden="true"
-                aria-label="add"
-                class="usa-icon margin-right-1"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                />
-              </svg>
-              Add an additional note
-            </button>
+              Region
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
           </div>
           <div
-            class="margin-top-6 margin-bottom-3"
+            class="mint-checkbox usa-checkbox"
           >
-            <button
-              class="usa-button usa-button usa-button--outline margin-bottom-1"
-              data-testid="button"
-              type="button"
+            <input
+              checked=""
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-type-OTHER"
+              name="geographiesTargetedTypes"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-type-OTHER"
             >
-              Back
-            </button>
-            <button
-              class="usa-button"
-              data-testid="button"
-              type="submit"
-            >
-              Next
-            </button>
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
           </div>
+          <div
+            class="usa-form-group margin-left-4 margin-y-2"
+          >
+            <label
+              class="usa-label text-normal"
+              data-testid="label"
+              for="plan-characteristics-geographies-targeted-other"
+            >
+              Please specify what the other geography type is.
+            </label>
+            <input
+              class="usa-input"
+              data-testid="plan-characteristics-geographies-targeted-other"
+              id="plan-characteristics-geographies-targeted-other"
+              name="geographiesTargetedTypesOther"
+              value="Other geography type"
+            />
+          </div>
+        </div>
+        <div
+          class="usa-form-group margin-top-4"
+        >
+          <label
+            class="usa-label text-normal"
+            data-testid="label"
+            for="plan-characteristics-geographies-applied-to"
+          >
+            Geographies are applied to
+          </label>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-BENEFICIARIES"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="BENEFICIARIES"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-BENEFICIARIES"
+            >
+              Beneficiaries
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="PARTICIPANTS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+            >
+              Participants
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-PROVIDERS"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="PROVIDERS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-PROVIDERS"
+            >
+              Providers
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="plan-characteristics-geographies-applied-to-OTHER"
+              name="geographiesTargetedAppliedTo"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="plan-characteristics-geographies-applied-to-OTHER"
+            >
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+        </div>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="button"
+            data-testid="plan-characteristics-geographies-targeted-note-add-note-toggle"
             type="button"
           >
             <svg
               aria-hidden="true"
-              aria-label="back"
+              aria-label="add"
               class="usa-icon margin-right-1"
               focusable="false"
               height="1em"
@@ -632,24 +369,271 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
               />
             </svg>
-            Save and return to task list
+            Add an additional note
           </button>
-        </fieldset>
-      </form>
-      <div
-        class="mint-page-number margin-y-6"
-        data-testid="page-num"
-      >
-        <span
-          class="mint-page-number__page-num"
-        >
-          Page 4 of 5
-        </span>
+        </div>
       </div>
-    </div>
-  </main>
+      <div
+        class="usa-form-group margin-y-4"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-participation"
+        >
+          Does the model offer different options for participation?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="plan-characteristics-participation-true"
+              id="plan-characteristics-participation-true"
+              name="participationOptions"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-participation-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="plan-characteristics-participation-false"
+              id="plan-characteristics-participation-false"
+              name="participationOptions"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="plan-characteristics-participation-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="plan-characteristics-participation-note-add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="add"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="usa-form-group"
+        data-scroll="agreementTypes"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="plan-characteristics-agreement-type"
+        >
+          What is the agreement type?
+        </label>
+        <div
+          class="usa-alert usa-alert--info flex mto-warning"
+          data-testid="alert"
+          id="ops-eval-and-learning-data-needed-warning"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Your answer to this question may have implications for the milestones and solutions or IT systems you select to implement your model. MINT may suggest additional content for your Model-to-operations matrix (MTO). 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/matrix"
+                >
+                  Go to your MTO
+                </a>
+                 to review any suggestions.
+              </span>
+            </p>
+          </div>
+        </div>
+        <p
+          class="text-base margin-y-1"
+        >
+          Note: CMMI writes, Office of General Council (OGC) approves both types of agreements
+        </p>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agreement-type-COOPERATIVE"
+            name="agreementTypes"
+            type="checkbox"
+            value="COOPERATIVE"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agreement-type-COOPERATIVE"
+          >
+            Co-Operative Agreement/Grant
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agreement-type-PARTICIPATION"
+            name="agreementTypes"
+            type="checkbox"
+            value="PARTICIPATION"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agreement-type-PARTICIPATION"
+          >
+            Participation Agreement
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="plan-characteristics-agreement-type-OTHER"
+            name="agreementTypes"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="plan-characteristics-agreement-type-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="plan-characteristics-multiple-participation-needed-note-add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="add"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="margin-top-6 margin-bottom-3"
+      >
+        <button
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Next
+        </button>
+      </div>
+      <button
+        class="usa-button usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          aria-label="back"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Save and return to task list
+      </button>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 4 of 5
+    </span>
+  </div>
 </DocumentFragment>
 `;

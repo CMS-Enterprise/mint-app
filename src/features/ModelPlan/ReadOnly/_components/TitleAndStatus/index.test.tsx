@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { TaskStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
@@ -8,29 +8,19 @@ import TitleAndStatus from './index';
 
 describe('Title and Status component for Read Only Pages', () => {
   it('renders without crashing', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance={false}
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView={false}
-              status={TaskStatus.IN_PROGRESS}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance={false}
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView={false}
+          status={TaskStatus.IN_PROGRESS}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByText('Regular Heading')).toBeInTheDocument();
@@ -39,29 +29,19 @@ describe('Title and Status component for Read Only Pages', () => {
   });
 
   it('renders Clearance heading', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView={false}
-              status={TaskStatus.IN_PROGRESS}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView={false}
+          status={TaskStatus.IN_PROGRESS}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByText('Clearance')).toBeInTheDocument();
@@ -70,29 +50,19 @@ describe('Title and Status component for Read Only Pages', () => {
   });
 
   it('renders the correct status', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView={false}
-              status={TaskStatus.READY_FOR_CLEARANCE}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView={false}
+          status={TaskStatus.READY_FOR_CLEARANCE}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByText('Clearance')).toBeInTheDocument();
@@ -101,58 +71,38 @@ describe('Title and Status component for Read Only Pages', () => {
   });
 
   it('does not render status for Filtered View groups', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView
-              status={TaskStatus.READY_FOR_CLEARANCE}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView
+          status={TaskStatus.READY_FOR_CLEARANCE}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(screen.getByText('Clearance')).toBeInTheDocument();
     expect(screen.queryByTestId('tasklist-tag')).not.toBeInTheDocument();
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance={false}
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView={false}
-              status={TaskStatus.IN_PROGRESS}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    const { asFragment } = render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance={false}
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView={false}
+          status={TaskStatus.IN_PROGRESS}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        />
+      </MemoryRouter>
     );
-
-    const { asFragment } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByText('Regular Heading')).toBeInTheDocument();
@@ -162,30 +112,20 @@ describe('Title and Status component for Read Only Pages', () => {
   });
 
   it('renders editDates UI when editDates is true', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance={false}
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView={false}
-              status={TaskStatus.IN_PROGRESS}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-              editDates
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance={false}
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView={false}
+          status={TaskStatus.IN_PROGRESS}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+          editDates
+        />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
     // Should render the edit icon
     expect(screen.getByTestId('edit-icon')).toBeInTheDocument();
     // Should render the edit dates link
@@ -202,29 +142,19 @@ describe('Title and Status component for Read Only Pages', () => {
   });
 
   it('does not render editDates UI when editDates is false', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <TitleAndStatus
-              clearance={false}
-              clearanceTitle="Clearance"
-              heading="Regular Heading"
-              isViewingFilteredView={false}
-              status={TaskStatus.IN_PROGRESS}
-              modelID="123"
-              modifiedOrCreatedDts="2021-09-01T00:00:00Z"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <TitleAndStatus
+          clearance={false}
+          clearanceTitle="Clearance"
+          heading="Regular Heading"
+          isViewingFilteredView={false}
+          status={TaskStatus.IN_PROGRESS}
+          modelID="123"
+          modifiedOrCreatedDts="2021-09-01T00:00:00Z"
+        />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
     expect(screen.queryByTestId('edit-icon')).not.toBeInTheDocument();
     expect(screen.queryByTestId('edit-dates-link')).not.toBeInTheDocument();
   });

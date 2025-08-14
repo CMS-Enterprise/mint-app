@@ -13,7 +13,6 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
     </h4>
     <a
       class="usa-link display-block line-height-body-5"
-      data-discover="true"
       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view"
     >
       Switch to the Read View for this Model Plan
@@ -42,7 +41,6 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
       >
         <a
           class="usa-link line-height-body-5"
-          data-discover="true"
           href="/help-and-knowledge/model-plan-overview"
           target="_blank"
         >
@@ -52,7 +50,6 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
       <div>
         <a
           class="usa-link line-height-body-5"
-          data-discover="true"
           href="/help-and-knowledge/sample-model-plan"
           target="_blank"
         >
@@ -80,7 +77,6 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
       </div>
       <a
         class="usa-link display-flex flex-align-center"
-        data-discover="true"
         data-testid="view-change-history"
         href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
       >

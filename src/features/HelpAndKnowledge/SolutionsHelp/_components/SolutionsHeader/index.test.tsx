@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 import { helpSolutions } from '../../solutionsMap';
@@ -8,26 +8,20 @@ import SolutionsHeader from './index';
 
 describe('Operation Solution Help Header', () => {
   it('rendered correct information without query', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <SolutionsHeader
-              resultsNum={9}
-              resultsMax={Object.keys(helpSolutions).length}
-              setQuery={(query: string) => null}
-              query=""
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
+    const { getByText } = render(
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <SolutionsHeader
+            resultsNum={9}
+            resultsMax={Object.keys(helpSolutions).length}
+            setQuery={(query: string) => null}
+            query=""
+          />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { getByText } = render(<RouterProvider router={router} />);
 
     // Page results info
     expect(
@@ -36,26 +30,20 @@ describe('Operation Solution Help Header', () => {
   });
 
   it('rendered correct information with query', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <SolutionsHeader
-              resultsNum={1}
-              resultsMax={Object.keys(helpSolutions).length}
-              setQuery={(query: string) => null}
-              query="4inn"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
+    const { getByText } = render(
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <SolutionsHeader
+            resultsNum={1}
+            resultsMax={Object.keys(helpSolutions).length}
+            setQuery={(query: string) => null}
+            query="4inn"
+          />
+        </Route>
+      </MemoryRouter>
     );
-
-    const { getByText } = render(<RouterProvider router={router} />);
 
     // Page results info
     expect(getByText('Showing 1 operational solution for')).toBeInTheDocument();
@@ -63,26 +51,21 @@ describe('Operation Solution Help Header', () => {
   });
 
   it('matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <SolutionsHeader
-              resultsNum={9}
-              resultsMax={Object.keys(helpSolutions).length}
-              setQuery={(query: string) => null}
-              query=""
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge/operational-solutions']
-      }
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={['/help-and-knowledge/operational-solutions']}
+      >
+        <Route path="/help-and-knowledge/operational-solutions">
+          <SolutionsHeader
+            resultsNum={9}
+            resultsMax={Object.keys(helpSolutions).length}
+            setQuery={(query: string) => null}
+            query=""
+          />
+        </Route>
+      </MemoryRouter>
     );
 
-    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

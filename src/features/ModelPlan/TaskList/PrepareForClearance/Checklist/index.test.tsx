@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -45,24 +45,18 @@ const clearanceMock = [
 
 describe('Prepare for clearance checklist', () => {
   it('renders without errors and unchecks an item', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-          element: <PrepareForClearanceCheckList />
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
-        ]
-      }
-    );
-
     const { user } = setup(
-      <MockedProvider mocks={clearanceMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+        ]}
+      >
+        <MockedProvider mocks={clearanceMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
+            <PrepareForClearanceCheckList modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -94,24 +88,18 @@ describe('Prepare for clearance checklist', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
-          element: <PrepareForClearanceCheckList />
-        }
-      ],
-      {
-        initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={clearanceMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+        ]}
+      >
+        <MockedProvider mocks={clearanceMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
+            <PrepareForClearanceCheckList modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Fieldset,
   Form,
@@ -72,9 +72,9 @@ const NewMethodologiesAndConsiderations = () => {
     isDataExchangeApproachComplete: isDataExchangeApproachCompleteConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -182,7 +182,7 @@ const NewMethodologiesAndConsiderations = () => {
         <Form
           id="new-methodologies-and-additional-considerations-form"
           onSubmit={handleSubmit(() => {
-            navigate(
+            history.push(
               `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
             );
           })}

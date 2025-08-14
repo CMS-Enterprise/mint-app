@@ -79,7 +79,7 @@ const Home = () => {
     }).then(() => refetch());
   };
 
-  const homepageComponents: Record<ViewCustomizationType, React.ReactNode> = {
+  const homepageComponents: Record<ViewCustomizationType, JSX.Element> = {
     [ViewCustomizationType.MY_MODEL_PLANS]: (
       <>
         <Divider className="margin-y-6" />
@@ -244,7 +244,7 @@ const Home = () => {
                     <div>
                       <UswdsReactLink
                         variant="unstyled"
-                        to="/homepage-settings/form"
+                        to="/homepage-settings"
                         className="display-flex flex-align-center"
                       >
                         <Icon.Edit
@@ -282,7 +282,7 @@ const Home = () => {
                     <div className="display-flex flex-align-center">
                       <UswdsReactLink
                         variant="unstyled"
-                        to="/homepage-settings/form"
+                        to="/homepage-settings"
                         className="margin-right-1"
                       >
                         {t('editHomepage')}

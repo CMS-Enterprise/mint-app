@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 
 import NotFound from './index';
@@ -22,36 +22,20 @@ vi.mock('@okta/okta-react', () => ({
 
 describe('The Not Found Page', () => {
   it('renders without crashing', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: <NotFound />
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <NotFound />
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
     expect(screen.getByText('This page cannot be found.')).toBeInTheDocument();
   });
 
   it('matches the snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: <NotFound />
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    const { asFragment } = render(
+      <MemoryRouter>
+        <NotFound />
+      </MemoryRouter>
     );
-
-    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

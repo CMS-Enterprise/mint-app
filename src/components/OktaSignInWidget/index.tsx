@@ -2,11 +2,10 @@
 // okta-signin-widget has no typescript support yet.  If becomes available, install and remove disable
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useOktaAuth } from '@okta/okta-react';
 import OktaSignIn from '@okta/okta-signin-widget';
 
 import Spinner from 'components/Spinner';
-import { useOktaSession } from 'contexts/OktaSessionContext';
+import useOktaSession from 'hooks/useOktaSession';
 
 import './index.scss';
 
@@ -24,8 +23,7 @@ const OktaSignInWidget = ({
   const { t } = useTranslation('general');
   const widgetRef = useRef(null);
 
-  const { oktaAuth } = useOktaAuth();
-  const { hasSession } = useOktaSession();
+  const { hasSession, oktaAuth } = useOktaSession();
 
   useEffect(() => {
     let signIn: any;

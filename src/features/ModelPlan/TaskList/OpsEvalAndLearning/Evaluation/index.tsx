@@ -1,16 +1,15 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
-  GridContainer,
   Icon,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   CcmInvolvmentType,
   DataForMonitoringType,
@@ -28,7 +27,6 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -45,7 +43,7 @@ import {
   isQualityMeasures,
   renderCurrentPage,
   renderTotalPages
-} from '../Support';
+} from '..';
 
 type EvaluationFormType = GetEvaluationQuery['modelPlan']['opsEvalAndLearning'];
 
@@ -65,10 +63,10 @@ const Evaluation = () => {
     shareCclfData: shareCclfDataConfig
   } = usePlanTranslation('opsEvalAndLearning');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const { data, loading, error } = useGetEvaluationQuery({
     variables: {
@@ -104,7 +102,7 @@ const Evaluation = () => {
     TypedUpdatePlanOpsEvalAndLearningDocument,
     {
       id,
-      formikRef: formikRef as any
+      formikRef
     }
   );
 
@@ -113,11 +111,11 @@ const Evaluation = () => {
       isCCWInvolvement(formikRef?.current?.values.ccmInvolvment) ||
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
-      navigate(
+      history.push(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
-      navigate(
+      history.push(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
       );
     }
@@ -148,381 +146,377 @@ const Evaluation = () => {
   }
 
   return (
-    <MainContent data-testid="ops-eval-and-learning-evaluation">
-      <GridContainer>
-        <MutationErrorModal
-          isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.closeModal()}
-          url={mutationError.destinationURL}
-        />
+    <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.closeModal()}
+        url={mutationError.destinationURL}
+      />
 
-        <Breadcrumbs
-          items={[
-            BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST,
-            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-          ]}
-        />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
-          {opsEvalAndLearningMiscT('heading')}
-        </PageHeading>
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {opsEvalAndLearningMiscT('heading')}
+      </PageHeading>
 
-        <p
-          className="margin-top-0 margin-bottom-1 font-body-lg"
-          data-testid="model-plan-name"
-        >
-          {miscellaneousT('for')} {modelName}
-        </p>
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        {miscellaneousT('for')} {modelName}
+      </p>
 
-        <p className="margin-bottom-2 font-body-md line-height-sans-4">
-          {miscellaneousT('helpText')}
-        </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {miscellaneousT('helpText')}
+      </p>
 
-        <AskAQuestion modelID={modelID} />
+      <AskAQuestion modelID={modelID} />
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {
-            nextPage();
-          }}
-          enableReinitialize
-          innerRef={formikRef}
-        >
-          {(formikProps: FormikProps<EvaluationFormType>) => {
-            const { handleSubmit, setErrors, values, setFieldValue } =
-              formikProps;
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          nextPage();
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<EvaluationFormType>) => {
+          const { handleSubmit, setErrors, values, setFieldValue } =
+            formikProps;
 
-            return (
-              <>
-                <ConfirmLeave />
+          return (
+            <>
+              <ConfirmLeave />
 
-                <form
-                  className="desktop:grid-col-6 margin-top-6"
-                  data-testid="ops-eval-and-learning-evaluation-form"
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <Fieldset disabled={!!error || loading}>
-                    <FieldGroup scrollElement="evaluationApproaches">
-                      <Label
-                        htmlFor="ops-eval-and-learning-evaluation-approach"
-                        id="ops-eval-and-learning-evaluation-approach"
-                        className="maxw-none"
-                      >
-                        {opsEvalAndLearningT('evaluationApproaches.label')}
-                      </Label>
-
-                      <MTOWarning id="ops-eval-and-learning-evaluation-approach-warning" />
-
-                      {getKeys(evaluationApproachesConfig.options).map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`ops-eval-and-learning-evaluation-approach-${type}`}
-                              data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
-                              name="evaluationApproaches"
-                              label={evaluationApproachesConfig.options[type]}
-                              value={type}
-                              checked={values?.evaluationApproaches.includes(
-                                type
-                              )}
-                            />
-
-                            {type === EvaluationApproachType.OTHER &&
-                              values.evaluationApproaches.includes(
-                                EvaluationApproachType.OTHER
-                              ) && (
-                                <div className="margin-left-4">
-                                  <Label
-                                    htmlFor="ops-eval-and-learning-evaluation-approach-other"
-                                    className="text-normal maxw-none"
-                                  >
-                                    {opsEvalAndLearningT(
-                                      'evaluationApproachOther.label'
-                                    )}
-                                  </Label>
-
-                                  <Field
-                                    as={TextInput}
-                                    id="ops-eval-and-learning-evaluation-approach-other"
-                                    name="evaluationApproachOther"
-                                  />
-                                </div>
-                              )}
-                          </Fragment>
-                        );
-                      })}
-                      <AddNote
-                        id="ops-eval-and-learning-evaluation-approach-note"
-                        field="evalutaionApproachNote"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup>
-                      <Label
-                        htmlFor="ops-eval-and-learning-cmmi-involvement"
-                        id="ops-eval-and-learning-cmmi-involvement"
-                        className="maxw-none"
-                      >
-                        {opsEvalAndLearningT('ccmInvolvment.label')}
-                      </Label>
-
-                      <p className="text-base margin-y-1">
-                        {opsEvalAndLearningT('ccmInvolvment.sublabel')}
-                      </p>
-
-                      {getKeys(ccmInvolvmentConfig.options).map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`ops-eval-and-learning-cmmi-involvement-${type}`}
-                              name="ccmInvolvment"
-                              label={ccmInvolvmentConfig.options[type]}
-                              value={type}
-                              checked={values?.ccmInvolvment.includes(type)}
-                            />
-                            {type === CcmInvolvmentType.OTHER &&
-                              values.ccmInvolvment.includes(
-                                CcmInvolvmentType.OTHER
-                              ) && (
-                                <div className="margin-left-4 margin-top-neg-2">
-                                  <Label
-                                    htmlFor="ops-eval-and-learning-cmmi-involvement-other"
-                                    className="text-normal"
-                                  >
-                                    {opsEvalAndLearningT(
-                                      'ccmInvolvmentOther.label'
-                                    )}
-                                  </Label>
-
-                                  <Field
-                                    as={TextInput}
-                                    id="ops-eval-and-learning-cmmi-involvement-other"
-                                    name="ccmInvolvmentOther"
-                                  />
-                                </div>
-                              )}
-                          </Fragment>
-                        );
-                      })}
-
-                      <AddNote
-                        id="ops-eval-and-learning-cmmi-involvement-note"
-                        field="ccmInvolvmentNote"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      className="margin-top-4"
-                      scrollElement="dataNeededForMonitoring"
+              <Form
+                className="desktop:grid-col-6 margin-top-6"
+                data-testid="ops-eval-and-learning-evaluation-form"
+                onSubmit={e => {
+                  handleSubmit(e);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
+                  <FieldGroup scrollElement="evaluationApproaches">
+                    <Label
+                      htmlFor="ops-eval-and-learning-evaluation-approach"
+                      id="ops-eval-and-learning-evaluation-approach"
+                      className="maxw-none"
                     >
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-needed"
-                        id="label-ops-eval-and-learning-data-needed"
-                        className="maxw-none"
-                      >
-                        {opsEvalAndLearningT('dataNeededForMonitoring.label')}
-                      </Label>
+                      {opsEvalAndLearningT('evaluationApproaches.label')}
+                    </Label>
 
-                      <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
+                    <MTOWarning id="ops-eval-and-learning-evaluation-approach-warning" />
 
-                      <p className="text-base margin-y-1">
-                        {opsEvalAndLearningT(
-                          'dataNeededForMonitoring.sublabel'
-                        )}
-                      </p>
-
-                      <Field
-                        as={MultiSelect}
-                        id="ops-eval-and-learning-data-needed"
-                        name="dataNeededForMonitoring"
-                        ariaLabel="label-ops-eval-and-learning-data-needed"
-                        options={composeMultiSelectOptions(
-                          dataNeededForMonitoringConfig.options
-                        )}
-                        selectedLabel={opsEvalAndLearningT(
-                          'dataNeededForMonitoring.multiSelectLabel'
-                        )}
-                        onChange={(value: string[] | []) => {
-                          setFieldValue('dataNeededForMonitoring', value);
-                        }}
-                        initialValues={initialValues.dataNeededForMonitoring}
-                      />
-
-                      {(values?.dataNeededForMonitoring || []).includes(
-                        DataForMonitoringType.OTHER
-                      ) && (
-                        <div className="margin-top-2">
-                          <Label
-                            htmlFor="ops-eval-and-learning-data-needed-other"
-                            className="text-normal"
-                          >
-                            {opsEvalAndLearningT(
-                              'dataNeededForMonitoringOther.label'
-                            )}
-                          </Label>
-
+                    {getKeys(evaluationApproachesConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
                           <Field
-                            as={TextInput}
-                            maxLength={50}
-                            id="ops-eval-and-learning-data-needed-other"
-                            name="dataNeededForMonitoringOther"
+                            as={CheckboxField}
+                            id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                            data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
+                            name="evaluationApproaches"
+                            label={evaluationApproachesConfig.options[type]}
+                            value={type}
+                            checked={values?.evaluationApproaches.includes(
+                              type
+                            )}
                           />
-                        </div>
-                      )}
 
-                      <AddNote
-                        id="ops-eval-and-learning-data-needed-note"
-                        field="dataNeededForMonitoringNote"
-                      />
-                    </FieldGroup>
+                          {type === EvaluationApproachType.OTHER &&
+                            values.evaluationApproaches.includes(
+                              EvaluationApproachType.OTHER
+                            ) && (
+                              <div className="margin-left-4">
+                                <Label
+                                  htmlFor="ops-eval-and-learning-evaluation-approach-other"
+                                  className="text-normal maxw-none"
+                                >
+                                  {opsEvalAndLearningT(
+                                    'evaluationApproachOther.label'
+                                  )}
+                                </Label>
 
-                    <FieldGroup
-                      className="margin-top-4"
-                      scrollElement="dataToSendParticicipants"
+                                <Field
+                                  as={TextInput}
+                                  id="ops-eval-and-learning-evaluation-approach-other"
+                                  name="evaluationApproachOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+                    <AddNote
+                      id="ops-eval-and-learning-evaluation-approach-note"
+                      field="evalutaionApproachNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup>
+                    <Label
+                      htmlFor="ops-eval-and-learning-cmmi-involvement"
+                      id="ops-eval-and-learning-cmmi-involvement"
+                      className="maxw-none"
                     >
-                      <Label
-                        htmlFor="ops-eval-and-learning-data-to-send"
-                        id="label-ops-eval-and-learning-data-to-send"
-                        className="maxw-none"
-                      >
-                        {opsEvalAndLearningT('dataToSendParticicipants.label')}
-                      </Label>
+                      {opsEvalAndLearningT('ccmInvolvment.label')}
+                    </Label>
 
-                      <MTOWarning id="ops-eval-and-learning-data-to-send-warning" />
+                    <p className="text-base margin-y-1">
+                      {opsEvalAndLearningT('ccmInvolvment.sublabel')}
+                    </p>
 
-                      <Field
-                        as={MultiSelect}
-                        id="ops-eval-and-learning-data-to-send"
-                        name="dataToSendParticicipants"
-                        ariaLabel="label-ops-eval-and-learning-data-to-send"
-                        options={composeMultiSelectOptions(
-                          dataToSendParticicipantsConfig.options
-                        )}
-                        selectedLabel={opsEvalAndLearningT(
-                          'dataToSendParticicipants.multiSelectLabel'
-                        )}
-                        onChange={(value: string[] | []) => {
-                          setFieldValue('dataToSendParticicipants', value);
-                        }}
-                        initialValues={initialValues.dataToSendParticicipants}
-                      />
-
-                      {(values?.dataToSendParticicipants || []).includes(
-                        DataToSendParticipantsType.OTHER_MIPS_DATA
-                      ) && (
-                        <div className="margin-top-2">
-                          <Label
-                            htmlFor="ops-eval-and-learning-data-to-send-other"
-                            className="text-normal"
-                          >
-                            {opsEvalAndLearningT(
-                              'dataToSendParticicipantsOther.label'
-                            )}
-                          </Label>
-
+                    {getKeys(ccmInvolvmentConfig.options).map(type => {
+                      return (
+                        <Fragment key={type}>
                           <Field
-                            as={TextInput}
-                            maxLength={50}
-                            id="ops-eval-and-learning-data-to-send-other"
-                            name="dataToSendParticicipantsOther"
+                            as={CheckboxField}
+                            id={`ops-eval-and-learning-cmmi-involvement-${type}`}
+                            name="ccmInvolvment"
+                            label={ccmInvolvmentConfig.options[type]}
+                            value={type}
+                            checked={values?.ccmInvolvment.includes(type)}
                           />
-                        </div>
+                          {type === CcmInvolvmentType.OTHER &&
+                            values.ccmInvolvment.includes(
+                              CcmInvolvmentType.OTHER
+                            ) && (
+                              <div className="margin-left-4 margin-top-neg-2">
+                                <Label
+                                  htmlFor="ops-eval-and-learning-cmmi-involvement-other"
+                                  className="text-normal"
+                                >
+                                  {opsEvalAndLearningT(
+                                    'ccmInvolvmentOther.label'
+                                  )}
+                                </Label>
+
+                                <Field
+                                  as={TextInput}
+                                  id="ops-eval-and-learning-cmmi-involvement-other"
+                                  name="ccmInvolvmentOther"
+                                />
+                              </div>
+                            )}
+                        </Fragment>
+                      );
+                    })}
+
+                    <AddNote
+                      id="ops-eval-and-learning-cmmi-involvement-note"
+                      field="ccmInvolvmentNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="dataNeededForMonitoring"
+                  >
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-needed"
+                      id="label-ops-eval-and-learning-data-needed"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('dataNeededForMonitoring.label')}
+                    </Label>
+
+                    <MTOWarning id="ops-eval-and-learning-data-needed-warning" />
+
+                    <p className="text-base margin-y-1">
+                      {opsEvalAndLearningT('dataNeededForMonitoring.sublabel')}
+                    </p>
+
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-data-needed"
+                      name="dataNeededForMonitoring"
+                      ariaLabel="label-ops-eval-and-learning-data-needed"
+                      options={composeMultiSelectOptions(
+                        dataNeededForMonitoringConfig.options
                       )}
+                      selectedLabel={opsEvalAndLearningT(
+                        'dataNeededForMonitoring.multiSelectLabel'
+                      )}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('dataNeededForMonitoring', value);
+                      }}
+                      initialValues={initialValues.dataNeededForMonitoring}
+                    />
 
-                      <AddNote
-                        id="ops-eval-and-learning-data-to-send-note"
-                        field="dataToSendParticicipantsNote"
-                      />
-                    </FieldGroup>
+                    {(values?.dataNeededForMonitoring || []).includes(
+                      DataForMonitoringType.OTHER
+                    ) && (
+                      <div className="margin-top-2">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-needed-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT(
+                            'dataNeededForMonitoringOther.label'
+                          )}
+                        </Label>
 
-                    <FieldGroup className="margin-top-6">
-                      <Label
-                        htmlFor="ops-eval-and-learning-share-cclf-data"
-                        className="maxw-none"
-                      >
-                        {opsEvalAndLearningT('shareCclfData.label')}
-                      </Label>
+                        <Field
+                          as={TextInput}
+                          maxLength={50}
+                          id="ops-eval-and-learning-data-needed-other"
+                          name="dataNeededForMonitoringOther"
+                        />
+                      </div>
+                    )}
 
-                      <BooleanRadio
-                        field="shareCclfData"
-                        id="ops-eval-and-learning-share-cclf-data"
-                        value={values.shareCclfData}
-                        setFieldValue={setFieldValue}
-                        options={shareCclfDataConfig.options}
-                      />
+                    <AddNote
+                      id="ops-eval-and-learning-data-needed-note"
+                      field="dataNeededForMonitoringNote"
+                    />
+                  </FieldGroup>
 
-                      <AddNote
-                        id="ops-eval-and-learning-share-cclf-data-note"
-                        field="shareCclfDataNote"
-                      />
-                    </FieldGroup>
+                  <FieldGroup
+                    className="margin-top-4"
+                    scrollElement="dataToSendParticicipants"
+                  >
+                    <Label
+                      htmlFor="ops-eval-and-learning-data-to-send"
+                      id="label-ops-eval-and-learning-data-to-send"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('dataToSendParticicipants.label')}
+                    </Label>
 
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          navigate(
-                            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
-                          );
-                        }}
-                      >
-                        {miscellaneousT('back')}
-                      </Button>
+                    <MTOWarning id="ops-eval-and-learning-data-to-send-warning" />
 
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {miscellaneousT('next')}
-                      </Button>
-                    </div>
+                    <Field
+                      as={MultiSelect}
+                      id="ops-eval-and-learning-data-to-send"
+                      name="dataToSendParticicipants"
+                      ariaLabel="label-ops-eval-and-learning-data-to-send"
+                      options={composeMultiSelectOptions(
+                        dataToSendParticicipantsConfig.options
+                      )}
+                      selectedLabel={opsEvalAndLearningT(
+                        'dataToSendParticicipants.multiSelectLabel'
+                      )}
+                      onChange={(value: string[] | []) => {
+                        setFieldValue('dataToSendParticicipants', value);
+                      }}
+                      initialValues={initialValues.dataToSendParticicipants}
+                    />
 
+                    {(values?.dataToSendParticicipants || []).includes(
+                      DataToSendParticipantsType.OTHER_MIPS_DATA
+                    ) && (
+                      <div className="margin-top-2">
+                        <Label
+                          htmlFor="ops-eval-and-learning-data-to-send-other"
+                          className="text-normal"
+                        >
+                          {opsEvalAndLearningT(
+                            'dataToSendParticicipantsOther.label'
+                          )}
+                        </Label>
+
+                        <Field
+                          as={TextInput}
+                          maxLength={50}
+                          id="ops-eval-and-learning-data-to-send-other"
+                          name="dataToSendParticicipantsOther"
+                        />
+                      </div>
+                    )}
+
+                    <AddNote
+                      id="ops-eval-and-learning-data-to-send-note"
+                      field="dataToSendParticicipantsNote"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label
+                      htmlFor="ops-eval-and-learning-share-cclf-data"
+                      className="maxw-none"
+                    >
+                      {opsEvalAndLearningT('shareCclfData.label')}
+                    </Label>
+
+                    <BooleanRadio
+                      field="shareCclfData"
+                      id="ops-eval-and-learning-share-cclf-data"
+                      value={values.shareCclfData}
+                      setFieldValue={setFieldValue}
+                      options={shareCclfDataConfig.options}
+                    />
+
+                    <AddNote
+                      id="ops-eval-and-learning-share-cclf-data-note"
+                      field="shareCclfDataNote"
+                    />
+                  </FieldGroup>
+
+                  <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
-                        )
-                      }
+                      className="usa-button usa-button--outline margin-bottom-1"
+                      onClick={() => {
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
+                        );
+                      }}
                     >
-                      <Icon.ArrowBack
-                        className="margin-right-1"
-                        aria-hidden
-                        aria-label="back"
-                      />
-
-                      {miscellaneousT('saveAndReturn')}
+                      {miscellaneousT('back')}
                     </Button>
-                  </Fieldset>
-                </form>
-              </>
-            );
-          }}
-        </Formik>
 
-        {data && (
-          <PageNumber
-            currentPage={renderCurrentPage(
-              6,
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            totalPages={renderTotalPages(
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            className="margin-y-6"
-          />
-        )}
-      </GridContainer>
-    </MainContent>
+                    <Button type="submit" onClick={() => setErrors({})}>
+                      {miscellaneousT('next')}
+                    </Button>
+                  </div>
+
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
+                  >
+                    <Icon.ArrowBack
+                      className="margin-right-1"
+                      aria-hidden
+                      aria-label="back"
+                    />
+
+                    {miscellaneousT('saveAndReturn')}
+                  </Button>
+                </Fieldset>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
+
+      {data && (
+        <PageNumber
+          currentPage={renderCurrentPage(
+            6,
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          totalPages={renderTotalPages(
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment) ||
+              isQualityMeasures(dataNeededForMonitoring)
+          )}
+          className="margin-y-6"
+        />
+      )}
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -57,24 +57,18 @@ const mocks = [
 
 describe('Basics overview page', () => {
   it('renders without errors and matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/overview',
-          element: <Overview />
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/overview'
-        ]
-      }
-    );
-
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false} showWarnings>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/overview'
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false} showWarnings>
+          <Route path="/models/:modelID/collaboration-area/task-list/overview">
+            <Overview />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() =>

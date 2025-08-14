@@ -5,11 +5,11 @@ Each checkbox modifies the 'status' on its respective task list sections
 
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetClearanceStatusesQuery,
   PrepareForClearanceStatus,
@@ -109,13 +109,17 @@ const convertReadyStatus = (status: TaskStatus): TaskStatusInput => {
   }
 };
 
-const PrepareForClearanceCheckList = () => {
+type PrepareForClearanceCheckListProps = {
+  modelID: string;
+};
+
+const PrepareForClearanceCheckList = ({
+  modelID
+}: PrepareForClearanceCheckListProps) => {
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('general');
 
-  const { modelID } = useParams<{ modelID: string }>();
-
-  const navigate = useNavigate();
+  const history = useHistory();
 
   // Used to map, iterate and label task list sections and values from query
   const taskListSections = tArray<Record<string, string>>(
@@ -128,7 +132,7 @@ const PrepareForClearanceCheckList = () => {
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID || '',
+      id: modelID,
       includePrepareForClearance: false
     }
   });
@@ -186,7 +190,7 @@ const PrepareForClearanceCheckList = () => {
         const errors = responses?.find(result => result?.errors);
 
         if (!errors) {
-          navigate(`/models/${modelID}/collaboration-area/task-list`);
+          history.push(`/models/${modelID}/collaboration-area/task-list`);
         }
       })
       .catch(errors => {
@@ -266,7 +270,7 @@ const PrepareForClearanceCheckList = () => {
                   </ErrorAlert>
                 )}
 
-                <form
+                <Form
                   className="margin-y-6"
                   data-testid="prepare-for-clearance-form"
                   onSubmit={e => {
@@ -392,7 +396,7 @@ const PrepareForClearanceCheckList = () => {
                       data-testid="dont-update-clearance"
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
-                        navigate(
+                        history.push(
                           `/models/${modelID}/collaboration-area/task-list`
                         )
                       }
@@ -405,7 +409,7 @@ const PrepareForClearanceCheckList = () => {
                       {t('dontUpdate')}
                     </Button>
                   </Fieldset>
-                </form>
+                </Form>
               </>
             );
           }}
@@ -426,7 +430,7 @@ export const SectionClearanceLabel = ({
   className,
   commonName,
   readyForClearanceDts
-}: SectionClearanceLabelProps): React.ReactElement => {
+}: SectionClearanceLabelProps): JSX.Element => {
   const { t } = useTranslation('prepareForClearance');
 
   return (

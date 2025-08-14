@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -36,24 +36,18 @@ const mocks: any = [...summaryMock, ...collaboratorsMocks, ...modelBasicsMocks];
 
 describe('Read Only Model Plan Summary', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/:subinfo',
-          element: <ReadOnly />
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/model-basics`]
-      }
-    );
-
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-view/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
@@ -92,24 +86,18 @@ describe('Read Only Model Plan Summary', () => {
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/:subinfo',
-          element: <ReadOnly />
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/model-basics`]
-      }
-    );
-
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-view/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
@@ -135,24 +123,18 @@ describe('Read Only Model Plan Summary', () => {
 describe('Status Tag updates', () => {
   it('renders "ICIP complete" tag and alert', async () => {
     mocks[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/:subinfo',
-          element: <ReadOnly />
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/model-basics`]
-      }
-    );
-
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-view/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
@@ -167,24 +149,18 @@ describe('Status Tag updates', () => {
 
   it('renders "Cleared" tag and does not render alert', async () => {
     mocks[0].result.data.modelPlan.status = ModelStatus.CLEARED;
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/read-view/:subinfo',
-          element: <ReadOnly />
-        }
-      ],
-      {
-        initialEntries: [`/models/${modelID}/read-view/model-basics`]
-      }
-    );
-
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-view/:subinfo">
+              <ReadOnly />
+            </Route>
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { UsePaginationInstanceProps, UsePaginationState } from 'react-table';
 import classnames from 'classnames';
 
@@ -27,10 +27,9 @@ const TablePagination = ({
 }: ReactTablePaginationProps) => {
   const { t } = useTranslation('systemProfile');
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const history = useHistory();
 
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
 
   const classNames = classnames(
     'usa-pagination',
@@ -49,19 +48,14 @@ const TablePagination = ({
           <li className="usa-pagination__item usa-pagination__arrow">
             <button
               type="button"
-              className="usa-pagination__link usa-pagination__previous-pag  "
+              className="usa-pagination__link usa-pagination__previous-page"
               aria-label="Previous page"
               onClick={() => {
                 if (setQueryParam) {
                   params.set('page', pageIndex.toString());
-                  navigate(
-                    {
-                      search: params.toString()
-                    },
-                    {
-                      replace: true
-                    }
-                  );
+                  history.replace({
+                    search: params.toString()
+                  });
                 }
                 previousPage();
               }}
@@ -100,14 +94,9 @@ const TablePagination = ({
                           onClick={() => {
                             if (setQueryParam) {
                               params.set('page', page.toString());
-                              navigate(
-                                {
-                                  search: params.toString()
-                                },
-                                {
-                                  replace: true
-                                }
-                              );
+                              history.replace({
+                                search: params.toString()
+                              });
                             }
                             gotoPage(page - 1);
                           }}
@@ -130,14 +119,9 @@ const TablePagination = ({
                         onClick={() => {
                           if (setQueryParam) {
                             params.set('page', page.toString());
-                            navigate(
-                              {
-                                search: params.toString()
-                              },
-                              {
-                                replace: true
-                              }
-                            );
+                            history.replace({
+                              search: params.toString()
+                            });
                           }
                           gotoPage(page - 1);
                         }}
@@ -160,14 +144,9 @@ const TablePagination = ({
               onClick={() => {
                 if (setQueryParam) {
                   params.set('page', (pageIndex + 2).toString());
-                  navigate(
-                    {
-                      search: params.toString()
-                    },
-                    {
-                      replace: true
-                    }
-                  );
+                  history.replace({
+                    search: params.toString()
+                  });
                 }
                 nextPage();
               }}

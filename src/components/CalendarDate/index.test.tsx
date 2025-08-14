@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { DateTime } from 'luxon';
 
@@ -11,21 +11,13 @@ describe('CalendarDate', () => {
     const link = '/some-link';
     const linkText = 'Some Link Text';
 
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <Route path="/">
+          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     const month = DateTime.fromISO(dateISO).toFormat('MMM');
     const day = DateTime.fromISO(dateISO).toFormat('dd');
@@ -39,21 +31,13 @@ describe('CalendarDate', () => {
     const link = '/some-link';
     const linkText = 'Some Link Text';
 
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <Route path="/">
+          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     const linkElement = screen.getByRole('link', { name: linkText });
     expect(linkElement).toBeInTheDocument();
@@ -65,21 +49,13 @@ describe('CalendarDate', () => {
     const link = '/some-link';
     const linkText = 'Some Link Text';
 
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <Route path="/">
+          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(screen.getByTestId('collection-calendar-date')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: linkText })).toBeInTheDocument();
@@ -90,21 +66,13 @@ describe('CalendarDate', () => {
     const link = '/some-link';
     const linkText = 'Some Link Text';
 
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
-      }
+    render(
+      <MemoryRouter>
+        <Route path="/">
+          <CalendarDate dateISO={dateISO} link={link} linkText={linkText} />
+        </Route>
+      </MemoryRouter>
     );
-
-    render(<RouterProvider router={router} />);
 
     expect(screen.getByTestId('collection-calendar-date')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: linkText })).toBeInTheDocument();

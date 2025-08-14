@@ -1,31 +1,32 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+
+import ProtectedRoute from 'components/ProtectedRoute';
 
 import SelectSolutionSettings from './selectSolutions';
 import SettingsForm from './settings';
 import SettingsOrder from './settingsOrder';
 
 export const HomePageSettings = () => {
-  return <Outlet />;
-};
+  return (
+    <Switch>
+      <ProtectedRoute
+        path="/homepage-settings"
+        exact
+        component={SettingsForm}
+      />
 
-export const homePageSettingsRoutes = {
-  path: '/homepage-settings',
-  element: <HomePageSettings />,
-  children: [
-    {
-      path: 'form',
-      element: <SettingsForm />
-    },
-    {
-      path: 'order',
-      element: <SettingsOrder />
-    },
-    {
-      path: 'solutions',
-      element: <SelectSolutionSettings />
-    }
-  ]
+      <ProtectedRoute
+        path="/homepage-settings/order"
+        component={SettingsOrder}
+      />
+
+      <ProtectedRoute
+        path="/homepage-settings/solutions"
+        component={SelectSolutionSettings}
+      />
+    </Switch>
+  );
 };
 
 export default HomePageSettings;

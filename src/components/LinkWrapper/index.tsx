@@ -23,7 +23,6 @@ type UswdsReactLinkProps = {
   'aria-label'?: string;
   children?: React.ReactNode | string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  state?: any;
 };
 
 const UswdsReactLink = ({
@@ -35,8 +34,7 @@ const UswdsReactLink = ({
   'data-testid': datatestid,
   'aria-label': ariaLabel,
   children,
-  onClick,
-  state
+  onClick
 }: UswdsReactLinkProps) => {
   return (
     <UswdsLink
@@ -49,7 +47,6 @@ const UswdsReactLink = ({
       className={classnames(className)}
       aria-label={ariaLabel}
       onClick={onClick}
-      state={state}
     >
       {children}
     </UswdsLink>

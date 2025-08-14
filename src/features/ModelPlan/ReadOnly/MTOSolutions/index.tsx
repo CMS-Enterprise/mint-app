@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import ITSystemsTable from 'features/ModelPlan/ModelToOperations/_components/ITSystemsTable';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -14,13 +13,11 @@ import PageLoading from 'components/PageLoading';
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 
-const ReadOnlyMTOSolutions = ({ modelID }: { modelID?: string }) => {
+const ReadOnlyMTOSolutions = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID: modelIDFromParams } = useParams();
-
   const { data, loading, error } = useGetMtoSolutionsAndMilestonesQuery({
-    variables: { id: modelID || modelIDFromParams || '' }
+    variables: { id: modelID }
   });
 
   const modelToOperationsMatrix =
@@ -49,7 +46,7 @@ const ReadOnlyMTOSolutions = ({ modelID }: { modelID?: string }) => {
         subHeading={t('solutions')}
         isViewingFilteredView={false}
         status={modelToOperationsMatrix.status}
-        modelID={modelID || modelIDFromParams || ''}
+        modelID={modelID}
         modifiedOrCreatedDts={modelToOperationsMatrix.recentEdit?.date}
       />
 

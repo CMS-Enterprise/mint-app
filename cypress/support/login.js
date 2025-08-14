@@ -19,7 +19,7 @@ Cypress.Commands.add('login', () => {
           token => {
             cy.get('input[name="answer"]').type(token, { log: false });
             cy.get('input[name="rememberDevice"]').check({ force: true });
-            cy.get('input[value="Verify"]').click({ force: true });
+            cy.get('input[value="Verify"]').click();
           }
         );
       });
@@ -38,34 +38,22 @@ Cypress.Commands.add(
       // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
       cy.visit('/login', { timeout: 120000 });
 
-      cy.wait(500);
-
-      cy.get('[data-testid="LocalAuth-Visit"]')
-        .should('be.not.disabled')
-        .click({ force: true });
-      cy.get('[data-testid="LocalAuth-EUA"]')
-        .should('be.not.disabled')
-        .type(name);
+      cy.get('[data-testid="LocalAuth-Visit"]').click();
+      cy.get('[data-testid="LocalAuth-EUA"]').type(name);
 
       if (role) {
-        cy.get(`input[value="${role}"]`).should('be.not.disabled').check({
-          force: true
-        });
+        cy.get(`input[value="${role}"]`).check();
       }
-      cy.get('[data-testid="LocalAuth-Submit"]')
-        .should('be.not.disabled')
-        .click({ force: true });
+      cy.get('[data-testid="LocalAuth-Submit"]').click();
 
       if (!nda) {
         cy.get('#nda-check').check({ force: true }).should('be.checked');
 
-        cy.get('#nda-submit').should('be.not.disabled').click({ force: true });
+        cy.get('#nda-submit').click();
       } else {
         cy.get('#nda-alert').should('contain.text', 'Accepted on');
 
-        cy.get('[data-testid="nda-continue"]')
-          .should('be.not.disabled')
-          .click({ force: true });
+        cy.get('[data-testid="nda-continue"]').click();
       }
 
       cy.url().should('eq', 'http://localhost:3005/');
@@ -74,6 +62,6 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('logout', () => {
-  cy.get('[data-testid="signout-link"]').click({ force: true });
+  cy.get('[data-testid="signout-link"]').click();
   cy.url().should('eq', 'http://localhost:3005/');
 });

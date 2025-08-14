@@ -1,6 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
@@ -9,26 +8,16 @@ import BCDATimeLine from './index';
 
 describe('The MTOWarning component', () => {
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge/operational-solutions',
-          element: (
-            <BCDATimeLine solution={helpSolutions[MtoCommonSolutionKey.BCDA]} />
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/help-and-knowledge/operational-solutions?solution=beneficiary-claims-data-api&section=timeline'
-        ]
-      }
-    );
-
     const { asFragment } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <MemoryRouter
+        initialEntries={[
+          '/help-and-knowledge/operational-solutions?solution=beneficiary-claims-data-api&section=timeline'
+        ]}
+      >
+        <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
+          <BCDATimeLine solution={helpSolutions[MtoCommonSolutionKey.BCDA]} />
+        </Route>
+      </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
   });

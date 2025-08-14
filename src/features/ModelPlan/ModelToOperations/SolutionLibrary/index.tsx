@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   CardGroup,
@@ -46,7 +46,7 @@ export type SolutionViewType =
 
 const SolutionLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const { clearMessage, message } = useMessage();
 
   const {
@@ -57,11 +57,9 @@ const SolutionLibrary = () => {
 
   // Query parameters
   const location = useLocation();
-  const navigate = useNavigate();
-
   const { prevPathname, selectedSolution } = useModalSolutionState();
-
-  const params = new URLSearchParams(location.search);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
   const hideAddedSolutions = params.get('hide-added-solutions') === 'true';
 
   let viewParam: SolutionViewType = 'all';
@@ -299,10 +297,7 @@ const SolutionLibrary = () => {
                           hideAddedSolutions ? 'false' : 'true'
                         );
                         params.set('page', '1');
-                        navigate(
-                          { search: params.toString() },
-                          { replace: true }
-                        );
+                        history.replace({ search: params.toString() });
                       }}
                     />
                   </Grid>
@@ -327,10 +322,7 @@ const SolutionLibrary = () => {
                               onClick={() => {
                                 setQuery('');
                                 params.set('view', 'all');
-                                navigate(
-                                  { search: params.toString() },
-                                  { replace: true }
-                                );
+                                history.replace({ search: params.toString() });
                               }}
                             >
                               {' '}
@@ -438,10 +430,7 @@ const SolutionLibrary = () => {
                             onClick={() => {
                               setQuery('');
                               params.set('view', 'all');
-                              navigate(
-                                { search: params.toString() },
-                                { replace: true }
-                              );
+                              history.replace({ search: params.toString() });
                             }}
                           >
                             {' '}

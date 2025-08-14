@@ -5,7 +5,7 @@ import './index.scss';
 
 type ErrorAlertProps = {
   heading: string;
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNodeArray;
   classNames?: string;
   testId?: string;
 };
