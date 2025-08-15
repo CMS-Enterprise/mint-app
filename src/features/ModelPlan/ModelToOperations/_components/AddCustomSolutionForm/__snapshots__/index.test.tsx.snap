@@ -110,13 +110,7 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           data-testid="label"
           for="poc-name"
         >
-          Point of contact name 
-          <abbr
-            class="usa-hint usa-hint--required"
-            title="required"
-          >
-            *
-          </abbr>
+          Point of contact name
         </label>
         <input
           class="usa-input"
@@ -136,13 +130,7 @@ exports[`Custom Solution form > matches snapshot 1`] = `
           data-testid="label"
           for="poc-email"
         >
-          Point of contact email address 
-          <abbr
-            class="usa-hint usa-hint--required"
-            title="required"
-          >
-            *
-          </abbr>
+          Point of contact email address
         </label>
         <input
           class="usa-input"

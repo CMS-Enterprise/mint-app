@@ -97,8 +97,8 @@ const CustomSolutionForm = () => {
         modelPlanID: modelID,
         solutionType: formData.solutionType,
         name: formData.solutionTitle,
-        pocName: formData.pocName,
-        pocEmail: formData.pocEmail
+        pocName: formData.pocName || null,
+        pocEmail: formData.pocEmail || null
       }
     })
       .then(response => {
@@ -228,14 +228,13 @@ const CustomSolutionForm = () => {
             name="pocName"
             control={control}
             rules={{
-              required: true
+              required: false
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
                 >
                   {t('modal.solution.label.pocName')}
                 </Label>
@@ -254,7 +253,7 @@ const CustomSolutionForm = () => {
             name="pocEmail"
             control={control}
             rules={{
-              required: true,
+              required: false,
               pattern: {
                 value: /\S+@\S+\.\S+/,
                 message: `${t('modal.solution.label.emailError')}`
@@ -265,7 +264,6 @@ const CustomSolutionForm = () => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
                 >
                   {t('modal.solution.label.pocEmail')}
                 </Label>

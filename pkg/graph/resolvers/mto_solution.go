@@ -90,8 +90,8 @@ func MTOSolutionCreateCustom(
 	name string,
 	solutionType models.MTOSolutionType,
 	neededBy *time.Time,
-	pocName string,
-	pocEmail string,
+	pocName *string,
+	pocEmail *string,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -105,8 +105,8 @@ func MTOSolutionCreateCustom(
 		neededBy,
 		principalAccount.ID,
 	)
-	mtoSolution.PocName = &pocName
-	mtoSolution.PocEmail = &pocEmail
+	mtoSolution.PocName = pocName
+	mtoSolution.PocEmail = pocEmail
 
 	err := BaseStructPreCreate(logger, mtoSolution, principal, store, true)
 	if err != nil {
