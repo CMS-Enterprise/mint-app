@@ -52,6 +52,8 @@ import {
 
 import Alert from 'components/Alert';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import DatePickerFormatted from 'components/DatePickerFormatted';
+import DatePickerWarning from 'components/DatePickerWarning';
 import DateTimePicker from 'components/DateTimePicker';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
@@ -114,6 +116,7 @@ const EditSolutionForm = ({
 }: EditSolutionFormProps) => {
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
+  const { t: generalT } = useTranslation('general');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -1044,16 +1047,33 @@ const EditSolutionForm = ({
                         </HelpText>
 
                         <div className="position-relative">
-                          <DateTimePicker
-                            id="neededBy"
-                            name="neededBy"
-                            value={field.value}
-                            onChange={(date: Date | null) =>
-                              field.onChange(date)
-                            }
-                            isDateInPast={isDateInPast(watch('neededBy'))}
+                          <DatePickerFormatted
+                            {...field}
+                            aria-labelledby={convertCamelCaseToKebabCase(
+                              'neededBy'
+                            )}
+                            id="solution-needed-by"
+                            defaultValue={field.value}
+                            suppressMilliseconds
                           />
+
+                          {isDateInPast(watch('neededBy')) && (
+                            <DatePickerWarning
+                              label={generalT('dateWarning')}
+                            />
+                          )}
                         </div>
+
+                        {isDateInPast(watch('neededBy')) && (
+                          <Alert
+                            type="warning"
+                            className="margin-top-2"
+                            headingLevel="h4"
+                            slim
+                          >
+                            {generalT('dateWarning')}
+                          </Alert>
+                        )}
                       </FormGroup>
                     )}
                   />

@@ -8,14 +8,12 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Label,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import {
   GetTimelineQuery,
   TypedUpdateTimelineDocument,
@@ -39,7 +37,6 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import { isDateInPast } from 'utils/date';
 
 import './index.scss';
-import 'react-datepicker/dist/react-datepicker.css';
 
 type TimelineFormType = GetTimelineQuery['modelPlan']['timeline'];
 
@@ -226,49 +223,21 @@ const Timeline = () => {
                                 className="font-body-sm line-height-sans-4 text-normal"
                               >
                                 <div className="datepicker__wrapper display-block">
-                                  <Grid desktop={{ col: 5 }}>
-                                    <Label
-                                      htmlFor="timeline-completeICIP"
-                                      className={classNames(
-                                        'usa-legend margin-top-0'
-                                      )}
-                                    >
-                                      {timelineT('completeICIP.label')}
-                                    </Label>
-
-                                    <div
-                                      className="usa-hint"
-                                      id="timeline-completeICIP-hint"
-                                    >
-                                      {miscellaneousT('datePlaceholder')}
-                                    </div>
-
-                                    <Field
-                                      as={DateTimePicker}
-                                      disabled={loading}
-                                      id="timeline-completeICIP"
-                                      name="completeICIP"
-                                      value={values.completeICIP}
-                                      onChange={(date: Date | null) =>
-                                        setFieldValue('completeICIP', date)
-                                      }
-                                      isDateInPast={isDateInPast(
-                                        values.completeICIP
-                                      )}
-                                      alertText={false}
-                                    />
-                                  </Grid>
-
-                                  {isDateInPast(values.completeICIP) && (
-                                    <Alert
-                                      type="warning"
-                                      className="margin-top-2"
-                                      headingLevel="h4"
-                                      slim
-                                    >
-                                      {miscellaneousT('dateWarning')}
-                                    </Alert>
-                                  )}
+                                  <MINTDatePicker
+                                    className="margin-top-0"
+                                    fieldName="completeICIP"
+                                    id="timeline-completeICIP"
+                                    label={timelineT('completeICIP.label')}
+                                    placeHolder
+                                    handleOnBlur={handleOnBlur}
+                                    formikValue={values.completeICIP}
+                                    value={completeICIP}
+                                    shouldShowWarning={
+                                      initialValues.completeICIP !==
+                                      values.completeICIP
+                                    }
+                                    half
+                                  />
                                 </div>
                               </ProcessListHeading>
                             </ProcessListItem>
