@@ -390,6 +390,8 @@ describe('Notification Center', () => {
       .should('not.be.disabled')
       .click({ force: true });
 
+    cy.wait(1000);
+
     cy.get('#additional-data-exchange-considerations-description')
       .should('not.be.disabled')
       .type('2025-12-31')
