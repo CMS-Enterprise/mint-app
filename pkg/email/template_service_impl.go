@@ -61,8 +61,8 @@ var discussionReplyCreatedOriginatorSubjectTemplate string
 //go:embed templates/discussion_reply_created_originator_body.html
 var discussionReplyCreatedOriginatorBodyTemplate string
 
-// PlanDiscussionTaggedPossibleSolutionTemplateName is the template name definition for the corresponding email template
-const PlanDiscussionTaggedPossibleSolutionTemplateName string = "plan_discussion_tagged_solution"
+// PlanDiscussionTaggedMTOCommonSolutionTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedMTOCommonSolutionTemplateName string = "plan_discussion_tagged_solution"
 
 //go:embed templates/plan_discussion_tagged_solution_subject.html
 var planDiscussionTaggedPossibleSolutionSubjectTemplate string
@@ -115,8 +115,20 @@ var sharedSolutionPOCFooterTemplate string
 //go:embed templates/shared_mto_common_solution_header.html
 var sharedMTOCommonSolutionHeaderTemplate string
 
+//go:embed templates/shared_mint_mailbox_header.html
+var sharedMintMailboxHeader string
+
 //go:embed templates/shared_mint_mailbox_footer.html
 var sharedMintMailboxFooter string
+
+//go:embed templates/shared_non_mint_mailbox_header.html
+var sharedNonMintMailboxHeader string
+
+//go:embed templates/shared_non_mint_mailbox_short_header.html
+var sharedNonMintMailboxShortHeader string
+
+//go:embed templates/shared_subscribed_footer.html
+var sharedSubscribedFooterTemplate string
 
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
@@ -321,7 +333,7 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(PlanDiscussionTaggedPossibleSolutionTemplateName, planDiscussionTaggedPossibleSolutionSubjectTemplate, planDiscussionTaggedPossibleSolutionBodyTemplate)
+	err = t.loadEmailTemplate(PlanDiscussionTaggedMTOCommonSolutionTemplateName, planDiscussionTaggedPossibleSolutionSubjectTemplate, planDiscussionTaggedPossibleSolutionBodyTemplate)
 	if err != nil {
 		return err
 	}
@@ -423,13 +435,17 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	}
 
 	predefinedTemplates := map[string]string{
-		"shared_style.html":                      sharedStyleTemplate,
-		"shared_header.html":                     sharedHeaderTemplate,
-		"shared_footer.html":                     sharedFooterTemplate,
-		"shared_access_banner.html":              sharedAccessBannerTemplate,
-		"shared_solution_poc_footer.html":        sharedSolutionPOCFooterTemplate,
-		"shared_mto_common_solution_header.html": sharedMTOCommonSolutionHeaderTemplate,
-		"shared_mint_mailbox_footer.html":        sharedMintMailboxFooter,
+		"shared_style.html":                         sharedStyleTemplate,
+		"shared_header.html":                        sharedHeaderTemplate,
+		"shared_footer.html":                        sharedFooterTemplate,
+		"shared_access_banner.html":                 sharedAccessBannerTemplate,
+		"shared_solution_poc_footer.html":           sharedSolutionPOCFooterTemplate,
+		"shared_mto_common_solution_header.html":    sharedMTOCommonSolutionHeaderTemplate,
+		"shared_mint_mailbox_header.html":           sharedMintMailboxHeader,
+		"shared_mint_mailbox_footer.html":           sharedMintMailboxFooter,
+		"shared_non_mint_mailbox_header.html":       sharedNonMintMailboxHeader,
+		"shared_non_mint_mailbox_short_header.html": sharedNonMintMailboxShortHeader,
+		"shared_subscribed_footer.html":             sharedSubscribedFooterTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)

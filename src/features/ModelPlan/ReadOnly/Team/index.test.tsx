@@ -9,9 +9,9 @@ import ReadOnlyTeamInfo from './index';
 describe('Read Only Model Plan Summary -- Model Basics', () => {
   it('renders without errors', async () => {
     render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/team`]}>
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/team`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/team">
+          <Route path="/models/:modelID/read-view/team">
             <ReadOnlyTeamInfo modelID={modelID} />
           </Route>
         </MockedProvider>
@@ -27,9 +27,9 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
   });
   it('matches snapshot', async () => {
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/team`]}>
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/team`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/team">
+          <Route path="/models/:modelID/read-view/team">
             <ReadOnlyTeamInfo modelID={modelID} />
           </Route>
         </MockedProvider>

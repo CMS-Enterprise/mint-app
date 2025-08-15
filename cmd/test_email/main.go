@@ -64,8 +64,8 @@ func main() {
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, templateService, addressBook)
 
 	// Daily Digest Email
-	sendTestDailyDigestEmail(emailService, templateService, addressBook)
-	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook)
+	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
+	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
 }
 
 func noErr(err error) {
@@ -121,12 +121,12 @@ func sendPlanDiscussionCreatedTestEmail(
 
 	tag2ID := "HIGLAS"
 	tag2Label := "Healthcare Integrated General Ledger Accounting System (HIGLAS)"
-	tag2Type := models.TagTypePossibleSolution
+	tag2Type := models.TagTypeMTOCommonSolution
 	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2ID + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
 
 	tag3ID := "CONNECT"
 	tag3Label := "Salesforce CONNECT"
-	tag3Type := models.TagTypePossibleSolution
+	tag3Type := models.TagTypeMTOCommonSolution
 	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
 
 	content := "Test Content for Plan Discussion, check out this tag  " + tag1 + "!  BTW, here is a list of solutions <ul><li>" + tag2 + "</li><li>" + tag3 + "</li></ul>"
@@ -229,6 +229,7 @@ func sendModelPlanCreatedEmailTest(
 		ModelName:     "Test Model Plan",
 		ModelID:       "00",
 		UserName:      "Test User",
+		IsGeneralUser: true,
 	})
 	noErr(err)
 

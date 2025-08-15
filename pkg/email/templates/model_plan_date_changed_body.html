@@ -1,5 +1,8 @@
 {{template "shared_header.html"}}
 
+{{template "shared_non_mint_mailbox_short_header.html" .}}
+<hr/>
+
 <h2>Dates updated for {{.ModelName}}</h2>
 <p>One or more dates have been updated for this model.</p>
 <br/>
@@ -41,8 +44,8 @@
 
 <br/>
 <p>
-  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only">
-    View this Model Plan in MINT
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">
+    View this model in MINT
   </a>
 </p>
 <br>
@@ -50,7 +53,7 @@
 {{if .ShowFooter}}
   <hr>
   <br/>
-  <p>
-    You are currently subscribed to notifications about changes to model dates. If you no longer wish to receive these email notifications, please <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=DATES_CHANGED">unsubscribe</a> or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
-  </p>
+  {{template "shared_subscribed_footer.html" .}}
 {{end}}
+
+{{template "shared_footer.html"}}

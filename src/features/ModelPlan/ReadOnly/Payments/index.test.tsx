@@ -9,9 +9,9 @@ import ReadOnlyPayments from './index';
 describe('Read Only Model Plan Summary -- Payment', () => {
   it('renders without errors', async () => {
     render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/payment`]}>
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/payment`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/payment">
+          <Route path="/models/:modelID/read-view/payment">
             <ReadOnlyPayments modelID={modelID} />
           </Route>
         </MockedProvider>
@@ -26,9 +26,9 @@ describe('Read Only Model Plan Summary -- Payment', () => {
   });
   it('matches snapshot', async () => {
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/payment`]}>
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/payment`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/payment">
+          <Route path="/models/:modelID/read-view/payment">
             <ReadOnlyPayments modelID={modelID} />
           </Route>
         </MockedProvider>

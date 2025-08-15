@@ -1,5 +1,8 @@
 {{template "shared_header.html"}}
 
+{{template "shared_mint_mailbox_header.html" .}}
+<hr/>
+<br/>
 
 <h3>New discussion in</h3>
 <p>{{.ModelName}}</p>
@@ -26,7 +29,7 @@
 <br/>
 <hr/>
 <br/>
-<p>You are receiving this email because you are a part of the
-  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>
-  email group.
-</p>
+
+{{template "shared_mint_mailbox_footer.html"}}
+
+{{template "shared_footer.html"}}

@@ -61,7 +61,7 @@ func sendTestDailyDigestEmail(
 	noErr(err)
 }
 
-// sendTestDailyDigestEmail sends a test daily digest email including MTO, data exchange, and plan section updates.
+// sendTestDailyDigestEmailAggregated sends a test daily digest email including MTO, data exchange, and plan section updates.
 func sendTestDailyDigestEmailAggregated(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,

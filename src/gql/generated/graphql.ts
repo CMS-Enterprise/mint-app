@@ -4443,6 +4443,7 @@ export type Tag = {
 };
 
 export enum TagType {
+  MTO_COMMON_SOLUTION = 'MTO_COMMON_SOLUTION',
   POSSIBLE_SOLUTION = 'POSSIBLE_SOLUTION',
   USER_ACCOUNT = 'USER_ACCOUNT'
 }
@@ -4456,7 +4457,7 @@ export type TaggedContent = {
 };
 
 /** TaggedEntity is the actual object represented by a tag in the data base. */
-export type TaggedEntity = PossibleOperationalSolution | UserAccount;
+export type TaggedEntity = MtoCommonSolution | PossibleOperationalSolution | UserAccount;
 
 export type TaggedInDiscussionReplyActivityMeta = {
   __typename: 'TaggedInDiscussionReplyActivityMeta';

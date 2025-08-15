@@ -3,7 +3,7 @@
 exports[`Owner Form Component > should matches snapshot 1`] = `
 <DocumentFragment>
   <form
-    class="usa-form maxw-none"
+    class="usa-form maxw-none padding-bottom-6"
     data-testid="owner-form"
     id="owner-form"
   >
@@ -643,25 +643,6 @@ exports[`Owner Form Component > should matches snapshot 1`] = `
         </div>
       </div>
     </fieldset>
-    <div
-      class="margin-top-3 display-flex"
-    >
-      <button
-        class="usa-button margin-right-3 margin-top-0"
-        data-testid="button"
-        disabled=""
-        type="submit"
-      >
-        Add owner
-      </button>
-      <button
-        class="usa-button usa-button--unstyled margin-top-0"
-        data-testid="button"
-        type="button"
-      >
-        Cancel
-      </button>
-    </div>
   </form>
 </DocumentFragment>
 `;
