@@ -39,6 +39,7 @@ describe('Team member point of contact form', () => {
                 mode="editTeamMember"
                 closeModal={() => {}}
                 teamMember={team}
+                setDisableButton={() => {}}
               />
             </Route>
           </MessageProvider>
@@ -70,6 +71,7 @@ describe('Team member point of contact form', () => {
                 mode="editTeamMember"
                 closeModal={() => {}}
                 teamMember={{ ...team, isPrimary: true, receiveEmails: true }}
+                setDisableButton={() => {}}
               />
             </Route>
           </MessageProvider>
@@ -97,6 +99,7 @@ describe('Team member point of contact form', () => {
                 mode="addTeamMember"
                 closeModal={() => {}}
                 teamMember={team}
+                setDisableButton={() => {}}
               />
             </Route>
           </MessageProvider>

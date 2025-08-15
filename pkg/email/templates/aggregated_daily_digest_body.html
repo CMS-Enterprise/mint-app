@@ -1,9 +1,12 @@
 
-{{template "shared_header.html" "Daily updates"}}
+{{template "shared_header.html"}}
 
-<p>A summary of changes to all Model Plans within MINT.</p>
+{{template "shared_mint_mailbox_header.html" .}}
+<hr/>
+<br/>
 
-<br />
+<h2>Your daily updates</h2>
+<br/>
 
 {{range $audit := .AnalyzedAudits}}
 
@@ -21,12 +24,17 @@
 
 <br />
 
-<a href="{{$.ClientAddress}}/models/{{$audit.ModelPlanID}}/collaboration-area/task-list"> View this Model Plan in MINT </a>
+<!-- <a href="{{$.ClientAddress}}/models/{{$audit.ModelPlanID}}/collaboration-area/task-list"> View this Model Plan in MINT </a> -->
+<a href="{{$.ClientAddress}}/models/{{$audit.ModelPlanID}}/read-view"> View this model in MINT </a>
 
 <br />
 <br />
 
 {{end}}
+
+<hr />
+<br />
+{{template "shared_mint_mailbox_footer.html"}}
 
 {{template "shared_footer.html"}}
 

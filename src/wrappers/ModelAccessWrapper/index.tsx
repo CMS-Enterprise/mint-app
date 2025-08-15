@@ -55,7 +55,7 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       editable &&
       !isAssessment(groups, flags)
     ) {
-      history.replace(`/models/${modelID}/read-only/model-basics`);
+      history.replace(`/models/${modelID}/read-view/model-basics`);
     }
   }, [
     pathname,

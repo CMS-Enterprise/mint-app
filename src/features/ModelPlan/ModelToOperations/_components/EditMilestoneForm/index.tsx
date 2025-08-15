@@ -508,7 +508,7 @@ const EditMilestoneForm = ({
             }),
             ...(isCategoryDirty && { mtoCategoryID }),
             ...(needBy !== undefined && {
-              needBy: needBy ? new Date(needBy)?.toISOString() : ''
+              needBy: needBy ? new Date(needBy).toISOString() : null
             }),
             ...(!!name && !milestone?.addedFromMilestoneLibrary && { name })
           },

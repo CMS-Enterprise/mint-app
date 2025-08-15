@@ -69,11 +69,11 @@ const store = mockStore({ auth: mockAuthReducer });
 describe('Model Plan Documents page', () => {
   it('renders without errors', async () => {
     render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/documents`]}>
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/documents`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="/models/:modelID/read-only/documents">
+              <Route path="/models/:modelID/read-view/documents">
                 <ReadOnlyDocuments modelID={modelID} />
               </Route>
             </MessageProvider>
@@ -92,11 +92,11 @@ describe('Model Plan Documents page', () => {
 
   it('matches snapshot', async () => {
     const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/documents`]}>
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/documents`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="/models/:modelID/read-only/documents">
+              <Route path="/models/:modelID/read-view/documents">
                 <ReadOnlyDocuments modelID={modelID} />
               </Route>
             </MessageProvider>

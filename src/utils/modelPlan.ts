@@ -58,6 +58,13 @@ export const composeMultiSelectOptions = (
     isDisabled: key === disabledValue
   }));
 
+// Sort options alphabetically by label
+export const sortedSelectOptions = (
+  options: { value: string; label: string }[]
+) => {
+  return [...options].sort((a, b) => a.label.localeCompare(b.label));
+};
+
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {
   if (

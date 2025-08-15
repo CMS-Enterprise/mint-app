@@ -22,10 +22,14 @@ interface LocationProps {
 
 const NDA = () => {
   const { t } = useTranslation('nda');
-  const dispatch = useDispatch();
+
   const history = useHistory();
   const { state: locationState } = useLocation<LocationProps>();
+
+  const dispatch = useDispatch();
+
   const [originalRoute, setOriginalRoute] = useState<string>('');
+
   const { acceptedNDA, ...user } = useSelector(
     (state: RootStateOrAny) => state.auth
   );
@@ -67,7 +71,7 @@ const NDA = () => {
                 {formatDateLocal(acceptedNDA?.agreedDts, 'MM/dd/yyyy')}
               </Alert>
               <UswdsReactLink
-                to="/"
+                to={originalRoute || '/'}
                 variant="unstyled"
                 className="usa-button margin-top-1"
                 data-testid="nda-continue"

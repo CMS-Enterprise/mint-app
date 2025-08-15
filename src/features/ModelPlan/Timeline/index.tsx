@@ -114,7 +114,7 @@ const Timeline = () => {
       <GridContainer>
         <MutationErrorModal
           isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.setIsModalOpen(false)}
+          closeModal={() => mutationError.closeModal()}
           url={mutationError.destinationURL}
         />
 

@@ -65,6 +65,18 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 
 	suite.EqualValues(sol.ID, retSol.ID)
 
+	// Get MTO Common Solution
+	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(models.MTOCSKConnect))
+	suite.NoError(err)
+	suite.NotNil(mtoSol)
+
+	mtoSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypeMTOCommonSolution, &mtoSol.ID, nil)
+	suite.NoError(err)
+	retMtoSol, ok := mtoSolEnt.(*models.MTOCommonSolution)
+	suite.True(ok, "Could not cast the Tagged Entity to MTO Common Solution")
+
+	suite.EqualValues(mtoSol.ID, retMtoSol.ID)
+
 }
 
 func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
@@ -78,7 +90,7 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
 	tag3ID := "CONNECT"
 	tag3Label := "Salesforce CONNECT"
-	tag3Type := models.TagTypePossibleSolution
+	tag3Type := models.TagTypeMTOCommonSolution
 	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
 	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.`
 	taggedContent, err := models.NewTaggedContentFromString(htmlMention)
@@ -98,10 +110,9 @@ func (suite *ResolverSuite) TestUpdateTaggedHTMLMentionsAndRawContent() {
 	suite.NoError(err)
 	suite.EqualValues(tag2User.ID, *taggedContent.Mentions[1].EntityUUID)
 
-	// tag3Sol, err := Possible(suite.testConfigs.Logger, suite.testConfigs.Store, tag2EUA)
-	tag3Sol, err := suite.testConfigs.Store.PossibleOperationalSolutionGetByKey(suite.testConfigs.Logger, models.OperationalSolutionKey(tag3ID))
+	tag3Sol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(tag3ID))
 	suite.NoError(err)
-	suite.EqualValues(tag3Sol.ID, *taggedContent.Mentions[2].EntityIntID)
+	suite.EqualValues(tag3Sol.ID, *taggedContent.Mentions[2].EntityUUID)
 
 	// if the data-id-db tag is set, the content will still be updated with the correct id in the database, regardless of what was provided
 	tag4EUA := "SKZO"
@@ -135,7 +146,7 @@ func (suite *ResolverSuite) TestTagCollectionCreate() {
 	tag2 := `<span data-type="mention" tag-type="` + string(tag2Type) + `" class="mention" data-id="` + tag2EUA + `" data-label="` + tag2Label + `">@` + tag2Label + `</span>`
 	tag3ID := "CONNECT"
 	tag3Label := "Salesforce CONNECT"
-	tag3Type := models.TagTypePossibleSolution
+	tag3Type := models.TagTypeMTOCommonSolution
 	tag3 := `<span data-type="mention" tag-type="` + string(tag3Type) + `" class="mention" data-id="` + tag3ID + `" data-label="` + tag3Label + `">@` + tag3Label + `</span>`
 	htmlMention := `<p>Hey ` + tag1 + `!  Will you be able to join the meeting next week?  If not, can you contact ` + tag2 + ` to let them know?</p> We are planning on using the ` + tag3 + `solution.` + tag1 + tag1
 	// We have made a mention with 5 Mentions. This should only create 5 tags in the database

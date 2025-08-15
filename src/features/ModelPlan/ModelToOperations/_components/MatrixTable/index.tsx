@@ -1022,8 +1022,29 @@ export const getRenderedRowIndexes = (
 
   // If there are no milestones, we still want to show the category and subcategory on their respective pages
   sliceItemsCopy.forEach((category, catIndex) => {
+    // If the category is Uncategorized and has no milestones, don't render it
+    const categoryMilestones = category.subCategories.reduce(
+      (acc, subCategory) => acc + subCategory.milestones.length,
+      0
+    );
+
+    // If the category is Uncategorized and has no milestones, don't render it
+    if (category.name === 'Uncategorized' && categoryMilestones === 0) {
+      return;
+    }
+
+    // If the category has no milestones, render it, but don't return/render the subcategory yet
+    if (categoryMilestones === 0) {
+      shownIndexes.category.push(catIndex);
+    }
+
     category.subCategories.forEach((subCategory, subIndex) => {
       if (subCategory.milestones.length === 0) {
+        // If the subcategory is Uncategorized and has no milestones, don't render it
+        if (subCategory.name === 'Uncategorized') {
+          return;
+        }
+
         // Only want to hit this conditional if the template is empty only one page
         if (totalPages === 1 && milestoneCount > 0) {
           shownIndexes.category.push(catIndex);
