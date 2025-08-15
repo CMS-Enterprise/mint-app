@@ -54,7 +54,6 @@ import Alert from 'components/Alert';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
-import DateTimePicker from 'components/DateTimePicker';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
