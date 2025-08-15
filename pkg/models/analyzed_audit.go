@@ -303,7 +303,7 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Section updates
 	if len(a.Updated) > 0 {
-		updatedSectionNames := a.humanizeDatabaseTableNames(a.Updated)
+		updatedSectionNames := lo.Uniq(a.humanizeDatabaseTableNames(a.Updated))
 
 		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
 			fmt.Sprintf(AnalyzedPlanSectionsHumanizedUpdated, strings.Join(updatedSectionNames, ", ")))
@@ -324,7 +324,7 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 
 	// Ready for review
 	if len(a.ReadyForReview) > 0 {
-		updatedSectionNames := a.humanizeDatabaseTableNames(a.ReadyForReview)
+		updatedSectionNames := lo.Uniq(a.humanizeDatabaseTableNames(a.ReadyForReview))
 
 		if len(updatedSectionNames) == 1 {
 			humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections,
