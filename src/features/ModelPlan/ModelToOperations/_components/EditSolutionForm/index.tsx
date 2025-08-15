@@ -872,15 +872,11 @@ const EditSolutionForm = ({
                       <Controller
                         name="pocName"
                         control={control}
-                        rules={{
-                          required: modelToOperationsMiscT('validation.fillOut')
-                        }}
                         render={({ field: { ref, ...field } }) => (
                           <FormGroup className="margin-top-0 margin-bottom-2">
                             <Label
                               htmlFor={convertCamelCaseToKebabCase(field.name)}
                               className="mint-body-normal maxw-none margin-bottom-1"
-                              requiredMarker
                             >
                               {modelToOperationsMiscT(
                                 'modal.solution.label.pocName'
@@ -906,8 +902,6 @@ const EditSolutionForm = ({
                         name="pocEmail"
                         control={control}
                         rules={{
-                          required:
-                            modelToOperationsMiscT('validation.fillOut'),
                           pattern: {
                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                             message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
@@ -918,7 +912,6 @@ const EditSolutionForm = ({
                             <Label
                               htmlFor={convertCamelCaseToKebabCase(field.name)}
                               className="mint-body-normal maxw-none margin-bottom-1"
-                              requiredMarker
                             >
                               {modelToOperationsMiscT(
                                 'modal.solution.label.pocEmail'
