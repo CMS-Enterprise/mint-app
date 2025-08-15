@@ -386,9 +386,11 @@ describe('Notification Center', () => {
     cy.contains('button', 'Next')
       .should('not.be.disabled')
       .click({ force: true });
+
+    cy.wait(1000);
+
     cy.contains('button', 'Next')
       .should('not.be.disabled')
-      .click({ force: true })
       .click({ force: true });
 
     cy.get('#additional-data-exchange-considerations-description')
