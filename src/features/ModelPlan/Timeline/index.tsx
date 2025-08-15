@@ -26,7 +26,6 @@ import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
-import DateTimePicker from 'components/DateTimePicker';
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
