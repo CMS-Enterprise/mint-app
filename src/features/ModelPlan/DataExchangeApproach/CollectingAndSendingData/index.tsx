@@ -368,6 +368,7 @@ const CollectingAndSendingData = () => {
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`}
                   nextPage
                   disabled={isSubmitting}
+                  id="collect-and-send-data-form"
                 />
               </Grid>
             </Grid>

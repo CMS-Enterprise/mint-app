@@ -383,13 +383,10 @@ describe('Notification Center', () => {
     cy.contains('button', 'Next')
       .should('not.be.disabled')
       .click({ force: true });
-    cy.contains('button', 'Next')
+    cy.get('#collect-and-send-data-form-next-button')
       .should('not.be.disabled')
       .click({ force: true });
-
-    cy.wait(1000);
-
-    cy.contains('button', 'Next')
+    cy.get('#collection-and-aggregation-form-next-button')
       .should('not.be.disabled')
       .click({ force: true });
 

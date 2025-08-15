@@ -9,6 +9,7 @@ type SubmittionFooterProps = {
   backPage?: string;
   nextPage?: boolean;
   disabled?: boolean;
+  id?: string;
 };
 
 const FormFooter = ({
@@ -16,14 +17,15 @@ const FormFooter = ({
   homeRoute,
   nextPage = true,
   backPage,
-  disabled
+  disabled,
+  id
 }: SubmittionFooterProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const navigate = useNavigate();
 
   return (
-    <>
+    <div id={id}>
       <div className="margin-top-6 margin-bottom-2 display-flex">
         {backPage && (
           <Button
@@ -39,7 +41,7 @@ const FormFooter = ({
         )}
 
         {nextPage && (
-          <Button type="submit" disabled={disabled}>
+          <Button type="submit" disabled={disabled} id={`${id}-next-button`}>
             {miscellaneousT('next')}
           </Button>
         )}
@@ -59,7 +61,7 @@ const FormFooter = ({
 
         {homeArea}
       </Button>
-    </>
+    </div>
   );
 };
 

@@ -341,6 +341,7 @@ const NewMethodologiesAndConsiderations = () => {
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`}
                   nextPage={false}
                   disabled={isSubmitting}
+                  id="new-methodologies-and-considerations-form"
                 />
               </Grid>
 

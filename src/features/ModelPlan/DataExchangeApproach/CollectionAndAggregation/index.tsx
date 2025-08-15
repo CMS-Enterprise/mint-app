@@ -387,6 +387,7 @@ const CollectionAndAggregation = () => {
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`}
+                  id="collection-and-aggregation-form"
                   nextPage
                   disabled={isSubmitting}
                 />
