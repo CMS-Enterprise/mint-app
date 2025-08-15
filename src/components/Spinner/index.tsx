@@ -8,7 +8,7 @@ type SpinnerProps = {
   size?: 'small' | 'large' | 'xl';
   center?: boolean;
   testId?: string;
-} & JSX.IntrinsicElements['span'];
+} & React.ComponentProps<'span'>;
 
 const Spinner = ({
   className,

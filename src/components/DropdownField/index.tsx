@@ -10,9 +10,9 @@ type DropdownFieldProps = {
   name: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onBlur: () => void;
-  children: React.ReactNodeArray;
+  children: React.ReactNode;
   value: any;
-} & JSX.IntrinsicElements['select'];
+} & React.ComponentProps<'select'>;
 
 export const DropdownField = ({
   id,

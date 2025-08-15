@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -10,7 +10,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   GetBeneficiaryCostSharingQuery,
@@ -25,6 +25,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -50,10 +51,10 @@ const BeneficiaryCostSharing = () => {
     waiverOnlyAppliesPartOfPayment: waiverOnlyAppliesPartOfPaymentConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<BeneficiaryCostSharingFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetBeneficiaryCostSharingQuery({
     variables: {
@@ -76,7 +77,7 @@ const BeneficiaryCostSharing = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const nextPage = () => {
@@ -85,11 +86,11 @@ const BeneficiaryCostSharing = () => {
         PayType.NON_CLAIMS_BASED_PAYMENTS
       )
     ) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/complexity`
       );
     }
@@ -115,237 +116,239 @@ const BeneficiaryCostSharing = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="model-payment">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.PAYMENTS
-        ]}
-      />
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {paymentsMiscT('heading')}
-      </PageHeading>
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.PAYMENTS
+          ]}
+        />
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {paymentsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          nextPage();
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<BeneficiaryCostSharingFormType>) => {
-          const { handleSubmit, setFieldValue, setErrors, values } =
-            formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            nextPage();
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<BeneficiaryCostSharingFormType>) => {
+            const { handleSubmit, setFieldValue, setErrors, values } =
+              formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap>
-                  <Grid desktop={{ col: 6 }}>
-                    <Form
-                      className="margin-top-6"
-                      data-testid="payment-beneficiary-cost-sharing-form"
-                      onSubmit={e => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <Fieldset disabled={!!error || loading}>
-                        <PageHeading
-                          headingLevel="h3"
-                          className="margin-bottom-3"
-                        >
-                          {paymentsMiscT('beneficaryCostSharingQuestions')}
-                        </PageHeading>
-
-                        <FieldGroup>
-                          <Label
-                            htmlFor="beneficiaryCostSharingLevelAndHandling"
-                            className="maxw-none"
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    <Grid desktop={{ col: 6 }}>
+                      <form
+                        className="margin-top-6"
+                        data-testid="payment-beneficiary-cost-sharing-form"
+                        onSubmit={e => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        <Fieldset disabled={!!error || loading}>
+                          <PageHeading
+                            headingLevel="h3"
+                            className="margin-bottom-3"
                           >
-                            {paymentsT(
-                              'beneficiaryCostSharingLevelAndHandling.label'
-                            )}
-                          </Label>
+                            {paymentsMiscT('beneficaryCostSharingQuestions')}
+                          </PageHeading>
 
-                          <Field
-                            as={TextAreaField}
-                            className="height-15"
-                            id="payment-beneficiary-cost-sharing"
-                            data-testid="payment-beneficiary-cost-sharing"
-                            name="beneficiaryCostSharingLevelAndHandling"
-                          />
-                        </FieldGroup>
+                          <FieldGroup>
+                            <Label
+                              htmlFor="beneficiaryCostSharingLevelAndHandling"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'beneficiaryCostSharingLevelAndHandling.label'
+                              )}
+                            </Label>
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="waiveBeneficiaryCostSharingForAnyServices"
-                            className="maxw-none"
-                          >
-                            {paymentsT(
-                              'waiveBeneficiaryCostSharingForAnyServices.label'
-                            )}
-                          </Label>
+                            <Field
+                              as={TextAreaField}
+                              className="height-15"
+                              id="payment-beneficiary-cost-sharing"
+                              data-testid="payment-beneficiary-cost-sharing"
+                              name="beneficiaryCostSharingLevelAndHandling"
+                            />
+                          </FieldGroup>
 
-                          <BooleanRadio
-                            field="waiveBeneficiaryCostSharingForAnyServices"
-                            id="payment-waive-any-service"
-                            value={
-                              values.waiveBeneficiaryCostSharingForAnyServices
-                            }
-                            setFieldValue={setFieldValue}
-                            options={
-                              waiveBeneficiaryCostSharingForAnyServicesConfig.options
-                            }
-                            childName="waiveBeneficiaryCostSharingServiceSpecification"
-                          >
-                            {values.waiveBeneficiaryCostSharingForAnyServices ? (
-                              <FieldGroup className="margin-left-4 margin-y-1">
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="waiveBeneficiaryCostSharingForAnyServices"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'waiveBeneficiaryCostSharingForAnyServices.label'
+                              )}
+                            </Label>
+
+                            <BooleanRadio
+                              field="waiveBeneficiaryCostSharingForAnyServices"
+                              id="payment-waive-any-service"
+                              value={
+                                values.waiveBeneficiaryCostSharingForAnyServices
+                              }
+                              setFieldValue={setFieldValue}
+                              options={
+                                waiveBeneficiaryCostSharingForAnyServicesConfig.options
+                              }
+                              childName="waiveBeneficiaryCostSharingServiceSpecification"
+                            >
+                              {values.waiveBeneficiaryCostSharingForAnyServices ? (
+                                <FieldGroup className="margin-left-4 margin-y-1">
+                                  <Label
+                                    htmlFor="waiveBeneficiaryCostSharingServiceSpecification"
+                                    className="text-normal"
+                                  >
+                                    {paymentsT(
+                                      'waiveBeneficiaryCostSharingServiceSpecification.label'
+                                    )}
+                                  </Label>
+
+                                  <Field
+                                    as={TextAreaField}
+                                    className="height-15"
+                                    id="payment-waive-any-service-specification"
+                                    data-testid="payment-waive-any-service-specification"
+                                    name="waiveBeneficiaryCostSharingServiceSpecification"
+                                  />
+                                </FieldGroup>
+                              ) : (
+                                <></>
+                              )}
+                            </BooleanRadio>
+
+                            {values.waiveBeneficiaryCostSharingForAnyServices && (
+                              <FieldGroup className="margin-top-4">
                                 <Label
-                                  htmlFor="waiveBeneficiaryCostSharingServiceSpecification"
-                                  className="text-normal"
+                                  htmlFor="waiverOnlyAppliesPartOfPayment"
+                                  className="maxw-none text-normal"
                                 >
                                   {paymentsT(
-                                    'waiveBeneficiaryCostSharingServiceSpecification.label'
+                                    'waiverOnlyAppliesPartOfPayment.label'
                                   )}
                                 </Label>
 
-                                <Field
-                                  as={TextAreaField}
-                                  className="height-15"
-                                  id="payment-waive-any-service-specification"
-                                  data-testid="payment-waive-any-service-specification"
-                                  name="waiveBeneficiaryCostSharingServiceSpecification"
+                                <p className="text-base margin-y-1">
+                                  {paymentsT(
+                                    'waiverOnlyAppliesPartOfPayment.sublabel'
+                                  )}
+                                </p>
+
+                                <BooleanRadio
+                                  field="waiverOnlyAppliesPartOfPayment"
+                                  id="payment-waive-part-of-payment"
+                                  value={values.waiverOnlyAppliesPartOfPayment}
+                                  setFieldValue={setFieldValue}
+                                  options={
+                                    waiverOnlyAppliesPartOfPaymentConfig.options
+                                  }
                                 />
                               </FieldGroup>
-                            ) : (
-                              <></>
                             )}
-                          </BooleanRadio>
+                            <AddNote
+                              id="payment-waive-beneficiary-cost-sharing-note"
+                              field="waiveBeneficiaryCostSharingNote"
+                            />
+                          </FieldGroup>
 
-                          {values.waiveBeneficiaryCostSharingForAnyServices && (
-                            <FieldGroup className="margin-top-4">
-                              <Label
-                                htmlFor="waiverOnlyAppliesPartOfPayment"
-                                className="maxw-none text-normal"
-                              >
-                                {paymentsT(
-                                  'waiverOnlyAppliesPartOfPayment.label'
-                                )}
-                              </Label>
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--outline margin-bottom-1"
+                              onClick={() => {
+                                navigate(
+                                  `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
+                                );
+                              }}
+                            >
+                              {miscellaneousT('back')}
+                            </Button>
 
-                              <p className="text-base margin-y-1">
-                                {paymentsT(
-                                  'waiverOnlyAppliesPartOfPayment.sublabel'
-                                )}
-                              </p>
+                            <Button type="submit" onClick={() => setErrors({})}>
+                              {miscellaneousT('next')}
+                            </Button>
+                          </div>
 
-                              <BooleanRadio
-                                field="waiverOnlyAppliesPartOfPayment"
-                                id="payment-waive-part-of-payment"
-                                value={values.waiverOnlyAppliesPartOfPayment}
-                                setFieldValue={setFieldValue}
-                                options={
-                                  waiverOnlyAppliesPartOfPaymentConfig.options
-                                }
-                              />
-                            </FieldGroup>
-                          )}
-                          <AddNote
-                            id="payment-waive-beneficiary-cost-sharing-note"
-                            field="waiveBeneficiaryCostSharingNote"
-                          />
-                        </FieldGroup>
-
-                        <div className="margin-top-6 margin-bottom-3">
                           <Button
                             type="button"
-                            className="usa-button usa-button--outline margin-bottom-1"
-                            onClick={() => {
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
-                              );
-                            }}
+                            className="usa-button usa-button--unstyled"
+                            onClick={() =>
+                              navigate(
+                                `/models/${modelID}/collaboration-area/task-list`
+                              )
+                            }
                           >
-                            {miscellaneousT('back')}
+                            <Icon.ArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                              aria-label="back"
+                            />
+
+                            {miscellaneousT('saveAndReturn')}
                           </Button>
-
-                          <Button type="submit" onClick={() => setErrors({})}>
-                            {miscellaneousT('next')}
-                          </Button>
-                        </div>
-
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/collaboration-area/task-list`
-                            )
-                          }
-                        >
-                          <Icon.ArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                            aria-label="back"
-                          />
-
-                          {miscellaneousT('saveAndReturn')}
-                        </Button>
-                      </Fieldset>
-                    </Form>
+                        </Fieldset>
+                      </form>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GridContainer>
-            </>
-          );
-        }}
-      </Formik>
+                </GridContainer>
+              </>
+            );
+          }}
+        </Formik>
 
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            4,
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          totalPages={renderTotalPages(
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              4,
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            totalPages={renderTotalPages(
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 export default BeneficiaryCostSharing;

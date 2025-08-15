@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import i18next from 'i18next';
 import { categoryMock } from 'tests/mock/mto';
@@ -12,19 +12,28 @@ import RemoveCategoryForm from './index';
 
 describe('Custom Catergory form', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/`]}>
-        <MessageProvider>
-          <VerboseMockedProvider
-            mocks={[...[...categoryMock]]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
+          element: (
+            <MessageProvider>
               <RemoveCategoryForm />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all`
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <VerboseMockedProvider mocks={[...[...categoryMock]]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

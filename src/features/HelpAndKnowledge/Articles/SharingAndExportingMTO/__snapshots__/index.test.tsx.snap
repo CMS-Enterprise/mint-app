@@ -50,6 +50,7 @@ exports[`SharingAndExportingMTO > matches the snapshot 1`] = `
             </h1>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=mto-tutorials"
             >
               <span
@@ -485,6 +486,7 @@ To share, complete the following fields in the form:
               </div>
               <a
                 class="usa-link width-fit-content display-block "
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 <span
@@ -536,6 +538,7 @@ To share, complete the following fields in the form:
               </div>
               <a
                 class="usa-link width-fit-content display-block "
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 <span
@@ -587,6 +590,7 @@ To share, complete the following fields in the form:
               </div>
               <a
                 class="usa-link width-fit-content display-block "
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 <span
@@ -622,6 +626,7 @@ To share, complete the following fields in the form:
         </ul>
         <a
           class="usa-link"
+          data-discover="true"
           href="/help-and-knowledge/articles"
         >
           View all help resources

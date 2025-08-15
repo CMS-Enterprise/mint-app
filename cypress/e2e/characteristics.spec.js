@@ -26,7 +26,10 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('#plan-characteristics-existing-model')
       .should('be.visible')
-      .click()
+      .as('existing-model-input')
+      .click({ force: true });
+
+    cy.get('@existing-model-input')
       .type('Plan with B{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { GetPollNotificationsDocument } from 'gql/generated/graphql';
@@ -48,34 +48,58 @@ vi.mock('launchdarkly-react-client-sdk', () => ({
 
 describe('The NavigationBar component', () => {
   it('renders without errors', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <NavigationBar
+              expandMobileSideNav={() => null}
+              isMobile
+              signout={() => null}
+              userName="A11Y"
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     const { getByTestId } = render(
-      <MemoryRouter initialEntries={['/']}>
-        <MockedProvider mocks={notificationsMock} addTypename={false}>
-          <NavigationBar
-            expandMobileSideNav={() => null}
-            isMobile
-            signout={() => null}
-            userName="A11Y"
-          />
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(getByTestId('navigation-bar')).toBeInTheDocument();
   });
 
   it('displays every navigation element', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/system/making-a-request',
+          element: (
+            <NavigationBar
+              expandMobileSideNav={() => null}
+              isMobile
+              signout={() => null}
+              userName="A11Y"
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/system/making-a-request']
+      }
+    );
+
     const { getByText, getByTestId } = render(
-      <MemoryRouter initialEntries={['/system/making-a-request']}>
-        <MockedProvider mocks={notificationsMock} addTypename={false}>
-          <NavigationBar
-            expandMobileSideNav={() => null}
-            isMobile
-            signout={() => null}
-            userName="A11Y"
-          />
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     const { t } = useTranslation();

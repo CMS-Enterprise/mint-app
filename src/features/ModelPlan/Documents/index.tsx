@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-import NotFound from 'features/NotFound';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -10,19 +9,17 @@ import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 
-import AddDocument from './AddDocument';
 import PlanDocumentsTable from './table';
 
 type DocumentStatusType = 'success' | 'error';
 
-export const DocumentsContent = () => {
+export const Documents = () => {
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t } = useTranslation('documentsMisc');
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [documentMessage, setDocumentMessage] = useState('');
   const [documentStatus, setDocumentStatus] =
@@ -104,27 +101,6 @@ export const DocumentsContent = () => {
         </Grid>
       </GridContainer>
     </MainContent>
-  );
-};
-
-const Documents = () => {
-  return (
-    <Switch>
-      {/* Model Plan Documents Pages */}
-      <ProtectedRoute
-        path="/models/:modelID/collaboration-area/documents"
-        exact
-        render={() => <DocumentsContent />}
-      />
-      <ProtectedRoute
-        path="/models/:modelID/collaboration-area/documents/add-document"
-        exact
-        render={() => <AddDocument />}
-      />
-
-      {/* 404 */}
-      <Route path="*" render={() => <NotFound />} />
-    </Switch>
   );
 };
 

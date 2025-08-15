@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   AnalyzedAudit as AnalyzedAuditsTypes,
@@ -76,13 +76,19 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
 
 describe('Daily Digest in Notifications', () => {
   it('renders without errors', async () => {
-    setup(
-      <MemoryRouter initialEntries={[`/notifications`]}>
-        <Route path="/notifications">
-          <DailyDigest analyzedAudits={dailyDigestProps} />
-        </Route>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/notifications',
+          element: <DailyDigest analyzedAudits={dailyDigestProps} />
+        }
+      ],
+      {
+        initialEntries: [`/notifications`]
+      }
     );
+
+    setup(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(
@@ -111,13 +117,19 @@ describe('Daily Digest in Notifications', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/notifications`]}>
-        <Route path="/notifications">
-          <DailyDigest analyzedAudits={dailyDigestProps} />
-        </Route>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/notifications',
+          element: <DailyDigest analyzedAudits={dailyDigestProps} />
+        }
+      ],
+      {
+        initialEntries: [`/notifications`]
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(

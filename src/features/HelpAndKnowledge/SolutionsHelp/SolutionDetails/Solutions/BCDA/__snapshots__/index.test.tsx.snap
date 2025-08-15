@@ -1,3 +1,80 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`The MTOWarning component > matches snapshot 1`] = `<DocumentFragment />`;
+exports[`The MTOWarning component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <p>
+      If a model is already using 4innovation (4i), it’s much quicker to onboard to BCDA (a few weeks versus several months). It’s best to involve BCDA during the development process, so they can help determine if it’s right for your model.
+    </p>
+    <ol
+      class="usa-process-list padding-top-1"
+    >
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05"
+          data-testid="processListHeading"
+        >
+          Inquire about BCDA
+        </h3>
+        <p
+          class="margin-bottom-0"
+        >
+          If you’re interested in using BCDA for your model or would like to learn more about the system, please contact the BCDA Team. They can give a demo and share information about the system.
+        </p>
+        <ul
+          class="padding-left-4 margin-top-0"
+        />
+        <p>
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+             
+          </button>
+        </p>
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05"
+          data-testid="processListHeading"
+        >
+          Get approval from CMMI leadership
+        </h3>
+        <p
+          class="margin-bottom-0"
+        >
+          If after talking with the BCDA Team, you feel BCDA is right for your model, CMMI leadership will need to approve this.
+        </p>
+        <ul
+          class="padding-left-4 margin-top-0"
+        />
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05"
+          data-testid="processListHeading"
+        >
+          Onboard to BCDA
+        </h3>
+        <p
+          class="margin-bottom-0"
+        >
+          Once your model is approved to use BCDA by CMMI leadership, the BCDA Team can help guide you through the onboarding process.
+        </p>
+        <ul
+          class="padding-left-4 margin-top-0"
+        />
+      </li>
+    </ol>
+  </div>
+</DocumentFragment>
+`;

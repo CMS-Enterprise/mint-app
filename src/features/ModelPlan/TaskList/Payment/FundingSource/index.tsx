@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -11,7 +11,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
@@ -28,6 +28,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -58,10 +59,10 @@ const FundingSource = () => {
     payType: payTypeConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetFundingQuery({
     variables: {
@@ -98,7 +99,7 @@ const FundingSource = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const nextPage = () => {
@@ -111,15 +112,15 @@ const FundingSource = () => {
     );
 
     if (hasClaimsBasedPayment) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/claims-based-payment`
       );
     } else if (hasNonClaimBasedPayment) {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(
+      navigate(
         `/models/${modelID}/collaboration-area/task-list/payment/complexity`
       );
     }
@@ -277,235 +278,244 @@ const FundingSource = () => {
   );
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="payment-funding-source">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.PAYMENTS
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.PAYMENTS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {paymentsMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {paymentsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          nextPage();
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<FundingFormType>) => {
-          const { handleSubmit, setErrors, values } = formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            nextPage();
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<FundingFormType>) => {
+            const { handleSubmit, setErrors, values } = formikProps;
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap>
-                  <Grid desktop={{ col: 6 }}>
-                    <Form
-                      className="margin-top-6"
-                      data-testid="payment-funding-source-form"
-                      onSubmit={e => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <Fieldset disabled={!!error || loading}>
-                        <FieldGroup className="margin-top-4">
-                          <FundSelection
-                            values={values}
-                            fieldName="fundingSource"
-                            config={fundingSourceConfig}
-                          />
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    <Grid desktop={{ col: 6 }}>
+                      <form
+                        className="margin-top-6"
+                        data-testid="payment-funding-source-form"
+                        onSubmit={e => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        <Fieldset disabled={!!error || loading}>
+                          <FieldGroup className="margin-top-4">
+                            <FundSelection
+                              values={values}
+                              fieldName="fundingSource"
+                              config={fundingSourceConfig}
+                            />
 
-                          <AddNote
-                            id="payment-funding-source-note"
-                            field="fundingSourceNote"
-                          />
-                        </FieldGroup>
+                            <AddNote
+                              id="payment-funding-source-note"
+                              field="fundingSourceNote"
+                            />
+                          </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="fundingSourceR"
-                          className="margin-top-4"
-                        >
-                          <FundSelection
-                            values={values}
-                            fieldName="fundingSourceR"
-                            config={fundingSourceRConfig}
-                          />
+                          <FieldGroup
+                            scrollElement="fundingSourceR"
+                            className="margin-top-4"
+                          >
+                            <FundSelection
+                              values={values}
+                              fieldName="fundingSourceR"
+                              config={fundingSourceRConfig}
+                            />
 
-                          <AddNote
-                            id="payment-funding-source-reconciliation-note"
-                            field="fundingSourceRNote"
-                          />
-                        </FieldGroup>
+                            <AddNote
+                              id="payment-funding-source-reconciliation-note"
+                              field="fundingSourceRNote"
+                            />
+                          </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
-                          <Label htmlFor="payRecipients" className="maxw-none">
-                            {paymentsT('payRecipients.label')}
-                          </Label>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="payRecipients"
+                              className="maxw-none"
+                            >
+                              {paymentsT('payRecipients.label')}
+                            </Label>
 
-                          <Fieldset>
-                            {getKeys(payRecipientsConfig.options).map(type => {
-                              return (
-                                <Fragment key={type}>
+                            <Fieldset>
+                              {getKeys(payRecipientsConfig.options).map(
+                                type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        id={`payment-pay-recipients-${type}`}
+                                        name="payRecipients"
+                                        label={
+                                          payRecipientsConfig.options[type]
+                                        }
+                                        value={type}
+                                        checked={values.payRecipients.includes(
+                                          type
+                                        )}
+                                      />
+
+                                      {type === PayRecipient.OTHER &&
+                                        values.payRecipients.includes(type) && (
+                                          <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-4">
+                                            <Label
+                                              htmlFor="payRecipientsOtherSpecification"
+                                              className="text-normal"
+                                            >
+                                              {paymentsT(
+                                                'payRecipientsOtherSpecification.label'
+                                              )}
+                                            </Label>
+
+                                            <Field
+                                              as={TextInput}
+                                              id="payment-pay-recipients-other-specification"
+                                              maxLength={50}
+                                              name="payRecipientsOtherSpecification"
+                                            />
+                                          </FieldGroup>
+                                        )}
+                                    </Fragment>
+                                  );
+                                }
+                              )}
+                            </Fieldset>
+
+                            <AddNote
+                              id="payment-pay-recipients-note"
+                              field="payRecipientsNote"
+                            />
+                          </FieldGroup>
+
+                          <FieldGroup
+                            className="margin-top-4"
+                            scrollElement="payType"
+                          >
+                            <Label htmlFor="payType" className="maxw-none">
+                              {paymentsT('payType.label')}
+                            </Label>
+
+                            <MTOWarning id="payment-pay-recipients-warning" />
+
+                            <p className="text-base margin-y-1 margin-top-2">
+                              {paymentsT('payType.sublabel')}
+                            </p>
+
+                            <Fieldset>
+                              {getKeys(payTypeConfig.options).map(type => {
+                                return (
                                   <Field
+                                    key={type}
                                     as={CheckboxField}
                                     id={`payment-pay-recipients-${type}`}
-                                    name="payRecipients"
-                                    label={payRecipientsConfig.options[type]}
+                                    name="payType"
+                                    label={payTypeConfig.options[type]}
                                     value={type}
-                                    checked={values.payRecipients.includes(
-                                      type
-                                    )}
+                                    checked={values.payType.includes(type)}
                                   />
+                                );
+                              })}
+                            </Fieldset>
 
-                                  {type === PayRecipient.OTHER &&
-                                    values.payRecipients.includes(type) && (
-                                      <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-4">
-                                        <Label
-                                          htmlFor="payRecipientsOtherSpecification"
-                                          className="text-normal"
-                                        >
-                                          {paymentsT(
-                                            'payRecipientsOtherSpecification.label'
-                                          )}
-                                        </Label>
+                            <AddNote
+                              id="payment-pay-type-note"
+                              field="payTypeNote"
+                            />
+                          </FieldGroup>
 
-                                        <Field
-                                          as={TextInput}
-                                          id="payment-pay-recipients-other-specification"
-                                          maxLength={50}
-                                          name="payRecipientsOtherSpecification"
-                                        />
-                                      </FieldGroup>
-                                    )}
-                                </Fragment>
-                              );
-                            })}
-                          </Fieldset>
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button type="submit" onClick={() => setErrors({})}>
+                              {miscellaneousT('next')}
+                            </Button>
+                          </div>
 
-                          <AddNote
-                            id="payment-pay-recipients-note"
-                            field="payRecipientsNote"
-                          />
-                        </FieldGroup>
+                          <Button
+                            type="button"
+                            className="usa-button usa-button--unstyled"
+                            onClick={() =>
+                              navigate(
+                                `/models/${modelID}/collaboration-area/task-list`
+                              )
+                            }
+                          >
+                            <Icon.ArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                              aria-label="back"
+                            />
 
-                        <FieldGroup
-                          className="margin-top-4"
-                          scrollElement="payType"
-                        >
-                          <Label htmlFor="payType" className="maxw-none">
-                            {paymentsT('payType.label')}
-                          </Label>
-
-                          <MTOWarning id="payment-pay-recipients-warning" />
-
-                          <p className="text-base margin-y-1 margin-top-2">
-                            {paymentsT('payType.sublabel')}
-                          </p>
-
-                          <Fieldset>
-                            {getKeys(payTypeConfig.options).map(type => {
-                              return (
-                                <Field
-                                  key={type}
-                                  as={CheckboxField}
-                                  id={`payment-pay-recipients-${type}`}
-                                  name="payType"
-                                  label={payTypeConfig.options[type]}
-                                  value={type}
-                                  checked={values.payType.includes(type)}
-                                />
-                              );
-                            })}
-                          </Fieldset>
-
-                          <AddNote
-                            id="payment-pay-type-note"
-                            field="payTypeNote"
-                          />
-                        </FieldGroup>
-
-                        <div className="margin-top-6 margin-bottom-3">
-                          <Button type="submit" onClick={() => setErrors({})}>
-                            {miscellaneousT('next')}
+                            {miscellaneousT('saveAndReturn')}
                           </Button>
-                        </div>
-
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/collaboration-area/task-list`
-                            )
-                          }
-                        >
-                          <Icon.ArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                            aria-label="back"
-                          />
-
-                          {miscellaneousT('saveAndReturn')}
-                        </Button>
-                      </Fieldset>
-                    </Form>
+                        </Fieldset>
+                      </form>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GridContainer>
-            </>
-          );
-        }}
-      </Formik>
+                </GridContainer>
+              </>
+            );
+          }}
+        </Formik>
 
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            1,
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          totalPages={renderTotalPages(
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              1,
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            totalPages={renderTotalPages(
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 

@@ -1,13 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import {
-  Route,
-  Switch,
-  useHistory,
-  useLocation,
-  useParams
-} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -17,6 +11,7 @@ import {
   useDeleteModelPlanCollaboratorMutation,
   useGetModelCollaboratorsQuery
 } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -26,7 +21,6 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
@@ -70,12 +64,12 @@ const SuccessRemovalMessage = ({
 };
 
 export const CollaboratorsContent = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -92,7 +86,7 @@ export const CollaboratorsContent = () => {
     useState<ModelPlanCollaboratorType>();
 
   // Current user's EUA id - to warn about removing yourself from model plan
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId } = useSelector((state: AppState) => state.auth);
 
   const [mutate] = useDeleteModelPlanCollaboratorMutation();
 
@@ -128,7 +122,7 @@ export const CollaboratorsContent = () => {
             showMessageOnNextPage(
               <SuccessRemovalMessage modelName={modelName} />
             );
-            history.push('/');
+            navigate('/');
           } else {
             refetch();
           }
@@ -307,23 +301,26 @@ export const CollaboratorsContent = () => {
 };
 
 const Collaborators = () => {
-  return (
-    <Switch>
-      <ProtectedRoute
-        path="/models/:modelID/collaboration-area/collaborators"
-        exact
-        render={() => <CollaboratorsContent />}
-      />
-      <ProtectedRoute
-        path="/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?"
-        exact
-        render={() => <AddCollaborator />}
-      />
+  return <Outlet />;
+};
 
-      {/* 404 */}
-      <Route path="*" render={() => <NotFound />} />
-    </Switch>
-  );
+export const collaboratorsRoutes = {
+  path: '/models/:modelID/collaboration-area/collaborators',
+  element: <Collaborators />,
+  children: [
+    {
+      path: '/models/:modelID/collaboration-area/collaborators',
+      element: <CollaboratorsContent />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?',
+      element: <AddCollaborator />
+    },
+    {
+      path: '*',
+      element: <NotFound />
+    }
+  ]
 };
 
 export default Collaborators;

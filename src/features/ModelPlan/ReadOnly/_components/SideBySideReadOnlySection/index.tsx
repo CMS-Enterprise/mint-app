@@ -4,7 +4,7 @@ import { Grid } from '@trussworks/react-uswds';
 const SideBySideReadOnlySection = ({
   children
 }: {
-  children: (false | JSX.Element | null | undefined)[];
+  children: (false | React.ReactElement | null | undefined)[];
 }) => {
   const [child1, child2] = children;
 

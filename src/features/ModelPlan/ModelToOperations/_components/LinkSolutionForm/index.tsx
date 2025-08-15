@@ -54,7 +54,7 @@ const LinkSolutionForm = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: milestoneT } = useTranslation('mtoMilestone');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 

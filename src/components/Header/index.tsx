@@ -14,10 +14,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
 import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useOktaSession from 'hooks/useOktaSession';
 import useOutsideClick from 'hooks/useOutsideClick';
 
 import { NavContext } from '../../contexts/NavContext';
+import { useOktaSession } from '../../contexts/OktaSessionContext';
 
 import './index.scss';
 
@@ -41,7 +41,9 @@ const Header = () => {
   const isGetAccess: boolean = pathname === '/how-to-get-access';
 
   // Detects click outside mobile navigation and close mobile nav
-  useOutsideClick(mobileNavRef, () => setIsMobileSideNavExpanded(false));
+  useOutsideClick(mobileNavRef as React.RefObject<HTMLElement>, () =>
+    setIsMobileSideNavExpanded(false)
+  );
 
   useEffect(() => {
     let isMounted = true;

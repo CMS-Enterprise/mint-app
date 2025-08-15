@@ -25,7 +25,8 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
           You may add additional milestones to your MTO from the 
           <a
             class="usa-link"
-            href="/models/undefined/collaboration-area/model-to-operations/milestone-library"
+            data-discover="true"
+            href="/models//collaboration-area/model-to-operations/milestone-library"
           >
             milestone library
           </a>

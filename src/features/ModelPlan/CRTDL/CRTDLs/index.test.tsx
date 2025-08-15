@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
@@ -22,20 +22,28 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('CR and TDLs page', () => {
   it('renders without errors', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/cr-and-tdl`]}
-      >
-        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/cr-and-tdl',
+          element: (
+            <MessageProvider>
               <Provider store={store}>
                 <CRTDLs />
               </Provider>
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/cr-and-tdl`]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -49,20 +57,28 @@ describe('CR and TDLs page', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/cr-and-tdl`]}
-      >
-        <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/cr-and-tdl',
+          element: (
+            <MessageProvider>
               <Provider store={store}>
                 <CRTDLs />
               </Provider>
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area/cr-and-tdl`]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

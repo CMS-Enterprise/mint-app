@@ -14,7 +14,7 @@ type FileUploadProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
   ariaDescribedBy?: string;
-  inputProps: JSX.IntrinsicElements['input'];
+  inputProps: React.ComponentProps<'input'>;
 };
 
 const FileUpload = (props: FileUploadProps) => {

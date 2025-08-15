@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
 import { collaborationAreaData } from 'tests/mock/general';
 import setup from 'tests/util';
@@ -12,15 +12,25 @@ const modelPlan = collaborationAreaData;
 
 describe('ModelPlanCard', () => {
   it('renders without issues', async () => {
-    const { getByText } = setup(
-      <MemoryRouter initialEntries={[`/models/${modelID}/collaboration-area`]}>
-        <ModelPlanCard
-          modelID={modelID}
-          modelPlan={modelPlan}
-          setStatusMessage={() => null}
-        />
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area',
+          element: (
+            <ModelPlanCard
+              modelID={modelID}
+              modelPlan={modelPlan}
+              setStatusMessage={() => null}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area`]
+      }
     );
+
+    const { getByText } = setup(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(getByText('Model Plan')).toBeInTheDocument();
@@ -53,14 +63,26 @@ describe('ModelPlanCard', () => {
   });
 
   it('matches the snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area',
+          element: (
+            <ModelPlanCard
+              modelID={modelID}
+              modelPlan={modelPlan}
+              setStatusMessage={() => null}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/collaboration-area`]
+      }
+    );
+
     const { getByText, queryByText, asFragment } = setup(
-      <MemoryRouter initialEntries={[`/models/${modelID}/collaboration-area`]}>
-        <ModelPlanCard
-          modelID={modelID}
-          modelPlan={modelPlan}
-          setStatusMessage={() => null}
-        />
-      </MemoryRouter>
+      <RouterProvider router={router} />
     );
 
     await waitFor(() => {

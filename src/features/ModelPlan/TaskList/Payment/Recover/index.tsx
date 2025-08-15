@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -10,7 +10,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Form, Formik, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import {
   ClaimsBasedPayType,
   GetRecoverQuery,
@@ -28,6 +28,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
+import MainContent from 'components/MainContent';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -56,7 +57,7 @@ const Recover = () => {
     paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig
   } = usePlanTranslation('payments');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const flags = useFlags();
 
@@ -67,7 +68,7 @@ const Recover = () => {
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetRecoverQuery({
     variables: {
@@ -107,7 +108,7 @@ const Recover = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const initialValues: InitialValueType = {
@@ -145,272 +146,279 @@ const Recover = () => {
   }
 
   return (
-    <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
-        url={mutationError.destinationURL}
-      />
+    <MainContent data-testid="payment-recover">
+      <GridContainer>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={() => mutationError.closeModal()}
+          url={mutationError.destinationURL}
+        />
 
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
-          BreadcrumbItemOptions.PAYMENTS
-        ]}
-      />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.PAYMENTS
+          ]}
+        />
 
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {paymentsMiscT('heading')}
-      </PageHeading>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {paymentsMiscT('heading')}
+        </PageHeading>
 
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {miscellaneousT('helpText')}
-      </p>
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {miscellaneousT('helpText')}
+        </p>
 
-      <AskAQuestion modelID={modelID} />
+        <AskAQuestion modelID={modelID} />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          history.push(`/models/${modelID}/collaboration-area/task-list`);
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<InitialValueType>) => {
-          const {
-            handleSubmit,
-            setFieldValue,
-            setFieldError,
-            setErrors,
-            values
-          } = formikProps;
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {
+            navigate(`/models/${modelID}/collaboration-area/task-list`);
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<InitialValueType>) => {
+            const {
+              handleSubmit,
+              setFieldValue,
+              setFieldError,
+              setErrors,
+              values
+            } = formikProps;
 
-          const handleOnBlur = (
-            e: React.ChangeEvent<HTMLInputElement>,
-            field: string
-          ) => {
-            if (e.target.value === '') {
-              setFieldValue(field, null);
-              return;
-            }
-            try {
-              setFieldValue(field, new Date(e.target.value).toISOString());
-            } catch (err) {
-              setFieldError(field, paymentsT('validDate'));
-            }
-          };
+            const handleOnBlur = (
+              e: React.ChangeEvent<HTMLInputElement>,
+              field: string
+            ) => {
+              if (e.target.value === '') {
+                setFieldValue(field, null);
+                return;
+              }
+              try {
+                setFieldValue(field, new Date(e.target.value).toISOString());
+              } catch (err) {
+                setFieldError(field, paymentsT('validDate'));
+              }
+            };
 
-          return (
-            <>
-              <ConfirmLeave />
+            return (
+              <>
+                <ConfirmLeave />
 
-              <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap>
-                  <Grid desktop={{ col: 6 }}>
-                    <Form
-                      className="margin-top-6"
-                      data-testid="payment-recover-form"
-                      onSubmit={e => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          className="margin-top-4"
-                          scrollElement="willRecoverPayments"
-                        >
-                          <Label
-                            htmlFor="payment-recover-payment"
-                            className="maxw-none"
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    <Grid desktop={{ col: 6 }}>
+                      <form
+                        className="margin-top-6"
+                        data-testid="payment-recover-form"
+                        onSubmit={e => {
+                          handleSubmit(e);
+                        }}
+                      >
+                        <Fieldset disabled={!!error || loading}>
+                          <FieldGroup
+                            className="margin-top-4"
+                            scrollElement="willRecoverPayments"
                           >
-                            {paymentsT('willRecoverPayments.label')}
-                          </Label>
+                            <Label
+                              htmlFor="payment-recover-payment"
+                              className="maxw-none"
+                            >
+                              {paymentsT('willRecoverPayments.label')}
+                            </Label>
 
-                          <MTOWarning id="payment-recover-payment-warning" />
+                            <MTOWarning id="payment-recover-payment-warning" />
 
-                          <BooleanRadio
-                            field="willRecoverPayments"
-                            id="payment-recover-payment"
-                            value={values.willRecoverPayments}
-                            setFieldValue={setFieldValue}
-                            options={willRecoverPaymentsConfig.options}
-                          />
+                            <BooleanRadio
+                              field="willRecoverPayments"
+                              id="payment-recover-payment"
+                              value={values.willRecoverPayments}
+                              setFieldValue={setFieldValue}
+                              options={willRecoverPaymentsConfig.options}
+                            />
 
-                          <AddNote
-                            id="payment-recover-payment-note"
-                            field="willRecoverPaymentsNote"
-                          />
-                        </FieldGroup>
+                            <AddNote
+                              id="payment-recover-payment-note"
+                              field="willRecoverPaymentsNote"
+                            />
+                          </FieldGroup>
 
-                        <FieldGroup className="margin-top-4">
-                          <Label
-                            htmlFor="payment-anticipate-reconciling-payment-retro"
-                            className="maxw-none"
-                          >
-                            {paymentsT(
-                              'anticipateReconcilingPaymentsRetrospectively.label'
-                            )}
-                          </Label>
+                          <FieldGroup className="margin-top-4">
+                            <Label
+                              htmlFor="payment-anticipate-reconciling-payment-retro"
+                              className="maxw-none"
+                            >
+                              {paymentsT(
+                                'anticipateReconcilingPaymentsRetrospectively.label'
+                              )}
+                            </Label>
 
-                          <BooleanRadio
-                            field="anticipateReconcilingPaymentsRetrospectively"
-                            id="payment-anticipate-reconciling-payment-retro"
-                            value={
-                              values.anticipateReconcilingPaymentsRetrospectively
-                            }
-                            setFieldValue={setFieldValue}
-                            options={
-                              anticipateReconcilingPaymentsRetrospectivelyConfig.options
-                            }
-                          />
-
-                          <AddNote
-                            id="payment-anticipate-reconciling-payment-retro-note"
-                            field="anticipateReconcilingPaymentsRetrospectivelyNote"
-                          />
-                        </FieldGroup>
-
-                        <FrequencyForm
-                          field="paymentReconciliationFrequency"
-                          values={values.paymentReconciliationFrequency}
-                          config={paymentReconciliationFrequencyConfig}
-                          nameSpace="payments"
-                          id="payment-reconciliation-frequency"
-                          label={paymentsT(
-                            'paymentReconciliationFrequency.label'
-                          )}
-                          disabled={loading}
-                        />
-
-                        <FrequencyForm
-                          field="paymentDemandRecoupmentFrequency"
-                          values={values.paymentDemandRecoupmentFrequency}
-                          config={paymentDemandRecoupmentFrequencyConfig}
-                          nameSpace="payments"
-                          id="payment-demand-recoupment-frequency"
-                          label={paymentsT(
-                            'paymentDemandRecoupmentFrequency.label'
-                          )}
-                          disabled={loading}
-                        />
-
-                        {!loading && (
-                          <>
-                            <MINTDatePicker
-                              fieldName="paymentStartDate"
-                              id="payment-payment-start-date"
-                              className="margin-top-6"
-                              label={paymentsT('paymentStartDate.label')}
-                              subLabel={paymentsT('paymentStartDate.sublabel')}
-                              placeHolder
-                              handleOnBlur={handleOnBlur}
-                              formikValue={values.paymentStartDate}
-                              value={paymentStartDate}
-                              shouldShowWarning={
-                                initialValues.paymentStartDate !==
-                                values.paymentStartDate
+                            <BooleanRadio
+                              field="anticipateReconcilingPaymentsRetrospectively"
+                              id="payment-anticipate-reconciling-payment-retro"
+                              value={
+                                values.anticipateReconcilingPaymentsRetrospectively
+                              }
+                              setFieldValue={setFieldValue}
+                              options={
+                                anticipateReconcilingPaymentsRetrospectivelyConfig.options
                               }
                             />
 
                             <AddNote
-                              id="payment-payment-start-date-note"
-                              field="paymentStartDateNote"
+                              id="payment-anticipate-reconciling-payment-retro-note"
+                              field="anticipateReconcilingPaymentsRetrospectivelyNote"
                             />
-                          </>
-                        )}
+                          </FieldGroup>
 
-                        {!loading && values.status && (
-                          <ReadyForReview
-                            id="payment-status"
-                            field="status"
-                            sectionName={paymentsMiscT('heading')}
-                            status={values.status}
-                            setFieldValue={setFieldValue}
-                            readyForReviewBy={
-                              readyForReviewByUserAccount?.commonName
-                            }
-                            readyForReviewDts={readyForReviewDts}
+                          <FrequencyForm
+                            field="paymentReconciliationFrequency"
+                            values={values.paymentReconciliationFrequency}
+                            config={paymentReconciliationFrequencyConfig}
+                            nameSpace="payments"
+                            id="payment-reconciliation-frequency"
+                            label={paymentsT(
+                              'paymentReconciliationFrequency.label'
+                            )}
+                            disabled={loading}
                           />
-                        )}
 
-                        <div className="margin-top-6 margin-bottom-3">
+                          <FrequencyForm
+                            field="paymentDemandRecoupmentFrequency"
+                            values={values.paymentDemandRecoupmentFrequency}
+                            config={paymentDemandRecoupmentFrequencyConfig}
+                            nameSpace="payments"
+                            id="payment-demand-recoupment-frequency"
+                            label={paymentsT(
+                              'paymentDemandRecoupmentFrequency.label'
+                            )}
+                            disabled={loading}
+                          />
+
+                          {!loading && (
+                            <>
+                              <MINTDatePicker
+                                fieldName="paymentStartDate"
+                                id="payment-payment-start-date"
+                                className="margin-top-6"
+                                label={paymentsT('paymentStartDate.label')}
+                                subLabel={paymentsT(
+                                  'paymentStartDate.sublabel'
+                                )}
+                                placeHolder
+                                handleOnBlur={handleOnBlur}
+                                formikValue={values.paymentStartDate}
+                                value={paymentStartDate}
+                                shouldShowWarning={
+                                  initialValues.paymentStartDate !==
+                                  values.paymentStartDate
+                                }
+                              />
+
+                              <AddNote
+                                id="payment-payment-start-date-note"
+                                field="paymentStartDateNote"
+                              />
+                            </>
+                          )}
+
+                          {!loading && values.status && (
+                            <ReadyForReview
+                              id="payment-status"
+                              field="status"
+                              sectionName={paymentsMiscT('heading')}
+                              status={values.status}
+                              setFieldValue={setFieldValue}
+                              readyForReviewBy={
+                                readyForReviewByUserAccount?.commonName
+                              }
+                              readyForReviewDts={readyForReviewDts}
+                            />
+                          )}
+
+                          <div className="margin-top-6 margin-bottom-3">
+                            <Button
+                              type="button"
+                              className="usa-button usa-button--outline margin-bottom-1"
+                              onClick={() => {
+                                navigate(
+                                  `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+                                );
+                              }}
+                            >
+                              {miscellaneousT('back')}
+                            </Button>
+
+                            {!flags.hideITLeadExperience && (
+                              <Button
+                                type="submit"
+                                onClick={() => setErrors({})}
+                              >
+                                {miscellaneousT('save')}
+                              </Button>
+                            )}
+                          </div>
+
                           <Button
                             type="button"
-                            className="usa-button usa-button--outline margin-bottom-1"
-                            onClick={() => {
-                              history.push(
-                                `/models/${modelID}/collaboration-area/task-list/payment/complexity`
-                              );
-                            }}
+                            className="usa-button usa-button--unstyled"
+                            onClick={() =>
+                              navigate(
+                                `/models/${modelID}/collaboration-area/task-list`
+                              )
+                            }
                           >
-                            {miscellaneousT('back')}
+                            <Icon.ArrowBack
+                              className="margin-right-1"
+                              aria-hidden
+                              aria-label="back"
+                            />
+
+                            {miscellaneousT('saveAndReturn')}
                           </Button>
-
-                          {!flags.hideITLeadExperience && (
-                            <Button type="submit" onClick={() => setErrors({})}>
-                              {miscellaneousT('save')}
-                            </Button>
-                          )}
-                        </div>
-
-                        <Button
-                          type="button"
-                          className="usa-button usa-button--unstyled"
-                          onClick={() =>
-                            history.push(
-                              `/models/${modelID}/collaboration-area/task-list`
-                            )
-                          }
-                        >
-                          <Icon.ArrowBack
-                            className="margin-right-1"
-                            aria-hidden
-                            aria-label="back"
-                          />
-
-                          {miscellaneousT('saveAndReturn')}
-                        </Button>
-                      </Fieldset>
-                    </Form>
+                        </Fieldset>
+                      </form>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </GridContainer>
-            </>
-          );
-        }}
-      </Formik>
+                </GridContainer>
+              </>
+            );
+          }}
+        </Formik>
 
-      {data && (
-        <PageNumber
-          currentPage={renderCurrentPage(
-            7,
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          totalPages={renderTotalPages(
-            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
-            payClaims.includes(
-              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-            )
-          )}
-          className="margin-y-6"
-        />
-      )}
-    </>
+        {data && (
+          <PageNumber
+            currentPage={renderCurrentPage(
+              7,
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            totalPages={renderTotalPages(
+              payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+              payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+              payClaims.includes(
+                ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            )}
+            className="margin-y-6"
+          />
+        )}
+      </GridContainer>
+    </MainContent>
   );
 };
 

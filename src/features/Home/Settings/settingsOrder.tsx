@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -25,10 +25,7 @@ import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import useMessage from 'hooks/useMessage';
 
-import {
-  HomepageLocationStateType,
-  HomepageSettingsLocationType
-} from './settings';
+import { HomepageSettingsLocationType } from './settings';
 
 import './index.scss';
 
@@ -68,11 +65,11 @@ const SettingsOrder = () => {
   const { t: homepageSettingsT } = useTranslation('homepageSettings');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { state } = useLocation<HomepageLocationStateType>();
+  const { state } = useLocation();
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
@@ -106,25 +103,6 @@ const SettingsOrder = () => {
     }
   }, [data?.userViewCustomization, loading, selectedSettings]);
 
-  // Passes the current state to the previous page if navigating back
-  useEffect(() => {
-    // Blocks the route transition until unblock() is called
-    const unblock = history.block(destination => {
-      unblock();
-      history.push({
-        pathname: destination.pathname,
-        state:
-          // If the destination is the homepage settings page, pass the current state
-          destination.pathname === '/homepage-settings'
-            ? { homepageSettings: selectedSettings }
-            : undefined
-      });
-      return false;
-    });
-
-    return () => {};
-  }, [history, selectedSettings]);
-
   const handleSubmit = () => {
     mutate({
       variables: {
@@ -144,7 +122,7 @@ const SettingsOrder = () => {
           );
           // Removes router state upon successful mutation
           window.history.replaceState({}, '');
-          history.push('/');
+          navigate('/');
         }
       })
       .catch(() => setMutationError(true));
@@ -304,7 +282,11 @@ const SettingsOrder = () => {
               type="button"
               outline
               className="margin-bottom-4"
-              onClick={() => history.push('/homepage-settings')}
+              onClick={() =>
+                navigate('/homepage-settings/form', {
+                  state: { homepageSettings: selectedSettings }
+                })
+              }
             >
               {miscellaneousT('back')}
             </Button>

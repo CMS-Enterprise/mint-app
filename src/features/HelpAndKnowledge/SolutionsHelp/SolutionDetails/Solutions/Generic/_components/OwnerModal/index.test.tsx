@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { SolutionSystemOwnerType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -22,26 +22,38 @@ const owner: SolutionSystemOwnerType = {
 
 const mocks = [...possibleSolutionsMock];
 
+// ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+// eslint-disable-next-line
+console.error = vi.fn();
+
 describe('Owner Modal Component', () => {
   it('should render add owner modal', async () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <OwnerModal
                 isModalOpen
                 mode="addSystemOwner"
                 closeModal={() => {}}
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+
+    const { getByText, queryByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -57,25 +69,33 @@ describe('Owner Modal Component', () => {
   });
 
   it('should render edit owner modal', async () => {
-    const { getByText, queryByText } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
-        ]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <MessageProvider>
-            <Route path="/help-and-knowledge/operational-solutions">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions/solutions',
+          element: (
+            <MessageProvider>
               <OwnerModal
                 isModalOpen
                 owner={owner}
                 mode="editSystemOwner"
                 closeModal={() => {}}
               />
-            </Route>
-          </MessageProvider>
-        </MockedProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=points-of-contact'
+        ]
+      }
+    );
+
+    const { getByText, queryByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

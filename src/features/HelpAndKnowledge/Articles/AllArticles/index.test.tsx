@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 
@@ -7,49 +7,71 @@ import AllArticles from '.';
 
 describe('The AllArticles component', () => {
   it('renders correct Getting Started category', async () => {
-    const { getAllByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/articles',
+          element: (
+            <MockedProvider mocks={[]} addTypename={false}>
+              <AllArticles />
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/articles?category=getting-started'
-        ]}
-      >
-        <Route path="/help-and-knowledge/articles">
-          <MockedProvider mocks={[]} addTypename={false}>
-            <AllArticles />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
     );
+
+    const { getAllByText } = render(<RouterProvider router={router} />);
 
     expect(getAllByText('Getting started')[0]).toBeInTheDocument();
   });
 
   it('renders correct IT Implementation category', async () => {
-    const { getAllByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/articles',
+          element: (
+            <MockedProvider mocks={[]} addTypename={false}>
+              <AllArticles />
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
           '/help-and-knowledge/articles?category=it-implementation'
-        ]}
-      >
-        <Route path="/help-and-knowledge/articles">
-          <MockedProvider mocks={[]} addTypename={false}>
-            <AllArticles />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
     );
+
+    const { getAllByText } = render(<RouterProvider router={router} />);
 
     expect(getAllByText('IT implementation')[0]).toBeInTheDocument();
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter>
-        <MockedProvider mocks={[]} addTypename={false}>
-          <AllArticles />
-        </MockedProvider>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <MockedProvider mocks={[]} addTypename={false}>
+              <AllArticles />
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

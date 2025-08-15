@@ -29,6 +29,7 @@ exports[`Notification Page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
+                data-discover="true"
                 href="/"
               >
                 <span>
@@ -75,6 +76,7 @@ exports[`Notification Page > matches snapshot 1`] = `
             </button>
             <a
               class="usa-link margin-y-0 margin-x-2"
+              data-discover="true"
               href="/notifications/settings"
             >
               Notification settings

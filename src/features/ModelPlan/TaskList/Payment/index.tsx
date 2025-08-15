@@ -1,8 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { NotFoundPartial } from 'features/NotFound';
+import { Outlet } from 'react-router-dom';
 
-import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
 
 import AnticipateDependencies from './AnticipateDependencies';
@@ -40,49 +38,47 @@ export const renderTotalPages = (
   return totalPages;
 };
 
-export const Payment = () => {
-  return (
-    <MainContent className="grid-container" data-testid="model-payment">
-      <Switch>
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment"
-          component={FundingSource}
-          exact
-        />
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment"
-          component={ClaimsBasedPayment}
-          exact
-        />
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment"
-          component={NonClaimsBasedPayment}
-          exact
-        />
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies"
-          component={AnticipateDependencies}
-          exact
-        />
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing"
-          component={BeneficiaryCostSharing}
-          exact
-        />
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment/complexity"
-          component={Complexity}
-          exact
-        />
-        <ProtectedRoute
-          path="/models/:modelID/collaboration-area/task-list/payment/recover-payment"
-          component={Recover}
-          exact
-        />
-        <Route path="*" render={() => <NotFoundPartial />} />
-      </Switch>
-    </MainContent>
-  );
+const Payment = () => {
+  return <Outlet />;
 };
 
-export default Payment;
+const paymentRoutes = {
+  path: '/models/:modelID/collaboration-area/task-list/payment',
+  element: (
+    <ProtectedRoute>
+      <Payment />
+    </ProtectedRoute>
+  ),
+  children: [
+    {
+      path: '',
+      element: <FundingSource />
+    },
+    {
+      path: 'claims-based-payment',
+      element: <ClaimsBasedPayment />
+    },
+    {
+      path: 'non-claims-based-payment',
+      element: <NonClaimsBasedPayment />
+    },
+    {
+      path: 'anticipating-dependencies',
+      element: <AnticipateDependencies />
+    },
+    {
+      path: 'beneficiary-cost-sharing',
+      element: <BeneficiaryCostSharing />
+    },
+    {
+      path: 'complexity',
+      element: <Complexity />
+    },
+    {
+      path: 'recover-payment',
+      element: <Recover />
+    }
+  ]
+};
+
+export default paymentRoutes;

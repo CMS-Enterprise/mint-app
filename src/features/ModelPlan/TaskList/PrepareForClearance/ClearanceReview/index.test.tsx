@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -104,18 +104,24 @@ const clearanceMocks = [
 
 describe('ClearanceReview component', () => {
   it('renders readonly component', async () => {
-    const { getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
+          element: <ClearanceReview />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
-        ]}
-      >
-        <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByTestId } = render(
+      <MockedProvider mocks={clearanceMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('spinner'));
@@ -130,18 +136,24 @@ describe('ClearanceReview component', () => {
     // eslint-disable-next-line
     console.error = vi.fn();
 
-    const { getByTestId, user } = setup(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
+          element: <ClearanceReview />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
-        ]}
-      >
-        <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByTestId, user } = setup(
+      <MockedProvider mocks={clearanceMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -158,18 +170,24 @@ describe('ClearanceReview component', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
+          element: <ClearanceReview />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
-        ]}
-      >
-        <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
-            <ClearanceReview modelID={modelID} />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment, getByTestId } = render(
+      <MockedProvider mocks={clearanceMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() => getByTestId('spinner'));

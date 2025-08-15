@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -126,20 +126,28 @@ describe('Ask a Question Component', () => {
   vi.spyOn(window, 'scroll');
 
   it('renders the discussion modal init with question', async () => {
-    const { getByText, getByTestId } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/basics',
+          element: (
+            <MockedProvider mocks={mocks} addTypename={false}>
+              <Provider store={store}>
+                <AskAQuestion modelID={modelID} />
+              </Provider>
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/basics'
-        ]}
-      >
-        <Route path="/models/:modelID/collaboration-area/task-list/basics">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <AskAQuestion modelID={modelID} />
-            </Provider>
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByText, getByTestId } = render(
+      <RouterProvider router={router} />
     );
 
     expect(getByTestId('ask-a-question')).toBeInTheDocument();

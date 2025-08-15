@@ -1,5 +1,5 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security } from '@okta/okta-react';
 
@@ -13,26 +13,33 @@ type ParentComponentProps = {
 };
 
 const AuthenticationWrapper = ({ children }: ParentComponentProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const authClient = new OktaAuth({
-    issuer: import.meta.env.VITE_OKTA_ISSUER,
-    clientId: import.meta.env.VITE_OKTA_CLIENT_ID,
-    redirectUri: import.meta.env.VITE_OKTA_REDIRECT_URI,
-    tokenManager: {
-      autoRenew: false
-    }
-  });
+  // Memoize the authClient to prevent recreation on every render
+  const authClient = useMemo(
+    () =>
+      new OktaAuth({
+        issuer: import.meta.env.VITE_OKTA_ISSUER,
+        clientId: import.meta.env.VITE_OKTA_CLIENT_ID,
+        redirectUri: import.meta.env.VITE_OKTA_REDIRECT_URI,
+        tokenManager: {
+          autoRenew: false
+        }
+      }),
+    []
+  );
 
   const handleAuthRequiredRedirect = () => {
-    history.push('/signin');
+    navigate('/signin');
   };
 
   const restoreOriginalUri = async (
     _oktaAuth: OktaAuth,
     originalUri: string
   ) => {
-    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+    navigate(toRelativeUrl(originalUri || '/', window.location.origin), {
+      replace: true
+    });
   };
 
   return isLocalAuthEnabled() &&

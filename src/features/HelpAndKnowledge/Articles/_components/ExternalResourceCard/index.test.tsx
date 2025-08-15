@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 
@@ -9,19 +9,29 @@ import ExternalResourceCard from './index'; // Adjust the import to your actual 
 
 describe('ExternalResourceCard', () => {
   it('renders the component correctly', () => {
-    render(
-      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <MockedProvider mocks={[]} addTypename={false}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/articles',
+          element: (
             <ExternalResourceCard
               type={ArticleCategories.GETTING_STARTED}
               route="https://example.com"
               translation={HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY}
               tag
             />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/articles']
+      }
+    );
+
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(screen.getByTestId('article-card')).toBeInTheDocument();
@@ -38,38 +48,58 @@ describe('ExternalResourceCard', () => {
   });
 
   it('renders the tag when tag prop is true', () => {
-    render(
-      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <MockedProvider mocks={[]} addTypename={false}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/articles',
+          element: (
             <ExternalResourceCard
               type={ArticleCategories.GETTING_STARTED}
               route="https://example.com"
               translation={HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY}
               tag
             />
-          </MockedProvider>{' '}
-        </Route>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/articles']
+      }
+    );
+
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(screen.getByText('Getting started')).toBeInTheDocument();
   });
 
   it('does not render the tag when tag prop is false', () => {
-    render(
-      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <MockedProvider mocks={[]} addTypename={false}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/articles',
+          element: (
             <ExternalResourceCard
               type={ArticleCategories.GETTING_STARTED}
               route="https://example.com"
               translation={HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY}
               tag={false}
             />
-          </MockedProvider>{' '}
-        </Route>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/articles']
+      }
+    );
+
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(
@@ -78,19 +108,29 @@ describe('ExternalResourceCard', () => {
   });
 
   it('matches the snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={['/help-and-knowledge/articles']}>
-        <Route path="/help-and-knowledge/articles">
-          <MockedProvider mocks={[]} addTypename={false}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/articles',
+          element: (
             <ExternalResourceCard
               type={ArticleCategories.GETTING_STARTED}
               route="https://example.com"
               translation={HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY}
               tag
             />
-          </MockedProvider>{' '}
-        </Route>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/articles']
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

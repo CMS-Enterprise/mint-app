@@ -28,6 +28,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
+                data-discover="true"
                 href="/"
               >
                 <span>
@@ -40,7 +41,8 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/undefined/collaboration-area"
+                data-discover="true"
+                href="/models//collaboration-area"
               >
                 <span>
                   Model collaboration area
@@ -69,9 +71,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
         >
           As you iterate on your Model Plan, update the status of your model so others known what stage it’s at in the design and clearance process.
         </p>
-        <form
-          action="#"
-        >
+        <form>
           <div
             class="usa-form-group"
             data-scroll="status"

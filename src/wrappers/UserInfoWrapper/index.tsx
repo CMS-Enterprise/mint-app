@@ -7,7 +7,7 @@ import GetNDA from 'gql/operations/Miscellaneous/GetNDA';
 import { setUser } from 'stores/reducers/authReducer';
 
 import { localAuthStorageKey } from 'constants/localAuth';
-import useOktaSession from 'hooks/useOktaSession';
+import { useOktaSession } from 'contexts/OktaSessionContext';
 import { isLocalAuthEnabled } from 'utils/auth';
 
 type UserInfoWrapperProps = {

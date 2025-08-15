@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -11,7 +11,7 @@ import {
   YesNoOtherType
 } from 'gql/generated/graphql';
 
-import { CharacteristicsContent, separateLinksByType } from './index';
+import ModelRelation, { separateLinksByType } from './index';
 
 const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] =
   {
@@ -98,18 +98,24 @@ const generalCharacteristicsMock = [
 
 describe('Model Plan Characteristics', () => {
   it('renders without errors', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/characteristics',
+          element: <ModelRelation />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics'
-        ]}
-      >
-        <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/characteristics">
-            <CharacteristicsContent />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -142,18 +148,24 @@ describe('Model Plan Characteristics', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/characteristics',
+          element: <ModelRelation />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics'
-        ]}
-      >
-        <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/characteristics">
-            <CharacteristicsContent />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

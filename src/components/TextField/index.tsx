@@ -15,7 +15,7 @@ type TextFieldProps = {
   match?: RegExp;
   inline?: boolean;
   className?: string;
-} & JSX.IntrinsicElements['input'];
+} & React.ComponentProps<'input'>;
 
 const TextField = ({
   disabled,
