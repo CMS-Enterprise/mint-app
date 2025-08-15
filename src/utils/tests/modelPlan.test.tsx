@@ -3,7 +3,8 @@ import { GetModelCollaboratorsQuery, TeamRole } from 'gql/generated/graphql';
 import {
   collaboratorsOrderedByModelLeads,
   getUserInitials,
-  returnValidLetter
+  returnValidLetter,
+  sortedSelectOptions
 } from '../modelPlan';
 
 type GetCollaboratorsType =
@@ -73,5 +74,18 @@ describe('model plan util', () => {
     expect(
       collaboratorsOrderedByModelLeads([normalPerson, steveRogers, peterParker])
     ).toEqual([peterParker, steveRogers, normalPerson]);
+  });
+
+  it('returns array ordered by label value', () => {
+    const options = [
+      { label: 'Berry crunch', value: 'CMS' },
+      { label: 'Zelda system', value: 'ZEL' },
+      { label: '4Cherry', value: '4C' }
+    ];
+    const sortedOptions = sortedSelectOptions(options);
+
+    expect(sortedOptions[0]).toEqual({ label: '4Cherry', value: '4C' });
+    expect(sortedOptions[1]).toEqual({ label: 'Berry crunch', value: 'CMS' });
+    expect(sortedOptions[2]).toEqual({ label: 'Zelda system', value: 'ZEL' });
   });
 });
