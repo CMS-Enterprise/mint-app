@@ -32,7 +32,8 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import {
   composeMultiSelectOptions,
-  convertCamelCaseToKebabCase
+  convertCamelCaseToKebabCase,
+  sortedSelectOptions
 } from 'utils/modelPlan';
 
 type FormValues = {
@@ -94,12 +95,13 @@ const AddCommonMilestoneForm = ({
 
   const formatSolutions = useCallback(
     (solutions: MilestoneCardType['commonSolutions']) => {
-      return solutions.map(solution => {
+      const solutionOptions = solutions.map(solution => {
         return {
           label: commonSolutionsConfig.options[solution.key] || '',
           value: solution.key
         };
       });
+      return sortedSelectOptions(solutionOptions);
     },
     [commonSolutionsConfig.options]
   );
@@ -133,6 +135,23 @@ const AddCommonMilestoneForm = ({
     [commonSolutionsConfig.options, milestone.commonSolutions]
   );
 
+  const formatOtherSolutions = useCallback(() => {
+    const solutionsWithoutSuggested = removeCommonSolutionsFromList(
+      commonSolutionsConfig.options
+    );
+
+    const mutiSelectOptions = composeMultiSelectOptions(
+      solutionsWithoutSuggested,
+      commonSolutionsConfig.readonlyOptions
+    );
+
+    return sortedSelectOptions(mutiSelectOptions);
+  }, [
+    commonSolutionsConfig.options,
+    commonSolutionsConfig.readonlyOptions,
+    removeCommonSolutionsFromList
+  ]);
+
   const [groupedOptions, setGroupedOptions] = useState([
     {
       label: 'Suggested solutions for this milestone',
@@ -144,10 +163,7 @@ const AddCommonMilestoneForm = ({
     // },
     {
       label: 'Other available solutions',
-      options: composeMultiSelectOptions(
-        removeCommonSolutionsFromList(commonSolutionsConfig.options),
-        commonSolutionsConfig.readonlyOptions
-      )
+      options: formatOtherSolutions()
     }
   ]);
 
@@ -163,21 +179,10 @@ const AddCommonMilestoneForm = ({
       // },
       {
         label: 'Other available solutions',
-        options: composeMultiSelectOptions(
-          removeCommonSolutionsFromList(commonSolutionsConfig.options),
-          commonSolutionsConfig.readonlyOptions
-        )
+        options: formatOtherSolutions()
       }
     ]);
-  }, [
-    milestone.commonSolutions,
-    // customSolutions,
-    commonSolutionsConfig.options,
-    commonSolutionsConfig.readonlyOptions,
-    formatSolutions,
-    // formatCustomSolutions,
-    removeCommonSolutionsFromList
-  ]);
+  }, [milestone.commonSolutions, formatSolutions, formatOtherSolutions]);
 
   const [create] = useCreateMtoMilestoneMutation({
     refetchQueries: [
