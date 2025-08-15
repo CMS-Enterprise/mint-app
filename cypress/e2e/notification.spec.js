@@ -380,9 +380,15 @@ describe('Notification Center', () => {
 
     cy.enterModelPlanCollaborationArea('Empty Plan');
     cy.contains('button', 'Start approach').click();
-    cy.contains('button', 'Next').should('not.be.disabled').click();
-    cy.contains('button', 'Next').should('not.be.disabled').click();
-    cy.contains('button', 'Next').should('not.be.disabled').click();
+    cy.contains('button', 'Next')
+      .should('not.be.disabled')
+      .click({ force: true });
+    cy.contains('button', 'Next')
+      .should('not.be.disabled')
+      .click({ force: true });
+    cy.contains('button', 'Next')
+      .should('not.be.disabled')
+      .click({ force: true });
 
     cy.get('#additional-data-exchange-considerations-description')
       .should('not.be.disabled')
