@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import ReactDatePicker, { DatePickerProps } from 'react-datepicker';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Icon, Tooltip } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import { formatDateUtc } from 'utils/date';
+import { formatDateUtc, isDateInPast } from 'utils/date';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
@@ -12,7 +12,6 @@ import './index.scss';
 type DateTimePickerProps = DatePickerProps & {
   id: string;
   name: string;
-  isDateInPast: boolean;
   alertIcon?: boolean; // Whether to show the warning icon
   alertText?: boolean; // Whether to show the warning text. Sometimes we want to render the warning text under a different parent/UI element - outside the scope of this component
   className?: string;
@@ -26,7 +25,6 @@ type DateTimePickerProps = DatePickerProps & {
 const DateTimePicker = ({
   id,
   name,
-  isDateInPast,
   alertIcon = true,
   alertText = true,
   className,
@@ -37,6 +35,14 @@ const DateTimePicker = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const datePickerRef = useRef<ReactDatePicker>(null);
+
+  // Check if the date is in the past
+  const dateIsInPast = useMemo<boolean>(() => {
+    if (props.value) {
+      return isDateInPast(props.value);
+    }
+    return false;
+  }, [props.value]);
 
   return (
     <div>
@@ -59,7 +65,7 @@ const DateTimePicker = ({
           popperPlacement="bottom-start"
         />
 
-        {isDateInPast && alertIcon && (
+        {dateIsInPast && alertIcon && (
           <div className="mint-datetime-picker-warning">
             <Tooltip
               label={generalT('dateWarning')}
@@ -86,7 +92,7 @@ const DateTimePicker = ({
         </Button>
       </div>
 
-      {isDateInPast && alertText && (
+      {dateIsInPast && alertText && (
         <Alert
           type="warning"
           className="margin-top-2"
