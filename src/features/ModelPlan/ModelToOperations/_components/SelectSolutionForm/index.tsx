@@ -31,7 +31,10 @@ import MultiSelect from 'components/MultiSelect';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
+import {
+  convertCamelCaseToKebabCase,
+  sortedSelectOptions
+} from 'utils/modelPlan';
 
 type FormValues = {
   linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
@@ -103,30 +106,36 @@ const SelectSolutionForm = () => {
   const groupedOptions = [
     {
       label: t('modal.editMilestone.suggestedSolution'),
-      options: mappedSolutions.map(solution => {
-        return {
-          label: solution?.name || '',
-          value: solution?.key || ''
-        };
-      })
+      options: sortedSelectOptions(
+        mappedSolutions.map(solution => {
+          return {
+            label: solution?.name || '',
+            value: solution?.key || ''
+          };
+        })
+      )
     },
     {
       label: t('modal.editMilestone.customSolution'),
-      options: createdSolutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.id
-        };
-      })
+      options: sortedSelectOptions(
+        createdSolutions.map(solution => {
+          return {
+            label: solution.name || '',
+            value: solution.id
+          };
+        })
+      )
     },
     {
       label: t('modal.editMilestone.otherSolutions'),
-      options: commonSolutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.key
-        };
-      })
+      options: sortedSelectOptions(
+        commonSolutions.map(solution => {
+          return {
+            label: solution.name || '',
+            value: solution.key
+          };
+        })
+      )
     }
   ];
 

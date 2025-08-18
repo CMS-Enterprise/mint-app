@@ -83,8 +83,6 @@ import MilestoneStatusTag from '../MTOStatusTag';
 
 import '../../index.scss';
 
-// export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
-
 type FormValues = {
   name: string;
   facilitatedBy?: MtoFacilitator[];

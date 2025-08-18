@@ -73,7 +73,15 @@ const notifications = {
         plan_beneficiaries: 'Beneficiaries',
         plan_general_characteristics: 'General characteristics',
         plan_basics: 'Model Basics',
-        plan_data_exchange_approach: 'Data exchange approach'
+        plan_data_exchange_approach: 'Data exchange approach',
+        plan_timeline: 'Model timeline',
+        mto_category: 'Model-to-operations matrix (MTO)',
+        mto_common_milestones: 'Model-to-operations matrix (MTO)',
+        mto_common_solutions: 'Model-to-operations matrix (MTO)',
+        mto_milestone: 'Model-to-operations matrix (MTO)',
+        mto_milestone_solution_links: 'Model-to-operations matrix (MTO)',
+        mto_info: 'Model-to-operations matrix (MTO)',
+        mto_solution: 'Model-to-operations matrix (MTO)'
       },
       statusChange: {
         PLAN_DRAFT: 'This model has been announced',

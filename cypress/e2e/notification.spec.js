@@ -306,8 +306,8 @@ describe('Notification Center', () => {
 
     cy.url().should('include', '/model-timeline');
     cy.get('#timeline-completeICIP')
-      .type('2025-12-31')
-      .should('have.value', '2025-12-31');
+      .type('12/31/2025')
+      .should('have.value', '12/31/2025');
 
     cy.clickOutside();
 

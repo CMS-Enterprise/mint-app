@@ -26,6 +26,7 @@ import {
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { sortedSelectOptions } from 'utils/modelPlan';
 
 import { SolutionCard } from '../SolutionCard';
 
@@ -81,21 +82,25 @@ const LinkSolutionForm = ({
   const groupedOptions = [
     {
       label: modelToOperationsMiscT('modal.editMilestone.customSolution'),
-      options: createdSolutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.id
-        };
-      })
+      options: sortedSelectOptions(
+        createdSolutions.map(solution => {
+          return {
+            label: solution.name || '',
+            value: solution.id
+          };
+        })
+      )
     },
     {
       label: modelToOperationsMiscT('modal.editMilestone.otherSolutions'),
-      options: commonSolutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.key
-        };
-      })
+      options: sortedSelectOptions(
+        commonSolutions.map(solution => {
+          return {
+            label: solution.name || '',
+            value: solution.key
+          };
+        })
+      )
     }
   ];
 

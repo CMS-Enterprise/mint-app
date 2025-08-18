@@ -1,7 +1,6 @@
 package resolvers
 
 import (
-	"context"
 	"strings"
 	"time"
 
@@ -132,11 +131,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 			gomock.Any(),
 		).MinTimes(1).MaxTimes(1)
 
-	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		return storage.UserNotificationPreferencesGetByUserID(suite.testConfigs.Store, user_id)
-	}
-
-	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, userAccount.Account().ID, preferenceFunctions, mockEmailService, emailTemplateService, addressBook)
+	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, userAccount.Account().ID, mockEmailService, emailTemplateService, addressBook)
 	suite.NoError(emailErr)
 
 	notificationCollection, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, userAccount)
