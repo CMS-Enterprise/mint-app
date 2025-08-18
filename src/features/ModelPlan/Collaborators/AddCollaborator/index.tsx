@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Form, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Formik, FormikProps } from 'formik';
@@ -73,7 +73,7 @@ const Collaborators = () => {
   const { data: allCollaboratorsData, loading: queryLoading } =
     useGetModelCollaboratorsQuery({
       variables: {
-        id: modelID!
+        id: modelID ?? ''
       }
     });
 
@@ -138,7 +138,7 @@ const Collaborators = () => {
       create({
         variables: {
           input: {
-            modelPlanID: modelID!,
+            modelPlanID: modelID ?? '',
             userName: username!,
             teamRoles: teamRoles!
           }
@@ -197,6 +197,9 @@ const Collaborators = () => {
   if (!isFromCollaborationArea || manageOrAdd === 'add') {
     breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
   }
+
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const MINTForm = Form as any;
 
   return (
     <MainContent>
@@ -267,7 +270,7 @@ const Collaborators = () => {
                     </ErrorAlert>
                   )}
 
-                  <form
+                  <MINTForm
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
@@ -410,7 +413,7 @@ const Collaborators = () => {
                         )}
                       </div>
                     </Fieldset>
-                  </form>
+                  </MINTForm>
                 </>
               );
             }}

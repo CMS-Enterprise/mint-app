@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -78,6 +78,9 @@ const QuestionAndReply = ({
   const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection?.userRole;
   const mostRecentUserRoleDescription =
     data?.mostRecentDiscussionRoleSelection?.userRoleDescription;
+
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const MINTForm = Form as any;
 
   return (
     <>
@@ -185,7 +188,7 @@ const QuestionAndReply = ({
                   })}
                 </ErrorAlert>
               )}
-              <form
+              <MINTForm
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   e.preventDefault();
                   handleSubmit(e);
@@ -337,7 +340,7 @@ const QuestionAndReply = ({
                     </Button>
                   </div>
                 </Fieldset>
-              </form>
+              </MINTForm>
             </>
           );
         }}

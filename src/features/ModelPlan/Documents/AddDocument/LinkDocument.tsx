@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Form, useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Formik, FormikProps } from 'formik';
@@ -105,6 +105,9 @@ const LinkDocument = ({
       });
   };
 
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const MINTForm = Form as any;
+
   return (
     <div>
       {mutationError && (
@@ -158,7 +161,7 @@ const LinkDocument = ({
                 </ErrorAlert>
               )}
               <div>
-                <form
+                <MINTForm
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
                     handleSubmit(e);
@@ -355,7 +358,7 @@ const LinkDocument = ({
                       {documentsMiscT('submitButton')}
                     </Button>
                   </div>
-                </form>
+                </MINTForm>
               </div>
             </>
           );

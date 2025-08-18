@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Label } from '@trussworks/react-uswds';
-import { Field, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DocumentType,
   useUploadNewPlanDocumentMutation
@@ -99,6 +99,9 @@ const DocumentUpload = ({
     }
   };
 
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const MINTForm = Form as any;
+
   return (
     <div>
       {mutationError && (
@@ -161,7 +164,7 @@ const DocumentUpload = ({
                 </ErrorAlert>
               )}
               <div>
-                <form
+                <MINTForm
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
                     handleSubmit(e);
@@ -347,7 +350,7 @@ const DocumentUpload = ({
                       {documentsMiscT('submitButton')}
                     </Button>
                   </div>
-                </form>
+                </MINTForm>
               </div>
             </>
           );
