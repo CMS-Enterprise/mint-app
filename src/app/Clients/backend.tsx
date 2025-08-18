@@ -59,42 +59,93 @@ const authLink = setContext((request, { headers }) => {
 });
 
 /**
+ * Helper function to determine operation type
+ */
+function getOperationType(
+  operation: any
+): 'query' | 'mutation' | 'subscription' | 'unknown' {
+  try {
+    const definition = operation.query.definitions[0];
+    if (definition?.kind === 'OperationDefinition') {
+      return definition.operation || 'unknown';
+    }
+    return 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+
+/**
  * Error Link
  *
  * A link that intercepts GraphQL errors and displays them in a toast notification.
  * It also allows for overriding the error message for a specific component.
  */
-const errorLink = onError(({ graphQLErrors }) => {
+const errorLink = onError(({ graphQLErrors, operation, forward }) => {
   if (graphQLErrors) {
     const { overrideMessage } = getCurrentErrorMeta();
-
     const isReactNode = React.isValidElement(overrideMessage);
-
-    console.log(isReactNode);
+    const operationType = getOperationType(operation);
 
     graphQLErrors.forEach(err => {
-      toast.error(
-        <div>
-          {isReactNode ? (
-            overrideMessage
-          ) : (
-            <Alert
-              type="error"
-              // heading={
-              //   !overrideMessage
-              //     ? 'Something went wrong with your request. Please try again.'
-              //     : undefined
-              // }
-              heading="Something went wrong with your request. Please try again."
-              isClosable={false}
-            >
-              {overrideMessage ||
-                // err.message ||
-                'If the problem persists, please contact support.'}
-            </Alert>
-          )}
-        </div>
-      );
+      // Log detailed error information including operation type
+      console.log('GraphQL Error Details:', {
+        message: err.message,
+        operationType,
+        operationName: operation.operationName,
+        path: err.path,
+        extensions: err.extensions,
+        error: err
+      });
+
+      // let errorHeading = err.message;
+      let errorMessage = 'If the problem persists, please contact support.';
+
+      // Handle different operation types if needed
+      switch (operationType) {
+        case 'mutation':
+          // errorHeading = `Operation failed: ${operation.operationName}`;
+          errorMessage = err.message;
+          // You could show different error messages for mutations
+          break;
+        // case 'query':
+        //   errorHeading = `Query failed: ${operation.operationName}`;
+        //   errorMessage = err.message;
+        //   // You could show different error messages for queries
+        //   break;
+        // case 'subscription':
+        //   errorHeading = `Subscription failed: ${operation.operationName}`;
+        //   errorMessage = err.message;
+        //   // You could show different error messages for subscriptions
+        //   break;
+        default:
+          // errorHeading = 'Unknown operation type failed';
+          errorMessage = 'If the problem persists, please contact support.';
+      }
+
+      if (operationType === 'mutation') {
+        toast.error(
+          <div>
+            {isReactNode ? (
+              overrideMessage
+            ) : (
+              <Alert
+                type="error"
+                heading={
+                  // errorHeading ||
+                  'Something went wrong with your request. Please try again.'
+                }
+                isClosable={false}
+              >
+                <p className="margin-0">{overrideMessage || errorMessage}</p>
+                <p className="margin-0">
+                  If the problem persists, please contact support.
+                </p>
+              </Alert>
+            )}
+          </div>
+        );
+      }
     });
   }
 });

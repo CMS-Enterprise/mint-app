@@ -6,10 +6,10 @@ import NotFoundPartial from './NotFoundPartial';
 
 import './index.scss';
 
-const NotFound = () => {
+const NotFound = ({ errorMessage }: { errorMessage?: string }) => {
   return (
     <MainContent className="mint-not-found grid-container">
-      <NotFoundPartial />
+      <NotFoundPartial errorMessage={errorMessage} />
     </MainContent>
   );
 };

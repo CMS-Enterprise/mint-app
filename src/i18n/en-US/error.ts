@@ -9,7 +9,8 @@ const error = {
     ],
     tryAgain:
       'If none of the above have solved the problem, please return to the home page and try again.',
-    goHome: 'Go back to the home page'
+    goHome: 'Go back to the home page',
+    modelPlanError: 'The model plan you are looking for does not exist.'
   }
 };
 

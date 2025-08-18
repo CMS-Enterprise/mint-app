@@ -11,6 +11,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import NotFound from 'features/NotFound';
 import {
   MtoStatus,
   useGetModelToOperationsMatrixQuery
@@ -95,6 +96,10 @@ const MTOHome = () => {
 
   const isMatrixStarted: boolean =
     data?.modelPlan.mtoMatrix.status !== MtoStatus.READY;
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <>

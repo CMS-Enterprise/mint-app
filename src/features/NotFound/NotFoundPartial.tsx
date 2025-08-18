@@ -7,14 +7,28 @@ import { tArray } from 'utils/translation';
 
 import './index.scss';
 
-const NotFoundPartial = () => {
+// TODO: This is a temporary fix to handle model plan errors. Keys on error message strings from gql
+const modelPlanErrors: string[] = [
+  'no model plan found for the given modelPlanID',
+  'invalid UUID length'
+];
+
+const NotFoundPartial = ({ errorMessage }: { errorMessage?: string }) => {
   const { t } = useTranslation();
 
   const listItems = tArray('error:notFound.list');
 
+  const isModelPlanError = modelPlanErrors.some(error =>
+    errorMessage?.includes(error)
+  );
+
   return (
     <div className="margin-y-7">
-      <PageHeading>{t('error:notFound.heading')}</PageHeading>
+      <PageHeading style={{ lineHeight: '3rem' }}>
+        {isModelPlanError
+          ? t('error:notFound.modelPlanError')
+          : t('error:notFound.heading')}
+      </PageHeading>
       <p>{t('error:notFound.thingsToTry')}</p>
 
       <ul className="mint-not-found__error_suggestions">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { NotFoundPartial } from 'features/NotFound';
+import NotFound from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
@@ -43,7 +43,7 @@ const ModelToOperations = () => {
             to="/models/:modelID/collaboration-area/model-to-operations/matrix"
           />
 
-          <Route path="*" render={() => <NotFoundPartial />} />
+          <Route path="*" render={() => <NotFound />} />
         </Switch>
       </MTOModalProvider>
     </MainContent>
