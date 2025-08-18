@@ -28,6 +28,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -192,9 +193,9 @@ const Timeline = () => {
                     <div data-testid="model-plan-timeline">
                       <ConfirmLeave />
 
-                      <form
+                      <MINTForm
                         className="desktop:grid-col-8 timeline-form margin-y-6"
-                        onSubmit={e => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                           window.scrollTo(0, 0);
                         }}
@@ -536,7 +537,7 @@ const Timeline = () => {
                             {timelineMiscT('dontUpdate')}
                           </Button>
                         </Fieldset>
-                      </form>
+                      </MINTForm>
                     </div>
                   );
                 }}

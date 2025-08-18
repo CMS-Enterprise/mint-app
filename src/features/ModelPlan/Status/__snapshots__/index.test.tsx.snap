@@ -71,7 +71,9 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
         >
           As you iterate on your Model Plan, update the status of your model so others known what stage it’s at in the design and clearance process.
         </p>
-        <form>
+        <form
+          action="#"
+        >
           <div
             class="usa-form-group"
             data-scroll="status"

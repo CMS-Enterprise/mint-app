@@ -80,6 +80,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
         After you’ve iterated on your Model Plan, make sure the information that’s included in your Model Plan matches any documentation that you’re using for clearance.
       </p>
       <form
+        action="#"
         class="margin-y-6"
         data-testid="prepare-for-clearance-form"
       >

@@ -25,6 +25,7 @@ import Alert from 'components/Alert';
 import BooleanRadio from 'components/BooleanRadioForm';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
@@ -103,7 +104,7 @@ const ReportAProblem = () => {
 
             return (
               <Grid desktop={{ col: 6 }}>
-                <form
+                <MINTForm
                   className="margin-top-3"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
@@ -301,7 +302,7 @@ const ReportAProblem = () => {
                       </Button>
                     </div>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </Grid>
             );
           }}

@@ -26,6 +26,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -187,7 +188,7 @@ const CCWAndQuality = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="ops-eval-and-learning-ccw-and-quality-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -428,7 +429,7 @@ const CCWAndQuality = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

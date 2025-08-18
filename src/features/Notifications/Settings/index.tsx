@@ -27,6 +27,7 @@ import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
@@ -426,8 +427,8 @@ const NotificationSettings = () => {
                     </Grid>
                   </Grid>
 
-                  <form
-                    onSubmit={e => {
+                  <MINTForm
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                     }}
                   >
@@ -558,7 +559,7 @@ const NotificationSettings = () => {
                         {notificationsT('settings.dontUpdate')}
                       </Button>
                     </Fieldset>
-                  </form>
+                  </MINTForm>
                 </>
               );
             }}

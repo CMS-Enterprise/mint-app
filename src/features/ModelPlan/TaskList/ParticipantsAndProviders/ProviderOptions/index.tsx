@@ -29,6 +29,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -198,7 +199,7 @@ export const ProviderOptions = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="participants-and-providers-providers-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -449,7 +450,7 @@ export const ProviderOptions = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

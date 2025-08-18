@@ -26,6 +26,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
@@ -124,7 +125,7 @@ const SettingsForm = () => {
               const { handleSubmit, setErrors, values } = formikProps;
 
               return (
-                <form
+                <MINTForm
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
@@ -266,7 +267,7 @@ const SettingsForm = () => {
                       {homepageSettingsT('back')}
                     </UswdsReactLink>
                   </div>
-                </form>
+                </MINTForm>
               );
             }}
           </Formik>

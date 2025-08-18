@@ -25,6 +25,7 @@ import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -168,7 +169,7 @@ const Learning = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="ops-eval-and-learning-learning-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -296,7 +297,7 @@ const Learning = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

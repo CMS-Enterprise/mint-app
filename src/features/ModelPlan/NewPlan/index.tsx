@@ -18,6 +18,7 @@ import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
@@ -98,7 +99,7 @@ const NewPlan = () => {
                       })}
                     </ErrorAlert>
                   )}
-                  <form
+                  <MINTForm
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
@@ -140,7 +141,7 @@ const NewPlan = () => {
                         {miscellaneousT('next')}
                       </Button>
                     </div>
-                  </form>
+                  </MINTForm>
                 </>
               );
             }}

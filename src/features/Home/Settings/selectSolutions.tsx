@@ -22,6 +22,7 @@ import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 
@@ -168,7 +169,7 @@ const SelectSolutionSettings = () => {
 
                   return (
                     <>
-                      <form
+                      <MINTForm
                         data-testid="it-solutions-add-solution"
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
@@ -211,7 +212,7 @@ const SelectSolutionSettings = () => {
                             </Button>
                           </div>
                         </Fieldset>
-                      </form>
+                      </MINTForm>
                     </>
                   );
                 }}

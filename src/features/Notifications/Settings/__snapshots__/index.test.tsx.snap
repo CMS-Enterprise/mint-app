@@ -122,7 +122,9 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             </p>
           </div>
         </div>
-        <form>
+        <form
+          action="#"
+        >
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"

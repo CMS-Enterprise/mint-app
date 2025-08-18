@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Form, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Formik, FormikProps } from 'formik';
@@ -20,6 +20,7 @@ import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
@@ -197,9 +198,6 @@ const Collaborators = () => {
   if (!isFromCollaborationArea || manageOrAdd === 'add') {
     breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
   }
-
-  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
-  const MINTForm = Form as any;
 
   return (
     <MainContent>

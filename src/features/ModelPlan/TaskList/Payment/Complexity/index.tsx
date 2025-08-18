@@ -29,6 +29,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -208,10 +209,10 @@ const Complexity = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     <Grid desktop={{ col: 6 }}>
-                      <form
+                      <MINTForm
                         className="margin-top-6"
                         data-testid="payment-complexity-form"
-                        onSubmit={e => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                         }}
                       >
@@ -399,7 +400,7 @@ const Complexity = () => {
                             {miscellaneousT('saveAndReturn')}
                           </Button>
                         </Fieldset>
-                      </form>
+                      </MINTForm>
                     </Grid>
                   </Grid>
                 </GridContainer>

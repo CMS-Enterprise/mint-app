@@ -43,6 +43,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -438,7 +439,7 @@ export const ModelRelation = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="plan-characteristics-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -909,7 +910,7 @@ export const ModelRelation = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

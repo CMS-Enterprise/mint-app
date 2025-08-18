@@ -121,6 +121,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
         </div>
       </div>
       <form
+        action="#"
         class="tablet:grid-col-6 margin-top-6"
       >
         <fieldset

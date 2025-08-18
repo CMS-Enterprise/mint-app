@@ -120,6 +120,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         </div>
       </div>
       <form
+        action="#"
         class="desktop:grid-col-6 margin-top-6"
         data-testid="participants-and-providers-coordination-form"
       >

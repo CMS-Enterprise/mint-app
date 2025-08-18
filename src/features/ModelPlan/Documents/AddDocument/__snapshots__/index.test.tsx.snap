@@ -135,7 +135,9 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
         </ul>
         <div>
           <div>
-            <form>
+            <form
+              action="#"
+            >
               <div
                 class="usa-form-group"
                 data-scroll="file"

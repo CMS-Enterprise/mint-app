@@ -80,7 +80,9 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           </span>
            ) are required.
         </p>
-        <form>
+        <form
+          action="#"
+        >
           <fieldset
             class="usa-fieldset"
             data-testid="fieldset"

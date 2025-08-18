@@ -26,6 +26,7 @@ import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -169,7 +170,7 @@ const Authority = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="plan-characteristics-authority-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -371,7 +372,7 @@ const Authority = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

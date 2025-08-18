@@ -11,6 +11,7 @@ import { AppState } from 'stores/reducers/rootReducer';
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import { formatDateLocal } from 'utils/date';
 
 type NDAType = {
@@ -84,7 +85,7 @@ const NDA = () => {
                 const { values, handleSubmit } = formikProps;
 
                 return (
-                  <form
+                  <MINTForm
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                     }}
@@ -104,7 +105,7 @@ const NDA = () => {
                     >
                       {t('submit')}
                     </Button>
-                  </form>
+                  </MINTForm>
                 );
               }}
             </Formik>

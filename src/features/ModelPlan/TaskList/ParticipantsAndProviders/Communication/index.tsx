@@ -28,6 +28,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -182,7 +183,7 @@ export const Communication = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="participants-and-providers-communication-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -365,7 +366,7 @@ export const Communication = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

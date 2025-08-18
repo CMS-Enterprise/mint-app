@@ -86,6 +86,7 @@ exports[`Model Timeline page > renders without errors and matches snapshot 1`] =
             data-testid="model-plan-timeline"
           >
             <form
+              action="#"
               class="desktop:grid-col-8 timeline-form margin-y-6"
             >
               <fieldset

@@ -133,6 +133,7 @@ exports[`Model Plan -- NonClaimsBasedPayment > matches snapshot 1`] = `
             data-testid="grid"
           >
             <form
+              action="#"
               class="margin-top-6"
               data-testid="payment-non-claims-based-payment-form"
             >

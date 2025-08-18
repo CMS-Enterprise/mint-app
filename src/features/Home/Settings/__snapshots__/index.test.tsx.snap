@@ -205,7 +205,9 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
         <h3>
           Select which information to display on your homepage.
         </h3>
-        <form>
+        <form
+          action="#"
+        >
           <ul
             class="usa-card-group"
             data-testid="CardGroup"

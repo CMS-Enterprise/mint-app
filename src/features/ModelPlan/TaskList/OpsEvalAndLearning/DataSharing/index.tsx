@@ -25,6 +25,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -206,7 +207,7 @@ const DataSharing = () => {
               <>
                 <ConfirmLeave />
 
-                <form
+                <MINTForm
                   className="desktop:grid-col-6 margin-top-6"
                   data-testid="ops-eval-and-learning-data-sharing-form"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -477,7 +478,7 @@ const DataSharing = () => {
                       {miscellaneousT('saveAndReturn')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}

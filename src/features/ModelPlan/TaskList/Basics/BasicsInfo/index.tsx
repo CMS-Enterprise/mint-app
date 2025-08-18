@@ -38,6 +38,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -314,7 +315,7 @@ const BasicsInfo = () => {
                 <GridContainer className="padding-x-0">
                   <Grid row gap>
                     <Grid desktop={{ col: 6 }}>
-                      <form
+                      <MINTForm
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                           window.scrollTo(0, 0);
@@ -660,7 +661,7 @@ const BasicsInfo = () => {
                             {miscellaneousT('saveAndReturn')}
                           </Button>
                         </Fieldset>
-                      </form>
+                      </MINTForm>
                     </Grid>
 
                     <Grid desktop={{ col: 6 }}>

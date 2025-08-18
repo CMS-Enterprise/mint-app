@@ -26,6 +26,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FrequencyForm from 'components/FrequencyForm';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -185,7 +186,7 @@ const Frequency = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     <Grid desktop={{ col: 6 }}>
-                      <form
+                      <MINTForm
                         className="margin-top-6"
                         data-testid="beneficiaries-frequency-form"
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
@@ -350,7 +351,7 @@ const Frequency = () => {
 
                           {miscellaneousT('saveAndReturn')}
                         </Button>
-                      </form>
+                      </MINTForm>
                     </Grid>
                   </Grid>
                 </GridContainer>

@@ -27,6 +27,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import CheckboxField from 'components/CheckboxField';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
@@ -109,7 +110,7 @@ const SendFeedback = () => {
 
             return (
               <Grid desktop={{ col: 6 }}>
-                <form
+                <MINTForm
                   className="margin-top-3"
                   onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
@@ -328,7 +329,7 @@ const SendFeedback = () => {
                       </Button>
                     </div>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </Grid>
             );
           }}

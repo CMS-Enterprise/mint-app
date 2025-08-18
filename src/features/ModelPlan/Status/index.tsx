@@ -15,6 +15,7 @@ import { ModelStatus, useUpdateModelPlanMutation } from 'gql/generated/graphql';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
@@ -120,7 +121,7 @@ const Status = () => {
               } = formikProps;
               return (
                 <>
-                  <form
+                  <MINTForm
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
@@ -188,7 +189,7 @@ const Status = () => {
 
                       {modelPlanMiscT('return')}
                     </Button>
-                  </form>
+                  </MINTForm>
                 </>
               );
             }}

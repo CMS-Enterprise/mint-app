@@ -121,6 +121,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         </div>
       </div>
       <form
+        action="#"
         class="desktop:grid-col-6 margin-top-6"
         data-testid="ops-eval-and-learning-data-sharing-form"
       >

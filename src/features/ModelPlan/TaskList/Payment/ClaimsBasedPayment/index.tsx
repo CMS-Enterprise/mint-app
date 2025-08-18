@@ -26,6 +26,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MTOWarning from 'components/MTOWarning';
 import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -181,10 +182,10 @@ const ClaimsBasedPayment = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     <Grid desktop={{ col: 6 }}>
-                      <form
+                      <MINTForm
                         className="margin-top-6"
                         data-testid="payment-claims-based-payment-form"
-                        onSubmit={e => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                         }}
                       >
@@ -422,7 +423,7 @@ const ClaimsBasedPayment = () => {
                             {miscellaneousT('saveAndReturn')}
                           </Button>
                         </Fieldset>
-                      </form>
+                      </MINTForm>
                     </Grid>
                   </Grid>
                 </GridContainer>

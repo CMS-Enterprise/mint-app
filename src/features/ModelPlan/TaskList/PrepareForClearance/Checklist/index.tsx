@@ -38,6 +38,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
 import UswdsReactLink from 'components/LinkWrapper';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -266,10 +267,10 @@ const PrepareForClearanceCheckList = () => {
                   </ErrorAlert>
                 )}
 
-                <form
+                <MINTForm
                   className="margin-y-6"
                   data-testid="prepare-for-clearance-form"
-                  onSubmit={e => {
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -405,7 +406,7 @@ const PrepareForClearanceCheckList = () => {
                       {t('dontUpdate')}
                     </Button>
                   </Fieldset>
-                </form>
+                </MINTForm>
               </>
             );
           }}
