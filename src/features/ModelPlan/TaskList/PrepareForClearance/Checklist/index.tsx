@@ -204,7 +204,7 @@ const PrepareForClearanceCheckList = ({
     (data as GetClearanceStatusesQuery)?.modelPlan?.prepareForClearance
       ?.status === PrepareForClearanceStatus.CANNOT_START
   ) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial errorMessage={error?.message} />;
   }
 
   return (

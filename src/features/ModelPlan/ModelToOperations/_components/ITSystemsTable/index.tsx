@@ -11,7 +11,6 @@ import { Button, Grid, Icon, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { NotFoundPartial } from 'features/NotFound';
 import {
   GetMtoSolutionsAndMilestonesQuery,
   MtoCommonSolutionKey,
@@ -553,7 +552,11 @@ const ITSystemsTable = ({
   }
 
   if (error) {
-    return <NotFoundPartial />;
+    return (
+      <Alert type="error" isClosable={false}>
+        {t('error:notFound.fetchError')}
+      </Alert>
+    );
   }
 
   // Temp fix for `globalFilterCellText` to work with `page` rows

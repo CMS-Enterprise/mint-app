@@ -33,7 +33,7 @@ const ReadOnlyParticipantsAndProviders = ({
   });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   const allparticipantsAndProvidersData = (data?.modelPlan

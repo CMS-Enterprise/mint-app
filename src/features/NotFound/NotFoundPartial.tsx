@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -13,7 +14,13 @@ const modelPlanErrors: string[] = [
   'invalid UUID length'
 ];
 
-const NotFoundPartial = ({ errorMessage }: { errorMessage?: string }) => {
+const NotFoundPartial = ({
+  errorMessage,
+  componentNotFound
+}: {
+  errorMessage?: string;
+  componentNotFound?: boolean; // Renders text for component not found rather than an entire page not found
+}) => {
   const { t } = useTranslation();
 
   const listItems = tArray('error:notFound.list');
@@ -22,12 +29,30 @@ const NotFoundPartial = ({ errorMessage }: { errorMessage?: string }) => {
     errorMessage?.includes(error)
   );
 
+  const headerText = () => {
+    if (isModelPlanError) {
+      return t('error:notFound.modelPlanError');
+    }
+
+    if (componentNotFound) {
+      return t('error:notFound.fetchError');
+    }
+    return t('error:notFound.heading');
+  };
+
   return (
-    <div className="margin-y-7">
-      <PageHeading style={{ lineHeight: '3rem' }}>
-        {isModelPlanError
-          ? t('error:notFound.modelPlanError')
-          : t('error:notFound.heading')}
+    <div
+      className={classNames('margin-y-7', {
+        'padding-right-4': componentNotFound,
+        'margin-y-0': componentNotFound
+      })}
+    >
+      <PageHeading
+        style={{ lineHeight: componentNotFound ? '2rem' : '3rem' }}
+        headingLevel={componentNotFound ? 'h3' : 'h1'}
+        className={classNames({ 'margin-y-0': componentNotFound })}
+      >
+        {headerText()}
       </PageHeading>
       <p>{t('error:notFound.thingsToTry')}</p>
 

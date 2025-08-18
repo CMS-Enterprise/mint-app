@@ -248,7 +248,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   }
 
   if ((!loading && error) || (!loading && !data?.modelPlan) || cannotStart) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial errorMessage={error?.message} />;
   }
 
   return (

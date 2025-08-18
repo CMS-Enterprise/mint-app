@@ -79,7 +79,7 @@ const ReadOnlyGeneralCharacteristics = ({
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   return (

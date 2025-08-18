@@ -71,7 +71,7 @@ const ReadOnlyModelBasics = ({
   } = basicsConfig;
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   return (

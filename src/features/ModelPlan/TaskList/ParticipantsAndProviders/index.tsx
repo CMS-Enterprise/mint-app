@@ -117,7 +117,7 @@ export const ParticipantsAndProvidersContent = () => {
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial errorMessage={error?.message} />;
   }
 
   return (

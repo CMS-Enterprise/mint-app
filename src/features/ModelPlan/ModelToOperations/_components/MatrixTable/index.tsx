@@ -8,7 +8,6 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
@@ -626,7 +625,11 @@ const MTOTable = ({
   }
 
   if (error) {
-    return <NotFoundPartial />;
+    return (
+      <Alert type="error" isClosable={false}>
+        {t('error:notFound.fetchError')}
+      </Alert>
+    );
   }
 
   return (

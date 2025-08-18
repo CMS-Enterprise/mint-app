@@ -29,7 +29,7 @@ const ReadOnlyBeneficiaries = ({
   });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   const allbeneficiariesData = (data?.modelPlan.beneficiaries ||

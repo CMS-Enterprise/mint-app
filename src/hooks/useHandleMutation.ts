@@ -132,7 +132,6 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           })
           .catch(errors => {
             unblock();
-            setDestinationURL(destination.pathname);
             setIsModalOpen(true);
 
             if ('formikRef' in config) {

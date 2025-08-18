@@ -31,7 +31,7 @@ const ReadOnlyMTOSolutions = ({ modelID }: { modelID: string }) => {
   }
 
   if (error || !modelToOperationsMatrix) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   return (
