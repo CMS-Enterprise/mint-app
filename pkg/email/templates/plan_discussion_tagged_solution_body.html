@@ -1,5 +1,7 @@
 {{template "shared_header.html"}}
 
+{{template "shared_non_mint_mailbox_header.html" .}}
+<hr>
 
 <h3>{{.SolutionName}} was tagged in</h3>
 <p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
@@ -27,5 +29,8 @@
 <hr/>
 <br/>
 {{template "shared_solution_poc_footer.html" .}}
+
+<br/>
+{{template "shared_access_banner.html" .}}
 
 {{template "shared_footer.html"}}

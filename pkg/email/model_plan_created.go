@@ -11,5 +11,5 @@ type ModelPlanCreatedBodyContent struct {
 	ModelName     string
 	ModelID       string
 	UserName      string
-	ShowFooter    bool
+	IsGeneralUser bool
 }

@@ -2381,7 +2381,10 @@ const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
   home: 'Home',
   description:
-    'Get help with the creation of your Model Plan and the implementation of operational solutions.',
+    'Get help with creating your Model Plan, drafting your model-to-operations matrix (MTO), and implementing IT systems and solutions for your model. Browse help articles, links to external resources, information about operational solutions and IT systems, and more.',
+  jumpTo: 'Jump to',
+  helpResourcesAndLinks: 'Help resources and links',
+  operationalSolutionsAndITSystems: 'Operational solutions and IT systems',
   read: 'Read',
   all: 'All help resources',
   helpCategories,

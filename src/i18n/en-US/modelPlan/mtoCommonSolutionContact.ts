@@ -132,7 +132,7 @@ export const mtoCommonSolutionContactMisc = {
   },
   editTeamMember: {
     title: 'Edit a team member',
-    cta: 'Save Changes',
+    cta: 'Save changes',
     primaryPocSubLabel:
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
     success:
@@ -149,7 +149,7 @@ export const mtoCommonSolutionContactMisc = {
   },
   editTeamMailbox: {
     title: 'Edit a team mailbox',
-    cta: 'Save Changes',
+    cta: 'Save changes',
     primaryPocSubLabel:
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
     success:

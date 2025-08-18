@@ -96,7 +96,7 @@ export const mtoCommonSolutionSystemOwnerMisc = {
   },
   editSystemOwner: {
     title: 'Edit owner information',
-    cta: 'Save Changes',
+    cta: 'Save changes',
     success: 'You updated owner information for <bold>{{-owner}}</bold>.',
     error:
       'There was an issue editing owner(s). Please try again, and if the problem persists, try again later.'

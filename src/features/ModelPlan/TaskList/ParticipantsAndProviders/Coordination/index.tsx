@@ -133,7 +133,7 @@ export const Coordination = () => {
     <>
       <MutationErrorModal
         isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.setIsModalOpen(false)}
+        closeModal={() => mutationError.closeModal()}
         url={mutationError.destinationURL}
       />
 

@@ -1,6 +1,8 @@
 package worker
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -9,6 +11,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // Worker is a struct that contains all the dependencies to run worker functions
@@ -21,6 +24,84 @@ type Worker struct {
 	Connections          int
 	ProcessJobs          bool
 	OktaAPIClient        oktaapi.Client
+}
+
+type JobWrapper struct {
+	Name string
+	Job  func(context.Context, ...interface{}) error
+}
+
+func (w *Worker) getJobWrappers(ctx context.Context) []JobWrapper {
+	return []JobWrapper{
+		{
+			Name: dailyDigestCronJobName,
+			Job:  w.DigestCronJob,
+		},
+		{
+			Name: analyzedAuditJobName,
+			Job:  w.AnalyzedAuditJob,
+		},
+		{
+			Name: analyzedAuditBatchJobName,
+			Job:  w.AnalyzedAuditBatchJob,
+		},
+		{
+			Name: analyzedAuditBatchJobSuccessName,
+			Job:  w.AnalyzedAuditBatchJobSuccess,
+		},
+		{
+			Name: digestEmailBatchJobName,
+			Job:  w.DigestEmailBatchJob,
+		},
+		{
+			Name: digestEmailBatchJobSuccessName,
+			Job:  w.DigestEmailBatchJobSuccess,
+		},
+		{
+			Name: digestEmailJobName,
+			Job:  w.DigestEmailJob,
+		},
+		{
+			Name: aggregatedDigestEmailJobName,
+			Job:  w.AggregatedDigestEmailJob,
+		},
+		{
+			Name: translateAuditCronJobName,
+			Job:  w.TranslateAuditCronJob,
+		},
+		{
+			Name: translateAuditBatchJobName,
+			Job:  w.TranslateAuditBatchJob,
+		},
+		{
+			Name: translateAuditBatchJobSuccessName,
+			Job:  w.TranslateAuditBatchJobSuccess,
+		},
+		{
+			Name: translateAuditJobName,
+			Job:  w.TranslateAuditJob,
+		},
+		{
+			Name: modelStatusUpdateCronJobName,
+			Job:  w.ModelStatusUpdateCronJob,
+		},
+		{
+			Name: modelStatusUpdateBatchJobName,
+			Job:  w.ModelStatusUpdateBatchJob,
+		},
+		{
+			Name: modelStatusUpdateBatchJobSuccessName,
+			Job:  w.ModelStatusUpdateBatchJobSuccess,
+		},
+		{
+			Name: modelStatusUpdateJobName,
+			Job:  w.ModelStatusUpdateJob,
+		},
+		{
+			Name: refreshOktaCronJobName,
+			Job:  w.RefreshOktaCronJob,
+		},
+	}
 }
 
 const (
@@ -37,47 +118,6 @@ const (
 	auditTranslateQueue string = "auditTranslation"
 )
 
-// These constants represent the names of jobs for translating audits
-const (
-	// translateAuditBatchJobName is the name of the batch job for translating audits
-	translateAuditBatchJobName string = "TranslateAuditBatchJob"
-
-	// translateAuditBatchJobSuccessName is the name of the job that is called when a group of translate Audit Jobs is completed
-	translateAuditBatchJobSuccessName string = "TranslateAuditBatchJobSuccess"
-
-	// translateAuditCronJobName is the name of the job called that initiates the translate audit batch job
-	translateAuditCronJobName string = "TranslateAuditCronJob"
-
-	// translateAuditJobName is the name of the job that creates a translated audit from an audit
-	translateAuditJobName string = "TranslateAuditJob"
-)
-
-// These constants represent the names of jobs for analyzing audits
-const (
-	analyzedAuditJobName             string = "AnalyzedAuditJob"
-	analyzedAuditBatchJobName        string = "AnalyzedAuditBatchJob"
-	analyzedAuditBatchJobSuccessName string = "AnalyzedAuditBatchJobSuccess"
-)
-
-const (
-	dailyDigestCronJobName         string = "DailyDigestCronJob"
-	digestEmailBatchJobName        string = "DigestEmailBatchJob"
-	digestEmailBatchJobSuccessName string = "DigestEmailBatchJobSuccess"
-	digestEmailJobName             string = "DigestEmailJob"
-	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
-)
-
-const (
-	modelStatusUpdateCronJobName         string = "ModelStatusUpdateCronJob"
-	modelStatusUpdateBatchJobName        string = "ModelStatusUpdateBatchJob"
-	modelStatusUpdateBatchJobSuccessName string = "ModelStatusUpdateBatchJobSuccess"
-	modelStatusUpdateJobName             string = "ModelStatusUpdateJob"
-)
-
-const (
-	refreshOktaCronJobName string = "RefreshOktaCronJob"
-)
-
 // Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
@@ -92,53 +132,18 @@ func (w *Worker) Work() {
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 
-	// register jobs here
-	mgr.Register(dailyDigestCronJobName, JobWithPanicProtection(w.DigestCronJob))
+	// Initialize data loaders and attach them to the context
+	dataLoaders := loaders.NewDataLoaders(w.Store)
+	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
 
-	mgr.Register(analyzedAuditJobName, JobWithPanicProtection(w.AnalyzedAuditJob))
-	mgr.Register(analyzedAuditBatchJobName, JobWithPanicProtection(w.AnalyzedAuditBatchJob))
-	mgr.Register(analyzedAuditBatchJobSuccessName, JobWithPanicProtection(w.AnalyzedAuditBatchJobSuccess))
+	// Register jobs using JobWrapper
+	for _, job := range w.getJobWrappers(ctx) {
+		w.Logger.Info("registering job", zap.String("job_name", job.Name))
+		mgr.Register(job.Name, JobWithPanicProtection(job.Job))
+	}
 
-	mgr.Register(digestEmailBatchJobName, JobWithPanicProtection(w.DigestEmailBatchJob))
-	mgr.Register(digestEmailBatchJobSuccessName, JobWithPanicProtection(w.DigestEmailBatchJobSuccess))
-	mgr.Register(digestEmailJobName, JobWithPanicProtection(w.DigestEmailJob))
-	mgr.Register(aggregatedDigestEmailJobName, JobWithPanicProtection(w.AggregatedDigestEmailJob))
-
-	mgr.Register(translateAuditCronJobName, JobWithPanicProtection(w.TranslateAuditCronJob))
-	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
-	mgr.Register(translateAuditBatchJobSuccessName, JobWithPanicProtection(w.TranslateAuditBatchJobSuccess))
-	mgr.Register(translateAuditJobName, JobWithPanicProtection(w.TranslateAuditJob))
-
-	mgr.Register(modelStatusUpdateCronJobName, JobWithPanicProtection(w.ModelStatusUpdateCronJob))
-	mgr.Register(modelStatusUpdateBatchJobName, JobWithPanicProtection(w.ModelStatusUpdateBatchJob))
-	mgr.Register(modelStatusUpdateBatchJobSuccessName, JobWithPanicProtection(w.ModelStatusUpdateBatchJobSuccess))
-	mgr.Register(modelStatusUpdateJobName, JobWithPanicProtection(w.ModelStatusUpdateJob))
-
-	mgr.Register(refreshOktaCronJobName, JobWithPanicProtection(w.RefreshOktaCronJob))
-
-	/**********************
-	* //Future Enhancement
-	* Consider providing workers with dataloaders, and potentially a shared context. As these run separate go routines for each worker,
-	***********************
-	*dataLoaders := loaders.NewDataLoaders(w.Store)
-	*ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
-	*err := mgr.RunWithContext(ctx)
-	******************************/
-
-	/**********************
-	* // Future Enhancement
-	Re-work this to consider wrapping a representation of the job with the name of the job itself. Consider a struct that is built with both a name and function.
-	This requires rework because all jobs are currently methods on a worker, instead of functions that take a worker
-
-	Something like:
-		// var TranslateAuditJob = JobWrapper{
-		// 	Name: "TranslateAuditJob",
-		// 	Job:  ,
-		// }
-
-	******************************/
-
-	err := mgr.Run()
+	// Run the manager with the shared context
+	err := mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
 	}

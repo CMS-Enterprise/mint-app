@@ -16,7 +16,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
+
+// This file sends a daily digest email to a user based on models they follow. DailyDigest email sent to MINT team email is handled by AggregatedDigestEmailJob in the worker package.
 
 // DailyDigestNotificationSend sends a single email for a user for a given day based on their favorited models
 // It will also call the notification package for Daily Digest Complete Activity
@@ -27,22 +31,12 @@ func DailyDigestNotificationSend(
 
 	dateAnalyzed time.Time,
 	userID uuid.UUID,
-	getPreferencesFunc notifications.GetUserNotificationPreferencesFunc,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 
 ) error {
-
-	/***********************
-	* //Future Enhancement *
-	************************
-	* 1. If we are able to provide dataloaders to faktory workers, replace store calls with dataloaders for
-	*   a. Get User account
-	*   b. Get User Preferences
-	* 2. If desired, you can wrap the parent method call in a transaction
-	 */
-	account, err := storage.UserAccountGetByID(np, userID)
+	account, err := userhelpers.UserAccountGetByIDLOADER(ctx, userID)
 	if err != nil {
 		return err
 	}
@@ -62,7 +56,11 @@ func DailyDigestNotificationSend(
 	systemAccountID := constants.GetSystemAccountUUID()
 
 	//Future Enhancement use the dataloader to get user preferences and remove the getPreferencesFunc
-	_, err = notifications.ActivityDailyDigestComplete(ctx, np, systemAccountID, userID, dateAnalyzed, modelPlanIDs, getPreferencesFunc)
+	pref, err := loaders.UserNotificationPreferencesGetByUserID(ctx, userID)
+	if err != nil {
+		return fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
+	}
+	_, err = notifications.ActivityDailyDigestComplete(ctx, np, systemAccountID, userID, dateAnalyzed, modelPlanIDs, pref)
 
 	if err != nil {
 		return fmt.Errorf("couldn't generate an activity record for the daily digest complete activity for user %s, error: %w", userID, err)
@@ -73,12 +71,7 @@ func DailyDigestNotificationSend(
 		return nil
 	}
 
-	preference, err := getPreferencesFunc(ctx, userID)
-	if err != nil {
-		return fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
-	}
-
-	if !preference.DailyDigestComplete.SendEmail() {
+	if !pref.DailyDigestComplete.SendEmail() {
 		// Early return if user doesn't want an email
 		return nil
 	}
@@ -151,7 +144,8 @@ func getDigestAnalyzedAudits(
 func generateDigestEmail(
 	analyzedAudits []*models.AnalyzedAudit,
 	emailTemplateService email.TemplateService,
-	emailService oddmail.EmailService) (string, string, error) {
+	emailService oddmail.EmailService,
+) (string, string, error) {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigestTemplateName)
 	if err != nil {
 		return "", "", err

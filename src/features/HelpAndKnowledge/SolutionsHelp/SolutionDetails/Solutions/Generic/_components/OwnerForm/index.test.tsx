@@ -33,7 +33,11 @@ describe('Owner Form Component', () => {
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/help-and-knowledge/operational-solutions">
-              <OwnerForm mode="addSystemOwner" closeModal={() => {}} />
+              <OwnerForm
+                mode="addSystemOwner"
+                closeModal={() => {}}
+                setDisableButton={() => {}}
+              />
             </Route>
           </MessageProvider>
         </MockedProvider>
@@ -57,6 +61,7 @@ describe('Owner Form Component', () => {
                 mode="editSystemOwner"
                 closeModal={() => {}}
                 owner={owner}
+                setDisableButton={() => {}}
               />
             </Route>
           </MessageProvider>
