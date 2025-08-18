@@ -8,6 +8,7 @@ import {
 import { FormikProps } from 'formik';
 import { DocumentNode } from 'graphql';
 
+import { useErrorMessage } from 'contexts/ErrorContext';
 import dirtyInput from 'utils/formUtil';
 import sanitizeStatus from 'utils/status';
 
@@ -58,6 +59,9 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 ): MutationReturnType {
   const history = useHistory();
   const { pathname } = useLocation();
+
+  // Skip global error handling, this is handled by the mutation modal
+  useErrorMessage('skip', true);
 
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -120,7 +124,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
         update({
           variables: {
-            id,
+            id: '123',
             changes
           }
         })

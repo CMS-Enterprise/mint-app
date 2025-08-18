@@ -9,7 +9,10 @@
  */
 import React from 'react';
 
-let currentMeta: { overrideMessage?: string | React.ReactNode } = {};
+let currentMeta: {
+  overrideMessage?: string | React.ReactNode;
+  skipError?: boolean;
+} = {};
 
 export const setCurrentErrorMeta = (meta: typeof currentMeta) => {
   currentMeta = meta;

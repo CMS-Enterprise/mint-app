@@ -169,7 +169,7 @@ const TeamMemberForm = ({
             />
           </Alert>,
           {
-            autoClose: 3000,
+            autoClose: 5000,
             hideProgressBar: false
           }
         );

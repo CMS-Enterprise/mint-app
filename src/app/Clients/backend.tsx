@@ -81,49 +81,25 @@ function getOperationType(
  * A link that intercepts GraphQL errors and displays them in a toast notification.
  * It also allows for overriding the error message for a specific component.
  */
-const errorLink = onError(({ graphQLErrors, operation, forward }) => {
+const errorLink = onError(({ graphQLErrors, operation }) => {
   if (graphQLErrors) {
-    const { overrideMessage } = getCurrentErrorMeta();
+    const { overrideMessage, skipError } = getCurrentErrorMeta();
     const isReactNode = React.isValidElement(overrideMessage);
     const operationType = getOperationType(operation);
 
     graphQLErrors.forEach(err => {
-      // Log detailed error information including operation type
-      console.log('GraphQL Error Details:', {
-        message: err.message,
-        operationType,
-        operationName: operation.operationName,
-        path: err.path,
-        extensions: err.extensions,
-        error: err
-      });
-
-      // let errorHeading = err.message;
       let errorMessage = 'If the problem persists, please contact support.';
 
       // Handle different operation types if needed
       switch (operationType) {
         case 'mutation':
-          // errorHeading = `Operation failed: ${operation.operationName}`;
           errorMessage = err.message;
-          // You could show different error messages for mutations
           break;
-        // case 'query':
-        //   errorHeading = `Query failed: ${operation.operationName}`;
-        //   errorMessage = err.message;
-        //   // You could show different error messages for queries
-        //   break;
-        // case 'subscription':
-        //   errorHeading = `Subscription failed: ${operation.operationName}`;
-        //   errorMessage = err.message;
-        //   // You could show different error messages for subscriptions
-        //   break;
         default:
-          // errorHeading = 'Unknown operation type failed';
           errorMessage = 'If the problem persists, please contact support.';
       }
 
-      if (operationType === 'mutation') {
+      if (operationType === 'mutation' && !skipError) {
         toast.error(
           <div>
             {isReactNode ? (
@@ -131,10 +107,7 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
             ) : (
               <Alert
                 type="error"
-                heading={
-                  // errorHeading ||
-                  'Something went wrong with your request. Please try again.'
-                }
+                heading="Something went wrong with your request. Please try again."
                 isClosable={false}
               >
                 <p className="margin-0">{overrideMessage || errorMessage}</p>
