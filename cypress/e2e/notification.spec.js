@@ -315,7 +315,7 @@ describe('Notification Center', () => {
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
 
-    cy.get('[data-testid="navmenu__notification"]').click();
+    cy.get('[data-testid="navmenu__notification"]').click().click();
 
     cy.url().should('include', '/notifications');
 

@@ -149,7 +149,11 @@ describe('Model-to-Operations Matrix', () => {
           .click({ force: true });
       });
 
-    cy.get('[data-testid="operational-solution-modal"]')
+    cy.get('[data-testid="operational-solution-modal"]').as(
+      'operationalSolutionModal'
+    );
+
+    cy.get('@operationalSolutionModal')
       .scrollIntoView()
       .within(() => {
         cy.get('@solutionHeading').then(solutionHeading => {
