@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import ScrollLink from 'components/ScrollLink';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
@@ -33,36 +35,16 @@ export const HelpAndKnowledgeHome = () => {
             <p className="display-inline text-bold margin-right-2">
               {t('jumpTo')}:
             </p>
-            <Button
-              type="button"
-              onClick={() =>
-                document.querySelector('#help-resources')?.scrollIntoView({
-                  behavior: 'smooth'
-                })
-              }
-              unstyled
-            >
-              {t('helpResourcesAndLinks')}
-            </Button>
+            <ScrollLink scrollTo={t('helpResourcesAndLinks')} />
 
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
 
-            <Button
-              type="button"
-              onClick={() =>
-                document
-                  .querySelector('#operational-solutions')
-                  ?.scrollIntoView({ behavior: 'smooth' })
-              }
-              unstyled
-            >
-              {t('operationalSolutionsAndITSystems')}
-            </Button>
+            <ScrollLink scrollTo={t('operationalSolutionsAndITSystems')} />
           </div>
         </GridContainer>
       </SummaryBox>
       <GridContainer
-        id="help-resources"
+        id={convertToLowercaseAndDashes(t('helpResourcesAndLinks'))}
         className="padding-bottom-4 padding-top-2"
         style={{ scrollMarginTop: '3.5rem' }}
       >
