@@ -5,8 +5,8 @@ export default gql(/* GraphQL */ `
     $modelPlanID: UUID!
     $solutionType: MTOSolutionType!
     $name: String!
-    $pocName: String!
-    $pocEmail: String!
+    $pocName: String
+    $pocEmail: String
   ) {
     createMTOSolutionCustom(
       modelPlanID: $modelPlanID

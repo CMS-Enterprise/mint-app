@@ -353,6 +353,9 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionI
 
 	// Create a custom solution (no common key)
 	solName := "Custom Solution 1"
+	pocName := "POC Name"
+	pocEmail := "poc@example.com"
+
 	solType := models.MTOSolutionTypeOther
 	sol, err := MTOSolutionCreateCustom(
 		suite.testConfigs.Logger,
@@ -363,8 +366,8 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionI
 		solName,
 		solType,
 		nil,
-		"POC Name",
-		"poc@example.com",
+		&pocName,
+		&pocEmail,
 	)
 	suite.NoError(err)
 
@@ -435,6 +438,9 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 	suite.NoError(err)
 
 	solName := "To Unlink Solution"
+	pocName := "POC Name"
+	pocEmail := "poc@example.com"
+
 	solType := models.MTOSolutionTypeOther
 	sol, err := MTOSolutionCreateCustom(
 		suite.testConfigs.Logger,
@@ -445,8 +451,8 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 		solName,
 		solType,
 		nil,
-		"POC Name",
-		"poc@example.com",
+		&pocName,
+		&pocEmail,
 	)
 	suite.NoError(err)
 
