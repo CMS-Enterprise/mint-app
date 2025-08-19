@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Label } from '@trussworks/react-uswds';
@@ -42,12 +42,8 @@ const DocumentUpload = ({
     usePlanTranslation('documents');
 
   const { showMessageOnNextPage } = useMessage();
-  const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
-
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
 
   const [uploadFile, uploadFileStatus] = useUploadNewPlanDocumentMutation();
 
@@ -79,34 +75,22 @@ const DocumentUpload = ({
             optionalNotes: values.optionalNotes
           }
         }
-      })
-        .then(response => {
-          if (!response.errors) {
-            messageOnNextPage('documentUploadSuccess', file.name);
+      }).then(response => {
+        if (!response.errors) {
+          messageOnNextPage('documentUploadSuccess', file.name);
 
-            if (solutionDetailsLink) {
-              history.push(solutionDetailsLink);
-            } else {
-              history.push(`/models/${modelID}/collaboration-area/documents`);
-            }
+          if (solutionDetailsLink) {
+            history.push(solutionDetailsLink);
           } else {
-            setMutationError(true);
+            history.push(`/models/${modelID}/collaboration-area/documents`);
           }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+        }
+      });
     }
   };
 
   return (
     <div>
-      {mutationError && (
-        <Alert type="error" slim>
-          {documentsMiscT('documentLinkError')}
-        </Alert>
-      )}
-
       <Formik
         initialValues={{
           file: null,

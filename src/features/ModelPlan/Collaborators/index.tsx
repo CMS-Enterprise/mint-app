@@ -120,24 +120,19 @@ export const CollaboratorsContent = () => {
       variables: {
         id: collaborator.id
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          setModalOpen(false);
-          if (collaborator.userAccount.username === euaId) {
-            showMessageOnNextPage(
-              <SuccessRemovalMessage modelName={modelName} />
-            );
-            history.push('/');
-          } else {
-            refetch();
-          }
-        }
-      })
-      .catch(errors => {
+    }).then(response => {
+      if (!response?.errors) {
         setModalOpen(false);
-        refetch();
-      });
+        if (collaborator.userAccount.username === euaId) {
+          showMessageOnNextPage(
+            <SuccessRemovalMessage modelName={modelName} />
+          );
+          history.push('/');
+        } else {
+          refetch();
+        }
+      }
+    });
   };
 
   // Modal control for removing a collaborator

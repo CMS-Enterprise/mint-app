@@ -112,36 +112,32 @@ const Collaborators = () => {
           id: collaboratorId,
           newRole: teamRoles!
         }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-collaborator-alert"
-                  className="margin-y-4"
-                >
-                  {collaboratorsMiscT('successUpdateMessage', {
-                    collaborator: commonName,
-                    role: teamRoles
-                      ?.map((role: TeamRole) => {
-                        return collaboratorsT(`teamRoles.options.${role}`);
-                      })
-                      .join(', ')
-                  })}
-                </Alert>
-              </>
-            );
-            history.push(
-              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
-            );
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+      }).then(response => {
+        if (!response?.errors) {
+          showMessageOnNextPage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="success-collaborator-alert"
+                className="margin-y-4"
+              >
+                {collaboratorsMiscT('successUpdateMessage', {
+                  collaborator: commonName,
+                  role: teamRoles
+                    ?.map((role: TeamRole) => {
+                      return collaboratorsT(`teamRoles.options.${role}`);
+                    })
+                    .join(', ')
+                })}
+              </Alert>
+            </>
+          );
+          history.push(
+            `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
+          );
+        }
+      });
     } else {
       create({
         variables: {
@@ -151,48 +147,32 @@ const Collaborators = () => {
             teamRoles: teamRoles!
           }
         }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-collaborator-alert"
-                  className="margin-y-4"
-                >
-                  {collaboratorsMiscT('successMessage', {
-                    collaborator: commonName,
-                    role: teamRoles
-                      ?.map((role: TeamRole) => {
-                        return collaboratorsT(`teamRoles.options.${role}`);
-                      })
-                      .join(', ')
-                  })}
-                </Alert>
-              </>
-            );
-            history.push(
-              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
-            );
-          }
-        })
-        .catch(errors => {
-          const collaboratorExistingError =
-            errors.graphQLErrors[0]?.message.includes(
-              'unique_collaborator_per_plan'
-            );
-          if (collaboratorExistingError) {
-            formikRef?.current?.setErrors({
-              userAccount: {
-                username: collaboratorsMiscT('existingMember')
-              }
-            });
-          } else {
-            formikRef?.current?.setErrors(errors);
-          }
-        });
+      }).then(response => {
+        if (!response?.errors) {
+          showMessageOnNextPage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="success-collaborator-alert"
+                className="margin-y-4"
+              >
+                {collaboratorsMiscT('successMessage', {
+                  collaborator: commonName,
+                  role: teamRoles
+                    ?.map((role: TeamRole) => {
+                      return collaboratorsT(`teamRoles.options.${role}`);
+                    })
+                    .join(', ')
+                })}
+              </Alert>
+            </>
+          );
+          history.push(
+            `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
+          );
+        }
+      });
     }
   };
 

@@ -29,6 +29,7 @@ import ExternalDocumentLink from 'components/ExternalDocumentLink';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -168,7 +169,7 @@ export const Table = ({
 }: TableProps) => {
   const { t } = useTranslation('documentsMisc');
   const { documentType: documentTypeConfig } = usePlanTranslation('documents');
-
+  const { setErrorMeta } = useErrorMessage();
   const [isModalOpen, setModalOpen] = useState(false);
   const [fileToRemove, setFileToRemove] = useState<GetDocumentType>(
     {} as GetDocumentType
@@ -182,32 +183,18 @@ export const Table = ({
 
   const handleDelete = useMemo(() => {
     return (file: GetDocumentType) => {
+      setErrorMeta({
+        overrideMessage: t('documentRemoval.error', {
+          documentName: file.fileName,
+          modelName
+        })
+      });
       mutate({
         variables: {
           id: file.id
         }
-      })
-        .then(response => {
-          if (response?.errors) {
-            setDocumentMessage(
-              t('documentRemoval.error', {
-                documentName: file.fileName,
-                modelName
-              })
-            );
-            setDocumentStatus('error');
-          } else {
-            setDocumentMessage(
-              t('documentRemoval.success', {
-                documentName: file.fileName,
-                modelName
-              })
-            );
-            setDocumentStatus('success');
-            refetch();
-          }
-        })
-        .catch(() => {
+      }).then(response => {
+        if (response?.errors) {
           setDocumentMessage(
             t('documentRemoval.error', {
               documentName: file.fileName,
@@ -215,9 +202,27 @@ export const Table = ({
             })
           );
           setDocumentStatus('error');
-        });
+        } else {
+          setDocumentMessage(
+            t('documentRemoval.success', {
+              documentName: file.fileName,
+              modelName
+            })
+          );
+          setDocumentStatus('success');
+          refetch();
+        }
+      });
     };
-  }, [mutate, setDocumentMessage, t, modelName, setDocumentStatus, refetch]);
+  }, [
+    mutate,
+    setDocumentMessage,
+    t,
+    modelName,
+    setDocumentStatus,
+    refetch,
+    setErrorMeta
+  ]);
 
   const handleDownload = useMemo(() => {
     return (file: GetDocumentType) => {
@@ -226,16 +231,9 @@ export const Table = ({
         fileType: file.fileType,
         fileName: file.fileName,
         downloadURL: file.downloadUrl!
-      })
-        .then()
-        .catch((error: any) => {
-          if (error) {
-            setDocumentMessage(error);
-            setDocumentStatus('error');
-          }
-        });
+      });
     };
-  }, [setDocumentMessage, setDocumentStatus]);
+  }, []);
 
   const renderModal = () => {
     return (

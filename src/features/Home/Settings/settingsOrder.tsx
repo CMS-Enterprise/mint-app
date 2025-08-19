@@ -23,6 +23,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 
 import {
@@ -78,8 +79,7 @@ const SettingsOrder = () => {
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
@@ -126,28 +126,30 @@ const SettingsOrder = () => {
   }, [history, selectedSettings]);
 
   const handleSubmit = () => {
+    setErrorMeta({
+      overrideMessage: homepageSettingsT('settingsError')
+    });
+
     mutate({
       variables: {
         changes: {
           viewCustomization: selectedSettings?.viewCustomization || []
         }
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessageOnNextPage(
-            <>
-              <Alert type="success" slim className="margin-y-4">
-                {homepageSettingsT('success')}
-              </Alert>
-            </>
-          );
-          // Removes router state upon successful mutation
-          window.history.replaceState({}, '');
-          history.push('/');
-        }
-      })
-      .catch(() => setMutationError(true));
+    }).then(response => {
+      if (!response?.errors) {
+        showMessageOnNextPage(
+          <>
+            <Alert type="success" slim className="margin-y-4">
+              {homepageSettingsT('success')}
+            </Alert>
+          </>
+        );
+        // Removes router state upon successful mutation
+        window.history.replaceState({}, '');
+        history.push('/');
+      }
+    });
   };
 
   return (
@@ -160,12 +162,6 @@ const SettingsOrder = () => {
               BreadcrumbItemOptions.HOME_SETTINGS
             ]}
           />
-
-          {mutationError && (
-            <Alert type="error" slim>
-              {homepageSettingsT('settingsError')}
-            </Alert>
-          )}
 
           <h1 className="margin-bottom-2">
             {homepageSettingsT('heading')}

@@ -16,6 +16,7 @@ import Alert from 'components/Alert';
 import Expire from 'components/Expire';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
@@ -47,6 +48,7 @@ const Discussions = ({
   readOnly
 }: DiscussionsProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { setErrorMeta } = useErrorMessage();
 
   // Used to replace query params after reply has been asnwered from linked email
   const location = useLocation();
@@ -145,49 +147,47 @@ const Discussions = ({
     if (payload.userRole !== DiscussionUserRole.NONE_OF_THE_ABOVE)
       payload.userRoleDescription = null;
 
+    setErrorMeta({
+      overrideMessage:
+        discussionType === 'question'
+          ? discussionsMiscT('error')
+          : discussionsMiscT('errorReply')
+    });
+
     createDiscussionMethods[discussionType]({
       variables: {
         input: payload
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (discussionType === 'reply' && reply?.id) {
-            setDiscussionReplyID(null);
-            queryParams.delete('discussionID');
-            history.replace({
-              search: queryParams.toString()
-            });
-            refetch().then(() => {
-              setInitQuestion(false);
-              setDiscussionType('discussion');
-            });
-          } else {
-            refetch().then(() => {
-              setInitQuestion(false);
-              setDiscussionType('discussion');
-            });
-          }
-
-          if (readOnly) {
-            setIsDiscussionOpen(false);
-          }
-          setDiscussionStatus('success');
-          setDiscussionStatusMessage(
-            discussionType === 'question'
-              ? discussionsMiscT('success')
-              : discussionsMiscT('successReply')
-          );
+    }).then(response => {
+      if (!response?.errors) {
+        if (discussionType === 'reply' && reply?.id) {
+          setDiscussionReplyID(null);
+          queryParams.delete('discussionID');
+          history.replace({
+            search: queryParams.toString()
+          });
+          refetch().then(() => {
+            setInitQuestion(false);
+            setDiscussionType('discussion');
+          });
+        } else {
+          refetch().then(() => {
+            setInitQuestion(false);
+            setDiscussionType('discussion');
+          });
         }
-      })
-      .catch(() => {
-        setDiscussionStatus('error');
+
+        if (readOnly) {
+          setIsDiscussionOpen(false);
+        }
+        setDiscussionStatus('success');
         setDiscussionStatusMessage(
           discussionType === 'question'
-            ? discussionsMiscT('error')
-            : discussionsMiscT('errorReply')
+            ? discussionsMiscT('success')
+            : discussionsMiscT('successReply')
         );
-      });
+      }
+    });
   };
 
   const DiscussionAccordion = ({

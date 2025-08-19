@@ -10,7 +10,10 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 import Alert from 'components/Alert';
 import { localAuthStorageKey } from 'constants/localAuth';
-import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
+import {
+  getCurrentErrorMeta,
+  setCurrentErrorMeta
+} from 'contexts/ErrorContext/errorMetaStore';
 
 const apiHost = new URL(import.meta.env.VITE_API_ADDRESS || '').host;
 
@@ -83,7 +86,9 @@ const knownErrors: Record<string, string> = {
   uniq_mailbox_address_per_solution_key:
     'This mailbox address is already added to this solution and cannot be added again. Please edit the existing entry.',
   uniq_system_owner_key_type_component:
-    'This owner is already added to this solution and cannot be added again. Please edit the existing entry.'
+    'This owner is already added to this solution and cannot be added again. Please edit the existing entry.',
+  unique_collaborator_per_plan:
+    'This person is already a member of your model team. Please select a different person to add to your team.'
 };
 
 const findKnownError = (errorMessage: string): string | undefined => {
@@ -125,17 +130,21 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
             ) : (
               <Alert
                 type="error"
-                heading="Something went wrong with your request. Please try again."
+                heading="Something went wrong with your request."
                 isClosable={false}
               >
                 <p className="margin-0">{overrideMessage || errorMessage}</p>
                 <p className="margin-0">
-                  If the problem persists, please contact support.
+                  Please try again. If the problem persists, please contact
+                  support.
                 </p>
               </Alert>
             )}
           </div>
         );
+
+        // Clear the override message after displaying the error
+        setCurrentErrorMeta({});
       }
     });
   }

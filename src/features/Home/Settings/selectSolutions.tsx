@@ -18,12 +18,12 @@ import {
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 import {
   HomepageLocationStateType,
@@ -78,8 +78,7 @@ const SelectSolutionSettings = () => {
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   // Passes the current state to the previous page if navigating back
   useEffect(() => {
@@ -101,34 +100,36 @@ const SelectSolutionSettings = () => {
   }, [history, selectedSettings]);
 
   const handleFormSubmit = () => {
+    setErrorMeta({
+      overrideMessage: homepageSettingsT('solutionError')
+    });
+
     mutate({
       variables: {
         changes: { ...formikRef.current?.values }
       }
-    })
-      .then(() => {
-        // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
-        if (
-          formikRef.current?.values?.solutions &&
-          formikRef.current?.values?.solutions.length > 0 &&
-          !selectedSettings?.viewCustomization.includes(
+    }).then(() => {
+      // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
+      if (
+        formikRef.current?.values?.solutions &&
+        formikRef.current?.values?.solutions.length > 0 &&
+        !selectedSettings?.viewCustomization.includes(
+          ViewCustomizationType.MODELS_BY_SOLUTION
+        )
+      ) {
+        setSelectedSettings({
+          viewCustomization: [
+            ...(selectedSettings?.viewCustomization || []),
             ViewCustomizationType.MODELS_BY_SOLUTION
-          )
-        ) {
-          setSelectedSettings({
-            viewCustomization: [
-              ...(selectedSettings?.viewCustomization || []),
-              ViewCustomizationType.MODELS_BY_SOLUTION
-            ]
-          });
-        }
+          ]
+        });
+      }
 
-        // Allow state to hydrate before redirecting
-        setTimeout(() => {
-          history.push(state?.fromHome ? '/' : '/homepage-settings');
-        }, 100);
-      })
-      .catch(() => setMutationError(true));
+      // Allow state to hydrate before redirecting
+      setTimeout(() => {
+        history.push(state?.fromHome ? '/' : '/homepage-settings');
+      }, 100);
+    });
   };
 
   const initialValues: SettingsFormType = {
@@ -146,12 +147,6 @@ const SelectSolutionSettings = () => {
             ]}
             customItem={homepageSettingsT('solutionsHeading')}
           />
-
-          {mutationError && (
-            <Alert type="error" slim>
-              {homepageSettingsT('solutionError')}
-            </Alert>
-          )}
 
           <h1 className="margin-bottom-2">
             {homepageSettingsT('solutionsHeading')}
