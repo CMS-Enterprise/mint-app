@@ -81,7 +81,9 @@ const knownErrors: Record<string, string> = {
   uniq_user_id_per_solution_key:
     'This user is already added to this solution and cannot be added again. Please edit the existing entry.',
   uniq_mailbox_address_per_solution_key:
-    'This mailbox address is already added to this solution and cannot be added again. Please edit the existing entry.'
+    'This mailbox address is already added to this solution and cannot be added again. Please edit the existing entry.',
+  uniq_system_owner_key_type_component:
+    'This owner is already added to this solution and cannot be added again. Please edit the existing entry.'
 };
 
 const findKnownError = (errorMessage: string): string | undefined => {

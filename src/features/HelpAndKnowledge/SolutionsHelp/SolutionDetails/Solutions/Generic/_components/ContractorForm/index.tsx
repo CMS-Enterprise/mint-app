@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Alert,
   Fieldset,
   Form,
   FormGroup,
@@ -16,6 +15,7 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
@@ -44,10 +44,11 @@ const ContractorForm = ({
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
-
+  const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
   const { selectedSolution } = useModalSolutionState();
 
   const { showMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<ContractorFormValues>({
     defaultValues: {
@@ -89,6 +90,10 @@ const ContractorForm = ({
     if (!selectedSolution) {
       return;
     }
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const { contractTitle, contractorName } = dirtyInput(contractor, formData);
 

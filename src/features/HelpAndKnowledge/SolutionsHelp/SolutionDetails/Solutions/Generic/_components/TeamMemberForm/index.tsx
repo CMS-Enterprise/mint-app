@@ -23,6 +23,7 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -69,6 +70,8 @@ const TeamMemberForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContactMisc');
 
   const { selectedSolution } = useModalSolutionState();
+
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<TeamMemberFormValues>({
     defaultValues: {
@@ -121,6 +124,10 @@ const TeamMemberForm = ({
     }
 
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const promise = isAddMode
       ? create({

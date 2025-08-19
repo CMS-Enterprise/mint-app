@@ -20,6 +20,7 @@ import {
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import CheckboxField from 'components/CheckboxField';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
@@ -58,6 +59,7 @@ const TeamMailboxForm = ({
   const { selectedSolution } = useModalSolutionState();
 
   const { showMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<TeamMailboxFormValues>({
     defaultValues: {
@@ -110,6 +112,10 @@ const TeamMailboxForm = ({
       teamMailbox,
       formData
     );
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const promise = isAddMode
       ? create({
