@@ -126,6 +126,8 @@ const DocumentUpload = ({
         validateOnChange={false}
         validateOnMount={false}
       >
+        {/* Formik types conflict with React 19 types */}
+        {/* @ts-ignore */}
         {(formikProps: FormikProps<FileUploadForm>): React.ReactNode => {
           const {
             errors,

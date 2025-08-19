@@ -131,6 +131,8 @@ const LinkDocument = ({
         validateOnChange={false}
         validateOnMount={false}
       >
+        {/* Formik types conflict with React 19 types */}
+        {/* @ts-ignore */}
         {(
           formikProps: FormikProps<LinkingDocumentFormTypes>
         ): React.ReactNode => {

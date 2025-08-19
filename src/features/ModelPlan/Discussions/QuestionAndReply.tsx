@@ -158,9 +158,9 @@ const QuestionAndReply = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(
-          formikProps: FormikProps<DiscussionFormPropTypes>
-        ): React.ReactNode => {
+        {/* Formik types conflict with React 19 types */}
+        {/* @ts-ignore */}
+        {(formikProps: FormikProps<DiscussionFormPropTypes>) => {
           const {
             errors,
             values,

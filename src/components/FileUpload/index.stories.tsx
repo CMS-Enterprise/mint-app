@@ -64,6 +64,8 @@ type FileInputForm = {
 export const WithFormik = () => {
   return (
     <Formik onSubmit={() => {}} initialValues={{ document: null }}>
+      {/* Formik types conflict with React 19 types */}
+      {/* @ts-ignore */}
       {(formikProps: FormikProps<FileInputForm>): React.ReactNode => {
         const { setFieldValue } = formikProps;
 
