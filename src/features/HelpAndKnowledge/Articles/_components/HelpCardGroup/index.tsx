@@ -190,7 +190,7 @@ const HelpCardGroup = ({
       {/* Pagination */}
 
       <div className="display-flex">
-        {!homeItems && resources.length > itemsPerPage && pageCount > 1 && (
+        {!homeItems && pageCount >= 1 && (
           <Pagination
             pathname={history.location.pathname}
             currentPage={currentPage}
@@ -207,6 +207,7 @@ const HelpCardGroup = ({
             pageSize={itemsPerPage}
             setPageSize={setItemsPerPage}
             valueArray={[6, 9, 'all']}
+            suffix={t('resourcesSuffix')}
           />
         )}
       </div>

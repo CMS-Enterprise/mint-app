@@ -8,7 +8,17 @@ const highLevelProjectPlans = {
   accordionItems: {
     copy: {
       legal: 'These activities may not apply to all models.',
-      cmmi: {
+      cmmiModel: [
+        {
+          href: 'creating-mto-matrix',
+          copy: 'Learn more about creating a model-to-operations matrix (MTO)'
+        },
+        {
+          href: 'evaluating-data-exchange-approach',
+          copy: 'Learn more about the data exchange approach'
+        }
+      ],
+      cmmiInternal: {
         href: 'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
         copy: 'Learn more about CMMI Internal Clearance on SharePoint'
       },
@@ -41,8 +51,16 @@ const highLevelProjectPlans = {
         {
           activity:
             '<paragraph>Contractor support prior to clearance</paragraph><italics> We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office (FO), as CMMI FO will need to approve this request.</italics>',
-          party:
-            'ARDS (available through BSG/DCCS), MITRE (available through PPG)'
+          modalLinks: [
+            {
+              copy: '<ml>ARDS</ml> (available through BSG/DCCS)',
+              route: 'research-measurement-assessment-design-and-analysis'
+            },
+            {
+              copy: '<ml>FFRDC</ml> (also known as MITRE, available through PPG)',
+              route: 'federally-funded-research-and-development-center'
+            }
+          ]
         },
         {
           activity: '2-pager review with CMMI FO',
@@ -57,12 +75,20 @@ const highLevelProjectPlans = {
           party: 'Model Team'
         },
         {
-          activity: 'Perform iterative analysis of IT plans',
+          activity: 'Draft a model-to-operations matrix (MTO)',
+          party: 'IT Lead'
+        },
+        {
+          activity: 'Draft a data exchange approach',
+          party: 'Model Team, IT Lead'
+        },
+        {
+          activity: 'Perform iterative analysis of MTO and IT plans',
           party: 'IT Lead, Model Team, MINT Team'
         },
         {
           activity: 'Draft IT cost estimates',
-          party: 'MINT Team'
+          party: 'IT Lead, MINT Team'
         },
         {
           activity: 'Draft implementation cost estimates',
@@ -82,8 +108,13 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Draft Innovation Center Investment Proposal (ICIP)',
-          party:
-            'Model Team, MITRE <italics>(if this support is requested/approved by CMMI FO)</italics>'
+          party: 'Model Team',
+          modalLinks: [
+            {
+              copy: '<ml>FFRDC</ml> <italics>(if this support is requested/approved by CMMI FO)</italics>',
+              route: 'federally-funded-research-and-development-center'
+            }
+          ]
         },
         {
           activity:
@@ -140,20 +171,46 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'ICIP',
-          party: 'Model Team and MITRE write, EOS clears'
+          modalLinks: [
+            {
+              copy: 'Model Team and <ml>FFRDC</ml> write',
+              route: 'federally-funded-research-and-development-center'
+            },
+            { copy: 'EOS clears', route: '' }
+          ]
         },
         {
           activity: 'Cooperative Agreement',
-          party:
-            'Legal Vertical writes, Office of the General Council (OGC) approves, EOS clears'
+          modalLinks: [
+            {
+              copy: '<ml>Legal Vertical</ml> write',
+              route: 'legal-vertical'
+            },
+            { copy: 'Office of the General Council (OGC) approves', route: '' },
+            { copy: 'EOS clears', route: '' }
+          ]
         },
         {
           activity: 'Participation Agreement',
-          party: 'Legal Vertical writes, OGC approves, EOS clears'
+          modalLinks: [
+            {
+              copy: '<ml>Legal Vertical</ml> write',
+              route: 'legal-vertical'
+            },
+            { copy: 'OGC approves', route: '' },
+            { copy: 'EOS clears', route: '' }
+          ]
         },
         {
           activity: 'Terms & Conditions',
-          party: 'Legal Vertical writes, OGC approves, EOS clears'
+          modalLinks: [
+            {
+              copy: '<ml>Legal Vertical</ml> write',
+              route: 'legal-vertical'
+            },
+            { copy: 'OGC approves', route: '' },
+            { copy: 'EOS clears', route: '' }
+          ]
         },
         {
           activity:
@@ -169,8 +226,14 @@ const highLevelProjectPlans = {
           activity: '<paragraph>Announcement materials</paragraph>',
           link: 'Learn more about announcement materials on SharePoint',
           href: 'https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx',
-          party:
-            'Model Team, Front Office, PPG Division of Stakeholder Engagement and Policy (DSEP), Office of Communications (OC)'
+          party: 'Model Team, Front Office',
+          modalLinks: [
+            {
+              copy: '<ml>Division of Stakeholder Engagement and Policy (DSEP)</ml> in PPG',
+              route: 'division-of-stakeholder-engagement-and-policy'
+            },
+            { copy: 'Office of Communications (OC)', route: '' }
+          ]
         }
       ],
       legal: [
@@ -252,7 +315,12 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Provide participant access to model platforms',
-          party: 'Innovation Center (IC) Landing Page'
+          modalLinks: [
+            {
+              copy: '<ml>IC Landing Page</ml>',
+              route: 'innovation-center-landing-page'
+            }
+          ]
         },
         {
           activity: 'Communicate with participants',
@@ -374,10 +442,12 @@ const highLevelProjectPlans = {
         {
           activity: 'Collect quality measures data',
           modalLinks: [
+            { copy: 'CCSQ contracts and systems', route: '' },
             {
-              copy: 'CCSQ contracts and systems, <ml>HDR</ml>, Patient Activation Measure (PAM)',
+              copy: '<ml>HDR</ml>',
               route: 'health-data-reporting'
-            }
+            },
+            { copy: '<ml>PAM</ml>', route: 'patient-activation-measure' }
           ]
         },
         {
@@ -389,7 +459,7 @@ const highLevelProjectPlans = {
               route: '4-innovation'
             },
             {
-              copy: 'ACO-OS',
+              copy: '<ml>ACO-OS</ml>',
               route: 'accountable-care-organization'
             }
           ]
@@ -436,7 +506,7 @@ const highLevelProjectPlans = {
               route: 'integrated-data-repository'
             },
             {
-              copy: '<ml>Salesforce POST</ml>',
+              copy: '<ml>Salesforce POST/Portal</ml>, another contractor',
               route: 'salesforce-project-officer-support-tool-portal'
             }
           ]
@@ -457,7 +527,7 @@ const highLevelProjectPlans = {
               route: 'health-data-reporting'
             },
             {
-              copy: '<ml>Salesforce POST</ml>',
+              copy: '<ml>Salesforce POST/Portal</ml>',
               route: 'salesforce-project-officer-support-tool-portal'
             }
           ]
@@ -494,7 +564,7 @@ const highLevelProjectPlans = {
               route: 'research-measurement-assessment-design-and-analysis'
             },
             {
-              copy: '<ml>Salesforce POST</ml>',
+              copy: '<ml>Salesforce POST/Portal</ml>',
               route: 'salesforce-project-officer-support-tool-portal'
             },
             {
@@ -505,7 +575,12 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Participate in CMMI data sharing',
-          party: 'CMMI Analysis & Management System (AMS)'
+          modalLinks: [
+            {
+              copy: '<ml>AMS</ml>',
+              route: 'cmmi-analysis-and-management-system'
+            }
+          ]
         },
         {
           activity: 'Process participant appeals',

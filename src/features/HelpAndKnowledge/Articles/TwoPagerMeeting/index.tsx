@@ -67,6 +67,10 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:about.stepOne.items.brief.list'
   );
 
+  const stepTwoItemsList = tArray<string>(
+    'twoPageMeeting:about.stepTwo.items.list'
+  );
+
   const aboutTipsList1: string[] = tArray(
     'twoPageMeeting:about.summarybox.tips.list1'
   );
@@ -241,9 +245,11 @@ const TwoPagerMeeting = () => {
               </p>
 
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                <li className="line-height-normal">
-                  {twoPageMeetingT('about.stepTwo.item')}
-                </li>
+                {stepTwoItemsList.map(listItem => (
+                  <li key={listItem} className="line-height-normal">
+                    {listItem}
+                  </li>
+                ))}
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
@@ -255,13 +261,7 @@ const TwoPagerMeeting = () => {
               </i>
 
               <p className="padding-left-3 margin-bottom-0 line-height-normal">
-                <Trans
-                  t={twoPageMeetingT}
-                  i18nKey="about.stepThree.copy"
-                  components={{
-                    bold: <strong />
-                  }}
-                />
+                {twoPageMeetingT('about.stepThree.copy')}
               </p>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 {Object.values(stepThreeList).map(k => (

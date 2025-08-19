@@ -954,7 +954,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+                  This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).
                 </p>
               </div>
               <div

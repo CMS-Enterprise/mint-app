@@ -4,7 +4,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="padding-y-4 padding-bottom-6 bg-primary-darker text-white margin-bottom-neg-7"
-    id="operational-solutions"
+    id="operational-solutions-and-it-systems"
     style="scroll-margin-top: 3.5rem;"
   >
     <div
@@ -19,7 +19,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
       <p
         class="margin-bottom-4 font-body-md"
       >
-        Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.
+        Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.
       </p>
       <ul
         class="usa-card-group"

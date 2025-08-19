@@ -59,7 +59,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
         <p
           class="margin-top-0 margin-bottom-4 mint-body-large"
         >
-          Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
+          Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) has signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
         </p>
         <div
           class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
@@ -82,9 +82,10 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#key-resources-for-model-teams-writing-6-page-concept-papers"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     Key resources for model teams writing 6-page concept papers
                     <svg
@@ -101,14 +102,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#model-plans-in-mint"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     Model Plans in MINT
                     <svg
@@ -125,14 +127,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#about-6-page-concept-papers"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     About 6-page concept papers
                     <svg
@@ -149,14 +152,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#additional-resources-available-to-model-teams"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     Additional resources available to model teams
                     <svg
@@ -173,14 +177,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#how-6-page-concept-papers-are-reviewed"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     How 6-page concept papers are reviewed
                     <svg
@@ -197,7 +202,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -415,7 +420,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
           <p
             class="margin-bottom-0"
           >
-            The 6-page model overview should address all relevant elements outlined below and should reflect consultation with these cross-cutting groups: 
+            The 6-page model overview should address all relevant elements outlined below with more specificity and details than the 2-pager and reflect consultation with these cross-cutting groups:
           </p>
           <ul
             class="margin-y-0"
@@ -424,7 +429,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               Business Services Group (BSG) – for feasibility criteria
             </li>
             <li>
-              CMMI Front Office (FO) – for health equity
+              CMMI Front Office (FO) – for healthy living
             </li>
             <li>
               <a
@@ -495,16 +500,19 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               class="margin-y-0 padding-top-1"
             >
               <li>
-                Describe the need for the model, the challenges the target population faces, related cost and quality/outcomes challenges, and any gaps in CMMI’s portfolio this model might address including lessons learned from previous models. Include the beneficiary perspective.
+                Describe the need for the model, the challenges the target population or program faces, related cost and quality/outcomes challenges, and any gaps in CMMI’s portfolio this model might address.
               </li>
               <li>
-                Briefly describe the theory of change for the model, including how care will change (i.e., the problem that the model is trying to solve).
+                Briefly describe the theory of change for the model – the problem the model is trying to solve, the proposed intervention, and expected result.
               </li>
               <li>
-                Provide any information on how this model may interact or overlap with other CMMI models or other CMS or Federal programs. 
+                Provide any information on how this model may interact or overlap with other CMMI models or other CMS or Federal programs.
               </li>
               <li>
-                In addition to the statutory requirements, consider other potential outcomes following the model test (e.g., spread to Medicare, Medicaid or commercial payers, next generation model, informing ACOs or other Medicare policy, etc.).
+                Scaling the model: In addition to the statutory requirements for expansion, consider other potential outcomes following the model test (e.g., spread to Medicare, Medicaid or commercial payers, next generation model, informing ACOs or other Medicare policy, etc.).
+              </li>
+              <li>
+                Why we need CMMI’s authority to test this
               </li>
             </ul>
           </div>
@@ -525,13 +533,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0 padding-top-1"
                 >
                   <li>
-                    Target population, including underserved populations.
+                    Target population or program.
                   </li>
                   <li>
                     Beneficiary attribution or alignment (or, if applicable, recruitment) to model.
                   </li>
                   <li>
-                    Target provider types, including safety net providers.
+                    Target provider types, including rural providers.
                   </li>
                   <li>
                     Participation eligibility requirements for providers, states or other entities.
@@ -546,10 +554,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     Quality/performance measurement, including proposed primary quality measures (and alignment to Universal Foundation/CMMI Advancing Quality & PROM strategy) developed in consultation with the Quality Vertical.
                   </li>
                   <li>
-                    Preliminary driver diagram comprised of a model aim that includes the quality goals and the primary and secondary drivers that will be used to achieve the aim.
+                    Preliminary driver diagram comprised of a model aim and the primary and secondary drivers that will be used to achieve the aim.
                   </li>
                   <li>
                     Draft patient journey map that illustrates how these elements address the beneficiary experience of care.
+                  </li>
+                  <li>
+                    Financial impact and high-level overview of scaling/intervention
                   </li>
                 </ul>
               </li>
@@ -561,7 +572,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <h3
               class="margin-y-0"
             >
-              3. Model selection criteria – Alignment, Impact, Feasibility, and Innovation 
+              3. Model selection criteria – Alignment, Impact, Feasibility, and Innovation
             </h3>
             <ul
               class="margin-y-0 padding-top-1"
@@ -570,48 +581,21 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <strong>
                   Alignment:
                 </strong>
-                 Describe how the proposed model would support or advance CMMI’s strategic objectives and 
-                <span
-                  class="usa-link pointer"
-                  role="button"
-                  tabindex="0"
-                >
-                  <span>
-                    metrics
-                    <svg
-                      aria-label="launch"
-                      class="usa-icon margin-left-05 top-05"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                      />
-                    </svg>
-                  </span>
-                </span>
-                :
+                 Describe how the proposed model would support or advance CMMI’s strategic objectives and metrics:
                 <ul
                   class="margin-y-0 padding-top-1"
                 >
                   <li>
-                    Drive accountable care
+                    Promote evidence-based prevention.
                   </li>
                   <li>
-                    Advance health equity
+                    Empower people with information.
                   </li>
                   <li>
-                    Support innovation
+                    Drive competition and consumer choice.
                   </li>
                   <li>
-                    Address affordability
-                  </li>
-                  <li>
-                    Partner to achieve system transformation, and multi-payer alignment, in particular
+                    Protecting the federal taxpayer.
                   </li>
                 </ul>
               </li>
@@ -624,13 +608,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0 padding-top-1"
                 >
                   <li>
-                    Participation – number of providers, percent of providers within relevant specialty, number of beneficiaries, Medicare and/or Medicaid spending (federal and state). 
+                    Participation – number of providers/plans/states, number of beneficiaries, Medicare and/or Medicaid spending (federal and state). If scaled, discuss potential participation impacts.
                   </li>
                   <li>
-                    Outcomes – expected improvements in quality and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts. 
+                    Outcomes – expected improvements in quality.
                   </li>
                   <li>
-                    Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries. 
+                    Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries.
                   </li>
                 </ul>
               </li>
@@ -638,13 +622,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <strong>
                   Feasibility:
                 </strong>
-                 Likelihood of successful execution of the model including any operational limitations, challenges in recruiting participants and potential for adoption and scaling by non-participants.  Update the analysis of data exchange concepts from the two-pager.
+                 Likelihood of successful execution of the model including any operational limitations, challenges in recruiting participants and potential for adoption and scaling by non-participants.
               </li>
               <li>
                 <strong>
                   Innovation:
                 </strong>
-                 Model provides or is expected to stimulate innovation in a particular dimension of the Center’s portfolio – payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.
+                 Model provides or is expected to stimulate innovation in a particular dimension of the Center’s portfolio – payment approach, organization type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.
               </li>
             </ul>
           </div>
@@ -654,128 +638,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <h3
               class="margin-y-0"
             >
-              4. Opportunities to advance health equity
-            </h3>
-            <ul
-              class="margin-y-0 padding-top-1"
-            >
-              <li>
-                Describe how model has the potential to improve care and outcomes for underserved populations by:
-                <ul
-                  class="margin-y-0 padding-top-1"
-                >
-                  <li>
-                    Embedding health equity in design features, including care delivery requirements, payment adjustment, SDOH screening and referral and participant health equity plans.
-                  </li>
-                  <li>
-                    Diversifying beneficiaries served, including increasing safety net provider participation through stakeholder engagement, model design elements, and participant recruitment and support during model implementation. 
-                  </li>
-                  <li>
-                    Ensuring evaluation assesses model impact on equity, including model access and outcomes for all beneficiary populations. 
-                  </li>
-                  <li>
-                    Supporting the collection and analysis of sociodemographic and HRSN data in accordance with Center policy (linked in Resources below).
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div
-            class="usa-summary-box margin-bottom-3"
-            data-testid="summary-box"
-          >
-            <div
-              class="usa-summary-box__body"
-            >
-              <h3
-                class="usa-summary-box__heading"
-              >
-                Tips to learn more about health equity
-              </h3>
-              <div
-                class="usa-summary-box__text"
-              >
-                <ul
-                  class="margin-y-0 padding-top-1"
-                >
-                  <li
-                    class="padding-bottom-05"
-                  >
-                    View the 
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        Health Equity Resources on the Quality Vertical SharePoint
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                  <li
-                    class="padding-bottom-05"
-                  >
-                    View the 
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        CMS Framework for Health Equity
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                  <li
-                    class="padding-bottom-05"
-                  >
-                    Work with CMMI FO
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div
-            class="margin-bottom-3"
-          >
-            <h3
-              class="margin-y-0"
-            >
-              5. Model evaluation
+              4. Model evaluation
             </h3>
             <ul
               class="margin-y-0 padding-top-1"
@@ -784,16 +647,10 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 Discuss evaluability of the proposed model and general approach to study design.
               </li>
               <li>
-                Describe how evaluation could assess broader cost and quality impacts and potential approaches to evaluating delivery system changes and interventions within and outside of the model, including priority questions in the organization and delivery of care tied to model aim.
-              </li>
-              <li>
                 Discuss potential for formal expansion, particularly if evaluation findings would be generalizable.
               </li>
               <li>
-                Discuss potential for adoption and scaling by non-participants outside of formal expansion.
-              </li>
-              <li>
-                Describe options for collecting data on key measures for assessing impact and innovation (as articulated in Section 3 above), including comparison group data.
+                Describe options for collecting data on key measures for assessing impact and innovation (as articulated in Section 3 above), including comparison group data including for key outcomes and quality goals.
               </li>
             </ul>
           </div>
@@ -803,13 +660,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <h3
               class="margin-y-0"
             >
-              6. Interested parties - Reactions/Issues
+              5. Interested parties - Reactions/Issues
             </h3>
             <ul
               class="margin-y-0 padding-top-1"
             >
               <li>
-                Provide a brief overview of health care constituencies affected, including those interested parties likely to support or voice opposition to or express concerns with the proposed model.
+                Provide a brief overview of health care constituencies affected, including those interested parties likely to support or express concerns with the proposed model.
               </li>
               <li>
                 Discuss potential for support and partnerships across the government – CMS, HHS, OMB, DPC, Congress – and areas of government that may voice concern with the proposed model.
@@ -817,9 +674,6 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               <li>
                 Provide a summary of stakeholder engagement (e.g. representatives of potential participants, impacted patient groups, policy experts) up to this point in model design.
               </li>
-              <li>
-                Describe how beneficiary perspective/input, especially those representing underserved populations, has been incorporated to date and will be if model concept proceeds forward.
-              </li>
             </ul>
           </div>
           <div
@@ -828,7 +682,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             <h3
               class="margin-y-0"
             >
-              7. Operational and financial considerations
+              6. Operational and financial considerations
             </h3>
             <ul
               class="margin-y-0 padding-top-1"
@@ -837,16 +691,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 CMMI staffing needs to support model.
               </li>
               <li>
-                Identification and process for addressing potential overlap issues with existing.
-              </li>
-              <li>
-                Opportunity or need for cross-CMMI collaboration and staffing.
+                Identification and process for addressing potential overlap issues with existing models.
               </li>
               <li>
                 Legal considerations.
               </li>
               <li>
-                Anticipated contracting and technology needs.
+                Anticipated contracting and technology needs, including financial estimate and development timeline.
               </li>
               <li>
                 Anticipated resources for obtaining comparison group data.
@@ -881,7 +732,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
-                      Strategy Refresh Model Development Library
+                      Model Development Library
                       <svg
                         aria-label="launch"
                         class="usa-icon"
@@ -904,7 +755,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0 text-bold"
                 >
                   <div>
-                    General resources 
+                    General resources
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
@@ -1079,7 +930,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     </ul>
                   </div>
                   <div>
-                    Quality resources 
+                    Quality resources
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
@@ -1121,7 +972,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             class="display-flex flex-align-center line-height-normal"
                             style="column-gap: 0.25rem;"
                           >
-                            Patient Reported Outcome Measure(PROM) strategy
+                            Patient Reported Outcome Measure(PROMs) strategy
                             <svg
                               aria-label="launch"
                               class="usa-icon"
@@ -1142,154 +993,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     </ul>
                   </div>
                   <div>
-                    Health equity resources 
-                    <ul
-                      class="margin-top-0 margin-bottom-05 text-normal"
-                    >
-                      <li>
-                        <button
-                          class="usa-button usa-button--unstyled"
-                          data-testid="button"
-                          type="button"
-                        >
-                          <span
-                            class="display-flex flex-align-center line-height-normal"
-                            style="column-gap: 0.25rem;"
-                          >
-                            Quality Vertical Health Equity Resource Guide
-                            <svg
-                              aria-label="launch"
-                              class="usa-icon"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="usa-button usa-button--unstyled"
-                          data-testid="button"
-                          type="button"
-                        >
-                          <span
-                            class="display-flex flex-align-center line-height-normal"
-                            style="column-gap: 0.25rem;"
-                          >
-                            Implicit Bias Guide
-                            <svg
-                              aria-label="launch"
-                              class="usa-icon"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="usa-button usa-button--unstyled"
-                          data-testid="button"
-                          type="button"
-                        >
-                          <span
-                            class="display-flex flex-align-center line-height-normal"
-                            style="column-gap: 0.25rem;"
-                          >
-                            Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo
-                            <svg
-                              aria-label="launch"
-                              class="usa-icon"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="usa-button usa-button--unstyled"
-                          data-testid="button"
-                          type="button"
-                        >
-                          <span
-                            class="display-flex flex-align-center line-height-normal"
-                            style="column-gap: 0.25rem;"
-                          >
-                            HRSN Screening and Referral Implementation Guide
-                            <svg
-                              aria-label="launch"
-                              class="usa-icon"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          class="usa-button usa-button--unstyled"
-                          data-testid="button"
-                          type="button"
-                        >
-                          <span
-                            class="display-flex flex-align-center line-height-normal"
-                            style="column-gap: 0.25rem;"
-                          >
-                            Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo
-                            <svg
-                              aria-label="launch"
-                              class="usa-icon"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    Implementation resources 
+                    Implementation resources
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
@@ -1748,7 +1452,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <td
                   class="text-baseline padding-left-0"
                 >
-                  Model supports or advances one (or more) of the five strategy pillars: Drive accountable care, advance health equity, support innovation, address affordability, partner to achieve system transformation
+                  Model supports or advances one (or more) of the five strategy pillars:​ Drive accountable care, advance healthy living, support innovation, address affordability, partner to achieve system transformation
                 </td>
                 <td
                   class="text-baseline padding-left-0"
@@ -1787,7 +1491,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <li
                       class="line-height-normal margin-bottom-05"
                     >
-                      Transformation, including: cost reduction, quality and equity improvement, delivery system change​
+                      Transformation, including: cost reduction, quality improvement, delivery system change​​
                     </li>
                   </ul>
                 </td>

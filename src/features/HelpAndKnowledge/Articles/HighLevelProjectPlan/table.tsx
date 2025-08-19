@@ -125,6 +125,7 @@ const Table = ({ content }: TableType) => {
               </th>
               <td className="text-baseline">
                 {item.party && <TransOrPrint copy={item.party} />}
+                {item.party && item.modalLinks && ', '}
                 {item.modalLinks &&
                   item.modalLinks.map((i, index) => {
                     return (
@@ -137,7 +138,8 @@ const Table = ({ content }: TableType) => {
                               <ModalLink solutionRoute={i.route}>
                                 {i.copy}
                               </ModalLink>
-                            )
+                            ),
+                            italics: <i />
                           }}
                         />
                         {item.modalLinks && index !== item.modalLinks.length - 1

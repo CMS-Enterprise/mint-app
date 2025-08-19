@@ -2270,22 +2270,22 @@ const helpCategories: Record<ArticleCategories, CardInfoType> = {
   [ArticleCategories.GETTING_STARTED]: {
     title: 'Getting started',
     description:
-      'Use these resources to help you get started with the creation of your Model Plan.'
+      'Use these articles to help you get started with the creation of your model and documenting it in MINT.'
   },
   [ArticleCategories.IT_IMPLEMENTATION]: {
     title: 'IT implementation',
     description:
-      'Use these resources to better understand what’s involved in your model to IT implementation.'
+      'Use these articles to better understand what’s involved in implementing IT for your model.'
   },
   [ArticleCategories.MTO_TUTORIALS]: {
     title: 'MINT tutorials',
     description:
-      'Step-by-step guides to help you navigate MINT and it’s capabilities.'
+      'Step-by-step guides to help you navigate MINT and its capabilities.'
   },
   [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: {
     title: 'Model concept and design',
     description:
-      'Use these resources to better understand what’s involved in the model concept and design phase.'
+      'Use these articles to better understand what’s involved in the model concept and design phase.'
   }
 };
 
@@ -2316,7 +2316,7 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]:
     'Fraud and abuse waiver templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
-    'Quality Vertical health equity resources on SharePoint',
+    'Quality Vertical healthy living resources on SharePoint',
   [HelpArticle.CREATING_MTO_MATRIX]:
     'Creating your Model-to-operations matrix (MTO) in MINT',
   [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
@@ -2359,14 +2359,15 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
       'The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is intended to provide CMMI staff with the final documents for referencing, ICIP drafting, research projects, and information sharing and is not for public disclosure.'
   },
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]: {
-    title: 'Fraud and abuse waiver templates on SharePoint',
+    title:
+      'Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint',
     description:
-      'Fraud and Abuse waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. PPG has gathered a library of resources to support teams in this process, including primers, how-to guides, overviews, and more. '
+      'Waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. Recent safe harbors and exceptions ensure that the needs of the Innovation Center are covered without the waiver team needing to write additional fraud and abuse waivers. PPG has gathered a library of resources to support teams in this process, including primers, how-to guides, overviews, and more.'
   },
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]: {
-    title: 'Quality Vertical health equity resources on SharePoint ',
+    title: 'Quality Vertical healthy living resources on SharePoint',
     description:
-      'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
+      'Browse Quality Vertical’s healthy living resources, including supplemental guidance on stratification standards, index proof of concept memo, and more. Additional healthy living resources can be found on the Strategy Refresh page.'
   }
 };
 
@@ -2404,7 +2405,7 @@ const helpAndKnowledge = {
   viewAllRelated: 'View all help resources',
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
-    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.',
+    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.',
   viewAllButton: 'View all operational solutions',
   learnMore: 'Learn more',
   browseCategories: 'Browse solutions by category',
@@ -2412,6 +2413,7 @@ const helpAndKnowledge = {
   aboutSolution: 'About this solution',
   aboutSolutionAriaLabel: 'Click to learn more about this solution:',
   pageInfo: '{{-pageStart}} of {{-totalPages}} resources',
+  solutionsSuffix: 'solutions',
   resultsInfo:
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
   queryResultsInfo:
@@ -2473,6 +2475,7 @@ const helpAndKnowledge = {
   externalResource: 'External resource',
   numResources: '{{count}} resource',
   numResources_other: '{{count}} resources',
+  resourcesSuffix: 'resources',
   viewOnSharePoint: 'View on SharePoint',
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',

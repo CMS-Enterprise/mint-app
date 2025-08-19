@@ -38,7 +38,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
           <h3
             class="line-height-body-4 margin-bottom-1 margin-top-3"
           >
-            Quality Vertical health equity resources on SharePoint 
+            Quality Vertical healthy living resources on SharePoint
           </h3>
         </div>
         <a
@@ -64,7 +64,7 @@ exports[`ExternalResourceCard > matches the snapshot 1`] = `
             <div
               class=""
             >
-              Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...
+              Browse Quality Vertical’s healthy living resources, including supplemental guidance on stratification standard ...
             </div>
             <button
               aria-controls="QUALITY_VERTICAL_HEALTH_EQUITY"
