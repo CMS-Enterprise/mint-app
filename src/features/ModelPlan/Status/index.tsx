@@ -60,20 +60,16 @@ const Status = () => {
             status: formikValues.status
           }
         }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              modelPlanTaskListT('statusUpdateSuccess', {
-                status: statusConfig.options[formikValues.status as ModelStatus]
-              })
-            );
-            history.push(`/models/${modelID}/collaboration-area/`);
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+      }).then(response => {
+        if (!response?.errors) {
+          showMessageOnNextPage(
+            modelPlanTaskListT('statusUpdateSuccess', {
+              status: statusConfig.options[formikValues.status as ModelStatus]
+            })
+          );
+          history.push(`/models/${modelID}/collaboration-area/`);
+        }
+      });
     }
   };
 

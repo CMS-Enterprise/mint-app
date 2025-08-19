@@ -56,6 +56,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ProtectedRoute from 'components/ProtectedRoute';
 import TextAreaField from 'components/TextAreaField';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
@@ -247,6 +248,9 @@ export const CharacteristicsContent = () => {
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
+
+  // Skip global error handling, this is handled by the mutation modal
+  useErrorMessage('skip', true);
 
   useEffect(() => {
     if (!isModalOpen && id) {

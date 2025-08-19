@@ -8,6 +8,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
@@ -21,7 +22,9 @@ const RemoveCategoryForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
+
+  const { showMessage, clearMessage } = useMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
     refetchQueries: [
@@ -38,39 +41,30 @@ const RemoveCategoryForm = () => {
     rowType === 'category' ? 'removeCategory' : 'removeSubcategory';
 
   const handleRemove = () => {
+    setErrorMeta({
+      overrideMessage: t(`modal.${namespace}.errorAlert`)
+    });
+
     deleteCategory({
       variables: {
         id: rowType === 'category' ? categoryID : subCategoryID
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {t(`modal.${namespace}.successAlert`)}
-            </Alert>
-          );
-        }
-        setMTOModalOpen(false);
-      })
-      .catch(() => {
-        showErrorMessageInModal(
+    }).then(response => {
+      if (!response?.errors) {
+        showMessage(
           <Alert
-            type="error"
+            type="success"
             slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+            clearMessage={clearMessage}
           >
-            {t(`modal.${namespace}.errorAlert`)}
+            {t(`modal.${namespace}.successAlert`)}
           </Alert>
         );
-      });
+      }
+      setMTOModalOpen(false);
+    });
   };
 
   return (

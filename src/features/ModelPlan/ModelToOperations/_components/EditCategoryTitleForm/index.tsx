@@ -21,6 +21,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
@@ -39,7 +40,8 @@ const EditCategoryTitleForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+  const { showMessage, clearMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
@@ -69,48 +71,39 @@ const EditCategoryTitleForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
+    setErrorMeta({
+      overrideMessage: t('modal.editCategoryTitle.alert.error')
+    });
+
     rename({
       variables: {
         id: subCategoryID || categoryID,
         name: formData.name
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              <span className="mandatory-fields-alert__text">
-                <Trans
-                  i18nKey={t('modal.editCategoryTitle.alert.success')}
-                  components={{
-                    b: <span className="text-bold" />
-                  }}
-                  values={{ title: formData.name }}
-                />
-              </span>
-            </Alert>
-          );
-        }
-        setMTOModalOpen(false);
-      })
-      .catch(() => {
-        showErrorMessageInModal(
+    }).then(response => {
+      if (!response?.errors) {
+        showMessage(
           <Alert
-            type="error"
+            type="success"
             slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+            clearMessage={clearMessage}
           >
-            {t('modal.editCategoryTitle.alert.error')}
+            <span className="mandatory-fields-alert__text">
+              <Trans
+                i18nKey={t('modal.editCategoryTitle.alert.success')}
+                components={{
+                  b: <span className="text-bold" />
+                }}
+                values={{ title: formData.name }}
+              />
+            </span>
           </Alert>
         );
-      });
+      }
+      setMTOModalOpen(false);
+    });
   };
 
   return (

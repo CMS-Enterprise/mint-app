@@ -63,6 +63,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -138,7 +139,7 @@ const EditSolutionForm = ({
   const shouldScrollToBottom = params.get('scroll-to-bottom') === 'true';
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  const [mutationError, setMutationError] = useState<React.ReactNode | null>();
+  const { setErrorMeta } = useErrorMessage();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -328,6 +329,12 @@ const EditSolutionForm = ({
         formChanges.facilitatedByOther = null;
       }
 
+      setErrorMeta({
+        overrideMessage: modelToOperationsMiscT(
+          'modal.editSolution.errorUpdated'
+        )
+      });
+
       updateSolution({
         variables: {
           id: editSolutionID || '',
@@ -353,72 +360,37 @@ const EditSolutionForm = ({
           GetModelToOperationsMatrixDocument,
           GetMtoSolutionsAndMilestonesDocument
         ]
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-y-4"
-                  clearMessage={clearMessage}
-                >
-                  <span className="mandatory-fields-alert__text">
-                    <Trans
-                      i18nKey={modelToOperationsMiscT(
-                        'modal.editSolution.successUpdated'
-                      )}
-                      components={{
-                        bold: <span className="text-bold" />
-                      }}
-                      values={{ solution: formData.name }}
-                    />
-                  </span>
-                </Alert>
-              </>
-            );
-            // eslint-disable-next-line no-param-reassign
-            submitted.current = true;
-            setIsDirty(false);
-            closeModal();
-          }
-        })
-        .catch(err => {
-          if (
-            err?.message.includes(
-              'unique_name_per_model_plan_when_mto_common_solution_is_null'
-            )
-          ) {
-            setMutationError(
+      }).then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
               <Alert
-                type="error"
+                type="success"
                 slim
-                data-testid="error-alert"
+                data-testid="mandatory-fields-alert"
                 className="margin-y-4"
+                clearMessage={clearMessage}
               >
-                {modelToOperationsMiscT(
-                  'modal.editSolution.errorNameAlreadyExists',
-                  {
-                    solution: formData.name
-                  }
-                )}
+                <span className="mandatory-fields-alert__text">
+                  <Trans
+                    i18nKey={modelToOperationsMiscT(
+                      'modal.editSolution.successUpdated'
+                    )}
+                    components={{
+                      bold: <span className="text-bold" />
+                    }}
+                    values={{ solution: formData.name }}
+                  />
+                </span>
               </Alert>
-            );
-          } else {
-            setMutationError(
-              <Alert
-                type="error"
-                slim
-                data-testid="error-alert"
-                className="margin-y-4"
-              >
-                {modelToOperationsMiscT('modal.editSolution.errorUpdated')}
-              </Alert>
-            );
-          }
-        });
+            </>
+          );
+          // eslint-disable-next-line no-param-reassign
+          submitted.current = true;
+          setIsDirty(false);
+          closeModal();
+        }
+      });
     },
     [
       solution,
@@ -436,6 +408,10 @@ const EditSolutionForm = ({
   );
 
   const handleRemove = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT('modal.editSolution.errorRemoved')
+    });
+
     deleteSolution({
       variables: {
         id: editSolutionID || ''
@@ -444,44 +420,30 @@ const EditSolutionForm = ({
         GetMtoSolutionsAndMilestonesDocument,
         GetMtoSolutionsAndMilestonesDocument
       ]
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                {modelToOperationsMiscT('modal.editSolution.successRemoved', {
-                  solution: solution?.name
-                })}
-              </Alert>
-            </>
-          );
-          // eslint-disable-next-line no-param-reassign
-          submitted.current = true;
-          setIsDirty(false);
-          closeModal();
-          setIsModalOpen(false);
-        }
-      })
-      .catch(() => {
-        setMutationError(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {modelToOperationsMiscT('modal.editSolution.errorRemoved')}
-          </Alert>
+    }).then(response => {
+      if (!response?.errors) {
+        showMessage(
+          <>
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              {modelToOperationsMiscT('modal.editSolution.successRemoved', {
+                solution: solution?.name
+              })}
+            </Alert>
+          </>
         );
+        // eslint-disable-next-line no-param-reassign
+        submitted.current = true;
+        setIsDirty(false);
+        closeModal();
         setIsModalOpen(false);
-      });
+      }
+    });
   };
 
   // Set the footer of the modal to be rendered in the parent Sidepanel to allow for sticky bottom
@@ -711,8 +673,6 @@ const EditSolutionForm = ({
                 {modelToOperationsMiscT('modal.editSolution.custom')}
               </span>
             )}
-
-            {mutationError && mutationError}
 
             <FormProvider {...methods}>
               <Form

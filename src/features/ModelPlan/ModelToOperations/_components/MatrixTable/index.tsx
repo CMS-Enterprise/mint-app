@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
+import { ErrorMeta } from 'react-i18next/TransWithoutContext';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
@@ -21,6 +22,7 @@ import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import { MTOSolutionPanelProvider } from 'contexts/MTOSolutionPanelContext';
@@ -852,37 +854,21 @@ export const moveRow = (
         id: draggedCategory.id,
         newOrder: hoverIndex[0]
       }
-    })
-      ?.then(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:successReorder')}
-            </Alert>
-          );
-        }
-      })
-      ?.catch(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:errorReorder')}
-            </Alert>
-          );
-        }
-      });
+    })?.then(() => {
+      if (setError) {
+        setError(
+          <Alert
+            type="success"
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+            clearMessage={clearMessage}
+          >
+            {i18next.t('modelToOperationsMisc:successReorder')}
+          </Alert>
+        );
+      }
+    });
   } else if (type.includes('subcategory')) {
     const parentIndex = dragIndex[0];
     const hoverParentIndex = hoverIndex[0];
@@ -919,37 +905,21 @@ export const moveRow = (
         newOrder: hoverSubIndex,
         parentID: hoverParentCategoryID
       }
-    })
-      ?.then(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:successReorder')}
-            </Alert>
-          );
-        }
-      })
-      ?.catch(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:errorReorder')}
-            </Alert>
-          );
-        }
-      });
+    })?.then(() => {
+      if (setError) {
+        setError(
+          <Alert
+            type="success"
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-y-4"
+            clearMessage={clearMessage}
+          >
+            {i18next.t('modelToOperationsMisc:successReorder')}
+          </Alert>
+        );
+      }
+    });
   } else if (type.includes('milestone')) {
     // TODO: if needed, implement milestone reordering
     // // Find the parent category

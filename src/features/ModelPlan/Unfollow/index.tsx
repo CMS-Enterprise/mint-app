@@ -8,6 +8,7 @@ import {
 
 import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 
 const Unfollow = () => {
@@ -20,6 +21,8 @@ const Unfollow = () => {
   const modelIDToRemove = params.get('modelID');
 
   const [removeMutate] = useDeletePlanFavoriteMutation();
+
+  const { setErrorMeta } = useErrorMessage();
 
   const { data, error } = useGetBasicsQuery({
     variables: {
@@ -46,6 +49,12 @@ const Unfollow = () => {
       history.push('/models');
     }
     if (modelName) {
+      setErrorMeta({
+        overrideMessage: t('favorite.failure', {
+          requestName: modelName
+        })
+      });
+
       removeMutate({
         variables: {
           modelPlanID: modelIDToRemove!
@@ -71,20 +80,6 @@ const Unfollow = () => {
           }
         })
         .catch(errors => {
-          showMessageOnNextPage(
-            <Alert
-              type="error"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-            >
-              <span className="mandatory-fields-alert__text">
-                {t('favorite.failure', {
-                  requestName: modelName
-                })}
-              </span>
-            </Alert>
-          );
           history.push('/models');
         });
     }
@@ -95,7 +90,8 @@ const Unfollow = () => {
     modelName,
     removeMutate,
     showMessageOnNextPage,
-    t
+    t,
+    setErrorMeta
   ]);
 
   return <PageLoading />;

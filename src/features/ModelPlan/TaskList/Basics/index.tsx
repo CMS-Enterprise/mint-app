@@ -43,6 +43,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import Tooltip from 'components/Tooltip';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -104,6 +105,9 @@ const BasicsContent = () => {
   } = basics || {};
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
+
+  // Skip global error handling, this is handled by the mutation modal
+  useErrorMessage('skip', true);
 
   useEffect(() => {
     if (!isModalOpen && modelID) {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Controller,
   FormProvider,
@@ -21,6 +21,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
@@ -42,7 +43,7 @@ const MoveSubCategoryForm = () => {
 
   const { showMessage, clearMessage } = useMessage();
 
-  const [mutationError, setMutationError] = useState<React.ReactNode | null>();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -84,50 +85,38 @@ const MoveSubCategoryForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT('errorReorderForm')
+    });
+
     updateOrder({
       variables: {
         id: subCategoryID,
         newOrder: 0, // Always move the subcategory to the top
         parentID: formData.parentID
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                {modelToOperationsMiscT('successReorder')}
-              </Alert>
-            </>
-          );
-          setMutationError(null);
-          setMTOModalOpen(false);
-        }
-      })
-      .catch(() => {
-        setMutationError(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {modelToOperationsMiscT('errorReorderForm')}
-          </Alert>
+    }).then(response => {
+      if (!response?.errors) {
+        showMessage(
+          <>
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              {modelToOperationsMiscT('successReorder')}
+            </Alert>
+          </>
         );
-      });
+        setMTOModalOpen(false);
+      }
+    });
   };
 
   return (
     <>
-      {mutationError && mutationError}
-
       <p className="margin-top-2 margin-bottom-3">
         {modelToOperationsMiscT('modal.moveSubCategory.description')}
       </p>

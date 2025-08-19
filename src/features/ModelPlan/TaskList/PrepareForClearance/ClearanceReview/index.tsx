@@ -43,12 +43,12 @@ import {
 } from 'wrappers/PageLockWrapper';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { tArray } from 'utils/translation';
 
@@ -116,7 +116,6 @@ const renderReviewTaskSection = (
 };
 
 export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
-  const [errors, setErrors] = useState<string>();
   const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
 
@@ -176,6 +175,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const [updatePayments] = useUpdateClearancePaymentsMutation();
 
+  const { setErrorMeta } = useErrorMessage();
+
   // Object to dynamically call each task list mutation within handleFormSubmit
   const clearanceMutations: MutationObjectType = {
     'model-timeline': updateTimeline,
@@ -188,22 +189,22 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   };
 
   const handleFormSubmit = (taskSection: keyof MutationObjectType) => {
+    setErrorMeta({
+      overrideMessage: p('mutationError')
+    });
+
     clearanceMutations[taskSection]({
       variables: {
         id: sectionID,
         changes: { status: TaskStatusInput.READY_FOR_CLEARANCE }
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          history.push(
-            `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
-          );
-        }
-      })
-      .catch(() => {
-        setErrors(p('mutationError'));
-      });
+    }).then(response => {
+      if (!response?.errors) {
+        history.push(
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+        );
+      }
+    });
   };
 
   // Modal used to render task list locked info or Ready for Clearance warning
@@ -266,16 +267,6 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             ]}
             customItem={p(`reviewBreadcrumbs.${routeMap[section]}`)}
           />
-
-          {errors && (
-            <ErrorAlert
-              testId="formik-validation-errors"
-              classNames="margin-y-3"
-              heading={p('errorHeading')}
-            >
-              <ErrorAlertMessage errorKey="error" message={errors} />
-            </ErrorAlert>
-          )}
 
           {renderModal(taskListLocked)}
 

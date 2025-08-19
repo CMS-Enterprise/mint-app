@@ -28,6 +28,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
@@ -65,6 +66,9 @@ const NotificationSettings = () => {
     () => new URLSearchParams(location.search),
     [location.search]
   );
+
+  const { setErrorMeta } = useErrorMessage();
+
   const unsubscribeEmailParams = params.get('unsubscribe_email');
 
   const { data, loading, error } = useGetNotificationSettingsQuery();
@@ -115,38 +119,29 @@ const NotificationSettings = () => {
       changes.taggedInDiscussionReply = dirtyInputs.taggedInDiscussion;
     }
 
+    setErrorMeta({
+      overrideMessage: notificationsT('settings.errorMessage')
+    });
+
     update({
       variables: {
         changes
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessageOnNextPage(
-            <Alert
-              type="success"
-              slim
-              data-testid="success-alert"
-              className="margin-y-4"
-            >
-              {notificationsT('settings.successMessage')}
-            </Alert>
-          );
-          history.push('/notifications');
-        }
-      })
-      .catch(() => {
-        showMessage(
+    }).then(response => {
+      if (!response?.errors) {
+        showMessageOnNextPage(
           <Alert
-            type="error"
+            type="success"
             slim
-            data-testid="error-alert"
+            data-testid="success-alert"
             className="margin-y-4"
           >
-            {notificationsT('settings.errorMessage')}
+            {notificationsT('settings.successMessage')}
           </Alert>
         );
-      });
+        history.push('/notifications');
+      }
+    });
   };
 
   // Unsubscribe from email
@@ -280,44 +275,37 @@ const NotificationSettings = () => {
 
         // Proceed to update user notification preferences if changes are present
         if (changes) {
-          update({ variables: { changes } })
-            .then(response => {
-              if (!response?.errors) {
-                showMessage(
-                  <Alert
-                    type="success"
-                    slim
-                    data-testid="success-alert"
-                    className="margin-y-4"
-                  >
-                    <Trans
-                      t={notificationsT}
-                      i18nKey="settings.unsubscribedMessage.success"
-                      values={{
-                        notificationType: notificationsT(
-                          `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                        )
-                      }}
-                      components={{
-                        bold: <strong />
-                      }}
-                    />
-                  </Alert>
-                );
-              }
-            })
-            .catch(() => {
+          setErrorMeta({
+            overrideMessage: notificationsT(
+              'settings.unsubscribedMessage.error'
+            )
+          });
+
+          update({ variables: { changes } }).then(response => {
+            if (!response?.errors) {
               showMessage(
                 <Alert
-                  type="error"
+                  type="success"
                   slim
-                  data-testid="error-alert"
+                  data-testid="success-alert"
                   className="margin-y-4"
                 >
-                  {notificationsT('settings.unsubscribedMessage.error')}
+                  <Trans
+                    t={notificationsT}
+                    i18nKey="settings.unsubscribedMessage.success"
+                    values={{
+                      notificationType: notificationsT(
+                        `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                      )
+                    }}
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                 </Alert>
               );
-            });
+            }
+          });
         }
       }
 
@@ -334,7 +322,8 @@ const NotificationSettings = () => {
     params,
     showMessage,
     unsubscribeEmailParams,
-    update
+    update,
+    setErrorMeta
   ]);
 
   const initialValues: NotificationSettingsFormType = {

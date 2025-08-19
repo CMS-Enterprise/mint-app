@@ -185,17 +185,13 @@ const PrepareForClearanceCheckList = ({
           }
         });
       })
-    )
-      .then(responses => {
-        const errors = responses?.find(result => result?.errors);
+    ).then(responses => {
+      const errors = responses?.find(result => result?.errors);
 
-        if (!errors) {
-          history.push(`/models/${modelID}/collaboration-area/task-list`);
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+      if (!errors) {
+        history.push(`/models/${modelID}/collaboration-area/task-list`);
+      }
+    });
   };
 
   if (

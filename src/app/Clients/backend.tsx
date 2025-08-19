@@ -88,7 +88,11 @@ const knownErrors: Record<string, string> = {
   uniq_system_owner_key_type_component:
     'This owner is already added to this solution and cannot be added again. Please edit the existing entry.',
   unique_collaborator_per_plan:
-    'This person is already a member of your model team. Please select a different person to add to your team.'
+    'This person is already a member of your model team. Please select a different person to add to your team.',
+  unique_name_per_model_plan_when_mto_common_milestone_is_null:
+    'There is already a model milestone in your MTO with this name. Please choose a different name for this milestone.',
+  unique_name_per_model_plan_when_mto_common_solution_is_null:
+    'There is already a model solution in your MTO with this name. Please choose a different name for this solution.'
 };
 
 const findKnownError = (errorMessage: string): string | undefined => {
@@ -108,7 +112,7 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
     const operationType = getOperationType(operation);
 
     graphQLErrors.forEach(err => {
-      let errorMessage = '';
+      let knownErrorMessage = '';
 
       let knownError: string | undefined;
 
@@ -116,10 +120,12 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
       switch (operationType) {
         case 'mutation':
           knownError = findKnownError(err.message);
-          errorMessage = knownError ? knownErrors[knownError] : errorMessage;
+          knownErrorMessage = knownError
+            ? knownErrors[knownError]
+            : knownErrorMessage;
           break;
         default:
-          errorMessage = '';
+          knownErrorMessage = '';
       }
 
       if (operationType === 'mutation' && !skipError) {
@@ -133,7 +139,9 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
                 heading="Something went wrong with your request."
                 isClosable={false}
               >
-                <p className="margin-0">{overrideMessage || errorMessage}</p>
+                <p className="margin-0">
+                  {knownErrorMessage || overrideMessage}
+                </p>
                 <p className="margin-0">
                   Please try again. If the problem persists, please contact
                   support.

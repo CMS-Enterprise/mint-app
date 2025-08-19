@@ -51,31 +51,27 @@ const TaskListSideNav = ({
         id: modelID,
         archived: true
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessageOnNextPage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('withdraw_modal.confirmationText_name', {
-                    modelName: modelPlan.modelName
-                  })}
-                </span>
-              </Alert>
-            </>
-          );
-          history.push(`/`);
-        }
-      })
-      .catch(() => {
-        setModalOpen(false);
-      });
+    }).then(response => {
+      if (!response?.errors) {
+        showMessageOnNextPage(
+          <>
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+            >
+              <span className="mandatory-fields-alert__text">
+                {t('withdraw_modal.confirmationText_name', {
+                  modelName: modelPlan.modelName
+                })}
+              </span>
+            </Alert>
+          </>
+        );
+        history.push(`/`);
+      }
+    });
   };
 
   const renderModal = () => {

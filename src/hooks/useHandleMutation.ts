@@ -124,7 +124,7 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
         update({
           variables: {
-            id: '123',
+            id,
             changes
           }
         })
