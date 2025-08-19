@@ -126,7 +126,7 @@ const DocumentUpload = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<FileUploadForm>) => {
+        {(formikProps: FormikProps<FileUploadForm>): React.ReactNode => {
           const {
             errors,
             setErrors,

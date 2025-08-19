@@ -64,7 +64,7 @@ type FileInputForm = {
 export const WithFormik = () => {
   return (
     <Formik onSubmit={() => {}} initialValues={{ document: null }}>
-      {(formikProps: FormikProps<FileInputForm>) => {
+      {(formikProps: FormikProps<FileInputForm>): React.ReactNode => {
         const { setFieldValue } = formikProps;
 
         // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.

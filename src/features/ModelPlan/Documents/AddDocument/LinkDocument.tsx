@@ -131,7 +131,9 @@ const LinkDocument = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<LinkingDocumentFormTypes>) => {
+        {(
+          formikProps: FormikProps<LinkingDocumentFormTypes>
+        ): React.ReactNode => {
           const {
             errors,
             setErrors,
