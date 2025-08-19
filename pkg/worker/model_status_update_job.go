@@ -43,7 +43,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 	ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
 	ctx = appcontext.WithUserAccountService(ctx, userhelpers.UserAccountGetByIDLOADER)
 
-	return resolvers.TrySendEmailForPhaseSuggestionByModelPlanID(
+	return resolvers.TryNotificationSend(
 		ctx,
 		w.Store,
 		logger,

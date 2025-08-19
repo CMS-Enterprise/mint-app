@@ -12,19 +12,31 @@ import (
 type IncorrectModelStatusActivityMeta struct {
 	ActivityMetaBaseStruct
 	modelPlanRelation
-	Details string `json:"details"`
+	Phase                      string
+	SuggestedStatusesRaw       []string
+	SuggestedStatusesHumanized []string
+	CurrentStatusHumanized     string
+	ModelPlanName              string
 }
 
 // newIncorrectModelStatusActivityMeta creates a new IncorrectModelStatusActivityMeta
 func newIncorrectModelStatusActivityMeta(
 	modelPlanID uuid.UUID,
-	details string,
+	Phase string,
+	SuggestedStatusesRaw []string,
+	SuggestedStatusesHumanized []string,
+	CurrentStatusHumanized string,
+	ModelPlanName string,
 ) *IncorrectModelStatusActivityMeta {
 	version := 0 // increment if this type ever updates
 	return &IncorrectModelStatusActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityIncorrectModelStatus, version),
-		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
-		Details:                details,
+		ActivityMetaBaseStruct:     NewActivityMetaBaseStruct(ActivityIncorrectModelStatus, version),
+		modelPlanRelation:          NewModelPlanRelation(modelPlanID),
+		Phase:                      Phase,
+		SuggestedStatusesRaw:       SuggestedStatusesRaw,
+		SuggestedStatusesHumanized: SuggestedStatusesHumanized,
+		CurrentStatusHumanized:     CurrentStatusHumanized,
+		ModelPlanName:              ModelPlanName,
 	}
 }
 
@@ -32,7 +44,11 @@ func newIncorrectModelStatusActivityMeta(
 func NewIncorrectModelStatusActivity(
 	actorID uuid.UUID,
 	modelPlanID uuid.UUID,
-	details string,
+	Phase string,
+	SuggestedStatusesRaw []string,
+	SuggestedStatusesHumanized []string,
+	CurrentStatusHumanized string,
+	ModelPlanName string,
 ) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
@@ -41,7 +57,11 @@ func NewIncorrectModelStatusActivity(
 		ActivityType: ActivityIncorrectModelStatus,
 		MetaData: newIncorrectModelStatusActivityMeta(
 			modelPlanID,
-			details,
+			Phase,
+			SuggestedStatusesRaw,
+			SuggestedStatusesHumanized,
+			CurrentStatusHumanized,
+			ModelPlanName,
 		),
 	}
 }
