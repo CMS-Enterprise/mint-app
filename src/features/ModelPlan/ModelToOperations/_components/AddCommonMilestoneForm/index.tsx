@@ -27,6 +27,7 @@ import {
 import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -65,6 +66,8 @@ const AddCommonMilestoneForm = ({
   const { modelID } = useParams<{ modelID: string }>();
 
   const { message, showMessage, clearMessage } = useMessage();
+
+  const { setErrorMeta } = useErrorMessage();
 
   // Variables for the form
   const methods = useForm<FormValues>({
@@ -196,31 +199,21 @@ const AddCommonMilestoneForm = ({
   const onSubmit: SubmitHandler<FormValues> = formData => {
     if (!milestoneKey) return;
 
+    setErrorMeta({
+      overrideMessage: t('modal.solution.alert.error')
+    });
+
     create({
       variables: {
         modelPlanID: modelID,
         commonMilestoneKey: milestoneKey,
         commonSolutions: formData.commonSolutions
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          closeModal();
-        }
-      })
-      .catch(() => {
-        showMessage(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-            clearMessage={clearMessage}
-          >
-            {t('modal.solution.alert.error')}
-          </Alert>
-        );
-      });
+    }).then(response => {
+      if (!response?.errors) {
+        closeModal();
+      }
+    });
   };
 
   // Adding solution from the Milestone Library

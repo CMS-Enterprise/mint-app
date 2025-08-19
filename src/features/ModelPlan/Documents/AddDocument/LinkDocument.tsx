@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -41,12 +41,8 @@ const LinkDocument = ({
   const history = useHistory();
 
   const { showMessageOnNextPage } = useMessage();
-  const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
-  const [fileNameError, setFileNameError] = useState('');
 
   const [linkFile] = useMutation(LinkNewPlanDocument);
 
@@ -83,36 +79,21 @@ const LinkDocument = ({
           optionalNotes
         }
       }
-    })
-      .then(response => {
-        if (!response.errors) {
-          messageOnNextPage('documentUploadSuccess', name);
+    }).then(response => {
+      if (!response.errors) {
+        messageOnNextPage('documentUploadSuccess', name);
 
-          if (solutionDetailsLink) {
-            history.push(solutionDetailsLink);
-          } else {
-            history.push(`/models/${modelID}/collaboration-area/documents`);
-          }
+        if (solutionDetailsLink) {
+          history.push(solutionDetailsLink);
         } else {
-          setFileNameError(name);
-          setMutationError(true);
-          window.scrollTo(0, 0);
+          history.push(`/models/${modelID}/collaboration-area/documents`);
         }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-        window.scrollTo(0, 0);
-      });
+      }
+    });
   };
 
   return (
     <div>
-      {mutationError && (
-        <Alert type="error" slim>
-          {documentsMiscT('documentLinkError', { fileName: fileNameError })}
-        </Alert>
-      )}
-
       <Formik
         initialValues={{
           url: '',

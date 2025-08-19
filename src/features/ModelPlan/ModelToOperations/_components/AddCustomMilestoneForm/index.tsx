@@ -22,6 +22,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import useMessage from 'hooks/useMessage';
@@ -45,7 +46,9 @@ const CustomMilestoneForm = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
+
+  const { showMessage, clearMessage } = useMessage();
 
   const {
     mtoModalState: { categoryID, subCategoryID, toggleRow },
@@ -113,55 +116,46 @@ const CustomMilestoneForm = () => {
       mtoCategoryID = formData.primaryCategory;
     }
 
+    setErrorMeta({
+      overrideMessage: t('modal.milestone.alert.error')
+    });
+
     create({
       variables: {
         id: modelID,
         name: formData.name,
         mtoCategoryID
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.milestone.alert.success')}
-                    components={{
-                      bold: <span className="text-bold" />
-                    }}
-                    values={{ milestone: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
-          );
-          setCategoryRowsOpenOnCreation(
-            formData.primaryCategory,
-            formData.subcategory
-          );
-          setMTOModalOpen(false);
-        }
-      })
-      .catch(() => {
-        showErrorMessageInModal(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
-          >
-            {t('modal.milestone.alert.error')}
-          </Alert>
+    }).then(response => {
+      if (!response?.errors) {
+        showMessage(
+          <>
+            <Alert
+              type="success"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+              clearMessage={clearMessage}
+            >
+              <span className="mandatory-fields-alert__text">
+                <Trans
+                  i18nKey={t('modal.milestone.alert.success')}
+                  components={{
+                    bold: <span className="text-bold" />
+                  }}
+                  values={{ milestone: formData.name }}
+                />
+              </span>
+            </Alert>
+          </>
         );
-      });
+        setCategoryRowsOpenOnCreation(
+          formData.primaryCategory,
+          formData.subcategory
+        );
+        setMTOModalOpen(false);
+      }
+    });
   };
 
   return (
