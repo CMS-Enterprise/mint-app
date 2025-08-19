@@ -59,7 +59,7 @@ func ActivityIncorrectModelStatusCreate(
 				log.Printf("Error checking if user %s is a lead: %v", receiverID, err)
 			}
 		}
-		// if model lead then send all notifications regardless of user preferneces
+		// if model lead then send all notifications regardless of user preferences
 		if isLead {
 			notifPrefs = models.UserNotificationPreferenceFlags{
 				models.UserNotificationPreferenceInApp,
