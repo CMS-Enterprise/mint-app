@@ -149,6 +149,8 @@ describe('Model-to-Operations Matrix', () => {
           .click({ force: true });
       });
 
+    cy.wait(500);
+
     cy.get('[data-testid="operational-solution-modal"]').as(
       'operationalSolutionModal'
     );
