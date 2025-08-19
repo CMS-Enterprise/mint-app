@@ -138,7 +138,7 @@ const AnticipateDependencies = () => {
       <GridContainer>
         <MutationErrorModal
           isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.closeModal()}
+          closeModal={mutationError.closeModal}
           url={mutationError.destinationURL}
         />
 

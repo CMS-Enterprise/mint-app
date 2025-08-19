@@ -31,7 +31,7 @@ type HandleMutationConfigType =
 type ModalConfigType = {
   isModalOpen: boolean;
   destinationURL: string;
-  closeModal: () => void;
+  closeModal: ({ clearDestination }: { clearDestination?: boolean }) => void;
 };
 
 type MutationReturnType = {
@@ -122,7 +122,6 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
         if ('formikRef' in config) {
           config.formikRef.current?.setErrors(errors);
         }
-        blocker?.proceed?.();
       });
 
     return true; // Block the navigation
@@ -147,9 +146,13 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
 
   const clearDestinationURL = () => setDestinationURL('');
 
-  const closeModal = () => {
+  const closeModal = ({
+    clearDestination = true
+  }: { clearDestination?: boolean } = {}) => {
     setIsModalOpen(false);
-    clearDestinationURL();
+    if (clearDestination) {
+      clearDestinationURL();
+    }
   };
 
   return {

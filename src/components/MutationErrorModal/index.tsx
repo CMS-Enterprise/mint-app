@@ -9,7 +9,7 @@ import PageHeading from 'components/PageHeading';
 
 type MutationErrorModalType = {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: ({ clearDestination }: { clearDestination?: boolean }) => void;
   url: string;
 };
 
@@ -25,7 +25,7 @@ const MutationErrorModal = ({
   return (
     <Modal
       isOpen={isOpen}
-      closeModal={closeModal}
+      closeModal={() => closeModal({ clearDestination: true })}
       className="external-link-modal maxw-mobile-lg"
       navigation
     >
@@ -46,7 +46,7 @@ const MutationErrorModal = ({
           <Button
             type="button"
             onClick={() => {
-              closeModal();
+              closeModal({ clearDestination: true });
             }}
           >
             {generalT('mutationError.stay')}
@@ -57,8 +57,8 @@ const MutationErrorModal = ({
             className="margin-left-2 text-red"
             unstyled
             onClick={() => {
-              closeModal();
               navigate(url);
+              closeModal({ clearDestination: false });
             }}
           >
             {generalT('mutationError.leave')}

@@ -206,9 +206,13 @@ const BasicsInfo = () => {
 
   const clearDestinationURL = () => setDestinationURL('');
 
-  const closeModal = () => {
+  const closeModal = ({
+    clearDestination = true
+  }: { clearDestination?: boolean } = {}) => {
     setIsModalOpen(false);
-    clearDestinationURL();
+    if (clearDestination) {
+      clearDestinationURL();
+    }
   };
 
   const initialValues: ModelPlanInfoFormType = {
