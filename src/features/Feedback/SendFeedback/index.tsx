@@ -28,6 +28,7 @@ import CheckboxField from 'components/CheckboxField';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
 
@@ -36,7 +37,7 @@ const SendFeedback = () => {
 
   const history = useHistory();
 
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   const [update, { loading }] = useMutation(CreateSendFeedback);
 
@@ -51,6 +52,10 @@ const SendFeedback = () => {
   );
 
   const handleFormSubmit = (formikValues: SendFeedbackEmailInput) => {
+    setErrorMeta({
+      overrideMessage: t('errorFeedback')
+    });
+
     update({
       variables: {
         input: formikValues
@@ -62,7 +67,6 @@ const SendFeedback = () => {
         }
       })
       .catch(errors => {
-        setMutationError(true);
         window.scrollTo(0, 0);
       });
   };
@@ -82,12 +86,6 @@ const SendFeedback = () => {
     <MainContent>
       <GridContainer>
         <HelpBreadcrumb newTabOnly />
-
-        {mutationError && (
-          <Alert type="error" slim className="margin-top-4">
-            {t('errorFeedback')}
-          </Alert>
-        )}
 
         <PageHeading className="margin-bottom-2">
           {t('feedbackHeading')}

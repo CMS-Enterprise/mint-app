@@ -75,6 +75,19 @@ function getOperationType(
   }
 }
 
+const knownErrors: Record<string, string> = {
+  uniq_contractor_name_per_solution_key:
+    'This contractor is already added to this solution and cannot be added again. Please edit the existing entry.',
+  uniq_user_id_per_solution_key:
+    'This user is already added to this solution and cannot be added again. Please edit the existing entry.',
+  uniq_mailbox_address_per_solution_key:
+    'This mailbox address is already added to this solution and cannot be added again. Please edit the existing entry.'
+};
+
+const findKnownError = (errorMessage: string): string | undefined => {
+  return Object.keys(knownErrors).find(key => errorMessage.includes(key));
+};
+
 /**
  * Error Link
  *
@@ -88,15 +101,18 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
     const operationType = getOperationType(operation);
 
     graphQLErrors.forEach(err => {
-      let errorMessage = 'If the problem persists, please contact support.';
+      let errorMessage = '';
+
+      let knownError: string | undefined;
 
       // Handle different operation types if needed
       switch (operationType) {
         case 'mutation':
-          errorMessage = err.message;
+          knownError = findKnownError(err.message);
+          errorMessage = knownError ? knownErrors[knownError] : errorMessage;
           break;
         default:
-          errorMessage = 'If the problem persists, please contact support.';
+          errorMessage = '';
       }
 
       if (operationType === 'mutation' && !skipError) {

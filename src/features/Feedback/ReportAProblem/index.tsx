@@ -26,6 +26,7 @@ import BooleanRadio from 'components/BooleanRadioForm';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
 
@@ -34,7 +35,7 @@ const ReportAProblem = () => {
 
   const history = useHistory();
 
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
@@ -47,6 +48,10 @@ const ReportAProblem = () => {
   );
 
   const handleFormSubmit = (formikValues: ReportAProblemInput) => {
+    setErrorMeta({
+      overrideMessage: t('errorFeedback')
+    });
+
     update({
       variables: {
         input: formikValues
@@ -58,7 +63,6 @@ const ReportAProblem = () => {
         }
       })
       .catch(errors => {
-        setMutationError(true);
         window.scrollTo(0, 0);
       });
   };
@@ -76,12 +80,6 @@ const ReportAProblem = () => {
     <MainContent>
       <GridContainer>
         <HelpBreadcrumb newTabOnly />
-
-        {mutationError && (
-          <Alert type="error" slim className="margin-top-4">
-            {t('errorFeedback')}
-          </Alert>
-        )}
 
         <PageHeading className="margin-bottom-2">
           {t('reportHeading')}

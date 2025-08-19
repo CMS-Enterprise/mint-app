@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -23,7 +23,6 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
-import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -106,17 +105,11 @@ const TeamMemberForm = ({
     ]
   });
 
-  const [mutationError, setMutationError] = useState<
-    'duplicate' | 'generic' | null
-  >(null);
-
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
 
   const disabledSubmitBtn =
     !watch('userName') || !watch('role') || isSubmitting || !isDirty;
-
-  const { setErrorMeta } = useErrorMessage();
 
   useEffect(() => {
     setDisableButton(disabledSubmitBtn);
@@ -124,15 +117,10 @@ const TeamMemberForm = ({
 
   const onSubmit = (formData: TeamMemberFormValues) => {
     if (!selectedSolution) {
-      setMutationError('generic');
       return;
     }
 
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
-
-    setErrorMeta({
-      overrideMessage: `${formData.userName} is already added to this solution and cannot be added again. Please edit the existing entry.`
-    });
 
     const promise = isAddMode
       ? create({
@@ -186,28 +174,6 @@ const TeamMemberForm = ({
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {mutationError !== null && (
-          <Alert
-            type="error"
-            slim
-            headingLevel="h1"
-            className="margin-bottom-2"
-          >
-            {mutationError === 'generic' ? (
-              miscT(`${mode}.error`)
-            ) : (
-              <Trans
-                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
-                values={{
-                  contact: methods.getValues('name')
-                }}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-              />
-            )}
-          </Alert>
-        )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
           <Controller
             name="userName"
