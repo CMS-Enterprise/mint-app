@@ -12,7 +12,6 @@ const currentUUIDRoutes: string[] = ['solution-implementation-details'];
 
 // These routes are excluded from GA4 tracking as they are legacy routes only existing in redirects.  We don't want to track them in GA4.
 const excludedPaths: string[] = [
-  '/read-only',
   '/read-view',
   '/collaboration-area/task-list/basics/milestones',
   '/task-list',
@@ -21,10 +20,15 @@ const excludedPaths: string[] = [
   '/read-view/it-systems-and-solutions'
 ];
 
-export const isExcludedPath = (path: string) =>
-  excludedPaths.some(excludedPath =>
-    path.match(new RegExp(`^/models/[^/]+${excludedPath}$`))
+const excludedMainPaths: string[] = ['/read-only'];
+
+export const isExcludedPath = (path: string) => {
+  return (
+    excludedPaths.some(excludedPath =>
+      path.match(new RegExp(`^/models/[^/]+${excludedPath}$`))
+    ) || excludedMainPaths.some(excludedPath => path.includes(excludedPath))
   );
+};
 
 const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
   const location = useLocation();
