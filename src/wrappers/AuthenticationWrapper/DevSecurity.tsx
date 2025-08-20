@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AuthTransaction, OktaAuth } from '@okta/okta-auth-js';
 import { OktaContext } from '@okta/okta-react';
 
@@ -30,33 +30,44 @@ const DevSecurity = ({ children }: ParentComponentProps) => {
   };
 
   const [authState, setAuthState] = useState(getStateFromLocalStorage);
-  const oktaAuth = new OktaAuth({
-    // to appease the OktaAuth constructor
-    issuer: 'https://fakewebsite.pqr',
-    tokenManager: {
-      autoRenew: false
-    }
-  });
-  oktaAuth.signInWithCredentials = (): Promise<AuthTransaction> => {
-    setAuthState(getStateFromLocalStorage);
-    return new Promise(() => {});
-  };
-  oktaAuth.signOut = (): Promise<void> => {
-    window.localStorage.removeItem(localAuthStorageKey);
-    sessionStorage.clear();
-    window.location.href = '/';
-    return new Promise(() => {});
-  };
-  oktaAuth.getUser = () => {
-    return Promise.resolve({
-      name: authState.name,
-      sub: '',
-      euaId: authState.euaId,
-      groups: authState.groups
+
+  // Memoize the mock oktaAuth instance to prevent recreation on every render
+  const oktaAuth = useMemo(() => {
+    const mockAuth = new OktaAuth({
+      // to appease the OktaAuth constructor
+      issuer: 'https://fakewebsite.pqr',
+      tokenManager: {
+        autoRenew: false
+      }
     });
-  };
-  oktaAuth.tokenManager.off = () => {};
-  oktaAuth.tokenManager.on = () => {};
+
+    mockAuth.signInWithCredentials = (): Promise<AuthTransaction> => {
+      setAuthState(getStateFromLocalStorage);
+      return new Promise(() => {});
+    };
+
+    mockAuth.signOut = (): Promise<void> => {
+      window.localStorage.removeItem(localAuthStorageKey);
+      sessionStorage.clear();
+      window.location.href = '/';
+      return new Promise(() => {});
+    };
+
+    mockAuth.getUser = () => {
+      const currentState = getStateFromLocalStorage();
+      return Promise.resolve({
+        name: currentState.name,
+        sub: '',
+        euaId: currentState.euaId,
+        groups: currentState.groups
+      });
+    };
+
+    mockAuth.tokenManager.off = () => {};
+    mockAuth.tokenManager.on = () => {};
+
+    return mockAuth;
+  }, []); // Empty dependency array since this should only be created once
 
   useEffect(() => {
     setAuthState(getStateFromLocalStorage);

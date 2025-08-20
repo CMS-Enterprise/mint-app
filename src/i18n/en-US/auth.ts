@@ -14,6 +14,11 @@ const auth = {
     inactivityWarning_second_other:
       'If you do not do anything on this page, you will be signed out in {{count}} seconds and will need to sign back in. We do this to keep your information secure.',
     cta: 'Return to MINT'
+  },
+  protectedRoute: {
+    loading: 'Loading authentication...',
+    isPending: 'Authenticating...',
+    error: 'Authentication setup error. Please refresh the page.'
   }
 };
 

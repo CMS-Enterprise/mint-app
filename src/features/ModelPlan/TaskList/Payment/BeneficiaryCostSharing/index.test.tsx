@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -46,18 +46,24 @@ const paymentsMock = [
 
 describe('Model Plan -- BeneficiaryCostSharing', () => {
   it('renders without errors', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing',
+          element: <BeneficiaryCostSharing />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/beneficiary-cost-sharing'
-        ]}
-      >
-        <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing">
-            <BeneficiaryCostSharing />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={paymentsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -80,18 +86,24 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing',
+          element: <BeneficiaryCostSharing />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/beneficiary-cost-sharing'
-        ]}
-      >
-        <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing">
-            <BeneficiaryCostSharing />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={paymentsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {

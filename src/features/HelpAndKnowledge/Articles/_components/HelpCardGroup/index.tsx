@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   CardGroup,
   Grid,
@@ -92,10 +92,11 @@ const HelpCardGroup = ({
     pageCount
   } = pagination;
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Query parameters
-  const params = new URLSearchParams(history.location.search);
+  const params = new URLSearchParams(location.search);
   const category = params.get('category');
 
   const currentArticles = homeItems ? resources : currentItems;
@@ -137,7 +138,7 @@ const HelpCardGroup = ({
                   onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                     setSorted(e.target.value as SortProps['value']);
                     params.set('sort', e.target.value);
-                    history.push({ search: params.toString() });
+                    navigate({ search: params.toString() });
                   }}
                 >
                   {sortOptions.map(option => {
@@ -192,7 +193,7 @@ const HelpCardGroup = ({
       <div className="display-flex">
         {!homeItems && pageCount >= 1 && (
           <Pagination
-            pathname={history.location.pathname}
+            pathname={location.pathname}
             currentPage={currentPage}
             maxSlots={7}
             onClickNext={handleNext}

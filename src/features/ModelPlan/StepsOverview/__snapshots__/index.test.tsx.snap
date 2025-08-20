@@ -26,6 +26,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
+                data-discover="true"
                 href="/"
               >
                 <span>
@@ -177,6 +178,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
         </div>
         <a
           class="usa-button margin-bottom-10"
+          data-discover="true"
           data-testid="continue-link"
           href="/models/new-plan"
         >
