@@ -617,130 +617,6 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </div>
             </li>
             <li
-              class="usa-card desktop:grid-col-4 article"
-              data-testid="article-card"
-            >
-              <div
-                class="usa-card__container radius-md shadow-2 minh-mobile padding-0"
-              >
-                <div
-                  class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
-                >
-                  <svg
-                    aria-label="launch"
-                    class="usa-icon margin-right-05"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                    />
-                  </svg>
-                   External resource
-                </div>
-                <div
-                  class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
-                >
-                  <div
-                    class="usa-card__header padding-0"
-                    data-testid="CardHeader"
-                  >
-                    <h3
-                      class="line-height-body-4 margin-bottom-1 margin-top-3"
-                    >
-                      Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint
-                    </h3>
-                  </div>
-                  <a
-                    class="usa-link width-fit-content display-block "
-                    data-discover="true"
-                    href="/help-and-knowledge/articles?category=model-concept-and-design"
-                  >
-                    <span
-                      aria-label="Articles under the Model concept and design category"
-                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                      data-testid="tag"
-                    >
-                      Model concept and design
-                    </span>
-                  </a>
-                  <div
-                    class="usa-card__body padding-x-0 padding-top-2"
-                    data-testid="CardBody"
-                  >
-                    <div
-                      class="truncated-text"
-                      data-testid="truncated-text"
-                    >
-                      <div
-                        class=""
-                      >
-                        Waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. R ...
-                      </div>
-                      <button
-                        aria-controls="FRAUD_AND_ABUSE_WAIVER"
-                        aria-expanded="true"
-                        class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
-                        data-testid="button"
-                        type="button"
-                      >
-                        Read more
-                        <svg
-                          aria-label="expand"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                    data-testid="CardFooter"
-                  >
-                    <button
-                      class="usa-button usa-button usa-button--outline"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        View on SharePoint
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li
               class="usa-card desktop:grid-col-4 article article-card--isLink"
               data-testid="article-card"
             >
@@ -836,6 +712,58 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 >
                   <button
                     aria-label="Read How to add a custom milestone article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <div
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    How to add a custom solution
+                  </h3>
+                </div>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  data-discover="true"
+                  href="/help-and-knowledge/articles?category=mto-tutorials"
+                >
+                  <span
+                    aria-label="Articles under the MINT tutorials category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    MINT tutorials
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    When possible, MINT encourages users to add solutions to a Model-to-operations matrix (MTO) via the solution library. However, MINT’s solution library does not currently offer a comprehensive list of all IT systems, contracts, and other operational solutions used for models. because of this and the unique needs of individual models, IT Leads may need to create custom solutions for a given model. IT Leads are able to create custom solutions directly from the Model-to-operations matrix (MTO) for their model.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read How to add a custom solution article"
                     class="usa-button usa-button--outline"
                     type="button"
                   >

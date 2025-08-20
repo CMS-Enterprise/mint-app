@@ -2314,7 +2314,7 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Strategy Refresh resources on SharePoint',
   [HelpArticle.ICIP_REPOSITORY]: 'ICIP Repository on SharePoint',
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]:
-    'Fraud and abuse waiver templates on SharePoint',
+    'Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
     'Quality Vertical healthy living resources on SharePoint',
   [HelpArticle.CREATING_MTO_MATRIX]:

@@ -323,13 +323,13 @@ export const ModelSolutionDesign = () => {
                       components={{
                         link1: (
                           <UswdsReactLink
-                            to="creating-mto-matrix"
+                            to="/help-and-knowledge/creating-mto-matrix"
                             className="margin-top-2 display-block display-flex flex-align-center text-bold"
                           />
                         ),
                         link2: (
                           <UswdsReactLink
-                            to="evaluating-data-exchange-approach"
+                            to="/help-and-knowledge/evaluating-data-exchange-approach"
                             className="margin-top-2 display-block display-flex flex-align-center text-bold"
                           />
                         ),
@@ -342,13 +342,13 @@ export const ModelSolutionDesign = () => {
                         ml1: (
                           <UswdsReactLink
                             className="usa-button usa-button--unstyled"
-                            to="model-and-solution-design?solution=cmmi-analysis-and-management-system&section=about"
+                            to="?solution=cmmi-analysis-and-management-system&section=about"
                           />
                         ),
                         ml2: (
                           <UswdsReactLink
                             className="usa-button usa-button--unstyled"
-                            to="model-and-solution-design?solution=quality-payment-program&section=about"
+                            to="?solution=quality-payment-program&section=about"
                           />
                         )
                       }}

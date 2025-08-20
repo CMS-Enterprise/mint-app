@@ -10,11 +10,11 @@ const highLevelProjectPlans = {
       legal: 'These activities may not apply to all models.',
       cmmiModel: [
         {
-          href: 'creating-mto-matrix',
+          href: '/help-and-knowledge/creating-mto-matrix',
           copy: 'Learn more about creating a model-to-operations matrix (MTO)'
         },
         {
-          href: 'evaluating-data-exchange-approach',
+          href: '/help-and-knowledge/evaluating-data-exchange-approach',
           copy: 'Learn more about the data exchange approach'
         }
       ],

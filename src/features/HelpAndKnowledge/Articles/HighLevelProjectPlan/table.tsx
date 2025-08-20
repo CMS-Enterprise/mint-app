@@ -90,7 +90,7 @@ const Table = ({ content }: TableType) => {
     return (
       <UswdsReactLink
         className="usa-button usa-button--unstyled"
-        to={`high-level-project-plan?solution=${solutionRoute}&section=about`}
+        to={`?solution=${solutionRoute}&section=about`}
       >
         {children}
       </UswdsReactLink>

@@ -104,7 +104,7 @@ export const UtilizingSolutions = () => {
                         ml: (
                           <UswdsReactLink
                             className="usa-button usa-button--unstyled"
-                            to={`utilizing-solutions?solution=${item.route}&section=about`}
+                            to={`?solution=${item.route}&section=about`}
                           >
                             {t(item.copy)}
                           </UswdsReactLink>
@@ -126,7 +126,7 @@ export const UtilizingSolutions = () => {
                 components={{
                   link1: (
                     <UswdsReactLink
-                      to="creating-mto-matrix"
+                      to="/help-and-knowledge/creating-mto-matrix"
                       className="margin-top-2 display-block display-flex flex-align-center text-bold"
                     />
                   ),
@@ -196,13 +196,13 @@ export const UtilizingSolutions = () => {
                 components={{
                   link1: (
                     <UswdsReactLink
-                      to="creating-mto-matrix"
+                      to="/help-and-knowledge/creating-mto-matrix"
                       className="margin-top-2 display-block display-flex flex-align-center text-bold"
                     />
                   ),
                   link2: (
                     <UswdsReactLink
-                      to="operational-solutions?page=1"
+                      to="/help-and-knowledge/operational-solutions?page=1"
                       className="margin-top-2 display-block display-flex flex-align-center text-bold"
                     />
                   ),

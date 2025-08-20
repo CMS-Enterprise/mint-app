@@ -35,11 +35,14 @@ export const HelpAndKnowledgeHome = () => {
             <p className="display-inline text-bold margin-right-2">
               {t('jumpTo')}:
             </p>
-            <ScrollLink scrollTo={t('helpResourcesAndLinks')} />
+            <ScrollLink scrollTo={t('helpResourcesAndLinks')} hasIcon={false} />
 
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
 
-            <ScrollLink scrollTo={t('operationalSolutionsAndITSystems')} />
+            <ScrollLink
+              scrollTo={t('operationalSolutionsAndITSystems')}
+              hasIcon={false}
+            />
           </div>
         </GridContainer>
       </SummaryBox>

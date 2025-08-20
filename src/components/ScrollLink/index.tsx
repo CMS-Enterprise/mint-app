@@ -3,7 +3,13 @@ import { Button, Icon } from '@trussworks/react-uswds';
 
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
-const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
+const ScrollLink = ({
+  scrollTo,
+  hasIcon = true
+}: {
+  scrollTo: string;
+  hasIcon?: boolean;
+}) => {
   return (
     <Button
       type="button"
@@ -17,7 +23,9 @@ const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
       unstyled
     >
       {scrollTo}
-      <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
+      {hasIcon && (
+        <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
+      )}
     </Button>
   );
 };
