@@ -8,7 +8,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -26,7 +25,7 @@ func ModelPlanAnticipatedPhase(
 	ctx context.Context,
 	modelStatus models.ModelStatus,
 	modelPlanID uuid.UUID,
-) (*model.PhaseSuggestion, error) {
+) (*models.PhaseSuggestion, error) {
 
 	// If the model plan is paused or canceled, we shouldn't suggest a new phase
 	if modelStatus == models.ModelStatusPaused || modelStatus == models.ModelStatusCanceled {
@@ -48,7 +47,7 @@ func ModelPlanAnticipatedPhase(
 
 // EvaluateSuggestedStatus evaluates the suggested status for a model plan based on its current status and planTimeline
 // A nil result indicates that no phase is suggested
-func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planTimeline *models.PlanTimeline) (*model.PhaseSuggestion, error) {
+func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planTimeline *models.PlanTimeline) (*models.PhaseSuggestion, error) {
 
 	// Iterate over all status evaluation strategies and append valid statuses to the results slice
 	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
@@ -64,7 +63,7 @@ func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planTimeline *model
 
 // ShouldSendEmailForPhaseSuggestion determines if an email should be sent for a phase suggestion
 func ShouldSendEmailForPhaseSuggestion(
-	currentPhaseSuggestion *model.PhaseSuggestion,
+	currentPhaseSuggestion *models.PhaseSuggestion,
 	previousSuggestedPhase *models.ModelPhase,
 ) bool {
 	if currentPhaseSuggestion == nil {
@@ -91,7 +90,7 @@ func TrySendEmailForPhaseSuggestion(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook *email.AddressBook,
-	currentPhaseSuggestion *model.PhaseSuggestion,
+	currentPhaseSuggestion *models.PhaseSuggestion,
 	modelPlan *models.ModelPlan,
 ) error {
 	if !ShouldSendEmailForPhaseSuggestion(currentPhaseSuggestion, modelPlan.PreviousSuggestedPhase) {
@@ -220,7 +219,7 @@ func sendInAppNotificationForPhaseSuggestion(
 	logger *zap.Logger,
 	receiverIDs []uuid.UUID,
 	modelPlanID uuid.UUID,
-	phaseSuggestion *model.PhaseSuggestion,
+	phaseSuggestion *models.PhaseSuggestion,
 	modelPlan *models.ModelPlan,
 ) error {
 	preferenceFunction := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
@@ -251,7 +250,7 @@ func ConstructPhaseSuggestionEmailTemplates(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	modelPlan *models.ModelPlan,
-	phaseSuggestion *model.PhaseSuggestion,
+	phaseSuggestion *models.PhaseSuggestion,
 ) (emailSubject string, emailBody string, err error) {
 
 	if phaseSuggestion == nil {

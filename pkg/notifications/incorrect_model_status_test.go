@@ -5,7 +5,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -18,7 +17,7 @@ func (suite *NotificationsSuite) TestActivityIncorrectModelStatusCreate() {
 	mp := models.NewModelPlan(uuid.New(), "Test Plan")
 	modelPlanID := mp.ID
 
-	phaseSuggestion := &model.PhaseSuggestion{
+	phaseSuggestion := &models.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusActive},
 	}
@@ -58,10 +57,10 @@ func (suite *NotificationsSuite) TestActivityIncorrectModelStatusCreate() {
 	// Validate meta fields
 	ims := meta.(*models.IncorrectModelStatusActivityMeta)
 	suite.EqualValues(modelPlanID, ims.ModelPlanID)
-	suite.EqualValues(string(phaseSuggestion.Phase), ims.Phase)
+	suite.EqualValues(string(phaseSuggestion.Phase), ims.PhaseSuggestion.Phase)
 	suite.EqualValues(mp.ModelName, ims.ModelPlanName)
 	suite.EqualValues(mp.Status, ims.CurrentStatus)
-	suite.Len(ims.SuggestedStatuses, len(phaseSuggestion.SuggestedStatuses))
+	suite.Len(ims.PhaseSuggestion.SuggestedStatuses, len(phaseSuggestion.SuggestedStatuses))
 
 	// Receiver got one notification
 	receiverNots, err := UserNotificationCollectionGetByUser(
@@ -81,7 +80,7 @@ func (suite *NotificationsSuite) TestActivityIncorrectModelStatusCreate_LeadOver
 
 	mp := models.NewModelPlan(uuid.New(), "Test Plan")
 
-	phaseSuggestion := &model.PhaseSuggestion{
+	phaseSuggestion := &models.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusActive},
 	}

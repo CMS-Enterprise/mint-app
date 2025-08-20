@@ -35,7 +35,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 	suite.NoError(err)
 
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
-	phaseSuggestion := model.PhaseSuggestion{
+	phaseSuggestion := models.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}

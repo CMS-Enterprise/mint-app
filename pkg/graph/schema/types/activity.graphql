@@ -140,8 +140,7 @@ type IncorrectModelStatusActivityMeta {
   type: ActivityType!
   modelPlanID: UUID!
   modelPlan: ModelPlan!
-  phase: String!
-  suggestedStatuses: [String!]!
+  phaseSuggestion: PhaseSuggestion!
   currentStatus: String!
   modelPlanName: String!
 }

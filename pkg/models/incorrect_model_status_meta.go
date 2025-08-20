@@ -12,26 +12,23 @@ import (
 type IncorrectModelStatusActivityMeta struct {
 	ActivityMetaBaseStruct
 	modelPlanRelation
-	Phase             string
-	SuggestedStatuses []string
-	CurrentStatus     string
-	ModelPlanName     string
+	PhaseSuggestion PhaseSuggestion
+	CurrentStatus   string
+	ModelPlanName   string
 }
 
 // newIncorrectModelStatusActivityMeta creates a new IncorrectModelStatusActivityMeta
 func newIncorrectModelStatusActivityMeta(
 	modelPlanID uuid.UUID,
-	Phase string,
-	SuggestedStatuses []string,
 	CurrentStatus string,
 	ModelPlanName string,
+	phaseSuggestion *PhaseSuggestion,
 ) *IncorrectModelStatusActivityMeta {
 	version := 0 // increment if this type ever updates
 	return &IncorrectModelStatusActivityMeta{
 		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityIncorrectModelStatus, version),
 		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
-		Phase:                  Phase,
-		SuggestedStatuses:      SuggestedStatuses,
+		PhaseSuggestion:        *phaseSuggestion,
 		CurrentStatus:          CurrentStatus,
 		ModelPlanName:          ModelPlanName,
 	}
@@ -40,23 +37,19 @@ func newIncorrectModelStatusActivityMeta(
 // NewIncorrectModelStatusActivity creates a new ActivityIncorrectModelStatus type of Activity
 func NewIncorrectModelStatusActivity(
 	actorID uuid.UUID,
-	modelPlanID uuid.UUID,
-	Phase string,
-	SuggestedStatuses []string,
-	CurrentStatus string,
-	ModelPlanName string,
+	modelPlan *ModelPlan,
+	phaseSuggestion *PhaseSuggestion,
 ) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
-		EntityID:     modelPlanID,
+		EntityID:     modelPlan.GetModelPlanID(),
 		ActivityType: ActivityIncorrectModelStatus,
 		MetaData: newIncorrectModelStatusActivityMeta(
-			modelPlanID,
-			Phase,
-			SuggestedStatuses,
-			CurrentStatus,
-			ModelPlanName,
+			modelPlan.GetModelPlanID(),
+			string(modelPlan.Status),
+			modelPlan.ModelName,
+			phaseSuggestion,
 		),
 	}
 }

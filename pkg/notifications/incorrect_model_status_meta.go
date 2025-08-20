@@ -6,7 +6,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
@@ -18,7 +17,7 @@ func ActivityIncorrectModelStatusCreate(
 	np sqlutils.NamedPreparer,
 	actorID uuid.UUID,
 	receiverIDs []uuid.UUID,
-	phaseSuggestion *model.PhaseSuggestion,
+	phaseSuggestion *models.PhaseSuggestion,
 	modelPlan *models.ModelPlan,
 	getPreferencesFunc GetUserNotificationPreferencesFunc,
 	isLeadFunc IsLeadFunc,
@@ -32,11 +31,8 @@ func ActivityIncorrectModelStatusCreate(
 
 	activity := models.NewIncorrectModelStatusActivity(
 		actorID,
-		modelPlan.GetModelPlanID(),
-		string(phaseSuggestion.Phase),
-		SuggestedStatuses,
-		string(modelPlan.Status),
-		modelPlan.ModelName,
+		modelPlan,
+		phaseSuggestion,
 	)
 
 	retActivity, actErr := activityCreate(ctx, np, activity)

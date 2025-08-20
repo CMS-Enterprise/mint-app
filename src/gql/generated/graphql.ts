@@ -668,8 +668,7 @@ export type IncorrectModelStatusActivityMeta = {
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];
   modelPlanName: Scalars['String']['output'];
-  phase: Scalars['String']['output'];
-  suggestedStatuses: Array<Scalars['String']['output']>;
+  phaseSuggestion: PhaseSuggestion;
   type: ActivityType;
   version: Scalars['Int']['output'];
 };
