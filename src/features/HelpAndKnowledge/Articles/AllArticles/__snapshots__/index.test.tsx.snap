@@ -149,7 +149,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="margin-bottom-2"
                       role="status"
                     >
-                      Showing 1-9 of 28 results 
+                      Showing 1-9 of 29 results 
                     </div>
                   </span>
                 </div>
@@ -994,7 +994,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <p
                 class="margin-y-1"
               >
-                6 resources
+                7 resources
               </p>
             </div>
           </div>
