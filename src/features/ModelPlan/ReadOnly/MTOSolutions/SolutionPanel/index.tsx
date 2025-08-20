@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -55,9 +55,9 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
   const { status: stausConfig, riskIndicator: riskIndicatorConfig } =
     usePlanTranslation('mtoSolution');
 
-  const history = useHistory();
+  const location = useLocation();
 
-  const params = new URLSearchParams(history.location.search);
+  const params = new URLSearchParams(location.search);
 
   const viewSolutionID = params.get('view-solution');
 
@@ -370,7 +370,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                               type="button"
                               {...column.getSortByToggleProps()}
                             >
-                              {column.render('Header')}
+                              {column.render('Header') as string}
                               {column.canSort &&
                                 getHeaderSortIcon(column, false)}
                             </button>
@@ -393,7 +393,7 @@ const SolutionPanel = ({ closeModal }: EditSolutionFormProps) => {
                                 key={cell.getCellProps().key}
                                 className="padding-left-0"
                               >
-                                {cell.render('Cell')}
+                                {cell.render('Cell') as string}
                               </td>
                             );
                           })}

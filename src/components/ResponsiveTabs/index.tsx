@@ -6,7 +6,7 @@ import './index.scss';
 type ResponsiveTabsProps = {
   activeTab: string;
   tabs: string[];
-  children: React.ReactNode | React.ReactNodeArray;
+  children: React.ReactNode;
   handleTabClick: (tab: string) => void;
 };
 
@@ -22,7 +22,7 @@ const ResponsiveTabs = ({
   const [tabListWidth, setTabListWidth] = useState(0);
   const [tabInfo, setTabInfo] = useState<{ name: string; width: number }[]>([]);
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
-  const dropdownNode = useRef<any>();
+  const dropdownNode = useRef<any>(null);
   const moreButtonWidth = 80; // Includes extra pixels for buffer
 
   const handleClick = (e: Event) => {

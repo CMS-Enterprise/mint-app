@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Button,
@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ReportAProblemInput,
   ReportAProblemSection,
@@ -25,6 +25,7 @@ import Alert from 'components/Alert';
 import BooleanRadio from 'components/BooleanRadioForm';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
@@ -32,7 +33,7 @@ import { tObject } from 'utils/translation';
 const ReportAProblem = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [mutationError, setMutationError] = useState<boolean>(false);
 
@@ -54,7 +55,7 @@ const ReportAProblem = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push('/feedback-received');
+          navigate('/feedback-received');
         }
       })
       .catch(errors => {
@@ -103,9 +104,9 @@ const ReportAProblem = () => {
 
             return (
               <Grid desktop={{ col: 6 }}>
-                <Form
+                <MINTForm
                   className="margin-top-3"
-                  onSubmit={e => {
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -301,7 +302,7 @@ const ReportAProblem = () => {
                       </Button>
                     </div>
                   </Fieldset>
-                </Form>
+                </MINTForm>
               </Grid>
             );
           }}

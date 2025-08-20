@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup, Label, Select } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -29,8 +29,9 @@ const SolutionViewSelector = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const viewParamName = type === 'table' ? 'type' : 'view';
 
@@ -52,7 +53,7 @@ const SolutionViewSelector = ({
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               params.set(viewParamName, e.target.value);
               if (usePages) params.set('page', '1');
-              history.replace({ search: params.toString() });
+              navigate({ search: params.toString() }, { replace: true });
             }}
           >
             <option value="all">
@@ -94,7 +95,7 @@ const SolutionViewSelector = ({
             onClick={() => {
               params.set(viewParamName, 'all');
               if (usePages) params.set('page', '1');
-              history.replace({ search: params.toString() });
+              navigate({ search: params.toString() }, { replace: true });
             }}
           >
             {t(`${translationNamespace}.tabs.allSolutions`, {
@@ -107,7 +108,7 @@ const SolutionViewSelector = ({
             onClick={() => {
               params.set(viewParamName, 'it-systems');
               if (usePages) params.set('page', '1');
-              history.replace({ search: params.toString() });
+              navigate({ search: params.toString() }, { replace: true });
             }}
           >
             {t(`${translationNamespace}.tabs.itSystems`, {
@@ -120,7 +121,7 @@ const SolutionViewSelector = ({
             onClick={() => {
               params.set(viewParamName, 'contracts');
               if (usePages) params.set('page', '1');
-              history.replace({ search: params.toString() });
+              navigate({ search: params.toString() }, { replace: true });
             }}
           >
             {t(`${translationNamespace}.tabs.contracts`, {
@@ -135,7 +136,7 @@ const SolutionViewSelector = ({
               onClick={() => {
                 params.set(viewParamName, 'cross-cut');
                 if (usePages) params.set('page', '1');
-                history.replace({ search: params.toString() });
+                navigate({ search: params.toString() }, { replace: true });
               }}
             >
               {t(`${translationNamespace}.tabs.crossCutting`, {
@@ -150,7 +151,7 @@ const SolutionViewSelector = ({
               onClick={() => {
                 params.set(viewParamName, 'other-solutions');
                 if (usePages) params.set('page', '1');
-                history.replace({ search: params.toString() });
+                navigate({ search: params.toString() }, { replace: true });
               }}
             >
               {t(`${translationNamespace}.tabs.other`, {

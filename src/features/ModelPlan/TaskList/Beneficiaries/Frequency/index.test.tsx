@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
@@ -68,18 +68,24 @@ const beneficiaryMock = [
 
 describe('Model Plan Beneficiaries', () => {
   it('renders without errors', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
+          element: <Frequency />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries/beneficiary-frequency'
-        ]}
-      >
-        <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency">
-            <Frequency />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={beneficiaryMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -96,18 +102,24 @@ describe('Model Plan Beneficiaries', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
+          element: <Frequency />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries/beneficiary-frequency'
-        ]}
-      >
-        <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency">
-            <Frequency />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={beneficiaryMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await waitForElementToBeRemoved(() =>

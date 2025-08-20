@@ -1,11 +1,13 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Discussions from 'features/ModelPlan/Discussions';
 
-const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
+const ReadOnlyDiscussions = ({ modelID }: { modelID?: string }) => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const discussionID = params.get('discussionID');
+
+  const { modelID: modelIDFromParams } = useParams();
 
   return (
     <div
@@ -13,7 +15,7 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
       data-testid="read-only-model-plan--discussions"
     >
       <Discussions
-        modelID={modelID}
+        modelID={modelID || modelIDFromParams || ''}
         readOnly
         discussionID={discussionID || 'discussion-readonly'}
       />

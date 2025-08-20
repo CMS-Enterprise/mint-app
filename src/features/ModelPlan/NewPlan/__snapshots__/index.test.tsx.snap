@@ -29,6 +29,7 @@ exports[`New Model Plan page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
+                data-discover="true"
                 href="/"
               >
                 <span>
@@ -102,6 +103,7 @@ exports[`New Model Plan page > matches snapshot 1`] = `
           >
             <a
               class="usa-button usa-button--outline margin-bottom-1"
+              data-discover="true"
               href="/models/steps-overview"
             >
               Cancel

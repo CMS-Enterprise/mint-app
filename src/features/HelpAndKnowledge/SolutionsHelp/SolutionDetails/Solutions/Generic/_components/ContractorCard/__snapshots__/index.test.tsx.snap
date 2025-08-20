@@ -2,49 +2,31 @@
 
 exports[`ContractorCard Component > should matches snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="margin-bottom-3"
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
   >
-    <li
-      class="usa-card margin-bottom-0"
-      data-testid="Card"
+    404 Not Found
+  </h3>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <div
-        class="usa-card__container radius-md padding-2 margin-bottom-1 margin-x-0"
-      >
-        <div
-          class="usa-card__body padding-0 margin-bottom-0"
-          data-testid="CardBody"
-        >
-          <h3
-            class="margin-bottom-0 line-height-sans-2"
-          >
-            Contractor: Aliza Kim
-          </h3>
-          <p
-            class="margin-top-1 line-height-sans-5"
-          >
-            Contract title: MIT
-          </p>
-        </div>
-      </div>
-    </li>
-    <div>
-      <button
-        class="usa-button usa-button--unstyled margin-right-2"
-        data-testid="button"
-        type="button"
-      >
-        Edit
-      </button>
-      <button
-        class="usa-button usa-button--unstyled text-error"
-        data-testid="button"
-        type="button"
-      >
-        Remove contractor
-      </button>
-    </div>
-  </div>
+      ErrorBoundary
+    </code>
+     or 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
+    >
+      errorElement
+    </code>
+     prop on your route.
+  </p>
 </DocumentFragment>
 `;

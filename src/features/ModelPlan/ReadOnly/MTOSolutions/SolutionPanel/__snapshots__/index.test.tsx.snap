@@ -32,6 +32,7 @@ exports[`SolutionPanel Component > renders correctly with solution data 1`] = `
         >
           <a
             class="usa-link usa-link--external"
+            data-discover="true"
             href="/help-and-knowledge/operational-solutions?page=1&solution-key=BCDA&section=about"
             target="_blank"
           >

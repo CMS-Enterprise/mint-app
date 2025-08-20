@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -43,9 +43,9 @@ const CustomSolutionForm = () => {
   const { solutionType: solutionTypeConfig } =
     usePlanTranslation('mtoSolution');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
 
@@ -295,10 +295,12 @@ const CustomSolutionForm = () => {
                     type="button"
                     className="usa-button usa-button--unstyled margin-top-0"
                     onClick={() => {
-                      history.push({
-                        pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                        state: { scroll: true }
-                      });
+                      navigate(
+                        `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
+                        {
+                          state: { scroll: true }
+                        }
+                      );
                       setMTOModalOpen(false);
                     }}
                   >
