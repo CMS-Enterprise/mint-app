@@ -14,7 +14,7 @@ const utilizingSolutions = {
         route: 'shared-systems'
       },
       {
-        copy: 'Modifying the <ml>Health Plan Management System</ml>to capture information from Accountable Care Organizations (ACOs)',
+        copy: 'Modifying the <ml>Health Plan Management System</ml> to capture information from Accountable Care Organizations (ACOs)',
         route: 'health-plan-management-system'
       }
     ]

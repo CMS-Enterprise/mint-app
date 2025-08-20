@@ -2,26 +2,46 @@
 
 exports[`ModelSolutionDesign > matches the snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="margin-y-10"
-    data-testid="page-loading"
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
   >
-    <div
-      class="text-center"
+    An error occurred! For more details, see the full error text at https://go.apollo.dev/c/err#%7B%22version%22%3A%223.13.8%22%2C%22message%22%3A58%2C%22args%22%3A%5B%5D%7D
+  </h3>
+  <pre
+    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
+  >
+    Invariant Violation: An error occurred! For more details, see the full error text at https://go.apollo.dev/c/err#%7B%22version%22%3A%223.13.8%22%2C%22message%22%3A58%2C%22args%22%3A%5B%5D%7D
+    at new InvariantError (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/node_modules/ts-invariant/lib/invariant.js:11:28)
+    at Object.originalInvariant [as invariant] (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/node_modules/ts-invariant/lib/invariant.js:24:15)
+    at Object.invariant (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/utilities/globals/invariantWrappers.js:28:9)
+    at useApolloClient (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/react/hooks/useApolloClient.js:22:5)
+    at Proxy.useQuery (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/react/hooks/useQuery.js:74:16)
+    at Module.useGetMtoSolutionContactsQuery (/Users/oddball/elle/mint/mint-app/src/gql/generated/graphql.ts:12188:23)
+    at Module.useHelpSolution [as default] (/Users/oddball/elle/mint/mint-app/src/hooks/useHelpSolutions.ts:42:29)
+    at ModelSolutionDesign (/Users/oddball/elle/mint/mint-app/src/features/HelpAndKnowledge/Articles/ModelSolutionDesign/index.tsx:66:38)
+    at Object.react-stack-bottom-frame (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
+    at renderWithHooks (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
+  </pre>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <span
-        aria-busy="true"
-        aria-valuetext="Loading the page"
-        class="mint-spinner mint-spinner--xl"
-        data-testid="spinner"
-        role="progressbar"
-      />
-    </div>
-    <h1
-      class="margin-top-6 text-center"
+      ErrorBoundary
+    </code>
+     or 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      Loading the page
-    </h1>
-  </div>
+      errorElement
+    </code>
+     prop on your route.
+  </p>
 </DocumentFragment>
 `;
