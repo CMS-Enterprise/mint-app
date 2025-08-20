@@ -664,13 +664,12 @@ export enum GeographyType {
 
 export type IncorrectModelStatusActivityMeta = {
   __typename: 'IncorrectModelStatusActivityMeta';
-  currentStatusHumanized: Scalars['String']['output'];
+  currentStatus: Scalars['String']['output'];
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];
   modelPlanName: Scalars['String']['output'];
   phase: Scalars['String']['output'];
-  suggestedStatusesHumanized: Array<Scalars['String']['output']>;
-  suggestedStatusesRaw: Array<Scalars['String']['output']>;
+  suggestedStatuses: Array<Scalars['String']['output']>;
   type: ActivityType;
   version: Scalars['Int']['output'];
 };

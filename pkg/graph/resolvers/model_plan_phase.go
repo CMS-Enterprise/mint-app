@@ -13,6 +13,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -222,9 +223,8 @@ func sendInAppNotificationForPhaseSuggestion(
 	phaseSuggestion *model.PhaseSuggestion,
 	modelPlan *models.ModelPlan,
 ) error {
-	//Future Enhancement use the dataloader to get user preferences and remove the getPreferencesFunc
 	preferenceFunction := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		return storage.UserNotificationPreferencesGetByUserID(store, user_id)
+		return loaders.UserNotificationPreferencesGetByUserID(ctx, user_id)
 	}
 
 	isLeadfunc := func(user_id uuid.UUID) (bool, error) {
@@ -301,7 +301,7 @@ func ConstructPhaseSuggestionEmailTemplates(
 	return emailSubject, emailBody, nil
 }
 
-func TryNotificationSend(
+func TryNotificationSendIncorrectModelStatus(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,

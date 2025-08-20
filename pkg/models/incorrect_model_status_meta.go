@@ -12,31 +12,28 @@ import (
 type IncorrectModelStatusActivityMeta struct {
 	ActivityMetaBaseStruct
 	modelPlanRelation
-	Phase                      string
-	SuggestedStatusesRaw       []string
-	SuggestedStatusesHumanized []string
-	CurrentStatusHumanized     string
-	ModelPlanName              string
+	Phase             string
+	SuggestedStatuses []string
+	CurrentStatus     string
+	ModelPlanName     string
 }
 
 // newIncorrectModelStatusActivityMeta creates a new IncorrectModelStatusActivityMeta
 func newIncorrectModelStatusActivityMeta(
 	modelPlanID uuid.UUID,
 	Phase string,
-	SuggestedStatusesRaw []string,
-	SuggestedStatusesHumanized []string,
-	CurrentStatusHumanized string,
+	SuggestedStatuses []string,
+	CurrentStatus string,
 	ModelPlanName string,
 ) *IncorrectModelStatusActivityMeta {
 	version := 0 // increment if this type ever updates
 	return &IncorrectModelStatusActivityMeta{
-		ActivityMetaBaseStruct:     NewActivityMetaBaseStruct(ActivityIncorrectModelStatus, version),
-		modelPlanRelation:          NewModelPlanRelation(modelPlanID),
-		Phase:                      Phase,
-		SuggestedStatusesRaw:       SuggestedStatusesRaw,
-		SuggestedStatusesHumanized: SuggestedStatusesHumanized,
-		CurrentStatusHumanized:     CurrentStatusHumanized,
-		ModelPlanName:              ModelPlanName,
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityIncorrectModelStatus, version),
+		modelPlanRelation:      NewModelPlanRelation(modelPlanID),
+		Phase:                  Phase,
+		SuggestedStatuses:      SuggestedStatuses,
+		CurrentStatus:          CurrentStatus,
+		ModelPlanName:          ModelPlanName,
 	}
 }
 
@@ -45,9 +42,8 @@ func NewIncorrectModelStatusActivity(
 	actorID uuid.UUID,
 	modelPlanID uuid.UUID,
 	Phase string,
-	SuggestedStatusesRaw []string,
-	SuggestedStatusesHumanized []string,
-	CurrentStatusHumanized string,
+	SuggestedStatuses []string,
+	CurrentStatus string,
 	ModelPlanName string,
 ) *Activity {
 	return &Activity{
@@ -58,9 +54,8 @@ func NewIncorrectModelStatusActivity(
 		MetaData: newIncorrectModelStatusActivityMeta(
 			modelPlanID,
 			Phase,
-			SuggestedStatusesRaw,
-			SuggestedStatusesHumanized,
-			CurrentStatusHumanized,
+			SuggestedStatuses,
+			CurrentStatus,
 			ModelPlanName,
 		),
 	}
