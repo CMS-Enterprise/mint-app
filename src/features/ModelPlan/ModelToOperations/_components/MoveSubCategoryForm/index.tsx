@@ -34,7 +34,7 @@ type FormValues = {
 const MoveSubCategoryForm = () => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const {
     mtoModalState: { categoryID, subCategoryID = '', categoryName },

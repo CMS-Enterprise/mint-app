@@ -32,7 +32,7 @@ type FormValues = {
 };
 
 const EditCategoryTitleForm = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
 
   const {

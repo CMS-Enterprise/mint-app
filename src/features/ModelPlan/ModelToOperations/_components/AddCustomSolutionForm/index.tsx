@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -44,9 +44,9 @@ const CustomSolutionForm = () => {
   const { solutionType: solutionTypeConfig } =
     usePlanTranslation('mtoSolution');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { setErrorMeta } = useErrorMessage();
 
@@ -104,8 +104,8 @@ const CustomSolutionForm = () => {
         modelPlanID: modelID,
         solutionType: formData.solutionType,
         name: formData.solutionTitle,
-        pocName: formData.pocName,
-        pocEmail: formData.pocEmail
+        pocName: formData.pocName || null,
+        pocEmail: formData.pocEmail || null
       }
     }).then(response => {
       if (!response?.errors) {
@@ -222,14 +222,13 @@ const CustomSolutionForm = () => {
             name="pocName"
             control={control}
             rules={{
-              required: true
+              required: false
             }}
             render={({ field: { ref, ...field } }) => (
               <FormGroup className="margin-top-0 margin-bottom-2">
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
                 >
                   {t('modal.solution.label.pocName')}
                 </Label>
@@ -248,7 +247,7 @@ const CustomSolutionForm = () => {
             name="pocEmail"
             control={control}
             rules={{
-              required: true,
+              required: false,
               pattern: {
                 value: /\S+@\S+\.\S+/,
                 message: `${t('modal.solution.label.emailError')}`
@@ -259,7 +258,6 @@ const CustomSolutionForm = () => {
                 <Label
                   htmlFor={convertCamelCaseToKebabCase(field.name)}
                   className="mint-body-normal maxw-none margin-bottom-1"
-                  requiredMarker
                 >
                   {t('modal.solution.label.pocEmail')}
                 </Label>
@@ -291,10 +289,12 @@ const CustomSolutionForm = () => {
                     type="button"
                     className="usa-button usa-button--unstyled margin-top-0"
                     onClick={() => {
-                      history.push({
-                        pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                        state: { scroll: true }
-                      });
+                      navigate(
+                        `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
+                        {
+                          state: { scroll: true }
+                        }
+                      );
                       setMTOModalOpen(false);
                     }}
                   >

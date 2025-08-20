@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -12,7 +12,7 @@ import {
 import classNames from 'classnames';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import NotFound from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
   MtoCommonSolutionKey,
@@ -26,6 +26,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
@@ -51,9 +52,9 @@ const SettingsForm = () => {
 
   const flags = useFlags();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { state } = useLocation<HomepageLocationStateType>();
+  const location = useLocation();
 
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
@@ -70,26 +71,6 @@ const SettingsForm = () => {
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
 
-  // Passes the current state to the previous page if navigating back
-  useEffect(() => {
-    // Blocks the route transition until unblock() is called
-    const unblock = history.block(destination => {
-      unblock();
-      history.push({
-        pathname: destination.pathname,
-        state:
-          // If the destination is the homepage settings page, pass the current state
-          destination.pathname === '/homepage-settings/solutions' ||
-          destination.pathname === '/homepage-settings/order'
-            ? { homepageSettings: formikRef.current?.values }
-            : undefined
-      });
-      return false;
-    });
-
-    return () => {};
-  }, [history, formikRef.current?.values]);
-
   // Get the settings options from the translation file
   const settingOptions = tObject<keyof HomepageSettingsType, any>(
     'homepageSettings:settings'
@@ -97,7 +78,7 @@ const SettingsForm = () => {
 
   const initialValues: HomepageSettingsFormType = {
     viewCustomization:
-      state?.homepageSettings?.viewCustomization ||
+      location.state?.homepageSettings?.viewCustomization ||
       data?.userViewCustomization.viewCustomization ||
       []
   };
@@ -133,7 +114,9 @@ const SettingsForm = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
-              history.push('/homepage-settings/order');
+              navigate('/homepage-settings/order', {
+                state: { homepageSettings: formikRef.current?.values }
+              });
             }}
             enableReinitialize
             innerRef={formikRef}
@@ -142,8 +125,8 @@ const SettingsForm = () => {
               const { handleSubmit, setErrors, values } = formikProps;
 
               return (
-                <Form
-                  onSubmit={e => {
+                <MINTForm
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -196,12 +179,9 @@ const SettingsForm = () => {
                               ViewCustomizationType.MODELS_BY_SOLUTION &&
                               selectedSolutions.length === 0 && (
                                 <UswdsReactLink
-                                  to={{
-                                    pathname: '/homepage-settings/solutions',
-                                    state: {
-                                      homepageSettings: formikRef.current
-                                        ?.values as any
-                                    }
+                                  to="/homepage-settings/solutions"
+                                  state={{
+                                    homepageSettings: values
                                   }}
                                   data-testid="add-solutions-settings"
                                   className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
@@ -227,13 +207,11 @@ const SettingsForm = () => {
                                     {selectedSolutions.join(', ')}
                                   </p>
                                   <span className="margin-right-105">|</span>
+
                                   <UswdsReactLink
-                                    to={{
-                                      pathname: '/homepage-settings/solutions',
-                                      state: {
-                                        homepageSettings: formikRef.current
-                                          ?.values as any
-                                      }
+                                    to="/homepage-settings/solutions"
+                                    state={{
+                                      homepageSettings: values
                                     }}
                                     className="text-bold display-flex flex-align-center settings__update"
                                   >
@@ -289,7 +267,7 @@ const SettingsForm = () => {
                       {homepageSettingsT('back')}
                     </UswdsReactLink>
                   </div>
-                </Form>
+                </MINTForm>
               );
             }}
           </Formik>

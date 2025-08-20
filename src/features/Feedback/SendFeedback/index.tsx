@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import {
   Button,
@@ -13,7 +13,7 @@ import {
   TextInput
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   EaseOfUse,
   MintUses,
@@ -22,11 +22,11 @@ import {
 } from 'gql/generated/graphql';
 import CreateSendFeedback from 'gql/operations/Feedback/CreateSendFeedback';
 
-import Alert from 'components/Alert';
 import BooleanRadio from 'components/BooleanRadioForm';
 import CheckboxField from 'components/CheckboxField';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { getKeys } from 'types/translation';
@@ -35,7 +35,7 @@ import { tObject } from 'utils/translation';
 const SendFeedback = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { setErrorMeta } = useErrorMessage();
 
@@ -63,7 +63,7 @@ const SendFeedback = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push('/feedback-received');
+          navigate('/feedback-received');
         }
       })
       .catch(errors => {
@@ -107,9 +107,9 @@ const SendFeedback = () => {
 
             return (
               <Grid desktop={{ col: 6 }}>
-                <Form
+                <MINTForm
                   className="margin-top-3"
-                  onSubmit={e => {
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -326,7 +326,7 @@ const SendFeedback = () => {
                       </Button>
                     </div>
                   </Fieldset>
-                </Form>
+                </MINTForm>
               </Grid>
             );
           }}

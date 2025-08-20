@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
-import { ErrorMeta } from 'react-i18next/TransWithoutContext';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -22,7 +21,6 @@ import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
-import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import { MTOSolutionPanelProvider } from 'contexts/MTOSolutionPanelContext';
@@ -64,10 +62,11 @@ const MTOTable = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const { showMessage: setError, clearMessage } = useMessage();
 
@@ -89,7 +88,6 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const location = useLocation();
   const [initLocation] = useState<string>(location.pathname);
 
   const { helpSolutions } = useHelpSolution();
@@ -739,7 +737,7 @@ const MTOTable = ({
                   onChange={() => {
                     // Reset pagination to the first page when the page size changes
                     params.set('page', '1');
-                    history.replace({ search: params.toString() });
+                    navigate({ search: params.toString() }, { replace: true });
                   }}
                 />
               </div>
@@ -838,7 +836,7 @@ export const moveRow = (
   }: {
     variables: ReorderMtoCategoryMutationVariables;
   }) => Promise<any>,
-  setError?: (element: JSX.Element) => void,
+  setError?: (element: React.ReactElement) => void,
   clearMessage?: () => void
 ) => {
   // Clone the existing data

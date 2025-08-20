@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -12,7 +12,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
   DataExchangeApproachMarkedCompleteNotificationType,
@@ -27,6 +27,7 @@ import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
@@ -58,7 +59,7 @@ const NotificationSettings = () => {
 
   const { showMessage, showMessageOnNextPage } = useMessage();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const { message } = useMessage();
   const location = useLocation();
 
@@ -139,7 +140,7 @@ const NotificationSettings = () => {
             {notificationsT('settings.successMessage')}
           </Alert>
         );
-        history.push('/notifications');
+        navigate('/notifications');
       }
     });
   };
@@ -226,7 +227,7 @@ const NotificationSettings = () => {
         </Alert>
       );
       params.delete('unsubscribe_email');
-      history.replace({ search: params.toString() });
+      navigate({ search: params.toString() }, { replace: true });
       return;
     }
 
@@ -310,12 +311,12 @@ const NotificationSettings = () => {
       }
 
       params.delete('unsubscribe_email');
-      history.replace({ search: params.toString() });
+      navigate({ search: params.toString() }, { replace: true });
     }
   }, [
     dataExchangeApproachMarkedComplete,
     datesChanged,
-    history,
+    navigate,
     loading,
     newModelPlan,
     notificationsT,
@@ -415,8 +416,8 @@ const NotificationSettings = () => {
                     </Grid>
                   </Grid>
 
-                  <Form
-                    onSubmit={e => {
+                  <MINTForm
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                     }}
                   >
@@ -536,7 +537,7 @@ const NotificationSettings = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => history.push('/notifications')}
+                        onClick={() => navigate('/notifications')}
                       >
                         <Icon.ArrowBack
                           className="margin-right-1"
@@ -547,7 +548,7 @@ const NotificationSettings = () => {
                         {notificationsT('settings.dontUpdate')}
                       </Button>
                     </Fieldset>
-                  </Form>
+                  </MINTForm>
                 </>
               );
             }}

@@ -5,7 +5,7 @@ import './index.scss';
 
 type MainContentProps = {
   className?: string;
-  children: React.ReactNode | React.ReactNodeArray;
+  children: React.ReactNode;
   'data-testid'?: string;
 };
 const MainContent = ({

@@ -58,7 +58,7 @@ type ShareExportModalProps = {
   defaultTab?: NavModelElemet;
   filteredView?: FilterGroup | ModelShareSection | null;
   setStatusMessage: (message: StatusMessageType) => void;
-} & JSX.IntrinsicElements['button'];
+} & React.ComponentProps<'button'>;
 
 /**
  * Modal for sharing/exporting a model plan
@@ -133,7 +133,7 @@ const ShareExportModal = ({
 
   // Composes components to render to PDF
   // Can either be all readonly sections, or individual filter group component views
-  const ComponentToPrint: JSX.Element = (
+  const ComponentToPrint: React.ReactNode = (
     <div className="mint-only-print" ref={componentRef}>
       <PDFSummary
         filteredView={

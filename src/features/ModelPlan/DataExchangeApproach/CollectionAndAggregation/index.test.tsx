@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import {
@@ -49,18 +49,24 @@ const mock = [
 
 describe('CollectionAndAggregation', () => {
   it('renders correctly and matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
+          element: <CollectionAndAggregation />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation'
-        ]}
-      >
-        <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation">
-            <CollectionAndAggregation />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     // Check if the label and help text are rendered
@@ -71,18 +77,24 @@ describe('CollectionAndAggregation', () => {
   });
 
   it('disables MultiSelect when checkbox is checked', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
+          element: <CollectionAndAggregation />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation'
-        ]}
-      >
-        <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation">
-            <CollectionAndAggregation />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(await screen.findByText('data available note')).toBeInTheDocument();

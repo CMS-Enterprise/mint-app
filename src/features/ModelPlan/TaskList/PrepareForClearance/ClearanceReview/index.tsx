@@ -6,7 +6,7 @@ Link to each task list section and checks if task list sections are locked
 
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'features/ModelPlan/ReadOnly/GeneralCharacteristics';
@@ -54,10 +54,6 @@ import { tArray } from 'utils/translation';
 
 import { ClearanceStatusesModelPlanFormType } from '../Checklist';
 
-type ClearanceReviewProps = {
-  modelID: string;
-};
-
 type MutationObjectType = {
   'model-timeline': UpdateClearanceTimelineMutationFn;
   basics: UpdateClearanceBasicsMutationFn;
@@ -92,7 +88,7 @@ const routeMap: RouteMapType = {
 const renderReviewTaskSection = (
   modelID: string,
   section: string
-): JSX.Element => {
+): React.ReactElement => {
   switch (section) {
     case 'model-timeline':
       return (
@@ -115,21 +111,21 @@ const renderReviewTaskSection = (
   }
 };
 
-export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
+export const ClearanceReview = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
-
+  const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('general');
   const { t: p } = useTranslation('prepareForClearance');
   const { t: generalT } = useTranslation('general');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // Subscription locks context for task list
   const { lockableSectionLocks } = useContext(SubscriptionContext);
 
   // Subscription lock boolean if current section is locked
   const taskListLocked: boolean =
-    findLockedSection(lockableSectionLocks, modelPlanSectionMap[section]) ===
+    findLockedSection(lockableSectionLocks, modelPlanSectionMap[section!]) ===
     LockStatus.LOCKED;
 
   const taskListSections = tArray<Record<string, string>>(
@@ -143,12 +139,12 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID,
+      id: modelID || '',
       includePrepareForClearance: true
     }
   });
 
-  const modelPlanSection = routeMap[section];
+  const modelPlanSection = routeMap[section!];
 
   const cannotStart: boolean =
     data?.modelPlan?.prepareForClearance?.status ===
@@ -195,12 +191,12 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
     clearanceMutations[taskSection]({
       variables: {
-        id: sectionID,
+        id: sectionID!,
         changes: { status: TaskStatusInput.READY_FOR_CLEARANCE }
       }
     }).then(response => {
       if (!response?.errors) {
-        history.push(
+        navigate(
           `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
         );
       }
@@ -265,13 +261,13 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 : [BreadcrumbItemOptions.TASK_LIST]),
               BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
             ]}
-            customItem={p(`reviewBreadcrumbs.${routeMap[section]}`)}
+            customItem={p(`reviewBreadcrumbs.${routeMap[section!]}`)}
           />
 
           {renderModal(taskListLocked)}
 
           <div className="margin-top-3">
-            {renderReviewTaskSection(modelID, section)}
+            {renderReviewTaskSection(modelID || '', section!)}
           </div>
 
           <div className="margin-top-6 margin-bottom-3">
@@ -279,7 +275,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               type="button"
               className="usa-button usa-button--outline margin-bottom-1"
               onClick={() => {
-                history.push(
+                navigate(
                   `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
                 );
               }}
@@ -289,7 +285,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             <Button
               type="submit"
               data-testid="mark-task-list-for-clearance"
-              onClick={() => handleFormSubmit(section)}
+              onClick={() => handleFormSubmit(section!)}
             >
               {p('markAsReady')}
             </Button>
@@ -305,14 +301,14 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 if (taskListLocked || readyForClearance) {
                   setModalOpen(true);
                 } else {
-                  history.push(formRoute);
+                  navigate(formRoute);
                 }
               }}
             >
               {p('changes', {
                 section:
                   taskListSections[
-                    routeMap[section] as any
+                    routeMap[section!] as any
                   ]?.heading?.toLowerCase()
               })}
               <Icon.ArrowForward

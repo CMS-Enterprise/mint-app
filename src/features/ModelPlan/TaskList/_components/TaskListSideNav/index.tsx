@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import RecentChanges from 'features/ModelPlan/ChangeHistory/components/RecentChanges';
 import {
@@ -33,7 +33,7 @@ const TaskListSideNav = ({
 }) => {
   const { id: modelID } = modelPlan;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { t } = useTranslation('modelPlanTaskList');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
@@ -69,7 +69,7 @@ const TaskListSideNav = ({
             </Alert>
           </>
         );
-        history.push(`/`);
+        navigate(`/`);
       }
     });
   };

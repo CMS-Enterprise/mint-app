@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -24,7 +24,7 @@ import {
   // useGetCustomMtoSolutionsQuery
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+// import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import { useErrorMessage } from 'contexts/ErrorContext';
@@ -58,14 +58,13 @@ const AddCommonMilestoneForm = ({
   const { commonSolutions: commonSolutionsConfig } =
     usePlanTranslation('mtoMilestone');
 
-  const history = useHistory();
-
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const milestoneKey = params.get('add-milestone') as MtoCommonMilestoneKey;
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { message, showMessage, clearMessage } = useMessage();
+  const { message, clearMessage } = useMessage();
 
   const { setErrorMeta } = useErrorMessage();
 

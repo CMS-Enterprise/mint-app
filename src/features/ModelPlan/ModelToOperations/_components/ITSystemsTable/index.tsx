@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Column,
   usePagination as usePaginationTable,
@@ -68,15 +68,15 @@ const ITSystemsTable = ({
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { location } = history;
+  const location = useLocation();
 
   const params = useMemo(
-    () => new URLSearchParams(history.location.search),
-    [history.location.search]
+    () => new URLSearchParams(location.search),
+    [location.search]
   );
 
   const { openEditSolutionModal, setSolutionID } = useContext(
@@ -366,11 +366,12 @@ const ITSystemsTable = ({
                     }
 
                     // Adds scroll param to existing params
-                    const existingParams = new URLSearchParams(
-                      history.location.search
-                    );
+                    const existingParams = new URLSearchParams(location.search);
                     existingParams.set('scroll-to-bottom', 'true');
-                    history.replace({ search: existingParams.toString() });
+                    navigate(
+                      { search: existingParams.toString() },
+                      { replace: true }
+                    );
                   }}
                 >
                   {t('table.moreMilestones', {
@@ -474,7 +475,7 @@ const ITSystemsTable = ({
     setSolutionID,
     mtoSolutionT,
     readView,
-    history
+    navigate
   ]);
 
   const filteredColumns = useMemo(() => {
@@ -609,7 +610,7 @@ const ITSystemsTable = ({
                       'hide-milestones-without-solutions',
                       hideMilestonesWithoutSolutions ? 'false' : 'true'
                     );
-                    history.replace({ search: params.toString() });
+                    navigate({ search: params.toString() }, { replace: true });
                   }}
                 />
               </Grid>
@@ -644,7 +645,7 @@ const ITSystemsTable = ({
                             type="button"
                             {...column.getSortByToggleProps()}
                           >
-                            {column.render('Header')}
+                            {column.render('Header') as React.ReactNode}
                             {column.canSort && getHeaderSortIcon(column, false)}
                           </button>
                         </th>
@@ -675,7 +676,7 @@ const ITSystemsTable = ({
                                 }}
                                 key={cell.getCellProps().key}
                               >
-                                {cell.render('Cell')}
+                                {cell.render('Cell') as React.ReactNode}
                               </th>
                             );
                           }
@@ -693,7 +694,7 @@ const ITSystemsTable = ({
                               }}
                               key={cell.getCellProps().key}
                             >
-                              {cell.render('Cell')}
+                              {cell.render('Cell') as React.ReactNode}
                             </td>
                           );
                         })}

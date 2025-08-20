@@ -9,6 +9,7 @@ import './index.scss';
 interface TagProps {
   children: React.ReactNode;
   arialabel?: string;
+  className?: string;
 }
 
 export const Tag = ({
@@ -16,7 +17,7 @@ export const Tag = ({
   className,
   arialabel,
   ...spanProps
-}: TagProps & JSX.IntrinsicElements['span']): React.ReactElement => {
+}: TagProps & React.ComponentProps<'span'>): React.ReactElement => {
   const style: React.CSSProperties = {};
 
   const tagClasses = classnames('mint-tag', className);

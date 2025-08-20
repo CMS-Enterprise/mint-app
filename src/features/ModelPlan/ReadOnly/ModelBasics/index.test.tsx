@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ModelCategory } from 'gql/generated/graphql';
@@ -15,18 +15,24 @@ const store = mockStore({ auth: { euaId: 'MINT' } });
 
 describe('Read Only Model Plan Summary -- Model Basics', () => {
   it('renders without errors', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/model-basics',
+          element: <ReadOnlyModelBasics modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/model-basics`]
+      }
+    );
+
     render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <Route path="/models/:modelID/read-view/model-basics">
-              <ReadOnlyModelBasics modelID={modelID} />
-            </Route>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -47,18 +53,24 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
   });
 
   it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/model-basics',
+          element: <ReadOnlyModelBasics modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/model-basics`]
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-view/model-basics`]}
-      >
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
-            <Route path="/models/:modelID/read-view/model-basics">
-              <ReadOnlyModelBasics modelID={modelID} />
-            </Route>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(() => {

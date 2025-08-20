@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -13,7 +13,7 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Form, Formik, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import {
   GetTimelineQuery,
   TypedUpdateTimelineDocument,
@@ -28,6 +28,7 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -53,9 +54,9 @@ const Timeline = () => {
   const { t: timelineMiscT } = useTranslation('timelineMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
 
   const { data, loading, error } = useGetTimelineQuery({
@@ -85,7 +86,7 @@ const Timeline = () => {
 
   const { mutationError } = useHandleMutation(TypedUpdateTimelineDocument, {
     id,
-    formikRef
+    formikRef: formikRef as React.RefObject<FormikProps<any>>
   });
 
   const initialValues: InitialValueType = {
@@ -113,7 +114,7 @@ const Timeline = () => {
       <GridContainer>
         <MutationErrorModal
           isOpen={mutationError.isModalOpen}
-          closeModal={() => mutationError.closeModal()}
+          closeModal={mutationError.closeModal}
           url={mutationError.destinationURL}
         />
 
@@ -153,7 +154,7 @@ const Timeline = () => {
               <Formik
                 initialValues={initialValues}
                 onSubmit={() => {
-                  history.push(`/models/${modelID}/collaboration-area`);
+                  navigate(`/models/${modelID}/collaboration-area`);
                 }}
                 enableReinitialize
                 validateOnBlur={false}
@@ -192,9 +193,9 @@ const Timeline = () => {
                     <div data-testid="model-plan-timeline">
                       <ConfirmLeave />
 
-                      <Form
+                      <MINTForm
                         className="desktop:grid-col-8 timeline-form margin-y-6"
-                        onSubmit={e => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                           window.scrollTo(0, 0);
                         }}
@@ -524,9 +525,7 @@ const Timeline = () => {
                             type="button"
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
-                              history.push(
-                                `/models/${modelID}/collaboration-area`
-                              )
+                              navigate(`/models/${modelID}/collaboration-area`)
                             }
                           >
                             <Icon.ArrowBack
@@ -538,7 +537,7 @@ const Timeline = () => {
                             {timelineMiscT('dontUpdate')}
                           </Button>
                         </Fieldset>
-                      </Form>
+                      </MINTForm>
                     </div>
                   );
                 }}

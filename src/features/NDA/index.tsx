@@ -1,38 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { useUpdateNdaMutation } from 'gql/generated/graphql';
 import { setUser } from 'stores/reducers/authReducer';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import { formatDateLocal } from 'utils/date';
 
 type NDAType = {
   agreed: boolean;
 };
 
-interface LocationProps {
-  nextState: string;
-}
-
 const NDA = () => {
   const { t } = useTranslation('nda');
-
-  const history = useHistory();
-  const { state: locationState } = useLocation<LocationProps>();
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { state: locationState } = useLocation();
 
   const [originalRoute, setOriginalRoute] = useState<string>('');
 
-  const { acceptedNDA, ...user } = useSelector(
-    (state: RootStateOrAny) => state.auth
-  );
+  const { acceptedNDA, ...user } = useSelector((state: AppState) => state.auth);
 
   const [signNDA] = useUpdateNdaMutation();
 
@@ -43,7 +37,7 @@ const NDA = () => {
   const handleFormSubmit = (formikValues: NDAType) => {
     signNDA().then(response => {
       dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
-      history.push(originalRoute || '/');
+      navigate(originalRoute || '/');
     });
   };
 
@@ -87,8 +81,8 @@ const NDA = () => {
                 const { values, handleSubmit } = formikProps;
 
                 return (
-                  <Form
-                    onSubmit={e => {
+                  <MINTForm
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                     }}
                   >
@@ -107,7 +101,7 @@ const NDA = () => {
                     >
                       {t('submit')}
                     </Button>
-                  </Form>
+                  </MINTForm>
                 );
               }}
             </Formik>

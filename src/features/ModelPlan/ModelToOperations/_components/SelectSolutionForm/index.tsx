@@ -42,7 +42,7 @@ type FormValues = {
 };
 
 const SelectSolutionForm = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
   const { commonSolutions: commonSolutionsConfig } =
     usePlanTranslation('mtoMilestone');
@@ -54,8 +54,7 @@ const SelectSolutionForm = () => {
 
   const { setErrorMeta } = useErrorMessage();
 
-  const { message, showMessage, showErrorMessageInModal, clearMessage } =
-    useMessage();
+  const { message, showMessage, clearMessage } = useMessage();
 
   const { data: milestoneData } = useGetMtoMilestoneQuery({
     variables: {
@@ -265,10 +264,8 @@ const SelectSolutionForm = () => {
                       components={{
                         solution: (
                           <UswdsReactLink
-                            to={{
-                              pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                              state: { scroll: true }
-                            }}
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                            state={{ scroll: true }}
                             onClick={() => setMTOModalOpen(false)}
                           >
                             {' '}

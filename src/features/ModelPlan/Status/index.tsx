@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -9,12 +9,13 @@ import {
   Label,
   Select
 } from '@trussworks/react-uswds';
-import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
@@ -34,13 +35,15 @@ const Status = () => {
 
   const { showMessageOnNextPage } = useMessage();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
+
+  const location = useLocation();
 
   const params = useMemo(() => {
-    return new URLSearchParams(history.location.search);
-  }, [history.location.search]);
+    return new URLSearchParams(location.search);
+  }, [location.search]);
 
   // Get model status from generated email link
   const modelStatus = params.get('model-status') as ModelStatus;
@@ -67,7 +70,7 @@ const Status = () => {
               status: statusConfig.options[formikValues.status as ModelStatus]
             })
           );
-          history.push(`/models/${modelID}/collaboration-area/`);
+          navigate(`/models/${modelID}/collaboration-area/`);
         }
       });
     }
@@ -114,8 +117,8 @@ const Status = () => {
               } = formikProps;
               return (
                 <>
-                  <Form
-                    onSubmit={e => {
+                  <MINTForm
+                    onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
                     }}
@@ -125,7 +128,11 @@ const Status = () => {
                         {modelPlanT('status.label')}
                       </Label>
 
-                      <ErrorMessage name="status" />
+                      {errors.status && (
+                        <div className="usa-error-message" role="alert">
+                          {errors.status}
+                        </div>
+                      )}
 
                       <Field
                         as={Select}
@@ -167,7 +174,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelID}/collaboration-area`)
+                        navigate(`/models/${modelID}/collaboration-area`)
                       }
                     >
                       <Icon.ArrowBack
@@ -178,7 +185,7 @@ const Status = () => {
 
                       {modelPlanMiscT('return')}
                     </Button>
-                  </Form>
+                  </MINTForm>
                 </>
               );
             }}

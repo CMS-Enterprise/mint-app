@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -9,7 +9,7 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
   useGetGlobalMtoCommonSolutionsQuery,
@@ -21,14 +21,12 @@ import {
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import { useErrorMessage } from 'contexts/ErrorContext';
 
-import {
-  HomepageLocationStateType,
-  HomepageSettingsLocationType
-} from './settings';
+import { HomepageSettingsLocationType } from './settings';
 
 import './index.scss';
 
@@ -41,9 +39,9 @@ const SelectSolutionSettings = () => {
 
   const formikRef = useRef<FormikProps<SettingsFormType>>(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { state } = useLocation<HomepageLocationStateType>();
+  const { state } = useLocation();
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
@@ -80,25 +78,6 @@ const SelectSolutionSettings = () => {
 
   const { setErrorMeta } = useErrorMessage();
 
-  // Passes the current state to the previous page if navigating back
-  useEffect(() => {
-    // Blocks the route transition until unblock() is called
-    const unblock = history.block(destination => {
-      unblock();
-      history.push({
-        pathname: destination.pathname,
-        state:
-          // If the destination is the homepage settings page, pass the current state
-          destination.pathname === '/homepage-settings'
-            ? { homepageSettings: selectedSettings }
-            : undefined
-      });
-      return false;
-    });
-
-    return () => {};
-  }, [history, selectedSettings]);
-
   const handleFormSubmit = () => {
     setErrorMeta({
       overrideMessage: homepageSettingsT('solutionError')
@@ -109,6 +88,9 @@ const SelectSolutionSettings = () => {
         changes: { ...formikRef.current?.values }
       }
     }).then(() => {
+      // Create updated settings with the new state
+      let updatedSettings = selectedSettings;
+
       // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
       if (
         formikRef.current?.values?.solutions &&
@@ -117,18 +99,21 @@ const SelectSolutionSettings = () => {
           ViewCustomizationType.MODELS_BY_SOLUTION
         )
       ) {
-        setSelectedSettings({
+        updatedSettings = {
           viewCustomization: [
             ...(selectedSettings?.viewCustomization || []),
             ViewCustomizationType.MODELS_BY_SOLUTION
           ]
-        });
+        };
+        setSelectedSettings(updatedSettings);
       }
 
-      // Allow state to hydrate before redirecting
-      setTimeout(() => {
-        history.push(state?.fromHome ? '/' : '/homepage-settings');
-      }, 100);
+      // Navigate with the updated settings
+      navigate(state?.fromHome ? '/' : '/homepage-settings/form', {
+        state: {
+          homepageSettings: updatedSettings
+        }
+      });
     });
   };
 
@@ -179,9 +164,9 @@ const SelectSolutionSettings = () => {
 
                   return (
                     <>
-                      <Form
+                      <MINTForm
                         data-testid="it-solutions-add-solution"
-                        onSubmit={e => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                         }}
                       >
@@ -222,7 +207,7 @@ const SelectSolutionSettings = () => {
                             </Button>
                           </div>
                         </Fieldset>
-                      </Form>
+                      </MINTForm>
                     </>
                   );
                 }}
@@ -232,7 +217,7 @@ const SelectSolutionSettings = () => {
 
           <div style={{ width: 'fit-content' }}>
             <UswdsReactLink
-              to={state?.fromHome ? '/' : '/homepage-settings'}
+              to={state?.fromHome ? '/' : '/homepage-settings/form'}
               className="display-flex flex-align-center"
             >
               <Icon.ArrowBack className="margin-right-2" aria-label="back" />

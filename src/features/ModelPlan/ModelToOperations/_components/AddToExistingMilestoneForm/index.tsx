@@ -6,7 +6,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -46,16 +46,18 @@ const AddToExistingMilestoneForm = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { message, showMessage, clearMessage } = useMessage();
   const { setErrorMeta } = useErrorMessage();
 
-  const history = useHistory();
+  const navigate = useNavigate();
+
+  const location = useLocation();
 
   const params = useMemo(() => {
-    return new URLSearchParams(history.location.search);
-  }, [history.location.search]);
+    return new URLSearchParams(location.search);
+  }, [location.search]);
 
   const { data, loading } = useGetMtoAllMilestonesQuery({
     variables: {
@@ -112,34 +114,40 @@ const AddToExistingMilestoneForm = ({
         milestonesToLink: linkedMilestones || [],
         key: solutionKey
       }
-    }).then(response => {
-      if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              <span className="mandatory-fields-alert__text">
-                <Trans
-                  i18nKey={t('modal.addToExistingMilestone.alert.success')}
-                  components={{
-                    bold: <span className="text-bold" />
-                  }}
-                  values={{ title: solutionName }}
-                />
-              </span>
-            </Alert>
-          </>
-        );
+    })
+      .then(response => {
+        if (!response?.errors) {
+          showMessage(
+            <>
+              <Alert
+                type="success"
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+                clearMessage={clearMessage}
+              >
+                <span className="mandatory-fields-alert__text">
+                  <Trans
+                    i18nKey={t('modal.addToExistingMilestone.alert.success')}
+                    components={{
+                      bold: <span className="text-bold" />
+                    }}
+                    values={{ title: solutionName }}
+                  />
+                </span>
+              </Alert>
+            </>
+          );
+          params.delete('add-solution', solutionKey);
+          navigate({ search: params.toString() }, { replace: true });
+          closeModal();
+        }
+      })
+      .catch(() => {
         params.delete('add-solution', solutionKey);
-        history.replace({ search: params.toString() });
+        navigate({ search: params.toString() }, { replace: true });
         closeModal();
-      }
-    });
+      });
   };
 
   return (

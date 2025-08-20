@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -22,14 +22,13 @@ const AddDocument = () => {
 
   const [formState, setFormState] = useState<'upload' | 'link'>('upload');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const { state } = useLocation<{
-    state: {
+  const { state } = useLocation() as {
+    state?: {
       fromCollaborationArea?: boolean;
     };
-    fromCollaborationArea?: boolean;
-  }>();
+  };
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -89,7 +88,7 @@ const AddDocument = () => {
           <div className="display-block">
             <Button
               type="button"
-              onClick={() => history.goBack()}
+              onClick={() => navigate(-1)}
               className="display-inline-flex flex-align-center margin-y-3 usa-button usa-button--unstyled"
             >
               <Icon.ArrowBack

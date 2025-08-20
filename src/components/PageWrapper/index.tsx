@@ -7,7 +7,7 @@ import './index.scss';
 type PageWrapperProps = {
   className?: string;
   children: React.ReactNode;
-} & JSX.IntrinsicElements['div'];
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const PageWrapper = ({ className, children, ...props }: PageWrapperProps) => {
   const { pathname } = useLocation();

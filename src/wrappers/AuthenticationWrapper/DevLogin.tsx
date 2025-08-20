@@ -1,4 +1,6 @@
 import React, { Fragment, ReactEventHandler, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 
 import { NONPROD_JOB_CODES } from 'constants/jobCodes';
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -8,6 +10,11 @@ const DevLogin = () => {
     (codes: any, code: any) => ({ ...codes, [code]: false }),
     {}
   );
+
+  const navigate = useNavigate();
+
+  const { oktaAuth } = useOktaAuth();
+  const referringUri = oktaAuth.getOriginalUri();
 
   const [euaId, setEuaId] = useState('');
   const [jobCodes, setJobCodes] = useState(availableJobCodes);
@@ -30,7 +37,11 @@ const DevLogin = () => {
       favorLocalAuth: true
     };
     localStorage.setItem(localAuthStorageKey, JSON.stringify(value));
-    window.location.href = '/pre-decisional-notice';
+    navigate('/pre-decisional-notice', {
+      state: {
+        nextState: referringUri || '/'
+      }
+    });
   };
 
   return (
