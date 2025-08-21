@@ -1,3 +1,20 @@
+export const knownErrors: Record<string, string> = {
+  uniq_contractor_name_per_solution_key:
+    'This contractor is already added to this solution and cannot be added again. Please edit the existing entry.',
+  uniq_user_id_per_solution_key:
+    'This user is already added to this solution and cannot be added again. Please edit the existing entry.',
+  uniq_mailbox_address_per_solution_key:
+    'This mailbox address is already added to this solution and cannot be added again. Please edit the existing entry.',
+  uniq_system_owner_key_type_component:
+    'This owner is already added to this solution and cannot be added again. Please edit the existing entry.',
+  unique_collaborator_per_plan:
+    'This person is already a member of your model team. Please select a different person to add to your team.',
+  unique_name_per_model_plan_when_mto_common_milestone_is_null:
+    'There is already a model milestone in your MTO with this name. Please choose a different name for this milestone.',
+  unique_name_per_model_plan_when_mto_common_solution_is_null:
+    'There is already a model solution in your MTO with this name. Please choose a different name for this solution.'
+};
+
 const error = {
   notFound: {
     heading: 'This page cannot be found.',
@@ -13,6 +30,12 @@ const error = {
     modelPlanError: 'The model plan you are looking for does not exist.',
     fetchError:
       'There was an error fetching the requested data. Please try again later.'
+  },
+  global: {
+    generalError: 'Something went wrong with your request.',
+    generalBody:
+      'Please try again. If the problem persists, please contact support.',
+    knownErrors
   }
 };
 

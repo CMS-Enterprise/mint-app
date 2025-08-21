@@ -6,6 +6,7 @@ import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { createUploadLink } from 'apollo-upload-client';
+import i18next from 'i18next';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 import Alert from 'components/Alert';
@@ -14,6 +15,7 @@ import {
   getCurrentErrorMeta,
   setCurrentErrorMeta
 } from 'contexts/ErrorContext/errorMetaStore';
+import { knownErrors } from 'i18n/en-US/error';
 
 const apiHost = new URL(import.meta.env.VITE_API_ADDRESS || '').host;
 
@@ -78,23 +80,6 @@ function getOperationType(
   }
 }
 
-const knownErrors: Record<string, string> = {
-  uniq_contractor_name_per_solution_key:
-    'This contractor is already added to this solution and cannot be added again. Please edit the existing entry.',
-  uniq_user_id_per_solution_key:
-    'This user is already added to this solution and cannot be added again. Please edit the existing entry.',
-  uniq_mailbox_address_per_solution_key:
-    'This mailbox address is already added to this solution and cannot be added again. Please edit the existing entry.',
-  uniq_system_owner_key_type_component:
-    'This owner is already added to this solution and cannot be added again. Please edit the existing entry.',
-  unique_collaborator_per_plan:
-    'This person is already a member of your model team. Please select a different person to add to your team.',
-  unique_name_per_model_plan_when_mto_common_milestone_is_null:
-    'There is already a model milestone in your MTO with this name. Please choose a different name for this milestone.',
-  unique_name_per_model_plan_when_mto_common_solution_is_null:
-    'There is already a model solution in your MTO with this name. Please choose a different name for this solution.'
-};
-
 const findKnownError = (errorMessage: string): string | undefined => {
   return Object.keys(knownErrors).find(key => errorMessage.includes(key));
 };
@@ -136,15 +121,14 @@ const errorLink = onError(({ graphQLErrors, operation }) => {
             ) : (
               <Alert
                 type="error"
-                heading="Something went wrong with your request."
+                heading={i18next.t('error:global.generalError')}
                 isClosable={false}
               >
                 <p className="margin-0">
                   {knownErrorMessage || overrideMessage}
                 </p>
                 <p className="margin-0">
-                  Please try again. If the problem persists, please contact
-                  support.
+                  {i18next.t('error:global.generalBody')}
                 </p>
               </Alert>
             )}

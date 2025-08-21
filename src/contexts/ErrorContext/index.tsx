@@ -20,9 +20,6 @@ const ErrorMessageContext = createContext<{
   setErrorMeta: () => {}
 });
 
-// // useErrorMessage is used to get the error message from the component
-// export const useErrorMessage = () => useContext(ErrorMessageContext);
-
 // Hook that accepts a message directly
 export const useErrorMessage = (
   message?: string | React.ReactNode,
