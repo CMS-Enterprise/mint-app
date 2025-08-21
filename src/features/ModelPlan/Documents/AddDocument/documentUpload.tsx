@@ -18,8 +18,8 @@ import { RadioField } from 'components/RadioField';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
+import toastSuccess from 'components/ToastSuccess';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
 import { getKeys } from 'types/translation';
@@ -41,23 +41,9 @@ const DocumentUpload = ({
   const { documentType: documentTypeConfig, restricted: restrictedConfig } =
     usePlanTranslation('documents');
 
-  const { showMessageOnNextPage } = useMessage();
-
   const { modelName } = useContext(ModelInfoContext);
 
   const [uploadFile, uploadFileStatus] = useUploadNewPlanDocumentMutation();
-
-  const messageOnNextPage = (message: string, fileName: string) =>
-    showMessageOnNextPage(
-      <Alert type="success" slim className="margin-y-4" aria-live="assertive">
-        <span className="mandatory-fields-alert__text">
-          {documentsMiscT(message, {
-            documentName: fileName,
-            modelName
-          })}
-        </span>
-      </Alert>
-    );
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {
@@ -77,7 +63,14 @@ const DocumentUpload = ({
         }
       }).then(response => {
         if (!response.errors) {
-          messageOnNextPage('documentUploadSuccess', file.name);
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              {documentsMiscT('documentUploadSuccess', {
+                documentName: file.name,
+                modelName
+              })}
+            </span>
+          );
 
           if (solutionDetailsLink) {
             navigate(solutionDetailsLink);

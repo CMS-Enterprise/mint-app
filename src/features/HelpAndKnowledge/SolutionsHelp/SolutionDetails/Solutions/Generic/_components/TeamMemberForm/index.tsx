@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import {
   Button,
   Fieldset,
@@ -23,6 +22,7 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
@@ -151,23 +151,18 @@ const TeamMemberForm = ({
         });
     promise.then(response => {
       if (!response?.errors) {
-        toast.success(
-          <Alert type="success" isClosable={false}>
-            <Trans
-              i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
-              values={{
-                contact: formData.name || teamMember.name
-              }}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-            />
-          </Alert>,
-          {
-            autoClose: 5000,
-            hideProgressBar: false
-          }
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
+            values={{
+              contact: formData.name || teamMember.name
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
         );
+
         closeModal();
       }
     });

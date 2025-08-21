@@ -15,14 +15,13 @@ import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import toastSuccess from 'components/ToastSuccess';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 
 import AddCollaborator from './AddCollaborator';
@@ -41,28 +40,6 @@ export const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
   return !(modelLeads.length > 1);
 };
 
-const SuccessRemovalMessage = ({
-  modelName
-}: {
-  modelName: string | undefined;
-}) => {
-  const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
-  return (
-    <Alert
-      type="success"
-      data-testid="mandatory-fields-alert"
-      className="margin-y-4"
-      heading={collaboratorsMiscT('success.heading', {
-        modelName
-      })}
-    >
-      <span className="mandatory-fields-alert__text">
-        {collaboratorsMiscT('success.message')}
-      </span>
-    </Alert>
-  );
-};
-
 export const CollaboratorsContent = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -76,8 +53,6 @@ export const CollaboratorsContent = () => {
   const params = new URLSearchParams(location.search);
 
   const manageOrAdd = params.get('view') || 'manage';
-
-  const { message, showMessageOnNextPage } = useMessage();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLastLead, setIsLastLead] = useState(false);
@@ -118,9 +93,11 @@ export const CollaboratorsContent = () => {
       if (!response?.errors) {
         setModalOpen(false);
         if (collaborator.userAccount.username === euaId) {
-          showMessageOnNextPage(
-            <SuccessRemovalMessage modelName={modelName} />
-          );
+          toastSuccess(collaboratorsMiscT('success.message'), {
+            heading: collaboratorsMiscT('success.heading', {
+              modelName
+            })
+          });
           navigate('/');
         } else {
           refetch();
@@ -199,8 +176,6 @@ export const CollaboratorsContent = () => {
                     ]
               }
             />
-
-            {message && <Expire delay={45000}>{message}</Expire>}
 
             {manageOrAdd === 'manage' ? (
               <>

@@ -17,8 +17,8 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -49,7 +49,6 @@ const OwnerForm = ({
 
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
   const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<OwnerFormValues>({
@@ -132,7 +131,7 @@ const OwnerForm = ({
 
     promise.then(response => {
       if (!response?.errors) {
-        showMessage(
+        toastSuccess(
           <Trans
             i18nKey={`mtoCommonSolutionSystemOwnerMisc:${mode}.success`}
             values={{

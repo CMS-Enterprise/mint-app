@@ -22,12 +22,11 @@ import {
   useCreateMtoCategoryMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
@@ -62,8 +61,6 @@ const CustomCategoryForm = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { setErrorMeta } = useErrorMessage();
-
-  const { showMessage, clearMessage } = useMessage();
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
@@ -117,49 +114,35 @@ const CustomCategoryForm = () => {
       if (!response?.errors) {
         if (formData.primaryCategory === 'none') {
           // Parent Category Success Message
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.category.alert.success.parent')}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    values={{ category: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              <Trans
+                i18nKey={t('modal.category.alert.success.parent')}
+                components={{
+                  b: <span className="text-bold" />
+                }}
+                values={{ category: formData.name }}
+              />
+            </span>,
+            {
+              id: 'mandatory-category-alert'
+            }
           );
         } else {
           // Subcategory Success Message
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.category.alert.success.subcategory')}
-                    components={{
-                      b: <span className="text-bold" />
-                    }}
-                    values={{ category: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              <Trans
+                i18nKey={t('modal.category.alert.success.subcategory')}
+                components={{
+                  b: <span className="text-bold" />
+                }}
+                values={{ category: formData.name }}
+              />
+            </span>,
+            {
+              id: 'mandatory-category-alert'
+            }
           );
         }
         setMTOModalOpen(false);

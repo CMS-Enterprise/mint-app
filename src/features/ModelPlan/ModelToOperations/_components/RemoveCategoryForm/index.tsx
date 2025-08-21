@@ -7,10 +7,9 @@ import {
   useDeleteMtoCategoryMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 
 const RemoveCategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -23,8 +22,6 @@ const RemoveCategoryForm = () => {
   } = useContext(MTOModalContext);
 
   const { setErrorMeta } = useErrorMessage();
-
-  const { showMessage, clearMessage } = useMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
     refetchQueries: [
@@ -51,17 +48,7 @@ const RemoveCategoryForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <Alert
-            type="success"
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-y-4"
-            clearMessage={clearMessage}
-          >
-            {t(`modal.${namespace}.successAlert`)}
-          </Alert>
-        );
+        toastSuccess(t(`modal.${namespace}.successAlert`));
       }
       setMTOModalOpen(false);
     });

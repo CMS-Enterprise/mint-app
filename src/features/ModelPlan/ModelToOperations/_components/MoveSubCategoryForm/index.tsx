@@ -21,10 +21,10 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
@@ -40,8 +40,6 @@ const MoveSubCategoryForm = () => {
     mtoModalState: { categoryID, subCategoryID = '', categoryName },
     setMTOModalOpen
   } = useContext(MTOModalContext);
-
-  const { showMessage, clearMessage } = useMessage();
 
   const { setErrorMeta } = useErrorMessage();
 
@@ -97,19 +95,8 @@ const MoveSubCategoryForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {modelToOperationsMiscT('successReorder')}
-            </Alert>
-          </>
-        );
+        toastSuccess(modelToOperationsMiscT('successReorder'));
+
         setMTOModalOpen(false);
       }
     });

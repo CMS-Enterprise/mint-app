@@ -63,9 +63,9 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
@@ -146,8 +146,6 @@ const EditSolutionForm = ({
 
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
-
-  const { showMessage, clearMessage } = useMessage();
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
 
@@ -361,29 +359,23 @@ const EditSolutionForm = ({
         ]
       }).then(response => {
         if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={modelToOperationsMiscT(
-                      'modal.editSolution.successUpdated'
-                    )}
-                    components={{
-                      bold: <span className="text-bold" />
-                    }}
-                    values={{ solution: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              <Trans
+                i18nKey={modelToOperationsMiscT(
+                  'modal.editSolution.successUpdated'
+                )}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+                values={{ solution: formData.name }}
+              />
+            </span>,
+            {
+              id: 'mandatory-fields-alert'
+            }
           );
+
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
@@ -396,8 +388,6 @@ const EditSolutionForm = ({
       updateSolution,
       editSolutionID,
       milestoneIDs,
-      showMessage,
-      clearMessage,
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
@@ -422,21 +412,12 @@ const EditSolutionForm = ({
       ]
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {modelToOperationsMiscT('modal.editSolution.successRemoved', {
-                solution: solution?.name
-              })}
-            </Alert>
-          </>
+        toastSuccess(
+          modelToOperationsMiscT('modal.editSolution.successRemoved', {
+            solution: solution?.name
+          })
         );
+
         // eslint-disable-next-line no-param-reassign
         submitted.current = true;
         setIsDirty(false);

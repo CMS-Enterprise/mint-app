@@ -24,9 +24,9 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -49,8 +49,6 @@ const CustomSolutionForm = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { setErrorMeta } = useErrorMessage();
-
-  const { showMessage, clearMessage } = useMessage();
 
   const {
     mtoModalState: { modalCalledFrom },
@@ -109,26 +107,19 @@ const CustomSolutionForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              <span className="mandatory-fields-alert__text">
-                <Trans
-                  i18nKey={t('modal.solution.alert.success')}
-                  components={{
-                    bold: <span className="text-bold" />
-                  }}
-                  values={{ solution: formData.solutionTitle }}
-                />
-              </span>
-            </Alert>
-          </>
+        toastSuccess(
+          <span className="mandatory-fields-alert__text">
+            <Trans
+              i18nKey={t('modal.solution.alert.success')}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+              values={{ solution: formData.solutionTitle }}
+            />
+          </span>,
+          {
+            id: 'mandatory-solution-alert'
+          }
         );
         setMTOModalOpen(false);
       }

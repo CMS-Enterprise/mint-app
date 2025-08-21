@@ -59,10 +59,10 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
@@ -147,8 +147,6 @@ const EditMilestoneForm = ({
 
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
-
-  const { showMessage, clearMessage } = useMessage();
 
   const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
 
@@ -525,29 +523,23 @@ const EditMilestoneForm = ({
         }
       }).then(response => {
         if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={modelToOperationsMiscT(
-                      'modal.editMilestone.successUpdated'
-                    )}
-                    components={{
-                      bold: <span className="text-bold" />
-                    }}
-                    values={{ milestone: formData.name }}
-                  />
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              <Trans
+                i18nKey={modelToOperationsMiscT(
+                  'modal.editMilestone.successUpdated'
+                )}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+                values={{ milestone: formData.name }}
+              />
+            </span>,
+            {
+              id: 'mandatory-fields-alert'
+            }
           );
+
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
@@ -561,8 +553,6 @@ const EditMilestoneForm = ({
       editMilestoneID,
       commonSolutionKeys,
       solutionIDs,
-      showMessage,
-      clearMessage,
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
@@ -586,20 +576,15 @@ const EditMilestoneForm = ({
       refetchQueries: [GetModelToOperationsMatrixDocument]
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
-                milestone: milestone?.name
-              })}
-            </Alert>
-          </>
+        toastSuccess(
+          <span className="mandatory-fields-alert__text">
+            {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
+              milestone: milestone?.name
+            })}
+          </span>,
+          {
+            id: 'mandatory-fields-alert'
+          }
         );
         closeModal();
         setIsModalOpen(false);

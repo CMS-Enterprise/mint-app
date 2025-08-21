@@ -29,6 +29,7 @@ import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
@@ -57,7 +58,7 @@ const NotificationSettings = () => {
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
-  const { showMessage, showMessageOnNextPage } = useMessage();
+  const { showMessage } = useMessage();
 
   const navigate = useNavigate();
   const { message } = useMessage();
@@ -130,16 +131,8 @@ const NotificationSettings = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessageOnNextPage(
-          <Alert
-            type="success"
-            slim
-            data-testid="success-alert"
-            className="margin-y-4"
-          >
-            {notificationsT('settings.successMessage')}
-          </Alert>
-        );
+        toastSuccess(notificationsT('settings.successMessage'));
+
         navigate('/notifications');
       }
     });
@@ -284,26 +277,19 @@ const NotificationSettings = () => {
 
           update({ variables: { changes } }).then(response => {
             if (!response?.errors) {
-              showMessage(
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-alert"
-                  className="margin-y-4"
-                >
-                  <Trans
-                    t={notificationsT}
-                    i18nKey="settings.unsubscribedMessage.success"
-                    values={{
-                      notificationType: notificationsT(
-                        `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                      )
-                    }}
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                </Alert>
+              toastSuccess(
+                <Trans
+                  t={notificationsT}
+                  i18nKey="settings.unsubscribedMessage.success"
+                  values={{
+                    notificationType: notificationsT(
+                      `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                    )
+                  }}
+                  components={{
+                    bold: <strong />
+                  }}
+                />
               );
             }
           });

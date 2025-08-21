@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Alert, Button } from '@trussworks/react-uswds';
+import { Button } from '@trussworks/react-uswds';
 import {
   SolutionContactType,
   SolutionContractorType,
@@ -15,8 +15,8 @@ import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolut
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
 type ContactType = 'teamOrMember' | 'owner' | 'contractor';
@@ -59,7 +59,6 @@ const RemoveContactModal = ({
   const useMutation = getUseMutation(contactType);
   const [deleteContact] = useMutation();
   const { setErrorMeta } = useErrorMessage();
-  const { showMessage } = useMessage();
 
   const getContactName = () => {
     switch (pointOfContact.__typename) {
@@ -111,7 +110,7 @@ const RemoveContactModal = ({
       refetchQueries: [GetMTOSolutionContacts]
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
+        toastSuccess(
           <Trans
             i18nKey={getModalStrings('success').i18nKey}
             values={{
@@ -122,6 +121,7 @@ const RemoveContactModal = ({
             }}
           />
         );
+
         closeModal();
       }
     });

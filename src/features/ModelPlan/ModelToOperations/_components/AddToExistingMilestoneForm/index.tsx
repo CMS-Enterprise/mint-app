@@ -24,6 +24,7 @@ import {
 import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import {
@@ -48,7 +49,7 @@ const AddToExistingMilestoneForm = ({
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { message, showMessage, clearMessage } = useMessage();
+  const { message } = useMessage();
   const { setErrorMeta } = useErrorMessage();
 
   const navigate = useNavigate();
@@ -117,27 +118,21 @@ const AddToExistingMilestoneForm = ({
     })
       .then(response => {
         if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.addToExistingMilestone.alert.success')}
-                    components={{
-                      bold: <span className="text-bold" />
-                    }}
-                    values={{ title: solutionName }}
-                  />
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              <Trans
+                i18nKey={t('modal.addToExistingMilestone.alert.success')}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+                values={{ title: solutionName }}
+              />
+            </span>,
+            {
+              id: 'mandatory-fields-alert'
+            }
           );
+
           params.delete('add-solution', solutionKey);
           navigate({ search: params.toString() }, { replace: true });
           closeModal();
@@ -224,7 +219,6 @@ const AddToExistingMilestoneForm = ({
               className="usa-button usa-button--unstyled margin-top-0"
               onClick={() => {
                 reset();
-                clearMessage();
                 closeModal();
               }}
             >

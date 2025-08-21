@@ -22,10 +22,10 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
@@ -47,8 +47,6 @@ const CustomMilestoneForm = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { setErrorMeta } = useErrorMessage();
-
-  const { showMessage, clearMessage } = useMessage();
 
   const {
     mtoModalState: { categoryID, subCategoryID, toggleRow },
@@ -128,27 +126,21 @@ const CustomMilestoneForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              <span className="mandatory-fields-alert__text">
-                <Trans
-                  i18nKey={t('modal.milestone.alert.success')}
-                  components={{
-                    bold: <span className="text-bold" />
-                  }}
-                  values={{ milestone: formData.name }}
-                />
-              </span>
-            </Alert>
-          </>
+        toastSuccess(
+          <span className="mandatory-fields-alert__text">
+            <Trans
+              i18nKey={t('modal.milestone.alert.success')}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+              values={{ milestone: formData.name }}
+            />
+          </span>,
+          {
+            id: 'mandatory-milestone-alert'
+          }
         );
+
         setCategoryRowsOpenOnCreation(
           formData.primaryCategory,
           formData.subcategory
@@ -282,7 +274,6 @@ const CustomMilestoneForm = () => {
                   className="usa-button usa-button--unstyled margin-top-0"
                   onClick={() => {
                     reset();
-                    clearMessage();
                     setMTOModalOpen(false);
                     navigate(
                       `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,

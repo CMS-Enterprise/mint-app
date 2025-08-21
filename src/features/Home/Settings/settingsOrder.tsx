@@ -23,8 +23,8 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useMessage from 'hooks/useMessage';
 
 import { HomepageSettingsLocationType } from './settings';
 
@@ -67,8 +67,6 @@ const SettingsOrder = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const navigate = useNavigate();
-
-  const { showMessageOnNextPage } = useMessage();
 
   const { state } = useLocation();
 
@@ -116,13 +114,7 @@ const SettingsOrder = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessageOnNextPage(
-          <>
-            <Alert type="success" slim className="margin-y-4">
-              {homepageSettingsT('success')}
-            </Alert>
-          </>
-        );
+        toastSuccess(homepageSettingsT('success'));
         // Removes router state upon successful mutation
         window.history.replaceState({}, '');
         navigate('/');

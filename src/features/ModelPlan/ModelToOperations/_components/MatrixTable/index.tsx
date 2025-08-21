@@ -21,6 +21,7 @@ import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
+import toastSuccess from 'components/ToastSuccess';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import { MTOSolutionPanelProvider } from 'contexts/MTOSolutionPanelContext';
@@ -68,7 +69,7 @@ const MTOTable = ({
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  const { showMessage: setError, clearMessage } = useMessage();
+  const { clearMessage } = useMessage();
 
   const [updateOrder] = useReorderMtoCategoryMutation({
     refetchQueries: [
@@ -356,9 +357,7 @@ const MTOTable = ({
                     moveRowDirection(-1),
                     rowType,
                     sortedData,
-                    updateOrder,
-                    setError,
-                    clearMessage
+                    updateOrder
                   )
                 );
               }}
@@ -388,9 +387,7 @@ const MTOTable = ({
                     moveRowDirection(1),
                     rowType,
                     sortedData,
-                    updateOrder,
-                    setError,
-                    clearMessage
+                    updateOrder
                   )
                 );
               }}
@@ -517,9 +514,7 @@ const MTOTable = ({
                   hoverIndex,
                   'subcategory',
                   sortedData,
-                  updateOrder,
-                  setError,
-                  clearMessage
+                  updateOrder
                 )
               )
             }
@@ -581,9 +576,7 @@ const MTOTable = ({
                   hoverIndex,
                   'category',
                   sortedData,
-                  updateOrder,
-                  setError,
-                  clearMessage
+                  updateOrder
                 )
               )
             }
@@ -835,9 +828,7 @@ export const moveRow = (
     variables
   }: {
     variables: ReorderMtoCategoryMutationVariables;
-  }) => Promise<any>,
-  setError?: (element: React.ReactElement) => void,
-  clearMessage?: () => void
+  }) => Promise<any>
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
@@ -853,19 +844,7 @@ export const moveRow = (
         newOrder: hoverIndex[0]
       }
     })?.then(() => {
-      if (setError) {
-        setError(
-          <Alert
-            type="success"
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-y-4"
-            clearMessage={clearMessage}
-          >
-            {i18next.t('modelToOperationsMisc:successReorder')}
-          </Alert>
-        );
-      }
+      toastSuccess(i18next.t('modelToOperationsMisc:successReorder'));
     });
   } else if (type.includes('subcategory')) {
     const parentIndex = dragIndex[0];
@@ -904,19 +883,7 @@ export const moveRow = (
         parentID: hoverParentCategoryID
       }
     })?.then(() => {
-      if (setError) {
-        setError(
-          <Alert
-            type="success"
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-y-4"
-            clearMessage={clearMessage}
-          >
-            {i18next.t('modelToOperationsMisc:successReorder')}
-          </Alert>
-        );
-      }
+      toastSuccess(i18next.t('modelToOperationsMisc:successReorder'));
     });
   } else if (type.includes('milestone')) {
     // TODO: if needed, implement milestone reordering

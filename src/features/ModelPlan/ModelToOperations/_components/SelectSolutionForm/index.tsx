@@ -24,13 +24,12 @@ import {
   useUpdateMtoMilestoneLinkedSolutionsMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import {
   convertCamelCaseToKebabCase,
@@ -53,8 +52,6 @@ const SelectSolutionForm = () => {
   } = useContext(MTOModalContext);
 
   const { setErrorMeta } = useErrorMessage();
-
-  const { message, showMessage, clearMessage } = useMessage();
 
   const { data: milestoneData } = useGetMtoMilestoneQuery({
     variables: {
@@ -204,20 +201,10 @@ const SelectSolutionForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <>
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              <span className="mandatory-fields-alert__text">
-                {t('modal.selectSolution.alert.success')}
-              </span>
-            </Alert>
-          </>
+        toastSuccess(
+          <span className="mandatory-fields-alert__text">
+            {t('modal.selectSolution.alert.success')}
+          </span>
         );
         setMTOModalOpen(false);
       }
@@ -238,7 +225,6 @@ const SelectSolutionForm = () => {
       </p>
 
       <FormProvider {...methods}>
-        {message}
         <Form
           className="maxw-none"
           id="select-solution-form"

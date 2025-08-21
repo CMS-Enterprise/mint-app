@@ -20,11 +20,10 @@ import {
   useRenameMtoCategoryMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
@@ -40,7 +39,6 @@ const EditCategoryTitleForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { showMessage, clearMessage } = useMessage();
   const { setErrorMeta } = useErrorMessage();
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
@@ -82,24 +80,19 @@ const EditCategoryTitleForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        showMessage(
-          <Alert
-            type="success"
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-y-4"
-            clearMessage={clearMessage}
-          >
-            <span className="mandatory-fields-alert__text">
-              <Trans
-                i18nKey={t('modal.editCategoryTitle.alert.success')}
-                components={{
-                  b: <span className="text-bold" />
-                }}
-                values={{ title: formData.name }}
-              />
-            </span>
-          </Alert>
+        toastSuccess(
+          <span className="mandatory-fields-alert__text">
+            <Trans
+              i18nKey={t('modal.editCategoryTitle.alert.success')}
+              components={{
+                b: <span className="text-bold" />
+              }}
+              values={{ title: formData.name }}
+            />
+          </span>,
+          {
+            id: 'mandatory-fields-alert'
+          }
         );
       }
       setMTOModalOpen(false);

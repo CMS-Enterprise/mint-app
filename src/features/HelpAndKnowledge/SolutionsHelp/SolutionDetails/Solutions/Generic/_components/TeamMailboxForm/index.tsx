@@ -20,8 +20,8 @@ import {
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import CheckboxField from 'components/CheckboxField';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -58,7 +58,6 @@ const TeamMailboxForm = ({
 
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
   const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<TeamMailboxFormValues>({
@@ -139,7 +138,7 @@ const TeamMailboxForm = ({
         });
     promise.then(response => {
       if (!response?.errors) {
-        showMessage(
+        toastSuccess(
           <Trans
             i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
             values={{
@@ -150,6 +149,7 @@ const TeamMailboxForm = ({
             }}
           />
         );
+
         closeModal();
       }
     });

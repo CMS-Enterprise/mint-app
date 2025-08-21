@@ -7,15 +7,14 @@ import { useUnlockAllSectionsMutation } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import MainContent from 'components/MainContent';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useMessage from 'hooks/useMessage';
 import { isAssessment } from 'utils/user';
 
 const UnlockAllSections = () => {
   const { t } = useTranslation('general');
   const flags = useFlags();
   const navigate = useNavigate();
-  const { showMessageOnNextPage } = useMessage();
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -39,7 +38,7 @@ const UnlockAllSections = () => {
     unlockAllSections({ variables: { modelPlanID: modelID } }).then(res => {
       if (!res.errors) {
         navigate(`/models/${modelID}/collaboration-area`);
-        showMessageOnNextPage(t('successfullyUnlock'));
+        toastSuccess(t('successfullyUnlock'));
       }
     });
   };

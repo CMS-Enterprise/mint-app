@@ -16,8 +16,8 @@ import { RadioField } from 'components/RadioField';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
+import toastSuccess from 'components/ToastSuccess';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { LinkingDocumentFormTypes } from 'types/files';
 import { getKeys } from 'types/translation';
@@ -40,23 +40,9 @@ const LinkDocument = ({
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
 
-  const { showMessageOnNextPage } = useMessage();
-
   const { modelName } = useContext(ModelInfoContext);
 
   const [linkFile] = useMutation(LinkNewPlanDocument);
-
-  const messageOnNextPage = (message: string, fileName: string) =>
-    showMessageOnNextPage(
-      <Alert type="success" slim className="margin-y-4" aria-live="assertive">
-        <span className="mandatory-fields-alert__text">
-          {documentsMiscT(message, {
-            documentName: fileName,
-            modelName
-          })}
-        </span>
-      </Alert>
-    );
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = ({
@@ -81,7 +67,14 @@ const LinkDocument = ({
       }
     }).then(response => {
       if (!response.errors) {
-        messageOnNextPage('documentUploadSuccess', name);
+        toastSuccess(
+          <span className="mandatory-fields-alert__text">
+            {documentsMiscT('documentUploadSuccess', {
+              documentName: name,
+              modelName
+            })}
+          </span>
+        );
 
         if (solutionDetailsLink) {
           navigate(solutionDetailsLink);

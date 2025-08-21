@@ -8,6 +8,7 @@ import {
 
 import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 
@@ -62,19 +63,12 @@ const Unfollow = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            showMessageOnNextPage(
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('favorite.success', {
-                    requestName: modelName
-                  })}
-                </span>
-              </Alert>
+            toastSuccess(
+              <span className="mandatory-fields-alert__text">
+                {t('favorite.success', {
+                  requestName: modelName
+                })}
+              </span>
             );
             navigate('/models');
           }

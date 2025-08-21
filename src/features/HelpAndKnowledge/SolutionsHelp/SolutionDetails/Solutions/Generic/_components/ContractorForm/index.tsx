@@ -15,8 +15,8 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -47,7 +47,6 @@ const ContractorForm = ({
   const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
   const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<ContractorFormValues>({
@@ -118,7 +117,7 @@ const ContractorForm = ({
 
     promise.then(response => {
       if (!response?.errors) {
-        showMessage(
+        toastSuccess(
           <Trans
             i18nKey={`mtoCommonSolutionContractorMisc:${mode}.success`}
             values={{
@@ -129,6 +128,7 @@ const ContractorForm = ({
             }}
           />
         );
+
         closeModal();
       }
     });

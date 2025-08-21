@@ -5,11 +5,10 @@ import { Button, Menu } from '@trussworks/react-uswds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { useArchiveModelPlanMutation } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import toastSuccess from 'components/ToastSuccess';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import useMessage from 'hooks/useMessage';
 
 import ShareExportModal, { NavModelElemet } from '.';
 
@@ -39,8 +38,6 @@ const ShareExportButton = ({
 
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const { showMessageOnNextPage } = useMessage();
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -65,21 +62,15 @@ const ShareExportButton = ({
     })
       .then((response: any) => {
         if (!response?.errors) {
-          showMessageOnNextPage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {modelPlanTaskListT('withdraw_modal.confirmationText_name', {
-                    modelName
-                  })}
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <span className="mandatory-fields-alert__text">
+              {modelPlanTaskListT('withdraw_modal.confirmationText_name', {
+                modelName
+              })}
+            </span>,
+            {
+              id: 'mandatory-fields-alert'
+            }
           );
           navigate(`/`);
         }

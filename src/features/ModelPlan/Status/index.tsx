@@ -17,8 +17,8 @@ import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
+import toastSuccess from 'components/ToastSuccess';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 
@@ -32,8 +32,6 @@ const Status = () => {
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
-
-  const { showMessageOnNextPage } = useMessage();
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -65,11 +63,12 @@ const Status = () => {
         }
       }).then(response => {
         if (!response?.errors) {
-          showMessageOnNextPage(
+          toastSuccess(
             modelPlanTaskListT('statusUpdateSuccess', {
               status: statusConfig.options[formikValues.status as ModelStatus]
             })
           );
+
           navigate(`/models/${modelID}/collaboration-area/`);
         }
       });
