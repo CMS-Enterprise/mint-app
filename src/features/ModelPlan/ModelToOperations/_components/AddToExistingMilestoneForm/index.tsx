@@ -122,7 +122,7 @@ const AddToExistingMilestoneForm = ({
             <Trans
               i18nKey={t('modal.addToExistingMilestone.alert.success')}
               components={{
-                bold: <span className="text-bold" />
+                b: <span className="text-bold" />
               }}
               values={{ title: solutionName }}
             />

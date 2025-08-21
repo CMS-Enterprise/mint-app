@@ -357,7 +357,8 @@ const MTOTable = ({
                     moveRowDirection(-1),
                     rowType,
                     sortedData,
-                    updateOrder
+                    updateOrder,
+                    true
                   )
                 );
               }}
@@ -828,7 +829,8 @@ export const moveRow = (
     variables
   }: {
     variables: ReorderMtoCategoryMutationVariables;
-  }) => Promise<any>
+  }) => Promise<any>,
+  successMessage?: boolean
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
@@ -883,7 +885,9 @@ export const moveRow = (
         parentID: hoverParentCategoryID
       }
     })?.then(() => {
-      toastSuccess(i18next.t('modelToOperationsMisc:successReorder'));
+      if (successMessage) {
+        toastSuccess(i18next.t('modelToOperationsMisc:successReorder'));
+      }
     });
   } else if (type.includes('milestone')) {
     // TODO: if needed, implement milestone reordering
