@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 
 import Alert from 'components/Alert';
 
+import './index.scss';
+
 /**
  * Utility function to show a success toast with an Alert component
  * @param message - The success message to display
@@ -28,14 +30,18 @@ const toastSuccess = (
   }
 ) => {
   const defaultOptions = {
-    autoClose: 4000,
+    autoClose: 3000,
     position: 'top-center' as const,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     id: 'toast-success',
-    ...options
+    ...options,
+    className:
+      options?.position === 'top-right'
+        ? 'custom-toast-width'
+        : 'custom-toast-width-center'
   };
 
   return toast.success(
