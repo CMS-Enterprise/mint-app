@@ -5,11 +5,11 @@ Each checkbox modifies the 'status' on its respective task list sections
 
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   GetClearanceStatusesQuery,
   PrepareForClearanceStatus,
@@ -38,6 +38,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
 import UswdsReactLink from 'components/LinkWrapper';
+import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -109,17 +110,13 @@ const convertReadyStatus = (status: TaskStatus): TaskStatusInput => {
   }
 };
 
-type PrepareForClearanceCheckListProps = {
-  modelID: string;
-};
-
-const PrepareForClearanceCheckList = ({
-  modelID
-}: PrepareForClearanceCheckListProps) => {
+const PrepareForClearanceCheckList = () => {
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('general');
 
-  const history = useHistory();
+  const { modelID } = useParams<{ modelID: string }>();
+
+  const navigate = useNavigate();
 
   // Used to map, iterate and label task list sections and values from query
   const taskListSections = tArray<Record<string, string>>(
@@ -132,7 +129,7 @@ const PrepareForClearanceCheckList = ({
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID,
+      id: modelID || '',
       includePrepareForClearance: false
     }
   });
@@ -190,7 +187,7 @@ const PrepareForClearanceCheckList = ({
         const errors = responses?.find(result => result?.errors);
 
         if (!errors) {
-          history.push(`/models/${modelID}/collaboration-area/task-list`);
+          navigate(`/models/${modelID}/collaboration-area/task-list`);
         }
       })
       .catch(errors => {
@@ -270,10 +267,10 @@ const PrepareForClearanceCheckList = ({
                   </ErrorAlert>
                 )}
 
-                <Form
+                <MINTForm
                   className="margin-y-6"
                   data-testid="prepare-for-clearance-form"
-                  onSubmit={e => {
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     handleSubmit(e);
                   }}
                 >
@@ -396,7 +393,7 @@ const PrepareForClearanceCheckList = ({
                       data-testid="dont-update-clearance"
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
-                        history.push(
+                        navigate(
                           `/models/${modelID}/collaboration-area/task-list`
                         )
                       }
@@ -409,7 +406,7 @@ const PrepareForClearanceCheckList = ({
                       {t('dontUpdate')}
                     </Button>
                   </Fieldset>
-                </Form>
+                </MINTForm>
               </>
             );
           }}
@@ -430,7 +427,7 @@ export const SectionClearanceLabel = ({
   className,
   commonName,
   readyForClearanceDts
-}: SectionClearanceLabelProps): JSX.Element => {
+}: SectionClearanceLabelProps): React.ReactElement => {
   const { t } = useTranslation('prepareForClearance');
 
   return (

@@ -1,34 +1,69 @@
-import React, { ComponentProps } from 'react';
-import { Route } from 'react-router-dom';
-import { SecureRoute } from '@okta/okta-react';
-import NotFound from 'features/NotFound';
-
-// Prop used to pass Launch Darkly flag support to the component or disabled the route completely
-type ShouldBeEnabled = { enabled?: boolean };
-
-type ProtectedRouteProps = ComponentProps<typeof SecureRoute> & {
-  children?: React.ReactNode;
-} & ShouldBeEnabled;
-
 /**
- * This component is a wrapper around Okta's SecureRoute component that adds support for Launch Darkly flags.
- * If the flag/enabled prop is false, the user will be redirected to the NotFound page.
+ * A function that wraps components with authentication protection. This is needed because @okta/okta-react deprecated <SecureRoute> with react-router v6.
+ * If the enabled option is false, the user will be redirected to the NotFound page.
+ * If the user is not authenticated, they will be redirected to the signin page.
  *
- * @param {boolean} enabled used to pass Launch Darkly flag support to the component
- * @param {RouteProps} routeProps {...routeProps} the react-router-dom route props
- * @param {OnAuthRequiredFunction} onAuthRequired the onAuthRequired function for Okta
- * @param {React.ComponentType<{ error: Error }>} errorComponent the error component for Okta
- * @returns JSX.Element
+ * @param {React.ReactNode} component - The component to wrap with protection
+ * @param {object} options - Configuration options
+ * @param {boolean} options.enabled - Whether the route is enabled (defaults to true)
+ * @returns {React.ReactNode} The protected component
  */
-const ProtectedRoute = (props: ProtectedRouteProps): JSX.Element => {
-  const { enabled = true, children, ...routeProps } = props;
 
-  // If the flag is disabled, redirect to the NotFound page
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+
+import { localAuthStorageKey } from 'constants/localAuth';
+import { isLocalAuthEnabled } from 'utils/auth';
+
+// Internal component that handles the protection logic
+const ProtectedRoute = ({
+  children,
+  enabled = true
+}: {
+  children: React.ReactNode;
+  enabled?: boolean;
+}) => {
+  const { oktaAuth, authState } = useOktaAuth();
+  const { t } = useTranslation();
+  const location = useLocation();
+
+  // Check if local auth is being used
+  const isLocalAuth =
+    isLocalAuthEnabled() && window.localStorage[localAuthStorageKey];
+
   if (!enabled) {
-    return <Route component={NotFound} />;
+    return <Navigate to="/not-found" replace />;
   }
 
-  return <SecureRoute {...routeProps}>{children}</SecureRoute>;
+  // If using local auth, skip Okta auth state checks
+  if (isLocalAuth) {
+    return <>{children}</>;
+  }
+
+  // If oktaAuth is null, something is wrong with the authentication setup
+  if (!oktaAuth) {
+    return <div>{t('auth.protectedRoute.error')}</div>;
+  }
+
+  // Show loading state while auth state is being determined
+  if (!authState) {
+    return <div>{t('auth.protectedRoute.loading')}</div>;
+  }
+
+  if (authState.isPending) {
+    return <div>{t('auth.protectedRoute.isPending')}</div>;
+  }
+
+  if (!authState?.isAuthenticated) {
+    // Store the current location so we can redirect back after login
+    oktaAuth.setOriginalUri(location.pathname + location.search);
+    return <Navigate to="/signin" replace />;
+  }
+
+  // Render the protected content
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

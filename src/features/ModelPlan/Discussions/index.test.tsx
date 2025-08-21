@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -128,20 +128,26 @@ describe('Discussion Component', () => {
   vi.spyOn(window, 'scroll');
 
   it('renders discussions and replies without errors', async () => {
-    const { getByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list',
+          element: <Discussions modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
-        ]}
-      >
-        <Route path="/models/:modelID/collaboration-area/task-list">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Discussions modelID={modelID} />
-            </Provider>
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -156,20 +162,26 @@ describe('Discussion Component', () => {
   });
 
   it('renders a question', async () => {
-    const { getByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list',
+          element: <Discussions modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
-        ]}
-      >
-        <Route path="/models/:modelID/collaboration-area/task-list">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Discussions modelID={modelID} />
-            </Provider>
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(async () => {
@@ -196,20 +208,26 @@ describe('Discussion Component', () => {
   });
 
   it('renders the reply form from email generated url param', async () => {
-    const { getByText } = render(
-      <MemoryRouter
-        initialEntries={[
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list',
+          element: <Discussions modelID={modelID} discussionID="123" />
+        }
+      ],
+      {
+        initialEntries: [
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list?discussionID=123'
-        ]}
-      >
-        <Route path="/models/:modelID/collaboration-area/task-list">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Discussions modelID={modelID} discussionID="123" />
-            </Provider>
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
+        ]
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(async () => {

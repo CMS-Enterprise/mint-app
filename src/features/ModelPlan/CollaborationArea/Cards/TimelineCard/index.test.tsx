@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { GetCollaborationAreaQuery, TaskStatus } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
@@ -40,16 +40,28 @@ const baseTimeline: GetCollaborationAreaQuery['modelPlan']['timeline'] = {
 
 describe('TimelineCard', () => {
   it('renders all main elements', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <TimelineCard
+              modelID="123"
+              timeline={baseTimeline}
+              setStatusMessage={mockSetStatusMessage}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     const { asFragment } = render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <TimelineCard
-            modelID="123"
-            timeline={baseTimeline}
-            setStatusMessage={mockSetStatusMessage}
-          />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     expect(screen.getByText('Model timeline')).toBeInTheDocument();
@@ -61,16 +73,28 @@ describe('TimelineCard', () => {
 
   it('does not render upcoming date if missing', () => {
     const timeline = { ...baseTimeline, upcomingTimelineDate: null };
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <TimelineCard
+              modelID="123"
+              timeline={timeline}
+              setStatusMessage={mockSetStatusMessage}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <TimelineCard
-            modelID="123"
-            timeline={timeline}
-            setStatusMessage={mockSetStatusMessage}
-          />{' '}
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
     expect(screen.queryByText(/Upcoming/)).not.toBeInTheDocument();
   });
@@ -81,16 +105,28 @@ describe('TimelineCard', () => {
       modifiedDts: null,
       modifiedByUserAccount: null
     };
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <TimelineCard
+              modelID="123"
+              timeline={timeline}
+              setStatusMessage={mockSetStatusMessage}
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <TimelineCard
-            modelID="123"
-            timeline={timeline}
-            setStatusMessage={mockSetStatusMessage}
-          />{' '}
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
     expect(screen.queryByText('Jane Doe')).not.toBeInTheDocument();
   });

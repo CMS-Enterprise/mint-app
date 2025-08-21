@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Fieldset,
   Form,
@@ -72,9 +72,9 @@ const NewMethodologiesAndConsiderations = () => {
     isDataExchangeApproachComplete: isDataExchangeApproachCompleteConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -166,7 +166,7 @@ const NewMethodologiesAndConsiderations = () => {
     <>
       <MutationErrorModal
         isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
+        closeModal={mutationError.closeModal}
         url={mutationError.destinationURL}
       />
 
@@ -182,7 +182,7 @@ const NewMethodologiesAndConsiderations = () => {
         <Form
           id="new-methodologies-and-additional-considerations-form"
           onSubmit={handleSubmit(() => {
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
             );
           })}
@@ -341,6 +341,7 @@ const NewMethodologiesAndConsiderations = () => {
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`}
                   nextPage={false}
                   disabled={isSubmitting}
+                  id="new-methodologies-and-considerations-form"
                 />
               </Grid>
 

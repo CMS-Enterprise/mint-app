@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 
 type SubmittionFooterProps = {
@@ -9,6 +9,7 @@ type SubmittionFooterProps = {
   backPage?: string;
   nextPage?: boolean;
   disabled?: boolean;
+  id?: string;
 };
 
 const FormFooter = ({
@@ -16,14 +17,15 @@ const FormFooter = ({
   homeRoute,
   nextPage = true,
   backPage,
-  disabled
+  disabled,
+  id
 }: SubmittionFooterProps) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
-    <>
+    <div id={id}>
       <div className="margin-top-6 margin-bottom-2 display-flex">
         {backPage && (
           <Button
@@ -31,7 +33,7 @@ const FormFooter = ({
             className="usa-button usa-button--outline"
             disabled={disabled}
             onClick={() => {
-              history.push(backPage);
+              navigate(backPage);
             }}
           >
             {miscellaneousT('back')}
@@ -39,7 +41,7 @@ const FormFooter = ({
         )}
 
         {nextPage && (
-          <Button type="submit" disabled={disabled}>
+          <Button type="submit" disabled={disabled} id={`${id}-next-button`}>
             {miscellaneousT('next')}
           </Button>
         )}
@@ -49,7 +51,7 @@ const FormFooter = ({
         type="button"
         className="usa-button usa-button--unstyled"
         disabled={disabled}
-        onClick={() => history.push(homeRoute)}
+        onClick={() => navigate(homeRoute)}
       >
         <Icon.ArrowBack
           className="margin-right-1"
@@ -59,7 +61,7 @@ const FormFooter = ({
 
         {homeArea}
       </Button>
-    </>
+    </div>
   );
 };
 

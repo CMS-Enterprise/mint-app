@@ -6,7 +6,7 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import {
   Alert,
@@ -23,6 +23,7 @@ import {
   useGetModelPlanDocumentsQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import ExternalDocumentLink from 'components/ExternalDocumentLink';
@@ -87,7 +88,7 @@ const PlanDocumentsTable = ({
 
   const documents = data?.modelPlan?.documents || ([] as GetDocumentType[]);
   const isCollaborator = data?.modelPlan?.isCollaborator;
-  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { groups } = useSelector((state: AppState) => state.auth);
   const hasEditAccess: boolean =
     !isHelpArticle && (isCollaborator || isAssessment(groups, flags));
 
@@ -519,7 +520,7 @@ export const Table = ({
                       type="button"
                       {...column.getSortByToggleProps()}
                     >
-                      {column.render('Header')}
+                      {column.render('Header') as React.ReactElement}
                       {getHeaderSortIcon(column, false)}
                     </button>
                   </th>
@@ -549,7 +550,7 @@ export const Table = ({
                           }}
                           key={cell.getCellProps().key}
                         >
-                          {cell.render('Cell')}
+                          {cell.render('Cell') as React.ReactElement}
                         </th>
                       );
                     }
@@ -563,7 +564,7 @@ export const Table = ({
                           }}
                           key={cell.getCellProps().key}
                         >
-                          {cell.render('Cell')}
+                          {cell.render('Cell') as React.ReactElement}
                         </td>
                       );
                     }
@@ -576,7 +577,7 @@ export const Table = ({
                         }}
                         key={cell.getCellProps().key}
                       >
-                        {cell.render('Cell')}
+                        {cell.render('Cell') as React.ReactElement}
                       </td>
                     );
                   })}

@@ -12,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -127,11 +127,10 @@ const EditSolutionForm = ({
     solutionType: solutionTypeConfig
   } = usePlanTranslation('mtoSolution');
 
-  const history = useHistory();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { modelID } = useParams<{ modelID: string }>();
-
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const editSolutionID = params.get('edit-solution');
 
@@ -870,15 +869,11 @@ const EditSolutionForm = ({
                       <Controller
                         name="pocName"
                         control={control}
-                        rules={{
-                          required: modelToOperationsMiscT('validation.fillOut')
-                        }}
                         render={({ field: { ref, ...field } }) => (
                           <FormGroup className="margin-top-0 margin-bottom-2">
                             <Label
                               htmlFor={convertCamelCaseToKebabCase(field.name)}
                               className="mint-body-normal maxw-none margin-bottom-1"
-                              requiredMarker
                             >
                               {modelToOperationsMiscT(
                                 'modal.solution.label.pocName'
@@ -904,8 +899,6 @@ const EditSolutionForm = ({
                         name="pocEmail"
                         control={control}
                         rules={{
-                          required:
-                            modelToOperationsMiscT('validation.fillOut'),
                           pattern: {
                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                             message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
@@ -916,7 +909,6 @@ const EditSolutionForm = ({
                             <Label
                               htmlFor={convertCamelCaseToKebabCase(field.name)}
                               className="mint-body-normal maxw-none margin-bottom-1"
-                              requiredMarker
                             >
                               {modelToOperationsMiscT(
                                 'modal.solution.label.pocEmail'
@@ -1241,7 +1233,11 @@ const EditSolutionForm = ({
                                       type="button"
                                       {...column.getSortByToggleProps()}
                                     >
-                                      {column.render('Header')}
+                                      {
+                                        column.render(
+                                          'Header'
+                                        ) as React.ReactElement
+                                      }
                                       {column.canSort &&
                                         getHeaderSortIcon(column, false)}
                                     </button>
@@ -1264,7 +1260,11 @@ const EditSolutionForm = ({
                                         key={cell.getCellProps().key}
                                         className="padding-left-0"
                                       >
-                                        {cell.render('Cell')}
+                                        {
+                                          cell.render(
+                                            'Cell'
+                                          ) as React.ReactElement
+                                        }
                                       </td>
                                     );
                                   })}
