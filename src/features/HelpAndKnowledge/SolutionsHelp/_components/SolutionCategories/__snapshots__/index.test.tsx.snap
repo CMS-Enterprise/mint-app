@@ -4,6 +4,8 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="padding-y-4 padding-bottom-6 bg-primary-darker text-white margin-bottom-neg-7"
+    id="operational-solutions"
+    style="scroll-margin-top: 3.5rem;"
   >
     <div
       class="grid-container"
@@ -52,6 +54,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Applications and participant interaction"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS"
                 >
                   Learn more
@@ -103,6 +106,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Applications and participant interaction"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS"
                 >
                   Learn more
@@ -149,6 +153,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Communication tools and help desk"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=COMMUNICATION_TOOLS_AND_HELP_DESK"
                 >
                   Learn more
@@ -195,6 +200,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Contract vehicles"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=CONTRACT_VEHICLES"
                 >
                   Learn more
@@ -241,6 +247,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Data"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=DATA"
                 >
                   Learn more
@@ -287,6 +294,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Evaluation and review"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=EVALUATION_AND_REVIEW"
                 >
                   Learn more
@@ -333,6 +341,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Learning"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=LEARNING"
                 >
                   Learn more
@@ -379,6 +388,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Legal"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=LEGAL"
                 >
                   Learn more
@@ -425,6 +435,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Medicare Advantage and Part D"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=MEDICARE_ADVANTAGE_AND_PART_D"
                 >
                   Learn more
@@ -471,6 +482,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Medicare Fee-for-Service"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=MEDICARE_FEE_FOR_SERVICE"
                 >
                   Learn more
@@ -517,6 +529,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Payments and financials"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=PAYMENTS_AND_FINANCIALS"
                 >
                   Learn more
@@ -563,6 +576,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
                 <a
                   aria-label="Learn more about Quality"
                   class="usa-link display-flex flex-align-center"
+                  data-discover="true"
                   href="/help-and-knowledge/operational-solutions?category=QUALITY"
                 >
                   Learn more
@@ -588,6 +602,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
       </ul>
       <a
         class="usa-button text-white"
+        data-discover="true"
         href="/help-and-knowledge/operational-solutions?page=1"
       >
         View all operational solutions

@@ -20,10 +20,12 @@ const OperationalSolutionsHelp = ({
 
   return (
     <div
+      id="operational-solutions"
       className={classNames(
         className,
         'padding-y-4 padding-bottom-6 bg-primary-darker text-white margin-bottom-neg-7'
       )}
+      style={{ scrollMarginTop: '3.5rem' }}
     >
       <GridContainer>
         <h2 className="margin-0">{t('operationalSolutions')}</h2>

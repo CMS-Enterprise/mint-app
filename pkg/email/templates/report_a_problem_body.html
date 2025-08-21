@@ -1,6 +1,10 @@
-{{template "shared_header.html" "Problem Report"}}
+{{template "shared_header.html"}}
 
-<h3>Reporter</h3>
+{{template "shared_mint_mailbox_header.html" .}}
+<hr/>
+<br/>
+
+<p class="bold">Reporter</p>
 
 {{if .IsAnonymousSubmission }}
   <p>Anonymous</p>
@@ -57,5 +61,11 @@
 {{else}}
   <i>Left Blank</i>
 {{end}}
+
+<br />
+<hr />
+<br />
+
+{{template "shared_mint_mailbox_footer.html"}}
 
 {{template "shared_footer.html"}}

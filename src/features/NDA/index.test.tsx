@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
@@ -22,15 +22,25 @@ describe('NDA Page', () => {
       }
     });
 
-    const { getByTestId } = render(
-      <MemoryRouter initialEntries={['/pre-decisional-notice']}>
-        <MockedProvider addTypename={false}>
-          <Provider store={store}>
-            <NDA />
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/pre-decisional-notice',
+          element: (
+            <MockedProvider addTypename={false}>
+              <Provider store={store}>
+                <NDA />
+              </Provider>
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/pre-decisional-notice']
+      }
     );
+
+    const { getByTestId } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(getByTestId('accepted-nda')).toBeInTheDocument();
@@ -47,15 +57,25 @@ describe('NDA Page', () => {
       }
     });
 
-    const { getByTestId } = render(
-      <MemoryRouter initialEntries={['/pre-decisional-notice']}>
-        <MockedProvider addTypename={false}>
-          <Provider store={store}>
-            <NDA />
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/pre-decisional-notice',
+          element: (
+            <MockedProvider addTypename={false}>
+              <Provider store={store}>
+                <NDA />
+              </Provider>
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/pre-decisional-notice']
+      }
     );
+
+    const { getByTestId } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(() => getByTestId('accepted-nda')).toThrow();
@@ -74,15 +94,25 @@ describe('NDA Page', () => {
       }
     });
 
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={['/pre-decisional-notice']}>
-        <MockedProvider addTypename={false}>
-          <Provider store={store}>
-            <NDA />
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/pre-decisional-notice',
+          element: (
+            <MockedProvider addTypename={false}>
+              <Provider store={store}>
+                <NDA />
+              </Provider>
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/pre-decisional-notice']
+      }
     );
+
+    const { asFragment } = render(<RouterProvider router={router} />);
     expect(asFragment()).toMatchSnapshot();
   });
 });

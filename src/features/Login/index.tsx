@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { Icon, Link } from '@trussworks/react-uswds';
 import DevLogin from 'wrappers/AuthenticationWrapper/DevLogin';
@@ -22,7 +22,8 @@ const Login = () => {
   let defaultAuth = false;
   const { oktaAuth, authState } = useOktaAuth();
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   if (isLocalAuthEnabled() && window.localStorage[localAuthStorageKey]) {
     defaultAuth = JSON.parse(
@@ -39,18 +40,23 @@ const Login = () => {
     const referringUri = oktaAuth.getOriginalUri();
 
     oktaAuth.handleLoginRedirect(tokens).then(() => {
-      history.push({
-        pathname: '/pre-decisional-notice',
-        state: {
-          nextState: referringUri || '/'
-        }
-      });
+      // Only navigate if we're not already on the pre-decisional-notice page
+      if (location.pathname !== '/pre-decisional-notice') {
+        navigate('/pre-decisional-notice', {
+          state: {
+            nextState: referringUri || '/'
+          }
+        });
+      }
     });
   };
 
   useEffect(() => {
     if (authState?.isAuthenticated) {
-      history.replace('/pre-decisional-notice');
+      // Only redirect if we're not already on the pre-decisional-notice page
+      if (location.pathname !== '/pre-decisional-notice') {
+        navigate('/pre-decisional-notice', { replace: true });
+      }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

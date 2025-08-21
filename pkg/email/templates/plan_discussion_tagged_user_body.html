@@ -1,5 +1,7 @@
 {{template "shared_header.html"}}
 
+{{template "shared_non_mint_mailbox_header.html" .}}
+<hr>
 
 <h3>You were tagged in</h3>
 <p>{{.ModelName}} {{ if .ModelAbbreviation}} ({{.ModelAbbreviation}}) {{end}} </p>
@@ -26,19 +28,11 @@
 <br/>
 <hr/>
 <br/>
-<p>You are receiving this email because you were tagged in a Discussion.
+<p>
+  You are receiving this email because you were tagged in a discussion for a model in MINT.
 </p>
+
 <br/>
-<div class="access-banner">
-  <p>
-      If you don’t have access to MINT yet, you will need to request access.
+{{template "shared_access_banner.html" .}}
 
-      <br/>
-      <br/>
-
-      <a href="{{.ClientAddress}}/how-to-get-access" class="link" style="font-weight: normal">
-      Learn how to get access
-      </a>
-  </p>
-</div>
 {{template "shared_footer.html"}}

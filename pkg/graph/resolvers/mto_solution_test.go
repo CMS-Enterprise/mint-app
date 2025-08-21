@@ -218,6 +218,9 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 
 	// Create a custom solution
 	solName := "Custom Solution 1"
+	pocName := "POC Name"
+	pocEmail := "poc@example.com"
+
 	solType := models.MTOSolutionTypeOther
 	sol, err := MTOSolutionCreateCustom(
 		suite.testConfigs.Logger,
@@ -228,8 +231,8 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 		solName,
 		solType,
 		nil,
-		"POC Name",
-		"poc@example.com",
+		&pocName,
+		&pocEmail,
 	)
 	suite.NoError(err)
 

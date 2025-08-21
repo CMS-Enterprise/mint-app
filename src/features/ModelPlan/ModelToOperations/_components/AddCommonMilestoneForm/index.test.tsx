@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MtoCommonMilestoneKey } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
@@ -11,15 +11,12 @@ import AddCommonMilestoneForm from './index';
 
 describe('Add common milestone form', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
-        ]}
-      >
-        <MessageProvider>
-          <VerboseMockedProvider mocks={[]} addTypename={false}>
-            <Route path="/models/:modelID/">
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
+          element: (
+            <MessageProvider>
               <AddCommonMilestoneForm
                 milestone={{
                   __typename: 'MTOCommonMilestone',
@@ -34,10 +31,21 @@ describe('Add common milestone form', () => {
                 }}
                 closeModal={() => {}}
               />
-            </Route>
-          </VerboseMockedProvider>
-        </MessageProvider>
-      </MemoryRouter>
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`
+        ]
+      }
+    );
+
+    const { asFragment } = render(
+      <VerboseMockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
     );
 
     await waitFor(() => {

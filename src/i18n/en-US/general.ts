@@ -55,8 +55,7 @@ const general = {
   noResults: 'No results found',
   checkAndFix: 'Please check and fix the following',
   note: 'Notes',
-  dateWarning:
-    'You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.',
+
   helpText:
     "If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.",
   modelPlanStatus: 'Model Plan status',
@@ -76,7 +75,14 @@ const general = {
   successfullyUnlock:
     'All sections have been unlocked successfully. Any users currently editing the Model Plan will maintain their locks on their respective sections.',
   unlockFailed: 'Unlock failed',
-  unlockAllSections: 'Unlock all model sections'
+  unlockAllSections: 'Unlock all model sections',
+  dateWarning:
+    'You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.',
+  datePicker: {
+    label: 'Date picker',
+    open: 'Open date picker',
+    warning: 'Date is in the past'
+  }
 };
 
 export default general;

@@ -5,6 +5,7 @@ exports[`Operation Solution Help Tag > matches snapshot 1`] = `
   <a
     aria-label="Articles under the Data category"
     class="usa-link margin-right-05 margin-bottom-1 display-block"
+    data-discover="true"
     data-testid="solutions-tag"
     href="/help-and-knowledge/operational-solutions?category=DATA"
   >

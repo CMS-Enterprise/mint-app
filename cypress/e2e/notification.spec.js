@@ -306,8 +306,8 @@ describe('Notification Center', () => {
 
     cy.url().should('include', '/model-timeline');
     cy.get('#timeline-completeICIP')
-      .type('2025-12-31')
-      .should('have.value', '2025-12-31');
+      .type('12/31/2025')
+      .should('have.value', '12/31/2025');
 
     cy.clickOutside();
 
@@ -315,7 +315,7 @@ describe('Notification Center', () => {
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
 
-    cy.get('[data-testid="navmenu__notification"]').click();
+    cy.get('[data-testid="navmenu__notification"]').click().click();
 
     cy.url().should('include', '/notifications');
 
@@ -325,7 +325,9 @@ describe('Notification Center', () => {
       'updated the dates for Empty Plan.'
     );
 
-    cy.contains('button', 'View changes').click();
+    cy.contains('button', 'View changes')
+      .should('be.not.disabled')
+      .click({ force: true });
 
     cy.get('[data-testid="notification--dates-changed"]').should('exist');
 
@@ -378,9 +380,15 @@ describe('Notification Center', () => {
 
     cy.enterModelPlanCollaborationArea('Empty Plan');
     cy.contains('button', 'Start approach').click();
-    cy.contains('button', 'Next').should('not.be.disabled').click();
-    cy.contains('button', 'Next').should('not.be.disabled').click();
-    cy.contains('button', 'Next').should('not.be.disabled').click();
+    cy.contains('button', 'Next')
+      .should('not.be.disabled')
+      .click({ force: true });
+    cy.get('#collect-and-send-data-form-next-button')
+      .should('not.be.disabled')
+      .click({ force: true });
+    cy.get('#collection-and-aggregation-form-next-button')
+      .should('not.be.disabled')
+      .click({ force: true });
 
     cy.get('#additional-data-exchange-considerations-description')
       .should('not.be.disabled')

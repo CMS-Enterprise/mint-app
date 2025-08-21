@@ -276,6 +276,9 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		models.TNPlanDataExchangeApproach,
 		models.TNPlanTimeline,
 	}
+
+	sections = append(sections, models.MTOTables...)
+
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return lo.Contains(sections, m.TableName)
 	})

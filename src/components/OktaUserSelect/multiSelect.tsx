@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import classNames from 'classnames';
 
 import Alert from 'components/Alert';
@@ -125,8 +125,8 @@ const OktaMultiSelect = ({
         hideSelectedOptions={false}
         closeMenuOnSelect={false}
         tabSelectsValue={false}
-        onChange={(selectedOptions: MultiSelectOptionProps[]) => {
-          setSelected(selectedOptions);
+        onChange={(selectedOptions: MultiValue<MultiSelectOptionProps>) => {
+          setSelected([...selectedOptions]);
           onChange(selectedOptions.map(option => option.value));
         }}
         value={selected}

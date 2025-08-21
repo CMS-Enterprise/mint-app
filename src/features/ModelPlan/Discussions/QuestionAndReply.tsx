@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -8,7 +8,7 @@ import {
   Select,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery,
@@ -67,7 +67,7 @@ const QuestionAndReply = ({
 
   const { userRole: userRoleConfig } = usePlanTranslation('discussions');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${renderType}`)
@@ -78,6 +78,9 @@ const QuestionAndReply = ({
   const mostRecentUserRole = data?.mostRecentDiscussionRoleSelection?.userRole;
   const mostRecentUserRoleDescription =
     data?.mostRecentDiscussionRoleSelection?.userRoleDescription;
+
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const MINTForm = Form as any;
 
   return (
     <>
@@ -155,6 +158,8 @@ const QuestionAndReply = ({
         validateOnChange={false}
         validateOnMount={false}
       >
+        {/* Formik types conflict with React 19 types */}
+        {/* @ts-ignore */}
         {(formikProps: FormikProps<DiscussionFormPropTypes>) => {
           const {
             errors,
@@ -185,8 +190,9 @@ const QuestionAndReply = ({
                   })}
                 </ErrorAlert>
               )}
-              <Form
-                onSubmit={e => {
+              <MINTForm
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  e.preventDefault();
                   handleSubmit(e);
                   window.scrollTo(0, 0);
                 }}
@@ -301,9 +307,14 @@ const QuestionAndReply = ({
                         ) {
                           setDiscussionReplyID(null);
                           queryParams.delete('discussionID');
-                          history.replace({
-                            search: queryParams.toString()
-                          });
+                          navigate(
+                            {
+                              search: queryParams.toString()
+                            },
+                            {
+                              replace: true
+                            }
+                          );
                           setInitQuestion(false);
                         }
                         if (renderType && setDiscussionType) {
@@ -331,7 +342,7 @@ const QuestionAndReply = ({
                     </Button>
                   </div>
                 </Fieldset>
-              </Form>
+              </MINTForm>
             </>
           );
         }}

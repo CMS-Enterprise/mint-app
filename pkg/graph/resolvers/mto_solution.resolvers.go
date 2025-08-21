@@ -44,7 +44,7 @@ func (r *mTOSolutionResolver) CommonSolution(ctx context.Context, obj *models.MT
 }
 
 // CreateMTOSolutionCustom is the resolver for the createMTOSolutionCustom field.
-func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, name string, pocName string, pocEmail string) (*models.MTOSolution, error) {
+func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPlanID uuid.UUID, solutionType models.MTOSolutionType, name string, pocName *string, pocEmail *string) (*models.MTOSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 

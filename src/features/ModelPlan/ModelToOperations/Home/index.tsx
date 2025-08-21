@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -46,7 +46,7 @@ const MTOHome = () => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -65,7 +65,7 @@ const MTOHome = () => {
       obj => obj.isSuggested && !obj.isAdded
     ) || [];
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -89,9 +89,9 @@ const MTOHome = () => {
     } else {
       // Default to milestones if no view param present
       params.set('view', 'milestones');
-      history.replace({ search: params.toString() });
+      navigate({ search: params.toString() }, { replace: true });
     }
-  }, [viewparam, history, params]);
+  }, [viewparam, navigate, params]);
 
   const isMatrixStarted: boolean =
     data?.modelPlan.mtoMatrix.status !== MtoStatus.READY;
@@ -193,7 +193,7 @@ const MTOHome = () => {
                       params.delete('type');
                       params.delete('hide-milestones-without-solutions');
                       params.set('view', item);
-                      history.push({ search: params.toString() });
+                      navigate({ search: params.toString() });
                     }}
                     className={classNames(
                       'usa-nav__link margin-left-neg-2 margin-right-2',
@@ -231,7 +231,7 @@ const MTOHome = () => {
                 value={currentView}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   params.set('view', e.target.value);
-                  history.push({ search: params.toString() });
+                  navigate({ search: params.toString() });
                 }}
                 className="margin-bottom-4 text-primary text-bold"
               >

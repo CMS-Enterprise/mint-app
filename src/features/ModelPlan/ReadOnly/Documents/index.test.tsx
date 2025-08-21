@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
@@ -68,18 +68,28 @@ const store = mockStore({ auth: mockAuthReducer });
 
 describe('Model Plan Documents page', () => {
   it('renders without errors', async () => {
-    render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/documents`]}>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/documents',
+          element: (
             <MessageProvider>
-              <Route path="/models/:modelID/read-view/documents">
-                <ReadOnlyDocuments modelID={modelID} />
-              </Route>
+              <ReadOnlyDocuments modelID={modelID} />
             </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/documents`]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
 
     await waitFor(() => {
@@ -91,18 +101,28 @@ describe('Model Plan Documents page', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/read-view/documents`]}>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Provider store={store}>
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/read-view/documents',
+          element: (
             <MessageProvider>
-              <Route path="/models/:modelID/read-view/documents">
-                <ReadOnlyDocuments modelID={modelID} />
-              </Route>
+              <ReadOnlyDocuments modelID={modelID} />
             </MessageProvider>
-          </Provider>
-        </MockedProvider>
-      </MemoryRouter>
+          )
+        }
+      ],
+      {
+        initialEntries: [`/models/${modelID}/read-view/documents`]
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
     );
     await waitFor(() => {
       expect(screen.getByText('My Document')).toBeInTheDocument();

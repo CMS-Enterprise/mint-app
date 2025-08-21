@@ -41,6 +41,7 @@ exports[`The Not Found Page > matches the snapshot 1`] = `
       </p>
       <a
         class="usa-button"
+        data-discover="true"
         href="/"
       >
         Go back to the home page
