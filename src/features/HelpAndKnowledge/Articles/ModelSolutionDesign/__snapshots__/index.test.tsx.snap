@@ -2,46 +2,800 @@
 
 exports[`ModelSolutionDesign > matches the snapshot 1`] = `
 <DocumentFragment>
-  <h2>
-    Unexpected Application Error!
-  </h2>
-  <h3
-    style="font-style: italic;"
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
   >
-    An error occurred! For more details, see the full error text at https://go.apollo.dev/c/err#%7B%22version%22%3A%223.13.9%22%2C%22message%22%3A58%2C%22args%22%3A%5B%5D%7D
-  </h3>
-  <pre
-    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-label="close"
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1 margin-top-4"
+          tabindex="-1"
+        >
+          Model design and solution design
+        </h1>
+        <a
+          class="usa-link width-fit-content display-block margin-bottom-1"
+          data-discover="true"
+          href="/help-and-knowledge/articles?category=it-implementation"
+        >
+          <span
+            aria-label="Articles under the IT implementation category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            IT implementation
+          </span>
+        </a>
+        <p
+          class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
+        >
+          This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, operational solutions, and contracts needed to support the model.
+        </p>
+        <div
+          class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading margin-top-0 margin-bottom-1"
+            >
+              Activities involved
+            </h3>
+            <div
+              class="usa-summary-box__text"
+            >
+              <ol
+                class="padding-left-5 margin-y-0"
+              >
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Add your model to MINT and start a Model Plan
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon margin-left-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Assemble the IT and operational team
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon margin-left-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Draft a model-to-operations matrix (MTO) and identify the IT solutions for the model’s operational needs
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon margin-left-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <h2
+          class="margin-top-6 margin-bottom-2"
+          id="add-your-model-to-mint-and-start-a-model-plan"
+        >
+          1.  Add your model to MINT and start a Model Plan
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To provide BSG with an understanding of the model needs so they can help determine the necessary operational solutions for the model.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          The model team may add their model to MINT as early as they wish, but should at least begin their Model Plan shortly after they’ve completed their 2-page concept document.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Start a Model Plan
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Once a concept paper has been written, the Model Lead (or other model team member) will add their model in MINT and start filling out the Model Plan form. Other team members may collaborate on the Model Plan and the operational needs of the model.
+            
+            
+              <a
+                class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+                data-discover="true"
+                href="/models/steps-overview"
+              >
+                Add a new model to MINT
+                <svg
+                  aria-label="forward"
+                  class="usa-icon margin-left-1 text-bold"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </a>
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Upload relevant documents
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Add documents such as your 2- and 6-page concept papers, draft ICIP, market research, presentations, etc. These will provide BSG and/or the IT Lead helpful background.
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Make time to work with BSG during model design
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Operational planning for models is a very iterative process so collaboration is key. BSG will assign an IT Lead to most models, and can offer additional assistance to model teams as needed.
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            The creation of a Model Plan that identifies the high-level operational requirements for your model.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Provides BSG with enough information to start assisting with the model and implementation requirements.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Project Management and IT subject matter experts are identified to work with the model team to plan, execute, and manage the IT and operational implementation for the model, including drafting and maintaining the model’s MTO.
+          </li>
+        </ol>
+        <h2
+          class="margin-top-7 margin-bottom-2"
+          id="assemble-the-it-and-operational-team"
+        >
+          2. Assemble the IT and operational team
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To provide the model team with the necessary expertise to assist with completing the IT and operational projects.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          This happens after the Model Plan has been started in MINT.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Assign an IT Lead
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              An IT Lead is a member of BSG that will work closely with the model team to orchestrate the implementation of all the IT and operations needed for a model. Other organizations might refer to this role as an integrator. The IT Lead will be responsible for drafting and maintaining the model-to-operations matrix (MTO) in MINT.
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Collaborate with other SMEs as necessary
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Other SMEs may be brought in to help with other aspects of the operational and IT needs of the model.
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            IT Lead and other relevant SMEs are identified to work with the model team to plan, execute, and manage the IT and operational implementation for the model.
+          </li>
+        </ol>
+        <h2
+          class="margin-top-7 margin-bottom-2"
+          id="draft-a-model-to-operations-matrix-mto-and-identify-the-it-solutions-for-the-model’s-operational-needs"
+        >
+          3. Draft a model-to-operations matrix (MTO) and identify the IT solutions for the model’s operational needs
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To identify the systems, data, and operational contracts needed to support a model. This step should identify the model milestones and functions needed for the model as well as the solutions and IT systems that will be used to implement them.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          The operational needs identification and creation of the MTO should begin as early as possible, but at least as soon as the model team:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-1"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Starts developing the Innovation Center Investment Proposal (ICIP) after approval by the Portfolio Management Committee (PMC) and/or
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Begins developing a Notice of Proposed Rulemaking (NPRM). Ideally, the operational needs identification occurs in parallel with the ICIP / NPRM development.
+          </li>
+        </ol>
+        <p
+          class="margin-y-0 line-height-sans-5 padding-left-6"
+        >
+          Identifying operational and IT needs early allows the IT Lead and BSG team to identify the most effective and efficient operational support strategies. As the model design becomes clearer, the operational strategy should also increase in precision.
+        </p>
+        <h3
+          class="margin-top-4 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Iterate and complete the Model Plan
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, milestones are suggested within the MTO. 
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Draft the MTO and select the necessary solutions and IT systems for the model’s milestones
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Within the MTO, the Model Lead and IT Lead will work together to select the solutions and IT systems that will be used to implement the model, associating them with the identified milestones.
+                        
+            
+              <a
+                class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+                data-discover="true"
+                href="/help-and-knowledge/creating-mto-matrix"
+              >
+                Learn more about creating a model-to-operations matrix (MTO)
+                <svg
+                  aria-label="forward"
+                  class="usa-icon margin-left-1 text-bold"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </a>
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Understand and plan for the data needs of the model and complete the data exchange approach
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              BSG will meet with model teams to understand the data the model will be collecting. For example: Models may choose to track participation in the model (the participants, providers, or beneficiaries). You will be asked to produce participation files in a specified format to be loaded into CMMI's central data repository the 
+              <a
+                class="usa-link usa-button usa-button--unstyled"
+                data-discover="true"
+                href="/help-and-knowledge/model-and-solution-design?solution=cmmi-analysis-and-management-system&section=about"
+              >
+                CMMI Analysis and Management System (AMS)
+              </a>
+              .
+          
+              <br />
+               
+              <br />
+              
+            This model data will be shared with 
+              <a
+                class="usa-link usa-button usa-button--unstyled"
+                data-discover="true"
+                href="/help-and-knowledge/model-and-solution-design?solution=cmmi-analysis-and-management-system&section=about"
+              >
+                AMS
+              </a>
+              , 
+              <a
+                class="usa-link usa-button usa-button--unstyled"
+                data-discover="true"
+                href="/help-and-knowledge/model-and-solution-design?solution=quality-payment-program&section=about"
+              >
+                QPP
+              </a>
+              , and ResDAC. Data will be made available for researchers in ResDAC after the first quarter of operations if it is ready at that point in time.
+
+            
+              <a
+                class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+                data-discover="true"
+                href="/help-and-knowledge/evaluating-data-exchange-approach"
+              >
+                Learn more about the data exchange approach
+            
+                <svg
+                  aria-label="forward"
+                  class="usa-icon margin-left-1 text-bold"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </a>
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Milestones for the model are identified.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Solutions and IT systems are identified for meeting the model milestones and needs.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Operational and data support for the model is identified.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            A data exchange approach is completed.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            The IT Lead drafts an MTO for the model.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Leadership and other interested parties are able to access the data exchange approach and MTO and review added model milestones and operational solutions.
+          </li>
+        </ol>
+      </div>
+    </div>
+  </main>
+  <div
+    class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
   >
-    Invariant Violation: An error occurred! For more details, see the full error text at https://go.apollo.dev/c/err#%7B%22version%22%3A%223.13.9%22%2C%22message%22%3A58%2C%22args%22%3A%5B%5D%7D
-    at new InvariantError (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/node_modules/ts-invariant/lib/invariant.js:11:28)
-    at Object.originalInvariant [as invariant] (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/node_modules/ts-invariant/lib/invariant.js:24:15)
-    at Object.invariant (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/utilities/globals/invariantWrappers.js:28:9)
-    at useApolloClient (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/react/hooks/useApolloClient.js:22:5)
-    at Proxy.useQuery (/Users/oddball/elle/mint/mint-app/node_modules/@apollo/client/react/hooks/useQuery.js:74:16)
-    at Module.useGetMtoSolutionContactsQuery (/Users/oddball/elle/mint/mint-app/src/gql/generated/graphql.ts:12188:23)
-    at Module.useHelpSolution [as default] (/Users/oddball/elle/mint/mint-app/src/hooks/useHelpSolutions.ts:42:29)
-    at ModelSolutionDesign (/Users/oddball/elle/mint/mint-app/src/features/HelpAndKnowledge/Articles/ModelSolutionDesign/index.tsx:66:38)
-    at Object.react_stack_bottom_frame (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
-    at renderWithHooks (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
-  </pre>
-  <p>
-    💿 Hey developer 👋
-  </p>
-  <p>
-    You can provide a way better UX than this when your app throws errors by providing your own 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
+    <div
+      class="grid-container padding-top-4 padding-bottom-10"
+      data-testid="gridContainer"
     >
-      ErrorBoundary
-    </code>
-     or 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      errorElement
-    </code>
-     prop on your route.
-  </p>
+      <h2
+        class="margin-top-0 margin-bottom-1"
+      >
+        Related help resources
+      </h2>
+      <dt
+        class="margin-bottom-4"
+      >
+        Below are some additional help resources that you may find useful.
+      </dt>
+      <ul
+        class="usa-card-group"
+        data-testid="CardGroup"
+      >
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <div
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Phases involved in creating IT and operational support for models
+              </h3>
+            </div>
+            <a
+              class="usa-link width-fit-content display-block "
+              data-discover="true"
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                There are two phases invovled in creating IT and operational support for CMMI models.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Phases involved in creating IT and operational support for models article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <div
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Model implementation and solution implementation
+              </h3>
+            </div>
+            <a
+              class="usa-link width-fit-content display-block "
+              data-discover="true"
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Model implementation and solution implementation article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <div
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Utilizing available operational solutions
+              </h3>
+            </div>
+            <a
+              class="usa-link width-fit-content display-block "
+              data-discover="true"
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Utilizing available operational solutions article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <a
+        class="usa-link"
+        data-discover="true"
+        href="/help-and-knowledge/articles"
+      >
+        View all help resources
+      </a>
+    </div>
+  </div>
 </DocumentFragment>
 `;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
@@ -23,27 +23,39 @@ export default {
   component: Contact,
   decorators: [
     Story => (
-      <MemoryRouter
-        initialEntries={[
-          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-        ]}
-      >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <Contact contact={contact} />
-        </Route>
-      </MemoryRouter>
+      <RouterProvider
+        router={createMemoryRouter(
+          [
+            {
+              path: '/help-and-knowledge/operational-solutions',
+              element: <Contact contact={contact} />
+            }
+          ],
+          {
+            initialEntries: [
+              '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
+            ]
+          }
+        )}
+      />
     )
   ]
 } as Meta<typeof Contact>;
 
 export const Default = () => (
-  <MemoryRouter
-    initialEntries={[
-      '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
-    ]}
-  >
-    <Route path="/help-and-knowledge/operational-solutions">
-      <Contact contact={contact} />
-    </Route>
-  </MemoryRouter>
+  <RouterProvider
+    router={createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: <Contact contact={contact} />
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/operational-solutions/solutions?solution=accountable-care-organization&section=about'
+        ]
+      }
+    )}
+  />
 );
