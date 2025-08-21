@@ -524,20 +524,15 @@ const EditMilestoneForm = ({
       }).then(response => {
         if (!response?.errors) {
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              <Trans
-                i18nKey={modelToOperationsMiscT(
-                  'modal.editMilestone.successUpdated'
-                )}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-                values={{ milestone: formData.name }}
-              />
-            </span>,
-            {
-              id: 'mandatory-fields-alert'
-            }
+            <Trans
+              i18nKey={modelToOperationsMiscT(
+                'modal.editMilestone.successUpdated'
+              )}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+              values={{ milestone: formData.name }}
+            />
           );
 
           // eslint-disable-next-line no-param-reassign
@@ -577,14 +572,9 @@ const EditMilestoneForm = ({
     }).then(response => {
       if (!response?.errors) {
         toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
-              milestone: milestone?.name
-            })}
-          </span>,
-          {
-            id: 'mandatory-fields-alert'
-          }
+          modelToOperationsMiscT('modal.editMilestone.successRemoved', {
+            milestone: milestone?.name
+          })
         );
         closeModal();
         setIsModalOpen(false);

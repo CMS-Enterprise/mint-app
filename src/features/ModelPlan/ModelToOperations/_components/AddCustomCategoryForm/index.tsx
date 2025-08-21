@@ -115,34 +115,24 @@ const CustomCategoryForm = () => {
         if (formData.primaryCategory === 'none') {
           // Parent Category Success Message
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              <Trans
-                i18nKey={t('modal.category.alert.success.parent')}
-                components={{
-                  b: <span className="text-bold" />
-                }}
-                values={{ category: formData.name }}
-              />
-            </span>,
-            {
-              id: 'mandatory-category-alert'
-            }
+            <Trans
+              i18nKey={t('modal.category.alert.success.parent')}
+              components={{
+                b: <span className="text-bold" />
+              }}
+              values={{ category: formData.name }}
+            />
           );
         } else {
           // Subcategory Success Message
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              <Trans
-                i18nKey={t('modal.category.alert.success.subcategory')}
-                components={{
-                  b: <span className="text-bold" />
-                }}
-                values={{ category: formData.name }}
-              />
-            </span>,
-            {
-              id: 'mandatory-category-alert'
-            }
+            <Trans
+              i18nKey={t('modal.category.alert.success.subcategory')}
+              components={{
+                b: <span className="text-bold" />
+              }}
+              values={{ category: formData.name }}
+            />
           );
         }
         setMTOModalOpen(false);

@@ -360,20 +360,15 @@ const EditSolutionForm = ({
       }).then(response => {
         if (!response?.errors) {
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              <Trans
-                i18nKey={modelToOperationsMiscT(
-                  'modal.editSolution.successUpdated'
-                )}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-                values={{ solution: formData.name }}
-              />
-            </span>,
-            {
-              id: 'mandatory-fields-alert'
-            }
+            <Trans
+              i18nKey={modelToOperationsMiscT(
+                'modal.editSolution.successUpdated'
+              )}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+              values={{ solution: formData.name }}
+            />
           );
 
           // eslint-disable-next-line no-param-reassign

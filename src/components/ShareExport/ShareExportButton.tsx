@@ -63,14 +63,9 @@ const ShareExportButton = ({
       .then((response: any) => {
         if (!response?.errors) {
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              {modelPlanTaskListT('withdraw_modal.confirmationText_name', {
-                modelName
-              })}
-            </span>,
-            {
-              id: 'mandatory-fields-alert'
-            }
+            modelPlanTaskListT('withdraw_modal.confirmationText_name', {
+              modelName
+            })
           );
           navigate(`/`);
         }

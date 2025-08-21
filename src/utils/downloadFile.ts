@@ -1,6 +1,5 @@
 // Util for downloading files from external URL
 import axios from 'axios';
-import i18next from 'i18next';
 
 type DownloadDocumentType = {
   fileType: string;

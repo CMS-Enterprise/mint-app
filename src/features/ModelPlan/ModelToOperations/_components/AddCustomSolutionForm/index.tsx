@@ -108,18 +108,13 @@ const CustomSolutionForm = () => {
     }).then(response => {
       if (!response?.errors) {
         toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            <Trans
-              i18nKey={t('modal.solution.alert.success')}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-              values={{ solution: formData.solutionTitle }}
-            />
-          </span>,
-          {
-            id: 'mandatory-solution-alert'
-          }
+          <Trans
+            i18nKey={t('modal.solution.alert.success')}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ solution: formData.solutionTitle }}
+          />
         );
         setMTOModalOpen(false);
       }

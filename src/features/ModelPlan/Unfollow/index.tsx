@@ -64,11 +64,9 @@ const Unfollow = () => {
         .then(response => {
           if (!response?.errors) {
             toastSuccess(
-              <span className="mandatory-fields-alert__text">
-                {t('favorite.success', {
-                  requestName: modelName
-                })}
-              </span>
+              t('favorite.success', {
+                requestName: modelName
+              })
             );
             navigate('/models');
           }

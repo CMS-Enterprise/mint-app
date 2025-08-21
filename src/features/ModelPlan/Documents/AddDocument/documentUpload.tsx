@@ -64,12 +64,10 @@ const DocumentUpload = ({
       }).then(response => {
         if (!response.errors) {
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              {documentsMiscT('documentUploadSuccess', {
-                documentName: file.name,
-                modelName
-              })}
-            </span>
+            documentsMiscT('documentUploadSuccess', {
+              documentName: file.name,
+              modelName
+            })
           );
 
           if (solutionDetailsLink) {

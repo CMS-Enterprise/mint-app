@@ -127,18 +127,13 @@ const CustomMilestoneForm = () => {
     }).then(response => {
       if (!response?.errors) {
         toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            <Trans
-              i18nKey={t('modal.milestone.alert.success')}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-              values={{ milestone: formData.name }}
-            />
-          </span>,
-          {
-            id: 'mandatory-milestone-alert'
-          }
+          <Trans
+            i18nKey={t('modal.milestone.alert.success')}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ milestone: formData.name }}
+          />
         );
 
         setCategoryRowsOpenOnCreation(
@@ -302,7 +297,6 @@ const CustomMilestoneForm = () => {
             className="usa-button usa-button--unstyled margin-top-0"
             onClick={() => {
               reset();
-              clearMessage();
               setMTOModalOpen(false);
             }}
           >

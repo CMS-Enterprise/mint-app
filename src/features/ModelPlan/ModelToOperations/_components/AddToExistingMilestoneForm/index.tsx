@@ -119,18 +119,13 @@ const AddToExistingMilestoneForm = ({
       .then(response => {
         if (!response?.errors) {
           toastSuccess(
-            <span className="mandatory-fields-alert__text">
-              <Trans
-                i18nKey={t('modal.addToExistingMilestone.alert.success')}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-                values={{ title: solutionName }}
-              />
-            </span>,
-            {
-              id: 'mandatory-fields-alert'
-            }
+            <Trans
+              i18nKey={t('modal.addToExistingMilestone.alert.success')}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+              values={{ title: solutionName }}
+            />
           );
 
           params.delete('add-solution', solutionKey);

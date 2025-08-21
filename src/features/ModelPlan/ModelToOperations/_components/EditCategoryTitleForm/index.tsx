@@ -81,18 +81,13 @@ const EditCategoryTitleForm = () => {
     }).then(response => {
       if (!response?.errors) {
         toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            <Trans
-              i18nKey={t('modal.editCategoryTitle.alert.success')}
-              components={{
-                b: <span className="text-bold" />
-              }}
-              values={{ title: formData.name }}
-            />
-          </span>,
-          {
-            id: 'mandatory-fields-alert'
-          }
+          <Trans
+            i18nKey={t('modal.editCategoryTitle.alert.success')}
+            components={{
+              b: <span className="text-bold" />
+            }}
+            values={{ title: formData.name }}
+          />
         );
       }
       setMTOModalOpen(false);

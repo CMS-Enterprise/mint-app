@@ -52,11 +52,9 @@ const TaskListSideNav = ({
     }).then(response => {
       if (!response?.errors) {
         toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            {t('withdraw_modal.confirmationText_name', {
-              modelName: modelPlan.modelName
-            })}
-          </span>
+          t('withdraw_modal.confirmationText_name', {
+            modelName: modelPlan.modelName
+          })
         );
 
         navigate(`/`);

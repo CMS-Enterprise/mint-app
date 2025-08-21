@@ -201,11 +201,7 @@ const SelectSolutionForm = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            {t('modal.selectSolution.alert.success')}
-          </span>
-        );
+        toastSuccess(t('modal.selectSolution.alert.success'));
         setMTOModalOpen(false);
       }
     });

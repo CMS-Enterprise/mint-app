@@ -68,12 +68,10 @@ const LinkDocument = ({
     }).then(response => {
       if (!response.errors) {
         toastSuccess(
-          <span className="mandatory-fields-alert__text">
-            {documentsMiscT('documentUploadSuccess', {
-              documentName: name,
-              modelName
-            })}
-          </span>
+          documentsMiscT('documentUploadSuccess', {
+            documentName: name,
+            modelName
+          })
         );
 
         if (solutionDetailsLink) {

@@ -44,10 +44,7 @@ const AddTemplateModal = () => {
             components={{
               bold: <span className="text-bold " />
             }}
-          />,
-          {
-            id: 'mandatory-fields-alert'
-          }
+          />
         );
       }
       setMTOModalOpen(false);
