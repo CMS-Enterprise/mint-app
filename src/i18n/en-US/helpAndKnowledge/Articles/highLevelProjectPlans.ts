@@ -54,7 +54,7 @@ const highLevelProjectPlans = {
           modalLinks: [
             {
               copy: '<ml>ARDS</ml> (available through BSG/DCCS)',
-              route: 'research-measurement-assessment-design-and-analysis'
+              route: 'actuarial-research-and-design-services'
             },
             {
               copy: '<ml>FFRDC</ml> (also known as MITRE, available through PPG)',
