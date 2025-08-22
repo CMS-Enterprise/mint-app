@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { Button, GridContainer } from '@trussworks/react-uswds';
 import { useUnlockAllSectionsMutation } from 'gql/generated/graphql';
@@ -14,10 +14,10 @@ import { isAssessment } from 'utils/user';
 const UnlockAllSections = () => {
   const { t } = useTranslation('general');
   const flags = useFlags();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { showMessageOnNextPage } = useMessage();
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const [showAlert, setShowAlert] = useState<boolean | null>(null);
 
@@ -35,7 +35,7 @@ const UnlockAllSections = () => {
     unlockAllSections({ variables: { modelPlanID: modelID } })
       .then(res => {
         if (!res.errors) {
-          history.push(`/models/${modelID}/collaboration-area`);
+          navigate(`/models/${modelID}/collaboration-area`);
           showMessageOnNextPage(t('successfullyUnlock'));
         } else {
           setShowAlert(true);
@@ -48,16 +48,16 @@ const UnlockAllSections = () => {
 
   useEffect(() => {
     if (!hasEditAccess) {
-      history.push(`/models/${modelID}/collaboration-area`);
+      navigate(`/models/${modelID}/collaboration-area`);
     }
-  }, [hasEditAccess, history, modelID]);
+  }, [hasEditAccess, navigate, modelID]);
 
   return (
     <MainContent>
       <GridContainer className="padding-top-4">
         {showAlert && <Alert type="warning">{t('unlockFailed')}</Alert>}
 
-        <Button onClick={() => unlockAllSectionsHandler()}>
+        <Button type="button" onClick={() => unlockAllSectionsHandler()}>
           {t('unlockAllSections')}
         </Button>
       </GridContainer>

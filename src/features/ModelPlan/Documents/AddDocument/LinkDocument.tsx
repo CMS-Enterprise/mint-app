@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { Form, useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import { DocumentType } from 'gql/generated/graphql';
 import LinkNewPlanDocument from 'gql/operations/Documents/LinkNewPlanDocument';
 
@@ -37,8 +37,8 @@ const LinkDocument = ({
   const { documentType: documentTypeConfig, restricted: restrictedConfig } =
     usePlanTranslation('documents');
 
-  const { modelID } = useParams<{ modelID: string }>();
-  const history = useHistory();
+  const { modelID = '' } = useParams<{ modelID: string }>();
+  const navigate = useNavigate();
 
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
@@ -89,9 +89,9 @@ const LinkDocument = ({
           messageOnNextPage('documentUploadSuccess', name);
 
           if (solutionDetailsLink) {
-            history.push(solutionDetailsLink);
+            navigate(solutionDetailsLink);
           } else {
-            history.push(`/models/${modelID}/collaboration-area/documents`);
+            navigate(`/models/${modelID}/collaboration-area/documents`);
           }
         } else {
           setFileNameError(name);
@@ -104,6 +104,9 @@ const LinkDocument = ({
         window.scrollTo(0, 0);
       });
   };
+
+  // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
+  const MINTForm = Form as any;
 
   return (
     <div>
@@ -128,7 +131,11 @@ const LinkDocument = ({
         validateOnChange={false}
         validateOnMount={false}
       >
-        {(formikProps: FormikProps<LinkingDocumentFormTypes>) => {
+        {/* Formik types conflict with React 19 types */}
+        {/* @ts-ignore */}
+        {(
+          formikProps: FormikProps<LinkingDocumentFormTypes>
+        ): React.ReactNode => {
           const {
             errors,
             setErrors,
@@ -158,7 +165,12 @@ const LinkDocument = ({
                 </ErrorAlert>
               )}
               <div>
-                <Form onSubmit={e => handleSubmit(e)}>
+                <MINTForm
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }}
+                >
                   <FieldGroup scrollElement="url" error={!!flatErrors.url}>
                     <Label htmlFor="FileUpload-LinkDocument">
                       {documentsT('url.label')}
@@ -350,7 +362,7 @@ const LinkDocument = ({
                       {documentsMiscT('submitButton')}
                     </Button>
                   </div>
-                </Form>
+                </MINTForm>
               </div>
             </>
           );

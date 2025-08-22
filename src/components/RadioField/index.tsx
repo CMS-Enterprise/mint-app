@@ -13,7 +13,7 @@ type RadioFieldProps = {
   onBlur?: () => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: any;
-} & JSX.IntrinsicElements['input'];
+} & React.ComponentProps<'input'>;
 
 // eslint-disable-next-line import/prefer-default-export
 export const RadioField = ({
@@ -60,9 +60,9 @@ export const RadioField = ({
 };
 
 type RadioGroupProps = {
-  children: React.ReactNode | React.ReactNodeArray;
+  children: React.ReactNode;
   inline?: boolean;
-} & JSX.IntrinsicElements['div'];
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const RadioGroup = ({ children, inline, ...props }: RadioGroupProps) => {
   const classes = classnames('mint-radio__group', {

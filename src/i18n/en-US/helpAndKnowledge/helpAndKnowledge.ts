@@ -2329,7 +2329,9 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.ADD_CUSTOM_MILESTONE]: 'How to add a custom milestone',
   [HelpArticle.ADD_CUSTOM_SOLUTION]: 'How to add a custom solution',
   [HelpArticle.UPDATING_MTO_STATUS]: 'Updating your MTO status',
-  [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO'
+  [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO',
+  [HelpArticle.LESSON_LEARNED_REPOSITORY]:
+    'Lessons Learned repository on SharePoint'
 };
 
 const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
@@ -2367,6 +2369,11 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
     title: 'Quality Vertical health equity resources on SharePoint ',
     description:
       'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
+  },
+  [HelpArticle.LESSON_LEARNED_REPOSITORY]: {
+    title: 'Lessons Learned repository on SharePoint',
+    description:
+      'The CMMI Lessons Learned Repository allows the storing and retrieval of important lessons from projects around the center, enabling users to identify best practices to increase project team effectiveness and efficiency. This repository houses information for project teams to reference.'
   }
 };
 

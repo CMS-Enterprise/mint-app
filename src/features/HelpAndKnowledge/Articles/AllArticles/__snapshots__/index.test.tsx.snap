@@ -17,39 +17,25 @@ exports[`The AllArticles component > matches snapshot 1`] = `
         data-testid="grid"
       >
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled margin-top-6"
           data-testid="button"
           type="button"
         >
-          <nav
-            aria-label="Breadcrumbs"
-            class="usa-breadcrumb usa-breadcrumb--wrap"
+          <svg
+            aria-label="close"
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <ol
-              class="usa-breadcrumb__list"
-            >
-              <li
-                class="usa-breadcrumb__list-item"
-              >
-                <a
-                  class="usa-link usa-breadcrumb__link"
-                  href="/help-and-knowledge"
-                >
-                  <span>
-                    Help and Knowledge Center
-                  </span>
-                </a>
-              </li>
-              <li
-                aria-current="page"
-                class="usa-breadcrumb__list-item usa-current"
-              >
-                <span>
-                  All help resources
-                </span>
-              </li>
-            </ol>
-          </nav>
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
         </button>
         <h1
           aria-live="polite"
@@ -163,7 +149,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="margin-bottom-2"
                       role="status"
                     >
-                      Showing 1-9 of 28 results 
+                      Showing 1-9 of 29 results 
                     </div>
                   </span>
                 </div>
@@ -193,6 +179,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=model-concept-and-design"
                 >
                   <span
@@ -244,6 +231,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=model-concept-and-design"
                 >
                   <span
@@ -317,6 +305,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   </div>
                   <a
                     class="usa-link width-fit-content display-block "
+                    data-discover="true"
                     href="/help-and-knowledge/articles?category=getting-started"
                   >
                     <span
@@ -440,6 +429,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   </div>
                   <a
                     class="usa-link width-fit-content display-block "
+                    data-discover="true"
                     href="/help-and-knowledge/articles?category=getting-started"
                   >
                     <span
@@ -541,6 +531,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=it-implementation"
                 >
                   <span
@@ -592,6 +583,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
@@ -665,6 +657,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                   </div>
                   <a
                     class="usa-link width-fit-content display-block "
+                    data-discover="true"
                     href="/help-and-knowledge/articles?category=model-concept-and-design"
                   >
                     <span
@@ -766,6 +759,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=getting-started"
                 >
                   <span
@@ -817,6 +811,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
                 <a
                   class="usa-link width-fit-content display-block "
+                  data-discover="true"
                   href="/help-and-knowledge/articles?category=mto-tutorials"
                 >
                   <span
@@ -991,6 +986,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link"
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=getting-started"
               >
                 Getting started
@@ -998,7 +994,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <p
                 class="margin-y-1"
               >
-                6 resources
+                7 resources
               </p>
             </div>
           </div>
@@ -1011,6 +1007,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link"
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=it-implementation"
               >
                 IT implementation
@@ -1032,6 +1029,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link"
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=model-concept-and-design"
               >
                 Model concept and design
@@ -1053,6 +1051,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link"
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=mto-tutorials"
               >
                 MINT tutorials

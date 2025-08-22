@@ -7,7 +7,7 @@ import Sidepanel from 'components/Sidepanel';
 type DiscussionModalWrapperProps = {
   isOpen: boolean;
   closeModal: () => void;
-  children: React.ReactNode | React.ReactNodeArray;
+  children: React.ReactNode;
 };
 
 const DiscussionModalWrapper = ({

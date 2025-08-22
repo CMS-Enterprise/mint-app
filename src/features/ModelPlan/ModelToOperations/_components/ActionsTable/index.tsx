@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
   useGetMtoCommonSolutionsQuery,
@@ -15,8 +15,8 @@ import './index.scss';
 const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const history = useHistory();
-  const { modelID } = useParams<{ modelID: string }>();
+  const navigate = useNavigate();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { clearMessage } = useMessage();
 
@@ -112,10 +112,12 @@ const MTOTableActions = () => {
                   className="display-block margin-bottom-1"
                   outline
                   onClick={() => {
-                    history.push({
-                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                      state: { scroll: true }
-                    });
+                    navigate(
+                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
+                      {
+                        state: { scroll: true }
+                      }
+                    );
                   }}
                 >
                   {t('table.tableActions.browseMilestoneLibrary')}
@@ -171,10 +173,12 @@ const MTOTableActions = () => {
                   className="display-block margin-bottom-1"
                   outline
                   onClick={() => {
-                    history.push({
-                      pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                      state: { scroll: true }
-                    });
+                    navigate(
+                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
+                      {
+                        state: { scroll: true }
+                      }
+                    );
                   }}
                 >
                   {t('table.tableActions.browseSolutionLibrary')}
