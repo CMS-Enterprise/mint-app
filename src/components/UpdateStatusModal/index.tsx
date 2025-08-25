@@ -12,6 +12,7 @@ import {
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 
@@ -40,6 +41,8 @@ const UpdateStatusModal = ({
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
 
+  const { setErrorMeta } = useErrorMessage();
+
   const [updateModelStatus] = useUpdateModelPlanMutation();
 
   const [status, setStatus] = useState<ModelStatus>(
@@ -48,6 +51,12 @@ const UpdateStatusModal = ({
 
   const handleUpdateStatus = () => {
     const translatedStatus = statusConfig.options[status];
+
+    setErrorMeta({
+      overrideMessage: modelPlanTaskListT('statusUpdateError', {
+        status: translatedStatus
+      })
+    });
 
     updateModelStatus({
       variables: {
@@ -70,12 +79,6 @@ const UpdateStatusModal = ({
         }
       })
       .catch(errors => {
-        setStatusMessage({
-          message: modelPlanTaskListT('statusUpdateError', {
-            status: translatedStatus
-          }),
-          status: 'error'
-        });
         closeModal();
       });
   };

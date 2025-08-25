@@ -99,10 +99,8 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   successReply: 'Success! Your reply has been added.',
   errorFetch:
     'Sorry we encountered a problem fetching your discusssions.  Please try again.',
-  error:
-    'Sorry, we encountered a problem adding your discussion topic. Please try again.',
-  errorReply:
-    'Sorry, we encountered a problem adding your reply. Please try again.',
+  error: 'Sorry, we encountered a problem adding your discussion topic.',
+  errorReply: 'Sorry, we encountered a problem adding your reply.',
   answerDescription:
     'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
   ago: 'ago',

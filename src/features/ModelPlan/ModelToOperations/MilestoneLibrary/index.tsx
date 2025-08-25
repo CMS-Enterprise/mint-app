@@ -10,7 +10,7 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
-import { NotFoundPartial } from 'features/NotFound';
+import NotFound from 'features/NotFound';
 import {
   GetMtoMilestonesQuery,
   useGetMtoMilestonesQuery
@@ -60,7 +60,7 @@ const MilestoneLibrary = () => {
   );
 
   if (error) {
-    return <NotFoundPartial />;
+    return <NotFound errorMessage={error.message} />;
   }
 
   return (

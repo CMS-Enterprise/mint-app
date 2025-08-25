@@ -59,9 +59,10 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
@@ -140,8 +141,6 @@ const EditMilestoneForm = ({
 
   const editMilestoneID = params.get('edit-milestone');
 
-  const [mutationError, setMutationError] = useState<React.ReactNode | null>();
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
@@ -149,9 +148,9 @@ const EditMilestoneForm = ({
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
 
-  const { showMessage, clearMessage } = useMessage();
-
   const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
+
+  const { setErrorMeta } = useErrorMessage();
 
   const {
     data,
@@ -494,6 +493,12 @@ const EditMilestoneForm = ({
         formChanges.facilitatedByOther = null;
       }
 
+      setErrorMeta({
+        overrideMessage: modelToOperationsMiscT(
+          'modal.editMilestone.errorUpdated'
+        )
+      });
+
       updateMilestone({
         variables: {
           id: editMilestoneID || '',
@@ -516,72 +521,26 @@ const EditMilestoneForm = ({
             solutionIDs
           }
         }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-y-4"
-                  clearMessage={clearMessage}
-                >
-                  <span className="mandatory-fields-alert__text">
-                    <Trans
-                      i18nKey={modelToOperationsMiscT(
-                        'modal.editMilestone.successUpdated'
-                      )}
-                      components={{
-                        bold: <span className="text-bold" />
-                      }}
-                      values={{ milestone: formData.name }}
-                    />
-                  </span>
-                </Alert>
-              </>
-            );
-            // eslint-disable-next-line no-param-reassign
-            submitted.current = true;
-            setIsDirty(false);
-            closeModal();
-          }
-        })
-        .catch(err => {
-          if (
-            err?.message.includes(
-              'unique_name_per_model_plan_when_mto_common_milestone_is_null'
-            )
-          ) {
-            setMutationError(
-              <Alert
-                type="error"
-                slim
-                data-testid="error-alert"
-                className="margin-y-4"
-              >
-                {modelToOperationsMiscT(
-                  'modal.editMilestone.errorNameAlreadyExists',
-                  {
-                    milestone: formData.name
-                  }
-                )}
-              </Alert>
-            );
-          } else {
-            setMutationError(
-              <Alert
-                type="error"
-                slim
-                data-testid="error-alert"
-                className="margin-y-4"
-              >
-                {modelToOperationsMiscT('modal.editMilestone.errorUpdated')}
-              </Alert>
-            );
-          }
-        });
+      }).then(response => {
+        if (!response?.errors) {
+          toastSuccess(
+            <Trans
+              i18nKey={modelToOperationsMiscT(
+                'modal.editMilestone.successUpdated'
+              )}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+              values={{ milestone: formData.name }}
+            />
+          );
+
+          // eslint-disable-next-line no-param-reassign
+          submitted.current = true;
+          setIsDirty(false);
+          closeModal();
+        }
+      });
     },
     [
       milestone,
@@ -589,56 +548,38 @@ const EditMilestoneForm = ({
       editMilestoneID,
       commonSolutionKeys,
       solutionIDs,
-      showMessage,
-      clearMessage,
       modelToOperationsMiscT,
       submitted,
       setIsDirty,
       closeModal,
-      formValues
+      formValues,
+      setErrorMeta
     ]
   );
 
   const handleRemove = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT(
+        'modal.editMilestone.errorRemoved'
+      )
+    });
+
     deleteMilestone({
       variables: {
         id: editMilestoneID || ''
       },
       refetchQueries: [GetModelToOperationsMatrixDocument]
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                {modelToOperationsMiscT('modal.editMilestone.successRemoved', {
-                  milestone: milestone?.name
-                })}
-              </Alert>
-            </>
-          );
-          closeModal();
-          setIsModalOpen(false);
-        }
-      })
-      .catch(() => {
-        setMutationError(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {modelToOperationsMiscT('modal.editMilestone.errorRemoved')}
-          </Alert>
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          modelToOperationsMiscT('modal.editMilestone.successRemoved', {
+            milestone: milestone?.name
+          })
         );
-      });
+        closeModal();
+        setIsModalOpen(false);
+      }
+    });
   };
 
   // Set the footer of the modal to be rendered in the parent Sidepanel to allow for sticky bottom
@@ -882,8 +823,6 @@ const EditMilestoneForm = ({
                 {modelToOperationsMiscT('modal.editMilestone.custom')}
               </span>
             )}
-
-            {mutationError && mutationError}
 
             <FormProvider {...methods}>
               <Form

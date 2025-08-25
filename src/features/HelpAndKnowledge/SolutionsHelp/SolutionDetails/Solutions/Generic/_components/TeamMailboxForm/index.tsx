@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -20,7 +20,8 @@ import {
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
 import CheckboxField from 'components/CheckboxField';
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -57,7 +58,7 @@ const TeamMailboxForm = ({
 
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<TeamMailboxFormValues>({
     defaultValues: {
@@ -92,10 +93,6 @@ const TeamMailboxForm = ({
     ]
   });
 
-  const [mutationError, setMutationError] = useState<
-    'duplicate' | 'generic' | null
-  >(null);
-
   const isAddMode = mode === 'addTeamMailbox';
   const isEditMode = mode === 'editTeamMailbox';
 
@@ -107,7 +104,6 @@ const TeamMailboxForm = ({
 
   const onSubmit = (formData: TeamMailboxFormValues) => {
     if (!selectedSolution) {
-      setMutationError('generic');
       return;
     }
 
@@ -115,6 +111,10 @@ const TeamMailboxForm = ({
       teamMailbox,
       formData
     );
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const promise = isAddMode
       ? create({
@@ -136,29 +136,23 @@ const TeamMailboxForm = ({
             }
           }
         });
-    promise
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Trans
-              i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
-              values={{
-                contact: formData.mailboxAddress || teamMailbox.name
-              }}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-            />
-          );
-          closeModal();
-        }
-      })
-      .catch(error => {
-        const duplicateError = error.message.includes(
-          'uniq_mailbox_address_per_solution_key'
+    promise.then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
+            values={{
+              contact: formData.mailboxAddress || teamMailbox.name
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
         );
-        setMutationError(duplicateError ? 'duplicate' : 'generic');
-      });
+
+        closeModal();
+      }
+    });
   };
 
   return (
@@ -169,28 +163,6 @@ const TeamMailboxForm = ({
         id="team-mailbox-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {mutationError !== null && (
-          <Alert
-            type="error"
-            slim
-            headingLevel="h1"
-            className="margin-bottom-2"
-          >
-            {mutationError === 'generic' ? (
-              miscT(`${mode}.error`)
-            ) : (
-              <Trans
-                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
-                values={{
-                  contact: methods.getValues('mailboxAddress')
-                }}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-              />
-            )}
-          </Alert>
-        )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
           <Controller
             name="mailboxAddress"

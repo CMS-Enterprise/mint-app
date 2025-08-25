@@ -108,7 +108,7 @@ const IDDOC = () => {
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial errorMessage={error?.message} />;
   }
 
   return (

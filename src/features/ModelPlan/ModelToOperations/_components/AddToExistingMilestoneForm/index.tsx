@@ -24,6 +24,8 @@ import {
 import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import {
   composeMultiSelectOptions,
@@ -47,8 +49,8 @@ const AddToExistingMilestoneForm = ({
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { message, showMessage, clearMessage, showErrorMessageInModal } =
-    useMessage();
+  const { message } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const navigate = useNavigate();
 
@@ -103,6 +105,10 @@ const AddToExistingMilestoneForm = ({
   });
 
   const onSubmit: SubmitHandler<FormValues> = ({ linkedMilestones }) => {
+    setErrorMeta({
+      overrideMessage: t('modal.addToExistingMilestone.alert.error')
+    });
+
     create({
       variables: {
         modelPlanID: modelID,
@@ -112,43 +118,25 @@ const AddToExistingMilestoneForm = ({
     })
       .then(response => {
         if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  <Trans
-                    i18nKey={t('modal.addToExistingMilestone.alert.success')}
-                    components={{
-                      bold: <span className="text-bold" />
-                    }}
-                    values={{ title: solutionName }}
-                  />
-                </span>
-              </Alert>
-            </>
+          toastSuccess(
+            <Trans
+              i18nKey={t('modal.addToExistingMilestone.alert.success')}
+              components={{
+                b: <span className="text-bold" />
+              }}
+              values={{ title: solutionName }}
+            />
           );
+
           params.delete('add-solution', solutionKey);
           navigate({ search: params.toString() }, { replace: true });
           closeModal();
         }
       })
       .catch(() => {
-        showErrorMessageInModal(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {t('modal.addToExistingMilestone.alert.error')}
-          </Alert>
-        );
+        params.delete('add-solution', solutionKey);
+        navigate({ search: params.toString() }, { replace: true });
+        closeModal();
       });
   };
 
@@ -226,7 +214,6 @@ const AddToExistingMilestoneForm = ({
               className="usa-button usa-button--unstyled margin-top-0"
               onClick={() => {
                 reset();
-                clearMessage();
                 closeModal();
               }}
             >

@@ -49,6 +49,7 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import TextAreaField from 'components/TextAreaField';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
@@ -234,6 +235,9 @@ export const ModelRelation = () => {
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
+
+  // Skip global error handling, this is handled by the mutation modal
+  useErrorMessage('skip', true);
 
   const blocker = useBlocker(({ currentLocation, nextLocation }) => {
     if (isModalOpen || !id) {

@@ -35,14 +35,10 @@ const NDA = () => {
   }, [locationState?.nextState]);
 
   const handleFormSubmit = (formikValues: NDAType) => {
-    signNDA()
-      .then(response => {
-        dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
-        navigate(originalRoute || '/');
-      })
-      .catch(err => {
-        // TODO: No roles assigned error?
-      });
+    signNDA().then(response => {
+      dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
+      navigate(originalRoute || '/');
+    });
   };
 
   return (

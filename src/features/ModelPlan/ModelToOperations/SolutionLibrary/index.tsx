@@ -10,7 +10,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { NotFoundPartial } from 'features/NotFound';
+import NotFound from 'features/NotFound';
 import {
   GetMtoCommonSolutionsQuery,
   MtoSolutionType,
@@ -193,7 +193,7 @@ const SolutionLibrary = () => {
   });
 
   if (error) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
   return (

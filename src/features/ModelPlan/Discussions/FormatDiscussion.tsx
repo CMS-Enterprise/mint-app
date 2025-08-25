@@ -18,15 +18,13 @@ type FormatDiscussionProps = {
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: DiscussionType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
-  setDiscussionStatusMessage: (value: string) => void;
 };
 
 const FormatDiscussion = ({
   discussionsContent,
   setDiscussionType,
   setReply,
-  setIsDiscussionOpen,
-  setDiscussionStatusMessage
+  setIsDiscussionOpen
 }: FormatDiscussionProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
 
@@ -47,7 +45,6 @@ const FormatDiscussion = ({
               setDiscussionType={setDiscussionType}
               setReply={setReply}
               setIsDiscussionOpen={setIsDiscussionOpen}
-              setDiscussionStatusMessage={setDiscussionStatusMessage}
               replies={discussion.replies}
             />
             {/* Divider to separate questions if not the last question */}

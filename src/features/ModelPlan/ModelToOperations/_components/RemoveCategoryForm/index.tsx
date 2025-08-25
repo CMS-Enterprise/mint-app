@@ -7,9 +7,9 @@ import {
   useDeleteMtoCategoryMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 
 const RemoveCategoryForm = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -21,7 +21,7 @@ const RemoveCategoryForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { showMessage, showErrorMessageInModal, clearMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const [deleteCategory] = useDeleteMtoCategoryMutation({
     refetchQueries: [
@@ -38,39 +38,20 @@ const RemoveCategoryForm = () => {
     rowType === 'category' ? 'removeCategory' : 'removeSubcategory';
 
   const handleRemove = () => {
+    setErrorMeta({
+      overrideMessage: t(`modal.${namespace}.errorAlert`)
+    });
+
     deleteCategory({
       variables: {
         id: rowType === 'category' ? categoryID : subCategoryID
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {t(`modal.${namespace}.successAlert`)}
-            </Alert>
-          );
-        }
-        setMTOModalOpen(false);
-      })
-      .catch(() => {
-        showErrorMessageInModal(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
-          >
-            {t(`modal.${namespace}.errorAlert`)}
-          </Alert>
-        );
-      });
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(t(`modal.${namespace}.successAlert`));
+      }
+      setMTOModalOpen(false);
+    });
   };
 
   return (

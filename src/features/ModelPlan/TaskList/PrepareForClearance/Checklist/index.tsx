@@ -182,17 +182,13 @@ const PrepareForClearanceCheckList = () => {
           }
         });
       })
-    )
-      .then(responses => {
-        const errors = responses?.find(result => result?.errors);
+    ).then(responses => {
+      const errors = responses?.find(result => result?.errors);
 
-        if (!errors) {
-          navigate(`/models/${modelID}/collaboration-area/task-list`);
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+      if (!errors) {
+        navigate(`/models/${modelID}/collaboration-area/task-list`);
+      }
+    });
   };
 
   if (
@@ -201,7 +197,7 @@ const PrepareForClearanceCheckList = () => {
     (data as GetClearanceStatusesQuery)?.modelPlan?.prepareForClearance
       ?.status === PrepareForClearanceStatus.CANNOT_START
   ) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial errorMessage={error?.message} />;
   }
 
   return (

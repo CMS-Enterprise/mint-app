@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Alert,
   Fieldset,
   Form,
   FormGroup,
@@ -16,7 +15,8 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -45,10 +45,9 @@ const ContractorForm = ({
 }) => {
   const { t: contractorT } = useTranslation('mtoCommonSolutionContractor');
   const { t: miscT } = useTranslation('mtoCommonSolutionContractorMisc');
-
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<ContractorFormValues>({
     defaultValues: {
@@ -80,10 +79,6 @@ const ContractorForm = ({
     ]
   });
 
-  const [mutationError, setMutationError] = useState<
-    'duplicate' | 'generic' | null
-  >(null);
-
   const disabledSubmitBtn = isSubmitting || !isDirty || !isValid;
 
   useEffect(() => {
@@ -92,9 +87,12 @@ const ContractorForm = ({
 
   const onSubmit = (formData: ContractorFormValues) => {
     if (!selectedSolution) {
-      setMutationError('generic');
       return;
     }
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const { contractTitle, contractorName } = dirtyInput(contractor, formData);
 
@@ -117,29 +115,23 @@ const ContractorForm = ({
             }
           });
 
-    promise
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Trans
-              i18nKey={`mtoCommonSolutionContractorMisc:${mode}.success`}
-              values={{
-                contractor: formData.contractorName
-              }}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-            />
-          );
-          closeModal();
-        }
-      })
-      .catch(error => {
-        const duplicateError = error.message.includes(
-          'uniq_contractor_name_per_solution_key'
+    promise.then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonSolutionContractorMisc:${mode}.success`}
+            values={{
+              contractor: formData.contractorName
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
         );
-        setMutationError(duplicateError ? 'duplicate' : 'generic');
-      });
+
+        closeModal();
+      }
+    });
   };
 
   return (
@@ -150,28 +142,6 @@ const ContractorForm = ({
         id="contractor-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {mutationError !== null && (
-          <Alert
-            type="error"
-            slim
-            headingLevel="h1"
-            className="margin-bottom-2"
-          >
-            {mutationError === 'generic' ? (
-              miscT(`${mode}.error`)
-            ) : (
-              <Trans
-                i18nKey="mtoCommonSolutionContractorMisc:duplicateError"
-                values={{
-                  contractor: methods.getValues('contractorName')
-                }}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-              />
-            )}
-          </Alert>
-        )}
         <Fieldset disabled={!selectedSolution}>
           <Controller
             name="contractTitle"

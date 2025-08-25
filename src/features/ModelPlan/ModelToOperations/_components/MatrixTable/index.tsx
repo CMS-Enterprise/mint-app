@@ -8,7 +8,6 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
@@ -22,6 +21,7 @@ import Alert from 'components/Alert';
 import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
+import toastSuccess from 'components/ToastSuccess';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import { MTOSolutionPanelProvider } from 'contexts/MTOSolutionPanelContext';
@@ -69,7 +69,7 @@ const MTOTable = ({
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  const { showMessage: setError, clearMessage } = useMessage();
+  const { clearMessage } = useMessage();
 
   const [updateOrder] = useReorderMtoCategoryMutation({
     refetchQueries: [
@@ -358,8 +358,7 @@ const MTOTable = ({
                     rowType,
                     sortedData,
                     updateOrder,
-                    setError,
-                    clearMessage
+                    true
                   )
                 );
               }}
@@ -389,9 +388,7 @@ const MTOTable = ({
                     moveRowDirection(1),
                     rowType,
                     sortedData,
-                    updateOrder,
-                    setError,
-                    clearMessage
+                    updateOrder
                   )
                 );
               }}
@@ -518,9 +515,7 @@ const MTOTable = ({
                   hoverIndex,
                   'subcategory',
                   sortedData,
-                  updateOrder,
-                  setError,
-                  clearMessage
+                  updateOrder
                 )
               )
             }
@@ -582,9 +577,7 @@ const MTOTable = ({
                   hoverIndex,
                   'category',
                   sortedData,
-                  updateOrder,
-                  setError,
-                  clearMessage
+                  updateOrder
                 )
               )
             }
@@ -626,7 +619,11 @@ const MTOTable = ({
   }
 
   if (error) {
-    return <NotFoundPartial />;
+    return (
+      <Alert type="error" isClosable={false}>
+        {t('error:notFound.fetchError')}
+      </Alert>
+    );
   }
 
   return (
@@ -833,8 +830,7 @@ export const moveRow = (
   }: {
     variables: ReorderMtoCategoryMutationVariables;
   }) => Promise<any>,
-  setError?: (element: React.ReactElement) => void,
-  clearMessage?: () => void
+  successMessage?: boolean
 ) => {
   // Clone the existing data
   const updatedData = [...sortedData];
@@ -849,37 +845,9 @@ export const moveRow = (
         id: draggedCategory.id,
         newOrder: hoverIndex[0]
       }
-    })
-      ?.then(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:successReorder')}
-            </Alert>
-          );
-        }
-      })
-      ?.catch(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:errorReorder')}
-            </Alert>
-          );
-        }
-      });
+    })?.then(() => {
+      toastSuccess(i18next.t('modelToOperationsMisc:successReorder'));
+    });
   } else if (type.includes('subcategory')) {
     const parentIndex = dragIndex[0];
     const hoverParentIndex = hoverIndex[0];
@@ -916,37 +884,11 @@ export const moveRow = (
         newOrder: hoverSubIndex,
         parentID: hoverParentCategoryID
       }
-    })
-      ?.then(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="success"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:successReorder')}
-            </Alert>
-          );
-        }
-      })
-      ?.catch(() => {
-        if (setError) {
-          setError(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-              clearMessage={clearMessage}
-            >
-              {i18next.t('modelToOperationsMisc:errorReorder')}
-            </Alert>
-          );
-        }
-      });
+    })?.then(() => {
+      if (successMessage) {
+        toastSuccess(i18next.t('modelToOperationsMisc:successReorder'));
+      }
+    });
   } else if (type.includes('milestone')) {
     // TODO: if needed, implement milestone reordering
     // // Find the parent category

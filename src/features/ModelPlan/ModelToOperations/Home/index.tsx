@@ -11,6 +11,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import NotFound from 'features/NotFound';
 import {
   MtoStatus,
   useGetModelToOperationsMatrixQuery
@@ -18,7 +19,6 @@ import {
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
@@ -27,7 +27,6 @@ import { EditMTOMilestoneProvider } from 'contexts/EditMTOMilestoneContext';
 import { EditMTOSolutionProvider } from 'contexts/EditMTOSolutionContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useMessage from 'hooks/useMessage';
 
 import MTOTableActions from '../_components/ActionsTable';
 import ITSystemsTable from '../_components/ITSystemsTable';
@@ -69,8 +68,6 @@ const MTOHome = () => {
 
   const location = useLocation();
 
-  const { message, showMessage } = useMessage();
-
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search]);
@@ -95,6 +92,10 @@ const MTOHome = () => {
 
   const isMatrixStarted: boolean =
     data?.modelPlan.mtoMatrix.status !== MtoStatus.READY;
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <>
@@ -121,12 +122,6 @@ const MTOHome = () => {
               BreadcrumbItemOptions.MODEL_TO_OPERATIONS
             ]}
           />
-
-          {message && (
-            <Expire delay={45000} callback={showMessage}>
-              {message}
-            </Expire>
-          )}
 
           <Grid row className="desktop:margin-bottom-6 margin-top-4">
             <Grid desktop={{ col: 9 }}>

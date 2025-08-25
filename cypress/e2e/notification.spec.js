@@ -45,7 +45,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save discussion').click();
 
-    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="close-discussions"]').click({ force: true });
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
     // Actual Notification Test
@@ -65,7 +65,7 @@ describe('Notification Center', () => {
       .click();
 
     // Navigate to Notification page (faster than cy.visit)
-    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="close-discussions"]').click({ force: true });
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
     // Check to see first entry should no longer have red dot
@@ -116,7 +116,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save').click();
 
-    cy.get('[data-testid="success-alert"').should('exist');
+    cy.get('[data-testid="toast-success"').should('exist');
 
     cy.contains('a', 'Notification settings').click();
 
@@ -143,7 +143,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save reply').click();
 
-    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="close-discussions"]').click({ force: true });
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
     cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
@@ -158,7 +158,7 @@ describe('Notification Center', () => {
       .find('button', 'View Discussion')
       .click();
 
-    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="close-discussions"]').click({ force: true });
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
     cy.get('[data-testid="individual-notification"]')
@@ -263,7 +263,7 @@ describe('Notification Center', () => {
       'be.not.checked'
     );
 
-    cy.get('[data-testid="success-alert"]').contains(
+    cy.get('[data-testid="toast-success"]').contains(
       'You have successfully unsubscribed from email notifications when a new Model Plan is created.'
     );
 
@@ -315,7 +315,7 @@ describe('Notification Center', () => {
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
 
-    cy.get('[data-testid="navmenu__notification"]').click().click();
+    cy.get('[data-testid="navmenu__notification"]').click().click().click();
 
     cy.url().should('include', '/notifications');
 
@@ -338,7 +338,7 @@ describe('Notification Center', () => {
       'be.not.checked'
     );
 
-    cy.get('[data-testid="success-alert"]').contains(
+    cy.get('[data-testid="toast-success"]').contains(
       'You have successfully unsubscribed from email notifications when model dates change.'
     );
 
@@ -431,7 +431,7 @@ describe('Notification Center', () => {
       '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
     ).should('be.not.checked');
 
-    cy.get('[data-testid="success-alert"]').contains(
+    cy.get('[data-testid="toast-success"]').contains(
       'You have successfully unsubscribed from email notifications when a data exchange approach is completed.'
     );
 

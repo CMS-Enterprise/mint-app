@@ -39,7 +39,6 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import { SubscriptionContext } from 'contexts/PageLockContext';
-import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
@@ -102,8 +101,6 @@ const TaskList = () => {
   const { t: h } = useTranslation('general');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
-
-  const { message } = useMessage();
 
   const location = useLocation();
 
@@ -239,12 +236,6 @@ const TaskList = () => {
               message={t('errorMessage')}
             />
           </ErrorAlert>
-        )}
-
-        {message && (
-          <Alert slim type="success">
-            {message}
-          </Alert>
         )}
 
         {!loading && statusMessage && (

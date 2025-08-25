@@ -13,7 +13,6 @@ import classNames from 'classnames';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import useMessage from 'hooks/useMessage';
 
 import { MilestoneCardType } from '../../MilestoneLibrary';
 import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
@@ -33,8 +32,6 @@ const MilestoneCard = ({
   const { t } = useTranslation('modelToOperationsMisc');
 
   const navigate = useNavigate();
-
-  const { errorMessageInModal, clearMessage } = useMessage();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -58,7 +55,6 @@ const MilestoneCard = ({
         closeModal={() => {
           params.delete('add-milestone', milestone.key);
           navigate({ search: params.toString() }, { replace: true });
-          clearMessage();
           setIsModalOpen(false);
         }}
         fixed
@@ -70,13 +66,10 @@ const MilestoneCard = ({
           </PageHeading>
         </div>
 
-        {errorMessageInModal}
-
         <AddSolutionToMilestoneForm
           closeModal={() => {
             params.delete('add-milestone', milestone.key);
             navigate({ search: params.toString() }, { replace: true });
-            clearMessage();
             setIsModalOpen(false);
           }}
           milestone={milestone}

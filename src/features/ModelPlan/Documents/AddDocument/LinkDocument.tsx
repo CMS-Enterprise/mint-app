@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -16,8 +16,8 @@ import { RadioField } from 'components/RadioField';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
+import toastSuccess from 'components/ToastSuccess';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { LinkingDocumentFormTypes } from 'types/files';
 import { getKeys } from 'types/translation';
@@ -40,27 +40,9 @@ const LinkDocument = ({
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
 
-  const { showMessageOnNextPage } = useMessage();
-  const formikRef = useRef<FormikProps<LinkingDocumentFormTypes>>(null);
-
   const { modelName } = useContext(ModelInfoContext);
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
-  const [fileNameError, setFileNameError] = useState('');
 
   const [linkFile] = useMutation(LinkNewPlanDocument);
-
-  const messageOnNextPage = (message: string, fileName: string) =>
-    showMessageOnNextPage(
-      <Alert type="success" slim className="margin-y-4" aria-live="assertive">
-        <span className="mandatory-fields-alert__text">
-          {documentsMiscT(message, {
-            documentName: fileName,
-            modelName
-          })}
-        </span>
-      </Alert>
-    );
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = ({
@@ -83,26 +65,22 @@ const LinkDocument = ({
           optionalNotes
         }
       }
-    })
-      .then(response => {
-        if (!response.errors) {
-          messageOnNextPage('documentUploadSuccess', name);
+    }).then(response => {
+      if (!response.errors) {
+        toastSuccess(
+          documentsMiscT('documentUploadSuccess', {
+            documentName: name,
+            modelName
+          })
+        );
 
-          if (solutionDetailsLink) {
-            navigate(solutionDetailsLink);
-          } else {
-            navigate(`/models/${modelID}/collaboration-area/documents`);
-          }
+        if (solutionDetailsLink) {
+          navigate(solutionDetailsLink);
         } else {
-          setFileNameError(name);
-          setMutationError(true);
-          window.scrollTo(0, 0);
+          navigate(`/models/${modelID}/collaboration-area/documents`);
         }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-        window.scrollTo(0, 0);
-      });
+      }
+    });
   };
 
   // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
@@ -110,12 +88,6 @@ const LinkDocument = ({
 
   return (
     <div>
-      {mutationError && (
-        <Alert type="error" slim>
-          {documentsMiscT('documentLinkError', { fileName: fileNameError })}
-        </Alert>
-      )}
-
       <Formik
         initialValues={{
           url: '',

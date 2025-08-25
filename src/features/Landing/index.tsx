@@ -388,7 +388,6 @@ const DiscussionCard = () => {
         discussionsContent={discussions}
         setDiscussionType={() => null}
         setReply={() => null}
-        setDiscussionStatusMessage={() => null}
       />
     </div>
   );
