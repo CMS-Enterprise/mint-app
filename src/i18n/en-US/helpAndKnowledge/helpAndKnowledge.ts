@@ -1702,7 +1702,12 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.'
+            'Early in modal development, model teams should reach out to the <link1>Quality Vertical Lead</link1>. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'QV assists the model team',
@@ -1739,7 +1744,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
     },
     timeline: {
       description:
-        'Model teams should follow the <link1>Procurement Administrative Lead Time (PALT)</link1> standards to determine when to being working with RMADA.',
+        'Model teams should follow the <link1>Procurement Administrative Lead Time (PALT)</link1> standards to determine when to begin working with RMADA.',
       items: [],
       links: ['Procurement Administrative Lead Time (PALT)']
     }
@@ -2146,7 +2151,12 @@ Model Space offers model teams and their contractors templates or Databricks not
       items: [
         {
           header: 'Reach out to the Product Owners',
-          description: `If you're interested in using Model Space or want to learn more about the system, please get in touch with Product Owners Zach Nall and Curtis Naumann.`
+          description: `If you're interested in using Model Space or want to learn more about the system, please get in touch with <link1>Model Space Product Owners</link1>.`,
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Meet to understand requirements',
