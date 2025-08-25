@@ -10,6 +10,8 @@ import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp
 
 import ExternalLink from 'components/ExternalLink';
 
+import { getTransLinkComponents } from '../Generic/About';
+
 import '../index.scss';
 
 const ChronicConditionsTimeline = ({
@@ -69,7 +71,8 @@ const ChronicConditionsTimeline = ({
                 <ExternalLink href="mailto:CCWAccess@cms.hhs.go">
                   {' '}
                 </ExternalLink>
-              )
+              ),
+              ...getTransLinkComponents(timelineConfig.items[1].links)
             }}
           />
         </ProcessListItem>
@@ -122,7 +125,8 @@ const ChronicConditionsTimeline = ({
                   <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
                     {' '}
                   </ExternalLink>
-                )
+                ),
+                ...getTransLinkComponents(timelineConfig.items2[0].links)
               }}
             />
           </ProcessListItem>
