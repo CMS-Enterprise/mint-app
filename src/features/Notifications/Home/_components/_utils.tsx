@@ -7,6 +7,7 @@ import {
   AnalyzedCrTdls,
   DailyDigestCompleteActivityMeta,
   DatesChangedActivityMeta,
+  IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
@@ -20,6 +21,7 @@ type MetaDataType =
   | TaggedInPlanDiscussionActivityMeta
   | DailyDigestCompleteActivityMeta
   | NewDiscussionRepliedActivityMeta
+  | IncorrectModelStatusActivityMeta
   | ModelPlanSharedActivityMeta
   | AddedAsCollaboratorMeta
   | NewModelPlanActivityMeta
@@ -53,6 +55,13 @@ export const isNewDiscussionReply = (
 ): data is NewDiscussionRepliedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionRepliedActivityMeta';
+};
+
+export const isIncorrectModelStatus = (
+  data: MetaDataType
+): data is IncorrectModelStatusActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'IncorrectModelStatusActivityMeta';
 };
 
 export const isSharedActivity = (

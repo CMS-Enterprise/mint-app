@@ -18,6 +18,7 @@ import {
   isDailyDigest,
   isDataExchangeApproach,
   isDatesChanged,
+  isIncorrectModelStatus,
   isNewDiscussionReply,
   isNewModelPlan,
   isSharedActivity,
@@ -141,6 +142,7 @@ const IndividualNotification = ({
                 </p>
                 {!isDailyDigest(metaData) &&
                   !isNewModelPlan(metaData) &&
+                  !isIncorrectModelStatus(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isDatesChanged(metaData) &&
                   !isDataExchangeApproach(metaData) &&
