@@ -34,3 +34,6 @@ var dbStore = dbStoreMethods{
 
 // GetUserNotificationPreferencesFunc represents a type of function which takes a context and uuid of a user account and returns UserNotificationPreferences
 type GetUserNotificationPreferencesFunc func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error)
+
+// IsLeadFunc represents a function that takes a user ID and returns true if the user is a lead
+type IsLeadFunc func(userID uuid.UUID) (bool, error)

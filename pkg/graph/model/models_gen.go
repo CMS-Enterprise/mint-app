@@ -197,12 +197,6 @@ type OperationalSolutionTranslation struct {
 	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
-// PhaseSuggestion is a suggestion response for a potential next phase and corresponding statuses for a model plan
-type PhaseSuggestion struct {
-	Phase             models.ModelPhase    `json:"phase"`
-	SuggestedStatuses []models.ModelStatus `json:"suggestedStatuses"`
-}
-
 // Represents plan basics translation data
 type PlanBasicsTranslation struct {
 	ModelCategory             models.TranslationFieldWithOptions `json:"modelCategory" db:"model_category"`

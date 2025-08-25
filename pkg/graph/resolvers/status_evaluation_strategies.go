@@ -3,8 +3,6 @@ package resolvers
 import (
 	"time"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitytime"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -30,7 +28,7 @@ type StatusEvaluationStrategy interface {
 	Evaluate(
 		modelPlanStatus models.ModelStatus,
 		planTimeline *models.PlanTimeline,
-	) *model.PhaseSuggestion
+	) *models.PhaseSuggestion
 }
 
 // ICIPCompleteStrategy is a strategy for evaluating the ICIP complete status of a model plan
@@ -41,12 +39,12 @@ type ICIPCompleteStrategy struct{}
 func (s *ICIPCompleteStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planTimeline *models.PlanTimeline,
-) *model.PhaseSuggestion {
+) *models.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusIcipComplete) &&
 		!utilitytime.IsTimeNilOrZero(planTimeline.CompleteICIP) &&
 		planTimeline.CompleteICIP.Before(time.Now()) {
-		return &model.PhaseSuggestion{
+		return &models.PhaseSuggestion{
 			Phase:             models.ModelPhaseIcipComplete,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 		}
@@ -63,12 +61,12 @@ type ClearanceStartStrategy struct{}
 func (s *ClearanceStartStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planTimeline *models.PlanTimeline,
-) *model.PhaseSuggestion {
+) *models.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusInternalCmmiClearance) &&
 		!utilitytime.IsTimeNilOrZero(planTimeline.ClearanceStarts) &&
 		planTimeline.ClearanceStarts.Before(time.Now()) {
-		return &model.PhaseSuggestion{
+		return &models.PhaseSuggestion{
 			Phase: models.ModelPhaseInClearance,
 			SuggestedStatuses: []models.ModelStatus{
 				models.ModelStatusInternalCmmiClearance,
@@ -89,12 +87,12 @@ type ClearanceEndStrategy struct{}
 func (s *ClearanceEndStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planTimeline *models.PlanTimeline,
-) *model.PhaseSuggestion {
+) *models.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) &&
 		!utilitytime.IsTimeNilOrZero(planTimeline.ClearanceEnds) &&
 		planTimeline.ClearanceEnds.Before(time.Now()) {
-		return &model.PhaseSuggestion{
+		return &models.PhaseSuggestion{
 			Phase:             models.ModelPhaseCleared,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusCleared},
 		}
@@ -110,12 +108,12 @@ type AnnounceStrategy struct{}
 func (s *AnnounceStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planTimeline *models.PlanTimeline,
-) *model.PhaseSuggestion {
+) *models.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusAnnounced) &&
 		!utilitytime.IsTimeNilOrZero(planTimeline.Announced) &&
 		planTimeline.Announced.Before(time.Now()) {
-		return &model.PhaseSuggestion{
+		return &models.PhaseSuggestion{
 			Phase:             models.ModelPhaseAnnounced,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusAnnounced},
 		}
@@ -131,12 +129,12 @@ type ActiveStrategy struct{}
 func (s *ActiveStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planTimeline *models.PlanTimeline,
-) *model.PhaseSuggestion {
+) *models.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusActive) &&
 		!utilitytime.IsTimeNilOrZero(planTimeline.PerformancePeriodStarts) &&
 		planTimeline.PerformancePeriodStarts.Before(time.Now()) {
-		return &model.PhaseSuggestion{
+		return &models.PhaseSuggestion{
 			Phase:             models.ModelPhaseActive,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusActive},
 		}
@@ -152,12 +150,12 @@ type EndedStrategy struct{}
 func (s *EndedStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planTimeline *models.PlanTimeline,
-) *model.PhaseSuggestion {
+) *models.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusEnded) &&
 		!utilitytime.IsTimeNilOrZero(planTimeline.PerformancePeriodEnds) &&
 		planTimeline.PerformancePeriodEnds.Before(time.Now()) {
-		return &model.PhaseSuggestion{
+		return &models.PhaseSuggestion{
 			Phase:             models.ModelPhaseEnded,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusEnded},
 		}
