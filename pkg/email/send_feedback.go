@@ -5,6 +5,7 @@ type SendFeedbackSubjectContent struct{}
 
 // SendFeedbackBodyContent defines the parameters necessary for the corresponding email body
 type SendFeedbackBodyContent struct {
+	ClientAddress         string
 	IsAnonymousSubmission bool
 	ReporterName          string
 	ReporterEmail         string
