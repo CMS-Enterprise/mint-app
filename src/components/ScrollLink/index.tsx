@@ -1,17 +1,32 @@
 import React from 'react';
-import { Icon } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
-const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
+const ScrollLink = ({
+  scrollTo,
+  hasIcon = true
+}: {
+  scrollTo: string;
+  hasIcon?: boolean;
+}) => {
   return (
-    <a
-      href={`#${convertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
+    <Button
+      type="button"
+      onClick={() =>
+        document
+          .querySelector(`#${convertToLowercaseAndDashes(scrollTo)}`)
+          ?.scrollIntoView({
+            behavior: 'smooth'
+          })
+      }
+      unstyled
     >
       {scrollTo}
-      <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
-    </a>
+      {hasIcon && (
+        <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
+      )}
+    </Button>
   );
 };
 

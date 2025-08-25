@@ -40,9 +40,10 @@ export const ModelSolutionImplementation = () => {
     'modelSolutionImplementation:trackWork.activities.items.0.items'
   );
 
-  const trackProgressConfig = tArray<Record<string, any>>(
-    'modelSolutionImplementation:trackWork.activities.items.1.items'
-  );
+  const trackProgressConfig = tArray<{
+    description: string;
+    items: { heading: string; items?: string[] }[];
+  }>('modelSolutionImplementation:trackWork.activities.items.1.sections');
   const outcomesConfig = tArray<string>(
     'modelSolutionImplementation:trackWork.outcomes.items'
   );
@@ -217,30 +218,33 @@ export const ModelSolutionImplementation = () => {
                   {t('trackWork.activities.items.1.heading')}
                 </ProcessListHeading>
 
-                <p className="margin-top-105 margin-bottom-1">
-                  {t('trackWork.activities.items.1.description')}
-                </p>
-
-                <ul className="padding-left-5 margin-y-0">
-                  {trackProgressConfig.map(item => {
-                    let listItem = <></>;
-                    if (item.items) {
-                      listItem = (
-                        <ul className="padding-left-5 margin-y-0">
-                          {item.items.map((item2: string) => {
-                            return <li key={item2}>{item2}</li>;
-                          })}
-                        </ul>
-                      );
-                    }
-                    return (
-                      <li key={item.heading}>
-                        {item.heading}
-                        {listItem}
-                      </li>
-                    );
-                  })}
-                </ul>
+                {trackProgressConfig.map(section => (
+                  <div key={section.description}>
+                    <p className="margin-top-105 margin-bottom-1">
+                      {t(section.description)}
+                    </p>
+                    <ul className="padding-left-5 margin-y-0">
+                      {section.items.map(item => {
+                        let listItem = <></>;
+                        if (item.items) {
+                          listItem = (
+                            <ul className="padding-left-5 margin-y-0">
+                              {item.items.map((item2: string) => {
+                                return <li key={item2}>{item2}</li>;
+                              })}
+                            </ul>
+                          );
+                        }
+                        return (
+                          <li key={item.heading}>
+                            {item.heading}
+                            {listItem}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
               </ProcessListItem>
             </ProcessList>
 

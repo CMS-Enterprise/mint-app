@@ -1,7 +1,7 @@
 const sixPageMeeting = {
   title: 'About 6-page concept papers and review meetings',
   description:
-    'Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
+    'Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) has signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
   summaryBox: {
     heading: 'Sections of this article',
     sections: [
@@ -54,10 +54,10 @@ const sixPageMeeting = {
   aboutConceptPapers: {
     heading: 'About 6-page concept papers',
     description:
-      'The 6-page model overview should address all relevant elements outlined below and should reflect consultation with these cross-cutting groups: ',
+      'The 6-page model overview should address all relevant elements outlined below with more specificity and details than the 2-pager and reflect consultation with these cross-cutting groups:',
     items: [
       'Business Services Group (BSG) – for feasibility criteria',
-      'CMMI Front Office (FO) – for health equity',
+      'CMMI Front Office (FO) – for healthy living',
       '<link1>Learning and Diffusion Group (LDG)</link1> - for learning',
       'Policy and Programs Group (PPG) – for quality and stakeholder engagement',
       'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
@@ -65,10 +65,11 @@ const sixPageMeeting = {
     sectionOne: {
       heading: '1. Model overview and goals',
       items: [
-        'Describe the need for the model, the challenges the target population faces, related cost and quality/outcomes challenges, and any gaps in CMMI’s portfolio this model might address including lessons learned from previous models. Include the beneficiary perspective.',
-        'Briefly describe the theory of change for the model, including how care will change (i.e., the problem that the model is trying to solve).',
-        'Provide any information on how this model may interact or overlap with other CMMI models or other CMS or Federal programs. ',
-        'In addition to the statutory requirements, consider other potential outcomes following the model test (e.g., spread to Medicare, Medicaid or commercial payers, next generation model, informing ACOs or other Medicare policy, etc.).'
+        'Describe the need for the model, the challenges the target population or program faces, related cost and quality/outcomes challenges, and any gaps in CMMI’s portfolio this model might address.',
+        'Briefly describe the theory of change for the model – the problem the model is trying to solve, the proposed intervention, and expected result.',
+        'Provide any information on how this model may interact or overlap with other CMMI models or other CMS or Federal programs.',
+        'Scaling the model: In addition to the statutory requirements for expansion, consider other potential outcomes following the model test (e.g., spread to Medicare, Medicaid or commercial payers, next generation model, informing ACOs or other Medicare policy, etc.).',
+        'Why we need CMMI’s authority to test this'
       ]
     },
     sectionTwo: {
@@ -78,125 +79,88 @@ const sixPageMeeting = {
           heading:
             'Provide an overview of key model design elements including:',
           items: [
-            'Target population, including underserved populations.',
+            'Target population or program.',
             'Beneficiary attribution or alignment (or, if applicable, recruitment) to model.',
-            'Target provider types, including safety net providers.',
+            'Target provider types, including rural providers.',
             'Participation eligibility requirements for providers, states or other entities.',
             'Payment approach, including any precedent for approach (i.e., CMMI, CM, Medicaid, commercial insurance) and benchmarking and risk adjustment approaches if applicable.',
             'Assess whether model will meet the standards for an Accountable Care Relationship and/or for an Advanced APM.',
             'Quality/performance measurement, including proposed primary quality measures (and alignment to Universal Foundation/CMMI Advancing Quality & PROM strategy) developed in consultation with the Quality Vertical.',
-            'Preliminary driver diagram comprised of a model aim that includes the quality goals and the primary and secondary drivers that will be used to achieve the aim.',
-            'Draft patient journey map that illustrates how these elements address the beneficiary experience of care.'
+            'Preliminary driver diagram comprised of a model aim and the primary and secondary drivers that will be used to achieve the aim.',
+            'Draft patient journey map that illustrates how these elements address the beneficiary experience of care.',
+            'Financial impact and high-level overview of scaling/intervention'
           ]
         }
       ]
     },
     sectionThree: {
       heading:
-        '3. Model selection criteria – Alignment, Impact, Feasibility, and Innovation ',
+        '3. Model selection criteria – Alignment, Impact, Feasibility, and Innovation',
       items: [
         {
           heading:
-            '<bold>Alignment:</bold> Describe how the proposed model would support or advance CMMI’s strategic objectives and <link1>metrics</link1>:',
-          link: 'https://innovation.cms.gov/data-and-reports/2022/cmmi-strategy-refresh-imp-report',
+            '<bold>Alignment:</bold> Describe how the proposed model would support or advance CMMI’s strategic objectives and metrics:',
           items: [
-            'Drive accountable care',
-            'Advance health equity',
-            'Support innovation',
-            'Address affordability',
-            'Partner to achieve system transformation, and multi-payer alignment, in particular'
+            'Promote evidence-based prevention.',
+            'Empower people with information.',
+            'Drive competition and consumer choice.',
+            'Protecting the federal taxpayer.'
           ]
         },
         {
           heading:
             '<bold>Impact:</bold> Model’s anticipated impact on the following dimensions:',
           items: [
-            'Participation – number of providers, percent of providers within relevant specialty, number of beneficiaries, Medicare and/or Medicaid spending (federal and state). ',
-            'Outcomes – expected improvements in quality and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts. ',
-            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries. '
+            'Participation – number of providers/plans/states, number of beneficiaries, Medicare and/or Medicaid spending (federal and state). If scaled, discuss potential participation impacts.',
+            'Outcomes – expected improvements in quality.',
+            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries.'
           ]
         },
         {
           heading:
-            '<bold>Feasibility:</bold> Likelihood of successful execution of the model including any operational limitations, challenges in recruiting participants and potential for adoption and scaling by non-participants.  Update the analysis of data exchange concepts from the two-pager.',
+            '<bold>Feasibility:</bold> Likelihood of successful execution of the model including any operational limitations, challenges in recruiting participants and potential for adoption and scaling by non-participants.',
           items: []
         },
         {
           heading:
-            '<bold>Innovation:</bold> Model provides or is expected to stimulate innovation in a particular dimension of the Center’s portfolio – payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.',
+            '<bold>Innovation:</bold> Model provides or is expected to stimulate innovation in a particular dimension of the Center’s portfolio – payment approach, organization type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.',
           items: []
         }
       ]
     },
     sectionFour: {
-      heading: '4. Opportunities to advance health equity',
+      heading: '4. Model evaluation',
       items: [
-        {
-          heading:
-            'Describe how model has the potential to improve care and outcomes for underserved populations by:',
-          items: [
-            'Embedding health equity in design features, including care delivery requirements, payment adjustment, SDOH screening and referral and participant health equity plans.',
-            'Diversifying beneficiaries served, including increasing safety net provider participation through stakeholder engagement, model design elements, and participant recruitment and support during model implementation. ',
-            'Ensuring evaluation assesses model impact on equity, including model access and outcomes for all beneficiary populations. ',
-            'Supporting the collection and analysis of sociodemographic and HRSN data in accordance with Center policy (linked in Resources below).'
-          ]
-        }
+        'Discuss evaluability of the proposed model and general approach to study design.',
+        'Discuss potential for formal expansion, particularly if evaluation findings would be generalizable.',
+        'Describe options for collecting data on key measures for assessing impact and innovation (as articulated in Section 3 above), including comparison group data including for key outcomes and quality goals.'
       ]
     },
     sectionFive: {
-      heading: '5. Model evaluation',
+      heading: '5. Interested parties - Reactions/Issues',
       items: [
-        'Discuss evaluability of the proposed model and general approach to study design.',
-        'Describe how evaluation could assess broader cost and quality impacts and potential approaches to evaluating delivery system changes and interventions within and outside of the model, including priority questions in the organization and delivery of care tied to model aim.',
-        'Discuss potential for formal expansion, particularly if evaluation findings would be generalizable.',
-        'Discuss potential for adoption and scaling by non-participants outside of formal expansion.',
-        'Describe options for collecting data on key measures for assessing impact and innovation (as articulated in Section 3 above), including comparison group data.'
+        'Provide a brief overview of health care constituencies affected, including those interested parties likely to support or express concerns with the proposed model.',
+        'Discuss potential for support and partnerships across the government – CMS, HHS, OMB, DPC, Congress – and areas of government that may voice concern with the proposed model.',
+        'Provide a summary of stakeholder engagement (e.g. representatives of potential participants, impacted patient groups, policy experts) up to this point in model design.'
       ]
     },
     sectionSix: {
-      heading: '6. Interested parties - Reactions/Issues',
-      items: [
-        'Provide a brief overview of health care constituencies affected, including those interested parties likely to support or voice opposition to or express concerns with the proposed model.',
-        'Discuss potential for support and partnerships across the government – CMS, HHS, OMB, DPC, Congress – and areas of government that may voice concern with the proposed model.',
-        'Provide a summary of stakeholder engagement (e.g. representatives of potential participants, impacted patient groups, policy experts) up to this point in model design.',
-        'Describe how beneficiary perspective/input, especially those representing underserved populations, has been incorporated to date and will be if model concept proceeds forward.'
-      ]
-    },
-    sectionSeven: {
-      heading: '7. Operational and financial considerations',
+      heading: '6. Operational and financial considerations',
       items: [
         'CMMI staffing needs to support model.',
-        'Identification and process for addressing potential overlap issues with existing.',
-        'Opportunity or need for cross-CMMI collaboration and staffing.',
+        'Identification and process for addressing potential overlap issues with existing models.',
         'Legal considerations.',
-        'Anticipated contracting and technology needs.',
+        'Anticipated contracting and technology needs, including financial estimate and development timeline.',
         'Anticipated resources for obtaining comparison group data.'
-      ]
-    },
-    tipsSummaryBox: {
-      heading: 'Tips to learn more about health equity',
-      items: [
-        {
-          text: 'View the <link1>Health Equity Resources on the Quality Vertical SharePoint</link1>',
-          link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D'
-        },
-        {
-          text: 'View the <link1>CMS Framework for Health Equity</link1>',
-          link: 'https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity'
-        },
-        {
-          text: 'Work with CMMI FO',
-          link: ''
-        }
       ]
     },
     additionalResources: {
       heading: 'Additional resources',
       description:
-        'You can view more resources by visiting the  <link1>Strategy Refresh Model Development Library</link1>.',
+        'You can view more resources by visiting the  <link1>Model Development Library</link1>.',
       items: [
         {
-          heading: 'General resources ',
+          heading: 'General resources',
           items: [
             {
               text: '<link1>2-pager repository</link1>',
@@ -225,45 +189,20 @@ const sixPageMeeting = {
           ]
         },
         {
-          heading: 'Quality resources ',
+          heading: 'Quality resources',
           items: [
             {
               text: '<link1>Quality Design Process</link1>',
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Innovation%20Center%20Model%20Quality%20Design%20Process_0907.pdf'
             },
             {
-              text: '<link1>Patient Reported Outcome Measure(PROM) strategy</link1>',
+              text: '<link1>Patient Reported Outcome Measure(PROMs) strategy</link1>',
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/CMMI%20Patient-Reported%20Outcome%20Measure%20Strategy_FINAL_5.16.22.docx'
             }
           ]
         },
         {
-          heading: 'Health equity resources ',
-          items: [
-            {
-              text: '<link1>Quality Vertical Health Equity Resource Guide</link1>',
-              link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D'
-            },
-            {
-              text: '<link1>Implicit Bias Guide</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Implicit%20Bias%20Guide%20for%20Model%20Devt%2002.28.24.docx'
-            },
-            {
-              text: '<link1>Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/HRSN%20Screening%20and%20Referral%20Policy%20Memo%2002.01.24%20clean.docx'
-            },
-            {
-              text: '<link1>HRSN Screening and Referral Implementation Guide</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/HRSN%20Screening%20and%20Referral%20Implementation%20Guide%20Version%202%20FINAL%205-21-24.pdf'
-            },
-            {
-              text: '<link1>Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/SOGI%20Data%20Collection%20and%20Reporting%20Policy%20Memo%201.24.docx'
-            }
-          ]
-        },
-        {
-          heading: 'Implementation resources ',
+          heading: 'Implementation resources',
           items: [
             {
               text: '<link1>BSG Checklist</link1>',

@@ -83,9 +83,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#key-resources-for-model-teams-writing-2-page-concept-papers"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     Key resources for model teams writing 2-page concept papers
                     <svg
@@ -102,14 +103,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#about-2-page-concept-papers"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     About 2-page concept papers
                     <svg
@@ -126,14 +128,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#additional-resources-available-to-model-teams"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     Additional resources available to model teams
                     <svg
@@ -150,14 +153,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#how-2-page-concept-papers-are-reviewed"
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
                   >
                     How 2-page concept papers are reviewed
                     <svg
@@ -174,7 +178,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -343,7 +347,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           <p
             class="margin-top-0 margin-bottom-3 line-height-normal"
           >
-            A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.
+            A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below, and should include general descriptions. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.
           </p>
           <div
             class="usa-alert usa-alert--info flex margin-y-3"
@@ -416,22 +420,27 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="line-height-normal"
                 >
-                  Magnitude/scope of the problem 
+                  Magnitude/scope of the problem
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Population(s) affected 
+                  Population(s) affected
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Why a model is appropriate to address the problem
+                  Why a CMMI model (i.e. why can’t CM/CMCS do it? Why do we need 1115A authority?)
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  How a model may address access, health disparities, affordability, quality, and/or care experience, as well as priority questions in the delivery and organization of care or in CMS operations
+                  How a model may address the problem
+                </li>
+                <li
+                  class="line-height-normal"
+                >
+                  How a model may address prevention, empowerment, and choice and competition, as well as priority questions in the delivery and organization of care or in CMS operations
                 </li>
               </ul>
             </li>
@@ -443,7 +452,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-normal"
             >
-              Include the beneficiary perspective regarding the need for the model, supported by a preliminary patient journey map
+              Include the beneficiary perspective regarding the need for the model
             </li>
             <li
               class="line-height-normal"
@@ -469,6 +478,11 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains
             </li>
+            <li
+              class="line-height-normal"
+            >
+              Model scale high-level potential impacts based on size/intervention
+            </li>
           </ul>
           <h3
             class="margin-top-0 margin-bottom-1"
@@ -483,15 +497,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           <p
             class="padding-left-3 margin-bottom-0 line-height-normal"
           >
-            2-page concept papers may address 
-            <strong>
-              Alignment, Impact, Feasibility, Innovation,
-            </strong>
-             and may list a brief description of 
-            <strong>
-              Interested parties
-            </strong>
-             by:
+            2-page concept papers may address the following criteria:
           </p>
           <ul
             class="margin-top-0 margin-bottom-5 padding-left-6"
@@ -499,95 +505,93 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-normal margin-bottom-05"
             >
-              Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level (
               <strong>
                 Alignment
               </strong>
-              ):
+              : Describe how the model would advance CMMI’s strategic objectives:
               <ol
                 class="padding-left-3 margin-top-05"
               >
                 <li
                   class="line-height-normal"
                 >
-                  Drive accountable care
+                  Promote evidence-based prevention
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Advance health equity
+                  Empower people with information
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Support innovation 
+                  Drive competition and consumer choice
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Address affordability 
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Partner to achieve system transformation, and multi-payer alignment in particular
+                  Protecting the Federal taxpayer
                 </li>
               </ol>
             </li>
             <li
               class="line-height-normal margin-bottom-05"
             >
-              Outlining the potential for the model to impact the following dimensions (
               <strong>
                 Impact
               </strong>
-              ):
+              : Potential for the model to impact the following dimensions:
               <ul
                 class="padding-left-3 margin-top-05"
               >
                 <li
                   class="line-height-normal"
                 >
-                  Participation – number and types of providers, beneficiaries
+                  Participation – number and types of providers, beneficiaries, potential participation if scaled.
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Outcomes – expected improvements in quality, and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts
+                  Outcomes – expected improvements in quality.
                 </li>
                 <li
                   class="line-height-normal"
                 >
-                  Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries
+                  Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries.
                 </li>
               </ul>
             </li>
             <li
               class="line-height-normal margin-bottom-05"
             >
-              Considering the likelihood of successful execution of the model including initial operational phases, CMMI staffing, evaluation challenges, feasibility limitations, participant interest, and potential for scaling. Complete preliminary assessment of data exchanges concept in the model. (
               <strong>
                 Feasibility
               </strong>
-              )
+              : Consider likelihood of successful execution of the model including operational complexity, legal considerations, CMMI staffing, evaluation challenges, participant interest, and potential for scaling.
             </li>
             <li
               class="line-height-normal margin-bottom-05"
             >
-              Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (
+              <strong>
+                Technology
+              </strong>
+              : Explain how the model with advance adoption of new technologies. Specify what existing internal technological capabilities will be leveraged for the model, and what new technical capabilities will need to be built.
+            </li>
+            <li
+              class="line-height-normal margin-bottom-05"
+            >
               <strong>
                 Innovation
               </strong>
-              )
+              : Model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.
             </li>
             <li
               class="line-height-normal margin-bottom-05"
             >
-              Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (
               <strong>
                 Interested parties
               </strong>
-              )
+              : Include brief description of any engagement or advocacy by interested parties, including Congress, on the model concept.
             </li>
           </ul>
           <div
@@ -993,7 +997,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-normal"
             >
-              CMMI Front Office (FO) - for health equity
+              CMMI Front Office (FO) – for healthy living
             </li>
             <li
               class="line-height-normal"
@@ -1133,7 +1137,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <td
                   class="text-baseline padding-left-0"
                 >
-                  Model supports or advances one (or more) of the five strategy pillars: Drive accountable care, advance health equity, support innovation, address affordability, partner to achieve system transformation
+                  Model supports or advances one (or more) of the five strategy pillars:​ Drive accountable care, advance healthy living, support innovation, address affordability, partner to achieve system transformation
                 </td>
                 <td
                   class="text-baseline padding-left-0"
@@ -1172,7 +1176,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     <li
                       class="line-height-normal margin-bottom-05"
                     >
-                      Transformation, including: cost reduction, quality and equity improvement, delivery system change​
+                      Transformation, including: cost reduction, quality improvement, delivery system change​​
                     </li>
                   </ul>
                 </td>
@@ -1398,7 +1402,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
+                  Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) has signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
                 </p>
               </div>
               <div

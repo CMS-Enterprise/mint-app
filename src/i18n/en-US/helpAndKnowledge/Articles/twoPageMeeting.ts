@@ -29,7 +29,7 @@ const twoPageMeeting = {
   },
   about: {
     introParagraph:
-      'A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.',
+      'A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below, and should include general descriptions. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.',
     alert:
       'Much of the content below is also accessible in the 6-page concept paper template. <el>Download it from the Strategy Refresh SharePoint site</el>',
     link: 'Download it from the Strategy Refresh SharePoint site',
@@ -41,16 +41,17 @@ const twoPageMeeting = {
           text: 'Briefly discuss the problem the model intends to address, including a description of the:',
           list: [
             'Causes and enablers of the problem',
-            'Magnitude/scope of the problem ',
-            'Population(s) affected ',
-            'Why a model is appropriate to address the problem',
-            'How a model may address access, health disparities, affordability, quality, and/or care experience, as well as priority questions in the delivery and organization of care or in CMS operations'
+            'Magnitude/scope of the problem',
+            'Population(s) affected',
+            'Why a CMMI model (i.e. why can’t CM/CMCS do it? Why do we need 1115A authority?)',
+            'How a model may address the problem',
+            'How a model may address prevention, empowerment, and choice and competition, as well as priority questions in the delivery and organization of care or in CMS operations'
           ]
         },
         describe:
           'Describe the preliminary theory of change for the model including a statement of the model aim with an initial driver diagram in consultation with LDG, RREG and the Quality Vertical that shows how the model will address the problem and questions above',
         include:
-          'Include the beneficiary perspective regarding the need for the model, supported by a preliminary patient journey map',
+          'Include the beneficiary perspective regarding the need for the model',
         provide:
           'Provide background or context on whether the proposed model has previously been tested or is a follow-on model, incorporates learnings from external stakeholders, and/or where concept originated (e.g. private sector, academia, state or regional efforts)'
       }
@@ -58,41 +59,48 @@ const twoPageMeeting = {
     stepTwo: {
       heading: '2. High-level description of model elements',
       copy: '2-page concept papers will:',
-      item: 'Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains'
+      items: {
+        list: [
+          'Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains',
+          'Model scale high-level potential impacts based on size/intervention'
+        ]
+      }
     },
     stepThree: {
       heading:
         '3. Preliminary analysis of the proposed model relative to selection criteria',
       italics:
         'Not all of these may be answerable early in model development/consideration',
-      copy: '2-page concept papers may address <bold>Alignment, Impact, Feasibility, Innovation,</bold> and may list a brief description of <bold>Interested parties</bold> by:',
+      copy: '2-page concept papers may address the following criteria:',
       list: [
         {
-          text: 'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level (<bold>Alignment</bold>):',
+          text: '<bold>Alignment</bold>: Describe how the model would advance CMMI’s strategic objectives:',
           numberedList: [
-            'Drive accountable care',
-            'Advance health equity',
-            'Support innovation ',
-            'Address affordability ',
-            'Partner to achieve system transformation, and multi-payer alignment in particular'
+            'Promote evidence-based prevention',
+            'Empower people with information',
+            'Drive competition and consumer choice',
+            'Protecting the Federal taxpayer'
           ]
         },
         {
-          text: 'Outlining the potential for the model to impact the following dimensions (<bold>Impact</bold>):',
+          text: '<bold>Impact</bold>: Potential for the model to impact the following dimensions:',
           list: [
-            'Participation – number and types of providers, beneficiaries',
-            'Outcomes – expected improvements in quality, and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts',
-            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries'
+            'Participation – number and types of providers, beneficiaries, potential participation if scaled.',
+            'Outcomes – expected improvements in quality.',
+            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries.'
           ]
         },
         {
-          text: 'Considering the likelihood of successful execution of the model including initial operational phases, CMMI staffing, evaluation challenges, feasibility limitations, participant interest, and potential for scaling. Complete preliminary assessment of data exchanges concept in the model. (<bold>Feasibility</bold>)'
+          text: '<bold>Feasibility</bold>: Consider likelihood of successful execution of the model including operational complexity, legal considerations, CMMI staffing, evaluation challenges, participant interest, and potential for scaling.'
         },
         {
-          text: 'Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (<bold>Innovation</bold>)'
+          text: '<bold>Technology</bold>: Explain how the model with advance adoption of new technologies. Specify what existing internal technological capabilities will be leveraged for the model, and what new technical capabilities will need to be built.'
         },
         {
-          text: 'Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (<bold>Interested parties</bold>)'
+          text: '<bold>Innovation</bold>: Model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.'
+        },
+        {
+          text: '<bold>Interested parties</bold>: Include brief description of any engagement or advocacy by interested parties, including Congress, on the model concept.'
         }
       ]
     },
@@ -175,7 +183,7 @@ const twoPageMeeting = {
       copy: 'During the concept, design, and development phases of a model, there are a variety of other groups within CMMI and the larger CMS organization that can help model teams with a variety of aspects of their model. These areas of specialty include:',
       list: [
         'Business Services Group (BSG) - for feasibility criteria',
-        'CMMI Front Office (FO) - for health equity',
+        'CMMI Front Office (FO) – for healthy living',
         '<ml>Learning and Diffusion Group (LDG)</ml> - for learning',
         'Policy and Programs Group (PPG) - for quality and stakeholder engagement',
         'Research and Rapid Cycle Evaluation Group (RREG) - for evaluation'
@@ -202,14 +210,14 @@ const twoPageMeeting = {
           {
             criteria: 'Alignment',
             description:
-              'Model supports or advances one (or more) of the five strategy pillars: Drive accountable care, advance health equity, support innovation, address affordability, partner to achieve system transformation',
+              'Model supports or advances one (or more) of the five strategy pillars:​ Drive accountable care, advance healthy living, support innovation, address affordability, partner to achieve system transformation',
             score:
               '<bold>Yes/No</bold>Model does not move forward if it does not align with any pillar of the strategy'
           },
           {
             criteria: 'Impact',
             description:
-              '<paragraph>Model effect as a function of participation and the potential for health system transformation</paragraph><ul><li>Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​</li><li>Transformation, including: cost reduction, quality and equity improvement, delivery system change​</li></ul>',
+              '<paragraph>Model effect as a function of participation and the potential for health system transformation</paragraph><ul><li>Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​</li><li>Transformation, including: cost reduction, quality improvement, delivery system change​​</li></ul>',
             score:
               '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
           },

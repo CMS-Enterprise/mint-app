@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 
 import { helpSolutions } from '../../solutionsMap';
@@ -11,31 +11,49 @@ export default {
   component: SolutionsHeader,
   decorators: [
     Story => (
-      <MemoryRouter
-        initialEntries={['/help-and-knowledge/operational-solutions']}
-      >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionsHeader
-            resultsNum={9}
-            resultsMax={Object.keys(helpSolutions).length}
-            setQuery={(query: string) => null}
-            query=""
-          />
-        </Route>
-      </MemoryRouter>
+      <RouterProvider
+        router={createMemoryRouter(
+          [
+            {
+              path: '/help-and-knowledge/operational-solutions',
+              element: (
+                <SolutionsHeader
+                  resultsNum={9}
+                  resultsMax={Object.keys(helpSolutions).length}
+                  setQuery={(query: string) => null}
+                  query=""
+                />
+              )
+            }
+          ],
+          {
+            initialEntries: ['/help-and-knowledge/operational-solutions']
+          }
+        )}
+      />
     )
   ]
 } as Meta<typeof SolutionsHeader>;
 
 export const Default = () => (
-  <MemoryRouter initialEntries={['/help-and-knowledge/operational-solutions']}>
-    <Route path="/help-and-knowledge/operational-solutions">
-      <SolutionsHeader
-        resultsNum={9}
-        resultsMax={Object.keys(helpSolutions).length}
-        setQuery={(query: string) => null}
-        query=""
-      />
-    </Route>
-  </MemoryRouter>
+  <RouterProvider
+    router={createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: (
+            <SolutionsHeader
+              resultsNum={9}
+              resultsMax={Object.keys(helpSolutions).length}
+              setQuery={(query: string) => null}
+              query=""
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/operational-solutions']
+      }
+    )}
+  />
 );
