@@ -9,8 +9,8 @@ import React, {
 } from 'react';
 import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -27,6 +27,7 @@ import {
   useGetModelPlanQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -100,7 +101,7 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('general');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { message } = useMessage();
 
@@ -121,7 +122,7 @@ const TaskList = () => {
     null
   );
 
-  const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId, groups } = useSelector((state: AppState) => state.auth);
 
   // Used to conditonally render role specific text in task list
   const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
@@ -361,6 +362,9 @@ const TaskList = () => {
             </Grid>
           </Grid>
         )}
+
+        {/* Render child routes */}
+        <Outlet />
       </GridContainer>
     </MainContent>
   );

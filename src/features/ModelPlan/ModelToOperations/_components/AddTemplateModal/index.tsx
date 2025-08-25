@@ -16,7 +16,7 @@ const AddTemplateModal = () => {
 
   const { setMTOModalOpen } = useContext(MTOModalContext);
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
 

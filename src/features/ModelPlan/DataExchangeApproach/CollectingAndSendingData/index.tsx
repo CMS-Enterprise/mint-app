@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Fieldset,
   Form,
@@ -67,9 +67,9 @@ const CollectingAndSendingData = () => {
     dataToSendToParticipants: dataToSendToParticipantsConfig
   } = usePlanTranslation('dataExchangeApproach');
 
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useGetCollectingAndSendingDataQuery({
     variables: { id: modelID }
@@ -125,7 +125,7 @@ const CollectingAndSendingData = () => {
     <>
       <MutationErrorModal
         isOpen={mutationError.isModalOpen}
-        closeModal={() => mutationError.closeModal()}
+        closeModal={mutationError.closeModal}
         url={mutationError.destinationURL}
       />
 
@@ -139,7 +139,7 @@ const CollectingAndSendingData = () => {
         <Form
           id="collect-and-send-data-form"
           onSubmit={handleSubmit(() => {
-            history.push(
+            navigate(
               `/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
             );
           })}
@@ -368,6 +368,7 @@ const CollectingAndSendingData = () => {
                   backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`}
                   nextPage
                   disabled={isSubmitting}
+                  id="collect-and-send-data-form"
                 />
               </Grid>
             </Grid>

@@ -217,7 +217,9 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		suite.NoError(err2)
 		perf := faktory_worker.NewTestExecutor(pool)
 
-		err2 = perf.Execute(job1, worker.DigestEmailJob)
+		// Use the fetched job1 from the queue instead of creating a new job
+
+		err2 = suite.ExecuteWithLoaders(perf, job1, worker.DigestEmailJob)
 		suite.NoError(err2)
 
 		return err2

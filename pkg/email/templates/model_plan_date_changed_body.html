@@ -1,6 +1,6 @@
 {{template "shared_header.html"}}
 
-{{template "shared_non_mint_mailbox_short_header.html"}}
+{{template "shared_non_mint_mailbox_short_header.html" .}}
 <hr/>
 
 <h2>Dates updated for {{.ModelName}}</h2>
@@ -53,5 +53,7 @@
 {{if .ShowFooter}}
   <hr>
   <br/>
-  {{template "shared_subscribed_footer.html"}}
+  {{template "shared_subscribed_footer.html" .}}
 {{end}}
+
+{{template "shared_footer.html"}}

@@ -46,6 +46,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
+          data-discover="true"
           href="/help-and-knowledge/articles?category=it-implementation"
         >
           <span
@@ -83,10 +84,26 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
                 Creating a model-specific application in the Reusable Framework
               </li>
               <li>
-                Adjusting claims payments in the Fee-for-Service systems
+                Adjusting claims payments in the 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  data-discover="true"
+                  href="/help-and-knowledge/utilizing-solutions?solution=shared-systems&section=about"
+                >
+                  Fee-for-Service
+                </a>
+                 systems
               </li>
               <li>
-                Modifying the Health Plan Management System to capture information from Accountable Care Organizations (ACOs)
+                Modifying the 
+                <a
+                  class="usa-link usa-button usa-button--unstyled"
+                  data-discover="true"
+                  href="/help-and-knowledge/utilizing-solutions?solution=health-plan-management-system&section=about"
+                >
+                  Health Plan Management System
+                </a>
+                 to capture information from Accountable Care Organizations (ACOs)
               </li>
             </ol>
           </div>
@@ -99,7 +116,31 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          The business and system owners of existing systems each determine the timelines for the relevant systems. The IT Lead will assist model teams in understanding and following the release calendar of each system. The timeline below outlines a hypothetical release calendar. All systems are different.
+          The business and system owners of existing systems each determine the timelines for the relevant systems. The IT Lead will assist model teams in understanding and following the release calendar of each system. The timeline below outlines a hypothetical release calendar. All systems are different. The IT Lead will document key dates in the model-to-operations matrix (MTO).
+
+        
+          <a
+            class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+            data-discover="true"
+            href="/help-and-knowledge/creating-mto-matrix"
+          >
+            Learn more about creating a model-to-operations matrix (MTO)
+        
+            <svg
+              aria-label="forward"
+              class="usa-icon margin-left-1 text-bold"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </a>
         </p>
         <h3
           class="margin-top-3 margin-bottom-5"
@@ -234,6 +275,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             >
               <a
                 class="usa-link margin-top-2 display-inline-block"
+                data-discover="true"
                 href="/help-and-knowledge/operational-solutions?page=1"
               >
                 Check out the operational solutions
@@ -250,7 +292,25 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          The timeline below describes the typical activities for using an existing system. Each CMS system has a unique process for accepting and implementing new requirements. The table below provides the general CMS process as guidance for model teams. However, teams will need to follow the specific procedures of each system. The IT Lead will assist model teams with this.
+          The timeline below describes the typical activities for using an existing system. Each CMS system has a unique process for accepting and implementing new requirements. The table below provides the general CMS process as guidance for model teams. However, teams will need to follow the specific procedures of each system. The IT Lead will assist model teams with this. The IT Lead will use the MTO to document the operational solutions and IT systems a model plans to use. MINT users may also browse all available solutions and IT systems within the operational solutions area of MINT’s Help and Knowledge Center.
+      
+        
+          <a
+            class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+            data-discover="true"
+            href="/help-and-knowledge/creating-mto-matrix"
+          >
+            Learn more about creating a model-to-operations matrix (MTO)
+          </a>
+           
+          <a
+            class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+            data-discover="true"
+            href="/help-and-knowledge/operational-solutions?page=1"
+          >
+            Browse available operational solutions
+          </a>
+           
         </p>
         <h3
           class="margin-top-3 margin-bottom-6"
@@ -408,7 +468,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               <p
                 class="margin-bottom-0"
               >
-                Model teams should work with their IT Lead to complete the operational solutions and implementation status tracker within the Model Plan to stay organized.
+                Model teams should work with their IT Lead to complete the model-to-operations matrix (MTO) for their model to stay organized.
               </p>
             </div>
           </div>
@@ -456,6 +516,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -507,6 +568,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -522,7 +584,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
+                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, operational solutions, and contracts needed to support the model.
               </p>
             </div>
             <div
@@ -558,6 +620,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -573,7 +636,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).
               </p>
             </div>
             <div
@@ -593,6 +656,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
       </ul>
       <a
         class="usa-link"
+        data-discover="true"
         href="/help-and-knowledge/articles"
       >
         View all help resources

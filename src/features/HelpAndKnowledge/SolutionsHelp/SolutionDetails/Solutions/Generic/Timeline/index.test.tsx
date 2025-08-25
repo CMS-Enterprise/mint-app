@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
@@ -13,17 +13,22 @@ describe('Generic Timeline Components', () => {
       if (
         solutionTimelineComponent.key !== MtoCommonSolutionKey.OUTLOOK_MAILBOX
       ) {
-        const { asFragment } = render(
-          <MemoryRouter
-            initialEntries={[
+        const router = createMemoryRouter(
+          [
+            {
+              path: '/help-and-knowledge/operational-solutions',
+              element: <GenericTimeline solution={solutionTimelineComponent} />
+            }
+          ],
+          {
+            initialEntries: [
               `/help-and-knowledge/operational-solutions?solution-key=${solutionTimelineComponent.key}&section=timeline`
-            ]}
-          >
-            <Route path="/help-and-knowledge/operational-solutions">
-              <GenericTimeline solution={solutionTimelineComponent} />
-            </Route>
-          </MemoryRouter>
+            ]
+          }
         );
+
+        const { asFragment } = render(<RouterProvider router={router} />);
+
         expect(asFragment()).toMatchSnapshot(solutionTimelineComponent.name);
       }
     }

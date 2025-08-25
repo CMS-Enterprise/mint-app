@@ -31,14 +31,17 @@ import MultiSelect from 'components/MultiSelect';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
+import {
+  convertCamelCaseToKebabCase,
+  sortedSelectOptions
+} from 'utils/modelPlan';
 
 type FormValues = {
   linkedSolutions: MtoCommonSolutionKey[] | string[] | undefined;
 };
 
 const SelectSolutionForm = () => {
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
   const { commonSolutions: commonSolutionsConfig } =
     usePlanTranslation('mtoMilestone');
@@ -103,30 +106,36 @@ const SelectSolutionForm = () => {
   const groupedOptions = [
     {
       label: t('modal.editMilestone.suggestedSolution'),
-      options: mappedSolutions.map(solution => {
-        return {
-          label: solution?.name || '',
-          value: solution?.key || ''
-        };
-      })
+      options: sortedSelectOptions(
+        mappedSolutions.map(solution => {
+          return {
+            label: solution?.name || '',
+            value: solution?.key || ''
+          };
+        })
+      )
     },
     {
       label: t('modal.editMilestone.customSolution'),
-      options: createdSolutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.id
-        };
-      })
+      options: sortedSelectOptions(
+        createdSolutions.map(solution => {
+          return {
+            label: solution.name || '',
+            value: solution.id
+          };
+        })
+      )
     },
     {
       label: t('modal.editMilestone.otherSolutions'),
-      options: commonSolutions.map(solution => {
-        return {
-          label: solution.name || '',
-          value: solution.key
-        };
-      })
+      options: sortedSelectOptions(
+        commonSolutions.map(solution => {
+          return {
+            label: solution.name || '',
+            value: solution.key
+          };
+        })
+      )
     }
   ];
 
@@ -262,10 +271,8 @@ const SelectSolutionForm = () => {
                       components={{
                         solution: (
                           <UswdsReactLink
-                            to={{
-                              pathname: `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                              state: { scroll: true }
-                            }}
+                            to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                            state={{ scroll: true }}
                             onClick={() => setMTOModalOpen(false)}
                           >
                             {' '}

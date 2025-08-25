@@ -50,6 +50,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
             </h1>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -382,6 +383,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
               Solutions are IT systems, contracts, CMS groups and teams, and other methods to implement milestones. IT leads will use their breadth of expertise to add solutions to the MTO and specify which milestone(s) they will help to accomplish. Like milestones, MINT offers two ways of adding a solution to an MTO. The MINT solution library houses a set of information about commonly used IT systems and other solutions, enabling IT leads to quickly add them to an MTO or associate them with a milestone. MINT also allows users to create custom solutions, helpful in cases where a needed system is not included in MINT or when a model is using a bespoke solution not commonly used by other models. You can also view MINT’s available solutions and IT systems in the 
               <a
                 class="usa-link"
+                data-discover="true"
                 href="/help-and-knowledge/operational-solutions"
               >
                 Operational solutions area of the Help Center
@@ -534,6 +536,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/starting-mto-matrix"
                   >
                     <span>
@@ -561,6 +564,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/using-milestone-table"
                   >
                     <span>
@@ -588,6 +592,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/using-solutions-and-it-systems-table"
                   >
                     <span>
@@ -615,6 +620,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/using-table-actions"
                   >
                     <span>
@@ -642,6 +648,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/using-milestone-library"
                   >
                     <span>
@@ -669,6 +676,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/using-solution-library"
                   >
                     <span>
@@ -696,6 +704,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/add-custom-milestone"
                   >
                     <span>
@@ -723,6 +732,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/add-custom-solution"
                   >
                     <span>
@@ -750,6 +760,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/updating-mto-status"
                   >
                     <span>
@@ -777,6 +788,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 >
                   <a
                     class="usa-link fit-content display-flex flex-align-center margin-y-05"
+                    data-discover="true"
                     href="/help-and-knowledge/sharing-exporting-mto"
                   >
                     <span>
@@ -888,6 +900,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=it-implementation"
               >
                 <span
@@ -939,6 +952,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=it-implementation"
               >
                 <span
@@ -954,7 +968,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+                  This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).
                 </p>
               </div>
               <div
@@ -990,6 +1004,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
               </div>
               <a
                 class="usa-link width-fit-content display-block "
+                data-discover="true"
                 href="/help-and-knowledge/articles?category=it-implementation"
               >
                 <span
@@ -1025,6 +1040,7 @@ exports[`CreatingMTOMatrix > matches the snapshot 1`] = `
         </ul>
         <a
           class="usa-link"
+          data-discover="true"
           href="/help-and-knowledge/articles"
         >
           View all help resources

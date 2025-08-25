@@ -6,6 +6,7 @@ import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { getKeys } from 'types/translation';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 import CategoryCard from '../CategoryCard';
 
@@ -20,10 +21,12 @@ const OperationalSolutionsHelp = ({
 
   return (
     <div
+      id={convertToLowercaseAndDashes(t('operationalSolutionsAndITSystems'))}
       className={classNames(
         className,
         'padding-y-4 padding-bottom-6 bg-primary-darker text-white margin-bottom-neg-7'
       )}
+      style={{ scrollMarginTop: '3.5rem' }}
     >
       <GridContainer>
         <h2 className="margin-0">{t('operationalSolutions')}</h2>

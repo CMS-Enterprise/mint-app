@@ -4,6 +4,8 @@ import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import ScrollLink from 'components/ScrollLink';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
@@ -28,9 +30,27 @@ export const HelpAndKnowledgeHome = () => {
           <div className="description-truncated margin-y-2 font-body-lg">
             {t('description')}
           </div>
+
+          <div>
+            <p className="display-inline text-bold margin-right-2">
+              {t('jumpTo')}:
+            </p>
+            <ScrollLink scrollTo={t('helpResourcesAndLinks')} hasIcon={false} />
+
+            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+
+            <ScrollLink
+              scrollTo={t('operationalSolutionsAndITSystems')}
+              hasIcon={false}
+            />
+          </div>
         </GridContainer>
       </SummaryBox>
-      <GridContainer className="padding-bottom-4 padding-top-2">
+      <GridContainer
+        id={convertToLowercaseAndDashes(t('helpResourcesAndLinks'))}
+        className="padding-bottom-4 padding-top-2"
+        style={{ scrollMarginTop: '3.5rem' }}
+      >
         <HelpCardGroup
           className="margin-top-2 margin-bottom-1"
           resources={homeArticles}

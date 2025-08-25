@@ -28,6 +28,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
+                data-discover="true"
                 href="/"
               >
                 <span>
@@ -40,7 +41,8 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/undefined/collaboration-area"
+                data-discover="true"
+                href="/models//collaboration-area"
               >
                 <span>
                   Model collaboration area

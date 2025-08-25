@@ -46,6 +46,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
+          data-discover="true"
           href="/help-and-knowledge/articles?category=it-implementation"
         >
           <span
@@ -59,7 +60,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
         >
-          This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+          This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).
         </p>
         <div
           class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
@@ -85,9 +86,10 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <a
-                      class="display-flex flex-align-center"
-                      href="#initiate-work-with-each-operational-solution-team"
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
                     >
                       Initiate work with each operational solution team
                       <svg
@@ -104,7 +106,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </a>
+                    </button>
                   </div>
                 </li>
                 <li
@@ -113,9 +115,10 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <a
-                      class="display-flex flex-align-center"
-                      href="#track-work-up-through-implementation"
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
                     >
                       Track work up through implementation
                       <svg
@@ -132,7 +135,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </a>
+                    </button>
                   </div>
                 </li>
               </ol>
@@ -163,7 +166,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          The IT Lead will assist model teams in understanding and following the release calendar of each system as all system timelines are different. 
+          The IT Lead will document key dates in the model’s MTO and will assist model teams in understanding and following the release calendar of each system as all system timelines are different.
         </p>
         <h3
           class="margin-top-3 margin-bottom-4"
@@ -185,7 +188,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             <p
               class="margin-top-105"
             >
-              Based on the operational solutions and implementation status tracker populated in the previous phase, the IT Lead will work with the Model Lead to determine which projects need to begin first. Working with some systems takes longer than others. The IT Lead will help model teams with the necessary timing.
+              Based on the solutions and IT systems added to the MTO in the previous phase, the IT Lead will work with the Model Lead to determine which projects need to begin first. Working with some systems takes longer than others. The IT Lead will help model teams with the necessary timing.
             </p>
           </li>
           <li
@@ -226,6 +229,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             >
               <a
                 class="usa-link margin-right-1"
+                data-discover="true"
                 href="/help-and-knowledge/utilizing-solutions"
               >
                 Learn more about utilizing available operational solutions
@@ -261,7 +265,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
           class="padding-left-7"
         >
           <li>
-            Relevant product/project teams have been notified about the model and the model is in the backlog. 
+            Relevant product/project teams have been notified about the model and the model is in the backlog.
           </li>
         </ol>
         <h2
@@ -288,7 +292,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
         <p
           class="margin-y-0 line-height-sans-5"
         >
-          After the operational solutions have been identified and outreach has began, the IT Lead will help keep track of the status of each solution up until it has been implemented.
+          After the operational solutions have been identified and outreach has began, the IT Lead will use the MTO to help keep track of the status of each solution up until it has been implemented.
         </p>
         <h3
           class="margin-top-3 margin-bottom-4"
@@ -335,54 +339,66 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             >
               Track progress of each operational solution within MINT
             </h5>
-            <p
-              class="margin-top-105 margin-bottom-1"
-            >
-              The IT Lead will work with the Model Team to update the status of each solution to the following:
-            </p>
-            <ul
-              class="padding-left-5 margin-y-0"
-            >
-              <li>
-                Not started
-              </li>
-              <li>
-                Onboarding
-                <ul
-                  class="padding-left-5 margin-y-0"
-                >
-                  <li>
-                    Onboarding includes activities such as contract modification, change request, onboarding request, etc.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Backlog
-                <ul
-                  class="padding-left-5 margin-y-0"
-                >
-                  <li>
-                    This means the model team’s work is on the project team’s backlog but not started yet.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                In progress
-              </li>
-              <li>
-                Completed
-              </li>
-              <li>
-                At risk
-                <ul
-                  class="padding-left-5 margin-y-0"
-                >
-                  <li>
-                    This indicates there are problems that may delay work or that the project is off track.
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <div>
+              <p
+                class="margin-top-105 margin-bottom-1"
+              >
+                The IT Lead will work with the model team to update the status of each solution to the following:
+              </p>
+              <ul
+                class="padding-left-5 margin-y-0"
+              >
+                <li>
+                  Not started
+                </li>
+                <li>
+                  Onboarding
+                  <ul
+                    class="padding-left-5 margin-y-0"
+                  >
+                    <li>
+                      Onboarding includes activities such as contract modification, change request, onboarding request, etc.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Backlog
+                  <ul
+                    class="padding-left-5 margin-y-0"
+                  >
+                    <li>
+                      This means the model team’s work is on the project team’s backlog but not started yet.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  In progress
+                </li>
+                <li>
+                  Completed
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p
+                class="margin-top-105 margin-bottom-1"
+              >
+                The IT Lead will work with the model team to flag the risk status of each of the solutions and its related milestones:
+              </p>
+              <ul
+                class="padding-left-5 margin-y-0"
+              >
+                <li>
+                  No risk (on track)
+                </li>
+                <li>
+                  Some risk (off track)
+                </li>
+                <li>
+                  Significantly at risk
+                </li>
+              </ul>
+            </div>
           </li>
         </ol>
         <h3
@@ -412,6 +428,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             class="padding-bottom-1"
           >
             Leadership can see the implementation status of projects.
+          </li>
+          <li
+            class="padding-bottom-1"
+          >
+            There is an up-to-date record of model milestones and solution activities in MINT.
           </li>
         </ol>
       </div>
@@ -457,6 +478,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -508,6 +530,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -523,7 +546,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
+                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, operational solutions, and contracts needed to support the model.
               </p>
             </div>
             <div
@@ -559,6 +582,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
             </div>
             <a
               class="usa-link width-fit-content display-block "
+              data-discover="true"
               href="/help-and-knowledge/articles?category=it-implementation"
             >
               <span
@@ -594,6 +618,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
       </ul>
       <a
         class="usa-link"
+        data-discover="true"
         href="/help-and-knowledge/articles"
       >
         View all help resources

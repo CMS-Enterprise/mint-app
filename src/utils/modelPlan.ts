@@ -58,6 +58,13 @@ export const composeMultiSelectOptions = (
     isDisabled: key === disabledValue
   }));
 
+// Sort options alphabetically by label
+export const sortedSelectOptions = (
+  options: { value: string; label: string }[]
+) => {
+  return [...options].sort((a, b) => a.label.localeCompare(b.label));
+};
+
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {
   if (
@@ -157,7 +164,7 @@ export const insertIf = (condition: boolean, ...elements: any) => {
 };
 
 export const convertToLowercaseAndDashes = (string: string) =>
-  string.toLowerCase().replace(/\s+/g, '-');
+  string.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '-');
 
 /**
  * Converts a camelCase string to all lowercase and hyphenates it at the camelCase boundaries.

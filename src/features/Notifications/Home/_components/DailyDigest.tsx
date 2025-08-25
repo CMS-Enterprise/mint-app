@@ -123,13 +123,15 @@ const DailyDigest = ({
                   firstFiveChanges.includes('updated') && (
                     <li className="line-height-sans-5">
                       {notificationsT('index.dailyDigest.updatesTo', {
-                        taskSection: planSections.updated
-                          .map(section =>
-                            notificationsT(
-                              `index.dailyDigest.planSections.${section}`
+                        taskSection: Array.from(
+                          new Set(
+                            planSections.updated.map(section =>
+                              notificationsT(
+                                `index.dailyDigest.planSections.${section}`
+                              )
                             )
                           )
-                          .join(', ')
+                        ).join(', ')
                       })}
                     </li>
                   )}

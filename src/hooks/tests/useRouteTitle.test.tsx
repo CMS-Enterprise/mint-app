@@ -127,13 +127,21 @@ describe('isExcludedPath', () => {
     expect(
       isExcludedPath('/models/uuid-5/read-view/it-systems-and-solutions')
     ).toBe(true);
+    expect(isExcludedPath('/models/123/read-only/extra')).toBe(true);
+    expect(isExcludedPath('/models/read-only')).toBe(true);
+    expect(isExcludedPath('/read-only')).toBe(true);
   });
 
   it('returns false for non-excluded paths', () => {
     expect(isExcludedPath('/models/123/other-path')).toBe(false);
-    expect(isExcludedPath('/models/123/read-only/extra')).toBe(false);
-    expect(isExcludedPath('/models/read-only')).toBe(false);
-    expect(isExcludedPath('/read-only')).toBe(false);
     expect(isExcludedPath('/models/123')).toBe(false);
+    expect(isExcludedPath('/models/123/read-view/model-basics')).toBe(false);
+    expect(isExcludedPath('/models/123/collaboration-area')).toBe(false);
+    expect(isExcludedPath('/models/123/collaboration-area/task-list')).toBe(
+      false
+    );
+    expect(
+      isExcludedPath('/models/123/collaboration-area/task-list/basics')
+    ).toBe(false);
   });
 });
