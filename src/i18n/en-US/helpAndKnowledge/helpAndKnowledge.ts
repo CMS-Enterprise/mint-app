@@ -453,7 +453,12 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete CCW VRDC Access Request worksheet',
           description:
-            'Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and Velda.'
+            'Contact the <link1>CMMI Government Task Lead</link1> to request the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and the CMMI Government Task Lead.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Complete CCW CARS application',
@@ -471,7 +476,12 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete Employee CCW Access Request form',
           description:
-            'Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and Velda.'
+            'Contact the <link1>CMMI Government Task Lead</link1> to request the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and the CMMI Government Task Lead.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Complete CCW CARS application',
