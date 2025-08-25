@@ -8,6 +8,8 @@ import {
 
 import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 
 const Unfollow = () => {
@@ -20,6 +22,8 @@ const Unfollow = () => {
   const modelIDToRemove = params.get('modelID');
 
   const [removeMutate] = useDeletePlanFavoriteMutation();
+
+  const { setErrorMeta } = useErrorMessage();
 
   const { data, error } = useGetBasicsQuery({
     variables: {
@@ -46,6 +50,12 @@ const Unfollow = () => {
       navigate('/models');
     }
     if (modelName) {
+      setErrorMeta({
+        overrideMessage: t('favorite.failure', {
+          requestName: modelName
+        })
+      });
+
       removeMutate({
         variables: {
           modelPlanID: modelIDToRemove!
@@ -53,38 +63,18 @@ const Unfollow = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            showMessageOnNextPage(
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('favorite.success', {
-                    requestName: modelName
-                  })}
-                </span>
-              </Alert>
+            toastSuccess(
+              t('favorite.success', {
+                requestName: modelName
+              }),
+              {
+                id: 'mandatory-fields-alert'
+              }
             );
             navigate('/models');
           }
         })
         .catch(errors => {
-          showMessageOnNextPage(
-            <Alert
-              type="error"
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-            >
-              <span className="mandatory-fields-alert__text">
-                {t('favorite.failure', {
-                  requestName: modelName
-                })}
-              </span>
-            </Alert>
-          );
           navigate('/models');
         });
     }
@@ -95,7 +85,8 @@ const Unfollow = () => {
     modelName,
     removeMutate,
     showMessageOnNextPage,
-    t
+    t,
+    setErrorMeta
   ]);
 
   return <PageLoading />;

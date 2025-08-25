@@ -9,12 +9,11 @@ import {
   useArchiveModelPlanMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import ShareExportModal from 'components/ShareExport';
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
 
 import { StatusMessageType } from '../..';
 
@@ -40,7 +39,6 @@ const TaskListSideNav = ({
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
-  const { showMessageOnNextPage } = useMessage();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [update] = useArchiveModelPlanMutation();
@@ -51,31 +49,17 @@ const TaskListSideNav = ({
         id: modelID,
         archived: true
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessageOnNextPage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('withdraw_modal.confirmationText_name', {
-                    modelName: modelPlan.modelName
-                  })}
-                </span>
-              </Alert>
-            </>
-          );
-          navigate(`/`);
-        }
-      })
-      .catch(() => {
-        setModalOpen(false);
-      });
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          t('withdraw_modal.confirmationText_name', {
+            modelName: modelPlan.modelName
+          })
+        );
+
+        navigate(`/`);
+      }
+    });
   };
 
   const renderModal = () => {

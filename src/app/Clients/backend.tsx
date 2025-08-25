@@ -1,11 +1,21 @@
-import { ApolloClient, InMemoryCache, split } from '@apollo/client';
+import React from 'react';
+import { toast } from 'react-toastify';
+import { ApolloClient, InMemoryCache, Operation, split } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { createUploadLink } from 'apollo-upload-client';
+import i18next from 'i18next';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
+import Alert from 'components/Alert';
 import { localAuthStorageKey } from 'constants/localAuth';
+import {
+  getCurrentErrorMeta,
+  setCurrentErrorMeta
+} from 'contexts/ErrorContext/errorMetaStore';
+import { knownErrors } from 'i18n/en-US/error';
 
 const apiHost = new URL(import.meta.env.VITE_API_ADDRESS || '').host;
 
@@ -53,6 +63,85 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
+/**
+ * Helper function to determine operation type
+ */
+function getOperationType(
+  operation: Operation
+): 'query' | 'mutation' | 'subscription' | 'unknown' {
+  try {
+    const definition = operation.query.definitions[0];
+    if (definition?.kind === 'OperationDefinition') {
+      return definition.operation || 'unknown';
+    }
+    return 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+
+const findKnownError = (errorMessage: string): string | undefined => {
+  return Object.keys(knownErrors).find(key => errorMessage.includes(key));
+};
+
+/**
+ * Error Link
+ *
+ * A link that intercepts GraphQL errors and displays them in a toast notification.
+ * It also allows for overriding the error message for a specific component.
+ */
+const errorLink = onError(({ graphQLErrors, operation }) => {
+  if (graphQLErrors) {
+    const { overrideMessage, skipError } = getCurrentErrorMeta();
+    const isReactNode = React.isValidElement(overrideMessage);
+    const operationType = getOperationType(operation);
+
+    graphQLErrors.forEach(err => {
+      let knownErrorMessage = '';
+
+      let knownError: string | undefined;
+
+      // Handle different operation types if needed
+      switch (operationType) {
+        case 'mutation':
+          knownError = findKnownError(err.message);
+          knownErrorMessage = knownError
+            ? knownErrors[knownError]
+            : knownErrorMessage;
+          break;
+        default:
+          knownErrorMessage = '';
+      }
+
+      if (operationType === 'mutation' && !skipError) {
+        toast.error(
+          <div>
+            {isReactNode ? (
+              overrideMessage
+            ) : (
+              <Alert
+                type="error"
+                heading={i18next.t('error:global.generalError')}
+                isClosable={false}
+              >
+                <p className="margin-0">
+                  {knownErrorMessage || overrideMessage}
+                </p>
+                <p className="margin-0">
+                  {i18next.t('error:global.generalBody')}
+                </p>
+              </Alert>
+            )}
+          </div>
+        );
+
+        // Clear the override message after displaying the error
+        setCurrentErrorMeta({});
+      }
+    });
+  }
+});
+
 const [protocol, gqlAddressWithoutProtocol] = (
   import.meta.env.VITE_GRAPHQL_ADDRESS as string
 ).split('://');
@@ -89,7 +178,7 @@ const splitLink = split(
 );
 
 const client = new ApolloClient({
-  link: splitLink,
+  link: errorLink.concat(splitLink),
   cache: new InMemoryCache({
     // Custom cache key for gql entities that have no `id` field, the default cache key for apollo
     typePolicies: {

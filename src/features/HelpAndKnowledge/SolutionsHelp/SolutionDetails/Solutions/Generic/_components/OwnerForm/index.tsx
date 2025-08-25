@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Alert,
   ComboBox,
   Fieldset,
   Form,
@@ -18,7 +17,8 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -49,7 +49,7 @@ const OwnerForm = ({
 
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<OwnerFormValues>({
     defaultValues: {
@@ -83,10 +83,6 @@ const OwnerForm = ({
     ]
   });
 
-  const [mutationError, setMutationError] = useState<
-    'duplicate' | 'generic' | null
-  >(null);
-
   const sortedCmsComponentConfig = [
     ...getKeys(cmsComponentConfig.options)
   ].sort();
@@ -107,11 +103,14 @@ const OwnerForm = ({
 
   const onSubmit = (formData: OwnerFormValues) => {
     if (!selectedSolution) {
-      setMutationError('generic');
       return;
     }
 
     const { cmsComponent, ownerType } = dirtyInput(owner, formData);
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const promise = owner
       ? update({
@@ -130,32 +129,25 @@ const OwnerForm = ({
           }
         });
 
-    promise
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Trans
-              i18nKey={`mtoCommonSolutionSystemOwnerMisc:${mode}.success`}
-              values={{
-                owner: cmsComponentInput
-                  ? cmsComponentConfig.options[cmsComponentInput]
-                  : ''
-              }}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-            />
-          );
-
-          closeModal();
-        }
-      })
-      .catch(error => {
-        const duplicateError = error.message.includes(
-          'uniq_system_owner_key_type_component'
+    promise.then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonSolutionSystemOwnerMisc:${mode}.success`}
+            values={{
+              owner: cmsComponentInput
+                ? cmsComponentConfig.options[cmsComponentInput]
+                : ''
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
         );
-        setMutationError(duplicateError ? 'duplicate' : 'generic');
-      });
+
+        closeModal();
+      }
+    });
   };
 
   return (
@@ -166,31 +158,6 @@ const OwnerForm = ({
         id="owner-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {mutationError !== null && (
-          <Alert
-            type="error"
-            slim
-            headingLevel="h1"
-            className="margin-bottom-2"
-          >
-            {mutationError === 'generic' ? (
-              miscT(`${mode}.error`)
-            ) : (
-              <Trans
-                i18nKey="mtoCommonSolutionSystemOwnerMisc:duplicateError"
-                values={{
-                  owner: cmsComponentInput
-                    ? cmsComponentConfig.options[cmsComponentInput]
-                    : ''
-                }}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-              />
-            )}
-          </Alert>
-        )}
-
         {mode === 'addSystemOwner' && <p> {miscT(`${mode}.description`)}</p>}
 
         <Fieldset disabled={!selectedSolution}>

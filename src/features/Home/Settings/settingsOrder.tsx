@@ -23,7 +23,8 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 import { HomepageSettingsLocationType } from './settings';
 
@@ -67,16 +68,13 @@ const SettingsOrder = () => {
 
   const navigate = useNavigate();
 
-  const { showMessageOnNextPage } = useMessage();
-
   const { state } = useLocation();
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
@@ -104,28 +102,24 @@ const SettingsOrder = () => {
   }, [data?.userViewCustomization, loading, selectedSettings]);
 
   const handleSubmit = () => {
+    setErrorMeta({
+      overrideMessage: homepageSettingsT('settingsError')
+    });
+
     mutate({
       variables: {
         changes: {
           viewCustomization: selectedSettings?.viewCustomization || []
         }
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessageOnNextPage(
-            <>
-              <Alert type="success" slim className="margin-y-4">
-                {homepageSettingsT('success')}
-              </Alert>
-            </>
-          );
-          // Removes router state upon successful mutation
-          window.history.replaceState({}, '');
-          navigate('/');
-        }
-      })
-      .catch(() => setMutationError(true));
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(homepageSettingsT('success'));
+        // Removes router state upon successful mutation
+        window.history.replaceState({}, '');
+        navigate('/');
+      }
+    });
   };
 
   return (
@@ -138,12 +132,6 @@ const SettingsOrder = () => {
               BreadcrumbItemOptions.HOME_SETTINGS
             ]}
           />
-
-          {mutationError && (
-            <Alert type="error" slim>
-              {homepageSettingsT('settingsError')}
-            </Alert>
-          )}
 
           <h1 className="margin-bottom-2">
             {homepageSettingsT('heading')}

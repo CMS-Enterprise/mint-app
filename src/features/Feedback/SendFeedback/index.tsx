@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -22,13 +22,13 @@ import {
 } from 'gql/generated/graphql';
 import CreateSendFeedback from 'gql/operations/Feedback/CreateSendFeedback';
 
-import Alert from 'components/Alert';
 import BooleanRadio from 'components/BooleanRadioForm';
 import CheckboxField from 'components/CheckboxField';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
 
@@ -37,7 +37,7 @@ const SendFeedback = () => {
 
   const navigate = useNavigate();
 
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   const [update, { loading }] = useMutation(CreateSendFeedback);
 
@@ -52,6 +52,10 @@ const SendFeedback = () => {
   );
 
   const handleFormSubmit = (formikValues: SendFeedbackEmailInput) => {
+    setErrorMeta({
+      overrideMessage: t('errorFeedback')
+    });
+
     update({
       variables: {
         input: formikValues
@@ -63,7 +67,6 @@ const SendFeedback = () => {
         }
       })
       .catch(errors => {
-        setMutationError(true);
         window.scrollTo(0, 0);
       });
   };
@@ -83,12 +86,6 @@ const SendFeedback = () => {
     <MainContent>
       <GridContainer>
         <HelpBreadcrumb newTabOnly />
-
-        {mutationError && (
-          <Alert type="error" slim className="margin-top-4">
-            {t('errorFeedback')}
-          </Alert>
-        )}
 
         <PageHeading className="margin-bottom-2">
           {t('feedbackHeading')}
