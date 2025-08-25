@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { ApolloClient, InMemoryCache, split } from '@apollo/client';
+import { ApolloClient, InMemoryCache, Operation, split } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
@@ -67,7 +67,7 @@ const authLink = setContext((request, { headers }) => {
  * Helper function to determine operation type
  */
 function getOperationType(
-  operation: any
+  operation: Operation
 ): 'query' | 'mutation' | 'subscription' | 'unknown' {
   try {
     const definition = operation.query.definitions[0];
