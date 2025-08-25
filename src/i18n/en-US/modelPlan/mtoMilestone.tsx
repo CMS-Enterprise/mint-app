@@ -221,7 +221,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
-        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
+      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -292,7 +293,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
-        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
+      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup'
     },
     readonlyOptions: {
       INNOVATION: '4i'

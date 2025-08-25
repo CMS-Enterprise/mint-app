@@ -3234,6 +3234,56 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions Timeline Components > matches the snapshot > Overlaps Operations Workgroup 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Contact the Overlaps Operations WorkGroup
+          </h3>
+          Reach out to the &lt;link1&gt;Workgroup Lead&lt;/link1&gt; to get on one of the Overlaps Operations Workgroups monthly meetings to walk through the model’s Overlaps Policies with the other model teams.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Submit files via AMS
+          </h3>
+          Your team will need to use the 
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            CMMI Analysis and Management System (AMS)
+          </button>
+           as the technical solution for this work to manage the data related to overlaps. Contact that team to get started with the system.
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions Timeline Components > matches the snapshot > Patient Activation Measure 1`] = `
 <DocumentFragment>
   <div>

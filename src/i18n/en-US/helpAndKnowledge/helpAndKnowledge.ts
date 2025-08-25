@@ -2263,6 +2263,37 @@ Model Space offers model teams and their contractors templates or Databricks not
       description: '',
       gatheringInfo: true
     }
+  },
+  [MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP]: {
+    about: {
+      description:
+        'The Overlaps Operations Work Group supports CMMI by acting as an operational coordinator and facilitator, ensuring smooth integration of new models into the overlaps system and managing ongoing operational changes through collaborative processes. The focus is on the practical implementation and scheduling aspects of overlaps operations across different models.'
+    },
+    timeline: {
+      items: [
+        {
+          header: 'Contact the Overlaps Operations WorkGroup',
+          description:
+            'Reach out to the <link1>Workgroup Lead</link1> to get on one of the Overlaps Operations Workgroups monthly meetings to walk through the model’s Overlaps Policies with the other model teams.'
+          // links: [
+          //   {
+          //     toPoC: true
+          //   }
+          // ]
+        },
+        {
+          header: 'Submit files via AMS',
+          description:
+            'Your team will need to use the <link1>CMMI Analysis and Management System (AMS)</link1> as the technical solution for this work to manage the data related to overlaps. Contact that team to get started with the system.',
+          links: [
+            {
+              link: MtoCommonSolutionKey.AMS,
+              external: false
+            }
+          ]
+        }
+      ]
+    }
   }
 };
 

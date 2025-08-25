@@ -52,6 +52,7 @@ enum MTOCommonSolutionKey {
   RMD
   MS_FORMS
   RESDAC_CMDS
+  OVERLAPS_OPERATIONS_WORKGROUP
 }
 
 enum MTOSolutionType {
