@@ -2369,7 +2369,7 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]: {
     title: 'Quality Vertical healthy living resources on SharePoint',
     description:
-      'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
+      'Browse Quality Vertical’s healthy living resources, including supplemental guidance on stratification standards, index proof of concept memo, and more. Additional healthy living resources can be found on the Strategy Refresh page.'
   },
   [HelpArticle.LESSON_LEARNED_REPOSITORY]: {
     title: 'Lessons Learned repository on SharePoint',
