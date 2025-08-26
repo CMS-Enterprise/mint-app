@@ -9,32 +9,32 @@ export default gql(/* GraphQL */ `
         numberOfRecordChanges
         modelPlanId
       }
-      # changesPerModelBySection {
-      #   modelName
-      #   numberOfChanges
-      #   numberOfRecordChanges
-      #   modelPlanId
-      #   tableName
-      # }
-      # changesPerModelOtherData {
-      #   modelName
-      #   numberOfChanges
-      #   numberOfRecordChanges
-      #   modelPlanId
-      #   section
-      # }
-      # modelsByStatus {
-      #   numberOfModels
-      #   status
-      # }
-      # numberOfFollowersPerModel {
-      #   modelName
-      #   modelPlanId
-      #   numberOfFollowers
-      # }
-      # totalNumberOfModels {
-      #   totalNumberOfModels
-      # }
+      changesPerModelBySection {
+        modelName
+        numberOfChanges
+        numberOfRecordChanges
+        modelPlanId
+        tableName
+      }
+      changesPerModelOtherData {
+        modelName
+        numberOfChanges
+        numberOfRecordChanges
+        modelPlanId
+        section
+      }
+      modelsByStatus {
+        numberOfModels
+        status
+      }
+      numberOfFollowersPerModel {
+        modelName
+        modelPlanId
+        numberOfFollowers
+      }
+      totalNumberOfModels {
+        totalNumberOfModels
+      }
     }
   }
 `);

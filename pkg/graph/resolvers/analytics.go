@@ -100,126 +100,126 @@ func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*
 				log.Info("Successfully retrieved changes per model", zap.Int("count", len(changesPerModel)))
 			}
 
-			// // Get changes per model by section
-			// changesPerModelBySection, err := storage.GetChangesPerModelBySectionLoader(tx, log)
-			// if err != nil {
-			// 	if log != nil {
-			// 		log.Error("Failed to get changes per model by section", zap.Error(err))
-			// 	}
-			// 	return nil, fmt.Errorf("failed to get changes per model by section: %w", err)
-			// }
-			// if changesPerModelBySection == nil {
-			// 	if log != nil {
-			// 		log.Info("Changes per model by section is nil, initializing empty slice")
-			// 	}
-			// 	changesPerModelBySection = []*models.ModelChangesBySectionAnalytics{}
-			// }
-			// if log != nil {
-			// 	log.Info("Successfully retrieved changes per model by section", zap.Int("count", len(changesPerModelBySection)))
-			// }
+			// Get changes per model by section
+			changesPerModelBySection, err := storage.GetChangesPerModelBySectionLoader(tx, log)
+			if err != nil {
+				if log != nil {
+					log.Error("Failed to get changes per model by section", zap.Error(err))
+				}
+				return nil, fmt.Errorf("failed to get changes per model by section: %w", err)
+			}
+			if changesPerModelBySection == nil {
+				if log != nil {
+					log.Info("Changes per model by section is nil, initializing empty slice")
+				}
+				changesPerModelBySection = []*models.ModelChangesBySectionAnalytics{}
+			}
+			if log != nil {
+				log.Info("Successfully retrieved changes per model by section", zap.Int("count", len(changesPerModelBySection)))
+			}
 
-			// // Get changes per model other data
-			// changesPerModelOtherData, err := storage.GetChangesPerModelOtherDataLoader(tx, log)
-			// if err != nil {
-			// 	if log != nil {
-			// 		log.Error("Failed to get changes per model other data", zap.Error(err))
-			// 	}
-			// 	return nil, fmt.Errorf("failed to get changes per model other data: %w", err)
-			// }
-			// if changesPerModelOtherData == nil {
-			// 	if log != nil {
-			// 		log.Info("Changes per model other data is nil, initializing empty slice")
-			// 	}
-			// 	changesPerModelOtherData = []*models.ModelChangesOtherDataAnalytics{}
-			// }
-			// if log != nil {
-			// 	log.Info("Successfully retrieved changes per model other data", zap.Int("count", len(changesPerModelOtherData)))
-			// }
+			// Get changes per model other data
+			changesPerModelOtherData, err := storage.GetChangesPerModelOtherDataLoader(tx, log)
+			if err != nil {
+				if log != nil {
+					log.Error("Failed to get changes per model other data", zap.Error(err))
+				}
+				return nil, fmt.Errorf("failed to get changes per model other data: %w", err)
+			}
+			if changesPerModelOtherData == nil {
+				if log != nil {
+					log.Info("Changes per model other data is nil, initializing empty slice")
+				}
+				changesPerModelOtherData = []*models.ModelChangesOtherDataAnalytics{}
+			}
+			if log != nil {
+				log.Info("Successfully retrieved changes per model other data", zap.Int("count", len(changesPerModelOtherData)))
+			}
 
-			// // Get models by status
-			// modelsByStatus, err := storage.GetModelsByStatusLoader(tx, log)
-			// if err != nil {
-			// 	if log != nil {
-			// 		log.Error("Failed to get models by status", zap.Error(err))
-			// 	}
-			// 	return nil, fmt.Errorf("failed to get models by status: %w", err)
-			// }
-			// if modelsByStatus == nil {
-			// 	if log != nil {
-			// 		log.Info("Models by status is nil, initializing empty slice")
-			// 	}
-			// 	modelsByStatus = []*models.ModelsByStatusAnalytics{}
-			// }
-			// if log != nil {
-			// 	log.Info("Successfully retrieved models by status", zap.Int("count", len(modelsByStatus)))
-			// }
+			// Get models by status
+			modelsByStatus, err := storage.GetModelsByStatusLoader(tx, log)
+			if err != nil {
+				if log != nil {
+					log.Error("Failed to get models by status", zap.Error(err))
+				}
+				return nil, fmt.Errorf("failed to get models by status: %w", err)
+			}
+			if modelsByStatus == nil {
+				if log != nil {
+					log.Info("Models by status is nil, initializing empty slice")
+				}
+				modelsByStatus = []*models.ModelsByStatusAnalytics{}
+			}
+			if log != nil {
+				log.Info("Successfully retrieved models by status", zap.Int("count", len(modelsByStatus)))
+			}
 
-			// // Get number of followers per model
-			// numberOfFollowersPerModel, err := storage.GetNumberOfFollowersPerModelLoader(tx, log)
-			// if err != nil {
-			// 	if log != nil {
-			// 		log.Error("Failed to get number of followers per model", zap.Error(err))
-			// 	}
-			// 	return nil, fmt.Errorf("failed to get number of followers per model: %w", err)
-			// }
-			// if numberOfFollowersPerModel == nil {
-			// 	if log != nil {
-			// 		log.Info("Number of followers per model is nil, initializing empty slice")
-			// 	}
-			// 	numberOfFollowersPerModel = []*models.ModelFollowersAnalytics{}
-			// }
-			// if log != nil {
-			// 	log.Info("Successfully retrieved number of followers per model", zap.Int("count", len(numberOfFollowersPerModel)))
-			// }
+			// Get number of followers per model
+			numberOfFollowersPerModel, err := storage.GetNumberOfFollowersPerModelLoader(tx, log)
+			if err != nil {
+				if log != nil {
+					log.Error("Failed to get number of followers per model", zap.Error(err))
+				}
+				return nil, fmt.Errorf("failed to get number of followers per model: %w", err)
+			}
+			if numberOfFollowersPerModel == nil {
+				if log != nil {
+					log.Info("Number of followers per model is nil, initializing empty slice")
+				}
+				numberOfFollowersPerModel = []*models.ModelFollowersAnalytics{}
+			}
+			if log != nil {
+				log.Info("Successfully retrieved number of followers per model", zap.Int("count", len(numberOfFollowersPerModel)))
+			}
 
-			// // Get total number of models
-			// if log != nil {
-			// 	log.Info("Starting to get total number of models")
-			// }
-			// totalNumberOfModels, err := storage.GetTotalNumberOfModelsLoader(tx, log)
-			// if err != nil {
-			// 	if log != nil {
-			// 		log.Error("Failed to get total number of models", zap.Error(err))
-			// 		// Log the specific error type to help diagnose the issue
-			// 		log.Error("Error details", zap.String("errorType", fmt.Sprintf("%T", err)))
-			// 	}
-			// 	// Check if it's a table not found error
-			// 	if err.Error() == "pq: relation \"model_plan\" does not exist" {
-			// 		return nil, fmt.Errorf("required database table 'model_plan' does not exist: %w", err)
-			// 	}
-			// 	// Check if it's a connection error
-			// 	if err.Error() == "pq: connection to server was lost" {
-			// 		return nil, fmt.Errorf("database connection lost: %w", err)
-			// 	}
-			// 	// Check if it's a permission error
-			// 	if err.Error() == "pq: permission denied for table model_plan" {
-			// 		return nil, fmt.Errorf("insufficient database permissions: %w", err)
-			// 	}
-			// 	return nil, fmt.Errorf("failed to get total number of models: %w", err)
-			// }
-			// if log != nil {
-			// 	log.Info("Total number of models query completed", zap.Int("resultCount", len(totalNumberOfModels)))
-			// }
+			// Get total number of models
+			if log != nil {
+				log.Info("Starting to get total number of models")
+			}
+			totalNumberOfModels, err := storage.GetTotalNumberOfModelsLoader(tx, log)
+			if err != nil {
+				if log != nil {
+					log.Error("Failed to get total number of models", zap.Error(err))
+					// Log the specific error type to help diagnose the issue
+					log.Error("Error details", zap.String("errorType", fmt.Sprintf("%T", err)))
+				}
+				// Check if it's a table not found error
+				if err.Error() == "pq: relation \"model_plan\" does not exist" {
+					return nil, fmt.Errorf("required database table 'model_plan' does not exist: %w", err)
+				}
+				// Check if it's a connection error
+				if err.Error() == "pq: connection to server was lost" {
+					return nil, fmt.Errorf("database connection lost: %w", err)
+				}
+				// Check if it's a permission error
+				if err.Error() == "pq: permission denied for table model_plan" {
+					return nil, fmt.Errorf("insufficient database permissions: %w", err)
+				}
+				return nil, fmt.Errorf("failed to get total number of models: %w", err)
+			}
+			if log != nil {
+				log.Info("Total number of models query completed", zap.Int("resultCount", len(totalNumberOfModels)))
+			}
 
-			// // Check if we have results before accessing the first element
-			// if len(totalNumberOfModels) == 0 {
-			// 	if log != nil {
-			// 		log.Error("Total number of models returned empty result set")
-			// 	}
-			// 	return nil, fmt.Errorf("no total number of models data available")
-			// }
+			// Check if we have results before accessing the first element
+			if len(totalNumberOfModels) == 0 {
+				if log != nil {
+					log.Error("Total number of models returned empty result set")
+				}
+				return nil, fmt.Errorf("no total number of models data available")
+			}
 
 			if log != nil {
 				log.Info("Creating analytics summary with all data")
 			}
 			// Create analytics summary
 			analyticsSummary := &models.AnalyticsSummary{
-				ChangesPerModel: changesPerModel,
-				// ChangesPerModelBySection:  changesPerModelBySection,
-				// ChangesPerModelOtherData:  changesPerModelOtherData,
-				// ModelsByStatus:            modelsByStatus,
-				// NumberOfFollowersPerModel: numberOfFollowersPerModel,
-				// TotalNumberOfModels:       totalNumberOfModels[0],
+				ChangesPerModel:           changesPerModel,
+				ChangesPerModelBySection:  changesPerModelBySection,
+				ChangesPerModelOtherData:  changesPerModelOtherData,
+				ModelsByStatus:            modelsByStatus,
+				NumberOfFollowersPerModel: numberOfFollowersPerModel,
+				TotalNumberOfModels:       totalNumberOfModels[0],
 			}
 
 			if log != nil {
@@ -230,144 +230,3 @@ func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*
 
 	return analyticsSummary, err
 }
-
-// func getChangesPerModel(ctx context.Context, store *storage.Store) ([]*model.ModelChangesAnalytics, error) {
-// 	rows, err := store.DB().QueryContext(ctx, sqlqueries.ChangesPerModel)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to query changes per model: %w", err)
-// 	}
-// 	defer rows.Close()
-
-// 	var results []*model.ModelChangesAnalytics
-// 	for rows.Next() {
-// 		var analytics model.ModelChangesAnalytics
-// 		err := rows.Scan(
-// 			&analytics.ModelName,
-// 			&analytics.NumberOfChanges,
-// 			&analytics.NumberOfRecordChanges,
-// 			&analytics.ModelPlanID,
-// 		)
-// 		if err != nil {
-// 			return nil, fmt.Errorf("failed to scan changes per model row: %w", err)
-// 		}
-// 		results = append(results, &analytics)
-// 	}
-
-// 	if err = rows.Err(); err != nil {
-// 		return nil, fmt.Errorf("error iterating changes per model rows: %w", err)
-// 	}
-
-// 	return results, nil
-// }
-// func getChangesPerModelBySection(ctx context.Context, store *storage.Store) ([]*model.ModelChangesBySectionAnalytics, error) {
-// 	rows, err := store.DB().QueryContext(ctx, sqlqueries.ChangesPerModelBySection)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to query changes per model by section: %w", err)
-// 	}
-// 	defer rows.Close()
-
-// 	var results []*model.ModelChangesBySectionAnalytics
-// 	for rows.Next() {
-// 		var analytics model.ModelChangesBySectionAnalytics
-// 		err := rows.Scan(
-// 			&analytics.ModelName,
-// 			&analytics.TableName,
-// 			&analytics.NumberOfChanges,
-// 			&analytics.NumberOfRecordChanges,
-// 			&analytics.ModelPlanID,
-// 		)
-// 		if err != nil {
-// 			return nil, fmt.Errorf("failed to scan changes per model by section row: %w", err)
-// 		}
-// 		results = append(results, &analytics)
-// 	}
-
-// 	if err = rows.Err(); err != nil {
-// 		return nil, fmt.Errorf("error iterating changes per model by section rows: %w", err)
-// 	}
-
-// 	return results, nil
-// }
-// func getChangesPerModelOtherData(ctx context.Context, store *storage.Store) ([]*model.ModelChangesOtherDataAnalytics, error) {
-// 	rows, err := store.DB().QueryContext(ctx, sqlqueries.ChangesPerModelOtherData)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to query changes per model other data: %w", err)
-// 	}
-// 	defer rows.Close()
-
-// 	var results []*model.ModelChangesOtherDataAnalytics
-// 	for rows.Next() {
-// 		var analytics model.ModelChangesOtherDataAnalytics
-// 		err := rows.Scan(
-// 			&analytics.ModelName,
-// 			&analytics.TableName,
-// 			&analytics.NumberOfChanges,
-// 			&analytics.NumberOfRecordChanges,
-// 			&analytics.Section,
-// 			&analytics.ModelPlanID,
-// 		)
-// 		if err != nil {
-// 			return nil, fmt.Errorf("failed to scan changes per model other data row: %w", err)
-// 		}
-// 		results = append(results, &analytics)
-// 	}
-
-// 	if err = rows.Err(); err != nil {
-// 		return nil, fmt.Errorf("error iterating changes per model other data rows: %w", err)
-// 	}
-
-// 	return results, nil
-// }
-// func getModelsByStatus(ctx context.Context, store *storage.Store) ([]*model.ModelsByStatusAnalytics, error) {
-// 	rows, err := store.DB().QueryContext(ctx, sqlqueries.ModelsByStatus)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to query models by status: %w", err)
-// 	}
-// 	defer rows.Close()
-
-// 	var results []*model.ModelsByStatusAnalytics
-// 	for rows.Next() {
-// 		var analytics model.ModelsByStatusAnalytics
-// 		err := rows.Scan(
-// 			&analytics.Status,
-// 			&analytics.NumberOfModels,
-// 		)
-// 		if err != nil {
-// 			return nil, fmt.Errorf("failed to scan models by status row: %w", err)
-// 		}
-// 		results = append(results, &analytics)
-// 	}
-
-// 	if err = rows.Err(); err != nil {
-// 		return nil, fmt.Errorf("error iterating models by status rows: %w", err)
-// 	}
-
-// 	return results, nil
-// }
-// func getNumberOfFollowersPerModel(ctx context.Context, store *storage.Store) ([]*model.ModelFollowersAnalytics, error) {
-// 	rows, err := store.DB().QueryContext(ctx, sqlqueries.NumberOfFollowersPerModel)
-// 	if err != nil {
-// 		return nil, fmt.Errorf("failed to query number of followers per model: %w", err)
-// 	}
-// 	defer rows.Close()
-
-// 	var results []*model.ModelFollowersAnalytics
-// 	for rows.Next() {
-// 		var analytics model.ModelFollowersAnalytics
-// 		err := rows.Scan(
-// 			&analytics.ModelName,
-// 			&analytics.NumberOfFollowers,
-// 			&analytics.ModelPlanID,
-// 		)
-// 		if err != nil {
-// 			return nil, fmt.Errorf("failed to scan number of followers per model row: %w", err)
-// 		}
-// 		results = append(results, &analytics)
-// 	}
-
-// 	if err = rows.Err(); err != nil {
-// 		return nil, fmt.Errorf("error iterating number of followers per model rows: %w", err)
-// 	}
-
-// 	return results, nil
-// }
