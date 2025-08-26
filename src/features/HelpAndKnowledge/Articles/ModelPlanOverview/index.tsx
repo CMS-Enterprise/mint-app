@@ -40,8 +40,8 @@ export const ModelPlanOverviewContent = ({
         </p>
 
         <ul className="padding-left-3 margin-y-0">
-          {summaryBoxListItems.map((item, index) => (
-            <li key={item}>{t(`summaryBox.listItem.${index}`)}</li>
+          {summaryBoxListItems.map(item => (
+            <li key={item}>{t(item)}</li>
           ))}
         </ul>
 
