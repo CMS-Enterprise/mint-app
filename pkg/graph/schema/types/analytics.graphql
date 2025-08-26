@@ -6,7 +6,7 @@ type ModelChangesAnalytics {
   modelName: String!
   numberOfChanges: Int!
   numberOfRecordChanges: Int!
-  modelPlanId: UUID!
+  modelPlanID: UUID!
 }
 
 type ModelChangesBySectionAnalytics {
@@ -14,7 +14,7 @@ type ModelChangesBySectionAnalytics {
   tableName: String!
   numberOfChanges: Int!
   numberOfRecordChanges: Int!
-  modelPlanId: UUID!
+  modelPlanID: UUID!
 }
 
 type ModelChangesOtherDataAnalytics {
@@ -23,7 +23,7 @@ type ModelChangesOtherDataAnalytics {
   numberOfChanges: Int!
   numberOfRecordChanges: Int!
   section: String!
-  modelPlanId: UUID!
+  modelPlanID: UUID!
 }
 
 type ModelsByStatusAnalytics {
@@ -34,7 +34,7 @@ type ModelsByStatusAnalytics {
 type ModelFollowersAnalytics {
   modelName: String!
   numberOfFollowers: Int!
-  modelPlanId: UUID!
+  modelPlanID: UUID!
 }
 
 type ModelCountAnalytics {

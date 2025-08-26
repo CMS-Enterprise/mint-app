@@ -7,7 +7,7 @@ type ModelChangesAnalytics struct {
 	ModelName             *string    `json:"modelName" db:"model_name"`
 	NumberOfChanges       *int       `json:"numberOfChanges" db:"number_of_changes"`
 	NumberOfRecordChanges *int       `json:"numberOfRecordChanges" db:"number_of_record_changes"`
-	ModelPlanID           *uuid.UUID `json:"modelPlanId" db:"id"`
+	ModelPlanID           *uuid.UUID `json:"modelPlanID" db:"id"`
 }
 
 type ModelChangesBySectionAnalytics struct {
@@ -15,7 +15,7 @@ type ModelChangesBySectionAnalytics struct {
 	TableName             *string    `json:"tableName" db:"table_name"`
 	NumberOfChanges       *int       `json:"numberOfChanges" db:"number_of_changes"`
 	NumberOfRecordChanges *int       `json:"numberOfRecordChanges" db:"number_of_record_changes"`
-	ModelPlanID           *uuid.UUID `json:"modelPlanId" db:"id"`
+	ModelPlanID           *uuid.UUID `json:"modelPlanID" db:"id"`
 }
 
 type ModelChangesOtherDataAnalytics struct {
@@ -24,7 +24,7 @@ type ModelChangesOtherDataAnalytics struct {
 	NumberOfChanges       *int       `json:"numberOfChanges" db:"number_of_changes"`
 	NumberOfRecordChanges *int       `json:"numberOfRecordChanges" db:"number_of_record_changes"`
 	Section               *string    `json:"section" db:"section"`
-	ModelPlanID           *uuid.UUID `json:"modelPlanId" db:"id"`
+	ModelPlanID           *uuid.UUID `json:"modelPlanID" db:"id"`
 }
 
 type ModelCountAnalytics struct {
@@ -39,7 +39,7 @@ type ModelsByStatusAnalytics struct {
 type ModelFollowersAnalytics struct {
 	ModelName         *string    `json:"modelName" db:"model_name"`
 	NumberOfFollowers *int       `json:"numberOfFollowers" db:"number_of_followers"`
-	ModelPlanID       *uuid.UUID `json:"modelPlanId" db:"id"`
+	ModelPlanID       *uuid.UUID `json:"modelPlanID" db:"id"`
 }
 
 // AnalyticsSummary is the summary of the analytics data

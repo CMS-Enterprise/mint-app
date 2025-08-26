@@ -10,9 +10,14 @@ import downloadAnalytics from './util';
 const Analytics = () => {
   const { data, loading, error } = useGetAnalyticsSummaryQuery();
 
-  const { analytics } = data || {};
-
   if (loading) return <PageLoading />;
+
+  if (!data?.analytics)
+    return (
+      <MainContent>
+        <GridContainer>No analytics data found</GridContainer>
+      </MainContent>
+    );
 
   return (
     <MainContent>
@@ -21,14 +26,14 @@ const Analytics = () => {
 
         <Button
           type="button"
-          onClick={() => downloadAnalytics(analytics, 'analytics.xlsx')}
+          onClick={() => downloadAnalytics(data.analytics, 'analytics.xlsx')}
         >
-          Download Analytics
+          Download Analytics as XLSX
         </Button>
 
         {error && <div>Error: {error.message}</div>}
 
-        {analytics && <pre>{JSON.stringify(analytics, null, 2)}</pre>}
+        <pre>{JSON.stringify(data.analytics, null, 2)}</pre>
       </GridContainer>
     </MainContent>
   );
