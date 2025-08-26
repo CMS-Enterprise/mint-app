@@ -8,11 +8,11 @@ import (
 	"context"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // Analytics is the resolver for the analytics field.
-func (r *queryResolver) Analytics(ctx context.Context) (*model.AnalyticsSummary, error) {
+func (r *queryResolver) Analytics(ctx context.Context) (*models.AnalyticsSummary, error) {
 	logger := appcontext.ZLogger(ctx)
 	return Analytics(ctx, r.store, logger)
 }

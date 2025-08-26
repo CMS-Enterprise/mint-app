@@ -2,6 +2,7 @@ package notifications
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -16,6 +17,11 @@ func UserNotificationCollectionGetByUser(
 	np sqlutils.NamedPreparer,
 	principal authentication.Principal,
 ) (*models.UserNotifications, error) {
+
+	// Check if principal has a valid account
+	if principal.Account() == nil {
+		return nil, fmt.Errorf("user not authenticated")
+	}
 
 	notifications, err := dbStore.notification.CollectionGetByUserID(np, principal.Account().ID)
 	if err != nil {
