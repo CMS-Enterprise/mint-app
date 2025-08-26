@@ -30,6 +30,7 @@ func ReportAProblem(
 		}
 
 		emailBody, err := emailTemplate.GetExecutedBody(email.ReportAProblemBodyContent{
+			ClientAddress:         emailService.GetConfig().GetClientAddress(),
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
 			ReporterEmail:         principal.Account().Email,

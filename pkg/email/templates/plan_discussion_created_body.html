@@ -30,6 +30,11 @@
 <hr/>
 <br/>
 
-{{template "shared_mint_mailbox_footer.html"}}
+<p>
+  You are currently subscribed to notifications about new discussions.
+  If you no longer wish to receive these email notifications,
+  <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=TAGGED_IN_DISCUSSION">unsubscribe</a>
+  or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+</p>
 
 {{template "shared_footer.html"}}

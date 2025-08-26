@@ -1,6 +1,10 @@
 package email
 
-import "html/template"
+import (
+	"html/template"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
 
 // PlanDiscussionCreatedSubjectContent defines the parameters necessary for the corresponding email subject
 type PlanDiscussionCreatedSubjectContent struct {
@@ -18,4 +22,23 @@ type PlanDiscussionCreatedBodyContent struct {
 	ModelID           string
 	ModelName         string
 	Role              string
+}
+
+// constructor for PlanDiscussionCreatedBodyContent
+func NewPlanDiscussionCreatedBodyContent(
+	clientAddress string,
+	planDiscussion *models.PlanDiscussion,
+	modelPlan *models.ModelPlan,
+	userName string,
+	role string,
+) *PlanDiscussionCreatedBodyContent {
+	return &PlanDiscussionCreatedBodyContent{
+		ClientAddress:     clientAddress,
+		DiscussionID:      planDiscussion.ID.String(),
+		UserName:          userName,
+		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
+		ModelID:           modelPlan.ID.String(),
+		ModelName:         modelPlan.ModelName,
+		Role:              role,
+	}
 }

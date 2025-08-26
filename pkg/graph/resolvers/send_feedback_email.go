@@ -30,6 +30,7 @@ func SendFeedbackEmail(
 		}
 
 		emailBody, err := emailTemplate.GetExecutedBody(email.SendFeedbackBodyContent{
+			ClientAddress:         emailService.GetConfig().GetClientAddress(),
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
 			ReporterEmail:         principal.Account().Email,
