@@ -27,6 +27,12 @@ const notifications = {
           hide: 'Hide changes'
         }
       },
+      INCORRECT_MODEL_STATUS: {},
+      text: ' suggests that you update the model status for {{modelName}}.',
+      cta: {
+        view: 'View suggested status',
+        hide: 'Hide suggested status'
+      },
       MODEL_PLAN_SHARED: {
         text: ' shared {{-modelName}} with you.',
         cta: 'View Model Plan'

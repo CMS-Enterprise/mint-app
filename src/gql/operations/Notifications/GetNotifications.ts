@@ -97,6 +97,17 @@ export default gql(/* GraphQL */ `
                   modelName
                 }
               }
+              ... on IncorrectModelStatusActivityMeta {
+                version
+                type
+                currentStatus
+                modelPlanName
+                modelPlanID
+                modelPlan {
+                  modelName
+                  status
+                }
+              }
               ... on DailyDigestCompleteActivityMeta {
                 version
                 type
