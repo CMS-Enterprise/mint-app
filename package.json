@@ -41,6 +41,7 @@
     "@types/redux-mock-store": "^1.5.0",
     "@types/redux-saga-routines": "^3.1.8",
     "@types/text-encoding": "^0.0.40",
+    "@types/xlsx": "^0.0.36",
     "@uswds/uswds": "^3.13.0",
     "apollo-upload-client": "^17.0.0",
     "axios": "^1.11.0",
@@ -91,6 +92,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
     "wait-on": "^7.2.0",
+    "xlsx": "^0.18.5",
     "yup": "^1.7.0"
   },
   "scripts": {

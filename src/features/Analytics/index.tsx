@@ -1,9 +1,11 @@
 import React from 'react';
-import { GridContainer } from '@trussworks/react-uswds';
+import { Button, GridContainer } from '@trussworks/react-uswds';
 import { useGetAnalyticsSummaryQuery } from 'gql/generated/graphql';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
+
+import downloadAnalytics from './util';
 
 const Analytics = () => {
   const { data, loading, error } = useGetAnalyticsSummaryQuery();
@@ -16,6 +18,13 @@ const Analytics = () => {
     <MainContent>
       <GridContainer>
         <h1>Analytics</h1>
+
+        <Button
+          type="button"
+          onClick={() => downloadAnalytics(analytics, 'analytics.xlsx')}
+        >
+          Download Analytics
+        </Button>
 
         {error && <div>Error: {error.message}</div>}
 
