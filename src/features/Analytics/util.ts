@@ -1,8 +1,54 @@
-import { GetAnalyticsSummaryQuery } from 'gql/generated/graphql';
+import {
+  AnalyticsSummary,
+  GetAnalyticsSummaryQuery
+} from 'gql/generated/graphql';
 import * as XLSX from 'xlsx';
 
 import { getKeys } from 'types/translation';
 
+export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
+
+export const analyticsSumamryConfig: Record<
+  AnalyticsSummaryKey,
+  {
+    xAxisDataKey: string;
+    yAxisDataKey: string;
+    xAxisLabel: string;
+  }
+> = {
+  changesPerModel: {
+    xAxisDataKey: 'modelName',
+    yAxisDataKey: 'numberOfChanges',
+    xAxisLabel: 'Model Name'
+  },
+  changesPerModelBySection: {
+    xAxisDataKey: 'modelName',
+    yAxisDataKey: 'numberOfChanges',
+    xAxisLabel: 'Model Name'
+  },
+  changesPerModelOtherData: {
+    xAxisDataKey: 'modelName',
+    yAxisDataKey: 'numberOfChanges',
+    xAxisLabel: 'Model Name'
+  },
+  modelsByStatus: {
+    xAxisDataKey: 'status',
+    yAxisDataKey: 'numberOfModels',
+    xAxisLabel: 'Model Status'
+  },
+  numberOfFollowersPerModel: {
+    xAxisDataKey: 'modelName',
+    yAxisDataKey: 'numberOfFollowers',
+    xAxisLabel: 'Model Name'
+  },
+  totalNumberOfModels: {
+    xAxisDataKey: 'totalNumberOfModels',
+    yAxisDataKey: 'totalNumberOfModels',
+    xAxisLabel: 'Total Number of Models'
+  }
+};
+
+// Prepares the analytics data for download as an XLSX file
 const downloadAnalytics = (
   data: GetAnalyticsSummaryQuery['analytics'],
   exportFileName: string
@@ -36,6 +82,7 @@ const downloadAnalytics = (
   XLSX.writeFile(workbook, exportFileName);
 };
 
+// Auto-fits the columns in the worksheet to the width of the longest cell in the column
 function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
   const columnWidths: { wch: number }[] = [];
 

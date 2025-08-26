@@ -9,7 +9,8 @@ const analytics = {
   numberOfChanges: 'Number of Changes',
   numberOfModels: 'Number of Models',
   numberOfFollowers: 'Number of Followers',
-  downloadAnalytics: 'Download Analytics summary as XLSX'
+  downloadAnalytics: 'Download Analytics summary as XLSX',
+  noAnalyticsData: 'No analytics data found'
 };
 
 export default analytics;

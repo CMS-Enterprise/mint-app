@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
 import { Button, ButtonGroup, GridContainer } from '@trussworks/react-uswds';
-import {
-  AnalyticsSummary,
-  useGetAnalyticsSummaryQuery
-} from 'gql/generated/graphql';
+import downloadAnalytics, {
+  analyticsSumamryConfig,
+  AnalyticsSummaryKey
+} from 'features/Analytics/util';
+import NotFound from 'features/NotFound';
+import { useGetAnalyticsSummaryQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 
@@ -13,71 +14,27 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 
-import downloadAnalytics from './util';
-
-type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
-
-const analyticsSumamryConfig: Record<
-  AnalyticsSummaryKey,
-  {
-    xAxisDataKey: string;
-    yAxisDataKey: string;
-    xAxisLabel: string;
-  }
-> = {
-  changesPerModel: {
-    xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfChanges',
-    xAxisLabel: 'Model Name'
-  },
-  changesPerModelBySection: {
-    xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfChanges',
-    xAxisLabel: 'Model Name'
-  },
-  changesPerModelOtherData: {
-    xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfChanges',
-    xAxisLabel: 'Model Name'
-  },
-  modelsByStatus: {
-    xAxisDataKey: 'status',
-    yAxisDataKey: 'numberOfModels',
-    xAxisLabel: 'Model Status'
-  },
-  numberOfFollowersPerModel: {
-    xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfFollowers',
-    xAxisLabel: 'Model Name'
-  },
-  totalNumberOfModels: {
-    xAxisDataKey: 'totalNumberOfModels',
-    yAxisDataKey: 'totalNumberOfModels',
-    xAxisLabel: 'Total Number of Models'
-  }
-};
-
 const Analytics = () => {
   const { t } = useTranslation('analytics');
 
-  const { flags } = useFlags();
-
-  console.log(flags);
+  const flags = useFlags();
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
 
-  const { data, loading, error } = useGetAnalyticsSummaryQuery();
+  const { data, loading, error } = useGetAnalyticsSummaryQuery({
+    skip: !flags?.mintAnalyticsEnabled
+  });
 
-  // if (!flags?.analyticsEnabled) {
-  //   return <Navigate to="/not-found" replace />;
-  // }
+  if (!flags?.mintAnalyticsEnabled) {
+    return <NotFound />;
+  }
 
   if (loading) return <PageLoading />;
 
-  if (!data?.analytics)
+  if (!data?.analytics || error)
     return (
       <MainContent>
-        <GridContainer>No analytics data found</GridContainer>
+        <GridContainer>{t('noAnalyticsData')}</GridContainer>
       </MainContent>
     );
 
@@ -95,8 +52,6 @@ const Analytics = () => {
         />
 
         <h1>{t('heading')}</h1>
-
-        {error && <div>Error: {error.message}</div>}
 
         <Button
           type="button"
