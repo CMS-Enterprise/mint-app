@@ -30,7 +30,7 @@ func newNewDiscussionAddedActivityMeta(
 ) *NewDiscussionAddedActivityMeta {
 	version := 0
 	return &NewDiscussionAddedActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityNewDiscussionReply, version),
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityNewDiscussionAdded, version),
 		discussionRelation:     NewDiscussionRelation(planDiscussion.ID),
 		modelPlanRelation:      NewModelPlanRelation(modelPlan.ID),
 		UserName:               userName,
