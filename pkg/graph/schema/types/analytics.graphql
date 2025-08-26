@@ -51,5 +51,5 @@ type AnalyticsSummary {
 }
 
 extend type Query {
-  analytics: AnalyticsSummary! @hasAnyRole(roles: [MINT_ASSESSMENT])
+  analytics: AnalyticsSummary! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
