@@ -146,7 +146,7 @@ func CreatePlanDiscussion(
 
 		_, notificationErr = notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ModelPlanID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
-			return nil, fmt.Errorf("unable to generate notification for tagged in dicussion, %w", notificationErr)
+			return nil, fmt.Errorf("unable to generate notification for tagged in discussion, %w", notificationErr)
 		}
 		go func() {
 			err = sendPlanDiscussionTagEmails(
