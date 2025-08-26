@@ -456,7 +456,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/analytics',
-        element: <Analytics />
+        element: (
+          <ProtectedRoute>
+            <Analytics />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/sandbox',

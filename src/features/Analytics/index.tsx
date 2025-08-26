@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Navigate } from 'react-router-dom';
 import { Button, ButtonGroup, GridContainer } from '@trussworks/react-uswds';
 import {
   AnalyticsSummary,
   useGetAnalyticsSummaryQuery
 } from 'gql/generated/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -58,9 +60,17 @@ const analyticsSumamryConfig: Record<
 const Analytics = () => {
   const { t } = useTranslation('analytics');
 
+  const { flags } = useFlags();
+
+  console.log(flags);
+
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
 
   const { data, loading, error } = useGetAnalyticsSummaryQuery();
+
+  // if (!flags?.analyticsEnabled) {
+  //   return <Navigate to="/not-found" replace />;
+  // }
 
   if (loading) return <PageLoading />;
 
@@ -133,7 +143,9 @@ const Analytics = () => {
           />
           <YAxis />
 
-          <Tooltip formatter={(value, name) => [value, t(name)]} />
+          <Tooltip
+            formatter={(value, name) => [value, t(name as AnalyticsSummaryKey)]}
+          />
 
           <Bar
             dataKey={
