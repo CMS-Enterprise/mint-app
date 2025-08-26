@@ -18,13 +18,13 @@ import {
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 import { HomepageSettingsLocationType } from './settings';
 
@@ -76,44 +76,45 @@ const SelectSolutionSettings = () => {
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   const handleFormSubmit = () => {
+    setErrorMeta({
+      overrideMessage: homepageSettingsT('solutionError')
+    });
+
     mutate({
       variables: {
         changes: { ...formikRef.current?.values }
       }
-    })
-      .then(() => {
-        // Create updated settings with the new state
-        let updatedSettings = selectedSettings;
+    }).then(() => {
+      // Create updated settings with the new state
+      let updatedSettings = selectedSettings;
 
-        // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
-        if (
-          formikRef.current?.values?.solutions &&
-          formikRef.current?.values?.solutions.length > 0 &&
-          !selectedSettings?.viewCustomization.includes(
+      // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
+      if (
+        formikRef.current?.values?.solutions &&
+        formikRef.current?.values?.solutions.length > 0 &&
+        !selectedSettings?.viewCustomization.includes(
+          ViewCustomizationType.MODELS_BY_SOLUTION
+        )
+      ) {
+        updatedSettings = {
+          viewCustomization: [
+            ...(selectedSettings?.viewCustomization || []),
             ViewCustomizationType.MODELS_BY_SOLUTION
-          )
-        ) {
-          updatedSettings = {
-            viewCustomization: [
-              ...(selectedSettings?.viewCustomization || []),
-              ViewCustomizationType.MODELS_BY_SOLUTION
-            ]
-          };
-          setSelectedSettings(updatedSettings);
-        }
+          ]
+        };
+        setSelectedSettings(updatedSettings);
+      }
 
-        // Navigate with the updated settings
-        navigate(state?.fromHome ? '/' : '/homepage-settings/form', {
-          state: {
-            homepageSettings: updatedSettings
-          }
-        });
-      })
-      .catch(() => setMutationError(true));
+      // Navigate with the updated settings
+      navigate(state?.fromHome ? '/' : '/homepage-settings/form', {
+        state: {
+          homepageSettings: updatedSettings
+        }
+      });
+    });
   };
 
   const initialValues: SettingsFormType = {
@@ -131,12 +132,6 @@ const SelectSolutionSettings = () => {
             ]}
             customItem={homepageSettingsT('solutionsHeading')}
           />
-
-          {mutationError && (
-            <Alert type="error" slim>
-              {homepageSettingsT('solutionError')}
-            </Alert>
-          )}
 
           <h1 className="margin-bottom-2">
             {homepageSettingsT('solutionsHeading')}

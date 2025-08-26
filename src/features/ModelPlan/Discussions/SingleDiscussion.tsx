@@ -22,7 +22,6 @@ type SingleDiscussionProps = {
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
   setReply: (discussion: discussionsMiscType | ReplyType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
-  setDiscussionStatusMessage: (value: string) => void;
   replies: ReplyType[];
 };
 
@@ -33,7 +32,6 @@ const SingleDiscussion = ({
   setDiscussionType,
   setReply,
   setIsDiscussionOpen,
-  setDiscussionStatusMessage,
   replies
 }: SingleDiscussionProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
@@ -75,7 +73,6 @@ const SingleDiscussion = ({
             type="button"
             unstyled
             onClick={() => {
-              setDiscussionStatusMessage('');
               if (setIsDiscussionOpen) {
                 setIsDiscussionOpen(true);
               }

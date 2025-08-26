@@ -10,6 +10,8 @@ import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp
 
 import ExternalLink from 'components/ExternalLink';
 
+import { getTransLinkComponents } from '../Generic/About';
+
 import '../index.scss';
 
 export interface ProcessListItemProps {
@@ -42,7 +44,16 @@ const SharedSystemsTimeLine = ({
             {timelineConfig.items[0].header}
           </ProcessListHeading>
 
-          {timelineConfig.items[0].description}
+          <span>
+            <Trans
+              i18nKey={`solutions.${solution.key}.timeline.items.0.description`}
+              t={t}
+              // @ts-ignore
+              components={{
+                ...getTransLinkComponents(timelineConfig.items[0].links)
+              }}
+            />
+          </span>
         </ProcessListItem>
 
         <ProcessListItem
@@ -68,7 +79,8 @@ const SharedSystemsTimeLine = ({
                   >
                     {' '}
                   </ExternalLink>
-                )
+                ),
+                ...getTransLinkComponents(timelineConfig.items[1].links)
               }}
             />
           </span>

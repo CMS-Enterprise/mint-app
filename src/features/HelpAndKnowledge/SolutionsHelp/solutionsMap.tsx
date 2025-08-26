@@ -714,9 +714,7 @@ export const helpSolutions: HelpSolutionsType = {
     acronym: 'NCQA',
     type: MtoSolutionType.OTHER,
     components: {
-      timeline: (props: SolutionDetailProps) => (
-        <GatheringInfoAlert {...props} />
-      )
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
   [MtoCommonSolutionKey.RMD]: {

@@ -22,11 +22,11 @@ import {
   useCreateMtoCategoryMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
-import useMessage from 'hooks/useMessage';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type FormValues = {
@@ -60,7 +60,7 @@ const CustomCategoryForm = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
@@ -99,6 +99,10 @@ const CustomCategoryForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
+    setErrorMeta({
+      overrideMessage: t('modal.category.alert.error')
+    });
+
     create({
       variables: {
         id: modelID,
@@ -106,71 +110,34 @@ const CustomCategoryForm = () => {
         parentID:
           formData.primaryCategory === 'none' ? null : formData.primaryCategory
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (formData.primaryCategory === 'none') {
-            // Parent Category Success Message
-            showMessage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-y-4"
-                  clearMessage={clearMessage}
-                >
-                  <span className="mandatory-fields-alert__text">
-                    <Trans
-                      i18nKey={t('modal.category.alert.success.parent')}
-                      components={{
-                        b: <span className="text-bold" />
-                      }}
-                      values={{ category: formData.name }}
-                    />
-                  </span>
-                </Alert>
-              </>
-            );
-          } else {
-            // Subcategory Success Message
-            showMessage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-y-4"
-                  clearMessage={clearMessage}
-                >
-                  <span className="mandatory-fields-alert__text">
-                    <Trans
-                      i18nKey={t('modal.category.alert.success.subcategory')}
-                      components={{
-                        b: <span className="text-bold" />
-                      }}
-                      values={{ category: formData.name }}
-                    />
-                  </span>
-                </Alert>
-              </>
-            );
-          }
-          setMTOModalOpen(false);
+    }).then(response => {
+      if (!response?.errors) {
+        if (formData.primaryCategory === 'none') {
+          // Parent Category Success Message
+          toastSuccess(
+            <Trans
+              i18nKey={t('modal.category.alert.success.parent')}
+              components={{
+                b: <span className="text-bold" />
+              }}
+              values={{ category: formData.name }}
+            />
+          );
+        } else {
+          // Subcategory Success Message
+          toastSuccess(
+            <Trans
+              i18nKey={t('modal.category.alert.success.subcategory')}
+              components={{
+                b: <span className="text-bold" />
+              }}
+              values={{ category: formData.name }}
+            />
+          );
         }
-      })
-      .catch(() => {
-        showErrorMessageInModal(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
-          >
-            {t('modal.category.alert.error')}
-          </Alert>
-        );
-      });
+        setMTOModalOpen(false);
+      }
+    });
   };
 
   return (

@@ -124,7 +124,7 @@ const ReadOnlyTeamInfo = ({
   });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   const collaborators = (data?.modelPlan?.collaborators ??

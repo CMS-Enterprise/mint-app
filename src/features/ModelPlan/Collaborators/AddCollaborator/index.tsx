@@ -26,7 +26,7 @@ import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import Spinner from 'components/Spinner';
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -56,8 +56,6 @@ const Collaborators = () => {
   const params = new URLSearchParams(location.search);
 
   const manageOrAdd = params.get('view') || 'manage';
-
-  const { showMessageOnNextPage } = useMessage();
 
   const { modelID, collaboratorId } = useParams<{
     modelID: string;
@@ -105,36 +103,26 @@ const Collaborators = () => {
           id: collaboratorId,
           newRole: teamRoles!
         }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-collaborator-alert"
-                  className="margin-y-4"
-                >
-                  {collaboratorsMiscT('successUpdateMessage', {
-                    collaborator: commonName,
-                    role: teamRoles
-                      ?.map((role: TeamRole) => {
-                        return collaboratorsT(`teamRoles.options.${role}`);
-                      })
-                      .join(', ')
-                  })}
-                </Alert>
-              </>
-            );
-            navigate(
-              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
-            );
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
+      }).then(response => {
+        if (!response?.errors) {
+          toastSuccess(
+            collaboratorsMiscT('successUpdateMessage', {
+              collaborator: commonName,
+              role: teamRoles
+                ?.map((role: TeamRole) => {
+                  return collaboratorsT(`teamRoles.options.${role}`);
+                })
+                .join(', ')
+            }),
+            {
+              id: 'success-collaborator-alert'
+            }
+          );
+          navigate(
+            `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
+          );
+        }
+      });
     } else {
       create({
         variables: {
@@ -144,48 +132,27 @@ const Collaborators = () => {
             teamRoles: teamRoles!
           }
         }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            showMessageOnNextPage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-collaborator-alert"
-                  className="margin-y-4"
-                >
-                  {collaboratorsMiscT('successMessage', {
-                    collaborator: commonName,
-                    role: teamRoles
-                      ?.map((role: TeamRole) => {
-                        return collaboratorsT(`teamRoles.options.${role}`);
-                      })
-                      .join(', ')
-                  })}
-                </Alert>
-              </>
-            );
-            navigate(
-              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
-            );
-          }
-        })
-        .catch(errors => {
-          const collaboratorExistingError =
-            errors.graphQLErrors[0]?.message.includes(
-              'unique_collaborator_per_plan'
-            );
-          if (collaboratorExistingError) {
-            formikRef?.current?.setErrors({
-              userAccount: {
-                username: collaboratorsMiscT('existingMember')
-              }
-            });
-          } else {
-            formikRef?.current?.setErrors(errors);
-          }
-        });
+      }).then(response => {
+        if (!response?.errors) {
+          toastSuccess(
+            collaboratorsMiscT('successMessage', {
+              collaborator: commonName,
+              role: teamRoles
+                ?.map((role: TeamRole) => {
+                  return collaboratorsT(`teamRoles.options.${role}`);
+                })
+                .join(', ')
+            }),
+            {
+              id: 'success-collaborator-alert'
+            }
+          );
+
+          navigate(
+            `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
+          );
+        }
+      });
     }
   };
 

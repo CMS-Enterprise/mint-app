@@ -7,9 +7,9 @@ import {
   useCreateStandardCategoriesMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 
 const AddTemplateModal = () => {
   const { t } = useTranslation('modelToOperationsMisc');
@@ -18,7 +18,7 @@ const AddTemplateModal = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { showErrorMessageInModal, showMessage, clearMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const [create] = useCreateStandardCategoriesMutation({
     variables: { modelPlanID: modelID },
@@ -31,43 +31,24 @@ const AddTemplateModal = () => {
   });
 
   const handleSubmit = () => {
-    create()
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <Trans
-                  i18nKey="modal.addTemplate.success"
-                  t={t}
-                  components={{
-                    bold: <span className="text-bold " />
-                  }}
-                />
-              </Alert>
-            </>
-          );
-        }
-        setMTOModalOpen(false);
-      })
-      .catch(() => {
-        showErrorMessageInModal(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
-          >
-            {t('modal.addTemplate.error')}
-          </Alert>
+    setErrorMeta({
+      overrideMessage: t('modal.addTemplate.error')
+    });
+
+    create().then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey="modal.addTemplate.success"
+            t={t}
+            components={{
+              bold: <span className="text-bold " />
+            }}
+          />
         );
-      });
+      }
+      setMTOModalOpen(false);
+    });
   };
 
   return (
