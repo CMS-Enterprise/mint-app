@@ -15,6 +15,21 @@ import (
 	"github.com/google/uuid"
 )
 
+type AnalyticsSummary struct {
+	// Changes per model analytics
+	ChangesPerModel []*ModelChangesAnalytics `json:"changesPerModel"`
+	// Changes per model by section analytics
+	ChangesPerModelBySection []*ModelChangesBySectionAnalytics `json:"changesPerModelBySection"`
+	// Changes per model other data analytics
+	ChangesPerModelOtherData []*ModelChangesOtherDataAnalytics `json:"changesPerModelOtherData"`
+	// Models by status analytics
+	ModelsByStatus []*ModelsByStatusAnalytics `json:"modelsByStatus"`
+	// Number of followers per model analytics
+	NumberOfFollowersPerModel []*ModelFollowersAnalytics `json:"numberOfFollowersPerModel"`
+	// Total model count
+	TotalNumberOfModels *ModelCountAnalytics `json:"totalNumberOfModels,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -143,6 +158,60 @@ type MTOSolutionTranslation struct {
 	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
+// Analytics data types for various model plan metrics and statistics
+type ModelChangesAnalytics struct {
+	// The name of the model plan
+	ModelName string `json:"modelName"`
+	// The total number of field changes
+	NumberOfChanges int `json:"numberOfChanges"`
+	// The number of distinct record changes
+	NumberOfRecordChanges int `json:"numberOfRecordChanges"`
+	// The model plan ID
+	ModelPlanID uuid.UUID `json:"modelPlanId"`
+}
+
+type ModelChangesBySectionAnalytics struct {
+	// The name of the model plan
+	ModelName string `json:"modelName"`
+	// The name of the table/section
+	TableName string `json:"tableName"`
+	// The total number of field changes
+	NumberOfChanges int `json:"numberOfChanges"`
+	// The number of distinct record changes
+	NumberOfRecordChanges int `json:"numberOfRecordChanges"`
+	// The model plan ID
+	ModelPlanID uuid.UUID `json:"modelPlanId"`
+}
+
+type ModelChangesOtherDataAnalytics struct {
+	// The name of the model plan
+	ModelName string `json:"modelName"`
+	// The name of the table/section
+	TableName string `json:"tableName"`
+	// The total number of field changes
+	NumberOfChanges int `json:"numberOfChanges"`
+	// The number of distinct record changes
+	NumberOfRecordChanges int `json:"numberOfRecordChanges"`
+	// The section name (human readable)
+	Section string `json:"section"`
+	// The model plan ID
+	ModelPlanID uuid.UUID `json:"modelPlanId"`
+}
+
+type ModelCountAnalytics struct {
+	// The total number of active (non-archived) models
+	TotalNumberOfModels int `json:"totalNumberOfModels"`
+}
+
+type ModelFollowersAnalytics struct {
+	// The name of the model plan
+	ModelName string `json:"modelName"`
+	// The number of followers for this model
+	NumberOfFollowers int `json:"numberOfFollowers"`
+	// The model plan ID
+	ModelPlanID uuid.UUID `json:"modelPlanId"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`
@@ -151,6 +220,13 @@ type ModelPlanTranslation struct {
 	Abbreviation models.TranslationField            `json:"abbreviation" db:"abbreviation"`
 	Archived     models.TranslationFieldWithOptions `json:"archived" db:"archived"`
 	Status       models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
+type ModelsByStatusAnalytics struct {
+	// The status of the model plans
+	Status string `json:"status"`
+	// The number of models with this status
+	NumberOfModels int `json:"numberOfModels"`
 }
 
 // Mutations definition for the schema

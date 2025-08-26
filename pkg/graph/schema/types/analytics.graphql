@@ -1,0 +1,82 @@
+"""
+Analytics data types for various model plan metrics and statistics
+"""
+
+type ModelChangesAnalytics {
+  """The name of the model plan"""
+  modelName: String!
+  """The total number of field changes"""
+  numberOfChanges: Int!
+  """The number of distinct record changes"""
+  numberOfRecordChanges: Int!
+  """The model plan ID"""
+  modelPlanId: UUID!
+}
+
+type ModelChangesBySectionAnalytics {
+  """The name of the model plan"""
+  modelName: String!
+  """The name of the table/section"""
+  tableName: String!
+  """The total number of field changes"""
+  numberOfChanges: Int!
+  """The number of distinct record changes"""
+  numberOfRecordChanges: Int!
+  """The model plan ID"""
+  modelPlanId: UUID!
+}
+
+type ModelChangesOtherDataAnalytics {
+  """The name of the model plan"""
+  modelName: String!
+  """The name of the table/section"""
+  tableName: String!
+  """The total number of field changes"""
+  numberOfChanges: Int!
+  """The number of distinct record changes"""
+  numberOfRecordChanges: Int!
+  """The section name (human readable)"""
+  section: String!
+  """The model plan ID"""
+  modelPlanId: UUID!
+}
+
+type ModelsByStatusAnalytics {
+  """The status of the model plans"""
+  status: String!
+  """The number of models with this status"""
+  numberOfModels: Int!
+}
+
+type ModelFollowersAnalytics {
+  """The name of the model plan"""
+  modelName: String!
+  """The number of followers for this model"""
+  numberOfFollowers: Int!
+  """The model plan ID"""
+  modelPlanId: UUID!
+}
+
+type ModelCountAnalytics {
+  """The total number of active (non-archived) models"""
+  totalNumberOfModels: Int!
+}
+
+type AnalyticsSummary {
+  """Changes per model analytics"""
+  changesPerModel: [ModelChangesAnalytics!]!
+  """Changes per model by section analytics"""
+  changesPerModelBySection: [ModelChangesBySectionAnalytics!]!
+  """Changes per model other data analytics"""
+  changesPerModelOtherData: [ModelChangesOtherDataAnalytics!]!
+  """Models by status analytics"""
+  modelsByStatus: [ModelsByStatusAnalytics!]!
+  """Number of followers per model analytics"""
+  numberOfFollowersPerModel: [ModelFollowersAnalytics!]!
+  """Total model count"""
+  totalNumberOfModels: ModelCountAnalytics
+}
+
+extend type Query {
+  analytics: AnalyticsSummary! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

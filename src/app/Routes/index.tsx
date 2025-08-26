@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
+import Analytics from 'features/Analytics';
 import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
 import ReportAProblem from 'features/Feedback/ReportAProblem';
@@ -452,6 +453,10 @@ const router = createBrowserRouter([
             <UserInfo />
           </ProtectedRoute>
         )
+      },
+      {
+        path: '/analytics',
+        element: <Analytics />
       },
       {
         path: '/sandbox',
