@@ -115,6 +115,16 @@ const notifications = {
         PERFORMANCE_PERIOD: 'Performance period',
         WRAP_UP_ENDS: 'Model wrap-up end date'
       }
+    },
+    incorrectModelStatus: {
+      heading: "It's time to update the model status for {{-modelName}}",
+      subheading:
+        "Your model's anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.",
+      currentStatus: '<bold>Current status:</bold> {{-currentStatus}}',
+      newStatus: '<bold>New status:</bold> {{-newStatus}}',
+      cta: 'Yes, update my model’s status',
+      adjustTimeline:
+        'If you’re not ready to update your model’s status, please <link1>adjust your model’s anticipated timeline.</link1>'
     }
   },
   settings: {

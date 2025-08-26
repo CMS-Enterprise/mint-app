@@ -131,6 +131,14 @@ export const activityText = (data: MetaDataType) => {
       />
     );
   }
+  if (isIncorrectModelStatus(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
   if (isNewDiscussionReply(data)) {
     return (
       <Trans
@@ -246,6 +254,28 @@ export const ActivityCTA = ({
           className="margin-left-1"
           aria-hidden
           aria-label="forward"
+        />
+      </>
+    );
+  }
+
+  if (isIncorrectModelStatus(data)) {
+    return isExpanded ? (
+      <>
+        <Trans i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.cta.hide" />
+        <Icon.ExpandLess
+          className="margin-left-1"
+          aria-hidden
+          aria-label="collapse"
+        />
+      </>
+    ) : (
+      <>
+        <Trans i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.cta.view" />
+        <Icon.ExpandMore
+          className="margin-left-1"
+          aria-hidden
+          aria-label="expand"
         />
       </>
     );

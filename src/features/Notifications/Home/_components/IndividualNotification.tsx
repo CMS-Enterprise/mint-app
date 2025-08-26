@@ -27,6 +27,7 @@ import {
 } from './_utils';
 import DailyDigest from './DailyDigest';
 import DatesChanged from './DatesChanged';
+import IncorrectModelStatus from './IncorrectModelStatus';
 
 type NotificationActivityType = Activity;
 
@@ -50,6 +51,8 @@ const IndividualNotification = ({
 
   const [isDailyDigestExpanded, setIsDailyDigestExpanded] = useState(false);
   const [isDatesChangedExpanded, setIsDatesChangedExpanded] = useState(false);
+  const [isIncorrectModelStatusExpanded, setIsIncorrectModelStatusExpanded] =
+    useState(false);
 
   const navigate = useNavigate();
 
@@ -89,6 +92,11 @@ const IndividualNotification = ({
     if (isDatesChanged(metaData)) {
       handleMarkAsRead(() =>
         setIsDatesChangedExpanded(!isDatesChangedExpanded)
+      );
+    }
+    if (isIncorrectModelStatus(metaData)) {
+      handleMarkAsRead(() =>
+        setIsIncorrectModelStatusExpanded(!isIncorrectModelStatusExpanded)
       );
     }
     if (isAddingCollaborator(metaData)) {
@@ -186,8 +194,13 @@ const IndividualNotification = ({
       {isDailyDigestExpanded && isDailyDigest(metaData) && (
         <DailyDigest {...metaData} />
       )}
+
       {isDatesChangedExpanded && isDatesChanged(metaData) && (
         <DatesChanged {...metaData} />
+      )}
+
+      {isIncorrectModelStatusExpanded && isIncorrectModelStatus(metaData) && (
+        <IncorrectModelStatus {...metaData} />
       )}
     </Grid>
   );
