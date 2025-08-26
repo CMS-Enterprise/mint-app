@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
@@ -77,74 +78,63 @@ func CreatePlanDiscussion(
 
 		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
 
+		recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDiscussionAdded(store, modelPlan.ID)
+		if err != nil {
+			logger.Error("Error getting user accounts for discussion added notifications",
+				zap.Error(err),
+				zap.String("modelPlanID", modelPlan.ID.String()),
+			)
+			return nil, err
+		}
+
+		emailRecipientUserAccounts, inAppRecipientUserAccounts := models.FilterNotificationPreferences(recipientUserAccounts)
+
+		recipientEmails := lo.Map(emailRecipientUserAccounts, func(user *models.UserAccountAndNotificationPreferences, _ int) string {
+			return user.Email
+		})
+
 		// Send email to MINT Dev Team and those subscribed to discussion created emails
 		go func() {
-			emailRecipients, sendEmailErr := GetEmailRecipients(
-				ctx,
-				logger,
-				store,
-				input.ModelPlanID,
-			)
-			if sendEmailErr != nil {
-				logger.Error("error getting email recipients for plan discussion created email",
-					zap.String("discussionID", discussion.ID.String()),
-					zap.Error(sendEmailErr))
-			}
-			emailRecipients = append(emailRecipients, addressBook.MINTTeamEmail)
+			// MINT dev team always gets an email for this
+			recipientEmails = append(recipientEmails, addressBook.MINTTeamEmail)
 
-			sendEmailErr = sendPlanDiscussionCreatedEmail(
+			err = sendPlanDiscussionCreatedEmail(
 				ctx,
 				logger,
 				emailService,
 				emailTemplateService,
 				addressBook,
-				emailRecipients,
+				recipientEmails,
 				discussion,
 				modelPlan,
 				commonName,
 				userRole,
 			)
-			if sendEmailErr != nil {
+			if err != nil {
 				logger.Error("error sending plan discussion created email to MINT Team and users subscribed to the email",
 					zap.String("discussionID", discussion.ID.String()),
-					zap.Error(sendEmailErr))
+					zap.Error(err))
 			}
 		}()
 
 		// send notification for those following new plan discussion creation
-		notificationRecipients, notificationErr := GetNotificationRecipients(
-			ctx,
-			logger,
-			store,
-			input.ModelPlanID,
-		)
-		if notificationErr != nil {
-			logger.Error("error getting notification recipients for plan discussion created notification",
-				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(notificationErr))
-		}
-
-		preferenceFunction := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-			return loaders.UserNotificationPreferencesGetByUserID(ctx, user_id)
-		}
-		_, notificationErr = notifications.ActivityNewDiscussionAddedCreate(
+		_, err = notifications.ActivityNewDiscussionAddedCreate(
 			ctx,
 			tx,
 			principal.Account().ID,
-			notificationRecipients,
+			inAppRecipientUserAccounts,
 			discussion,
 			modelPlan,
 			commonName,
 			userRole,
-			preferenceFunction,
 		)
-		if notificationErr != nil {
+		if err != nil {
 			logger.Error("error sending plan discussion created notification to users",
 				zap.String("discussionID", discussion.ID.String()),
-				zap.Error(notificationErr))
+				zap.Error(err))
 		}
 
-		_, notificationErr = notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ModelPlanID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
+		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ModelPlanID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
 			return nil, fmt.Errorf("unable to generate notification for tagged in discussion, %w", notificationErr)
 		}
@@ -360,80 +350,6 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		return err
 	}
 	return nil
-}
-
-func GetEmailRecipients(
-	ctx context.Context,
-	logger *zap.Logger,
-	store *storage.Store,
-	modelPlanID uuid.UUID,
-) ([]string, error) {
-	planCollaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
-	if err != nil {
-		return []string{}, fmt.Errorf("failed to get plan collaborators: %w", err)
-	}
-
-	emailRecipients := make([]string, 0, len(planCollaborators))
-	for _, collaborator := range planCollaborators {
-		account, err := collaborator.UserAccount(ctx)
-		if err != nil {
-			logger.Error("Failed to get user account", zap.Error(err))
-			continue
-		}
-
-		if account.Email == "" {
-			continue
-		}
-
-		pref, prefErr := UserNotificationPreferencesGetByUserID(ctx, account.ID)
-		if prefErr != nil {
-			logger.Warn("unable to get user notification preferences", zap.Error(prefErr), zap.String("userID", account.ID.String()))
-			continue
-		}
-
-		if pref != nil && pref.NewDiscussionAdded.SendEmail() {
-			emailRecipients = append(emailRecipients, account.Email)
-		}
-	}
-
-	return emailRecipients, nil
-}
-
-func GetNotificationRecipients(
-	ctx context.Context,
-	logger *zap.Logger,
-	store *storage.Store,
-	modelPlanID uuid.UUID,
-) ([]uuid.UUID, error) {
-	planCollaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
-	if err != nil {
-		return []uuid.UUID{}, fmt.Errorf("failed to get plan collaborators: %w", err)
-	}
-
-	notificationRecipients := make([]uuid.UUID, 0, len(planCollaborators))
-	for _, collaborator := range planCollaborators {
-		account, err := collaborator.UserAccount(ctx)
-		if err != nil {
-			logger.Error("Failed to get user account", zap.Error(err))
-			continue
-		}
-
-		if account.Email == "" {
-			continue
-		}
-
-		pref, prefErr := UserNotificationPreferencesGetByUserID(ctx, account.ID)
-		if prefErr != nil {
-			logger.Warn("unable to get user notification preferences", zap.Error(prefErr), zap.String("userID", account.ID.String()))
-			continue
-		}
-
-		if pref != nil && pref.NewDiscussionAdded.InApp() {
-			notificationRecipients = append(notificationRecipients, account.ID)
-		}
-	}
-
-	return notificationRecipients, nil
 }
 
 func sendPlanDiscussionCreatedEmail(

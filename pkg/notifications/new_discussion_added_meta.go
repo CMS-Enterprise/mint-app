@@ -14,14 +14,12 @@ func ActivityNewDiscussionAddedCreate(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	actorID uuid.UUID,
-	receiverIDs []uuid.UUID,
+	recipients []*models.UserAccountAndNotificationPreferences,
 	planDiscussion *models.PlanDiscussion,
 	modelPlan *models.ModelPlan,
 	userName string,
 	role string,
-	getPreferencesFunc GetUserNotificationPreferencesFunc,
 ) (*models.Activity, error) {
-
 	activity := models.NewNewDiscussionAddedActivity(planDiscussion, modelPlan, actorID, userName, role)
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
@@ -29,13 +27,8 @@ func ActivityNewDiscussionAddedCreate(
 		return nil, actErr
 	}
 
-	for _, receiverID := range receiverIDs {
-		preferences, err := getPreferencesFunc(ctx, receiverID)
-		if err != nil {
-			return nil, err
-		}
-
-		_, err = userNotificationCreate(ctx, np, retActivity, receiverID, preferences.NewDiscussionAdded)
+	for _, recipient := range recipients {
+		_, err := userNotificationCreate(ctx, np, retActivity, recipient.ID, recipient.PreferenceFlags)
 		if err != nil {
 			return nil, err
 		}

@@ -9,7 +9,7 @@ ADD VALUE 'NEW_DISCUSSION_ADDED' AFTER 'DATA_EXCHANGE_APPROACH_MARKED_COMPLETE';
 
 ALTER TABLE user_notification_preferences
 ADD COLUMN new_discussion_added USER_NOTIFICATION_PREFERENCE_FLAG[] DEFAULT '{}'::USER_NOTIFICATION_PREFERENCE_FLAG[],
-ADD COLUMN new_discussion_added_complete_notification_type NEW_DISCUSSION_ADDED_NOTIFICATION_TYPE DEFAULT NULL;
+ADD COLUMN new_discussion_added_notification_type NEW_DISCUSSION_ADDED_NOTIFICATION_TYPE DEFAULT NULL;
 
 COMMENT ON COLUMN user_notification_preferences.new_discussion_added
 IS 'Notification preference for when a new discussion is added.';
