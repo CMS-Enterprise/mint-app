@@ -233,12 +233,12 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save').click();
 
-    // Navigate back to home to start a new model plan
+    // Navigate back to home to add a new model to MINT
     cy.get('[aria-label="Home"]').click();
     cy.url().should('include', '/');
 
-    cy.contains('a', 'Start a new Model Plan').click();
-    cy.contains('h1', 'Start a new model plan');
+    cy.contains('a', 'Add a new model to MINT').click();
+    cy.contains('h1', 'Add a new model to MINT');
     cy.get('[data-testid="continue-link"]').click();
 
     cy.get('#new-plan-model-name')
@@ -374,7 +374,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save').click();
 
-    // Navigate back to home to start a new model plan
+    // Navigate back to home to add a new model to MINT
     cy.get('[aria-label="Home"]').click();
     cy.url().should('include', '/');
 

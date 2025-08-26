@@ -7,8 +7,8 @@ describe('The model timeline form', () => {
   it('completes a the timeline form', () => {
     cy.visit('/');
 
-    cy.contains('a', 'Start a new Model Plan').click();
-    cy.contains('h1', 'Start a new model plan');
+    cy.contains('a', 'Add a new model to MINT').click();
+    cy.contains('h1', 'Add a new model to MINT');
     cy.get('[data-testid="continue-link"]').click();
 
     // General Model Plan Information

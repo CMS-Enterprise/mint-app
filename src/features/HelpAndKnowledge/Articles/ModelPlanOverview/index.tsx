@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
+  Link,
   Link as UswdsLink,
   ProcessList,
   ProcessListHeading,
@@ -13,6 +14,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import LatestContentUpdate from '../_components/LatestContentUpdate';
@@ -26,6 +28,9 @@ export const ModelPlanOverviewContent = ({
   help
 }: ModelPlanOverviewContentProps) => {
   const { t } = useTranslation('modelPlanOverview');
+  const summaryBoxListItems = tArray<string>(
+    'modelPlanOverview:summaryBox.listItem'
+  );
 
   return (
     <>
@@ -35,9 +40,9 @@ export const ModelPlanOverviewContent = ({
         </p>
 
         <ul className="padding-left-3 margin-y-0">
-          <li>{t('summaryBox.listItem.start')}</li>
-          <li>{t('summaryBox.listItem.upload')}</li>
-          <li>{t('summaryBox.listItem.track')}</li>
+          {summaryBoxListItems.map((item, index) => (
+            <li key={item}>{t(`summaryBox.listItem.${index}`)}</li>
+          ))}
         </ul>
 
         <p className="margin-y-1">
@@ -54,41 +59,55 @@ export const ModelPlanOverviewContent = ({
 
       <p className="font-body-lg margin-y-0">{t('steps.description')}</p>
 
-      <Grid desktop={{ col: 6 }} className="margin-top-105">
+      <Grid desktop={{ col: 9 }} className="margin-top-105">
         <ProcessList>
-          <ProcessListItem>
+          <ProcessListItem className="maxw-none">
             <ProcessListHeading type="h3">
               {t('steps.first.heading')}
             </ProcessListHeading>
             <p>{t('steps.first.description')}</p>
           </ProcessListItem>
 
-          <ProcessListItem>
+          <ProcessListItem className="maxw-none">
             <ProcessListHeading type="h3">
               {t('steps.second.heading')}
             </ProcessListHeading>
             <p>{t('steps.second.description')}</p>
           </ProcessListItem>
 
-          <ProcessListItem className="padding-bottom-3">
+          <ProcessListItem className="maxw-none padding-bottom-3">
             <ProcessListHeading type="h3">
               {t('steps.third.heading')}
             </ProcessListHeading>
             <p>{t('steps.third.description')}</p>
           </ProcessListItem>
 
-          <ProcessListItem>
+          <ProcessListItem className="maxw-none">
             <ProcessListHeading type="h3">
               {t('steps.fourth.heading')}
             </ProcessListHeading>
             <p>{t('steps.fourth.description')}</p>
           </ProcessListItem>
 
-          <ProcessListItem>
+          <ProcessListItem className="maxw-none">
             <ProcessListHeading type="h3">
               {t('steps.fifth.heading')}
             </ProcessListHeading>
-            <p>{t('steps.fifth.description')}</p>
+            <p>
+              <Trans
+                i18nKey="modelPlanOverview:steps:fifth.description"
+                components={{
+                  link1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                }}
+              />
+            </p>
+          </ProcessListItem>
+
+          <ProcessListItem className="maxw-none">
+            <ProcessListHeading type="h3">
+              {t('steps.sixth.heading')}
+            </ProcessListHeading>
+            <p>{t('steps.sixth.description')}</p>
           </ProcessListItem>
         </ProcessList>
       </Grid>
