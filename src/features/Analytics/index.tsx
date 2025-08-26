@@ -20,31 +20,38 @@ const analyticsSumamryConfig: Record<
   {
     xAxisDataKey: string;
     yAxisDataKey: string;
+    xAxisLabel: string;
   }
 > = {
   changesPerModel: {
     xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfChanges'
+    yAxisDataKey: 'numberOfChanges',
+    xAxisLabel: 'Model Name'
   },
   changesPerModelBySection: {
     xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfChanges'
+    yAxisDataKey: 'numberOfChanges',
+    xAxisLabel: 'Model Name'
   },
   changesPerModelOtherData: {
     xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfChanges'
+    yAxisDataKey: 'numberOfChanges',
+    xAxisLabel: 'Model Name'
   },
   modelsByStatus: {
     xAxisDataKey: 'status',
-    yAxisDataKey: 'numberOfModels'
+    yAxisDataKey: 'numberOfModels',
+    xAxisLabel: 'Model Status'
   },
   numberOfFollowersPerModel: {
     xAxisDataKey: 'modelName',
-    yAxisDataKey: 'numberOfFollowers'
+    yAxisDataKey: 'numberOfFollowers',
+    xAxisLabel: 'Model Name'
   },
   totalNumberOfModels: {
     xAxisDataKey: 'totalNumberOfModels',
-    yAxisDataKey: 'totalNumberOfModels'
+    yAxisDataKey: 'totalNumberOfModels',
+    xAxisLabel: 'Total Number of Models'
   }
 };
 
@@ -77,7 +84,7 @@ const Analytics = () => {
           items={[BreadcrumbItemOptions.HOME, BreadcrumbItemOptions.ANALYTICS]}
         />
 
-        <h1>Analytics</h1>
+        <h1>{t('heading')}</h1>
 
         {error && <div>Error: {error.message}</div>}
 
@@ -86,7 +93,7 @@ const Analytics = () => {
           className="margin-bottom-6"
           onClick={() => downloadAnalytics(data.analytics, 'analytics.xlsx')}
         >
-          Download Analytics as XLSX
+          {t('downloadAnalytics')}
         </Button>
 
         <ButtonGroup type="segmented" className="margin-bottom-6">
@@ -103,13 +110,15 @@ const Analytics = () => {
           ))}
         </ButtonGroup>
 
-        <h3 className="margin-bottom-2 margin-left-10">{t(selectedChart)}</h3>
+        <h3 className="margin-bottom-2" style={{ marginLeft: '20rem' }}>
+          {t(selectedChart)}
+        </h3>
 
         <BarChart
           width={800}
           height={800}
           data={chartData as any[]}
-          margin={{ top: 20, right: 30, left: 20, bottom: 200 }}
+          margin={{ top: 20, right: 30, left: 60, bottom: 200 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
 
@@ -124,7 +133,7 @@ const Analytics = () => {
           />
           <YAxis />
 
-          <Tooltip />
+          <Tooltip formatter={(value, name) => [value, t(name)]} />
 
           <Bar
             dataKey={
