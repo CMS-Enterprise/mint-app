@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
 import { OperationalSolutionSubCategories } from 'types/operationalSolutionCategories';
 
@@ -15,6 +16,9 @@ import {
 import SolutionHelpCard from '../SolutionHelpCard';
 
 import './index.scss';
+
+const DEFAULT_ITEMS_PER_PAGE = 9;
+const PAGE_SIZE_VALUE_ARRAY: (number | 'all')[] = [6, 9, 'all'];
 
 type SolutionHelpCardGroupProps = {
   className?: string;
@@ -113,10 +117,15 @@ const SolutionHelpCardGroup = ({
     [solutions]
   );
 
+  const [pageSize, setPageSize] = useState<'all' | number>(
+    DEFAULT_ITEMS_PER_PAGE
+  );
+
   const { currentItems, Pagination } = usePagination<HelpSolutionType[]>({
     items: sortedSolutions,
-    itemsPerPage: 9,
-    withQueryParams: 'page'
+    itemsPerPage: pageSize === 'all' ? sortedSolutions.length : pageSize,
+    withQueryParams: 'page',
+    showPageIfOne: true
   });
 
   // Updates the result nums
@@ -148,7 +157,16 @@ const SolutionHelpCardGroup = ({
       ) : (
         <>
           <Solutions currentSolutions={currentItems} category={category} />
-          {Pagination}
+          <div className="display-flex">
+            {Pagination}
+            <TablePageSize
+              className="margin-left-auto desktop:grid-col-auto"
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              valueArray={PAGE_SIZE_VALUE_ARRAY}
+              suffix={t('solutionsSuffix')}
+            />
+          </div>
         </>
       )}
     </GridContainer>

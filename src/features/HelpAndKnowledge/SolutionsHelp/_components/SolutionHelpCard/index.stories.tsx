@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
@@ -12,15 +12,23 @@ export default {
   component: SolutionHelpCard,
   decorators: [
     Story => (
-      <MemoryRouter
-        initialEntries={['/help-and-knowledge/operational-solutions']}
-      >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionHelpCard
-            solution={helpSolutions[MtoCommonSolutionKey.INNOVATION]}
-          />
-        </Route>
-      </MemoryRouter>
+      <RouterProvider
+        router={createMemoryRouter(
+          [
+            {
+              path: '/help-and-knowledge/operational-solutions',
+              element: (
+                <SolutionHelpCard
+                  solution={helpSolutions[MtoCommonSolutionKey.INNOVATION]}
+                />
+              )
+            }
+          ],
+          {
+            initialEntries: ['/help-and-knowledge/operational-solutions']
+          }
+        )}
+      />
     )
   ]
 } as Meta<typeof SolutionHelpCard>;

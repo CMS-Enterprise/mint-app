@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 
 import { helpSolutionsArray } from '../../solutionsMap';
@@ -11,16 +11,24 @@ export default {
   component: SolutionHelpCardGroup,
   decorators: [
     Story => (
-      <MemoryRouter
-        initialEntries={['/help-and-knowledge/operational-solutions']}
-      >
-        <Route path="/help-and-knowledge/operational-solutions">
-          <SolutionHelpCardGroup
-            solutions={helpSolutionsArray}
-            setResultsNum={() => null}
-          />
-        </Route>
-      </MemoryRouter>
+      <RouterProvider
+        router={createMemoryRouter(
+          [
+            {
+              path: '/help-and-knowledge/operational-solutions',
+              element: (
+                <SolutionHelpCardGroup
+                  solutions={helpSolutionsArray}
+                  setResultsNum={() => null}
+                />
+              )
+            }
+          ],
+          {
+            initialEntries: ['/help-and-knowledge/operational-solutions']
+          }
+        )}
+      />
     )
   ]
 } as Meta<typeof SolutionHelpCardGroup>;

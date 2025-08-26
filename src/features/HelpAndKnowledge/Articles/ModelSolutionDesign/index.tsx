@@ -13,11 +13,16 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
+import useHelpSolution from 'hooks/useHelpSolutions';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
@@ -58,8 +63,31 @@ export const ModelSolutionDesign = () => {
     'modelSolutionDesign:identifySolutions.whenItems'
   );
 
+  const { helpSolutions, loading } = useHelpSolution();
+
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState();
+
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.key || null,
+    helpSolutions,
+    true
+  );
+
+  if (loading) {
+    return <PageLoading />;
+  }
+
   return (
     <>
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute="/help-and-knowledge/model-and-solution-design"
+        />
+      )}
+
       <MainContent>
         <GridContainer>
           <Grid desktop={{ col: 12 }}>
@@ -88,7 +116,7 @@ export const ModelSolutionDesign = () => {
 
               <SummaryBoxContent>
                 <ol className="padding-left-5 margin-y-0">
-                  {summaryBoxConfig.map((item, index) => (
+                  {summaryBoxConfig.map(item => (
                     <li key={item} className="margin-bottom-1">
                       <div className="margin-left-1 display-flex flex-align-center">
                         <ScrollLink scrollTo={item} />
@@ -280,7 +308,7 @@ export const ModelSolutionDesign = () => {
             </h3>
 
             <ProcessList>
-              {identifySolutionsActivitiesConfig.map(activity => (
+              {identifySolutionsActivitiesConfig.map((activity, index) => (
                 <ProcessListItem
                   key={activity.heading}
                   className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
@@ -289,7 +317,43 @@ export const ModelSolutionDesign = () => {
                     {activity.heading}
                   </ProcessListHeading>
 
-                  <p className="margin-top-105">{activity.description}</p>
+                  <p className="margin-top-105">
+                    <Trans
+                      i18nKey={`modelSolutionDesign:identifySolutions.activities.items.${index}.description`}
+                      components={{
+                        link1: (
+                          <UswdsReactLink
+                            to="/help-and-knowledge/creating-mto-matrix"
+                            className="margin-top-2 display-block display-flex flex-align-center text-bold"
+                          />
+                        ),
+                        link2: (
+                          <UswdsReactLink
+                            to="/help-and-knowledge/evaluating-data-exchange-approach"
+                            className="margin-top-2 display-block display-flex flex-align-center text-bold"
+                          />
+                        ),
+                        iconForward: (
+                          <Icon.ArrowForward
+                            className="margin-left-1 text-bold"
+                            aria-label="forward"
+                          />
+                        ),
+                        ml1: (
+                          <UswdsReactLink
+                            className="usa-button usa-button--unstyled"
+                            to="?solution=cmmi-analysis-and-management-system&section=about"
+                          />
+                        ),
+                        ml2: (
+                          <UswdsReactLink
+                            className="usa-button usa-button--unstyled"
+                            to="?solution=quality-payment-program&section=about"
+                          />
+                        )
+                      }}
+                    />
+                  </p>
                 </ProcessListItem>
               ))}
             </ProcessList>

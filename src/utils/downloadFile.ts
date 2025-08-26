@@ -1,6 +1,5 @@
 // Util for downloading files from external URL
 import axios from 'axios';
-import i18next from 'i18next';
 
 type DownloadDocumentType = {
   fileType: string;
@@ -14,13 +13,9 @@ const downloadFile = ({
   fileName,
   downloadURL
 }: DownloadDocumentType) => {
-  return downloadDocumentFromURL(downloadURL, fileName, fileType)
-    .then(() => {
-      return downloadURL;
-    })
-    .catch(error => {
-      throw error;
-    });
+  return downloadDocumentFromURL(downloadURL, fileName, fileType).then(() => {
+    return downloadURL;
+  });
 };
 
 // Axios download of file from url
@@ -38,9 +33,6 @@ const downloadDocumentFromURL = (
     .then(response => {
       const blob = new Blob([response.data], { type: fileType });
       downloadBlob(fileName, blob);
-    })
-    .catch(() => {
-      throw i18next.t('documents:downloadFail');
     });
 };
 

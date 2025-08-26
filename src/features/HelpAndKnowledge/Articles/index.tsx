@@ -40,7 +40,8 @@ export enum HelpArticle {
   ADD_CUSTOM_MILESTONE = 'ADD_CUSTOM_MILESTONE',
   ADD_CUSTOM_SOLUTION = 'ADD_CUSTOM_SOLUTION',
   UPDATING_MTO_STATUS = 'UPDATING_MTO_STATUS',
-  SHARING_EXPORTING_MTO = 'SHARING_EXPORTING_MTO'
+  SHARING_EXPORTING_MTO = 'SHARING_EXPORTING_MTO',
+  LESSON_LEARNED_REPOSITORY = 'LESSON_LEARNED_REPOSITORY'
 }
 
 export type ArticleProps = {
@@ -235,6 +236,14 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     route: '/sharing-exporting-mto',
     translation: 'sharingExportingMto',
     type: ArticleCategories.MTO_TUTORIALS
+  },
+  {
+    key: HelpArticle.LESSON_LEARNED_REPOSITORY,
+    route:
+      'https://share.cms.gov/center/cmmi/LessonsLearned/SitePages/Home.aspx',
+    translation: HelpArticle.LESSON_LEARNED_REPOSITORY,
+    type: ArticleCategories.GETTING_STARTED,
+    external: true
   }
 ];
 

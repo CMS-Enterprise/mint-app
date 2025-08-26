@@ -5,16 +5,26 @@ const utilizingSolutions = {
   summaryBox: {
     copy: 'Examples of using an existing solution include:',
     items: [
-      'Using Salesforce to create a Request for Application website',
-      'Creating a model-specific application in the Reusable Framework',
-      'Adjusting claims payments in the Fee-for-Service systems',
-      'Modifying the Health Plan Management System to capture information from Accountable Care Organizations (ACOs)'
+      { copy: 'Using Salesforce to create a Request for Application website' },
+      {
+        copy: 'Creating a model-specific application in the Reusable Framework'
+      },
+      {
+        copy: 'Adjusting claims payments in the <ml>Fee-for-Service</ml> systems',
+        route: 'shared-systems'
+      },
+      {
+        copy: 'Modifying the <ml>Health Plan Management System</ml> to capture information from Accountable Care Organizations (ACOs)',
+        route: 'health-plan-management-system'
+      }
     ]
   },
   timingSteps: {
     heading: 'Timing',
-    description:
-      'The business and system owners of existing systems each determine the timelines for the relevant systems. The IT Lead will assist model teams in understanding and following the release calendar of each system. The timeline below outlines a hypothetical release calendar. All systems are different.',
+    description: `The business and system owners of existing systems each determine the timelines for the relevant systems. The IT Lead will assist model teams in understanding and following the release calendar of each system. The timeline below outlines a hypothetical release calendar. All systems are different. The IT Lead will document key dates in the model-to-operations matrix (MTO).
+
+        <link1>Learn more about creating a model-to-operations matrix (MTO)
+        <iconForward /></link1>`,
     subHeading: 'Hypothetical Release Calendar',
     items: [
       {
@@ -52,8 +62,11 @@ const utilizingSolutions = {
   },
   activitySteps: {
     heading: 'Activities involved',
-    description:
-      'The timeline below describes the typical activities for using an existing system. Each CMS system has a unique process for accepting and implementing new requirements. The table below provides the general CMS process as guidance for model teams. However, teams will need to follow the specific procedures of each system. The IT Lead will assist model teams with this.',
+    description: `The timeline below describes the typical activities for using an existing system. Each CMS system has a unique process for accepting and implementing new requirements. The table below provides the general CMS process as guidance for model teams. However, teams will need to follow the specific procedures of each system. The IT Lead will assist model teams with this. The IT Lead will use the MTO to document the operational solutions and IT systems a model plans to use. MINT users may also browse all available solutions and IT systems within the operational solutions area of MINT’s Help and Knowledge Center.
+      
+        <link1>Learn more about creating a model-to-operations matrix (MTO)</link1>
+        <link2>Browse available operational solutions</link2>
+      `,
     subHeading: 'Typical activities for using an existing system',
     items: [
       {
@@ -93,7 +106,7 @@ const utilizingSolutions = {
     heading:
       'Did you know you can track the status for your operational solutions within MINT?',
     description:
-      'Model teams should work with their IT Lead to complete the operational solutions and implementation status tracker within the Model Plan to stay organized.'
+      'Model teams should work with their IT Lead to complete the model-to-operations matrix (MTO) for their model to stay organized.'
   }
 };
 

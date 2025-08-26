@@ -73,7 +73,7 @@ describe('Homepage Settings', () => {
     // Save settings
     cy.get('[data-testid="save-settings-order"]').click();
 
-    cy.get('[data-testid="alert"]').contains(
+    cy.get('[data-testid="toast-success"]').contains(
       ' Success! Your homepage has been updated.'
     );
   });

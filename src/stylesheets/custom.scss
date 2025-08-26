@@ -360,3 +360,34 @@ th {
     box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);  
   }
 }
+
+// Custom toast styling
+.Toastify__toast {
+  padding: 0 !important;
+  width: 100%;
+  max-width: 71rem;
+  display: block;
+  min-height: 0;
+  border: 0;
+}
+
+.Toastify__toast .usa-alert {
+  border-radius: .5rem;
+}
+
+.Toastify__toast .usa-alert .usa-alert__body {
+  border-radius: .5rem;
+}
+
+// Custom error toast styling
+.Toastify__toast--error {
+  border-left: none;
+  background-color: transparent;
+}
+
+// Custom progress bar styling for success toasts
+.Toastify__toast--success {
+  .Toastify__progress-bar {
+    background-color: #00a91c !important;
+  }
+}

@@ -283,7 +283,12 @@ const solutions: SolutionTType = {
         {
           header: 'Reach out to Project Lead',
           description:
-            'Contact Aliza Kim and Ed Howard to start a discussion about your model concept.'
+            'Contact the <link1>APPS Project Leads</link1> to start a discussion about your model concept.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Collaborate with APPS',
@@ -453,7 +458,12 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete CCW VRDC Access Request worksheet',
           description:
-            'Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and Velda.'
+            'Contact the <link1>CMMI Government Task Lead</link1> to request the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and the CMMI Government Task Lead.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Complete CCW CARS application',
@@ -471,7 +481,12 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete Employee CCW Access Request form',
           description:
-            'Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and Velda.'
+            'Contact the <link1>CMMI Government Task Lead</link1> to request the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and the CMMI Government Task Lead.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Complete CCW CARS application',
@@ -546,7 +561,12 @@ Examples and impact:`,
         {
           header: 'Reach out to CDAC team',
           description:
-            'If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to Megha Mirchandani and William Gordon to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. '
+            'If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to the <link1>CDAC points of contact</link1> to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. ',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         }
       ]
     }
@@ -686,7 +706,12 @@ CMMI works with CPI to screen participant and provider candidates prior to those
         {
           header: 'Reach out to eDFR ',
           description:
-            'Once a model team knows they would like to use eDFR, they should reach out to Zach Nall.'
+            'Once a model team knows they would like to use eDFR, they should reach out to the <link1>eDFR points of contact</link1>.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Meet to understand requirements'
@@ -755,9 +780,14 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
     timeline: {
       items: [
         {
-          header: 'Contact Mary Greene or Michelle Brown',
+          header: 'Contact the GrantSolutions team',
           description:
-            'Reach out to Mary or Michelle during the development of a grant project.'
+            'Reach out to the <link1>GrantSolutions points of contact</link1> during the development of a grant project.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Point of contact assigned',
@@ -794,8 +824,25 @@ Specific to CMMI, HIGLAS has two integrated points:`,
     },
     timeline: {
       description:
-        'Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at <email>donna.schmidt@cms.hhs.gov</email> if you have questions.',
-      items: []
+        'Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact the <link1>HIGLAS</link1>, <link2>IPC</link2>, and/or <link3>Shared Systems</link3> points of contact if you have questions.',
+      items: [
+        {
+          header: 'HIGLAS',
+          links: [
+            {
+              toPoC: true
+            },
+            {
+              link: MtoCommonSolutionKey.IPC,
+              external: false
+            },
+            {
+              link: MtoCommonSolutionKey.SHARED_SYSTEMS,
+              external: false
+            }
+          ]
+        }
+      ]
     }
   },
   [MtoCommonSolutionKey.HDR]: {
@@ -862,7 +909,12 @@ HDR’s Configuration Management allows model teams to define and modify perform
         {
           header: 'Reach out to Product Owner',
           description:
-            'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Curtis Naumann. '
+            'If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to <link1>the HDR Product Owner</link1>.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Meet to understand requirements',
@@ -1149,7 +1201,12 @@ The Model team will receive an implementation milestone schedule that identifies
         {
           header: 'Contact the ISP Team',
           description:
-            'Contact Joe Pusateri if you’re interested in using ISP or want to learn more.'
+            'Contact the <link1>ISP team</link1> if you’re interested in using ISP or want to learn more.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Initial discussion',
@@ -1280,12 +1337,22 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
         {
           header: 'Reach out to Legal Vertical',
           description:
-            'When model teams have questions or when they start developing their ICIP, they should contact Megan Hyde or Erin Hagenbrok.'
+            'When model teams have questions or when they start developing their ICIP, they should contact the <link1>Legal Vertical co-team leads</link1>.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Legal Vertical member assigned',
           description:
-            'Model team management should reach out to Ann Vrabel and Melanie Dang to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.'
+            'Model team management should reach out to the <link1>Division Directors</link1> to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Draft governing documents',
@@ -1340,7 +1407,12 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'CMMI/BSG will reach out',
           description:
-            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Sara Fontaine.'
+            'When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email the <link1>CMMI/BSG point of contact</link1>.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Discussion with the model team',
@@ -1366,7 +1438,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         },
         {
           header: 'Share ICD',
-          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
+          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. The CMMI/BSG team can help answer any questions that model teams and their implementation contractors have about MDM.
 
 <link1>Go to ICD and Onboarding Mapping for MDM-POR</link1>`,
           links: [
@@ -1405,7 +1477,12 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'CMMI/BSG will reach out',
           description:
-            'When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Sara Fontaine.'
+            'When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email the <link1>CMMI/BSG point of contact</link1>.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Discussion with the model team',
@@ -1432,10 +1509,13 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         },
         {
           header: 'Share ICD',
-          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
+          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. The <link1>CMMI/BSG team</link1> can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
 
-<link1>Go to ICD and Onboarding Mapping for MDM-NCBP</link1>`,
+<link2>Go to ICD and Onboarding Mapping for MDM-NCBP</link2>`,
           links: [
+            {
+              toPoC: true
+            },
             {
               external: true,
               link: 'https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx'
@@ -1469,12 +1549,17 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. '
+            'Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the <link1>Quality Vertical Program Analyst</link1>, who is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. ',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'COR meets with the model team',
           description:
-            'Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). '
+            'Once model teams receive approval from the Program Analyst to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, and the CMMI MIDS Quality Subject Matter Expert (QSME) to discuss their quality measure needs. These points of contact will guide the model teams as they prepare justification to present their request to the Front Office (FO). '
         },
         {
           header: 'Present justification to Front Office',
@@ -1617,7 +1702,12 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Reach out to Quality Vertical',
           description:
-            'Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.'
+            'Early in modal development, model teams should reach out to the <link1>Quality Vertical Lead</link1>. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'QV assists the model team',
@@ -1654,7 +1744,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
     },
     timeline: {
       description:
-        'Model teams should follow the <link1>Procurement Administrative Lead Time (PALT)</link1> standards to determine when to being working with RMADA.',
+        'Model teams should follow the <link1>Procurement Administrative Lead Time (PALT)</link1> standards to determine when to begin working with RMADA.',
       items: [],
       links: ['Procurement Administrative Lead Time (PALT)']
     }
@@ -1989,11 +2079,16 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         {
           header: 'Reach out to Donna Schmidt',
           description:
-            'Early in the process, contact Donna Schmidt to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.'
+            'Early in the process, contact the <link1>Shared Systems points of contact</link1> to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Draft a Change Request (CR)',
-          description: `Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
+          description: `The team will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
 
 <link1>Go to Fee For Service Change Request Resource Center</link1>
 
@@ -2056,7 +2151,12 @@ Model Space offers model teams and their contractors templates or Databricks not
       items: [
         {
           header: 'Reach out to the Product Owners',
-          description: `If you're interested in using Model Space or want to learn more about the system, please get in touch with Product Owners Zach Nall and Curtis Naumann.`
+          description: `If you're interested in using Model Space or want to learn more about the system, please get in touch with <link1>Model Space Product Owners</link1>.`,
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         },
         {
           header: 'Meet to understand requirements',
@@ -2241,7 +2341,12 @@ Model Space offers model teams and their contractors templates or Databricks not
         {
           header: 'Contact NCQA point of contact',
           description:
-            'Reach out to the NCQA primary point of contact to get started.'
+            'Reach out to the <link1>NCQA primary point of contact</link1> to get started.',
+          links: [
+            {
+              toPoC: true
+            }
+          ]
         }
       ]
     }
@@ -2270,22 +2375,22 @@ const helpCategories: Record<ArticleCategories, CardInfoType> = {
   [ArticleCategories.GETTING_STARTED]: {
     title: 'Getting started',
     description:
-      'Use these resources to help you get started with the creation of your Model Plan.'
+      'Use these articles to help you get started with the creation of your model and documenting it in MINT.'
   },
   [ArticleCategories.IT_IMPLEMENTATION]: {
     title: 'IT implementation',
     description:
-      'Use these resources to better understand what’s involved in your model to IT implementation.'
+      'Use these articles to better understand what’s involved in implementing IT for your model.'
   },
   [ArticleCategories.MTO_TUTORIALS]: {
     title: 'MINT tutorials',
     description:
-      'Step-by-step guides to help you navigate MINT and it’s capabilities.'
+      'Step-by-step guides to help you navigate MINT and its capabilities.'
   },
   [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: {
     title: 'Model concept and design',
     description:
-      'Use these resources to better understand what’s involved in the model concept and design phase.'
+      'Use these articles to better understand what’s involved in the model concept and design phase.'
   }
 };
 
@@ -2314,9 +2419,9 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Strategy Refresh resources on SharePoint',
   [HelpArticle.ICIP_REPOSITORY]: 'ICIP Repository on SharePoint',
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]:
-    'Fraud and abuse waiver templates on SharePoint',
+    'Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
-    'Quality Vertical health equity resources on SharePoint',
+    'Quality Vertical healthy living resources on SharePoint',
   [HelpArticle.CREATING_MTO_MATRIX]:
     'Creating your Model-to-operations matrix (MTO) in MINT',
   [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
@@ -2329,7 +2434,9 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.ADD_CUSTOM_MILESTONE]: 'How to add a custom milestone',
   [HelpArticle.ADD_CUSTOM_SOLUTION]: 'How to add a custom solution',
   [HelpArticle.UPDATING_MTO_STATUS]: 'Updating your MTO status',
-  [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO'
+  [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO',
+  [HelpArticle.LESSON_LEARNED_REPOSITORY]:
+    'Lessons Learned repository on SharePoint'
 };
 
 const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
@@ -2359,14 +2466,20 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
       'The ICIP Repository contains all OMB-approved model ICIPs and their respective amendments. This repository is intended to provide CMMI staff with the final documents for referencing, ICIP drafting, research projects, and information sharing and is not for public disclosure.'
   },
   [HelpArticle.FRAUD_AND_ABUSE_WAIVER]: {
-    title: 'Fraud and abuse waiver templates on SharePoint',
+    title:
+      'Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint',
     description:
-      'Fraud and Abuse waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. PPG has gathered a library of resources to support teams in this process, including primers, how-to guides, overviews, and more. '
+      'Waivers are complicated and involve working with colleagues in other parts as CMS and in other parts of HHS. Recent safe harbors and exceptions ensure that the needs of the Innovation Center are covered without the waiver team needing to write additional fraud and abuse waivers. PPG has gathered a library of resources to support teams in this process, including primers, how-to guides, overviews, and more.'
   },
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]: {
-    title: 'Quality Vertical health equity resources on SharePoint ',
+    title: 'Quality Vertical healthy living resources on SharePoint',
     description:
-      'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards, health equity index proof of concept memo, and more. Additional health equity resources can be found on the Strategy Refresh page.'
+      'Browse Quality Vertical’s healthy living resources, including supplemental guidance on stratification standards, index proof of concept memo, and more. Additional healthy living resources can be found on the Strategy Refresh page.'
+  },
+  [HelpArticle.LESSON_LEARNED_REPOSITORY]: {
+    title: 'Lessons Learned repository on SharePoint',
+    description:
+      'The CMMI Lessons Learned Repository allows the storing and retrieval of important lessons from projects around the center, enabling users to identify best practices to increase project team effectiveness and efficiency. This repository houses information for project teams to reference.'
   }
 };
 
@@ -2404,7 +2517,7 @@ const helpAndKnowledge = {
   viewAllRelated: 'View all help resources',
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
-    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your Model Plans.',
+    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.',
   viewAllButton: 'View all operational solutions',
   learnMore: 'Learn more',
   browseCategories: 'Browse solutions by category',
@@ -2412,6 +2525,7 @@ const helpAndKnowledge = {
   aboutSolution: 'About this solution',
   aboutSolutionAriaLabel: 'Click to learn more about this solution:',
   pageInfo: '{{-pageStart}} of {{-totalPages}} resources',
+  solutionsSuffix: 'solutions',
   resultsInfo:
     'Showing {{-resultsNum}} of {{-resultsMax}} operational solutions',
   queryResultsInfo:
@@ -2473,6 +2587,7 @@ const helpAndKnowledge = {
   externalResource: 'External resource',
   numResources: '{{count}} resource',
   numResources_other: '{{count}} resources',
+  resourcesSuffix: 'resources',
   viewOnSharePoint: 'View on SharePoint',
   sort: 'Sort',
   sortAsc: 'By title (A-Z)',

@@ -5,7 +5,7 @@ import { filterResourceArticles, handleSortOptions } from './index'; // Adjust t
 describe('filterResourceArticles', () => {
   it('filters articles based on the query string', () => {
     const result = filterResourceArticles(
-      'Quality Vertical health equity resources on SharePoint',
+      'Quality Vertical healthy living resources on SharePoint',
       helpAndKnowledgeArticles
     );
     expect(result).toHaveLength(1);

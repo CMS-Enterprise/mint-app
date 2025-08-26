@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { MtoCommonSolutionSubject } from 'gql/generated/graphql';
 
@@ -10,9 +10,19 @@ export default {
   component: CategoryCard,
   decorators: [
     Story => (
-      <MemoryRouter>
-        <Story />
-      </MemoryRouter>
+      <RouterProvider
+        router={createMemoryRouter(
+          [
+            {
+              path: '/',
+              element: <Story />
+            }
+          ],
+          {
+            initialEntries: ['/']
+          }
+        )}
+      />
     )
   ]
 } as Meta<typeof CategoryCard>;

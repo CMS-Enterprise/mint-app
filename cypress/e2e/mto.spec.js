@@ -225,7 +225,7 @@ describe('Model-to-Operations Matrix', () => {
       cy.contains('Add milestone').click({ force: true });
     });
 
-    cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
+    cy.get('[data-testid="toast-success"]').should('exist');
     cy.get('td').contains('Custom Milestone').should('exist');
   });
 
@@ -261,7 +261,7 @@ describe('Model-to-Operations Matrix', () => {
         .click({ force: true });
     });
 
-    cy.get('[data-testid="mandatory-fields-alert"]')
+    cy.get('[data-testid="toast-success"]')
       .should('exist')
       .contains('Your solution (Custom Solution) has been added.');
 
@@ -290,7 +290,7 @@ describe('Model-to-Operations Matrix', () => {
       .should('be.not.disabled')
       .click({ force: true });
 
-    cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
+    cy.get('[data-testid="toast-success"]').should('exist');
 
     cy.get('table').within(() => {
       cy.get('td').contains('Edited Custom Solution').should('exist');
@@ -313,7 +313,7 @@ describe('Model-to-Operations Matrix', () => {
       .should('be.not.disabled')
       .click({ force: true });
 
-    cy.get('[data-testid="mandatory-fields-alert"]').should('exist');
+    cy.get('[data-testid="toast-success"]').should('exist');
   });
 
   it('Add standard categories', () => {
@@ -324,7 +324,7 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.contains('Add template').click({ force: true });
 
-    cy.get('[data-testid="mandatory-fields-alert"]')
+    cy.get('[data-testid="toast-success"]')
       .should('exist')
       .contains('Your template (Standard categories) has been added.');
   });

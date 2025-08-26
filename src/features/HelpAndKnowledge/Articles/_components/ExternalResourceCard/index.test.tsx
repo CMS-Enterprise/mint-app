@@ -37,11 +37,13 @@ describe('ExternalResourceCard', () => {
     expect(screen.getByTestId('article-card')).toBeInTheDocument();
     expect(screen.getByText('External resource')).toBeInTheDocument();
     expect(
-      screen.getByText('Quality Vertical health equity resources on SharePoint')
+      screen.getByText(
+        'Quality Vertical healthy living resources on SharePoint'
+      )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Browse Quality Vertical’s health equity resources, including supplemental guidance on stratification standards ...'
+        'Browse Quality Vertical’s healthy living resources, including supplemental guidance on stratification standard ...'
       )
     ).toBeInTheDocument();
     expect(screen.getByText('View on SharePoint')).toBeInTheDocument();

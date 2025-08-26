@@ -67,13 +67,13 @@ exports[`StepsOverview > matches the snapshot 1`] = `
               class="padding-left-3 margin-y-0"
             >
               <li>
-                start a new Model Plan to analyze the operational and implementation needs of the model
+                add a new model and start filling out the Model Plan to analyze the operational and implementation needs of the model
               </li>
               <li>
                 upload and access documents related to your model request, like concept documents or policy papers
               </li>
               <li>
-                track the operational solutions the model will use and track its status through implementation
+                use the model-top-operations matrix (MTO) to track the IT solutions the model will use and track its status through implementation
               </li>
             </ul>
             <p
@@ -100,7 +100,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
         <p
           class="font-body-lg margin-y-0"
         >
-          Below is an overview of the process involved in creating your draft model plan.
+          Below is an overview of the process involved in using MINT to document information about your model.
         </p>
         <div
           class="desktop:grid-col-6 margin-top-105"
@@ -116,10 +116,10 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 class="usa-process-list__heading"
                 data-testid="processListHeading"
               >
-                Fill out the sections of the draft model plan form and document model requirements
+                Fill out the sections of the Model Plan form and document model requirements
               </h3>
               <p>
-                Tell the MINT Team about your model and collaborate with the rest of your team to draft model requirements around participants, population, operations, payment options, and more.
+                Tell the MINT Team about your model and collaborate with the rest of your team to draft model requirements around participants, beneficiaries, operations, payment options, and more.
               </p>
             </li>
             <li
@@ -132,7 +132,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 Upload any existing model documentation
               </h3>
               <p>
-                Add additional details to your Model Plan by uploading documents such as a concept paper, draft ICIP, or other related materials.
+                Add additional details about your model by uploading documents such as a concept paper, draft ICIP, or other related materials.
               </p>
             </li>
             <li
@@ -142,7 +142,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 class="usa-process-list__heading"
                 data-testid="processListHeading"
               >
-                Iterate on your draft model plan
+                Iterate on your Model Plan
               </h3>
               <p>
                 Work with the MINT Team and other administrative teams to iterate on model requirements.
@@ -155,10 +155,10 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 class="usa-process-list__heading"
                 data-testid="processListHeading"
               >
-                Track your operational solutions
+                Draft your MTO and track your IT solutions
               </h3>
               <p>
-                Work with your IT Lead or BSG to determine which solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.
+                Work with your IT Lead and/or BSG to draft your model-to-operations matrix (MTO), document model milestones and functions, and determine which solutions and IT systems your model will use for its implementation and operations. Then, use the MTO to track the progress of those milestones and the implementation status of those solutions to stay organized throughout the process.
               </p>
             </li>
             <li
