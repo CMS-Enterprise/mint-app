@@ -124,6 +124,12 @@ const notifications = {
         subHeading:
           'You will always receive basic notifications in-app, but may opt out of receiving them via email.'
       },
+      notificationAboutMyModels: {
+        heading: 'Notifications about my models',
+        subHeading:
+          'Regardless of your settings here, you will receive both email and in-app notifications for all models where you are listed as the Model Lead.',
+        info: 'You are listed as the Model Lead for {{count}} models.'
+      },
       additionalNotifications: {
         heading: 'Additional notifications'
       }
@@ -135,6 +141,7 @@ const notifications = {
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me',
+      incorrectModelStatus: 'When MINT detects an incorrect model status',
       newModelPlan: 'When a new Model Plan is created',
       datesChanged: 'When model dates change',
       dataExchangeApproachMarkedComplete:
