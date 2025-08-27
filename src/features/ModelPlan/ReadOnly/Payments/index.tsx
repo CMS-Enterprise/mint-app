@@ -35,7 +35,7 @@ const ReadOnlyPayments = ({
   });
 
   if ((!loading && error) || (!loading && !data)) {
-    return <NotFoundPartial />;
+    return <NotFoundPartial componentNotFound />;
   }
 
   const allPaymentData = (data?.modelPlan.payments ||

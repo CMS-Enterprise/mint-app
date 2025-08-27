@@ -6,6 +6,7 @@ import {
   RouterProvider,
   useParams
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Analytics from 'features/Analytics';
@@ -121,6 +122,19 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
       </button>
 
       {children}
+
+      <ToastContainer
+        position="top-center"
+        className="width-full"
+        autoClose={false}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        icon={false}
+      />
     </>
   );
 };

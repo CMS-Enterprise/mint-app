@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -21,12 +21,13 @@ import {
 } from 'gql/generated/graphql';
 import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
 
-import Alert from 'components/Alert';
+// import Alert from 'components/Alert';
 import BooleanRadio from 'components/BooleanRadioForm';
 import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
 
@@ -35,7 +36,7 @@ const ReportAProblem = () => {
 
   const navigate = useNavigate();
 
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  const { setErrorMeta } = useErrorMessage();
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
@@ -48,6 +49,10 @@ const ReportAProblem = () => {
   );
 
   const handleFormSubmit = (formikValues: ReportAProblemInput) => {
+    setErrorMeta({
+      overrideMessage: t('errorFeedback')
+    });
+
     update({
       variables: {
         input: formikValues
@@ -59,7 +64,6 @@ const ReportAProblem = () => {
         }
       })
       .catch(errors => {
-        setMutationError(true);
         window.scrollTo(0, 0);
       });
   };
@@ -77,12 +81,6 @@ const ReportAProblem = () => {
     <MainContent>
       <GridContainer>
         <HelpBreadcrumb newTabOnly />
-
-        {mutationError && (
-          <Alert type="error" slim className="margin-top-4">
-            {t('errorFeedback')}
-          </Alert>
-        )}
 
         <PageHeading className="margin-bottom-2">
           {t('reportHeading')}
