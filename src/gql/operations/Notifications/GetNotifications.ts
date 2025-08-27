@@ -101,6 +101,10 @@ export default gql(/* GraphQL */ `
                 version
                 type
                 currentStatus
+                phaseSuggestion {
+                  phase
+                  suggestedStatuses
+                }
                 modelPlanName
                 modelPlanID
                 modelPlan {

@@ -27,11 +27,12 @@ const notifications = {
           hide: 'Hide changes'
         }
       },
-      INCORRECT_MODEL_STATUS: {},
-      text: ' suggests that you update the model status for {{modelName}}.',
-      cta: {
-        view: 'View suggested status',
-        hide: 'Hide suggested status'
+      INCORRECT_MODEL_STATUS: {
+        text: ' suggests that you update the model status for {{modelName}}.',
+        cta: {
+          view: 'View suggested status',
+          hide: 'Hide suggested status'
+        }
       },
       MODEL_PLAN_SHARED: {
         text: ' shared {{-modelName}} with you.',
@@ -118,8 +119,6 @@ const notifications = {
     },
     incorrectModelStatus: {
       heading: "It's time to update the model status for {{-modelName}}",
-      subheading:
-        "Your model's anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.",
       currentStatus: '<bold>Current status:</bold> {{-currentStatus}}',
       newStatus: '<bold>New status:</bold> {{-newStatus}}',
       cta: 'Yes, update my model’s status',
