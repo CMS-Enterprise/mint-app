@@ -121,6 +121,19 @@ const IndividualNotification = ({
   // Mint System Account -> MINT
   const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
 
+  const getExpandButtonStatus = () => {
+    if (isDailyDigest(metaData)) {
+      return isDailyDigestExpanded;
+    }
+    if (isDatesChanged(metaData)) {
+      return isDatesChangedExpanded;
+    }
+    if (isIncorrectModelStatus(metaData)) {
+      return isIncorrectModelStatusExpanded;
+    }
+    return false;
+  };
+
   return (
     <Grid row data-testid="individual-notification">
       <Grid desktop={{ col: 12 }} className="position-relative">
@@ -176,7 +189,7 @@ const IndividualNotification = ({
                 >
                   <ActivityCTA
                     data={metaData}
-                    isExpanded={isDailyDigestExpanded}
+                    isExpanded={getExpandButtonStatus()}
                   />
                 </Button>
               </div>
