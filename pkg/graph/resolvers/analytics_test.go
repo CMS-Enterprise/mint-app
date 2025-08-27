@@ -48,11 +48,11 @@ func TestAnalyticsReturnsExpectedDataStructure(t *testing.T) {
 
 	expectedModelsByStatus := []*models.ModelsByStatusAnalytics{
 		{
-			Status:         (*string)(&status1),
+			Status:         status1,
 			NumberOfModels: &numberOfModels1,
 		},
 		{
-			Status:         (*string)(&status2),
+			Status:         status2,
 			NumberOfModels: &numberOfModels2,
 		},
 	}
@@ -114,7 +114,7 @@ func TestAnalyticsReturnsExpectedDataStructure(t *testing.T) {
 	// Verify specific data values
 	assert.Equal(t, "Test Model 1", *expectedSummary.ChangesPerModel[0].ModelName)
 	assert.Equal(t, 10, *expectedSummary.ChangesPerModel[0].NumberOfChanges)
-	assert.Equal(t, "ACTIVE", *expectedSummary.ModelsByStatus[0].Status)
+	assert.Equal(t, models.ModelStatusActive, expectedSummary.ModelsByStatus[0].Status)
 	assert.Equal(t, 25, *expectedSummary.ModelsByStatus[0].NumberOfModels)
 	assert.Equal(t, 40, *expectedSummary.TotalNumberOfModels.TotalNumberOfModels)
 }

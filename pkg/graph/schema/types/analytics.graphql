@@ -27,7 +27,7 @@ type ModelChangesOtherDataAnalytics {
 }
 
 type ModelsByStatusAnalytics {
-  status: String!
+  status: ModelStatus!
   numberOfModels: Int!
 }
 

@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Analytics > matches the snapshot when loading 1`] = `
+<DocumentFragment>
+  <div
+    class="margin-y-10"
+    data-testid="page-loading"
+  >
+    <div
+      class="text-center"
+    >
+      <span
+        aria-busy="true"
+        aria-valuetext="pageLoading"
+        class="mint-spinner mint-spinner--xl"
+        data-testid="spinner"
+        role="progressbar"
+      />
+    </div>
+    <h1
+      class="margin-top-6 text-center"
+    >
+      pageLoading
+    </h1>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Analytics > matches the snapshot when no analytics data is available 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      No analytics data available
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`Analytics > matches the snapshot when there is an error 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      No analytics data available
+    </div>
+  </main>
+</DocumentFragment>
+`;

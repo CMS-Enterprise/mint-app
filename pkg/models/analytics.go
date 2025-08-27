@@ -36,8 +36,8 @@ type ModelCountAnalytics struct {
 
 // ModelsByStatusAnalytics is the analytics data for models by status
 type ModelsByStatusAnalytics struct {
-	Status         *string `json:"status" db:"status"`
-	NumberOfModels *int    `json:"numberOfModels" db:"number_of_models"`
+	Status         ModelStatus `json:"status" db:"status"`
+	NumberOfModels *int        `json:"numberOfModels" db:"number_of_models"`
 }
 
 // ModelFollowersAnalytics is the analytics data for the number of followers per model

@@ -1499,7 +1499,7 @@ export enum ModelViewFilter {
 export type ModelsByStatusAnalytics = {
   __typename: 'ModelsByStatusAnalytics';
   numberOfModels: Scalars['Int']['output'];
-  status: Scalars['String']['output'];
+  status: ModelStatus;
 };
 
 export type ModelsToOperationMatrix = {
@@ -5124,7 +5124,7 @@ export enum YesNoType {
 export type GetAnalyticsSummaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAnalyticsSummaryQuery = { __typename: 'Query', analytics: { __typename: 'AnalyticsSummary', changesPerModel: Array<{ __typename: 'ModelChangesAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID }>, changesPerModelBySection: Array<{ __typename: 'ModelChangesBySectionAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, tableName: string }>, changesPerModelOtherData: Array<{ __typename: 'ModelChangesOtherDataAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, section: string }>, modelsByStatus: Array<{ __typename: 'ModelsByStatusAnalytics', numberOfModels: number, status: string }>, numberOfFollowersPerModel: Array<{ __typename: 'ModelFollowersAnalytics', modelName: string, modelPlanID: UUID, numberOfFollowers: number }>, totalNumberOfModels?: { __typename: 'ModelCountAnalytics', totalNumberOfModels: number } | null } };
+export type GetAnalyticsSummaryQuery = { __typename: 'Query', analytics: { __typename: 'AnalyticsSummary', changesPerModel: Array<{ __typename: 'ModelChangesAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID }>, changesPerModelBySection: Array<{ __typename: 'ModelChangesBySectionAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, tableName: string }>, changesPerModelOtherData: Array<{ __typename: 'ModelChangesOtherDataAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, section: string }>, modelsByStatus: Array<{ __typename: 'ModelsByStatusAnalytics', numberOfModels: number, status: ModelStatus }>, numberOfFollowersPerModel: Array<{ __typename: 'ModelFollowersAnalytics', modelName: string, modelPlanID: UUID, numberOfFollowers: number }>, totalNumberOfModels?: { __typename: 'ModelCountAnalytics', totalNumberOfModels: number } | null } };
 
 export type GetAllBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
