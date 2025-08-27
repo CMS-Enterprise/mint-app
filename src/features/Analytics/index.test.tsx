@@ -4,8 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetAnalyticsSummaryDocument,
   GetAnalyticsSummaryQuery,
-  ModelStatus,
-  useGetAnalyticsSummaryQuery
+  ModelStatus
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { expect, it } from 'vitest';
@@ -13,6 +12,11 @@ import { expect, it } from 'vitest';
 import Analytics from '.';
 
 type GetAnalyticsSummaryType = GetAnalyticsSummaryQuery;
+
+// Mock dependencies
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: vi.fn()
+}));
 
 // Mock data
 const mockAnalyticsData: GetAnalyticsSummaryType = {
@@ -96,6 +100,10 @@ const mocks = [
 ];
 
 describe('Analytics', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('matches the snapshot when analytics feature is enabled and data is loaded', async () => {
     (useFlags as any).mockReturnValue({ mintAnalyticsEnabled: true });
 
@@ -106,7 +114,7 @@ describe('Analytics', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Analytics Dashboard')).toBeInTheDocument();
+      expect(screen.getByText('Analytics')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

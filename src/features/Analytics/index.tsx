@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonGroup, GridContainer } from '@trussworks/react-uswds';
 import downloadAnalytics, {
-  analyticsSumamryConfig,
+  analyticsSummaryConfig,
   AnalyticsSummaryKey
 } from 'features/Analytics/util';
 import NotFound from 'features/NotFound';
@@ -62,10 +62,11 @@ const Analytics = () => {
         </Button>
 
         <ButtonGroup type="segmented" className="margin-bottom-6">
-          {Object.keys(analyticsSumamryConfig).map(key => (
+          {Object.keys(analyticsSummaryConfig).map(key => (
             <Button
               type="button"
               outline={selectedChart === key}
+              key={`${key}-button`}
               onClick={() => {
                 setSelectedChart(key);
               }}
@@ -89,7 +90,7 @@ const Analytics = () => {
 
           <XAxis
             dataKey={
-              analyticsSumamryConfig[selectedChart as AnalyticsSummaryKey]
+              analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
                 .xAxisDataKey
             }
             angle={-45}
@@ -104,7 +105,7 @@ const Analytics = () => {
 
           <Bar
             dataKey={
-              analyticsSumamryConfig[selectedChart as AnalyticsSummaryKey]
+              analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
                 .yAxisDataKey
             }
             fill="#008480"

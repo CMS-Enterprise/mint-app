@@ -8,7 +8,7 @@ import { getKeys } from 'types/translation';
 
 export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
 
-export const analyticsSumamryConfig: Record<
+export const analyticsSummaryConfig: Record<
   AnalyticsSummaryKey,
   {
     xAxisDataKey: string;
@@ -86,9 +86,11 @@ const downloadAnalytics = (
 function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
   const columnWidths: { wch: number }[] = [];
 
+  const worksheetKeys = Object.keys(worksheet);
+
   // Get all column keys
   const columns = new Set<string>();
-  Object.keys(worksheet).forEach(key => {
+  worksheetKeys.forEach(key => {
     if (key !== '!ref') {
       const colKey = key.replace(/\d+$/, '');
       columns.add(colKey);
@@ -106,7 +108,7 @@ function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
     }
 
     // Then check all data rows
-    Object.keys(worksheet).forEach(key => {
+    worksheetKeys.forEach(key => {
       if (key.startsWith(colKey) && key !== headerKey) {
         const cell = worksheet[key];
         if (cell && cell.v) {
