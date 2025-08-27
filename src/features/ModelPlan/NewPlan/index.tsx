@@ -111,7 +111,7 @@ const NewPlan = () => {
                       error={!!flatErrors.modelName}
                     >
                       <Label htmlFor="new-plan-model-name">
-                        {modelPlanMiscT('modeName')}
+                        {modelPlanMiscT('modelName')}
                       </Label>
 
                       <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>

@@ -8,7 +8,6 @@ import {
   Icon,
   SummaryBox
 } from '@trussworks/react-uswds';
-import classnames from 'classnames';
 import ModelPlansTable from 'features/Home/Table';
 import {
   ModelPlanFilter,
@@ -265,9 +264,7 @@ const Home = () => {
                   </p>
 
                   <UswdsReactLink
-                    className={classnames('usa-button', {
-                      'usa-button--outline': isAssessment(userGroups, flags)
-                    })}
+                    className="usa-button"
                     variant="unstyled"
                     to="/models/steps-overview"
                   >

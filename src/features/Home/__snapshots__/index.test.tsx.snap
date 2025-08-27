@@ -119,7 +119,7 @@ exports[`The home page > matches setting snapshot 1`] = `
               <p
                 class="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3"
               >
-                The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.
+                The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model.
               </p>
             </div>
           </div>
@@ -183,7 +183,7 @@ exports[`The home page > matches setting snapshot 1`] = `
               data-discover="true"
               href="/models/steps-overview"
             >
-              Start a new Model Plan
+              Add a new model to MINT
             </a>
           </div>
         </div>
