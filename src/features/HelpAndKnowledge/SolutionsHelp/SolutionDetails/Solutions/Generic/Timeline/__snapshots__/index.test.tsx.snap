@@ -1839,9 +1839,17 @@ exports[`Generic Timeline Components > matches the snapshot > Overlaps Operation
           class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
           data-testid="processListHeading"
         >
-          Contact the Overlaps Operations WorkGroup
+          Contact the Overlaps Operations Workgroup
         </h3>
-        Reach out to the &lt;link1&gt;Workgroup Lead&lt;/link1&gt; to get on one of the Overlaps Operations Workgroups monthly meetings to walk through the model’s Overlaps Policies with the other model teams.
+        Reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Workgroup Lead
+        </button>
+         to get on one of the Overlaps Operations Workgroups monthly meetings to walk through the model’s Overlaps Policies with the other model teams.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
