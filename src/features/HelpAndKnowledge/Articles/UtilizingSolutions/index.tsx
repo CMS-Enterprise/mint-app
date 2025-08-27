@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
+  Icon,
   ProcessList,
   ProcessListHeading,
   ProcessListItem,
@@ -12,10 +13,15 @@ import {
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import useHelpSolution from 'hooks/useHelpSolutions';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
@@ -30,9 +36,10 @@ type ListItem = {
 export const UtilizingSolutions = () => {
   const { t } = useTranslation('utilizingSolutions');
 
-  const summaryBoxConfig = tArray<string>(
-    'utilizingSolutions:summaryBox.items'
-  );
+  const summaryBoxConfig = tArray<{
+    copy: string;
+    route?: string;
+  }>('utilizingSolutions:summaryBox.items');
 
   const timingConfig = tArray<ListItem>('utilizingSolutions:timingSteps.items');
 
@@ -40,8 +47,31 @@ export const UtilizingSolutions = () => {
     'utilizingSolutions:activitySteps.items'
   );
 
+  const { helpSolutions, loading } = useHelpSolution();
+
+  const { prevPathname, selectedSolution: solution } = useModalSolutionState();
+
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.key || null,
+    helpSolutions,
+    true
+  );
+
+  if (loading) {
+    return <PageLoading />;
+  }
+
   return (
     <>
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute="/help-and-knowledge/utilizing-solutions"
+        />
+      )}
+
       <MainContent>
         <GridContainer>
           <Grid desktop={{ col: 12 }}>
@@ -66,8 +96,22 @@ export const UtilizingSolutions = () => {
               </p>
 
               <ol className="padding-left-3 margin-y-0">
-                {summaryBoxConfig.map(item => (
-                  <li key={item}>{item}</li>
+                {summaryBoxConfig.map((item, index) => (
+                  <li key={item.copy}>
+                    <Trans
+                      i18nKey={`utilizingSolutions:summaryBox.items.${index}.copy`}
+                      components={{
+                        ml: (
+                          <UswdsReactLink
+                            className="usa-button usa-button--unstyled"
+                            to={`?solution=${item.route}&section=about`}
+                          >
+                            {t(item.copy)}
+                          </UswdsReactLink>
+                        )
+                      }}
+                    />
+                  </li>
                 ))}
               </ol>
             </SummaryBox>
@@ -77,7 +121,23 @@ export const UtilizingSolutions = () => {
             </h2>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('timingSteps.description')}
+              <Trans
+                i18nKey="utilizingSolutions:timingSteps.description"
+                components={{
+                  link1: (
+                    <UswdsReactLink
+                      to="/help-and-knowledge/creating-mto-matrix"
+                      className="margin-top-2 display-block display-flex flex-align-center text-bold"
+                    />
+                  ),
+                  iconForward: (
+                    <Icon.ArrowForward
+                      className="margin-left-1 text-bold"
+                      aria-label="forward"
+                    />
+                  )
+                }}
+              />
             </p>
 
             <h3 className="margin-top-3 margin-bottom-5">
@@ -131,7 +191,29 @@ export const UtilizingSolutions = () => {
             </h2>
 
             <p className="margin-y-0 line-height-sans-5">
-              {t('activitySteps.description')}
+              <Trans
+                i18nKey="utilizingSolutions:activitySteps.description"
+                components={{
+                  link1: (
+                    <UswdsReactLink
+                      to="/help-and-knowledge/creating-mto-matrix"
+                      className="margin-top-2 display-block display-flex flex-align-center text-bold"
+                    />
+                  ),
+                  link2: (
+                    <UswdsReactLink
+                      to="/help-and-knowledge/operational-solutions?page=1"
+                      className="margin-top-2 display-block display-flex flex-align-center text-bold"
+                    />
+                  ),
+                  iconForward: (
+                    <Icon.ArrowForward
+                      className="margin-left-1 text-bold"
+                      aria-label="forward"
+                    />
+                  )
+                }}
+              />
             </p>
 
             <h3 className="margin-top-3 margin-bottom-6">

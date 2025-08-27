@@ -16,6 +16,7 @@ import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/Soluti
 
 import ExcelFile from 'assets/files/high-level-project-plan.xlsx';
 import ExternalLink from 'components/ExternalLink';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -31,6 +32,9 @@ import Table from './table';
 const HighLevelProjectPlan = () => {
   const { t: highLevelT } = useTranslation('highLevelProjectPlans');
   const { t: generalT } = useTranslation('general');
+  const cmmiModelList = tArray<{ copy: string; href: string }>(
+    'highLevelProjectPlans:accordionItems:copy:cmmiModel'
+  );
 
   const { helpSolutions, loading } = useHelpSolution();
 
@@ -52,9 +56,25 @@ const HighLevelProjectPlan = () => {
       title: item,
       content: (
         <>
+          {item === 'CMMI Model Operational Planning' &&
+            cmmiModelList.map(linkItem => (
+              <UswdsReactLink
+                aria-label="Redirect to using the solution library article"
+                to={linkItem.href}
+                className="display-block margin-y-05"
+              >
+                {highLevelT(linkItem.copy)}
+                <Icon.ArrowForward
+                  className="top-3px margin-left-05"
+                  aria-label="forward"
+                />
+              </UswdsReactLink>
+            ))}
           {item === 'CMMI Internal Clearance Process' && (
-            <ExternalLink href={highLevelT('accordionItems.copy.cmmi.href')}>
-              {highLevelT('accordionItems.copy.cmmi.copy')}
+            <ExternalLink
+              href={highLevelT('accordionItems.copy.cmmiInternal.href')}
+            >
+              {highLevelT('accordionItems.copy.cmmiInternal.copy')}
             </ExternalLink>
           )}
           {item === 'Clearance of Documents' && (

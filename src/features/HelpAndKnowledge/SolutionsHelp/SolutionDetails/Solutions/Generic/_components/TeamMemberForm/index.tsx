@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Alert,
   Button,
   Fieldset,
   Form,
@@ -20,9 +19,11 @@ import {
 } from 'gql/generated/graphql';
 import GetMTOSolutionContacts from 'gql/operations/ModelToOperations/GetMTOSolutionContacts';
 
+import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import OktaUserSelect from 'components/OktaUserSelect';
-import useMessage from 'hooks/useMessage';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import dirtyInput from 'utils/formUtil';
 
@@ -70,7 +71,7 @@ const TeamMemberForm = ({
 
   const { selectedSolution } = useModalSolutionState();
 
-  const { showMessage } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const methods = useForm<TeamMemberFormValues>({
     defaultValues: {
@@ -107,10 +108,6 @@ const TeamMemberForm = ({
     ]
   });
 
-  const [mutationError, setMutationError] = useState<
-    'duplicate' | 'generic' | null
-  >(null);
-
   const isAddMode = mode === 'addTeamMember';
   const isEditMode = mode === 'editTeamMember';
 
@@ -123,11 +120,14 @@ const TeamMemberForm = ({
 
   const onSubmit = (formData: TeamMemberFormValues) => {
     if (!selectedSolution) {
-      setMutationError('generic');
       return;
     }
 
     const { role, isPrimary, receiveEmails } = dirtyInput(teamMember, formData);
+
+    setErrorMeta({
+      overrideMessage: miscT(`${mode}.error`)
+    });
 
     const promise = isAddMode
       ? create({
@@ -149,29 +149,23 @@ const TeamMemberForm = ({
             }
           }
         });
-    promise
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <Trans
-              i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
-              values={{
-                contact: formData.name || teamMember.name
-              }}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-            />
-          );
-          closeModal();
-        }
-      })
-      .catch(error => {
-        const duplicateError = error.message.includes(
-          'uniq_user_id_per_solution_key'
+    promise.then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonSolutionContactMisc:${mode}.success`}
+            values={{
+              contact: formData.name || teamMember.name
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
         );
-        setMutationError(duplicateError ? 'duplicate' : 'generic');
-      });
+
+        closeModal();
+      }
+    });
   };
 
   return (
@@ -182,28 +176,6 @@ const TeamMemberForm = ({
         id="team-member-form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {mutationError !== null && (
-          <Alert
-            type="error"
-            slim
-            headingLevel="h1"
-            className="margin-bottom-2"
-          >
-            {mutationError === 'generic' ? (
-              miscT(`${mode}.error`)
-            ) : (
-              <Trans
-                i18nKey="mtoCommonSolutionContactMisc:duplicateError"
-                values={{
-                  contact: methods.getValues('name')
-                }}
-                components={{
-                  bold: <span className="text-bold" />
-                }}
-              />
-            )}
-          </Alert>
-        )}
         <Fieldset disabled={!selectedSolution} style={{ minWidth: '100%' }}>
           <Controller
             name="userName"

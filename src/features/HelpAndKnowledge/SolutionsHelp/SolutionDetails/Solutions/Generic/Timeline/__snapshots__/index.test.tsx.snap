@@ -181,7 +181,15 @@ exports[`Generic Timeline Components > matches the snapshot > Automated Plan Pay
         >
           Reach out to Project Lead
         </h3>
-        Contact Aliza Kim and Ed Howard to start a discussion about your model concept.
+        Contact the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          APPS Project Leads
+        </button>
+         to start a discussion about your model concept.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -285,7 +293,15 @@ exports[`Generic Timeline Components > matches the snapshot > CMMI Data Aggregat
         >
           Reach out to CDAC team
         </h3>
-        If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to Megha Mirchandani and William Gordon to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. 
+        If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          CDAC points of contact
+        </button>
+         to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. 
       </li>
     </ol>
   </div>
@@ -438,7 +454,15 @@ exports[`Generic Timeline Components > matches the snapshot > Chronic Conditions
         >
           Complete CCW VRDC Access Request worksheet
         </h3>
-        Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (&lt;email&gt;CCWAccess@cms.hhs.gov&lt;/email&gt;) and Velda.
+        Contact the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          CMMI Government Task Lead
+        </button>
+         to request the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (&lt;email&gt;CCWAccess@cms.hhs.gov&lt;/email&gt;) and the CMMI Government Task Lead.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -628,7 +652,15 @@ exports[`Generic Timeline Components > matches the snapshot > Expanded Data Feed
         >
           Reach out to eDFR 
         </h3>
-        Once a model team knows they would like to use eDFR, they should reach out to Zach Nall.
+        Once a model team knows they would like to use eDFR, they should reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          eDFR points of contact
+        </button>
+        .
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -756,9 +788,17 @@ exports[`Generic Timeline Components > matches the snapshot > GrantSolutions 1`]
           class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
           data-testid="processListHeading"
         >
-          Contact Mary Greene or Michelle Brown
+          Contact the GrantSolutions team
         </h3>
-        Reach out to Mary or Michelle during the development of a grant project.
+        Reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          GrantSolutions points of contact
+        </button>
+         during the development of a grant project.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -796,7 +836,15 @@ exports[`Generic Timeline Components > matches the snapshot > Health Data Report
         >
           Reach out to Product Owner
         </h3>
-        If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Curtis Naumann. 
+        If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          the HDR Product Owner
+        </button>
+        .
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -872,11 +920,22 @@ exports[`Generic Timeline Components > matches the snapshot > Healthcare Integra
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
     <p>
-      Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at &lt;email&gt;donna.schmidt@cms.hhs.gov&lt;/email&gt; if you have questions.
+      Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact the &lt;link1&gt;HIGLAS&lt;/link1&gt;, &lt;link2&gt;IPC&lt;/link2&gt;, and/or &lt;link3&gt;Shared Systems&lt;/link3&gt; points of contact if you have questions.
     </p>
     <ol
       class="usa-process-list padding-top-1"
-    />
+    >
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          HIGLAS
+        </h3>
+      </li>
+    </ol>
   </div>
 </DocumentFragment>
 `;
@@ -1038,7 +1097,15 @@ exports[`Generic Timeline Components > matches the snapshot > Innovation Support
         >
           Contact the ISP Team
         </h3>
-        Contact Joe Pusateri if you’re interested in using ISP or want to learn more.
+        Contact the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          ISP team
+        </button>
+         if you’re interested in using ISP or want to learn more.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1178,7 +1245,15 @@ exports[`Generic Timeline Components > matches the snapshot > Legal Vertical 1`]
         >
           Reach out to Legal Vertical
         </h3>
-        When model teams have questions or when they start developing their ICIP, they should contact Megan Hyde or Erin Hagenbrok.
+        When model teams have questions or when they start developing their ICIP, they should contact the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Legal Vertical co-team leads
+        </button>
+        .
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1189,7 +1264,15 @@ exports[`Generic Timeline Components > matches the snapshot > Legal Vertical 1`]
         >
           Legal Vertical member assigned
         </h3>
-        Model team management should reach out to Ann Vrabel and Melanie Dang to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.
+        Model team management should reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Division Directors
+        </button>
+         to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1238,7 +1321,15 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
         >
           CMMI/BSG will reach out
         </h3>
-        When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Sara Fontaine.
+        When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          CMMI/BSG point of contact
+        </button>
+        .
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1307,7 +1398,7 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
         >
           Share ICD
         </h3>
-        CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
+        CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. The CMMI/BSG team can help answer any questions that model teams and their implementation contractors have about MDM.
 
 
         <span
@@ -1359,7 +1450,15 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
         >
           CMMI/BSG will reach out
         </h3>
-        When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Sara Fontaine.
+        When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          CMMI/BSG point of contact
+        </button>
+        .
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1428,7 +1527,15 @@ exports[`Generic Timeline Components > matches the snapshot > Master Data Manage
         >
           Share ICD
         </h3>
-        CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
+        CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. The 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          CMMI/BSG team
+        </button>
+         can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
 
 
         <span
@@ -1480,7 +1587,15 @@ exports[`Generic Timeline Components > matches the snapshot > Measure and Instru
         >
           Reach out to Quality Vertical
         </h3>
-        Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. 
+        Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Quality Vertical Program Analyst
+        </button>
+        , who is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. 
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1491,7 +1606,7 @@ exports[`Generic Timeline Components > matches the snapshot > Measure and Instru
         >
           COR meets with the model team
         </h3>
-        Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). 
+        Once model teams receive approval from the Program Analyst to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, and the CMMI MIDS Quality Subject Matter Expert (QSME) to discuss their quality measure needs. These points of contact will guide the model teams as they prepare justification to present their request to the Front Office (FO). 
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1589,7 +1704,15 @@ exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = 
         >
           Reach out to the Product Owners
         </h3>
-        If you're interested in using Model Space or want to learn more about the system, please get in touch with Product Owners Zach Nall and Curtis Naumann.
+        If you're interested in using Model Space or want to learn more about the system, please get in touch with 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Model Space Product Owners
+        </button>
+        .
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1674,7 +1797,15 @@ exports[`Generic Timeline Components > matches the snapshot > National Committee
         >
           Contact NCQA point of contact
         </h3>
-        Reach out to the NCQA primary point of contact to get started.
+        Reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          NCQA primary point of contact
+        </button>
+         to get started.
       </li>
     </ol>
   </div>
@@ -1780,7 +1911,15 @@ exports[`Generic Timeline Components > matches the snapshot > Quality Vertical 1
         >
           Reach out to Quality Vertical
         </h3>
-        Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.
+        Early in modal development, model teams should reach out to the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Quality Vertical Lead
+        </button>
+        . The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1851,7 +1990,7 @@ exports[`Generic Timeline Components > matches the snapshot > Research, Measurem
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
     <p>
-      Model teams should follow the &lt;link1&gt;Procurement Administrative Lead Time (PALT)&lt;/link1&gt; standards to determine when to being working with RMADA.
+      Model teams should follow the &lt;link1&gt;Procurement Administrative Lead Time (PALT)&lt;/link1&gt; standards to determine when to begin working with RMADA.
     </p>
     <ol
       class="usa-process-list padding-top-1"
@@ -2056,7 +2195,15 @@ exports[`Generic Timeline Components > matches the snapshot > Shared Systems 1`]
         >
           Reach out to Donna Schmidt
         </h3>
-        Early in the process, contact Donna Schmidt to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.
+        Early in the process, contact the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Shared Systems points of contact
+        </button>
+         to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.
       </li>
       <li
         class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2067,7 +2214,7 @@ exports[`Generic Timeline Components > matches the snapshot > Shared Systems 1`]
         >
           Draft a Change Request (CR)
         </h3>
-        Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
+        The team will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
 
 &lt;link1&gt;Go to Fee For Service Change Request Resource Center&lt;/link1&gt;
 

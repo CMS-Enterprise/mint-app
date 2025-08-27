@@ -127,8 +127,7 @@ export const mtoCommonSolutionContactMisc = {
     title: 'Add a team member',
     cta: 'Add team member',
     success: 'You added <bold>{{-contact}}</bold> as a point of contact.',
-    error:
-      'There was an issue adding this point of contact. Please try again, and if the problem persists, try again later.'
+    error: 'There was an issue adding this point of contact.'
   },
   editTeamMember: {
     title: 'Edit a team member',
@@ -137,15 +136,13 @@ export const mtoCommonSolutionContactMisc = {
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
     success:
       'You updated point of contact information for <bold>{{-contact}}</bold>.',
-    error:
-      'There was an issue editing this point of contact. Please try again, and if the problem persists, try again later.'
+    error: 'There was an issue editing this point of contact.'
   },
   addTeamMailbox: {
     title: 'Add a team mailbox',
     cta: 'Add team mailbox',
     success: 'You added <bold>{{-contact}}</bold> as a point of contact.',
-    error:
-      'There was an issue adding this team mailbox. Please try again, and if the problem persists, try again later.'
+    error: 'There was an issue adding this team mailbox.'
   },
   editTeamMailbox: {
     title: 'Edit a team mailbox',
@@ -154,16 +151,14 @@ export const mtoCommonSolutionContactMisc = {
       'If you check this box, it will replace any existing primary point of contact, but will not remove the existing contact from the overall list. If this is already checked, you must designate another primary contact in order to remove this contact’s primary status.',
     success:
       'You updated point of contact information for <bold>{{-contact}}</bold>.',
-    error:
-      'There was an issue edditing this team mailbox. Please try again, and if the problem persists, try again later.'
+    error: 'There was an issue edditing this team mailbox.'
   },
   removePointOfContact: {
     title: 'Are you sure you want to remove this point of contact?',
     text: '<bold>Point of contact to be removed:</bold> {{-contact}}',
     cta: 'Remove point of contact',
     success: 'You removed <bold>{{-contact}}</bold> as a point of contact.',
-    error:
-      'There was an issue removing this point of contact. Please try again, and if the problem persists, try again later.'
+    error: 'There was an issue removing this point of contact.'
   },
   allFieldsRequired:
     'Fields marked with an asterisk ( <s>*</s> ) are required.',

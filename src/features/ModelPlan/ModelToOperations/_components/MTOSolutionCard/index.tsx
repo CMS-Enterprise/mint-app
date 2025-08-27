@@ -16,7 +16,6 @@ import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutions
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import useMessage from 'hooks/useMessage';
 
 import { SolutionCardType } from '../../SolutionLibrary';
 import AddToExistingMilestoneForm from '../AddToExistingMilestoneForm';
@@ -29,7 +28,6 @@ const MTOSolutionCard = ({
   solution: SolutionCardType;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const { errorMessageInModal, clearMessage } = useMessage();
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -50,7 +48,6 @@ const MTOSolutionCard = ({
         closeModal={() => {
           params.delete('add-solution', solution.key);
           navigate({ search: params.toString() }, { replace: true });
-          clearMessage();
           setIsModalOpen(false);
         }}
         fixed
@@ -66,13 +63,10 @@ const MTOSolutionCard = ({
           </PageHeading>
         </div>
 
-        {errorMessageInModal}
-
         <AddToExistingMilestoneForm
           closeModal={() => {
             params.delete('add-solution', solution.key);
             navigate({ search: params.toString() }, { replace: true });
-            clearMessage();
             setIsModalOpen(false);
           }}
           solutionName={mappedSolution?.name}
@@ -121,7 +115,6 @@ const MTOSolutionCard = ({
               onClick={() => {
                 params.set('add-solution', solution.key);
                 navigate({ search: params.toString() }, { replace: true });
-                clearMessage();
                 setIsModalOpen(true);
               }}
             >

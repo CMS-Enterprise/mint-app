@@ -79,7 +79,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
                 Model design and solution design
               </h3>
               <p>
-                This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
+                This phase kicks off work within MINT; assembles the team; and identifies all of the IT systems, data, and operational contracts needed to support the model.
               </p>
               <p
                 class="margin-bottom-0"
@@ -94,7 +94,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
                   Assemble the IT and operational team
                 </li>
                 <li>
-                  Identify the solutions for the model’s operational needs
+                  Start drafting a model-to-operations matrix (MTO) and identify the solutions and IT systems the team will leverage for the model’s operational needs
                 </li>
               </ul>
               <div
@@ -145,7 +145,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
                   Initiate work with each operational solution team
                 </li>
                 <li>
-                  Track work up through implementation
+                  Use the MTO to track work up through implementation
                 </li>
               </ul>
               <div
@@ -235,7 +235,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
+                This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, operational solutions, and contracts needed to support the model.
               </p>
             </div>
             <div
@@ -287,7 +287,7 @@ exports[`PhasesInvolved > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).
               </p>
             </div>
             <div

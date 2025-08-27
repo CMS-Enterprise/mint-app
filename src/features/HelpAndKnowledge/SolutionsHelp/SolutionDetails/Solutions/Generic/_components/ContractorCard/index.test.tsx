@@ -19,11 +19,11 @@ const contractor: SolutionContractorType = {
 };
 
 describe('ContractorCard Component', () => {
-  it('should matches snapshot', () => {
+  it('should matches snapshot', async () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/help-and-knowledge/operational-solutions/ ',
+          path: '/help-and-knowledge/operational-solutions/solutions',
           element: (
             <MessageProvider>
               <ContractorCard contractor={contractor} />

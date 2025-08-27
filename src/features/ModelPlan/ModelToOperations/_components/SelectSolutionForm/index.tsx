@@ -24,12 +24,12 @@ import {
   useUpdateMtoMilestoneLinkedSolutionsMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
-import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import {
   convertCamelCaseToKebabCase,
@@ -51,8 +51,7 @@ const SelectSolutionForm = () => {
     setMTOModalOpen
   } = useContext(MTOModalContext);
 
-  const { message, showMessage, showErrorMessageInModal, clearMessage } =
-    useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const { data: milestoneData } = useGetMtoMilestoneQuery({
     variables: {
@@ -188,6 +187,10 @@ const SelectSolutionForm = () => {
       }
     });
 
+    setErrorMeta({
+      overrideMessage: t('modal.selectSolution.alert.success')
+    });
+
     update({
       variables: {
         id: milestoneID,
@@ -196,39 +199,12 @@ const SelectSolutionForm = () => {
           solutionIDs: custom
         }
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          showMessage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-                clearMessage={clearMessage}
-              >
-                <span className="mandatory-fields-alert__text">
-                  {t('modal.selectSolution.alert.success')}
-                </span>
-              </Alert>
-            </>
-          );
-          setMTOModalOpen(false);
-        }
-      })
-      .catch(() => {
-        showErrorMessageInModal(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-bottom-2"
-          >
-            {t('modal.selectSolution.alert.error')}
-          </Alert>
-        );
-      });
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(t('modal.selectSolution.alert.success'));
+        setMTOModalOpen(false);
+      }
+    });
   };
 
   // Adding solution from the table
@@ -245,7 +221,6 @@ const SelectSolutionForm = () => {
       </p>
 
       <FormProvider {...methods}>
-        {message}
         <Form
           className="maxw-none"
           id="select-solution-form"

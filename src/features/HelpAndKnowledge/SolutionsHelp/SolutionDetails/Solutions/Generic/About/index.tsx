@@ -19,8 +19,9 @@ type ListItemType = {
 };
 
 export type LinkType = {
-  link: string;
-  external: boolean;
+  link?: string;
+  external?: boolean;
+  toPoC?: boolean; // If true, will set the section to points-of-contact
 };
 
 interface AboutComponentType {
@@ -79,6 +80,22 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
 
   if (links) {
     links.forEach((link, index) => {
+      // If the link is a POC, set the section to points-of-contact
+      if (link.toPoC) {
+        params.set('section', 'points-of-contact');
+
+        linkObj[`link${index + 1}`] = (
+          <InternalSolutionButton params={params.toString()}>
+            link
+          </InternalSolutionButton>
+        );
+        return;
+      }
+
+      if (!link.link) {
+        return;
+      }
+
       if (link.external) {
         linkObj[`link${index + 1}`] = (
           <ExternalLink href={link.link} inlineText>

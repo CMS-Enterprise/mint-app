@@ -21,7 +21,6 @@ import PageLoading from 'components/PageLoading';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
-import useMessage from 'hooks/useMessage';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
@@ -47,8 +46,6 @@ const CollaborationArea = () => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
-
-  const { message } = useMessage();
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -140,12 +137,6 @@ const CollaborationArea = () => {
               message={collaborationAreaT('errorMessage')}
             />
           </ErrorAlert>
-        )}
-
-        {message && (
-          <Alert slim type="success">
-            {message}
-          </Alert>
         )}
 
         {!loading && statusMessage && (

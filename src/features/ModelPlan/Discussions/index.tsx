@@ -13,9 +13,10 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import Expire from 'components/Expire';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
@@ -47,6 +48,7 @@ const Discussions = ({
   readOnly
 }: DiscussionsProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { setErrorMeta } = useErrorMessage();
 
   // Used to replace query params after reply has been asnwered from linked email
   const location = useLocation();
@@ -84,11 +86,6 @@ const Discussions = ({
     'question' | 'reply' | 'discussion'
   >(discussionReplyID ? 'reply' : 'question');
 
-  const [discussionStatus, setDiscussionStatus] = useState<
-    'success' | 'warning' | 'error' | 'info'
-  >('info');
-  const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
-
   // State used to control when the component is being rendered from a form page rather than the task-list
   const [initQuestion, setInitQuestion] = useState<boolean | undefined>(
     discussionReplyID ? true : askAQuestion
@@ -96,9 +93,6 @@ const Discussions = ({
 
   // State and setter used for containing the related question when replying
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
-
-  // State used to manage alert rendering
-  const [alertClosed, closeAlert] = useState<boolean | null>(false);
 
   // Hook used to open reply form if discussionID present
   useEffect(() => {
@@ -145,54 +139,55 @@ const Discussions = ({
     if (payload.userRole !== DiscussionUserRole.NONE_OF_THE_ABOVE)
       payload.userRoleDescription = null;
 
+    setErrorMeta({
+      overrideMessage:
+        discussionType === 'question'
+          ? discussionsMiscT('error')
+          : discussionsMiscT('errorReply')
+    });
+
     createDiscussionMethods[discussionType]({
       variables: {
         input: payload
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (discussionType === 'reply' && reply?.id) {
-            setDiscussionReplyID(null);
-            queryParams.delete('discussionID');
-            navigate(
-              {
-                search: queryParams.toString()
-              },
-              {
-                replace: true
-              }
-            );
-            refetch().then(() => {
-              setInitQuestion(false);
-              setDiscussionType('discussion');
-            });
-          } else {
-            refetch().then(() => {
-              setInitQuestion(false);
-              setDiscussionType('discussion');
-            });
-          }
-
-          if (readOnly) {
-            setIsDiscussionOpen(false);
-          }
-          setDiscussionStatus('success');
-          setDiscussionStatusMessage(
-            discussionType === 'question'
-              ? discussionsMiscT('success')
-              : discussionsMiscT('successReply')
+    }).then(response => {
+      if (!response?.errors) {
+        if (discussionType === 'reply' && reply?.id) {
+          setDiscussionReplyID(null);
+          queryParams.delete('discussionID');
+          navigate(
+            {
+              search: queryParams.toString()
+            },
+            {
+              replace: true
+            }
           );
+          refetch().then(() => {
+            setInitQuestion(false);
+            setDiscussionType('discussion');
+          });
+        } else {
+          refetch().then(() => {
+            setInitQuestion(false);
+            setDiscussionType('discussion');
+          });
         }
-      })
-      .catch(() => {
-        setDiscussionStatus('error');
-        setDiscussionStatusMessage(
+
+        if (readOnly) {
+          setIsDiscussionOpen(false);
+        }
+
+        toastSuccess(
           discussionType === 'question'
-            ? discussionsMiscT('error')
-            : discussionsMiscT('errorReply')
+            ? discussionsMiscT('success')
+            : discussionsMiscT('successReply'),
+          {
+            position: 'top-right'
+          }
         );
-      });
+      }
+    });
   };
 
   const DiscussionAccordion = ({
@@ -233,7 +228,6 @@ const Discussions = ({
                   setDiscussionType={setDiscussionType}
                   setReply={setReply}
                   setIsDiscussionOpen={setIsDiscussionOpen}
-                  setDiscussionStatusMessage={setDiscussionStatusMessage}
                 />
               ),
               expanded: true,
@@ -280,26 +274,6 @@ const Discussions = ({
     );
   };
 
-  const showStatusBanner = (errorOnly?: 'errorOnly') => {
-    if (discussionStatus !== 'error' && errorOnly) {
-      return <></>;
-    }
-    if (discussionStatusMessage && !alertClosed) {
-      return (
-        <Expire delay={45000} callback={setDiscussionStatusMessage}>
-          <Alert
-            type={discussionStatus}
-            className="margin-bottom-4"
-            closeAlert={closeAlert}
-          >
-            {discussionStatusMessage}
-          </Alert>
-        </Expire>
-      );
-    }
-    return <></>;
-  };
-
   const renderDiscussions = () => {
     return (
       <>
@@ -324,7 +298,6 @@ const Discussions = ({
                 setDiscussionType('question');
               } else {
                 setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
-                setDiscussionStatusMessage(''); // Clearing status before asking a new question
                 setDiscussionType('question');
               }
             }}
@@ -333,8 +306,6 @@ const Discussions = ({
           </Button>
         </div>
 
-        {/* General error message for mutations that expires after 45 seconds */}
-        {showStatusBanner()}
         {/* Render error if failed to fetch discussions */}
         {error ? (
           <Alert type="error" className="margin-bottom-4">
@@ -355,7 +326,6 @@ const Discussions = ({
     // If discussionType === "question" or "reply"
     return (
       <>
-        {showStatusBanner('errorOnly')}
         <QuestionAndReply
           renderType={discussionType}
           handleCreateDiscussion={handleCreateDiscussion}
@@ -363,7 +333,6 @@ const Discussions = ({
           discussionReplyID={discussionReplyID}
           setDiscussionReplyID={setDiscussionReplyID}
           queryParams={queryParams}
-          setDiscussionStatusMessage={setDiscussionStatusMessage}
           setInitQuestion={setInitQuestion}
           setDiscussionType={setDiscussionType}
         />
@@ -385,11 +354,9 @@ const Discussions = ({
             >
               {discussionType !== 'discussion' && (
                 <>
-                  {showStatusBanner('errorOnly')}
                   <QuestionAndReply
                     renderType={discussionType}
                     discussionReplyID={discussionReplyID}
-                    setDiscussionStatusMessage={setDiscussionStatusMessage}
                     closeModal={() => setIsDiscussionOpen(false)}
                     handleCreateDiscussion={handleCreateDiscussion}
                     reply={reply}

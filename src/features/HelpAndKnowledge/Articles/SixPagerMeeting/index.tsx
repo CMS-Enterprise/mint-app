@@ -65,7 +65,7 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:aboutConceptPapers.sectionThree.items'
   );
 
-  const conceptPaperSectionFour = tArray<Record<string, any>>(
+  const conceptPaperSectionFour = tArray(
     'sixPageMeeting:aboutConceptPapers.sectionFour.items'
   );
 
@@ -75,14 +75,6 @@ const SixPagerMeeting = () => {
 
   const conceptPaperSectionSix = tArray(
     'sixPageMeeting:aboutConceptPapers.sectionSix.items'
-  );
-
-  const conceptPaperSectionSeven = tArray(
-    'sixPageMeeting:aboutConceptPapers.sectionSeven.items'
-  );
-
-  const tipsToLearn = tArray<Record<string, any>>(
-    'sixPageMeeting:aboutConceptPapers.tipsSummaryBox.items'
   );
 
   const conceptPaperAdditionalResources = tArray<Record<string, any>>(
@@ -307,17 +299,7 @@ const SixPagerMeeting = () => {
                         i18nKey={`aboutConceptPapers.sectionThree.items.${index}.heading`}
                         t={sixPageMeetingT}
                         components={{
-                          bold: <strong />,
-                          link1: (
-                            <ExternalLink
-                              href={sixPageMeetingT(
-                                `aboutConceptPapers.sectionThree.items.${index}.link`
-                              )}
-                              inlineText
-                            >
-                              {' '}
-                            </ExternalLink>
-                          )
+                          bold: <strong />
                         }}
                       />
                       {section.items.length > 0 && (
@@ -333,55 +315,12 @@ const SixPagerMeeting = () => {
               </div>
 
               {/* Section 4 */}
-              <div className="margin-bottom-3">
-                <h3 className="margin-y-0">
-                  {sixPageMeetingT('aboutConceptPapers.sectionFour.heading')}
-                </h3>
-
-                <ul className="margin-y-0 padding-top-1">
-                  {conceptPaperSectionFour.map(section => (
-                    <li key={section.heading}>
-                      {section.heading}
-                      <ul className="margin-y-0 padding-top-1">
-                        {section.items.map((item: string) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Tips to learn */}
-              <SummaryBox className="margin-bottom-3">
-                <SummaryBoxHeading headingLevel="h3">
-                  {sixPageMeetingT('aboutConceptPapers.tipsSummaryBox.heading')}
-                </SummaryBoxHeading>
-
-                <SummaryBoxContent>
-                  <ul className="margin-y-0 padding-top-1">
-                    {tipsToLearn.map((section, index) => (
-                      <li key={section.heading} className="padding-bottom-05">
-                        <Trans
-                          i18nKey={`aboutConceptPapers.tipsSummaryBox.items.${index}.text`}
-                          t={sixPageMeetingT}
-                          components={{
-                            link1: (
-                              <ExternalLink
-                                href={sixPageMeetingT(
-                                  `aboutConceptPapers.tipsSummaryBox.items.${index}.link`
-                                )}
-                              >
-                                {' '}
-                              </ExternalLink>
-                            )
-                          }}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </SummaryBoxContent>
-              </SummaryBox>
+              <SimpleList
+                list={conceptPaperSectionFour}
+                heading={sixPageMeetingT(
+                  'aboutConceptPapers.sectionFour.heading'
+                )}
+              />
 
               {/* Section 5 */}
               <SimpleList
@@ -399,14 +338,7 @@ const SixPagerMeeting = () => {
                 )}
               />
 
-              {/* Section 7 */}
-              <SimpleList
-                list={conceptPaperSectionSeven}
-                heading={sixPageMeetingT(
-                  'aboutConceptPapers.sectionSeven.heading'
-                )}
-              />
-
+              {/* Additional resources */}
               <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
                 <SummaryBoxHeading headingLevel="h3">
                   {sixPageMeetingT(
