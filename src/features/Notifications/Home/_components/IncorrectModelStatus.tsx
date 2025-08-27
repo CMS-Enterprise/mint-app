@@ -1,18 +1,28 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
-import { IncorrectModelStatusActivityMeta } from 'gql/generated/graphql';
+import {
+  IncorrectModelStatusActivityMeta,
+  ModelPlan
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+
+type ModelPlanEssential = Pick<ModelPlan, 'id' | 'status' | 'modelName'>;
+
+type IncorrectModelStatusProps = Pick<
+  IncorrectModelStatusActivityMeta,
+  'modelPlanName' | 'modelPlanID' | 'phaseSuggestion'
+> & { modelPlan: ModelPlanEssential };
 
 const IncorrectModelStatus = ({
   modelPlanName,
   modelPlanID,
   modelPlan,
   phaseSuggestion
-}: IncorrectModelStatusActivityMeta) => {
+}: IncorrectModelStatusProps) => {
   const { t: notificationsT } = useTranslation('notifications');
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { status: statusConfig } = usePlanTranslation('modelPlan');
