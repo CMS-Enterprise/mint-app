@@ -22,7 +22,8 @@ const Analytics = () => {
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
 
   const { data, loading, error } = useGetAnalyticsSummaryQuery({
-    skip: !flags?.mintAnalyticsEnabled
+    skip: !flags?.mintAnalyticsEnabled,
+    fetchPolicy: 'network-only'
   });
 
   if (!flags?.mintAnalyticsEnabled) {
