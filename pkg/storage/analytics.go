@@ -1,10 +1,11 @@
 package storage
 
 import (
+	"go.uber.org/zap"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"go.uber.org/zap"
 )
 
 // AnalyticsType constraint ensures T is one of the analytics struct types

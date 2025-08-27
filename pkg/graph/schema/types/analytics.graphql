@@ -1,7 +1,6 @@
 """
 Analytics data types for various model plan metrics and statistics
 """
-
 type ModelChangesAnalytics {
   modelName: String!
   numberOfChanges: Int!
