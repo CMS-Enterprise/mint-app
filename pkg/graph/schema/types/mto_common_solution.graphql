@@ -18,7 +18,6 @@ enum MTOCommonSolutionKey {
   IDR
   LDG
   LV
-  MDM_POR
   MARX
   OUTLOOK_MAILBOX
   QV

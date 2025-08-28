@@ -42,7 +42,6 @@ const (
 	MTOCSKIdr                         MTOCommonSolutionKey = "IDR"
 	MTOCSKLdg                         MTOCommonSolutionKey = "LDG"
 	MTOCSKLv                          MTOCommonSolutionKey = "LV"
-	MTOCSKMdmPor                      MTOCommonSolutionKey = "MDM_POR"
 	MTOCSKMarx                        MTOCommonSolutionKey = "MARX"
 	MTOCSKOutlookMailbox              MTOCommonSolutionKey = "OUTLOOK_MAILBOX"
 	MTOCSKQv                          MTOCommonSolutionKey = "QV"

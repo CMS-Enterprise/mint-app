@@ -31,7 +31,7 @@ describe('Operation Solution Help Header', () => {
 
     // Page results info
     expect(
-      getByText('Showing 9 of 54 operational solutions')
+      getByText('Showing 9 of 53 operational solutions')
     ).toBeInTheDocument();
   });
 
