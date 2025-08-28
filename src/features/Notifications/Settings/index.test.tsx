@@ -50,7 +50,8 @@ const notificationPreferences: NotificationPerferenceType = {
     UserNotificationPreferenceFlag.EMAIL,
     UserNotificationPreferenceFlag.IN_APP
   ],
-  dataExchangeApproachMarkedCompleteNotificationType: null
+  dataExchangeApproachMarkedCompleteNotificationType: null,
+  incorrectModelStatus: [UserNotificationPreferenceFlag.EMAIL]
 };
 
 const notificationsSettingsMock = [
@@ -102,12 +103,17 @@ describe('Notification Settings Page', () => {
       ).toBeChecked();
 
       expect(
+        screen.getByTestId('notification-setting-email-incorrectModelStatus')
+      ).toBeChecked();
+
+      expect(
         screen.getByTestId('notification-setting-email-newModelPlan')
       ).not.toBeChecked();
 
       expect(
         screen.getByTestId('notification-setting-email-datesChanged')
       ).not.toBeChecked();
+
       expect(
         screen.getByTestId('notification-setting-whichModel-datesChanged')
       ).toBeDisabled();
@@ -115,6 +121,9 @@ describe('Notification Settings Page', () => {
 
     await user.click(
       screen.getByTestId('notification-setting-email-dailyDigestComplete')
+    );
+    await user.click(
+      screen.getByTestId('notification-setting-email-incorrectModelStatus')
     );
     await user.click(
       screen.getByTestId('notification-setting-email-newModelPlan')
@@ -126,6 +135,10 @@ describe('Notification Settings Page', () => {
     await waitFor(() => {
       expect(
         screen.getByTestId('notification-setting-email-dailyDigestComplete')
+      ).not.toBeChecked();
+
+      expect(
+        screen.getByTestId('notification-setting-email-incorrectModelStatus')
       ).not.toBeChecked();
 
       expect(

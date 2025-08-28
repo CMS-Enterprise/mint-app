@@ -27,6 +27,13 @@ const notifications = {
           hide: 'Hide changes'
         }
       },
+      INCORRECT_MODEL_STATUS: {
+        text: ' suggests that you update the model status for {{modelName}}.',
+        cta: {
+          view: 'View suggested status',
+          hide: 'Hide suggested status'
+        }
+      },
       MODEL_PLAN_SHARED: {
         text: ' shared {{-modelName}} with you.',
         cta: 'View Model Plan'
@@ -109,6 +116,14 @@ const notifications = {
         PERFORMANCE_PERIOD: 'Performance period',
         WRAP_UP_ENDS: 'Model wrap-up end date'
       }
+    },
+    incorrectModelStatus: {
+      heading: "It's time to update the model status for {{-modelName}}",
+      currentStatus: '<bold>Current status:</bold> {{-currentStatus}}',
+      newStatus: '<bold>New status:</bold> {{-newStatus}}',
+      cta: 'Yes, update my model’s status',
+      adjustTimeline:
+        'If you’re not ready to update your model’s status, please <link1>adjust your model’s anticipated timeline.</link1>'
     }
   },
   settings: {
@@ -124,6 +139,12 @@ const notifications = {
         subHeading:
           'You will always receive basic notifications in-app, but may opt out of receiving them via email.'
       },
+      notificationAboutMyModels: {
+        heading: 'Notifications about my models',
+        subHeading:
+          'Regardless of your settings here, you will receive both email and in-app notifications for all models where you are listed as the Model Lead.',
+        info: 'You are listed as the Model Lead for {{count}} models.'
+      },
       additionalNotifications: {
         heading: 'Additional notifications'
       }
@@ -135,6 +156,7 @@ const notifications = {
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me',
+      incorrectModelStatus: 'When MINT detects an incorrect model status',
       newModelPlan: 'When a new Model Plan is created',
       datesChanged: 'When model dates change',
       dataExchangeApproachMarkedComplete:

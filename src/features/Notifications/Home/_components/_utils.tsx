@@ -7,6 +7,7 @@ import {
   AnalyzedCrTdls,
   DailyDigestCompleteActivityMeta,
   DatesChangedActivityMeta,
+  IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
@@ -20,6 +21,7 @@ type MetaDataType =
   | TaggedInPlanDiscussionActivityMeta
   | DailyDigestCompleteActivityMeta
   | NewDiscussionRepliedActivityMeta
+  | IncorrectModelStatusActivityMeta
   | ModelPlanSharedActivityMeta
   | AddedAsCollaboratorMeta
   | NewModelPlanActivityMeta
@@ -53,6 +55,13 @@ export const isNewDiscussionReply = (
 ): data is NewDiscussionRepliedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionRepliedActivityMeta';
+};
+
+export const isIncorrectModelStatus = (
+  data: MetaDataType
+): data is IncorrectModelStatusActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'IncorrectModelStatusActivityMeta';
 };
 
 export const isSharedActivity = (
@@ -118,6 +127,14 @@ export const activityText = (data: MetaDataType) => {
     return (
       <Trans
         i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+  if (isIncorrectModelStatus(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -237,6 +254,28 @@ export const ActivityCTA = ({
           className="margin-left-1"
           aria-hidden
           aria-label="forward"
+        />
+      </>
+    );
+  }
+
+  if (isIncorrectModelStatus(data)) {
+    return isExpanded ? (
+      <>
+        <Trans i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.cta.hide" />
+        <Icon.ExpandLess
+          className="margin-left-1"
+          aria-hidden
+          aria-label="collapse"
+        />
+      </>
+    ) : (
+      <>
+        <Trans i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.cta.view" />
+        <Icon.ExpandMore
+          className="margin-left-1"
+          aria-hidden
+          aria-label="expand"
         />
       </>
     );

@@ -155,7 +155,15 @@ body:graphql {
                   markedCompleteByUserAccount {
                       id
                   }
-              }          
+              }        
+              ... on IncorrectModelStatusActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan{
+                      modelName
+                  }
+              }
             }
             createdByUserAccount {
               commonName
