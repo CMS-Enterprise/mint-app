@@ -30,7 +30,7 @@ const IncorrectModelStatus = ({
   return (
     <Grid
       desktop={{ col: 12 }}
-      className="border-1 border-base-lightest padding-x-3 padding-y-5"
+      className="border-1 border-base-lightest padding-x-3 padding-y-5 line-height-body-5"
       data-testid="incorrect-model-status"
     >
       <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-2">

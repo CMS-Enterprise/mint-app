@@ -1,66 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Incorrect Model Status in Notifications > should matches snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="desktop:grid-col-12 border-1 border-base-lightest padding-x-3 padding-y-5"
-    data-testid="incorrect-model-status"
-  >
-    <h2
-      aria-live="polite"
-      class="mint-h1 margin-top-0 margin-bottom-2"
-      tabindex="-1"
-    >
-      It's time to update the model status for Wonderful Plan
-    </h2>
-    <p
-      class="margin-top-0 margin-bottom-3"
-    >
-      Your model’s anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.
-    </p>
-    <div>
-      <p
-        class="margin-bottom-1"
-      >
-        <strong>
-          Current status:
-        </strong>
-         In CMS clearance
-      </p>
-      <p
-        class="margin-top-1"
-      >
-        <strong>
-          New status:
-        </strong>
-         Ended
-      </p>
-    </div>
-    <a
-      class="usa-link display-block deep-underline margin-y-4"
-      data-discover="true"
-      href="/models/notarealid/collaboration-area/status?model-status=ENDED"
-    >
-      Yes, update my model’s status
-    </a>
-    <p>
-      If you’re not ready to update your model’s status, please 
-      <a
-        class="usa-link deep-underline"
-        data-discover="true"
-        href="/models/notarealid/collaboration-area/model-timeline"
-      >
-        adjust your model’s anticipated timeline.
-      </a>
-    </p>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Incorrect Model Status in Notifications > should render accordingly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="desktop:grid-col-12 border-1 border-base-lightest padding-x-3 padding-y-5"
+    class="desktop:grid-col-12 border-1 border-base-lightest padding-x-3 padding-y-5 line-height-body-5"
     data-testid="incorrect-model-status"
   >
     <h2
