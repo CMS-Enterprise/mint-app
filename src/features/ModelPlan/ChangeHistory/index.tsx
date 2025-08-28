@@ -9,6 +9,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  Button,
   Grid,
   GridContainer,
   Icon,
@@ -25,6 +26,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import ModalForm from 'components/ModalForm';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
@@ -93,6 +95,8 @@ const ChangeHistory = () => {
   const sortParam = params.get('sort') as SortProps['value'];
 
   const { modelName, createdDts } = useContext(ModelInfoContext);
+
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
@@ -287,6 +291,22 @@ const ChangeHistory = () => {
               <Grid row>
                 <Grid tablet={{ col: 6 }}>
                   {/* Search bar and results info */}
+
+                  <ModalForm
+                    isOpen={isFilterModalOpen}
+                    closeModal={() => setIsFilterModalOpen(false)}
+                    modalHeading="Filter"
+                  >
+                    <div>MODAL FORM</div>
+                  </ModalForm>
+
+                  <Button
+                    type="button"
+                    onClick={() => setIsFilterModalOpen(true)}
+                  >
+                    Filter
+                  </Button>
+
                   <Search
                     query={query}
                     resultsNum={resultsNum}
