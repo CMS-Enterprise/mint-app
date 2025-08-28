@@ -757,6 +757,15 @@ export const helpSolutions: HelpSolutionsType = {
         <GatheringInfoAlert {...props} />
       )
     }
+  },
+  [MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP]: {
+    key: MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP,
+    categories: [MtoCommonSolutionSubject.DATA],
+    name: 'Overlaps Operations Workgroup',
+    type: MtoSolutionType.OTHER,
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
   }
 };
 

@@ -3381,6 +3381,20 @@ exports[`Generic About Components > matches the snapshot > Outlook Mailbox 1`] =
 </DocumentFragment>
 `;
 
+exports[`Generic About Components > matches the snapshot > Overlaps Operations Workgroup 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md"
+  >
+    <p
+      class="margin-top-0 text-pre-wrap margin-bottom-0"
+    >
+      The Overlaps Operations Workgroup supports CMMI by acting as an operational coordinator and facilitator, ensuring smooth integration of new models into the overlaps system and managing ongoing operational changes through collaborative processes. The focus is on the practical implementation and scheduling aspects of overlaps operations across different models.
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic About Components > matches the snapshot > Patient Activation Measure 1`] = `
 <DocumentFragment>
   <div
