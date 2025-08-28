@@ -27,6 +27,7 @@ import {
 } from './_utils';
 import DailyDigest from './DailyDigest';
 import DatesChanged from './DatesChanged';
+import IncorrectModelStatus from './IncorrectModelStatus';
 
 type NotificationActivityType = Activity;
 
@@ -50,6 +51,8 @@ const IndividualNotification = ({
 
   const [isDailyDigestExpanded, setIsDailyDigestExpanded] = useState(false);
   const [isDatesChangedExpanded, setIsDatesChangedExpanded] = useState(false);
+  const [isIncorrectModelStatusExpanded, setIsIncorrectModelStatusExpanded] =
+    useState(false);
 
   const navigate = useNavigate();
 
@@ -91,6 +94,11 @@ const IndividualNotification = ({
         setIsDatesChangedExpanded(!isDatesChangedExpanded)
       );
     }
+    if (isIncorrectModelStatus(metaData)) {
+      handleMarkAsRead(() =>
+        setIsIncorrectModelStatusExpanded(!isIncorrectModelStatusExpanded)
+      );
+    }
     if (isAddingCollaborator(metaData)) {
       handleMarkAsRead(() => {
         navigate(`/models/${metaData.modelPlanID}/collaboration-area`);
@@ -112,6 +120,19 @@ const IndividualNotification = ({
 
   // Mint System Account -> MINT
   const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
+
+  const getExpandButtonStatus = () => {
+    if (isDailyDigest(metaData)) {
+      return isDailyDigestExpanded;
+    }
+    if (isDatesChanged(metaData)) {
+      return isDatesChangedExpanded;
+    }
+    if (isIncorrectModelStatus(metaData)) {
+      return isIncorrectModelStatusExpanded;
+    }
+    return false;
+  };
 
   return (
     <Grid row data-testid="individual-notification">
@@ -168,7 +189,7 @@ const IndividualNotification = ({
                 >
                   <ActivityCTA
                     data={metaData}
-                    isExpanded={isDailyDigestExpanded}
+                    isExpanded={getExpandButtonStatus()}
                   />
                 </Button>
               </div>
@@ -186,8 +207,13 @@ const IndividualNotification = ({
       {isDailyDigestExpanded && isDailyDigest(metaData) && (
         <DailyDigest {...metaData} />
       )}
+
       {isDatesChangedExpanded && isDatesChanged(metaData) && (
         <DatesChanged {...metaData} />
+      )}
+
+      {isIncorrectModelStatusExpanded && isIncorrectModelStatus(metaData) && (
+        <IncorrectModelStatus {...metaData} />
       )}
     </Grid>
   );

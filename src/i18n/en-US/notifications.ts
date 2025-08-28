@@ -27,6 +27,13 @@ const notifications = {
           hide: 'Hide changes'
         }
       },
+      INCORRECT_MODEL_STATUS: {
+        text: ' suggests that you update the model status for {{modelName}}.',
+        cta: {
+          view: 'View suggested status',
+          hide: 'Hide suggested status'
+        }
+      },
       MODEL_PLAN_SHARED: {
         text: ' shared {{-modelName}} with you.',
         cta: 'View Model Plan'
@@ -109,6 +116,14 @@ const notifications = {
         PERFORMANCE_PERIOD: 'Performance period',
         WRAP_UP_ENDS: 'Model wrap-up end date'
       }
+    },
+    incorrectModelStatus: {
+      heading: "It's time to update the model status for {{-modelName}}",
+      currentStatus: '<bold>Current status:</bold> {{-currentStatus}}',
+      newStatus: '<bold>New status:</bold> {{-newStatus}}',
+      cta: 'Yes, update my model’s status',
+      adjustTimeline:
+        'If you’re not ready to update your model’s status, please <link1>adjust your model’s anticipated timeline.</link1>'
     }
   },
   settings: {
