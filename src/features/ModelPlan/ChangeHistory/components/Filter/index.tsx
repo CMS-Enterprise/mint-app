@@ -3,6 +3,8 @@ import ReactModal from 'react-modal';
 import { Button, Checkbox, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import DateTimePicker from 'components/DateTimePicker';
+
 import getAllContributors, {
   TypeOfChange,
   TypeOfOtherChange
@@ -37,6 +39,9 @@ const Filter = ({
     (TypeOfChange | TypeOfOtherChange)[]
   >([...filters.typeOfChange]);
 
+  const [startDate, setStartDate] = useState<string>(filters.startDate);
+  const [endDate, setEndDate] = useState<string>(filters.endDate);
+
   const contributors = getAllContributors(changes);
 
   const handleContributorChange = (contributor: string) => {
@@ -52,6 +57,14 @@ const Filter = ({
       setSelectedTypeOfChange(prev => prev.filter(t => t !== type));
     } else {
       setSelectedTypeOfChange(prev => [...prev, type]);
+    }
+  };
+
+  const handleDateRangeChange = (date: string, value: string) => {
+    if (date === 'startDate') {
+      setStartDate(value);
+    } else {
+      setEndDate(value);
     }
   };
 
@@ -87,35 +100,77 @@ const Filter = ({
 
       {/* BODY/FORM */}
       <div className="padding-y-2 padding-x-4">
-        <form>
-          <div>
-            <label htmlFor="contributors">Contributors</label>
-            {contributors.map(contributor => (
-              <Checkbox
-                id={`contributor-${contributor}`}
-                name={contributor}
-                value={contributor}
-                label={contributor}
-                checked={selectedContributors.includes(contributor)}
-                onChange={() => handleContributorChange(contributor)}
-              />
-            ))}
-          </div>
-
-          <div>
-            <label htmlFor="typeOfChange">Type of Change</label>
-          </div>
-          {Object.values(TypeOfChange).map(type => (
+        {/* Contributors */}
+        <div>
+          <label htmlFor="contributors">Contributors</label>
+          {contributors.map(contributor => (
             <Checkbox
-              id={`typeOfChange-${type}`}
-              name={type}
-              value={type}
-              label={type}
-              checked={selectedTypeOfChange.includes(type)}
-              onChange={() => handleTypeOfChangeChange(type)}
+              id={`contributor-${contributor}`}
+              name={contributor}
+              value={contributor}
+              label={contributor}
+              checked={selectedContributors.includes(contributor)}
+              onChange={() => handleContributorChange(contributor)}
             />
           ))}
-        </form>
+        </div>
+
+        {/* Type of Change */}
+        <div>
+          <label htmlFor="typeOfChange">Type of Change</label>
+        </div>
+
+        {Object.values(TypeOfChange).map(type => (
+          <Checkbox
+            id={`typeOfChange-${type}`}
+            key={type}
+            name={type}
+            value={type}
+            label={type}
+            checked={selectedTypeOfChange.includes(type)}
+            onChange={() => handleTypeOfChangeChange(type)}
+          />
+        ))}
+
+        {/* Other Types of Change */}
+        <div>
+          <label htmlFor="otherTypesOfChange">Other Types of Change</label>
+        </div>
+
+        {Object.values(TypeOfOtherChange).map(type => (
+          <Checkbox
+            id={`typeOfChange-${type}`}
+            key={type}
+            name={type}
+            value={type}
+            label={type}
+            checked={selectedTypeOfChange.includes(type)}
+            onChange={() => handleTypeOfChangeChange(type)}
+          />
+        ))}
+
+        {/* Date Range */}
+        <div>
+          <label htmlFor="dateRange">Date Range</label>
+        </div>
+
+        <DateTimePicker
+          id="startDate"
+          name="startDate"
+          value={startDate}
+          onChange={date => {
+            handleDateRangeChange('startDate', date || '');
+          }}
+        />
+
+        <DateTimePicker
+          id="endDate"
+          name="endDate"
+          value={endDate}
+          onChange={date => {
+            handleDateRangeChange('endDate', date || '');
+          }}
+        />
       </div>
 
       {/* FOOTER */}
@@ -126,6 +181,8 @@ const Filter = ({
           onClick={() => {
             setSelectedContributors([]);
             setSelectedTypeOfChange([]);
+            setStartDate('');
+            setEndDate('');
           }}
         >
           Clear all
@@ -137,8 +194,8 @@ const Filter = ({
             setFilters({
               contributors: selectedContributors,
               typeOfChange: selectedTypeOfChange,
-              startDate: filters.startDate,
-              endDate: filters.endDate
+              startDate,
+              endDate
             });
             closeModal();
           }}
