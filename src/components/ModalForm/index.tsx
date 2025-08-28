@@ -13,8 +13,8 @@ type ModalProps = {
   shouldCloseOnOverlayClick?: boolean;
   modalHeading?: string;
   closeModal: () => void;
-  submitAction: () => void;
-  clearAction: () => void;
+  submitAction?: () => void;
+  clearAction?: () => void;
 };
 
 const ModalForm = ({
@@ -33,7 +33,7 @@ const ModalForm = ({
   return (
     <ModalComponent
       isOpen={isOpen}
-      overlayClassName={classNames('mint-modal__overlay', {})}
+      overlayClassName={classNames('mint-modal__overlay')}
       className={classNames('mint-modal__content', className)}
       onAfterClose={() => {
         noScroll.off();
@@ -67,11 +67,30 @@ const ModalForm = ({
 
       {/* FOOTER */}
       <div className="border-top-1px border-base-lighter padding-y-2 padding-x-4 display-flex flex-justify">
-        <Button type="button" unstyled onClick={clearAction}>
+        <Button
+          type="button"
+          unstyled
+          onClick={() => {
+            if (clearAction) {
+              clearAction();
+            } else {
+              closeModal();
+            }
+          }}
+        >
           Clear all
         </Button>
 
-        <Button type="button" onClick={submitAction}>
+        <Button
+          type="button"
+          onClick={() => {
+            if (submitAction) {
+              submitAction();
+            } else {
+              closeModal();
+            }
+          }}
+        >
           Apply filter
         </Button>
       </div>

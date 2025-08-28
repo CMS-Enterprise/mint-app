@@ -26,7 +26,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import ModalForm from 'components/ModalForm';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
@@ -34,6 +33,7 @@ import { formatDateUtc } from 'utils/date';
 
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
+import Filter, { FilterType } from './components/Filter';
 import Search from './components/Search';
 import {
   filterQueryAudits,
@@ -97,6 +97,15 @@ const ChangeHistory = () => {
   const { modelName, createdDts } = useContext(ModelInfoContext);
 
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  const [filters, setFilters] = useState<FilterType>({
+    contributors: [],
+    typeOfChange: [],
+    startDate: '',
+    endDate: ''
+  });
+
+  console.log(filters);
 
   const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
@@ -292,13 +301,13 @@ const ChangeHistory = () => {
                 <Grid tablet={{ col: 6 }}>
                   {/* Search bar and results info */}
 
-                  <ModalForm
+                  <Filter
+                    changes={auditChanges}
+                    filters={filters}
+                    setFilters={setFilters}
                     isOpen={isFilterModalOpen}
                     closeModal={() => setIsFilterModalOpen(false)}
-                    modalHeading="Filter"
-                  >
-                    <div>MODAL FORM</div>
-                  </ModalForm>
+                  />
 
                   <Button
                     type="button"
