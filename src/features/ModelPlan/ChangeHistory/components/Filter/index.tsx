@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import { Button, Checkbox, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -41,6 +41,16 @@ const Filter = ({
 
   const [startDate, setStartDate] = useState<string>(filters.startDate);
   const [endDate, setEndDate] = useState<string>(filters.endDate);
+
+  // Reset local state when modal closes without applying
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedContributors([...filters.contributors]);
+      setSelectedTypeOfChange([...filters.typeOfChange]);
+      setStartDate(filters.startDate);
+      setEndDate(filters.endDate);
+    }
+  }, [isOpen, filters]);
 
   const contributors = getAllContributors(changes);
 
@@ -106,6 +116,7 @@ const Filter = ({
           {contributors.map(contributor => (
             <Checkbox
               id={`contributor-${contributor}`}
+              key={contributor}
               name={contributor}
               value={contributor}
               label={contributor}
@@ -161,6 +172,8 @@ const Filter = ({
           onChange={date => {
             handleDateRangeChange('startDate', date || '');
           }}
+          alertText={false}
+          alertIcon={false}
         />
 
         <DateTimePicker
@@ -170,6 +183,8 @@ const Filter = ({
           onChange={date => {
             handleDateRangeChange('endDate', date || '');
           }}
+          alertText={false}
+          alertIcon={false}
         />
       </div>
 

@@ -301,30 +301,34 @@ const ChangeHistory = () => {
                 <Grid tablet={{ col: 6 }}>
                   {/* Search bar and results info */}
 
-                  <Filter
-                    changes={auditChanges}
-                    filters={filters}
-                    setFilters={setFilters}
-                    isOpen={isFilterModalOpen}
-                    closeModal={() => setIsFilterModalOpen(false)}
-                  />
+                  <div className="display-flex flex-justify flex-align-start">
+                    <Filter
+                      changes={auditChanges}
+                      filters={filters}
+                      setFilters={setFilters}
+                      isOpen={isFilterModalOpen}
+                      closeModal={() => setIsFilterModalOpen(false)}
+                    />
 
-                  <Button
-                    type="button"
-                    onClick={() => setIsFilterModalOpen(true)}
-                  >
-                    Filter
-                  </Button>
+                    <Button
+                      type="button"
+                      outline
+                      className="margin-right-2 height-4 margin-top-1"
+                      onClick={() => setIsFilterModalOpen(true)}
+                    >
+                      Filter
+                    </Button>
 
-                  <Search
-                    query={query}
-                    resultsNum={resultsNum}
-                    itemsPerPage={itemsPerPage}
-                    currentPage={currentPage - 1}
-                    setQuery={setQuery}
-                    results={auditChanges}
-                    currentResults={currentItems}
-                  />
+                    <Search
+                      query={query}
+                      resultsNum={resultsNum}
+                      itemsPerPage={itemsPerPage}
+                      currentPage={currentPage - 1}
+                      setQuery={setQuery}
+                      results={auditChanges}
+                      currentResults={currentItems}
+                    />
+                  </div>
                 </Grid>
 
                 {/* Select sort display */}
