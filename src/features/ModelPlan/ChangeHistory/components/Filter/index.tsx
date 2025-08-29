@@ -113,7 +113,7 @@ const Filter = ({
         {/* HEADING */}
         <div
           className={classNames(
-            'display-flex flex-align-center text-base padding-y-1 padding-left-4 padding-right-2 border-bottom-1px border-base-lighter'
+            'display-flex flex-align-center text-base padding-y-1 padding-left-3 padding-right-1 border-bottom-1px border-base-lighter'
           )}
         >
           <h4 className="margin-0 flex-1">{t('filter')}</h4>
@@ -130,7 +130,7 @@ const Filter = ({
 
         {/* BODY/FORM */}
         <div
-          className="padding-y-2 padding-x-4 overflow-y-auto"
+          className="padding-y-2 padding-x-3 overflow-y-auto"
           style={{ maxHeight: '600px' }}
         >
           {/* Collaborators */}
@@ -227,7 +227,7 @@ const Filter = ({
               />
 
               {/* All other model plan sections */}
-              <Grid row gap={2}>
+              <Grid row>
                 {Object.values(TypeOfChange)
                   .slice(1)
                   .map(type => (
@@ -251,8 +251,8 @@ const Filter = ({
               {t('otherTypes')}
             </label>
 
-            <div className="margin-top-05">
-              <Grid row gap={2}>
+            <div className="margin-top-05 margin-bottom-1">
+              <Grid row>
                 {Object.values(TypeOfOtherChange).map(type => (
                   <Grid key={type} col={6}>
                     <Checkbox
@@ -322,7 +322,7 @@ const Filter = ({
         </div>
 
         {/* FOOTER */}
-        <div className="border-top-1px border-base-lighter padding-y-2 padding-x-4 display-flex flex-justify">
+        <div className="border-top-1px border-base-lighter padding-y-2 padding-x-3 display-flex flex-justify">
           <Button
             type="button"
             unstyled
