@@ -36,7 +36,8 @@ import { formatDateUtc } from 'utils/date';
 
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
-import Filter, { FilterType } from './components/Filter';
+import FilterForm, { FilterType } from './components/FilterForm';
+import FilterTags from './components/FilterTags';
 import Search from './components/Search';
 import {
   filterQueryAudits,
@@ -317,7 +318,7 @@ const ChangeHistory = () => {
                   {/* Search bar and results info */}
 
                   <div className="display-flex flex-justify flex-align-start">
-                    <Filter
+                    <FilterForm
                       changes={auditChanges}
                       filters={filters}
                       setFilters={setFilters}
@@ -383,6 +384,10 @@ const ChangeHistory = () => {
                       })}
                     </Select>
                   </div>
+                </Grid>
+
+                <Grid tablet={{ col: 12 }}>
+                  <FilterTags filters={filters} setFilters={setFilters} />
                 </Grid>
               </Grid>
             </div>

@@ -23,7 +23,7 @@ export type FilterType = {
 };
 
 // Component to filter change history by contributors, type of change, and date range
-const Filter = ({
+const FilterForm = ({
   changes,
   filters,
   setFilters,
@@ -374,4 +374,4 @@ const Filter = ({
   );
 };
 
-export default Filter;
+export default FilterForm;

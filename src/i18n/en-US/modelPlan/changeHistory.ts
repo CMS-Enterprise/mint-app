@@ -1,7 +1,7 @@
 import {
   TypeOfChange,
   TypeOfOtherChange
-} from 'features/ModelPlan/ChangeHistory/components/Filter/filterUtil';
+} from 'features/ModelPlan/ChangeHistory/components/FilterForm/filterUtil';
 
 const filterSections: Record<TypeOfChange | TypeOfOtherChange, string> = {
   [TypeOfChange.ALL_MODEL_PLAN_SECTIONS]: 'All Model Plan sections',
