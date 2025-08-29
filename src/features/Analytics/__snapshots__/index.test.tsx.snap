@@ -1,55 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Analytics > matches the snapshot when analytics feature is disabled 1`] = `
-<DocumentFragment>
-  <h2>
-    Unexpected Application Error!
-  </h2>
-  <h3
-    style="font-style: italic;"
-  >
-    [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-  </h3>
-  <pre
-    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
-  >
-    Error: [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-    at VitestMocker.createError (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:321:19)
-    at Object.get (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:389:22)
-    at Analytics (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/src/features/Analytics/index.tsx:24:36)
-    at Object.react_stack_bottom_frame (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
-    at renderWithHooks (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
-    at updateFunctionComponent (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
-    at beginWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
-    at runWithFiberInDEV (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
-    at performUnitOfWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
-    at workLoopSync (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
-  </pre>
-  <p>
-    💿 Hey developer 👋
-  </p>
-  <p>
-    You can provide a way better UX than this when your app throws errors by providing your own 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      ErrorBoundary
-    </code>
-     or 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      errorElement
-    </code>
-     prop on your route.
-  </p>
-</DocumentFragment>
-`;
-
 exports[`Analytics > matches the snapshot when analytics feature is enabled and data is loaded 1`] = `
 <DocumentFragment>
   <main
@@ -700,6 +650,13 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
       "numberOfRecordChanges": 3,
       "modelPlanID": "123e4567-e89b-12d3-a456-426614174000",
       "tableName": "plan_basics"
+    },
+    {
+      "modelName": "Test Model 2",
+      "numberOfChanges": 3,
+      "numberOfRecordChanges": 2,
+      "modelPlanID": "123e4567-e89b-12d3-a456-426614174001",
+      "tableName": "plan_basics"
     }
   ],
   "changesPerModelOtherData": [
@@ -708,6 +665,13 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
       "numberOfChanges": 3,
       "numberOfRecordChanges": 2,
       "modelPlanID": "123e4567-e89b-12d3-a456-426614174000",
+      "section": "plan_documents"
+    },
+    {
+      "modelName": "Test Model 2",
+      "numberOfChanges": 2,
+      "numberOfRecordChanges": 1,
+      "modelPlanID": "123e4567-e89b-12d3-a456-426614174001",
       "section": "plan_documents"
     }
   ],
@@ -735,155 +699,5 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
       </pre>
     </div>
   </main>
-</DocumentFragment>
-`;
-
-exports[`Analytics > matches the snapshot when loading 1`] = `
-<DocumentFragment>
-  <h2>
-    Unexpected Application Error!
-  </h2>
-  <h3
-    style="font-style: italic;"
-  >
-    [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-  </h3>
-  <pre
-    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
-  >
-    Error: [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-    at VitestMocker.createError (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:321:19)
-    at Object.get (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:389:22)
-    at Analytics (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/src/features/Analytics/index.tsx:24:36)
-    at Object.react_stack_bottom_frame (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
-    at renderWithHooks (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
-    at updateFunctionComponent (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
-    at beginWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
-    at runWithFiberInDEV (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
-    at performUnitOfWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
-    at workLoopSync (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
-  </pre>
-  <p>
-    💿 Hey developer 👋
-  </p>
-  <p>
-    You can provide a way better UX than this when your app throws errors by providing your own 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      ErrorBoundary
-    </code>
-     or 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      errorElement
-    </code>
-     prop on your route.
-  </p>
-</DocumentFragment>
-`;
-
-exports[`Analytics > matches the snapshot when no analytics data is available 1`] = `
-<DocumentFragment>
-  <h2>
-    Unexpected Application Error!
-  </h2>
-  <h3
-    style="font-style: italic;"
-  >
-    [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-  </h3>
-  <pre
-    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
-  >
-    Error: [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-    at VitestMocker.createError (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:321:19)
-    at Object.get (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:389:22)
-    at Analytics (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/src/features/Analytics/index.tsx:24:36)
-    at Object.react_stack_bottom_frame (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
-    at renderWithHooks (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
-    at updateFunctionComponent (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
-    at beginWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
-    at runWithFiberInDEV (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
-    at performUnitOfWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
-    at workLoopSync (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
-  </pre>
-  <p>
-    💿 Hey developer 👋
-  </p>
-  <p>
-    You can provide a way better UX than this when your app throws errors by providing your own 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      ErrorBoundary
-    </code>
-     or 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      errorElement
-    </code>
-     prop on your route.
-  </p>
-</DocumentFragment>
-`;
-
-exports[`Analytics > matches the snapshot when there is an error 1`] = `
-<DocumentFragment>
-  <h2>
-    Unexpected Application Error!
-  </h2>
-  <h3
-    style="font-style: italic;"
-  >
-    [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-  </h3>
-  <pre
-    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
-  >
-    Error: [vitest] No "useGetAnalyticsSummaryQuery" export is defined on the "gql/generated/graphql" mock. Did you forget to return it from "vi.mock"?
-If you need to partially mock a module, you can use "importOriginal" helper inside:
-
-    at VitestMocker.createError (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:321:19)
-    at Object.get (file:///Users/patricksegura/Documents/GitHub/MINT%20Workspace/mint-app/node_modules/vitest/dist/chunks/execute.2pr0rHgK.js:389:22)
-    at Analytics (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/src/features/Analytics/index.tsx:24:36)
-    at Object.react_stack_bottom_frame (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:23863:20)
-    at renderWithHooks (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:5529:22)
-    at updateFunctionComponent (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:8897:19)
-    at beginWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:10522:18)
-    at runWithFiberInDEV (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:1522:13)
-    at performUnitOfWork (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:15140:22)
-    at workLoopSync (/Users/patricksegura/Documents/GitHub/MINT Workspace/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:14956:41)
-  </pre>
-  <p>
-    💿 Hey developer 👋
-  </p>
-  <p>
-    You can provide a way better UX than this when your app throws errors by providing your own 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      ErrorBoundary
-    </code>
-     or 
-    <code
-      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
-    >
-      errorElement
-    </code>
-     prop on your route.
-  </p>
 </DocumentFragment>
 `;
