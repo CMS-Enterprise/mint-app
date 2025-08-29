@@ -41,10 +41,7 @@ const FilterTags = ({
   };
 
   const UserTags = users.map(user => (
-    <Tag
-      key={user}
-      className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
-    >
+    <Tag key={user} className="mint-tag__select-tag">
       {t('user')}:<span className="text-bold margin-left-05">{user}</span>
       <div className="pointer display-inline-flex flex-align-center">
         <Icon.Close
@@ -63,14 +60,14 @@ const FilterTags = ({
     .map(type => (
       <Tag
         key={type}
-        className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
+        className="mint-tag__select-tag"
         onClick={() => handleRemoveTypeOfChange(type)}
       >
         {t('type')}:
         <span className="text-bold margin-left-05">
           {t(`filterSections.${type}`)}
         </span>
-        <div className="pointer display-inline-flex flex-align-center">
+        <div className="pointer">
           <Icon.Close
             className="margin-left-05"
             tabIndex={0}
@@ -85,7 +82,7 @@ const FilterTags = ({
   const startDateTag = startDate ? (
     <Tag
       key={startDate}
-      className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
+      className="mint-tag__select-tag"
       onClick={handleRemoveStartDate}
       onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
@@ -97,7 +94,7 @@ const FilterTags = ({
       <span className="text-bold margin-left-05">
         {formatDateUtc(startDate, 'MM/dd/yyyy')}
       </span>
-      <div className="pointer display-inline-flex flex-align-center">
+      <div className="pointer">
         <Icon.Close
           className="margin-left-05"
           tabIndex={0}
@@ -112,7 +109,7 @@ const FilterTags = ({
   const endDateTag = endDate ? (
     <Tag
       key={endDate}
-      className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
+      className="mint-tag__select-tag"
       onClick={handleRemoveEndDate}
       onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
@@ -124,7 +121,7 @@ const FilterTags = ({
       <span className="text-bold margin-left-05">
         {formatDateUtc(endDate, 'MM/dd/yyyy')}
       </span>
-      <div className="pointer display-inline-flex flex-align-center">
+      <div className="pointer">
         <Icon.Close
           className="margin-left-05"
           tabIndex={0}
