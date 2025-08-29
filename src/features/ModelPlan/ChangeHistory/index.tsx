@@ -324,6 +324,7 @@ const ChangeHistory = () => {
                       isOpen={isFilterModalOpen}
                       closeModal={() => setIsFilterModalOpen(false)}
                       collaborators={collaborators}
+                      createdDts={createdDts}
                     />
 
                     <Button

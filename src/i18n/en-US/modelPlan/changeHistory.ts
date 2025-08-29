@@ -205,8 +205,9 @@ const changeHistory = {
   filterSections,
   dateRange: 'Date range',
   dateRangeHint:
-    'View changes made within a certain date range. This Model Plan was created on 10/01/2023.',
-  from: 'From',
+    'View changes made within a certain date range. This Model Plan was created on {{date}}.',
+  fromDate: 'From',
+  toDate: 'To',
   format: 'mm/dd/yyyy',
   clearAll: 'Clear all',
   applyFilter: 'Apply filter',

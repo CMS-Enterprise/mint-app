@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import CollapsableLink from 'components/CollapsableLink';
 import DateTimePicker from 'components/DateTimePicker';
+import { formatDateUtc } from 'utils/date';
 
 import getAllContributors, {
   TypeOfChange,
@@ -27,7 +28,8 @@ const Filter = ({
   setFilters,
   isOpen,
   closeModal,
-  collaborators
+  collaborators,
+  createdDts
 }: {
   changes: ChangeRecordType[][];
   filters: FilterType;
@@ -35,6 +37,7 @@ const Filter = ({
   isOpen: boolean;
   closeModal: () => void;
   collaborators: string[];
+  createdDts: string;
 }) => {
   const { t } = useTranslation('changeHistory');
 
@@ -139,17 +142,20 @@ const Filter = ({
             </label>
 
             <div className="margin-bottom-2">
-              {collaborators.map(collaborator => (
-                <Checkbox
-                  id="collaborators"
-                  key={collaborator}
-                  name={collaborator}
-                  value={collaborator}
-                  label={collaborator}
-                  checked={selectedUsers.includes(collaborator)}
-                  onChange={() => handleContributorChange(collaborator)}
-                />
-              ))}
+              <Grid row gap={2}>
+                {collaborators.map((collaborator, index) => (
+                  <Grid key={collaborator} col={6}>
+                    <Checkbox
+                      id="collaborators"
+                      name={collaborator}
+                      value={collaborator}
+                      label={collaborator}
+                      checked={selectedUsers.includes(collaborator)}
+                      onChange={() => handleContributorChange(collaborator)}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
             </div>
 
             {/* Other Contributors */}
@@ -166,17 +172,21 @@ const Filter = ({
               </label>
 
               <div className="margin-bottom-2">
-                {contributors.map(contributor => (
-                  <Checkbox
-                    id="contributors"
-                    key={contributor}
-                    name={contributor}
-                    value={contributor}
-                    label={contributor}
-                    checked={selectedUsers.includes(contributor)}
-                    onChange={() => handleContributorChange(contributor)}
-                  />
-                ))}
+                <Grid row gap={2}>
+                  {contributors.map(contributor => (
+                    <Grid key={contributor} col={6}>
+                      <Checkbox
+                        id="contributors"
+                        key={contributor}
+                        name={contributor}
+                        value={contributor}
+                        label={contributor}
+                        checked={selectedUsers.includes(contributor)}
+                        onChange={() => handleContributorChange(contributor)}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
               </div>
             </CollapsableLink>
           </div>
@@ -191,18 +201,42 @@ const Filter = ({
               {t('modelPlanSection')}
             </label>
 
-            <div className="margin-bottom-4 margin-top-1">
-              {Object.values(TypeOfChange).map(type => (
-                <Checkbox
-                  id={`typeOfChange-${type}`}
-                  key={type}
-                  name={type}
-                  value={type}
-                  label={t(`filterSections.${type}`)}
-                  checked={selectedTypeOfChange.includes(type)}
-                  onChange={() => handleTypeOfChangeChange(type)}
-                />
-              ))}{' '}
+            <div className="margin-bottom-4 margin-top-05">
+              {/* ALL_MODEL_PLAN_SECTIONS should be on its own row */}
+              <Checkbox
+                id={`typeOfChange-${TypeOfChange.ALL_MODEL_PLAN_SECTIONS}`}
+                key={TypeOfChange.ALL_MODEL_PLAN_SECTIONS}
+                name={TypeOfChange.ALL_MODEL_PLAN_SECTIONS}
+                value={TypeOfChange.ALL_MODEL_PLAN_SECTIONS}
+                label={t(
+                  `filterSections.${TypeOfChange.ALL_MODEL_PLAN_SECTIONS}`
+                )}
+                checked={selectedTypeOfChange.includes(
+                  TypeOfChange.ALL_MODEL_PLAN_SECTIONS
+                )}
+                onChange={() =>
+                  handleTypeOfChangeChange(TypeOfChange.ALL_MODEL_PLAN_SECTIONS)
+                }
+              />
+
+              {/* All other model plan sections */}
+              <Grid row gap={2}>
+                {Object.values(TypeOfChange)
+                  .slice(1)
+                  .map(type => (
+                    <Grid key={type} col={6}>
+                      <Checkbox
+                        id={`typeOfChange-${type}`}
+                        key={type}
+                        name={type}
+                        value={type}
+                        label={t(`filterSections.${type}`)}
+                        checked={selectedTypeOfChange.includes(type)}
+                        onChange={() => handleTypeOfChangeChange(type)}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
             </div>
 
             {/* Other Types of Change */}
@@ -210,18 +244,22 @@ const Filter = ({
               {t('otherTypes')}
             </label>
 
-            <div className="margin-top-1">
-              {Object.values(TypeOfOtherChange).map(type => (
-                <Checkbox
-                  id={`typeOfChange-${type}`}
-                  key={type}
-                  name={type}
-                  value={type}
-                  label={t(`filterSections.${type}`)}
-                  checked={selectedTypeOfChange.includes(type)}
-                  onChange={() => handleTypeOfChangeChange(type)}
-                />
-              ))}{' '}
+            <div className="margin-top-05">
+              <Grid row gap={2}>
+                {Object.values(TypeOfOtherChange).map(type => (
+                  <Grid key={type} col={6}>
+                    <Checkbox
+                      id={`typeOfChange-${type}`}
+                      key={type}
+                      name={type}
+                      value={type}
+                      label={t(`filterSections.${type}`)}
+                      checked={selectedTypeOfChange.includes(type)}
+                      onChange={() => handleTypeOfChangeChange(type)}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
             </div>
           </div>
 
@@ -230,11 +268,19 @@ const Filter = ({
             <h3 className="margin-top-0 margin-bottom-1">{t('dateRange')}</h3>
 
             <p className="margin-0 text-base margin-bottom-3">
-              {t('dateRangeHint')}
+              {t('dateRangeHint', {
+                date: formatDateUtc(createdDts, 'MM/dd/yyyy')
+              })}
             </p>
 
             <Grid row gap={2} className="margin-bottom-2">
               <Grid col={6}>
+                <label htmlFor="startDate" className="text-bold">
+                  {t('fromDate')}
+                </label>
+
+                <p className="margin-0 text-base">{t('format')}</p>
+
                 <DateTimePicker
                   id="startDate"
                   name="startDate"
@@ -242,9 +288,17 @@ const Filter = ({
                   onChange={date => {
                     handleDateRangeChange('startDate', date || '');
                   }}
+                  alertText={false}
+                  alertIcon={false}
                 />
               </Grid>
               <Grid col={6}>
+                <label htmlFor="endDate" className="text-bold">
+                  {t('toDate')}
+                </label>
+
+                <p className="margin-0 text-base">{t('format')}</p>
+
                 <DateTimePicker
                   id="endDate"
                   name="endDate"
@@ -252,6 +306,8 @@ const Filter = ({
                   onChange={date => {
                     handleDateRangeChange('endDate', date || '');
                   }}
+                  alertText={false}
+                  alertIcon={false}
                 />
               </Grid>
             </Grid>
