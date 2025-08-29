@@ -8,11 +8,12 @@ import CollapsableLink from 'components/CollapsableLink';
 import DateTimePicker from 'components/DateTimePicker';
 import { formatDateUtc } from 'utils/date';
 
+import { ChangeRecordType } from '../ChangeRecord';
+
 import getAllContributors, {
   TypeOfChange,
   TypeOfOtherChange
-} from '../../filterUtil';
-import { ChangeRecordType } from '../../util';
+} from './filterUtil';
 
 export type FilterType = {
   users: string[];
@@ -81,6 +82,16 @@ const Filter = ({
 
   // Handle type of change change checkbox
   const handleTypeOfChangeChange = (type: TypeOfChange | TypeOfOtherChange) => {
+    // If ALL_MODEL_PLAN_SECTIONS is selected, clear/toggle the other checkboxes
+    if (type === TypeOfChange.ALL_MODEL_PLAN_SECTIONS) {
+      if (selectedTypeOfChange.includes(type)) {
+        setSelectedTypeOfChange([]);
+      } else {
+        setSelectedTypeOfChange(Object.values(TypeOfChange));
+      }
+      return;
+    }
+
     if (selectedTypeOfChange.includes(type)) {
       setSelectedTypeOfChange(prev => prev.filter(y => y !== type));
     } else {
@@ -163,39 +174,41 @@ const Filter = ({
             </div>
 
             {/* Other Contributors */}
-            <CollapsableLink
-              id="otherContributors"
-              label={t('viewMore')}
-              closeLabel={t('viewLess')}
-              labelPosition="bottom"
-              styleLeftBar={false}
-              startOpen={filters.users.some(user =>
-                contributors.includes(user)
-              )}
-              className="margin-bottom-2"
-            >
-              <label htmlFor="contributors" className="text-bold">
-                {t('otherContributors')}
-              </label>
+            {contributors.length > 0 && (
+              <CollapsableLink
+                id="otherContributors"
+                label={t('viewMore')}
+                closeLabel={t('viewLess')}
+                labelPosition="bottom"
+                styleLeftBar={false}
+                startOpen={filters.users.some(user =>
+                  contributors.includes(user)
+                )}
+                className="margin-bottom-2"
+              >
+                <label htmlFor="contributors" className="text-bold">
+                  {t('otherContributors')}
+                </label>
 
-              <div className="margin-bottom-2">
-                <Grid row gap={2}>
-                  {contributors.map(contributor => (
-                    <Grid key={contributor} col={6}>
-                      <Checkbox
-                        id={`contributors-${contributor}`}
-                        key={contributor}
-                        name={contributor}
-                        value={contributor}
-                        label={contributor}
-                        checked={selectedUsers.includes(contributor)}
-                        onChange={() => handleUserChange(contributor)}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
-              </div>
-            </CollapsableLink>
+                <div className="margin-bottom-2">
+                  <Grid row gap={2}>
+                    {contributors.map((contributor: string) => (
+                      <Grid key={contributor} col={6}>
+                        <Checkbox
+                          id={`contributors-${contributor}`}
+                          key={contributor}
+                          name={contributor}
+                          value={contributor}
+                          label={contributor}
+                          checked={selectedUsers.includes(contributor)}
+                          onChange={() => handleUserChange(contributor)}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </div>
+              </CollapsableLink>
+            )}
           </div>
 
           {/* Type of Change */}
@@ -230,7 +243,7 @@ const Filter = ({
               <Grid row>
                 {Object.values(TypeOfChange)
                   .slice(1)
-                  .map(type => (
+                  .map((type: TypeOfChange) => (
                     <Grid key={type} col={6}>
                       <Checkbox
                         id={`typeOfChange-${type}`}
@@ -240,6 +253,9 @@ const Filter = ({
                         label={t(`filterSections.${type}`)}
                         checked={selectedTypeOfChange.includes(type)}
                         onChange={() => handleTypeOfChangeChange(type)}
+                        disabled={selectedTypeOfChange.includes(
+                          TypeOfChange.ALL_MODEL_PLAN_SECTIONS
+                        )}
                       />
                     </Grid>
                   ))}
@@ -253,19 +269,21 @@ const Filter = ({
 
             <div className="margin-top-05 margin-bottom-1">
               <Grid row>
-                {Object.values(TypeOfOtherChange).map(type => (
-                  <Grid key={type} col={6}>
-                    <Checkbox
-                      id={`typeOfChange-${type}`}
-                      key={type}
-                      name={type}
-                      value={type}
-                      label={t(`filterSections.${type}`)}
-                      checked={selectedTypeOfChange.includes(type)}
-                      onChange={() => handleTypeOfChangeChange(type)}
-                    />
-                  </Grid>
-                ))}
+                {Object.values(TypeOfOtherChange).map(
+                  (type: TypeOfOtherChange) => (
+                    <Grid key={type} col={6}>
+                      <Checkbox
+                        id={`typeOfChange-${type}`}
+                        key={type}
+                        name={type}
+                        value={type}
+                        label={t(`filterSections.${type}`)}
+                        checked={selectedTypeOfChange.includes(type)}
+                        onChange={() => handleTypeOfChangeChange(type)}
+                      />
+                    </Grid>
+                  )
+                )}
               </Grid>
             </div>
           </div>
