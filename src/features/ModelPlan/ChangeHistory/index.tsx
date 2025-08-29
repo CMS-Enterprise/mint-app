@@ -20,7 +20,10 @@ import {
 } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import NotFound from 'features/NotFound';
-import { useGetChangeHistoryQuery } from 'gql/generated/graphql';
+import {
+  useGetChangeHistoryQuery,
+  useGetModelCollaboratorsQuery
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
@@ -99,13 +102,25 @@ const ChangeHistory = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const [filters, setFilters] = useState<FilterType>({
-    contributors: [],
+    users: [],
     typeOfChange: [],
     startDate: '',
     endDate: ''
   });
 
-  console.log(filters);
+  const { data: collaboratorsData } = useGetModelCollaboratorsQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const collaborators = useMemo(() => {
+    return (
+      collaboratorsData?.modelPlan?.collaborators.map(
+        collaborator => collaborator.userAccount.commonName
+      ) || []
+    );
+  }, [collaboratorsData]);
 
   const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
@@ -308,15 +323,16 @@ const ChangeHistory = () => {
                       setFilters={setFilters}
                       isOpen={isFilterModalOpen}
                       closeModal={() => setIsFilterModalOpen(false)}
+                      collaborators={collaborators}
                     />
 
                     <Button
                       type="button"
                       outline
-                      className="margin-right-2 height-4 margin-top-1"
+                      className="margin-right-2 margin-top-1"
                       onClick={() => setIsFilterModalOpen(true)}
                     >
-                      Filter
+                      {t('filter')}
                     </Button>
 
                     <Search
@@ -334,19 +350,18 @@ const ChangeHistory = () => {
                 {/* Select sort display */}
                 <Grid tablet={{ col: 6 }}>
                   <div
-                    className="margin-left-auto display-flex"
+                    className="margin-left-auto display-flex flex-align-center"
                     style={{ maxWidth: '13rem' }}
                   >
                     <Label
                       htmlFor="sort"
-                      className="text-normal margin-top-1 margin-right-1"
+                      className="text-normal margin-right-1 margin-top-1"
                     >
                       {t('sort.label')}
                     </Label>
 
                     <Select
                       id="sort"
-                      className="margin-bottom-2 margin-top-0"
                       name="sort"
                       value={sort}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {

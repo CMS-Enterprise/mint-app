@@ -20,8 +20,15 @@ export enum TypeOfOtherChange {
   TEAM_MEMBERS = 'TEAM_MEMBERS'
 }
 
-export const getAllContributors = (changes: ChangeRecordType[][]) => [
-  ...new Set(changes.flatMap(change => change.map(c => c.actorName)))
+export const getAllContributors = (
+  changes: ChangeRecordType[][],
+  collaborators: string[]
+) => [
+  ...new Set(
+    changes
+      .flatMap(change => change.map(c => c.actorName))
+      .filter(contributor => !collaborators?.includes(contributor))
+  )
 ];
 
 export default getAllContributors;

@@ -34,6 +34,7 @@ const Search = ({
         tableName="table-name"
         className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
         initialFilter={query || ''}
+        height5
       />
 
       {/* Results text */}
