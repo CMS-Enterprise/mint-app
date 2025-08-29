@@ -66,12 +66,16 @@ const Filter = ({
   // Get all unique contributors from existing audit changes
   const contributors = getAllContributors(changes, collaborators);
 
+  console.log('collaborators', collaborators);
+  console.log('contributors', contributors);
+  console.log('selectedUsers', selectedUsers);
+
   // Handle contributor change checkbox
-  const handleContributorChange = (contributor: string) => {
-    if (selectedUsers.includes(contributor)) {
-      setSelectedUsers(prev => prev.filter(c => c !== contributor));
+  const handleUserChange = (user: string) => {
+    if (selectedUsers.includes(user)) {
+      setSelectedUsers(prev => prev.filter(c => c !== user));
     } else {
-      setSelectedUsers(prev => [...prev, contributor]);
+      setSelectedUsers(prev => [...prev, user]);
     }
   };
 
@@ -146,12 +150,12 @@ const Filter = ({
                 {collaborators.map((collaborator, index) => (
                   <Grid key={collaborator} col={6}>
                     <Checkbox
-                      id="collaborators"
+                      id={`collaborators-${collaborator}`}
                       name={collaborator}
                       value={collaborator}
                       label={collaborator}
                       checked={selectedUsers.includes(collaborator)}
-                      onChange={() => handleContributorChange(collaborator)}
+                      onChange={() => handleUserChange(collaborator)}
                     />
                   </Grid>
                 ))}
@@ -160,11 +164,14 @@ const Filter = ({
 
             {/* Other Contributors */}
             <CollapsableLink
-              id="contributors"
+              id="otherContributors"
               label={t('viewMore')}
               closeLabel={t('viewLess')}
               labelPosition="bottom"
               styleLeftBar={false}
+              startOpen={filters.users.some(user =>
+                contributors.includes(user)
+              )}
               className="margin-bottom-2"
             >
               <label htmlFor="contributors" className="text-bold">
@@ -176,13 +183,13 @@ const Filter = ({
                   {contributors.map(contributor => (
                     <Grid key={contributor} col={6}>
                       <Checkbox
-                        id="contributors"
+                        id={`contributors-${contributor}`}
                         key={contributor}
                         name={contributor}
                         value={contributor}
                         label={contributor}
                         checked={selectedUsers.includes(contributor)}
-                        onChange={() => handleContributorChange(contributor)}
+                        onChange={() => handleUserChange(contributor)}
                       />
                     </Grid>
                   ))}
