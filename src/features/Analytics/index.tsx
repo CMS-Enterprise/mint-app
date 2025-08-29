@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonGroup, GridContainer } from '@trussworks/react-uswds';
 import downloadAnalytics, {
   analyticsSummaryConfig,
-  AnalyticsSummaryKey
+  AnalyticsSummaryKey,
+  getChangesByOtherData,
+  getChangesBySection
 } from 'features/Analytics/util';
 import NotFound from 'features/NotFound';
 import { useGetAnalyticsSummaryQuery } from 'gql/generated/graphql';
@@ -39,11 +41,17 @@ const Analytics = () => {
       </MainContent>
     );
 
-  const chartData = !Array.isArray(
+  let chartData: any = !Array.isArray(
     data.analytics[selectedChart as AnalyticsSummaryKey]
   )
     ? [data.analytics[selectedChart as AnalyticsSummaryKey]]
     : data.analytics[selectedChart as AnalyticsSummaryKey];
+
+  if (selectedChart === 'changesPerModelBySection') {
+    chartData = getChangesBySection(data.analytics.changesPerModelBySection);
+  } else if (selectedChart === 'changesPerModelOtherData') {
+    chartData = getChangesByOtherData(data.analytics.changesPerModelOtherData);
+  }
 
   return (
     <MainContent>
