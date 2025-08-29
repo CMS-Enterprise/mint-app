@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { Button, Checkbox, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import _ from 'lodash';
 
 import CollapsableLink from 'components/CollapsableLink';
 import DateTimePicker from 'components/DateTimePicker';
@@ -67,10 +68,6 @@ const FilterForm = ({
   // Get all unique contributors from existing audit changes
   const contributors = getAllContributors(changes, collaborators);
 
-  console.log('collaborators', collaborators);
-  console.log('contributors', contributors);
-  console.log('selectedUsers', selectedUsers);
-
   // Handle contributor change checkbox
   const handleUserChange = (user: string) => {
     if (selectedUsers.includes(user)) {
@@ -107,6 +104,14 @@ const FilterForm = ({
       setEndDate(value);
     }
   };
+
+  const isDisabled: boolean =
+    _.difference(selectedUsers, filters.users).length === 0 &&
+    _.difference(filters.users, selectedUsers).length === 0 &&
+    _.difference(selectedTypeOfChange, filters.typeOfChange).length === 0 &&
+    _.difference(filters.typeOfChange, selectedTypeOfChange).length === 0 &&
+    startDate === filters.startDate &&
+    endDate === filters.endDate;
 
   // Cast to any to avoid type errors. This is a common pattern for resolving React 19 compatibility issues with third-party libraries that haven't been updated yet.
   const ModalComponent = ReactModal as any;
@@ -315,6 +320,7 @@ const FilterForm = ({
                   }}
                   alertText={false}
                   alertIcon={false}
+                  isClearable
                 />
               </Grid>
               <Grid col={6}>
@@ -331,6 +337,7 @@ const FilterForm = ({
                   onChange={date => {
                     handleDateRangeChange('endDate', date || '');
                   }}
+                  isClearable
                   alertText={false}
                   alertIcon={false}
                 />
@@ -365,6 +372,7 @@ const FilterForm = ({
               });
               closeModal();
             }}
+            disabled={isDisabled}
           >
             {t('applyFilter')}
           </Button>

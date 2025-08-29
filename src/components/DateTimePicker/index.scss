@@ -5,6 +5,16 @@
   width: 100%;
 }
 
+.react-datepicker__close-icon::after {
+  background-color: transparent;
+  color: black;
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: normal;
+  cursor: pointer;
+}
+
 .react-datepicker__input-container input {
   padding: 0.5rem;
 }

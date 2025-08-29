@@ -6,6 +6,7 @@ import Tag from 'components/Tag';
 import { formatDateUtc } from 'utils/date';
 
 import { FilterType } from '../FilterForm';
+import { TypeOfChange, TypeOfOtherChange } from '../FilterForm/filterUtil';
 
 const FilterTags = ({
   filters,
@@ -22,10 +23,12 @@ const FilterTags = ({
     setFilters({ ...filters, users: filters.users.filter(u => u !== user) });
   };
 
-  const handleRemoveTypeOfChange = (type: string) => {
+  const handleRemoveTypeOfChange = (type: TypeOfChange | TypeOfOtherChange) => {
     setFilters({
       ...filters,
-      typeOfChange: filters.typeOfChange.filter(t => t !== type)
+      typeOfChange: filters.typeOfChange.filter(
+        y => y !== type && y !== TypeOfChange.ALL_MODEL_PLAN_SECTIONS // Clears ALL_MODEL_PLAN_SECTIONS if it is selected
+      )
     });
   };
 
@@ -43,35 +46,41 @@ const FilterTags = ({
       className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
     >
       {t('user')}:<span className="text-bold margin-left-05">{user}</span>
-      <Icon.Close
-        className="margin-left-05"
-        tabIndex={0}
-        role="button"
-        aria-label={`Remove ${user}`}
-        onClick={() => handleRemoveUser(user)}
-      />
+      <div className="pointer display-inline-flex flex-align-center">
+        <Icon.Close
+          className="margin-left-05"
+          tabIndex={0}
+          role="button"
+          aria-label={`Remove ${user}`}
+          onClick={() => handleRemoveUser(user)}
+        />
+      </div>
     </Tag>
   ));
 
-  const TypeOfChangeTags = typeOfChange.map(type => (
-    <Tag
-      key={type}
-      className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
-      onClick={() => handleRemoveTypeOfChange(type)}
-    >
-      {t('type')}:
-      <span className="text-bold margin-left-05">
-        {t(`filterSections.${type}`)}
-      </span>
-      <Icon.Close
-        className="margin-left-05"
-        tabIndex={0}
-        role="button"
-        aria-label={`Remove ${type}`}
+  const TypeOfChangeTags = typeOfChange
+    .filter(type => type !== TypeOfChange.ALL_MODEL_PLAN_SECTIONS)
+    .map(type => (
+      <Tag
+        key={type}
+        className="bg-primary-lighter text-normal margin-bottom-1 display-flex flex-align-center"
         onClick={() => handleRemoveTypeOfChange(type)}
-      />
-    </Tag>
-  ));
+      >
+        {t('type')}:
+        <span className="text-bold margin-left-05">
+          {t(`filterSections.${type}`)}
+        </span>
+        <div className="pointer display-inline-flex flex-align-center">
+          <Icon.Close
+            className="margin-left-05"
+            tabIndex={0}
+            role="button"
+            aria-label={`Remove ${type}`}
+            onClick={() => handleRemoveTypeOfChange(type)}
+          />
+        </div>
+      </Tag>
+    ));
 
   const startDateTag = startDate ? (
     <Tag
@@ -88,13 +97,15 @@ const FilterTags = ({
       <span className="text-bold margin-left-05">
         {formatDateUtc(startDate, 'MM/dd/yyyy')}
       </span>
-      <Icon.Close
-        className="margin-left-05"
-        tabIndex={0}
-        role="button"
-        aria-label={`Remove ${startDate}`}
-        onClick={handleRemoveStartDate}
-      />
+      <div className="pointer display-inline-flex flex-align-center">
+        <Icon.Close
+          className="margin-left-05"
+          tabIndex={0}
+          role="button"
+          aria-label={`Remove ${startDate}`}
+          onClick={handleRemoveStartDate}
+        />
+      </div>
     </Tag>
   ) : null;
 
@@ -113,13 +124,15 @@ const FilterTags = ({
       <span className="text-bold margin-left-05">
         {formatDateUtc(endDate, 'MM/dd/yyyy')}
       </span>
-      <Icon.Close
-        className="margin-left-05"
-        tabIndex={0}
-        role="button"
-        aria-label={`Remove ${endDate}`}
-        onClick={handleRemoveEndDate}
-      />
+      <div className="pointer display-inline-flex flex-align-center">
+        <Icon.Close
+          className="margin-left-05"
+          tabIndex={0}
+          role="button"
+          aria-label={`Remove ${endDate}`}
+          onClick={handleRemoveEndDate}
+        />
+      </div>
     </Tag>
   ) : null;
 

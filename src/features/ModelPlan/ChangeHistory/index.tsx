@@ -117,9 +117,9 @@ const ChangeHistory = () => {
 
   const collaborators = useMemo(() => {
     return (
-      collaboratorsData?.modelPlan?.collaborators.map(
-        collaborator => collaborator.userAccount.commonName
-      ) || []
+      collaboratorsData?.modelPlan?.collaborators
+        .map(collaborator => collaborator.userAccount.commonName)
+        .sort() || []
     );
   }, [collaboratorsData]);
 
