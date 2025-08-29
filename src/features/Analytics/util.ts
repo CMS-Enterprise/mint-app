@@ -51,7 +51,7 @@ export const analyticsSummaryConfig: Record<
 export const getChangesBySection = (
   data: GetAnalyticsSummaryQuery['analytics']['changesPerModelBySection']
 ) => {
-  const sectionData: any = {};
+  const sectionData: Record<string, number> = {};
   data.forEach(item => {
     if (!sectionData[item.tableName]) {
       sectionData[item.tableName] = 0;
@@ -67,7 +67,7 @@ export const getChangesBySection = (
 export const getChangesByOtherData = (
   data: GetAnalyticsSummaryQuery['analytics']['changesPerModelOtherData']
 ) => {
-  const otherData: any = {};
+  const otherData: Record<string, number> = {};
   data.forEach(item => {
     if (!otherData[item.section]) {
       otherData[item.section] = 0;
