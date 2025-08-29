@@ -194,3 +194,16 @@ func UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesDataExchangeApproachMarkedComplete, arg)
 }
+
+// UserAccountsGetNotificationRecipientsForDiscussionAdded returns a collection of
+// user accounts that should be notified of when a new discussion is added to a model plan
+func (s *Store) UserAccountsGetNotificationRecipientsForDiscussionAdded(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) (
+	[]*models.UserAccountAndNotificationPreferences,
+	error,
+) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesDiscussionAdded, arg)
+}

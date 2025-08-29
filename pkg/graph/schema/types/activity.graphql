@@ -11,6 +11,7 @@ enum ActivityType {
   NEW_MODEL_PLAN
   DATES_CHANGED
   DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
+  NEW_DISCUSSION_ADDED
 }
 
 enum DateChangeFieldType {
@@ -35,6 +36,7 @@ union ActivityMetaData =
   | NewModelPlanActivityMeta
   | DatesChangedActivityMeta
   | PlanDataExchangeApproachMarkedCompleteActivityMeta
+  | NewDiscussionAddedActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -131,6 +133,18 @@ type PlanDataExchangeApproachMarkedCompleteActivityMeta {
   modelPlan: ModelPlan!
   markedCompleteBy: UUID!
   markedCompleteByUserAccount: UserAccount!
+}
+
+type NewDiscussionAddedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+  userName: String!
+  modelPlanID: UUID!
+  modelPlanName: String!
+  modelAbbreviation: String!
+  role: String!
+  content: String!
 }
 
 """

@@ -18,6 +18,7 @@ const (
 	ActivityNewModelPlan                       ActivityType = "NEW_MODEL_PLAN"
 	ActivityDatesChanged                       ActivityType = "DATES_CHANGED"
 	ActivityDataExchangeApproachMarkedComplete ActivityType = "DATA_EXCHANGE_APPROACH_MARKED_COMPLETE"
+	ActivityNewDiscussionAdded                 ActivityType = "NEW_DISCUSSION_ADDED"
 )
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.
