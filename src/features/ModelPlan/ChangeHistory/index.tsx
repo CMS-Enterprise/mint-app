@@ -37,7 +37,10 @@ import { formatDateUtc } from 'utils/date';
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import FilterForm, { FilterType } from './components/FilterForm';
-import { filterUserAudits } from './components/FilterForm/filterUtil';
+import {
+  filterAuditsBetweenDates,
+  filterUserAudits
+} from './components/FilterForm/filterUtil';
 import FilterTags from './components/FilterTags';
 import Search from './components/Search';
 import {
@@ -191,13 +194,20 @@ const ChangeHistory = () => {
     if (filters.typeOfChange.length > 0) {
       let filteredTypeAudits: ChangeRecordType[][] = [];
       filters.typeOfChange.forEach(type => {
-        console.log(type);
         filteredTypeAudits = [
           ...filteredTypeAudits,
           ...searchChanges(type, filteredAudits)
         ];
       });
       filteredAudits = filteredTypeAudits;
+    }
+
+    if (filters.startDate || filters.endDate) {
+      filteredAudits = filterAuditsBetweenDates(
+        filteredAudits,
+        filters.startDate,
+        filters.endDate
+      );
     }
 
     // Set the audit changes based on the filtered audits
@@ -230,7 +240,9 @@ const ChangeHistory = () => {
     loading,
     navigate,
     filters.users,
-    filters.typeOfChange
+    filters.typeOfChange,
+    filters.startDate,
+    filters.endDate
   ]);
 
   // Update the audit changes when the data is loaded.

@@ -82,9 +82,16 @@ const FilterForm = ({
     // If ALL_MODEL_PLAN_SECTIONS is selected, clear/toggle the other checkboxes
     if (type === TypeOfChange.ALL_MODEL_PLAN_SECTIONS) {
       if (selectedTypeOfChange.includes(type)) {
+        // Remove only ALL_MODEL_PLAN_SECTIONS
         setSelectedTypeOfChange(prev => prev.filter(y => y !== type));
       } else {
-        setSelectedTypeOfChange(Object.values(TypeOfChange));
+        // Add all model plan sections to existing selected types of change
+        // Removes duplicates if Object.values(TypeOfChange) creates a copy
+        setSelectedTypeOfChange(
+          Array.from(
+            new Set([...selectedTypeOfChange, ...Object.values(TypeOfChange)])
+          )
+        );
       }
       return;
     }

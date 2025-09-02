@@ -10,7 +10,7 @@ import {
 
 export enum TypeOfChange {
   ALL_MODEL_PLAN_SECTIONS = 'all_model_plan_sections',
-  MODEL_TIMELINE = 'model_timeline',
+  MODEL_TIMELINE = 'plan_timeline',
   BASICS = 'plan_basics',
   GENERAL_CHARACTERISTICS = 'plan_general_characteristics',
   PARTICIPANTS_AND_PROVIDERS = 'plan_participants_and_providers',
@@ -25,12 +25,12 @@ export enum TypeOfOtherChange {
   DISCUSSIONS = 'discussions',
   DOCUMENTS = 'documents',
   OVERALL_STATUS = 'overall_status',
-  TEAM_MEMBERS = 'team_members'
+  TEAM_MEMBERS = 'plan_collaborator'
 }
 
 export const modelPlanTables: Record<TypeOfChange, TableName | string> = {
   all_model_plan_sections: 'all_model_plan_sections',
-  model_timeline: TableName.PLAN_TIMELINE,
+  plan_timeline: TableName.PLAN_TIMELINE,
   plan_basics: TableName.PLAN_BASICS,
   plan_general_characteristics: TableName.PLAN_GENERAL_CHARACTERISTICS,
   plan_participants_and_providers: TableName.PLAN_PARTICIPANTS_AND_PROVIDERS,
@@ -46,7 +46,7 @@ export const otherChangeTables: Record<TypeOfOtherChange, TableName | string> =
     discussions: TableName.PLAN_DISCUSSION,
     documents: TableName.PLAN_DOCUMENT,
     overall_status: 'overall_status',
-    team_members: TableName.PLAN_COLLABORATOR
+    plan_collaborator: TableName.PLAN_COLLABORATOR
   };
 
 export const mtoTables: TableName[] = [
@@ -68,77 +68,26 @@ export const getAllContributors = (
   )
 ];
 
-export const filterUserAudits = (
-  userString: string,
-  groupedAudits: ChangeRecordType[][]
+export const filterAuditsBetweenDates = (
+  groupedAudits: ChangeRecordType[][],
+  startDate?: string,
+  endDate?: string
 ): ChangeRecordType[][] => {
   return groupedAudits.filter(audits => {
     const filteredAudits = audits.filter(audit => {
-      const lowerCaseQuery = userString.toLowerCase().trim();
-
-      const actionText = getActionText(audit);
-
-      if (actionText.toLowerCase().includes(lowerCaseQuery)) {
-        return true;
-      }
-
-      // Gets translated nested action text for fields and checks for a match
-      const nestedActionTexts = audit.translatedFields.map(field =>
-        getNestedActionText(
-          field,
-          audit.action,
-          audit.tableName as TranslationTables
-        )
-      );
-
-      if (
-        nestedActionTexts.some(text =>
-          text.toLowerCase().includes(lowerCaseQuery)
-        )
-      ) {
-        return true;
-      }
-
-      // Check for a match on the header text
-      if (getHeaderText(audit).toLowerCase().includes(lowerCaseQuery)) {
-        return true;
-      }
-
-      // Check for a match on any part of metdata
-      const metaDataMatch =
-        audit.metaData &&
-        Object.values(audit.metaData).find(
-          field =>
-            typeof field === 'string' &&
-            field?.toLowerCase().includes(lowerCaseQuery)
-        );
-
-      if (metaDataMatch) return true;
-
-      const translatedFieldsMatchQuery = audit.translatedFields.filter(
-        field => {
-          if (
-            field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
-            field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
-            field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
-            field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
-          ) {
-            return true;
-          }
-
-          return false;
+      if (startDate && endDate) {
+        if (audit.date >= startDate && audit.date <= endDate) {
+          return true;
         }
-      );
-
-      // Check if the actor name matches the query
-      if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
-        return true;
+      } else if (startDate) {
+        if (audit.date >= startDate) {
+          return true;
+        }
+      } else if (endDate) {
+        if (audit.date <= endDate) {
+          return true;
+        }
       }
-
-      if (translatedFieldsMatchQuery.length > 0) {
-        return true;
-      }
-
       return false;
     });
 
