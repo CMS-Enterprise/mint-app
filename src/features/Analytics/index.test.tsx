@@ -11,6 +11,7 @@ import {
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { expect, it } from 'vitest';
 
+import { getChangesByOtherData, getChangesBySection } from './util';
 import Analytics from '.';
 
 type GetAnalyticsSummaryType = GetAnalyticsSummaryQuery;
@@ -73,6 +74,14 @@ const mockAnalyticsData: GetAnalyticsSummaryType = {
         numberOfChanges: 5,
         numberOfRecordChanges: 3,
         modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
+      },
+      {
+        __typename: 'ModelChangesBySectionAnalytics',
+        modelName: 'Test Model 2',
+        tableName: 'plan_basics',
+        numberOfChanges: 3,
+        numberOfRecordChanges: 2,
+        modelPlanID: '123e4567-e89b-12d3-a456-426614174001'
       }
     ],
     changesPerModelOtherData: [
@@ -83,6 +92,14 @@ const mockAnalyticsData: GetAnalyticsSummaryType = {
         numberOfRecordChanges: 2,
         section: 'plan_documents',
         modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
+      },
+      {
+        __typename: 'ModelChangesOtherDataAnalytics',
+        modelName: 'Test Model 2',
+        numberOfChanges: 2,
+        numberOfRecordChanges: 1,
+        section: 'plan_documents',
+        modelPlanID: '123e4567-e89b-12d3-a456-426614174001'
       }
     ]
   }
@@ -135,5 +152,25 @@ describe('Analytics', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('returns cumulative changes by section', async () => {
+    const expected = getChangesBySection(
+      mockAnalyticsData.analytics.changesPerModelBySection
+    );
+
+    expect(expected).toEqual([
+      { tableName: 'plan_basics', numberOfChanges: 8 }
+    ]);
+  });
+
+  it('returns cumulative changes by other data', async () => {
+    const expected = getChangesByOtherData(
+      mockAnalyticsData.analytics.changesPerModelOtherData
+    );
+
+    expect(expected).toEqual([
+      { section: 'plan_documents', numberOfChanges: 5 }
+    ]);
   });
 });
