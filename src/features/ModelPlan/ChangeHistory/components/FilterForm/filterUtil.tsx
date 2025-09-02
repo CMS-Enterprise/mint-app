@@ -1,12 +1,6 @@
 import { TableName } from 'gql/generated/graphql';
 
-import {
-  ChangeRecordType,
-  getActionText,
-  getHeaderText,
-  getNestedActionText,
-  TranslationTables
-} from '../../util';
+import { ChangeRecordType } from '../../util';
 
 export enum TypeOfChange {
   ALL_MODEL_PLAN_SECTIONS = 'all_model_plan_sections',
@@ -68,10 +62,11 @@ export const getAllContributors = (
   )
 ];
 
+// Filter audits between a start and end date if present
 export const filterAuditsBetweenDates = (
   groupedAudits: ChangeRecordType[][],
-  startDate?: string,
-  endDate?: string
+  startDate?: string, // ISO string
+  endDate?: string // ISO string
 ): ChangeRecordType[][] => {
   return groupedAudits.filter(audits => {
     const filteredAudits = audits.filter(audit => {

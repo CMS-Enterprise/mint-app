@@ -37,10 +37,7 @@ import { formatDateUtc } from 'utils/date';
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import FilterForm, { FilterType } from './components/FilterForm';
-import {
-  filterAuditsBetweenDates,
-  filterUserAudits
-} from './components/FilterForm/filterUtil';
+import { filterAuditsBetweenDates } from './components/FilterForm/filterUtil';
 import FilterTags from './components/FilterTags';
 import Search from './components/Search';
 import {
@@ -170,7 +167,7 @@ const ChangeHistory = () => {
   // searchChanges is a function to filter audits based on query
   const searchChanges = useCallback(filterQueryAudits, []);
 
-  //  If no query, return all solutions, otherwise, matching query solutions
+  // Main hook for filtering audits based on filters and query strings
   useEffect(() => {
     let filteredAudits: ChangeRecordType[][] = [...sortedAudits];
 
@@ -191,6 +188,7 @@ const ChangeHistory = () => {
       filteredAudits = filteredUserAudits;
     }
 
+    // If type of change is filtered, filter the audits based on the type of change
     if (filters.typeOfChange.length > 0) {
       let filteredTypeAudits: ChangeRecordType[][] = [];
       filters.typeOfChange.forEach(type => {
@@ -202,6 +200,7 @@ const ChangeHistory = () => {
       filteredAudits = filteredTypeAudits;
     }
 
+    // If date range is filtered, filter the audits based on the date range
     if (filters.startDate || filters.endDate) {
       filteredAudits = filterAuditsBetweenDates(
         filteredAudits,

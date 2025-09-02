@@ -112,8 +112,7 @@ const FilterForm = ({
     }
   };
 
-  console.log(startDate, endDate);
-
+  // Determine if the filter is disabled when local state matches parent state
   const isDisabled: boolean =
     _.difference(selectedUsers, filters.users).length === 0 &&
     _.difference(filters.users, selectedUsers).length === 0 &&

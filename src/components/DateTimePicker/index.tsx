@@ -23,7 +23,7 @@ type DateTimePickerProps = Omit<SingleDatePickerProps, 'onChange'> & {
   className?: string;
   /** Uses date converted to UTC timezone in ISO string format */
   onChange: (date: string | null) => void;
-  endOfDay?: boolean;
+  endOfDay?: boolean; // Whether to set the date to the end of the day
 };
 
 /*
