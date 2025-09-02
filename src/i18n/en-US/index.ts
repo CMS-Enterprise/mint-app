@@ -79,6 +79,7 @@ import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
 import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
+import analytics from './analytics';
 import auth from './auth';
 import cookies from './cookies';
 import error from './error';
@@ -192,7 +193,8 @@ const enUS = {
   // End Help and Knowledge Center Articles
   tableAndPagination,
   termsAndConditions,
-  externalLinkModal
+  externalLinkModal,
+  analytics
 };
 
 export default enUS;

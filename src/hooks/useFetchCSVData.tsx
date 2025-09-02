@@ -317,7 +317,7 @@ export const removedUnneededData = (
 };
 
 // Initiates the downloading of the formatted csv data
-const downloadFile = (data: string, filename: string) => {
+export const downloadFile = (data: string, filename: string) => {
   const element = document.createElement('a');
   const file = new Blob([data], {
     type: 'text/csv'
