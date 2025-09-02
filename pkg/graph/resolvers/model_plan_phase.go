@@ -227,11 +227,16 @@ func sendInAppNotificationForPhaseSuggestion(
 	}
 
 	isLeadfunc := func(user_id uuid.UUID) (bool, error) {
-		collaborator, err := store.PlanCollaboratorGetByID(user_id)
+		collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
 		if err != nil {
 			return false, err
 		}
-		return lo.Contains(models.ConvertEnums[models.TeamRole](collaborator.TeamRoles), models.TeamRoleModelLead), nil
+		for _, collaborator := range collaborators {
+			if collaborator.UserID == user_id {
+				return lo.Contains(models.ConvertEnums[models.TeamRole](collaborator.TeamRoles), models.TeamRoleModelLead), nil
+			}
+		}
+		return false, nil
 	}
 
 	systemAccountID := constants.GetSystemAccountUUID()
