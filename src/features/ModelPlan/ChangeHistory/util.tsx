@@ -549,6 +549,11 @@ export const filterQueryAudits = (
         return true;
       }
 
+      // Checks for table name match
+      if (audit.tableName.toLowerCase().includes(lowerCaseQuery)) {
+        return true;
+      }
+
       // Gets translated nested action text for fields and checks for a match
       const nestedActionTexts = audit.translatedFields.map(field =>
         getNestedActionText(

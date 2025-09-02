@@ -6,13 +6,13 @@ import {
 const filterSections: Record<TypeOfChange | TypeOfOtherChange, string> = {
   [TypeOfChange.ALL_MODEL_PLAN_SECTIONS]: 'All Model Plan sections',
   [TypeOfChange.MODEL_TIMELINE]: 'Model timeline',
-  [TypeOfChange.MODEL_BASICS]: 'Model basics',
+  [TypeOfChange.BASICS]: 'Model basics',
   [TypeOfChange.GENERAL_CHARACTERISTICS]: 'General characteristics',
   [TypeOfChange.PARTICIPANTS_AND_PROVIDERS]: 'Participants and providers',
   [TypeOfChange.BENEFICIARIES]: 'Beneficiaries',
   [TypeOfChange.OPERATIONS_EVALUATION_AND_LEARNING]:
     'Operations, evaluation, and learning',
-  [TypeOfChange.PAYMENT]: 'Payments',
+  [TypeOfChange.PAYMENTS]: 'Payments',
   [TypeOfChange.MODEL_TO_OPERATIONS]: 'Model-to-operations matrix',
   [TypeOfOtherChange.DATA_EXCHANGE_APPROACH]: 'Data exchange approach',
   [TypeOfOtherChange.DISCUSSIONS]: 'Discussions',

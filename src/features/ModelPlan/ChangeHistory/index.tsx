@@ -37,9 +37,11 @@ import { formatDateUtc } from 'utils/date';
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import FilterForm, { FilterType } from './components/FilterForm';
+import { filterUserAudits } from './components/FilterForm/filterUtil';
 import FilterTags from './components/FilterTags';
 import Search from './components/Search';
 import {
+  ChangeRecordType,
   filterQueryAudits,
   handleSortOptions,
   shouldRenderExistingLinkBatch,
@@ -167,16 +169,42 @@ const ChangeHistory = () => {
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
-    if (query.trim()) {
-      const filteredAudits = searchChanges(query, sortedAudits);
+    let filteredAudits: ChangeRecordType[][] = [...sortedAudits];
 
-      // Sets audit changes based on the filtered audits
-      setAuditChanges(filteredAudits);
-      setResultsNum(filteredAudits.length);
-    } else {
-      // Sets the default audits if no query present
-      setAuditChanges(sortedAudits);
+    // If query is present, filter the audits based on the query
+    if (query.trim()) {
+      filteredAudits = searchChanges(query, filteredAudits);
     }
+
+    // If users are filtered, filter the audits based on the users
+    if (filters.users.length > 0) {
+      let filteredUserAudits: ChangeRecordType[][] = [];
+      filters.users.forEach(user => {
+        filteredUserAudits = [
+          ...filteredUserAudits,
+          ...searchChanges(user, filteredAudits)
+        ];
+      });
+      filteredAudits = filteredUserAudits;
+    }
+
+    if (filters.typeOfChange.length > 0) {
+      let filteredTypeAudits: ChangeRecordType[][] = [];
+      filters.typeOfChange.forEach(type => {
+        console.log(type);
+        filteredTypeAudits = [
+          ...filteredTypeAudits,
+          ...searchChanges(type, filteredAudits)
+        ];
+      });
+      filteredAudits = filteredTypeAudits;
+    }
+
+    // Set the audit changes based on the filtered audits
+    setAuditChanges(filteredAudits);
+
+    // Set the results number based on the filtered audits
+    setResultsNum(filteredAudits.length);
 
     if (!loading) {
       // Update the URL's query parameters
@@ -192,7 +220,18 @@ const ChangeHistory = () => {
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
-  }, [query, searchChanges, setCurrentPage]); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    query,
+    searchChanges,
+    setCurrentPage,
+    filters.users,
+    sortedAudits,
+    loading,
+    navigate,
+    filters.users,
+    filters.typeOfChange
+  ]);
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {

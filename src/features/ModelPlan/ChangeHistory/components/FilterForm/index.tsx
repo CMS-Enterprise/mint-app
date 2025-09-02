@@ -82,7 +82,7 @@ const FilterForm = ({
     // If ALL_MODEL_PLAN_SECTIONS is selected, clear/toggle the other checkboxes
     if (type === TypeOfChange.ALL_MODEL_PLAN_SECTIONS) {
       if (selectedTypeOfChange.includes(type)) {
-        setSelectedTypeOfChange([]);
+        setSelectedTypeOfChange(prev => prev.filter(y => y !== type));
       } else {
         setSelectedTypeOfChange(Object.values(TypeOfChange));
       }
@@ -247,7 +247,7 @@ const FilterForm = ({
               {/* All other model plan sections */}
               <Grid row>
                 {Object.values(TypeOfChange)
-                  .slice(1)
+                  .slice(1) // Skip ALL_MODEL_PLAN_SECTIONS
                   .map((type: TypeOfChange) => (
                     <Grid key={type} col={6}>
                       <Checkbox
