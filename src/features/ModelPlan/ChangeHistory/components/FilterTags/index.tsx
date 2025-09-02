@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 
 import Tag from 'components/Tag';
 import { formatDateLocal } from 'utils/date';
@@ -134,12 +134,42 @@ const FilterTags = ({
   ) : null;
 
   return (
-    <div className="display-flex flex-wrap gap-2">
-      {UserTags}
-      {TypeOfChangeTags}
-      {startDateTag}
-      {endDateTag}
-    </div>
+    <>
+      <div className="display-flex flex-align-center margin-bottom-2">
+        <p className="text-bold margin-0 margin-right-1">
+          {t('filters')} (
+          {users.length +
+            typeOfChange.length +
+            (startDate ? 1 : 0) +
+            (endDate ? 1 : 0)}
+          )
+        </p>
+
+        <Button
+          type="button"
+          className="margin-0"
+          unstyled
+          onClick={() =>
+            setFilters({
+              ...filters,
+              users: [],
+              typeOfChange: [],
+              startDate: '',
+              endDate: ''
+            })
+          }
+        >
+          {t('clearAll')}
+        </Button>
+      </div>
+
+      <div className="display-flex flex-wrap gap-2">
+        {UserTags}
+        {TypeOfChangeTags}
+        {startDateTag}
+        {endDateTag}
+      </div>
+    </>
   );
 };
 

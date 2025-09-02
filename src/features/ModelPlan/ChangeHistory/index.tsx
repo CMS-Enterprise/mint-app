@@ -39,7 +39,7 @@ import ChangeRecord from './components/ChangeRecord';
 import FilterForm, { FilterType } from './components/FilterForm';
 import { filterAuditsBetweenDates } from './components/FilterForm/filterUtil';
 import FilterTags from './components/FilterTags';
-import Search from './components/Search';
+import Search, { SearchResults } from './components/Search';
 import {
   ChangeRecordType,
   filterQueryAudits,
@@ -395,6 +395,7 @@ const ChangeHistory = () => {
                       setQuery={setQuery}
                       results={auditChanges}
                       currentResults={currentItems}
+                      showResults={false}
                     />
                   </div>
                 </Grid>
@@ -436,9 +437,28 @@ const ChangeHistory = () => {
                   </div>
                 </Grid>
 
-                <Grid tablet={{ col: 12 }}>
-                  <FilterTags filters={filters} setFilters={setFilters} />
-                </Grid>
+                {filters.users.length +
+                  filters.typeOfChange.length +
+                  (filters.startDate ? 1 : 0) +
+                  (filters.endDate ? 1 : 0) >
+                  0 && (
+                  <Grid tablet={{ col: 12 }} className="margin-top-2">
+                    <FilterTags filters={filters} setFilters={setFilters} />
+                  </Grid>
+                )}
+
+                {query && (
+                  <Grid tablet={{ col: 12 }} className="margin-top-4">
+                    <SearchResults
+                      query={query}
+                      resultsNum={resultsNum}
+                      itemsPerPage={itemsPerPage}
+                      currentPage={currentPage - 1}
+                      results={auditChanges}
+                      currentResults={currentItems}
+                    />
+                  </Grid>
+                )}
               </Grid>
             </div>
 
