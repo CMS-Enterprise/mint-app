@@ -28,16 +28,24 @@ func ActivityIncorrectModelStatusCreate(
 	for i, status := range phaseSuggestion.SuggestedStatuses {
 		SuggestedStatuses[i] = string(status)
 	}
-
 	activity := models.NewIncorrectModelStatusActivity(
 		actorID,
 		modelPlan,
 		phaseSuggestion,
 	)
 
-	retActivity, actErr := activityCreate(ctx, np, activity)
-	if actErr != nil {
-		return nil, actErr
+	count, err := dbStore.activity.CountByMetadata(np, activity)
+	if err != nil {
+		return nil, err
+	}
+	if count > 0 {
+		// Don't send duplicate notification
+		return nil, nil
+	}
+
+	retActivity, err := activityCreate(ctx, np, activity)
+	if err != nil {
+		return nil, err
 	}
 
 	for _, receiverID := range receiverIDs {
