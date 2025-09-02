@@ -134,7 +134,7 @@ ENABLE TRIGGER audit_trigger;
 ALTER TABLE user_view_customization
 ENABLE TRIGGER audit_trigger;
 
--- Add back contraint in mto_common_milestone_solution_link
+-- Add back constraint in mto_common_milestone_solution_link
 ALTER TABLE mto_common_solution_contact
 ADD CONSTRAINT mto_common_solution_contact_mto_common_solution_key_fkey FOREIGN KEY (mto_common_solution_key)
 REFERENCES mto_common_solution (key);
