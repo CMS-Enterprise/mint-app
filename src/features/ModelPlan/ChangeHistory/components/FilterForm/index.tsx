@@ -112,6 +112,8 @@ const FilterForm = ({
     }
   };
 
+  console.log(startDate, endDate);
+
   const isDisabled: boolean =
     _.difference(selectedUsers, filters.users).length === 0 &&
     _.difference(filters.users, selectedUsers).length === 0 &&
@@ -344,6 +346,7 @@ const FilterForm = ({
                   onChange={date => {
                     handleDateRangeChange('endDate', date || '');
                   }}
+                  endOfDay
                   isClearable
                   alertText={false}
                   alertIcon={false}

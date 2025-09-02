@@ -23,6 +23,7 @@ type DateTimePickerProps = Omit<SingleDatePickerProps, 'onChange'> & {
   className?: string;
   /** Uses date converted to UTC timezone in ISO string format */
   onChange: (date: string | null) => void;
+  endOfDay?: boolean;
 };
 
 /*
@@ -38,6 +39,7 @@ const DateTimePicker = ({
   className,
   value,
   onChange,
+  endOfDay = false,
   ...props
 }: DateTimePickerProps) => {
   const { t: generalT } = useTranslation('general');
@@ -68,7 +70,12 @@ const DateTimePicker = ({
           onSelect={() => setIsOpen(false)}
           selected={value ? new Date(value) : null}
           // Convert date to UTC ISO string before calling onChange
-          onChange={date => onChange(convertDateToISOString(date))}
+          onChange={date => {
+            if (endOfDay && date) {
+              date.setHours(23, 59, 59, 999);
+            }
+            return onChange(convertDateToISOString(date));
+          }}
           aria-label={generalT('datePicker.label')}
           popperPlacement="bottom-start"
         />

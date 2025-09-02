@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 
 import Tag from 'components/Tag';
-import { formatDateUtc } from 'utils/date';
+import { formatDateLocal } from 'utils/date';
 
 import { FilterType } from '../FilterForm';
 import { TypeOfChange, TypeOfOtherChange } from '../FilterForm/filterUtil';
@@ -92,7 +92,7 @@ const FilterTags = ({
     >
       {t('startDate')}:
       <span className="text-bold margin-left-05">
-        {formatDateUtc(startDate, 'MM/dd/yyyy')}
+        {formatDateLocal(startDate, 'MM/dd/yyyy')}
       </span>
       <div className="pointer">
         <Icon.Close
@@ -119,7 +119,7 @@ const FilterTags = ({
     >
       {t('endDate')}:
       <span className="text-bold margin-left-05">
-        {formatDateUtc(endDate, 'MM/dd/yyyy')}
+        {formatDateLocal(endDate, 'MM/dd/yyyy')}
       </span>
       <div className="pointer">
         <Icon.Close
