@@ -1,0 +1,54 @@
+"""
+Analytics data types for various model plan metrics and statistics
+"""
+type ModelChangesAnalytics {
+  modelName: String!
+  numberOfChanges: Int!
+  numberOfRecordChanges: Int!
+  modelPlanID: UUID!
+}
+
+type ModelChangesBySectionAnalytics {
+  modelName: String!
+  tableName: String!
+  numberOfChanges: Int!
+  numberOfRecordChanges: Int!
+  modelPlanID: UUID!
+}
+
+type ModelChangesOtherDataAnalytics {
+  modelName: String!
+  tableName: String!
+  numberOfChanges: Int!
+  numberOfRecordChanges: Int!
+  section: String!
+  modelPlanID: UUID!
+}
+
+type ModelsByStatusAnalytics {
+  status: ModelStatus!
+  numberOfModels: Int!
+}
+
+type ModelFollowersAnalytics {
+  modelName: String!
+  numberOfFollowers: Int!
+  modelPlanID: UUID!
+}
+
+type ModelCountAnalytics {
+  totalNumberOfModels: Int!
+}
+
+type AnalyticsSummary {
+  changesPerModel: [ModelChangesAnalytics!]!
+  changesPerModelBySection: [ModelChangesBySectionAnalytics!]!
+  changesPerModelOtherData: [ModelChangesOtherDataAnalytics!]!
+  modelsByStatus: [ModelsByStatusAnalytics!]!
+  numberOfFollowersPerModel: [ModelFollowersAnalytics!]!
+  totalNumberOfModels: ModelCountAnalytics
+}
+
+extend type Query {
+  analytics: AnalyticsSummary! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

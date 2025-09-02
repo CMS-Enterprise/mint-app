@@ -44,6 +44,7 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             downgradeNonCMS: false,
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
+            mintAnalyticsEnabled: true,
             sandbox: true
           }
         });

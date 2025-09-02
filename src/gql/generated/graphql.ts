@@ -108,6 +108,16 @@ export enum AlternativePaymentModelType {
   REGULAR = 'REGULAR'
 }
 
+export type AnalyticsSummary = {
+  __typename: 'AnalyticsSummary';
+  changesPerModel: Array<ModelChangesAnalytics>;
+  changesPerModelBySection: Array<ModelChangesBySectionAnalytics>;
+  changesPerModelOtherData: Array<ModelChangesOtherDataAnalytics>;
+  modelsByStatus: Array<ModelsByStatusAnalytics>;
+  numberOfFollowersPerModel: Array<ModelFollowersAnalytics>;
+  totalNumberOfModels?: Maybe<ModelCountAnalytics>;
+};
+
 /** Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a */
 export type AnalyzedAudit = {
   __typename: 'AnalyzedAudit';
@@ -979,6 +989,7 @@ export enum MtoCommonSolutionKey {
   NCQA = 'NCQA',
   OACT = 'OACT',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
+  OVERLAPS_OPERATIONS_WORKGROUP = 'OVERLAPS_OPERATIONS_WORKGROUP',
   PAM = 'PAM',
   POST_PORTAL = 'POST_PORTAL',
   QPP = 'QPP',
@@ -1290,6 +1301,46 @@ export enum ModelCategory {
   TO_BE_DETERMINED = 'TO_BE_DETERMINED'
 }
 
+/** Analytics data types for various model plan metrics and statistics */
+export type ModelChangesAnalytics = {
+  __typename: 'ModelChangesAnalytics';
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  numberOfChanges: Scalars['Int']['output'];
+  numberOfRecordChanges: Scalars['Int']['output'];
+};
+
+export type ModelChangesBySectionAnalytics = {
+  __typename: 'ModelChangesBySectionAnalytics';
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  numberOfChanges: Scalars['Int']['output'];
+  numberOfRecordChanges: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
+};
+
+export type ModelChangesOtherDataAnalytics = {
+  __typename: 'ModelChangesOtherDataAnalytics';
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  numberOfChanges: Scalars['Int']['output'];
+  numberOfRecordChanges: Scalars['Int']['output'];
+  section: Scalars['String']['output'];
+  tableName: Scalars['String']['output'];
+};
+
+export type ModelCountAnalytics = {
+  __typename: 'ModelCountAnalytics';
+  totalNumberOfModels: Scalars['Int']['output'];
+};
+
+export type ModelFollowersAnalytics = {
+  __typename: 'ModelFollowersAnalytics';
+  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  numberOfFollowers: Scalars['Int']['output'];
+};
+
 export enum ModelLearningSystemType {
   EDUCATE_BENEFICIARIES = 'EDUCATE_BENEFICIARIES',
   IT_PLATFORM_CONNECT = 'IT_PLATFORM_CONNECT',
@@ -1458,6 +1509,12 @@ export enum ModelViewFilter {
   OACT = 'OACT',
   PBG = 'PBG'
 }
+
+export type ModelsByStatusAnalytics = {
+  __typename: 'ModelsByStatusAnalytics';
+  numberOfModels: Scalars['Int']['output'];
+  status: ModelStatus;
+};
 
 export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
@@ -4062,6 +4119,7 @@ export enum ProviderLeaveType {
 /** Query definition for the schema */
 export type Query = {
   __typename: 'Query';
+  analytics: AnalyticsSummary;
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
@@ -5078,6 +5136,11 @@ export enum YesNoType {
   NO = 'NO',
   YES = 'YES'
 }
+
+export type GetAnalyticsSummaryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAnalyticsSummaryQuery = { __typename: 'Query', analytics: { __typename: 'AnalyticsSummary', changesPerModel: Array<{ __typename: 'ModelChangesAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID }>, changesPerModelBySection: Array<{ __typename: 'ModelChangesBySectionAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, tableName: string }>, changesPerModelOtherData: Array<{ __typename: 'ModelChangesOtherDataAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, section: string }>, modelsByStatus: Array<{ __typename: 'ModelsByStatusAnalytics', numberOfModels: number, status: ModelStatus }>, numberOfFollowersPerModel: Array<{ __typename: 'ModelFollowersAnalytics', modelName: string, modelPlanID: UUID, numberOfFollowers: number }>, totalNumberOfModels?: { __typename: 'ModelCountAnalytics', totalNumberOfModels: number } | null } };
 
 export type GetAllBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6246,6 +6309,76 @@ export const ReadyForReviewUserFragmentFragmentDoc = gql`
   commonName
 }
     `;
+export const GetAnalyticsSummaryDocument = gql`
+    query GetAnalyticsSummary {
+  analytics {
+    changesPerModel {
+      modelName
+      numberOfChanges
+      numberOfRecordChanges
+      modelPlanID
+    }
+    changesPerModelBySection {
+      modelName
+      numberOfChanges
+      numberOfRecordChanges
+      modelPlanID
+      tableName
+    }
+    changesPerModelOtherData {
+      modelName
+      numberOfChanges
+      numberOfRecordChanges
+      modelPlanID
+      section
+    }
+    modelsByStatus {
+      numberOfModels
+      status
+    }
+    numberOfFollowersPerModel {
+      modelName
+      modelPlanID
+      numberOfFollowers
+    }
+    totalNumberOfModels {
+      totalNumberOfModels
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAnalyticsSummaryQuery__
+ *
+ * To run a query within a React component, call `useGetAnalyticsSummaryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAnalyticsSummaryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAnalyticsSummaryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAnalyticsSummaryQuery(baseOptions?: Apollo.QueryHookOptions<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>(GetAnalyticsSummaryDocument, options);
+      }
+export function useGetAnalyticsSummaryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>(GetAnalyticsSummaryDocument, options);
+        }
+export function useGetAnalyticsSummarySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>(GetAnalyticsSummaryDocument, options);
+        }
+export type GetAnalyticsSummaryQueryHookResult = ReturnType<typeof useGetAnalyticsSummaryQuery>;
+export type GetAnalyticsSummaryLazyQueryHookResult = ReturnType<typeof useGetAnalyticsSummaryLazyQuery>;
+export type GetAnalyticsSummarySuspenseQueryHookResult = ReturnType<typeof useGetAnalyticsSummarySuspenseQuery>;
+export type GetAnalyticsSummaryQueryResult = Apollo.QueryResult<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>;
 export const GetAllBasicsDocument = gql`
     query GetAllBasics($id: UUID!) {
   modelPlan(id: $id) {
@@ -15650,6 +15783,7 @@ export type UpdateTimelineMutationHookResult = ReturnType<typeof useUpdateTimeli
 export type UpdateTimelineMutationResult = Apollo.MutationResult<UpdateTimelineMutation>;
 export type UpdateTimelineMutationOptions = Apollo.BaseMutationOptions<UpdateTimelineMutation, UpdateTimelineMutationVariables>;
 export const TypedReadyForReviewUserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<ReadyForReviewUserFragmentFragment, unknown>;
+export const TypedGetAnalyticsSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnalyticsSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"analytics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changesPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelBySection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelOtherData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelsByStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numberOfModels"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowersPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowers"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalNumberOfModels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalNumberOfModels"}}]}}]}}]}}]} as unknown as DocumentNode<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>;
 export const TypedGetAllBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllBasicsQuery, GetAllBasicsQueryVariables>;
 export const TypedGetBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}}]}}]}}]}}]} as unknown as DocumentNode<GetBasicsQuery, GetBasicsQueryVariables>;
 export const TypedGetOverviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOverview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReadyForReviewUserFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<GetOverviewQuery, GetOverviewQueryVariables>;

@@ -6,7 +6,7 @@ const routes = {
     '/pre-decisional-notice': 'Pre-decisional notice',
 
     '/models': 'Models',
-    '/steps-overview': 'Start a new model plan',
+    '/steps-overview': 'Add a new model to MINT',
     '/new-plan': 'Model name',
     '/status': 'Update status',
 
