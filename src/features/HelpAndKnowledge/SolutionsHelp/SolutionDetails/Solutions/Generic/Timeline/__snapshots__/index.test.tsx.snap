@@ -268,7 +268,79 @@ exports[`Generic Timeline Components > matches the snapshot > CMMI Analysis and 
   >
     <ol
       class="usa-process-list padding-top-1"
-    />
+    >
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Let’s connect
+        </h3>
+        Reach out and we can talk (note that we will reach out to you if we don’t hear from you)! We can tell you about AMS and talk through your model/demo. &lt;italic&gt;Estimated timing: 1-2 meetings&lt;/italic&gt;
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Contract development
+        </h3>
+        When you are writing the SOO/SOW for your implementation contract, be sure to include producing participation files in the scope. &lt;italic&gt;Estimated timing: as part of SOO/SOW writing&lt;/italic&gt;
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Provide participation data
+        </h3>
+        When your model starts to have participation data (lists of entities/participants, Medicare providers, or Medicare FFS beneficiaries) then please provide this data to AMS. Note: models may also provide provider and/or beneficiary data to AMS for overlaps checking. Visit the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Overlaps Operations Workgroup
+        </button>
+         page to learn more. &lt;italic&gt;Estimated timing: ongoing activity, begins when the participation data is available &lt;/italic&gt;
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Quality measures
+        </h3>
+        Each late spring/early summer, all active and upcoming models and demos provide their quality measures to AMS.&lt;italic&gt;Estimated timing: Annually in late spring/early summer&lt;/italic&gt;
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Overlaps processing
+        </h3>
+        Please reach out to the Overlaps team to get on the schedule for the Overlaps Operations Workgroup to walk through your overlap policies with other model teams. Visit the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Overlaps Operations Workgroup
+        </button>
+         page to learn more.
+      </li>
+    </ol>
   </div>
 </DocumentFragment>
 `;

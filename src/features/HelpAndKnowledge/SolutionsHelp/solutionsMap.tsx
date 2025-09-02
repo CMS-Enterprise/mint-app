@@ -17,6 +17,7 @@ import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
 import BCDATimeLine from './SolutionDetails/Solutions/BCDA';
 import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
+import CMMIAnalysisTimeline from './SolutionDetails/Solutions/CMMIAnalysis ';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
 import GenericTimeline from './SolutionDetails/Solutions/Generic/Timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
@@ -617,13 +618,16 @@ export const helpSolutions: HelpSolutionsType = {
   },
   [MtoCommonSolutionKey.AMS]: {
     key: MtoCommonSolutionKey.AMS,
-    categories: [MtoCommonSolutionSubject.DATA],
+    categories: [
+      MtoCommonSolutionSubject.DATA,
+      MtoCommonSolutionSubject.QUALITY
+    ],
     name: 'CMMI Analysis and Management System',
     acronym: 'AMS',
     type: MtoSolutionType.IT_SYSTEM,
     components: {
       timeline: (props: SolutionDetailProps) => (
-        <GatheringInfoAlert {...props} />
+        <CMMIAnalysisTimeline {...props} />
       )
     }
   },

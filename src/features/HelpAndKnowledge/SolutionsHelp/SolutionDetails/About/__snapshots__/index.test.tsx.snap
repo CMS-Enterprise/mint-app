@@ -589,75 +589,230 @@ exports[`Operational Solutions About Components > matches the snapshot > CMMI An
     <div
       class="operational-solution-details line-height-body-5 font-body-md"
     >
-      <div
-        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
-        data-testid="alert"
-      >
-        <div
-          class="usa-alert__body"
-        >
-          <h4
-            class="usa-alert__heading"
-          >
-            We’re still gathering information about  AMS
-          </h4>
-          <p
-            class="usa-alert__text"
-          >
-            <span>
-              In the meantime, contact the MINT Team at 
-              <button
-                class="usa-button usa-button--unstyled"
-                data-testid="button"
-                type="button"
-              >
-                <span
-                  class="display-flex flex-align-center line-height-normal"
-                  style="column-gap: 0.25rem;"
-                >
-                  MINTTeam@cms.hhs.gov
-                  <svg
-                    aria-label="launch"
-                    class="usa-icon"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                    />
-                  </svg>
-                </span>
-              </button>
-              .
-            </span>
-          </p>
-        </div>
-      </div>
       <p
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
-        The CMMI Analytics & Management System (AMS), a.k.a Alternative Payment Model (APM) Management System, supports CMMI for the 
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
-        >
-          Quality Payment Program (QPP)
-        </button>
-        ; Portfolio Management and Cross Model Management; and Reporting, Analytics, and Audits. AMS serves as the central repository for CMMI model data including model design elements, model participation, quality measures, and a model’s participation in the QPP. Within 
-        <button
-          class="usa-button usa-button--unstyled"
-          data-testid="button"
-          type="button"
-        >
-          Integrated Data Repository (IDR)
-        </button>
-        , AMS also has a Business Data Mart storing model participation data enabling users to perform analysis on model participants and linking to other data sources. AMS supports QPP by storing relevant data and making it available to the Merit-Based Incentive Payment System (MIPS). The system also provides targeted data search capabilities for all data stored within AMS as well as user friendly dashboards to enable users to perform broader data searches. Lastly, AMS provides users with a BI platform (Looker) to perform more targeted and complex analysis.
+        AMS serves as the centralized source of truth for CMMI data. It serves, as the repository for participation information, quality measures, and model information. This data supports:
       </p>
+      <ul
+        class="padding-left-4 margin-top-0"
+      >
+        <li
+          class="list-item"
+        >
+          CMMI’s Data Sharing strategy through the 
+          <button
+            class="usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            CMMI Model Data Sharing (CMDS) initiative with ResDAC
+          </button>
+        </li>
+        <li
+          class="list-item"
+        >
+          The work of the Quality Reporting Program
+        </li>
+        <li
+          class="list-item"
+        >
+          Reports to Congress
+        </li>
+        <li
+          class="list-item"
+        >
+          Measurements of CMMI’s strategic objectives
+        </li>
+        <li
+          class="list-item"
+        >
+          Data requests from CMMI colleagues and those we collaborate with across the Agency
+        </li>
+      </ul>
+      <span
+        class="line-height-normal"
+      >
+        Of note, all Medicare FFS-based models are required to provide their participants (Entity, Provider, and Beneficiary, as applicable) to AMS to support accurate and complete reporting. Additionally, AMS supports provider and beneficiary overlaps checks. Visit the 
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          Overlaps Operations Workgroup
+        </button>
+         page for more information. Starting in September 2025, AMS will also support non-claims-based payment (NCBP) file processing.
+      </span>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Capabilities
+        </h3>
+        <span
+          class="text-pre-wrap "
+        >
+          AMS has four main objectives:
+        </span>
+        <ol
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            <strong>
+              Consolidate CMMI model information:
+            </strong>
+             AMS is the central repository to store data from all innovative models, programs, initiatives, and demonstrations funded under Section 3021 of the Affordable Care Act (ACA), and projects operated out of CMMI. The data consists of policy characteristics, model participation, and performance data.
+          </li>
+          <li
+            class="list-item"
+          >
+            <strong>
+              Provide reports and support analytics:
+            </strong>
+             AMS provides reports and supports data analytics for CMMI leadership and stakeholders to inform decisions on strategic design and program policy. AMS also supports model teams and staff by providing model-specific reporting and analytics.
+          </li>
+          <li
+            class="list-item"
+          >
+            <strong>
+              Support the Quality Payment Program (QPP):
+            </strong>
+             AMS collects data on Alternative Payment Model (APM) participation and Qualifying APM Participants, and provides it to the QPP for processing in the Merit-Based Incentive Payment System (MIPS). By providing a source of truth at both the Entity and Provider levels, AMS helps QPP achieve its objectives and enables analytics for model teams and QPP leadership.
+          </li>
+          <li
+            class="list-item"
+          >
+            <strong>
+              Provide overlaps and non-claims based payment (NCBP) file processing:
+            </strong>
+             AMS provides a space to collect, validate and publish overlaps files for model teams to perform overlaps processing. Starting in September 2025, AMS will also be the system model teams will use to submit their Non-Claims Based Payment files.
+          </li>
+        </ol>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Services provided
+        </h3>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            Reference information about models and demos (on the website site and via downloadable reports)
+          </li>
+          <li
+            class="list-item"
+          >
+            Participation tracking and reporting (entities/participants, providers, beneficiaries)
+          </li>
+          <li
+            class="list-item"
+          >
+            Participation data integration with the Medicare databases (CCW and IDR)
+          </li>
+          <li
+            class="list-item"
+          >
+            Quality measures tracking and reporting
+          </li>
+          <li
+            class="list-item"
+          >
+            Information about the Quality Payment Program- related information for CMMI models and participants
+          </li>
+          <li
+            class="list-item"
+          >
+            A business intelligence tool that is available via the AMS site
+          </li>
+          <li
+            class="list-item"
+          >
+            Perform overlaps processing
+          </li>
+          <li
+            class="list-item"
+          >
+            Perform non-claims based payment (NCBP) file storage
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Additional resources
+        </h3>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                Information about how to get access to AMS
+                <svg
+                  aria-label="launch"
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </li>
+          <li
+            class="list-item"
+          >
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                AMS overview
+                <svg
+                  aria-label="launch"
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </DocumentFragment>
