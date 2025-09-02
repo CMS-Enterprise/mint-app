@@ -67,7 +67,7 @@ const FilterTags = ({
         <span className="text-bold margin-left-05">
           {t(`filterSections.${type}`)}
         </span>
-        <div className="pointer">
+        <div className="pointer display-inline-flex flex-align-center">
           <Icon.Close
             className="margin-left-05"
             tabIndex={0}
@@ -94,7 +94,7 @@ const FilterTags = ({
       <span className="text-bold margin-left-05">
         {formatDateLocal(startDate, 'MM/dd/yyyy')}
       </span>
-      <div className="pointer">
+      <div className="pointer display-inline-flex flex-align-center">
         <Icon.Close
           className="margin-left-05"
           tabIndex={0}
@@ -121,7 +121,7 @@ const FilterTags = ({
       <span className="text-bold margin-left-05">
         {formatDateLocal(endDate, 'MM/dd/yyyy')}
       </span>
-      <div className="pointer">
+      <div className="pointer display-inline-flex flex-align-center">
         <Icon.Close
           className="margin-left-05"
           tabIndex={0}

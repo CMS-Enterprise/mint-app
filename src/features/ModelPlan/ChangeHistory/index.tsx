@@ -95,10 +95,16 @@ const ChangeHistory = () => {
 
   // Query parameters
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const pageParam = params.get('page');
-  const queryParam = params.get('query');
-  const sortParam = params.get('sort') as SortProps['value'];
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const pageParam = useMemo(() => params.get('page'), [params]);
+  const queryParam = useMemo(() => params.get('query'), [params]);
+  const sortParam = useMemo(
+    () => (params.get('sort') as SortProps['value']) || sortOptions[0].value,
+    [params]
+  );
 
   const { modelName, createdDts } = useContext(ModelInfoContext);
 
@@ -141,8 +147,6 @@ const ChangeHistory = () => {
   const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
   // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
-  // Contains sort state of select option dropdown
-  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
   // Search/query configuration
   const [query, setQuery] = useState<string>('');
@@ -229,29 +233,28 @@ const ChangeHistory = () => {
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     query,
     searchChanges,
     setCurrentPage,
-    filters.users,
     sortedAudits,
     loading,
     navigate,
     filters.users,
     filters.typeOfChange,
     filters.startDate,
-    filters.endDate
+    filters.endDate,
+    params
   ]);
+
+  // Determine if the parameters have been set
+  const [areParamsSet, setAreParamsSet] = useState(false);
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
-    if (!loading) {
-      setAuditChanges([...sortedChanges]);
-      setSortedAudits([...sortedChanges]);
-
-      // Set the sort based on the sort query parameter or default value
-      setSort(sortParam || sortOptions[0].value);
+    if (!loading && !areParamsSet) {
+      setAuditChanges(handleSortOptions(auditChanges, sortParam));
+      setSortedAudits(handleSortOptions(sortedChanges, sortParam));
 
       setTimeout(() => {
         // Set the query based on the query parameter
@@ -261,8 +264,21 @@ const ChangeHistory = () => {
       // Set the page offset based on the page parameter
       setCurrentPage(pageParam ? Number(pageParam) - 1 : 1);
       setPageCount(Math.ceil(auditChanges.length / itemsPerPage));
+
+      setAreParamsSet(true);
     }
-  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [
+    loading,
+    queryParam,
+    pageParam,
+    params,
+    navigate,
+    sortedChanges,
+    sortParam,
+    auditChanges.length,
+    areParamsSet,
+    auditChanges
+  ]);
 
   // Update the current items when the page offset changes.
   useEffect(() => {
@@ -274,12 +290,6 @@ const ChangeHistory = () => {
     );
     setPageCount(Math.ceil(auditChanges.length / itemsPerPage));
   }, [auditChanges, currentPage, setPageCount]);
-
-  // Sort the changes when the sort option changes.
-  useEffect(() => {
-    setAuditChanges(handleSortOptions(auditChanges, sort));
-    setSortedAudits(handleSortOptions(sortedChanges, sort));
-  }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNext = () => {
     const nextPage = currentPage + 1;
@@ -309,6 +319,14 @@ const ChangeHistory = () => {
     () => sortChangesByDay(currentItems),
     [currentItems]
   );
+
+  // Determine if the filters are applied
+  const isFiltered: boolean =
+    filters.users.length +
+      filters.typeOfChange.length +
+      (filters.startDate ? 1 : 0) +
+      (filters.endDate ? 1 : 0) >
+    0;
 
   if (error) {
     return <NotFound />;
@@ -416,11 +434,23 @@ const ChangeHistory = () => {
                     <Select
                       id="sort"
                       name="sort"
-                      value={sort}
+                      value={sortParam}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                        setSort(e.target.value as SortProps['value']);
                         params.set('sort', e.target.value);
                         navigate({ search: params.toString() });
+
+                        setAuditChanges(
+                          handleSortOptions(
+                            auditChanges,
+                            e.target.value as SortProps['value']
+                          )
+                        );
+                        setSortedAudits(
+                          handleSortOptions(
+                            sortedChanges,
+                            e.target.value as SortProps['value']
+                          )
+                        );
                       }}
                     >
                       {sortOptions.map(option => {
@@ -437,11 +467,7 @@ const ChangeHistory = () => {
                   </div>
                 </Grid>
 
-                {filters.users.length +
-                  filters.typeOfChange.length +
-                  (filters.startDate ? 1 : 0) +
-                  (filters.endDate ? 1 : 0) >
-                  0 && (
+                {isFiltered && (
                   <Grid tablet={{ col: 12 }} className="margin-top-2">
                     <FilterTags filters={filters} setFilters={setFilters} />
                   </Grid>
@@ -463,7 +489,7 @@ const ChangeHistory = () => {
             </div>
 
             {/* No results from query */}
-            {auditChanges.length === 0 && query && (
+            {auditChanges.length === 0 && (query || isFiltered) && (
               <Alert
                 type="info"
                 className="margin-bottom-2"
@@ -474,7 +500,7 @@ const ChangeHistory = () => {
             )}
 
             {/* No audits alert */}
-            {auditChanges.length === 0 && !query && (
+            {auditChanges.length === 0 && !query && !isFiltered && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
               </Alert>
