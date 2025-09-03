@@ -42,7 +42,6 @@ func (suite *ResolverSuite) TestPossibleOperationalSolutionCollectionGetByKey() 
 		models.OpSKInternalStaff,
 		models.OpSKLdg,
 		models.OpSKLv,
-		models.OpSKMdmPor,
 		models.OpSKMdmNcbp,
 		models.OpSKMarx,
 		models.OpSKOtherNewProcess,
