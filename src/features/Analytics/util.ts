@@ -22,12 +22,12 @@ export const analyticsSummaryConfig: Record<
     xAxisLabel: 'Model Name'
   },
   changesPerModelBySection: {
-    xAxisDataKey: 'modelName',
+    xAxisDataKey: 'tableName',
     yAxisDataKey: 'numberOfChanges',
     xAxisLabel: 'Model Name'
   },
   changesPerModelOtherData: {
-    xAxisDataKey: 'modelName',
+    xAxisDataKey: 'section',
     yAxisDataKey: 'numberOfChanges',
     xAxisLabel: 'Model Name'
   },
@@ -46,6 +46,38 @@ export const analyticsSummaryConfig: Record<
     yAxisDataKey: 'totalNumberOfModels',
     xAxisLabel: 'Total Number of Models'
   }
+};
+
+export const getChangesBySection = (
+  data: GetAnalyticsSummaryQuery['analytics']['changesPerModelBySection']
+) => {
+  const sectionData: Record<string, number> = {};
+  data.forEach(item => {
+    if (!sectionData[item.tableName]) {
+      sectionData[item.tableName] = 0;
+    }
+    sectionData[item.tableName] += item.numberOfChanges;
+  });
+  return Object.keys(sectionData).map(tableName => ({
+    tableName,
+    numberOfChanges: sectionData[tableName]
+  }));
+};
+
+export const getChangesByOtherData = (
+  data: GetAnalyticsSummaryQuery['analytics']['changesPerModelOtherData']
+) => {
+  const otherData: Record<string, number> = {};
+  data.forEach(item => {
+    if (!otherData[item.section]) {
+      otherData[item.section] = 0;
+    }
+    otherData[item.section] += item.numberOfChanges;
+  });
+  return Object.keys(otherData).map(section => ({
+    section,
+    numberOfChanges: otherData[section]
+  }));
 };
 
 // Prepares the analytics data for download as an XLSX file
