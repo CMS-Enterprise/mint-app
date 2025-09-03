@@ -31,6 +31,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.get('@existing-model-input')
       .type('Plan with B{downArrow}{enter}')
+      .wait(250)
       .should('have.value', 'Plan with Basics');
 
     // Resembles Questions
