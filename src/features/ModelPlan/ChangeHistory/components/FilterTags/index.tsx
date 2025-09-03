@@ -46,6 +46,7 @@ const FilterTags = ({
       <div className="pointer display-inline-flex flex-align-center">
         <Icon.Close
           className="margin-left-05"
+          data-testid={`close-icon-${user}`}
           tabIndex={0}
           role="button"
           aria-label={`Remove ${user}`}
@@ -70,6 +71,7 @@ const FilterTags = ({
         <div className="pointer display-inline-flex flex-align-center">
           <Icon.Close
             className="margin-left-05"
+            data-testid={`close-icon-${type}`}
             tabIndex={0}
             role="button"
             aria-label={`Remove ${type}`}
@@ -97,6 +99,7 @@ const FilterTags = ({
       <div className="pointer display-inline-flex flex-align-center">
         <Icon.Close
           className="margin-left-05"
+          data-testid={`close-icon-${startDate}`}
           tabIndex={0}
           role="button"
           aria-label={`Remove ${startDate}`}
@@ -124,6 +127,7 @@ const FilterTags = ({
       <div className="pointer display-inline-flex flex-align-center">
         <Icon.Close
           className="margin-left-05"
+          data-testid={`close-icon-${endDate}`}
           tabIndex={0}
           role="button"
           aria-label={`Remove ${endDate}`}
