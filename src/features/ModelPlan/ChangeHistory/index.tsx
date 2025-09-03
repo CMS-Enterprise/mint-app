@@ -75,6 +75,10 @@ const sortOptions: SortProps[] = [
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
 
+  const { modelName, createdDts } = useContext(ModelInfoContext);
+
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
   const flags = useFlags();
 
   let chReleaseDate: string = flags.changeHistoryReleaseDate;
@@ -98,16 +102,58 @@ const ChangeHistory = () => {
 
   // Query parameters
   const location = useLocation();
+
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]
   );
-  const pageParam = useMemo(() => params.get('page'), [params]);
+
+  const pageNum = useMemo(() => {
+    const page = params.get('page');
+    return page ? Number(page) : 1;
+  }, [params]);
+
+  const setCurrentPage = useCallback(
+    (page: number) => {
+      const newParams = new URLSearchParams(location.search);
+      newParams.set('page', page.toString());
+      navigate({ search: newParams.toString() });
+    },
+    [location.search, navigate]
+  );
+
   const queryParam = useMemo(() => params.get('query'), [params]);
+
+  // Search/query configuration
+  const setQuery = useCallback(
+    (query: string) => {
+      const newParams = new URLSearchParams(location.search);
+      if (query) {
+        newParams.set('query', query);
+      } else {
+        // Delete the 'query' parameter
+        newParams.delete('query');
+      }
+      newParams.delete('page');
+      navigate({ search: newParams.toString() });
+    },
+    [location.search, navigate]
+  );
+
   const sortParam = useMemo(
     () => (params.get('sort') as SortProps['value']) || sortOptions[0].value,
     [params]
   );
+
+  const setSortParam = useCallback(
+    (sort: SortProps['value']) => {
+      const newParams = new URLSearchParams(location.search);
+      newParams.set('sort', sort);
+      navigate({ search: newParams.toString() });
+    },
+    [location.search, navigate]
+  );
+
   const filters: FilterType = {
     users: useMemo(
       () => params.get('users')?.split(',') || ([] as string[]),
@@ -125,34 +171,35 @@ const ChangeHistory = () => {
   // Manages state and URL parameters for the filters
   const setFilters = useCallback(
     (filtersParams: FilterType) => {
+      const newParams = new URLSearchParams(location.search);
+
       if (filtersParams.users.length > 0) {
-        params.set('users', filtersParams.users.join(','));
+        newParams.set('users', filtersParams.users.join(','));
       } else {
-        params.delete('users');
+        newParams.delete('users');
       }
       if (filtersParams.typeOfChange.length > 0) {
-        params.set('typeOfChange', filtersParams.typeOfChange.join(','));
+        newParams.set('typeOfChange', filtersParams.typeOfChange.join(','));
       } else {
-        params.delete('typeOfChange');
+        newParams.delete('typeOfChange');
       }
       if (filtersParams.startDate) {
-        params.set('startDate', filtersParams.startDate);
+        newParams.set('startDate', filtersParams.startDate);
       } else {
-        params.delete('startDate');
+        newParams.delete('startDate');
       }
       if (filtersParams.endDate) {
-        params.set('endDate', filtersParams.endDate);
+        newParams.set('endDate', filtersParams.endDate);
       } else {
-        params.delete('endDate');
+        newParams.delete('endDate');
       }
-      navigate({ search: params.toString() });
+
+      // Reset to page 1 when filters change
+      newParams.delete('page');
+      navigate({ search: newParams.toString() });
     },
-    [params, navigate]
+    [location.search, navigate]
   );
-
-  const { modelName, createdDts } = useContext(ModelInfoContext);
-
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const { data: collaboratorsData } = useGetModelCollaboratorsQuery({
     variables: {
@@ -185,36 +232,26 @@ const ChangeHistory = () => {
   // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
-  // Search/query configuration
-  const setQuery = useCallback(
-    (query: string) => {
-      if (query) {
-        params.set('query', query);
-      } else {
-        // Delete the 'query' parameter
-        params.delete('query');
-      }
-      params.delete('page');
-      navigate({ search: params.toString() });
-    },
-    [params, navigate]
-  );
-
   const [resultsNum, setResultsNum] = useState<number>(0);
 
   // Pagination Configuration
   const itemsPerPage = 10;
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  // Memoized sorted audit changes to prevent unnecessary re-sorting
+  const sortedAuditChanges = useMemo(
+    () => handleSortOptions(auditChanges, sortParam),
+    [auditChanges, sortParam]
+  );
+
   const [pageCount, setPageCount] = useState<number>(
-    Math.floor(auditChanges.length / itemsPerPage)
+    Math.floor(sortedAuditChanges.length / itemsPerPage)
   );
 
   // Current items to dsiplay on the current page - contains search and sort data
   const [currentItems, setCurrentItems] = useState(
-    auditChanges.slice(
-      currentPage * itemsPerPage,
-      currentPage * itemsPerPage + itemsPerPage
+    sortedAuditChanges.slice(
+      (pageNum - 1) * itemsPerPage,
+      pageNum * itemsPerPage
     )
   );
 
@@ -269,18 +306,11 @@ const ChangeHistory = () => {
     // Set the results number based on the filtered audits
     setResultsNum(filteredAudits.length);
 
-    if (!loading) {
-      // Update the URL's query parameters
-      setQuery(queryParam || '');
-    }
-
-    // Return the page to the first page when the query changes
-    setCurrentPage(1);
+    // Note: We don't call setQuery here anymore to avoid resetting the page
+    // The query parameter is already set correctly from the URL
   }, [
     queryParam,
-    setQuery,
     searchChanges,
-    setCurrentPage,
     sortedAudits,
     loading,
     navigate,
@@ -288,7 +318,8 @@ const ChangeHistory = () => {
     filters.typeOfChange,
     filters.startDate,
     filters.endDate,
-    params
+    params,
+    sortParam
   ]);
 
   // Determine if the parameters have been set
@@ -297,7 +328,7 @@ const ChangeHistory = () => {
   // Update the audit changes when the data is loaded.
   useEffect(() => {
     if (!loading && !areParamsSet) {
-      setAuditChanges(handleSortOptions(auditChanges, sortParam));
+      setAuditChanges(auditChanges);
       setSortedAudits(handleSortOptions(sortedChanges, sortParam));
 
       setTimeout(() => {
@@ -306,20 +337,19 @@ const ChangeHistory = () => {
       }, 0);
 
       // Set the page offset based on the page parameter
-      setCurrentPage(pageParam ? Number(pageParam) - 1 : 1);
-      setPageCount(Math.ceil(auditChanges.length / itemsPerPage));
+      setPageCount(Math.ceil(sortedAuditChanges.length / itemsPerPage));
 
       setAreParamsSet(true);
     }
   }, [
     loading,
     queryParam,
-    pageParam,
+    pageNum,
     params,
     navigate,
     sortedChanges,
     sortParam,
-    auditChanges.length,
+    sortedAuditChanges.length,
     areParamsSet,
     auditChanges,
     setQuery
@@ -328,35 +358,42 @@ const ChangeHistory = () => {
   // Update the current items when the page offset changes.
   useEffect(() => {
     setCurrentItems(
-      auditChanges.slice(
-        (currentPage - 1) * itemsPerPage,
-        (currentPage - 1) * itemsPerPage + itemsPerPage
+      sortedAuditChanges.slice(
+        (pageNum - 1) * itemsPerPage,
+        pageNum * itemsPerPage
       )
     );
-    setPageCount(Math.ceil(auditChanges.length / itemsPerPage));
-  }, [auditChanges, currentPage, setPageCount]);
+    setPageCount(Math.ceil(sortedAuditChanges.length / itemsPerPage));
+  }, [sortedAuditChanges, pageNum, setPageCount]);
 
   const handleNext = () => {
-    const nextPage = currentPage + 1;
-    params.set('page', nextPage.toString());
-    navigate({ search: params.toString() });
-    setCurrentPage(nextPage);
+    const nextPage = pageNum + 1;
+    const maxPage = Math.ceil(sortedAuditChanges.length / itemsPerPage);
+    console.log(
+      'handleNext - current page:',
+      pageNum,
+      'next page:',
+      nextPage,
+      'max page:',
+      maxPage
+    );
+    if (nextPage <= maxPage) {
+      setCurrentPage(nextPage);
+    }
   };
 
   const handlePrevious = () => {
-    const prevPage = currentPage - 1;
-    params.set('page', prevPage.toString());
-    navigate({ search: params.toString() });
-    setCurrentPage(prevPage);
+    const prevPage = pageNum - 1;
+    if (prevPage >= 1) {
+      setCurrentPage(prevPage);
+    }
   };
 
   const handlePageNumber = (
     event: React.MouseEvent<HTMLButtonElement>,
-    pageNum: number
+    pageNumber: number
   ) => {
-    params.set('page', pageNum.toString());
-    navigate({ search: params.toString() });
-    setCurrentPage(pageNum);
+    setCurrentPage(pageNumber);
   };
 
   // Group changes by day
@@ -454,7 +491,7 @@ const ChangeHistory = () => {
                       query={queryParam}
                       resultsNum={resultsNum}
                       itemsPerPage={itemsPerPage}
-                      currentPage={currentPage - 1}
+                      currentPage={pageNum}
                       setQuery={setQuery}
                       results={auditChanges}
                       currentResults={currentItems}
@@ -481,21 +518,7 @@ const ChangeHistory = () => {
                       name="sort"
                       value={sortParam}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                        params.set('sort', e.target.value);
-                        navigate({ search: params.toString() });
-
-                        setAuditChanges(
-                          handleSortOptions(
-                            auditChanges,
-                            e.target.value as SortProps['value']
-                          )
-                        );
-                        setSortedAudits(
-                          handleSortOptions(
-                            sortedChanges,
-                            e.target.value as SortProps['value']
-                          )
-                        );
+                        setSortParam(e.target.value as SortProps['value']);
                       }}
                     >
                       {sortOptions.map(option => {
@@ -524,7 +547,7 @@ const ChangeHistory = () => {
                       query={queryParam}
                       resultsNum={resultsNum}
                       itemsPerPage={itemsPerPage}
-                      currentPage={currentPage - 1}
+                      currentPage={pageNum}
                       results={auditChanges}
                       currentResults={currentItems}
                     />
@@ -534,7 +557,7 @@ const ChangeHistory = () => {
             </div>
 
             {/* No results from query */}
-            {auditChanges.length === 0 && (queryParam || isFiltered) && (
+            {sortedAuditChanges.length === 0 && (queryParam || isFiltered) && (
               <Alert
                 type="info"
                 className="margin-bottom-2"
@@ -545,7 +568,7 @@ const ChangeHistory = () => {
             )}
 
             {/* No audits alert */}
-            {auditChanges.length === 0 && !queryParam && !isFiltered && (
+            {sortedAuditChanges.length === 0 && !queryParam && !isFiltered && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
               </Alert>
@@ -587,7 +610,7 @@ const ChangeHistory = () => {
             {pageCount > 1 && (
               <Pagination
                 pathname={location.pathname}
-                currentPage={currentPage}
+                currentPage={pageNum}
                 maxSlots={7}
                 onClickNext={handleNext}
                 onClickPageNumber={handlePageNumber}
