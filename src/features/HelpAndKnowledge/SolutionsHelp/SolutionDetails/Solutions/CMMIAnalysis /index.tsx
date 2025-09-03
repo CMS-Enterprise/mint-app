@@ -72,57 +72,6 @@ const CMMIAnalysisTimeline = ({ solution }: { solution: HelpSolutionType }) => {
           </ProcessListItem>
         ))}
       </ProcessList>
-
-      {/* {timelineConfig?.items2 && (
-        <ProcessList>
-          <ProcessListItem
-            key="complete-request"
-            className="operational-solution-details__timeline-item"
-          >
-            <ProcessListHeading
-              type="h3"
-              className="margin-top-neg-05 margin-bottom-1"
-            >
-              {timelineConfig.items2[0].header}
-            </ProcessListHeading>
-
-            <Trans
-              i18nKey={`solutions.${solution.key}.timeline.items.1.description`}
-              t={t}
-              components={{
-                email: (
-                  <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
-                    {' '}
-                  </ExternalLink>
-                ),
-                ...getTransLinkComponents(timelineConfig.items2[0].links)
-              }}
-            />
-          </ProcessListItem>
-
-          <ProcessListItem
-            key="complete-application"
-            className="operational-solution-details__timeline-item"
-          >
-            <ProcessListHeading type="h3" className="margin-top-neg-05">
-              {timelineConfig.items2[1].header}
-            </ProcessListHeading>
-
-            <p>{timelineConfig.items2[1].description}</p>
-          </ProcessListItem>
-
-          <ProcessListItem
-            key="complete-training"
-            className="operational-solution-details__timeline-item"
-          >
-            <ProcessListHeading type="h3" className="margin-top-neg-05">
-              {timelineConfig.items2[2].header}
-            </ProcessListHeading>
-
-            <p>{timelineConfig.items2[2].description}</p>
-          </ProcessListItem>
-        </ProcessList>
-      )} */}
     </div>
   );
 };
