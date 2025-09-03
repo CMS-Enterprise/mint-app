@@ -149,11 +149,10 @@ describe('Model-to-Operations Matrix', () => {
           .click({ force: true });
       });
 
-    cy.wait(500);
-
-    cy.get('[data-testid="operational-solution-modal"]').as(
-      'operationalSolutionModal'
-    );
+    // Wait for the modal to appear and be fully rendered
+    cy.get('[data-testid="operational-solution-modal"]', { timeout: 10000 })
+      .should('be.visible')
+      .as('operationalSolutionModal');
 
     cy.get('@operationalSolutionModal')
       .scrollIntoView()
