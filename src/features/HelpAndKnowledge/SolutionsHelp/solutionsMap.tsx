@@ -347,16 +347,6 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
-  [MtoCommonSolutionKey.MDM_POR]: {
-    key: MtoCommonSolutionKey.MDM_POR,
-    categories: [MtoCommonSolutionSubject.DATA],
-    acronym: 'MDM-POR',
-    type: MtoSolutionType.IT_SYSTEM,
-    name: 'Master Data Management Program-Organization Relationship',
-    components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
-    }
-  },
   [MtoCommonSolutionKey.MDM_NCBP]: {
     key: MtoCommonSolutionKey.MDM_NCBP,
     categories: [
@@ -851,8 +841,6 @@ export const routeToEnumMap: Record<string, MtoCommonSolutionKey> = {
   'integrated-data-repository': MtoCommonSolutionKey.IDR,
   'learning-and-diffusion-group': MtoCommonSolutionKey.LDG,
   'legal-vertical': MtoCommonSolutionKey.LV,
-  'master-data-management-program-organization-relationship':
-    MtoCommonSolutionKey.MDM_POR,
   'master-data-management-for-ncbp': MtoCommonSolutionKey.MDM_NCBP,
   'measure-and-instrument-development-and-support': MtoCommonSolutionKey.MIDS,
   'medicare-advantage-prescription-drug-system': MtoCommonSolutionKey.MARX,

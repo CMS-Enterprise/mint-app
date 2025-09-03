@@ -46,6 +46,7 @@ describe('user', () => {
             feedbackEnabled: false,
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
+            mintAnalyticsEnabled: true,
             sandbox: true
           })
         ).toBe(false);

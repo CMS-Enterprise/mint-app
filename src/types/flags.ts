@@ -6,6 +6,7 @@ export type Flags = {
   feedbackEnabled: boolean;
   changeHistoryReleaseDate: string;
   modelsApproachingClearanceEnabled: boolean;
+  mintAnalyticsEnabled: boolean;
   sandbox: boolean;
 };
 
