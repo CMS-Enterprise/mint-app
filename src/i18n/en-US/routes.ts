@@ -230,8 +230,6 @@ const routes = {
     'learning-and-diffusion-group':
       'Help and knowledge center solution - Learning and Diffusion Group',
     'legal-vertical': 'Help and knowledge center solution - Legal Vertical',
-    'master-data-management-program-organization-relationship':
-      'Help and knowledge center solution - Master Data Management Program Organization Relationship',
     'master-data-management-for-ncbp':
       'Help and knowledge center solution - Master Data Management for NCBP',
     'measure-and-instrument-development-and-support':

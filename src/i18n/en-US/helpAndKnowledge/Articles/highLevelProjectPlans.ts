@@ -402,22 +402,10 @@ const highLevelProjectPlans = {
           party: 'Implementation contractor'
         },
         {
-          activity: 'Manage provider overlaps',
-          modalLinks: [
-            {
-              copy: '<ml>MDM-POR</ml>',
-              route: 'master-data-management-program-organization-relationship'
-            }
-          ]
+          activity: 'Manage provider overlaps'
         },
         {
-          activity: 'Manage beneficiary overlaps',
-          modalLinks: [
-            {
-              copy: '<ml>MDM-POR</ml>',
-              route: 'master-data-management-program-organization-relationship'
-            }
-          ]
+          activity: 'Manage beneficiary overlaps'
         }
       ],
       'model-operations': [
