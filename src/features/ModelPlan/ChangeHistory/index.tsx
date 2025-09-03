@@ -149,7 +149,20 @@ const ChangeHistory = () => {
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
   // Search/query configuration
-  const [query, setQuery] = useState<string>('');
+  const setQuery = useCallback(
+    (query: string) => {
+      if (query) {
+        params.set('query', query);
+      } else {
+        // Delete the 'query' parameter
+        params.delete('query');
+      }
+      params.delete('page');
+      navigate({ search: params.toString() });
+    },
+    [params, navigate]
+  );
+
   const [resultsNum, setResultsNum] = useState<number>(0);
 
   // Pagination Configuration
@@ -176,8 +189,8 @@ const ChangeHistory = () => {
     let filteredAudits: ChangeRecordType[][] = [...sortedAudits];
 
     // If query is present, filter the audits based on the query
-    if (query.trim()) {
-      filteredAudits = searchChanges(query, filteredAudits);
+    if (queryParam?.trim()) {
+      filteredAudits = searchChanges(queryParam, filteredAudits);
     }
 
     // If users are filtered, filter the audits based on the users
@@ -221,20 +234,14 @@ const ChangeHistory = () => {
 
     if (!loading) {
       // Update the URL's query parameters
-      if (query) {
-        params.set('query', query);
-      } else {
-        // Delete the 'query' parameter
-        params.delete('query');
-      }
-      params.delete('page');
-      navigate({ search: params.toString() });
+      setQuery(queryParam || '');
     }
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
   }, [
-    query,
+    queryParam,
+    setQuery,
     searchChanges,
     setCurrentPage,
     sortedAudits,
@@ -277,7 +284,8 @@ const ChangeHistory = () => {
     sortParam,
     auditChanges.length,
     areParamsSet,
-    auditChanges
+    auditChanges,
+    setQuery
   ]);
 
   // Update the current items when the page offset changes.
@@ -406,7 +414,7 @@ const ChangeHistory = () => {
                     </Button>
 
                     <Search
-                      query={query}
+                      query={queryParam}
                       resultsNum={resultsNum}
                       itemsPerPage={itemsPerPage}
                       currentPage={currentPage - 1}
@@ -473,10 +481,10 @@ const ChangeHistory = () => {
                   </Grid>
                 )}
 
-                {query && (
+                {queryParam && (
                   <Grid tablet={{ col: 12 }} className="margin-top-4">
                     <SearchResults
-                      query={query}
+                      query={queryParam}
                       resultsNum={resultsNum}
                       itemsPerPage={itemsPerPage}
                       currentPage={currentPage - 1}
@@ -489,7 +497,7 @@ const ChangeHistory = () => {
             </div>
 
             {/* No results from query */}
-            {auditChanges.length === 0 && (query || isFiltered) && (
+            {auditChanges.length === 0 && (queryParam || isFiltered) && (
               <Alert
                 type="info"
                 className="margin-bottom-2"
@@ -500,7 +508,7 @@ const ChangeHistory = () => {
             )}
 
             {/* No audits alert */}
-            {auditChanges.length === 0 && !query && !isFiltered && (
+            {auditChanges.length === 0 && !queryParam && !isFiltered && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
               </Alert>

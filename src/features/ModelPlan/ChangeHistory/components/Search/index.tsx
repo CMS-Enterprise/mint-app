@@ -24,8 +24,6 @@ const Search = ({
   setQuery,
   showResults = true
 }: SearchProps) => {
-  const { t } = useTranslation('changeHistory');
-
   return (
     <>
       {/* Search bar */}
