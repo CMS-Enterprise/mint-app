@@ -64,6 +64,7 @@ const DateTimePicker = ({
           {...(props as SingleDatePickerProps)}
           ref={datePickerRef}
           id={id}
+          data-testid={id}
           name={name}
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
