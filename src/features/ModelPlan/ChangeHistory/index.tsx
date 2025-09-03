@@ -37,7 +37,10 @@ import { formatDateUtc } from 'utils/date';
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import FilterForm, { FilterType } from './components/FilterForm';
-import { filterAuditsBetweenDates } from './components/FilterForm/filterUtil';
+import {
+  filterAuditsBetweenDates,
+  TypeChangeFilter
+} from './components/FilterForm/filterUtil';
 import FilterTags from './components/FilterTags';
 import Search, { SearchResults } from './components/Search';
 import {
@@ -105,17 +108,51 @@ const ChangeHistory = () => {
     () => (params.get('sort') as SortProps['value']) || sortOptions[0].value,
     [params]
   );
+  const filters: FilterType = {
+    users: useMemo(
+      () => params.get('users')?.split(',') || ([] as string[]),
+      [params]
+    ),
+    typeOfChange: useMemo(
+      () =>
+        (params.get('typeOfChange')?.split(',') || []) as TypeChangeFilter[],
+      [params]
+    ),
+    startDate: useMemo(() => params.get('startDate') || '', [params]),
+    endDate: useMemo(() => params.get('endDate') || '', [params])
+  };
+
+  // Manages state and URL parameters for the filters
+  const setFilters = useCallback(
+    (filtersParams: FilterType) => {
+      if (filtersParams.users.length > 0) {
+        params.set('users', filtersParams.users.join(','));
+      } else {
+        params.delete('users');
+      }
+      if (filtersParams.typeOfChange.length > 0) {
+        params.set('typeOfChange', filtersParams.typeOfChange.join(','));
+      } else {
+        params.delete('typeOfChange');
+      }
+      if (filtersParams.startDate) {
+        params.set('startDate', filtersParams.startDate);
+      } else {
+        params.delete('startDate');
+      }
+      if (filtersParams.endDate) {
+        params.set('endDate', filtersParams.endDate);
+      } else {
+        params.delete('endDate');
+      }
+      navigate({ search: params.toString() });
+    },
+    [params, navigate]
+  );
 
   const { modelName, createdDts } = useContext(ModelInfoContext);
 
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-
-  const [filters, setFilters] = useState<FilterType>({
-    users: [],
-    typeOfChange: [],
-    startDate: '',
-    endDate: ''
-  });
 
   const { data: collaboratorsData } = useGetModelCollaboratorsQuery({
     variables: {

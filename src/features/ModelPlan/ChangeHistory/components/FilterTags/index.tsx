@@ -6,7 +6,7 @@ import Tag from 'components/Tag';
 import { formatDateLocal } from 'utils/date';
 
 import { FilterType } from '../FilterForm';
-import { TypeOfChange, TypeOfOtherChange } from '../FilterForm/filterUtil';
+import { TypeChangeFilter, TypeOfChange } from '../FilterForm/filterUtil';
 
 const FilterTags = ({
   filters,
@@ -23,7 +23,7 @@ const FilterTags = ({
     setFilters({ ...filters, users: filters.users.filter(u => u !== user) });
   };
 
-  const handleRemoveTypeOfChange = (type: TypeOfChange | TypeOfOtherChange) => {
+  const handleRemoveTypeOfChange = (type: TypeChangeFilter) => {
     setFilters({
       ...filters,
       typeOfChange: filters.typeOfChange.filter(

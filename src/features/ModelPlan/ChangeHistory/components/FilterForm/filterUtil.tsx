@@ -24,6 +24,8 @@ export enum TypeOfOtherChange {
   TEAM_MEMBERS = 'plan_collaborator'
 }
 
+export type TypeChangeFilter = TypeOfChange | TypeOfOtherChange;
+
 export const modelPlanTables: Record<TypeOfChange, TableName | string> = {
   all_model_plan_sections: 'all_model_plan_sections',
   plan_timeline: TableName.PLAN_TIMELINE,

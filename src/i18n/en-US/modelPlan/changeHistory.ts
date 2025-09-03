@@ -1,9 +1,10 @@
 import {
+  TypeChangeFilter,
   TypeOfChange,
   TypeOfOtherChange
 } from 'features/ModelPlan/ChangeHistory/components/FilterForm/filterUtil';
 
-const filterSections: Record<TypeOfChange | TypeOfOtherChange, string> = {
+const filterSections: Record<TypeChangeFilter, string> = {
   [TypeOfChange.ALL_MODEL_PLAN_SECTIONS]: 'All Model Plan sections',
   [TypeOfChange.MODEL_TIMELINE]: 'Model timeline',
   [TypeOfChange.BASICS]: 'Model basics',

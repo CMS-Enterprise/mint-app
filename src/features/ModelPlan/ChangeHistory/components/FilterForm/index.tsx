@@ -12,13 +12,14 @@ import { formatDateUtc } from 'utils/date';
 import { ChangeRecordType } from '../ChangeRecord';
 
 import getAllContributors, {
+  TypeChangeFilter,
   TypeOfChange,
   TypeOfOtherChange
 } from './filterUtil';
 
 export type FilterType = {
   users: string[];
-  typeOfChange: (TypeOfChange | TypeOfOtherChange)[];
+  typeOfChange: TypeChangeFilter[];
   startDate: string;
   endDate: string;
 };
@@ -49,7 +50,7 @@ const FilterForm = ({
   ]);
 
   const [selectedTypeOfChange, setSelectedTypeOfChange] = useState<
-    (TypeOfChange | TypeOfOtherChange)[]
+    TypeChangeFilter[]
   >([...filters.typeOfChange]);
 
   const [startDate, setStartDate] = useState<string>(filters.startDate);
@@ -78,7 +79,7 @@ const FilterForm = ({
   };
 
   // Handle type of change change checkbox
-  const handleTypeOfChangeChange = (type: TypeOfChange | TypeOfOtherChange) => {
+  const handleTypeOfChangeChange = (type: TypeChangeFilter) => {
     // If ALL_MODEL_PLAN_SECTIONS is selected, clear/toggle the other checkboxes
     if (type === TypeOfChange.ALL_MODEL_PLAN_SECTIONS) {
       if (selectedTypeOfChange.includes(type)) {
