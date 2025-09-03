@@ -72,10 +72,12 @@ const DateTimePicker = ({
           selected={value ? new Date(value) : null}
           // Convert date to UTC ISO string before calling onChange
           onChange={date => {
+            let dateToUse = date;
             if (endOfDay && date) {
-              date.setHours(23, 59, 59, 999);
+              dateToUse = new Date(date.getTime());
+              dateToUse.setHours(23, 59, 59, 999);
             }
-            return onChange(convertDateToISOString(date));
+            return onChange(convertDateToISOString(dateToUse));
           }}
           aria-label={generalT('datePicker.label')}
           popperPlacement="bottom-start"

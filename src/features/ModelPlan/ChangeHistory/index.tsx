@@ -72,6 +72,17 @@ const sortOptions: SortProps[] = [
   }
 ];
 
+/**
+ * ChangeHistory Component
+ *
+ * Displays a paginated, filterable, and searchable list of model plan changes.
+ * Features include:
+ * - URL-driven state management for filters, search, pagination, and sorting
+ * - Real-time filtering by users, change types, and date ranges
+ * - Search functionality across change records
+ * - Pagination with configurable items per page
+ * - Sorting options (newest/oldest)
+ */
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
 
@@ -100,19 +111,22 @@ const ChangeHistory = () => {
 
   const navigate = useNavigate();
 
-  // Query parameters
+  // Query parameters - Extract and manage URL search parameters
   const location = useLocation();
 
+  // Memoized URL search parameters to prevent unnecessary re-parsing
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]
   );
 
+  // Current page number from URL parameters, defaults to 1
   const pageNum = useMemo(() => {
     const page = params.get('page');
     return page ? Number(page) : 1;
   }, [params]);
 
+  // Updates the current page in URL parameters
   const setCurrentPage = useCallback(
     (page: number) => {
       const newParams = new URLSearchParams(location.search);
@@ -122,29 +136,33 @@ const ChangeHistory = () => {
     [location.search, navigate]
   );
 
+  // Current search query from URL parameters
   const queryParam = useMemo(() => params.get('query'), [params]);
 
-  // Search/query configuration
+  // Updates the search query in URL parameters and resets to page 1
   const setQuery = useCallback(
     (query: string) => {
       const newParams = new URLSearchParams(location.search);
       if (query) {
         newParams.set('query', query);
       } else {
-        // Delete the 'query' parameter
+        // Delete the 'query' parameter if empty
         newParams.delete('query');
       }
+      // Reset to page 1 when query changes
       newParams.delete('page');
       navigate({ search: newParams.toString() });
     },
     [location.search, navigate]
   );
 
+  // Current sort option from URL parameters, defaults to first sort option
   const sortParam = useMemo(
     () => (params.get('sort') as SortProps['value']) || sortOptions[0].value,
     [params]
   );
 
+  // Updates the sort parameter in URL
   const setSortParam = useCallback(
     (sort: SortProps['value']) => {
       const newParams = new URLSearchParams(location.search);
@@ -154,40 +172,52 @@ const ChangeHistory = () => {
     [location.search, navigate]
   );
 
+  // Filter state derived from URL parameters
   const filters: FilterType = {
+    // Comma-separated list of users from URL
     users: useMemo(
       () => params.get('users')?.split(',') || ([] as string[]),
       [params]
     ),
+    // Comma-separated list of change types from URL
     typeOfChange: useMemo(
       () =>
         (params.get('typeOfChange')?.split(',') || []) as TypeChangeFilter[],
       [params]
     ),
+    // Start date filter from URL
     startDate: useMemo(() => params.get('startDate') || '', [params]),
+    // End date filter from URL
     endDate: useMemo(() => params.get('endDate') || '', [params])
   };
 
-  // Manages state and URL parameters for the filters
+  // Updates filter parameters in URL and resets to page 1 when filters change
   const setFilters = useCallback(
     (filtersParams: FilterType) => {
       const newParams = new URLSearchParams(location.search);
 
+      // Update users filter
       if (filtersParams.users.length > 0) {
         newParams.set('users', filtersParams.users.join(','));
       } else {
         newParams.delete('users');
       }
+
+      // Update type of change filter
       if (filtersParams.typeOfChange.length > 0) {
         newParams.set('typeOfChange', filtersParams.typeOfChange.join(','));
       } else {
         newParams.delete('typeOfChange');
       }
+
+      // Update start date filter
       if (filtersParams.startDate) {
         newParams.set('startDate', filtersParams.startDate);
       } else {
         newParams.delete('startDate');
       }
+
+      // Update end date filter
       if (filtersParams.endDate) {
         newParams.set('endDate', filtersParams.endDate);
       } else {
@@ -201,12 +231,14 @@ const ChangeHistory = () => {
     [location.search, navigate]
   );
 
+  // Fetch model collaborators for filter options
   const { data: collaboratorsData } = useGetModelCollaboratorsQuery({
     variables: {
       id: modelID
     }
   });
 
+  // Extract and sort collaborator names for filter dropdown
   const collaborators = useMemo(() => {
     return (
       collaboratorsData?.modelPlan?.collaborators
@@ -215,12 +247,14 @@ const ChangeHistory = () => {
     );
   }, [collaboratorsData]);
 
+  // Fetch change history data for the model plan
   const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
       modelPlanID: modelID
     }
   });
 
+  // Process and sort all changes using the sortAllChanges utility
   const sortedChanges = useMemo(() => {
     const changes = [...(data?.translatedAuditCollection || [])];
 
@@ -232,22 +266,24 @@ const ChangeHistory = () => {
   // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
+  // Number of results after filtering (for display purposes)
   const [resultsNum, setResultsNum] = useState<number>(0);
 
   // Pagination Configuration
   const itemsPerPage = 10;
 
-  // Memoized sorted audit changes to prevent unnecessary re-sorting
+  // Memoized sorted audit changes to prevent unnecessary re-sorting and flicker
   const sortedAuditChanges = useMemo(
     () => handleSortOptions(auditChanges, sortParam),
     [auditChanges, sortParam]
   );
 
+  // Total number of pages based on filtered results
   const [pageCount, setPageCount] = useState<number>(
     Math.floor(sortedAuditChanges.length / itemsPerPage)
   );
 
-  // Current items to dsiplay on the current page - contains search and sort data
+  // Current items to display on the current page - contains search and sort data
   const [currentItems, setCurrentItems] = useState(
     sortedAuditChanges.slice(
       (pageNum - 1) * itemsPerPage,
@@ -255,19 +291,20 @@ const ChangeHistory = () => {
     )
   );
 
-  // searchChanges is a function to filter audits based on query
+  // Memoized search function to filter audits based on query
   const searchChanges = useCallback(filterQueryAudits, []);
 
-  // Main hook for filtering audits based on filters and query strings
+  // Main useEffect for filtering audits based on filters and query strings
   useEffect(() => {
+    // Start with all sorted audits
     let filteredAudits: ChangeRecordType[][] = [...sortedAudits];
 
-    // If query is present, filter the audits based on the query
+    // Apply search query filter if present
     if (queryParam?.trim()) {
       filteredAudits = searchChanges(queryParam, filteredAudits);
     }
 
-    // If users are filtered, filter the audits based on the users
+    // Apply user filters - combine results from all selected users
     if (filters.users.length > 0) {
       let filteredUserAudits: ChangeRecordType[][] = [];
       filters.users.forEach(user => {
@@ -279,7 +316,7 @@ const ChangeHistory = () => {
       filteredAudits = filteredUserAudits;
     }
 
-    // If type of change is filtered, filter the audits based on the type of change
+    // Apply type of change filters - combine results from all selected types
     if (filters.typeOfChange.length > 0) {
       let filteredTypeAudits: ChangeRecordType[][] = [];
       filters.typeOfChange.forEach(type => {
@@ -291,7 +328,7 @@ const ChangeHistory = () => {
       filteredAudits = filteredTypeAudits;
     }
 
-    // If date range is filtered, filter the audits based on the date range
+    // Apply date range filter if start or end date is specified
     if (filters.startDate || filters.endDate) {
       filteredAudits = filterAuditsBetweenDates(
         filteredAudits,
@@ -300,10 +337,10 @@ const ChangeHistory = () => {
       );
     }
 
-    // Set the audit changes based on the filtered audits
+    // Update the audit changes state with filtered results
     setAuditChanges(filteredAudits);
 
-    // Set the results number based on the filtered audits
+    // Update the results count for display
     setResultsNum(filteredAudits.length);
 
     // Note: We don't call setQuery here anymore to avoid resetting the page
@@ -322,10 +359,10 @@ const ChangeHistory = () => {
     sortParam
   ]);
 
-  // Determine if the parameters have been set
+  // Track whether URL parameters have been initialized to prevent duplicate processing
   const [areParamsSet, setAreParamsSet] = useState(false);
 
-  // Update the audit changes when the data is loaded.
+  // Initialize component state from URL parameters when data is first loaded
   useEffect(() => {
     if (!loading && !areParamsSet) {
       setAuditChanges(auditChanges);
@@ -355,33 +392,29 @@ const ChangeHistory = () => {
     setQuery
   ]);
 
-  // Update the current items when the page offset changes.
+  // Update the current items when the page number or sorted data changes
   useEffect(() => {
+    // Calculate the slice of items to display for the current page
     setCurrentItems(
       sortedAuditChanges.slice(
         (pageNum - 1) * itemsPerPage,
         pageNum * itemsPerPage
       )
     );
+    // Update the total page count based on filtered results
     setPageCount(Math.ceil(sortedAuditChanges.length / itemsPerPage));
   }, [sortedAuditChanges, pageNum, setPageCount]);
 
+  // Navigate to the next page if not at the last page
   const handleNext = () => {
     const nextPage = pageNum + 1;
     const maxPage = Math.ceil(sortedAuditChanges.length / itemsPerPage);
-    console.log(
-      'handleNext - current page:',
-      pageNum,
-      'next page:',
-      nextPage,
-      'max page:',
-      maxPage
-    );
     if (nextPage <= maxPage) {
       setCurrentPage(nextPage);
     }
   };
 
+  // Navigate to the previous page if not at the first page
   const handlePrevious = () => {
     const prevPage = pageNum - 1;
     if (prevPage >= 1) {
@@ -389,6 +422,7 @@ const ChangeHistory = () => {
     }
   };
 
+  // Navigate to a specific page number
   const handlePageNumber = (
     event: React.MouseEvent<HTMLButtonElement>,
     pageNumber: number
@@ -396,13 +430,13 @@ const ChangeHistory = () => {
     setCurrentPage(pageNumber);
   };
 
-  // Group changes by day
+  // Group current page items by day for display
   const changesByDay = useMemo(
     () => sortChangesByDay(currentItems),
     [currentItems]
   );
 
-  // Determine if the filters are applied
+  // Check if any filters are currently applied
   const isFiltered: boolean =
     filters.users.length +
       filters.typeOfChange.length +

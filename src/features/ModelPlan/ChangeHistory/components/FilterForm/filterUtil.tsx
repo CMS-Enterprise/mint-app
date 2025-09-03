@@ -26,7 +26,10 @@ export enum TypeOfOtherChange {
 
 export type TypeChangeFilter = TypeOfChange | TypeOfOtherChange;
 
-export const modelPlanTables: Record<TypeOfChange, TableName | string> = {
+export const modelPlanTables: Record<
+  TypeOfChange,
+  TableName | 'all_model_plan_sections' | 'model_to_operations'
+> = {
   all_model_plan_sections: 'all_model_plan_sections',
   plan_timeline: TableName.PLAN_TIMELINE,
   plan_basics: TableName.PLAN_BASICS,
