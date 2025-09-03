@@ -2,6 +2,7 @@ import { TableName } from 'gql/generated/graphql';
 
 import { ChangeRecordType } from '../../util';
 
+// Relevant values refer to TableName in the gql schema
 export enum TypeOfChange {
   ALL_MODEL_PLAN_SECTIONS = 'all_model_plan_sections',
   MODEL_TIMELINE = 'plan_timeline',
@@ -14,6 +15,7 @@ export enum TypeOfChange {
   MODEL_TO_OPERATIONS = 'model_to_operations'
 }
 
+// Relevant values refer to TableName in the gql schema
 export enum TypeOfOtherChange {
   DATA_EXCHANGE_APPROACH = 'data_exchange_approach',
   DISCUSSIONS = 'discussions',
@@ -68,6 +70,12 @@ export const filterAuditsBetweenDates = (
   startDate?: string, // ISO string
   endDate?: string // ISO string
 ): ChangeRecordType[][] => {
+  // If no start or end date is provided, return all audits
+  if (!startDate && !endDate) {
+    return groupedAudits;
+  }
+
+  // If start or end date is provided, filter audits by date
   return groupedAudits.filter(audits => {
     const filteredAudits = audits.filter(audit => {
       if (startDate && endDate) {

@@ -19,6 +19,11 @@ import i18next from 'i18next';
 
 import { formatDateUtc, formatTime } from 'utils/date';
 
+import {
+  TypeOfChange,
+  TypeOfOtherChange
+} from './components/FilterForm/filterUtil';
+
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
@@ -535,6 +540,23 @@ export const getNestedActionText = (
   return '';
 };
 
+// Checks if query string is searching for Model Plan status.  Returns all status results from the Model Plan table
+export const isModelPlanStatusChange = (
+  queryString: string,
+  audit: ChangeRecordType
+): boolean =>
+  queryString === TypeOfOtherChange.OVERALL_STATUS &&
+  audit.tableName === TableName.MODEL_PLAN &&
+  !!audit.translatedFields.find(field => field.fieldName === 'status');
+
+// Checks if query string is searching for MTO matrix.  Returns all results from any table in mtoTables
+export const isMTOChange = (
+  queryString: string,
+  audit: ChangeRecordType
+): boolean =>
+  queryString === TypeOfChange.MODEL_TO_OPERATIONS &&
+  mtoTables.includes(audit.tableName);
+
 export const filterQueryAudits = (
   queryString: string,
   groupedAudits: ChangeRecordType[][]
@@ -551,6 +573,14 @@ export const filterQueryAudits = (
 
       // Checks for table name match
       if (audit.tableName.toLowerCase().includes(lowerCaseQuery)) {
+        return true;
+      }
+
+      if (isMTOChange(queryString, audit)) {
+        return true;
+      }
+
+      if (isModelPlanStatusChange(queryString, audit)) {
         return true;
       }
 
