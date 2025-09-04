@@ -21,17 +21,21 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#plan-characteristics-is-new-model-false')
+      .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
 
     cy.get('#plan-characteristics-existing-model')
-      .should('be.visible')
+      .should('not.be.disabled')
       .as('existing-model-input')
       .click({ force: true });
 
     cy.get('@existing-model-input')
-      .type('Plan with B{downArrow}{enter}')
+      .should('be.visible')
+      .should('be.enabled')
+      .type('Plan with B')
       .wait(250)
+      .type('{downArrow}{enter}')
       .should('have.value', 'Plan with Basics');
 
     // Resembles Questions
