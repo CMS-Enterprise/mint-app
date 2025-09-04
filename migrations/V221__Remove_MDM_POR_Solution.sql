@@ -1,4 +1,4 @@
--- Disable (temp) primary contact and audit triggers
+-- Disable (temp) primary contact and audit triggers to not recording below changes
 ALTER TABLE mto_solution
 DISABLE TRIGGER audit_trigger;
 ALTER TABLE mto_common_solution_contact 
@@ -104,15 +104,15 @@ WHERE mto_common_solution_key = 'MDM_POR';
 
 --Drop (temp) constraints
 ALTER TABLE mto_common_solution_contact
-DROP CONSTRAINT mto_common_solution_contact_mto_common_solution_key_fkey;
+DROP CONSTRAINT IF EXISTS mto_common_solution_contact_mto_common_solution_key_fkey;
 ALTER TABLE mto_common_solution_contractor
-DROP CONSTRAINT mto_common_solution_contractor_mto_common_solution_key_fkey;
+DROP CONSTRAINT IF EXISTS mto_common_solution_contractor_mto_common_solution_key_fkey;
 ALTER TABLE mto_common_solution_system_owner
-DROP CONSTRAINT mto_common_solution_system_owner_mto_common_solution_key_fkey;
+DROP CONSTRAINT IF EXISTS mto_common_solution_system_owner_mto_common_solution_key_fkey;
 ALTER TABLE mto_common_milestone_solution_link 
-DROP CONSTRAINT mto_common_milestone_solution_link_mto_common_solution_key_fkey;
+DROP CONSTRAINT IF EXISTS mto_common_milestone_solution_link_mto_common_solution_key_fkey;
 ALTER TABLE mto_solution 
-DROP CONSTRAINT mto_solution_mto_common_solution_key_fkey;
+DROP CONSTRAINT IF EXISTS mto_solution_mto_common_solution_key_fkey;
 
 -- Delete MDM_POR row from common solutions
 DELETE FROM mto_common_solution 
