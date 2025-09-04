@@ -17,7 +17,6 @@ import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';
 import BCDATimeLine from './SolutionDetails/Solutions/BCDA';
 import CentralizedDataExhangeTimeline from './SolutionDetails/Solutions/CentralizedDataExchange';
 import ChronicConditionsTimeline from './SolutionDetails/Solutions/ChronicConditions';
-import CMMIAnalysisTimeline from './SolutionDetails/Solutions/CMMIAnalysis ';
 import CMSBoxTimeline from './SolutionDetails/Solutions/CMSBox';
 import GenericTimeline from './SolutionDetails/Solutions/Generic/Timeline';
 import HIGLASTimeline from './SolutionDetails/Solutions/HIGLAS';
@@ -616,9 +615,7 @@ export const helpSolutions: HelpSolutionsType = {
     acronym: 'AMS',
     type: MtoSolutionType.IT_SYSTEM,
     components: {
-      timeline: (props: SolutionDetailProps) => (
-        <CMMIAnalysisTimeline {...props} />
-      )
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
   [MtoCommonSolutionKey.IC_LANDING]: {
