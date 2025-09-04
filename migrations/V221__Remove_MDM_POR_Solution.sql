@@ -1,3 +1,40 @@
+-- Disable (temp) primary contact and audit triggers
+ALTER TABLE mto_solution
+DISABLE TRIGGER audit_trigger;
+ALTER TABLE mto_common_solution_contact 
+DISABLE TRIGGER trg_ensure_primary_contact_MTO;
+ALTER TABLE mto_common_solution_contact 
+DISABLE TRIGGER audit_trigger;
+ALTER TABLE user_view_customization
+DISABLE TRIGGER audit_trigger;
+
+WITH poc_table AS (
+    SELECT solution.id, "user".common_name, contact.mailbox_title, "user".email, contact.mailbox_address
+    FROM mto_solution AS solution
+    LEFT JOIN mto_common_solution_contact AS contact
+        ON
+            solution.mto_common_solution_key = contact.mto_common_solution_key
+            AND contact.is_primary
+    LEFT JOIN user_account AS "user" ON "user".id = contact.user_id
+    WHERE solution.mto_common_solution_key = 'MDM_POR'
+)
+
+-- Replace existed MDM_POR from common solution to custom solution
+UPDATE mto_solution AS solution
+SET 
+    mto_common_solution_key = NULL,
+    name = 'Master Data Management Program-Organization Relationship',
+    type = 'IT_SYSTEM',
+    modified_by = '00000001-0001-0001-0001-000000000001', -- System Account
+    modified_dts = CURRENT_TIMESTAMP,
+    poc_name = 
+    COALESCE(poc_table.common_name, poc_table.mailbox_title),
+    poc_email = 
+    COALESCE(poc_table.email, poc_table.mailbox_address)
+FROM poc_table
+WHERE
+    solution.id = poc_table.id;
+
 -- Create new enum without MDM_POR
 CREATE TYPE MTO_COMMON_SOLUTION_NEW_KEY AS ENUM (
     'INNOVATION',
@@ -55,19 +92,16 @@ CREATE TYPE MTO_COMMON_SOLUTION_NEW_KEY AS ENUM (
     'OVERLAPS_OPERATIONS_WORKGROUP'
 );
 
--- Disable (temp) primary contact and audit triggers
-ALTER TABLE mto_common_solution_contact 
-DISABLE TRIGGER trg_ensure_primary_contact_MTO;
-ALTER TABLE mto_common_solution_contact 
-DISABLE TRIGGER audit_trigger;
-ALTER TABLE mto_solution
-DISABLE TRIGGER audit_trigger;
-ALTER TABLE user_view_customization
-DISABLE TRIGGER audit_trigger;
-
--- Delete primary contact for MDM_POR solution
+-- Delete all contacts for MDM_POR solution
 DELETE FROM mto_common_solution_contact 
 WHERE mto_common_solution_key = 'MDM_POR';
+
+DELETE FROM mto_common_solution_contractor 
+WHERE mto_common_solution_key = 'MDM_POR';
+
+DELETE FROM mto_common_solution_system_owner 
+WHERE mto_common_solution_key = 'MDM_POR';
+
 --Drop (temp) constraints
 ALTER TABLE mto_common_solution_contact
 DROP CONSTRAINT mto_common_solution_contact_mto_common_solution_key_fkey;
