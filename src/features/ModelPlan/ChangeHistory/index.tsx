@@ -182,13 +182,13 @@ const ChangeHistory = () => {
     // Comma-separated list of change types from URL
     typeOfChange: useMemo(
       () =>
-        (params.get('typeOfChange')?.split(',') || []) as TypeChangeFilter[],
+        (params.get('type-of-change')?.split(',') || []) as TypeChangeFilter[],
       [params]
     ),
     // Start date filter from URL
-    startDate: useMemo(() => params.get('startDate') || '', [params]),
+    startDate: useMemo(() => params.get('start-date') || '', [params]),
     // End date filter from URL
-    endDate: useMemo(() => params.get('endDate') || '', [params])
+    endDate: useMemo(() => params.get('end-date') || '', [params])
   };
 
   // Updates filter parameters in URL and resets to page 1 when filters change
@@ -205,23 +205,23 @@ const ChangeHistory = () => {
 
       // Update type of change filter
       if (filtersParams.typeOfChange.length > 0) {
-        newParams.set('typeOfChange', filtersParams.typeOfChange.join(','));
+        newParams.set('type-of-change', filtersParams.typeOfChange.join(','));
       } else {
-        newParams.delete('typeOfChange');
+        newParams.delete('type-of-change');
       }
 
       // Update start date filter
       if (filtersParams.startDate) {
-        newParams.set('startDate', filtersParams.startDate);
+        newParams.set('start-date', filtersParams.startDate);
       } else {
-        newParams.delete('startDate');
+        newParams.delete('start-date');
       }
 
       // Update end date filter
       if (filtersParams.endDate) {
-        newParams.set('endDate', filtersParams.endDate);
+        newParams.set('end-date', filtersParams.endDate);
       } else {
-        newParams.delete('endDate');
+        newParams.delete('end-date');
       }
 
       // Reset to page 1 when filters change
