@@ -16,7 +16,7 @@ WITH poc_table AS (
             solution.mto_common_solution_key = contact.mto_common_solution_key
             AND contact.is_primary
     LEFT JOIN user_account AS "user" ON "user".id = contact.user_id
-    WHERE solution.mto_common_solution_key = 'MDM_POR'
+    WHERE solution.mto_common_solution_key::TEXT = 'MDM_POR' 
 )
 
 -- Replace existed MDM_POR from common solution to custom solution
@@ -94,13 +94,13 @@ CREATE TYPE MTO_COMMON_SOLUTION_NEW_KEY AS ENUM (
 
 -- Delete all contacts for MDM_POR solution
 DELETE FROM mto_common_solution_contact 
-WHERE mto_common_solution_key = 'MDM_POR';
+WHERE mto_common_solution_key::TEXT = 'MDM_POR';
 
 DELETE FROM mto_common_solution_contractor 
-WHERE mto_common_solution_key = 'MDM_POR';
+WHERE mto_common_solution_key::TEXT = 'MDM_POR';
 
 DELETE FROM mto_common_solution_system_owner 
-WHERE mto_common_solution_key = 'MDM_POR';
+WHERE mto_common_solution_key::TEXT = 'MDM_POR';
 
 --Drop (temp) constraints
 ALTER TABLE mto_common_solution_contact
@@ -116,7 +116,7 @@ DROP CONSTRAINT IF EXISTS mto_solution_mto_common_solution_key_fkey;
 
 -- Delete MDM_POR row from common solutions
 DELETE FROM mto_common_solution 
-WHERE key = 'MDM_POR';
+WHERE key::TEXT = 'MDM_POR';
 -- Convert all existing solution keys to new enum
 ALTER TABLE mto_common_solution
 ALTER COLUMN key TYPE MTO_COMMON_SOLUTION_NEW_KEY 
