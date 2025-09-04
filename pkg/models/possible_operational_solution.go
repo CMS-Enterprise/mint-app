@@ -39,7 +39,6 @@ const (
 	OpSKInternalStaff             OperationalSolutionKey = "INTERNAL_STAFF"
 	OpSKLdg                       OperationalSolutionKey = "LDG"
 	OpSKLv                        OperationalSolutionKey = "LV"
-	OpSKMdmPor                    OperationalSolutionKey = "MDM_POR"
 	OpSKMdmNcbp                   OperationalSolutionKey = "MDM_NCBP"
 	OpSKMarx                      OperationalSolutionKey = "MARX"
 	OpSKOtherNewProcess           OperationalSolutionKey = "OTHER_NEW_PROCESS"
