@@ -2,6 +2,7 @@ import {
   AnalyticsSummary,
   GetAnalyticsSummaryQuery,
   GetMtoMilestoneSummaryQuery,
+  MtoMilestoneStatus,
   MtoRiskIndicator
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
@@ -217,7 +218,10 @@ export const downloadMTOMilestoneSummary = (
       flattenedData.push({
         'Model Plan': !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
-        'Needed By': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
+        'Needed By':
+          milestone.status === MtoMilestoneStatus.COMPLETED
+            ? 'Completed'
+            : formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
         ...quarterObject
@@ -317,6 +321,24 @@ export const downloadMTOMilestoneSummary = (
       cell.s.fill = { fgColor: { rgb: backgroundColor } };
       cell.s.font = { color: { rgb: textColor }, bold: true };
       cell.s.alignment = { horizontal: 'center' };
+    }
+  }
+
+  // Style "Needed By" column - make 'Completed' text grey
+  const neededByColumnIndex = 2; // "Needed By" is the 3rd column (0-indexed)
+  for (let row = 1; row <= range.e.r; row += 1) {
+    const cellAddress = XLSX.utils.encode_cell({
+      r: row,
+      c: neededByColumnIndex
+    });
+    const cell = sheet[cellAddress];
+
+    if (cell && cell.v === 'Completed') {
+      // Apply grey text color for completed milestones
+      if (!cell.s) {
+        cell.s = {};
+      }
+      cell.s.font = { color: { rgb: '808080' } }; // Grey text color
     }
   }
 
