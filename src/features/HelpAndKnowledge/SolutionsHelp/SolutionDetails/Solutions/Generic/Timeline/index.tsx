@@ -90,29 +90,31 @@ export const GenericTimeline = ({
         <h3 className="margin-bottom-0 text-bold">{timelineConfig.header2}</h3>
       )}
 
-      <ProcessList>
-        {timelineConfig.items2?.map((item: any, index: number) => (
-          <ProcessListItem
-            key={item.header}
-            className="operational-solution-details__timeline-item"
-          >
-            <ProcessListHeading type="h3" className="margin-top-neg-05">
-              {item.header}
-            </ProcessListHeading>
+      {timelineConfig.items2 && (
+        <ProcessList>
+          {timelineConfig.items2.map((item: any, index: number) => (
+            <ProcessListItem
+              key={item.header}
+              className="operational-solution-details__timeline-item"
+            >
+              <ProcessListHeading type="h3" className="margin-top-neg-05">
+                {item.header}
+              </ProcessListHeading>
 
-            {item.description && (
-              <Trans
-                i18nKey={`helpAndKnowledge:solutions.${solution.key}.timeline.items2.${index}.description`}
-                components={{
-                  ...getTransLinkComponents(item.links),
-                  bold: <strong />,
-                  italic: <p className="text-italic text-base" />
-                }}
-              />
-            )}
-          </ProcessListItem>
-        ))}
-      </ProcessList>
+              {item.description && (
+                <Trans
+                  i18nKey={`helpAndKnowledge:solutions.${solution.key}.timeline.items2.${index}.description`}
+                  components={{
+                    ...getTransLinkComponents(item.links),
+                    bold: <strong />,
+                    italic: <p className="text-italic text-base" />
+                  }}
+                />
+              )}
+            </ProcessListItem>
+          ))}
+        </ProcessList>
+      )}
     </div>
   );
 };
