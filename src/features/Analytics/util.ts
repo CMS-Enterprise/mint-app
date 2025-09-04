@@ -1,10 +1,14 @@
 import {
   AnalyticsSummary,
-  GetAnalyticsSummaryQuery
+  GetAnalyticsSummaryQuery,
+  GetMtoMilestoneSummaryQuery,
+  MtoRiskIndicator
 } from 'gql/generated/graphql';
+import i18next from 'i18next';
 import * as XLSX from 'xlsx';
 
 import { getKeys } from 'types/translation';
+import { formatDateUtc } from 'utils/date';
 
 export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
 
@@ -81,10 +85,7 @@ export const getChangesByOtherData = (
 };
 
 // Prepares the analytics data for download as an XLSX file
-const downloadAnalytics = (
-  data: GetAnalyticsSummaryQuery['analytics'],
-  exportFileName: string
-) => {
+function downloadAnalytics<T>(data: T, exportFileName: string): void {
   if (!data) return;
 
   // Create a new workbook
@@ -107,12 +108,12 @@ const downloadAnalytics = (
     const columnWidths = autoFitColumns(sheet);
     sheet['!cols'] = columnWidths;
 
-    XLSX.utils.book_append_sheet(workbook, sheet, key);
+    XLSX.utils.book_append_sheet(workbook, sheet, key as string);
   });
 
   // Write to file
   XLSX.writeFile(workbook, exportFileName);
-};
+}
 
 // Auto-fits the columns in the worksheet to the width of the longest cell in the column
 function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
@@ -155,6 +156,64 @@ function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
   });
 
   return columnWidths;
+}
+
+// Prepares the analytics data for download as an XLSX file
+export const downloadMTOMilestoneSummary = (
+  data: GetMtoMilestoneSummaryQuery['modelPlanCollection'],
+  exportFileName: string
+): void => {
+  if (!data) return;
+
+  const flattenedData: any = [];
+  data.forEach(item => {
+    item.mtoMatrix.milestones.forEach(milestone => {
+      flattenedData.push({
+        'Model Plan': item.modelName,
+        Milestone: milestone.name,
+        'Needed By': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
+        Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
+        Concerns: getRiskDescription(milestone.riskIndicator)
+      });
+    });
+  });
+
+  // Create a new workbook
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(flattenedData);
+
+  const columnWidths = autoFitColumns(sheet);
+  sheet['!cols'] = columnWidths;
+
+  // Set row heights for better readability
+  const range = XLSX.utils.decode_range(sheet['!ref'] || 'A1');
+  if (!sheet['!rows']) {
+    sheet['!rows'] = [];
+  }
+
+  // Set row height for all rows (including header)
+  for (let row = 0; row <= range.e.r; row += 1) {
+    sheet['!rows'][row] = { hpt: 25 }; // 25 points height (default is ~15)
+  }
+
+  XLSX.utils.book_append_sheet(workbook, sheet, 'MTO Milestone Summary');
+
+  // Write to file
+  XLSX.writeFile(workbook, exportFileName);
+};
+
+// Helper function to get risk description
+function getRiskDescription(riskIndicator: MtoRiskIndicator): string {
+  switch (riskIndicator) {
+    case MtoRiskIndicator.ON_TRACK:
+      return '🟢';
+    case MtoRiskIndicator.OFF_TRACK:
+      return '🟡';
+    case MtoRiskIndicator.AT_RISK:
+      return '🔴';
+    default:
+      return 'Unknown';
+  }
 }
 
 export default downloadAnalytics;
