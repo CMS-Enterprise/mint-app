@@ -165,7 +165,7 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
         >
           Is your model also making payments through the 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -369,7 +369,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
         >
           Is your model also making payments through the 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -602,7 +602,7 @@ exports[`Operational Solutions About Components > matches the snapshot > CMMI An
         >
           CMMI’s Data Sharing strategy through the 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -635,7 +635,7 @@ exports[`Operational Solutions About Components > matches the snapshot > CMMI An
       >
         Of note, all Medicare FFS-based models are required to provide their participants (Entity, Provider, and Beneficiary, as applicable) to AMS to support accurate and complete reporting. Additionally, AMS supports provider and beneficiary overlaps checks. Visit the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -1041,7 +1041,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Central
       >
         Centralized Data Exchange (CDX) is a part of the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -1640,7 +1640,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Expande
       >
         Expanded Data Feedback Reporting (eDFR) is part of the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -1922,7 +1922,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Health 
       >
         Health Data Reporting (HDR) is part of the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -2604,7 +2604,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
         >
           ISP supplies the capabilities below through: 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -2612,7 +2612,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           </button>
           , 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -2620,7 +2620,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           </button>
           , 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -2628,7 +2628,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           </button>
           , and 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >
@@ -3507,7 +3507,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Model S
       >
         Model Space is a secure analytic platform that enables model teams and their contractors to access, share, and analyze data. As part of the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -4376,7 +4376,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Risk Ad
       >
         The Risk Adjustment Suite of System (RASS) supports CMS processes that apply risk adjustments to payments to Medicare Advantage and Part D plans. This system was implemented to receive, process, store risk adjustment data using the CMS HCC, ESRD, Part D models developed by CMS to calculate risk scores which would be used by 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -5090,7 +5090,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
         >
           Is your model also making payments through the 
           <button
-            class="usa-button usa-button--unstyled"
+            class="usa-button usa-button--unstyled line-height-body-5"
             data-testid="button"
             type="button"
           >

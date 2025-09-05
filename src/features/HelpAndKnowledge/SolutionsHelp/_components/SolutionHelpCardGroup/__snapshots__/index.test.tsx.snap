@@ -574,7 +574,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     Centralized Data Exchange (CDX) is a part of the 
                     <button
-                      class="usa-button usa-button--unstyled"
+                      class="usa-button usa-button--unstyled line-height-body-5"
                       data-testid="button"
                       type="button"
                     >

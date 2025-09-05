@@ -159,7 +159,7 @@ exports[`Generic About Components > matches the snapshot > 4innovation 1`] = `
       >
         Is your model also making payments through the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -356,7 +356,7 @@ exports[`Generic About Components > matches the snapshot > Accountable Care Orga
       >
         Is your model also making payments through the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -561,7 +561,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Analysis and Man
       >
         CMMI’s Data Sharing strategy through the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -594,7 +594,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Analysis and Man
     >
       Of note, all Medicare FFS-based models are required to provide their participants (Entity, Provider, and Beneficiary, as applicable) to AMS to support accurate and complete reporting. Additionally, AMS supports provider and beneficiary overlaps checks. Visit the 
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled line-height-body-5"
         data-testid="button"
         type="button"
       >
@@ -972,7 +972,7 @@ exports[`Generic About Components > matches the snapshot > Centralized Data Exch
     >
       Centralized Data Exchange (CDX) is a part of the 
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled line-height-body-5"
         data-testid="button"
         type="button"
       >
@@ -1522,7 +1522,7 @@ exports[`Generic About Components > matches the snapshot > Expanded Data Feedbac
     >
       Expanded Data Feedback Reporting (eDFR) is part of the 
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled line-height-body-5"
         data-testid="button"
         type="button"
       >
@@ -1776,7 +1776,7 @@ exports[`Generic About Components > matches the snapshot > Health Data Reporting
     >
       Health Data Reporting (HDR) is part of the 
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled line-height-body-5"
         data-testid="button"
         type="button"
       >
@@ -2423,7 +2423,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
       >
         ISP supplies the capabilities below through: 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -2431,7 +2431,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         </button>
         , 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -2439,7 +2439,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         </button>
         , 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -2447,7 +2447,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         </button>
         , and 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
@@ -3270,7 +3270,7 @@ exports[`Generic About Components > matches the snapshot > Model Space 1`] = `
     >
       Model Space is a secure analytic platform that enables model teams and their contractors to access, share, and analyze data. As part of the 
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled line-height-body-5"
         data-testid="button"
         type="button"
       >
@@ -4055,7 +4055,7 @@ exports[`Generic About Components > matches the snapshot > Risk Adjustment Suite
     >
       The Risk Adjustment Suite of System (RASS) supports CMS processes that apply risk adjustments to payments to Medicare Advantage and Part D plans. This system was implemented to receive, process, store risk adjustment data using the CMS HCC, ESRD, Part D models developed by CMS to calculate risk scores which would be used by 
       <button
-        class="usa-button usa-button--unstyled"
+        class="usa-button usa-button--unstyled line-height-body-5"
         data-testid="button"
         type="button"
       >
@@ -4734,7 +4734,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
       >
         Is your model also making payments through the 
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled line-height-body-5"
           data-testid="button"
           type="button"
         >
