@@ -13,7 +13,7 @@ const filterSections: Record<TypeChangeFilter, string> = {
   [TypeOfChange.BENEFICIARIES]: 'Beneficiaries',
   [TypeOfChange.OPERATIONS_EVALUATION_AND_LEARNING]:
     'Operations, evaluation, and learning',
-  [TypeOfChange.PAYMENTS]: 'Payments',
+  [TypeOfChange.PAYMENTS]: 'Payment',
   [TypeOfChange.MODEL_TO_OPERATIONS]: 'Model-to-operations matrix',
   [TypeOfOtherChange.DATA_EXCHANGE_APPROACH]: 'Data exchange approach',
   [TypeOfOtherChange.DISCUSSIONS]: 'Discussions',

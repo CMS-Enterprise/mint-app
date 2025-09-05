@@ -5,8 +5,8 @@ import { ChangeRecordType } from '../../util';
 // Relevant values refer to TableName in the gql schema
 export enum TypeOfChange {
   ALL_MODEL_PLAN_SECTIONS = 'all_model_plan_sections',
-  MODEL_TIMELINE = 'plan_timeline',
   BASICS = 'plan_basics',
+  MODEL_TIMELINE = 'plan_timeline',
   GENERAL_CHARACTERISTICS = 'plan_general_characteristics',
   PARTICIPANTS_AND_PROVIDERS = 'plan_participants_and_providers',
   BENEFICIARIES = 'plan_beneficiaries',
