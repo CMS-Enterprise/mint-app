@@ -434,6 +434,112 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
               data-testid="grid"
             >
               <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <h4
+                  class="margin-top-5 margin-bottom-0"
+                >
+                  Notifications about my models
+                </h4>
+                <p
+                  class="margin-top-0 margin-bottom-1 text-base-dark"
+                >
+                  Regardless of your settings here, you will receive both email and in-app notifications for all models where you are listed as the Model Lead.
+                </p>
+                <div
+                  class="display-flex flex-align-center bg-base-lightest padding-x-2"
+                >
+                  <svg
+                    aria-label="info icon"
+                    class="usa-icon usa-icon--size-3 margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0V0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M11 7h2v2h-2V7zm0 4h2v6h-2v-6zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    />
+                  </svg>
+                  <p
+                    class="text-italic"
+                  >
+                    You are listed as the Model Lead for 0 models.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
+              <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-wrap margin-y-105"
+                >
+                  When MINT detects an incorrect model status
+                </p>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-email-incorrectModelStatus"
+                    id="notification-setting-email-incorrectModelStatus"
+                    name="incorrectModelStatus"
+                    type="checkbox"
+                    value="EMAIL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-email-incorrectModelStatus"
+                  />
+                </div>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-in-app-incorrectModelStatus"
+                    id="notification-setting-in-app-incorrectModelStatus"
+                    name="incorrectModelStatus"
+                    type="checkbox"
+                    value="IN_APP"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-in-app-incorrectModelStatus"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
+              <div
                 class="mobile:grid-col-12"
                 data-testid="grid"
               >

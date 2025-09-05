@@ -4,11 +4,15 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/samber/lo"
+
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -21,7 +25,7 @@ func ModelPlanAnticipatedPhase(
 	ctx context.Context,
 	modelStatus models.ModelStatus,
 	modelPlanID uuid.UUID,
-) (*model.PhaseSuggestion, error) {
+) (*models.PhaseSuggestion, error) {
 
 	// If the model plan is paused or canceled, we shouldn't suggest a new phase
 	if modelStatus == models.ModelStatusPaused || modelStatus == models.ModelStatusCanceled {
@@ -43,7 +47,7 @@ func ModelPlanAnticipatedPhase(
 
 // EvaluateSuggestedStatus evaluates the suggested status for a model plan based on its current status and planTimeline
 // A nil result indicates that no phase is suggested
-func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planTimeline *models.PlanTimeline) (*model.PhaseSuggestion, error) {
+func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planTimeline *models.PlanTimeline) (*models.PhaseSuggestion, error) {
 
 	// Iterate over all status evaluation strategies and append valid statuses to the results slice
 	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
@@ -59,7 +63,7 @@ func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planTimeline *model
 
 // ShouldSendEmailForPhaseSuggestion determines if an email should be sent for a phase suggestion
 func ShouldSendEmailForPhaseSuggestion(
-	currentPhaseSuggestion *model.PhaseSuggestion,
+	currentPhaseSuggestion *models.PhaseSuggestion,
 	previousSuggestedPhase *models.ModelPhase,
 ) bool {
 	if currentPhaseSuggestion == nil {
@@ -79,13 +83,14 @@ func ShouldSendEmailForPhaseSuggestion(
 
 // TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
 func TrySendEmailForPhaseSuggestion(
+	ctx context.Context,
 	logger *zap.Logger,
 	store *storage.Store,
 	emailRecipients []string,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook *email.AddressBook,
-	currentPhaseSuggestion *model.PhaseSuggestion,
+	currentPhaseSuggestion *models.PhaseSuggestion,
 	modelPlan *models.ModelPlan,
 ) error {
 	if !ShouldSendEmailForPhaseSuggestion(currentPhaseSuggestion, modelPlan.PreviousSuggestedPhase) {
@@ -138,14 +143,14 @@ func TrySendEmailForPhaseSuggestion(
 	return nil
 }
 
-// GetEmailsForModelPlanLeads returns the email addresses of the model leads for a given model plan
-func GetEmailsForModelPlanLeads(
+// GetEmailsForModelStatusAlert returns the email addresses of the model leads and collaborators with notifications on for a given model plan
+func GetEmailsForModelStatusAlert(
 	ctx context.Context,
 	logger *zap.Logger,
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 ) ([]string, error) {
-	// Get the model leads for the model plan
+	// Get the collaborators for the model plan
 	planCollaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get plan collaborators: %w", err)
@@ -153,27 +158,96 @@ func GetEmailsForModelPlanLeads(
 
 	logger.Info("Fetched collaborators", zap.Any("collaborators", planCollaborators))
 
-	var modelLeadEmails []string
+	var emailRecipients []string
 	for _, collaborator := range planCollaborators {
 		teamRoles := models.ConvertEnums[models.TeamRole](collaborator.TeamRoles)
 		logger.Info("Converted roles", zap.Any("roles", teamRoles))
 
-		for _, role := range teamRoles {
-			if role == models.TeamRoleModelLead {
-				account, accountErr := collaborator.UserAccount(ctx)
-				if accountErr != nil {
-					logger.Error("Failed to get user account", zap.Error(accountErr))
-					continue
-				}
-				logger.Info("Fetched user account", zap.String("email", account.Email))
-				modelLeadEmails = append(modelLeadEmails, account.Email)
-				break
-			}
+		acct, accErr := collaborator.UserAccount(ctx)
+		if accErr != nil {
+			logger.Warn("failed to load user account", zap.Error(accErr), zap.String("userID", collaborator.UserID.String()))
+			continue
+		}
+		if acct.Email == "" {
+			continue
+		}
+
+		if lo.Contains(teamRoles, models.TeamRoleModelLead) {
+			emailRecipients = append(emailRecipients, acct.Email)
+			continue
+		}
+
+		// Non-lead: include only if opted in for incorrect model status email
+		pref, prefErr := UserNotificationPreferencesGetByUserID(ctx, acct.ID)
+		if prefErr != nil {
+			logger.Warn("unable to get user notification preferences", zap.Error(prefErr), zap.String("userID", acct.ID.String()))
+			continue
+		}
+		if pref != nil && pref.IncorrectModelStatus.SendEmail() {
+			emailRecipients = append(emailRecipients, acct.Email)
 		}
 	}
 
-	logger.Info("Final model lead emails", zap.Strings("emails", modelLeadEmails))
-	return modelLeadEmails, nil
+	logger.Info("Final email recipients", zap.Strings("emails", emailRecipients))
+	return emailRecipients, nil
+}
+
+// GetCollaboratorUUIDsForModelStatusAlert returns the UUIDs of all collaborators for a given model plan
+func GetCollaboratorUUIDsForModelStatusAlert(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+) ([]uuid.UUID, error) {
+	planCollaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get plan collaborators: %w", err)
+	}
+
+	var uuids []uuid.UUID
+	for _, collaborator := range planCollaborators {
+		uuids = append(uuids, collaborator.UserID)
+	}
+
+	logger.Info("Final collaborator UUIDs", zap.Any("uuids", uuids))
+	return uuids, nil
+}
+
+func sendInAppNotificationForPhaseSuggestion(
+	ctx context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+	receiverIDs []uuid.UUID,
+	modelPlanID uuid.UUID,
+	phaseSuggestion *models.PhaseSuggestion,
+	modelPlan *models.ModelPlan,
+) error {
+	preferenceFunction := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		return loaders.UserNotificationPreferencesGetByUserID(ctx, user_id)
+	}
+
+	isLeadfunc := func(user_id uuid.UUID) (bool, error) {
+		collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+		if err != nil {
+			return false, err
+		}
+		for _, collaborator := range collaborators {
+			if collaborator.UserID == user_id {
+				return lo.Contains(models.ConvertEnums[models.TeamRole](collaborator.TeamRoles), models.TeamRoleModelLead), nil
+			}
+		}
+		return false, nil
+	}
+
+	systemAccountID := constants.GetSystemAccountUUID()
+
+	_, err := notifications.ActivityIncorrectModelStatusCreate(ctx, store, systemAccountID, receiverIDs, phaseSuggestion, modelPlan, preferenceFunction, isLeadfunc)
+	if err != nil {
+		err = fmt.Errorf("couldn't generate an activity record for the incorrect model status activity for model plan %s, error: %w", modelPlanID, err)
+		logger.Error(err.Error(), zap.Error(err))
+	}
+
+	return nil
 }
 
 func ConstructPhaseSuggestionEmailTemplates(
@@ -181,7 +255,7 @@ func ConstructPhaseSuggestionEmailTemplates(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	modelPlan *models.ModelPlan,
-	phaseSuggestion *model.PhaseSuggestion,
+	phaseSuggestion *models.PhaseSuggestion,
 ) (emailSubject string, emailBody string, err error) {
 
 	if phaseSuggestion == nil {
@@ -231,7 +305,7 @@ func ConstructPhaseSuggestionEmailTemplates(
 	return emailSubject, emailBody, nil
 }
 
-func TrySendEmailForPhaseSuggestionByModelPlanID(
+func TryNotificationSendIncorrectModelStatus(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
@@ -260,12 +334,36 @@ func TrySendEmailForPhaseSuggestionByModelPlanID(
 		return err
 	}
 
-	emailRecipients, err := GetEmailsForModelPlanLeads(ctx, logger, store, modelPlan.ID)
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
+	emailRecipients, err := GetEmailsForModelStatusAlert(ctx, logger, store, modelPlan.ID)
 	if err != nil {
 		return err
 	}
 
+	notificationRecipients, err := GetCollaboratorUUIDsForModelStatusAlert(ctx, logger, store, modelPlan.ID)
+	if err != nil {
+		return err
+	}
+
+	err = sendInAppNotificationForPhaseSuggestion(
+		ctx,
+		store,
+		logger,
+		notificationRecipients,
+		modelPlan.ID,
+		phaseSuggestion,
+		modelPlan,
+	)
+	if err != nil {
+		err = fmt.Errorf("unable to send in-app notification for suggested status for model plan id %s. Err %w", modelPlan.ID, err)
+		logger.Error(err.Error(), zap.Error(err))
+	}
+
 	return TrySendEmailForPhaseSuggestion(
+		ctx,
 		logger,
 		store,
 		emailRecipients,
