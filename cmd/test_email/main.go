@@ -174,6 +174,11 @@ func sendPlanDiscussionCreatedEmail(
 	modelName := "Test Model Plan Name"
 	modelAbbreviation := "TMPN"
 
+	modelPlan := models.ModelPlan{
+		ModelName:    modelName,
+		Abbreviation: &modelAbbreviation,
+	}
+
 	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
 		UserName:          createdByUserName,
 		ModelName:         modelName,
@@ -183,15 +188,13 @@ func sendPlanDiscussionCreatedEmail(
 		return err
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
-		ClientAddress:     emailService.GetConfig().GetClientAddress(),
-		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          createdByUserName, // Note: Hardcoded for the test. In real use, it would be dynamic.
-		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
-		ModelID:           modelPlanID.String(),
-		ModelName:         "Test Model Plan Name", // Note: Hardcoded for the test. In real use, it would be dynamic.
-		Role:              planDiscussion.UserRole.Humanize(models.ValueOrEmpty(planDiscussion.UserRoleDescription)),
-	})
+	emailBody, err := emailTemplate.GetExecutedBody(email.NewPlanDiscussionCreatedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		planDiscussion,
+		&modelPlan,
+		createdByUserName,
+		planDiscussion.UserRole.Humanize(models.ValueOrEmpty(planDiscussion.UserRoleDescription)),
+	))
 	if err != nil {
 		return err
 	}

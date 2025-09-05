@@ -17,7 +17,7 @@
         <p class="subtitle"> {{.Role}}</p>
         <p>{{.DiscussionContent}}</p>
         <p style="font-weight: normal">
-          <a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area?discussionID={{.DiscussionID}}">
+          <a style="font-weight: normal" href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area?discussionID={{.DiscussionID}}">
             Respond to this discussion in MINT
           </a>
         </p>
@@ -30,6 +30,11 @@
 <hr/>
 <br/>
 
-{{template "shared_mint_mailbox_footer.html"}}
+<p>
+  You are currently subscribed to notifications about new discussions.
+  If you no longer wish to receive these email notifications,
+  <a style="font-weight: normal" href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED">unsubscribe</a>
+  or change your <a style="font-weight: normal" href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+</p>
 
 {{template "shared_footer.html"}}

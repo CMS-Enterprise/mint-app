@@ -65,6 +65,11 @@ func (r *userNotificationPreferencesResolver) DataExchangeApproachMarkedComplete
 	return obj.DataExchangeApproachMarkedComplete, nil
 }
 
+// NewDiscussionAdded is the resolver for the newDiscussionAdded field.
+func (r *userNotificationPreferencesResolver) NewDiscussionAdded(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.NewDiscussionAdded, nil
+}
+
 // IncorrectModelStatus is the resolver for the incorrectModelStatus field.
 func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.IncorrectModelStatus, nil

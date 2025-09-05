@@ -6,6 +6,8 @@ SELECT
     tagged_in_discussion,
     tagged_in_discussion_reply,
     new_discussion_reply,
+    new_discussion_added,
+    new_discussion_added_notification_type,
     model_plan_shared,
     new_model_plan,
     dates_changed,

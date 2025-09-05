@@ -15,6 +15,12 @@ enum DataExchangeApproachMarkedCompleteNotificationType {
   MY_MODELS
 }
 
+enum NewDiscussionAddedNotificationType {
+  ALL_MODELS
+  FOLLOWED_MODELS
+  MY_MODELS
+}
+
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
 """
@@ -42,6 +48,8 @@ type UserNotificationPreferences {
   dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]!
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
+  newDiscussionAdded: [UserNotificationPreferenceFlag!]!
+  newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
 
   createdBy: UUID!
@@ -77,6 +85,8 @@ input UserNotificationPreferencesChanges
   dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
+  newDiscussionAdded: [UserNotificationPreferenceFlag!]
+  newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
 }
 
