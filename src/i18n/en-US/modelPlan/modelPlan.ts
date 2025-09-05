@@ -102,8 +102,8 @@ export const modelPlanMisc: Record<string, string> = {
   createdAt: 'Created at',
   readyForReviewBy: 'Ready for review by',
   readyForReviewAt: 'Ready for review at',
-  breadcrumb: 'Start a new Model Plan',
-  modeName: 'What is the name of your model?',
+  breadcrumb: 'Add a new model to MINT',
+  modelName: 'What is the name of your model?',
   modelNameInfo:
     'This is not a permanent name. If needed, you may update it later.',
   headingStatus: 'Update status',

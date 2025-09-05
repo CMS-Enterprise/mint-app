@@ -18,7 +18,6 @@ enum MTOCommonSolutionKey {
   IDR
   LDG
   LV
-  MDM_POR
   MARX
   OUTLOOK_MAILBOX
   QV
@@ -52,6 +51,7 @@ enum MTOCommonSolutionKey {
   RMD
   MS_FORMS
   RESDAC_CMDS
+  OVERLAPS_OPERATIONS_WORKGROUP
 }
 
 enum MTOSolutionType {

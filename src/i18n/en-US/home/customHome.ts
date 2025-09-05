@@ -56,7 +56,7 @@ const settings: HomepageSettingsType = {
 const customHome = {
   title: 'Welcome to MINT',
   subheading:
-    'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
+    'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model.',
   macSubheading:
     'The place to learn about upcoming CMMI models and demonstrations.',
   signIn: 'Sign in to start',
@@ -68,7 +68,7 @@ const customHome = {
   settings,
   newModelSummaryBox: {
     copy: 'Have a new model or demonstration?',
-    cta: 'Start a new Model Plan'
+    cta: 'Add a new model to MINT'
   },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',

@@ -70,6 +70,11 @@ func (r *userNotificationPreferencesResolver) NewDiscussionAdded(ctx context.Con
 	return obj.NewDiscussionAdded, nil
 }
 
+// IncorrectModelStatus is the resolver for the incorrectModelStatus field.
+func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.IncorrectModelStatus, nil
+}
+
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
 func (r *Resolver) UserNotificationPreferences() generated.UserNotificationPreferencesResolver {
 	return &userNotificationPreferencesResolver{r}

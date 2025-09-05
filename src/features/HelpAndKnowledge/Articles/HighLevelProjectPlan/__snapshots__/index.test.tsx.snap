@@ -1423,15 +1423,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   </th>
                   <td
                     class="text-baseline"
-                  >
-                    <a
-                      class="usa-link usa-button usa-button--unstyled"
-                      data-discover="true"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
-                    >
-                      MDM-POR
-                    </a>
-                  </td>
+                  />
                 </tr>
                 <tr>
                   <th
@@ -1442,15 +1434,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   </th>
                   <td
                     class="text-baseline"
-                  >
-                    <a
-                      class="usa-link usa-button usa-button--unstyled"
-                      data-discover="true"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
-                    >
-                      MDM-POR
-                    </a>
-                  </td>
+                  />
                 </tr>
               </tbody>
             </table>

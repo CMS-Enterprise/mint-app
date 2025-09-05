@@ -39,7 +39,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
               class="usa-breadcrumb__list-item usa-current"
             >
               <span>
-                Start a new model plan
+                Add a new model to MINT
               </span>
             </li>
           </ol>
@@ -49,7 +49,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
           class="mint-h1"
           tabindex="-1"
         >
-          Start a new model plan
+          Add a new model to MINT
         </h1>
         <div
           class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
@@ -61,19 +61,25 @@ exports[`StepsOverview > matches the snapshot 1`] = `
             <p
               class="margin-top-0 margin-bottom-1"
             >
-              Use this service to:
+              Within MINT, you can:
             </p>
             <ul
               class="padding-left-3 margin-y-0"
             >
               <li>
-                add a new model and start filling out the Model Plan to analyze the operational and implementation needs of the model
+                start and iterate on your Model Plan questionnaire to collaborate on your concept
               </li>
               <li>
-                upload and access documents related to your model request, like concept documents or policy papers
+                analyze the business, operational, and implementation needs of your model
               </li>
               <li>
-                use the model-top-operations matrix (MTO) to track the IT solutions the model will use and track its status through implementation
+                upload and access documents related to your model, like concept documents or policy papers
+              </li>
+              <li>
+                start and iterate on your data exchange approach to document the ways in which you will exchange data with model participants
+              </li>
+              <li>
+                start and iterate on your model-to-operations (MTO) matrix to track the status of milestones and solutions your model will use
               </li>
             </ul>
             <p
@@ -100,17 +106,17 @@ exports[`StepsOverview > matches the snapshot 1`] = `
         <p
           class="font-body-lg margin-y-0"
         >
-          Below is an overview of the process involved in using MINT to document information about your model.
+          Below is an overview of the process involved in collaborating on your model in MINT.
         </p>
         <div
-          class="desktop:grid-col-6 margin-top-105"
+          class="desktop:grid-col-9 margin-top-105"
           data-testid="grid"
         >
           <ol
             class="usa-process-list"
           >
             <li
-              class="usa-process-list__item"
+              class="usa-process-list__item maxw-none"
             >
               <h3
                 class="usa-process-list__heading"
@@ -119,11 +125,11 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 Fill out the sections of the Model Plan form and document model requirements
               </h3>
               <p>
-                Tell the MINT Team about your model and collaborate with the rest of your team to draft model requirements around participants, beneficiaries, operations, payment options, and more.
+                The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies. The MINT model collaboration area and the Model Plan are cooperative spaces, allowing you to collaborate with the rest of your team to draft model requirements around participants, population, operations, payment options, and more.
               </p>
             </li>
             <li
-              class="usa-process-list__item"
+              class="usa-process-list__item maxw-none"
             >
               <h3
                 class="usa-process-list__heading"
@@ -132,37 +138,57 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 Upload any existing model documentation
               </h3>
               <p>
-                Add additional details about your model by uploading documents such as a concept paper, draft ICIP, or other related materials.
+                Add additional details about your model by uploading or linking documents such as a concept paper, market research, policy paper, ICIP draft, or other related materials.
               </p>
             </li>
             <li
-              class="usa-process-list__item padding-bottom-3"
+              class="usa-process-list__item maxw-none padding-bottom-3"
             >
               <h3
                 class="usa-process-list__heading"
                 data-testid="processListHeading"
               >
-                Iterate on your Model Plan
+                Start your data exchange approach
               </h3>
               <p>
-                Work with the MINT Team and other administrative teams to iterate on model requirements.
+                Exchanging data between CMS and model participants is essential to model operations. After your 6-page concept paper is approved, work with your IT Lead (or reach out to the Business Services Group (BSG) if one still needs to be assigned) to determine how you'll exchange data so that we BSG and CMMI can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.
               </p>
             </li>
             <li
-              class="usa-process-list__item"
+              class="usa-process-list__item maxw-none"
             >
               <h3
                 class="usa-process-list__heading"
                 data-testid="processListHeading"
               >
-                Draft your MTO and track your IT solutions
+                Work with your IT Lead to start your model-to-operations (MTO) matrix
               </h3>
               <p>
-                Work with your IT Lead and/or BSG to draft your model-to-operations matrix (MTO), document model milestones and functions, and determine which solutions and IT systems your model will use for its implementation and operations. Then, use the MTO to track the progress of those milestones and the implementation status of those solutions to stay organized throughout the process.
+                Work with your IT Lead to determine milestones for your model and the solutions your model will use to implement those milestones. Your IT Lead will track the status of those milestones and solutions to stay organized throughout the process.
               </p>
             </li>
             <li
-              class="usa-process-list__item"
+              class="usa-process-list__item maxw-none"
+            >
+              <h3
+                class="usa-process-list__heading"
+                data-testid="processListHeading"
+              >
+                Iterate on your Model Plan, data exchange approach, and MTO
+              </h3>
+              <p>
+                Collaborate with your team and the cross-cutting groups at CMS to iterate on your model requirements. If you encounter any issues or have questions, 
+                <a
+                  class="usa-link"
+                  href="mailto:MINTTeam@cms.hhs.gov"
+                >
+                  contact the MINT Team
+                </a>
+                . As requirements and statuses change, please keep information about your model in MINT up-to-date.
+              </p>
+            </li>
+            <li
+              class="usa-process-list__item maxw-none"
             >
               <h3
                 class="usa-process-list__heading"
@@ -171,7 +197,7 @@ exports[`StepsOverview > matches the snapshot 1`] = `
                 Finalize your Model Plan and prepare for clearance
               </h3>
               <p>
-                Review all sections of your Model Plan and confirm that your model is ready for internal clearance processes and matches your clearance documentation.
+                Review all sections of your Model Plan and confirm that your Model Plan is ready for internal clearance processes and matches your clearance documentation.
               </p>
             </li>
           </ol>

@@ -28,6 +28,8 @@ type UserNotificationPreferences struct {
 	DatesChangedNotificationType                       *DatesChangedNotificationType                       `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
 	DataExchangeApproachMarkedComplete                 UserNotificationPreferenceFlags                     `json:"dataExchangeApproachMarkedComplete" db:"data_exchange_approach_marked_complete"`
 	DataExchangeApproachMarkedCompleteNotificationType *DataExchangeApproachMarkedCompleteNotificationType `json:"dataExchangeApproachMarkedCompleteNotificationType" db:"data_exchange_approach_marked_complete_notification_type"`
+	IncorrectModelStatus                               UserNotificationPreferenceFlags                     `json:"incorrectModelStatus" db:"incorrect_model_status"`
+	IncorrectModelStatusNotificationType               UserNotificationPreferenceFlags                     `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -46,6 +48,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		NewDiscussionAdded:                 DefaultUserNotificationPreferencesFlags(),
 		DatesChanged:                       EmptyUserNotificationPreferencesFlags(),
 		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),
+		IncorrectModelStatus:               EmptyUserNotificationPreferencesFlags(),
 	}
 }
 

@@ -3,6 +3,8 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/flags"
@@ -10,6 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	ldclient "github.com/launchdarkly/go-server-sdk/v6"
 )
@@ -38,4 +41,11 @@ func CurrentUserAccountGet(ctx context.Context) (*authentication.UserAccount, er
 func CurrentUserNotificationsGet(ctx context.Context, np sqlutils.NamedPreparer) (*models.UserNotifications, error) {
 	princ := appcontext.Principal(ctx)
 	return notifications.UserNotificationCollectionGetByUser(ctx, np, princ)
+}
+
+// GetLeadModelPlanCount returns the number of model plans where the specified user is a lead.
+func GetLeadModelPlanCount(ctx context.Context, store *storage.Store,
+	userID uuid.UUID,
+) (int, error) {
+	return storage.UserAccountGetLeadModelPlanCount(store, userID)
 }

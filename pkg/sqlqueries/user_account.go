@@ -29,6 +29,9 @@ var userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete stri
 //go:embed SQL/user_account/get_notification_preferences_discussion_added.sql
 var userAccountGetNotificationPreferencesDiscussionAdded string
 
+//go:embed SQL/user_account/get_lead_model_plan_count.sql
+var userAccountGetLeadModelPlanCount string
+
 type userAccountScripts struct {
 	GetByUsername                                                string
 	GetByID                                                      string
@@ -39,6 +42,7 @@ type userAccountScripts struct {
 	GetNotificationRecipientsDatesChanged                        string
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete string
 	GetNotificationPreferencesDiscussionAdded                    string
+	GetLeadModelPlanCount                                        string
 }
 
 // UserAccount houses all the sql for getting data for user account from the database
@@ -52,4 +56,5 @@ var UserAccount = userAccountScripts{
 	GetNotificationRecipientsDatesChanged:  userAccountGetNotificationRecipientsDatesChanged,
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete: userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,
 	GetNotificationPreferencesDiscussionAdded:                    userAccountGetNotificationPreferencesDiscussionAdded,
+	GetLeadModelPlanCount:                                        userAccountGetLeadModelPlanCount,
 }

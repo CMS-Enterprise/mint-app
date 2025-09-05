@@ -77,7 +77,8 @@ const CollaborationArea = () => {
 
   // Gets the sessions storage variable for statusChecked of modelPlan
   const statusCheckedStorage =
-    sessionStorage.getItem(`statusChecked-${modelID}`) === 'true';
+    sessionStorage.getItem(`statusChecked-${modelID}`) ===
+    modelPlan.suggestedPhase?.phase;
 
   // Aligns session with default value of state
   const [statusChecked, setStatusChecked] =
@@ -230,7 +231,10 @@ const CollaborationArea = () => {
             modelID={modelID}
             isOpen={isStatusPhaseModalOpen}
             closeModal={() => {
-              sessionStorage.setItem(`statusChecked-${modelID}`, 'true');
+              sessionStorage.setItem(
+                `statusChecked-${modelID}`,
+                modelPlan.suggestedPhase?.phase || ''
+              );
               setStatusPhaseModalOpen(false);
             }}
             currentStatus={status}

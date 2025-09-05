@@ -100,7 +100,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
               />
             </svg>
-            downloadPDF
+            Download this article as a PDF
           </button>
           <div
             class="usa-table-container--scrollable"

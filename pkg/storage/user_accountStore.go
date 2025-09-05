@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
@@ -206,4 +207,19 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDiscussionAdded(
 ) {
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesDiscussionAdded, arg)
+}
+
+// UserAccountGetLeadModelPlanCount returns the count of model plans where the user is a lead.
+func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUID) (int, error) {
+	arg := map[string]interface{}{
+		"user_id": userID,
+	}
+	count, err := sqlutils.GetProcedure[int](np, sqlqueries.UserAccount.GetLeadModelPlanCount, arg)
+	if err != nil {
+		return 0, err
+	}
+	if count == nil {
+		return 0, fmt.Errorf("unexpected nil pointer for count")
+	}
+	return *count, nil
 }

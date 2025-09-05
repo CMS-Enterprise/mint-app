@@ -3078,90 +3078,6 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
 </DocumentFragment>
 `;
 
-exports[`Operational Solutions About Components > matches the snapshot > Master Data Management Program-Organization Relationship 1`] = `
-<DocumentFragment>
-  <div>
-    <h2
-      class="margin-top-0"
-    >
-      About this solution
-    </h2>
-    <div
-      class="operational-solution-details line-height-body-5 font-body-md"
-    >
-      <p
-        class="margin-top-0 text-pre-wrap margin-bottom-0"
-      >
-        Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities provider(e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, business intelligence reports and data lake mesh, and data share to IDRC Snowflake.
-
-MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
-
-CMMI, in particular, uses MDM as a repository to store data to inform and resolve model overlaps (when necessary) for both aligned beneficiaries and participating providers among CMS payment models/demonstrations that are primarily shared savings-based models. This use of MDM for CMMI is a limited but critical role so that CMMI, CM, and Duals Office models have a single point of operational data ‘hub’ to resolve overlaps.
-
-MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM provides:
-      </p>
-      <ul
-        class="padding-left-4 margin-top-0"
-      >
-        <li
-          class="list-item"
-        >
-          Trusted identity resolution capability for CMS’ expanding catalog of Master Data sources
-        </li>
-        <li
-          class="list-item"
-        >
-          Integration and consolidation of Master Data from numerous disparate data sources to create a consolidated, authoritative view of each entity
-        </li>
-        <li
-          class="list-item"
-        >
-          Flexible and easy access to Master Data (e.g., near real-time web services, extracts for batch processing, APIs, and analytic capabilities).
-        </li>
-        <li
-          class="list-item"
-        >
-          A platform for improved data quality and understanding
-        </li>
-        <li
-          class="list-item"
-        >
-          A record of non-claims-based payments
-        </li>
-      </ul>
-      <div
-        class="margin-top-4"
-      >
-        <h3
-          class="margin-bottom-2"
-        >
-          Functions
-        </h3>
-        <ul
-          class="padding-left-4 margin-top-0"
-        >
-          <li
-            class="list-item"
-          >
-            Identity resolution of CMS enterprise data entities (providers)
-          </li>
-          <li
-            class="list-item"
-          >
-            Repository for CMMI’s APM alignment overlaps data
-          </li>
-          <li
-            class="list-item"
-          >
-            Federation of identity resolved CMS enterprise data
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Operational Solutions About Components > matches the snapshot > Master Data Management for Non-Claims Based Payments 1`] = `
 <DocumentFragment>
   <div>
@@ -3641,6 +3557,27 @@ exports[`Operational Solutions About Components > matches the snapshot > Outlook
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
         Set up an email address through Outlook Mailbox, so all your model communications will funnel into a single place.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Overlaps Operations Workgroup 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        The Overlaps Operations Workgroup supports CMMI by acting as an operational coordinator and facilitator, ensuring smooth integration of new models into the overlaps system and managing ongoing operational changes through collaborative processes. The focus is on the practical implementation and scheduling aspects of overlaps operations across different models.
       </p>
     </div>
   </div>

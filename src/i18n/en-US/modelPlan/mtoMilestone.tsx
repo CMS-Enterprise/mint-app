@@ -191,7 +191,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       LDG: 'Learning and Diffusion Group',
       LV: 'Legal Vertical',
       MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
-      MDM_POR: 'Master Data Management Program-Organization Relationship',
       MIDS: 'Measure and Instrument Development and Support',
       MODEL_SPACE: 'Model Space',
       MARX: 'Medicare Advantage Prescription Drug System',
@@ -221,7 +220,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
-        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
+      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -262,7 +262,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       LDG: 'Learning and Diffusion Group',
       LV: 'Legal Vertical',
       MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
-      MDM_POR: 'Master Data Management Program-Organization Relationship',
       MIDS: 'Measure and Instrument Development and Support',
       MODEL_SPACE: 'Model Space',
       MARX: 'Medicare Advantage Prescription Drug System',
@@ -292,7 +291,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
-        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative'
+        'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
+      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup'
     },
     readonlyOptions: {
       INNOVATION: '4i'

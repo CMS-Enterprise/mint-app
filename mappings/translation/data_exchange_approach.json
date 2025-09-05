@@ -308,21 +308,18 @@
     "questionTooltip": {
       "type": "div",
       "key": null,
-      "ref": null,
       "props": {
         "children": [
           "Examples of novel data exchange methodologies include:",
           {
             "type": "ul",
             "key": null,
-            "ref": null,
             "props": {
               "className": "margin-0 padding-left-3",
               "children": [
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Privacy-preserving record linkage"
                   },
@@ -332,7 +329,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Utilizing the Trusted Exchange Framework and Common Agreement (TEFCA)"
                   },
@@ -342,7 +338,6 @@
                 {
                   "type": "li",
                   "key": null,
-                  "ref": null,
                   "props": {
                     "children": "Enabling an additional data stream not previously used at CMMI"
                   },

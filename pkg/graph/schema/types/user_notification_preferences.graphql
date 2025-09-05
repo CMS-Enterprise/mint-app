@@ -50,6 +50,7 @@ type UserNotificationPreferences {
 
   newDiscussionAdded: [UserNotificationPreferenceFlag!]!
   newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
+  incorrectModelStatus: [UserNotificationPreferenceFlag!]!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -86,6 +87,7 @@ input UserNotificationPreferencesChanges
 
   newDiscussionAdded: [UserNotificationPreferenceFlag!]
   newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
+  incorrectModelStatus: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
