@@ -109,3 +109,16 @@ export const isDateInPast = (date: string | null | undefined): boolean => {
   }
   return false;
 };
+
+/**
+ * Converts a Date object to a UTC ISO string
+ */
+export const convertDateToISOString = (date: Date | null) => {
+  if (!date) return null;
+
+  const dt = DateTime.fromJSDate(date, { zone: 'UTC' });
+
+  if (!dt.isValid) return null;
+
+  return dt.toISO({ suppressMilliseconds: true });
+};

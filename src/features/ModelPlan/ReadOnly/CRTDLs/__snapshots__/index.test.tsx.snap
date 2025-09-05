@@ -95,7 +95,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
                 value=""
               />
               <button
-                class="usa-button grid-row flex-justify-center flex-align-center no-pointer"
+                class="usa-button"
                 data-testid="button"
                 type="submit"
               >

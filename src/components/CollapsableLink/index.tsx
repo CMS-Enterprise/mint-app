@@ -121,6 +121,7 @@ const CollapsableLink = ({
       {isOpen && (
         <div
           id={id}
+          data-testid={id || 'collapsable-link'}
           className={classNames(
             childClassName,
             labelPosition === 'top' ? 'padding-bottom-0' : '',
