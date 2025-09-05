@@ -528,10 +528,7 @@ const ModelPlansTable = ({
       </div>
 
       <TopScrollContainer>
-        <table
-          {...getTableProps()}
-          className="usa-table usa-table--borderless width-full"
-        >
+        <UswdsTable {...getTableProps()} fullWidth>
           <caption className="usa-sr-only">
             {homeT('requestsTable.caption')}
           </caption>
@@ -618,7 +615,7 @@ const ModelPlansTable = ({
               );
             })}
           </tbody>
-        </table>
+        </UswdsTable>
       </TopScrollContainer>
 
       {canSearch && data.length > 10 && (

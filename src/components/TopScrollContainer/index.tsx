@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import './index.scss';
+
 interface TopScrollContainerProps {
   children: React.ReactNode;
 }
+
+/*
+  This container component adds a horizontal scrollbar to the top of the content.
+  The scrollbar is hidden by default and is shown when the content is too wide, depending on the width of the child content.
+*/
 
 const TopScrollContainer: React.FC<TopScrollContainerProps> = ({
   children
@@ -84,27 +91,13 @@ const TopScrollContainer: React.FC<TopScrollContainerProps> = ({
     <div>
       {/* Top scrollbar */}
       {showTopScrollbar && (
-        <div
-          ref={topScrollRef}
-          style={{
-            overflowX: 'auto',
-            overflowY: 'hidden',
-            height: '23px',
-            marginBottom: '8px'
-          }}
-        >
-          <div style={{ width: contentWidth, height: '1px' }} />
+        <div ref={topScrollRef} className="top-scroll-container">
+          <div style={{ width: contentWidth }} />
         </div>
       )}
 
       {/* Content container */}
-      <div
-        ref={contentScrollRef}
-        style={{
-          overflowX: 'auto',
-          overflowY: 'visible'
-        }}
-      >
+      <div ref={contentScrollRef} className="top-scroll-content">
         {children}
       </div>
     </div>
