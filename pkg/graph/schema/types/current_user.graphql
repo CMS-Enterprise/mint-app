@@ -6,6 +6,7 @@ type CurrentUser {
   account: UserAccount!
   notifications: UserNotifications!
   notificationPreferences: UserNotificationPreferences!
+  leadModelPlanCount: Int!
 }
 
 extend type Query {
