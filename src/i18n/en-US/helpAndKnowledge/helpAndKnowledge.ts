@@ -2154,17 +2154,126 @@ Model Space offers model teams and their contractors templates or Databricks not
   },
   [MtoCommonSolutionKey.AMS]: {
     about: {
-      description:
-        'The CMMI Analytics & Management System (AMS), a.k.a Alternative Payment Model (APM) Management System, supports CMMI for the <link1>Quality Payment Program (QPP)</link1>; Portfolio Management and Cross Model Management; and Reporting, Analytics, and Audits. AMS serves as the central repository for CMMI model data including model design elements, model participation, quality measures, and a model’s participation in the QPP. Within <link2>Integrated Data Repository (IDR)</link2>, AMS also has a Business Data Mart storing model participation data enabling users to perform analysis on model participants and linking to other data sources. AMS supports QPP by storing relevant data and making it available to the Merit-Based Incentive Payment System (MIPS). The system also provides targeted data search capabilities for all data stored within AMS as well as user friendly dashboards to enable users to perform broader data searches. Lastly, AMS provides users with a BI platform (Looker) to perform more targeted and complex analysis.',
-      gatheringInfo: true,
+      description: `AMS serves as the centralized source of truth for CMMI data. It serves, as the repository for participation information, quality measures, and model information. This data supports:`,
+      items: [
+        'CMMI’s Data Sharing strategy through the <link1>CMMI Model Data Sharing (CMDS) initiative with ResDAC</link1>',
+        'The work of the Quality Reporting Program',
+        'Reports to Congress',
+        'Measurements of CMMI’s strategic objectives',
+        'Data requests from CMMI colleagues and those we collaborate with across the Agency'
+      ],
+      descriptionFooter:
+        'Of note, all Medicare FFS-based models are required to provide their participants (Entity, Provider, and Beneficiary, as applicable) to AMS to support accurate and complete reporting. Additionally, AMS supports provider and beneficiary overlaps checks. Visit the <link2>Overlaps Operations Workgroup</link2> page for more information. Starting in September 2025, AMS will also support non-claims-based payment (NCBP) file processing.',
+      gatheringInfo: false,
       links: [
         {
-          link: MtoCommonSolutionKey.QPP,
+          link: MtoCommonSolutionKey.RESDAC_CMDS,
           external: false
         },
         {
-          link: MtoCommonSolutionKey.IDR,
+          link: MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP,
           external: false
+        }
+      ],
+      components: [
+        {
+          header: 'Capabilities',
+          description: 'AMS has four main objectives:',
+          level: 'h3',
+          ordered: true,
+          items: [
+            '<bold>Consolidate CMMI model information:</bold> AMS is the central repository to store data from all innovative models, programs, initiatives, and demonstrations funded under Section 3021 of the Affordable Care Act (ACA), and projects operated out of CMMI. The data consists of policy characteristics, model participation, and performance data.',
+            '<bold>Provide reports and support analytics:</bold> AMS provides reports and supports data analytics for CMMI leadership and stakeholders to inform decisions on strategic design and program policy. AMS also supports model teams and staff by providing model-specific reporting and analytics.',
+            '<bold>Support the Quality Payment Program (QPP):</bold> AMS collects data on Alternative Payment Model (APM) participation and Qualifying APM Participants, and provides it to the QPP for processing in the Merit-Based Incentive Payment System (MIPS). By providing a source of truth at both the Entity and Provider levels, AMS helps QPP achieve its objectives and enables analytics for model teams and QPP leadership.',
+            '<bold>Provide overlaps and non-claims based payment (NCBP) file processing:</bold> AMS provides a space to collect, validate and publish overlaps files for model teams to perform overlaps processing. Starting in September 2025, AMS will also be the system model teams will use to submit their Non-Claims Based Payment files.'
+          ]
+        },
+        {
+          header: 'Services provided',
+          level: 'h3',
+          items: [
+            'Reference information about models and demos (on the website site and via downloadable reports)',
+            'Participation tracking and reporting (entities/participants, providers, beneficiaries)',
+            'Participation data integration with the Medicare databases (CCW and IDR)',
+            'Quality measures tracking and reporting',
+            'Information about the Quality Payment Program- related information for CMMI models and participants',
+            'A business intelligence tool that is available via the AMS site',
+            'Perform overlaps processing',
+            'Perform non-claims based payment (NCBP) file storage'
+          ]
+        },
+        {
+          header: 'Additional resources',
+          level: 'h3',
+          items: [
+            '<link1>Information about how to get access to AMS</link1>',
+            '<link2>AMS overview</link2>'
+          ],
+          links: [
+            {
+              link: 'https://confluenceent.cms.gov/spaces/CMMIAMS/pages/1035743695/Access+Instructions',
+              external: true
+            },
+            {
+              link: 'https://confluenceent.cms.gov/spaces/CMMIAMS/pages/1078138880/AMS+Overview',
+              external: true
+            }
+          ]
+        }
+      ]
+    },
+    timeline: {
+      header: 'Brand new models and demonstrations',
+      items: [
+        {
+          header: 'Let’s connect',
+          description:
+            'Reach out and we can talk (note that we will reach out to you if we don’t hear from you)! We can tell you about AMS and talk through your model/demo. <italic>Estimated timing: 1-2 meetings</italic>'
+        },
+        {
+          header: 'Contract development',
+          description:
+            'When you are writing the SOO/SOW for your implementation contract, be sure to include producing participation files in the scope. <italic>Estimated timing: as part of SOO/SOW writing</italic>'
+        },
+        {
+          header: 'Provide participation data',
+          description:
+            'When your model starts to have participation data (lists of entities/participants, Medicare providers, or Medicare FFS beneficiaries) then please provide this data to AMS. Note: models may also provide provider and/or beneficiary data to AMS for overlaps checking. Visit the <link1>Overlaps Operations Workgroup</link1> page to learn more. <italic>Estimated timing: ongoing activity, begins when the participation data is available </italic>',
+          links: [
+            {
+              link: MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP,
+              external: false
+            }
+          ]
+        },
+        {
+          header: 'Quality measures',
+          description:
+            'Each late spring/early summer, all active and upcoming models and demos provide their quality measures to AMS.<italic>Estimated timing: Annually in late spring/early summer</italic>'
+        },
+        {
+          header: 'Overlaps processing',
+          description:
+            'Please reach out to the Overlaps team to get on the schedule for the Overlaps Operations Workgroup to walk through your overlap policies with other model teams. Visit the <link1>Overlaps Operations Workgroup</link1> page to learn more.',
+          links: [
+            {
+              link: MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP,
+              external: false
+            }
+          ]
+        }
+      ],
+      header2: 'Active models and demonstrations',
+      items2: [
+        {
+          header: 'Provide participation data',
+          description:
+            'Please continue to provide participation data (lists of entities/participants, Medicare providers, or Medicare FFS beneficiaries) at the agreed-upon frequency.<italic>Estimated timing: Ongoing activity until final data has been provided for all file types (entity/participant, provider, beneficiary)</italic>'
+        },
+        {
+          header: 'Quality measures',
+          description:
+            'Each late spring/early summer, all active and upcoming models and demos provide their quality measures to AMS.<italic>Estimated timing: Annually in late spring/early summer</italic>'
         }
       ]
     }
