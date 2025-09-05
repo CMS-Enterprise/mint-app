@@ -18,6 +18,7 @@ import {
   DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
+  NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
   useUpdateNotificationSettingsMutation
@@ -79,6 +80,8 @@ const NotificationSettings = () => {
     dailyDigestComplete,
     addedAsCollaborator,
     taggedInDiscussion,
+    newDiscussionAdded,
+    newDiscussionAddedNotificationType,
     newDiscussionReply,
     modelPlanShared,
     incorrectModelStatus,
@@ -108,12 +111,23 @@ const NotificationSettings = () => {
       changes.datesChangedNotificationType =
         DatesChangedNotificationType.ALL_MODELS;
     }
-    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
+
+    // if newDiscussionAddedNotificationType is not changed by user, but newDiscussionAdded is changed, then do the following logic
+    if (
+      !changes.newDiscussionAddedNotificationType &&
+      changes.newDiscussionAdded?.length
+    ) {
+      // If newDiscussionAddedNotificationType is subscribed, then manually set newDiscussionAddedNotificationType to ALL_MODELS
+      changes.newDiscussionAddedNotificationType =
+        NewDiscussionAddedNotificationType.ALL_MODELS;
+    }
+
+    // if dataExchangeApproachMarkedCompleteNotificationType is not changed by user, but dataExchangeApproachMarkedComplete is changed, then do the following logic
     if (
       !changes.dataExchangeApproachMarkedCompleteNotificationType &&
       changes.dataExchangeApproachMarkedComplete?.length
     ) {
-      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+      // If dataExchangeApproachMarkedCompleteNotificationType is subscribed, then manually set dataExchangeApproachMarkedCompleteNotificationType to ALL_MODELS
       changes.dataExchangeApproachMarkedCompleteNotificationType =
         DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS;
     }
@@ -170,6 +184,7 @@ const NotificationSettings = () => {
     const isSubscribedModelPlanInApp = newModelPlan.includes(
       UserNotificationPreferenceFlag.IN_APP
     );
+
     // Dates Changed variables
     const isSubscribedDatesChangedEmail = datesChanged.includes(
       UserNotificationPreferenceFlag.EMAIL
@@ -318,6 +333,9 @@ const NotificationSettings = () => {
     dailyDigestComplete: dailyDigestComplete ?? [],
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
+    newDiscussionAdded: newDiscussionAdded ?? [],
+    newDiscussionAddedNotificationType:
+      newDiscussionAddedNotificationType ?? undefined,
     newDiscussionReply: newDiscussionReply ?? [],
     incorrectModelStatus: incorrectModelStatus ?? [],
     modelPlanShared: modelPlanShared ?? [],
@@ -328,6 +346,22 @@ const NotificationSettings = () => {
       dataExchangeApproachMarkedComplete ?? [],
     dataExchangeApproachMarkedCompleteNotificationType:
       dataExchangeApproachMarkedCompleteNotificationType ?? undefined
+  };
+
+  const getModelsSelectValue = (
+    setting: keyof NotificationSettingsFormType,
+    values: NotificationSettingsFormType
+  ) => {
+    switch (setting) {
+      case 'newDiscussionAdded':
+        return values.newDiscussionAddedNotificationType;
+      case 'datesChanged':
+        return values.datesChangedNotificationType;
+      case 'dataExchangeApproachMarkedComplete':
+        return values.dataExchangeApproachMarkedCompleteNotificationType;
+      default:
+        return '';
+    }
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -488,6 +522,7 @@ const NotificationSettings = () => {
                                   disabled={
                                     setting !== 'incorrectModelStatus' &&
                                     setting !== 'datesChanged' &&
+                                    setting !== 'newDiscussionAdded' &&
                                     setting !== 'newModelPlan' &&
                                     setting !==
                                       'dataExchangeApproachMarkedComplete'
@@ -500,7 +535,8 @@ const NotificationSettings = () => {
                             </Grid>
                             {(setting === 'datesChanged' ||
                               setting ===
-                                'dataExchangeApproachMarkedComplete') && (
+                                'dataExchangeApproachMarkedComplete' ||
+                              setting === 'newDiscussionAdded') && (
                               <Grid row>
                                 <Grid
                                   className="tablet:padding-left-3"
@@ -521,9 +557,10 @@ const NotificationSettings = () => {
                                     data-testid={`notification-setting-whichModel-${setting}`}
                                     name={`${setting}NotificationType`}
                                     value={
-                                      setting === 'datesChanged'
-                                        ? values.datesChangedNotificationType
-                                        : values.dataExchangeApproachMarkedCompleteNotificationType
+                                      getModelsSelectValue(setting, values)
+                                      // setting === 'datesChanged'
+                                      //   ? values.datesChangedNotificationType
+                                      //   : values.dataExchangeApproachMarkedCompleteNotificationType
                                     }
                                     disabled={!values[setting].length}
                                     onChange={(

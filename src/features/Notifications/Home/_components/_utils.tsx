@@ -9,6 +9,7 @@ import {
   DatesChangedActivityMeta,
   IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
+  NewDiscussionAddedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
   PlanDataExchangeApproachMarkedCompleteActivityMeta,
@@ -20,6 +21,7 @@ type MetaDataType =
   | TaggedInDiscussionReplyActivityMeta
   | TaggedInPlanDiscussionActivityMeta
   | DailyDigestCompleteActivityMeta
+  | NewDiscussionAddedActivityMeta
   | NewDiscussionRepliedActivityMeta
   | IncorrectModelStatusActivityMeta
   | ModelPlanSharedActivityMeta
@@ -48,6 +50,13 @@ export const isDailyDigest = (
 ): data is DailyDigestCompleteActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'DailyDigestCompleteActivityMeta';
+};
+
+export const isNewDiscussionAdded = (
+  data: MetaDataType
+): data is NewDiscussionAddedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'NewDiscussionAddedActivityMeta';
 };
 
 export const isNewDiscussionReply = (

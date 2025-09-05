@@ -19,6 +19,7 @@ import {
   isDataExchangeApproach,
   isDatesChanged,
   isIncorrectModelStatus,
+  isNewDiscussionAdded,
   isNewDiscussionReply,
   isNewModelPlan,
   isSharedActivity,
@@ -78,6 +79,7 @@ const IndividualNotification = ({
     if (
       isTaggedInDiscussion(metaData) ||
       isTaggedInDiscussionReply(metaData) ||
+      isNewDiscussionAdded(metaData) ||
       isNewDiscussionReply(metaData)
     ) {
       handleMarkAsRead(() =>
