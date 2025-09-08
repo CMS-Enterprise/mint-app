@@ -166,6 +166,7 @@ const IndividualNotification = ({
                 {!isDailyDigest(metaData) &&
                   !isNewModelPlan(metaData) &&
                   !isIncorrectModelStatus(metaData) &&
+                  !isNewDiscussionAdded(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isDatesChanged(metaData) &&
                   !isDataExchangeApproach(metaData) &&

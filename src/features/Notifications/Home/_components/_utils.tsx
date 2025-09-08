@@ -148,6 +148,14 @@ export const activityText = (data: MetaDataType) => {
       />
     );
   }
+  if (isNewDiscussionAdded(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.NEW_DISCUSSION_ADDED.text"
+        values={{ modelName: data.modelPlanName }}
+      />
+    );
+  }
   if (isNewDiscussionReply(data)) {
     return (
       <Trans
@@ -302,6 +310,20 @@ export const ActivityCTA = ({
       </>
     );
   }
+
+  if (isNewDiscussionAdded(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_ADDED.cta" />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
+      </>
+    );
+  }
+
   if (isNewDiscussionReply(data)) {
     return (
       <>
