@@ -113,19 +113,23 @@ const TopScrollContainer: React.FC<TopScrollContainerProps> = ({
    * Runs whenever showTopScrollbar state changes
    */
   useEffect(() => {
-    if (showTopScrollbar) {
-      // Small delay to ensure DOM elements are fully rendered
-      const timer = setTimeout(() => {
-        const cleanup = setupScrollSync();
-        return cleanup; // This cleanup function will be called when effect re-runs
-      }, 50);
-
-      // Cleanup timer if effect re-runs before timeout
-      return () => {
-        clearTimeout(timer);
-      };
+    if (!showTopScrollbar) {
+      return undefined;
     }
-    return undefined;
+
+    // Small delay to ensure DOM elements are fully rendered
+    let cleanupFn: (() => void) | undefined;
+    const timer = setTimeout(() => {
+      cleanupFn = setupScrollSync();
+    }, 50);
+
+    // Cleanup: clear timer and call cleanupFn if it exists
+    return () => {
+      clearTimeout(timer);
+      if (cleanupFn) {
+        cleanupFn();
+      }
+    };
   }, [showTopScrollbar]); // Re-run when scrollbar visibility changes
 
   return (
