@@ -11,6 +11,7 @@ type SearchProps = {
   itemsPerPage: number;
   currentPage: number;
   setQuery: (query: string) => void;
+  showResults?: boolean;
 };
 
 const Search = ({
@@ -20,10 +21,9 @@ const Search = ({
   resultsNum,
   itemsPerPage,
   currentPage,
-  setQuery
+  setQuery,
+  showResults = true
 }: SearchProps) => {
-  const { t } = useTranslation('changeHistory');
-
   return (
     <>
       {/* Search bar */}
@@ -34,29 +34,59 @@ const Search = ({
         tableName="table-name"
         className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
         initialFilter={query || ''}
+        height5
       />
 
       {/* Results text */}
-      {query && (
-        <div className="display-flex padding-bottom-2">
-          <p className="margin-y-0">
-            {results.length > itemsPerPage
-              ? t('resultsInfo', {
-                  resultsNum: currentPage * 10 + 1,
-                  count: currentPage * 10 + currentResults?.length,
-                  total: resultsNum,
-                  query: 'for'
-                })
-              : t('resultsNoInfo', {
-                  resultsNum: results.length,
-                  count: results.length,
-                  query: 'for'
-                })}
-            {query && <span className="text-bold">{` "${query}"`}</span>}
-          </p>
-        </div>
+      {query && showResults && (
+        <SearchResults
+          query={query}
+          results={results}
+          resultsNum={resultsNum}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          currentResults={currentResults}
+        />
       )}
     </>
+  );
+};
+
+export const SearchResults = ({
+  query,
+  results,
+  resultsNum,
+  itemsPerPage,
+  currentPage,
+  currentResults
+}: {
+  query: string;
+  results: any[];
+  resultsNum: number;
+  itemsPerPage: number;
+  currentPage: number;
+  currentResults: any[];
+}) => {
+  const { t } = useTranslation('changeHistory');
+
+  return (
+    <div className="display-flex padding-bottom-2">
+      <p className="margin-y-0">
+        {results.length > itemsPerPage
+          ? t('resultsInfo', {
+              resultsNum: currentPage * 10 + 1,
+              count: currentPage * 10 + currentResults?.length,
+              total: resultsNum,
+              query: 'for'
+            })
+          : t('resultsNoInfo', {
+              resultsNum: results.length,
+              count: results.length,
+              query: 'for'
+            })}
+      </p>
+      {query && <span className="text-bold">{` "${query}"`}</span>}
+    </div>
   );
 };
 
