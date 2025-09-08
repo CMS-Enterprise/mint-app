@@ -64,7 +64,7 @@ const TopScrollContainer: React.FC<TopScrollContainerProps> = ({
 
   /**
    * Effect: Detect horizontal overflow and show/hide top scrollbar
-   * Runs once on mount and checks multiple times to handle async content loading
+   * Runs on mount, when content changes, and when user zooms (resize events)
    */
   useEffect(() => {
     const contentScroll = contentScrollRef.current;
@@ -87,11 +87,25 @@ const TopScrollContainer: React.FC<TopScrollContainerProps> = ({
 
     // Try multiple times to detect overflow as content may load asynchronously
     checkAndSetupScrollbar(); // Immediate check
-    setTimeout(checkAndSetupScrollbar, 100); // After 100ms
-    setTimeout(checkAndSetupScrollbar, 500); // After 500ms
-    setTimeout(checkAndSetupScrollbar, 1000); // After 1s
+    const timeout100 = setTimeout(checkAndSetupScrollbar, 100); // After 100ms
+    const timeout500 = setTimeout(checkAndSetupScrollbar, 500); // After 500ms
+    const timeout1000 = setTimeout(checkAndSetupScrollbar, 1000); // After 1s
 
-    return undefined;
+    // Listen for window resize events (includes zoom changes)
+    const handleResize = () => {
+      // Debounce resize events to avoid excessive calls
+      setTimeout(checkAndSetupScrollbar, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function to remove event listener and clear timeouts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeout100);
+      clearTimeout(timeout500);
+      clearTimeout(timeout1000);
+    };
   }, []); // Run once on mount
 
   /**
