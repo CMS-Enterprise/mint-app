@@ -2,7 +2,6 @@ package notifications
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/graph-gophers/dataloader"
@@ -41,129 +40,20 @@ func ActivityGetByIDLoaderThunk(_ context.Context, np sqlutils.NamedPreparer, pa
 		activity, ok := activitiesByID[key]
 		if ok {
 			// PARSE the meta data
-			meta, err := parseRawActivityMetaData(activity.ActivityType, activity.MetaDataRaw)
-			if err != nil {
+			success, err := activity.ParseRawActivityMetaData()
+			if !success || err != nil {
 				err = fmt.Errorf("issue converting activity meta data to discrete type: %w", err)
 				output[index] = &dataloader.Result{Data: nil, Error: err}
 			}
-			activity.MetaData = meta
 
 			output[index] = &dataloader.Result{Data: activity, Error: nil}
 
 		} else {
-			err := fmt.Errorf("activity  not found for id %s", key)
+			err := fmt.Errorf("activity not found for id %s", key)
 			output[index] = &dataloader.Result{Data: nil, Error: err}
 		}
 
 	}
 	return output
-
-}
-
-// parseRawActivityMetaData conditionally parses meta data from JSON to a specific meta data type
-func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON interface{}) (models.ActivityMetaData, error) {
-	//Future Enhancement: can this be genericized instead of switching on activity type?
-
-	var rawData []byte
-
-	// Check if rawMetaDataJSON is already a string
-	if str, ok := rawMetaDataJSON.(string); ok {
-		// Convert string to byte array
-		rawData = []byte(str)
-	} else if bytes, ok := rawMetaDataJSON.([]byte); ok {
-		// Use byte array directly
-		rawData = bytes
-	} else {
-		// Invalid type, return an error
-		return nil, fmt.Errorf("unsupported type for activityData: %T", rawMetaDataJSON)
-	}
-
-	switch activityType {
-	case models.ActivityTaggedInDiscussion:
-		// Deserialize the raw JSON into TaggedInPlanDiscussionActivityMeta
-		meta := models.TaggedInPlanDiscussionActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityTaggedInDiscussionReply:
-		// Deserialize the raw JSON into TaggedInDiscussionReplyActivityMeta
-		meta := models.TaggedInDiscussionReplyActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityDigest:
-		// Deserialize the raw JSON into TaggedInDiscussionReplyActivityMeta
-		meta := models.DailyDigestCompleteActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityNewDiscussionReply:
-		// Deserialize the raw JSON into NewDiscussionReplyActivityMeta
-		meta := models.NewDiscussionRepliedActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityAddedAsCollaborator:
-		// Deserialize the raw JSON into AddedAsCollaboratorMeta
-		meta := models.AddedAsCollaboratorMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityModelPlanShared:
-		// Deserialize the raw JSON into ModelPlanSharedActivityMeta
-		meta := models.ModelPlanSharedActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityNewModelPlan:
-		// Deserialize the raw JSON into NewModelPlanActivityMeta
-		meta := models.NewModelPlanActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityDatesChanged:
-		// Deserialize the raw JSON into DatesChangedActivityMeta
-		meta := models.DatesChangedActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityDataExchangeApproachMarkedComplete:
-		// Deserialize the raw JSON into DataExchangeApproachMarkedCompleteActivityMeta
-		meta := models.PlanDataExchangeApproachMarkedCompleteActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	case models.ActivityIncorrectModelStatus:
-		// Deserialize the raw JSON into IncorrectModelStatusActivityMeta
-		meta := models.IncorrectModelStatusActivityMeta{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-
-	default:
-		// Return a default implementation or handle unsupported types
-		return nil, fmt.Errorf("unsupported activity type: %s", activityType)
-	}
 
 }

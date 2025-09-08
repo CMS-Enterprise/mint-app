@@ -38,9 +38,11 @@ func (suite *NotificationsSuite) TestActivityNewModelPlanCreate() {
 
 	//Assert meta data can be deserialized
 	suite.NotNil(testActivity.MetaDataRaw)
-	meta, err := parseRawActivityMetaData(testActivity.ActivityType, testActivity.MetaDataRaw)
+	metaSuccess, err := testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.NotNil(meta)
+	suite.True(metaSuccess)
+	suite.NotNil(testActivity.MetaData)
+	meta := testActivity.MetaData
 
 	actorNots, err := UserNotificationCollectionGetByUser(
 		suite.testConfigs.Context,
