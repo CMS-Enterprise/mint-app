@@ -574,7 +574,7 @@ exports[`Operation Solution Help Card Group > matches snapshot 1`] = `
                   >
                     Centralized Data Exchange (CDX) is a part of the 
                     <button
-                      class="usa-button usa-button--unstyled"
+                      class="usa-button usa-button--unstyled line-height-body-5"
                       data-testid="button"
                       type="button"
                     >
@@ -786,27 +786,25 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                         Data
                       </span>
                     </a>
+                    <a
+                      aria-label="Articles under the Quality category"
+                      class="usa-link margin-right-05 margin-bottom-1 display-block"
+                      data-discover="true"
+                      data-testid="solutions-tag"
+                      href="/help-and-knowledge/operational-solutions?category=QUALITY"
+                    >
+                      <span
+                        class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase font-body-sm margin-right-0 width-fit-content line-height-sans-2 text-bold"
+                        data-testid="tag"
+                      >
+                        Quality
+                      </span>
+                    </a>
                   </div>
                   <p
                     class="solution-card__body"
                   >
-                    The CMMI Analytics & Management System (AMS), a.k.a Alternative Payment Model (APM) Management System, supports CMMI for the 
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      Quality Payment Program (QPP)
-                    </button>
-                    ; Portfolio Management and Cross Model Management; and Reporting, Analytics, and Audits. AMS serves as the central repository for CMMI model data including model design elements, model participation, quality measures, and a model’s participation in the QPP. Within 
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      Integrated Data Repository (IDR)
-                    </button>
-                    , AMS also has a Business Data Mart storing model participation data enabling users to perform analysis on model participants and linking to other data sources. AMS supports QPP by storing relevant data and making it available to the Merit-Based Incentive Payment System (MIPS). The system also provides targeted data search capabilities for all data stored within AMS as well as user friendly dashboards to enable users to perform broader data searches. Lastly, AMS provides users with a BI platform (Looker) to perform more targeted and complex analysis.
+                    AMS serves as the centralized source of truth for CMMI data. It serves, as the repository for participation information, quality measures, and model information. This data supports:
                   </p>
                   <div
                     class="tablet:grid-col-12 margin-bottom-2"
