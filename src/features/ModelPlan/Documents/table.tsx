@@ -30,6 +30,7 @@ import ExternalDocumentLink from 'components/ExternalDocumentLink';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import TopScrollContainer from 'components/TopScrollContainer';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { PrintPDFContext } from 'contexts/PrintPDFContext';
@@ -488,102 +489,106 @@ export const Table = ({
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">
       {renderModal()}
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
-        <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr
-              {...headerGroup.getHeaderGroupProps()}
-              key={{ ...headerGroup.getHeaderGroupProps() }.key}
-            >
-              {headerGroup.headers
-                // @ts-ignore
-                .filter(column => !hiddenColumns?.includes(column.Header))
-                .map((column, index) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    aria-sort={getColumnSortStatus(column)}
-                    className="table-header"
-                    scope="col"
-                    style={{
-                      minWidth: '138px',
-                      paddingLeft: '0',
-                      paddingBottom: '.5rem',
-                      position: 'relative'
-                    }}
-                    key={column.id}
-                  >
-                    <button
-                      className="usa-button usa-button--unstyled position-relative"
-                      type="button"
-                      {...column.getSortByToggleProps()}
+      <TopScrollContainer>
+        <UswdsTable bordered={false} {...getTableProps()} fullWidth>
+          <caption className="usa-sr-only">
+            {t('requestsTable.caption')}
+          </caption>
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={{ ...headerGroup.getHeaderGroupProps() }.key}
+              >
+                {headerGroup.headers
+                  // @ts-ignore
+                  .filter(column => !hiddenColumns?.includes(column.Header))
+                  .map((column, index) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      aria-sort={getColumnSortStatus(column)}
+                      className="table-header"
+                      scope="col"
+                      style={{
+                        minWidth: '138px',
+                        paddingLeft: '0',
+                        paddingBottom: '.5rem',
+                        position: 'relative'
+                      }}
+                      key={column.id}
                     >
-                      {column.render('Header') as React.ReactElement}
-                      {getHeaderSortIcon(column, false)}
-                    </button>
-                  </th>
-                ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row);
-            const { getRowProps, cells, id } = { ...row };
-            return (
-              <tr {...getRowProps()} key={id}>
-                {cells
-                  .filter(cell => {
-                    // @ts-ignore
-                    return !hiddenColumns?.includes(cell.column.Header);
-                  })
-                  .map((cell, i) => {
-                    if (i === 0) {
-                      return (
-                        <th
-                          {...cell.getCellProps()}
-                          scope="row"
-                          style={{
-                            paddingLeft: '0'
-                          }}
-                          key={cell.getCellProps().key}
-                        >
-                          {cell.render('Cell') as React.ReactElement}
-                        </th>
-                      );
-                    }
-                    if (i + 1 === cells.length) {
+                      <button
+                        className="usa-button usa-button--unstyled position-relative"
+                        type="button"
+                        {...column.getSortByToggleProps()}
+                      >
+                        {column.render('Header') as React.ReactElement}
+                        {getHeaderSortIcon(column, false)}
+                      </button>
+                    </th>
+                  ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map(row => {
+              prepareRow(row);
+              const { getRowProps, cells, id } = { ...row };
+              return (
+                <tr {...getRowProps()} key={id}>
+                  {cells
+                    .filter(cell => {
+                      // @ts-ignore
+                      return !hiddenColumns?.includes(cell.column.Header);
+                    })
+                    .map((cell, i) => {
+                      if (i === 0) {
+                        return (
+                          <th
+                            {...cell.getCellProps()}
+                            scope="row"
+                            style={{
+                              paddingLeft: '0'
+                            }}
+                            key={cell.getCellProps().key}
+                          >
+                            {cell.render('Cell') as React.ReactElement}
+                          </th>
+                        );
+                      }
+                      if (i + 1 === cells.length) {
+                        return (
+                          <td
+                            {...cell.getCellProps()}
+                            style={{
+                              paddingLeft: '0',
+                              paddingRight: '0'
+                            }}
+                            key={cell.getCellProps().key}
+                          >
+                            {cell.render('Cell') as React.ReactElement}
+                          </td>
+                        );
+                      }
                       return (
                         <td
                           {...cell.getCellProps()}
                           style={{
                             paddingLeft: '0',
-                            paddingRight: '0'
+                            whiteSpace: 'normal'
                           }}
                           key={cell.getCellProps().key}
                         >
                           {cell.render('Cell') as React.ReactElement}
                         </td>
                       );
-                    }
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        style={{
-                          paddingLeft: '0',
-                          whiteSpace: 'normal'
-                        }}
-                        key={cell.getCellProps().key}
-                      >
-                        {cell.render('Cell') as React.ReactElement}
-                      </td>
-                    );
-                  })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </UswdsTable>
+                    })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </UswdsTable>
+      </TopScrollContainer>
 
       <div
         className="usa-sr-only usa-table__announcement-region"
