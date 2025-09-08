@@ -136,6 +136,7 @@ const InternalSolutionButton = ({
         )?.[0];
         modalCon.scrollTo(0, 0);
       }}
+      className="line-height-body-5"
     >
       {children}
     </Button>

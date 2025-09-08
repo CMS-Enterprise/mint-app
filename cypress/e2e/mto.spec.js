@@ -168,7 +168,7 @@ describe('Model-to-Operations Matrix', () => {
     // cy.get('@sidePanel').should('not.exist');
 
     cy.get('@secondCard').within(() => {
-      cy.contains('Add to matrix').click({ force: true });
+      cy.contains('Add to matrix').click();
     });
 
     cy.findModalWithThisHeadingAndSaveAlias(

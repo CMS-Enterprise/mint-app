@@ -607,14 +607,15 @@ export const helpSolutions: HelpSolutionsType = {
   },
   [MtoCommonSolutionKey.AMS]: {
     key: MtoCommonSolutionKey.AMS,
-    categories: [MtoCommonSolutionSubject.DATA],
+    categories: [
+      MtoCommonSolutionSubject.DATA,
+      MtoCommonSolutionSubject.QUALITY
+    ],
     name: 'CMMI Analysis and Management System',
     acronym: 'AMS',
     type: MtoSolutionType.IT_SYSTEM,
     components: {
-      timeline: (props: SolutionDetailProps) => (
-        <GatheringInfoAlert {...props} />
-      )
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
   [MtoCommonSolutionKey.IC_LANDING]: {
