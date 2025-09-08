@@ -22,6 +22,7 @@ import DraggableRow from 'components/DraggableRow';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import toastSuccess from 'components/ToastSuccess';
+import TopScrollContainer from 'components/TopScrollContainer';
 import { MTOMilestonePanelProvider } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import { MTOSolutionPanelProvider } from 'contexts/MTOSolutionPanelContext';
@@ -648,75 +649,78 @@ const MTOTable = ({
                 marginBottom: '.75rem'
               }}
             >
-              <table
-                style={{
-                  width: '100%',
-                  borderCollapse: 'collapse'
-                }}
-              >
-                <thead>
-                  <tr>
-                    {filteredColumns.map((column, index) => (
-                      <th
-                        key={column.accessor}
-                        style={{
-                          borderBottom: '1px solid black',
-                          padding: '1rem',
-                          paddingLeft: index === 0 ? '.5rem' : '0px',
-                          paddingBottom: '.25rem',
-                          width: column.width,
-                          minWidth: column.width,
-                          maxWidth: column.width
-                        }}
-                      >
-                        {column.canSort !== false ? (
-                          <button
-                            className={classNames(
-                              'usa-button usa-button--unstyled position-relative display-block'
-                            )}
-                            onClick={() => {
-                              const isSorted =
-                                sortCount % 3 === 1 || sortCount % 3 === 0;
-                              const isSortedDesc = sortCount % 3 === 1;
+              <TopScrollContainer>
+                <table
+                  style={{
+                    width: '100%',
+                    borderCollapse: 'collapse'
+                  }}
+                >
+                  <thead>
+                    <tr>
+                      {filteredColumns.map((column, index) => (
+                        <th
+                          key={column.accessor}
+                          style={{
+                            borderBottom: '1px solid black',
+                            padding: '1rem',
+                            paddingLeft: index === 0 ? '.5rem' : '0px',
+                            paddingBottom: '.25rem',
+                            width: column.width,
+                            minWidth: column.width,
+                            maxWidth: column.width
+                          }}
+                        >
+                          {column.canSort !== false ? (
+                            <button
+                              className={classNames(
+                                'usa-button usa-button--unstyled position-relative display-block'
+                              )}
+                              onClick={() => {
+                                const isSorted =
+                                  sortCount % 3 === 1 || sortCount % 3 === 0;
+                                const isSortedDesc = sortCount % 3 === 1;
 
-                              setCurrentColumn(index);
-                              setSortCount(sortCount + 1);
-                              setColumnSort(prev => {
-                                const newColumnSort = [...prev];
-                                newColumnSort[index] = {
-                                  isSorted,
-                                  isSortedDesc,
-                                  sortColumn: column.accessor
-                                };
-                                return newColumnSort;
-                              });
-                            }}
-                            type="button"
-                          >
-                            {column.Header}
-                            {getHeaderSortIcon(columnSort[index], true)}
-                          </button>
-                        ) : (
-                          <span
-                            className={classNames(
-                              'usa-button usa-button--unstyled position-relative display-block',
-                              {
-                                'text-no-underline text-black':
-                                  column.Header ===
-                                  t('modelToOperationsMisc:table.actions')
-                              }
-                            )}
-                          >
-                            {column.Header}
-                          </span>
-                        )}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>{renderCategories()}</tbody>
-              </table>
+                                setCurrentColumn(index);
+                                setSortCount(sortCount + 1);
+                                setColumnSort(prev => {
+                                  const newColumnSort = [...prev];
+                                  newColumnSort[index] = {
+                                    isSorted,
+                                    isSortedDesc,
+                                    sortColumn: column.accessor
+                                  };
+                                  return newColumnSort;
+                                });
+                              }}
+                              type="button"
+                            >
+                              {column.Header}
+                              {getHeaderSortIcon(columnSort[index], true)}
+                            </button>
+                          ) : (
+                            <span
+                              className={classNames(
+                                'usa-button usa-button--unstyled position-relative display-block',
+                                {
+                                  'text-no-underline text-black':
+                                    column.Header ===
+                                    t('modelToOperationsMisc:table.actions')
+                                }
+                              )}
+                            >
+                              {column.Header}
+                            </span>
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>{renderCategories()}</tbody>
+                </table>{' '}
+              </TopScrollContainer>
             </div>
+
             <div className="mint-no-print">
               <div className="display-flex">
                 {totalPages > 0 && Pagination}
