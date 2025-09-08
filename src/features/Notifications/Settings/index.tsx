@@ -185,6 +185,14 @@ const NotificationSettings = () => {
       UserNotificationPreferenceFlag.IN_APP
     );
 
+    // New Discussion variables
+    const isSubscribedNewDiscussionAddedEmail = newDiscussionAdded.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedNewDiscussionAddedInApp = newDiscussionAdded.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+
     // Dates Changed variables
     const isSubscribedDatesChangedEmail = datesChanged.includes(
       UserNotificationPreferenceFlag.EMAIL
@@ -208,6 +216,8 @@ const NotificationSettings = () => {
     if (
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
         !isSubscribedModelPlanEmail) ||
+      (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED &&
+        !isSubscribedNewDiscussionAddedEmail) ||
       (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
         !isSubscribedDatesChangedEmail) ||
       (unsubscribeEmailParams ===
@@ -240,9 +250,10 @@ const NotificationSettings = () => {
       return;
     }
 
-    // Unsubscribe from New Model Plan email notifications
+    // Unsubscribe from email notifications
     if (
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
+      unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED ||
       unsubscribeEmailParams === ActivityType.DATES_CHANGED ||
       unsubscribeEmailParams ===
         ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
@@ -250,6 +261,7 @@ const NotificationSettings = () => {
       // if user has email notifications, then proceeed to unsubscribe
       if (
         isSubscribedModelPlanEmail ||
+        isSubscribedNewDiscussionAddedEmail ||
         isSubscribedDatesChangedEmail ||
         isSubscribedDataExchangeApproachMarkedCompleteEmail
       ) {
@@ -262,6 +274,15 @@ const NotificationSettings = () => {
               : []
           };
         }
+        // Adjust payload if New Discussion Added in-app notifications are enabled
+        if (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED) {
+          changes = {
+            newDiscussionAdded: isSubscribedNewDiscussionAddedInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+
         // Adjust payload if Dates Changed in-app notifications are enabled
         if (unsubscribeEmailParams === ActivityType.DATES_CHANGED) {
           changes = {
@@ -326,7 +347,8 @@ const NotificationSettings = () => {
     showMessage,
     unsubscribeEmailParams,
     update,
-    setErrorMeta
+    setErrorMeta,
+    newDiscussionAdded
   ]);
 
   const initialValues: NotificationSettingsFormType = {
