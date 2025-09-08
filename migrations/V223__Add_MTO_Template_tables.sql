@@ -1,31 +1,31 @@
 BEGIN;
 
 -- =========================================================
--- 1) Enum for mto_template.key
--- =========================================================
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'mto_template_key') THEN
-    CREATE TYPE MTO_TEMPLATE_KEY AS ENUM ('DEFAULT');
-  END IF;
-END$$;
-
--- =========================================================
--- 2) mto_template (root)
+-- 1) mto_template (root)
 -- =========================================================
 CREATE TABLE IF NOT EXISTS mto_template (
     id           UUID PRIMARY KEY NOT NULL,
-    key          MTO_TEMPLATE_KEY NOT NULL,
-    name         TEXT NOT NULL,
-    description  TEXT,
+    key          MTO_COMMON_MILESTONE_KEY NOT NULL,
+    name         ZERO_STRING NOT NULL,
+    description  ZERO_STRING,
 
     created_by   UUID NOT NULL REFERENCES user_account(id),
-    created_dts  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_dts  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by  UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMPTZ
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
-COMMENT ON TABLE mto_template IS 'Top-level template definition.';
+COMMENT ON TABLE mto_template IS
+'Top-level MTO (Model Tracking & Operations) template definition. This table stores reusable template structures for MTO milestones, solutions, and categories, which can be referenced or instantiated by model plans throughout the application. Each template defines a set of milestones, solutions, and organizational categories that can be used to standardize and streamline model plan setup and tracking in the MINT application.';
+
+COMMENT ON COLUMN mto_template.id IS 'Unique identifier for the template.';
+COMMENT ON COLUMN mto_template.key IS 'Enum identifying the logical template family.';
+COMMENT ON COLUMN mto_template.name IS 'Human-readable template name.';
+COMMENT ON COLUMN mto_template.description IS 'Optional template description or purpose.';
+COMMENT ON COLUMN mto_template.created_by IS 'User that created this template.';
+COMMENT ON COLUMN mto_template.created_dts IS 'Timestamp when the template was created.';
+COMMENT ON COLUMN mto_template.modified_by IS 'User that last modified this template.';
+COMMENT ON COLUMN mto_template.modified_dts IS 'Timestamp when the template was last modified.';
 
 SELECT audit.AUDIT_TABLE(
     'public','mto_template','id',NULL,
@@ -33,40 +33,50 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 3) mto_template_category
+-- 2) mto_template_category
 --    - Parent/child categories within the same template
 --    - "order" controls sibling ordering
 -- =========================================================
 CREATE TABLE IF NOT EXISTS mto_template_category (
     id                 UUID PRIMARY KEY NOT NULL,
     template_id        UUID NOT NULL REFERENCES mto_template(id) ON DELETE CASCADE,
-    name               TEXT NOT NULL,
-    parent_category_id UUID NULL REFERENCES mto_template_category(id) ON DELETE SET NULL,
+    name               ZERO_STRING NOT NULL,
+    parent_id          UUID NULL REFERENCES mto_template_category(id) ON DELETE SET NULL,
     "order"            INT NOT NULL DEFAULT 0,
 
     created_by   UUID NOT NULL REFERENCES user_account(id),
-    created_dts  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_dts  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by  UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMPTZ
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
-COMMENT ON TABLE mto_template_category IS 'Categories within a template; parent_category_id indicates a subcategory.';
+COMMENT ON TABLE mto_template_category IS 'Categories within a template; parent_id indicates a subcategory.';
 
--- Sibling order unique within (template_id, parent_category_id)
+COMMENT ON COLUMN mto_template_category.id IS 'Unique identifier for the template category.';
+COMMENT ON COLUMN mto_template_category.template_id IS 'FK to the parent template that owns this category.';
+COMMENT ON COLUMN mto_template_category.name IS 'Display name of the category.';
+COMMENT ON COLUMN mto_template_category.parent_id IS 'Optional FK to a parent category, forming a hierarchy.';
+COMMENT ON COLUMN mto_template_category."order" IS 'Sibling order used for sorting within the same parent.';
+COMMENT ON COLUMN mto_template_category.created_by IS 'User that created this category.';
+COMMENT ON COLUMN mto_template_category.created_dts IS 'Timestamp when the category was created.';
+COMMENT ON COLUMN mto_template_category.modified_by IS 'User that last modified this category.';
+COMMENT ON COLUMN mto_template_category.modified_dts IS 'Timestamp when the category was last modified.';
+
+-- Sibling order unique within (template_id, parent_id)
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_template_category_order
-ON mto_template_category (template_id, COALESCE(parent_category_id, '00000000-0000-0000-0000-000000000000'::UUID), "order");
+ON mto_template_category (template_id, COALESCE(parent_id, '00000000-0000-0000-0000-000000000000'::UUID), "order");
 
 -- Parent must belong to same template
 CREATE OR REPLACE FUNCTION ENFORCE_CATEGORY_TEMPLATE_MATCH()
 RETURNS TRIGGER AS $$
 BEGIN
-  IF NEW.parent_category_id IS NOT NULL THEN
+  IF NEW.parent_id IS NOT NULL THEN
     PERFORM 1
     FROM mto_template_category p
-    WHERE p.id = NEW.parent_category_id
+    WHERE p.id = NEW.parent_id
       AND p.template_id = NEW.template_id;
     IF NOT FOUND THEN
-      RAISE EXCEPTION 'Parent category (%) must belong to same template (%)', NEW.parent_category_id, NEW.template_id;
+      RAISE EXCEPTION 'Parent category (%) must belong to same template (%)', NEW.parent_id, NEW.template_id;
     END IF;
   END IF;
   RETURN NEW;
@@ -85,7 +95,7 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 4) mto_template_milestone
+-- 3) mto_template_milestone
 --    - Unique (template_id, mto_common_milestone_id)
 --    - Optional category must belong to same template
 -- =========================================================
@@ -97,12 +107,21 @@ CREATE TABLE IF NOT EXISTS mto_template_milestone (
     mto_template_category_id  UUID NULL REFERENCES mto_template_category(id) ON DELETE SET NULL,
 
     created_by   UUID NOT NULL REFERENCES user_account(id),
-    created_dts  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_dts  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by  UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMPTZ
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 COMMENT ON TABLE mto_template_milestone IS 'Milestones attached to a template, optionally grouped by a category.';
+
+COMMENT ON COLUMN mto_template_milestone.id IS 'Unique identifier for the template milestone.';
+COMMENT ON COLUMN mto_template_milestone.template_id IS 'FK to the template that owns this milestone.';
+COMMENT ON COLUMN mto_template_milestone.mto_common_milestone_key IS 'FK to the common milestone catalog (by key).';
+COMMENT ON COLUMN mto_template_milestone.mto_template_category_id IS 'Optional FK to group this milestone under a template category.';
+COMMENT ON COLUMN mto_template_milestone.created_by IS 'User that created this milestone entry.';
+COMMENT ON COLUMN mto_template_milestone.created_dts IS 'Timestamp when the milestone entry was created.';
+COMMENT ON COLUMN mto_template_milestone.modified_by IS 'User that last modified this milestone entry.';
+COMMENT ON COLUMN mto_template_milestone.modified_dts IS 'Timestamp when the milestone entry was last modified.';
 
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_template_common_milestone
 ON mto_template_milestone (template_id, mto_common_milestone_key);
@@ -136,22 +155,30 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 5) mto_template_solution
+-- 4) mto_template_solution
 --    - NOTE: FK references enum PK on mto_common_solution(key)
 --    - Unique (template_id, mto_common_solution_key)
 -- =========================================================
 CREATE TABLE IF NOT EXISTS mto_template_solution (
     id                      UUID PRIMARY KEY NOT NULL,
     template_id             UUID NOT NULL REFERENCES mto_template(id) ON DELETE CASCADE,
-    mto_common_solution_id UUID NOT NULL REFERENCES mto_common_solution(id),
+    mto_common_solution_id  UUID NOT NULL REFERENCES mto_common_solution(id),
 
     created_by   UUID NOT NULL REFERENCES user_account(id),
-    created_dts  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_dts  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by  UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMPTZ
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 COMMENT ON TABLE mto_template_solution IS 'Solutions attached to a template (FK to enum PK mto_common_solution.key).';
+
+COMMENT ON COLUMN mto_template_solution.id IS 'Unique identifier for the template solution.';
+COMMENT ON COLUMN mto_template_solution.template_id IS 'FK to the template that owns this solution.';
+COMMENT ON COLUMN mto_template_solution.mto_common_solution_id IS 'FK to the common solution catalog (solution id).';
+COMMENT ON COLUMN mto_template_solution.created_by IS 'User that created this solution entry.';
+COMMENT ON COLUMN mto_template_solution.created_dts IS 'Timestamp when the solution entry was created.';
+COMMENT ON COLUMN mto_template_solution.modified_by IS 'User that last modified this solution entry.';
+COMMENT ON COLUMN mto_template_solution.modified_dts IS 'Timestamp when the solution entry was last modified.';
 
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_template_common_solution
 ON mto_template_solution (template_id, mto_common_solution_id);
@@ -162,7 +189,7 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 6) mto_template_milestone_solution_link
+-- 5) mto_template_milestone_solution_link
 --    - Links a template milestone to a template solution for the same template
 -- =========================================================
 CREATE TABLE IF NOT EXISTS mto_template_milestone_solution_link (
@@ -172,12 +199,21 @@ CREATE TABLE IF NOT EXISTS mto_template_milestone_solution_link (
     mto_template_milestone UUID NOT NULL REFERENCES mto_template_milestone(id) ON DELETE CASCADE,
 
     created_by   UUID NOT NULL REFERENCES user_account(id),
-    created_dts  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_dts  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by  UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMPTZ
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 COMMENT ON TABLE mto_template_milestone_solution_link IS 'Joins template milestones to template solutions for the same template.';
+
+COMMENT ON COLUMN mto_template_milestone_solution_link.id IS 'Unique identifier for the milestone–solution link record.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.template_id IS 'FK to the template that owns both sides of this link.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.mto_template_solution IS 'FK to the template solution in this link.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.mto_template_milestone IS 'FK to the template milestone in this link.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.created_by IS 'User that created this link record.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.created_dts IS 'Timestamp when the link record was created.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.modified_by IS 'User that last modified this link record.';
+COMMENT ON COLUMN mto_template_milestone_solution_link.modified_dts IS 'Timestamp when the link record was last modified.';
 
 -- Ensure both sides of the link belong to NEW.template_id
 CREATE OR REPLACE FUNCTION ENFORCE_LINK_TEMPLATE_MATCH()
