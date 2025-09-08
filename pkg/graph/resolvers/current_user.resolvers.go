@@ -27,7 +27,12 @@ func (r *currentUserResolver) Account(ctx context.Context, obj *models.CurrentUs
 
 // Notifications is the resolver for the notifications field.
 func (r *currentUserResolver) Notifications(ctx context.Context, obj *models.CurrentUser) (*models.UserNotifications, error) {
-	return CurrentUserNotificationsGet(ctx, r.store)
+	val, err := CurrentUserNotificationsGet(ctx, r.store)
+	if err != nil {
+		return nil, err
+	}
+
+	return val, nil
 }
 
 // NotificationPreferences is the resolver for the notificationPreferences field.
