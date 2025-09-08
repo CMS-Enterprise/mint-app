@@ -81,6 +81,7 @@ const NotificationSettings = () => {
     taggedInDiscussion,
     newDiscussionReply,
     modelPlanShared,
+    incorrectModelStatus,
     newModelPlan,
     datesChanged,
     datesChangedNotificationType,
@@ -318,6 +319,7 @@ const NotificationSettings = () => {
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
     newDiscussionReply: newDiscussionReply ?? [],
+    incorrectModelStatus: incorrectModelStatus ?? [],
     modelPlanShared: modelPlanShared ?? [],
     newModelPlan: newModelPlan ?? [],
     datesChanged: datesChanged ?? [],
@@ -411,6 +413,39 @@ const NotificationSettings = () => {
                       {getKeys(notificationSettings).map(setting => {
                         return (
                           <React.Fragment key={setting}>
+                            {setting === 'incorrectModelStatus' && (
+                              <Grid row>
+                                <Grid mobile={{ col: 6 }}>
+                                  <h4 className="margin-top-5 margin-bottom-0">
+                                    {notificationsT(
+                                      'settings.sections.notificationAboutMyModels.heading'
+                                    )}
+                                  </h4>
+                                  <p className="margin-top-0 margin-bottom-1 text-base-dark">
+                                    {notificationsT(
+                                      'settings.sections.notificationAboutMyModels.subHeading'
+                                    )}
+                                  </p>
+                                  <div className="display-flex flex-align-center bg-base-lightest padding-x-2">
+                                    <Icon.InfoOutline
+                                      size={3}
+                                      className="margin-right-1"
+                                      aria-label="info icon"
+                                    />
+                                    <p className="text-italic">
+                                      <Trans
+                                        i18nKey="notifications:settings:sections:notificationAboutMyModels:info"
+                                        values={{
+                                          count:
+                                            data?.currentUser
+                                              .leadModelPlanCount || 0
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                </Grid>
+                              </Grid>
+                            )}
                             <Grid row>
                               {setting === 'newModelPlan' && (
                                 <Grid mobile={{ col: 12 }}>
@@ -451,6 +486,7 @@ const NotificationSettings = () => {
                                   name={setting}
                                   value={UserNotificationPreferenceFlag.IN_APP}
                                   disabled={
+                                    setting !== 'incorrectModelStatus' &&
                                     setting !== 'datesChanged' &&
                                     setting !== 'newModelPlan' &&
                                     setting !==

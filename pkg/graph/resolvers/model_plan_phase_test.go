@@ -35,7 +35,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 	suite.NoError(err)
 
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
-	phaseSuggestion := model.PhaseSuggestion{
+	phaseSuggestion := models.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}
@@ -80,6 +80,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 		Times(1)
 
 	err = TrySendEmailForPhaseSuggestion(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 		emailRecipients,
@@ -110,7 +111,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.NotEmpty(collaborators)
 
 	// Fetch emails
-	emails, err := GetEmailsForModelPlanLeads(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	emails, err := GetEmailsForModelStatusAlert(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.Equal([]string{expectedEmail}, emails)
 
@@ -145,7 +146,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.NotEmpty(collaborators)
 
 	// Fetch emails again
-	emails, err = GetEmailsForModelPlanLeads(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	emails, err = GetEmailsForModelStatusAlert(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.ElementsMatch([]string{expectedEmail, expectedEmail2}, emails)
 }

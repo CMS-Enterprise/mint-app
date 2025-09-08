@@ -26,6 +26,9 @@ var userAccountGetNotificationRecipientsDatesChanged string
 //go:embed SQL/user_account/get_notification_preferences_data_exchange_approach_marked_complete.sql
 var userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete string
 
+//go:embed SQL/user_account/get_lead_model_plan_count.sql
+var userAccountGetLeadModelPlanCount string
+
 type userAccountScripts struct {
 	GetByUsername                                                string
 	GetByID                                                      string
@@ -35,6 +38,7 @@ type userAccountScripts struct {
 	GetNotificationPreferencesNewModelPlan                       string
 	GetNotificationRecipientsDatesChanged                        string
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete string
+	GetLeadModelPlanCount                                        string
 }
 
 // UserAccount houses all the sql for getting data for user account from the database
@@ -47,4 +51,5 @@ var UserAccount = userAccountScripts{
 	GetNotificationPreferencesNewModelPlan: userNotificationPreferencesNewModelPlan,
 	GetNotificationRecipientsDatesChanged:  userAccountGetNotificationRecipientsDatesChanged,
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete: userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,
+	GetLeadModelPlanCount: userAccountGetLeadModelPlanCount,
 }

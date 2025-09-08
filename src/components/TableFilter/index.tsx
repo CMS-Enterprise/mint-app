@@ -17,6 +17,7 @@ type GlobalClientFilterProps = {
   skipPageResetRef?: MutableRefObject<boolean>;
   tableID: string;
   tableName: string;
+  height5?: boolean;
 };
 
 // Component for Global Filter for Client Side filtering
@@ -27,7 +28,8 @@ const GlobalClientFilter = ({
   setGlobalFilter,
   skipPageResetRef,
   tableID,
-  tableName
+  tableName,
+  height5
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
 
@@ -48,6 +50,9 @@ const GlobalClientFilter = ({
         id={`${tableID}-search`}
         role="searchbox"
         type="search"
+        className={classnames({
+          'height-5': height5
+        })}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           if (skipPageResetRef) {
             // eslint-disable-next-line no-param-reassign
@@ -63,7 +68,10 @@ const GlobalClientFilter = ({
         purely from wireframe.  Will change in future with CEDAR API filtering */}
       <Button
         type="submit"
-        className="grid-row flex-justify-center flex-align-center no-pointer"
+        className={classnames({
+          'grid-row flex-justify-center flex-align-center no-pointer height-5':
+            height5
+        })}
       >
         <Icon.Search size={3} aria-label="search" />
       </Button>

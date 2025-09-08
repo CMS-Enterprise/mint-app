@@ -4,17 +4,26 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Button, Icon, Tooltip } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import { formatDateUtc, isDateInPast } from 'utils/date';
+import { convertDateToISOString, isDateInPast } from 'utils/date';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './index.scss';
 
-type DateTimePickerProps = DatePickerProps & {
+/** Extends the DatePickerProps type from react-datepicker to force single-date selection variant of ReactDatePicker's union type. */
+type SingleDatePickerProps = DatePickerProps & {
+  selectsMultiple?: never;
+  selectsRange?: never;
+};
+
+type DateTimePickerProps = Omit<SingleDatePickerProps, 'onChange'> & {
   id: string;
   name: string;
   alertIcon?: boolean; // Whether to show the warning icon
   alertText?: boolean; // Whether to show the warning text. Sometimes we want to render the warning text under a different parent/UI element - outside the scope of this component
   className?: string;
+  /** Uses date converted to UTC timezone in ISO string format */
+  onChange: (date: string | null) => void;
+  endOfDay?: boolean; // Whether to set the date to the end of the day
 };
 
 /*
@@ -28,6 +37,9 @@ const DateTimePicker = ({
   alertIcon = true,
   alertText = true,
   className,
+  value,
+  onChange,
+  endOfDay = false,
   ...props
 }: DateTimePickerProps) => {
   const { t: generalT } = useTranslation('general');
@@ -38,29 +50,35 @@ const DateTimePicker = ({
 
   // Check if the date is in the past
   const dateIsInPast = useMemo<boolean>(() => {
-    if (props.value) {
-      return isDateInPast(props.value);
+    if (value) {
+      return isDateInPast(value);
     }
     return false;
-  }, [props.value]);
+  }, [value]);
 
   return (
     <div>
       <div className={classNames('display-flex margin-top-1', className)}>
         <ReactDatePicker
-          {...props}
+          // Type assertion needed to force single-date selection variant of ReactDatePicker's union type
+          {...(props as SingleDatePickerProps)}
           ref={datePickerRef}
           id={id}
+          data-testid={id}
           name={name}
           open={isOpen}
           onClickOutside={() => setIsOpen(false)}
           onSelect={() => setIsOpen(false)}
-          selected={props.value ? new Date(props.value) : null}
-          value={
-            typeof props.value === 'string'
-              ? formatDateUtc(props.value, 'MM/dd/yyyy')
-              : props.value
-          }
+          selected={value ? new Date(value) : null}
+          // Convert date to UTC ISO string before calling onChange
+          onChange={date => {
+            let dateToUse = date;
+            if (endOfDay && date) {
+              dateToUse = new Date(date.getTime());
+              dateToUse.setHours(23, 59, 59, 999);
+            }
+            return onChange(convertDateToISOString(dateToUse));
+          }}
           aria-label={generalT('datePicker.label')}
           popperPlacement="bottom-start"
         />
@@ -88,7 +106,7 @@ const DateTimePicker = ({
           disabled={props.disabled}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Icon.CalendarToday size={3} />
+          <Icon.CalendarToday size={3} aria-hidden />
         </Button>
       </div>
 

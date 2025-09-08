@@ -16,7 +16,9 @@ export default gql(/* GraphQL */ `
         datesChangedNotificationType
         dataExchangeApproachMarkedComplete
         dataExchangeApproachMarkedCompleteNotificationType
+        incorrectModelStatus
       }
+      leadModelPlanCount
     }
   }
 `);
