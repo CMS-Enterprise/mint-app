@@ -79,7 +79,7 @@ func (r *modelPlanResolver) TaskListStatus(ctx context.Context, obj *models.Mode
 }
 
 // SuggestedPhase is the resolver for the suggestedPhase field.
-func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*model.PhaseSuggestion, error) {
+func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*models.PhaseSuggestion, error) {
 	return ModelPlanAnticipatedPhase(ctx, obj.Status, obj.ID)
 }
 

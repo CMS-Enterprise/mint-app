@@ -11,6 +11,7 @@ SET
     dates_changed_notification_type = :dates_changed_notification_type,
     data_exchange_approach_marked_complete = :data_exchange_approach_marked_complete,
     data_exchange_approach_marked_complete_notification_type = :data_exchange_approach_marked_complete_notification_type,
+    incorrect_model_status = :incorrect_model_status, 
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -29,6 +30,7 @@ RETURNING
     dates_changed_notification_type,
     data_exchange_approach_marked_complete,
     data_exchange_approach_marked_complete_notification_type,
+    incorrect_model_status,
     created_by,
     created_dts,
     modified_by,
