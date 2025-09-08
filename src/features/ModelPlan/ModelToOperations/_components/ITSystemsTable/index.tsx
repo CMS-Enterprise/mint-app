@@ -27,6 +27,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
+import TopScrollContainer from 'components/TopScrollContainer';
 import { EditMTOSolutionContext } from 'contexts/EditMTOSolutionContext';
 import {
   MTOMilestonePanelContext,
@@ -618,8 +619,8 @@ const ITSystemsTable = ({
           )}
 
           {renderTable && (
-            <>
-              <Table bordered={false} {...getTableProps()} fullWidth scrollable>
+            <TopScrollContainer>
+              <Table bordered={false} {...getTableProps()} fullWidth>
                 <thead>
                   {headerGroups.map(headerGroup => (
                     <tr
@@ -740,7 +741,7 @@ const ITSystemsTable = ({
               >
                 {currentTableSortDescription(headerGroups[0])}
               </div>
-            </>
+            </TopScrollContainer>
           )}
 
           <FilterViewSolutionsAlert

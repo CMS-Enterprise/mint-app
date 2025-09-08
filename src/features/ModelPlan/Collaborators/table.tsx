@@ -11,6 +11,7 @@ import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
+import TopScrollContainer from 'components/TopScrollContainer';
 import { formatDateLocal } from 'utils/date';
 import {
   currentTableSortDescription,
@@ -189,66 +190,68 @@ const CollaboratorsTable = ({
 
   return (
     <div className="collaborator-table">
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
-        <caption className="usa-sr-only">
-          {collaboratorsMiscT('requestsTable.caption')}
-        </caption>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr
-              {...headerGroup.getHeaderGroupProps()}
-              key={{ ...headerGroup.getHeaderGroupProps() }.key}
-            >
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  aria-sort={getColumnSortStatus(column)}
-                  className="table-header"
-                  scope="col"
-                  style={{
-                    paddingBottom: '.5rem',
-                    width:
-                      (column.id === 'teamRoles' && '45%') ||
-                      (column.id === 'userAccount.commonName' && '25%') ||
-                      'auto'
-                  }}
-                  key={column.id}
-                >
-                  <button
-                    className="usa-button usa-button--unstyled position-relative"
-                    type="button"
-                    {...column.getSortByToggleProps()}
+      <TopScrollContainer>
+        <UswdsTable bordered={false} {...getTableProps()} fullWidth>
+          <caption className="usa-sr-only">
+            {collaboratorsMiscT('requestsTable.caption')}
+          </caption>
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={{ ...headerGroup.getHeaderGroupProps() }.key}
+              >
+                {headerGroup.headers.map(column => (
+                  <th
+                    {...column.getHeaderProps()}
+                    aria-sort={getColumnSortStatus(column)}
+                    className="table-header"
+                    scope="col"
+                    style={{
+                      paddingBottom: '.5rem',
+                      width:
+                        (column.id === 'teamRoles' && '45%') ||
+                        (column.id === 'userAccount.commonName' && '25%') ||
+                        'auto'
+                    }}
+                    key={column.id}
                   >
-                    {column.render('Header') as React.ReactElement}
-                    {getHeaderSortIcon(column, false)}
-                  </button>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            return (
-              <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map(cell => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        whiteSpace: 'normal'
-                      }}
-                      key={cell.getCellProps().key}
+                    <button
+                      className="usa-button usa-button--unstyled position-relative"
+                      type="button"
+                      {...column.getSortByToggleProps()}
                     >
-                      {cell.render('Cell') as React.ReactElement}
-                    </td>
-                  );
-                })}
+                      {column.render('Header') as React.ReactElement}
+                      {getHeaderSortIcon(column, false)}
+                    </button>
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </UswdsTable>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map(row => {
+              return (
+                <tr {...row.getRowProps()} key={row.id}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          whiteSpace: 'normal'
+                        }}
+                        key={cell.getCellProps().key}
+                      >
+                        {cell.render('Cell') as React.ReactElement}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </UswdsTable>
+      </TopScrollContainer>
 
       <div
         className={classNames('grid-row grid-gap grid-gap-lg', {
