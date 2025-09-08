@@ -143,7 +143,7 @@ SELECT audit.AUDIT_TABLE(
 CREATE TABLE IF NOT EXISTS mto_template_solution (
     id                      UUID PRIMARY KEY NOT NULL,
     template_id             UUID NOT NULL REFERENCES mto_template(id) ON DELETE CASCADE,
-    mto_common_solution_key MTO_COMMON_SOLUTION_KEY NOT NULL REFERENCES mto_common_solution(key),
+    mto_common_solution_id UUID NOT NULL REFERENCES mto_common_solution(id),
 
     created_by   UUID NOT NULL REFERENCES user_account(id),
     created_dts  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS mto_template_solution (
 COMMENT ON TABLE mto_template_solution IS 'Solutions attached to a template (FK to enum PK mto_common_solution.key).';
 
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_template_common_solution
-ON mto_template_solution (template_id, mto_common_solution_key);
+ON mto_template_solution (template_id, mto_common_solution_id);
 
 SELECT audit.AUDIT_TABLE(
     'public','mto_template_solution','id','template_id',
