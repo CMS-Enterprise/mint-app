@@ -339,6 +339,7 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
     dataObj.mtoSolution = plan.mtoMatrix.solutions;
     dataObj.mtoCategory = plan.mtoMatrix.categories;
     dataObj.modelToOperations = plan.mtoMatrix.info;
+    flattenedData[index] = dataObj;
   });
 
   return flattenedData;

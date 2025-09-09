@@ -247,6 +247,55 @@ exports[`The home page > matches setting snapshot 1`] = `
                   </button>
                 </form>
               </div>
+              <div
+                class="display-flex flex-align-start padding-top-1"
+              >
+                <div>
+                  <button
+                    class="usa-button usa-button--unstyled display-flex"
+                    type="button"
+                  >
+                    <svg
+                      aria-label="download"
+                      class="usa-icon margin-right-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                      />
+                    </svg>
+                    <span>
+                      Download all plans as CSV
+                    </span>
+                  </button>
+                </div>
+                <button
+                  class="usa-button usa-button usa-button--unstyled display-flex margin-left-4"
+                  data-testid="button"
+                  type="button"
+                >
+                  <svg
+                    aria-label="download"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                    />
+                  </svg>
+                  Download MTO milestone summary
+                </button>
+              </div>
             </div>
             <div>
               <div
