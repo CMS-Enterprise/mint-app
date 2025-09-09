@@ -191,6 +191,16 @@ export enum AnticipatedMultiPayerDataAvailabilityUseCase {
   SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING = 'SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING'
 }
 
+export type ApplyTemplateResult = {
+  __typename: 'ApplyTemplateResult';
+  categoriesAdded: Scalars['Int']['output'];
+  milestonesAdded: Scalars['Int']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  solutionsAdded: Scalars['Int']['output'];
+  templateID: Scalars['UUID']['output'];
+  warnings?: Maybe<Array<Scalars['String']['output']>>;
+};
+
 export type AuditChange = {
   __typename: 'AuditChange';
   action: Scalars['String']['output'];
@@ -1260,6 +1270,14 @@ export type MtoSubcategory = {
   position: Scalars['Int']['output'];
 };
 
+export enum Mto_Template_Key {
+  ACO_AND_KIDNEY_MODELS = 'ACO_AND_KIDNEY_MODELS',
+  EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS = 'EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS',
+  MEDICARE_ADVANTAGE_AND_DRUG_MODELS = 'MEDICARE_ADVANTAGE_AND_DRUG_MODELS',
+  STANDARD_CATEGORIES = 'STANDARD_CATEGORIES',
+  STATE_AND_LOCAL_MODELS = 'STATE_AND_LOCAL_MODELS'
+}
+
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
   EDIT_MODEL = 'EDIT_MODEL',
@@ -1537,6 +1555,70 @@ export enum MonitoringFileType {
   PROVIDER = 'PROVIDER'
 }
 
+export type MtoTemplate = {
+  __typename: 'MtoTemplate';
+  categories: Array<MtoTemplateCategory>;
+  categoryCount: Scalars['Int']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  key: Mto_Template_Key;
+  milestoneCount: Scalars['Int']['output'];
+  milestones: Array<MtoTemplateMilestone>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  solutionCount: Scalars['Int']['output'];
+  solutions: Array<MtoTemplateSolution>;
+};
+
+
+export type MtoTemplateCategoriesArgs = {
+  parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+export type MtoTemplateMilestonesArgs = {
+  categoryID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+export type MtoTemplateCategory = {
+  __typename: 'MtoTemplateCategory';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  parentID?: Maybe<Scalars['UUID']['output']>;
+  templateID: Scalars['UUID']['output'];
+};
+
+export type MtoTemplateMilestone = {
+  __typename: 'MtoTemplateMilestone';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoCommonMilestoneKey: Scalars['String']['output'];
+  mtoTemplateCategoryID?: Maybe<Scalars['UUID']['output']>;
+  templateID: Scalars['UUID']['output'];
+};
+
+export type MtoTemplateSolution = {
+  __typename: 'MtoTemplateSolution';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoCommonSolutionID: Scalars['UUID']['output'];
+  templateID: Scalars['UUID']['output'];
+};
+
 export enum MultiSourceDataToCollect {
   COMMERCIAL_CLAIMS = 'COMMERCIAL_CLAIMS',
   LAB_DATA = 'LAB_DATA',
@@ -1552,6 +1634,7 @@ export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
+  applyTemplateToMto: ApplyTemplateResult;
   createDiscussionReply: DiscussionReply;
   /**
    * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
@@ -1660,6 +1743,13 @@ export type MutationAddPlanFavoriteArgs = {
 /** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationApplyTemplateToMtoArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  templateID: Scalars['UUID']['input'];
 };
 
 
@@ -4121,6 +4211,8 @@ export type Query = {
   mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
+  mtoTemplate?: Maybe<MtoTemplate>;
+  mtoTemplates: Array<MtoTemplate>;
   ndaInfo: NdaInfo;
   planCR: PlanCr;
   planCollaboratorByID: PlanCollaborator;
@@ -4212,6 +4304,19 @@ export type QueryMtoMilestoneArgs = {
 /** Query definition for the schema */
 export type QueryMtoSolutionArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoTemplateArgs = {
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  key?: InputMaybe<Mto_Template_Key>;
+};
+
+
+/** Query definition for the schema */
+export type QueryMtoTemplatesArgs = {
+  keys?: InputMaybe<Array<Mto_Template_Key>>;
 };
 
 

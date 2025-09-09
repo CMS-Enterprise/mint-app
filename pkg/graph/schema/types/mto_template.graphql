@@ -1,0 +1,90 @@
+# Mirror of DB enum MTO_TEMPLATE_KEY
+enum MTO_TEMPLATE_KEY {
+  ACO_AND_KIDNEY_MODELS
+  EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+  MEDICARE_ADVANTAGE_AND_DRUG_MODELS
+  STANDARD_CATEGORIES
+  STATE_AND_LOCAL_MODELS
+}
+
+type MtoTemplate {
+  id: UUID!
+  key: MTO_TEMPLATE_KEY!
+  name: String!
+  description: String
+
+  categories(parentID: UUID): [MtoTemplateCategory!]!
+  milestones(categoryID: UUID): [MtoTemplateMilestone!]!
+  solutions: [MtoTemplateSolution!]!
+
+  # Convenience count fields
+  categoryCount: Int!
+  milestoneCount: Int!
+  solutionCount: Int!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MtoTemplateCategory {
+  id: UUID!
+  templateID: UUID!
+  name: String!
+  parentID: UUID
+  order: Int!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MtoTemplateMilestone {
+  id: UUID!
+  templateID: UUID!
+  mtoCommonMilestoneKey: String!
+  mtoTemplateCategoryID: UUID
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MtoTemplateSolution {
+  id: UUID!
+  templateID: UUID!
+  mtoCommonSolutionID: UUID!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type ApplyTemplateResult {
+  modelPlanID: UUID!
+  templateID: UUID!
+  categoriesAdded: Int!
+  milestonesAdded: Int!
+  solutionsAdded: Int!
+  warnings: [String!] # Non-blocking messages returned when applying a template.
+}
+
+extend type Query {
+  # List all templates (optionally filter by keys)
+  mtoTemplates(keys: [MTO_TEMPLATE_KEY!]): [MtoTemplate!]!
+
+  # Get a single template by id or key
+  mtoTemplate(id: UUID, key: MTO_TEMPLATE_KEY): MtoTemplate
+}
+
+extend type Mutation {
+  # Apply a template to a specific MTO (matrix)
+  applyTemplateToMto(
+    modelPlanID: UUID!
+    templateID: UUID!
+  ): ApplyTemplateResult!
+}

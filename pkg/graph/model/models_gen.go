@@ -15,6 +15,15 @@ import (
 	"github.com/google/uuid"
 )
 
+type ApplyTemplateResult struct {
+	ModelPlanID     uuid.UUID `json:"modelPlanID"`
+	TemplateID      uuid.UUID `json:"templateID"`
+	CategoriesAdded int       `json:"categoriesAdded"`
+	MilestonesAdded int       `json:"milestonesAdded"`
+	SolutionsAdded  int       `json:"solutionsAdded"`
+	Warnings        []string  `json:"warnings,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
