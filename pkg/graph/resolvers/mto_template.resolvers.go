@@ -16,20 +16,73 @@ import (
 
 // Categories is the resolver for the categories field.
 func (r *mtoTemplateResolver) Categories(ctx context.Context, obj *models.MtoTemplate, parentID *uuid.UUID) ([]*models.MtoTemplateCategory, error) {
-	// Return an empty slice for now
-	return []*models.MtoTemplateCategory{}, nil
+	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
+
+	// Create mock categories
+	categories := []*models.MtoTemplateCategory{
+		models.NewMtoTemplateCategory(
+			mockUUID,
+			obj.ID,
+			"Implementation Planning",
+			parentID,
+			1,
+		),
+		models.NewMtoTemplateCategory(
+			mockUUID,
+			obj.ID,
+			"Operations Management",
+			parentID,
+			2,
+		),
+	}
+
+	return categories, nil
 }
 
 // Milestones is the resolver for the milestones field.
 func (r *mtoTemplateResolver) Milestones(ctx context.Context, obj *models.MtoTemplate, categoryID *uuid.UUID) ([]*models.MtoTemplateMilestone, error) {
-	// Return an empty slice for now
-	return []*models.MtoTemplateMilestone{}, nil
+	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
+
+	// Create mock milestones
+	milestones := []*models.MtoTemplateMilestone{
+		models.NewMtoTemplateMilestone(
+			mockUUID,
+			obj.ID,
+			"MODEL_DESIGN_COMPLETE",
+			categoryID,
+		),
+		models.NewMtoTemplateMilestone(
+			mockUUID,
+			obj.ID,
+			"IMPLEMENTATION_START",
+			categoryID,
+		),
+	}
+
+	return milestones, nil
 }
 
 // Solutions is the resolver for the solutions field.
 func (r *mtoTemplateResolver) Solutions(ctx context.Context, obj *models.MtoTemplate) ([]*models.MtoTemplateSolution, error) {
-	// Return an empty slice for now
-	return []*models.MtoTemplateSolution{}, nil
+	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
+	solutionID1 := uuid.MustParse("11111111-1111-1111-1111-111111111111")
+	solutionID2 := uuid.MustParse("22222222-2222-2222-2222-222222222222")
+
+	// Create mock solutions
+	solutions := []*models.MtoTemplateSolution{
+		models.NewMtoTemplateSolution(
+			mockUUID,
+			obj.ID,
+			solutionID1,
+		),
+		models.NewMtoTemplateSolution(
+			mockUUID,
+			obj.ID,
+			solutionID2,
+		),
+	}
+
+	return solutions, nil
 }
 
 // ApplyTemplateToMto is the resolver for the applyTemplateToMto field.

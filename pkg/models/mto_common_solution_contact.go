@@ -95,3 +95,48 @@ func NewMTOCommonSolutionContact(
 		ReceiveEmails:     receiveEmails,
 	}
 }
+
+// NewMtoTemplateCategory returns a new MtoTemplateCategory object
+func NewMtoTemplateCategory(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	name string,
+	parentID *uuid.UUID,
+	order int,
+) *MtoTemplateCategory {
+	return &MtoTemplateCategory{
+		baseStruct: NewBaseStruct(createdBy),
+		TemplateID: templateID,
+		Name:       name,
+		ParentID:   parentID,
+		Order:      order,
+	}
+}
+
+// NewMtoTemplateMilestone returns a new MtoTemplateMilestone object
+func NewMtoTemplateMilestone(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	mtoCommonMilestoneKey string,
+	mtoTemplateCategoryID *uuid.UUID,
+) *MtoTemplateMilestone {
+	return &MtoTemplateMilestone{
+		baseStruct:            NewBaseStruct(createdBy),
+		TemplateID:            templateID,
+		MtoCommonMilestoneKey: mtoCommonMilestoneKey,
+		MtoTemplateCategoryID: mtoTemplateCategoryID,
+	}
+}
+
+// NewMtoTemplateSolution returns a new MtoTemplateSolution object
+func NewMtoTemplateSolution(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	mtoCommonSolutionID uuid.UUID,
+) *MtoTemplateSolution {
+	return &MtoTemplateSolution{
+		baseStruct:          NewBaseStruct(createdBy),
+		TemplateID:          templateID,
+		MtoCommonSolutionID: mtoCommonSolutionID,
+	}
+}
