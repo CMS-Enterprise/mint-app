@@ -1,3 +1,27 @@
+import {
+  TypeChangeFilter,
+  TypeOfChange,
+  TypeOfOtherChange
+} from 'features/ModelPlan/ChangeHistory/components/FilterForm/filterUtil';
+
+const filterSections: Record<TypeChangeFilter, string> = {
+  [TypeOfChange.ALL_MODEL_PLAN_SECTIONS]: 'All Model Plan sections',
+  [TypeOfChange.MODEL_TIMELINE]: 'Model timeline',
+  [TypeOfChange.BASICS]: 'Model basics',
+  [TypeOfChange.GENERAL_CHARACTERISTICS]: 'General characteristics',
+  [TypeOfChange.PARTICIPANTS_AND_PROVIDERS]: 'Participants and providers',
+  [TypeOfChange.BENEFICIARIES]: 'Beneficiaries',
+  [TypeOfChange.OPERATIONS_EVALUATION_AND_LEARNING]:
+    'Operations, evaluation, and learning',
+  [TypeOfChange.PAYMENTS]: 'Payment',
+  [TypeOfChange.MODEL_TO_OPERATIONS]: 'Model-to-operations matrix',
+  [TypeOfOtherChange.DATA_EXCHANGE_APPROACH]: 'Data exchange approach',
+  [TypeOfOtherChange.DISCUSSIONS]: 'Discussions',
+  [TypeOfOtherChange.DOCUMENTS]: 'Documents',
+  [TypeOfOtherChange.OVERALL_STATUS]: 'Overall status',
+  [TypeOfOtherChange.TEAM_MEMBERS]: 'Team members'
+};
+
 const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
@@ -167,7 +191,31 @@ const changeHistory = {
   changesSinceRelease:
     'This Model Plan was created before the release of Change history. Because of this, you can only view changes made since {{date}}.',
   followUp: 'Follow-up to ',
-  noteFor: 'Note for '
+  noteFor: 'Note for ',
+  users: 'Users',
+  filter: 'Filter',
+  filters: 'Filters',
+  usersHint: 'Filter by users that have contributed to this Model Plan.',
+  currentTeam: 'Current Model Team',
+  otherContributors: 'Other contributors',
+  viewMore: 'View more',
+  viewLess: 'View less',
+  typeOfChange: 'Type of change',
+  modelPlanSection: 'Model plan section',
+  otherTypes: 'Other types',
+  filterSections,
+  dateRange: 'Date range',
+  dateRangeHint:
+    'View changes made within a certain date range. This Model Plan was created on {{date}}.',
+  fromDate: 'From',
+  toDate: 'To',
+  format: 'mm/dd/yyyy',
+  clearAll: 'Clear all',
+  applyFilter: 'Apply filter',
+  user: 'User',
+  type: 'Type',
+  startDate: 'Start date',
+  endDate: 'End date'
 };
 
 export default changeHistory;

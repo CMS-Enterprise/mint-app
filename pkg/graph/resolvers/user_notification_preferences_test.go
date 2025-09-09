@@ -13,7 +13,7 @@ func (suite *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussionReply)
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.NewDiscussionReply)
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelPlanShared)
-
+	suite.EqualValues(models.UserNotificationPreferenceFlags(nil), pref.IncorrectModelStatus)
 }
 
 func (suite *ResolverSuite) TestUserNotificationPreferencesUpdate() {
@@ -29,6 +29,7 @@ func (suite *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 		"taggedInDiscussionReply": inAppOnly,
 		"newDiscussionReply":      inAppOnly,
 		"modelPlanShared":         nil,
+		"incorrectModelStatus":    inAppOnly,
 	}
 	updatedPref, err := UserNotificationPreferencesUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, changes)
 	suite.NoError(err)
@@ -40,9 +41,9 @@ func (suite *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 	suite.EqualValues(inAppOnly, updatedPref.TaggedInDiscussionReply)
 	suite.EqualValues(inAppOnly, updatedPref.NewDiscussionReply)
 	suite.EqualValues(models.UserNotificationPreferenceFlags(nil), updatedPref.ModelPlanShared)
+	suite.EqualValues(inAppOnly, updatedPref.IncorrectModelStatus)
 
 	// Ensure a nil reference evaluates correctly
 	suite.False(updatedPref.ModelPlanShared.InApp())
 	suite.False(updatedPref.ModelPlanShared.SendEmail())
-
 }

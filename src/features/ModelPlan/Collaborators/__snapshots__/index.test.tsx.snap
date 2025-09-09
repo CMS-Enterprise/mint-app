@@ -77,205 +77,211 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
           <div
             class="collaborator-table"
           >
-            <table
-              class="usa-table usa-table--borderless width-full"
-              data-testid="table"
-            >
-              <caption
-                class="usa-sr-only"
+            <div>
+              <div
+                class="top-scroll-content"
               >
-                requestsTable.caption
-              </caption>
-              <thead>
-                <tr
-                  role="row"
+                <table
+                  class="usa-table usa-table--borderless width-full"
+                  data-testid="table"
                 >
-                  <th
-                    aria-sort="none"
-                    class="table-header"
-                    colspan="1"
-                    role="columnheader"
-                    scope="col"
-                    style="padding-bottom: .5rem; width: 25%;"
+                  <caption
+                    class="usa-sr-only"
                   >
-                    <button
-                      class="usa-button usa-button--unstyled position-relative"
-                      style="cursor: pointer;"
-                      title="Toggle SortBy"
-                      type="button"
+                    requestsTable.caption
+                  </caption>
+                  <thead>
+                    <tr
+                      role="row"
                     >
-                      Name
-                      <svg
-                        aria-label="unfold"
-                        class="usa-icon margin-left-05"
-                        data-testid="caret--sort"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="padding-bottom: .5rem; width: 25%;"
                       >
-                        <path
-                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                        />
-                      </svg>
-                    </button>
-                  </th>
-                  <th
-                    aria-sort="none"
-                    class="table-header"
-                    colspan="1"
-                    role="columnheader"
-                    scope="col"
-                    style="padding-bottom: .5rem; width: 45%;"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled position-relative"
-                      style="cursor: pointer;"
-                      title="Toggle SortBy"
-                      type="button"
-                    >
-                      Role(s)
-                      <svg
-                        aria-label="unfold"
-                        class="usa-icon margin-left-05"
-                        data-testid="caret--sort"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                        />
-                      </svg>
-                    </button>
-                  </th>
-                  <th
-                    aria-sort="none"
-                    class="table-header"
-                    colspan="1"
-                    role="columnheader"
-                    scope="col"
-                    style="padding-bottom: .5rem; width: auto;"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled position-relative"
-                      style="cursor: pointer;"
-                      title="Toggle SortBy"
-                      type="button"
-                    >
-                      Date added
-                      <svg
-                        aria-label="unfold"
-                        class="usa-icon margin-left-05"
-                        data-testid="caret--sort"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                        />
-                      </svg>
-                    </button>
-                  </th>
-                  <th
-                    aria-sort="none"
-                    class="table-header"
-                    colspan="1"
-                    role="columnheader"
-                    scope="col"
-                    style="padding-bottom: .5rem; width: auto;"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled position-relative"
-                      type="button"
-                    >
-                      Actions
-                      <svg
-                        aria-label="unfold"
-                        class="usa-icon margin-left-05"
-                        data-testid="caret--sort"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                        />
-                      </svg>
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                role="rowgroup"
-              >
-                <tr
-                  role="row"
-                >
-                  <td
-                    role="cell"
-                    style="white-space: normal;"
-                  >
-                    <div
-                      class="display-flex  flex-align-center"
-                    >
-                      <div
-                        class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
-                        data-testid="avatar--basic"
-                      >
-                        JD
-                      </div>
-                      <div
-                        class="margin-y-0"
-                      >
-                        <span
-                          class=""
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
                         >
-                          John Doe
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td
-                    role="cell"
-                    style="white-space: normal;"
+                          Name
+                          <svg
+                            aria-label="unfold"
+                            class="usa-icon margin-left-05"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="padding-bottom: .5rem; width: 45%;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Role(s)
+                          <svg
+                            aria-label="unfold"
+                            class="usa-icon margin-left-05"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="padding-bottom: .5rem; width: auto;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Date added
+                          <svg
+                            aria-label="unfold"
+                            class="usa-icon margin-left-05"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="padding-bottom: .5rem; width: auto;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          type="button"
+                        >
+                          Actions
+                          <svg
+                            aria-label="unfold"
+                            class="usa-icon margin-left-05"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    role="rowgroup"
                   >
-                    Model Lead
-                  </td>
-                  <td
-                    role="cell"
-                    style="white-space: normal;"
-                  >
-                    October 22, 2022
-                  </td>
-                  <td
-                    role="cell"
-                    style="white-space: normal;"
-                  >
-                    <a
-                      aria-label="Edit John Doe"
-                      class="usa-link margin-right-2"
-                      data-discover="true"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
+                    <tr
+                      role="row"
                     >
-                      Edit
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <td
+                        role="cell"
+                        style="white-space: normal;"
+                      >
+                        <div
+                          class="display-flex  flex-align-center"
+                        >
+                          <div
+                            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+                            data-testid="avatar--basic"
+                          >
+                            JD
+                          </div>
+                          <div
+                            class="margin-y-0"
+                          >
+                            <span
+                              class=""
+                            >
+                              John Doe
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        role="cell"
+                        style="white-space: normal;"
+                      >
+                        Model Lead
+                      </td>
+                      <td
+                        role="cell"
+                        style="white-space: normal;"
+                      >
+                        October 22, 2022
+                      </td>
+                      <td
+                        role="cell"
+                        style="white-space: normal;"
+                      >
+                        <a
+                          aria-label="Edit John Doe"
+                          class="usa-link margin-right-2"
+                          data-discover="true"
+                          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
+                        >
+                          Edit
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div
               class="grid-row grid-gap grid-gap-lg display-flex row-reverse"
             />

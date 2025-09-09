@@ -32,7 +32,7 @@ describe('Change History', () => {
     cy.get('[data-testid="shown-value"]').should('be.visible');
 
     // Close expanded audit
-    cy.get('[data-testid="batch-record-0"]').click();
+    cy.get('[data-testid="batch-record-0"]').eq(1).click();
 
     // Check that audit is collapsed again
     cy.get('[data-testid="shown-value"]').should('not.exist');
@@ -47,14 +47,14 @@ describe('Change History', () => {
 
     // Searches changes correctly
     cy.get('#table-id-search')
-      .type('Plan with Documents')
+      .type('Plan with Documents', { delay: 100 })
       .should('have.value', 'Plan with Documents');
 
     cy.get('li.change-record').should('have.length', 1);
 
     // Should show no results
     cy.get('#table-id-search')
-      .type('wegdsfdfaa')
+      .type('wegdsfdfaa', { delay: 100 })
       .should('have.value', 'Plan with Documentswegdsfdfaa');
 
     cy.get('li.change-record').should('have.length', 0);

@@ -56,3 +56,20 @@ func (s *activityStore) GetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON 
 	//Note: This doesn't parse metaData here, that is the responsibility of the parent function
 	return retActivities, nil
 }
+
+// CountByMetadata returns the count of activities with the same metadata
+func (s *activityStore) CountByMetadata(np sqlutils.NamedPreparer, activity *models.Activity) (int, error) {
+	activity.MetaDataRaw = activity.MetaData
+	metaData := activity.MetaDataRaw
+
+	arg := map[string]interface{}{
+		"meta_data": metaData,
+	}
+
+	var count *int
+	count, err := sqlutils.GetProcedure[int](np, sqlqueries.Activity.CountByMetadata, arg)
+	if err != nil {
+		return 0, fmt.Errorf("issue counting activities by metadata: %w", err)
+	}
+	return *count, nil
+}

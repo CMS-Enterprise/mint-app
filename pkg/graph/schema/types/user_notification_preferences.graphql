@@ -42,6 +42,8 @@ type UserNotificationPreferences {
   dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]!
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
 
+  incorrectModelStatus: [UserNotificationPreferenceFlag!]!
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -74,6 +76,8 @@ input UserNotificationPreferencesChanges
 
   dataExchangeApproachMarkedComplete: [UserNotificationPreferenceFlag!]
   dataExchangeApproachMarkedCompleteNotificationType: DataExchangeApproachMarkedCompleteNotificationType
+
+  incorrectModelStatus: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
