@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -17,32 +16,117 @@ import (
 
 // Categories is the resolver for the categories field.
 func (r *mtoTemplateResolver) Categories(ctx context.Context, obj *models.MtoTemplate, parentID *uuid.UUID) ([]*models.MtoTemplateCategory, error) {
-	panic(fmt.Errorf("not implemented: Categories - categories"))
+	// Return an empty slice for now
+	return []*models.MtoTemplateCategory{}, nil
 }
 
 // Milestones is the resolver for the milestones field.
 func (r *mtoTemplateResolver) Milestones(ctx context.Context, obj *models.MtoTemplate, categoryID *uuid.UUID) ([]*models.MtoTemplateMilestone, error) {
-	panic(fmt.Errorf("not implemented: Milestones - milestones"))
+	// Return an empty slice for now
+	return []*models.MtoTemplateMilestone{}, nil
 }
 
 // Solutions is the resolver for the solutions field.
 func (r *mtoTemplateResolver) Solutions(ctx context.Context, obj *models.MtoTemplate) ([]*models.MtoTemplateSolution, error) {
-	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+	// Return an empty slice for now
+	return []*models.MtoTemplateSolution{}, nil
 }
 
 // ApplyTemplateToMto is the resolver for the applyTemplateToMto field.
 func (r *mutationResolver) ApplyTemplateToMto(ctx context.Context, modelPlanID uuid.UUID, templateID uuid.UUID) (*model.ApplyTemplateResult, error) {
-	panic(fmt.Errorf("not implemented: ApplyTemplateToMto - applyTemplateToMto"))
+	// Return a mock result object for now
+	return &model.ApplyTemplateResult{
+		ModelPlanID:     modelPlanID,
+		TemplateID:      templateID,
+		CategoriesAdded: 0,
+		MilestonesAdded: 0,
+		SolutionsAdded:  0,
+		Warnings:        []string{},
+	}, nil
 }
 
 // MtoTemplates is the resolver for the mtoTemplates field.
-func (r *queryResolver) MtoTemplates(ctx context.Context, keys []models.MtoTemplateKey) ([]*models.MtoTemplate, error) {
-	panic(fmt.Errorf("not implemented: MtoTemplates - mtoTemplates"))
+func (r *queryResolver) MtoTemplates(ctx context.Context, keys []models.MTOTemplateKey) ([]*models.MtoTemplate, error) {
+	// Create mock templates using constructor
+	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
+
+	// Create descriptions as variables first
+	acoDesc := "Template for ACO and kidney care models"
+	episodeDesc := "Template for Episode Primary Care and Non-ACO models"
+	medicareDesc := "Template for Medicare Advantage and Drug models"
+	standardDesc := "Template with standard organizational categories"
+	stateDesc := "Template for state and local government models"
+
+	mockTemplates := []*models.MtoTemplate{
+		models.NewMtoTemplate(
+			mockUUID,
+			models.MTOTemplateKeyAcoAndKidneyModels,
+			"ACO and Kidney Models Template",
+			&acoDesc,
+		),
+		models.NewMtoTemplate(
+			mockUUID,
+			models.MTOTemplateKeyEpisodePrimaryCareAndNonAcoModels,
+			"Episode Primary Care Template",
+			&episodeDesc,
+		),
+		models.NewMtoTemplate(
+			mockUUID,
+			models.MTOTemplateKeyMedicareAdvantageAndDrugModels,
+			"Medicare Advantage and Drug Template",
+			&medicareDesc,
+		),
+		models.NewMtoTemplate(
+			mockUUID,
+			models.MTOTemplateKeyStandardCategories,
+			"Standard Categories Template",
+			&standardDesc,
+		),
+		models.NewMtoTemplate(
+			mockUUID,
+			models.MTOTemplateKeyStateAndLocalModels,
+			"State and Local Models Template",
+			&stateDesc,
+		),
+	}
+
+	// Set mock counts (since constructor sets them to 0)
+	for _, template := range mockTemplates {
+		template.CategoryCount = 5
+		template.MilestoneCount = 20
+		template.SolutionCount = 10
+	}
+
+	// Filter by keys if provided
+	if len(keys) > 0 {
+		filtered := make([]*models.MtoTemplate, 0)
+		keySet := make(map[models.MTOTemplateKey]bool)
+		for _, key := range keys {
+			keySet[key] = true
+		}
+
+		for _, template := range mockTemplates {
+			if keySet[template.Key] {
+				filtered = append(filtered, template)
+			}
+		}
+		return filtered, nil
+	}
+
+	return mockTemplates, nil
 }
 
 // MtoTemplate is the resolver for the mtoTemplate field.
-func (r *queryResolver) MtoTemplate(ctx context.Context, id *uuid.UUID, key *models.MtoTemplateKey) (*models.MtoTemplate, error) {
-	panic(fmt.Errorf("not implemented: MtoTemplate - mtoTemplate"))
+func (r *queryResolver) MtoTemplate(ctx context.Context, id *uuid.UUID, key *models.MTOTemplateKey) (*models.MtoTemplate, error) {
+	// Return a stub template for now
+	return &models.MtoTemplate{
+		Key:            models.MTOTemplateKeyAcoAndKidneyModels,
+		Name:           "Mock Template",
+		Description:    nil,
+		CategoryCount:  5,
+		MilestoneCount: 20,
+		SolutionCount:  10,
+	}, nil
 }
 
 // MtoTemplate returns generated.MtoTemplateResolver implementation.

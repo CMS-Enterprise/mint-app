@@ -1270,7 +1270,7 @@ export type MtoSubcategory = {
   position: Scalars['Int']['output'];
 };
 
-export enum Mto_Template_Key {
+export enum MtoTemplateKey {
   ACO_AND_KIDNEY_MODELS = 'ACO_AND_KIDNEY_MODELS',
   EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS = 'EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS',
   MEDICARE_ADVANTAGE_AND_DRUG_MODELS = 'MEDICARE_ADVANTAGE_AND_DRUG_MODELS',
@@ -1563,7 +1563,7 @@ export type MtoTemplate = {
   createdDts: Scalars['Time']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
-  key: Mto_Template_Key;
+  key: MtoTemplateKey;
   milestoneCount: Scalars['Int']['output'];
   milestones: Array<MtoTemplateMilestone>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -4310,13 +4310,13 @@ export type QueryMtoSolutionArgs = {
 /** Query definition for the schema */
 export type QueryMtoTemplateArgs = {
   id?: InputMaybe<Scalars['UUID']['input']>;
-  key?: InputMaybe<Mto_Template_Key>;
+  key?: InputMaybe<MtoTemplateKey>;
 };
 
 
 /** Query definition for the schema */
 export type QueryMtoTemplatesArgs = {
-  keys?: InputMaybe<Array<Mto_Template_Key>>;
+  keys?: InputMaybe<Array<MtoTemplateKey>>;
 };
 
 

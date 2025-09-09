@@ -8,14 +8,14 @@ import (
    Enum: MTO_TEMPLATE_KEY
    ========================= */
 
-type MtoTemplateKey string
+type MTOTemplateKey string
 
 const (
-	MtoTemplateKeyAcoAndKidneyModels                MtoTemplateKey = "ACO_AND_KIDNEY_MODELS"
-	MtoTemplateKeyEpisodePrimaryCareAndNonAcoModels MtoTemplateKey = "EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS"
-	MtoTemplateKeyMedicareAdvantageAndDrugModels    MtoTemplateKey = "MEDICARE_ADVANTAGE_AND_DRUG_MODELS"
-	MtoTemplateKeyStandardCategories                MtoTemplateKey = "STANDARD_CATEGORIES"
-	MtoTemplateKeyStateAndLocalModels               MtoTemplateKey = "STATE_AND_LOCAL_MODELS"
+	MTOTemplateKeyAcoAndKidneyModels                MTOTemplateKey = "ACO_AND_KIDNEY_MODELS"
+	MTOTemplateKeyEpisodePrimaryCareAndNonAcoModels MTOTemplateKey = "EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS"
+	MTOTemplateKeyMedicareAdvantageAndDrugModels    MTOTemplateKey = "MEDICARE_ADVANTAGE_AND_DRUG_MODELS"
+	MTOTemplateKeyStandardCategories                MTOTemplateKey = "STANDARD_CATEGORIES"
+	MTOTemplateKeyStateAndLocalModels               MTOTemplateKey = "STATE_AND_LOCAL_MODELS"
 )
 
 /* =========================
@@ -25,7 +25,7 @@ const (
 type MtoTemplate struct {
 	baseStruct
 
-	Key         MtoTemplateKey `json:"key"         db:"key"`
+	Key         MTOTemplateKey `json:"key"         db:"key"`
 	Name        string         `json:"name"        db:"name"`
 	Description *string        `json:"description" db:"description"`
 
@@ -57,4 +57,19 @@ type MtoTemplateSolution struct {
 
 	TemplateID          uuid.UUID `json:"templateID"         db:"template_id"`
 	MtoCommonSolutionID uuid.UUID `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
+}
+
+// NewMtoTemplate returns a new MtoTemplate object
+func NewMtoTemplate(
+	createdBy uuid.UUID,
+	key MTOTemplateKey,
+	name string,
+	description *string,
+) *MtoTemplate {
+	return &MtoTemplate{
+		baseStruct:  NewBaseStruct(createdBy),
+		Key:         key,
+		Name:        name,
+		Description: description,
+	}
 }
