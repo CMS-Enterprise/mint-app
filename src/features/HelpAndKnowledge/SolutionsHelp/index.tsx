@@ -118,10 +118,11 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   // Resets the page to 1 when the query changes
   useEffect(() => {
     if (query) {
-      params.set('page', '1');
-      navigate({ search: params.toString() });
+      const paramsChange = new URLSearchParams(location.search);
+      paramsChange.set('page', '1');
+      navigate({ search: paramsChange.toString() });
     }
-  }, [query, params, navigate]);
+  }, [query, location.search, navigate]);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
@@ -130,7 +131,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query, helpSolutions]);
+  }, [query, selectedSolution, helpSolutions]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category
