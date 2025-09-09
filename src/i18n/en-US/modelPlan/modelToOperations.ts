@@ -269,7 +269,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Template',
       header: 'Standard categories',
       description: '24 categories, 0 milestones, 0 solutions',
-      buttonText: 'Add this template'
+      buttonText: 'Add this template',
+      templateCount:
+        '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions'
     }
   },
   table: {
