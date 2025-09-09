@@ -532,7 +532,7 @@ const ModelPlansTable = ({
         </div>
 
         <>
-          {type === ViewCustomizationType.ALL_MODEL_PLANS && isAssessment && (
+          {type === ViewCustomizationType.ALL_MODEL_PLANS && (
             <div className="display-flex flex-align-start padding-top-1">
               <CsvExportLink />
               <Button
