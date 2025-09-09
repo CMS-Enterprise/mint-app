@@ -188,6 +188,7 @@ const notifications = {
       alreadyUnsubscribed:
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
+        INCORRECT_MODEL_STATUS: 'when MINT detects an incorrect model status',
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
         NEW_DISCUSSION_ADDED: 'when a new discussion is added',
         DATES_CHANGED: 'when model dates change',

@@ -177,6 +177,15 @@ const NotificationSettings = () => {
     }
 
     // Setting variables
+
+    // Incorrect Model Status variables
+    const isSubscribedIncorrectModelStatusEmail = incorrectModelStatus.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedIncorrectModelStatusInApp = incorrectModelStatus.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+
     // New Model Plan variables
     const isSubscribedModelPlanEmail = newModelPlan.includes(
       UserNotificationPreferenceFlag.EMAIL
@@ -214,6 +223,8 @@ const NotificationSettings = () => {
     // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
     // then show error alert banner
     if (
+      (unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS &&
+        !isSubscribedIncorrectModelStatusEmail) ||
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
         !isSubscribedModelPlanEmail) ||
       (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED &&
@@ -252,6 +263,7 @@ const NotificationSettings = () => {
 
     // Unsubscribe from email notifications
     if (
+      unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS ||
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
       unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED ||
       unsubscribeEmailParams === ActivityType.DATES_CHANGED ||
@@ -260,12 +272,22 @@ const NotificationSettings = () => {
     ) {
       // if user has email notifications, then proceeed to unsubscribe
       if (
+        isSubscribedIncorrectModelStatusEmail ||
         isSubscribedModelPlanEmail ||
         isSubscribedNewDiscussionAddedEmail ||
         isSubscribedDatesChangedEmail ||
         isSubscribedDataExchangeApproachMarkedCompleteEmail
       ) {
         let changes;
+        // Adjust payload if Incorrect Model Status in-app notifications are enabled
+        if (unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS) {
+          changes = {
+            incorrectModelStatus: isSubscribedIncorrectModelStatusInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+
         // Adjust payload if New Model Plan in-app notifications are enabled
         if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
           changes = {
@@ -348,7 +370,8 @@ const NotificationSettings = () => {
     unsubscribeEmailParams,
     update,
     setErrorMeta,
-    newDiscussionAdded
+    newDiscussionAdded,
+    incorrectModelStatus
   ]);
 
   const initialValues: NotificationSettingsFormType = {
