@@ -549,7 +549,7 @@ const ModelPlansTable = ({
                   className="margin-right-1"
                   aria-label="download"
                 />
-                Download MTO Milestone Summary
+                {homeT('downloadMTOMilestoneSummary')}
               </Button>
             </div>
           )}

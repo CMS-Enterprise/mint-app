@@ -2,12 +2,12 @@ import {
   AnalyticsSummary,
   GetAnalyticsSummaryQuery,
   GetMtoMilestoneSummaryQuery,
-  MtoMilestoneStatus,
   MtoRiskIndicator
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import * as XLSX from 'xlsx-js-style';
 
+import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 
@@ -216,12 +216,17 @@ export const downloadMTOMilestoneSummary = (
       }
 
       flattenedData.push({
-        'Model Plan': !addedModelPlans.includes(item.id) ? item.modelName : '',
+        Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
-        'Needed By':
-          milestone.status === MtoMilestoneStatus.COMPLETED
-            ? 'Completed'
-            : formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
+        Description: milestone.key
+          ? milestoneMap[milestone.key]?.description
+          : '',
+        'Facilitated by': (milestone.facilitatedBy || [])
+          ?.map(facilitator =>
+            i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
+          )
+          .join(', '),
+        'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
         ...quarterObject
@@ -252,7 +257,7 @@ export const downloadMTOMilestoneSummary = (
   }
 
   // Add borders to all cells in the sheet
-  const concernsColumnIndex = 4; // Column E (0-indexed)
+  const concernsColumnIndex = 6; // Column E (0-indexed)
   const borderStyle = {
     top: { style: 'thin', color: { rgb: '000000' } },
     bottom: { style: 'thin', color: { rgb: '000000' } },
@@ -264,16 +269,16 @@ export const downloadMTOMilestoneSummary = (
   for (let row = 0; row <= range.e.r; row += 1) {
     for (let col = 0; col <= range.e.c; col += 1) {
       const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
-      const cell = sheet[cellAddress];
 
-      if (!cell) {
-        sheet[cellAddress] = { v: '', s: { border: borderStyle } };
-      } else {
-        if (!cell.s) {
-          cell.s = {};
-        }
-        cell.s.border = borderStyle;
+      if (!sheet[cellAddress]) {
+        sheet[cellAddress] = { v: '', s: {} };
       }
+      if (!sheet[cellAddress].s) {
+        sheet[cellAddress].s = {};
+      }
+
+      // Ensure border is always applied with black color
+      sheet[cellAddress].s.border = borderStyle;
     }
   }
 
@@ -287,6 +292,8 @@ export const downloadMTOMilestoneSummary = (
       sheet[headerCell].s.fill = { fgColor: { rgb: 'F0F0F0' } };
       sheet[headerCell].s.font = { bold: true };
       sheet[headerCell].s.alignment = { horizontal: 'center' };
+      // Ensure black borders are preserved on header cells
+      sheet[headerCell].s.border = borderStyle;
     }
   }
 
@@ -321,11 +328,14 @@ export const downloadMTOMilestoneSummary = (
       cell.s.fill = { fgColor: { rgb: backgroundColor } };
       cell.s.font = { color: { rgb: textColor }, bold: true };
       cell.s.alignment = { horizontal: 'center' };
+      // Ensure black borders are preserved
+      cell.s.border = borderStyle;
     }
   }
 
+  // NOT NEEDED ANYMORE, may need for future
   // Style "Needed By" column - make 'Completed' text grey
-  const neededByColumnIndex = 2; // "Needed By" is the 3rd column (0-indexed)
+  const neededByColumnIndex = 4; // "Needed By" is the 3rd column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     const cellAddress = XLSX.utils.encode_cell({
       r: row,
@@ -343,7 +353,7 @@ export const downloadMTOMilestoneSummary = (
   }
 
   // Style quarter columns - add grey background for cells with 'X'
-  const quarterStartColumn = 5; // Quarters start after Concerns column (0-indexed)
+  const quarterStartColumn = 7; // Quarters start after Concerns column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     for (let col = quarterStartColumn; col <= range.e.c; col += 1) {
       const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
@@ -357,6 +367,8 @@ export const downloadMTOMilestoneSummary = (
         cell.s.fill = { fgColor: { rgb: 'D3D3D3' } }; // Light grey background
         cell.s.alignment = { horizontal: 'center' };
         cell.s.font = { bold: true };
+        // Ensure black borders are preserved
+        cell.s.border = borderStyle;
       }
     }
   }
