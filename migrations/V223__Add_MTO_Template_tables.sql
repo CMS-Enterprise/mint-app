@@ -1,11 +1,24 @@
 BEGIN;
 
 -- =========================================================
--- 1) mto_template (root)
+-- 1) Enum for mto_template.key
+-- =========================================================
+CREATE TYPE MTO_TEMPLATE_KEY AS ENUM (
+    'ACO_AND_KIDNEY_MODELS',
+    'EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS',
+    'MEDICARE_ADVANTAGE_AND_DRUG_MODELS',
+    'STANDARD_CATEGORIES',
+    'STATE_AND_LOCAL_MODELS'
+);
+
+COMMENT ON TYPE MTO_TEMPLATE_KEY IS 'Logical key/family for a template.';
+
+-- =========================================================
+-- 2) mto_template (root)
 -- =========================================================
 CREATE TABLE IF NOT EXISTS mto_template (
     id           UUID PRIMARY KEY NOT NULL,
-    key          MTO_COMMON_MILESTONE_KEY NOT NULL,
+    key          MTO_TEMPLATE_KEY NOT NULL,
     name         ZERO_STRING NOT NULL,
     description  ZERO_STRING,
 
@@ -21,7 +34,7 @@ COMMENT ON TABLE mto_template IS
 COMMENT ON COLUMN mto_template.id IS 'Unique identifier for the template.';
 COMMENT ON COLUMN mto_template.key IS 'Enum identifying the logical template family.';
 COMMENT ON COLUMN mto_template.name IS 'Human-readable template name.';
-COMMENT ON COLUMN mto_template.description IS 'Optional template description or purpose.';
+COMMENT ON COLUMN mto_template.description IS 'Optional template description.';
 COMMENT ON COLUMN mto_template.created_by IS 'User that created this template.';
 COMMENT ON COLUMN mto_template.created_dts IS 'Timestamp when the template was created.';
 COMMENT ON COLUMN mto_template.modified_by IS 'User that last modified this template.';
@@ -33,7 +46,7 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 2) mto_template_category
+-- 3) mto_template_category
 --    - Parent/child categories within the same template
 --    - "order" controls sibling ordering
 -- =========================================================
@@ -95,7 +108,7 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 3) mto_template_milestone
+-- 4) mto_template_milestone
 --    - Unique (template_id, mto_common_milestone_id)
 --    - Optional category must belong to same template
 -- =========================================================
@@ -155,7 +168,7 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 4) mto_template_solution
+-- 5) mto_template_solution
 --    - NOTE: FK references enum PK on mto_common_solution(key)
 --    - Unique (template_id, mto_common_solution_key)
 -- =========================================================
@@ -189,7 +202,7 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- =========================================================
--- 5) mto_template_milestone_solution_link
+-- 6) mto_template_milestone_solution_link
 --    - Links a template milestone to a template solution for the same template
 -- =========================================================
 CREATE TABLE IF NOT EXISTS mto_template_milestone_solution_link (
