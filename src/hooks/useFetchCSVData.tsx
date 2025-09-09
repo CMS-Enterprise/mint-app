@@ -331,13 +331,17 @@ export const downloadFile = (data: string, filename: string) => {
 // Flattens the MTO data to be in a single row for each model plan, rather than all nested under mtoMatrix
 const flattenMTOData = (data: CSVModelPlanType[]) => {
   const flattenedData: any = [...data];
-  const dataObj = { ...flattenedData[0] };
 
-  dataObj.mtoMilestone = dataObj.mtoMatrix.milestones;
-  dataObj.mtoSolution = dataObj.mtoMatrix.solutions;
-  dataObj.mtoCategory = dataObj.mtoMatrix.categories;
-  dataObj.modelToOperations = dataObj.mtoMatrix.info;
-  return [dataObj];
+  flattenedData.forEach((plan: any, index: number) => {
+    const dataObj = { ...flattenedData[index] };
+
+    dataObj.mtoMilestone = plan.mtoMatrix.milestones;
+    dataObj.mtoSolution = plan.mtoMatrix.solutions;
+    dataObj.mtoCategory = plan.mtoMatrix.categories;
+    dataObj.modelToOperations = plan.mtoMatrix.info;
+  });
+
+  return flattenedData;
 };
 
 const csvFormatter = (
