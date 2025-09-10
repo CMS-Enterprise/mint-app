@@ -3,7 +3,7 @@ Operational Solution portion of the MINT Help and Knowledge Center
 Contains components for search, categories, and solutions cards
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -66,7 +66,10 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const params = new URLSearchParams(location.search);
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
 
   const category = params.get('category') as MtoCommonSolutionSubject;
   const page = params.get('page');
@@ -115,11 +118,14 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
+      const paramsChange = new URLSearchParams(location.search);
+      paramsChange.set('page', '1');
+      navigate({ search: paramsChange.toString() });
       setQuerySolutions(searchSolutions(query, helpSolutions));
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query, selectedSolution, helpSolutions]);
+  }, [query, selectedSolution, helpSolutions, location.search, navigate]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category
