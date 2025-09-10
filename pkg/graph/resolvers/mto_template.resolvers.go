@@ -14,6 +14,29 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// Solutions is the resolver for the solutions field.
+func (r *mTOTemplateResolver) Solutions(ctx context.Context, obj *models.MTOTemplate) ([]*models.MTOTemplateSolution, error) {
+	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
+	solutionID1 := uuid.MustParse("11111111-1111-1111-1111-111111111111")
+	solutionID2 := uuid.MustParse("22222222-2222-2222-2222-222222222222")
+
+	// Create mock solutions for this milestone
+	solutions := []*models.MTOTemplateSolution{
+		models.NewMTOTemplateSolution(
+			mockUUID,
+			obj.ID,
+			solutionID1,
+		),
+		models.NewMTOTemplateSolution(
+			mockUUID,
+			obj.ID,
+			solutionID2,
+		),
+	}
+
+	return solutions, nil
+}
+
 // Categories is the resolver for the categories field.
 func (r *mTOTemplateResolver) Categories(ctx context.Context, obj *models.MTOTemplate) ([]*models.MTOTemplateCategory, error) {
 	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")

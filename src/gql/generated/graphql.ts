@@ -1284,6 +1284,7 @@ export type MtoTemplate = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
   solutionCount: Scalars['Int']['output'];
+  solutions: Array<MtoTemplateSolution>;
 };
 
 export type MtoTemplateCategory = {
