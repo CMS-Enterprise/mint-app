@@ -17,6 +17,7 @@ import Sidepanel from 'components/Sidepanel';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
@@ -165,10 +166,7 @@ const EChimpCardsTable = ({
             i18nKey="tableState.empty.copy"
             components={{
               el: (
-                <ExternalLink
-                  className="margin-right-0"
-                  href={import.meta.env.VITE_ECHIMP_URL}
-                >
+                <ExternalLink className="margin-right-0" href={ECHIMP_URL_SSO}>
                   {' '}
                 </ExternalLink>
               )

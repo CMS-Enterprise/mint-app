@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 
-import { DataOrNoData } from 'components/EChimpCards/EChimpCard';
+import { DataOrNoData, echimpUrl } from 'components/EChimpCards/EChimpCard';
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
 
@@ -155,7 +155,7 @@ const CRAndTDLSidePanel = ({
             )}
 
             <ExternalLink
-              href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`}
+              href={echimpUrl(isCR ? 'ffs' : 'tdl', id)}
               className="sidepanel--full-width margin-right-0"
               toEchimp
             >
