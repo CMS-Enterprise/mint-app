@@ -10,6 +10,7 @@ import {
 } from '@trussworks/react-uswds';
 
 import ExternalLink from 'components/ExternalLink';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 import './index.scss';
 
@@ -26,6 +27,19 @@ export type EChimpCardProps = {
   setShowCRorTDLWithId: (id: string) => void;
   setIsSidepanelOpen: (isOpen: boolean) => void;
   isCR: boolean;
+};
+
+// Configures the URL for the ECHIMP page based on the type and id
+export const echimpUrl = (type?: 'ffs' | 'tdl', id?: string) => {
+  if (type === 'ffs') {
+    return id
+      ? `${import.meta.env.VITE_ECHIMP_URL}/ffs-ui/${id}/cr-summary`
+      : ECHIMP_URL_SSO;
+  }
+  if (type === 'tdl') {
+    return id ? `${ECHIMP_URL_SSO}?sysSelect=TDL&crNum=${id}` : ECHIMP_URL_SSO;
+  }
+  return ECHIMP_URL_SSO;
 };
 
 export const DataOrNoData = ({ data }: { data: string | null | undefined }) => {
@@ -122,7 +136,7 @@ const EChimpCard = ({
           {crtdlsT('echimpCard.viewMore')}
         </Button>
         <ExternalLink
-          href={`${import.meta.env.VITE_ECHIMP_URL}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`}
+          href={echimpUrl(isCR ? 'ffs' : 'tdl', id)}
           className="margin-right-0"
           toEchimp
         >

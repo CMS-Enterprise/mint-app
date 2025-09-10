@@ -10,6 +10,7 @@ import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 export const CRTDLs = () => {
@@ -60,11 +61,7 @@ export const CRTDLs = () => {
               i18nKey="description"
               components={{
                 el: (
-                  <ExternalLink
-                    inlineText
-                    href={import.meta.env.VITE_ECHIMP_URL}
-                    toEchimp
-                  >
+                  <ExternalLink inlineText href={ECHIMP_URL_SSO} toEchimp>
                     {' '}
                   </ExternalLink>
                 )
