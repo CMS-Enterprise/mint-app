@@ -40,8 +40,8 @@ func ActivityGetByIDLoaderThunk(_ context.Context, np sqlutils.NamedPreparer, pa
 		activity, ok := activitiesByID[key]
 		if ok {
 			// PARSE the meta data
-			success, err := activity.ParseRawActivityMetaData()
-			if !success || err != nil {
+			err := activity.ParseRawActivityMetaData()
+			if err != nil {
 				err = fmt.Errorf("issue converting activity meta data to discrete type: %w", err)
 				output[index] = &dataloader.Result{Data: nil, Error: err}
 			}

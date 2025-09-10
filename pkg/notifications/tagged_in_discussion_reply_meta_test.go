@@ -69,9 +69,9 @@ func (suite *NotificationsSuite) TestActivityTaggedInDiscussionReplyCreate() {
 	suite.Nil(testActivity.MetaData)
 	//Assert meta data can be deserialized
 	suite.NotNil(testActivity.MetaDataRaw)
-	metaSuccess, err := testActivity.ParseRawActivityMetaData()
+	err = testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.True(metaSuccess)
+
 	suite.NotNil(testActivity.MetaData)
 
 	actorNots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal)

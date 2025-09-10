@@ -62,8 +62,7 @@ func NewActivity(actorID uuid.UUID, entityID uuid.UUID, activityType ActivityTyp
 }
 
 // ParseRawActivityMetaData conditionally parses the raw meta data JSON into the appropriate struct based on ActivityType
-// It returns a boolean indicating if parsing was successful and an error if any occurred during parsing
-func (a *Activity) ParseRawActivityMetaData() (bool, error) {
+func (a *Activity) ParseRawActivityMetaData() error {
 	var rawData []byte
 	// Check if rawMetaDataJSON is already a string
 	if str, ok := a.MetaDataRaw.(string); ok {
@@ -74,20 +73,20 @@ func (a *Activity) ParseRawActivityMetaData() (bool, error) {
 		rawData = bytes
 	} else {
 		// Invalid type, return an error
-		return false, fmt.Errorf("unsupported type for activityData: %T", a.MetaDataRaw)
+		return fmt.Errorf("unsupported type for activityData: %T", a.MetaDataRaw)
 	}
 
 	// Get the constructor function for the specific meta data type
 	metaTypeInit, ok := activityMetaDataTypeMap[a.ActivityType]
 	if !ok {
-		return false, fmt.Errorf("no meta data type found for activity type: %s", a.ActivityType)
+		return fmt.Errorf("no meta data type found for activity type: %s", a.ActivityType)
 	}
 
 	meta := metaTypeInit()
 	if err := json.Unmarshal(rawData, &meta); err != nil {
-		return false, err
+		return fmt.Errorf("failed to unmarshal activity meta data for type %s: %w", a.ActivityType, err)
 	}
 	a.MetaData = meta
-	return true, nil
+	return nil
 
 }

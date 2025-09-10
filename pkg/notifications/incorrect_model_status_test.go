@@ -50,9 +50,9 @@ func (suite *NotificationsSuite) TestActivityIncorrectModelStatusCreate() {
 
 	// Meta can be parsed from raw
 	suite.NotNil(testActivity.MetaDataRaw)
-	metaSuccess, err := testActivity.ParseRawActivityMetaData()
+	err = testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.True(metaSuccess)
+
 	suite.NotNil(testActivity.MetaData)
 	meta := testActivity.MetaData
 
@@ -111,9 +111,9 @@ func (suite *NotificationsSuite) TestActivityIncorrectModelStatusCreate_LeadOver
 	suite.EqualValues(models.ActivityIncorrectModelStatus, testActivity.ActivityType)
 	suite.Nil(testActivity.MetaData)
 
-	metaSuccess, err := testActivity.ParseRawActivityMetaData()
+	err = testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.True(metaSuccess)
+
 	suite.NotNil(testActivity.MetaData)
 
 	receiverNots, err := UserNotificationCollectionGetByUser(

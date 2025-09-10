@@ -38,9 +38,9 @@ func (suite *NotificationsSuite) TestActivityNewModelPlanCreate() {
 
 	//Assert meta data can be deserialized
 	suite.NotNil(testActivity.MetaDataRaw)
-	metaSuccess, err := testActivity.ParseRawActivityMetaData()
+	err = testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.True(metaSuccess)
+
 	suite.NotNil(testActivity.MetaData)
 	meta := testActivity.MetaData
 
