@@ -14,8 +14,9 @@ type MTOTemplate {
   description: String
 
   # Custom Resolvers
-  solutions: [MTOTemplateSolution!]!
   categories: [MTOTemplateCategory!]!
+  milestones: [MTOTemplateMilestone!]!
+  solutions: [MTOTemplateSolution!]!
 
   # Convenience count fields
   categoryCount: Int!

@@ -1280,6 +1280,7 @@ export type MtoTemplate = {
   id: Scalars['UUID']['output'];
   key: MtoTemplateKey;
   milestoneCount: Scalars['Int']['output'];
+  milestones: Array<MtoTemplateMilestone>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
