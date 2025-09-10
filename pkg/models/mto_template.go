@@ -22,7 +22,7 @@ const (
    Core: Template + children
    ========================= */
 
-type MtoTemplate struct {
+type MTOTemplate struct {
 	baseStruct
 
 	Key         MTOTemplateKey `json:"key"         db:"key"`
@@ -35,7 +35,7 @@ type MtoTemplate struct {
 	SolutionCount  int `json:"solutionCount"  db:"-"`
 }
 
-type MtoTemplateCategory struct {
+type MTOTemplateCategory struct {
 	baseStruct
 
 	TemplateID uuid.UUID  `json:"templateID" db:"template_id"`
@@ -44,32 +44,101 @@ type MtoTemplateCategory struct {
 	Order      int        `json:"order"      db:"order"`
 }
 
-type MtoTemplateMilestone struct {
+type MTOTemplateSubCategory struct {
+	baseStruct
+
+	TemplateID uuid.UUID  `json:"templateID" db:"template_id"`
+	Name       string     `json:"name"       db:"name"`
+	ParentID   *uuid.UUID `json:"parentID"   db:"parent_id"`
+	Order      int        `json:"order"      db:"order"`
+}
+
+type MTOTemplateMilestone struct {
 	baseStruct
 
 	TemplateID            uuid.UUID  `json:"templateID"            db:"template_id"`
-	MtoCommonMilestoneKey string     `json:"mtoCommonMilestoneKey" db:"mto_common_milestone_key"`
-	MtoTemplateCategoryID *uuid.UUID `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
+	MTOCommonMilestoneKey string     `json:"mtoCommonMilestoneKey" db:"mto_common_milestone_key"`
+	MTOTemplateCategoryID *uuid.UUID `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
 }
 
-type MtoTemplateSolution struct {
+type MTOTemplateSolution struct {
 	baseStruct
 
 	TemplateID          uuid.UUID `json:"templateID"         db:"template_id"`
-	MtoCommonSolutionID uuid.UUID `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
+	MTOCommonSolutionID uuid.UUID `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
 }
 
 // NewMtoTemplate returns a new MtoTemplate object
-func NewMtoTemplate(
+func NewMTOTemplate(
 	createdBy uuid.UUID,
 	key MTOTemplateKey,
 	name string,
 	description *string,
-) *MtoTemplate {
-	return &MtoTemplate{
+) *MTOTemplate {
+	return &MTOTemplate{
 		baseStruct:  NewBaseStruct(createdBy),
 		Key:         key,
 		Name:        name,
 		Description: description,
+	}
+}
+
+// NewMTOTemplateCategory returns a new MTOTemplateCategory object
+func NewMTOTemplateCategory(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	name string,
+	parentID *uuid.UUID,
+	order int,
+) *MTOTemplateCategory {
+	return &MTOTemplateCategory{
+		baseStruct: NewBaseStruct(createdBy),
+		TemplateID: templateID,
+		Name:       name,
+		ParentID:   parentID,
+		Order:      order,
+	}
+}
+
+// NewMTOTemplateSubCategory returns a new MTOTemplateSubCategory object
+func NewMTOTemplateSubCategory(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	name string,
+	order int,
+) *MTOTemplateSubCategory {
+	return &MTOTemplateSubCategory{
+		baseStruct: NewBaseStruct(createdBy),
+		TemplateID: templateID,
+		Name:       name,
+		Order:      order,
+	}
+}
+
+// NewMTOTemplateMilestone returns a new MTOTemplateMilestone object
+func NewMTOTemplateMilestone(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	mtoCommonMilestoneKey string,
+	mtoTemplateCategoryID *uuid.UUID,
+) *MTOTemplateMilestone {
+	return &MTOTemplateMilestone{
+		baseStruct:            NewBaseStruct(createdBy),
+		TemplateID:            templateID,
+		MTOCommonMilestoneKey: mtoCommonMilestoneKey,
+		MTOTemplateCategoryID: mtoTemplateCategoryID,
+	}
+}
+
+// NewMTOTemplateSolution returns a new MTOTemplateSolution object
+func NewMTOTemplateSolution(
+	createdBy uuid.UUID,
+	templateID uuid.UUID,
+	mtoCommonSolutionID uuid.UUID,
+) *MTOTemplateSolution {
+	return &MTOTemplateSolution{
+		baseStruct:          NewBaseStruct(createdBy),
+		TemplateID:          templateID,
+		MTOCommonSolutionID: mtoCommonSolutionID,
 	}
 }

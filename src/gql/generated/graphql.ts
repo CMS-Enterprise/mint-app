@@ -1270,6 +1270,36 @@ export type MtoSubcategory = {
   position: Scalars['Int']['output'];
 };
 
+export type MtoTemplate = {
+  __typename: 'MTOTemplate';
+  categories: Array<MtoTemplateCategory>;
+  categoryCount: Scalars['Int']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  key: MtoTemplateKey;
+  milestoneCount: Scalars['Int']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  solutionCount: Scalars['Int']['output'];
+};
+
+export type MtoTemplateCategory = {
+  __typename: 'MTOTemplateCategory';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  isUncategorized: Scalars['Boolean']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  subCategories: Array<MtoTemplateSubCategory>;
+  templateID: Scalars['UUID']['output'];
+};
+
 export enum MtoTemplateKey {
   ACO_AND_KIDNEY_MODELS = 'ACO_AND_KIDNEY_MODELS',
   EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS = 'EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS',
@@ -1277,6 +1307,44 @@ export enum MtoTemplateKey {
   STANDARD_CATEGORIES = 'STANDARD_CATEGORIES',
   STATE_AND_LOCAL_MODELS = 'STATE_AND_LOCAL_MODELS'
 }
+
+export type MtoTemplateMilestone = {
+  __typename: 'MTOTemplateMilestone';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoCommonMilestoneKey: Scalars['String']['output'];
+  mtoTemplateCategoryID?: Maybe<Scalars['UUID']['output']>;
+  solutions: Array<MtoTemplateSolution>;
+  templateID: Scalars['UUID']['output'];
+};
+
+export type MtoTemplateSolution = {
+  __typename: 'MTOTemplateSolution';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  mtoCommonSolutionID: Scalars['UUID']['output'];
+  templateID: Scalars['UUID']['output'];
+};
+
+export type MtoTemplateSubCategory = {
+  __typename: 'MTOTemplateSubCategory';
+  createdBy: Scalars['UUID']['output'];
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  milestones: Array<MtoTemplateMilestone>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  parentID?: Maybe<Scalars['UUID']['output']>;
+  templateID: Scalars['UUID']['output'];
+};
 
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
@@ -1554,70 +1622,6 @@ export enum MonitoringFileType {
   PART_B = 'PART_B',
   PROVIDER = 'PROVIDER'
 }
-
-export type MtoTemplate = {
-  __typename: 'MtoTemplate';
-  categories: Array<MtoTemplateCategory>;
-  categoryCount: Scalars['Int']['output'];
-  createdBy: Scalars['UUID']['output'];
-  createdDts: Scalars['Time']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['UUID']['output'];
-  key: MtoTemplateKey;
-  milestoneCount: Scalars['Int']['output'];
-  milestones: Array<MtoTemplateMilestone>;
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-  solutionCount: Scalars['Int']['output'];
-  solutions: Array<MtoTemplateSolution>;
-};
-
-
-export type MtoTemplateCategoriesArgs = {
-  parentID?: InputMaybe<Scalars['UUID']['input']>;
-};
-
-
-export type MtoTemplateMilestonesArgs = {
-  categoryID?: InputMaybe<Scalars['UUID']['input']>;
-};
-
-export type MtoTemplateCategory = {
-  __typename: 'MtoTemplateCategory';
-  createdBy: Scalars['UUID']['output'];
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-  order: Scalars['Int']['output'];
-  parentID?: Maybe<Scalars['UUID']['output']>;
-  templateID: Scalars['UUID']['output'];
-};
-
-export type MtoTemplateMilestone = {
-  __typename: 'MtoTemplateMilestone';
-  createdBy: Scalars['UUID']['output'];
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  mtoCommonMilestoneKey: Scalars['String']['output'];
-  mtoTemplateCategoryID?: Maybe<Scalars['UUID']['output']>;
-  templateID: Scalars['UUID']['output'];
-};
-
-export type MtoTemplateSolution = {
-  __typename: 'MtoTemplateSolution';
-  createdBy: Scalars['UUID']['output'];
-  createdDts: Scalars['Time']['output'];
-  id: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  mtoCommonSolutionID: Scalars['UUID']['output'];
-  templateID: Scalars['UUID']['output'];
-};
 
 export enum MultiSourceDataToCollect {
   COMMERCIAL_CLAIMS = 'COMMERCIAL_CLAIMS',

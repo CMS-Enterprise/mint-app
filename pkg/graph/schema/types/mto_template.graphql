@@ -7,15 +7,13 @@ enum MTOTemplateKey {
   STATE_AND_LOCAL_MODELS
 }
 
-type MtoTemplate {
+type MTOTemplate {
   id: UUID!
   key: MTOTemplateKey!
   name: String!
   description: String
 
-  categories(parentID: UUID): [MtoTemplateCategory!]!
-  milestones(categoryID: UUID): [MtoTemplateMilestone!]!
-  solutions: [MtoTemplateSolution!]!
+  categories: [MTOTemplateCategory!]!
 
   # Convenience count fields
   categoryCount: Int!
@@ -28,32 +26,54 @@ type MtoTemplate {
   modifiedDts: Time
 }
 
-type MtoTemplateCategory {
+type MTOTemplateCategory {
+  id: UUID!
+  templateID: UUID!
+  name: String!
+  order: Int!
+
+  # Custom Resolvers
+  isUncategorized: Boolean!
+  subCategories: [MTOTemplateSubCategory!]!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MTOTemplateSubCategory {
   id: UUID!
   templateID: UUID!
   name: String!
   parentID: UUID
   order: Int!
 
+  # Custom Resolvers
+  milestones: [MTOTemplateMilestone!]!
+
   createdBy: UUID!
   createdDts: Time!
   modifiedBy: UUID
   modifiedDts: Time
 }
 
-type MtoTemplateMilestone {
+type MTOTemplateMilestone {
   id: UUID!
   templateID: UUID!
   mtoCommonMilestoneKey: String!
   mtoTemplateCategoryID: UUID
 
+  # Custom Resolvers
+  solutions: [MTOTemplateSolution!]!
+
   createdBy: UUID!
   createdDts: Time!
   modifiedBy: UUID
   modifiedDts: Time
 }
 
-type MtoTemplateSolution {
+type MTOTemplateSolution {
   id: UUID!
   templateID: UUID!
   mtoCommonSolutionID: UUID!
@@ -75,10 +95,10 @@ type ApplyTemplateResult {
 
 extend type Query {
   # List all templates (optionally filter by keys)
-  mtoTemplates(keys: [MTOTemplateKey!]): [MtoTemplate!]!
+  mtoTemplates(keys: [MTOTemplateKey!]): [MTOTemplate!]!
 
   # Get a single template by id or key
-  mtoTemplate(id: UUID, key: MTOTemplateKey): MtoTemplate
+  mtoTemplate(id: UUID, key: MTOTemplateKey): MTOTemplate
 }
 
 extend type Mutation {
