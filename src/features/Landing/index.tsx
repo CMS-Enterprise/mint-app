@@ -95,7 +95,7 @@ export const LandingHeader = () => {
           )}
 
           <UswdsReactLink
-            to="/how-to-get-access"
+            to={{ pathname: '/how-to-get-access', state: { scroll: true } }}
             className="landing__access-link margin-left-105"
           >
             {t('getAccess')}

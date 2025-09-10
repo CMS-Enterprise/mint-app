@@ -149,7 +149,10 @@ const Header = () => {
             <div className="display-flex flex-align-center">
               {!isMobile && (
                 <UswdsReactLink
-                  to="/how-to-get-access"
+                  to={{
+                    pathname: '/how-to-get-access',
+                    state: { scroll: true }
+                  }}
                   className={classnames('landing__access-link margin-right-2', {
                     'text-base-darker': !isLanding
                   })}
