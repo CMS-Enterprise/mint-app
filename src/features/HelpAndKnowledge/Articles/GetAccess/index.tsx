@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -19,6 +18,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useHashScroll from 'hooks/useHashScroll';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
@@ -30,20 +30,25 @@ type GetAccessContentProps = {
 
 type AnchorLink = {
   anchor: string;
+  text: string;
 };
 
 const anchorLinks: AnchorLink[] = [
   {
-    anchor: i18next.t('getAccess:jobcodes.heading')
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:jobcodes.heading'))}`,
+    text: i18next.t('getAccess:jobcodes.heading')
   },
   {
-    anchor: i18next.t('getAccess:stepsEUA.heading')
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:stepsEUA.heading'))}`,
+    text: i18next.t('getAccess:stepsEUA.heading')
   },
   {
-    anchor: i18next.t('getAccess:stepsIDM.heading')
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:stepsIDM.heading'))}`,
+    text: i18next.t('getAccess:stepsIDM.heading')
   },
   {
-    anchor: i18next.t('getAccess:questionsHeading')
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:questionsHeading'))}`,
+    text: i18next.t('getAccess:questionsHeading')
   }
 ];
 
@@ -51,7 +56,8 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { t } = useTranslation('getAccess');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-  const currentHash = useLocation().hash;
+  const { currentHash, setCurrenHash, isScrolling } =
+    useHashScroll('div.nav-anchor');
 
   const rowTwo = tArray<string>('getAccess:jobcodes.table.rowTwo.roles');
 
@@ -59,16 +65,6 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  // Used to set smooth scroll for entire html and cleanup/return to auto on unmount
-  useEffect(() => {
-    const html = document.querySelector('html')!;
-    html.style.scrollBehavior = 'smooth';
-
-    return () => {
-      html.style.scrollBehavior = 'auto';
-    };
   }, []);
 
   return (
@@ -92,14 +88,16 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                   key={anchor.anchor}
                 >
                   <a
-                    href={`#${convertToLowercaseAndDashes(anchor.anchor)}`}
+                    href={anchor.anchor}
+                    onClick={() => {
+                      setCurrenHash(anchor.anchor);
+                      isScrolling.current = true;
+                    }}
                     className={classNames('usa-in-page-nav__link', {
-                      'usa-current':
-                        currentHash ===
-                        `#${convertToLowercaseAndDashes(anchor.anchor)}`
+                      'usa-current': currentHash === anchor.anchor
                     })}
                   >
-                    {anchor.anchor}
+                    {anchor.text}
                   </a>
                 </li>
               ))}
