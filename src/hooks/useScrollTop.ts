@@ -17,6 +17,7 @@ export interface LocationProps {
 const scrollBypass: string[] = [
   'read-only',
   'sample-model-plan',
+  '/how-to-get-access',
   '/help-and-knowledge/operational-solutions',
   '?solution=',
   '&solution=',
@@ -30,6 +31,7 @@ const scrollBypass: string[] = [
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {
+  // console.log('/how-to-get-access#'.includes('/how-to-get-access'));
   return (
     !scrollBypass.some(r => path.includes(r)) &&
     !scrollBypass.some(r => prevPath?.includes(r))
@@ -47,7 +49,7 @@ const bypassScroll = (
 function useScrollTop() {
   const location = useLocation();
   const prevLocation = usePrevLocation(location);
-
+  // console.log('location', location);
   useLayoutEffect(() => {
     if (
       shouldScroll(

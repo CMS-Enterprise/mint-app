@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -18,7 +19,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import useHashScroll from 'hooks/useHashScroll';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import LatestContentUpdate from '../_components/LatestContentUpdate';
@@ -29,25 +30,20 @@ type GetAccessContentProps = {
 
 type AnchorLink = {
   anchor: string;
-  text: string;
 };
 
 const anchorLinks: AnchorLink[] = [
   {
-    anchor: '#which-job-code-should-i-request',
-    text: i18next.t('getAccess:jobcodes.heading')
+    anchor: i18next.t('getAccess:jobcodes.heading')
   },
   {
-    anchor: '#access-through-eua',
-    text: i18next.t('getAccess:stepsEUA.heading')
+    anchor: i18next.t('getAccess:stepsEUA.heading')
   },
   {
-    anchor: '#access-through-idm',
-    text: i18next.t('getAccess:accessThroughIDM')
+    anchor: i18next.t('getAccess:stepsIDM.heading')
   },
   {
-    anchor: '#questions-or-issues',
-    text: i18next.t('getAccess:questionsHeading')
+    anchor: i18next.t('getAccess:questionsHeading')
   }
 ];
 
@@ -55,13 +51,25 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { t } = useTranslation('getAccess');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-
-  const { currentHash, setCurrenHash, isScrolling } =
-    useHashScroll('div.nav-anchor');
+  const currentHash = useLocation().hash;
 
   const rowTwo = tArray<string>('getAccess:jobcodes.table.rowTwo.roles');
 
   const rowThree = tArray<string>('getAccess:jobcodes.table.rowThree.roles');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Used to set smooth scroll for entire html and cleanup/return to auto on unmount
+  useEffect(() => {
+    const html = document.querySelector('html')!;
+    html.style.scrollBehavior = 'smooth';
+
+    return () => {
+      html.style.scrollBehavior = 'auto';
+    };
+  }, []);
 
   return (
     <div className="usa-in-page-nav-container">
@@ -84,16 +92,14 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
                   key={anchor.anchor}
                 >
                   <a
-                    href={anchor.anchor}
-                    onClick={() => {
-                      setCurrenHash(anchor.anchor);
-                      isScrolling.current = true;
-                    }}
+                    href={`#${convertToLowercaseAndDashes(anchor.anchor)}`}
                     className={classNames('usa-in-page-nav__link', {
-                      'usa-current': currentHash === anchor.anchor
+                      'usa-current':
+                        currentHash ===
+                        `#${convertToLowercaseAndDashes(anchor.anchor)}`
                     })}
                   >
-                    {anchor.text}
+                    {anchor.anchor}
                   </a>
                 </li>
               ))}
@@ -111,7 +117,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           {t('description')}
         </p>
 
-        <div className="nav-anchor" id="which-job-code-should-i-request">
+        <div
+          className="nav-anchor"
+          id={convertToLowercaseAndDashes(t('jobcodes.heading'))}
+        >
           <PageHeading
             className="margin-top-4 margin-bottom-1"
             headingLevel="h2"
@@ -236,7 +245,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </Table>
         </div>
 
-        <div className="nav-anchor" id="access-through-eua">
+        <div
+          className="nav-anchor"
+          id={convertToLowercaseAndDashes(t('stepsEUA.heading'))}
+        >
           <PageHeading
             className="margin-top-4 margin-bottom-1"
             headingLevel="h2"
@@ -329,8 +341,16 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </ProcessList>
         </div>
 
-        <div className="nav-anchor margin-bottom-4" id="access-through-idm">
-          <h2>{t('accessThroughIDM')}</h2>
+        <div
+          className="nav-anchor margin-bottom-4"
+          id={convertToLowercaseAndDashes(t('stepsIDM.heading'))}
+        >
+          <PageHeading
+            className="margin-top-4 margin-bottom-1"
+            headingLevel="h2"
+          >
+            {t('stepsIDM.heading')}
+          </PageHeading>
 
           <ProcessList>
             <ProcessListItem className="maxw-none">
@@ -467,7 +487,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </ProcessList>
         </div>
 
-        <div className="nav-anchor" id="questions-or-issues">
+        <div
+          className="nav-anchor"
+          id={convertToLowercaseAndDashes(t('questionsHeading'))}
+        >
           <Alert
             type="info"
             className="margin-bottom-2"
