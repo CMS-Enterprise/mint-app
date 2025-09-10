@@ -105,10 +105,7 @@ const ModelPlansTable = ({
   const { data: mtoMilestoneSummary } = useGetMtoMilestoneSummaryQuery();
 
   const mtoMilestoneSummaryData = useMemo(() => {
-    return (
-      mtoMilestoneSummary?.modelPlanCollection ??
-      ([] as GetMtoMilestoneSummaryQuery['modelPlanCollection'])
-    );
+    return mtoMilestoneSummary?.modelPlanCollection ?? [];
   }, [mtoMilestoneSummary?.modelPlanCollection]);
 
   const columns = useMemo<Column<any>[]>(() => {
