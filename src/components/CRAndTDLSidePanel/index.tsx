@@ -2,10 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { DataOrNoData, echimpUrl } from 'components/EChimpCards/EChimpCard';
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 import properlyCapitalizeInitiator from './_utils';
 
@@ -43,6 +45,13 @@ const CRAndTDLSidePanel = ({
   crSummary
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
+
+  const flags = useFlags();
+
+  // If the flag is enabled, use the echimp url from the flags
+  const echimpURL = flags?.echimpFFSURLEnabled
+    ? echimpUrl(isCR ? 'ffs' : 'tdl', id)
+    : `${ECHIMP_URL_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
 
   return (
     <GridContainer className="padding-y-5 padding-x-4 side-panel--cr-and-tdl">
@@ -155,7 +164,7 @@ const CRAndTDLSidePanel = ({
             )}
 
             <ExternalLink
-              href={echimpUrl(isCR ? 'ffs' : 'tdl', id)}
+              href={echimpURL}
               className="sidepanel--full-width margin-right-0"
               toEchimp
             >
