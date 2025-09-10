@@ -4,6 +4,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import Alert from 'components/Alert';
 import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
 import ExternalLink from 'components/ExternalLink';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 const ReadOnlyCRTDLs = () => {
   const { t } = useTranslation('crtdlsMisc');
@@ -23,7 +24,7 @@ const ReadOnlyCRTDLs = () => {
             el: (
               <ExternalLink
                 className="margin-right-0"
-                href={import.meta.env.VITE_ECHIMP_URL}
+                href={ECHIMP_URL_SSO}
                 toEchimp
               >
                 {' '}

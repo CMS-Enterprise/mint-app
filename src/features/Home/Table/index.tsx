@@ -10,6 +10,7 @@ import {
 } from 'react-table';
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { downloadMTOMilestoneSummary } from 'features/Analytics/util';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import {
   GetEchimpCrandTdlQuery,
@@ -19,6 +20,7 @@ import {
   ModelPlanFilter,
   TeamRole,
   useGetModelPlansQuery,
+  useGetMtoMilestoneSummaryQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
@@ -30,6 +32,7 @@ import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import TopScrollContainer from 'components/TopScrollContainer';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -97,6 +100,12 @@ const ModelPlansTable = ({
   const data = useMemo(() => {
     return (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
   }, [modelPlans?.modelPlanCollection]);
+
+  const { data: mtoMilestoneSummary } = useGetMtoMilestoneSummaryQuery();
+
+  const mtoMilestoneSummaryData = useMemo(() => {
+    return mtoMilestoneSummary?.modelPlanCollection ?? [];
+  }, [mtoMilestoneSummary?.modelPlanCollection]);
 
   const columns = useMemo<Column<any>[]>(() => {
     const homeColumns: string[] = [
@@ -520,100 +529,120 @@ const ModelPlansTable = ({
         </div>
 
         <>
-          {type === ViewCustomizationType.ALL_MODEL_PLANS && isAssessment && (
-            <CsvExportLink />
+          {type === ViewCustomizationType.ALL_MODEL_PLANS && (
+            <div className="display-flex flex-align-start padding-top-1">
+              <CsvExportLink />
+              <Button
+                type="button"
+                className="usa-button usa-button--unstyled display-flex margin-left-4"
+                onClick={() => {
+                  downloadMTOMilestoneSummary(
+                    mtoMilestoneSummaryData,
+                    'mto-milestone-summary.xlsx'
+                  );
+                }}
+              >
+                <Icon.FileDownload
+                  className="margin-right-1"
+                  aria-label="download"
+                />
+                {homeT('downloadMTOMilestoneSummary')}
+              </Button>
+            </div>
           )}
         </>
       </div>
 
-      <UswdsTable {...getTableProps()} fullWidth scrollable>
-        <caption className="usa-sr-only">
-          {homeT('requestsTable.caption')}
-        </caption>
+      <TopScrollContainer>
+        <UswdsTable {...getTableProps()} fullWidth>
+          <caption className="usa-sr-only">
+            {homeT('requestsTable.caption')}
+          </caption>
 
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr
-              {...headerGroup.getHeaderGroupProps()}
-              key={{ ...headerGroup.getHeaderGroupProps() }.key}
-            >
-              {headerGroup.headers
-                // @ts-ignore
-                .filter((column, index) => !hiddenColumns?.includes(index))
-                .map((column, index) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    aria-sort={getColumnSortStatus(column)}
-                    className="table-header"
-                    scope="col"
-                    style={!isHome ? modelsStyle(index) : homeStyle(index)}
-                    key={column.id}
-                  >
-                    <button
-                      className={classNames(
-                        'usa-button usa-button--unstyled position-relative',
-                        {
-                          'margin-top-1': index === 0 && !isHome
-                        }
-                      )}
-                      type="button"
-                      {...column.getSortByToggleProps()}
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={{ ...headerGroup.getHeaderGroupProps() }.key}
+              >
+                {headerGroup.headers
+                  // @ts-ignore
+                  .filter((column, index) => !hiddenColumns?.includes(index))
+                  .map((column, index) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      aria-sort={getColumnSortStatus(column)}
+                      className="table-header"
+                      scope="col"
+                      style={!isHome ? modelsStyle(index) : homeStyle(index)}
+                      key={column.id}
                     >
-                      {column.render('Header') as React.ReactElement}
-                      {getHeaderSortIcon(column, index === 0)}
-                    </button>
-                  </th>
-                ))}
-            </tr>
-          ))}
-        </thead>
+                      <button
+                        className={classNames(
+                          'usa-button usa-button--unstyled position-relative',
+                          {
+                            'margin-top-1': index === 0 && !isHome
+                          }
+                        )}
+                        type="button"
+                        {...column.getSortByToggleProps()}
+                      >
+                        {column.render('Header') as React.ReactElement}
+                        {getHeaderSortIcon(column, index === 0)}
+                      </button>
+                    </th>
+                  ))}
+              </tr>
+            ))}
+          </thead>
 
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            // need to destructure row and getRowProps to avoid TS error for prop-types
-            const { getRowProps, cells } = { ...row };
-            return (
-              <tr {...getRowProps()} key={row.id}>
-                {cells
-                  .filter((cell, index) => {
-                    // @ts-ignore
-                    return !hiddenColumns?.includes(index);
-                  })
-                  .map((cell, i) => {
-                    if (i === 0) {
+          <tbody {...getTableBodyProps()}>
+            {page.map(row => {
+              // need to destructure row and getRowProps to avoid TS error for prop-types
+              const { getRowProps, cells } = { ...row };
+              return (
+                <tr {...getRowProps()} key={row.id}>
+                  {cells
+                    .filter((cell, index) => {
+                      // @ts-ignore
+                      return !hiddenColumns?.includes(index);
+                    })
+                    .map((cell, i) => {
+                      if (i === 0) {
+                        return (
+                          <th
+                            {...cell.getCellProps()}
+                            scope="row"
+                            style={{
+                              paddingLeft: '0',
+                              borderBottom: 'auto'
+                            }}
+                            key={cell.getCellProps().key}
+                          >
+                            {cell.render('Cell') as React.ReactElement}
+                          </th>
+                        );
+                      }
                       return (
-                        <th
+                        <td
                           {...cell.getCellProps()}
-                          scope="row"
                           style={{
                             paddingLeft: '0',
-                            borderBottom: 'auto'
+                            borderBottom: 'auto',
+                            whiteSpace: 'normal'
                           }}
                           key={cell.getCellProps().key}
                         >
                           {cell.render('Cell') as React.ReactElement}
-                        </th>
+                        </td>
                       );
-                    }
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        style={{
-                          paddingLeft: '0',
-                          borderBottom: 'auto',
-                          whiteSpace: 'normal'
-                        }}
-                        key={cell.getCellProps().key}
-                      >
-                        {cell.render('Cell') as React.ReactElement}
-                      </td>
-                    );
-                  })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </UswdsTable>
+                    })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </UswdsTable>
+      </TopScrollContainer>
 
       {canSearch && data.length > 10 && (
         <TablePagination
