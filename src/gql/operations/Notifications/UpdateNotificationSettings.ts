@@ -10,6 +10,8 @@ export default gql(/* GraphQL */ `
       addedAsCollaborator
       taggedInDiscussion
       taggedInDiscussionReply
+      newDiscussionAdded
+      newDiscussionAddedNotificationType
       newDiscussionReply
       modelPlanShared
       newModelPlan
