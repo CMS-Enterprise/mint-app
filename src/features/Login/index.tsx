@@ -104,9 +104,7 @@ const Login = () => {
         <div className="margin-bottom-0 margin-top-neg-05 text-bold">
           {getAccessT('accessInfo')}
         </div>
-        <UswdsReactLink
-          to={{ pathname: '/how-to-get-access', state: { scroll: false } }}
-        >
+        <UswdsReactLink to="/how-to-get-access">
           {getAccessT('learnHow')}
           <Icon.ArrowForward
             className="margin-left-1 text-tbottom"
