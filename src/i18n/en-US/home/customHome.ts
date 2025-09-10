@@ -86,6 +86,7 @@ const customHome = {
   fetchError: 'There was an error fetching models plans.  Please try again.',
   downloadAllCSV: 'Download all plans as CSV',
   downloadSingleCSV: 'Download this Model Plan (CSV)',
+  downloadMTOMilestoneSummary: 'Download MTO milestone summary',
   requestsTable: {
     id: 'model-plans',
     title: 'Model plans',

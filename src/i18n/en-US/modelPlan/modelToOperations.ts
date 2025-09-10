@@ -13,7 +13,7 @@ type MilestoneCardType = {
   description: string;
 };
 
-const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
+export const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
   [MtoCommonMilestoneKey.MANAGE_CD]: {
     description:
       'Identify the Part D and Parts C/D beneficiaries based on their enrollment in a participating Medicare Advantage and Prescription Drug (MAPD) or Prescription Drug Plan (PDP) plan.'
