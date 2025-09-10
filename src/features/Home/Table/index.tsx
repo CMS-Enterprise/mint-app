@@ -15,7 +15,6 @@ import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import {
   GetEchimpCrandTdlQuery,
   GetModelPlansQuery,
-  GetMtoMilestoneSummaryQuery,
   KeyCharacteristic,
   ModelCategory,
   ModelPlanFilter,
