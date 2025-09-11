@@ -1,0 +1,29 @@
+meta {
+  name: Get MTO Template
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetMtoTemplate {
+    mtoTemplate(id: "00000000-0000-0000-0000-000000000000") {
+      id
+      key
+      name
+      description
+      categoryCount
+      milestoneCount
+      solutionCount
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}
