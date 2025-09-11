@@ -3,6 +3,7 @@ import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/F
 import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/columns';
 import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
 
+// TODO: remove this once we have the the queries hooked up
 export type MtoTemplateBaseType = Omit<
   GetMtoTemplatesQuery['mtoTemplates'][number],
   'categories' | 'subCategories' | 'milestones' | 'solutions'
