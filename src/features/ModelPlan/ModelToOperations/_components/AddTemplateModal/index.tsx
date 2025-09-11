@@ -62,10 +62,36 @@ const AddTemplateModal = () => {
       }}
       className="maxw-none"
     >
+      <p className="margin-bottom-0">
+        <Trans
+          t={t}
+          i18nKey="modal.addTemplate.selectedTemplate"
+          components={{
+            bold: <span className="text-bold" />
+          }}
+          values={{ template: mtoTemplate?.name }}
+        />
+      </p>
+
       <p className="margin-bottom-0">{t('modal.addTemplate.description')}</p>
 
       <ul className="margin-y-1 margin-bottom-3">
-        <li>{t('modal.addTemplate.item')}</li>
+        <li>
+          {t('modal.addTemplate.categories', {
+            count: mtoTemplate?.categoryCount,
+            primaryCount: mtoTemplate?.primaryCategoryCount || 0 // TODO: remove this once we have the primaryCategoryCount
+          })}
+        </li>
+        <li>
+          {t('modal.addTemplate.milestones', {
+            count: mtoTemplate?.milestoneCount
+          })}
+        </li>
+        <li>
+          {t('modal.addTemplate.solutions', {
+            count: mtoTemplate?.solutionCount
+          })}
+        </li>
       </ul>
 
       <p className="margin-bottom-8">{t('modal.addTemplate.description2')}</p>

@@ -668,8 +668,12 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     addTemplate: {
       title: 'Are you sure you want to continue?',
+      selectedTemplate: '<bold>Selected template:</bold> {{template}}',
       description: 'Adding this template to your MTO will add:',
-      item: '24 categories (including 9 primary categories)',
+      categories:
+        '{{count}} categories (including {{primaryCount}} primary categories)',
+      milestones: '{{count}} milestones',
+      solutions: '{{count}} solutions',
       description2:
         'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
       success:
