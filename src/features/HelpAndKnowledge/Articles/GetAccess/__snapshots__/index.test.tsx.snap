@@ -75,7 +75,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
                 >
                   <a
                     class="usa-in-page-nav__link"
-                    href="#access-through-eua"
+                    href="#requesting-access-through-eua"
                   >
                     Requesting access through EUA
                   </a>
@@ -85,7 +85,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
                 >
                   <a
                     class="usa-in-page-nav__link"
-                    href="#access-through-idm"
+                    href="#requesting-access-through-idm"
                   >
                     Requesting access through IDM
                   </a>
@@ -316,7 +316,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
             </div>
             <div
               class="nav-anchor"
-              id="access-through-eua"
+              id="requesting-access-through-eua"
             >
               <h2
                 aria-live="polite"
@@ -475,9 +475,13 @@ exports[`Get Access Article > matches snapshot 1`] = `
             </div>
             <div
               class="nav-anchor margin-bottom-4"
-              id="access-through-idm"
+              id="requesting-access-through-idm"
             >
-              <h2>
+              <h2
+                aria-live="polite"
+                class="mint-h1 margin-top-4 margin-bottom-1"
+                tabindex="-1"
+              >
                 Requesting access through IDM
               </h2>
               <ol
