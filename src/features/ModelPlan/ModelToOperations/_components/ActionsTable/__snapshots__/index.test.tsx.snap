@@ -193,25 +193,15 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
         <p
           class="margin-top-0"
         >
-          1 available template
+          5 available templates
         </p>
-        <div
-          class="display-flex flex-justify bg-base-lightest border border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
-          style="gap: 24px;"
+        <button
+          class="usa-button usa-button--outline display-block margin-bottom-1"
+          data-testid="button"
+          type="button"
         >
-          <span
-            class="text-bold"
-          >
-            Standard categories
-          </span>
-          <button
-            class="usa-button usa-button--unstyled display-block"
-            data-testid="button"
-            type="button"
-          >
-            Add this template
-          </button>
-        </div>
+          Add templates from library
+        </button>
         <button
           class="usa-button usa-button--unstyled display-block"
           data-testid="button"
