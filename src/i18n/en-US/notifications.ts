@@ -38,6 +38,10 @@ const notifications = {
         text: ' shared {{-modelName}} with you.',
         cta: 'View Model Plan'
       },
+      NEW_DISCUSSION_ADDED: {
+        text: ' added a discussion for {{-modelName}}.',
+        cta: 'View discussion'
+      },
       NEW_DISCUSSION_REPLY: {
         text: ' replied to your discussion for {{-modelName}}.',
         cta: 'View discussion'
@@ -159,6 +163,7 @@ const notifications = {
       incorrectModelStatus: 'When MINT detects an incorrect model status',
       newModelPlan: 'When a new Model Plan is created',
       datesChanged: 'When model dates change',
+      newDiscussionAdded: 'When a new discussion is added',
       dataExchangeApproachMarkedComplete:
         'When a data exchange approach is completed'
     },
@@ -183,7 +188,9 @@ const notifications = {
       alreadyUnsubscribed:
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
+        INCORRECT_MODEL_STATUS: 'when MINT detects an incorrect model status',
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
+        NEW_DISCUSSION_ADDED: 'when a new discussion is added',
         DATES_CHANGED: 'when model dates change',
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
           'when a data exchange approach is completed'

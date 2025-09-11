@@ -22,6 +22,8 @@ type UserNotificationPreferences struct {
 	NewDiscussionReply                                 UserNotificationPreferenceFlags                     `json:"newDiscussionReply" db:"new_discussion_reply"`
 	ModelPlanShared                                    UserNotificationPreferenceFlags                     `json:"modelPlanShared" db:"model_plan_shared"`
 	NewModelPlan                                       UserNotificationPreferenceFlags                     `json:"newModelPlan" db:"new_model_plan"`
+	NewDiscussionAdded                                 UserNotificationPreferenceFlags                     `json:"newDiscussionAdded" db:"new_discussion_added"`
+	NewDiscussionAddedNotificationType                 *NewDiscussionAddedNotificationType                 `json:"newDiscussionAddedNotificationType" db:"new_discussion_added_notification_type"`
 	DatesChanged                                       UserNotificationPreferenceFlags                     `json:"datesChanged" db:"dates_changed"`
 	DatesChangedNotificationType                       *DatesChangedNotificationType                       `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
 	DataExchangeApproachMarkedComplete                 UserNotificationPreferenceFlags                     `json:"dataExchangeApproachMarkedComplete" db:"data_exchange_approach_marked_complete"`
@@ -43,6 +45,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		NewDiscussionReply:                 DefaultUserNotificationPreferencesFlags(),
 		ModelPlanShared:                    DefaultUserNotificationPreferencesFlags(),
 		NewModelPlan:                       EmptyUserNotificationPreferencesFlags(),
+		NewDiscussionAdded:                 DefaultUserNotificationPreferencesFlags(),
 		DatesChanged:                       EmptyUserNotificationPreferencesFlags(),
 		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),
 		IncorrectModelStatus:               EmptyUserNotificationPreferencesFlags(),
@@ -93,6 +96,16 @@ const (
 	DataExchangeApproachMarkedCompleteNotificationTypeMyModels       DataExchangeApproachMarkedCompleteNotificationType = "MY_MODELS"
 )
 
+// NewDiscussionAddedNotificationType is an enum that represents the type of notification a user wants for when a new discussion is added
+type NewDiscussionAddedNotificationType string
+
+// These constants represent the possible values of a NewDiscussionAddedNotificationType
+const (
+	NewDiscussionAddedNotificationTypeAllModels      NewDiscussionAddedNotificationType = "ALL_MODELS"
+	NewDiscussionAddedNotificationTypeFollowedModels NewDiscussionAddedNotificationType = "FOLLOWED_MODELS"
+	NewDiscussionAddedNotificationTypeMyModels       NewDiscussionAddedNotificationType = "MY_MODELS"
+)
+
 // InApp translates notification preferences to a bool. True means the user desires an in app notification for this notification type
 func (unp UserNotificationPreferenceFlags) InApp() bool {
 	return lo.Contains(unp, UserNotificationPreferenceInApp)
@@ -111,5 +124,4 @@ func (unp *UserNotificationPreferenceFlags) Scan(src interface{}) error {
 // Value implements the driver.Valuer interface.
 func (unp UserNotificationPreferenceFlags) Value() (driver.Value, error) {
 	return serialization.GenericStringArrayValue(unp)
-
 }

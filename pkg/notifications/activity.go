@@ -161,6 +161,14 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
+	case models.ActivityNewDiscussionAdded:
+		// Deserialize the raw JSON into NewDiscussionAddedActivityMeta
+		meta := models.NewDiscussionAddedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+
 	default:
 		// Return a default implementation or handle unsupported types
 		return nil, fmt.Errorf("unsupported activity type: %s", activityType)

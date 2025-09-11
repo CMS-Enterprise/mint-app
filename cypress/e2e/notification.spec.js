@@ -212,6 +212,82 @@ describe('Notification Center', () => {
     cy.url().should('include', '/collaboration-area');
   });
 
+  it('testing Incorrect Model Status Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the incorrect model status in-app checkbox
+    cy.get('[data-testid="notification-setting-in-app-incorrectModelStatus"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get('[data-testid="notification-setting-email-incorrectModelStatus"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to update a timeline
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.contains('a', 'Plan with Timeline').click();
+    cy.url().should('include', '/collaboration-area');
+    cy.contains('button', 'Edit timeline').click();
+
+    cy.get('#timeline-completeICIP')
+      .clear()
+      .type('05/23/2015')
+      .should('have.value', '05/23/2015');
+
+    cy.get('#timeline-wrapUpEnds')
+      .clear()
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.clickOutside();
+    cy.contains('button', 'Save').click();
+    cy.wait(500);
+
+    // Comment out since currently need to wait for too long for below notification to show
+    // Navigate back to Notification Center
+    // cy.get('[data-testid="navmenu__notification"]').click();
+    // cy.url().should('include', '/notifications');
+
+    // cy.wait(30000);
+
+    // cy.get('[data-testid="individual-notification"]').contains(
+    //   'MINT suggests that you update the model status for Plan with Timeline.'
+    // );
+
+    // Unsubscribe via email link
+    cy.visit(
+      '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
+    );
+
+    cy.get(
+      '[data-testid="notification-setting-email-incorrectModelStatus"]'
+    ).should('be.not.checked');
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'You have successfully unsubscribed from email notifications when MINT detects an incorrect model status.'
+    );
+
+    cy.visit(
+      '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
+    );
+
+    cy.get('[data-testid="error-alert"]').contains(
+      'You are already unsubscribed from email notifications when MINT detects an incorrect model status.'
+    );
+  });
+
   it('testing New Model Plan Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
@@ -346,6 +422,80 @@ describe('Notification Center', () => {
 
     cy.get('[data-testid="error-alert"]').contains(
       'You are already unsubscribed from email notifications when model dates change.'
+    );
+  });
+
+  it('testing New Discussion Added Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the new model plan in-app checkbox
+    cy.get('[data-testid="notification-setting-in-app-newDiscussionAdded"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get('[data-testid="notification-setting-email-newDiscussionAdded"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to click "Empty Plan" model plan
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.enterModelPlanCollaborationArea('Empty Plan');
+
+    // Start a discussion
+    cy.contains('button', 'Start a discussion').click();
+
+    cy.get('#user-role').should('not.be.disabled').select('MINT Team');
+    cy.get('#mention-editor')
+      .type('How to I get to model characteristics?')
+      .should('have.text', 'How to I get to model characteristics?');
+
+    cy.contains('button', 'Save discussion').click();
+
+    cy.get('[data-testid="page-loading"]').should('not.exist');
+
+    cy.get('[data-testid="close-discussions"]').click();
+    cy.get('[data-testid="discussion-modal"]').should('not.exist');
+
+    cy.get('[data-testid="navmenu__notification"]').click();
+
+    cy.url().should('include', '/notifications');
+
+    cy.get('[data-testid="spinner"]').should('not.exist');
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'added a discussion for Empty Plan.'
+    );
+
+    cy.contains('button', 'View discussion')
+      .should('be.not.disabled')
+      .click({ force: true });
+
+    // Unsubscribe via email link
+    cy.visit('/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED');
+
+    cy.get(
+      '[data-testid="notification-setting-email-newDiscussionAdded"]'
+    ).should('be.not.checked');
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'You have successfully unsubscribed from email notifications when a new discussion is added.'
+    );
+
+    cy.visit('/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED');
+
+    cy.get('[data-testid="error-alert"]').contains(
+      'You are already unsubscribed from email notifications when a new discussion is added.'
     );
   });
 
