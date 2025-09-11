@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
@@ -19,6 +19,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHashScroll from 'hooks/useHashScroll';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import LatestContentUpdate from '../_components/LatestContentUpdate';
@@ -34,19 +35,19 @@ type AnchorLink = {
 
 const anchorLinks: AnchorLink[] = [
   {
-    anchor: '#which-job-code-should-i-request',
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:jobcodes.heading'))}`,
     text: i18next.t('getAccess:jobcodes.heading')
   },
   {
-    anchor: '#access-through-eua',
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:stepsEUA.heading'))}`,
     text: i18next.t('getAccess:stepsEUA.heading')
   },
   {
-    anchor: '#access-through-idm',
-    text: i18next.t('getAccess:accessThroughIDM')
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:stepsIDM.heading'))}`,
+    text: i18next.t('getAccess:stepsIDM.heading')
   },
   {
-    anchor: '#questions-or-issues',
+    anchor: `#${convertToLowercaseAndDashes(i18next.t('getAccess:questionsHeading'))}`,
     text: i18next.t('getAccess:questionsHeading')
   }
 ];
@@ -55,13 +56,16 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { t } = useTranslation('getAccess');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-
   const { currentHash, setCurrenHash, isScrolling } =
     useHashScroll('div.nav-anchor');
 
   const rowTwo = tArray<string>('getAccess:jobcodes.table.rowTwo.roles');
 
   const rowThree = tArray<string>('getAccess:jobcodes.table.rowThree.roles');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="usa-in-page-nav-container">
@@ -111,7 +115,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           {t('description')}
         </p>
 
-        <div className="nav-anchor" id="which-job-code-should-i-request">
+        <div
+          className="nav-anchor"
+          id={convertToLowercaseAndDashes(t('jobcodes.heading'))}
+        >
           <PageHeading
             className="margin-top-4 margin-bottom-1"
             headingLevel="h2"
@@ -236,7 +243,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </Table>
         </div>
 
-        <div className="nav-anchor" id="access-through-eua">
+        <div
+          className="nav-anchor"
+          id={convertToLowercaseAndDashes(t('stepsEUA.heading'))}
+        >
           <PageHeading
             className="margin-top-4 margin-bottom-1"
             headingLevel="h2"
@@ -329,8 +339,16 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </ProcessList>
         </div>
 
-        <div className="nav-anchor margin-bottom-4" id="access-through-idm">
-          <h2>{t('accessThroughIDM')}</h2>
+        <div
+          className="nav-anchor margin-bottom-4"
+          id={convertToLowercaseAndDashes(t('stepsIDM.heading'))}
+        >
+          <PageHeading
+            className="margin-top-4 margin-bottom-1"
+            headingLevel="h2"
+          >
+            {t('stepsIDM.heading')}
+          </PageHeading>
 
           <ProcessList>
             <ProcessListItem className="maxw-none">
@@ -467,7 +485,10 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </ProcessList>
         </div>
 
-        <div className="nav-anchor" id="questions-or-issues">
+        <div
+          className="nav-anchor"
+          id={convertToLowercaseAndDashes(t('questionsHeading'))}
+        >
           <Alert
             type="info"
             className="margin-bottom-2"
