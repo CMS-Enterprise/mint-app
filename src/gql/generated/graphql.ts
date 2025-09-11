@@ -195,6 +195,7 @@ export enum AnticipatedMultiPayerDataAvailabilityUseCase {
 export type ApplyTemplateResult = {
   __typename: 'ApplyTemplateResult';
   categoriesAdded: Scalars['Int']['output'];
+  id: Scalars['UUID']['output'];
   milestonesAdded: Scalars['Int']['output'];
   modelPlanID: Scalars['UUID']['output'];
   solutionsAdded: Scalars['Int']['output'];
@@ -1297,6 +1298,7 @@ export type MtoTemplate = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  primaryCategoryCount: Scalars['Int']['output'];
   solutionCount: Scalars['Int']['output'];
   solutions: Array<MtoTemplateSolution>;
 };
@@ -1328,10 +1330,11 @@ export type MtoTemplateMilestone = {
   createdBy: Scalars['UUID']['output'];
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
+  key?: Maybe<MtoCommonMilestoneKey>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  mtoCommonMilestoneKey: Scalars['String']['output'];
   mtoTemplateCategoryID?: Maybe<Scalars['UUID']['output']>;
+  name: Scalars['String']['output'];
   solutions: Array<MtoTemplateSolution>;
   templateID: Scalars['UUID']['output'];
 };
@@ -1341,9 +1344,11 @@ export type MtoTemplateSolution = {
   createdBy: Scalars['UUID']['output'];
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
+  key?: Maybe<MtoCommonSolutionKey>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   mtoCommonSolutionID: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
   templateID: Scalars['UUID']['output'];
 };
 
@@ -1653,7 +1658,6 @@ export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
-  applyTemplateToMto: ApplyTemplateResult;
   createDiscussionReply: DiscussionReply;
   /**
    * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
@@ -1678,6 +1682,7 @@ export type Mutation = {
    * still create the others
    */
   createStandardCategories: Scalars['Boolean']['output'];
+  createTemplateToMTO: ApplyTemplateResult;
   /**
    * Deletes an MTO category. If the category has subcategories, it will delete them as well.
    * If the target category is a subcategory, it will only delete the subcategory and redirect
@@ -1762,13 +1767,6 @@ export type MutationAddPlanFavoriteArgs = {
 /** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationApplyTemplateToMtoArgs = {
-  modelPlanID: Scalars['UUID']['input'];
-  templateID: Scalars['UUID']['input'];
 };
 
 
@@ -1891,6 +1889,13 @@ export type MutationCreatePlanTdlArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateStandardCategoriesArgs = {
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateTemplateToMtoArgs = {
+  modelPlanID: Scalars['UUID']['input'];
+  templateID: Scalars['UUID']['input'];
 };
 
 

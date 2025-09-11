@@ -56,16 +56,19 @@ type MTOTemplateSubCategory struct {
 type MTOTemplateMilestone struct {
 	baseStruct
 
-	TemplateID            uuid.UUID  `json:"templateID"            db:"template_id"`
-	MTOCommonMilestoneKey string     `json:"mtoCommonMilestoneKey" db:"mto_common_milestone_key"`
-	MTOTemplateCategoryID *uuid.UUID `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
+	Name                  string                `json:"name"                  db:"name"`
+	TemplateID            uuid.UUID             `json:"templateID"            db:"template_id"`
+	Key                   MTOCommonMilestoneKey `json:"key" db:"key"`
+	MTOTemplateCategoryID *uuid.UUID            `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
 }
 
 type MTOTemplateSolution struct {
 	baseStruct
 
-	TemplateID          uuid.UUID `json:"templateID"         db:"template_id"`
-	MTOCommonSolutionID uuid.UUID `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
+	Name                string               `json:"name"               db:"name"`
+	Key                 MTOCommonSolutionKey `json:"key"                db:"key"`
+	TemplateID          uuid.UUID            `json:"templateID"         db:"template_id"`
+	MTOCommonSolutionID uuid.UUID            `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
 }
 
 // NewMtoTemplate returns a new MtoTemplate object
@@ -119,13 +122,13 @@ func NewMTOTemplateSubCategory(
 func NewMTOTemplateMilestone(
 	createdBy uuid.UUID,
 	templateID uuid.UUID,
-	mtoCommonMilestoneKey string,
+	mtoCommonMilestoneKey MTOCommonMilestoneKey,
 	mtoTemplateCategoryID *uuid.UUID,
 ) *MTOTemplateMilestone {
 	return &MTOTemplateMilestone{
 		baseStruct:            NewBaseStruct(createdBy),
 		TemplateID:            templateID,
-		MTOCommonMilestoneKey: mtoCommonMilestoneKey,
+		Key:                   mtoCommonMilestoneKey,
 		MTOTemplateCategoryID: mtoTemplateCategoryID,
 	}
 }

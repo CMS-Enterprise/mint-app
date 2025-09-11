@@ -86,6 +86,11 @@ func (r *mTOTemplateResolver) Solutions(ctx context.Context, obj *models.MTOTemp
 	return solutions, nil
 }
 
+// PrimaryCategoryCount is the resolver for the primaryCategoryCount field.
+func (r *mTOTemplateResolver) PrimaryCategoryCount(ctx context.Context, obj *models.MTOTemplate) (int, error) {
+	return 3, nil
+}
+
 // IsUncategorized is the resolver for the isUncategorized field.
 func (r *mTOTemplateCategoryResolver) IsUncategorized(ctx context.Context, obj *models.MTOTemplateCategory) (bool, error) {
 	// Mock logic: category is uncategorized if it has no parent
@@ -162,8 +167,8 @@ func (r *mTOTemplateSubCategoryResolver) Milestones(ctx context.Context, obj *mo
 	return milestones, nil
 }
 
-// ApplyTemplateToMto is the resolver for the applyTemplateToMto field.
-func (r *mutationResolver) ApplyTemplateToMto(ctx context.Context, modelPlanID uuid.UUID, templateID uuid.UUID) (*model.ApplyTemplateResult, error) {
+// CreateTemplateToMto is the resolver for the createTemplateToMto field.
+func (r *mutationResolver) CreateTemplateToMto(ctx context.Context, modelPlanID uuid.UUID, templateID uuid.UUID) (*model.ApplyTemplateResult, error) {
 	// Mock implementation
 	return &model.ApplyTemplateResult{
 		ModelPlanID:     modelPlanID,
