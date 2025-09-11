@@ -12,10 +12,11 @@ post {
 
 body:graphql {
   mutation ApplyMtoTemplate {
-    applyTemplateToMto(
+    createTemplateToMTO(
       modelPlanID: "12345678-1234-1234-1234-123456789012"
       templateID: "00000000-0000-0000-0000-000000000000"
     ) {
+      id
       modelPlanID
       templateID
       categoriesAdded
