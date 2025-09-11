@@ -2,87 +2,14 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { GetMtoTemplatesDocument, MtoTemplateKey } from 'gql/generated/graphql';
+import { GetMtoTemplatesDocument } from 'gql/generated/graphql';
+import { mtoTemplateMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
 
 import MessageProvider from 'contexts/MessageContext';
-import { MTOModalProvider, MtoTemplateType } from 'contexts/MTOModalContext';
+import { MTOModalProvider } from 'contexts/MTOModalContext';
 
 import MTOOptionsPanel from '.';
-
-const mockTemplates: MtoTemplateType[] = [
-  {
-    __typename: 'MTOTemplate',
-    id: '1',
-    name: 'Standard categories',
-    description: 'These are the standard categories for MTOs.',
-    key: MtoTemplateKey.STANDARD_CATEGORIES,
-    categoryCount: 24,
-    milestoneCount: 0,
-    solutionCount: 0,
-    primaryCategoryCount: 9,
-    categories: []
-  },
-  {
-    __typename: 'MTOTemplate',
-    id: '2',
-    name: 'ACO and kidney models',
-    description: 'These are the ACO and Kidney models for MTOs.',
-    key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
-    categoryCount: 13,
-    milestoneCount: 12,
-    solutionCount: 10,
-    primaryCategoryCount: 4,
-    categories: []
-  },
-  {
-    __typename: 'MTOTemplate',
-    id: '3',
-    name: 'Episode primary care and non-ACO models',
-    description:
-      'These are the Episode Primary Care and Non-ACO models for MTOs.',
-    key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
-    categoryCount: 13,
-    milestoneCount: 13,
-    solutionCount: 11,
-    primaryCategoryCount: 4,
-    categories: []
-  },
-  {
-    __typename: 'MTOTemplate',
-    id: '4',
-    name: 'Medicare advantage and drug models',
-    description: 'These are the Medicare Advantage and Drug models for MTOs.',
-    key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
-    categoryCount: 3,
-    milestoneCount: 3,
-    solutionCount: 0,
-    primaryCategoryCount: 1,
-    categories: []
-  },
-  {
-    __typename: 'MTOTemplate',
-    id: '5',
-    name: 'State and local models',
-    description: 'These are the State and Local models for MTOs.',
-    key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
-    categoryCount: 14,
-    milestoneCount: 0,
-    solutionCount: 0,
-    primaryCategoryCount: 0,
-    categories: []
-  }
-];
-
-const mocks = [
-  {
-    request: {
-      query: GetMtoTemplatesDocument,
-      variables: {}
-    },
-    result: { data: { mtoTemplates: mockTemplates } }
-  }
-];
 
 describe('MTOOptionsPanel', () => {
   it('renders correctly and matches snapshot', () => {
@@ -107,7 +34,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -197,16 +124,6 @@ describe('MTOOptionsPanel', () => {
   });
 
   it('displays default templates when loaded successfully', async () => {
-    const successMock = {
-      request: {
-        query: GetMtoTemplatesDocument,
-        variables: {}
-      },
-      result: {
-        data: { mtoTemplates: mockTemplates }
-      }
-    };
-
     const router = createMemoryRouter(
       [
         {
@@ -228,7 +145,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[successMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -246,16 +163,6 @@ describe('MTOOptionsPanel', () => {
   });
 
   it('displays template counts correctly', async () => {
-    const successMock = {
-      request: {
-        query: GetMtoTemplatesDocument,
-        variables: {}
-      },
-      result: {
-        data: { mtoTemplates: mockTemplates }
-      }
-    };
-
     const router = createMemoryRouter(
       [
         {
@@ -277,7 +184,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[successMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -296,16 +203,6 @@ describe('MTOOptionsPanel', () => {
   });
 
   it('filters to show only default templates', async () => {
-    const successMock = {
-      request: {
-        query: GetMtoTemplatesDocument,
-        variables: {}
-      },
-      result: {
-        data: { mtoTemplates: mockTemplates }
-      }
-    };
-
     const router = createMemoryRouter(
       [
         {
@@ -327,7 +224,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[successMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -356,16 +253,6 @@ describe('MTOOptionsPanel', () => {
   });
 
   it('opens modal when template button is clicked', async () => {
-    const successMock = {
-      request: {
-        query: GetMtoTemplatesDocument,
-        variables: {}
-      },
-      result: {
-        data: { mtoTemplates: mockTemplates }
-      }
-    };
-
     const router = createMemoryRouter(
       [
         {
@@ -387,7 +274,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[successMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -401,16 +288,6 @@ describe('MTOOptionsPanel', () => {
   });
 
   it('navigates to template library when link is clicked', async () => {
-    const successMock = {
-      request: {
-        query: GetMtoTemplatesDocument,
-        variables: {}
-      },
-      result: {
-        data: { mtoTemplates: mockTemplates }
-      }
-    };
-
     const router = createMemoryRouter(
       [
         {
@@ -432,7 +309,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[successMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -470,7 +347,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -505,7 +382,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -536,7 +413,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
