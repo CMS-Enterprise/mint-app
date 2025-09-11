@@ -273,7 +273,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       templateCount:
         '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions',
       availableTemplates: '{{selected}} of {{available}} available templates',
-      viewTemplates: 'View all templates in the library'
+      viewTemplates: 'View all templates in the library',
+      errorFetchingTemplates: 'Failed to fetch templates'
     }
   },
   table: {

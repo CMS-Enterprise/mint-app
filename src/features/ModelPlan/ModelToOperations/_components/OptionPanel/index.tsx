@@ -13,8 +13,10 @@ import {
 import classNames from 'classnames';
 import { MtoTemplateKey, useGetMtoTemplatesQuery } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
-import { MTOModalContext } from 'contexts/MTOModalContext';
+import Spinner from 'components/Spinner';
+import { MTOModalContext, MtoTemplateBaseType } from 'contexts/MTOModalContext';
 
 import { MTOOption, mtoOptions } from '../../Home';
 
@@ -125,9 +127,10 @@ const MTOOptionsPanel = () => {
     MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
   ];
 
-  const templates = [
+  const templates: MtoTemplateBaseType[] = [
     {
-      __typename: 'MTO_TEMPLATE',
+      __typename: 'MTOTemplate',
+      id: '1',
       name: 'Standard Categories',
       description: '24 categories, 0 milestones, 0 solutions',
       key: MtoTemplateKey.STANDARD_CATEGORIES,
@@ -136,7 +139,8 @@ const MTOOptionsPanel = () => {
       solutionCount: 0
     },
     {
-      __typename: 'MTO_TEMPLATE',
+      __typename: 'MTOTemplate',
+      id: '2',
       name: 'ACO and Kidney Models',
       description: '13 categories, 12 milestones, 10 solutions',
       key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
@@ -145,7 +149,8 @@ const MTOOptionsPanel = () => {
       solutionCount: 10
     },
     {
-      __typename: 'MTO_TEMPLATE',
+      __typename: 'MTOTemplate',
+      id: '3',
       name: 'Episode Primary Care and Non-ACO Models',
       description: '13 categories, 13 milestones, 11 solutions',
       key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
@@ -154,7 +159,8 @@ const MTOOptionsPanel = () => {
       solutionCount: 11
     },
     {
-      __typename: 'MTO_TEMPLATE',
+      __typename: 'MTOTemplate',
+      id: '4',
       name: 'Medicare Advantage and Drug Models',
       description: '3 templates, 3 milestones, 0 solutions',
       key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
@@ -163,7 +169,8 @@ const MTOOptionsPanel = () => {
       solutionCount: 0
     },
     {
-      __typename: 'MTO_TEMPLATE',
+      __typename: 'MTOTemplate',
+      id: '5',
       name: 'State and Local Models',
       description: '14 templates, 0 milestones, 0 solutions',
       key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
@@ -217,81 +224,98 @@ const MTOOptionsPanel = () => {
         </Grid>
       </Grid>
 
-      <div>
-        <div className="margin-right-2 margin-top-4 display-inline-block">
-          {t('optionsCard.template.availableTemplates', {
-            selected: defaultTemplates.length,
-            available: templates.length
-          })}
+      {loading ? (
+        <div className="margin-top-8 display-flex flex-justify-center">
+          <Spinner size="large" />
         </div>
-        <UswdsReactLink
-          to={`/models/${modelID}/collaboration-area/model-to-operations/template-library`}
-        >
-          {t('optionsCard.template.viewTemplates')}
-        </UswdsReactLink>
-      </div>
-
-      {defaultTemplates.map(template => (
-        <Card
-          containerProps={{
-            className: 'shadow-2 padding-0 margin-0',
-            style: {
-              borderTopLeftRadius: '.65rem',
-              borderTopRightRadius: '.65rem'
-            }
-          }}
-          data-testid="article-card"
-          className="margin-top-2"
-        >
-          <div
-            className={classNames(
-              'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg'
-            )}
-          >
-            {t('optionsCard.template.label').toLocaleUpperCase()}{' '}
-            <Icon.GridView
-              className="margin-right-05"
-              style={{ top: '4px' }}
-              aria-label="grid view"
-            />
-          </div>
-
-          <div className="padding-x-3 display-flex flex-column height-full">
-            <CardBody className="padding-x-0 padding-y-2">
-              <Grid row gap={2}>
-                <Grid desktop={{ col: 9 }} tablet={{ col: 9 }}>
-                  <h4 className="line-height-body-4 margin-y-0">
-                    {template.name}
-                  </h4>
-
-                  {t('optionsCard.template.templateCount', {
-                    categoryCount: template.categoryCount,
-                    milestoneCount: template.milestoneCount,
-                    solutionCount: template.solutionCount
+      ) : (
+        <>
+          {error ? (
+            <Alert type="error">
+              {t('optionsCard.template.errorFetchingTemplates')}
+            </Alert>
+          ) : (
+            <>
+              <div>
+                <div className="margin-right-2 margin-top-4 display-inline-block">
+                  {t('optionsCard.template.availableTemplates', {
+                    selected: defaultTemplates.length,
+                    available: templates.length
                   })}
-                </Grid>
+                </div>
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/model-to-operations/template-library`}
+                >
+                  {t('optionsCard.template.viewTemplates')}
+                </UswdsReactLink>
+              </div>
 
-                <Grid desktop={{ col: 3 }} tablet={{ col: 3 }}>
-                  <div className="display-flex flex-justify-end">
-                    <Button
-                      type="button"
-                      outline
-                      onClick={() => {
-                        setMTOModalState({
-                          modalType: 'addTemplate'
-                        });
-                        setIsModalOpen(true);
-                      }}
-                    >
-                      {t('optionsCard.template.buttonText')}
-                    </Button>
+              {defaultTemplates.map(template => (
+                <Card
+                  containerProps={{
+                    className: 'shadow-2 padding-0 margin-0',
+                    style: {
+                      borderTopLeftRadius: '.65rem',
+                      borderTopRightRadius: '.65rem'
+                    }
+                  }}
+                  data-testid="article-card"
+                  className="margin-top-2"
+                >
+                  <div
+                    className={classNames(
+                      'display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg'
+                    )}
+                  >
+                    {t('optionsCard.template.label').toLocaleUpperCase()}{' '}
+                    <Icon.GridView
+                      className="margin-right-05"
+                      style={{ top: '4px' }}
+                      aria-label="grid view"
+                    />
                   </div>
-                </Grid>
-              </Grid>
-            </CardBody>
-          </div>
-        </Card>
-      ))}
+
+                  <div className="padding-x-3 display-flex flex-column height-full">
+                    <CardBody className="padding-x-0 padding-y-2">
+                      <Grid row gap={2}>
+                        <Grid desktop={{ col: 9 }} tablet={{ col: 9 }}>
+                          <h4 className="line-height-body-4 margin-y-0">
+                            {template.name}
+                          </h4>
+
+                          {t('optionsCard.template.templateCount', {
+                            categoryCount: template.categoryCount,
+                            milestoneCount: template.milestoneCount,
+                            solutionCount: template.solutionCount
+                          })}
+                        </Grid>
+
+                        <Grid desktop={{ col: 3 }} tablet={{ col: 3 }}>
+                          <div className="display-flex flex-justify-end">
+                            <Button
+                              type="button"
+                              outline
+                              onClick={() => {
+                                setMTOModalState({
+                                  modalType: 'addTemplate',
+                                  mtoTemplate: template
+                                });
+                                setIsModalOpen(true);
+                              }}
+                            >
+                              {t('optionsCard.template.buttonText')}
+                            </Button>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    </CardBody>
+                  </div>
+                </Card>
+              ))}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

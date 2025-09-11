@@ -14,7 +14,10 @@ import { MTOModalContext } from 'contexts/MTOModalContext';
 const AddTemplateModal = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { setMTOModalOpen } = useContext(MTOModalContext);
+  const {
+    setMTOModalOpen,
+    mtoModalState: { mtoTemplate }
+  } = useContext(MTOModalContext);
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 

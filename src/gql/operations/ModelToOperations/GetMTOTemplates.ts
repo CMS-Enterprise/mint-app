@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetMTOTemplates($keys: [MTO_TEMPLATE_KEY!]) {
+  query GetMTOTemplates($keys: [MTOTemplateKey!]) {
     mtoTemplates(keys: $keys) {
       id
       name
@@ -14,8 +14,21 @@ export default gql(/* GraphQL */ `
         id
         templateID
         name
-        parentID
         order
+        subCategories {
+          id
+          templateID
+          name
+          order
+          milestones {
+            id
+            templateID
+            solutions {
+              id
+              templateID
+            }
+          }
+        }
       }
     }
   }
