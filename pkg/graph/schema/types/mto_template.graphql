@@ -19,6 +19,7 @@ type MTOTemplate {
   solutions: [MTOTemplateSolution!]!
 
   # Convenience count fields
+  primaryCategoryCount: Int!
   categoryCount: Int!
   milestoneCount: Int!
   solutionCount: Int!
@@ -63,8 +64,9 @@ type MTOTemplateSubCategory {
 
 type MTOTemplateMilestone {
   id: UUID!
+  name: String!
+  key: MTOCommonMilestoneKey
   templateID: UUID!
-  mtoCommonMilestoneKey: String!
   mtoTemplateCategoryID: UUID
 
   # Custom Resolvers
@@ -78,6 +80,8 @@ type MTOTemplateMilestone {
 
 type MTOTemplateSolution {
   id: UUID!
+  name: String!
+  key: MTOCommonSolutionKey
   templateID: UUID!
   mtoCommonSolutionID: UUID!
 
@@ -88,6 +92,7 @@ type MTOTemplateSolution {
 }
 
 type ApplyTemplateResult {
+  id: UUID!
   modelPlanID: UUID!
   templateID: UUID!
   categoriesAdded: Int!
@@ -106,7 +111,7 @@ extend type Query {
 
 extend type Mutation {
   # Apply a template to a specific MTO (matrix)
-  applyTemplateToMto(
+  createTemplateToMTO(
     modelPlanID: UUID!
     templateID: UUID!
   ): ApplyTemplateResult!

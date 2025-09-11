@@ -16,6 +16,7 @@ import (
 )
 
 type ApplyTemplateResult struct {
+	ID              uuid.UUID `json:"id"`
 	ModelPlanID     uuid.UUID `json:"modelPlanID"`
 	TemplateID      uuid.UUID `json:"templateID"`
 	CategoriesAdded int       `json:"categoriesAdded"`
