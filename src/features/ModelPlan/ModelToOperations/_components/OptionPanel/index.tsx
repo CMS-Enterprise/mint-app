@@ -117,8 +117,10 @@ const MTOOptionsPanel = () => {
   const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
     useContext(MTOModalContext);
 
+  // TODO: Add data once the query is implemented
   const { loading, error } = useGetMtoTemplatesQuery();
 
+  // TODO: Uncomment this once the query is implemented
   // const templates = data?.mtoTemplates || [];
 
   const defaultTemplateKeys = [
@@ -127,6 +129,7 @@ const MTOOptionsPanel = () => {
     MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
   ];
 
+  // TODO: Remove this once the query is implemented
   const templates: MtoTemplateType[] = [
     {
       __typename: 'MTOTemplate',
