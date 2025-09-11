@@ -323,9 +323,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       commonSolutions: '{{number}} common solutions and IT systems',
       browseSolutionLibrary: 'Add solutions from library',
       templateAndCategories: 'Templates and categories',
-      availableTemplates: '1 available template',
+      availableTemplates: '5 available templates',
       standardCategories: 'Standard categories',
-      addThisTemplate: 'Add this template',
+      addTemplateFromLibrary: 'Add templates from library',
       addCustomCategory: 'or, create a custom category'
     },
     alert: {

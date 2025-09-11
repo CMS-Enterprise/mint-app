@@ -3,11 +3,7 @@ import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/F
 import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/columns';
 import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
 
-// TODO: remove this once we have the the queries hooked up
-export type MtoTemplateBaseType = Omit<
-  GetMtoTemplatesQuery['mtoTemplates'][number],
-  'categories' | 'subCategories' | 'milestones' | 'solutions'
->;
+export type MtoTemplateType = GetMtoTemplatesQuery['mtoTemplates'][number];
 
 export interface MTOModalState {
   categoryID: string;
@@ -18,7 +14,7 @@ export interface MTOModalState {
   subCategoryID: string;
   modalCalledFrom?: 'solution-library';
   toggleRow?: (index: string, forceOpen?: boolean) => void;
-  mtoTemplate?: MtoTemplateBaseType;
+  mtoTemplate?: MtoTemplateType;
 }
 
 interface MTOModalContextType {
