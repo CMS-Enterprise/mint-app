@@ -78,7 +78,7 @@ exports[`Operation Solution Help Header > matches snapshot 1`] = `
               value=""
             />
             <button
-              class="usa-button grid-row flex-justify-center flex-align-center no-pointer"
+              class="usa-button"
               data-testid="button"
               type="submit"
             >

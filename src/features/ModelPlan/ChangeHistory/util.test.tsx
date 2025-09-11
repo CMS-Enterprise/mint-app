@@ -8,6 +8,10 @@ import {
 import i18next from 'i18next';
 
 import {
+  TypeOfChange,
+  TypeOfOtherChange
+} from './components/FilterForm/filterUtil';
+import {
   ChangeRecordType,
   ChangeType,
   condenseLinkingTableChanges,
@@ -22,6 +26,8 @@ import {
   handleSortOptions,
   identifyChangeType,
   isInitialCreatedSection,
+  isModelPlanStatusChange,
+  isMTOChange,
   isTableWithStatus,
   linkingTableQuestions,
   parseArray,
@@ -1197,5 +1203,82 @@ describe('util.tsx', () => {
     const result3 = documentUpdateType(change as ChangeRecordType);
 
     expect(result3).toEqual('removed');
+  });
+
+  it('should return the correct text for model plan status changes', () => {
+    const change: ChangeRecordType = {
+      __typename: 'TranslatedAudit',
+      id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+      tableName: TableName.MODEL_PLAN,
+      translatedFields: [
+        {
+          fieldName: 'status'
+        }
+      ]
+    } as ChangeRecordType;
+
+    const result = isModelPlanStatusChange(
+      TypeOfOtherChange.OVERALL_STATUS,
+      change
+    );
+
+    expect(result).toEqual(true);
+
+    change.translatedFields = [
+      {
+        fieldName: 'not_status',
+        old: null,
+        new: 'active'
+      } as TranslatedAuditField
+    ] as TranslatedAuditField[];
+
+    const result2 = isModelPlanStatusChange(
+      TypeOfOtherChange.OVERALL_STATUS,
+      change
+    );
+
+    expect(result2).toEqual(false);
+  });
+
+  it('should return the correct text for MTO changes', () => {
+    const change: ChangeRecordType = {
+      __typename: 'TranslatedAudit',
+      id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+      tableName: TableName.MTO_CATEGORY
+    } as ChangeRecordType;
+
+    const result = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
+
+    expect(result).toEqual(true);
+
+    change.tableName = TableName.MTO_INFO;
+
+    const result2 = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
+
+    expect(result2).toEqual(true);
+
+    change.tableName = TableName.MTO_MILESTONE;
+
+    const result3 = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
+
+    expect(result3).toEqual(true);
+
+    change.tableName = TableName.MTO_SOLUTION;
+
+    const result4 = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
+
+    expect(result4).toEqual(true);
+
+    change.tableName = TableName.MTO_MILESTONE_SOLUTION_LINK;
+
+    const result5 = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
+
+    expect(result5).toEqual(true);
+
+    change.tableName = TableName.MODEL_PLAN;
+
+    const result6 = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
+
+    expect(result6).toEqual(false);
   });
 });

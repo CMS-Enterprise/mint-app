@@ -1,10 +1,15 @@
 import {
   AnalyticsSummary,
-  GetAnalyticsSummaryQuery
+  GetAnalyticsSummaryQuery,
+  GetMtoMilestoneSummaryQuery,
+  MtoRiskIndicator
 } from 'gql/generated/graphql';
-import * as XLSX from 'xlsx';
+import i18next from 'i18next';
+import * as XLSX from 'xlsx-js-style';
 
+import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import { getKeys } from 'types/translation';
+import { formatDateUtc } from 'utils/date';
 
 export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
 
@@ -81,10 +86,7 @@ export const getChangesByOtherData = (
 };
 
 // Prepares the analytics data for download as an XLSX file
-const downloadAnalytics = (
-  data: GetAnalyticsSummaryQuery['analytics'],
-  exportFileName: string
-) => {
+function downloadAnalytics<T>(data: T, exportFileName: string): void {
   if (!data) return;
 
   // Create a new workbook
@@ -107,12 +109,12 @@ const downloadAnalytics = (
     const columnWidths = autoFitColumns(sheet);
     sheet['!cols'] = columnWidths;
 
-    XLSX.utils.book_append_sheet(workbook, sheet, key);
+    XLSX.utils.book_append_sheet(workbook, sheet, key as string);
   });
 
   // Write to file
   XLSX.writeFile(workbook, exportFileName);
-};
+}
 
 // Auto-fits the columns in the worksheet to the width of the longest cell in the column
 function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
@@ -156,5 +158,225 @@ function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
 
   return columnWidths;
 }
+
+const riskMap = {
+  [MtoRiskIndicator.ON_TRACK]: 'G',
+  [MtoRiskIndicator.OFF_TRACK]: 'Y',
+  [MtoRiskIndicator.AT_RISK]: 'R'
+};
+
+// Prepares the analytics data for download as an XLSX file
+export const downloadMTOMilestoneSummary = (
+  data: GetMtoMilestoneSummaryQuery['modelPlanCollection'],
+  exportFileName: string
+): void => {
+  if (!data) return;
+
+  const addedModelPlans: string[] = [];
+
+  // Helper function to get quarter key from date
+  const getQuarterKey = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth() returns 0-11
+    const quarter = Math.ceil(month / 3);
+    return `Q${quarter} ${year}`;
+  };
+
+  // Helper function to generate all quarters for the next 2 years
+  const generateQuarterKeys = (): string[] => {
+    const quarters: string[] = [];
+    const currentYear = new Date().getFullYear();
+
+    for (let year = currentYear; year <= currentYear + 2; year += 1) {
+      for (let quarter = 1; quarter <= 4; quarter += 1) {
+        quarters.push(`Q${quarter} ${year}`);
+      }
+    }
+    return quarters;
+  };
+
+  const allQuarters = generateQuarterKeys();
+
+  const flattenedData: any = [];
+  data.forEach(item => {
+    item.mtoMatrix.milestones.forEach(milestone => {
+      // Create quarter object with all quarters initialized to empty string
+      const quarterObject: { [key: string]: string } = {};
+      allQuarters.forEach(quarter => {
+        quarterObject[quarter] = '';
+      });
+
+      // Mark the relevant quarter with 'X' based on needBy date
+      if (milestone.needBy) {
+        const needByDate = new Date(milestone.needBy);
+        const quarterKey = getQuarterKey(needByDate);
+        if (Object.prototype.hasOwnProperty.call(quarterObject, quarterKey)) {
+          quarterObject[quarterKey] = 'X';
+        }
+      }
+
+      flattenedData.push({
+        Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
+        Milestone: milestone.name,
+        Description: milestone.key
+          ? milestoneMap[milestone.key]?.description
+          : '',
+        'Facilitated by': (milestone.facilitatedBy || [])
+          ?.map(facilitator =>
+            i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
+          )
+          .join(', '),
+        'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
+        Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
+        Concerns: riskMap[milestone.riskIndicator],
+        ...quarterObject
+      });
+
+      if (!addedModelPlans.includes(item.id)) {
+        addedModelPlans.push(item.id);
+      }
+    });
+  });
+
+  // Create a new workbook
+  const workbook = XLSX.utils.book_new();
+  const sheet = XLSX.utils.json_to_sheet(flattenedData);
+
+  const columnWidths = autoFitColumns(sheet);
+  sheet['!cols'] = columnWidths;
+
+  // Set row heights for better readability
+  const range = XLSX.utils.decode_range(sheet['!ref'] || 'A1');
+  if (!sheet['!rows']) {
+    sheet['!rows'] = [];
+  }
+
+  // Set row height for all rows (including header)
+  for (let row = 0; row <= range.e.r; row += 1) {
+    sheet['!rows'][row] = { hpt: 20 }; // 20 points height (default is ~15)
+  }
+
+  // Add borders to all cells in the sheet
+  const concernsColumnIndex = 6; // Column E (0-indexed)
+  const borderStyle = {
+    top: { style: 'thin', color: { rgb: '000000' } },
+    bottom: { style: 'thin', color: { rgb: '000000' } },
+    left: { style: 'thin', color: { rgb: '000000' } },
+    right: { style: 'thin', color: { rgb: '000000' } }
+  };
+
+  // Apply borders to all cells
+  for (let row = 0; row <= range.e.r; row += 1) {
+    for (let col = 0; col <= range.e.c; col += 1) {
+      const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
+
+      if (!sheet[cellAddress]) {
+        sheet[cellAddress] = { v: '', s: {} };
+      }
+      if (!sheet[cellAddress].s) {
+        sheet[cellAddress].s = {};
+      }
+
+      // Ensure border is always applied with black color
+      sheet[cellAddress].s.border = borderStyle;
+    }
+  }
+
+  // Style the header row with background color
+  for (let col = 0; col <= range.e.c; col += 1) {
+    const headerCell = XLSX.utils.encode_cell({ r: 0, c: col });
+    if (sheet[headerCell]) {
+      if (!sheet[headerCell].s) {
+        sheet[headerCell].s = {};
+      }
+      sheet[headerCell].s.fill = { fgColor: { rgb: 'F0F0F0' } };
+      sheet[headerCell].s.font = { bold: true };
+      sheet[headerCell].s.alignment = { horizontal: 'center' };
+      // Ensure black borders are preserved on header cells
+      sheet[headerCell].s.border = borderStyle;
+    }
+  }
+
+  // Add background colors to the Concerns column based on risk indicators
+  for (let row = 1; row <= range.e.r; row += 1) {
+    const cellAddress = XLSX.utils.encode_cell({
+      r: row,
+      c: concernsColumnIndex
+    });
+    const cell = sheet[cellAddress];
+
+    if (cell && cell.v) {
+      let backgroundColor = '';
+      let textColor = '000000';
+
+      // Determine colors based on risk indicators
+      if (cell.v.includes('G')) {
+        backgroundColor = 'c6efce'; // Green
+      } else if (cell.v.includes('Y')) {
+        backgroundColor = 'f5e295'; // Yellow/Orange
+      } else if (cell.v.includes('R')) {
+        backgroundColor = 'fec7cd'; // Red
+      } else {
+        backgroundColor = 'CCCCCC'; // Gray for unknown
+        textColor = '000000';
+      }
+
+      // Apply background color and text styling
+      if (!cell.s) {
+        cell.s = {};
+      }
+      cell.s.fill = { fgColor: { rgb: backgroundColor } };
+      cell.s.font = { color: { rgb: textColor }, bold: true };
+      cell.s.alignment = { horizontal: 'center' };
+      // Ensure black borders are preserved
+      cell.s.border = borderStyle;
+    }
+  }
+
+  // NOT NEEDED ANYMORE, may need for future
+  // Style "Needed By" column - make 'Completed' text grey
+  const neededByColumnIndex = 4; // "Needed By" is the 3rd column (0-indexed)
+  for (let row = 1; row <= range.e.r; row += 1) {
+    const cellAddress = XLSX.utils.encode_cell({
+      r: row,
+      c: neededByColumnIndex
+    });
+    const cell = sheet[cellAddress];
+
+    if (cell && cell.v === 'Completed') {
+      // Apply grey text color for completed milestones
+      if (!cell.s) {
+        cell.s = {};
+      }
+      cell.s.font = { color: { rgb: '808080' } }; // Grey text color
+    }
+  }
+
+  // Style quarter columns - add grey background for cells with 'X'
+  const quarterStartColumn = 7; // Quarters start after Concerns column (0-indexed)
+  for (let row = 1; row <= range.e.r; row += 1) {
+    for (let col = quarterStartColumn; col <= range.e.c; col += 1) {
+      const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
+      const cell = sheet[cellAddress];
+
+      if (cell && cell.v === 'X') {
+        // Apply grey background and center alignment for X cells
+        if (!cell.s) {
+          cell.s = {};
+        }
+        cell.s.fill = { fgColor: { rgb: 'D3D3D3' } }; // Light grey background
+        cell.s.alignment = { horizontal: 'center' };
+        cell.s.font = { bold: true };
+        // Ensure black borders are preserved
+        cell.s.border = borderStyle;
+      }
+    }
+  }
+
+  XLSX.utils.book_append_sheet(workbook, sheet, 'MTO Milestone Summary');
+
+  // Write to file
+  XLSX.writeFile(workbook, exportFileName);
+};
 
 export default downloadAnalytics;

@@ -1,0 +1,10 @@
+.top-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 23px;
+  }
+  
+.top-scroll-content {
+    overflow-x: auto;
+    overflow-y: visible;
+}

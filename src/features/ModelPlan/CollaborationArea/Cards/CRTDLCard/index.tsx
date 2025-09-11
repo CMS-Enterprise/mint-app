@@ -10,6 +10,7 @@ import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 import '../../index.scss';
 
@@ -61,7 +62,7 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
 
       <CardFooter>
         <ExternalLink
-          href={import.meta.env.VITE_ECHIMP_URL}
+          href={ECHIMP_URL_SSO}
           className="usa-button"
           variant="unstyled"
           asButton

@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TopScrollContainer Component > Snapshots > matches snapshot with narrow content 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="top-scroll-container"
+    >
+      <div
+        style="width: 1000px;"
+      />
+    </div>
+    <div
+      class="top-scroll-content"
+    >
+      <div
+        data-testid="narrow-content"
+        style="width: 200px; height: 100px;"
+      >
+        Normal width content
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TopScrollContainer Component > Snapshots > matches snapshot with wide content 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="top-scroll-container"
+    >
+      <div
+        style="width: 1000px;"
+      />
+    </div>
+    <div
+      class="top-scroll-content"
+    >
+      <div
+        data-testid="wide-content"
+        style="width: 2000px; height: 100px; background-color: lightblue; white-space: nowrap;"
+      >
+        Very wide content that should trigger horizontal overflow
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
