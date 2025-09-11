@@ -271,7 +271,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       description: '24 categories, 0 milestones, 0 solutions',
       buttonText: 'Add this template',
       templateCount:
-        '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions'
+        '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions',
+      availableTemplates: '{{selected}} of {{available}} available templates',
+      viewTemplates: 'View all templates in the library'
     }
   },
   table: {

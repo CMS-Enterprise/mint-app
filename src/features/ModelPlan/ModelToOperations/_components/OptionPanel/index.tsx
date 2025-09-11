@@ -11,10 +11,7 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
-  Mto_Template_Key as MtoTemplateKey,
-  useGetMtoTemplatesQuery
-} from 'gql/generated/graphql';
+import { MtoTemplateKey, useGetMtoTemplatesQuery } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -113,20 +110,20 @@ const MTOOptionsCard = ({
 const MTOOptionsPanel = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const { modelID = '' } = useParams<{ modelID: string }>();
+
   const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
     useContext(MTOModalContext);
 
-  const { data, loading, error } = useGetMtoTemplatesQuery({
-    variables: {
-      keys: [
-        MtoTemplateKey.STANDARD_CATEGORIES,
-        MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
-        MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
-      ]
-    }
-  });
+  const { data, loading, error } = useGetMtoTemplatesQuery();
 
   // const templates = data?.mtoTemplates || [];
+
+  const defaultTemplateKeys = [
+    MtoTemplateKey.STANDARD_CATEGORIES,
+    MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+    MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+  ];
 
   const templates = [
     {
@@ -141,22 +138,44 @@ const MTOOptionsPanel = () => {
     {
       __typename: 'MTO_TEMPLATE',
       name: 'ACO and Kidney Models',
-      description: '10 categories, 0 milestones, 0 solutions',
+      description: '13 categories, 12 milestones, 10 solutions',
       key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
-      categoryCount: 10,
-      milestoneCount: 0,
-      solutionCount: 0
+      categoryCount: 13,
+      milestoneCount: 12,
+      solutionCount: 10
     },
     {
       __typename: 'MTO_TEMPLATE',
       name: 'Episode Primary Care and Non-ACO Models',
-      description: '10 categories, 0 milestones, 0 solutions',
+      description: '13 categories, 13 milestones, 11 solutions',
       key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
-      categoryCount: 10,
+      categoryCount: 13,
+      milestoneCount: 13,
+      solutionCount: 11
+    },
+    {
+      __typename: 'MTO_TEMPLATE',
+      name: 'Medicare Advantage and Drug Models',
+      description: '3 templates, 3 milestones, 0 solutions',
+      key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
+      categoryCount: 3,
+      milestoneCount: 3,
+      solutionCount: 0
+    },
+    {
+      __typename: 'MTO_TEMPLATE',
+      name: 'State and Local Models',
+      description: '14 templates, 0 milestones, 0 solutions',
+      key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
+      categoryCount: 14,
       milestoneCount: 0,
       solutionCount: 0
     }
   ];
+
+  const defaultTemplates = templates.filter(template =>
+    defaultTemplateKeys.includes(template.key)
+  );
 
   return (
     <div className="model-to-operations__options-panel">
@@ -198,7 +217,21 @@ const MTOOptionsPanel = () => {
         </Grid>
       </Grid>
 
-      {templates.map(template => (
+      <div>
+        <div className="margin-right-2 margin-top-4 display-inline-block">
+          {t('optionsCard.template.availableTemplates', {
+            selected: defaultTemplates.length,
+            available: templates.length
+          })}
+        </div>
+        <UswdsReactLink
+          to={`/models/${modelID}/collaboration-area/model-to-operations/template-library`}
+        >
+          {t('optionsCard.template.viewTemplates')}
+        </UswdsReactLink>
+      </div>
+
+      {defaultTemplates.map(template => (
         <Card
           containerProps={{
             className: 'shadow-2 padding-0 margin-0',
@@ -230,6 +263,7 @@ const MTOOptionsPanel = () => {
                   <h4 className="line-height-body-4 margin-y-0">
                     {template.name}
                   </h4>
+
                   {t('optionsCard.template.templateCount', {
                     categoryCount: template.categoryCount,
                     milestoneCount: template.milestoneCount,
