@@ -47,9 +47,9 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachMarkedCompleteC
 	suite.Nil(testActivity.MetaData)
 	//Assert meta data can be deserialized
 	suite.NotNil(testActivity.MetaDataRaw)
-	meta, err := parseRawActivityMetaData(testActivity.ActivityType, testActivity.MetaDataRaw)
+	err = testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.NotNil(meta)
+	suite.NotNil(testActivity.MetaData)
 
 	actorNots, err := UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal)
 	suite.NoError(err)

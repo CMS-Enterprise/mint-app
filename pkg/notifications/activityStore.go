@@ -34,12 +34,11 @@ func (s *activityStore) GetByID(np sqlutils.NamedPreparer, activityID uuid.UUID)
 		return nil, fmt.Errorf("issue retrieving activity: %w", procErr)
 	}
 
-	meta, err := parseRawActivityMetaData(retActivity.ActivityType, retActivity.MetaDataRaw)
+	err := retActivity.ParseRawActivityMetaData()
 	if err != nil {
 		return nil, fmt.Errorf("issue converting activity meta data to discrete type: %w", err)
 
 	}
-	retActivity.MetaData = meta
 	return retActivity, nil
 }
 
