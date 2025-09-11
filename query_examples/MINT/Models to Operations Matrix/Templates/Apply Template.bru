@@ -1,0 +1,31 @@
+meta {
+  name: Apply Template
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation ApplyMtoTemplate {
+    applyTemplateToMto(
+      modelPlanID: "12345678-1234-1234-1234-123456789012"
+      templateID: "00000000-0000-0000-0000-000000000000"
+    ) {
+      modelPlanID
+      templateID
+      categoriesAdded
+      milestonesAdded
+      solutionsAdded
+      warnings
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

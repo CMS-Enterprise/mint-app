@@ -1,0 +1,113 @@
+# Mirror of DB enum MTOTemplateKey
+enum MTOTemplateKey {
+  ACO_AND_KIDNEY_MODELS
+  EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+  MEDICARE_ADVANTAGE_AND_DRUG_MODELS
+  STANDARD_CATEGORIES
+  STATE_AND_LOCAL_MODELS
+}
+
+type MTOTemplate {
+  id: UUID!
+  key: MTOTemplateKey!
+  name: String!
+  description: String
+
+  # Custom Resolvers
+  categories: [MTOTemplateCategory!]!
+  milestones: [MTOTemplateMilestone!]!
+  solutions: [MTOTemplateSolution!]!
+
+  # Convenience count fields
+  categoryCount: Int!
+  milestoneCount: Int!
+  solutionCount: Int!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MTOTemplateCategory {
+  id: UUID!
+  templateID: UUID!
+  name: String!
+  order: Int!
+
+  # Custom Resolvers
+  isUncategorized: Boolean!
+  subCategories: [MTOTemplateSubCategory!]!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MTOTemplateSubCategory {
+  id: UUID!
+  templateID: UUID!
+  name: String!
+  parentID: UUID
+  order: Int!
+
+  # Custom Resolvers
+  milestones: [MTOTemplateMilestone!]!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MTOTemplateMilestone {
+  id: UUID!
+  templateID: UUID!
+  mtoCommonMilestoneKey: String!
+  mtoTemplateCategoryID: UUID
+
+  # Custom Resolvers
+  solutions: [MTOTemplateSolution!]!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type MTOTemplateSolution {
+  id: UUID!
+  templateID: UUID!
+  mtoCommonSolutionID: UUID!
+
+  createdBy: UUID!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedDts: Time
+}
+
+type ApplyTemplateResult {
+  modelPlanID: UUID!
+  templateID: UUID!
+  categoriesAdded: Int!
+  milestonesAdded: Int!
+  solutionsAdded: Int!
+  warnings: [String!] # Non-blocking messages returned when applying a template.
+}
+
+extend type Query {
+  # List all templates (optionally filter by keys)
+  mtoTemplates(keys: [MTOTemplateKey!]): [MTOTemplate!]!
+
+  # Get a single template by id or key
+  mtoTemplate(id: UUID, key: MTOTemplateKey): MTOTemplate
+}
+
+extend type Mutation {
+  # Apply a template to a specific MTO (matrix)
+  applyTemplateToMto(
+    modelPlanID: UUID!
+    templateID: UUID!
+  ): ApplyTemplateResult!
+}
