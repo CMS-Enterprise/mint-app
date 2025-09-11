@@ -10,6 +10,7 @@ export default gql(/* GraphQL */ `
       categoryCount
       milestoneCount
       solutionCount
+      primaryCategoryCount
       categories {
         id
         templateID

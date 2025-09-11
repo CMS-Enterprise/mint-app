@@ -4,9 +4,10 @@ import { useParams } from 'react-router-dom';
 import { Button, Form } from '@trussworks/react-uswds';
 import {
   GetModelToOperationsMatrixDocument,
-  useCreateStandardCategoriesMutation
+  useCreateMtoTemplateMutation
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { MTOModalContext } from 'contexts/MTOModalContext';
@@ -23,22 +24,28 @@ const AddTemplateModal = () => {
 
   const { setErrorMeta } = useErrorMessage();
 
-  const [create] = useCreateStandardCategoriesMutation({
-    variables: { modelPlanID: modelID },
-    refetchQueries: [
-      {
-        query: GetModelToOperationsMatrixDocument,
-        variables: { id: modelID }
-      }
-    ]
-  });
+  const [create] = useCreateMtoTemplateMutation();
+
+  if (!mtoTemplate)
+    return <Alert type="error">{t('modal.addTemplate.failedToFetch')}</Alert>;
 
   const handleSubmit = () => {
     setErrorMeta({
       overrideMessage: t('modal.addTemplate.error')
     });
 
-    create().then(response => {
+    create({
+      variables: {
+        modelPlanID: modelID,
+        templateID: mtoTemplate.id
+      },
+      refetchQueries: [
+        {
+          query: GetModelToOperationsMatrixDocument,
+          variables: { id: modelID }
+        }
+      ]
+    }).then(response => {
       if (!response?.errors) {
         toastSuccess(
           <Trans
@@ -78,23 +85,23 @@ const AddTemplateModal = () => {
       <ul className="margin-y-1 margin-bottom-3">
         <li>
           {t('modal.addTemplate.categories', {
-            count: mtoTemplate?.categoryCount,
-            primaryCount: mtoTemplate?.primaryCategoryCount || 0 // TODO: remove this once we have the primaryCategoryCount
+            count: mtoTemplate.categoryCount,
+            primaryCount: mtoTemplate.primaryCategoryCount
           })}
         </li>
         <li>
           {t('modal.addTemplate.milestones', {
-            count: mtoTemplate?.milestoneCount
+            count: mtoTemplate.milestoneCount
           })}
         </li>
         <li>
           {t('modal.addTemplate.solutions', {
-            count: mtoTemplate?.solutionCount
+            count: mtoTemplate.solutionCount
           })}
         </li>
       </ul>
 
-      <p className="margin-bottom-8">{t('modal.addTemplate.description2')}</p>
+      <p className="margin-bottom-10">{t('modal.addTemplate.description2')}</p>
 
       <div className="display-flex mint-modal__footer">
         <Button type="submit" className="margin-right-3 margin-top-0">

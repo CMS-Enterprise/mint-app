@@ -136,7 +136,8 @@ const MTOOptionsPanel = () => {
       key: MtoTemplateKey.STANDARD_CATEGORIES,
       categoryCount: 24,
       milestoneCount: 0,
-      solutionCount: 0
+      solutionCount: 0,
+      primaryCategoryCount: 9
     },
     {
       __typename: 'MTOTemplate',
@@ -146,7 +147,8 @@ const MTOOptionsPanel = () => {
       key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
       categoryCount: 13,
       milestoneCount: 12,
-      solutionCount: 10
+      solutionCount: 10,
+      primaryCategoryCount: 4
     },
     {
       __typename: 'MTOTemplate',
@@ -157,7 +159,8 @@ const MTOOptionsPanel = () => {
       key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
       categoryCount: 13,
       milestoneCount: 13,
-      solutionCount: 11
+      solutionCount: 11,
+      primaryCategoryCount: 4
     },
     {
       __typename: 'MTOTemplate',
@@ -167,7 +170,8 @@ const MTOOptionsPanel = () => {
       key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
       categoryCount: 3,
       milestoneCount: 3,
-      solutionCount: 0
+      solutionCount: 0,
+      primaryCategoryCount: 1
     },
     {
       __typename: 'MTOTemplate',
@@ -177,7 +181,8 @@ const MTOOptionsPanel = () => {
       key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
       categoryCount: 14,
       milestoneCount: 0,
-      solutionCount: 0
+      solutionCount: 0,
+      primaryCategoryCount: 0
     }
   ];
 

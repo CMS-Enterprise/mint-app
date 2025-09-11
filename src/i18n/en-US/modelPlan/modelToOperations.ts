@@ -681,7 +681,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       error:
         'There was an error adding this template. Please try again. If the error persists, please try again another time.',
       addTemplate: 'Add template',
-      dontAdd: 'Don’t add template'
+      dontAdd: 'Don’t add template',
+      failedToFetch: 'Failed to fetch template'
     },
     addToExistingMilestone: {
       title: 'Add to existing milestone?',
