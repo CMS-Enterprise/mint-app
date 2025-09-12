@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -10,6 +10,8 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
+
+import { MTOModalContext } from 'contexts/MTOModalContext';
 
 import '../../index.scss';
 
@@ -33,13 +35,13 @@ const TemplateCard = ({
 
   const templateParam = params.get('add-template');
 
-  const [isModalOpen, setIsModalOpen] = useState(templateParam === template.id);
+  const { setMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
 
   useEffect(() => {
     if (templateParam === template.id) {
-      setIsModalOpen(true);
+      setMTOModalOpen(true);
     }
-  }, [templateParam, template.id, setIsModalOpen]);
+  }, [templateParam, template.id, setMTOModalOpen]);
 
   return (
     <>
@@ -102,11 +104,18 @@ const TemplateCard = ({
             type="button"
             outline
             className="margin-right-2"
+            // onClick={() => {
+            //   params.delete('template');
+            //   params.set('add-template', template.key);
+            //   navigate({ search: params.toString() }, { replace: true });
+            //   setIsModalOpen(true);
+            // }}
             onClick={() => {
-              params.delete('template');
-              params.set('add-template', template.key);
-              navigate({ search: params.toString() }, { replace: true });
-              setIsModalOpen(true);
+              setMTOModalState({
+                modalType: 'addTemplate',
+                mtoTemplate: template
+              });
+              setMTOModalOpen(true);
             }}
           >
             {t('templateLibrary.addToMatrix')}
