@@ -213,9 +213,11 @@ const MTOHome = () => {
           </Header>
         </GridContainer>
       </div>
+
       {currentView === 'milestones' && (
         <SuggestedMilestoneBanner suggestedMilestones={suggestedMilestones} />
       )}
+
       <GridContainer>
         <div className="model-to-operations margin-y-6">
           {isTablet && (
