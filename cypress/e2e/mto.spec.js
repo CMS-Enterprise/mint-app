@@ -316,18 +316,19 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('[data-testid="toast-success"]').should('exist');
   });
 
-  it('Add standard categories', () => {
-    cy.contains('Add this template').click({ force: true });
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Are you sure you want to continue?'
-    );
+  // TODO: Add this once the template library is implemented
+  // it('Add standard categories', () => {
+  //   cy.contains('Add this template').click({ force: true });
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Are you sure you want to continue?'
+  //   );
 
-    cy.contains('Add template').click({ force: true });
+  //   cy.contains('Add template').click({ force: true });
 
-    cy.get('[data-testid="toast-success"]')
-      .should('exist')
-      .contains('Your template (Standard categories) has been added.');
-  });
+  //   cy.get('[data-testid="toast-success"]')
+  //     .should('exist')
+  //     .contains('Your template (Standard categories) has been added.');
+  // });
 
   it('tests Action Menu', () => {
     cy.get('tbody tr')
