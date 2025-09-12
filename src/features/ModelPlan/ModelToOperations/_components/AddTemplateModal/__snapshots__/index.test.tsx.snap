@@ -1,5 +1,36 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AddTemplateModal > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="usa-alert usa-alert--error mint-alert-text flex"
+    data-testid="alert"
+  >
+    <div
+      class="usa-alert__body"
+    >
+      <p
+        class="usa-alert__text"
+      >
+        <span>
+          Failed to fetch template
+        </span>
+        <button
+          aria-label="Close Button"
+          class="usa-button usa-button usa-button--unstyled text-no-underline text-black flex-align-start margin-top-05"
+          data-testid="button"
+          role="button"
+          tabindex="0"
+          type="button"
+        >
+          ✕
+        </button>
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Custom Catergory form > matches snapshot 1`] = `
 <DocumentFragment>
   <form
