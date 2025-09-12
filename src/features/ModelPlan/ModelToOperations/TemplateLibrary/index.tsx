@@ -1,24 +1,15 @@
 import React, { useContext, useMemo, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  Button,
-  ButtonGroup,
-  CardGroup,
-  Grid,
-  GridContainer,
-  Icon
-} from '@trussworks/react-uswds';
+import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { CardGroup, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import { TemplateCardType } from 'features/ModelPlan/ModelToOperations/_components/TemplateCard';
 import NotFound from 'features/NotFound';
 import { useGetMtoTemplatesQuery } from 'gql/generated/graphql';
 import { mtoTemplateMock } from 'tests/mock/mto';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
-import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import GlobalClientFilter from 'components/TableFilter';
@@ -30,7 +21,6 @@ import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import TemplateCard from '../_components/TemplateCard';
-import { MilestoneCardType } from '../MilestoneLibrary';
 
 const TemplateLibrary = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();

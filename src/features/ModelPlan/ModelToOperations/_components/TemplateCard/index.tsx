@@ -6,16 +6,10 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Icon
+  CardHeader
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
-
-import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
-
-import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
 
 import '../../index.scss';
 
@@ -106,11 +100,16 @@ const TemplateCard = ({
         <CardFooter className="padding-3">
           <Button
             type="button"
-            disabled
-            className="margin-right-2 model-to-operations__milestone-added text-normal"
+            outline
+            className="margin-right-2"
+            onClick={() => {
+              params.delete('template');
+              params.set('add-template', template.key);
+              navigate({ search: params.toString() }, { replace: true });
+              setIsModalOpen(true);
+            }}
           >
-            <Icon.Check aria-label="check" />
-            {t('templateLibrary.added')}
+            {t('templateLibrary.addToMatrix')}
           </Button>
 
           <Button
