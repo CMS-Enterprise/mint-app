@@ -21,6 +21,7 @@ import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import TemplateCard from '../_components/TemplateCard';
+import TemplatePanel from '../_components/TemplatePanel';
 
 const TemplateLibrary = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
@@ -184,13 +185,23 @@ const TemplateCardGroup = ({
           navigate({ search: params.toString() }, { replace: true });
           setIsSidepanelOpen(false);
         }}
-        ariaLabel={t('modal.editTemplate.templateTitle')}
-        testid="milestone-sidepanel"
-        modalHeading={t('modal.editTemplate.templateTitle')}
+        ariaLabel={t('templateLibrary.aboutThisTemplate')}
+        testid="template-sidepanel"
+        modalHeading={t('templateLibrary.aboutThisTemplate')}
         noScrollable
       >
-        <></>
-        {/* {selectedTemplate && <TemplatePanel template={selectedTemplate} />} */}
+        <>
+          {selectedTemplate && (
+            <TemplatePanel
+              template={selectedTemplate}
+              closeModal={() => {
+                params.delete('template');
+                navigate({ search: params.toString() }, { replace: true });
+                setIsSidepanelOpen(false);
+              }}
+            />
+          )}
+        </>
       </Sidepanel>
 
       {!isMTOModalOpen && message && <Expire delay={45000}>{message}</Expire>}
@@ -257,10 +268,7 @@ const TemplateCardGroup = ({
                     tablet={{ col: 6 }}
                     key={template.key}
                   >
-                    <TemplateCard
-                      template={template}
-                      setIsSidepanelOpen={setIsSidepanelOpen}
-                    />
+                    <TemplateCard template={template} />
                   </Grid>
                 ))}
               </Grid>

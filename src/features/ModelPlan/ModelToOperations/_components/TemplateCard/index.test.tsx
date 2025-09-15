@@ -18,6 +18,8 @@ import TemplateCard, { TemplateCardType } from './index';
 const mockSetMTOModalState = vi.fn();
 const mockSetMTOModalOpen = vi.fn();
 
+const mockSetIsSidepanelOpen = vi.fn();
+
 const mockMTOModalContext = {
   setMTOModalOpen: mockSetMTOModalOpen,
   mtoModalState: {
@@ -59,8 +61,6 @@ describe('TemplateCard Component', () => {
     categories: []
   };
 
-  const mockSetIsSidepanelOpen = vi.fn();
-
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -73,10 +73,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -123,7 +120,6 @@ describe('TemplateCard Component', () => {
                 <TemplateCard
                   className={customClassName}
                   template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
                 />
               </MTOModalContext.Provider>
             </MessageProvider>
@@ -155,10 +151,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -193,10 +186,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -234,10 +224,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={templateWithCounts}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={templateWithCounts} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
