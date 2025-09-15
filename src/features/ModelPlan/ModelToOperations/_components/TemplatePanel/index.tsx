@@ -1,15 +1,9 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Grid,
-  GridContainer,
-  Header,
-  PrimaryNav
-} from '@trussworks/react-uswds';
+import { Button, Header, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { mtoTemplateMock } from 'tests/mock/mto';
 
+import Alert from 'components/Alert';
 import { MTOModalContext, MtoTemplateType } from 'contexts/MTOModalContext';
 import usePagination from 'hooks/usePagination';
 
@@ -18,7 +12,10 @@ import '../../index.scss';
 type TableType = 'milestones' | 'solutions';
 
 // Flatten the nested array structure based on tableType
-const flattenTemplateData = (template: MtoTemplateType, type: TableType) => {
+export const flattenTemplateData = (
+  template: MtoTemplateType,
+  type: TableType
+) => {
   const flattenedItems: any[] = [];
 
   const flattenedSolutions: any[] = [];
@@ -88,11 +85,9 @@ const TemplatePanel = ({
 
   const [tableType, setTableType] = useState<TableType>('milestones');
 
-  const mockItems = mtoTemplateMock?.[0]?.result?.data?.mtoTemplates?.[0];
-
   const formattedItems = useMemo(
-    () => flattenTemplateData(mockItems, tableType),
-    [mockItems, tableType]
+    () => flattenTemplateData(template, tableType),
+    [template, tableType]
   );
 
   const { currentItems, Pagination: PaginationComponent } = usePagination<
@@ -103,135 +98,136 @@ const TemplatePanel = ({
     showPageIfOne: true
   });
 
-  console.log('currentItems', currentItems);
-
   return (
-    <GridContainer className="padding-4 padding-x-8 mint-body-normal">
-      <Grid row>
-        <Grid col={12}>
-          <h2 className="margin-y-2 line-height-large">{template.name}</h2>
+    <div className="padding-4 padding-x-8 mint-body-normal">
+      <h2 className="margin-y-2 line-height-large">{template.name}</h2>
 
-          <div className="text-base-dark">
-            {t('templateLibrary.templateCount', {
-              categoryCount: template.categoryCount,
-              milestoneCount: template.milestoneCount,
-              solutionCount: template.solutionCount
-            })}
-          </div>
+      <div className="text-base-dark">
+        {t('templateLibrary.templateCount', {
+          categoryCount: template.categoryCount,
+          milestoneCount: template.milestoneCount,
+          solutionCount: template.solutionCount
+        })}
+      </div>
 
-          <p className="margin-y-4" style={{ whiteSpace: 'pre-line' }}>
-            {template.description}
-          </p>
+      <p className="margin-y-4" style={{ whiteSpace: 'pre-line' }}>
+        {template.description}
+      </p>
 
-          <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
-            <Button
-              type="button"
-              outline
-              className="margin-right-2"
-              onClick={() => {
-                setMTOModalState({
-                  modalType: 'addTemplate',
-                  mtoTemplate: template
-                });
-                setMTOModalOpen(true);
-              }}
-            >
-              {t('templateLibrary.addToMatrix')}
-            </Button>
-          </div>
+      <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+        <Button
+          type="button"
+          outline
+          className="margin-right-2"
+          onClick={() => {
+            setMTOModalState({
+              modalType: 'addTemplate',
+              mtoTemplate: template
+            });
+            setMTOModalOpen(true);
+          }}
+        >
+          {t('templateLibrary.addToMatrix')}
+        </Button>
+      </div>
 
-          <h3 className="margin-y-2">{t('templateLibrary.templateContent')}</h3>
+      <h3 className="margin-y-2">{t('templateLibrary.templateContents')}</h3>
 
-          <p className="margin-y-2" style={{ whiteSpace: 'pre-line' }}>
-            {t('templateLibrary.contentDetails')}
-          </p>
+      <p className="margin-y-2" style={{ whiteSpace: 'pre-line' }}>
+        {t('templateLibrary.contentDetails')}
+      </p>
 
-          <Header
-            basic
-            extended={false}
-            className="model-to-operations__nav-container border-bottom border-base-lighter"
-          >
-            <div className="usa-nav-container padding-0">
-              <PrimaryNav
-                items={(['milestones', 'solutions'] as TableType[]).map(
-                  item => (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setTableType(item);
-                      }}
-                      className={classNames(
-                        'usa-nav__link margin-left-neg-2 margin-right-2',
-                        {
-                          'usa-current': tableType === item
-                        }
-                      )}
-                    >
-                      <span
-                        className={classNames({
-                          'text-primary': tableType === item
-                        })}
-                      >
-                        {t(item)}
-                      </span>
-                    </button>
-                  )
+      <Header
+        basic
+        extended={false}
+        className="model-to-operations__nav-container border-bottom border-base-lighter"
+      >
+        <div className="usa-nav-container padding-0">
+          <PrimaryNav
+            items={(['milestones', 'solutions'] as TableType[]).map(item => (
+              <button
+                type="button"
+                onClick={() => {
+                  setTableType(item);
+                }}
+                className={classNames(
+                  'usa-nav__link margin-left-neg-2 margin-right-2',
+                  {
+                    'usa-current': tableType === item
+                  }
                 )}
-                mobileExpanded={false}
-                className="flex-justify-start margin-0 padding-0"
-              />
-            </div>
-          </Header>
-
-          {/* Milestone Table */}
-          <div className="margin-y-4">
-            <div className="border-top border-bottom">
-              {currentItems.map((item, index) => (
-                <div
-                  key={item.id}
-                  className={classNames(`padding-2`, {
-                    'border-bottom': index < currentItems.length - 1,
-                    'bg-accent-cool-lighter': item.type === 'category',
-                    'bg-base-lightest': item.type === 'subCategory'
+              >
+                <span
+                  className={classNames({
+                    'text-primary': tableType === item
                   })}
                 >
-                  {tableType === 'milestones' && (
-                    <div
-                      className={classNames({
-                        'text-normal': item.type === 'milestone',
-                        'text-bold':
-                          item.type === 'category' ||
-                          item.type === 'subCategory'
-                      })}
-                    >
+                  {t(item)}
+                </span>
+              </button>
+            ))}
+            mobileExpanded={false}
+            className="flex-justify-start margin-0 padding-0"
+          />
+        </div>
+      </Header>
+
+      {/* Milestone Table */}
+      <div className="margin-y-4">
+        {currentItems.length > 0 ? (
+          <div className="border-top border-bottom">
+            {currentItems.map((item, index) => (
+              <div
+                key={item.id}
+                className={classNames(`padding-105`, {
+                  'border-bottom': index < currentItems.length - 1,
+                  'bg-accent-cool-lighter': item.type === 'category',
+                  'bg-base-lightest': item.type === 'subCategory'
+                })}
+              >
+                {tableType === 'milestones' && (
+                  <div
+                    className={classNames({
+                      'text-normal': item.type === 'milestone',
+                      'text-bold':
+                        item.type === 'category' || item.type === 'subCategory'
+                    })}
+                  >
+                    <p className="margin-0">
                       {t(`templateLibrary.${item.type}`)}: {item.name}
-                      {item.type === 'milestone' && (
-                        <div className="text-normal">
-                          {t('templateLibrary.selectedSolutions')}:{' '}
-                          {item.solutions}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {tableType === 'solutions' && (
-                    <>
-                      <div className="text-normal">
-                        {t('templateLibrary.solution')}: {item.name}
-                      </div>
-                      <div className="text-normal">
-                        {t('templateLibrary.relatedMilestones')}:{' '}
-                        {item.relatedMilestones}
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-            {PaginationComponent}
+                    </p>
+                    {item.type === 'milestone' && (
+                      <p className="margin-0 text-base">
+                        {t('templateLibrary.selectedSolutions')}:{' '}
+                        {item.solutions}
+                      </p>
+                    )}
+                  </div>
+                )}
+                {tableType === 'solutions' && (
+                  <>
+                    <p className="margin-0">
+                      {t('templateLibrary.solution')}: {item.name}
+                    </p>
+                    <p className="margin-0 text-base">
+                      {t('templateLibrary.relatedMilestones')}:{' '}
+                      {item.relatedMilestones}
+                    </p>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
-        </Grid>
-      </Grid>
-    </GridContainer>
+        ) : (
+          <Alert type="info" slim>
+            {tableType === 'milestones'
+              ? t('templateLibrary.noMilestones')
+              : t('templateLibrary.noSolutions')}
+          </Alert>
+        )}
+        {PaginationComponent}
+      </div>
+    </div>
   );
 };
 

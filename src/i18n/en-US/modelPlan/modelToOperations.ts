@@ -724,7 +724,7 @@ export const modelToOperationsMisc: Record<string, any> = {
     alertHeading: 'There are no model templates that match your search.',
     alertDescription:
       'Please double-check your search and try again. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
-    templateContent: 'Template content',
+    templateContents: 'Template contents',
     contentDetails:
       'The categories, milestones, and solutions listed below will be added to your model-to-operations (MTO) matrix if you choose to add this template.',
     category: 'Category',
@@ -732,7 +732,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     milestone: 'Milestone',
     solution: 'Solution',
     selectedSolutions: 'Selected solutions',
-    relatedMilestones: 'Related milestones'
+    relatedMilestones: 'Related milestones',
+    noMilestones:
+      'There are no milestones or categories included in this template.',
+    noSolutions:
+      'There are no solutions or IT systems included in this template.'
   },
   milestoneLibrary: {
     heading: 'Milestone library',
