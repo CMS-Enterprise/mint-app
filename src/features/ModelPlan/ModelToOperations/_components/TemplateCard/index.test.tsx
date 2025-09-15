@@ -18,8 +18,6 @@ import TemplateCard, { TemplateCardType } from './index';
 const mockSetMTOModalState = vi.fn();
 const mockSetMTOModalOpen = vi.fn();
 
-const mockSetIsSidepanelOpen = vi.fn();
-
 const mockMTOModalContext = {
   setMTOModalOpen: mockSetMTOModalOpen,
   mtoModalState: {
@@ -206,7 +204,9 @@ describe('TemplateCard Component', () => {
     const aboutTemplateButton = screen.getByText('About this template');
     fireEvent.click(aboutTemplateButton);
 
-    expect(mockSetIsSidepanelOpen).toHaveBeenCalledWith(true);
+    expect(router.state.location.search).toContain(
+      'template=STANDARD_CATEGORIES'
+    );
   });
 
   it('renders template count with different values', () => {
