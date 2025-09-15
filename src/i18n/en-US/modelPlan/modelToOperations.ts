@@ -726,7 +726,11 @@ export const modelToOperationsMisc: Record<string, any> = {
       'Please double-check your search and try again. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
     templateContent: 'Template content',
     contentDetails:
-      'The categories, milestones, and solutions listed below will be added to your model-to-operations (MTO) matrix if you choose to add this template.'
+      'The categories, milestones, and solutions listed below will be added to your model-to-operations (MTO) matrix if you choose to add this template.',
+    category: 'Category',
+    subCategory: 'Sub-category',
+    milestone: 'Milestone',
+    solution: 'Selected solutions'
   },
   milestoneLibrary: {
     heading: 'Milestone library',

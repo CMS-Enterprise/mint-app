@@ -810,27 +810,29 @@ export const mtoTemplateMock: MockedResponse<
             categories: [
               {
                 __typename: 'MTOTemplateCategory',
-                id: '1',
+                id: '12',
                 name: 'Category 1',
                 templateID: '1',
                 order: 1,
                 subCategories: [
                   {
                     __typename: 'MTOTemplateSubCategory',
-                    id: '1',
+                    id: '123',
                     name: 'SubCategory 1',
                     templateID: '1',
                     order: 1,
                     milestones: [
                       {
                         __typename: 'MTOTemplateMilestone',
-                        id: '1',
+                        id: '1234',
                         templateID: '1',
+                        name: 'Milestone 1',
                         solutions: [
                           {
                             __typename: 'MTOTemplateSolution',
-                            id: '1',
-                            templateID: '1'
+                            id: '12345',
+                            templateID: '1',
+                            name: 'Solution 1'
                           }
                         ]
                       }

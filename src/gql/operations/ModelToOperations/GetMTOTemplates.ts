@@ -24,9 +24,11 @@ export default gql(/* GraphQL */ `
           milestones {
             id
             templateID
+            name
             solutions {
               id
               templateID
+              name
             }
           }
         }
