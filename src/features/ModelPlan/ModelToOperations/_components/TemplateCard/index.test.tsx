@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MtoTemplateKey } from 'gql/generated/graphql';
-import { mtoTemplateMock } from 'tests/mock/mto';
+import { modelID, mtoTemplateMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 import {
@@ -116,7 +116,7 @@ describe('TemplateCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/collaboration-area/model-to-operations/template-library',
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
@@ -131,7 +131,9 @@ describe('TemplateCard Component', () => {
         }
       ],
       {
-        initialEntries: ['/']
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/template-library`
+        ]
       }
     );
 
@@ -165,7 +167,9 @@ describe('TemplateCard Component', () => {
         }
       ],
       {
-        initialEntries: ['/']
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/template-library`
+        ]
       }
     );
 
@@ -189,7 +193,7 @@ describe('TemplateCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/collaboration-area/model-to-operations/template-library',
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
@@ -203,7 +207,9 @@ describe('TemplateCard Component', () => {
         }
       ],
       {
-        initialEntries: ['/']
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/template-library`
+        ]
       }
     );
 
@@ -230,7 +236,7 @@ describe('TemplateCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/collaboration-area/model-to-operations/template-library',
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
@@ -244,7 +250,9 @@ describe('TemplateCard Component', () => {
         }
       ],
       {
-        initialEntries: ['/']
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/template-library`
+        ]
       }
     );
 
