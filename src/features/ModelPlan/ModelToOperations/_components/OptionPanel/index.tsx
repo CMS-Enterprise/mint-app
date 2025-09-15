@@ -275,7 +275,7 @@ const MTOOptionsPanel = () => {
                   }}
                   key={template.id}
                   data-testid="article-card"
-                  className="margin-top-2"
+                  className="margin-top-2 margin-bottom-1"
                 >
                   <div
                     className={classNames(
