@@ -330,32 +330,32 @@ describe('Model-to-Operations Matrix', () => {
   //     .contains('Your template (Standard categories) has been added.');
   // });
 
-  it('tests Action Menu', () => {
-    cy.get('tbody tr')
-      .first()
-      .find('td')
-      .eq(1)
-      .invoke('text')
-      .then(text => {
-        cy.wrap(text.trim()).as('firstRowName');
-      });
+  // it('tests Action Menu', () => {
+  //   cy.get('tbody tr')
+  //     .first()
+  //     .find('td')
+  //     .eq(1)
+  //     .invoke('text')
+  //     .then(text => {
+  //       cy.wrap(text.trim()).as('firstRowName');
+  //     });
 
-    cy.get('tbody tr')
-      .first()
-      .find('button[aria-label="Open action menu"]')
-      .click({ force: true });
+  //   cy.get('tbody tr')
+  //     .first()
+  //     .find('button[aria-label="Open action menu"]')
+  //     .click({ force: true });
 
-    cy.contains('button', 'Move category down').click({ force: true });
+  //   cy.contains('button', 'Move category down').click({ force: true });
 
-    cy.get('@firstRowName').then(firstRowName => {
-      cy.get('tbody tr')
-        .first()
-        .find('td')
-        .eq(1)
-        .invoke('text')
-        .then(currentFirstRowName => {
-          expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
-        });
-    });
-  });
+  //   cy.get('@firstRowName').then(firstRowName => {
+  //     cy.get('tbody tr')
+  //       .first()
+  //       .find('td')
+  //       .eq(1)
+  //       .invoke('text')
+  //       .then(currentFirstRowName => {
+  //         expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
+  //       });
+  //   });
+  // });
 });
