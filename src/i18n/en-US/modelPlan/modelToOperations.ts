@@ -730,7 +730,9 @@ export const modelToOperationsMisc: Record<string, any> = {
     category: 'Category',
     subCategory: 'Sub-category',
     milestone: 'Milestone',
-    solution: 'Selected solutions'
+    solution: 'Solution',
+    selectedSolutions: 'Selected solutions',
+    relatedMilestones: 'Related milestones'
   },
   milestoneLibrary: {
     heading: 'Milestone library',

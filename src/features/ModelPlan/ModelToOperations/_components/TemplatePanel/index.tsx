@@ -21,6 +21,10 @@ type TableType = 'milestones' | 'solutions';
 const flattenTemplateData = (template: MtoTemplateType, type: TableType) => {
   const flattenedItems: any[] = [];
 
+  const flattenedSolutions: any[] = [];
+
+  const solutionMap: any = {};
+
   template.categories?.forEach(category => {
     flattenedItems.push({
       ...category,
@@ -42,9 +46,31 @@ const flattenTemplateData = (template: MtoTemplateType, type: TableType) => {
             .map(solution => solution.name)
             .join(', ')
         });
+
+        if (type === 'solutions') {
+          milestone.solutions.forEach(solution => {
+            if (!solutionMap[solution.name]) {
+              solutionMap[solution.name] = [];
+            }
+            solutionMap[solution.name].push(milestone.name);
+            flattenedSolutions.push({
+              ...solution,
+              type: 'solution',
+              name: solution.name
+            });
+          });
+        }
       });
     });
   });
+
+  if (type === 'solutions') {
+    // Assign related milestones to the flattenedSolutions array
+    return flattenedSolutions.map(solution => ({
+      ...solution,
+      relatedMilestones: solutionMap[solution.name].join(', ')
+    }));
+  }
 
   return flattenedItems;
 };
@@ -64,12 +90,7 @@ const TemplatePanel = ({
 
   const mockItems = mtoTemplateMock?.[0]?.result?.data?.mtoTemplates?.[0];
 
-  const formattedMilestones = useMemo(
-    () => flattenTemplateData(mockItems, tableType),
-    [mockItems, tableType]
-  );
-
-  const formattedSolutions = useMemo(
+  const formattedItems = useMemo(
     () => flattenTemplateData(mockItems, tableType),
     [mockItems, tableType]
   );
@@ -77,8 +98,7 @@ const TemplatePanel = ({
   const { currentItems, Pagination: PaginationComponent } = usePagination<
     any[]
   >({
-    items:
-      tableType === 'milestones' ? formattedMilestones : formattedSolutions,
+    items: formattedItems,
     itemsPerPage: 5,
     showPageIfOne: true
   });
@@ -175,20 +195,35 @@ const TemplatePanel = ({
                     'bg-base-lightest': item.type === 'subCategory'
                   })}
                 >
-                  <div
-                    className={classNames({
-                      'text-normal': item.type === 'milestone',
-                      'text-bold':
-                        item.type === 'category' || item.type === 'subCategory'
-                    })}
-                  >
-                    {t(`templateLibrary.${item.type}`)}: {item.name}
-                    {item.type === 'milestone' && (
+                  {tableType === 'milestones' && (
+                    <div
+                      className={classNames({
+                        'text-normal': item.type === 'milestone',
+                        'text-bold':
+                          item.type === 'category' ||
+                          item.type === 'subCategory'
+                      })}
+                    >
+                      {t(`templateLibrary.${item.type}`)}: {item.name}
+                      {item.type === 'milestone' && (
+                        <div className="text-normal">
+                          {t('templateLibrary.selectedSolutions')}:{' '}
+                          {item.solutions}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {tableType === 'solutions' && (
+                    <>
                       <div className="text-normal">
-                        {t('templateLibrary.solution')}: {item.solutions}
+                        {t('templateLibrary.solution')}: {item.name}
                       </div>
-                    )}
-                  </div>
+                      <div className="text-normal">
+                        {t('templateLibrary.relatedMilestones')}:{' '}
+                        {item.relatedMilestones}
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
             </div>
