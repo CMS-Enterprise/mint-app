@@ -11,7 +11,7 @@ import {
   MtoTemplateType
 } from 'contexts/MTOModalContext';
 
-import TemplatePanel from './index';
+import TemplatePanel, { flattenTemplateData } from './index';
 
 // Mock the MTOModalContext
 const mockSetMTOModalState = vi.fn();
@@ -44,10 +44,235 @@ const mockMTOModalContext = {
   resetMTOModalState: vi.fn()
 };
 
+describe('flattenTemplateData Function', () => {
+  const mockTemplate: MtoTemplateType = {
+    __typename: 'MTOTemplate',
+    id: '1',
+    name: 'Test Template',
+    description: 'Test description',
+    key: MtoTemplateKey.STANDARD_CATEGORIES,
+    categoryCount: 1,
+    milestoneCount: 1,
+    solutionCount: 1,
+    primaryCategoryCount: 1,
+    categories: [
+      {
+        __typename: 'MTOTemplateCategory',
+        id: 'cat-1',
+        name: 'Category 1',
+        templateID: '1',
+        order: 1,
+        subCategories: [
+          {
+            __typename: 'MTOTemplateSubCategory',
+            id: 'sub-1',
+            name: 'SubCategory 1',
+            templateID: '1',
+            order: 1,
+            milestones: [
+              {
+                __typename: 'MTOTemplateMilestone',
+                id: 'mil-1',
+                name: 'Milestone 1',
+                templateID: '1',
+                solutions: [
+                  {
+                    __typename: 'MTOTemplateSolution',
+                    id: 'sol-1',
+                    name: 'Solution 1',
+                    templateID: '1'
+                  },
+                  {
+                    __typename: 'MTOTemplateSolution',
+                    id: 'sol-2',
+                    name: 'Solution 2',
+                    templateID: '1'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
+
+  it('flattens milestones correctly', () => {
+    const result = flattenTemplateData(mockTemplate, 'milestones');
+
+    expect(result).toHaveLength(3); // 1 category + 1 subcategory + 1 milestone
+
+    // Check category
+    expect(result[0]).toMatchObject({
+      type: 'category',
+      name: 'Category 1',
+      id: 'cat-1'
+    });
+
+    // Check subcategory
+    expect(result[1]).toMatchObject({
+      type: 'subCategory',
+      name: 'SubCategory 1',
+      id: 'sub-1'
+    });
+
+    // Check milestone
+    expect(result[2]).toMatchObject({
+      type: 'milestone',
+      name: 'Milestone 1',
+      id: 'mil-1',
+      solutions: 'Solution 1, Solution 2'
+    });
+  });
+
+  it('flattens solutions correctly', () => {
+    const result = flattenTemplateData(mockTemplate, 'solutions');
+
+    expect(result).toHaveLength(2); // 2 solutions
+
+    // Check first solution
+    expect(result[0]).toMatchObject({
+      type: 'solution',
+      name: 'Solution 1',
+      id: 'sol-1',
+      relatedMilestones: 'Milestone 1'
+    });
+
+    // Check second solution
+    expect(result[1]).toMatchObject({
+      type: 'solution',
+      name: 'Solution 2',
+      id: 'sol-2',
+      relatedMilestones: 'Milestone 1'
+    });
+  });
+
+  it('handles empty template', () => {
+    const emptyTemplate: MtoTemplateType = {
+      __typename: 'MTOTemplate',
+      id: '1',
+      name: 'Empty Template',
+      description: 'Empty',
+      key: MtoTemplateKey.STANDARD_CATEGORIES,
+      categoryCount: 0,
+      milestoneCount: 0,
+      solutionCount: 0,
+      primaryCategoryCount: 0,
+      categories: []
+    };
+
+    const milestonesResult = flattenTemplateData(emptyTemplate, 'milestones');
+    const solutionsResult = flattenTemplateData(emptyTemplate, 'solutions');
+
+    expect(milestonesResult).toHaveLength(0);
+    expect(solutionsResult).toHaveLength(0);
+  });
+
+  it('handles template with no subcategories', () => {
+    const templateNoSubCats: MtoTemplateType = {
+      ...mockTemplate,
+      categories: [
+        {
+          __typename: 'MTOTemplateCategory',
+          id: 'cat-1',
+          name: 'Category 1',
+          templateID: '1',
+          order: 1,
+          subCategories: []
+        }
+      ]
+    };
+
+    const result = flattenTemplateData(templateNoSubCats, 'milestones');
+    expect(result).toHaveLength(1); // Only category
+    expect(result[0].type).toBe('category');
+  });
+
+  it('handles template with no milestones', () => {
+    const templateNoMilestones: MtoTemplateType = {
+      ...mockTemplate,
+      categories: [
+        {
+          __typename: 'MTOTemplateCategory',
+          id: 'cat-1',
+          name: 'Category 1',
+          templateID: '1',
+          order: 1,
+          subCategories: [
+            {
+              __typename: 'MTOTemplateSubCategory',
+              id: 'sub-1',
+              name: 'SubCategory 1',
+              templateID: '1',
+              order: 1,
+              milestones: []
+            }
+          ]
+        }
+      ]
+    };
+
+    const milestonesResult = flattenTemplateData(
+      templateNoMilestones,
+      'milestones'
+    );
+    const solutionsResult = flattenTemplateData(
+      templateNoMilestones,
+      'solutions'
+    );
+
+    expect(milestonesResult).toHaveLength(2); // Category + SubCategory
+    expect(solutionsResult).toHaveLength(0); // No milestones = no solutions
+  });
+
+  it('handles template with no solutions', () => {
+    const templateNoSolutions: MtoTemplateType = {
+      ...mockTemplate,
+      categories: [
+        {
+          __typename: 'MTOTemplateCategory',
+          id: 'cat-1',
+          name: 'Category 1',
+          templateID: '1',
+          order: 1,
+          subCategories: [
+            {
+              __typename: 'MTOTemplateSubCategory',
+              id: 'sub-1',
+              name: 'SubCategory 1',
+              templateID: '1',
+              order: 1,
+              milestones: [
+                {
+                  __typename: 'MTOTemplateMilestone',
+                  id: 'mil-1',
+                  name: 'Milestone 1',
+                  templateID: '1',
+                  solutions: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    const milestonesResult = flattenTemplateData(
+      templateNoSolutions,
+      'milestones'
+    );
+    const solutionsResult = flattenTemplateData(
+      templateNoSolutions,
+      'solutions'
+    );
+
+    expect(milestonesResult).toHaveLength(3); // Category + SubCategory + Milestone
+    expect(solutionsResult).toHaveLength(0); // No solutions
+  });
+});
+
 describe('TemplatePanel Component', () => {
   const mockTemplate: MtoTemplateType = mtoTemplateMockData[0];
-
-  const mockCloseModal = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -61,10 +286,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -104,10 +326,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -134,10 +353,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -170,10 +386,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -201,10 +414,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -239,10 +449,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -272,10 +479,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={mockTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -320,10 +524,7 @@ describe('TemplatePanel Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplatePanel
-                  template={emptyTemplate}
-                  closeModal={mockCloseModal}
-                />
+                <TemplatePanel template={emptyTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )

@@ -72,13 +72,7 @@ export const flattenTemplateData = (
   return flattenedItems;
 };
 
-const TemplatePanel = ({
-  template,
-  closeModal
-}: {
-  template: MtoTemplateType;
-  closeModal: () => void;
-}) => {
+const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { setMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
