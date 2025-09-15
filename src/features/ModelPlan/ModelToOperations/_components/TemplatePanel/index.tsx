@@ -1,10 +1,11 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Header, PrimaryNav } from '@trussworks/react-uswds';
+import { Button, Header, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/Alert';
 import { MTOModalContext, MtoTemplateType } from 'contexts/MTOModalContext';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePagination from 'hooks/usePagination';
 
 import '../../index.scss';
@@ -76,6 +77,8 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const { setMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
+
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [tableType, setTableType] = useState<TableType>('milestones');
 
@@ -165,6 +168,29 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
           />
         </div>
       </Header>
+
+      {/* Mobile select for table type */}
+      {isTablet && (
+        <div className="maxw-mobile-lg margin-top-3">
+          <Select
+            id="solutionKey"
+            name="solutionKey"
+            value={tableType}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setTableType(e.currentTarget.value as TableType)
+            }
+            className="margin-bottom-4 text-primary text-bold"
+          >
+            {(['milestones', 'solutions'] as TableType[]).map(solution => {
+              return (
+                <option key={solution} value={solution}>
+                  {t(solution)}
+                </option>
+              );
+            })}
+          </Select>
+        </div>
+      )}
 
       {/* Milestone Table */}
       <div className="margin-y-4">
