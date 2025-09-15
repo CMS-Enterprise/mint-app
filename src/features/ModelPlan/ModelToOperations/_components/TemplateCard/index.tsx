@@ -104,12 +104,6 @@ const TemplateCard = ({
             type="button"
             outline
             className="margin-right-2"
-            // onClick={() => {
-            //   params.delete('template');
-            //   params.set('add-template', template.key);
-            //   navigate({ search: params.toString() }, { replace: true });
-            //   setIsModalOpen(true);
-            // }}
             onClick={() => {
               setMTOModalState({
                 modalType: 'addTemplate',
