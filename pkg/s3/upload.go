@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -46,17 +47,17 @@ func NewS3Client(config Config) S3Client {
 	//TODO: Consider deprecating config, and replacing with parameters
 	//TODO: Consider replacing the calls to os.Getenv to user viper.GetString to be consistent with the rest of the app (and remove any need to call os.SetEnv)
 	awsConfig := &aws.Config{
-		Region: aws.String(config.Region),
+		Region: &config.Region,
 	}
 
 	// if we are in a local dev environment we use Minio for s3
 	if config.IsLocal {
-		awsConfig.Endpoint = aws.String(os.Getenv(appconfig.LocalMinioAddressKey))
+		awsConfig.Endpoint = helpers.PointerTo(os.Getenv(appconfig.LocalMinioAddressKey))
 		awsConfig.Credentials = credentials.NewStaticCredentials(
 			os.Getenv(appconfig.LocalMinioS3AccessKey),
 			os.Getenv(appconfig.LocalMinioS3SecretKey),
 			"")
-		awsConfig.S3ForcePathStyle = aws.Bool(true)
+		awsConfig.S3ForcePathStyle = helpers.PointerTo(true)
 	}
 
 	s3Session := session.Must(session.NewSession(awsConfig))
@@ -87,9 +88,9 @@ func (c S3Client) NewPutPresignedURL(fileType string) (*models.PreSignedURL, err
 		key = key + extensions[0]
 	}
 	req, _ := c.client.PutObjectRequest(&s3.PutObjectInput{
-		Bucket:      aws.String(c.config.Bucket),
-		Key:         aws.String(key),
-		ContentType: aws.String(fileType),
+		Bucket:      &c.config.Bucket,
+		Key:         &key,
+		ContentType: &fileType,
 	})
 
 	url, err := req.Presign(15 * time.Minute)
@@ -105,8 +106,8 @@ func (c S3Client) NewPutPresignedURL(fileType string) (*models.PreSignedURL, err
 // NewGetPresignedURL returns a pre-signed URL used for GET-ing objects
 func (c S3Client) NewGetPresignedURL(key string) (*string, error) {
 	objectInput := &s3.GetObjectInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
+		Bucket: &c.config.Bucket,
+		Key:    &key,
 	}
 	req, _ := c.client.GetObjectRequest(objectInput)
 
@@ -128,8 +129,8 @@ func (c S3Client) KeyFromURL(url *url.URL) (string, error) {
 // specified key and tag name. If no value is found, returns an empty string.
 func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 	input := &s3.GetObjectTaggingInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
+		Bucket: &c.config.Bucket,
+		Key:    &key,
 	}
 	tagging, taggingErr := c.client.GetObjectTagging(input)
 	if taggingErr != nil {
@@ -147,13 +148,13 @@ func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 // SetTagValueForKey sets the tag value and returns an error if any was encountered.
 func (c S3Client) SetTagValueForKey(key string, tagName string, tagValue string) error {
 	input := &s3.PutObjectTaggingInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
+		Bucket: &c.config.Bucket,
+		Key:    &key,
 		Tagging: &s3.Tagging{
 			TagSet: []*s3.Tag{
 				{
-					Key:   aws.String(tagName),
-					Value: aws.String(tagValue),
+					Key:   &tagName,
+					Value: &tagValue,
 				},
 			},
 		},
@@ -168,7 +169,7 @@ func (c S3Client) SetTagValueForKey(key string, tagName string, tagValue string)
 
 // GetBucket returns a *string containing the S3 Bucket as defined by the S3Configuration
 func (c S3Client) GetBucket() *string {
-	return aws.String(c.config.Bucket)
+	return &c.config.Bucket
 }
 
 // ExpectNoBucketEnabled returns true if the S3 config's ExpectNoBucket value is set
@@ -181,8 +182,8 @@ func (c S3Client) UploadFile(file io.Reader, key string) error {
 	uploader := s3manager.NewUploaderWithClient(c.client)
 
 	_, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
+		Bucket: &c.config.Bucket,
+		Key:    &key,
 		Body:   file,
 	})
 	if err != nil {

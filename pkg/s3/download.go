@@ -5,23 +5,26 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
 // GetS3ObjectReaderAt returns an io.ReaderAt from an S3 object
 func (c S3Client) GetS3ObjectReaderAt(key string) (io.ReaderAt, int64, error) {
-
 	// Get the S3 object
 	resp, err := c.client.GetObject(&s3.GetObjectInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
+		Bucket: &c.config.Bucket,
+		Key:    &key,
 	})
+
 	if err != nil {
 		return nil, 0, fmt.Errorf("failed to get S3 object: %w", err)
 	}
 	defer resp.Body.Close()
-	size := aws.Int64Value(resp.ContentLength)
+
+	var size int64 = 0
+	if resp.ContentLength != nil {
+		size = *resp.ContentLength
+	}
 
 	// Read the object into memory (make sure the object is not too large for this!)
 	buf := new(bytes.Buffer)

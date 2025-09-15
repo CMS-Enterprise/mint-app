@@ -9,33 +9,24 @@ import (
 	"strings"
 	"time"
 
-	"github.com/vektah/gqlparser/v2/ast"
-	mail "github.com/xhit/go-simple-mail/v2"
-
-	"github.com/cms-enterprise/mint-app/pkg/apperrors"
-	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
-	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
-	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
-	"github.com/cms-enterprise/mint-app/pkg/worker"
-
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/handler/lru"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/lambda"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
+	"github.com/vektah/gqlparser/v2/ast"
+	mail "github.com/xhit/go-simple-mail/v2"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/apperrors"
 	"github.com/cms-enterprise/mint-app/pkg/authorization"
-
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/flags"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
@@ -44,9 +35,14 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/handlers"
 	"github.com/cms-enterprise/mint-app/pkg/local"
 	"github.com/cms-enterprise/mint-app/pkg/okta"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/services"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/worker"
 )
 
 // HandleLocalOrOktaWebSocketAuth is a function that effectively acts as a wrapper around 2 functions that can serve as a transport.WebSocket "InitFunc"
@@ -207,18 +203,25 @@ func (s *Server) routes(
 	s3Client := s3.NewS3Client(s3Config)
 	echimpS3Client := s3.NewS3Client(echimpS3config)
 
-	var lambdaClient *lambda.Lambda
+	var lambdaClient *lambda.Client
 	var princeLambdaName string
-	lambdaSession := session.Must(session.NewSession())
 
 	princeConfig := s.NewPrinceLambdaConfig()
 	princeLambdaName = princeConfig.FunctionName
 
 	if s.environment.Local() || s.environment.Testing() {
-		endpoint := princeConfig.Endpoint
-		lambdaClient = lambda.New(lambdaSession, &aws.Config{Endpoint: &endpoint, Region: aws.String("us-west-2")})
+		awsConfig, err := config.LoadDefaultConfig(context.Background(), config.WithRegion("us-west-2"), config.WithBaseEndpoint(princeConfig.Endpoint))
+		if err != nil {
+			s.logger.Fatal("failed to load aws config", zap.Error(err))
+		}
+
+		lambdaClient = lambda.NewFromConfig(awsConfig)
 	} else {
-		lambdaClient = lambda.New(lambdaSession, &aws.Config{})
+		awsConfig, err := config.LoadDefaultConfig(context.Background())
+		if err != nil {
+			s.logger.Fatal("failed to load aws config", zap.Error(err))
+		}
+		lambdaClient = lambda.NewFromConfig(awsConfig)
 	}
 
 	serviceConfig := services.NewConfig(s.logger, ldClient)
