@@ -306,8 +306,23 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
       >
         Download data (excel)
       </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-4 margin-left-2"
+        data-testid="download-chart-pdf-button"
+        type="button"
+      >
+        Download chart (PDF)
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-4 margin-left-2"
+        data-testid="download-multiple-charts-pdf-button"
+        type="button"
+      >
+        Download all charts (PDF)
+      </button>
       <div
         class="recharts-responsive-container"
+        id="analytics-chart-changesPerModel"
         style="width: 100%; height: 1000px; min-width: 0;"
       >
         <div
