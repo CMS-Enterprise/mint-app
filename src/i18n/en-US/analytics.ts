@@ -18,6 +18,22 @@ export const reports: Record<
   }
 };
 
+// Column header translations for Excel export
+export const columnHeaderTranslations: Record<string, string> = {
+  __typename: 'Report name',
+  modelName: 'Model name',
+  numberOfChanges: 'Number of changes',
+  numberOfRecordChanges: 'Number of record changes',
+  modelPlanID: 'Model plan ID',
+  status: 'Status',
+  numberOfModels: 'Number of models',
+  numberOfFollowers: 'Number of followers',
+  totalNumberOfModels: 'Total number of models',
+  tableName: 'Table name',
+  section: 'Section',
+  monthYear: 'Date'
+};
+
 export const typenameTranslations: Record<string, string> = {
   ModelChangesAnalytics: 'Changes per model',
   ModelChangesBySectionAnalytics: 'Changes per model by section',
@@ -57,7 +73,8 @@ const analytics = {
   downloadAnalytics: 'Download analytics summary as XLSX',
   noAnalyticsData: 'No analytics data found',
   report: 'Report',
-  downloadExcel: 'Download data (excel)'
+  downloadExcel: 'Download data (excel)',
+  columnHeaderTranslations
 };
 
 export default analytics;

@@ -8,28 +8,16 @@ import {
 import i18next from 'i18next';
 import * as XLSX from 'xlsx-js-style';
 
-import { typenameTranslations } from 'i18n/en-US/analytics';
+import {
+  columnHeaderTranslations,
+  typenameTranslations
+} from 'i18n/en-US/analytics';
 import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 
 export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
-
-// Column header translations for Excel export
-export const columnHeaderTranslations: Record<string, string> = {
-  __typename: 'Report name',
-  modelName: 'Model name',
-  numberOfChanges: 'Number of changes',
-  numberOfRecordChanges: 'Number of record changes',
-  modelPlanID: 'Model plan ID',
-  status: 'Status',
-  numberOfModels: 'Number of models',
-  numberOfFollowers: 'Number of followers',
-  totalNumberOfModels: 'Total number of models',
-  tableName: 'Table name',
-  section: 'Section'
-};
 
 export type UsedAnalyticsSummaryKey = Exclude<
   AnalyticsSummaryKey,
@@ -76,13 +64,6 @@ export const analyticsSummaryConfig: Record<
     xAxisLabel: 'Model Name',
     chartType: 'bar'
   },
-  // totalNumberOfModels: {
-  //   xAxisDataKey: 'totalNumberOfModels',
-  //   yAxisDataKey: 'totalNumberOfModels',
-  //   xAxisLabel: 'Total Number of Models',
-  //   chartType: 'bar',
-  //   hidden: true
-  // },
   numberOfModelsOverTime: {
     xAxisDataKey: 'monthYear',
     yAxisDataKey: 'numberOfModels',
@@ -206,6 +187,11 @@ function downloadAnalytics<T>(data: T, exportFileName: string): void {
             ) {
               // Translate table names using the tables translation
               translatedValue = tables[cellValue as TableName].generalName;
+            }
+            // Format monthYear dates
+            else if (columnHeader === 'monthYear' || columnHeader === 'Date') {
+              // Format the monthYear value using formatDateUtc
+              translatedValue = formatDateUtc(cellValue, 'MMMM yyyy');
             }
 
             // Update the cell value if translation was found or if we're clearing __typename cells

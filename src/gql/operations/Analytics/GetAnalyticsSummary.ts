@@ -32,9 +32,6 @@ export default gql(/* GraphQL */ `
         modelPlanID
         numberOfFollowers
       }
-      totalNumberOfModels {
-        totalNumberOfModels
-      }
       numberOfModelsOverTime {
         monthYear
         numberOfModels

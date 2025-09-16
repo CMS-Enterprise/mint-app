@@ -434,10 +434,13 @@ export const mockAnalyticsData: GetAnalyticsSummaryType = {
         modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
       }
     ],
-    totalNumberOfModels: {
-      __typename: 'ModelCountAnalytics',
-      totalNumberOfModels: 40
-    },
+    numberOfModelsOverTime: [
+      {
+        __typename: 'ModelCountAnalyticsOverTime',
+        monthYear: '2022-01-01',
+        numberOfModels: 10
+      }
+    ],
     changesPerModelBySection: [
       {
         __typename: 'ModelChangesBySectionAnalytics',
