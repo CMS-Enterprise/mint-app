@@ -384,6 +384,8 @@ const ReportsAndAnalytics = () => {
                       ].yAxisDataKey
                     }
                     fill="#008480"
+                    animationDuration={300}
+                    animationEasing="ease-out"
                   />
                 </BarChart>
               ) : (
@@ -424,6 +426,10 @@ const ReportsAndAnalytics = () => {
                     }
                     stroke="#008480"
                     strokeWidth={3}
+                    animationDuration={300}
+                    animationEasing="ease-out"
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
                   />
                 </LineChart>
               )}

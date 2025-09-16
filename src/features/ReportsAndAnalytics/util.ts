@@ -569,13 +569,8 @@ export const downloadMultipleChartsAsPDF = async (
         await onChartChange(chartType);
         // Wait a bit for the chart to render
 
-        if (chartType === 'numberOfModelsOverTime') {
-          // eslint-disable-next-line no-await-in-loop
-          await new Promise(resolve => setTimeout(resolve, 1500));
-        } else {
-          // eslint-disable-next-line no-await-in-loop
-          await new Promise(resolve => setTimeout(resolve, 500));
-        }
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise(resolve => setTimeout(resolve, 350));
       }
 
       // Look for the chart element with the current chart type
