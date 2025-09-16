@@ -4,6 +4,8 @@ describe('Reports and Analytics', () => {
     cy.visit('/reports-and-analytics');
   });
 
+  const downloadsFolder = Cypress.config('downloadsFolder');
+
   it('should display the reports and analytics page correctly', () => {
     // Verify page loads and shows expected content
     cy.get('h1').should('contain', 'Reports and analytics');
@@ -17,7 +19,6 @@ describe('Reports and Analytics', () => {
   });
 
   it('should download analytics Excel file successfully', () => {
-    const downloadsFolder = Cypress.config('downloadsFolder');
     const expectedFilename = 'MINT-Analytics.xlsx';
 
     // Clean up any previous files
@@ -35,7 +36,6 @@ describe('Reports and Analytics', () => {
   });
 
   it('should download MTO milestone summary Excel file successfully', () => {
-    const downloadsFolder = Cypress.config('downloadsFolder');
     const expectedFilename = 'MINT-MTO_Milestone_Summary.xlsx';
 
     // Clean up any previous files
@@ -59,7 +59,6 @@ describe('Reports and Analytics', () => {
   });
 
   it('should verify Excel file contains expected sheets and data', () => {
-    const downloadsFolder = Cypress.config('downloadsFolder');
     const expectedFilename = 'MINT-Analytics.xlsx';
 
     // Clean up any previous files
