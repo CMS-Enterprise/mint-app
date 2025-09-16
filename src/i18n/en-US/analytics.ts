@@ -14,7 +14,7 @@ export const reports: Record<
     heading: 'All models',
     description:
       'This report downloads a csv of information about all models in MINT including Model Plan details and more.',
-    formatExcel: 'Format: Excel'
+    formatExcel: 'Format: CSV'
   }
 };
 
@@ -45,7 +45,7 @@ const analytics = {
   numberOfFollowers: 'Number of followers',
   downloadAnalytics: 'Download analytics summary as XLSX',
   noAnalyticsData: 'No analytics data found',
-  view: 'View'
+  report: 'Report'
 };
 
 export default analytics;

@@ -527,30 +527,6 @@ const ModelPlansTable = ({
             />
           )}
         </div>
-
-        <>
-          {type === ViewCustomizationType.ALL_MODEL_PLANS && (
-            <div className="display-flex flex-align-start padding-top-1">
-              <CsvExportLink />
-              <Button
-                type="button"
-                className="usa-button usa-button--unstyled display-flex margin-left-4"
-                onClick={() => {
-                  downloadMTOMilestoneSummary(
-                    mtoMilestoneSummaryData,
-                    'mto-milestone-summary.xlsx'
-                  );
-                }}
-              >
-                <Icon.FileDownload
-                  className="margin-right-1"
-                  aria-label="download"
-                />
-                {homeT('downloadMTOMilestoneSummary')}
-              </Button>
-            </div>
-          )}
-        </>
       </div>
 
       <TopScrollContainer>

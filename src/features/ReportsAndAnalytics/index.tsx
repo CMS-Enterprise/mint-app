@@ -23,6 +23,7 @@ import {
   getChangesBySection
 } from 'features/ReportsAndAnalytics/util';
 import {
+  TableName,
   useGetAnalyticsSummaryQuery,
   useGetMtoMilestoneSummaryQuery
 } from 'gql/generated/graphql';
@@ -41,10 +42,12 @@ import PageLoading from 'components/PageLoading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { reports } from 'i18n/en-US/analytics';
+import tables from 'i18n/en-US/modelPlan/tables';
 
 export type ReportsType = 'mtoMilestoneSummary' | 'allModels';
 
 const ReportsAndAnalytics = () => {
+  const { t: modelPlanT } = useTranslation('modelPlan');
   const { t } = useTranslation('analytics');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -90,6 +93,7 @@ const ReportsAndAnalytics = () => {
     ? [analyticsData[selectedChart as AnalyticsSummaryKey]]
     : analyticsData[selectedChart as AnalyticsSummaryKey];
 
+  // Custom logic for changes per model by section and other data
   if (selectedChart === 'changesPerModelBySection') {
     chartData = getChangesBySection(analyticsData.changesPerModelBySection);
   } else if (selectedChart === 'changesPerModelOtherData') {
@@ -232,7 +236,7 @@ const ReportsAndAnalytics = () => {
 
             {isTablet && (
               <div className="maxw-mobile-lg">
-                <p className="margin-y-0 text-bold">{t('view')}</p>
+                <p className="margin-y-0 text-bold">{t('report')}</p>
                 <Select
                   id="selected-chart"
                   name="selectedChart"
@@ -269,6 +273,25 @@ const ReportsAndAnalytics = () => {
                   angle={-45}
                   textAnchor="end"
                   height={80}
+                  tickFormatter={value => {
+                    // Format different types of X-axis labels
+                    if (selectedChart === 'modelsByStatus') {
+                      // Format status values (e.g., "ACTIVE" -> "Active")
+                      return modelPlanT(`status.options.${value}`);
+                    }
+                    if (
+                      selectedChart === 'changesPerModelBySection' ||
+                      selectedChart === 'changesPerModelOtherData'
+                    ) {
+                      // Format table names (e.g., "plan_basics" -> "Plan Basics")
+                      return tables[value as TableName].generalName;
+                    }
+                    // For model names and other text, truncate if too long
+                    if (typeof value === 'string' && value.length > 15) {
+                      return `${value.substring(0, 12)}...`;
+                    }
+                    return value;
+                  }}
                 />
                 <YAxis />
 
