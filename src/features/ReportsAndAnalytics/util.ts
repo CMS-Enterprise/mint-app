@@ -31,13 +31,19 @@ export const columnHeaderTranslations: Record<string, string> = {
   section: 'Section'
 };
 
-export const analyticsSummaryConfig: Record<
+export type UsedAnalyticsSummaryKey = Exclude<
   AnalyticsSummaryKey,
+  'totalNumberOfModels'
+>;
+
+export const analyticsSummaryConfig: Record<
+  UsedAnalyticsSummaryKey,
   {
     xAxisDataKey: string;
     yAxisDataKey: string;
     xAxisLabel: string;
     chartType: 'bar' | 'line';
+    hidden?: boolean;
   }
 > = {
   changesPerModel: {
@@ -70,6 +76,13 @@ export const analyticsSummaryConfig: Record<
     xAxisLabel: 'Model Name',
     chartType: 'bar'
   },
+  // totalNumberOfModels: {
+  //   xAxisDataKey: 'totalNumberOfModels',
+  //   yAxisDataKey: 'totalNumberOfModels',
+  //   xAxisLabel: 'Total Number of Models',
+  //   chartType: 'bar',
+  //   hidden: true
+  // },
   numberOfModelsOverTime: {
     xAxisDataKey: 'monthYear',
     yAxisDataKey: 'numberOfModels',

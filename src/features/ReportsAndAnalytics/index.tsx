@@ -17,10 +17,10 @@ import {
 import classNames from 'classnames';
 import downloadAnalytics, {
   analyticsSummaryConfig,
-  AnalyticsSummaryKey,
   downloadMTOMilestoneSummary,
   getChangesByOtherData,
-  getChangesBySection
+  getChangesBySection,
+  UsedAnalyticsSummaryKey
 } from 'features/ReportsAndAnalytics/util';
 import {
   TableName,
@@ -100,10 +100,10 @@ const ReportsAndAnalytics = () => {
   }, [mtoMilestoneSummary?.modelPlanCollection]);
 
   let chartData: any = !Array.isArray(
-    analyticsData[selectedChart as AnalyticsSummaryKey]
+    analyticsData[selectedChart as UsedAnalyticsSummaryKey]
   )
-    ? [analyticsData[selectedChart as AnalyticsSummaryKey]]
-    : analyticsData[selectedChart as AnalyticsSummaryKey];
+    ? [analyticsData[selectedChart as UsedAnalyticsSummaryKey]]
+    : analyticsData[selectedChart as UsedAnalyticsSummaryKey];
 
   // Custom logic for changes per model by section and other data
   if (selectedChart === 'changesPerModelBySection') {
@@ -294,7 +294,7 @@ const ReportsAndAnalytics = () => {
               height={chartHeight}
               data-testid="chart-container"
             >
-              {analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+              {analyticsSummaryConfig[selectedChart as UsedAnalyticsSummaryKey]
                 .chartType === 'bar' ? (
                 <BarChart data={chartData as any[]} margin={chartMargins}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -302,7 +302,7 @@ const ReportsAndAnalytics = () => {
                   <XAxis
                     dataKey={
                       analyticsSummaryConfig[
-                        selectedChart as AnalyticsSummaryKey
+                        selectedChart as UsedAnalyticsSummaryKey
                       ].xAxisDataKey
                     }
                     angle={-45}
@@ -333,14 +333,14 @@ const ReportsAndAnalytics = () => {
                   <Tooltip
                     formatter={(value, name) => [
                       value,
-                      t(name as AnalyticsSummaryKey)
+                      t(name as UsedAnalyticsSummaryKey)
                     ]}
                   />
 
                   <Bar
                     dataKey={
                       analyticsSummaryConfig[
-                        selectedChart as AnalyticsSummaryKey
+                        selectedChart as UsedAnalyticsSummaryKey
                       ].yAxisDataKey
                     }
                     fill="#008480"
@@ -352,7 +352,7 @@ const ReportsAndAnalytics = () => {
                   <XAxis
                     dataKey={
                       analyticsSummaryConfig[
-                        selectedChart as AnalyticsSummaryKey
+                        selectedChart as UsedAnalyticsSummaryKey
                       ].xAxisDataKey
                     }
                     tickFormatter={formatXAxisLabel}
@@ -363,9 +363,9 @@ const ReportsAndAnalytics = () => {
                     formatter={(value, name, props: any) => {
                       // Format the tooltip based on chart type
                       if (selectedChart === 'numberOfModelsOverTime') {
-                        return [value, `${t(name as AnalyticsSummaryKey)}`];
+                        return [value, `${t(name as UsedAnalyticsSummaryKey)}`];
                       }
-                      return [value, t(name as AnalyticsSummaryKey)];
+                      return [value, t(name as UsedAnalyticsSummaryKey)];
                     }}
                     labelFormatter={label => {
                       // Format the label (X-axis value) for date-based charts
@@ -379,7 +379,7 @@ const ReportsAndAnalytics = () => {
                   <Line
                     dataKey={
                       analyticsSummaryConfig[
-                        selectedChart as AnalyticsSummaryKey
+                        selectedChart as UsedAnalyticsSummaryKey
                       ].yAxisDataKey
                     }
                     stroke="#008480"
