@@ -190,7 +190,12 @@ const ReportsAndAnalytics = () => {
             <Header
               basic
               extended={false}
-              className="model-to-operations__nav-container margin-top-4"
+              className={classNames(
+                'model-to-operations__nav-container margin-top-4',
+                {
+                  'border-bottom border-base-lighter': !isTablet
+                }
+              )}
             >
               <div className="usa-nav-container padding-0">
                 <PrimaryNav
