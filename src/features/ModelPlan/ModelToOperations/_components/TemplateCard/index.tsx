@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -19,58 +19,22 @@ export type TemplateCardType = GetMtoTemplatesQuery['mtoTemplates'][0];
 
 const TemplateCard = ({
   className,
-  template,
-  setIsSidepanelOpen
+  template
 }: {
   className?: string;
   template: TemplateCardType;
-  setIsSidepanelOpen: (isOpen: boolean) => void;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
-
-  const navigate = useNavigate();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  const templateParam = params.get('add-template');
+  const navigate = useNavigate();
 
   const { setMTOModalState, setMTOModalOpen } = useContext(MTOModalContext);
 
-  useEffect(() => {
-    if (templateParam === template.id) {
-      setMTOModalOpen(true);
-    }
-  }, [templateParam, template.id, setMTOModalOpen]);
-
   return (
     <>
-      {/* <Modal
-        isOpen={isModalOpen}
-        closeModal={() => {
-          params.delete('add-template', template.id);
-          navigate({ search: params.toString() }, { replace: true });
-          setIsModalOpen(false);
-        }}
-        fixed
-        className="tablet:width-mobile-lg mint-body-normal"
-      >
-        <div className="margin-bottom-2">
-          <PageHeading headingLevel="h3" className="margin-y-0">
-            {t('modal.solutionToMilestone.title')}
-          </PageHeading>
-        </div>
-
-        <AddSolutionToMilestoneForm
-          closeModal={() => {
-            params.delete('add-template', template.id);
-            navigate({ search: params.toString() }, { replace: true });
-            setIsModalOpen(false);
-          }}
-          template={template}
-        />
-      </Modal> */}
-
       <Card
         containerProps={{
           className: 'radius-md minh-mobile padding-0 margin-0'
@@ -120,7 +84,6 @@ const TemplateCard = ({
             type="button"
             className="margin-top-2"
             onClick={() => {
-              setIsSidepanelOpen(true);
               params.set('template', template.key);
               navigate({ search: params.toString() });
             }}

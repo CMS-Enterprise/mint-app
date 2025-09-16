@@ -26,7 +26,7 @@ export type MTOModalType =
   | 'removeSubcategory'
   | 'addTemplate'
   | 'selectSolution'
-  | 'template';
+  | 'addTemplate';
 
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
@@ -59,6 +59,7 @@ const MTOModal = () => {
       fixed
       shouldCloseOnOverlayClick={!shouldNotCloseModals.includes(modalType)}
       className="tablet:width-mobile-lg mint-body-normal"
+      zTop={modalType === 'addTemplate'}
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">

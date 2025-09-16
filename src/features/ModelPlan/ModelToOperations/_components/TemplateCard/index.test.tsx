@@ -59,8 +59,6 @@ describe('TemplateCard Component', () => {
     categories: []
   };
 
-  const mockSetIsSidepanelOpen = vi.fn();
-
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -73,10 +71,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -123,7 +118,6 @@ describe('TemplateCard Component', () => {
                 <TemplateCard
                   className={customClassName}
                   template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
                 />
               </MTOModalContext.Provider>
             </MessageProvider>
@@ -157,10 +151,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -197,10 +188,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={mockTemplate}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={mockTemplate} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )
@@ -222,7 +210,9 @@ describe('TemplateCard Component', () => {
     const aboutTemplateButton = screen.getByText('About this template');
     fireEvent.click(aboutTemplateButton);
 
-    expect(mockSetIsSidepanelOpen).toHaveBeenCalledWith(true);
+    expect(router.state.location.search).toContain(
+      'template=STANDARD_CATEGORIES'
+    );
   });
 
   it('renders template count with different values', () => {
@@ -240,10 +230,7 @@ describe('TemplateCard Component', () => {
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
-                <TemplateCard
-                  template={templateWithCounts}
-                  setIsSidepanelOpen={mockSetIsSidepanelOpen}
-                />
+                <TemplateCard template={templateWithCounts} />
               </MTOModalContext.Provider>
             </MessageProvider>
           )

@@ -47,6 +47,8 @@ import {
   MtoTemplateKey
 } from 'gql/generated/graphql';
 
+import { MtoTemplateType } from 'contexts/MTOModalContext';
+
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 export const pointsOfContact = [
@@ -785,6 +787,103 @@ export const solutionAndMilestoneMock: MockedResponse<
   }
 ];
 
+export const mtoTemplateMockData: MtoTemplateType[] = [
+  {
+    __typename: 'MTOTemplate',
+    id: '1',
+    name: 'Standard categories',
+    description: 'These are the standard categories for MTOs.',
+    key: MtoTemplateKey.STANDARD_CATEGORIES,
+    categoryCount: 24,
+    milestoneCount: 0,
+    solutionCount: 0,
+    primaryCategoryCount: 9,
+    categories: [
+      {
+        __typename: 'MTOTemplateCategory',
+        id: '12',
+        name: 'Category 1',
+        templateID: '1',
+        order: 1,
+        subCategories: [
+          {
+            __typename: 'MTOTemplateSubCategory',
+            id: '123',
+            name: 'SubCategory 1',
+            templateID: '1',
+            order: 1,
+            milestones: [
+              {
+                __typename: 'MTOTemplateMilestone',
+                id: '1234',
+                templateID: '1',
+                name: 'Milestone 1',
+                solutions: [
+                  {
+                    __typename: 'MTOTemplateSolution',
+                    id: '12345',
+                    templateID: '1',
+                    name: 'Solution 1'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '2',
+    name: 'ACO and kidney models',
+    description: 'These are the ACO and Kidney models for MTOs.',
+    key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+    categoryCount: 13,
+    milestoneCount: 12,
+    solutionCount: 10,
+    primaryCategoryCount: 4,
+    categories: []
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '3',
+    name: 'Episode primary care and non-ACO models',
+    description:
+      'These are the Episode Primary Care and Non-ACO models for MTOs.',
+    key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
+    categoryCount: 13,
+    milestoneCount: 13,
+    solutionCount: 11,
+    primaryCategoryCount: 4,
+    categories: []
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '4',
+    name: 'Medicare advantage and drug models',
+    description: 'These are the Medicare Advantage and Drug models for MTOs.',
+    key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
+    categoryCount: 3,
+    milestoneCount: 3,
+    solutionCount: 0,
+    primaryCategoryCount: 1,
+    categories: []
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '5',
+    name: 'State and local models',
+    description: 'These are the State and Local models for MTOs.',
+    key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
+    categoryCount: 14,
+    milestoneCount: 0,
+    solutionCount: 0,
+    primaryCategoryCount: 0,
+    categories: []
+  }
+];
+
 export const mtoTemplateMock: MockedResponse<
   GetMtoTemplatesQuery,
   GetMtoTemplatesQueryVariables
@@ -796,101 +895,7 @@ export const mtoTemplateMock: MockedResponse<
     result: {
       data: {
         __typename: 'Query',
-        mtoTemplates: [
-          {
-            __typename: 'MTOTemplate',
-            id: '1',
-            name: 'Standard categories',
-            description: 'These are the standard categories for MTOs.',
-            key: MtoTemplateKey.STANDARD_CATEGORIES,
-            categoryCount: 24,
-            milestoneCount: 0,
-            solutionCount: 0,
-            primaryCategoryCount: 9,
-            categories: [
-              {
-                __typename: 'MTOTemplateCategory',
-                id: '1',
-                name: 'Category 1',
-                templateID: '1',
-                order: 1,
-                subCategories: [
-                  {
-                    __typename: 'MTOTemplateSubCategory',
-                    id: '1',
-                    name: 'SubCategory 1',
-                    templateID: '1',
-                    order: 1,
-                    milestones: [
-                      {
-                        __typename: 'MTOTemplateMilestone',
-                        id: '1',
-                        templateID: '1',
-                        solutions: [
-                          {
-                            __typename: 'MTOTemplateSolution',
-                            id: '1',
-                            templateID: '1'
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            __typename: 'MTOTemplate',
-            id: '2',
-            name: 'ACO and kidney models',
-            description: 'These are the ACO and Kidney models for MTOs.',
-            key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
-            categoryCount: 13,
-            milestoneCount: 12,
-            solutionCount: 10,
-            primaryCategoryCount: 4,
-            categories: []
-          },
-          {
-            __typename: 'MTOTemplate',
-            id: '3',
-            name: 'Episode primary care and non-ACO models',
-            description:
-              'These are the Episode Primary Care and Non-ACO models for MTOs.',
-            key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
-            categoryCount: 13,
-            milestoneCount: 13,
-            solutionCount: 11,
-            primaryCategoryCount: 4,
-            categories: []
-          },
-          {
-            __typename: 'MTOTemplate',
-            id: '4',
-            name: 'Medicare advantage and drug models',
-            description:
-              'These are the Medicare Advantage and Drug models for MTOs.',
-            key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
-            categoryCount: 3,
-            milestoneCount: 3,
-            solutionCount: 0,
-            primaryCategoryCount: 1,
-            categories: []
-          },
-          {
-            __typename: 'MTOTemplate',
-            id: '5',
-            name: 'State and local models',
-            description: 'These are the State and Local models for MTOs.',
-            key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
-            categoryCount: 14,
-            milestoneCount: 0,
-            solutionCount: 0,
-            primaryCategoryCount: 0,
-            categories: []
-          }
-        ]
+        mtoTemplates: mtoTemplateMockData
       }
     }
   }
