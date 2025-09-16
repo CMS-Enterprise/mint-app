@@ -26,7 +26,6 @@ import {
   useGetAnalyticsSummaryQuery,
   useGetMtoMilestoneSummaryQuery
 } from 'gql/generated/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 import {
   Bar,
   BarChart,
@@ -127,7 +126,7 @@ const ReportsAndAnalytics = () => {
           <Grid desktop={{ col: 12 }}>
             <Grid row gap={1}>
               {Object.keys(reports).map(reportKey => (
-                <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
+                <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={reportKey}>
                   <Card
                     containerProps={{
                       className: 'radius-md padding-0 margin-0',
@@ -200,11 +199,12 @@ const ReportsAndAnalytics = () => {
               <div className="usa-nav-container padding-0">
                 <PrimaryNav
                   items={Object.keys(analyticsSummaryConfig).map(item => (
-                    <button
+                    <Button
                       type="button"
                       onClick={() => {
                         setSelectedChart(item);
                       }}
+                      key={item}
                       style={{
                         textAlign: 'center'
                       }}
@@ -222,7 +222,7 @@ const ReportsAndAnalytics = () => {
                       >
                         {t(item)}
                       </span>
-                    </button>
+                    </Button>
                   ))}
                   mobileExpanded={false}
                   className="flex-justify-start margin-0 padding-0"

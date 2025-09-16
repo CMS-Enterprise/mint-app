@@ -701,3 +701,314 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
   </main>
 </DocumentFragment>
 `;
+
+exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is enabled and data is loaded 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content mint-body-normal"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <h1
+        class="margin-top-10 margin-bottom-2"
+      >
+        Reports and analytics
+      </h1>
+      <p
+        class="mint-body-large margin-top-0 margin-bottom-1"
+      >
+        Download reports containing a variety of information about models in MINT or view the latest analytics about content in MINT.
+      </p>
+      <a
+        class="usa-link"
+        href="mailto:MINTTeam@cms.hhs.gov"
+      >
+        Contact the MINT Team
+      </a>
+       if you have any questions about the available reports.
+      <h2
+        class="margin-top-6 margin-bottom-2"
+      >
+        Downloadable reports
+      </h2>
+      <p
+        class="mint-body-normal margin-top-0"
+      >
+        Download reports of the latest model information in MINT. Each report will be downloaded in a specific format and will include a subset of model information available in MINT.
+      </p>
+      <ul
+        class="usa-card-group padding-x-1 margin-y-4"
+        data-testid="CardGroup"
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="grid-row grid-gap-1"
+            data-testid="grid"
+          >
+            <div
+              class="tablet:grid-col-6 desktop:grid-col-4"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card margin-bottom-2"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container radius-md padding-0 margin-0"
+                  style="min-height: 350px;"
+                >
+                  <div
+                    class="usa-card__header padding-3 padding-bottom-0"
+                    data-testid="CardHeader"
+                  >
+                    <h3
+                      class="line-height-normal margin-top-1"
+                    >
+                      MTO milestone summary
+                    </h3>
+                  </div>
+                  <div
+                    class="usa-card__body padding-x-3 "
+                    data-testid="CardBody"
+                  >
+                    <p>
+                      This report downloads an excel file of all model-to-operations matrix (MTO) milestones, separated my model. It contains a subset of data about each milestone.
+                    </p>
+                    <p
+                      class="text-base-dark"
+                    >
+                      Format: Excel
+                    </p>
+                  </div>
+                  <div
+                    class="usa-card__footer padding-3"
+                    data-testid="CardFooter"
+                  >
+                    <button
+                      class="usa-button margin-right-2"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </div>
+            <div
+              class="tablet:grid-col-6 desktop:grid-col-4"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card margin-bottom-2"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container radius-md padding-0 margin-0"
+                  style="min-height: 350px;"
+                >
+                  <div
+                    class="usa-card__header padding-3 padding-bottom-0"
+                    data-testid="CardHeader"
+                  >
+                    <h3
+                      class="line-height-normal margin-top-1"
+                    >
+                      All models
+                    </h3>
+                  </div>
+                  <div
+                    class="usa-card__body padding-x-3 "
+                    data-testid="CardBody"
+                  >
+                    <p>
+                      This report downloads a csv of information about all models in MINT including Model Plan details and more.
+                    </p>
+                    <p
+                      class="text-base-dark"
+                    >
+                      Format: Excel
+                    </p>
+                  </div>
+                  <div
+                    class="usa-card__footer padding-3"
+                    data-testid="CardFooter"
+                  >
+                    <button
+                      class="usa-button margin-right-2"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </div>
+          </div>
+        </div>
+      </ul>
+      <h2
+        class="margin-top-6 margin-bottom-2"
+      >
+        MINT analytics
+      </h2>
+      <p
+        class="mint-body-normal margin-top-0"
+      >
+        Charts and graphs of current statistics for MINT.
+      </p>
+      <header
+        class="usa-header usa-header--basic model-to-operations__nav-container margin-top-4 border-bottom border-base-lighter"
+        data-testid="header"
+      >
+        <div
+          class="usa-nav-container padding-0"
+        >
+          <nav
+            class="usa-nav flex-justify-start margin-0 padding-0"
+          >
+            <button
+              aria-label="Close Navigation Menu"
+              class="usa-nav__close"
+              data-testid="navCloseButton"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon usa-icon--size-3"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+            </button>
+            <ul
+              class="usa-nav__primary usa-accordion"
+            >
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="usa-button usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                  data-testid="button"
+                  style="text-align: center;"
+                  type="button"
+                >
+                  <span
+                    class="text-primary"
+                  >
+                    Changes per model
+                  </span>
+                </button>
+              </li>
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="usa-button usa-nav__link margin-left-neg-2 margin-right-2"
+                  data-testid="button"
+                  style="text-align: center;"
+                  type="button"
+                >
+                  <span
+                    class=""
+                  >
+                    Changes per model by section
+                  </span>
+                </button>
+              </li>
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="usa-button usa-nav__link margin-left-neg-2 margin-right-2"
+                  data-testid="button"
+                  style="text-align: center;"
+                  type="button"
+                >
+                  <span
+                    class=""
+                  >
+                    Changes per model other data
+                  </span>
+                </button>
+              </li>
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="usa-button usa-nav__link margin-left-neg-2 margin-right-2"
+                  data-testid="button"
+                  style="text-align: center;"
+                  type="button"
+                >
+                  <span
+                    class=""
+                  >
+                    Models by status
+                  </span>
+                </button>
+              </li>
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="usa-button usa-nav__link margin-left-neg-2 margin-right-2"
+                  data-testid="button"
+                  style="text-align: center;"
+                  type="button"
+                >
+                  <span
+                    class=""
+                  >
+                    Number of followers per model
+                  </span>
+                </button>
+              </li>
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="usa-button usa-nav__link margin-left-neg-2 margin-right-2"
+                  data-testid="button"
+                  style="text-align: center;"
+                  type="button"
+                >
+                  <span
+                    class=""
+                  >
+                    Total number of models
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div
+        class="recharts-responsive-container"
+        style="width: 100%; height: 1000px; min-width: 0;"
+      >
+        <div
+          style="width: 0px; height: 0px; overflow: visible;"
+        />
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
