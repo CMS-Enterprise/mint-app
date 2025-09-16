@@ -302,7 +302,7 @@ const ReportsAndAnalytics = () => {
 
             <Button
               type="button"
-              className="margin-top-4"
+              className="margin-top-4 margin-right-2"
               unstyled
               data-testid="download-analytics-button"
               onClick={() => {
@@ -314,7 +314,7 @@ const ReportsAndAnalytics = () => {
 
             <Button
               type="button"
-              className="margin-top-4 margin-left-2"
+              className="margin-top-1 margin-right-2"
               unstyled
               data-testid="download-chart-pdf-button"
               onClick={() => {
@@ -329,7 +329,7 @@ const ReportsAndAnalytics = () => {
 
             <Button
               type="button"
-              className="margin-top-4 margin-left-2"
+              className="margin-top-1 margin-right-2"
               unstyled
               data-testid="download-multiple-charts-pdf-button"
               disabled={isDownloadingAllCharts}

@@ -300,21 +300,21 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
         </div>
       </header>
       <button
-        class="usa-button usa-button--unstyled margin-top-4"
+        class="usa-button usa-button--unstyled margin-top-4 margin-right-2"
         data-testid="download-analytics-button"
         type="button"
       >
         Download data (excel)
       </button>
       <button
-        class="usa-button usa-button--unstyled margin-top-4 margin-left-2"
+        class="usa-button usa-button--unstyled margin-top-1 margin-right-2"
         data-testid="download-chart-pdf-button"
         type="button"
       >
         Download chart (PDF)
       </button>
       <button
-        class="usa-button usa-button--unstyled margin-top-4 margin-left-2"
+        class="usa-button usa-button--unstyled margin-top-1 margin-right-2"
         data-testid="download-multiple-charts-pdf-button"
         type="button"
       >
