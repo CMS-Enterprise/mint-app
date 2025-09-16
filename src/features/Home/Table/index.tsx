@@ -10,7 +10,7 @@ import {
 } from 'react-table';
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { downloadMTOMilestoneSummary } from 'features/Analytics/util';
+import { downloadMTOMilestoneSummary } from 'features/ReportsAndAnalytics/util';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import {
   GetEchimpCrandTdlQuery,

@@ -12,7 +12,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import { expect, it } from 'vitest';
 
 import { getChangesByOtherData, getChangesBySection } from './util';
-import Analytics from '.';
+import ReportsAndAnalytics from '.';
 
 type GetAnalyticsSummaryType = GetAnalyticsSummaryQuery;
 
@@ -119,7 +119,7 @@ const mocks: MockedResponse<
   }
 ];
 
-describe('Analytics', () => {
+describe('ReportsAndAnalytics', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -127,12 +127,12 @@ describe('Analytics', () => {
   const router = createMemoryRouter(
     [
       {
-        path: '/analytics',
-        element: <Analytics />
+        path: '/reports-and-analytics',
+        element: <ReportsAndAnalytics />
       }
     ],
     {
-      initialEntries: ['/analytics']
+      initialEntries: ['/reports-and-analytics']
     }
   );
 
@@ -147,7 +147,7 @@ describe('Analytics', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Download Analytics summary as XLSX')
+        screen.getByText('Download analytics summary as XLSX')
       ).toBeInTheDocument();
     });
 

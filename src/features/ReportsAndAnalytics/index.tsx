@@ -1,0 +1,250 @@
+import React, { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardGroup,
+  CardHeader,
+  Grid,
+  GridContainer,
+  Header,
+  Link,
+  PrimaryNav,
+  Select
+} from '@trussworks/react-uswds';
+import classNames from 'classnames';
+import NotFound from 'features/NotFound';
+import downloadAnalytics, {
+  analyticsSummaryConfig,
+  AnalyticsSummaryKey,
+  getChangesByOtherData,
+  getChangesBySection
+} from 'features/ReportsAndAnalytics/util';
+import { useGetAnalyticsSummaryQuery } from 'gql/generated/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+
+import MainContent from 'components/MainContent';
+import PageLoading from 'components/PageLoading';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { reports } from 'i18n/en-US/analytics';
+
+export type ReportsType = 'mtoMilestoneSummary' | 'allModels';
+
+const ReportsAndAnalytics = () => {
+  const { t } = useTranslation('analytics');
+
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+  const flags = useFlags();
+
+  const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
+
+  const { data, loading, error } = useGetAnalyticsSummaryQuery({
+    skip: !flags?.mintAnalyticsEnabled,
+    fetchPolicy: 'network-only'
+  });
+
+  if (!flags?.mintAnalyticsEnabled) {
+    return <NotFound />;
+  }
+
+  if (loading) return <PageLoading />;
+
+  if (!data?.analytics || error)
+    return (
+      <MainContent>
+        <GridContainer>{t('noAnalyticsData')}</GridContainer>
+      </MainContent>
+    );
+
+  let chartData: any = !Array.isArray(
+    data.analytics[selectedChart as AnalyticsSummaryKey]
+  )
+    ? [data.analytics[selectedChart as AnalyticsSummaryKey]]
+    : data.analytics[selectedChart as AnalyticsSummaryKey];
+
+  if (selectedChart === 'changesPerModelBySection') {
+    chartData = getChangesBySection(data.analytics.changesPerModelBySection);
+  } else if (selectedChart === 'changesPerModelOtherData') {
+    chartData = getChangesByOtherData(data.analytics.changesPerModelOtherData);
+  }
+
+  return (
+    <MainContent className="mint-body-normal">
+      <GridContainer>
+        <h1 className="margin-top-10 margin-bottom-2">{t('heading')}</h1>
+
+        <p className="mint-body-large margin-top-0 margin-bottom-1">
+          {t('description')}
+        </p>
+
+        <Trans
+          i18nKey="analytics:contactMINTTeam"
+          components={{
+            email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+          }}
+        />
+
+        <h2 className="margin-top-6 margin-bottom-2">
+          {t('downloadableReports')}
+        </h2>
+
+        <p className="mint-body-normal margin-top-0">
+          {t('downloadableReportsDescription')}
+        </p>
+
+        <CardGroup className="padding-x-1 margin-y-4">
+          <Grid desktop={{ col: 12 }}>
+            <Grid row gap={1}>
+              {Object.values(reports).map(report => (
+                <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
+                  <Card
+                    containerProps={{
+                      className: 'radius-md padding-0 margin-0',
+                      style: {
+                        minHeight: '350px'
+                      }
+                    }}
+                    className="margin-bottom-2"
+                  >
+                    <CardHeader className="padding-3 padding-bottom-0">
+                      <h3 className="line-height-normal margin-top-1">
+                        {t(report.heading)}
+                      </h3>
+                    </CardHeader>
+
+                    <CardBody className="padding-x-3 ">
+                      <p>{t(report.description)}</p>
+
+                      <p className="text-base-dark">{t(report.formatExcel)}</p>
+                    </CardBody>
+
+                    <CardFooter className="padding-3">
+                      <Button
+                        type="button"
+                        className="margin-right-2"
+                        onClick={() => {
+                          downloadAnalytics(data.analytics, 'analytics.xlsx');
+                        }}
+                      >
+                        {t('download')}
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        </CardGroup>
+
+        <h2 className="margin-top-6 margin-bottom-2">{t('mintAnalytics')}</h2>
+
+        <p className="mint-body-normal margin-top-0">
+          {t('mintAnalyticsDescription')}
+        </p>
+
+        <Header
+          basic
+          extended={false}
+          className="model-to-operations__nav-container margin-top-4"
+        >
+          <div className="usa-nav-container padding-0">
+            <PrimaryNav
+              items={Object.keys(analyticsSummaryConfig).map(item => (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedChart(item);
+                  }}
+                  style={{
+                    textAlign: 'center'
+                  }}
+                  className={classNames(
+                    'usa-nav__link margin-left-neg-2 margin-right-2',
+                    {
+                      'usa-current': selectedChart === item
+                    }
+                  )}
+                >
+                  <span
+                    className={classNames({
+                      'text-primary': selectedChart === item
+                    })}
+                  >
+                    {t(item)}
+                  </span>
+                </button>
+              ))}
+              mobileExpanded={false}
+              className="flex-justify-start margin-0 padding-0"
+            />
+          </div>
+        </Header>
+
+        {isTablet && (
+          <div className="maxw-mobile-lg">
+            <p className="margin-y-0 text-bold">{t('view')}</p>
+            <Select
+              id="selected-chart"
+              name="selectedChart"
+              value={selectedChart}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setSelectedChart(e.target.value);
+              }}
+              className="margin-bottom-4 text-primary text-bold margin-top-1"
+            >
+              {Object.keys(analyticsSummaryConfig).map(item => {
+                return (
+                  <option
+                    key={item}
+                    value={item}
+                    selected={selectedChart === item}
+                  >
+                    {t(item)}
+                  </option>
+                );
+              })}
+            </Select>
+          </div>
+        )}
+
+        <BarChart
+          width={1000}
+          height={1000}
+          data={chartData as any[]}
+          margin={{ top: 100, right: 30, left: 120, bottom: 200 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+
+          <XAxis
+            dataKey={
+              analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                .xAxisDataKey
+            }
+            angle={-45}
+            textAnchor="end"
+            height={80}
+          />
+          <YAxis />
+
+          <Tooltip
+            formatter={(value, name) => [value, t(name as AnalyticsSummaryKey)]}
+          />
+
+          <Bar
+            dataKey={
+              analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                .yAxisDataKey
+            }
+            fill="#008480"
+          />
+        </BarChart>
+      </GridContainer>
+    </MainContent>
+  );
+};
+
+export default ReportsAndAnalytics;
