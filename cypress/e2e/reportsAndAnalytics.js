@@ -69,12 +69,6 @@ describe('Reports and Analytics', () => {
     cy.get('[data-testid="download-analytics-button"]').click();
     cy.readFile(`${downloadsFolder}/${expectedFilename}`).should('exist');
 
-    // Note: For more detailed Excel file verification, you would need to:
-    // 1. Install a library like 'xlsx' in Cypress
-    // 2. Parse the Excel file and verify sheet names and content
-    // 3. Check that translated column headers are present
-    // 4. Verify that cell values are properly translated
-
     // Basic file verification
     cy.readFile(`${downloadsFolder}/${expectedFilename}`).should('not.be.null');
     // Additional Excel-specific checks would go here
