@@ -708,6 +708,23 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     }
   },
+  templateLibrary: {
+    heading: 'Template library',
+    description:
+      'Browse the model-to-operations (MTO) matrix templates available in MINT. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added. Add any templates that are relevant for your MTO.',
+    hideAdded: 'Hide added templates ({{count}})',
+    template: 'Template',
+    templateCount:
+      '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions',
+    addToMatrix: 'Add to matrix',
+    aboutThisTemplate: 'About this template',
+    templateDetails: 'Template details',
+    added: 'Added',
+    returnToMTO: 'Return to model-to-operations matrix',
+    alertHeading: 'There are no model templates that match your search.',
+    alertDescription:
+      'Please double-check your search and try again. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.'
+  },
   milestoneLibrary: {
     heading: 'Milestone library',
     description:

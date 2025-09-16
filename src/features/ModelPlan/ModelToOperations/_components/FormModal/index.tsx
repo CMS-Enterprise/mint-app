@@ -25,7 +25,8 @@ export type MTOModalType =
   | 'removeCategory'
   | 'removeSubcategory'
   | 'addTemplate'
-  | 'selectSolution';
+  | 'selectSolution'
+  | 'template';
 
 const nonRequiredForms: Partial<MTOModalType[]> = [
   'removeCategory',
