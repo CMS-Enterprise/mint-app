@@ -5,7 +5,9 @@ import {
   MtoRiskIndicator,
   TableName
 } from 'gql/generated/graphql';
+import html2canvas from 'html2canvas';
 import i18next from 'i18next';
+import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx-js-style';
 
 import {
@@ -493,6 +495,151 @@ export const downloadMTOMilestoneSummary = (
 
   // Write to file
   XLSX.writeFile(workbook, exportFileName);
+};
+
+// Downloads a chart as PDF using html2canvas and jsPDF
+export const downloadChartAsPDF = async (
+  chartElementId: string,
+  filename: string = 'MINT-Chart.pdf'
+): Promise<void> => {
+  try {
+    const chartElement = document.getElementById(chartElementId);
+    if (!chartElement) {
+      // eslint-disable-next-line no-console
+      console.error(`Chart element with id "${chartElementId}" not found`);
+      return;
+    }
+
+    // Create canvas from the chart element
+    const canvas = await html2canvas(chartElement, {
+      backgroundColor: '#ffffff',
+      scale: 2, // Higher scale for better quality
+      useCORS: true,
+      allowTaint: true,
+      logging: false
+    });
+
+    // Calculate dimensions
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+
+    // Create PDF with appropriate orientation
+    const Pdf = jsPDF;
+    const pdf = new Pdf({
+      orientation: imgWidth > imgHeight ? 'landscape' : 'portrait',
+      unit: 'px',
+      format: [imgWidth, imgHeight]
+    });
+
+    // Add the image to PDF
+    const imgData = canvas.toDataURL('image/png');
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+    // Download the PDF
+    pdf.save(filename);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error generating PDF:', error);
+  }
+};
+
+// Downloads multiple charts as a single PDF by temporarily switching chart types
+export const downloadMultipleChartsAsPDF = async (
+  chartTypes: string[],
+  filename: string = 'MINT-Charts.pdf',
+  onChartChange?: (chartType: string) => Promise<void>,
+  getChartTitle?: (chartType: string) => string
+): Promise<void> => {
+  try {
+    const Pdf = jsPDF;
+    const pdf = new Pdf('portrait', 'px', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 20;
+    const maxWidth = pageWidth - margin * 2;
+    const maxHeight = pageHeight - margin * 2;
+
+    // Process each chart type by switching to it and capturing
+    for (let i = 0; i < chartTypes.length; i += 1) {
+      const chartType = chartTypes[i];
+
+      // Switch to this chart type if callback provided
+      if (onChartChange) {
+        // eslint-disable-next-line no-await-in-loop
+        await onChartChange(chartType);
+        // Wait a bit for the chart to render
+
+        if (chartType === 'numberOfModelsOverTime') {
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise(resolve => setTimeout(resolve, 1500));
+        } else {
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+      }
+
+      // Look for the chart element with the current chart type
+      const chartElement = document.getElementById(
+        `analytics-chart-${chartType}`
+      );
+      if (!chartElement) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `Chart element with id "analytics-chart-${chartType}" not found`
+        );
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      // Create canvas from the chart element
+      // eslint-disable-next-line no-await-in-loop
+      const canvas = await html2canvas(chartElement, {
+        backgroundColor: '#ffffff',
+        scale: 1.5,
+        useCORS: true,
+        allowTaint: true,
+        logging: false
+      });
+
+      // Calculate scaling to fit page
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const scaleX = maxWidth / imgWidth;
+      const scaleY = maxHeight / imgHeight;
+      const scale = Math.min(scaleX, scaleY, 1); // Don't scale up
+
+      const scaledWidth = imgWidth * scale;
+      const scaledHeight = imgHeight * scale;
+
+      // Add new page for each chart (except the first one)
+      if (i > 0) {
+        pdf.addPage();
+      }
+
+      // Add chart title if provided
+      if (getChartTitle) {
+        const chartTitle = getChartTitle(chartType);
+        pdf.setFontSize(16);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(chartTitle, pageWidth / 2, 30, { align: 'center' });
+      }
+
+      // Center the image on the page (with space for title)
+      const titleHeight = getChartTitle ? 50 : 0;
+      const x = (pageWidth - scaledWidth) / 2;
+      const y = (pageHeight - scaledHeight) / 2 + titleHeight;
+
+      // Add the image to PDF
+      const imgData = canvas.toDataURL('image/png');
+      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight);
+    }
+
+    // Download the PDF
+    pdf.save(filename);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error generating multi-chart PDF:', error);
+  }
 };
 
 export default downloadAnalytics;

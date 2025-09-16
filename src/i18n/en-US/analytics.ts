@@ -74,6 +74,8 @@ const analytics = {
   noAnalyticsData: 'No analytics data found',
   report: 'Report',
   downloadExcel: 'Download data (excel)',
+  downloadPDF: 'Download chart (PDF)',
+  downloadMultipleChartsPDF: 'Download all charts (PDF)',
   columnHeaderTranslations
 };
 

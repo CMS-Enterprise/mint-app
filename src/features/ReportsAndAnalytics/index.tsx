@@ -17,7 +17,9 @@ import {
 import classNames from 'classnames';
 import downloadAnalytics, {
   analyticsSummaryConfig,
+  downloadChartAsPDF,
   downloadMTOMilestoneSummary,
+  downloadMultipleChartsAsPDF,
   getChangesByOtherData,
   getChangesBySection,
   UsedAnalyticsSummaryKey
@@ -289,10 +291,48 @@ const ReportsAndAnalytics = () => {
               {t('downloadExcel')}
             </Button>
 
+            <Button
+              type="button"
+              className="margin-top-4 margin-left-2"
+              unstyled
+              data-testid="download-chart-pdf-button"
+              onClick={() => {
+                downloadChartAsPDF(
+                  'analytics-chart',
+                  'MINT-Analytics-Chart.pdf'
+                );
+              }}
+            >
+              {t('downloadPDF')}
+            </Button>
+
+            <Button
+              type="button"
+              className="margin-top-4 margin-left-2"
+              unstyled
+              data-testid="download-multiple-charts-pdf-button"
+              onClick={async () => {
+                const chartTypes = Object.keys(analyticsSummaryConfig);
+                await downloadMultipleChartsAsPDF(
+                  chartTypes,
+                  'MINT-Analytics-All-Charts.pdf',
+                  async (chartType: string) => {
+                    setSelectedChart(chartType);
+                  },
+                  (chartType: string) => {
+                    return t(`analytics:${chartType}`);
+                  }
+                );
+              }}
+            >
+              {t('downloadMultipleChartsPDF')}
+            </Button>
+
             <ResponsiveContainer
               width="100%"
               height={chartHeight}
               data-testid="chart-container"
+              id={`analytics-chart-${selectedChart}`}
             >
               {analyticsSummaryConfig[selectedChart as UsedAnalyticsSummaryKey]
                 .chartType === 'bar' ? (
