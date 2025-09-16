@@ -403,15 +403,13 @@ export const mockAnalyticsData: GetAnalyticsSummaryType = {
         __typename: 'ModelChangesAnalytics',
         modelName: 'Test Model 1',
         numberOfChanges: 10,
-        numberOfRecordChanges: 5,
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
+        numberOfRecordChanges: 5
       },
       {
         __typename: 'ModelChangesAnalytics',
         modelName: 'Test Model 2',
         numberOfChanges: 15,
-        numberOfRecordChanges: 8,
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174001'
+        numberOfRecordChanges: 8
       }
     ],
     modelsByStatus: [
@@ -430,8 +428,7 @@ export const mockAnalyticsData: GetAnalyticsSummaryType = {
       {
         __typename: 'ModelFollowersAnalytics',
         modelName: 'Test Model 1',
-        numberOfFollowers: 12,
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
+        numberOfFollowers: 12
       }
     ],
     numberOfModelsOverTime: [
@@ -447,16 +444,14 @@ export const mockAnalyticsData: GetAnalyticsSummaryType = {
         modelName: 'Test Model 1',
         tableName: 'plan_basics',
         numberOfChanges: 5,
-        numberOfRecordChanges: 3,
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
+        numberOfRecordChanges: 3
       },
       {
         __typename: 'ModelChangesBySectionAnalytics',
         modelName: 'Test Model 2',
         tableName: 'plan_basics',
         numberOfChanges: 3,
-        numberOfRecordChanges: 2,
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174001'
+        numberOfRecordChanges: 2
       }
     ],
     changesPerModelOtherData: [
@@ -465,16 +460,14 @@ export const mockAnalyticsData: GetAnalyticsSummaryType = {
         modelName: 'Test Model 1',
         numberOfChanges: 3,
         numberOfRecordChanges: 2,
-        section: 'plan_documents',
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174000'
+        section: 'plan_documents'
       },
       {
         __typename: 'ModelChangesOtherDataAnalytics',
         modelName: 'Test Model 2',
         numberOfChanges: 2,
         numberOfRecordChanges: 1,
-        section: 'plan_documents',
-        modelPlanID: '123e4567-e89b-12d3-a456-426614174001'
+        section: 'plan_documents'
       }
     ]
   }

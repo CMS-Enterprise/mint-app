@@ -29,7 +29,7 @@ export const columnHeaderTranslations: Record<string, string> = {
   numberOfModels: 'Number of models',
   numberOfFollowers: 'Number of followers',
   totalNumberOfModels: 'Total number of models',
-  tableName: 'Table name',
+  tableName: 'Section',
   section: 'Section',
   monthYear: 'Date'
 };

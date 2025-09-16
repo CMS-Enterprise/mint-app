@@ -7,29 +7,25 @@ export default gql(/* GraphQL */ `
         modelName
         numberOfChanges
         numberOfRecordChanges
-        modelPlanID
       }
       changesPerModelBySection {
         modelName
+        tableName
         numberOfChanges
         numberOfRecordChanges
-        modelPlanID
-        tableName
       }
       changesPerModelOtherData {
         modelName
+        section
         numberOfChanges
         numberOfRecordChanges
-        modelPlanID
-        section
       }
       modelsByStatus {
-        numberOfModels
         status
+        numberOfModels
       }
       numberOfFollowersPerModel {
         modelName
-        modelPlanID
         numberOfFollowers
       }
       numberOfModelsOverTime {
