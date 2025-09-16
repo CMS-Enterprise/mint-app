@@ -28,7 +28,15 @@ import {
   useGetMtoMilestoneSummaryQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
@@ -42,8 +50,26 @@ const ReportsAndAnalytics = () => {
   const { t } = useTranslation('analytics');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const flags = useFlags();
+
+  // Responsive margins and height for the chart
+  const chartMargins = useMemo(() => {
+    if (isMobile) {
+      return { top: 50, right: 120, left: 40, bottom: 100 };
+    }
+    if (isTablet) {
+      return { top: 80, right: 140, left: 80, bottom: 150 };
+    }
+    return { top: 100, right: 160, left: 120, bottom: 200 };
+  }, [isMobile, isTablet]);
+
+  const chartHeight = useMemo(() => {
+    if (isMobile) return 400;
+    if (isTablet) return 600;
+    return 1000;
+  }, [isMobile, isTablet]);
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
 
@@ -235,37 +261,37 @@ const ReportsAndAnalytics = () => {
           </div>
         )}
 
-        <BarChart
-          width={1000}
-          height={1000}
-          data={chartData as any[]}
-          margin={{ top: 100, right: 30, left: 120, bottom: 200 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
+        <ResponsiveContainer width="100%" height={chartHeight}>
+          <BarChart data={chartData as any[]} margin={chartMargins}>
+            <CartesianGrid strokeDasharray="3 3" />
 
-          <XAxis
-            dataKey={
-              analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
-                .xAxisDataKey
-            }
-            angle={-45}
-            textAnchor="end"
-            height={80}
-          />
-          <YAxis />
+            <XAxis
+              dataKey={
+                analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                  .xAxisDataKey
+              }
+              angle={-45}
+              textAnchor="end"
+              height={80}
+            />
+            <YAxis />
 
-          <Tooltip
-            formatter={(value, name) => [value, t(name as AnalyticsSummaryKey)]}
-          />
+            <Tooltip
+              formatter={(value, name) => [
+                value,
+                t(name as AnalyticsSummaryKey)
+              ]}
+            />
 
-          <Bar
-            dataKey={
-              analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
-                .yAxisDataKey
-            }
-            fill="#008480"
-          />
-        </BarChart>
+            <Bar
+              dataKey={
+                analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                  .yAxisDataKey
+              }
+              fill="#008480"
+            />
+          </BarChart>
+        </ResponsiveContainer>
       </GridContainer>
     </MainContent>
   );
