@@ -15,7 +15,6 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import NotFound from 'features/NotFound';
 import {
   analyticsSummaryConfig,
   AnalyticsSummaryKey,
@@ -52,8 +51,6 @@ const ReportsAndAnalytics = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
-  const flags = useFlags();
-
   // Responsive margins and height for the chart
   const chartMargins = useMemo(() => {
     if (isMobile) {
@@ -76,9 +73,10 @@ const ReportsAndAnalytics = () => {
   const { fetchAllData } = useFetchCSVData();
 
   const { data, loading, error } = useGetAnalyticsSummaryQuery({
-    skip: !flags?.mintAnalyticsEnabled,
     fetchPolicy: 'network-only'
   });
+
+  const analyticsData = data?.analytics || ({} as any);
 
   const { data: mtoMilestoneSummary, loading: mtoMilestoneSummaryLoading } =
     useGetMtoMilestoneSummaryQuery();
@@ -87,30 +85,19 @@ const ReportsAndAnalytics = () => {
     return mtoMilestoneSummary?.modelPlanCollection ?? [];
   }, [mtoMilestoneSummary?.modelPlanCollection]);
 
-  if (!flags?.mintAnalyticsEnabled) {
-    return <NotFound />;
-  }
-
-  if (loading) return <PageLoading />;
-
-  if (!data?.analytics || error)
-    return (
-      <MainContent>
-        <GridContainer>{t('noAnalyticsData')}</GridContainer>
-      </MainContent>
-    );
-
   let chartData: any = !Array.isArray(
-    data.analytics[selectedChart as AnalyticsSummaryKey]
+    analyticsData[selectedChart as AnalyticsSummaryKey]
   )
-    ? [data.analytics[selectedChart as AnalyticsSummaryKey]]
-    : data.analytics[selectedChart as AnalyticsSummaryKey];
+    ? [analyticsData[selectedChart as AnalyticsSummaryKey]]
+    : analyticsData[selectedChart as AnalyticsSummaryKey];
 
   if (selectedChart === 'changesPerModelBySection') {
-    chartData = getChangesBySection(data.analytics.changesPerModelBySection);
+    chartData = getChangesBySection(analyticsData.changesPerModelBySection);
   } else if (selectedChart === 'changesPerModelOtherData') {
-    chartData = getChangesByOtherData(data.analytics.changesPerModelOtherData);
+    chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
+
+  if (loading || mtoMilestoneSummaryLoading) return <PageLoading />;
 
   return (
     <MainContent className="mint-body-normal">
@@ -196,102 +183,108 @@ const ReportsAndAnalytics = () => {
           {t('mintAnalyticsDescription')}
         </p>
 
-        <Header
-          basic
-          extended={false}
-          className="model-to-operations__nav-container margin-top-4"
-        >
-          <div className="usa-nav-container padding-0">
-            <PrimaryNav
-              items={Object.keys(analyticsSummaryConfig).map(item => (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedChart(item);
-                  }}
-                  style={{
-                    textAlign: 'center'
-                  }}
-                  className={classNames(
-                    'usa-nav__link margin-left-neg-2 margin-right-2',
-                    {
-                      'usa-current': selectedChart === item
-                    }
-                  )}
-                >
-                  <span
-                    className={classNames({
-                      'text-primary': selectedChart === item
-                    })}
-                  >
-                    {t(item)}
-                  </span>
-                </button>
-              ))}
-              mobileExpanded={false}
-              className="flex-justify-start margin-0 padding-0"
-            />
-          </div>
-        </Header>
-
-        {isTablet && (
-          <div className="maxw-mobile-lg">
-            <p className="margin-y-0 text-bold">{t('view')}</p>
-            <Select
-              id="selected-chart"
-              name="selectedChart"
-              value={selectedChart}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setSelectedChart(e.target.value);
-              }}
-              className="margin-bottom-4 text-primary text-bold margin-top-1"
+        {!analyticsData || error ? (
+          <p>{t('noAnalyticsData')}</p>
+        ) : (
+          <>
+            <Header
+              basic
+              extended={false}
+              className="model-to-operations__nav-container margin-top-4"
             >
-              {Object.keys(analyticsSummaryConfig).map(item => {
-                return (
-                  <option
-                    key={item}
-                    value={item}
-                    selected={selectedChart === item}
-                  >
-                    {t(item)}
-                  </option>
-                );
-              })}
-            </Select>
-          </div>
+              <div className="usa-nav-container padding-0">
+                <PrimaryNav
+                  items={Object.keys(analyticsSummaryConfig).map(item => (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedChart(item);
+                      }}
+                      style={{
+                        textAlign: 'center'
+                      }}
+                      className={classNames(
+                        'usa-nav__link margin-left-neg-2 margin-right-2',
+                        {
+                          'usa-current': selectedChart === item
+                        }
+                      )}
+                    >
+                      <span
+                        className={classNames({
+                          'text-primary': selectedChart === item
+                        })}
+                      >
+                        {t(item)}
+                      </span>
+                    </button>
+                  ))}
+                  mobileExpanded={false}
+                  className="flex-justify-start margin-0 padding-0"
+                />
+              </div>
+            </Header>
+
+            {isTablet && (
+              <div className="maxw-mobile-lg">
+                <p className="margin-y-0 text-bold">{t('view')}</p>
+                <Select
+                  id="selected-chart"
+                  name="selectedChart"
+                  value={selectedChart}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    setSelectedChart(e.target.value);
+                  }}
+                  className="margin-bottom-4 text-primary text-bold margin-top-1"
+                >
+                  {Object.keys(analyticsSummaryConfig).map(item => {
+                    return (
+                      <option
+                        key={item}
+                        value={item}
+                        selected={selectedChart === item}
+                      >
+                        {t(item)}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </div>
+            )}
+
+            <ResponsiveContainer width="100%" height={chartHeight}>
+              <BarChart data={chartData as any[]} margin={chartMargins}>
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis
+                  dataKey={
+                    analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                      .xAxisDataKey
+                  }
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis />
+
+                <Tooltip
+                  formatter={(value, name) => [
+                    value,
+                    t(name as AnalyticsSummaryKey)
+                  ]}
+                />
+
+                <Bar
+                  dataKey={
+                    analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                      .yAxisDataKey
+                  }
+                  fill="#008480"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </>
         )}
-
-        <ResponsiveContainer width="100%" height={chartHeight}>
-          <BarChart data={chartData as any[]} margin={chartMargins}>
-            <CartesianGrid strokeDasharray="3 3" />
-
-            <XAxis
-              dataKey={
-                analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
-                  .xAxisDataKey
-              }
-              angle={-45}
-              textAnchor="end"
-              height={80}
-            />
-            <YAxis />
-
-            <Tooltip
-              formatter={(value, name) => [
-                value,
-                t(name as AnalyticsSummaryKey)
-              ]}
-            />
-
-            <Bar
-              dataKey={
-                analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
-                  .yAxisDataKey
-              }
-              fill="#008480"
-            />
-          </BarChart>
-        </ResponsiveContainer>
       </GridContainer>
     </MainContent>
   );
