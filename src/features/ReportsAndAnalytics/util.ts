@@ -2,16 +2,33 @@ import {
   AnalyticsSummary,
   GetAnalyticsSummaryQuery,
   GetMtoMilestoneSummaryQuery,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  TableName
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import * as XLSX from 'xlsx-js-style';
 
 import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
+import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 
 export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
+
+// Column header translations for Excel export
+export const columnHeaderTranslations: Record<string, string> = {
+  __typename: 'Report name',
+  modelName: 'Model name',
+  numberOfChanges: 'Number of changes',
+  numberOfRecordChanges: 'Number of record changes',
+  modelPlanID: 'Model plan ID',
+  status: 'Status',
+  numberOfModels: 'Number of models',
+  numberOfFollowers: 'Number of followers',
+  totalNumberOfModels: 'Total number of models',
+  tableName: 'Table name',
+  section: 'Section'
+};
 
 export const analyticsSummaryConfig: Record<
   AnalyticsSummaryKey,
@@ -105,11 +122,89 @@ function downloadAnalytics<T>(data: T, exportFileName: string): void {
 
     const sheet = XLSX.utils.json_to_sheet(formattedSheetData);
 
+    // Apply column header translations
+    if (sheet['!ref']) {
+      const range = XLSX.utils.decode_range(sheet['!ref']);
+
+      // Loop through all columns and apply translations
+      for (let col = range.s.c; col <= range.e.c; col += 1) {
+        const headerCell = XLSX.utils.encode_cell({ r: 0, c: col });
+        if (sheet[headerCell] && sheet[headerCell].v) {
+          const originalHeader = sheet[headerCell].v as string;
+          const translatedHeader = columnHeaderTranslations[originalHeader];
+
+          // Apply translation if available, otherwise keep original
+          if (translatedHeader) {
+            sheet[headerCell].v = translatedHeader;
+          }
+        }
+      }
+
+      // Apply cell value translations for specific columns
+      for (let row = range.s.r + 1; row <= range.e.r; row += 1) {
+        for (let col = range.s.c; col <= range.e.c; col += 1) {
+          const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });
+          const cell = sheet[cellAddress];
+
+          if (cell && cell.v) {
+            const cellValue = cell.v as string;
+            let translatedValue = cellValue;
+
+            // Get the column header to determine what type of translation to apply
+            const headerCell = XLSX.utils.encode_cell({ r: 0, c: col });
+            const columnHeader = sheet[headerCell]?.v as string;
+
+            // Translate status values
+            if (columnHeader === 'Status' || columnHeader === 'status') {
+              // Translate status values (e.g., "ACTIVE" -> "Active")
+              translatedValue = i18next.t(
+                `modelPlan:status.options.${cellValue}`,
+                cellValue
+              );
+            }
+            // Translate table/section names
+            else if (
+              columnHeader === 'Table name' ||
+              columnHeader === 'tableName' ||
+              columnHeader === 'Section' ||
+              columnHeader === 'section'
+            ) {
+              // Translate table names using the tables translation
+              translatedValue = tables[cellValue as TableName].generalName;
+            }
+
+            // Update the cell value if translation was found
+            if (translatedValue !== cellValue) {
+              cell.v = translatedValue;
+            }
+          }
+        }
+      }
+    }
+
     // Auto-fit columns
     const columnWidths = autoFitColumns(sheet);
     sheet['!cols'] = columnWidths;
 
-    XLSX.utils.book_append_sheet(workbook, sheet, key as string);
+    // Use translated yAxisDataKey for sheet name
+    // Handle duplicates and truncate if needed to stay within 31 char limit
+    const baseLabel = i18next.t(`analytics:${key as string}`);
+
+    let sheetName: string;
+    if (baseLabel) {
+      // Start with the translated yAxis label
+      let candidateName = baseLabel;
+
+      // If it's too long, truncate it
+      if (candidateName.length > 31) {
+        candidateName = `${candidateName.substring(0, 28)}...`;
+      }
+
+      sheetName = candidateName;
+    } else {
+      sheetName = String(key);
+    }
+    XLSX.utils.book_append_sheet(workbook, sheet, sheetName);
   });
 
   // Write to file

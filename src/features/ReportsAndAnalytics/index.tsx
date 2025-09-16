@@ -266,7 +266,7 @@ const ReportsAndAnalytics = () => {
               className="margin-top-4"
               unstyled
               onClick={() => {
-                downloadAnalytics(chartData, 'MINT-Analytics.xlsx');
+                downloadAnalytics(analyticsData, 'MINT-Analytics.xlsx');
               }}
             >
               {t('downloadExcel')}
