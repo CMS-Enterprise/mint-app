@@ -79,5 +79,8 @@ describe('Reports and Analytics', () => {
     // Basic file verification
     cy.readFile(`${downloadsFolder}/${expectedFilename}`).should('not.be.null');
     // Additional Excel-specific checks would go here
+
+    // Clean up any previous files
+    cy.task('deleteAllFiles', downloadsFolder);
   });
 });
