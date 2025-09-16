@@ -11,7 +11,6 @@ import {
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
-import { downloadMTOMilestoneSummary } from 'features/ReportsAndAnalytics/util';
 import {
   GetEchimpCrandTdlQuery,
   GetModelPlansQuery,
@@ -20,13 +19,11 @@ import {
   ModelPlanFilter,
   TeamRole,
   useGetModelPlansQuery,
-  useGetMtoMilestoneSummaryQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
-import CsvExportLink from 'components/CSVExportLink/CsvExportLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
@@ -100,12 +97,6 @@ const ModelPlansTable = ({
   const data = useMemo(() => {
     return (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
   }, [modelPlans?.modelPlanCollection]);
-
-  const { data: mtoMilestoneSummary } = useGetMtoMilestoneSummaryQuery();
-
-  const mtoMilestoneSummaryData = useMemo(() => {
-    return mtoMilestoneSummary?.modelPlanCollection ?? [];
-  }, [mtoMilestoneSummary?.modelPlanCollection]);
 
   const columns = useMemo<Column<any>[]>(() => {
     const homeColumns: string[] = [
