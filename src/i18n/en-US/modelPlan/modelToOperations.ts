@@ -269,7 +269,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Template',
       header: 'Standard categories',
       description: '24 categories, 0 milestones, 0 solutions',
-      buttonText: 'Add this template'
+      buttonText: 'Add this template',
+      templateCount:
+        '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions',
+      availableTemplates: '{{selected}} of {{available}} available templates',
+      viewTemplates: 'View all templates in the library',
+      errorFetchingTemplates: 'Failed to fetch templates'
     }
   },
   table: {
@@ -318,9 +323,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       commonSolutions: '{{number}} common solutions and IT systems',
       browseSolutionLibrary: 'Add solutions from library',
       templateAndCategories: 'Templates and categories',
-      availableTemplates: '1 available template',
+      availableTemplates: '5 available templates',
       standardCategories: 'Standard categories',
-      addThisTemplate: 'Add this template',
+      addTemplateFromLibrary: 'Add templates from library',
       addCustomCategory: 'or, create a custom category'
     },
     alert: {
@@ -663,8 +668,12 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     addTemplate: {
       title: 'Are you sure you want to continue?',
+      selectedTemplate: '<bold>Selected template:</bold> {{template}}',
       description: 'Adding this template to your MTO will add:',
-      item: '24 categories (including 9 primary categories)',
+      categories:
+        '{{count}} categories (including {{primaryCount}} primary categories)',
+      milestones: '{{count}} milestones',
+      solutions: '{{count}} solutions',
       description2:
         'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
       success:
@@ -672,7 +681,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       error:
         'There was an error adding this template. Please try again. If the error persists, please try again another time.',
       addTemplate: 'Add template',
-      dontAdd: 'Don’t add template'
+      dontAdd: 'Don’t add template',
+      failedToFetch: 'Failed to fetch template'
     },
     addToExistingMilestone: {
       title: 'Add to existing milestone?',

@@ -1,6 +1,9 @@
 import React, { createContext, useState } from 'react';
 import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/FormModal';
 import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/columns';
+import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
+
+export type MtoTemplateType = GetMtoTemplatesQuery['mtoTemplates'][number];
 
 export interface MTOModalState {
   categoryID: string;
@@ -11,6 +14,7 @@ export interface MTOModalState {
   subCategoryID: string;
   modalCalledFrom?: 'solution-library';
   toggleRow?: (index: string, forceOpen?: boolean) => void;
+  mtoTemplate?: MtoTemplateType;
 }
 
 interface MTOModalContextType {
@@ -30,7 +34,8 @@ const MTOModalContext = createContext<MTOModalContextType>({
     rowType: 'category',
     subCategoryID: '',
     modalType: 'category',
-    toggleRow: () => {}
+    toggleRow: () => {},
+    mtoTemplate: undefined
   },
   setMTOModalState: () => {},
   resetMTOModalState: () => {}
@@ -46,7 +51,8 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
     rowType: 'category',
     subCategoryID: '',
     modalType: 'category',
-    toggleRow: () => {}
+    toggleRow: () => {},
+    mtoTemplate: undefined
   });
 
   const setMTOModalState = (state: Partial<MTOModalState>) => {
@@ -63,7 +69,8 @@ const MTOModalProvider = ({ children }: { children: React.ReactNode }) => {
       rowType: 'category',
       subCategoryID: '',
       modalType: 'category',
-      toggleRow: () => {}
+      toggleRow: () => {},
+      mtoTemplate: undefined
     });
   };
 

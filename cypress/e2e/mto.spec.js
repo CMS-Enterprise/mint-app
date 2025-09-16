@@ -316,45 +316,46 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('[data-testid="toast-success"]').should('exist');
   });
 
-  it('Add standard categories', () => {
-    cy.contains('Add this template').click({ force: true });
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Are you sure you want to continue?'
-    );
+  // TODO: Add this once the template library is implemented
+  // it('Add standard categories', () => {
+  //   cy.contains('Add this template').click({ force: true });
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Are you sure you want to continue?'
+  //   );
 
-    cy.contains('Add template').click({ force: true });
+  //   cy.contains('Add template').click({ force: true });
 
-    cy.get('[data-testid="toast-success"]')
-      .should('exist')
-      .contains('Your template (Standard categories) has been added.');
-  });
+  //   cy.get('[data-testid="toast-success"]')
+  //     .should('exist')
+  //     .contains('Your template (Standard categories) has been added.');
+  // });
 
-  it('tests Action Menu', () => {
-    cy.get('tbody tr')
-      .first()
-      .find('td')
-      .eq(1)
-      .invoke('text')
-      .then(text => {
-        cy.wrap(text.trim()).as('firstRowName');
-      });
+  // it('tests Action Menu', () => {
+  //   cy.get('tbody tr')
+  //     .first()
+  //     .find('td')
+  //     .eq(1)
+  //     .invoke('text')
+  //     .then(text => {
+  //       cy.wrap(text.trim()).as('firstRowName');
+  //     });
 
-    cy.get('tbody tr')
-      .first()
-      .find('button[aria-label="Open action menu"]')
-      .click({ force: true });
+  //   cy.get('tbody tr')
+  //     .first()
+  //     .find('button[aria-label="Open action menu"]')
+  //     .click({ force: true });
 
-    cy.contains('button', 'Move category down').click({ force: true });
+  //   cy.contains('button', 'Move category down').click({ force: true });
 
-    cy.get('@firstRowName').then(firstRowName => {
-      cy.get('tbody tr')
-        .first()
-        .find('td')
-        .eq(1)
-        .invoke('text')
-        .then(currentFirstRowName => {
-          expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
-        });
-    });
-  });
+  //   cy.get('@firstRowName').then(firstRowName => {
+  //     cy.get('tbody tr')
+  //       .first()
+  //       .find('td')
+  //       .eq(1)
+  //       .invoke('text')
+  //       .then(currentFirstRowName => {
+  //         expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
+  //       });
+  //   });
+  // });
 });
