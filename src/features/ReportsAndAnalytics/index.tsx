@@ -100,14 +100,18 @@ const ReportsAndAnalytics = () => {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
 
-  if (loading || mtoMilestoneSummaryLoading) return <PageLoading />;
+  if (loading || mtoMilestoneSummaryLoading)
+    return <PageLoading data-testid="analytics-loading" />;
 
   return (
     <MainContent className="mint-body-normal">
       <GridContainer>
         <h1 className="margin-top-10 margin-bottom-2">{t('heading')}</h1>
 
-        <p className="mint-body-large margin-top-0 margin-bottom-1">
+        <p
+          className="mint-body-large margin-top-0 margin-bottom-1"
+          data-testid="analytics-description"
+        >
           {t('description')}
         </p>
 
@@ -159,6 +163,7 @@ const ReportsAndAnalytics = () => {
                         type="button"
                         className="margin-right-2"
                         disabled={mtoMilestoneSummaryLoading}
+                        data-testid={`download-${reportKey}-button`}
                         onClick={() => {
                           if (reportKey === 'mtoMilestoneSummary') {
                             downloadMTOMilestoneSummary(
@@ -187,7 +192,7 @@ const ReportsAndAnalytics = () => {
         </p>
 
         {!analyticsData || error ? (
-          <p>{t('noAnalyticsData')}</p>
+          <p data-testid="no-analytics-data">{t('noAnalyticsData')}</p>
         ) : (
           <>
             <Header
@@ -199,6 +204,7 @@ const ReportsAndAnalytics = () => {
                   'border-bottom border-base-lighter': !isTablet
                 }
               )}
+              data-testid="chart-navigation"
             >
               <div className="usa-nav-container padding-0">
                 <PrimaryNav
@@ -209,6 +215,7 @@ const ReportsAndAnalytics = () => {
                         setSelectedChart(item);
                       }}
                       key={item}
+                      data-testid={`chart-tab-${item}`}
                       style={{
                         textAlign: 'center'
                       }}
@@ -241,6 +248,7 @@ const ReportsAndAnalytics = () => {
                   id="selected-chart"
                   name="selectedChart"
                   value={selectedChart}
+                  data-testid="mobile-chart-selector"
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                     setSelectedChart(e.target.value);
                   }}
@@ -265,6 +273,7 @@ const ReportsAndAnalytics = () => {
               type="button"
               className="margin-top-4"
               unstyled
+              data-testid="download-analytics-button"
               onClick={() => {
                 downloadAnalytics(analyticsData, 'MINT-Analytics.xlsx');
               }}
@@ -272,7 +281,11 @@ const ReportsAndAnalytics = () => {
               {t('downloadExcel')}
             </Button>
 
-            <ResponsiveContainer width="100%" height={chartHeight}>
+            <ResponsiveContainer
+              width="100%"
+              height={chartHeight}
+              data-testid="chart-container"
+            >
               <BarChart data={chartData as any[]} margin={chartMargins}>
                 <CartesianGrid strokeDasharray="3 3" />
 
