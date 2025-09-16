@@ -31,6 +31,8 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -43,6 +45,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
+import { formatDateUtc } from 'utils/date';
 
 export type ReportsType = 'mtoMilestoneSummary' | 'allModels';
 
@@ -69,6 +72,15 @@ const ReportsAndAnalytics = () => {
     if (isTablet) return 600;
     return 1000;
   }, [isMobile, isTablet]);
+
+  // Format X-axis labels for date-based charts
+  const formatXAxisLabel = (value: any) => {
+    if (selectedChart === 'numberOfModelsOverTime') {
+      // Format the monthYear value (e.g., "2023-01-01T00:00:00Z") to a readable date
+      return formatDateUtc(value, 'MMMM yyyy');
+    }
+    return value;
+  };
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
 
@@ -282,54 +294,99 @@ const ReportsAndAnalytics = () => {
               height={chartHeight}
               data-testid="chart-container"
             >
-              <BarChart data={chartData as any[]} margin={chartMargins}>
-                <CartesianGrid strokeDasharray="3 3" />
+              {analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
+                .chartType === 'bar' ? (
+                <BarChart data={chartData as any[]} margin={chartMargins}>
+                  <CartesianGrid strokeDasharray="3 3" />
 
-                <XAxis
-                  dataKey={
-                    analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
-                      .xAxisDataKey
-                  }
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                  tickFormatter={value => {
-                    // Format different types of X-axis labels
-                    if (selectedChart === 'modelsByStatus') {
-                      // Format status values (e.g., "ACTIVE" -> "Active")
-                      return modelPlanT(`status.options.${value}`);
+                  <XAxis
+                    dataKey={
+                      analyticsSummaryConfig[
+                        selectedChart as AnalyticsSummaryKey
+                      ].xAxisDataKey
                     }
-                    if (
-                      selectedChart === 'changesPerModelBySection' ||
-                      selectedChart === 'changesPerModelOtherData'
-                    ) {
-                      // Format table names (e.g., "plan_basics" -> "Plan Basics")
-                      return tables[value as TableName].generalName;
-                    }
-                    // For model names and other text, truncate if too long
-                    if (typeof value === 'string' && value.length > 15) {
-                      return `${value.substring(0, 12)}...`;
-                    }
-                    return value;
-                  }}
-                />
-                <YAxis />
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                    tickFormatter={value => {
+                      // Format different types of X-axis labels
+                      if (selectedChart === 'modelsByStatus') {
+                        // Format status values (e.g., "ACTIVE" -> "Active")
+                        return modelPlanT(`status.options.${value}`);
+                      }
+                      if (
+                        selectedChart === 'changesPerModelBySection' ||
+                        selectedChart === 'changesPerModelOtherData'
+                      ) {
+                        // Format table names (e.g., "plan_basics" -> "Plan Basics")
+                        return tables[value as TableName].generalName;
+                      }
+                      // For model names and other text, truncate if too long
+                      if (typeof value === 'string' && value.length > 15) {
+                        return `${value.substring(0, 12)}...`;
+                      }
+                      return value;
+                    }}
+                  />
+                  <YAxis />
 
-                <Tooltip
-                  formatter={(value, name) => [
-                    value,
-                    t(name as AnalyticsSummaryKey)
-                  ]}
-                />
+                  <Tooltip
+                    formatter={(value, name) => [
+                      value,
+                      t(name as AnalyticsSummaryKey)
+                    ]}
+                  />
 
-                <Bar
-                  dataKey={
-                    analyticsSummaryConfig[selectedChart as AnalyticsSummaryKey]
-                      .yAxisDataKey
-                  }
-                  fill="#008480"
-                />
-              </BarChart>
+                  <Bar
+                    dataKey={
+                      analyticsSummaryConfig[
+                        selectedChart as AnalyticsSummaryKey
+                      ].yAxisDataKey
+                    }
+                    fill="#008480"
+                  />
+                </BarChart>
+              ) : (
+                <LineChart data={chartData as any[]} margin={chartMargins}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey={
+                      analyticsSummaryConfig[
+                        selectedChart as AnalyticsSummaryKey
+                      ].xAxisDataKey
+                    }
+                    tickFormatter={formatXAxisLabel}
+                  />
+                  <YAxis />
+
+                  <Tooltip
+                    formatter={(value, name, props: any) => {
+                      // Format the tooltip based on chart type
+                      if (selectedChart === 'numberOfModelsOverTime') {
+                        return [value, `${t(name as AnalyticsSummaryKey)}`];
+                      }
+                      return [value, t(name as AnalyticsSummaryKey)];
+                    }}
+                    labelFormatter={label => {
+                      // Format the label (X-axis value) for date-based charts
+                      if (selectedChart === 'numberOfModelsOverTime') {
+                        return formatDateUtc(label, 'MMMM yyyy');
+                      }
+                      return label;
+                    }}
+                  />
+
+                  <Line
+                    dataKey={
+                      analyticsSummaryConfig[
+                        selectedChart as AnalyticsSummaryKey
+                      ].yAxisDataKey
+                    }
+                    stroke="#008480"
+                    strokeWidth={3}
+                  />
+                </LineChart>
+              )}
             </ResponsiveContainer>
           </>
         )}

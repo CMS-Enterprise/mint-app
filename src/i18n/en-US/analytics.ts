@@ -24,7 +24,8 @@ export const typenameTranslations: Record<string, string> = {
   ModelChangesOtherDataAnalytics: 'Changes per model other data',
   ModelsByStatusAnalytics: 'Models by status',
   ModelFollowersAnalytics: 'Number of followers per model',
-  ModelCountAnalytics: 'Total number of models'
+  ModelCountAnalytics: 'Total number of models',
+  ModelCountAnalyticsOverTime: 'Number of models over time'
 };
 
 const analytics = {
@@ -49,6 +50,7 @@ const analytics = {
   modelsByStatus: 'Models by status',
   numberOfFollowersPerModel: 'Number of followers per model',
   totalNumberOfModels: 'Total number of models',
+  numberOfModelsOverTime: 'Number of models over time',
   numberOfChanges: 'Number of changes',
   numberOfModels: 'Number of models',
   numberOfFollowers: 'Number of followers',

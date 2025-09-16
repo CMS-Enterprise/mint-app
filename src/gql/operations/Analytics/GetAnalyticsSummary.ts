@@ -35,6 +35,10 @@ export default gql(/* GraphQL */ `
       totalNumberOfModels {
         totalNumberOfModels
       }
+      numberOfModelsOverTime {
+        monthYear
+        numberOfModels
+      }
     }
   }
 `);

@@ -37,37 +37,44 @@ export const analyticsSummaryConfig: Record<
     xAxisDataKey: string;
     yAxisDataKey: string;
     xAxisLabel: string;
+    chartType: 'bar' | 'line';
   }
 > = {
   changesPerModel: {
     xAxisDataKey: 'modelName',
     yAxisDataKey: 'numberOfChanges',
-    xAxisLabel: 'Model Name'
+    xAxisLabel: 'Model Name',
+    chartType: 'bar'
   },
   changesPerModelBySection: {
     xAxisDataKey: 'tableName',
     yAxisDataKey: 'numberOfChanges',
-    xAxisLabel: 'Model Name'
+    xAxisLabel: 'Model Name',
+    chartType: 'bar'
   },
   changesPerModelOtherData: {
     xAxisDataKey: 'section',
     yAxisDataKey: 'numberOfChanges',
-    xAxisLabel: 'Model Name'
+    xAxisLabel: 'Model Name',
+    chartType: 'bar'
   },
   modelsByStatus: {
     xAxisDataKey: 'status',
     yAxisDataKey: 'numberOfModels',
-    xAxisLabel: 'Model Status'
+    xAxisLabel: 'Model Status',
+    chartType: 'bar'
   },
   numberOfFollowersPerModel: {
     xAxisDataKey: 'modelName',
     yAxisDataKey: 'numberOfFollowers',
-    xAxisLabel: 'Model Name'
+    xAxisLabel: 'Model Name',
+    chartType: 'bar'
   },
-  totalNumberOfModels: {
-    xAxisDataKey: 'totalNumberOfModels',
-    yAxisDataKey: 'totalNumberOfModels',
-    xAxisLabel: 'Total Number of Models'
+  numberOfModelsOverTime: {
+    xAxisDataKey: 'monthYear',
+    yAxisDataKey: 'numberOfModels',
+    xAxisLabel: 'Month Year',
+    chartType: 'line'
   }
 };
 

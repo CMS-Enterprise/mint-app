@@ -15,7 +15,8 @@ type AnalyticsType interface {
 		models.ModelChangesAnalytics |
 		models.ModelChangesBySectionAnalytics |
 		models.ModelChangesOtherDataAnalytics |
-		models.ModelsByStatusAnalytics
+		models.ModelsByStatusAnalytics |
+		models.ModelCountAnalyticsOverTime
 }
 
 // genericAnalyticsLoader is a generic function that handles the common pattern
@@ -47,6 +48,10 @@ func GetNumberOfFollowersPerModelLoader(np sqlutils.NamedPreparer, _ *zap.Logger
 
 func GetTotalNumberOfModelsLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.ModelCountAnalytics, error) {
 	return genericAnalyticsLoader[models.ModelCountAnalytics](np, sqlqueries.NumberOfModels)
+}
+
+func GetNumberOfModelsOverTimeLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.ModelCountAnalyticsOverTime, error) {
+	return genericAnalyticsLoader[models.ModelCountAnalyticsOverTime](np, sqlqueries.NumberOfModelsOverTime)
 }
 
 func GetChangesPerModelLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.ModelChangesAnalytics, error) {

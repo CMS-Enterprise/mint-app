@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
+type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy' | 'MMMM yyyy';
 
 /**
  * Output local timezoned dates from iso string.
