@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
@@ -16,19 +16,24 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import NotFound from 'features/NotFound';
-import downloadAnalytics, {
+import {
   analyticsSummaryConfig,
   AnalyticsSummaryKey,
+  downloadMTOMilestoneSummary,
   getChangesByOtherData,
   getChangesBySection
 } from 'features/ReportsAndAnalytics/util';
-import { useGetAnalyticsSummaryQuery } from 'gql/generated/graphql';
+import {
+  useGetAnalyticsSummaryQuery,
+  useGetMtoMilestoneSummaryQuery
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useFetchCSVData from 'hooks/useFetchCSVData';
 import { reports } from 'i18n/en-US/analytics';
 
 export type ReportsType = 'mtoMilestoneSummary' | 'allModels';
@@ -42,10 +47,19 @@ const ReportsAndAnalytics = () => {
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
 
+  const { fetchAllData } = useFetchCSVData();
+
   const { data, loading, error } = useGetAnalyticsSummaryQuery({
     skip: !flags?.mintAnalyticsEnabled,
     fetchPolicy: 'network-only'
   });
+
+  const { data: mtoMilestoneSummary, loading: mtoMilestoneSummaryLoading } =
+    useGetMtoMilestoneSummaryQuery();
+
+  const mtoMilestoneSummaryData = useMemo(() => {
+    return mtoMilestoneSummary?.modelPlanCollection ?? [];
+  }, [mtoMilestoneSummary?.modelPlanCollection]);
 
   if (!flags?.mintAnalyticsEnabled) {
     return <NotFound />;
@@ -99,7 +113,7 @@ const ReportsAndAnalytics = () => {
         <CardGroup className="padding-x-1 margin-y-4">
           <Grid desktop={{ col: 12 }}>
             <Grid row gap={1}>
-              {Object.values(reports).map(report => (
+              {Object.keys(reports).map(reportKey => (
                 <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
                   <Card
                     containerProps={{
@@ -112,22 +126,32 @@ const ReportsAndAnalytics = () => {
                   >
                     <CardHeader className="padding-3 padding-bottom-0">
                       <h3 className="line-height-normal margin-top-1">
-                        {t(report.heading)}
+                        {t(reports[reportKey as ReportsType].heading)}
                       </h3>
                     </CardHeader>
 
                     <CardBody className="padding-x-3 ">
-                      <p>{t(report.description)}</p>
+                      <p>{t(reports[reportKey as ReportsType].description)}</p>
 
-                      <p className="text-base-dark">{t(report.formatExcel)}</p>
+                      <p className="text-base-dark">
+                        {t(reports[reportKey as ReportsType].formatExcel)}
+                      </p>
                     </CardBody>
 
                     <CardFooter className="padding-3">
                       <Button
                         type="button"
                         className="margin-right-2"
+                        disabled={mtoMilestoneSummaryLoading}
                         onClick={() => {
-                          downloadAnalytics(data.analytics, 'analytics.xlsx');
+                          if (reportKey === 'mtoMilestoneSummary') {
+                            downloadMTOMilestoneSummary(
+                              mtoMilestoneSummaryData,
+                              'MINT-MTO_Milestone_Summary.xlsx'
+                            );
+                          } else if (reportKey === 'allModels') {
+                            fetchAllData();
+                          }
                         }}
                       >
                         {t('download')}
