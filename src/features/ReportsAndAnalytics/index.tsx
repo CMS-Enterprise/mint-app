@@ -312,6 +312,7 @@ const ReportsAndAnalytics = () => {
               unstyled
               data-testid="download-multiple-charts-pdf-button"
               onClick={async () => {
+                const originalChart = selectedChart; // Store the original chart
                 const chartTypes = Object.keys(analyticsSummaryConfig);
                 await downloadMultipleChartsAsPDF(
                   chartTypes,
@@ -323,6 +324,8 @@ const ReportsAndAnalytics = () => {
                     return t(`analytics:${chartType}`);
                   }
                 );
+                // Reset to original chart after download completes
+                setSelectedChart(originalChart);
               }}
             >
               {t('downloadMultipleChartsPDF')}
