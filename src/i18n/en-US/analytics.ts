@@ -45,7 +45,8 @@ const analytics = {
   numberOfFollowers: 'Number of followers',
   downloadAnalytics: 'Download analytics summary as XLSX',
   noAnalyticsData: 'No analytics data found',
-  report: 'Report'
+  report: 'Report',
+  downloadExcel: 'Download data (excel)'
 };
 
 export default analytics;

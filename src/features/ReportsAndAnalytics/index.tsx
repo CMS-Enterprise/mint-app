@@ -15,7 +15,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
+import downloadAnalytics, {
   analyticsSummaryConfig,
   AnalyticsSummaryKey,
   downloadMTOMilestoneSummary,
@@ -56,12 +56,12 @@ const ReportsAndAnalytics = () => {
   // Responsive margins and height for the chart
   const chartMargins = useMemo(() => {
     if (isMobile) {
-      return { top: 50, right: 120, left: 40, bottom: 100 };
+      return { top: 40, right: 120, left: 40, bottom: 100 };
     }
     if (isTablet) {
-      return { top: 80, right: 140, left: 80, bottom: 150 };
+      return { top: 40, right: 140, left: 80, bottom: 150 };
     }
-    return { top: 100, right: 160, left: 120, bottom: 200 };
+    return { top: 40, right: 160, left: 120, bottom: 200 };
   }, [isMobile, isTablet]);
 
   const chartHeight = useMemo(() => {
@@ -244,7 +244,7 @@ const ReportsAndAnalytics = () => {
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                     setSelectedChart(e.target.value);
                   }}
-                  className="margin-bottom-4 text-primary text-bold margin-top-1"
+                  className="margin-bottom-0 text-primary text-bold margin-top-1"
                 >
                   {Object.keys(analyticsSummaryConfig).map(item => {
                     return (
@@ -260,6 +260,17 @@ const ReportsAndAnalytics = () => {
                 </Select>
               </div>
             )}
+
+            <Button
+              type="button"
+              className="margin-top-4"
+              unstyled
+              onClick={() => {
+                downloadAnalytics(chartData, 'MINT-Analytics.xlsx');
+              }}
+            >
+              {t('downloadExcel')}
+            </Button>
 
             <ResponsiveContainer width="100%" height={chartHeight}>
               <BarChart data={chartData as any[]} margin={chartMargins}>
