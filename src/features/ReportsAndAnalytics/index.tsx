@@ -43,6 +43,7 @@ import {
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
+import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 import { reports } from 'i18n/en-US/analytics';
@@ -85,6 +86,8 @@ const ReportsAndAnalytics = () => {
   };
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
+  const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
+    useState<boolean>(false);
 
   const { fetchAllData } = useFetchCSVData();
 
@@ -113,6 +116,24 @@ const ReportsAndAnalytics = () => {
   } else if (selectedChart === 'changesPerModelOtherData') {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
+
+  const downloadMultipleChartsPDF = async () => {
+    setIsDownloadingAllCharts(true);
+    const originalChart = selectedChart; // Store the original chart
+    const chartTypes = Object.keys(analyticsSummaryConfig);
+    await downloadMultipleChartsAsPDF(
+      chartTypes,
+      'MINT-Analytics-All-Charts.pdf',
+      async (chartType: string) => {
+        setSelectedChart(chartType);
+      },
+      (chartType: string) => {
+        return t(`analytics:${chartType}`);
+      }
+    );
+    setIsDownloadingAllCharts(false);
+    setSelectedChart(originalChart);
+  };
 
   if (loading || mtoMilestoneSummaryLoading)
     return <PageLoading data-testid="analytics-loading" />;
@@ -311,24 +332,13 @@ const ReportsAndAnalytics = () => {
               className="margin-top-4 margin-left-2"
               unstyled
               data-testid="download-multiple-charts-pdf-button"
-              onClick={async () => {
-                const originalChart = selectedChart; // Store the original chart
-                const chartTypes = Object.keys(analyticsSummaryConfig);
-                await downloadMultipleChartsAsPDF(
-                  chartTypes,
-                  'MINT-Analytics-All-Charts.pdf',
-                  async (chartType: string) => {
-                    setSelectedChart(chartType);
-                  },
-                  (chartType: string) => {
-                    return t(`analytics:${chartType}`);
-                  }
-                );
-                // Reset to original chart after download completes
-                setSelectedChart(originalChart);
-              }}
+              disabled={isDownloadingAllCharts}
+              onClick={downloadMultipleChartsPDF}
             >
               {t('downloadMultipleChartsPDF')}
+              {isDownloadingAllCharts && (
+                <Spinner size="small" className="margin-right-1" />
+              )}
             </Button>
 
             <ResponsiveContainer
