@@ -8,6 +8,7 @@ import {
 import i18next from 'i18next';
 import * as XLSX from 'xlsx-js-style';
 
+import { typenameTranslations } from 'i18n/en-US/analytics';
 import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
@@ -154,8 +155,22 @@ function downloadAnalytics<T>(data: T, exportFileName: string): void {
             const headerCell = XLSX.utils.encode_cell({ r: 0, c: col });
             const columnHeader = sheet[headerCell]?.v as string;
 
+            // Handle __typename/Report name column - only populate first cell
+            if (
+              columnHeader === '__typename' ||
+              columnHeader === 'Report name'
+            ) {
+              // Only keep the value in the first data row (row 1), clear all others
+              if (row === 1) {
+                // Keep the first cell value as is
+                translatedValue = typenameTranslations[cellValue as string];
+              } else {
+                // Clear all other cells in this column
+                translatedValue = '';
+              }
+            }
             // Translate status values
-            if (columnHeader === 'Status' || columnHeader === 'status') {
+            else if (columnHeader === 'Status' || columnHeader === 'status') {
               // Translate status values (e.g., "ACTIVE" -> "Active")
               translatedValue = i18next.t(
                 `modelPlan:status.options.${cellValue}`,
@@ -173,7 +188,7 @@ function downloadAnalytics<T>(data: T, exportFileName: string): void {
               translatedValue = tables[cellValue as TableName].generalName;
             }
 
-            // Update the cell value if translation was found
+            // Update the cell value if translation was found or if we're clearing __typename cells
             if (translatedValue !== cellValue) {
               cell.v = translatedValue;
             }

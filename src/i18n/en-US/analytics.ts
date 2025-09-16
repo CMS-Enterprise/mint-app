@@ -18,6 +18,15 @@ export const reports: Record<
   }
 };
 
+export const typenameTranslations: Record<string, string> = {
+  ModelChangesAnalytics: 'Changes per model',
+  ModelChangesBySectionAnalytics: 'Changes per model by section',
+  ModelChangesOtherDataAnalytics: 'Changes per model other data',
+  ModelsByStatusAnalytics: 'Models by status',
+  ModelFollowersAnalytics: 'Number of followers per model',
+  ModelCountAnalytics: 'Total number of models'
+};
+
 const analytics = {
   heading: 'Reports and analytics',
   description:
