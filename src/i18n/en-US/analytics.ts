@@ -7,7 +7,7 @@ export const reports: Record<
   mtoMilestoneSummary: {
     heading: 'MTO milestone summary',
     description:
-      'This report downloads an excel file of all model-to-operations matrix (MTO) milestones, separated my model. It contains a subset of data about each milestone.',
+      'This report downloads an excel file of all model-to-operations matrix (MTO) milestones, separated by model. It contains a subset of data about each milestone.',
     formatExcel: 'Format: Excel'
   },
   allModels: {

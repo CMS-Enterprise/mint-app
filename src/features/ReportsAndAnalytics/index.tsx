@@ -256,11 +256,7 @@ const ReportsAndAnalytics = () => {
                 >
                   {Object.keys(analyticsSummaryConfig).map(item => {
                     return (
-                      <option
-                        key={item}
-                        value={item}
-                        selected={selectedChart === item}
-                      >
+                      <option key={item} value={item}>
                         {t(item)}
                       </option>
                     );
