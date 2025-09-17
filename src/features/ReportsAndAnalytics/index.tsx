@@ -41,6 +41,7 @@ import {
   YAxis
 } from 'recharts';
 
+import CheckboxField from 'components/CheckboxField';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import Spinner from 'components/Spinner';
@@ -86,6 +87,8 @@ const ReportsAndAnalytics = () => {
   };
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
+
+  const [appendTableToChart, setAppendTableToChart] = useState<boolean>(true);
 
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
@@ -306,6 +309,7 @@ const ReportsAndAnalytics = () => {
               </div>
             )}
 
+            {/* <div> */}
             <Button
               type="button"
               className="margin-top-4 margin-right-2"
@@ -337,7 +341,7 @@ const ReportsAndAnalytics = () => {
 
             <Button
               type="button"
-              className="margin-top-1 margin-right-2"
+              className="margin-top-1 margin-right-4"
               unstyled
               data-testid="download-multiple-charts-pdf-button"
               disabled={isDownloadingAllCharts}
@@ -348,6 +352,21 @@ const ReportsAndAnalytics = () => {
                 <Spinner size="small" className="margin-right-1" />
               )}
             </Button>
+
+            <div className="display-inline-block">
+              <CheckboxField
+                id="append-table-to-chart"
+                name="appendTableToChart"
+                onBlur={() => {}}
+                value="true"
+                label={t('appendTableToChart')}
+                checked={appendTableToChart}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setAppendTableToChart(e.target.checked);
+                }}
+              />
+            </div>
+            {/* </div> */}
 
             <ResponsiveContainer
               width="100%"

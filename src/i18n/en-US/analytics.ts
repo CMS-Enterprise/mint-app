@@ -78,7 +78,8 @@ const analytics = {
   downloadMultipleChartsPDF: 'Download all charts (PDF)',
   columnHeaderTranslations,
   errorGeneratingMultiChartPDF: 'Error generating multi-chart PDF',
-  errorGeneratingPDF: 'Error generating PDF'
+  errorGeneratingPDF: 'Error generating PDF',
+  appendTableToChart: 'Append table to chart'
 };
 
 export default analytics;
