@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   AnalyticsSummary,
   GetAnalyticsSummaryQuery,
@@ -505,8 +506,7 @@ export const downloadChartAsPDF = async (
   try {
     const chartElement = document.getElementById(chartElementId);
     if (!chartElement) {
-      // eslint-disable-next-line no-console
-      console.error(`Chart element with id "${chartElementId}" not found`);
+      toast.error(`Chart element with id "${chartElementId}" not found`);
       return;
     }
 
@@ -538,8 +538,7 @@ export const downloadChartAsPDF = async (
     // Download the PDF
     pdf.save(filename);
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error generating PDF:', error);
+    toast.error('Error generating PDF');
   }
 };
 
@@ -578,8 +577,7 @@ export const downloadMultipleChartsAsPDF = async (
         `analytics-chart-${chartType}`
       );
       if (!chartElement) {
-        // eslint-disable-next-line no-console
-        console.error(
+        toast.error(
           `Chart element with id "analytics-chart-${chartType}" not found`
         );
         // eslint-disable-next-line no-continue
@@ -632,8 +630,7 @@ export const downloadMultipleChartsAsPDF = async (
     // Download the PDF
     pdf.save(filename);
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error generating multi-chart PDF:', error);
+    toast.error('Error generating multi-chart PDF');
   }
 };
 

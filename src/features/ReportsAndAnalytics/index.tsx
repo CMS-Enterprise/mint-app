@@ -86,13 +86,15 @@ const ReportsAndAnalytics = () => {
   };
 
   const [selectedChart, setSelectedChart] = useState<string>('changesPerModel');
+
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
 
+  // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
 
   const { data, loading, error } = useGetAnalyticsSummaryQuery({
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only' // Don't use cache for analytics summary
   });
 
   const analyticsData = data?.analytics || ({} as any);
@@ -104,6 +106,7 @@ const ReportsAndAnalytics = () => {
     return mtoMilestoneSummary?.modelPlanCollection ?? [];
   }, [mtoMilestoneSummary?.modelPlanCollection]);
 
+  // Some data is not an array, so we need to handle that
   let chartData: any = !Array.isArray(
     analyticsData[selectedChart as UsedAnalyticsSummaryKey]
   )
@@ -117,6 +120,7 @@ const ReportsAndAnalytics = () => {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
 
+  // Onclick handler for downloading multiple charts as PDF
   const downloadMultipleChartsPDF = async () => {
     setIsDownloadingAllCharts(true);
     const originalChart = selectedChart; // Store the original chart
@@ -135,6 +139,7 @@ const ReportsAndAnalytics = () => {
     setSelectedChart(originalChart);
   };
 
+  // If loading any data, show loading spinner
   if (loading || mtoMilestoneSummaryLoading)
     return <PageLoading data-testid="analytics-loading" />;
 
