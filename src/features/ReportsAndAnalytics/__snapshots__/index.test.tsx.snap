@@ -306,6 +306,13 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
       >
         Download data (excel)
       </button>
+      <div
+        class="display-inline-block height-2"
+      >
+        <div
+          class="border-right-2px border-base-light margin-right-2 display-flex flex-align-end height-2 margin-top-2px"
+        />
+      </div>
       <button
         class="usa-button usa-button--unstyled margin-top-1 margin-right-2"
         data-testid="download-chart-pdf-button"
@@ -313,6 +320,13 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
       >
         Download chart (PDF)
       </button>
+      <div
+        class="display-inline-block height-2"
+      >
+        <div
+          class="border-right-2px border-base-light margin-right-2 display-flex flex-align-end height-2 margin-top-2px"
+        />
+      </div>
       <button
         class="usa-button usa-button--unstyled margin-top-1 margin-right-4"
         data-testid="download-multiple-charts-pdf-button"
@@ -338,7 +352,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
             class="usa-checkbox__label"
             for="append-table-to-chart"
           >
-            Append table to chart
+            Append table to chart export
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"

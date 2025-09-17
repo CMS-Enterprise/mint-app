@@ -322,6 +322,12 @@ const ReportsAndAnalytics = () => {
               {t('downloadExcel')}
             </Button>
 
+            {!isTablet && (
+              <div className="display-inline-block height-2">
+                <div className="border-right-2px border-base-light margin-right-2 display-flex flex-align-end height-2 margin-top-2px" />
+              </div>
+            )}
+
             <Button
               type="button"
               className="margin-top-1 margin-right-2"
@@ -338,6 +344,12 @@ const ReportsAndAnalytics = () => {
             >
               {t('downloadPDF')}
             </Button>
+
+            {!isTablet && (
+              <div className="display-inline-block height-2">
+                <div className="border-right-2px border-base-light margin-right-2 display-flex flex-align-end height-2 margin-top-2px" />
+              </div>
+            )}
 
             <Button
               type="button"
@@ -411,10 +423,21 @@ const ReportsAndAnalytics = () => {
                   <YAxis />
 
                   <Tooltip
-                    formatter={(value, name) => [
-                      value,
-                      t(name as UsedAnalyticsSummaryKey)
-                    ]}
+                    formatter={(value, name) => {
+                      return [value, t(name as UsedAnalyticsSummaryKey)];
+                    }}
+                    labelFormatter={label => {
+                      if (selectedChart === 'modelsByStatus') {
+                        return modelPlanT(`status.options.${label}`);
+                      }
+                      if (
+                        selectedChart === 'changesPerModelBySection' ||
+                        selectedChart === 'changesPerModelOtherData'
+                      ) {
+                        return tables[label as TableName].generalName;
+                      }
+                      return t(label as UsedAnalyticsSummaryKey);
+                    }}
                   />
 
                   <Bar

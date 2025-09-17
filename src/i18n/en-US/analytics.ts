@@ -79,7 +79,7 @@ const analytics = {
   columnHeaderTranslations,
   errorGeneratingMultiChartPDF: 'Error generating multi-chart PDF',
   errorGeneratingPDF: 'Error generating PDF',
-  appendTableToChart: 'Append table to chart'
+  appendTableToChart: 'Append table to chart export'
 };
 
 export default analytics;
