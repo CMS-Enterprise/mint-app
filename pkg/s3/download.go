@@ -2,16 +2,17 @@ package s3
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 
-	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
 
 // GetS3ObjectReaderAt returns an io.ReaderAt from an S3 object
 func (c S3Client) GetS3ObjectReaderAt(key string) (io.ReaderAt, int64, error) {
 	// Get the S3 object
-	resp, err := c.client.GetObject(&s3.GetObjectInput{
+	resp, err := c.client.GetObject(context.TODO(), &s3.GetObjectInput{
 		Bucket: &c.config.Bucket,
 		Key:    &key,
 	})
