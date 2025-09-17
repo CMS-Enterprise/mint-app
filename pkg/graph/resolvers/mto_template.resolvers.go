@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -16,260 +17,52 @@ import (
 
 // Categories is the resolver for the categories field.
 func (r *mTOTemplateResolver) Categories(ctx context.Context, obj *models.MTOTemplate) ([]*models.MTOTemplateCategory, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-
-	// Create mock categories
-	categories := []*models.MTOTemplateCategory{
-		models.NewMTOTemplateCategory(
-			mockUUID,
-			obj.ID,
-			"Implementation Planning",
-			nil, // No parent - top level category
-			1,
-		),
-		models.NewMTOTemplateCategory(
-			mockUUID,
-			obj.ID,
-			"Operations Management",
-			nil, // No parent - top level category
-			2,
-		),
-	}
-
-	return categories, nil
+	return MTOTemplateCategoryGetByTemplateIDLOADER(ctx, obj.ID)
 }
 
 // Milestones is the resolver for the milestones field.
 func (r *mTOTemplateResolver) Milestones(ctx context.Context, obj *models.MTOTemplate) ([]*models.MTOTemplateMilestone, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-	categoryID := uuid.MustParse("33333333-3333-3333-3333-333333333333")
-
-	// Create mock milestones for this subcategory
-	milestones := []*models.MTOTemplateMilestone{
-		models.NewMTOTemplateMilestone(
-			mockUUID,
-			obj.ID,
-			"MODEL_DESIGN_COMPLETE",
-			&categoryID,
-		),
-		models.NewMTOTemplateMilestone(
-			mockUUID,
-			obj.ID,
-			"IMPLEMENTATION_START",
-			&categoryID,
-		),
-	}
-
-	return milestones, nil
+	return MTOTemplateMilestoneGetByTemplateIDLOADER(ctx, obj.ID)
 }
 
 // Solutions is the resolver for the solutions field.
 func (r *mTOTemplateResolver) Solutions(ctx context.Context, obj *models.MTOTemplate) ([]*models.MTOTemplateSolution, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-	solutionID1 := uuid.MustParse("11111111-1111-1111-1111-111111111111")
-	solutionID2 := uuid.MustParse("22222222-2222-2222-2222-222222222222")
-
-	// Create mock solutions for this milestone
-	solutions := []*models.MTOTemplateSolution{
-		models.NewMTOTemplateSolution(
-			mockUUID,
-			obj.ID,
-			solutionID1,
-		),
-		models.NewMTOTemplateSolution(
-			mockUUID,
-			obj.ID,
-			solutionID2,
-		),
-	}
-
-	return solutions, nil
-}
-
-// PrimaryCategoryCount is the resolver for the primaryCategoryCount field.
-func (r *mTOTemplateResolver) PrimaryCategoryCount(ctx context.Context, obj *models.MTOTemplate) (int, error) {
-	return 3, nil
-}
-
-// IsUncategorized is the resolver for the isUncategorized field.
-func (r *mTOTemplateCategoryResolver) IsUncategorized(ctx context.Context, obj *models.MTOTemplateCategory) (bool, error) {
-	// Mock logic: category is uncategorized if it has no parent
-	return obj.ParentID == nil, nil
+	return MTOTemplateSolutionGetByTemplateIDLOADER(ctx, obj.ID)
 }
 
 // SubCategories is the resolver for the subCategories field.
 func (r *mTOTemplateCategoryResolver) SubCategories(ctx context.Context, obj *models.MTOTemplateCategory) ([]*models.MTOTemplateSubCategory, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-
-	// Create mock subcategories
-	subCategories := []*models.MTOTemplateSubCategory{
-		models.NewMTOTemplateSubCategory(
-			mockUUID,
-			obj.TemplateID,
-			"Design Phase",
-			1,
-		),
-		models.NewMTOTemplateSubCategory(
-			mockUUID,
-			obj.TemplateID,
-			"Testing Phase",
-			2,
-		),
-	}
-
-	return subCategories, nil
+	return MTOTemplateSubCategoryGetByCategoryIDLOADER(ctx, obj.ID)
 }
 
 // Solutions is the resolver for the solutions field.
 func (r *mTOTemplateMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOTemplateMilestone) ([]*models.MTOTemplateSolution, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-	solutionID1 := uuid.MustParse("11111111-1111-1111-1111-111111111111")
-	solutionID2 := uuid.MustParse("22222222-2222-2222-2222-222222222222")
+	return MTOTemplateSolutionGetByMilestoneIDLOADER(ctx, obj.ID)
+}
 
-	// Create mock solutions for this milestone
-	solutions := []*models.MTOTemplateSolution{
-		models.NewMTOTemplateSolution(
-			mockUUID,
-			obj.TemplateID,
-			solutionID1,
-		),
-		models.NewMTOTemplateSolution(
-			mockUUID,
-			obj.TemplateID,
-			solutionID2,
-		),
-	}
-
-	return solutions, nil
+// Milestones is the resolver for the milestones field.
+func (r *mTOTemplateSolutionResolver) Milestones(ctx context.Context, obj *models.MTOTemplateSolution) ([]*models.MTOTemplateMilestone, error) {
+	return MTOTemplateMilestoneGetBySolutionIDLOADER(ctx, obj.ID)
 }
 
 // Milestones is the resolver for the milestones field.
 func (r *mTOTemplateSubCategoryResolver) Milestones(ctx context.Context, obj *models.MTOTemplateSubCategory) ([]*models.MTOTemplateMilestone, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-	categoryID := uuid.MustParse("33333333-3333-3333-3333-333333333333")
-
-	// Create mock milestones for this subcategory
-	milestones := []*models.MTOTemplateMilestone{
-		models.NewMTOTemplateMilestone(
-			mockUUID,
-			obj.TemplateID,
-			"MODEL_DESIGN_COMPLETE",
-			&categoryID,
-		),
-		models.NewMTOTemplateMilestone(
-			mockUUID,
-			obj.TemplateID,
-			"IMPLEMENTATION_START",
-			&categoryID,
-		),
-	}
-
-	return milestones, nil
+	return MTOTemplateMilestoneGetByCategoryIDLOADER(ctx, obj.ID)
 }
 
-// CreateTemplateToMto is the resolver for the createTemplateToMto field.
+// CreateTemplateToMto is the resolver for the createTemplateToMTO field.
 func (r *mutationResolver) CreateTemplateToMto(ctx context.Context, modelPlanID uuid.UUID, templateID uuid.UUID) (*model.ApplyTemplateResult, error) {
-	// Mock implementation
-	return &model.ApplyTemplateResult{
-		ModelPlanID:     modelPlanID,
-		TemplateID:      templateID,
-		CategoriesAdded: 5,
-		MilestonesAdded: 15,
-		SolutionsAdded:  8,
-		Warnings:        []string{"Milestone xyz already exists", "Template partially applied"},
-	}, nil
+	panic(fmt.Errorf("not implemented: CreateTemplateToMto - createTemplateToMTO"))
 }
 
 // MtoTemplates is the resolver for the mtoTemplates field.
 func (r *queryResolver) MtoTemplates(ctx context.Context, keys []models.MTOTemplateKey) ([]*models.MTOTemplate, error) {
-	// Create mock templates using constructor
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-
-	// Create descriptions as variables first
-	acoDesc := "Template for ACO and kidney care models"
-	episodeDesc := "Template for Episode Primary Care and Non-ACO models"
-	medicareDesc := "Template for Medicare Advantage and Drug models"
-	standardDesc := "Template with standard organizational categories"
-	stateDesc := "Template for state and local government models"
-
-	mockTemplates := []*models.MTOTemplate{
-		models.NewMTOTemplate(
-			mockUUID,
-			models.MTOTemplateKeyAcoAndKidneyModels,
-			"ACO and Kidney Models Template",
-			&acoDesc,
-		),
-		models.NewMTOTemplate(
-			mockUUID,
-			models.MTOTemplateKeyEpisodePrimaryCareAndNonAcoModels,
-			"Episode Primary Care Template",
-			&episodeDesc,
-		),
-		models.NewMTOTemplate(
-			mockUUID,
-			models.MTOTemplateKeyMedicareAdvantageAndDrugModels,
-			"Medicare Advantage and Drug Template",
-			&medicareDesc,
-		),
-		models.NewMTOTemplate(
-			mockUUID,
-			models.MTOTemplateKeyStandardCategories,
-			"Standard Categories Template",
-			&standardDesc,
-		),
-		models.NewMTOTemplate(
-			mockUUID,
-			models.MTOTemplateKeyStateAndLocalModels,
-			"State and Local Models Template",
-			&stateDesc,
-		),
-	}
-
-	// Set mock counts (since constructor sets them to 0)
-	for _, template := range mockTemplates {
-		template.CategoryCount = 5
-		template.MilestoneCount = 20
-		template.SolutionCount = 10
-	}
-
-	// Filter by keys if provided
-	if len(keys) > 0 {
-		filtered := make([]*models.MTOTemplate, 0)
-		keySet := make(map[models.MTOTemplateKey]bool)
-		for _, key := range keys {
-			keySet[key] = true
-		}
-
-		for _, template := range mockTemplates {
-			if keySet[template.Key] {
-				filtered = append(filtered, template)
-			}
-		}
-		return filtered, nil
-	}
-
-	return mockTemplates, nil
+	return MTOTemplateGetByKeysLOADER(ctx, keys)
 }
 
 // MtoTemplate is the resolver for the mtoTemplate field.
 func (r *queryResolver) MtoTemplate(ctx context.Context, id *uuid.UUID, key *models.MTOTemplateKey) (*models.MTOTemplate, error) {
-	mockUUID := uuid.MustParse("00000000-0000-0000-0000-000000000000")
-	desc := "Mock template description"
-
-	// Mock single template
-	template := models.NewMTOTemplate(
-		mockUUID,
-		models.MTOTemplateKeyAcoAndKidneyModels,
-		"Mock Template",
-		&desc,
-	)
-
-	// Set mock counts
-	template.CategoryCount = 3
-	template.MilestoneCount = 12
-	template.SolutionCount = 8
-
-	return template, nil
+	return MTOTemplateGetByIDOrKeyLOADER(ctx, id, key)
 }
 
 // MTOTemplate returns generated.MTOTemplateResolver implementation.
@@ -285,6 +78,11 @@ func (r *Resolver) MTOTemplateMilestone() generated.MTOTemplateMilestoneResolver
 	return &mTOTemplateMilestoneResolver{r}
 }
 
+// MTOTemplateSolution returns generated.MTOTemplateSolutionResolver implementation.
+func (r *Resolver) MTOTemplateSolution() generated.MTOTemplateSolutionResolver {
+	return &mTOTemplateSolutionResolver{r}
+}
+
 // MTOTemplateSubCategory returns generated.MTOTemplateSubCategoryResolver implementation.
 func (r *Resolver) MTOTemplateSubCategory() generated.MTOTemplateSubCategoryResolver {
 	return &mTOTemplateSubCategoryResolver{r}
@@ -293,4 +91,5 @@ func (r *Resolver) MTOTemplateSubCategory() generated.MTOTemplateSubCategoryReso
 type mTOTemplateResolver struct{ *Resolver }
 type mTOTemplateCategoryResolver struct{ *Resolver }
 type mTOTemplateMilestoneResolver struct{ *Resolver }
+type mTOTemplateSolutionResolver struct{ *Resolver }
 type mTOTemplateSubCategoryResolver struct{ *Resolver }

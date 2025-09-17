@@ -12,8 +12,14 @@ type MTOTemplate {
   key: MTOTemplateKey!
   name: String!
   description: String
+  dateAdded: Time
 
   # Custom Resolvers
+  """
+  To represent if this template is _already_ part of the Model Plan's MTO.
+  This will automatically return false if it is not in the context of a model plan
+  """
+  isAdded: Boolean!
   categories: [MTOTemplateCategory!]!
   milestones: [MTOTemplateMilestone!]!
   solutions: [MTOTemplateSolution!]!
@@ -84,6 +90,9 @@ type MTOTemplateSolution {
   key: MTOCommonSolutionKey
   templateID: UUID!
   mtoCommonSolutionID: UUID!
+
+  # Custom Resolvers
+  milestones: [MTOTemplateMilestone!]!
 
   createdBy: UUID!
   createdDts: Time!

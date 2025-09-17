@@ -5,6 +5,7 @@ type ModelsToOperationMatrix {
   commonMilestones: [MTOCommonMilestone!]!
   commonSolutions: [MTOCommonSolution!]!
   milestones: [MTOMilestone!]!
+  mtoTemplates: [MTOTemplate!]!
   """
   Solutions returns solutions that are linked to a Model Plan's MTO.
    -- filterView is used to return only solutions that are relevant to a specific ModelViewFilter

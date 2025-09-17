@@ -34,6 +34,11 @@ func (r *modelsToOperationMatrixResolver) Milestones(ctx context.Context, obj *m
 	return MTOMilestoneGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
+// MtoTemplates is the resolver for the mtoTemplates field.
+func (r *modelsToOperationMatrixResolver) MtoTemplates(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOTemplate, error) {
+	return MTOTemplateGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *modelsToOperationMatrixResolver) Solutions(ctx context.Context, obj *models.ModelsToOperationMatrix, filterView *models.ModelViewFilter) ([]*models.MTOSolution, error) {
 	return MTOSolutionsGetByModelPlanIDAndOptionalFilterView(ctx, obj.ModelPlan.ID, filterView)

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 )
 
@@ -18,57 +20,24 @@ const (
 	MTOTemplateKeyStateAndLocalModels               MTOTemplateKey = "STATE_AND_LOCAL_MODELS"
 )
 
-/* =========================
-   Core: Template + children
-   ========================= */
-
+// MTOTemplate Represents a Master Template of MTO that can be applied to a Model Plan
 type MTOTemplate struct {
 	baseStruct
+	modelPlanRelation
 
 	Key         MTOTemplateKey `json:"key"         db:"key"`
 	Name        string         `json:"name"        db:"name"`
 	Description *string        `json:"description" db:"description"`
 
 	// Convenience counts (not persisted, filled in resolvers)
-	CategoryCount  int `json:"categoryCount"  db:"-"`
-	MilestoneCount int `json:"milestoneCount" db:"-"`
-	SolutionCount  int `json:"solutionCount"  db:"-"`
-}
+	CategoryCount        int `json:"categoryCount"  db:"-"`
+	PrimaryCategoryCount int `json:"primaryCategoryCount"  db:"-"`
+	MilestoneCount       int `json:"milestoneCount" db:"-"`
+	SolutionCount        int `json:"solutionCount"  db:"-"`
 
-type MTOTemplateCategory struct {
-	baseStruct
-
-	TemplateID uuid.UUID  `json:"templateID" db:"template_id"`
-	Name       string     `json:"name"       db:"name"`
-	ParentID   *uuid.UUID `json:"parentID"   db:"parent_id"`
-	Order      int        `json:"order"      db:"order"`
-}
-
-type MTOTemplateSubCategory struct {
-	baseStruct
-
-	TemplateID uuid.UUID  `json:"templateID" db:"template_id"`
-	Name       string     `json:"name"       db:"name"`
-	ParentID   *uuid.UUID `json:"parentID"   db:"parent_id"`
-	Order      int        `json:"order"      db:"order"`
-}
-
-type MTOTemplateMilestone struct {
-	baseStruct
-
-	Name                  string                `json:"name"                  db:"name"`
-	TemplateID            uuid.UUID             `json:"templateID"            db:"template_id"`
-	Key                   MTOCommonMilestoneKey `json:"key" db:"key"`
-	MTOTemplateCategoryID *uuid.UUID            `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
-}
-
-type MTOTemplateSolution struct {
-	baseStruct
-
-	Name                string               `json:"name"               db:"name"`
-	Key                 MTOCommonSolutionKey `json:"key"                db:"key"`
-	TemplateID          uuid.UUID            `json:"templateID"         db:"template_id"`
-	MTOCommonSolutionID uuid.UUID            `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
+	// Indicates if the template is added to a model plan (not persisted, filled in by join in database)
+	IsAdded   bool       `json:"isAdded" db:"is_added"`
+	DateAdded *time.Time `json:"dateAdded" db:"date_added"`
 }
 
 // NewMtoTemplate returns a new MtoTemplate object
@@ -83,65 +52,5 @@ func NewMTOTemplate(
 		Key:         key,
 		Name:        name,
 		Description: description,
-	}
-}
-
-// NewMTOTemplateCategory returns a new MTOTemplateCategory object
-func NewMTOTemplateCategory(
-	createdBy uuid.UUID,
-	templateID uuid.UUID,
-	name string,
-	parentID *uuid.UUID,
-	order int,
-) *MTOTemplateCategory {
-	return &MTOTemplateCategory{
-		baseStruct: NewBaseStruct(createdBy),
-		TemplateID: templateID,
-		Name:       name,
-		ParentID:   parentID,
-		Order:      order,
-	}
-}
-
-// NewMTOTemplateSubCategory returns a new MTOTemplateSubCategory object
-func NewMTOTemplateSubCategory(
-	createdBy uuid.UUID,
-	templateID uuid.UUID,
-	name string,
-	order int,
-) *MTOTemplateSubCategory {
-	return &MTOTemplateSubCategory{
-		baseStruct: NewBaseStruct(createdBy),
-		TemplateID: templateID,
-		Name:       name,
-		Order:      order,
-	}
-}
-
-// NewMTOTemplateMilestone returns a new MTOTemplateMilestone object
-func NewMTOTemplateMilestone(
-	createdBy uuid.UUID,
-	templateID uuid.UUID,
-	mtoCommonMilestoneKey MTOCommonMilestoneKey,
-	mtoTemplateCategoryID *uuid.UUID,
-) *MTOTemplateMilestone {
-	return &MTOTemplateMilestone{
-		baseStruct:            NewBaseStruct(createdBy),
-		TemplateID:            templateID,
-		Key:                   mtoCommonMilestoneKey,
-		MTOTemplateCategoryID: mtoTemplateCategoryID,
-	}
-}
-
-// NewMTOTemplateSolution returns a new MTOTemplateSolution object
-func NewMTOTemplateSolution(
-	createdBy uuid.UUID,
-	templateID uuid.UUID,
-	mtoCommonSolutionID uuid.UUID,
-) *MTOTemplateSolution {
-	return &MTOTemplateSolution{
-		baseStruct:          NewBaseStruct(createdBy),
-		TemplateID:          templateID,
-		MTOCommonSolutionID: mtoCommonSolutionID,
 	}
 }

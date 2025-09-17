@@ -4,3 +4,4 @@ ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'mto_template_category';
 ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'mto_template_milestone';
 ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'mto_template_solution';
 ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'mto_template_milestone_solution_link';
+ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'model_plan_mto_template_link';
