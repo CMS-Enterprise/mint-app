@@ -2,6 +2,7 @@ package echimptestdata
 
 import (
 	"bytes"
+	"context"
 	_ "embed"
 
 	"github.com/spf13/viper"
@@ -24,11 +25,11 @@ func SeedEChimpTestData(eChimpClient *s3.S3Client, viperConfig *viper.Viper) err
 	// Create a crReader from the embedded byte slice
 	crReader := bytes.NewReader(fsCrDataParquet)
 	tldReader := bytes.NewReader(tdlDataParquet)
-	err := eChimpClient.UploadFile(crReader, crKey)
+	err := eChimpClient.UploadFile(context.TODO(), crReader, crKey)
 	if err != nil {
 		return err
 	}
-	err = eChimpClient.UploadFile(tldReader, tdlKey)
+	err = eChimpClient.UploadFile(context.TODO(), tldReader, tdlKey)
 	if err != nil {
 		return err
 	}

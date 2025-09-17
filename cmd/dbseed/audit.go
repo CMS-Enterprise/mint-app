@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -64,15 +65,14 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 		// Notice:  that this will create an error if you run this a second time, because there is already an analyzed audit record.
 		// For simplicity, we check if it is that error, and if so just continue.
 		if err2 != nil {
-			if pqErr, ok := err2.(*pq.Error); ok {
+			var pqErr *pq.Error
+			if errors.As(err2, &pqErr) {
 
 				if pqErr.Code.Name() == "unique_violation" {
 					continue
 				}
 				fmt.Printf("pq error: Severity: %s, Code: %s, Message: %s\n", pqErr.Severity, pqErr.Code, pqErr.Message)
 
-			} else {
-				fmt.Printf("there was an issue analyzing model plan: %s, ID: %s. Err: %v", mp.ModelName, mp.ID, err2)
 			}
 
 		}

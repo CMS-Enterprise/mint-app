@@ -254,7 +254,7 @@ func (s *Seeder) planDocumentCreate(mp *models.ModelPlan, fileName string, fileP
 		if virusFound {
 			scanStatus = "INFECTED"
 		}
-		err := s.Config.S3Client.SetTagValueForKey(document.FileKey, "av-status", scanStatus)
+		err := s.Config.S3Client.SetTagValueForKey(context.TODO(), document.FileKey, "av-status", scanStatus)
 		if err != nil {
 			panic(err)
 		}

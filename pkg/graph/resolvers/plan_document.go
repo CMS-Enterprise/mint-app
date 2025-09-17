@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"context"
 	"fmt"
 	"net/url"
 
@@ -26,7 +27,7 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 		return nil, err
 	}
 
-	err = s3Client.UploadFile(input.FileData.File, document.FileKey)
+	err = s3Client.UploadFile(context.TODO(), input.FileData.File, document.FileKey)
 	if err != nil {
 		return &models.PlanDocument{}, err
 	}

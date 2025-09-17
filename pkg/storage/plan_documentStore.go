@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"context"
 	"database/sql"
 	_ "embed"
 
@@ -243,7 +244,7 @@ func planDocumentUpdateVirusScanStatus(s3Client *s3.S3Client, document *models.P
 }
 
 func fetchDocumentTag(s3Client *s3.S3Client, document *models.PlanDocument, tagName string) (string, error) {
-	value, valueErr := s3Client.TagValueForKey(document.FileKey, tagName)
+	value, valueErr := s3Client.TagValueForKey(context.TODO(), document.FileKey, tagName)
 	if valueErr != nil {
 		return "", valueErr
 	}

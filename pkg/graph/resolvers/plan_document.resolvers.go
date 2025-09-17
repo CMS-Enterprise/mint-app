@@ -59,7 +59,7 @@ func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.Plan
 	if obj.IsLink {
 		return nil, nil
 	}
-	url, err := r.fileUploadS3Client.NewGetPresignedURL(obj.FileKey)
+	url, err := r.fileUploadS3Client.NewGetPresignedURL(ctx, obj.FileKey)
 	if err != nil {
 		return nil, err
 	}
