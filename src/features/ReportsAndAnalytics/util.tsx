@@ -507,7 +507,8 @@ const addDataTableToPDF = (
   chartType: string | undefined,
   pageWidth: number,
   startY: number,
-  maxHeight: number
+  maxHeight: number,
+  analyticsData?: any
 ): void => {
   if (!chartData || chartData.length === 0) return;
 
@@ -516,20 +517,44 @@ const addDataTableToPDF = (
   const cellHeight = 20;
   const headerHeight = 25;
 
-  // Get column headers and keys from the actual data structure (same as Excel export)
-  const firstItem = chartData[0];
-  const keys = Object.keys(firstItem);
+  // Get the appropriate data for this specific chart type (same as Excel export)
+  let processedData = chartData;
 
-  // Filter out __typename/Report name column
-  const filteredKeys = keys.filter(key => key !== '__typename');
+  // Apply the same data processing logic as the main component
+  if (chartType && analyticsData) {
+    if (chartType === 'changesPerModelBySection') {
+      processedData = getChangesBySection(
+        analyticsData.changesPerModelBySection
+      );
+    } else if (chartType === 'changesPerModelOtherData') {
+      processedData = getChangesByOtherData(
+        analyticsData.changesPerModelOtherData
+      );
+    } else {
+      // Use the specific chart data from analyticsData
+      const specificChartData =
+        analyticsData[chartType as UsedAnalyticsSummaryKey];
+      processedData = !Array.isArray(specificChartData)
+        ? [specificChartData]
+        : specificChartData;
+    }
+  }
 
-  // Use all available keys from the data, excluding Report name
-  const headers = filteredKeys.map(
+  if (!processedData || processedData.length === 0) return;
+
+  // Get column headers and keys from the processed data structure (same as Excel export)
+  const firstItem = processedData[0];
+
+  // Remove __typename key from the keys
+  const keys = Object.keys(firstItem).filter(key => key !== '__typename');
+
+  // Use all available keys from the data (same as Excel export)
+  const headers = keys.map(
     key =>
       columnHeaderTranslations[key] ||
       key.charAt(0).toUpperCase() + key.slice(1)
   );
-  const dataKeys = filteredKeys;
+  const dataKeys = keys;
 
   const colWidth = tableWidth / headers.length;
   let currentY = startY;
@@ -556,7 +581,7 @@ const addDataTableToPDF = (
 
   // Add data rows with pagination
   pdf.setFont('helvetica', 'normal');
-  chartData.forEach((item, rowIndex) => {
+  processedData.forEach((item, rowIndex) => {
     // Check if we need a new page
     const remainingSpace = isFirstPage
       ? startY + maxHeight - currentY
@@ -581,20 +606,46 @@ const addDataTableToPDF = (
       let displayValue = value;
 
       // Apply the same formatting logic as Excel export
-      if (key === 'status') {
+      const columnHeader =
+        columnHeaderTranslations[key] ||
+        key.charAt(0).toUpperCase() + key.slice(1);
+      // Handle __typename/Report name column - only populate first cell (same as Excel)
+      if (key === '__typename' || columnHeader === 'Report name') {
+        // Only keep the value in the first data row (row 1), clear all others
+        if (rowIndex === 0) {
+          // Keep the first cell value as is
+          displayValue = typenameTranslations[value as string] || value;
+        } else {
+          // Clear all other cells in this column
+          displayValue = '';
+        }
+      }
+      // Translate status values
+      else if (columnHeader === 'Status' || key === 'status') {
         // Translate status values (e.g., "ACTIVE" -> "Active")
         displayValue = i18next.t(`modelPlan:status.options.${value}`, value);
-      } else if (key === 'tableName' || key === 'section') {
-        // Translate table/section names
+      }
+      // Translate table/section names
+      else if (
+        columnHeader === 'Table name' ||
+        key === 'tableName' ||
+        columnHeader === 'Section' ||
+        key === 'section'
+      ) {
+        // Translate table names using the tables translation
         displayValue = tables[value as TableName]?.generalName || value;
-      } else if (key === 'monthYear') {
-        // Format monthYear dates
+      }
+      // Format monthYear dates
+      else if (key === 'monthYear' || columnHeader === 'Date') {
+        // Format the monthYear value using formatDateUtc
         displayValue = formatDateUtc(value, 'MMMM yyyy');
-      } else if (key === 'modelName') {
-        // Don't truncate model names - show full text
+      }
+      // Don't truncate model names - show full text
+      else if (key === 'modelName') {
         displayValue = value;
-      } else if (typeof value === 'string' && value.length > 20) {
-        // Truncate other long strings for display
+      }
+      // Truncate other long strings for display
+      else if (typeof value === 'string' && value.length > 20) {
         displayValue = `${value.substring(0, 17)}...`;
       }
 
@@ -624,7 +675,8 @@ export const downloadChartAsPDF = async (
   chartElementId: string,
   filename: string = 'MINT-Chart.pdf',
   chartData?: any[],
-  chartType?: string
+  chartType?: string,
+  analyticsData?: any
 ): Promise<void> => {
   try {
     const chartElement = document.getElementById(chartElementId);
@@ -712,7 +764,8 @@ export const downloadChartAsPDF = async (
         chartType,
         pageWidth,
         chartY + scaledChartHeight + 10,
-        tableHeight
+        tableHeight,
+        analyticsData
       );
     }
 
@@ -736,7 +789,8 @@ export const downloadMultipleChartsAsPDF = async (
   chartTypes: string[],
   filename: string = 'MINT-Charts.pdf',
   setSelectedChart?: (chartType: string) => void,
-  chartData?: any[]
+  chartData?: any[],
+  analyticsData?: any
 ): Promise<void> => {
   try {
     const Pdf = jsPDF;
@@ -839,7 +893,8 @@ export const downloadMultipleChartsAsPDF = async (
           chartType,
           pageWidth,
           chartY + scaledHeight + 10,
-          tableHeight
+          tableHeight,
+          analyticsData
         );
       }
     }
