@@ -128,7 +128,13 @@ const ReportsAndAnalytics = () => {
     await downloadMultipleChartsAsPDF(
       chartTypes,
       'MINT-Analytics-All-Charts.pdf',
-      setSelectedChart
+      setSelectedChart,
+      (chartType: string) => {
+        // Return the chart data for the specified chart type
+        const dataForChart =
+          analyticsData[chartType as UsedAnalyticsSummaryKey];
+        return Array.isArray(dataForChart) ? dataForChart : [];
+      }
     );
     setIsDownloadingAllCharts(false);
     setSelectedChart(originalChart); // Restore the orignal chart
@@ -320,7 +326,9 @@ const ReportsAndAnalytics = () => {
               onClick={() => {
                 downloadChartAsPDF(
                   `analytics-chart-${selectedChart}`,
-                  'MINT-Analytics-Chart.pdf'
+                  'MINT-Analytics-Chart.pdf',
+                  chartData,
+                  selectedChart
                 );
               }}
             >

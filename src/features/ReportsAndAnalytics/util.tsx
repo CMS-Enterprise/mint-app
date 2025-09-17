@@ -8,7 +8,7 @@ import {
   TableName
 } from 'gql/generated/graphql';
 import html2canvas from 'html2canvas';
-import i18next, { t } from 'i18next';
+import i18next from 'i18next';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx-js-style';
 
@@ -500,10 +500,131 @@ export const downloadMTOMilestoneSummary = (
   XLSX.writeFile(workbook, exportFileName);
 };
 
+// Helper function to add data table to PDF
+const addDataTableToPDF = (
+  pdf: any,
+  chartData: any[],
+  chartType: string | undefined,
+  pageWidth: number,
+  startY: number,
+  maxHeight: number
+): void => {
+  if (!chartData || chartData.length === 0) return;
+
+  const margin = 20;
+  const tableWidth = pageWidth - margin * 2;
+  const cellHeight = 20;
+  const headerHeight = 25;
+
+  // Get column headers and keys from the actual data structure (same as Excel export)
+  const firstItem = chartData[0];
+  const keys = Object.keys(firstItem);
+
+  // Filter out __typename/Report name column
+  const filteredKeys = keys.filter(key => key !== '__typename');
+
+  // Use all available keys from the data, excluding Report name
+  const headers = filteredKeys.map(
+    key =>
+      columnHeaderTranslations[key] ||
+      key.charAt(0).toUpperCase() + key.slice(1)
+  );
+  const dataKeys = filteredKeys;
+
+  const colWidth = tableWidth / headers.length;
+  let currentY = startY;
+  let currentPage = 0;
+  let isFirstPage = true;
+  const pageHeight = 600; // Full page height for new pages
+
+  currentY += 30;
+
+  // Add headers
+  const addHeaders = () => {
+    pdf.setFontSize(10);
+    pdf.setFont('helvetica', 'bold');
+    headers.forEach((header, index) => {
+      const x = margin + index * colWidth;
+      pdf.rect(x, currentY, colWidth, headerHeight);
+      pdf.text(header, x + 5, currentY + 15);
+    });
+    currentY += headerHeight;
+  };
+
+  // Add headers on first page
+  addHeaders();
+
+  // Add data rows with pagination
+  pdf.setFont('helvetica', 'normal');
+  chartData.forEach((item, rowIndex) => {
+    // Check if we need a new page
+    const remainingSpace = isFirstPage
+      ? startY + maxHeight - currentY
+      : pageHeight - currentY - 50;
+    const spaceNeeded = cellHeight;
+
+    if (remainingSpace < spaceNeeded) {
+      // Add new page
+      pdf.addPage();
+      currentPage += 1;
+      currentY = 50; // Start from top of new page
+      isFirstPage = false;
+
+      // Add headers on new page
+      addHeaders();
+    }
+
+    // Add data row
+    dataKeys.forEach((key, colIndex) => {
+      const x = margin + colIndex * colWidth;
+      const value = item[key];
+      let displayValue = value;
+
+      // Apply the same formatting logic as Excel export
+      if (key === 'status') {
+        // Translate status values (e.g., "ACTIVE" -> "Active")
+        displayValue = i18next.t(`modelPlan:status.options.${value}`, value);
+      } else if (key === 'tableName' || key === 'section') {
+        // Translate table/section names
+        displayValue = tables[value as TableName]?.generalName || value;
+      } else if (key === 'monthYear') {
+        // Format monthYear dates
+        displayValue = formatDateUtc(value, 'MMMM yyyy');
+      } else if (key === 'modelName') {
+        // Don't truncate model names - show full text
+        displayValue = value;
+      } else if (typeof value === 'string' && value.length > 20) {
+        // Truncate other long strings for display
+        displayValue = `${value.substring(0, 17)}...`;
+      }
+
+      pdf.rect(x, currentY, colWidth, cellHeight);
+      pdf.text(String(displayValue), x + 5, currentY + 12);
+    });
+    currentY += cellHeight;
+  });
+
+  // Add page numbers if multiple pages
+  if (currentPage > 0) {
+    for (let pageNum = 0; pageNum <= currentPage; pageNum += 1) {
+      pdf.setPage(pageNum + 1);
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(
+        `Page ${pageNum + 1} of ${currentPage + 1}`,
+        pageWidth - 60,
+        pageHeight - 10
+      );
+    }
+  }
+};
+
 // Downloads a chart as PDF using html2canvas and jsPDF
 export const downloadChartAsPDF = async (
   chartElementId: string,
-  filename: string = 'MINT-Chart.pdf'
+  filename: string = 'MINT-Chart.pdf',
+  chartData?: any[],
+  chartType?: string
 ): Promise<void> => {
   try {
     const chartElement = document.getElementById(chartElementId);
@@ -535,17 +656,52 @@ export const downloadChartAsPDF = async (
     const imgWidth = canvas.width;
     const imgHeight = canvas.height;
 
-    // Create PDF with appropriate orientation
+    // Create PDF with space for chart and data table
     const Pdf = jsPDF;
+    const pageWidth = 800; // Fixed width for better table layout
+    const pageHeight = 600; // Fixed height
+    const chartHeight = 400; // Height allocated for chart
+    const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table
+
     const pdf = new Pdf({
-      orientation: imgWidth > imgHeight ? 'landscape' : 'portrait',
+      orientation: 'landscape',
       unit: 'px',
-      format: [imgWidth, imgHeight]
+      format: [pageWidth, pageHeight]
     });
 
-    // Add the image to PDF
+    // Scale chart to fit allocated space
+    const chartScale = Math.min(
+      pageWidth / imgWidth,
+      chartHeight / imgHeight,
+      1
+    );
+    const scaledChartWidth = imgWidth * chartScale;
+    const scaledChartHeight = imgHeight * chartScale;
+    const chartX = (pageWidth - scaledChartWidth) / 2;
+    const chartY = 20;
+
+    // Add the chart image to PDF
     const imgData = canvas.toDataURL('image/png');
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    pdf.addImage(
+      imgData,
+      'PNG',
+      chartX,
+      chartY,
+      scaledChartWidth,
+      scaledChartHeight
+    );
+
+    // Add data table if chart data is provided
+    if (chartData && chartData.length > 0) {
+      addDataTableToPDF(
+        pdf,
+        chartData,
+        chartType,
+        pageWidth,
+        chartY + scaledChartHeight + 10,
+        tableHeight
+      );
+    }
 
     // Download the PDF
     pdf.save(filename);
@@ -566,16 +722,19 @@ export const downloadChartAsPDF = async (
 export const downloadMultipleChartsAsPDF = async (
   chartTypes: string[],
   filename: string = 'MINT-Charts.pdf',
-  setSelectedChart?: (chartType: string) => void
+  setSelectedChart?: (chartType: string) => void,
+  getChartData?: (chartType: string) => any[]
 ): Promise<void> => {
   try {
     const Pdf = jsPDF;
-    const pdf = new Pdf('portrait', 'px', 'a4');
+    const pdf = new Pdf('landscape', 'px', 'a4'); // Use landscape for better table layout
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
     const margin = 20;
+    const chartHeight = 300; // Allocate space for chart
+    const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table (reduced margin)
     const maxWidth = pageWidth - margin * 2;
-    const maxHeight = pageHeight - margin * 2;
+    const maxChartHeight = chartHeight - 60; // Space for title
 
     // Process each chart type by switching to it and capturing
     for (let i = 0; i < chartTypes.length; i += 1) {
@@ -621,11 +780,11 @@ export const downloadMultipleChartsAsPDF = async (
         logging: false
       });
 
-      // Calculate scaling to fit page
+      // Calculate scaling to fit allocated chart space
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
       const scaleX = maxWidth / imgWidth;
-      const scaleY = maxHeight / imgHeight;
+      const scaleY = maxChartHeight / imgHeight;
       const scale = Math.min(scaleX, scaleY, 1); // Don't scale up
 
       const scaledWidth = imgWidth * scale;
@@ -636,20 +795,47 @@ export const downloadMultipleChartsAsPDF = async (
         pdf.addPage();
       }
 
-      // Add chart title if provided
+      // Add chart title
       const chartTitle = i18next.t(`analytics:${chartType}`);
       pdf.setFontSize(16);
       pdf.setFont('helvetica', 'bold');
       pdf.text(chartTitle, pageWidth / 2, 30, { align: 'center' });
 
-      // Center the image on the page (with space for title)
-      const titleHeight = 50;
-      const x = (pageWidth - scaledWidth) / 2;
-      const y = (pageHeight - scaledHeight) / 2 + titleHeight;
+      // Position chart in allocated space
+      const chartX = (pageWidth - scaledWidth) / 2;
+      const chartY = 50; // Below title
 
-      // Add the image to PDF
+      // Add the chart image to PDF
       const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight);
+      pdf.addImage(imgData, 'PNG', chartX, chartY, scaledWidth, scaledHeight);
+
+      // Add data table if chart data is provided
+      if (getChartData) {
+        const chartData = getChartData(chartType);
+        if (chartData && chartData.length > 0) {
+          addDataTableToPDF(
+            pdf,
+            chartData,
+            chartType,
+            pageWidth,
+            chartY + scaledHeight + 10,
+            tableHeight
+          );
+        }
+      }
+    }
+
+    // Add page numbers to all pages
+    const totalPages = chartTypes.length; // Each chart gets its own page
+    for (let pageNum = 1; pageNum <= totalPages; pageNum += 1) {
+      pdf.setPage(pageNum);
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(
+        `Page ${pageNum} of ${totalPages}`,
+        pageWidth - 60,
+        pageHeight - 10
+      );
     }
 
     // Download the PDF
