@@ -723,18 +723,23 @@ export const downloadMultipleChartsAsPDF = async (
   chartTypes: string[],
   filename: string = 'MINT-Charts.pdf',
   setSelectedChart?: (chartType: string) => void,
-  getChartData?: (chartType: string) => any[]
+  chartData?: any[]
 ): Promise<void> => {
   try {
     const Pdf = jsPDF;
-    const pdf = new Pdf('landscape', 'px', 'a4'); // Use landscape for better table layout
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
+    const pageWidth = 800; // Fixed width for better table layout (same as single PDF)
+    const pageHeight = 600; // Fixed height (same as single PDF)
+    const chartHeight = 400; // Height allocated for chart (same as single PDF)
+    const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table
     const margin = 20;
-    const chartHeight = 300; // Allocate space for chart
-    const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table (reduced margin)
     const maxWidth = pageWidth - margin * 2;
     const maxChartHeight = chartHeight - 60; // Space for title
+
+    const pdf = new Pdf({
+      orientation: 'landscape',
+      unit: 'px',
+      format: [pageWidth, pageHeight]
+    });
 
     // Process each chart type by switching to it and capturing
     for (let i = 0; i < chartTypes.length; i += 1) {
@@ -810,18 +815,15 @@ export const downloadMultipleChartsAsPDF = async (
       pdf.addImage(imgData, 'PNG', chartX, chartY, scaledWidth, scaledHeight);
 
       // Add data table if chart data is provided
-      if (getChartData) {
-        const chartData = getChartData(chartType);
-        if (chartData && chartData.length > 0) {
-          addDataTableToPDF(
-            pdf,
-            chartData,
-            chartType,
-            pageWidth,
-            chartY + scaledHeight + 10,
-            tableHeight
-          );
-        }
+      if (chartData && chartData.length > 0) {
+        addDataTableToPDF(
+          pdf,
+          chartData,
+          chartType,
+          pageWidth,
+          chartY + scaledHeight + 10,
+          tableHeight
+        );
       }
     }
 

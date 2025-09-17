@@ -125,16 +125,16 @@ const ReportsAndAnalytics = () => {
     setIsDownloadingAllCharts(true);
     const originalChart = selectedChart; // Store the original chart
     const chartTypes = Object.keys(analyticsSummaryConfig);
+    const singleChartData =
+      analyticsData[selectedChart as UsedAnalyticsSummaryKey];
+    const chartDataForPDF = Array.isArray(singleChartData)
+      ? singleChartData
+      : [];
     await downloadMultipleChartsAsPDF(
       chartTypes,
       'MINT-Analytics-All-Charts.pdf',
       setSelectedChart,
-      (chartType: string) => {
-        // Return the chart data for the specified chart type
-        const dataForChart =
-          analyticsData[chartType as UsedAnalyticsSummaryKey];
-        return Array.isArray(dataForChart) ? dataForChart : [];
-      }
+      chartDataForPDF
     );
     setIsDownloadingAllCharts(false);
     setSelectedChart(originalChart); // Restore the orignal chart
