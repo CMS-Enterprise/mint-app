@@ -12,7 +12,7 @@ post {
 
 body:graphql {
   query GetMtoTemplate {
-    mtoTemplate(id: "00000000-0000-0000-0000-000000000000") {
+    mtoTemplate(key: MEDICARE_ADVANTAGE_AND_DRUG_MODELS) {
       id
       key
       name
@@ -20,8 +20,32 @@ body:graphql {
       categoryCount
       milestoneCount
       solutionCount
+      isAdded
+      dateAdded
+      categories {
+        id
+        name
+        order
+        subCategories {
+          id
+          name
+          order
+          parentID
+        }
+      }
+      solutions {
+        id
+        mtoCommonSolutionID
+        templateID
+      }
+      milestones {
+        id
+        templateID
+        key
+      }
     }
   }
+  
 }
 
 settings {
