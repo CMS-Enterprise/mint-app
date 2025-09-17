@@ -200,8 +200,8 @@ func (s *Server) routes(
 		echimpS3config.IsLocal = true
 	}
 
-	s3Client := s3.NewS3Client(s3Config)
-	echimpS3Client := s3.NewS3Client(echimpS3config)
+	s3Client := s3.NewS3Client(context.TODO(), s3Config)
+	echimpS3Client := s3.NewS3Client(context.TODO(), echimpS3config)
 
 	var lambdaClient *lambda.Client
 	var princeLambdaName string

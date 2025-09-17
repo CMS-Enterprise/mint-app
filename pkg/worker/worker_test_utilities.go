@@ -60,7 +60,7 @@ func createS3Client() s3.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return s3.NewS3Client(s3Cfg)
+	return s3.NewS3Client(context.TODO(), s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct that will remain constant across the suite
