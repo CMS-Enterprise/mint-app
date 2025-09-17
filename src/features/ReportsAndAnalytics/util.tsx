@@ -658,14 +658,17 @@ export const downloadChartAsPDF = async (
 
     // Create PDF with space for chart and data table
     const Pdf = jsPDF;
-    const pageWidth = 800; // Fixed width for better table layout
-    const pageHeight = 600; // Fixed height
+    const pageWidth = 600; // Portrait width
+    const pageHeight = 800; // Portrait height
     const hasData = chartData && chartData.length > 0;
-    const chartHeight = hasData ? 400 : pageHeight - 40; // Fill page if no data
-    const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table
+    const titleSpace = chartType ? 50 : 20; // Space for title if present
+    const chartHeight = hasData
+      ? 400 - titleSpace
+      : pageHeight - titleSpace - 20; // Fill page if no data
+    const tableHeight = pageHeight - chartHeight - titleSpace - 50; // Remaining space for table
 
     const pdf = new Pdf({
-      orientation: 'landscape',
+      orientation: 'portrait',
       unit: 'px',
       format: [pageWidth, pageHeight]
     });
@@ -678,8 +681,17 @@ export const downloadChartAsPDF = async (
     );
     const scaledChartWidth = imgWidth * chartScale;
     const scaledChartHeight = imgHeight * chartScale;
+    // Add chart title first
+    if (chartType) {
+      const chartTitle = i18next.t(`analytics:${chartType}`);
+      pdf.setFontSize(16);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(chartTitle, pageWidth / 2, 30, { align: 'center' });
+    }
+
+    // Position chart below the title
     const chartX = (pageWidth - scaledChartWidth) / 2;
-    const chartY = 20;
+    const chartY = 50; // Move chart down to make room for title
 
     // Add the chart image to PDF
     const imgData = canvas.toDataURL('image/png');
@@ -728,13 +740,13 @@ export const downloadMultipleChartsAsPDF = async (
 ): Promise<void> => {
   try {
     const Pdf = jsPDF;
-    const pageWidth = 800; // Fixed width for better table layout (same as single PDF)
-    const pageHeight = 600; // Fixed height (same as single PDF)
+    const pageWidth = 600; // Portrait width (same as single PDF)
+    const pageHeight = 800; // Portrait height (same as single PDF)
     const margin = 20;
     const maxWidth = pageWidth - margin * 2;
 
     const pdf = new Pdf({
-      orientation: 'landscape',
+      orientation: 'portrait',
       unit: 'px',
       format: [pageWidth, pageHeight]
     });
