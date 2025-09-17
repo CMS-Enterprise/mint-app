@@ -2,11 +2,8 @@ package loaders
 
 import (
 	"context"
-	"fmt"
-	"reflect"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -100,17 +97,6 @@ func batchMTOTemplateGetAll(ctx context.Context, keys []string) []*dataloader.Re
 		return errorPerEachKey[string, []*models.MTOTemplate](keys, err)
 	}
 
-	logger.Info("batch get all",
-		zap.Bool("hasLoaders", loaders != nil),
-		zap.Bool("hasDataReader", loaders != nil && loaders.DataReader != nil),
-		zap.Bool("hasStore", loaders != nil && loaders.DataReader != nil && loaders.DataReader.Store != nil),
-	)
-
-	if loaders == nil || loaders.DataReader == nil || isTypedNil(loaders.DataReader.Store) {
-		return errorPerEachKey[string, []*models.MTOTemplate](keys,
-			fmt.Errorf("dataloader store not initialized (typed-nil): type=%T", loaders.DataReader.Store))
-	}
-
 	data, err := storage.MTOTemplateGetAllLoader(loaders.DataReader.Store, logger)
 	if err != nil {
 		return errorPerEachKey[string, []*models.MTOTemplate](keys, err)
@@ -122,17 +108,4 @@ func batchMTOTemplateGetAll(ctx context.Context, keys []string) []*dataloader.Re
 		results[i] = &dataloader.Result[[]*models.MTOTemplate]{Data: data}
 	}
 	return results
-}
-
-func isTypedNil(i any) bool {
-	if i == nil {
-		return true
-	}
-	v := reflect.ValueOf(i)
-	switch v.Kind() {
-	case reflect.Ptr, reflect.Map, reflect.Slice, reflect.Interface, reflect.Func, reflect.Chan:
-		return v.IsNil()
-	default:
-		return false
-	}
 }

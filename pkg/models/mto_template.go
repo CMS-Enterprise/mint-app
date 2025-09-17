@@ -30,17 +30,17 @@ type MTOTemplate struct {
 	Description *string        `json:"description" db:"description"`
 
 	// Convenience counts (not persisted, filled in resolvers)
-	CategoryCount        int `json:"categoryCount"  db:"-"`
-	PrimaryCategoryCount int `json:"primaryCategoryCount"  db:"-"`
-	MilestoneCount       int `json:"milestoneCount" db:"-"`
-	SolutionCount        int `json:"solutionCount"  db:"-"`
+	CategoryCount        int `json:"categoryCount"        db:"category_count"`
+	PrimaryCategoryCount int `json:"primaryCategoryCount" db:"primary_category_count"`
+	MilestoneCount       int `json:"milestoneCount"       db:"milestone_count"`
+	SolutionCount        int `json:"solutionCount"        db:"solution_count"`
 
 	// Indicates if the template is added to a model plan (not persisted, filled in by join in database)
 	IsAdded   bool       `json:"isAdded" db:"is_added"`
 	DateAdded *time.Time `json:"dateAdded" db:"date_added"`
 }
 
-// NewMtoTemplate returns a new MtoTemplate object
+// NewMTOTemplate returns a new MTOTemplate object
 func NewMTOTemplate(
 	createdBy uuid.UUID,
 	key MTOTemplateKey,

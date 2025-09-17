@@ -20,8 +20,26 @@ body:graphql {
       categoryCount
       milestoneCount
       solutionCount
+      categories{
+        id
+        name
+        order
+        subCategories{
+          id
+          name
+          order
+          parentID
+        }
+      }
       solutions{
         id
+        mtoCommonSolutionID
+        templateID
+      }
+      milestones {
+        id
+        templateID
+        key
       }
     }
   }

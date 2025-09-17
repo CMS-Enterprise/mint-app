@@ -52,7 +52,7 @@ func MTOTemplateGetByKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []
 
 // MTOTemplateGetAllLoader returns all templates
 func MTOTemplateGetAllLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.MTOTemplate, error) {
-	returned, err := sqlutils.SelectProcedure[models.MTOTemplate](np, sqlqueries.MTOTemplate.GetAll, nil)
+	returned, err := sqlutils.SelectProcedure[models.MTOTemplate](np, sqlqueries.MTOTemplate.GetAll, map[string]any{})
 	if err != nil {
 		return nil, err
 	}
