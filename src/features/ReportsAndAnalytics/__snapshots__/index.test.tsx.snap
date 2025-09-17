@@ -314,12 +314,37 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
         Download chart (PDF)
       </button>
       <button
-        class="usa-button usa-button--unstyled margin-top-1 margin-right-2"
+        class="usa-button usa-button--unstyled margin-top-1 margin-right-4"
         data-testid="download-multiple-charts-pdf-button"
         type="button"
       >
         Download all charts (PDF)
       </button>
+      <div
+        class="display-inline-block"
+      >
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            checked=""
+            class="usa-checkbox__input"
+            id="append-table-to-chart"
+            name="appendTableToChart"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="append-table-to-chart"
+          >
+            Append table to chart
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+      </div>
       <div
         class="recharts-responsive-container"
         id="analytics-chart-changesPerModel"

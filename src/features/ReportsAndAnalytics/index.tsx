@@ -137,7 +137,7 @@ const ReportsAndAnalytics = () => {
       chartTypes,
       'MINT-Analytics-All-Charts.pdf',
       setSelectedChart,
-      chartDataForPDF
+      appendTableToChart ? chartDataForPDF : undefined
     );
     setIsDownloadingAllCharts(false);
     setSelectedChart(originalChart); // Restore the orignal chart
@@ -331,7 +331,7 @@ const ReportsAndAnalytics = () => {
                 downloadChartAsPDF(
                   `analytics-chart-${selectedChart}`,
                   'MINT-Analytics-Chart.pdf',
-                  chartData,
+                  appendTableToChart ? chartData : undefined,
                   selectedChart
                 );
               }}

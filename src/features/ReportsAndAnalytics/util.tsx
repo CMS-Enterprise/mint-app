@@ -660,7 +660,8 @@ export const downloadChartAsPDF = async (
     const Pdf = jsPDF;
     const pageWidth = 800; // Fixed width for better table layout
     const pageHeight = 600; // Fixed height
-    const chartHeight = 400; // Height allocated for chart
+    const hasData = chartData && chartData.length > 0;
+    const chartHeight = hasData ? 400 : pageHeight - 40; // Fill page if no data
     const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table
 
     const pdf = new Pdf({
@@ -692,7 +693,7 @@ export const downloadChartAsPDF = async (
     );
 
     // Add data table if chart data is provided
-    if (chartData && chartData.length > 0) {
+    if (hasData) {
       addDataTableToPDF(
         pdf,
         chartData,
@@ -729,11 +730,8 @@ export const downloadMultipleChartsAsPDF = async (
     const Pdf = jsPDF;
     const pageWidth = 800; // Fixed width for better table layout (same as single PDF)
     const pageHeight = 600; // Fixed height (same as single PDF)
-    const chartHeight = 400; // Height allocated for chart (same as single PDF)
-    const tableHeight = pageHeight - chartHeight - 50; // Remaining space for table
     const margin = 20;
     const maxWidth = pageWidth - margin * 2;
-    const maxChartHeight = chartHeight - 60; // Space for title
 
     const pdf = new Pdf({
       orientation: 'landscape',
@@ -788,6 +786,12 @@ export const downloadMultipleChartsAsPDF = async (
       // Calculate scaling to fit allocated chart space
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
+
+      // Check if this chart has data to determine chart height
+      const hasData = chartData && chartData.length > 0;
+      const chartHeight = hasData ? 400 : pageHeight - 40; // Fill page if no data
+      const maxChartHeight = chartHeight - 60; // Space for title
+
       const scaleX = maxWidth / imgWidth;
       const scaleY = maxChartHeight / imgHeight;
       const scale = Math.min(scaleX, scaleY, 1); // Don't scale up
@@ -815,7 +819,8 @@ export const downloadMultipleChartsAsPDF = async (
       pdf.addImage(imgData, 'PNG', chartX, chartY, scaledWidth, scaledHeight);
 
       // Add data table if chart data is provided
-      if (chartData && chartData.length > 0) {
+      if (hasData) {
+        const tableHeight = pageHeight - chartHeight - 50; // Calculate table height dynamically
         addDataTableToPDF(
           pdf,
           chartData,
