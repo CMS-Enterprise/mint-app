@@ -309,7 +309,6 @@ const ReportsAndAnalytics = () => {
               </div>
             )}
 
-            {/* <div> */}
             <Button
               type="button"
               className="margin-top-4 margin-right-2"
@@ -378,7 +377,6 @@ const ReportsAndAnalytics = () => {
                 }}
               />
             </div>
-            {/* </div> */}
 
             <ResponsiveContainer
               width="100%"
