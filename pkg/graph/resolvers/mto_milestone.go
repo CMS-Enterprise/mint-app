@@ -224,11 +224,6 @@ func MTOMilestoneGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UU
 	return loaders.MTOMilestone.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-// MTOTemplateGetByModelPlanIDLOADER implements resolver logic to get all MTO templates by a model plan ID using a data loader
-func MTOTemplateGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOTemplate, error) {
-	return loaders.MTOTemplate.ByModelPlanID.Load(ctx, modelPlanID)
-}
-
 // MTOMilestoneGetByIDLOADER returns a mto milestone by it's provided ID
 func MTOMilestoneGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.ByID.Load(ctx, id)

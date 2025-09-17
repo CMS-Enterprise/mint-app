@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -37,7 +36,7 @@ func (r *modelsToOperationMatrixResolver) Milestones(ctx context.Context, obj *m
 
 // MtoTemplates is the resolver for the mtoTemplates field.
 func (r *modelsToOperationMatrixResolver) MtoTemplates(ctx context.Context, obj *models.ModelsToOperationMatrix) ([]*models.MTOTemplate, error) {
-	panic(fmt.Errorf("not implemented: MtoTemplates - mtoTemplates"))
+	return MTOTemplateGetByModelPlanIDLOADER(ctx, obj.ModelPlan.ID)
 }
 
 // Solutions is the resolver for the solutions field.
