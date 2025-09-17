@@ -280,7 +280,7 @@ function autoFitColumns(worksheet: XLSX.WorkSheet): { wch: number }[] {
   return columnWidths;
 }
 
-const riskMap = {
+const riskMap: Record<MtoRiskIndicator, string> = {
   [MtoRiskIndicator.ON_TRACK]: 'G',
   [MtoRiskIndicator.OFF_TRACK]: 'Y',
   [MtoRiskIndicator.AT_RISK]: 'R'
