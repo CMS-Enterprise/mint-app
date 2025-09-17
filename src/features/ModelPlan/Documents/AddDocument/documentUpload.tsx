@@ -171,7 +171,7 @@ const DocumentUpload = ({
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setFieldValue('file', e.currentTarget?.files?.[0]);
                       }}
-                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                       inputProps={{
                         'aria-expanded': !!values.file,
                         'aria-label':
