@@ -1,3 +1,4 @@
+import React from 'react';
 import { toast } from 'react-toastify';
 import {
   AnalyticsSummary,
@@ -11,6 +12,7 @@ import i18next from 'i18next';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx-js-style';
 
+import Alert from 'components/Alert';
 import {
   columnHeaderTranslations,
   typenameTranslations
@@ -506,7 +508,17 @@ export const downloadChartAsPDF = async (
   try {
     const chartElement = document.getElementById(chartElementId);
     if (!chartElement) {
-      toast.error(`Chart element with id "${chartElementId}" not found`);
+      toast.error(
+        <Alert
+          type="error"
+          heading={i18next.t('error:global.generalError')}
+          isClosable={false}
+        >
+          <p className="margin-0">
+            {i18next.t('analytics:errorGeneratingPDF')}
+          </p>
+        </Alert>
+      );
       return;
     }
 
@@ -538,7 +550,15 @@ export const downloadChartAsPDF = async (
     // Download the PDF
     pdf.save(filename);
   } catch (error) {
-    toast.error('Error generating PDF');
+    toast.error(
+      <Alert
+        type="error"
+        heading={i18next.t('error:global.generalError')}
+        isClosable={false}
+      >
+        <p className="margin-0">{i18next.t('analytics:errorGeneratingPDF')}</p>
+      </Alert>
+    );
   }
 };
 
@@ -578,7 +598,15 @@ export const downloadMultipleChartsAsPDF = async (
       );
       if (!chartElement) {
         toast.error(
-          `Chart element with id "analytics-chart-${chartType}" not found`
+          <Alert
+            type="error"
+            heading={i18next.t('error:global.generalError')}
+            isClosable={false}
+          >
+            <p className="margin-0">
+              {i18next.t('analytics:errorGeneratingMultiChartPDF')}
+            </p>
+          </Alert>
         );
         // eslint-disable-next-line no-continue
         continue;
@@ -630,7 +658,18 @@ export const downloadMultipleChartsAsPDF = async (
     // Download the PDF
     pdf.save(filename);
   } catch (error) {
-    toast.error('Error generating multi-chart PDF');
+    toast.error(
+      <Alert
+        type="error"
+        heading={i18next.t('error:global.generalError')}
+        isClosable={false}
+      >
+        <p className="margin-0">
+          {i18next.t('analytics:errorGeneratingMultiChartPDF')}
+        </p>
+        <p className="margin-0">{i18next.t('error:global.generalBody')}</p>
+      </Alert>
+    );
   }
 };
 

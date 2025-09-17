@@ -324,7 +324,7 @@ const ReportsAndAnalytics = () => {
               data-testid="download-chart-pdf-button"
               onClick={() => {
                 downloadChartAsPDF(
-                  'analytics-chart',
+                  `analytics-chart-${selectedChart}`,
                   'MINT-Analytics-Chart.pdf'
                 );
               }}

@@ -76,7 +76,9 @@ const analytics = {
   downloadExcel: 'Download data (excel)',
   downloadPDF: 'Download chart (PDF)',
   downloadMultipleChartsPDF: 'Download all charts (PDF)',
-  columnHeaderTranslations
+  columnHeaderTranslations,
+  errorGeneratingMultiChartPDF: 'Error generating multi-chart PDF',
+  errorGeneratingPDF: 'Error generating PDF'
 };
 
 export default analytics;
