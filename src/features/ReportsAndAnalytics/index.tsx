@@ -128,15 +128,10 @@ const ReportsAndAnalytics = () => {
     await downloadMultipleChartsAsPDF(
       chartTypes,
       'MINT-Analytics-All-Charts.pdf',
-      async (chartType: string) => {
-        setSelectedChart(chartType);
-      },
-      (chartType: string) => {
-        return t(`analytics:${chartType}`);
-      }
+      setSelectedChart
     );
     setIsDownloadingAllCharts(false);
-    setSelectedChart(originalChart);
+    setSelectedChart(originalChart); // Restore the orignal chart
   };
 
   // If loading any data, show loading spinner

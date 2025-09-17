@@ -8,7 +8,7 @@ import {
   TableName
 } from 'gql/generated/graphql';
 import html2canvas from 'html2canvas';
-import i18next from 'i18next';
+import i18next, { t } from 'i18next';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx-js-style';
 
@@ -566,8 +566,7 @@ export const downloadChartAsPDF = async (
 export const downloadMultipleChartsAsPDF = async (
   chartTypes: string[],
   filename: string = 'MINT-Charts.pdf',
-  onChartChange?: (chartType: string) => Promise<void>,
-  getChartTitle?: (chartType: string) => string
+  setSelectedChart?: (chartType: string) => void
 ): Promise<void> => {
   try {
     const Pdf = jsPDF;
@@ -583,11 +582,10 @@ export const downloadMultipleChartsAsPDF = async (
       const chartType = chartTypes[i];
 
       // Switch to this chart type if callback provided
-      if (onChartChange) {
-        // eslint-disable-next-line no-await-in-loop
-        await onChartChange(chartType);
-        // Wait a bit for the chart to render
+      if (setSelectedChart) {
+        setSelectedChart(chartType);
 
+        // Wait a bit for the chart to render
         // eslint-disable-next-line no-await-in-loop
         await new Promise(resolve => setTimeout(resolve, 350));
       }
@@ -596,6 +594,7 @@ export const downloadMultipleChartsAsPDF = async (
       const chartElement = document.getElementById(
         `analytics-chart-${chartType}`
       );
+
       if (!chartElement) {
         toast.error(
           <Alert
@@ -638,15 +637,13 @@ export const downloadMultipleChartsAsPDF = async (
       }
 
       // Add chart title if provided
-      if (getChartTitle) {
-        const chartTitle = getChartTitle(chartType);
-        pdf.setFontSize(16);
-        pdf.setFont('helvetica', 'bold');
-        pdf.text(chartTitle, pageWidth / 2, 30, { align: 'center' });
-      }
+      const chartTitle = i18next.t(`analytics:${chartType}`);
+      pdf.setFontSize(16);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(chartTitle, pageWidth / 2, 30, { align: 'center' });
 
       // Center the image on the page (with space for title)
-      const titleHeight = getChartTitle ? 50 : 0;
+      const titleHeight = 50;
       const x = (pageWidth - scaledWidth) / 2;
       const y = (pageHeight - scaledHeight) / 2 + titleHeight;
 
