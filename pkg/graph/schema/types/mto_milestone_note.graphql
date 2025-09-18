@@ -1,0 +1,49 @@
+"""
+MTOMilestoneNote represents a note for a milestone
+"""
+
+type MTOMilestoneNote {
+  id: UUID!
+  mtoMilestoneID: UUID!
+  content: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID!
+  modifiedByUserAccount: UserAccount!
+  modifiedDts: Time!
+}
+
+"""
+MTOMilestoneNoteCreateInput represents the necessary fields to create a milestone note
+"""
+input MTOMilestoneNoteCreateInput {
+  mtoMilestoneID: UUID!
+  content: String!
+}
+
+"""
+MTOMilestoneNoteUpdateInput represents the necessary fields to update a milestone note
+"""
+input MTOMilestoneNoteUpdateInput {
+  id: UUID!
+  content: String!
+}
+
+"""
+MTOMilestoneNoteDeleteInput represents the necessary fields to delete a milestone note
+"""
+input MTOMilestoneNoteDeleteInput {
+  id: UUID!
+}
+
+extend type Mutation {
+  createMTOMilestoneNote(input: MTOMilestoneNoteCreateInput!): MTOMilestoneNote!
+    @hasRole(role: MINT_USER)
+
+  updateMTOMilestoneNote(input: MTOMilestoneNoteUpdateInput!): MTOMilestoneNote!
+    @hasRole(role: MINT_USER)
+
+  deleteMTOMilestoneNote(input: MTOMilestoneNoteDeleteInput!): MTOMilestoneNote!
+    @hasRole(role: MINT_USER)
+}
