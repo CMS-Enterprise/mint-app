@@ -96,9 +96,7 @@ const ReportsAndAnalytics = () => {
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
 
-  const { data, loading, error } = useGetAnalyticsSummaryQuery({
-    fetchPolicy: 'network-only' // Don't use cache for analytics summary
-  });
+  const { data, loading, error } = useGetAnalyticsSummaryQuery();
 
   const analyticsData = data?.analytics || ({} as any);
 
