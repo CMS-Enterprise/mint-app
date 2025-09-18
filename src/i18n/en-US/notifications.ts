@@ -141,16 +141,69 @@ const notifications = {
       basicNotifications: {
         heading: 'Basic notifications',
         subHeading:
-          'You will always receive basic notifications in-app, but may opt out of receiving them via email.'
+          'You will always receive basic notifications in-app, but may opt out of receiving them via email.',
+        notifications: [
+          {
+            name: 'dailyDigestComplete',
+            copy: 'Daily digest of changes to the models I’m following'
+          },
+          {
+            name: 'addedAsCollaborator',
+            copy: 'When I’m added as a collaborator to a Model Plan'
+          },
+          {
+            name: 'taggedInDiscussion',
+            copy: 'When I’m tagged in a discussion'
+          },
+          {
+            name: 'newDiscussionReply',
+            copy: 'When someone replies to a discussion I started'
+          },
+          {
+            name: 'modelPlanShared',
+            copy: 'When someone shares a Model Plan with me'
+          }
+        ]
       },
       notificationAboutMyModels: {
         heading: 'Notifications about my models',
         subHeading:
           'Regardless of your settings here, you will receive both email and in-app notifications for all models where you are listed as the Model Lead.',
-        info: 'You are listed as the Model Lead for {{count}} models.'
+        info: 'You are listed as the Model Lead for {{count}} models.',
+        notifications: [
+          {
+            name: 'incorrectModelStatus',
+            copy: 'When MINT detects an incorrect model status'
+          }
+        ]
       },
       additionalNotifications: {
-        heading: 'Additional notifications'
+        heading: 'Additional notifications',
+        notifications: [
+          {
+            name: 'newModelPlan',
+            copy: 'When a new Model Plan is created'
+          },
+          {
+            name: 'datesChanged',
+            copy: 'When model dates change',
+            modelSpecific: 'whichModelTypes',
+            notificationType: 'datesChangedNotificationType'
+          },
+          {
+            name: 'newDiscussionAdded',
+            copy: 'When a new discussion is added',
+            modelSpecific: 'whichModelTypes',
+            notificationType: 'newDiscussionAddedNotificationType'
+          },
+          {
+            name: 'dataExchangeApproachMarkedComplete',
+            copy: 'When a data exchange approach is completed',
+            modelSpecific: 'whichModelTypes',
+            notificationType:
+              'dataExchangeApproachMarkedCompleteNotificationType'
+          }
+        ]
       }
     },
     configurations: {
