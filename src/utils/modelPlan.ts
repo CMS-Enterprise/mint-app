@@ -164,7 +164,7 @@ export const insertIf = (condition: boolean, ...elements: any) => {
 };
 
 export const convertToLowercaseAndDashes = (string: string) =>
-  string.toLowerCase().replace(/[()]/g, '').replace(/\s+/g, '-');
+  string.toLowerCase().replace(/[()?]/g, '').replace(/\s+/g, '-');
 
 /**
  * Converts a camelCase string to all lowercase and hyphenates it at the camelCase boundaries.

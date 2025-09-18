@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import EChimpCard, { EChimpCardProps } from './EChimpCard';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
+
+import EChimpCard, { EChimpCardProps, echimpUrl } from './EChimpCard';
 
 describe('EChimpCard', () => {
   const defaultProps: EChimpCardProps = {
@@ -25,5 +27,17 @@ describe('EChimpCard', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders the correct echimp url', () => {
+    expect(echimpUrl('ffs', '123')).toBe(
+      `${import.meta.env.VITE_ECHIMP_URL}/ffs-ui/123/cr-summary`
+    );
+    expect(echimpUrl('tdl', '123')).toBe(
+      `${ECHIMP_URL_SSO}?sysSelect=TDL&crNum=123`
+    );
+    expect(echimpUrl('ffs')).toBe(ECHIMP_URL_SSO);
+    expect(echimpUrl('tdl')).toBe(ECHIMP_URL_SSO);
+    expect(echimpUrl()).toBe(ECHIMP_URL_SSO);
   });
 });

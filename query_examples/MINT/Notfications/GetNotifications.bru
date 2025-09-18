@@ -155,7 +155,12 @@ body:graphql {
                   markedCompleteByUserAccount {
                       id
                   }
-              }        
+              }
+              ... on NewDiscussionAddedActivityMeta {
+                  version
+                  type
+                  content
+              }
               ... on IncorrectModelStatusActivityMeta {
                   version
                   type

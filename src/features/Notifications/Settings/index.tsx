@@ -18,6 +18,7 @@ import {
   DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
+  NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
   useUpdateNotificationSettingsMutation
@@ -79,6 +80,8 @@ const NotificationSettings = () => {
     dailyDigestComplete,
     addedAsCollaborator,
     taggedInDiscussion,
+    newDiscussionAdded,
+    newDiscussionAddedNotificationType,
     newDiscussionReply,
     modelPlanShared,
     incorrectModelStatus,
@@ -108,12 +111,23 @@ const NotificationSettings = () => {
       changes.datesChangedNotificationType =
         DatesChangedNotificationType.ALL_MODELS;
     }
-    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
+
+    // if newDiscussionAddedNotificationType is not changed by user, but newDiscussionAdded is changed, then do the following logic
+    if (
+      !changes.newDiscussionAddedNotificationType &&
+      changes.newDiscussionAdded?.length
+    ) {
+      // If newDiscussionAddedNotificationType is subscribed, then manually set newDiscussionAddedNotificationType to ALL_MODELS
+      changes.newDiscussionAddedNotificationType =
+        NewDiscussionAddedNotificationType.ALL_MODELS;
+    }
+
+    // if dataExchangeApproachMarkedCompleteNotificationType is not changed by user, but dataExchangeApproachMarkedComplete is changed, then do the following logic
     if (
       !changes.dataExchangeApproachMarkedCompleteNotificationType &&
       changes.dataExchangeApproachMarkedComplete?.length
     ) {
-      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+      // If dataExchangeApproachMarkedCompleteNotificationType is subscribed, then manually set dataExchangeApproachMarkedCompleteNotificationType to ALL_MODELS
       changes.dataExchangeApproachMarkedCompleteNotificationType =
         DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS;
     }
@@ -163,6 +177,15 @@ const NotificationSettings = () => {
     }
 
     // Setting variables
+
+    // Incorrect Model Status variables
+    const isSubscribedIncorrectModelStatusEmail = incorrectModelStatus.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedIncorrectModelStatusInApp = incorrectModelStatus.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+
     // New Model Plan variables
     const isSubscribedModelPlanEmail = newModelPlan.includes(
       UserNotificationPreferenceFlag.EMAIL
@@ -170,6 +193,15 @@ const NotificationSettings = () => {
     const isSubscribedModelPlanInApp = newModelPlan.includes(
       UserNotificationPreferenceFlag.IN_APP
     );
+
+    // New Discussion variables
+    const isSubscribedNewDiscussionAddedEmail = newDiscussionAdded.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedNewDiscussionAddedInApp = newDiscussionAdded.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+
     // Dates Changed variables
     const isSubscribedDatesChangedEmail = datesChanged.includes(
       UserNotificationPreferenceFlag.EMAIL
@@ -191,8 +223,12 @@ const NotificationSettings = () => {
     // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
     // then show error alert banner
     if (
+      (unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS &&
+        !isSubscribedIncorrectModelStatusEmail) ||
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
         !isSubscribedModelPlanEmail) ||
+      (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED &&
+        !isSubscribedNewDiscussionAddedEmail) ||
       (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
         !isSubscribedDatesChangedEmail) ||
       (unsubscribeEmailParams ===
@@ -225,20 +261,33 @@ const NotificationSettings = () => {
       return;
     }
 
-    // Unsubscribe from New Model Plan email notifications
+    // Unsubscribe from email notifications
     if (
+      unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS ||
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
+      unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED ||
       unsubscribeEmailParams === ActivityType.DATES_CHANGED ||
       unsubscribeEmailParams ===
         ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
     ) {
       // if user has email notifications, then proceeed to unsubscribe
       if (
+        isSubscribedIncorrectModelStatusEmail ||
         isSubscribedModelPlanEmail ||
+        isSubscribedNewDiscussionAddedEmail ||
         isSubscribedDatesChangedEmail ||
         isSubscribedDataExchangeApproachMarkedCompleteEmail
       ) {
         let changes;
+        // Adjust payload if Incorrect Model Status in-app notifications are enabled
+        if (unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS) {
+          changes = {
+            incorrectModelStatus: isSubscribedIncorrectModelStatusInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+
         // Adjust payload if New Model Plan in-app notifications are enabled
         if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
           changes = {
@@ -247,6 +296,15 @@ const NotificationSettings = () => {
               : []
           };
         }
+        // Adjust payload if New Discussion Added in-app notifications are enabled
+        if (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED) {
+          changes = {
+            newDiscussionAdded: isSubscribedNewDiscussionAddedInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+
         // Adjust payload if Dates Changed in-app notifications are enabled
         if (unsubscribeEmailParams === ActivityType.DATES_CHANGED) {
           changes = {
@@ -311,13 +369,18 @@ const NotificationSettings = () => {
     showMessage,
     unsubscribeEmailParams,
     update,
-    setErrorMeta
+    setErrorMeta,
+    newDiscussionAdded,
+    incorrectModelStatus
   ]);
 
   const initialValues: NotificationSettingsFormType = {
     dailyDigestComplete: dailyDigestComplete ?? [],
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
+    newDiscussionAdded: newDiscussionAdded ?? [],
+    newDiscussionAddedNotificationType:
+      newDiscussionAddedNotificationType ?? undefined,
     newDiscussionReply: newDiscussionReply ?? [],
     incorrectModelStatus: incorrectModelStatus ?? [],
     modelPlanShared: modelPlanShared ?? [],
@@ -328,6 +391,22 @@ const NotificationSettings = () => {
       dataExchangeApproachMarkedComplete ?? [],
     dataExchangeApproachMarkedCompleteNotificationType:
       dataExchangeApproachMarkedCompleteNotificationType ?? undefined
+  };
+
+  const getModelsSelectValue = (
+    setting: keyof NotificationSettingsFormType,
+    values: NotificationSettingsFormType
+  ) => {
+    switch (setting) {
+      case 'newDiscussionAdded':
+        return values.newDiscussionAddedNotificationType;
+      case 'datesChanged':
+        return values.datesChangedNotificationType;
+      case 'dataExchangeApproachMarkedComplete':
+        return values.dataExchangeApproachMarkedCompleteNotificationType;
+      default:
+        return '';
+    }
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -488,6 +567,7 @@ const NotificationSettings = () => {
                                   disabled={
                                     setting !== 'incorrectModelStatus' &&
                                     setting !== 'datesChanged' &&
+                                    setting !== 'newDiscussionAdded' &&
                                     setting !== 'newModelPlan' &&
                                     setting !==
                                       'dataExchangeApproachMarkedComplete'
@@ -500,7 +580,8 @@ const NotificationSettings = () => {
                             </Grid>
                             {(setting === 'datesChanged' ||
                               setting ===
-                                'dataExchangeApproachMarkedComplete') && (
+                                'dataExchangeApproachMarkedComplete' ||
+                              setting === 'newDiscussionAdded') && (
                               <Grid row>
                                 <Grid
                                   className="tablet:padding-left-3"
@@ -521,9 +602,10 @@ const NotificationSettings = () => {
                                     data-testid={`notification-setting-whichModel-${setting}`}
                                     name={`${setting}NotificationType`}
                                     value={
-                                      setting === 'datesChanged'
-                                        ? values.datesChangedNotificationType
-                                        : values.dataExchangeApproachMarkedCompleteNotificationType
+                                      getModelsSelectValue(setting, values)
+                                      // setting === 'datesChanged'
+                                      //   ? values.datesChangedNotificationType
+                                      //   : values.dataExchangeApproachMarkedCompleteNotificationType
                                     }
                                     disabled={!values[setting].length}
                                     onChange={(

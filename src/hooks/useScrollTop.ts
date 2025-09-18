@@ -17,6 +17,7 @@ export interface LocationProps {
 const scrollBypass: string[] = [
   'read-only',
   'sample-model-plan',
+  '/how-to-get-access',
   '/help-and-knowledge/operational-solutions',
   '?solution=',
   '&solution=',
