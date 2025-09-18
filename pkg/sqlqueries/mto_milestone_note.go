@@ -14,11 +14,15 @@ var mtoMilestoneNoteDeleteSQL string
 //go:embed SQL/mto/note/get_by_milestone_id_LOADER.sql
 var mtoMilestoneNoteGetByMilestoneIDLoaderSQL string
 
+//go:embed SQL/mto/note/get_by_id_loader.sql
+var mtoMilestoneNoteGetByIDLoaderSQL string
+
 var MTOMilestoneNote = mtoMilestoneNoteScripts{
 	Create:                 mtoMilestoneNoteCreateSQL,
 	Update:                 mtoMilestoneNoteUpdateSQL,
 	Delete:                 mtoMilestoneNoteDeleteSQL,
 	GetByMilestoneIDLoader: mtoMilestoneNoteGetByMilestoneIDLoaderSQL,
+	GetByIDLoader:          mtoMilestoneNoteGetByIDLoaderSQL,
 }
 
 type mtoMilestoneNoteScripts struct {
@@ -26,4 +30,5 @@ type mtoMilestoneNoteScripts struct {
 	Update                 string
 	Delete                 string
 	GetByMilestoneIDLoader string
+	GetByIDLoader          string
 }

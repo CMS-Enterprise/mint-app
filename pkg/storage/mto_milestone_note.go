@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -12,12 +11,16 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-func MTOMilestoneNoteGetByMilestoneIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, milestoneIDs []uuid.UUID) ([]*models.MTOMilestoneNote, error) {
-
-	args := map[string]interface{}{
-		"milestone_ids": pq.Array(milestoneIDs),
+func MTOMilestoneNoteGetByMilestoneIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, milestoneID uuid.UUID) ([]*models.MTOMilestoneNote, error) {
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByMilestoneIDLoader, map[string]interface{}{"milestone_id": milestoneID})
+	if err != nil {
+		return nil, err
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByMilestoneIDLoader, args)
+	return returned, nil
+}
+
+func MTOMilestoneNoteGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOMilestoneNote, error) {
+	returned, err := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByIDLoader, map[string]interface{}{"id": []uuid.UUID{id}})
 	if err != nil {
 		return nil, err
 	}
