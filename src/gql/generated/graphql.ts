@@ -1125,6 +1125,7 @@ export type MtoMilestone = {
   mtoCategoryID?: Maybe<Scalars['UUID']['output']>;
   name: Scalars['String']['output'];
   needBy?: Maybe<Scalars['Time']['output']>;
+  notes: Array<MtoMilestoneNote>;
   riskIndicator: MtoRiskIndicator;
   solutions: Array<MtoSolution>;
   status: MtoMilestoneStatus;
@@ -1143,6 +1144,37 @@ export type MtoMilestoneChanges = {
 
 export type MtoMilestoneLinks = {
   milestoneIDs?: InputMaybe<Array<Scalars['UUID']['input']>>;
+};
+
+/** MTOMilestoneNote represents a note for a milestone */
+export type MtoMilestoneNote = {
+  __typename: 'MTOMilestoneNote';
+  content: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy: Scalars['UUID']['output'];
+  modifiedByUserAccount: UserAccount;
+  modifiedDts: Scalars['Time']['output'];
+  mtoMilestoneID: Scalars['UUID']['output'];
+};
+
+/** MTOMilestoneNoteCreateInput represents the necessary fields to create a milestone note */
+export type MtoMilestoneNoteCreateInput = {
+  content: Scalars['String']['input'];
+  mtoMilestoneID: Scalars['UUID']['input'];
+};
+
+/** MTOMilestoneNoteDeleteInput represents the necessary fields to delete a milestone note */
+export type MtoMilestoneNoteDeleteInput = {
+  id: Scalars['UUID']['input'];
+};
+
+/** MTOMilestoneNoteUpdateInput represents the necessary fields to update a milestone note */
+export type MtoMilestoneNoteUpdateInput = {
+  content: Scalars['String']['input'];
+  id: Scalars['UUID']['input'];
 };
 
 /** Represents MTO Milestone Solution Link translation data */
@@ -1578,6 +1610,7 @@ export type Mutation = {
   createMTOCommonSolutionUserContact: MtoCommonSolutionContact;
   createMTOMilestoneCommon: MtoMilestone;
   createMTOMilestoneCustom: MtoMilestone;
+  createMTOMilestoneNote: MtoMilestoneNote;
   createMTOSolutionCommon: MtoSolution;
   createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
@@ -1600,6 +1633,7 @@ export type Mutation = {
   deleteMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   deleteMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   deleteMTOMilestone: Scalars['Boolean']['output'];
+  deleteMTOMilestoneNote: MtoMilestoneNote;
   deleteMTOSolution: Scalars['Boolean']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
@@ -1645,6 +1679,7 @@ export type Mutation = {
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   updateMTOMilestone: MtoMilestone;
+  updateMTOMilestoneNote: MtoMilestoneNote;
   updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
   updatePlanBasics: PlanBasics;
@@ -1746,6 +1781,12 @@ export type MutationCreateMtoMilestoneCustomArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationCreateMtoMilestoneNoteArgs = {
+  input: MtoMilestoneNoteCreateInput;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationCreateMtoSolutionCommonArgs = {
   key: MtoCommonSolutionKey;
   milestonesToLink?: InputMaybe<Array<Scalars['UUID']['input']>>;
@@ -1826,6 +1867,12 @@ export type MutationDeleteMtoCommonSolutionSystemOwnerArgs = {
 /** Mutations definition for the schema */
 export type MutationDeleteMtoMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteMtoMilestoneNoteArgs = {
+  input: MtoMilestoneNoteDeleteInput;
 };
 
 
@@ -1983,6 +2030,12 @@ export type MutationUpdateMtoMilestoneArgs = {
   changes: MtoMilestoneChanges;
   id: Scalars['UUID']['input'];
   solutionLinks?: InputMaybe<MtoSolutionLinks>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoMilestoneNoteArgs = {
+  input: MtoMilestoneNoteUpdateInput;
 };
 
 
@@ -4477,6 +4530,7 @@ export enum TableName {
   MTO_COMMON_SOLUTION_CONTACT = 'mto_common_solution_contact',
   MTO_INFO = 'mto_info',
   MTO_MILESTONE = 'mto_milestone',
+  MTO_MILESTONE_NOTE = 'mto_milestone_note',
   MTO_MILESTONE_SOLUTION_LINK = 'mto_milestone_solution_link',
   MTO_SOLUTION = 'mto_solution',
   NDA_AGREEMENT = 'nda_agreement',

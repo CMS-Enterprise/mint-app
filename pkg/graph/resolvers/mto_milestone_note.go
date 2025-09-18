@@ -6,20 +6,37 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/jmoiron/sqlx"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+func GetMTOMilestoneNoteByIDResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) (*models.MTOMilestoneNote, error) {
+	if principal == nil {
+		return nil, fmt.Errorf("principal is nil")
+	}
+	return loaders.MTOMilestoneNote.ByMilestoneID.Load(ctx, id)
+}
 
 func CreateMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	note := models.NewMTOMilestoneNote(principalAccount.ID, "", input.MTOMilestoneID)
-	err := BaseStructPreCreate(logger, note, principal, store, false)
+
+	// Get the milestone to get its model plan ID
+	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, input.MTOMilestoneID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get milestone: %w", err)
+	}
+
+	note := models.NewMTOMilestoneNote(principalAccount.ID, input.Content, input.MTOMilestoneID, milestone.ModelPlanID)
+	err = BaseStructPreCreate(logger, note, principal, store, false)
 	if err != nil {
 		return nil, err
 	}
