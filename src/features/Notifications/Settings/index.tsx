@@ -16,27 +16,25 @@ import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
-  DataExchangeApproachMarkedCompleteNotificationType,
-  DatesChangedNotificationType,
   GetNotificationSettingsQuery,
-  NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
   useUpdateNotificationSettingsMutation
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import toastSuccess from 'components/ToastSuccess';
-import { useErrorMessage } from 'contexts/ErrorContext';
+import { statusAlert, useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
 import { tObject } from 'utils/translation';
+
+import { verifyEmailParams } from '../Home/_components/_utils';
 
 type GetNotifcationSettingsType =
   GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
@@ -52,6 +50,7 @@ type SelectNotificationType<Key extends string> =
 const NotificationSettings = () => {
   const { t: notificationsT } = useTranslation('notifications');
 
+  // matching notification i18n
   const notificationSections = tObject<
     string,
     {
@@ -61,6 +60,7 @@ const NotificationSettings = () => {
       notifications: {
         name: keyof NotificationSettingsFormType;
         copy: string;
+        disable?: UserNotificationPreferenceFlag[];
         modelSpecific?: 'whichModelTypes';
         notificationType: SelectNotificationType<
           keyof NotificationSettingsFormType
@@ -75,8 +75,6 @@ const NotificationSettings = () => {
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
-  const { showMessage } = useMessage();
-
   const navigate = useNavigate();
   const { message } = useMessage();
   const location = useLocation();
@@ -89,8 +87,11 @@ const NotificationSettings = () => {
   const { setErrorMeta } = useErrorMessage();
 
   const unsubscribeEmailParams = params.get('unsubscribe_email');
+  const isEmailParamsValid = verifyEmailParams(unsubscribeEmailParams);
 
   const { data, loading, error } = useGetNotificationSettingsQuery();
+
+  const [update] = useUpdateNotificationSettingsMutation();
 
   const {
     dailyDigestComplete,
@@ -109,7 +110,24 @@ const NotificationSettings = () => {
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
-  const [update] = useUpdateNotificationSettingsMutation();
+  const initialValues: NotificationSettingsFormType = {
+    dailyDigestComplete: dailyDigestComplete ?? [],
+    addedAsCollaborator: addedAsCollaborator ?? [],
+    taggedInDiscussion: taggedInDiscussion ?? [],
+    newDiscussionAdded: newDiscussionAdded ?? [],
+    newDiscussionAddedNotificationType:
+      newDiscussionAddedNotificationType ?? undefined,
+    newDiscussionReply: newDiscussionReply ?? [],
+    incorrectModelStatus: incorrectModelStatus ?? [],
+    modelPlanShared: modelPlanShared ?? [],
+    newModelPlan: newModelPlan ?? [],
+    datesChanged: datesChanged ?? [],
+    datesChangedNotificationType: datesChangedNotificationType ?? undefined,
+    dataExchangeApproachMarkedComplete:
+      dataExchangeApproachMarkedComplete ?? [],
+    dataExchangeApproachMarkedCompleteNotificationType:
+      dataExchangeApproachMarkedCompleteNotificationType ?? undefined
+  };
 
   const handleFormSubmit = () => {
     const dirtyInputs = dirtyInput(
@@ -120,37 +138,6 @@ const NotificationSettings = () => {
     const changes = {
       ...dirtyInputs
     };
-
-    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
-    if (!changes.datesChangedNotificationType && changes.datesChanged?.length) {
-      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
-      changes.datesChangedNotificationType =
-        DatesChangedNotificationType.ALL_MODELS;
-    }
-
-    // if newDiscussionAddedNotificationType is not changed by user, but newDiscussionAdded is changed, then do the following logic
-    if (
-      !changes.newDiscussionAddedNotificationType &&
-      changes.newDiscussionAdded?.length
-    ) {
-      // If newDiscussionAddedNotificationType is subscribed, then manually set newDiscussionAddedNotificationType to ALL_MODELS
-      changes.newDiscussionAddedNotificationType =
-        NewDiscussionAddedNotificationType.ALL_MODELS;
-    }
-
-    // if dataExchangeApproachMarkedCompleteNotificationType is not changed by user, but dataExchangeApproachMarkedComplete is changed, then do the following logic
-    if (
-      !changes.dataExchangeApproachMarkedCompleteNotificationType &&
-      changes.dataExchangeApproachMarkedComplete?.length
-    ) {
-      // If dataExchangeApproachMarkedCompleteNotificationType is subscribed, then manually set dataExchangeApproachMarkedCompleteNotificationType to ALL_MODELS
-      changes.dataExchangeApproachMarkedCompleteNotificationType =
-        DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS;
-    }
-
-    if (dirtyInputs.taggedInDiscussion) {
-      changes.taggedInDiscussionReply = dirtyInputs.taggedInDiscussion;
-    }
 
     setErrorMeta({
       overrideMessage: notificationsT('settings.errorMessage')
@@ -178,17 +165,11 @@ const NotificationSettings = () => {
     if (!unsubscribeEmailParams) return;
 
     // if params are not valid, throw error
-    if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
-      showMessage(
-        <Alert
-          type="error"
-          slim
-          data-testid="error-alert"
-          className="margin-y-4"
-        >
-          {notificationsT('settings.unsubscribedMessage.error')}
-        </Alert>
-      );
+    if (!isEmailParamsValid) {
+      statusAlert({
+        message: notificationsT('settings.unsubscribedMessage.error'),
+        type: 'error'
+      });
       return;
     }
 
@@ -251,13 +232,8 @@ const NotificationSettings = () => {
         ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE &&
         !isSubscribedDataExchangeApproachMarkedCompleteEmail)
     ) {
-      showMessage(
-        <Alert
-          type="error"
-          slim
-          data-testid="error-alert"
-          className="margin-y-4"
-        >
+      statusAlert({
+        message: (
           <Trans
             t={notificationsT}
             i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
@@ -270,8 +246,10 @@ const NotificationSettings = () => {
               bold: <strong />
             }}
           />
-        </Alert>
-      );
+        ),
+        type: 'error'
+      });
+
       params.delete('unsubscribe_email');
       navigate({ search: params.toString() }, { replace: true });
       return;
@@ -382,32 +360,13 @@ const NotificationSettings = () => {
     newModelPlan,
     notificationsT,
     params,
-    showMessage,
     unsubscribeEmailParams,
     update,
     setErrorMeta,
     newDiscussionAdded,
-    incorrectModelStatus
+    incorrectModelStatus,
+    isEmailParamsValid
   ]);
-
-  const initialValues: NotificationSettingsFormType = {
-    dailyDigestComplete: dailyDigestComplete ?? [],
-    addedAsCollaborator: addedAsCollaborator ?? [],
-    taggedInDiscussion: taggedInDiscussion ?? [],
-    newDiscussionAdded: newDiscussionAdded ?? [],
-    newDiscussionAddedNotificationType:
-      newDiscussionAddedNotificationType ?? undefined,
-    newDiscussionReply: newDiscussionReply ?? [],
-    incorrectModelStatus: incorrectModelStatus ?? [],
-    modelPlanShared: modelPlanShared ?? [],
-    newModelPlan: newModelPlan ?? [],
-    datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? undefined,
-    dataExchangeApproachMarkedComplete:
-      dataExchangeApproachMarkedComplete ?? [],
-    dataExchangeApproachMarkedCompleteNotificationType:
-      dataExchangeApproachMarkedCompleteNotificationType ?? undefined
-  };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
     return <NotFoundPartial />;
@@ -530,6 +489,9 @@ const NotificationSettings = () => {
                                   className="padding-left-2"
                                   name={notification.name}
                                   value={UserNotificationPreferenceFlag.EMAIL}
+                                  disabled={notification.disable?.includes(
+                                    UserNotificationPreferenceFlag.EMAIL
+                                  )}
                                   checked={(
                                     values?.[notification.name] ?? []
                                   ).includes(
@@ -546,7 +508,9 @@ const NotificationSettings = () => {
                                   className="padding-left-2"
                                   name={notification.name}
                                   value={UserNotificationPreferenceFlag.IN_APP}
-                                  disabled={section === 'basicNotifications'}
+                                  disabled={notification.disable?.includes(
+                                    UserNotificationPreferenceFlag.IN_APP
+                                  )}
                                   checked={(
                                     values?.[notification.name] ?? []
                                   ).includes(

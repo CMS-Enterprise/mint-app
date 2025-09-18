@@ -145,23 +145,28 @@ const notifications = {
         notifications: [
           {
             name: 'dailyDigestComplete',
-            copy: 'Daily digest of changes to the models I’m following'
+            copy: 'Daily digest of changes to the models I’m following',
+            disable: ['IN_APP']
           },
           {
             name: 'addedAsCollaborator',
-            copy: 'When I’m added as a collaborator to a Model Plan'
+            copy: 'When I’m added as a collaborator to a Model Plan',
+            disable: ['IN_APP']
           },
           {
             name: 'taggedInDiscussion',
-            copy: 'When I’m tagged in a discussion'
+            copy: 'When I’m tagged in a discussion',
+            disable: ['IN_APP']
           },
           {
             name: 'newDiscussionReply',
-            copy: 'When someone replies to a discussion I started'
+            copy: 'When someone replies to a discussion I started',
+            disable: ['IN_APP']
           },
           {
             name: 'modelPlanShared',
-            copy: 'When someone shares a Model Plan with me'
+            copy: 'When someone shares a Model Plan with me',
+            disable: ['IN_APP']
           }
         ]
       },
