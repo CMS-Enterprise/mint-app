@@ -29,25 +29,25 @@ func MTOMilestoneNoteGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, id 
 }
 
 func MTOMilestoneNoteCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.Create, MTOMilestoneNote)
+	procErr := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Create, MTOMilestoneNote)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new MTOMilestoneNote object: %w", procErr)
 	}
-	return returned, nil
+	return MTOMilestoneNote, nil
 }
 
 func MTOMilestoneNoteUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.Update, MTOMilestoneNote)
+	procErr := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Update, MTOMilestoneNote)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating MTOMilestoneNote object: %w", procErr)
 	}
-	return returned, nil
+	return MTOMilestoneNote, nil
 }
 
 func MTOMilestoneNoteDelete(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
-	returned, procErr := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.Delete, MTOMilestoneNote)
+	procErr := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Delete, MTOMilestoneNote)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue deleting MTOMilestoneNote object: %w", procErr)
 	}
-	return returned, nil
+	return MTOMilestoneNote, nil
 }
