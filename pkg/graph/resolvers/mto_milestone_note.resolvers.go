@@ -24,7 +24,7 @@ func (r *mutationResolver) CreateMTOMilestoneNote(ctx context.Context, input mod
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	store := r.store
-	return CreateMTOMilestoneNoteResolver(ctx, logger, principal, store, input)
+	return CreateMTOMilestoneNote(ctx, logger, principal, store, input)
 }
 
 // UpdateMTOMilestoneNote is the resolver for the updateMTOMilestoneNote field.
@@ -32,7 +32,7 @@ func (r *mutationResolver) UpdateMTOMilestoneNote(ctx context.Context, input mod
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	store := r.store
-	return UpdateMTOMilestoneNoteResolver(ctx, logger, principal, store, input)
+	return UpdateMTOMilestoneNote(ctx, logger, principal, store, input)
 }
 
 // DeleteMTOMilestoneNote is the resolver for the deleteMTOMilestoneNote field.
@@ -40,7 +40,7 @@ func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, input mod
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	store := r.store
-	return DeleteMTOMilestoneNoteResolver(ctx, logger, principal, store, input)
+	return DeleteMTOMilestoneNote(ctx, logger, principal, store, input)
 }
 
 // MTOMilestoneNote returns generated.MTOMilestoneNoteResolver implementation.

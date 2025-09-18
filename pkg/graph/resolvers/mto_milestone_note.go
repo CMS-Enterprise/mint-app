@@ -44,7 +44,7 @@ func GetMTOMilestoneNotesByMilestoneIDLOADER(ctx context.Context, logger *zap.Lo
 	return notes, nil
 }
 
-func CreateMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
+func CreateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -64,7 +64,7 @@ func CreateMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, pri
 	return storage.MTOMilestoneNoteCreate(store, logger, note)
 }
 
-func UpdateMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteUpdateInput) (*models.MTOMilestoneNote, error) {
+func UpdateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteUpdateInput) (*models.MTOMilestoneNote, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -84,7 +84,7 @@ func UpdateMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, pri
 	})
 }
 
-func DeleteMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteDeleteInput) (*models.MTOMilestoneNote, error) {
+func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteDeleteInput) (*models.MTOMilestoneNote, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
