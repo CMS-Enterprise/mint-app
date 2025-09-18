@@ -408,6 +408,7 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
             class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis"
           >
             <line
+              angle="0"
               class="recharts-cartesian-axis-line"
               fill="none"
               height="500"
@@ -428,6 +429,7 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
                 class="recharts-layer recharts-cartesian-axis-tick"
               >
                 <line
+                  angle="0"
                   class="recharts-cartesian-axis-tick-line"
                   fill="none"
                   height="500"
@@ -464,6 +466,7 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
                 class="recharts-layer recharts-cartesian-axis-tick"
               >
                 <line
+                  angle="0"
                   class="recharts-cartesian-axis-tick-line"
                   fill="none"
                   height="500"
@@ -500,6 +503,7 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
                 class="recharts-layer recharts-cartesian-axis-tick"
               >
                 <line
+                  angle="0"
                   class="recharts-cartesian-axis-tick-line"
                   fill="none"
                   height="500"
@@ -536,6 +540,7 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
                 class="recharts-layer recharts-cartesian-axis-tick"
               >
                 <line
+                  angle="0"
                   class="recharts-cartesian-axis-tick-line"
                   fill="none"
                   height="500"
@@ -572,6 +577,7 @@ exports[`Analytics > matches the snapshot when analytics feature is enabled and 
                 class="recharts-layer recharts-cartesian-axis-tick"
               >
                 <line
+                  angle="0"
                   class="recharts-cartesian-axis-tick-line"
                   fill="none"
                   height="500"

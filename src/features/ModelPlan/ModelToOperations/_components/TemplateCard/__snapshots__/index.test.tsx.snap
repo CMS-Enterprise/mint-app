@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TemplateCard Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card margin-bottom-2"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container radius-md minh-mobile padding-0 margin-0"
+    >
+      <div
+        class="usa-card__header padding-3 padding-bottom-0"
+        data-testid="CardHeader"
+      >
+        <div
+          class="display-flex flex-justify"
+        >
+          <span
+            class="text-base-dark"
+          >
+            Template
+          </span>
+        </div>
+        <h3
+          class="line-height-normal margin-top-1"
+        >
+          Standard categories
+        </h3>
+      </div>
+      <div
+        class="usa-card__body padding-x-3 "
+        data-testid="CardBody"
+      >
+        <div
+          class="text-base-dark"
+        >
+          24 categories, 0 milestones, 0 solutions
+        </div>
+        <p>
+          These are the standard categories for MTOs.
+        </p>
+      </div>
+      <div
+        class="usa-card__footer padding-3"
+        data-testid="CardFooter"
+      >
+        <button
+          class="usa-button usa-button--outline margin-right-2"
+          data-testid="button"
+          type="button"
+        >
+          Add to matrix
+        </button>
+        <button
+          class="usa-button usa-button--unstyled margin-top-2"
+          data-testid="button"
+          type="button"
+        >
+          About this template
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

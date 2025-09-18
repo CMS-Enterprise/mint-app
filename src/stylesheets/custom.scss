@@ -391,3 +391,7 @@ th {
     background-color: #00a91c !important;
   }
 }
+
+.Toastify__toast-container {
+  z-index: 100000;
+}

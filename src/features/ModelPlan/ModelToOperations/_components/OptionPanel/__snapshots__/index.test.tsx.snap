@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MTOOptionsPanel > renders correctly 1`] = `
+exports[`MTOOptionsPanel > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="model-to-operations__options-panel"
@@ -74,7 +74,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
                 aria-label="Add milestones from library"
                 class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
                 data-discover="true"
-                href="/models/123/collaboration-area/model-to-operations/milestone-library"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library"
               >
                 Add milestones from library
               </a>
@@ -144,7 +144,7 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
                 aria-label="Add solutions from library"
                 class="usa-link usa-button usa-button--outline display-block width-fit-content text-decoration-none margin-bottom-1"
                 data-discover="true"
-                href="/models/123/collaboration-area/model-to-operations/solution-library"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library"
               >
                 Add solutions from library
               </a>
@@ -200,78 +200,16 @@ exports[`MTOOptionsPanel > renders correctly 1`] = `
         </p>
       </div>
     </div>
-    <li
-      class="usa-card margin-top-2"
-      data-testid="article-card"
+    <div
+      class="margin-top-8 display-flex flex-justify-center"
     >
-      <div
-        class="usa-card__container shadow-2 padding-0 margin-0"
-        style="border-top-left-radius: .65rem; border-top-right-radius: .65rem;"
-      >
-        <div
-          class="display-flex flex-justify bg-base-lightest padding-x-3 padding-y-05 bg-base-lighter radius-top-lg"
-        >
-          TEMPLATE 
-          <svg
-            aria-label="grid view"
-            class="usa-icon margin-right-05"
-            focusable="false"
-            height="1em"
-            role="img"
-            style="top: 4px;"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3 3v8h8V3H3zm6 6H5V5h4v4zm-6 4v8h8v-8H3zm6 6H5v-4h4v4zm4-16v8h8V3h-8zm6 6h-4V5h4v4zm-6 4v8h8v-8h-8zm6 6h-4v-4h4v4z"
-              fill-rule="evenodd"
-            />
-          </svg>
-        </div>
-        <div
-          class="padding-x-3 display-flex flex-column height-full"
-        >
-          <div
-            class="usa-card__body padding-x-0 padding-y-2"
-            data-testid="CardBody"
-          >
-            <div
-              class="grid-row grid-gap-2"
-              data-testid="grid"
-            >
-              <div
-                class="tablet:grid-col-9 desktop:grid-col-9"
-                data-testid="grid"
-              >
-                <h4
-                  class="line-height-body-4 margin-y-0"
-                >
-                  Standard categories
-                </h4>
-                24 categories, 0 milestones, 0 solutions
-              </div>
-              <div
-                class="tablet:grid-col-3 desktop:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="display-flex flex-justify-end"
-                >
-                  <button
-                    class="usa-button usa-button--outline"
-                    data-testid="button"
-                    type="button"
-                  >
-                    Add this template
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </li>
+      <span
+        aria-valuetext="Loading"
+        class="mint-spinner mint-spinner--large"
+        data-testid="spinner"
+        role="progressbar"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;
