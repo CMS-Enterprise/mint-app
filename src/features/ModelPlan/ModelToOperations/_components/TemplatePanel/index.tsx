@@ -96,7 +96,10 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
   });
 
   return (
-    <div className="padding-4 padding-x-8 mint-body-normal">
+    <div
+      className="padding-4 padding-x-8 mint-body-normal"
+      style={{ maxWidth: '530px' }}
+    >
       <h2 className="margin-y-2 line-height-large">{template.name}</h2>
 
       <div className="text-base-dark">
