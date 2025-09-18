@@ -16,11 +16,32 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-func GetMTOMilestoneNoteByIDResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) (*models.MTOMilestoneNote, error) {
+func GetMTOMilestoneNoteByIDLOADER(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) (*models.MTOMilestoneNote, error) {
 	if principal == nil {
 		return nil, fmt.Errorf("principal is nil")
 	}
-	return loaders.MTOMilestoneNote.ByMilestoneID.Load(ctx, id)
+	notes, err := loaders.MTOMilestoneNote.ByMilestoneID.Load(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if len(notes) == 0 {
+		return nil, nil
+	}
+	return notes[0], nil
+}
+
+func GetMTOMilestoneNotesByMilestoneIDLOADER(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, milestoneID uuid.UUID) ([]*models.MTOMilestoneNote, error) {
+	if principal == nil {
+		return nil, fmt.Errorf("principal is nil")
+	}
+	notes, err := loaders.MTOMilestoneNote.ByMilestoneID.Load(ctx, milestoneID)
+	if err != nil {
+		return nil, err
+	}
+	if notes == nil {
+		return []*models.MTOMilestoneNote{}, nil
+	}
+	return notes, nil
 }
 
 func CreateMTOMilestoneNoteResolver(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {

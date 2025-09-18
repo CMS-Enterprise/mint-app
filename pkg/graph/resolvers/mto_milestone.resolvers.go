@@ -41,14 +41,7 @@ func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMil
 func (r *mTOMilestoneResolver) Notes(ctx context.Context, obj *models.MTOMilestone) ([]*models.MTOMilestoneNote, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	note, err := GetMTOMilestoneNoteByIDResolver(ctx, logger, principal, r.store, obj.ID)
-	if err != nil {
-		return nil, err
-	}
-	if note == nil {
-		return []*models.MTOMilestoneNote{}, nil
-	}
-	return []*models.MTOMilestoneNote{note}, nil
+	return GetMTOMilestoneNotesByMilestoneIDLOADER(ctx, logger, principal, r.store, obj.ID)
 }
 
 // Categories is the resolver for the categories field.

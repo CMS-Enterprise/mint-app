@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -17,7 +16,7 @@ import (
 
 // MtoMilestoneID is the resolver for the mtoMilestoneID field.
 func (r *mTOMilestoneNoteResolver) MtoMilestoneID(ctx context.Context, obj *models.MTOMilestoneNote) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: MtoMilestoneID - mtoMilestoneID"))
+	return obj.MTOMilestoneID, nil
 }
 
 // CreateMTOMilestoneNote is the resolver for the createMTOMilestoneNote field.
