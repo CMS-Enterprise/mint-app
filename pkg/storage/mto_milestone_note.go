@@ -29,11 +29,11 @@ func MTOMilestoneNoteGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, id 
 }
 
 func MTOMilestoneNoteCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
-	procErr := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Create, MTOMilestoneNote)
+	returned, procErr := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.Create, MTOMilestoneNote)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new MTOMilestoneNote object: %w", procErr)
 	}
-	return MTOMilestoneNote, nil
+	return returned, nil
 }
 
 func MTOMilestoneNoteUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
