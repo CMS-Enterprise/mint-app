@@ -2,7 +2,6 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import {
-  ActivityType,
   AddedAsCollaboratorMeta,
   AnalyzedAuditChange,
   AnalyzedCrTdls,
@@ -111,10 +110,23 @@ export const isDataExchangeApproach = (
   );
 };
 
+export const UnsubscribableActivities = {
+  DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: 'dataExchangeApproachMarkedComplete',
+  DATES_CHANGED: 'datesChanged',
+  INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
+  NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
+  NEW_MODEL_PLAN: 'newModelPlan'
+} as const;
+
+export type UnsubscribableActivityType = keyof typeof UnsubscribableActivities;
+
 export const verifyEmailParams = (
   emailParams: string | null
-): emailParams is ActivityType => {
-  return emailParams ? Object.keys(ActivityType).includes(emailParams) : false;
+): emailParams is UnsubscribableActivityType => {
+  return (
+    emailParams !== null &&
+    Object.keys(UnsubscribableActivities).includes(emailParams)
+  );
 };
 
 const activityI18nKeybases = {

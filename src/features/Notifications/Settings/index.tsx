@@ -15,7 +15,6 @@ import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
-  ActivityType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -34,7 +33,10 @@ import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
 import { tObject } from 'utils/translation';
 
-import { verifyEmailParams } from '../Home/_components/_utils';
+import {
+  UnsubscribableActivities,
+  verifyEmailParams
+} from '../Home/_components/_utils';
 
 type GetNotifcationSettingsType =
   GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
@@ -76,7 +78,6 @@ const NotificationSettings = () => {
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
   const navigate = useNavigate();
-  const { message } = useMessage();
   const location = useLocation();
 
   const params = useMemo(
@@ -84,14 +85,21 @@ const NotificationSettings = () => {
     [location.search]
   );
 
-  const { setErrorMeta } = useErrorMessage();
-
   const unsubscribeEmailParams = params.get('unsubscribe_email');
   const isEmailParamsValid = verifyEmailParams(unsubscribeEmailParams);
+
+  const { message } = useMessage();
+  const { setErrorMeta } = useErrorMessage();
 
   const { data, loading, error } = useGetNotificationSettingsQuery();
 
   const [update] = useUpdateNotificationSettingsMutation();
+
+  const notificationPreferences: Partial<NotificationSettingsFormType> =
+    useMemo(
+      () => data?.currentUser.notificationPreferences || {},
+      [data?.currentUser.notificationPreferences]
+    );
 
   const {
     dailyDigestComplete,
@@ -107,8 +115,7 @@ const NotificationSettings = () => {
     datesChangedNotificationType,
     dataExchangeApproachMarkedComplete,
     dataExchangeApproachMarkedCompleteNotificationType
-  } = (data?.currentUser.notificationPreferences ||
-    {}) as GetNotifcationSettingsType;
+  } = notificationPreferences;
 
   const initialValues: NotificationSettingsFormType = {
     dailyDigestComplete: dailyDigestComplete ?? [],
@@ -172,65 +179,17 @@ const NotificationSettings = () => {
       });
       return;
     }
+    const unsubscribeNotification =
+      UnsubscribableActivities[unsubscribeEmailParams];
 
-    // Setting variables
+    const unsubscribeNotificationPreferences =
+      notificationPreferences[unsubscribeNotification] || [];
 
-    // Incorrect Model Status variables
-    const isSubscribedIncorrectModelStatusEmail = incorrectModelStatus.includes(
-      UserNotificationPreferenceFlag.EMAIL
-    );
-    const isSubscribedIncorrectModelStatusInApp = incorrectModelStatus.includes(
-      UserNotificationPreferenceFlag.IN_APP
-    );
-
-    // New Model Plan variables
-    const isSubscribedModelPlanEmail = newModelPlan.includes(
-      UserNotificationPreferenceFlag.EMAIL
-    );
-    const isSubscribedModelPlanInApp = newModelPlan.includes(
-      UserNotificationPreferenceFlag.IN_APP
-    );
-
-    // New Discussion variables
-    const isSubscribedNewDiscussionAddedEmail = newDiscussionAdded.includes(
-      UserNotificationPreferenceFlag.EMAIL
-    );
-    const isSubscribedNewDiscussionAddedInApp = newDiscussionAdded.includes(
-      UserNotificationPreferenceFlag.IN_APP
-    );
-
-    // Dates Changed variables
-    const isSubscribedDatesChangedEmail = datesChanged.includes(
-      UserNotificationPreferenceFlag.EMAIL
-    );
-    const isSubscribedDatesChangedInApp = datesChanged.includes(
-      UserNotificationPreferenceFlag.IN_APP
-    );
-    // Data Exchange Approach Marked Complete variables
-    const isSubscribedDataExchangeApproachMarkedCompleteEmail =
-      dataExchangeApproachMarkedComplete.includes(
-        UserNotificationPreferenceFlag.EMAIL
-      );
-
-    const isSubscribedDataExchangeApproachMarkedCompleteInApp =
-      dataExchangeApproachMarkedComplete.includes(
-        UserNotificationPreferenceFlag.IN_APP
-      );
-
-    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
-    // then show error alert banner
+    // if chosen notification email preferance is unchecked then show error alert banner
     if (
-      (unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS &&
-        !isSubscribedIncorrectModelStatusEmail) ||
-      (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
-        !isSubscribedModelPlanEmail) ||
-      (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED &&
-        !isSubscribedNewDiscussionAddedEmail) ||
-      (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
-        !isSubscribedDatesChangedEmail) ||
-      (unsubscribeEmailParams ===
-        ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE &&
-        !isSubscribedDataExchangeApproachMarkedCompleteEmail)
+      !unsubscribeNotificationPreferences.includes(
+        UserNotificationPreferenceFlag.EMAIL
+      )
     ) {
       statusAlert({
         message: (
@@ -255,117 +214,50 @@ const NotificationSettings = () => {
       return;
     }
 
-    // Unsubscribe from email notifications
-    if (
-      unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS ||
-      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
-      unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED ||
-      unsubscribeEmailParams === ActivityType.DATES_CHANGED ||
-      unsubscribeEmailParams ===
-        ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
-    ) {
-      // if user has email notifications, then proceeed to unsubscribe
-      if (
-        isSubscribedIncorrectModelStatusEmail ||
-        isSubscribedModelPlanEmail ||
-        isSubscribedNewDiscussionAddedEmail ||
-        isSubscribedDatesChangedEmail ||
-        isSubscribedDataExchangeApproachMarkedCompleteEmail
-      ) {
-        let changes;
-        // Adjust payload if Incorrect Model Status in-app notifications are enabled
-        if (unsubscribeEmailParams === ActivityType.INCORRECT_MODEL_STATUS) {
-          changes = {
-            incorrectModelStatus: isSubscribedIncorrectModelStatusInApp
-              ? [UserNotificationPreferenceFlag.IN_APP]
-              : []
-          };
-        }
+    // if chosen notification has email preferance checked
+    // adjust payload if in-app notifications are checked
+    const changes = {
+      [unsubscribeNotification]: unsubscribeNotificationPreferences.filter(
+        pref => pref !== UserNotificationPreferenceFlag.EMAIL
+      )
+    };
 
-        // Adjust payload if New Model Plan in-app notifications are enabled
-        if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
-          changes = {
-            newModelPlan: isSubscribedModelPlanInApp
-              ? [UserNotificationPreferenceFlag.IN_APP]
-              : []
-          };
-        }
-        // Adjust payload if New Discussion Added in-app notifications are enabled
-        if (unsubscribeEmailParams === ActivityType.NEW_DISCUSSION_ADDED) {
-          changes = {
-            newDiscussionAdded: isSubscribedNewDiscussionAddedInApp
-              ? [UserNotificationPreferenceFlag.IN_APP]
-              : []
-          };
-        }
+    // Proceed to unsubscribe, update user notification preferences if changes are present
+    setErrorMeta({
+      overrideMessage: notificationsT('settings.unsubscribedMessage.error')
+    });
 
-        // Adjust payload if Dates Changed in-app notifications are enabled
-        if (unsubscribeEmailParams === ActivityType.DATES_CHANGED) {
-          changes = {
-            datesChanged: isSubscribedDatesChangedInApp
-              ? [UserNotificationPreferenceFlag.IN_APP]
-              : []
-          };
-        }
-        // Adjust payload if Data Exchange Approach in-app notifications are enabled
-        if (
-          unsubscribeEmailParams ===
-          ActivityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
-        ) {
-          changes = {
-            dataExchangeApproachMarkedComplete:
-              isSubscribedDataExchangeApproachMarkedCompleteInApp
-                ? [UserNotificationPreferenceFlag.IN_APP]
-                : []
-          };
-        }
-
-        // Proceed to update user notification preferences if changes are present
-        if (changes) {
-          setErrorMeta({
-            overrideMessage: notificationsT(
-              'settings.unsubscribedMessage.error'
-            )
-          });
-
-          update({ variables: { changes } }).then(response => {
-            if (!response?.errors) {
-              toastSuccess(
-                <Trans
-                  t={notificationsT}
-                  i18nKey="settings.unsubscribedMessage.success"
-                  values={{
-                    notificationType: notificationsT(
-                      `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                    )
-                  }}
-                  components={{
-                    bold: <strong />
-                  }}
-                />
-              );
-            }
-          });
-        }
+    update({ variables: { changes } }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            t={notificationsT}
+            i18nKey="settings.unsubscribedMessage.success"
+            values={{
+              notificationType: notificationsT(
+                `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+              )
+            }}
+            components={{
+              bold: <strong />
+            }}
+          />
+        );
       }
+    });
 
-      params.delete('unsubscribe_email');
-      navigate({ search: params.toString() }, { replace: true });
-    }
+    params.delete('unsubscribe_email');
+    navigate({ search: params.toString() }, { replace: true });
   }, [
-    dataExchangeApproachMarkedComplete,
-    datesChanged,
     navigate,
     loading,
-    newModelPlan,
     notificationsT,
     params,
     unsubscribeEmailParams,
     update,
     setErrorMeta,
-    newDiscussionAdded,
-    incorrectModelStatus,
-    isEmailParamsValid
+    isEmailParamsValid,
+    notificationPreferences
   ]);
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
