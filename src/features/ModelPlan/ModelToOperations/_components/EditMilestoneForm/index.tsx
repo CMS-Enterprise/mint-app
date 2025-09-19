@@ -154,6 +154,8 @@ const EditMilestoneForm = ({
 
   const [editNotesOpen, setEditNotesOpen] = useState<boolean>(false);
 
+  const [milestoneNote, setMilestoneNote] = useState<string>('');
+
   const { setErrorMeta } = useErrorMessage();
 
   const {
@@ -782,15 +784,11 @@ const EditMilestoneForm = ({
             overlayClassName="bg-transparent"
           >
             <MilestoneNoteForm
-            // milestone={milestone}
-            // commonSolutionKeys={commonSolutionKeys}
-            // setCommonSolutionKeys={setCommonSolutionKeys}
-            // solutionIDs={solutionIDs}
-            // setSolutionIDs={setSolutionIDs}
-            // allSolutions={
-            //   allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
-            // }
-            // setCloseDestination={setCloseDestination}
+              milestoneNote={milestoneNote}
+              setMilestoneNote={setMilestoneNote}
+              closeModal={() => {
+                setEditNotesOpen(false);
+              }}
             />
           </Sidepanel>
         </>

@@ -20,7 +20,11 @@ export const mtoMilestoneNoteMisc = {
   addANote: 'Add a note',
   addAMilestoneNote: 'Add a milestone note',
   notesAdded: '{{count}} note added to this milestone',
-  notesAdded_other: '{{count}} notes added to this milestone'
+  notesAdded_other: '{{count}} notes added to this milestone',
+  note: 'Note',
+  addNote: 'Add note',
+  cancel: 'Cancel',
+  saveChanges: 'Save changes'
 };
 
 export default mtoMilestoneNote;
