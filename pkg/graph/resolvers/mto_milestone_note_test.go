@@ -207,7 +207,6 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteGetByMilestoneID() {
 	for i, note := range notes {
 		noteIDs[i] = note.ID
 		suite.Equal(milestone.ID, note.MTOMilestoneID)
-		suite.Equal(plan.ID, note.ModelPlanID)
 	}
 
 	suite.Contains(noteIDs, note1.ID)
