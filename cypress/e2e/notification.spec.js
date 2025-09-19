@@ -215,6 +215,7 @@ describe('Notification Center', () => {
   it('testing Incorrect Model Status Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
+    cy.wait(500);
 
     // Check the incorrect model status in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-incorrectModelStatus"]')
@@ -283,7 +284,7 @@ describe('Notification Center', () => {
       '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
     );
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when MINT detects an incorrect model status.'
     );
   });
@@ -291,6 +292,7 @@ describe('Notification Center', () => {
   it('testing New Model Plan Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
+    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
@@ -345,7 +347,7 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a new Model Plan is created.'
     );
   });
@@ -353,6 +355,7 @@ describe('Notification Center', () => {
   it('testing Dates Changed Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
+    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-datesChanged"]')
@@ -420,7 +423,7 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when model dates change.'
     );
   });
@@ -428,6 +431,7 @@ describe('Notification Center', () => {
   it('testing New Discussion Added Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
+    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-newDiscussionAdded"]')
@@ -494,7 +498,7 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED');
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a new discussion is added.'
     );
   });
@@ -502,6 +506,7 @@ describe('Notification Center', () => {
   it('testing Data Exchange Approach is marked Complete Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
+    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get(
@@ -589,7 +594,7 @@ describe('Notification Center', () => {
       '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
     );
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a data exchange approach is completed.'
     );
   });
