@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import {
+  ActivityMetaData,
   AddedAsCollaboratorMeta,
   AnalyzedAuditChange,
   AnalyzedCrTdls,
@@ -17,97 +18,107 @@ import {
   TaggedInPlanDiscussionActivityMeta
 } from 'gql/generated/graphql';
 
-type MetaDataType =
-  | TaggedInDiscussionReplyActivityMeta
-  | TaggedInPlanDiscussionActivityMeta
-  | DailyDigestCompleteActivityMeta
-  | NewDiscussionAddedActivityMeta
-  | NewDiscussionRepliedActivityMeta
-  | IncorrectModelStatusActivityMeta
-  | ModelPlanSharedActivityMeta
-  | AddedAsCollaboratorMeta
-  | NewModelPlanActivityMeta
-  | DatesChangedActivityMeta
-  | PlanDataExchangeApproachMarkedCompleteActivityMeta;
-
 // Type guard to check union type
 export const isTaggedInDiscussion = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is TaggedInPlanDiscussionActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
 };
 
 export const isTaggedInDiscussionReply = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is TaggedInDiscussionReplyActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
 };
 
 export const isDailyDigest = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is DailyDigestCompleteActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'DailyDigestCompleteActivityMeta';
 };
 
 export const isNewDiscussionAdded = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is NewDiscussionAddedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionAddedActivityMeta';
 };
 
 export const isNewDiscussionReply = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is NewDiscussionRepliedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionRepliedActivityMeta';
 };
 
 export const isIncorrectModelStatus = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is IncorrectModelStatusActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'IncorrectModelStatusActivityMeta';
 };
 
 export const isSharedActivity = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is ModelPlanSharedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'ModelPlanSharedActivityMeta';
 };
 
 export const isAddingCollaborator = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is AddedAsCollaboratorMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'AddedAsCollaboratorMeta';
 };
 
 export const isDatesChanged = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is DatesChangedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'DatesChangedActivityMeta';
 };
 
 export const isNewModelPlan = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is NewModelPlanActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewModelPlanActivityMeta';
 };
 
 export const isDataExchangeApproach = (
-  data: MetaDataType
+  data: ActivityMetaData
 ): data is PlanDataExchangeApproachMarkedCompleteActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return (
     data.__typename === 'PlanDataExchangeApproachMarkedCompleteActivityMeta'
   );
+};
+
+export const getNavUrl = (metaData: ActivityMetaData) => {
+  switch (metaData.__typename) {
+    case 'AddedAsCollaboratorMeta':
+      return `/models/${metaData.modelPlanID}/collaboration-area`;
+
+    case 'ModelPlanSharedActivityMeta':
+    case 'NewModelPlanActivityMeta':
+      return `/models/${metaData.modelPlanID}/read-view`;
+
+    case 'PlanDataExchangeApproachMarkedCompleteActivityMeta':
+      return `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`;
+
+    case 'TaggedInPlanDiscussionActivityMeta':
+    case 'TaggedInDiscussionReplyActivityMeta':
+    case 'NewDiscussionAddedActivityMeta':
+    case 'NewDiscussionRepliedActivityMeta':
+      return `/models/${metaData.modelPlanID}/read-view/discussions?discussionID=${metaData.discussionID}`;
+
+    default:
+      return '/';
+  }
 };
 
 export const UnsubscribableActivities = {
@@ -152,7 +163,7 @@ const activityI18nKeybases = {
     'notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
 };
 
-export const activityText = (data: MetaDataType) => {
+export const activityText = (data: ActivityMetaData) => {
   let additionalProps;
   switch (data.__typename) {
     case 'DailyDigestCompleteActivityMeta':
@@ -177,7 +188,7 @@ export const ActivityCTA = ({
   data,
   isExpanded
 }: {
-  data: MetaDataType;
+  data: ActivityMetaData;
   isExpanded: boolean;
 }) => {
   switch (data.__typename) {
