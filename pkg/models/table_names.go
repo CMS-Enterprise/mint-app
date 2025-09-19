@@ -66,8 +66,9 @@ const (
 	TNMTOCommonSolutionSystemOwner       TableName = "mto_common_solution_system_owner"
 	TNPlanTimeline                       TableName = "plan_timeline"
 	TNMTOSuggestedMilestone              TableName = "mto_suggested_milestone"
+	TNMTOMilestoneNote                   TableName = "mto_milestone_note"
 )
 
 // MTOTables is a list of all tables that are related to the MTO section
 // This is used to filter the translated audit collection to only include MTO related tables
-var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo}
+var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo, TNMTOMilestoneNote}

@@ -110,6 +110,9 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   },
   [TableName.PLAN_TIMELINE]: {
     generalName: 'Timeline'
+  },
+  [TableName.MTO_MILESTONE_NOTE]: {
+    generalName: 'MTO milestone note'
   }
 };
 

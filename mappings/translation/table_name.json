@@ -143,5 +143,8 @@
   },
   "plan_timeline": {
     "generalName": "Timeline"
+  },
+  "mto_milestone_note": {
+    "generalName": "MTO milestone note"
   }
 }

@@ -41,6 +41,7 @@ type MTOMilestone {
   addedFromMilestoneLibrary: Boolean! # Only true when commonMilestone && commonMilestone
   commonMilestone: MTOCommonMilestone
   solutions: [MTOSolution!]!
+  notes: [MTOMilestoneNote!]!
   """
   Category resolves relational category information.
   """
