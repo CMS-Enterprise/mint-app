@@ -20,8 +20,12 @@ func MTOMilestoneNoteGetByMilestoneIDLoader(np sqlutils.NamedPreparer, _ *zap.Lo
 	return returned, nil
 }
 
-func MTOMilestoneNoteGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOMilestoneNote, error) {
-	returned, err := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByIDLoader, map[string]interface{}{"id": pq.Array([]uuid.UUID{id})})
+// MTOMilestoneNoteGetByIDLoader returns all milestone notes by the provided ids
+func MTOMilestoneNoteGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOMilestoneNote, error) {
+	args := map[string]interface{}{
+		"ids": pq.Array(ids),
+	}
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

@@ -12,10 +12,12 @@ import (
 
 type mtoMilestoneNoteLoaders struct {
 	ByMilestoneID LoaderWrapper[uuid.UUID, []*models.MTOMilestoneNote]
+	ByID          LoaderWrapper[uuid.UUID, *models.MTOMilestoneNote]
 }
 
 var MTOMilestoneNote = &mtoMilestoneNoteLoaders{
 	ByMilestoneID: NewLoaderWrapper(batchMTOMilestoneNoteGetByMilestoneID),
+	ByID:          NewLoaderWrapper(batchMTOMilestoneNoteGetByID),
 }
 
 func batchMTOMilestoneNoteGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOMilestoneNote] {
@@ -32,4 +34,20 @@ func batchMTOMilestoneNoteGetByMilestoneID(ctx context.Context, milestoneIDs []u
 		return data.MTOMilestoneID
 	}
 	return oneToManyDataLoader(milestoneIDs, data, getKeyFunc)
+}
+
+func batchMTOMilestoneNoteGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOMilestoneNote] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOMilestoneNote](ids, err)
+	}
+	data, err := storage.MTOMilestoneNoteGetByIDLoader(loaders.DataReader.Store, logger, ids)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, *models.MTOMilestoneNote](ids, err)
+	}
+	getKeyFunc := func(data *models.MTOMilestoneNote) uuid.UUID {
+		return data.ID
+	}
+	return oneToOneDataLoader(ids, data, getKeyFunc)
 }
