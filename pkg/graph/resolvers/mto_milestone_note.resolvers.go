@@ -7,17 +7,9 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// MtoMilestoneID is the resolver for the mtoMilestoneID field.
-func (r *mTOMilestoneNoteResolver) MtoMilestoneID(ctx context.Context, obj *models.MTOMilestoneNote) (uuid.UUID, error) {
-	return obj.MTOMilestoneID, nil
-}
 
 // CreateMTOMilestoneNote is the resolver for the createMTOMilestoneNote field.
 func (r *mutationResolver) CreateMTOMilestoneNote(ctx context.Context, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
@@ -43,9 +35,18 @@ func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, input mod
 	return DeleteMTOMilestoneNote(ctx, logger, principal, store, input)
 }
 
-// MTOMilestoneNote returns generated.MTOMilestoneNoteResolver implementation.
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+/*
+	func (r *mTOMilestoneNoteResolver) MtoMilestoneID(ctx context.Context, obj *models.MTOMilestoneNote) (uuid.UUID, error) {
+	return obj.MTOMilestoneID, nil
+}
 func (r *Resolver) MTOMilestoneNote() generated.MTOMilestoneNoteResolver {
 	return &mTOMilestoneNoteResolver{r}
 }
-
 type mTOMilestoneNoteResolver struct{ *Resolver }
+*/

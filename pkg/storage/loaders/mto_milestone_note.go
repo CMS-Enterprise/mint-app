@@ -3,11 +3,12 @@ package loaders
 import (
 	"context"
 
+	"github.com/google/uuid"
+	"github.com/graph-gophers/dataloader/v7"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader/v7"
 )
 
 type mtoMilestoneNoteLoaders struct {
