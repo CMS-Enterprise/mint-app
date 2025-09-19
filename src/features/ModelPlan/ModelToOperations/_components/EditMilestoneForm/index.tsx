@@ -24,6 +24,9 @@ import {
   GridContainer,
   Icon,
   Label,
+  ProcessList,
+  ProcessListHeading,
+  ProcessListItem,
   Radio,
   Select,
   Table as UswdsTable,
@@ -48,6 +51,7 @@ import {
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import CollapsableLink from 'components/CollapsableLink';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
@@ -65,7 +69,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import { isDateInPast } from 'utils/date';
+import { formatDateUtc, formatTime, isDateInPast } from 'utils/date';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 import {
   composeMultiSelectOptions,
@@ -820,9 +824,9 @@ const EditMilestoneForm = ({
 
           <Sidepanel
             isOpen={editNotesOpen}
-            ariaLabel={mtoMilestoneNoteMiscT('addAMilestoneNote')}
+            ariaLabel={mtoMilestoneNoteMiscT('backToMilestone')}
             testid="edit-notes-sidepanel"
-            modalHeading={mtoMilestoneNoteMiscT('addAMilestoneNote')}
+            modalHeading={mtoMilestoneNoteMiscT('backToMilestone')}
             backButton
             showScroll
             noScrollable={false}
@@ -1515,37 +1519,70 @@ const EditMilestoneForm = ({
                       />
                     </Button>
 
-                    {milestoneNotes.map((note, index) => (
-                      <div key={note.id}>
-                        <div>{note.content}</div>
+                    {milestoneNotes.length > 0 && (
+                      <CollapsableLink
+                        id="milestone-notes"
+                        label={mtoMilestoneNoteMiscT('showNotes')}
+                        closeLabel={mtoMilestoneNoteMiscT('hideNotes')}
+                        styleLeftBar={false}
+                        startOpen
+                      >
+                        <ProcessList className="padding-x-0 margin-left-neg-1">
+                          {milestoneNotes.map((note, index) => (
+                            <ProcessListItem
+                              key={`${note.id}-${note.content}`}
+                              className="read-only-model-plan__timeline__list-item"
+                            >
+                              <p className="margin-top-0 margin-bottom-1">
+                                {note.content}
+                              </p>
 
-                        <div className="display-flex">
-                          <Button
-                            type="button"
-                            unstyled
-                            className="margin-right-1"
-                            onClick={() => {
-                              setSelectedMilestoneNote(note);
-                              setEditNotesOpen(true);
-                            }}
-                          >
-                            {mtoMilestoneNoteMiscT('editThisNote')}
-                          </Button>
-                          <Button
-                            type="button"
-                            unstyled
-                            className="text-error"
-                            onClick={() => {
-                              setMilestoneNotes(
-                                milestoneNotes.filter((n, i) => i !== index)
-                              );
-                            }}
-                          >
-                            {mtoMilestoneNoteMiscT('deleteThisNote')}
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                              <p className="text-base-dark margin-top-0 margin-bottom-1">
+                                {mtoMilestoneNoteMiscT('createdBy', {
+                                  name: note.createdByUserAccount.commonName,
+                                  date: formatDateUtc(
+                                    note.createdDts,
+                                    'MMMM d, yyyy'
+                                  ),
+                                  time: formatTime(note.createdDts)
+                                })}
+                              </p>
+
+                              {note.createdByUserAccount.isEUAID && (
+                                <div className="display-flex">
+                                  <Button
+                                    type="button"
+                                    unstyled
+                                    className="margin-right-2"
+                                    onClick={() => {
+                                      setSelectedMilestoneNote(note);
+                                      setEditNotesOpen(true);
+                                    }}
+                                  >
+                                    {mtoMilestoneNoteMiscT('editThisNote')}
+                                  </Button>
+
+                                  <Button
+                                    type="button"
+                                    unstyled
+                                    className="text-error"
+                                    onClick={() => {
+                                      setMilestoneNotes(
+                                        milestoneNotes.filter(
+                                          (n, i) => i !== index
+                                        )
+                                      );
+                                    }}
+                                  >
+                                    {mtoMilestoneNoteMiscT('removeThisNote')}
+                                  </Button>
+                                </div>
+                              )}
+                            </ProcessListItem>
+                          ))}
+                        </ProcessList>
+                      </CollapsableLink>
+                    )}
                   </div>
                 </Fieldset>
               </Form>

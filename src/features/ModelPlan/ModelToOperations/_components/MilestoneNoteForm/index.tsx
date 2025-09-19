@@ -81,6 +81,7 @@ const MilestoneNoteForm = ({
             <div className="display-flex">
               <Button
                 type="submit"
+                disabled={!milestoneNote}
                 onClick={() => {
                   if (isEditing) {
                     setMilestoneNotes(
@@ -106,7 +107,8 @@ const MilestoneNoteForm = ({
                         createdByUserAccount: {
                           __typename: 'UserAccount',
                           id: euaId,
-                          commonName: euaId
+                          commonName: euaId,
+                          isEUAID: true
                         }
                       }
                     ]);
