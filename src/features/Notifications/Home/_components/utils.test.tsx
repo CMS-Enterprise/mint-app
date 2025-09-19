@@ -3,7 +3,20 @@ import {
   TableName
 } from 'gql/generated/graphql';
 
-import { pushValuesToChangesArray } from './_utils';
+import { pushValuesToChangesArray, verifyEmailParams } from './_utils';
+
+describe('VerifyEmailParams Util', () => {
+  it('returns boolean to verify if param is valid', () => {
+    const result = verifyEmailParams('DATES_CHANGED');
+    expect(result).toEqual(true);
+
+    const result2 = verifyEmailParams('NEW_DISCUSSION_ADDED');
+    expect(result2).toEqual(true);
+
+    const result3 = verifyEmailParams('INVALID_PARAM');
+    expect(result3).toEqual(false);
+  });
+});
 
 describe('PushValuesToChangesArray Util', () => {
   const defaultObject: ChangeTypes = {
