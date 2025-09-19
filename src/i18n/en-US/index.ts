@@ -55,6 +55,9 @@ import mtoCommonSolutionSystemOwner, {
   mtoCommonSolutionSystemOwnerMisc
 } from './modelPlan/mtoCommonSolutionSystemOwner';
 import mtoMilestone from './modelPlan/mtoMilestone';
+import mtoMilestoneNote, {
+  mtoMilestoneNoteMisc
+} from './modelPlan/mtoMilestoneNote';
 import mtoSolution from './modelPlan/mtoSolution';
 import operationalNeeds from './modelPlan/operationalNeeds';
 import operationalSolutionSubtasks from './modelPlan/operationalSolutionSubtasks';
@@ -137,6 +140,8 @@ const enUS = {
   modelToOperationsMisc,
   mtoCategory,
   mtoMilestone,
+  mtoMilestoneNote,
+  mtoMilestoneNoteMisc,
   mtoCommonSolutionContact,
   mtoCommonSolutionContactMisc,
   mtoCommonSolutionContractor,

@@ -41,6 +41,15 @@ export default gql(/* GraphQL */ `
           isAdded
         }
       }
+      notes {
+        id
+        content
+        createdDts
+        createdByUserAccount {
+          id
+          commonName
+        }
+      }
     }
   }
 `);

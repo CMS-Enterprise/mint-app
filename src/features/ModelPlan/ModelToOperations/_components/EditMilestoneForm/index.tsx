@@ -74,6 +74,7 @@ import {
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkSolutionForm from '../LinkSolutionForm';
+import MilestoneNoteForm from '../MilestoneNoteForm';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
@@ -122,6 +123,7 @@ const EditMilestoneForm = ({
   setFooter
 }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
+  const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
@@ -149,6 +151,8 @@ const EditMilestoneForm = ({
     useState<number>(0);
 
   const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
+
+  const [editNotesOpen, setEditNotesOpen] = useState<boolean>(false);
 
   const { setErrorMeta } = useErrorMessage();
 
@@ -733,35 +737,63 @@ const EditMilestoneForm = ({
       </Modal>
 
       {milestone && (
-        <Sidepanel
-          isOpen={editSolutionsOpen}
-          ariaLabel={modelToOperationsMiscT(
-            'modal.editMilestone.backToMilestone'
-          )}
-          testid="edit-solutions-sidepanel"
-          modalHeading={modelToOperationsMiscT(
-            'modal.editMilestone.backToMilestone'
-          )}
-          backButton
-          showScroll
-          noScrollable={false}
-          closeModal={() => {
-            setEditSolutionsOpen(false);
-          }}
-          overlayClassName="bg-transparent"
-        >
-          <LinkSolutionForm
-            milestone={milestone}
-            commonSolutionKeys={commonSolutionKeys}
-            setCommonSolutionKeys={setCommonSolutionKeys}
-            solutionIDs={solutionIDs}
-            setSolutionIDs={setSolutionIDs}
-            allSolutions={
-              allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
-            }
-            setCloseDestination={setCloseDestination}
-          />
-        </Sidepanel>
+        <>
+          <Sidepanel
+            isOpen={editSolutionsOpen}
+            ariaLabel={modelToOperationsMiscT(
+              'modal.editMilestone.backToMilestone'
+            )}
+            testid="edit-solutions-sidepanel"
+            modalHeading={modelToOperationsMiscT(
+              'modal.editMilestone.backToMilestone'
+            )}
+            backButton
+            showScroll
+            noScrollable={false}
+            closeModal={() => {
+              setEditSolutionsOpen(false);
+            }}
+            overlayClassName="bg-transparent"
+          >
+            <LinkSolutionForm
+              milestone={milestone}
+              commonSolutionKeys={commonSolutionKeys}
+              setCommonSolutionKeys={setCommonSolutionKeys}
+              solutionIDs={solutionIDs}
+              setSolutionIDs={setSolutionIDs}
+              allSolutions={
+                allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
+              }
+              setCloseDestination={setCloseDestination}
+            />
+          </Sidepanel>
+
+          <Sidepanel
+            isOpen={editNotesOpen}
+            ariaLabel={mtoMilestoneNoteMiscT('addAMilestoneNote')}
+            testid="edit-notes-sidepanel"
+            modalHeading={mtoMilestoneNoteMiscT('addAMilestoneNote')}
+            backButton
+            showScroll
+            noScrollable={false}
+            closeModal={() => {
+              setEditNotesOpen(false);
+            }}
+            overlayClassName="bg-transparent"
+          >
+            <MilestoneNoteForm
+            // milestone={milestone}
+            // commonSolutionKeys={commonSolutionKeys}
+            // setCommonSolutionKeys={setCommonSolutionKeys}
+            // solutionIDs={solutionIDs}
+            // setSolutionIDs={setSolutionIDs}
+            // allSolutions={
+            //   allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
+            // }
+            // setCloseDestination={setCloseDestination}
+            />
+          </Sidepanel>
+        </>
       )}
 
       {unsavedChanges + unsavedSolutionChanges > 0 && (
@@ -1406,6 +1438,33 @@ const EditMilestoneForm = ({
                         </Alert>
                       </>
                     )}
+                  </div>
+
+                  <div className="border-top-1px border-base-lighter padding-y-4">
+                    <h3 className="margin-0 margin-bottom-1">
+                      {mtoMilestoneNoteMiscT('heading')}
+                    </h3>
+
+                    <p className="margin-0 margin-bottom-1">
+                      {mtoMilestoneNoteMiscT('notesAdded', {
+                        count: milestone?.notes?.length || 0
+                      })}
+                    </p>
+
+                    <Button
+                      type="button"
+                      unstyled
+                      className="margin-0 display-flex"
+                      onClick={() => {
+                        setEditNotesOpen(true);
+                      }}
+                    >
+                      {mtoMilestoneNoteMiscT('addANote')}
+                      <Icon.ArrowForward
+                        className="top-2px"
+                        aria-label="forward"
+                      />
+                    </Button>
                   </div>
                 </Fieldset>
               </Form>
