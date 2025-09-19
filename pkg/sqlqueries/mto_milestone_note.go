@@ -14,7 +14,7 @@ var mtoMilestoneNoteDeleteSQL string
 //go:embed SQL/mto/note/get_by_milestone_id_LOADER.sql
 var mtoMilestoneNoteGetByMilestoneIDLoaderSQL string
 
-//go:embed SQL/mto/note/get_by_id_loader.sql
+//go:embed SQL/mto/note/get_by_id_LOADER.sql
 var mtoMilestoneNoteGetByIDLoaderSQL string
 
 var MTOMilestoneNote = mtoMilestoneNoteScripts{
