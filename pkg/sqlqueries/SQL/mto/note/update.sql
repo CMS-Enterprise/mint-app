@@ -3,4 +3,12 @@ SET
     content = :content,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
-WHERE id = :id;
+WHERE id = :id
+RETURNING
+    id,
+    mto_milestone_id,
+    content,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

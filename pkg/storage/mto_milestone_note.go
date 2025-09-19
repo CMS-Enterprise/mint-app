@@ -37,11 +37,11 @@ func MTOMilestoneNoteCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilesto
 }
 
 func MTOMilestoneNoteUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
-	procErr := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Update, MTOMilestoneNote)
+	returned, procErr := sqlutils.GetProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.Update, MTOMilestoneNote)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue updating MTOMilestoneNote object: %w", procErr)
 	}
-	return MTOMilestoneNote, nil
+	return returned, nil
 }
 
 func MTOMilestoneNoteDelete(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
