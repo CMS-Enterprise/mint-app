@@ -25,12 +25,10 @@ import {
   Icon,
   Label,
   ProcessList,
-  ProcessListHeading,
   ProcessListItem,
   Radio,
   Select,
-  Table as UswdsTable,
-  TextInput
+  Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
@@ -43,10 +41,13 @@ import {
   MtoRiskIndicator,
   MtoSolution,
   MtoSolutionStatus,
+  useCreateMtoMilestoneNoteMutation,
   useDeleteMtoMilestoneMutation,
+  useDeleteMtoMilestoneNoteMutation,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
-  useUpdateMtoMilestoneMutation
+  useUpdateMtoMilestoneMutation,
+  useUpdateMtoMilestoneNoteMutation
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -513,6 +514,12 @@ const EditMilestoneForm = ({
 
   const [deleteMilestone] = useDeleteMtoMilestoneMutation();
 
+  const [addMilestoneNote] = useCreateMtoMilestoneNoteMutation();
+
+  const [deleteMilestoneNote] = useDeleteMtoMilestoneNoteMutation();
+
+  const [updateMilestoneNote] = useUpdateMtoMilestoneNoteMutation();
+
   const onSubmit = useCallback<SubmitHandler<FormValues>>(
     formData => {
       let mtoCategoryID;
@@ -599,6 +606,50 @@ const EditMilestoneForm = ({
           closeModal();
         }
       });
+
+      if (notesToAdd.length > 0) {
+        Promise.all(
+          notesToAdd.map(note =>
+            addMilestoneNote({
+              variables: {
+                input: {
+                  mtoMilestoneID: editMilestoneID || '',
+                  content: note.content
+                }
+              }
+            })
+          )
+        );
+      }
+
+      if (notesToRemove.length > 0) {
+        Promise.all(
+          notesToRemove.map(note =>
+            deleteMilestoneNote({
+              variables: {
+                input: {
+                  id: note.id
+                }
+              }
+            })
+          )
+        );
+      }
+
+      if (notesToUpdate.length > 0) {
+        Promise.all(
+          notesToUpdate.map(note =>
+            updateMilestoneNote({
+              variables: {
+                input: {
+                  id: note.id,
+                  content: note.content
+                }
+              }
+            })
+          )
+        );
+      }
     },
     [
       milestone,
@@ -611,7 +662,13 @@ const EditMilestoneForm = ({
       setIsDirty,
       closeModal,
       formValues,
-      setErrorMeta
+      setErrorMeta,
+      notesToAdd,
+      addMilestoneNote,
+      notesToRemove,
+      deleteMilestoneNote,
+      notesToUpdate,
+      updateMilestoneNote
     ]
   );
 
@@ -647,7 +704,9 @@ const EditMilestoneForm = ({
         <Button
           type="submit"
           onClick={handleSubmit(onSubmit)}
-          disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
+          disabled={
+            isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
+          }
           className="margin-bottom-2 margin-top-0"
         >
           {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
@@ -665,12 +724,12 @@ const EditMilestoneForm = ({
     );
   }, [
     isSubmitting,
-    isDirty,
     unsavedSolutionChanges,
     handleSubmit,
     setFooter,
     onSubmit,
-    modelToOperationsMiscT
+    modelToOperationsMiscT,
+    unsavedChanges
   ]);
 
   const columns: Column<SolutionType>[] = useMemo(
@@ -1531,7 +1590,7 @@ const EditMilestoneForm = ({
                           {milestoneNotes.map((note, index) => (
                             <ProcessListItem
                               key={`${note.id}-${note.content}`}
-                              className="read-only-model-plan__timeline__list-item"
+                              className="read-only-model-plan__timeline__list-item margin-left-2"
                             >
                               <p className="margin-top-0 margin-bottom-1">
                                 {note.content}
