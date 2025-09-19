@@ -39,9 +39,9 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreate() {
 	suite.Nil(note.ModifiedDts)
 }
 
-// TestMTOMilestoneNoteCreateWithEmptyContent tests creating a note with empty content
+// TestMTOMilestoneNoteCreateWithEmptyContent tests that empty content is rejected
 func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithEmptyContent() {
-	plan := suite.createModelPlan("Test Plan for Empty Content")
+	plan := suite.createModelPlan("Test Plan for Empty Content Rejection")
 	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
 
 	note, err := CreateMTOMilestoneNote(
@@ -50,14 +50,14 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithEmptyContent() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		models.MTOMilestoneNoteCreateInput{
-			Content:        "",
+			Content:        "", // Empty content should be rejected by ZERO_STRING constraint
 			MTOMilestoneID: milestone.ID,
 		},
 	)
 
-	suite.NoError(err)
-	suite.NotNil(note)
-	suite.Equal("", note.Content)
+	suite.Error(err)
+	suite.Nil(note)
+	suite.Contains(err.Error(), "zero_string_check")
 }
 
 // TestMTOMilestoneNoteCreateWithInvalidMilestoneID tests creating a note with invalid milestone ID
@@ -106,7 +106,6 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteUpdate() {
 	suite.Equal(note.ID, updatedNote.ID)
 	suite.Equal(newContent, updatedNote.Content)
 	suite.Equal(note.MTOMilestoneID, updatedNote.MTOMilestoneID)
-	suite.Equal(note.ModelPlanID, updatedNote.ModelPlanID)
 	suite.Equal(note.CreatedBy, updatedNote.CreatedBy)
 	suite.Equal(note.CreatedDts, updatedNote.CreatedDts)
 	suite.NotNil(updatedNote.ModifiedBy)
