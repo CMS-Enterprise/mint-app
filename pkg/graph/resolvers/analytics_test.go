@@ -27,6 +27,8 @@ func TestAnalyticsReturnsExpectedDataStructure(t *testing.T) {
 	numberOfModels2 := 15
 	totalNumberOfModels := 40
 	numberOfFollowers1 := 12
+	monthYear1 := "2025-01"
+	monthYear2 := "2025-02"
 
 	modelID1 := uuid.MustParse("123e4567-e89b-12d3-a456-426614174000")
 	modelID2 := uuid.MustParse("123e4567-e89b-12d3-a456-426614174001")
@@ -60,6 +62,17 @@ func TestAnalyticsReturnsExpectedDataStructure(t *testing.T) {
 	expectedTotalNumberOfModels := []*models.ModelCountAnalytics{
 		{
 			TotalNumberOfModels: &totalNumberOfModels,
+		},
+	}
+
+	expectedNumberOfModelsOverTime := []*models.ModelCountAnalyticsOverTime{
+		{
+			MonthYear:      &monthYear1,
+			NumberOfModels: &numberOfModels1,
+		},
+		{
+			MonthYear:      &monthYear2,
+			NumberOfModels: &numberOfModels2,
 		},
 	}
 
@@ -100,6 +113,7 @@ func TestAnalyticsReturnsExpectedDataStructure(t *testing.T) {
 		ModelsByStatus:            expectedModelsByStatus,
 		NumberOfFollowersPerModel: expectedNumberOfFollowersPerModel,
 		TotalNumberOfModels:       expectedTotalNumberOfModels[0],
+		NumberOfModelsOverTime:    expectedNumberOfModelsOverTime,
 	}
 
 	// Verify the expected data structure
@@ -133,4 +147,5 @@ func TestAnalyticsSummaryStructure(t *testing.T) {
 	assert.Nil(t, summary.ModelsByStatus)
 	assert.Nil(t, summary.NumberOfFollowersPerModel)
 	assert.Nil(t, summary.TotalNumberOfModels)
+	assert.Nil(t, summary.NumberOfModelsOverTime)
 }
