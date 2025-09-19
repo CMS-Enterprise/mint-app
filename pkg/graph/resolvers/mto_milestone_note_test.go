@@ -275,7 +275,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteMultipleMilestones() {
 
 	// Create two milestones
 	milestone1 := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
-	milestone2 := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	milestone2 := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyAdjustFfsClaims, []models.MTOCommonSolutionKey{})
 
 	// Create notes for each milestone
 	note1 := suite.createMTOMilestoneNote(milestone1, "Note for milestone 1")

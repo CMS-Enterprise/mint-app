@@ -1,6 +1,6 @@
-WITH QUERIED_ID AS (
+WITH QUERIED_IDs AS (
     /*Translate the input to a table */
-    SELECT UNNEST(CAST(:id AS UUID[]))  AS id
+    SELECT UNNEST(CAST(:ids AS UUID[]))  AS id
 )
 
 SELECT
@@ -12,4 +12,4 @@ SELECT
     mto_milestone_note.modified_by,
     mto_milestone_note.modified_dts
 FROM mto_milestone_note
-INNER JOIN QUERIED_ID AS qID ON mto_milestone_note.id = qID.id
+INNER JOIN QUERIED_IDs AS qID ON mto_milestone_note.id = qID.id
