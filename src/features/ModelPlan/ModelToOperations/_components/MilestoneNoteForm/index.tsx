@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   Button,
   Form,
@@ -9,22 +10,37 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import TextAreaField from 'components/TextAreaField';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
+import { MilestoneNoteType } from '../EditMilestoneForm';
+
 const MilestoneNoteForm = ({
-  milestoneNote,
-  setMilestoneNote,
-  closeModal
+  milestoneNotes,
+  setMilestoneNotes,
+  closeModal,
+  selectedMilestoneNote
 }: {
-  milestoneNote: string;
-  setMilestoneNote: (note: string) => void;
+  milestoneNotes: MilestoneNoteType[];
+  setMilestoneNotes: (notes: MilestoneNoteType[]) => void;
+  selectedMilestoneNote: MilestoneNoteType | null;
   closeModal: () => void;
 }) => {
   const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
 
+  const { euaId } = useSelector((state: AppState) => state.auth);
+
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+  const [milestoneNote, setMilestoneNote] = useState<string>(
+    selectedMilestoneNote?.content || ''
+  );
+
+  const isEditing = useMemo(() => {
+    return !!selectedMilestoneNote;
+  }, [selectedMilestoneNote]);
 
   return (
     <GridContainer
@@ -64,6 +80,34 @@ const MilestoneNoteForm = ({
               <Button
                 type="submit"
                 onClick={() => {
+                  if (isEditing) {
+                    setMilestoneNotes(
+                      milestoneNotes.map(note =>
+                        note.id === selectedMilestoneNote?.id
+                          ? {
+                              ...note,
+                              content: milestoneNote
+                            }
+                          : note
+                      )
+                    );
+                  } else {
+                    setMilestoneNotes([
+                      ...milestoneNotes,
+                      // Dummy data to add a new note in app memory
+                      {
+                        __typename: 'MTOMilestoneNote',
+                        id: '',
+                        content: milestoneNote,
+                        createdDts: new Date().toISOString(),
+                        createdByUserAccount: {
+                          __typename: 'UserAccount',
+                          id: euaId,
+                          commonName: euaId
+                        }
+                      }
+                    ]);
+                  }
                   closeModal();
                 }}
                 className="margin-right-3"

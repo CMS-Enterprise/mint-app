@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { use, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -83,6 +83,9 @@ import '../../index.scss';
 
 export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 
+export type MilestoneNoteType =
+  GetMtoMilestoneQuery['mtoMilestone']['notes'][0];
+
 type FormValues = {
   isDraft: boolean;
   name: string;
@@ -154,7 +157,15 @@ const EditMilestoneForm = ({
 
   const [editNotesOpen, setEditNotesOpen] = useState<boolean>(false);
 
-  const [milestoneNote, setMilestoneNote] = useState<string>('');
+  const [milestoneNotes, setMilestoneNotes] = useState<MilestoneNoteType[]>([]);
+
+  // UUID of the milestone note to edit, null if adding a new note
+  const [selectedMilestoneNote, setSelectedMilestoneNote] =
+    useState<MilestoneNoteType | null>(null);
+
+  const [notesToAdd, setNotesToAdd] = useState<MilestoneNoteType[]>([]);
+  const [notesToRemove, setNotesToRemove] = useState<MilestoneNoteType[]>([]);
+  const [notesToUpdate, setNotesToUpdate] = useState<MilestoneNoteType[]>([]);
 
   const { setErrorMeta } = useErrorMessage();
 
@@ -320,7 +331,27 @@ const EditMilestoneForm = ({
       ...formattedCustomSolutions,
       ...formattedCommonSolutions
     ]);
+
+    // Sets the milestone notes from the milestone
+    setMilestoneNotes(data?.mtoMilestone.notes || []);
   }, [data, solutionIDs, commonSolutionKeys, formatSolutionForTable]);
+
+  // Determines which notes to add, remove, and update based on the original notes and the current notes
+  useEffect(() => {
+    setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
+
+    setNotesToRemove(
+      data?.mtoMilestone.notes.filter(note => milestoneNotes.includes(note)) ||
+        []
+    );
+
+    setNotesToUpdate(
+      data?.mtoMilestone.notes?.filter(
+        note =>
+          milestoneNotes.find(n => n.id === note.id)?.content !== note.content
+      ) || []
+    );
+  }, [milestoneNotes, data]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -396,7 +427,21 @@ const EditMilestoneForm = ({
       );
     }
 
-    const totalChanges = facilitatedByChangeCount + Object.keys(rest).length;
+    // Counts amount of changes in notesToAdd array
+    const notesToAddChangeCount = notesToAdd.length;
+
+    // Counts amount of changes in notesToRemove array
+    const notesToRemoveChangeCount = notesToRemove.length;
+
+    // Counts amount of changes in notesToUpdate array
+    const notesToUpdateChangeCount = notesToUpdate.length;
+
+    const totalChanges =
+      facilitatedByChangeCount +
+      Object.keys(rest).length +
+      notesToAddChangeCount +
+      notesToRemoveChangeCount +
+      notesToUpdateChangeCount;
 
     setUnsavedChanges(totalChanges);
   }, [
@@ -404,7 +449,10 @@ const EditMilestoneForm = ({
     touchedFields.needBy,
     values,
     formValues.needBy,
-    formValues.facilitatedBy.length
+    formValues.facilitatedBy.length,
+    notesToAdd.length,
+    notesToRemove.length,
+    notesToUpdate.length
   ]);
 
   // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
@@ -780,15 +828,17 @@ const EditMilestoneForm = ({
             noScrollable={false}
             closeModal={() => {
               setEditNotesOpen(false);
+              setMilestoneNotes(milestoneNotes);
             }}
             overlayClassName="bg-transparent"
           >
             <MilestoneNoteForm
-              milestoneNote={milestoneNote}
-              setMilestoneNote={setMilestoneNote}
+              milestoneNotes={milestoneNotes}
+              setMilestoneNotes={setMilestoneNotes}
               closeModal={() => {
                 setEditNotesOpen(false);
               }}
+              selectedMilestoneNote={selectedMilestoneNote}
             />
           </Sidepanel>
         </>
@@ -1463,6 +1513,36 @@ const EditMilestoneForm = ({
                         aria-label="forward"
                       />
                     </Button>
+
+                    {milestoneNotes.map(note => (
+                      <div key={note.id}>
+                        <div>{note.content}</div>
+
+                        <div className="display-flex">
+                          <Button
+                            type="button"
+                            unstyled
+                            className="margin-right-1"
+                            onClick={() => {
+                              setSelectedMilestoneNote(note);
+                              setEditNotesOpen(true);
+                            }}
+                          >
+                            {mtoMilestoneNoteMiscT('editThisNote')}
+                          </Button>
+                          <Button
+                            type="button"
+                            unstyled
+                            className="text-error"
+                            onClick={() => {
+                              setSelectedMilestoneNote(note);
+                            }}
+                          >
+                            {mtoMilestoneNoteMiscT('deleteThisNote')}
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </Fieldset>
               </Form>

@@ -24,7 +24,9 @@ export const mtoMilestoneNoteMisc = {
   note: 'Note',
   addNote: 'Add note',
   cancel: 'Cancel',
-  saveChanges: 'Save changes'
+  saveChanges: 'Save changes',
+  editThisNote: 'Edit this note',
+  deleteThisNote: 'Delete this note'
 };
 
 export default mtoMilestoneNote;
