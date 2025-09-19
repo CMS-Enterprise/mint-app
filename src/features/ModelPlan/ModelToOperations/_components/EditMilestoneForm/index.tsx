@@ -1504,6 +1504,7 @@ const EditMilestoneForm = ({
                       unstyled
                       className="margin-0 display-flex"
                       onClick={() => {
+                        setSelectedMilestoneNote(null);
                         setEditNotesOpen(true);
                       }}
                     >
@@ -1514,7 +1515,7 @@ const EditMilestoneForm = ({
                       />
                     </Button>
 
-                    {milestoneNotes.map(note => (
+                    {milestoneNotes.map((note, index) => (
                       <div key={note.id}>
                         <div>{note.content}</div>
 
@@ -1535,7 +1536,9 @@ const EditMilestoneForm = ({
                             unstyled
                             className="text-error"
                             onClick={() => {
-                              setSelectedMilestoneNote(note);
+                              setMilestoneNotes(
+                                milestoneNotes.filter((n, i) => i !== index)
+                              );
                             }}
                           >
                             {mtoMilestoneNoteMiscT('deleteThisNote')}

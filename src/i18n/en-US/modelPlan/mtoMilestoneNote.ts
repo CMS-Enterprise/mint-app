@@ -19,6 +19,7 @@ export const mtoMilestoneNoteMisc = {
   heading: 'Milestone notes',
   addANote: 'Add a note',
   addAMilestoneNote: 'Add a milestone note',
+  editMilestoneNote: 'Edit milestone note',
   notesAdded: '{{count}} note added to this milestone',
   notesAdded_other: '{{count}} notes added to this milestone',
   note: 'Note',

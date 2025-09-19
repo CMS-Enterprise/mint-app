@@ -55,7 +55,9 @@ const MilestoneNoteForm = ({
       <Grid row>
         <Grid col={10}>
           <h3 className="margin-bottom-2">
-            {mtoMilestoneNoteMiscT('addAMilestoneNote')}
+            {isEditing
+              ? mtoMilestoneNoteMiscT('editMilestoneNote')
+              : mtoMilestoneNoteMiscT('addAMilestoneNote')}
           </h3>
 
           <Form onSubmit={() => {}} className="maxw-none">
@@ -83,6 +85,7 @@ const MilestoneNoteForm = ({
                   if (isEditing) {
                     setMilestoneNotes(
                       milestoneNotes.map(note =>
+                        note.content === selectedMilestoneNote?.content &&
                         note.id === selectedMilestoneNote?.id
                           ? {
                               ...note,
@@ -112,7 +115,9 @@ const MilestoneNoteForm = ({
                 }}
                 className="margin-right-3"
               >
-                {mtoMilestoneNoteMiscT('addNote')}
+                {isEditing
+                  ? mtoMilestoneNoteMiscT('saveChanges')
+                  : mtoMilestoneNoteMiscT('addNote')}
               </Button>
 
               <Button
