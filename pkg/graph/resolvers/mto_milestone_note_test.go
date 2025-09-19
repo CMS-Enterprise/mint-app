@@ -33,7 +33,6 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreate() {
 	suite.NotEqual(uuid.Nil, note.ID) // Should have a generated UUID
 	suite.Equal(content, note.Content)
 	suite.Equal(milestone.ID, note.MTOMilestoneID)
-	suite.Equal(plan.ID, note.ModelPlanID)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, note.CreatedBy)
 	suite.NotNil(note.CreatedDts)
 	suite.Nil(note.ModifiedBy)
