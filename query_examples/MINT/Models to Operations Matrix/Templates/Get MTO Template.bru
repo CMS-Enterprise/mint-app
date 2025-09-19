@@ -48,6 +48,14 @@ body:graphql {
   
 }
 
+tests {
+  let responseData = res.getBody().data.mtoTemplate
+  
+  templateID = responseData.id
+  bru.setVar("templateID", templateID);
+  
+}
+
 settings {
   encodeUrl: true
 }

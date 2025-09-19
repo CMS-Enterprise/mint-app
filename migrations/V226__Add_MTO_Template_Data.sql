@@ -61,7 +61,7 @@ BEGIN
         template_uuid,
         'Participants',
         NULL,
-        1,
+        0,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -74,7 +74,7 @@ BEGIN
         template_uuid,
         'Application, review, and selection',
         participants_cat_uuid,
-        2,
+        1,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -87,7 +87,7 @@ BEGIN
         template_uuid,
         'Participant support',
         participants_cat_uuid,
-        3,
+        2,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -102,7 +102,7 @@ BEGIN
         template_uuid,
         'Operations',
         NULL,
-        4,
+        3,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -115,7 +115,7 @@ BEGIN
         template_uuid,
         'Participant and beneficiary tracking/alignment',
         operations_cat_uuid,
-        5,
+        4,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -130,7 +130,7 @@ BEGIN
         template_uuid,
         'Legal',
         NULL,
-        6,
+        5,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -143,7 +143,7 @@ BEGIN
         template_uuid,
         'Agreements',
         legal_cat_uuid,
-        7,
+        6,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -158,7 +158,7 @@ BEGIN
         template_uuid,
         'Payers',
         NULL,
-        8,
+        7,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -171,7 +171,7 @@ BEGIN
         template_uuid,
         'Uncategorized',
         payers_cat_uuid,
-        9,
+        8,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
@@ -490,105 +490,105 @@ BEGIN
   -- Category: Participants
   participants_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (participants_cat_uuid, template_uuid, 'Participants', NULL, 1,
+  VALUES (participants_cat_uuid, template_uuid, 'Participants', NULL, 0,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Application, review, and selection
   app_review_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (app_review_subcat_uuid, template_uuid, 'Application, review, and selection',
-          participants_cat_uuid, 2,
+          participants_cat_uuid, 1,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Participant support
   participant_support_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (participant_support_subcat_uuid, template_uuid, 'Participant support',
-          participants_cat_uuid, 3,
+          participants_cat_uuid, 2,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Operations
   operations_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (operations_cat_uuid, template_uuid, 'Operations', NULL, 4,
+  VALUES (operations_cat_uuid, template_uuid, 'Operations', NULL, 3,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Set up operations
   setup_ops_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (setup_ops_subcat_uuid, template_uuid, 'Set up operations',
-          operations_cat_uuid, 5,
+          operations_cat_uuid, 4,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Collect data
   collect_data_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (collect_data_cat_uuid, template_uuid, 'Collect data', NULL, 6,
+  VALUES (collect_data_cat_uuid, template_uuid, 'Collect data', NULL, 5,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Send data to participants
   send_data_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (send_data_subcat_uuid, template_uuid, 'Send data to participants',
-          collect_data_cat_uuid, 7,
+          collect_data_cat_uuid, 6,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Participant and beneficiary tracking/alignment
   tracking_align_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (tracking_align_cat_uuid, template_uuid, 'Participant and beneficiary tracking/alignment', NULL, 8,
+  VALUES (tracking_align_cat_uuid, template_uuid, 'Participant and beneficiary tracking/alignment', NULL, 7,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Benchmarks
   benchmarks_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (benchmarks_cat_uuid, template_uuid, 'Benchmarks', NULL, 9,
+  VALUES (benchmarks_cat_uuid, template_uuid, 'Benchmarks', NULL, 8,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Legal
   legal_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (legal_cat_uuid, template_uuid, 'Legal', NULL, 10,
+  VALUES (legal_cat_uuid, template_uuid, 'Legal', NULL, 9,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Agreements
   agreements_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (agreements_subcat_uuid, template_uuid, 'Agreements',
-          legal_cat_uuid, 11,
+          legal_cat_uuid, 10,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Payment
   payment_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (payment_cat_uuid, template_uuid, 'Payment', NULL, 12,
+  VALUES (payment_cat_uuid, template_uuid, 'Payment', NULL, 11,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Claims-based
   claims_based_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (claims_based_subcat_uuid, template_uuid, 'Claims-based',
-          payment_cat_uuid, 13,
+          payment_cat_uuid, 12,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Non-claims based
   non_claims_based_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (non_claims_based_subcat_uuid, template_uuid, 'Non-claims based',
-          payment_cat_uuid, 14,
+          payment_cat_uuid, 13,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Category: Evaluation
   evaluation_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (evaluation_cat_uuid, template_uuid, 'Evaluation', NULL, 15,
+  VALUES (evaluation_cat_uuid, template_uuid, 'Evaluation', NULL, 14,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Sub-category: Uncategorized
   eval_uncat_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (eval_uncat_subcat_uuid, template_uuid, 'Uncategorized',
-          evaluation_cat_uuid, 16,
+          evaluation_cat_uuid, 15,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- =========================================================

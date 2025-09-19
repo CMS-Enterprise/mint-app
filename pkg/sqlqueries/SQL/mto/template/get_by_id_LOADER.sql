@@ -14,7 +14,7 @@ SELECT
     COALESCE(sol_counts.solution_count, 0) AS solution_count,
     -- Default values for isAdded and dateAdded since this is get by ID
     FALSE AS is_added,
-    NULL::TIMESTAMP WITH TIME ZONE AS date_added
+    NULL AS date_added
 FROM mto_template t
 LEFT JOIN (
     -- Count categories and primary categories (parent_id IS NULL)
