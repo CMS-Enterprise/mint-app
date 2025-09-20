@@ -15,7 +15,7 @@ import (
 /*
 Analytics is the resolver for the analytics query.
 It returns the changes per model, changes per model by section, changes per model other data,
-models by status, number of followers per model, and total number of models.
+models by status, number of followers per model, total number of models, and number of models over time.
 */
 func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*models.AnalyticsSummary, error) {
 
@@ -59,6 +59,12 @@ func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*
 				return nil, fmt.Errorf("failed to get total number of models: %w", err)
 			}
 
+			// Get number of models over time
+			numberOfModelsOverTime, err := storage.GetNumberOfModelsOverTimeLoader(tx, logger)
+			if err != nil {
+				return nil, fmt.Errorf("failed to get number of models over time: %w", err)
+			}
+
 			// Check if we have results before accessing the first element
 			if len(totalNumberOfModels) == 0 {
 				return nil, fmt.Errorf("no total number of models data available")
@@ -72,6 +78,7 @@ func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*
 				ModelsByStatus:            modelsByStatus,
 				NumberOfFollowersPerModel: numberOfFollowersPerModel,
 				TotalNumberOfModels:       totalNumberOfModels[0],
+				NumberOfModelsOverTime:    numberOfModelsOverTime,
 			}
 
 			return analyticsSummary, nil

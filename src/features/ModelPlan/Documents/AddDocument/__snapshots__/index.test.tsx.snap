@@ -160,7 +160,7 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
                   data-testid="label"
                   for="FileUpload-File"
                 >
-                  Select a PDF, DOC, DOCX, XLS, or XLSX
+                  Select a PDF, DOC, DOCX, XLS, XLSX, PPT, or PPTX
                   <span
                     class="usa-hint"
                   />
@@ -192,7 +192,7 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
                       class="usa-file-input__box"
                     />
                     <input
-                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
                       aria-controls="file-type"
                       aria-describedby="FileUpload-Description"
                       aria-expanded="false"
