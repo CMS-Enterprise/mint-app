@@ -15,9 +15,6 @@ import {
   ActivityCTA,
   activityText,
   getNavUrl,
-  isDailyDigest,
-  isDatesChanged,
-  isIncorrectModelStatus,
   isNewDiscussionReply,
   isSharedActivity,
   isTaggedInDiscussion,
@@ -66,6 +63,27 @@ const IndividualNotification = ({
   const navigate = useNavigate();
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
+
+  const isNotificationWithContent =
+    isTaggedInDiscussion(metaData) ||
+    isTaggedInDiscussionReply(metaData) ||
+    isNewDiscussionReply(metaData);
+
+  const isNotificationWithOptionalMessage =
+    isSharedActivity(metaData) && metaData.optionalMessage;
+
+  const renderExpandedNotification = () => {
+    switch (metaData.__typename) {
+      case 'DailyDigestCompleteActivityMeta':
+        return <DailyDigest {...metaData} />;
+      case 'DatesChangedActivityMeta':
+        return <DatesChanged {...metaData} />;
+      case 'IncorrectModelStatusActivityMeta':
+        return <IncorrectModelStatus {...metaData} />;
+      default:
+        return null;
+    }
+  };
 
   const handleMarkAsRead = (action: () => void) => {
     if (!isRead) {
@@ -130,9 +148,7 @@ const IndividualNotification = ({
                   {activityText(metaData)}
                 </p>
 
-                {(isTaggedInDiscussion(metaData) ||
-                  isTaggedInDiscussionReply(metaData) ||
-                  isNewDiscussionReply(metaData)) && (
+                {isNotificationWithContent && (
                   <MentionTextArea
                     className="notification__content text-base-darker margin-bottom-1"
                     id={`mention-${metaData.discussionID}`}
@@ -140,7 +156,7 @@ const IndividualNotification = ({
                     initialContent={metaData.content}
                   />
                 )}
-                {isSharedActivity(metaData) && metaData.optionalMessage && (
+                {isNotificationWithOptionalMessage && (
                   <p className="margin-bottom-1 margin-top-0 text-base-darker">
                     “{metaData.optionalMessage}”
                   </p>
@@ -169,17 +185,8 @@ const IndividualNotification = ({
           </Grid>
         </Grid>
       </Grid>
-      {isExpanded[metaData.__typename] && isDailyDigest(metaData) && (
-        <DailyDigest {...metaData} />
-      )}
 
-      {isExpanded[metaData.__typename] && isDatesChanged(metaData) && (
-        <DatesChanged {...metaData} />
-      )}
-
-      {isExpanded[metaData.__typename] && isIncorrectModelStatus(metaData) && (
-        <IncorrectModelStatus {...metaData} />
-      )}
+      {isExpanded[metaData.__typename] && renderExpandedNotification()}
     </Grid>
   );
 };
