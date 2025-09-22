@@ -1618,11 +1618,17 @@ export type ModelsByStatusAnalytics = {
 export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
+  /** This returns all common milestones, regardless of whether they're linked to a category */
   commonMilestones: Array<MtoCommonMilestone>;
+  /**
+   * This returns all common solutions, regardless of whether they're linked to a category
+   * to check if it is part of this MTO check the returned isAdded field
+   */
   commonSolutions: Array<MtoCommonSolution>;
   info: MtoInfo;
   milestones: Array<MtoMilestone>;
   milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
+  /** This returns */
   mtoTemplates: Array<MtoTemplate>;
   /**
    * RecentEdit returns the most recent translated audit for the MTO
