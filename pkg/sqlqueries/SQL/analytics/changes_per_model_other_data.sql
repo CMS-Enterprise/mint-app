@@ -44,7 +44,9 @@ WHERE
             'model_plan',
             'plan_discussion',
             'plan_document',
-            'discussion_reply'
+            'discussion_reply',
+            'plan_timeline',
+            'plan_data_exchange_approach'
 
         ))
         AND model_plan.archived != TRUE
