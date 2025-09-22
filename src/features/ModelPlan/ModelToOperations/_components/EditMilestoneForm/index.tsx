@@ -346,15 +346,19 @@ const EditMilestoneForm = ({
     setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
 
     setNotesToRemove(
-      data?.mtoMilestone.notes.filter(note => milestoneNotes.includes(note)) ||
-        []
+      data?.mtoMilestone.notes.filter(
+        note =>
+          !milestoneNotes.find(
+            n => n.id === note.id && n.content === note.content
+          )
+      ) || []
     );
 
     setNotesToUpdate(
-      data?.mtoMilestone.notes?.filter(
-        note =>
-          milestoneNotes.find(n => n.id === note.id)?.content !== note.content
-      ) || []
+      data?.mtoMilestone.notes?.filter(note => {
+        const foundNote = milestoneNotes.find(n => n.id === note.id);
+        return foundNote && foundNote.content !== note.content;
+      }) || []
     );
   }, [milestoneNotes, data]);
 
@@ -606,6 +610,10 @@ const EditMilestoneForm = ({
           closeModal();
         }
       });
+
+      console.log('notesToAdd', notesToAdd);
+      console.log('notesToRemove', notesToRemove);
+      console.log('notesToUpdate', notesToUpdate);
 
       if (notesToAdd.length > 0) {
         Promise.all(
