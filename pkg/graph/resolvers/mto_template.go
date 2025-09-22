@@ -177,16 +177,21 @@ func ApplyTemplateToMTO(
 		})
 
 		for _, category := range categories {
-			var parentID uuid.UUID
+			var parentID *uuid.UUID
 			if category.ParentID != nil {
-				parentID = categoryIDMap[*category.ParentID]
+				if mappedID, exists := categoryIDMap[*category.ParentID]; exists {
+					parentID = &mappedID
+				} else {
+					warnings = append(warnings, fmt.Sprintf("category %s references unknown parent ID %s", category.Name, *category.ParentID))
+					continue
+				}
 			}
 
 			mtoCategory := models.NewMTOCategory(
 				principalAccount.ID,
 				category.Name,
 				modelPlanID,
-				&parentID,
+				parentID,
 				category.Order,
 			)
 
@@ -245,10 +250,11 @@ func ApplyTemplateToMTO(
 				}
 			}
 
-			_, err := MTOMilestoneCreateCommon(
+			_, err := MTOMilestoneCreateCommonWithTX(
 				ctx,
 				logger,
 				principal,
+				tx,
 				store,
 				emailService,
 				emailTemplateService,
@@ -283,6 +289,7 @@ func ApplyTemplateToMTO(
 
 		// Return the result
 		result := &model.ApplyTemplateResult{
+			ID:              templateID,
 			ModelPlanID:     modelPlanID,
 			TemplateID:      templateID,
 			CategoriesAdded: categoriesCreated,
