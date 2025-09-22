@@ -72,7 +72,8 @@ const milestone: MilestoneType = {
         isAdded: true
       }
     }
-  ]
+  ],
+  notes: []
 };
 
 describe('LinkSolutionForm', () => {

@@ -9,13 +9,7 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import {
-  Grid,
-  GridContainer,
-  Icon,
-  Table as UswdsTable
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import { Grid, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import MilestoneNotes from 'features/ModelPlan/ModelToOperations/_components/MilestoneNotes';
 import MTORiskIndicatorTag from 'features/ModelPlan/ModelToOperations/_components/MTORiskIndicatorIcon';
 import MilestoneStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
@@ -35,7 +29,6 @@ import {
 import PageLoading from 'components/PageLoading';
 import TablePagination from 'components/TablePagination';
 import Tooltip from 'components/Tooltip';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -48,8 +41,6 @@ type EditMilestoneFormProps = {
 const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
-
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const { status: stausConfig, riskIndicator: riskIndicatorConfig } =
     usePlanTranslation('mtoMilestone');
@@ -178,289 +169,276 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
   return (
     <>
-      <GridContainer
-        className={classNames({
-          'padding-8': !isTablet,
-          'padding-4': isTablet
-        })}
-      >
-        <Grid row>
-          <Grid col={10}>
-            <div className="display-flex">
-              {milestone.isDraft && (
-                <MTOTag
-                  type="draft"
-                  label={modelToOperationsMiscT('milestoneLibrary.isDraft')}
-                  tooltip={mtoMilestoneT('isDraft.questionTooltip')}
-                />
+      <div className="padding-8 maxw-tablet">
+        <div className="display-flex">
+          {milestone.isDraft && (
+            <MTOTag
+              type="draft"
+              label={modelToOperationsMiscT('milestoneLibrary.isDraft')}
+              tooltip={mtoMilestoneT('isDraft.questionTooltip')}
+            />
+          )}
+
+          {!milestone.addedFromMilestoneLibrary && (
+            <MTOTag
+              type="custom"
+              label={modelToOperationsMiscT('modal.editMilestone.custom')}
+              tooltip={modelToOperationsMiscT(
+                'modal.editMilestone.customTooltip'
               )}
+            />
+          )}
+        </div>
 
-              {!milestone.addedFromMilestoneLibrary && (
-                <MTOTag
-                  type="custom"
-                  label={modelToOperationsMiscT('modal.editMilestone.custom')}
-                  tooltip={modelToOperationsMiscT(
-                    'modal.editMilestone.customTooltip'
-                  )}
-                />
-              )}
-            </div>
+        <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
 
-            <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
-
-            {milestone.key && (
-              <p className="margin-0 mint-body-normal text-base-dark text-pre-line">
-                {modelToOperationsMiscT(
-                  `milestoneLibrary.milestoneMap.${milestone.key}.description`
-                )}
-              </p>
+        {milestone.key && (
+          <p className="margin-0 mint-body-normal text-base-dark text-pre-line">
+            {modelToOperationsMiscT(
+              `milestoneLibrary.milestoneMap.${milestone.key}.description`
             )}
+          </p>
+        )}
 
-            <div className="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4">
-              <Grid row className="margin-bottom-2">
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={modelToOperationsMiscT(
-                      'modal.milestone.milestoneCategory.label'
-                    )}
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      milestone.categories.category?.name || NoneSpecified
-                    }
-                  />
-                </Grid>
-
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={modelToOperationsMiscT(
-                      'modal.milestone.milestoneSubcategory.label'
-                    )}
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      milestone.categories.subCategory?.name || NoneSpecified
-                    }
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid row className="margin-bottom-2">
-                <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={mtoMilestoneT('facilitatedBy.label')}
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      milestone.facilitatedBy
-                        ? milestone.facilitatedBy
-                            .map(
-                              (facilitator: any) =>
-                                `${mtoMilestoneT(
-                                  `facilitatedBy.options.${facilitator}`
-                                )}${facilitator === 'OTHER' ? ` (${milestone.facilitatedByOther})` : ''}`
-                            )
-                            .join(', ')
-                        : NoneSpecified
-                    }
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid row className="margin-bottom-2">
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={mtoMilestoneT('needBy.label')}
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={milestone.needBy || NoneSpecified}
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid row className="margin-bottom-2">
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={
-                      <>
-                        {mtoMilestoneT('status.label')}
-                        <Tooltip
-                          wrapperclasses="top-2px margin-left-1"
-                          label={stausConfig.questionTooltip}
-                          position="right"
-                        >
-                          <Icon.Info
-                            className="text-base-light"
-                            aria-label="info"
-                          />
-                        </Tooltip>
-                      </>
-                    }
-                  />
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      <MilestoneStatusTag
-                        status={milestone.status}
-                        classname="width-fit-content"
-                      />
-                    }
-                  />
-                </Grid>
-
-                <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
-                  <DescriptionTerm
-                    className="font-body-sm margin-bottom-0"
-                    term={
-                      <>
-                        {mtoMilestoneT('riskIndicator.label')}
-                        <Tooltip
-                          wrapperclasses="top-2px margin-left-1"
-                          label={riskIndicatorConfig.questionTooltip}
-                          position="right"
-                        >
-                          <Icon.Info
-                            className="text-base-light"
-                            aria-label="info"
-                          />
-                        </Tooltip>
-                      </>
-                    }
-                  />
-
-                  <DescriptionDefinition
-                    className="font-body-md text-base-darkest"
-                    definition={
-                      <div className="display-flex flex-align-end">
-                        <div className="margin-right-1">
-                          {riskIndicatorConfig.options[milestone.riskIndicator]}
-                        </div>
-                        <MTORiskIndicatorTag
-                          riskIndicator={milestone.riskIndicator}
-                          showTooltip
-                        />
-                      </div>
-                    }
-                  />
-                </Grid>
-              </Grid>
-            </div>
-
-            <h3 className="margin-bottom-1">
-              {modelToOperationsMiscT(
-                'modal.editMilestone.selectedSolutionCount',
-                {
-                  count: milestone.solutions.length
-                }
-              )}
-            </h3>
-
-            {milestone.solutions.length > 0 ? (
-              <>
-                <UswdsTable
-                  bordered={false}
-                  {...getTableProps()}
-                  className="margin-top-0"
-                  fullWidth
-                >
-                  <thead>
-                    {headerGroups.map(headerGroup => (
-                      <tr
-                        {...headerGroup.getHeaderGroupProps()}
-                        key={{ ...headerGroup.getHeaderGroupProps() }.key}
-                      >
-                        {headerGroup.headers.map(column => (
-                          <th
-                            {...column.getHeaderProps()}
-                            scope="col"
-                            key={column.id}
-                            className="padding-left-0 padding-bottom-0"
-                            style={{
-                              width: column.id === 'status' ? '150px' : 'auto'
-                            }}
-                          >
-                            <button
-                              className="usa-button usa-button--unstyled position-relative"
-                              type="button"
-                              {...column.getSortByToggleProps()}
-                            >
-                              {column.render('Header') as React.ReactElement}
-                              {column.canSort &&
-                                getHeaderSortIcon(column, false)}
-                            </button>
-                          </th>
-                        ))}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody {...getTableBodyProps()}>
-                    {page.map((row, i) => {
-                      const { getRowProps, cells, id } = { ...row };
-
-                      prepareRow(row);
-                      return (
-                        <tr {...getRowProps()} key={id}>
-                          {cells.map(cell => {
-                            return (
-                              <td
-                                {...cell.getCellProps()}
-                                key={cell.getCellProps().key}
-                                className="padding-left-0"
-                              >
-                                {cell.render('Cell') as React.ReactElement}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </UswdsTable>
-
-                {milestone.solutions.length > 5 && (
-                  <TablePagination
-                    className="flex-justify-start margin-left-neg-05"
-                    gotoPage={gotoPage}
-                    previousPage={previousPage}
-                    nextPage={nextPage}
-                    canNextPage={canNextPage}
-                    pageIndex={state.pageIndex}
-                    pageOptions={pageOptions}
-                    canPreviousPage={canPreviousPage}
-                    pageCount={pageCount}
-                    pageSize={state.pageSize}
-                    setPageSize={setPageSize}
-                    page={[]}
-                  />
+        <div className="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4">
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={modelToOperationsMiscT(
+                  'modal.milestone.milestoneCategory.label'
                 )}
-              </>
-            ) : (
-              <Alert type="info" slim className="margin-bottom-2">
-                {modelToOperationsMiscT('modal.editMilestone.noSolutionsTable')}
-              </Alert>
-            )}
-            <div className="border-top-1px border-base-lighter padding-y-4 margin-top-6">
-              <MilestoneNotes
-                mtoMilestoneID={milestone.id}
-                milestoneNotes={milestone.notes}
-                setMilestoneNotes={() => {}}
-                selectedMilestoneNote={null}
-                setSelectedMilestoneNote={() => {}}
-                readView
               />
-            </div>
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.categories.category?.name || NoneSpecified
+                }
+              />
+            </Grid>
+
+            <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={modelToOperationsMiscT(
+                  'modal.milestone.milestoneSubcategory.label'
+                )}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.categories.subCategory?.name || NoneSpecified
+                }
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </GridContainer>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={mtoMilestoneT('facilitatedBy.label')}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.facilitatedBy
+                    ? milestone.facilitatedBy
+                        .map(
+                          (facilitator: any) =>
+                            `${mtoMilestoneT(
+                              `facilitatedBy.options.${facilitator}`
+                            )}${facilitator === 'OTHER' ? ` (${milestone.facilitatedByOther})` : ''}`
+                        )
+                        .join(', ')
+                    : NoneSpecified
+                }
+              />
+            </Grid>
+          </Grid>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={mtoMilestoneT('needBy.label')}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={milestone.needBy || NoneSpecified}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={
+                  <>
+                    {mtoMilestoneT('status.label')}
+                    <Tooltip
+                      wrapperclasses="top-2px margin-left-1"
+                      label={stausConfig.questionTooltip}
+                      position="right"
+                    >
+                      <Icon.Info
+                        className="text-base-light"
+                        aria-label="info"
+                      />
+                    </Tooltip>
+                  </>
+                }
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  <MilestoneStatusTag
+                    status={milestone.status}
+                    classname="width-fit-content"
+                  />
+                }
+              />
+            </Grid>
+
+            <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={
+                  <>
+                    {mtoMilestoneT('riskIndicator.label')}
+                    <Tooltip
+                      wrapperclasses="top-2px margin-left-1"
+                      label={riskIndicatorConfig.questionTooltip}
+                      position="right"
+                    >
+                      <Icon.Info
+                        className="text-base-light"
+                        aria-label="info"
+                      />
+                    </Tooltip>
+                  </>
+                }
+              />
+
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  <div className="display-flex flex-align-end">
+                    <div className="margin-right-1">
+                      {riskIndicatorConfig.options[milestone.riskIndicator]}
+                    </div>
+                    <MTORiskIndicatorTag
+                      riskIndicator={milestone.riskIndicator}
+                      showTooltip
+                    />
+                  </div>
+                }
+              />
+            </Grid>
+          </Grid>
+        </div>
+
+        <h3 className="margin-bottom-1">
+          {modelToOperationsMiscT('modal.editMilestone.selectedSolutionCount', {
+            count: milestone.solutions.length
+          })}
+        </h3>
+
+        {milestone.solutions.length > 0 ? (
+          <>
+            <UswdsTable
+              bordered={false}
+              {...getTableProps()}
+              className="margin-top-0"
+              fullWidth
+            >
+              <thead>
+                {headerGroups.map(headerGroup => (
+                  <tr
+                    {...headerGroup.getHeaderGroupProps()}
+                    key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                  >
+                    {headerGroup.headers.map(column => (
+                      <th
+                        {...column.getHeaderProps()}
+                        scope="col"
+                        key={column.id}
+                        className="padding-left-0 padding-bottom-0"
+                        style={{
+                          width: column.id === 'status' ? '150px' : 'auto'
+                        }}
+                      >
+                        <button
+                          className="usa-button usa-button--unstyled position-relative"
+                          type="button"
+                          {...column.getSortByToggleProps()}
+                        >
+                          {column.render('Header') as React.ReactElement}
+                          {column.canSort && getHeaderSortIcon(column, false)}
+                        </button>
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {page.map((row, i) => {
+                  const { getRowProps, cells, id } = { ...row };
+
+                  prepareRow(row);
+                  return (
+                    <tr {...getRowProps()} key={id}>
+                      {cells.map(cell => {
+                        return (
+                          <td
+                            {...cell.getCellProps()}
+                            key={cell.getCellProps().key}
+                            className="padding-left-0"
+                          >
+                            {cell.render('Cell') as React.ReactElement}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </UswdsTable>
+
+            {milestone.solutions.length > 5 && (
+              <TablePagination
+                className="flex-justify-start margin-left-neg-05"
+                gotoPage={gotoPage}
+                previousPage={previousPage}
+                nextPage={nextPage}
+                canNextPage={canNextPage}
+                pageIndex={state.pageIndex}
+                pageOptions={pageOptions}
+                canPreviousPage={canPreviousPage}
+                pageCount={pageCount}
+                pageSize={state.pageSize}
+                setPageSize={setPageSize}
+                page={[]}
+              />
+            )}
+          </>
+        ) : (
+          <Alert type="info" slim className="margin-bottom-2">
+            {modelToOperationsMiscT('modal.editMilestone.noSolutionsTable')}
+          </Alert>
+        )}
+        <div className="border-top-1px border-base-lighter padding-y-4 margin-top-6">
+          <MilestoneNotes
+            mtoMilestoneID={milestone.id}
+            milestoneNotes={milestone.notes}
+            setMilestoneNotes={() => {}}
+            selectedMilestoneNote={null}
+            setSelectedMilestoneNote={() => {}}
+            readView
+          />
+        </div>
+      </div>
     </>
   );
 };

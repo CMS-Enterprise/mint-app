@@ -1,15 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import {
-  Button,
-  Form,
-  FormGroup,
-  Grid,
-  GridContainer,
-  Label
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import { Button, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import {
   GetMtoMilestoneDocument,
   useCreateMtoMilestoneNoteMutation,
@@ -20,7 +12,6 @@ import { AppState } from 'stores/reducers/rootReducer';
 import Alert from 'components/Alert';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import { MilestoneNoteType } from '../EditMilestoneForm';
 
@@ -42,8 +33,6 @@ const MilestoneNoteForm = ({
   const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
 
   const { euaId } = useSelector((state: AppState) => state.auth);
-
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [milestoneNote, setMilestoneNote] = useState<string>(
     selectedMilestoneNote?.content || ''
@@ -145,79 +134,67 @@ const MilestoneNoteForm = ({
   };
 
   return (
-    <GridContainer
-      className={classNames(
-        {
-          'padding-x-8': !isTablet,
-          'padding-x-4': isTablet
-        },
-        'padding-top-2'
-      )}
-    >
-      <Grid row>
-        <Grid col={10}>
-          <h3 className="margin-bottom-2">
+    <div className="padding-x-8 padding-y-2 maxw-tablet">
+      <h3 className="margin-bottom-2">
+        {isEditing
+          ? mtoMilestoneNoteMiscT('editMilestoneNote')
+          : mtoMilestoneNoteMiscT('addAMilestoneNote')}
+      </h3>
+
+      <Form onSubmit={() => {}} className="maxw-none">
+        <FormGroup>
+          <Label htmlFor="note" className="text-normal">
+            {mtoMilestoneNoteMiscT('note')}
+          </Label>
+
+          <TextAreaField
+            id="note"
+            name="note"
+            className="height-card"
+            onBlur={() => {}}
+            onChange={e => {
+              setMilestoneNote(e.target.value);
+            }}
+            value={milestoneNote}
+          />
+        </FormGroup>
+
+        <Alert type="info" slim className="margin-top-4">
+          {mtoMilestoneNoteMiscT('noteInfo')}
+        </Alert>
+
+        <div className="display-flex">
+          <Button
+            type="submit"
+            disabled={!milestoneNote}
+            onClick={() => {
+              if (readView) {
+                handleAddMilestoneNote();
+              } else {
+                editMilestoneSubmit();
+              }
+              closeModal();
+            }}
+            className="margin-right-3"
+          >
             {isEditing
-              ? mtoMilestoneNoteMiscT('editMilestoneNote')
-              : mtoMilestoneNoteMiscT('addAMilestoneNote')}
-          </h3>
+              ? mtoMilestoneNoteMiscT('saveChanges')
+              : mtoMilestoneNoteMiscT('addNote')}
+          </Button>
 
-          <Form onSubmit={() => {}} className="maxw-none">
-            <FormGroup>
-              <Label htmlFor="note" className="text-normal">
-                {mtoMilestoneNoteMiscT('note')}
-              </Label>
-
-              <TextAreaField
-                id="note"
-                name="note"
-                className="height-card"
-                onBlur={() => {}}
-                onChange={e => {
-                  setMilestoneNote(e.target.value);
-                }}
-                value={milestoneNote}
-              />
-            </FormGroup>
-
-            <Alert type="info" slim className="margin-top-4">
-              {mtoMilestoneNoteMiscT('noteInfo')}
-            </Alert>
-
-            <div className="display-flex">
-              <Button
-                type="submit"
-                disabled={!milestoneNote}
-                onClick={() => {
-                  if (readView) {
-                    handleAddMilestoneNote();
-                  } else {
-                    editMilestoneSubmit();
-                  }
-                  closeModal();
-                }}
-                className="margin-right-3"
-              >
-                {isEditing
-                  ? mtoMilestoneNoteMiscT('saveChanges')
-                  : mtoMilestoneNoteMiscT('addNote')}
-              </Button>
-
-              <Button
-                type="button"
-                onClick={() => {
-                  setMilestoneNote('');
-                  closeModal();
-                }}
-                className="usa-button usa-button--unstyled"
-              >
-                {mtoMilestoneNoteMiscT('cancel')}
-              </Button>
-            </div>
-          </Form>
-        </Grid>
-      </Grid>
-    </GridContainer>
+          <Button
+            type="button"
+            onClick={() => {
+              setMilestoneNote('');
+              closeModal();
+            }}
+            className="usa-button usa-button--unstyled"
+          >
+            {mtoMilestoneNoteMiscT('cancel')}
+          </Button>
+        </div>
+      </Form>
+    </div>
   );
 };
 

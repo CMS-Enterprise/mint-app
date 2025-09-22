@@ -1,4 +1,4 @@
-import React, { use, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -20,12 +20,8 @@ import {
   Fieldset,
   Form,
   FormGroup,
-  Grid,
-  GridContainer,
   Icon,
   Label,
-  ProcessList,
-  ProcessListItem,
   Radio,
   Select,
   Table as UswdsTable,
@@ -53,7 +49,6 @@ import {
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
-import CollapsableLink from 'components/CollapsableLink';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import DatePickerWarning from 'components/DatePickerWarning';
@@ -71,7 +66,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import { formatDateUtc, formatTime, isDateInPast } from 'utils/date';
+import { isDateInPast } from 'utils/date';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 import {
   composeMultiSelectOptions,
@@ -80,7 +75,6 @@ import {
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkSolutionForm from '../LinkSolutionForm';
-import MilestoneNoteForm from '../MilestoneNoteForm';
 import MilestoneNotes from '../MilestoneNotes';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
@@ -136,7 +130,6 @@ const EditMilestoneForm = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
@@ -913,635 +906,586 @@ const EditMilestoneForm = ({
         </div>
       )}
 
-      <GridContainer
-        className={classNames({
-          'padding-8': !isTablet,
-          'padding-4': isTablet
-        })}
-      >
-        <Grid row>
-          <Grid col={10}>
-            {watch('isDraft') && (
-              <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
-                <Icon.Science
-                  className="margin-left-1"
-                  style={{ top: '2px' }}
-                  aria-label="science"
-                />{' '}
-                {modelToOperationsMiscT('milestoneLibrary.isDraft')}
-              </span>
-            )}
+      <div className="padding-8 maxw-tablet">
+        {watch('isDraft') && (
+          <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
+            <Icon.Science
+              className="margin-left-1"
+              style={{ top: '2px' }}
+              aria-label="science"
+            />{' '}
+            {modelToOperationsMiscT('milestoneLibrary.isDraft')}
+          </span>
+        )}
 
-            {!milestone.addedFromMilestoneLibrary && (
-              <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
-                <Icon.Construction
-                  className="margin-left-1"
-                  style={{ top: '2px' }}
-                  aria-label="construction"
-                />{' '}
-                {modelToOperationsMiscT('modal.editMilestone.custom')}
-              </span>
-            )}
+        {!milestone.addedFromMilestoneLibrary && (
+          <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
+            <Icon.Construction
+              className="margin-left-1"
+              style={{ top: '2px' }}
+              aria-label="construction"
+            />{' '}
+            {modelToOperationsMiscT('modal.editMilestone.custom')}
+          </span>
+        )}
 
-            <FormProvider {...methods}>
-              <Form
-                className="maxw-none"
-                id="edit-milestone-form"
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                <ConfirmLeaveRHF />
+        <FormProvider {...methods}>
+          <Form
+            className="maxw-none"
+            id="edit-milestone-form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <ConfirmLeaveRHF />
 
-                <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
-                  {milestone.name}
-                </h2>
+            <h2 className="margin-y-2 margin-bottom-4 padding-bottom-4 line-height-large border-bottom-1px border-base-lighter">
+              {milestone.name}
+            </h2>
 
-                <Fieldset disabled={loading} className="margin-bottom-8">
-                  <p className="margin-top-0 margin-bottom-3 text-base">
-                    <Trans
-                      i18nKey={modelToOperationsMiscT(
-                        'modal.allFieldsRequired'
+            <Fieldset disabled={loading} className="margin-bottom-8">
+              <p className="margin-top-0 margin-bottom-3 text-base">
+                <Trans
+                  i18nKey={modelToOperationsMiscT('modal.allFieldsRequired')}
+                  components={{
+                    s: <span className="text-secondary-dark" />
+                  }}
+                />
+              </p>
+
+              {!milestone.addedFromMilestoneLibrary && (
+                <Controller
+                  name="name"
+                  control={control}
+                  rules={{
+                    required: modelToOperationsMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup className="margin-bottom-3">
+                      <Label requiredMarker htmlFor="name">
+                        {mtoMilestoneT('name.label')}
+                      </Label>
+
+                      {!!error && (
+                        <FieldErrorMsg>{error.message}</FieldErrorMsg>
                       )}
-                      components={{
-                        s: <span className="text-secondary-dark" />
-                      }}
-                    />
-                  </p>
 
-                  {!milestone.addedFromMilestoneLibrary && (
-                    <Controller
-                      name="name"
-                      control={control}
-                      rules={{
-                        required: modelToOperationsMiscT('validation.fillOut')
-                      }}
-                      render={({
-                        field: { ref, ...field },
-                        fieldState: { error }
-                      }) => (
-                        <FormGroup className="margin-bottom-3">
-                          <Label requiredMarker htmlFor="name">
-                            {mtoMilestoneT('name.label')}
-                          </Label>
-
-                          {!!error && (
-                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                          )}
-
-                          <TextInput
-                            {...field}
-                            ref={null}
-                            id="name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      )}
-                    />
+                      <TextInput {...field} ref={null} id="name" type="text" />
+                    </FormGroup>
                   )}
+                />
+              )}
 
-                  <Controller
-                    name="isDraft"
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
-                        <CheckboxField
-                          {...field}
-                          id={field.name}
-                          value={field.name}
-                          checked={field.value}
-                          label={mtoMilestoneT('isDraft.label')}
-                          subLabel={mtoMilestoneT('isDraft.sublabel')}
-                        />
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="categories.category.id"
-                    control={control}
-                    rules={{
-                      required: modelToOperationsMiscT('validation.fillOut'),
-                      validate: value =>
-                        value !== 'default' ||
-                        modelToOperationsMiscT('validation.fillOut')
-                    }}
-                    render={({
-                      field: { ref, ...field },
-                      fieldState: { error }
-                    }) => (
-                      <FormGroup
-                        error={!!error}
-                        className="margin-top-0 margin-bottom-3"
-                      >
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
-                        >
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneCategory.label'
-                          )}
-                        </Label>
-
-                        <HelpText className="margin-top-05">
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneCategory.sublabel'
-                          )}
-                        </HelpText>
-
-                        {!!error && (
-                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                        )}
-
-                        <Select
-                          {...field}
-                          id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || 'default'}
-                          defaultValue="default"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLSelectElement>
-                          ) => {
-                            field.onChange(e);
-                            // Reset subcategory when category changes
-                            setValue('categories.subCategory.id', 'default');
-                          }}
-                        >
-                          {selectOptionsAndMappedCategories.map(option => {
-                            return (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            );
-                          })}
-                        </Select>
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="categories.subCategory.id"
-                    control={control}
-                    rules={{
-                      required: modelToOperationsMiscT('validation.fillOut'),
-                      validate: value =>
-                        value !== 'default' ||
-                        modelToOperationsMiscT('validation.fillOut')
-                    }}
-                    render={({
-                      field: { ref, ...field },
-                      fieldState: { error }
-                    }) => (
-                      <FormGroup
-                        error={!!error}
-                        className="margin-top-0 margin-bottom-3"
-                      >
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
-                        >
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneSubcategory.label'
-                          )}
-                        </Label>
-
-                        <HelpText className="margin-top-05">
-                          {modelToOperationsMiscT(
-                            'modal.milestone.milestoneSubcategory.sublabel'
-                          )}
-                        </HelpText>
-
-                        {!!error && (
-                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                        )}
-
-                        <Select
-                          {...field}
-                          id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || 'default'}
-                          defaultValue="default"
-                          disabled={
-                            watch('categories.category.id') === 'default'
-                          }
-                        >
-                          {[selectOptions[0], ...mappedSubcategories].map(
-                            option => {
-                              return (
-                                <option key={option.value} value={option.value}>
-                                  {option.label}
-                                </option>
-                              );
-                            }
-                          )}
-                        </Select>
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="facilitatedBy"
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-0 margin-bottom-3">
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase('facilitatedBy')}
-                        >
-                          {facilitatedByConfig.label}
-                        </Label>
-
-                        <HelpText className="margin-top-1">
-                          {facilitatedByConfig.sublabel}
-                        </HelpText>
-
-                        <MultiSelect
-                          {...field}
-                          id={convertCamelCaseToKebabCase(
-                            'multiSourceDataToCollect'
-                          )}
-                          inputId={convertCamelCaseToKebabCase('facilitatedBy')}
-                          ariaLabel={convertCamelCaseToKebabCase(
-                            'facilitatedBy'
-                          )}
-                          ariaLabelText={facilitatedByConfig.label}
-                          options={composeMultiSelectOptions(
-                            facilitatedByConfig.options
-                          )}
-                          selectedLabel={
-                            facilitatedByConfig.multiSelectLabel || ''
-                          }
-                          initialValues={watch('facilitatedBy')}
-                        />
-                      </FormGroup>
-                    )}
-                  />
-
-                  {watch('facilitatedBy')?.includes(MtoFacilitator.OTHER) && (
-                    <Controller
-                      name="facilitatedByOther"
-                      control={control}
-                      rules={{
-                        required: modelToOperationsMiscT('validation.fillOut')
-                      }}
-                      render={({
-                        field: { ref, ...field },
-                        fieldState: { error }
-                      }) => (
-                        <FormGroup
-                          className="margin-0 margin-bottom-3"
-                          error={!!error}
-                        >
-                          <Label
-                            htmlFor={convertCamelCaseToKebabCase(
-                              'facilitatedByOther'
-                            )}
-                            requiredMarker
-                            className="text-normal"
-                          >
-                            {mtoMilestoneT('facilitatedByOther.label')}
-                          </Label>
-
-                          {!!error && (
-                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                          )}
-
-                          <HelpText className="margin-top-1">
-                            {mtoMilestoneT('facilitatedByOther.sublabel')}
-                          </HelpText>
-
-                          <TextInput
-                            {...field}
-                            ref={null}
-                            id={convertCamelCaseToKebabCase(
-                              'facilitatedByOther'
-                            )}
-                            type="text"
-                            maxLength={75}
-                          />
-
-                          <HelpText className="margin-top-1">
-                            {modelToOperationsMiscT(
-                              'modal.editMilestone.charactersAllowed'
-                            )}
-                          </HelpText>
-                        </FormGroup>
-                      )}
+              <Controller
+                name="isDraft"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-top-0 margin-bottom-3">
+                    <CheckboxField
+                      {...field}
+                      id={field.name}
+                      value={field.name}
+                      checked={field.value}
+                      label={mtoMilestoneT('isDraft.label')}
+                      subLabel={mtoMilestoneT('isDraft.sublabel')}
                     />
-                  )}
+                  </FormGroup>
+                )}
+              />
 
-                  <Controller
-                    name="needBy"
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-0 margin-bottom-3">
-                        <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
-                          {mtoMilestoneT('needBy.label')}
-                        </Label>
-
-                        <HelpText className="margin-top-1">
-                          {mtoMilestoneT('needBy.sublabel')}
-                        </HelpText>
-
-                        <div className="position-relative">
-                          <DatePickerFormatted
-                            {...field}
-                            aria-labelledby={convertCamelCaseToKebabCase(
-                              'needBy'
-                            )}
-                            id="milestone-need-by"
-                            defaultValue={field.value}
-                          />
-
-                          {isDateInPast(watch('needBy')) && (
-                            <DatePickerWarning
-                              label={generalT('dateWarning')}
-                            />
-                          )}
-                        </div>
-
-                        {isDateInPast(watch('needBy')) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-2"
-                            headingLevel="h4"
-                            slim
-                          >
-                            {generalT('dateWarning')}
-                          </Alert>
-                        )}
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="status"
-                    control={control}
-                    rules={{
-                      required: true
-                    }}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
-                        >
-                          {mtoMilestoneT('status.label')}
-                        </Label>
-
-                        <Select
-                          {...field}
-                          id={convertCamelCaseToKebabCase(field.name)}
-                          value={field.value || ''}
-                        >
-                          {getKeys(stausConfig.options).map(option => {
-                            return (
-                              <option key={option} value={option}>
-                                {stausConfig.options[option]}
-                              </option>
-                            );
-                          })}
-                        </Select>
-                      </FormGroup>
-                    )}
-                  />
-
-                  <MTOStatusInfoToggle
-                    className="margin-bottom-4"
-                    type="milestone"
-                  />
-
-                  <Controller
-                    name="riskIndicator"
-                    control={control}
-                    rules={{
-                      required: true
-                    }}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
-                        >
-                          {mtoMilestoneT('riskIndicator.label')}
-                        </Label>
-
-                        <HelpText className="margin-top-1">
-                          {mtoMilestoneT('riskIndicator.sublabel')}
-                        </HelpText>
-
-                        {getKeys(riskIndicatorConfig.options).map(value => (
-                          <div className="display-flex" key={value}>
-                            <Radio
-                              {...field}
-                              id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
-                              value={value}
-                              label={riskIndicatorConfig.options[value]}
-                              checked={field.value === value}
-                              className="margin-right-1"
-                            />
-
-                            {(() => {
-                              if (value === MtoRiskIndicator.AT_RISK)
-                                return (
-                                  <Icon.Error
-                                    className="text-error-dark"
-                                    style={{ top: '10px' }}
-                                    size={3}
-                                    aria-label="error"
-                                  />
-                                );
-
-                              if (value === MtoRiskIndicator.OFF_TRACK)
-                                return (
-                                  <Icon.Warning
-                                    className="text-warning-dark"
-                                    style={{ top: '10px' }}
-                                    size={3}
-                                    aria-label="warning"
-                                  />
-                                );
-
-                              return <></>;
-                            })()}
-                          </div>
-                        ))}
-                      </FormGroup>
-                    )}
-                  />
-
-                  <div className="border-top-1px border-base-lighter padding-y-4">
-                    <h3 className="margin-0 margin-bottom-1">
-                      {modelToOperationsMiscT(
-                        'modal.editMilestone.selectedSolutions'
-                      )}
-                    </h3>
-
-                    <p className="margin-0 margin-bottom-1">
-                      {modelToOperationsMiscT(
-                        'modal.editMilestone.selectedSolutionsCount',
-                        {
-                          count: selectedSolutions?.length || 0
-                        }
-                      )}
-                    </p>
-
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setEditSolutionsOpen(true);
-                      }}
-                      unstyled
-                      className="margin-0 display-flex"
+              <Controller
+                name="categories.category.id"
+                control={control}
+                rules={{
+                  required: modelToOperationsMiscT('validation.fillOut'),
+                  validate: value =>
+                    value !== 'default' ||
+                    modelToOperationsMiscT('validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
                     >
                       {modelToOperationsMiscT(
-                        'modal.editMilestone.editSolutions'
+                        'modal.milestone.milestoneCategory.label'
                       )}
-                      <Icon.ArrowForward
-                        className="top-2px"
-                        aria-label="forward"
-                      />
-                    </Button>
+                    </Label>
 
-                    {selectedSolutions.length === 0 ? (
-                      <Alert type="info" slim>
-                        {modelToOperationsMiscT(
-                          'modal.editMilestone.noSolutions'
-                        )}
-                      </Alert>
-                    ) : (
-                      <>
-                        <UswdsTable
-                          bordered={false}
-                          {...getTableProps()}
-                          className="margin-top-0"
-                          fullWidth
-                        >
-                          <thead>
-                            {headerGroups.map(headerGroup => (
-                              <tr
-                                {...headerGroup.getHeaderGroupProps()}
-                                key={
-                                  { ...headerGroup.getHeaderGroupProps() }.key
-                                }
-                              >
-                                {headerGroup.headers.map(column => (
-                                  <th
-                                    {...column.getHeaderProps()}
-                                    scope="col"
-                                    key={column.id}
-                                    className="padding-left-0 padding-bottom-0"
-                                    style={{
-                                      width:
-                                        column.id === 'status'
-                                          ? '150px'
-                                          : 'auto'
-                                    }}
-                                  >
-                                    <button
-                                      className="usa-button usa-button--unstyled position-relative"
-                                      type="button"
-                                      {...column.getSortByToggleProps()}
-                                    >
-                                      {
-                                        column.render(
-                                          'Header'
-                                        ) as React.ReactElement
-                                      }
-                                      {column.canSort &&
-                                        getHeaderSortIcon(column, false)}
-                                    </button>
-                                  </th>
-                                ))}
-                              </tr>
-                            ))}
-                          </thead>
-                          <tbody {...getTableBodyProps()}>
-                            {page.map((row, i) => {
-                              const { getRowProps, cells, id } = { ...row };
+                    <HelpText className="margin-top-05">
+                      {modelToOperationsMiscT(
+                        'modal.milestone.milestoneCategory.sublabel'
+                      )}
+                    </HelpText>
 
-                              prepareRow(row);
-                              return (
-                                <tr {...getRowProps()} key={id}>
-                                  {cells.map(cell => {
-                                    return (
-                                      <td
-                                        {...cell.getCellProps()}
-                                        key={cell.getCellProps().key}
-                                        className="padding-left-0"
-                                      >
-                                        {
-                                          cell.render(
-                                            'Cell'
-                                          ) as React.ReactElement
-                                        }
-                                      </td>
-                                    );
-                                  })}
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </UswdsTable>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
 
-                        {selectedSolutions.length > 5 && (
-                          <TablePagination
-                            className="flex-justify-start margin-left-neg-05"
-                            gotoPage={gotoPage}
-                            previousPage={previousPage}
-                            nextPage={nextPage}
-                            canNextPage={canNextPage}
-                            pageIndex={state.pageIndex}
-                            pageOptions={pageOptions}
-                            canPreviousPage={canPreviousPage}
-                            pageCount={pageCount}
-                            pageSize={state.pageSize}
-                            setPageSize={setPageSize}
-                            page={[]}
-                          />
-                        )}
+                    <Select
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      value={field.value || 'default'}
+                      defaultValue="default"
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        field.onChange(e);
+                        // Reset subcategory when category changes
+                        setValue('categories.subCategory.id', 'default');
+                      }}
+                    >
+                      {selectOptionsAndMappedCategories.map(option => {
+                        return (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </FormGroup>
+                )}
+              />
 
-                        <Alert type="info" slim className="margin-top-4">
-                          <Trans
-                            i18nKey={modelToOperationsMiscT(
-                              'modal.editMilestone.solutionInfo'
-                            )}
-                            components={{
-                              link1: (
-                                <Button
-                                  type="button"
-                                  unstyled
-                                  className="usa-button--unstyled margin-0"
-                                  onClick={() => {
-                                    setCloseDestination(
-                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-                                    );
-                                  }}
-                                >
-                                  {' '}
-                                </Button>
-                              )
-                            }}
-                          />
-                        </Alert>
-                      </>
-                    )}
-                  </div>
+              <Controller
+                name="categories.subCategory.id"
+                control={control}
+                rules={{
+                  required: modelToOperationsMiscT('validation.fillOut'),
+                  validate: value =>
+                    value !== 'default' ||
+                    modelToOperationsMiscT('validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {modelToOperationsMiscT(
+                        'modal.milestone.milestoneSubcategory.label'
+                      )}
+                    </Label>
 
-                  <div className="border-top-1px border-base-lighter padding-y-4">
-                    <MilestoneNotes
-                      mtoMilestoneID={editMilestoneID || ''}
-                      milestoneNotes={milestoneNotes}
-                      setMilestoneNotes={setMilestoneNotes}
-                      selectedMilestoneNote={selectedMilestoneNote}
-                      setSelectedMilestoneNote={setSelectedMilestoneNote}
+                    <HelpText className="margin-top-05">
+                      {modelToOperationsMiscT(
+                        'modal.milestone.milestoneSubcategory.sublabel'
+                      )}
+                    </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <Select
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      value={field.value || 'default'}
+                      defaultValue="default"
+                      disabled={watch('categories.category.id') === 'default'}
+                    >
+                      {[selectOptions[0], ...mappedSubcategories].map(
+                        option => {
+                          return (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          );
+                        }
+                      )}
+                    </Select>
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="facilitatedBy"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase('facilitatedBy')}
+                    >
+                      {facilitatedByConfig.label}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {facilitatedByConfig.sublabel}
+                    </HelpText>
+
+                    <MultiSelect
+                      {...field}
+                      id={convertCamelCaseToKebabCase(
+                        'multiSourceDataToCollect'
+                      )}
+                      inputId={convertCamelCaseToKebabCase('facilitatedBy')}
+                      ariaLabel={convertCamelCaseToKebabCase('facilitatedBy')}
+                      ariaLabelText={facilitatedByConfig.label}
+                      options={composeMultiSelectOptions(
+                        facilitatedByConfig.options
+                      )}
+                      selectedLabel={facilitatedByConfig.multiSelectLabel || ''}
+                      initialValues={watch('facilitatedBy')}
                     />
-                  </div>
-                </Fieldset>
-              </Form>
-            </FormProvider>
-          </Grid>
-        </Grid>
-      </GridContainer>
+                  </FormGroup>
+                )}
+              />
+
+              {watch('facilitatedBy')?.includes(MtoFacilitator.OTHER) && (
+                <Controller
+                  name="facilitatedByOther"
+                  control={control}
+                  rules={{
+                    required: modelToOperationsMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup
+                      className="margin-0 margin-bottom-3"
+                      error={!!error}
+                    >
+                      <Label
+                        htmlFor={convertCamelCaseToKebabCase(
+                          'facilitatedByOther'
+                        )}
+                        requiredMarker
+                        className="text-normal"
+                      >
+                        {mtoMilestoneT('facilitatedByOther.label')}
+                      </Label>
+
+                      {!!error && (
+                        <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                      )}
+
+                      <HelpText className="margin-top-1">
+                        {mtoMilestoneT('facilitatedByOther.sublabel')}
+                      </HelpText>
+
+                      <TextInput
+                        {...field}
+                        ref={null}
+                        id={convertCamelCaseToKebabCase('facilitatedByOther')}
+                        type="text"
+                        maxLength={75}
+                      />
+
+                      <HelpText className="margin-top-1">
+                        {modelToOperationsMiscT(
+                          'modal.editMilestone.charactersAllowed'
+                        )}
+                      </HelpText>
+                    </FormGroup>
+                  )}
+                />
+              )}
+
+              <Controller
+                name="needBy"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-0 margin-bottom-3">
+                    <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
+                      {mtoMilestoneT('needBy.label')}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {mtoMilestoneT('needBy.sublabel')}
+                    </HelpText>
+
+                    <div className="position-relative">
+                      <DatePickerFormatted
+                        {...field}
+                        aria-labelledby={convertCamelCaseToKebabCase('needBy')}
+                        id="milestone-need-by"
+                        defaultValue={field.value}
+                      />
+
+                      {isDateInPast(watch('needBy')) && (
+                        <DatePickerWarning label={generalT('dateWarning')} />
+                      )}
+                    </div>
+
+                    {isDateInPast(watch('needBy')) && (
+                      <Alert
+                        type="warning"
+                        className="margin-top-2"
+                        headingLevel="h4"
+                        slim
+                      >
+                        {generalT('dateWarning')}
+                      </Alert>
+                    )}
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="status"
+                control={control}
+                rules={{
+                  required: true
+                }}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-top-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoMilestoneT('status.label')}
+                    </Label>
+
+                    <Select
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      value={field.value || ''}
+                    >
+                      {getKeys(stausConfig.options).map(option => {
+                        return (
+                          <option key={option} value={option}>
+                            {stausConfig.options[option]}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </FormGroup>
+                )}
+              />
+
+              <MTOStatusInfoToggle
+                className="margin-bottom-4"
+                type="milestone"
+              />
+
+              <Controller
+                name="riskIndicator"
+                control={control}
+                rules={{
+                  required: true
+                }}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-top-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoMilestoneT('riskIndicator.label')}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {mtoMilestoneT('riskIndicator.sublabel')}
+                    </HelpText>
+
+                    {getKeys(riskIndicatorConfig.options).map(value => (
+                      <div className="display-flex" key={value}>
+                        <Radio
+                          {...field}
+                          id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
+                          value={value}
+                          label={riskIndicatorConfig.options[value]}
+                          checked={field.value === value}
+                          className="margin-right-1"
+                        />
+
+                        {(() => {
+                          if (value === MtoRiskIndicator.AT_RISK)
+                            return (
+                              <Icon.Error
+                                className="text-error-dark"
+                                style={{ top: '10px' }}
+                                size={3}
+                                aria-label="error"
+                              />
+                            );
+
+                          if (value === MtoRiskIndicator.OFF_TRACK)
+                            return (
+                              <Icon.Warning
+                                className="text-warning-dark"
+                                style={{ top: '10px' }}
+                                size={3}
+                                aria-label="warning"
+                              />
+                            );
+
+                          return <></>;
+                        })()}
+                      </div>
+                    ))}
+                  </FormGroup>
+                )}
+              />
+
+              <div className="border-top-1px border-base-lighter padding-y-4">
+                <h3 className="margin-0 margin-bottom-1">
+                  {modelToOperationsMiscT(
+                    'modal.editMilestone.selectedSolutions'
+                  )}
+                </h3>
+
+                <p className="margin-0 margin-bottom-1">
+                  {modelToOperationsMiscT(
+                    'modal.editMilestone.selectedSolutionsCount',
+                    {
+                      count: selectedSolutions?.length || 0
+                    }
+                  )}
+                </p>
+
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setEditSolutionsOpen(true);
+                  }}
+                  unstyled
+                  className="margin-0 display-flex"
+                >
+                  {modelToOperationsMiscT('modal.editMilestone.editSolutions')}
+                  <Icon.ArrowForward className="top-2px" aria-label="forward" />
+                </Button>
+
+                {selectedSolutions.length === 0 ? (
+                  <Alert type="info" slim>
+                    {modelToOperationsMiscT('modal.editMilestone.noSolutions')}
+                  </Alert>
+                ) : (
+                  <>
+                    <UswdsTable
+                      bordered={false}
+                      {...getTableProps()}
+                      className="margin-top-0"
+                      fullWidth
+                    >
+                      <thead>
+                        {headerGroups.map(headerGroup => (
+                          <tr
+                            {...headerGroup.getHeaderGroupProps()}
+                            key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                          >
+                            {headerGroup.headers.map(column => (
+                              <th
+                                {...column.getHeaderProps()}
+                                scope="col"
+                                key={column.id}
+                                className="padding-left-0 padding-bottom-0"
+                                style={{
+                                  width:
+                                    column.id === 'status' ? '150px' : 'auto'
+                                }}
+                              >
+                                <button
+                                  className="usa-button usa-button--unstyled position-relative"
+                                  type="button"
+                                  {...column.getSortByToggleProps()}
+                                >
+                                  {
+                                    column.render(
+                                      'Header'
+                                    ) as React.ReactElement
+                                  }
+                                  {column.canSort &&
+                                    getHeaderSortIcon(column, false)}
+                                </button>
+                              </th>
+                            ))}
+                          </tr>
+                        ))}
+                      </thead>
+                      <tbody {...getTableBodyProps()}>
+                        {page.map((row, i) => {
+                          const { getRowProps, cells, id } = { ...row };
+
+                          prepareRow(row);
+                          return (
+                            <tr {...getRowProps()} key={id}>
+                              {cells.map(cell => {
+                                return (
+                                  <td
+                                    {...cell.getCellProps()}
+                                    key={cell.getCellProps().key}
+                                    className="padding-left-0"
+                                  >
+                                    {cell.render('Cell') as React.ReactElement}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </UswdsTable>
+
+                    {selectedSolutions.length > 5 && (
+                      <TablePagination
+                        className="flex-justify-start margin-left-neg-05"
+                        gotoPage={gotoPage}
+                        previousPage={previousPage}
+                        nextPage={nextPage}
+                        canNextPage={canNextPage}
+                        pageIndex={state.pageIndex}
+                        pageOptions={pageOptions}
+                        canPreviousPage={canPreviousPage}
+                        pageCount={pageCount}
+                        pageSize={state.pageSize}
+                        setPageSize={setPageSize}
+                        page={[]}
+                      />
+                    )}
+
+                    <Alert type="info" slim className="margin-top-4">
+                      <Trans
+                        i18nKey={modelToOperationsMiscT(
+                          'modal.editMilestone.solutionInfo'
+                        )}
+                        components={{
+                          link1: (
+                            <Button
+                              type="button"
+                              unstyled
+                              className="usa-button--unstyled margin-0"
+                              onClick={() => {
+                                setCloseDestination(
+                                  `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                                );
+                              }}
+                            >
+                              {' '}
+                            </Button>
+                          )
+                        }}
+                      />
+                    </Alert>
+                  </>
+                )}
+              </div>
+
+              <div className="border-top-1px border-base-lighter padding-y-4">
+                <MilestoneNotes
+                  mtoMilestoneID={editMilestoneID || ''}
+                  milestoneNotes={milestoneNotes}
+                  setMilestoneNotes={setMilestoneNotes}
+                  selectedMilestoneNote={selectedMilestoneNote}
+                  setSelectedMilestoneNote={setSelectedMilestoneNote}
+                />
+              </div>
+            </Fieldset>
+          </Form>
+        </FormProvider>
+      </div>
     </div>
   );
 };

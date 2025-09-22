@@ -509,7 +509,8 @@ export const milestoneMock = (
                 isAdded: true
               }
             }
-          ]
+          ],
+          notes: []
         }
       }
     }
