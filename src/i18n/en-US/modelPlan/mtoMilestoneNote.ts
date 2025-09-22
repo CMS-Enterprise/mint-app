@@ -34,7 +34,12 @@ export const mtoMilestoneNoteMisc = {
   createdBy: 'by {{name}} | {{date}} at {{time}}',
   removeMilestoneNote: 'Are you sure you want to remove this note?',
   actionWarning: 'This action cannot be undone.',
-  removeNote: 'Remove note'
+  removeNote: 'Remove note',
+  noteInfo:
+    'All added notes will be visible to anyone with access to MINT. Please be sure the content of your note should be visible to others before adding it.',
+  noteAdded: 'Note added successfully.',
+  noteUpdated: 'Note updated successfully.',
+  noteDeleted: 'Note deleted successfully.'
 };
 
 export default mtoMilestoneNote;

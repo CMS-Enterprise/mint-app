@@ -17,6 +17,7 @@ import {
 } from 'gql/generated/graphql';
 import { AppState } from 'stores/reducers/rootReducer';
 
+import Alert from 'components/Alert';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -178,6 +179,10 @@ const MilestoneNoteForm = ({
                 value={milestoneNote}
               />
             </FormGroup>
+
+            <Alert type="info" slim className="margin-top-4">
+              {mtoMilestoneNoteMiscT('noteInfo')}
+            </Alert>
 
             <div className="display-flex">
               <Button

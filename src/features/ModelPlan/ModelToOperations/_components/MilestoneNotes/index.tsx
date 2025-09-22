@@ -159,6 +159,7 @@ const MilestoneNotes = ({
         })}
         onClick={() => {
           setSelectedMilestoneNote(null);
+          setNoteToEditReadView(null);
           setEditNotesOpen(true);
         }}
       >
