@@ -22,6 +22,19 @@ import { formatDateUtc, formatTime } from 'utils/date';
 import { MilestoneNoteType } from '../EditMilestoneForm';
 import MilestoneNoteForm from '../MilestoneNoteForm';
 
+/**
+ * MilestoneNotes component
+ * This component is used to display the milestone notes for a given MTO milestone
+ * Opens a sidepanel/form to add a new note or edit an existing note
+ * Opens a modal to confirm the deletion of a note
+ *
+ * @param {string} mtoMilestoneID - The ID of the MTO milestone
+ * @param {MilestoneNoteType[]} props.milestoneNotes - The list of milestone notes
+ * @param {function} setMilestoneNotes - The function to set the list of milestone notes
+ * @param {MilestoneNoteType | null} selectedMilestoneNote - The selected milestone note
+ * @param {function} setSelectedMilestoneNote - The function to set the selected milestone note
+ * @param {boolean} props.readView - Whether the component is in read view
+ */
 const MilestoneNotes = ({
   mtoMilestoneID,
   milestoneNotes,
@@ -74,6 +87,7 @@ const MilestoneNotes = ({
 
   return (
     <div>
+      {/* Add note sidepanel/form */}
       <Sidepanel
         isOpen={editNotesOpen}
         ariaLabel={mtoMilestoneNoteMiscT('backToMilestone')}

@@ -15,6 +15,19 @@ import toastSuccess from 'components/ToastSuccess';
 
 import { MilestoneNoteType } from '../EditMilestoneForm';
 
+/**
+ * MilestoneNoteForm component
+ * This component is used to add a new note or edit an existing note for a given MTO milestone
+ * If in read view, will directly call mutation to add/update note
+ * If in MTO matrix, will add/update note in app memory
+ *
+ * @param {string} mtoMilestoneID - The ID of the MTO milestone
+ * @param {MilestoneNoteType[]} milestoneNotes - The list of milestone notes
+ * @param {function} setMilestoneNotes - The function to set the list of milestone notes
+ * @param {function} closeModal - The function to close the modal
+ * @param {MilestoneNoteType | null} selectedMilestoneNote - The selected milestone note
+ * @param {boolean} readView - Whether the component is in read view
+ */
 const MilestoneNoteForm = ({
   mtoMilestoneID,
   milestoneNotes,
