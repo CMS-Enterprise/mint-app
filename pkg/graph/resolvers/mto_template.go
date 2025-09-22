@@ -134,18 +134,6 @@ func ApplyTemplateToMTO(
 
 	// Start a transaction for the rest of the operations
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*model.ApplyTemplateResult, error) {
-
-		// Create the new template link
-		note := fmt.Sprintf("Template %s applied to model plan %s by %s", template.Name, modelPlan.ModelName, *principalAccount.Username)
-		newLink := models.NewModelPlanMTOTemplateLink(
-			principalAccount.ID,
-			modelPlanID,
-			templateID,
-			time.Now(),
-			true,
-			&note,
-		)
-
 		// Get template data using loaders
 		categories, err := loaders.MTOTemplateCategory.ByTemplateID.Load(ctx, templateID)
 		if err != nil {
@@ -176,7 +164,7 @@ func ApplyTemplateToMTO(
 		// Map template category IDs to new MTO category IDs,
 		// to maintain parent-child relationships and associations
 		// when copying categories, milestones, and solutions
-		categoryIDMap := make(map[*uuid.UUID]*uuid.UUID)
+		categoryIDMap := make(map[uuid.UUID]uuid.UUID)
 
 		// Map template solution IDs to their keys for linking with milestones
 		// the links in the DB are based on template solution IDs so we need to preserve them
@@ -189,12 +177,16 @@ func ApplyTemplateToMTO(
 		})
 
 		for _, category := range categories {
-			parentID := categoryIDMap[category.ParentID]
+			var parentID uuid.UUID
+			if category.ParentID != nil {
+				parentID = categoryIDMap[*category.ParentID]
+			}
+
 			mtoCategory := models.NewMTOCategory(
 				principalAccount.ID,
 				category.Name,
 				modelPlanID,
-				parentID,
+				&parentID,
 				category.Order,
 			)
 
@@ -210,7 +202,7 @@ func ApplyTemplateToMTO(
 				continue
 			}
 
-			categoryIDMap[&category.ID] = &categoryAdded.ID
+			categoryIDMap[category.ID] = categoryAdded.ID
 
 			categoriesCreated++
 		}
@@ -271,6 +263,17 @@ func ApplyTemplateToMTO(
 			}
 			milestonesCreated++
 		}
+
+		// Create the new template link
+		note := fmt.Sprintf("Template %s applied to model plan %s by %s", template.Name, modelPlan.ModelName, *principalAccount.Username)
+		newLink := models.NewModelPlanMTOTemplateLink(
+			principalAccount.ID,
+			modelPlanID,
+			templateID,
+			time.Now(),
+			true,
+			&note,
+		)
 
 		// Create the template link record
 		_, err = storage.ModelPlanMTOTemplateLinkCreate(tx, logger, newLink)

@@ -66,7 +66,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 		// Next, attempt to insert a category with the same name as the configured category in the Common Milestone
 		// Here we use a special storage method that handles conflicts without returning an error
-		// to ensure that we create a cateogry if needed, otherwise we just return the existing one
+		// to ensure that we create a category if needed, otherwise we just return the existing one
 
 		// Note, the position for the category & subcategory (coded as `0` here) is not respected when inserted, but is a required parameter in the constructor
 		// It will be have a position equal to the max of all other positions
