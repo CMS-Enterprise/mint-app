@@ -31,7 +31,10 @@ export const mtoMilestoneNoteMisc = {
   backToMilestone: 'Back to milestone details',
   showNotes: 'Show notes',
   hideNotes: 'Hide notes',
-  createdBy: 'by {{name}} | {{date}} at {{time}}'
+  createdBy: 'by {{name}} | {{date}} at {{time}}',
+  removeMilestoneNote: 'Are you sure you want to remove this note?',
+  actionWarning: 'This action cannot be undone.',
+  removeNote: 'Remove note'
 };
 
 export default mtoMilestoneNote;

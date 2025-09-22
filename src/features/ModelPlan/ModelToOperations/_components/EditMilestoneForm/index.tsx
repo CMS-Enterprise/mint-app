@@ -28,7 +28,8 @@ import {
   ProcessListItem,
   Radio,
   Select,
-  Table as UswdsTable
+  Table as UswdsTable,
+  TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
@@ -80,6 +81,7 @@ import { getHeaderSortIcon } from 'utils/tableSort';
 
 import LinkSolutionForm from '../LinkSolutionForm';
 import MilestoneNoteForm from '../MilestoneNoteForm';
+import MilestoneNotes from '../MilestoneNotes';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
 import MTOStatusInfoToggle from '../MTOStatusInfoToggle';
 import MilestoneStatusTag from '../MTOStatusTag';
@@ -347,16 +349,13 @@ const EditMilestoneForm = ({
 
     setNotesToRemove(
       data?.mtoMilestone.notes.filter(
-        note =>
-          !milestoneNotes.find(
-            n => n.id === note.id && n.content === note.content
-          )
+        note => !milestoneNotes.find(n => n.id === note.id)
       ) || []
     );
 
     setNotesToUpdate(
-      data?.mtoMilestone.notes?.filter(note => {
-        const foundNote = milestoneNotes.find(n => n.id === note.id);
+      milestoneNotes.filter(note => {
+        const foundNote = data?.mtoMilestone.notes.find(n => n.id === note.id);
         return foundNote && foundNote.content !== note.content;
       }) || []
     );
@@ -886,30 +885,6 @@ const EditMilestoneForm = ({
                 allSolutions as GetMtoAllSolutionsQuery['modelPlan']['mtoMatrix']
               }
               setCloseDestination={setCloseDestination}
-            />
-          </Sidepanel>
-
-          <Sidepanel
-            isOpen={editNotesOpen}
-            ariaLabel={mtoMilestoneNoteMiscT('backToMilestone')}
-            testid="edit-notes-sidepanel"
-            modalHeading={mtoMilestoneNoteMiscT('backToMilestone')}
-            backButton
-            showScroll
-            noScrollable={false}
-            closeModal={() => {
-              setEditNotesOpen(false);
-              setMilestoneNotes(milestoneNotes);
-            }}
-            overlayClassName="bg-transparent"
-          >
-            <MilestoneNoteForm
-              milestoneNotes={milestoneNotes}
-              setMilestoneNotes={setMilestoneNotes}
-              closeModal={() => {
-                setEditNotesOpen(false);
-              }}
-              selectedMilestoneNote={selectedMilestoneNote}
             />
           </Sidepanel>
         </>
@@ -1560,96 +1535,12 @@ const EditMilestoneForm = ({
                   </div>
 
                   <div className="border-top-1px border-base-lighter padding-y-4">
-                    <h3 className="margin-0 margin-bottom-1">
-                      {mtoMilestoneNoteMiscT('heading')}
-                    </h3>
-
-                    <p className="margin-0 margin-bottom-1">
-                      {mtoMilestoneNoteMiscT('notesAdded', {
-                        count: milestone?.notes?.length || 0
-                      })}
-                    </p>
-
-                    <Button
-                      type="button"
-                      unstyled
-                      className="margin-0 display-flex"
-                      onClick={() => {
-                        setSelectedMilestoneNote(null);
-                        setEditNotesOpen(true);
-                      }}
-                    >
-                      {mtoMilestoneNoteMiscT('addANote')}
-                      <Icon.ArrowForward
-                        className="top-2px"
-                        aria-label="forward"
-                      />
-                    </Button>
-
-                    {milestoneNotes.length > 0 && (
-                      <CollapsableLink
-                        id="milestone-notes"
-                        label={mtoMilestoneNoteMiscT('showNotes')}
-                        closeLabel={mtoMilestoneNoteMiscT('hideNotes')}
-                        styleLeftBar={false}
-                        startOpen
-                      >
-                        <ProcessList className="padding-x-0 margin-left-neg-1">
-                          {milestoneNotes.map((note, index) => (
-                            <ProcessListItem
-                              key={`${note.id}-${note.content}`}
-                              className="read-only-model-plan__timeline__list-item margin-left-2"
-                            >
-                              <p className="margin-top-0 margin-bottom-1">
-                                {note.content}
-                              </p>
-
-                              <p className="text-base-dark margin-top-0 margin-bottom-1">
-                                {mtoMilestoneNoteMiscT('createdBy', {
-                                  name: note.createdByUserAccount.commonName,
-                                  date: formatDateUtc(
-                                    note.createdDts,
-                                    'MMMM d, yyyy'
-                                  ),
-                                  time: formatTime(note.createdDts)
-                                })}
-                              </p>
-
-                              {note.createdByUserAccount.isEUAID && (
-                                <div className="display-flex">
-                                  <Button
-                                    type="button"
-                                    unstyled
-                                    className="margin-right-2"
-                                    onClick={() => {
-                                      setSelectedMilestoneNote(note);
-                                      setEditNotesOpen(true);
-                                    }}
-                                  >
-                                    {mtoMilestoneNoteMiscT('editThisNote')}
-                                  </Button>
-
-                                  <Button
-                                    type="button"
-                                    unstyled
-                                    className="text-error"
-                                    onClick={() => {
-                                      setMilestoneNotes(
-                                        milestoneNotes.filter(
-                                          (n, i) => i !== index
-                                        )
-                                      );
-                                    }}
-                                  >
-                                    {mtoMilestoneNoteMiscT('removeThisNote')}
-                                  </Button>
-                                </div>
-                              )}
-                            </ProcessListItem>
-                          ))}
-                        </ProcessList>
-                      </CollapsableLink>
-                    )}
+                    <MilestoneNotes
+                      milestoneNotes={milestoneNotes}
+                      setMilestoneNotes={setMilestoneNotes}
+                      selectedMilestoneNote={selectedMilestoneNote}
+                      setSelectedMilestoneNote={setSelectedMilestoneNote}
+                    />
                   </div>
                 </Fieldset>
               </Form>
