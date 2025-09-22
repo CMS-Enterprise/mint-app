@@ -6,30 +6,58 @@ import {
   ProcessList,
   ProcessListItem
 } from '@trussworks/react-uswds';
+import { useDeleteMtoMilestoneNoteMutation } from 'gql/generated/graphql';
 
 import CollapsableLink from 'components/CollapsableLink';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
+import toastSuccess from 'components/ToastSuccess';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import { MilestoneNoteType } from '../EditMilestoneForm';
 import MilestoneNoteForm from '../MilestoneNoteForm';
 
 const MilestoneNotes = ({
+  mtoMilestoneID,
   milestoneNotes,
   setMilestoneNotes,
   selectedMilestoneNote,
-  setSelectedMilestoneNote
+  setSelectedMilestoneNote,
+  readView = false
 }: {
+  mtoMilestoneID: string;
   milestoneNotes: MilestoneNoteType[];
   setMilestoneNotes: (milestoneNotes: MilestoneNoteType[]) => void;
   selectedMilestoneNote: MilestoneNoteType | null;
   setSelectedMilestoneNote: (
     selectedMilestoneNote: MilestoneNoteType | null
   ) => void;
+  readView?: boolean;
 }) => {
   const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
 
   const [editNotesOpen, setEditNotesOpen] = useState(false);
+
+  const [isRemoveNoteModalOpen, setIsRemoveNoteModalOpen] = useState(false);
+
+  const [noteToRemove, setNoteToRemove] = useState<MilestoneNoteType | null>(
+    null
+  );
+
+  const [deleteMilestoneNote] = useDeleteMtoMilestoneNoteMutation();
+
+  const handleDeleteMilestoneNote = (note: MilestoneNoteType) => {
+    deleteMilestoneNote({
+      variables: {
+        input: {
+          id: note.id
+        }
+      }
+    }).then(() => {
+      toastSuccess(mtoMilestoneNoteMiscT('noteDeleted'));
+    });
+  };
 
   return (
     <div>
@@ -54,8 +82,51 @@ const MilestoneNotes = ({
             setEditNotesOpen(false);
           }}
           selectedMilestoneNote={selectedMilestoneNote}
+          mtoMilestoneID={mtoMilestoneID}
+          readView={readView}
         />
       </Sidepanel>
+
+      {/* Remove Note Modal */}
+      <Modal
+        isOpen={isRemoveNoteModalOpen}
+        closeModal={() => setIsRemoveNoteModalOpen(false)}
+        fixed
+        className="tablet:width-mobile-lg mint-body-normal"
+      >
+        <div className="padding-bottom-8">
+          <PageHeading headingLevel="h3" className="margin-y-0">
+            {mtoMilestoneNoteMiscT('removeMilestoneNote')}
+          </PageHeading>
+
+          <p className="margin-bottom-1">
+            {mtoMilestoneNoteMiscT('actionWarning')}
+          </p>
+
+          <div className="margin-bottom-2 display-flex mint-modal__footer shadow-none">
+            <Button
+              type="submit"
+              className="margin-right-3 margin-top-0 bg-error"
+              onClick={() => {
+                handleDeleteMilestoneNote(noteToRemove as MilestoneNoteType);
+                setNoteToRemove(null);
+                setIsRemoveNoteModalOpen(false);
+              }}
+            >
+              {mtoMilestoneNoteMiscT('removeNote')}
+            </Button>
+
+            <Button
+              type="button"
+              className="margin-top-0"
+              unstyled
+              onClick={() => setIsRemoveNoteModalOpen(false)}
+            >
+              {mtoMilestoneNoteMiscT('cancel')}
+            </Button>
+          </div>
+        </div>
+      </Modal>
 
       <h3 className="margin-0 margin-bottom-1">
         {mtoMilestoneNoteMiscT('heading')}
@@ -123,9 +194,14 @@ const MilestoneNotes = ({
                       unstyled
                       className="text-error"
                       onClick={() => {
-                        setMilestoneNotes(
-                          milestoneNotes.filter((n, i) => i !== index)
-                        );
+                        if (readView) {
+                          setNoteToRemove(note);
+                          setIsRemoveNoteModalOpen(true);
+                        } else {
+                          setMilestoneNotes(
+                            milestoneNotes.filter((n, i) => i !== index)
+                          );
+                        }
                       }}
                     >
                       {mtoMilestoneNoteMiscT('removeThisNote')}

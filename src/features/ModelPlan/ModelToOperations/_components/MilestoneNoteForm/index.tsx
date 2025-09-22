@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
@@ -10,23 +10,32 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import {
+  useCreateMtoMilestoneNoteMutation,
+  useUpdateMtoMilestoneNoteMutation
+} from 'gql/generated/graphql';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import TextAreaField from 'components/TextAreaField';
+import toastSuccess from 'components/ToastSuccess';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import { MilestoneNoteType } from '../EditMilestoneForm';
 
 const MilestoneNoteForm = ({
+  mtoMilestoneID,
   milestoneNotes,
   setMilestoneNotes,
   closeModal,
-  selectedMilestoneNote
+  selectedMilestoneNote,
+  readView = false
 }: {
+  mtoMilestoneID: string;
   milestoneNotes: MilestoneNoteType[];
   setMilestoneNotes: (notes: MilestoneNoteType[]) => void;
   selectedMilestoneNote: MilestoneNoteType | null;
   closeModal: () => void;
+  readView?: boolean;
 }) => {
   const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
 
@@ -41,6 +50,79 @@ const MilestoneNoteForm = ({
   const isEditing = useMemo(() => {
     return !!selectedMilestoneNote;
   }, [selectedMilestoneNote]);
+
+  const [addMilestoneNote] = useCreateMtoMilestoneNoteMutation();
+
+  const [updateMilestoneNote] = useUpdateMtoMilestoneNoteMutation();
+
+  // Submit handler when adding a new note in the read view/not MTO matrix
+  const handleAddMilestoneNote = useCallback(() => {
+    if (!isEditing) {
+      addMilestoneNote({
+        variables: {
+          input: {
+            mtoMilestoneID,
+            content: milestoneNote
+          }
+        }
+      }).then(() => {
+        toastSuccess(mtoMilestoneNoteMiscT('noteAdded'));
+      });
+    } else {
+      updateMilestoneNote({
+        variables: {
+          input: {
+            id: selectedMilestoneNote?.id || '',
+            content: milestoneNote
+          }
+        }
+      }).then(() => {
+        toastSuccess(mtoMilestoneNoteMiscT('noteUpdated'));
+      });
+    }
+  }, [
+    isEditing,
+    mtoMilestoneID,
+    addMilestoneNote,
+    updateMilestoneNote,
+    mtoMilestoneNoteMiscT,
+    milestoneNote,
+    selectedMilestoneNote
+  ]);
+
+  // Submit handler when editing from the milestone form in the MTO matrix/not read view
+  const editMilestoneSubmit = () => {
+    if (isEditing) {
+      setMilestoneNotes(
+        milestoneNotes.map(note =>
+          note.content === selectedMilestoneNote?.content &&
+          note.id === selectedMilestoneNote?.id
+            ? {
+                ...note,
+                content: milestoneNote
+              }
+            : note
+        )
+      );
+    } else {
+      setMilestoneNotes([
+        ...milestoneNotes,
+        // Dummy data to add a new note in app memory
+        {
+          __typename: 'MTOMilestoneNote',
+          id: '',
+          content: milestoneNote,
+          createdDts: new Date().toISOString(),
+          createdByUserAccount: {
+            __typename: 'UserAccount',
+            id: euaId,
+            commonName: euaId,
+            isEUAID: true
+          }
+        }
+      ]);
+    }
+  };
 
   return (
     <GridContainer
@@ -83,35 +165,10 @@ const MilestoneNoteForm = ({
                 type="submit"
                 disabled={!milestoneNote}
                 onClick={() => {
-                  if (isEditing) {
-                    setMilestoneNotes(
-                      milestoneNotes.map(note =>
-                        note.content === selectedMilestoneNote?.content &&
-                        note.id === selectedMilestoneNote?.id
-                          ? {
-                              ...note,
-                              content: milestoneNote
-                            }
-                          : note
-                      )
-                    );
+                  if (readView) {
+                    handleAddMilestoneNote();
                   } else {
-                    setMilestoneNotes([
-                      ...milestoneNotes,
-                      // Dummy data to add a new note in app memory
-                      {
-                        __typename: 'MTOMilestoneNote',
-                        id: '',
-                        content: milestoneNote,
-                        createdDts: new Date().toISOString(),
-                        createdByUserAccount: {
-                          __typename: 'UserAccount',
-                          id: euaId,
-                          commonName: euaId,
-                          isEUAID: true
-                        }
-                      }
-                    ]);
+                    editMilestoneSubmit();
                   }
                   closeModal();
                 }}

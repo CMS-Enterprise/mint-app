@@ -133,7 +133,6 @@ const EditMilestoneForm = ({
   setFooter
 }: EditMilestoneFormProps) => {
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
-  const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
@@ -161,8 +160,6 @@ const EditMilestoneForm = ({
     useState<number>(0);
 
   const [editSolutionsOpen, setEditSolutionsOpen] = useState<boolean>(false);
-
-  const [editNotesOpen, setEditNotesOpen] = useState<boolean>(false);
 
   const [milestoneNotes, setMilestoneNotes] = useState<MilestoneNoteType[]>([]);
 
@@ -609,10 +606,6 @@ const EditMilestoneForm = ({
           closeModal();
         }
       });
-
-      console.log('notesToAdd', notesToAdd);
-      console.log('notesToRemove', notesToRemove);
-      console.log('notesToUpdate', notesToUpdate);
 
       if (notesToAdd.length > 0) {
         Promise.all(
@@ -1536,6 +1529,7 @@ const EditMilestoneForm = ({
 
                   <div className="border-top-1px border-base-lighter padding-y-4">
                     <MilestoneNotes
+                      mtoMilestoneID={editMilestoneID || ''}
                       milestoneNotes={milestoneNotes}
                       setMilestoneNotes={setMilestoneNotes}
                       selectedMilestoneNote={selectedMilestoneNote}

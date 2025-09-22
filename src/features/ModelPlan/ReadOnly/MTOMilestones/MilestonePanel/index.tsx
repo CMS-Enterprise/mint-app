@@ -16,6 +16,7 @@ import {
   Table as UswdsTable
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import MilestoneNotes from 'features/ModelPlan/ModelToOperations/_components/MilestoneNotes';
 import MTORiskIndicatorTag from 'features/ModelPlan/ModelToOperations/_components/MTORiskIndicatorIcon';
 import MilestoneStatusTag from 'features/ModelPlan/ModelToOperations/_components/MTOStatusTag';
 import MTOTag from 'features/ModelPlan/ModelToOperations/_components/MTOTag';
@@ -446,6 +447,13 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                 {modelToOperationsMiscT('modal.editMilestone.noSolutionsTable')}
               </Alert>
             )}
+
+            <MilestoneNotes
+              milestoneNotes={milestone.notes}
+              setMilestoneNotes={() => {}}
+              selectedMilestoneNote={null}
+              setSelectedMilestoneNote={() => {}}
+            />
           </Grid>
         </Grid>
       </GridContainer>
