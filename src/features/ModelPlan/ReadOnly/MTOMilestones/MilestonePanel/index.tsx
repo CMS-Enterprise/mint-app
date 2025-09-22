@@ -85,7 +85,8 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         solutions: [],
         isDraft: false,
         categories:
-          [] as unknown as GetMtoMilestoneQuery['mtoMilestone']['categories']
+          [] as unknown as GetMtoMilestoneQuery['mtoMilestone']['categories'],
+        notes: []
       } as GetMtoMilestoneQuery['mtoMilestone'])
     );
   }, [data]);
@@ -447,13 +448,16 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                 {modelToOperationsMiscT('modal.editMilestone.noSolutionsTable')}
               </Alert>
             )}
-
-            <MilestoneNotes
-              milestoneNotes={milestone.notes}
-              setMilestoneNotes={() => {}}
-              selectedMilestoneNote={null}
-              setSelectedMilestoneNote={() => {}}
-            />
+            <div className="border-top-1px border-base-lighter padding-y-4 margin-top-6">
+              <MilestoneNotes
+                mtoMilestoneID={milestone.id}
+                milestoneNotes={milestone.notes}
+                setMilestoneNotes={() => {}}
+                selectedMilestoneNote={null}
+                setSelectedMilestoneNote={() => {}}
+                readView
+              />
+            </div>
           </Grid>
         </Grid>
       </GridContainer>

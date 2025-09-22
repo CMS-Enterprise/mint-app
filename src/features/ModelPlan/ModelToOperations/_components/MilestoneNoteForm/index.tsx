@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
@@ -11,6 +11,7 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  GetMtoMilestoneDocument,
   useCreateMtoMilestoneNoteMutation,
   useUpdateMtoMilestoneNoteMutation
 } from 'gql/generated/graphql';
@@ -47,6 +48,12 @@ const MilestoneNoteForm = ({
     selectedMilestoneNote?.content || ''
   );
 
+  useEffect(() => {
+    if (selectedMilestoneNote) {
+      setMilestoneNote(selectedMilestoneNote.content);
+    }
+  }, [selectedMilestoneNote]);
+
   const isEditing = useMemo(() => {
     return !!selectedMilestoneNote;
   }, [selectedMilestoneNote]);
@@ -64,7 +71,13 @@ const MilestoneNoteForm = ({
             mtoMilestoneID,
             content: milestoneNote
           }
-        }
+        },
+        refetchQueries: [
+          {
+            query: GetMtoMilestoneDocument,
+            variables: { id: mtoMilestoneID }
+          }
+        ]
       }).then(() => {
         toastSuccess(mtoMilestoneNoteMiscT('noteAdded'));
       });
@@ -75,7 +88,13 @@ const MilestoneNoteForm = ({
             id: selectedMilestoneNote?.id || '',
             content: milestoneNote
           }
-        }
+        },
+        refetchQueries: [
+          {
+            query: GetMtoMilestoneDocument,
+            variables: { id: mtoMilestoneID }
+          }
+        ]
       }).then(() => {
         toastSuccess(mtoMilestoneNoteMiscT('noteUpdated'));
       });

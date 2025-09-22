@@ -6,7 +6,11 @@ import {
   ProcessList,
   ProcessListItem
 } from '@trussworks/react-uswds';
-import { useDeleteMtoMilestoneNoteMutation } from 'gql/generated/graphql';
+import classNames from 'classnames';
+import {
+  GetMtoMilestoneDocument,
+  useDeleteMtoMilestoneNoteMutation
+} from 'gql/generated/graphql';
 
 import CollapsableLink from 'components/CollapsableLink';
 import Modal from 'components/Modal';
@@ -45,6 +49,9 @@ const MilestoneNotes = ({
     null
   );
 
+  const [noteToEditReadView, setNoteToEditReadView] =
+    useState<MilestoneNoteType | null>(null);
+
   const [deleteMilestoneNote] = useDeleteMtoMilestoneNoteMutation();
 
   const handleDeleteMilestoneNote = (note: MilestoneNoteType) => {
@@ -53,7 +60,13 @@ const MilestoneNotes = ({
         input: {
           id: note.id
         }
-      }
+      },
+      refetchQueries: [
+        {
+          query: GetMtoMilestoneDocument,
+          variables: { id: mtoMilestoneID }
+        }
+      ]
     }).then(() => {
       toastSuccess(mtoMilestoneNoteMiscT('noteDeleted'));
     });
@@ -81,7 +94,7 @@ const MilestoneNotes = ({
           closeModal={() => {
             setEditNotesOpen(false);
           }}
-          selectedMilestoneNote={selectedMilestoneNote}
+          selectedMilestoneNote={selectedMilestoneNote || noteToEditReadView}
           mtoMilestoneID={mtoMilestoneID}
           readView={readView}
         />
@@ -141,7 +154,9 @@ const MilestoneNotes = ({
       <Button
         type="button"
         unstyled
-        className="margin-0 display-flex"
+        className={classNames('margin-0 display-flex', {
+          'margin-bottom-3': readView
+        })}
         onClick={() => {
           setSelectedMilestoneNote(null);
           setEditNotesOpen(true);
@@ -151,7 +166,7 @@ const MilestoneNotes = ({
         <Icon.ArrowForward className="top-2px" aria-label="forward" />
       </Button>
 
-      {milestoneNotes.length > 0 && (
+      {milestoneNotes?.length > 0 && (
         <CollapsableLink
           id="milestone-notes"
           label={mtoMilestoneNoteMiscT('showNotes')}
@@ -182,7 +197,11 @@ const MilestoneNotes = ({
                       unstyled
                       className="margin-right-2"
                       onClick={() => {
-                        setSelectedMilestoneNote(note);
+                        if (readView) {
+                          setNoteToEditReadView(note);
+                        } else {
+                          setSelectedMilestoneNote(note);
+                        }
                         setEditNotesOpen(true);
                       }}
                     >
