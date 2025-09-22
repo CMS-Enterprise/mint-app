@@ -24,7 +24,6 @@ import {
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
-import CsvExportLink from 'components/CSVExportLink/CsvExportLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
@@ -519,12 +518,6 @@ const ModelPlansTable = ({
             />
           )}
         </div>
-
-        <>
-          {type === ViewCustomizationType.ALL_MODEL_PLANS && isAssessment && (
-            <CsvExportLink />
-          )}
-        </>
       </div>
 
       <TopScrollContainer>

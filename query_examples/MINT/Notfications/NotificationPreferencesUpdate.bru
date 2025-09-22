@@ -18,37 +18,37 @@ auth:apikey {
 
 body:graphql {
   mutation NotificationUpdate {
-  updateUserNotificationPreferences( changes:{
-      dailyDigestComplete: [EMAIL,IN_APP]
-      
-      addedAsCollaborator: [EMAIL,IN_APP]
-  
-      taggedInDiscussion:[IN_APP]
-  
-      taggedInDiscussionReply:[EMAIL,IN_APP]
-  
-      newDiscussionReply: [EMAIL,IN_APP]
-  
-      modelPlanShared: [EMAIL,IN_APP]
-  
-      newModelPlan: [EMAIL, IN_APP]
-  
-  }) {
-  
-          dailyDigestComplete
-  
-          addedAsCollaborator
-  
-          taggedInDiscussion
-  
-          taggedInDiscussionReply
-  
-          newDiscussionReply
-  
-          modelPlanShared
-  
-          newModelPlan
+    updateUserNotificationPreferences(
+      changes: {
+        dailyDigestComplete: [EMAIL, IN_APP]
+        addedAsCollaborator: [EMAIL, IN_APP]
+        taggedInDiscussion: [IN_APP]
+        taggedInDiscussionReply: [EMAIL, IN_APP]
+        newDiscussionReply: [EMAIL, IN_APP]
+        newDiscussionAdded: [EMAIL, IN_APP]
+        newDiscussionAddedNotificationType: ALL_MODELS
+        modelPlanShared: [EMAIL, IN_APP]
+        newModelPlan: [EMAIL, IN_APP]
       }
+    ) {
+      dailyDigestComplete
+  
+      addedAsCollaborator
+  
+      taggedInDiscussion
+  
+      taggedInDiscussionReply
+  
+      newDiscussionReply
+  
+      newDiscussionAdded
+  
+      newDiscussionAddedNotificationType
+  
+      modelPlanShared
+  
+      newModelPlan
+    }
   }
   
 }

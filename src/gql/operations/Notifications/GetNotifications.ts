@@ -21,6 +21,17 @@ export default gql(/* GraphQL */ `
             }
             metaData {
               __typename
+              ... on NewDiscussionAddedActivityMeta {
+                version
+                type
+                discussionID
+                userName
+                modelPlanID
+                modelPlanName
+                modelAbbreviation
+                role
+                content
+              }
               ... on NewDiscussionRepliedActivityMeta {
                 version
                 type

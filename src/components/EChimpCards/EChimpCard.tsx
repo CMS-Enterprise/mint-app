@@ -8,6 +8,7 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
 import { ECHIMP_URL_SSO } from 'constants/echimp';
@@ -67,6 +68,13 @@ const EChimpCard = ({
   isCR
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
+
+  const flags = useFlags();
+
+  // If the flag is enabled, use the echimp url from the flags
+  const echimpURL = flags?.echimpFFSURLEnabled
+    ? echimpUrl(isCR ? 'ffs' : 'tdl', id)
+    : `${ECHIMP_URL_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
 
   return (
     <Card
@@ -135,11 +143,7 @@ const EChimpCard = ({
         >
           {crtdlsT('echimpCard.viewMore')}
         </Button>
-        <ExternalLink
-          href={echimpUrl(isCR ? 'ffs' : 'tdl', id)}
-          className="margin-right-0"
-          toEchimp
-        >
+        <ExternalLink href={echimpURL} className="margin-right-0" toEchimp>
           {crtdlsT('echimpCard.viewThisInECHIMP')}
         </ExternalLink>
       </CardFooter>

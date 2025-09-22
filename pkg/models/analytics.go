@@ -34,6 +34,12 @@ type ModelCountAnalytics struct {
 	TotalNumberOfModels *int `json:"totalNumberOfModels" db:"total_number_of_models"`
 }
 
+// ModelCountAnalytics is the analytics data for the total number of models over time
+type ModelCountAnalyticsOverTime struct {
+	MonthYear      *string `json:"monthYear" db:"month_year"`
+	NumberOfModels *int    `json:"numberOfModels" db:"number_of_models"`
+}
+
 // ModelsByStatusAnalytics is the analytics data for models by status
 type ModelsByStatusAnalytics struct {
 	Status         ModelStatus `json:"status" db:"status"`
@@ -55,4 +61,5 @@ type AnalyticsSummary struct {
 	ModelsByStatus            []*ModelsByStatusAnalytics
 	NumberOfFollowersPerModel []*ModelFollowersAnalytics
 	TotalNumberOfModels       *ModelCountAnalytics
+	NumberOfModelsOverTime    []*ModelCountAnalyticsOverTime
 }

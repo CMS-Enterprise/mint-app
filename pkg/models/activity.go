@@ -21,6 +21,7 @@ const (
 	ActivityNewModelPlan                       ActivityType = "NEW_MODEL_PLAN"
 	ActivityDatesChanged                       ActivityType = "DATES_CHANGED"
 	ActivityDataExchangeApproachMarkedComplete ActivityType = "DATA_EXCHANGE_APPROACH_MARKED_COMPLETE"
+	ActivityNewDiscussionAdded                 ActivityType = "NEW_DISCUSSION_ADDED"
 	ActivityIncorrectModelStatus               ActivityType = "INCORRECT_MODEL_STATUS"
 )
 
@@ -34,6 +35,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityNewDiscussionReply:                 func() ActivityMetaData { return &NewDiscussionRepliedActivityMeta{} },
 	ActivityModelPlanShared:                    func() ActivityMetaData { return &ModelPlanSharedActivityMeta{} },
 	ActivityNewModelPlan:                       func() ActivityMetaData { return &NewModelPlanActivityMeta{} },
+	ActivityNewDiscussionAdded:                 func() ActivityMetaData { return &NewDiscussionAddedActivityMeta{} },
 	ActivityDatesChanged:                       func() ActivityMetaData { return &DatesChangedActivityMeta{} },
 	ActivityDataExchangeApproachMarkedComplete: func() ActivityMetaData { return &PlanDataExchangeApproachMarkedCompleteActivityMeta{} },
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
