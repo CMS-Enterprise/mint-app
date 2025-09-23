@@ -15,7 +15,8 @@ import {
   NewModelPlanActivityMeta,
   PlanDataExchangeApproachMarkedCompleteActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
-  TaggedInPlanDiscussionActivityMeta
+  TaggedInPlanDiscussionActivityMeta,
+  UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
 
 // Type guard to check union type
@@ -320,4 +321,13 @@ export const pushValuesToChangesArray = (
   };
   pushValues(obj);
   return changesArray;
+};
+
+export const getUpdatedNotificationPreferences = (
+  allValues: UserNotificationPreferenceFlag[],
+  chosenValue: UserNotificationPreferenceFlag
+) => {
+  return allValues.includes(chosenValue)
+    ? allValues.filter(value => value !== chosenValue)
+    : [...allValues, chosenValue];
 };

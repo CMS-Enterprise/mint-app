@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
   Checkbox,
   Fieldset,
+  Form,
   Grid,
   GridContainer,
   Icon,
@@ -13,9 +15,11 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
 import {
+  DataExchangeApproachMarkedCompleteNotificationType,
+  DatesChangedNotificationType,
   GetNotificationSettingsQuery,
+  NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
   useUpdateNotificationSettingsMutation
@@ -24,7 +28,6 @@ import {
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
-import MINTForm from 'components/MINTForm';
 import PageHeading from 'components/PageHeading';
 import toastSuccess from 'components/ToastSuccess';
 import { statusAlert, useErrorMessage } from 'contexts/ErrorContext';
@@ -34,6 +37,7 @@ import { dirtyInput } from 'utils/formUtil';
 import { tObject } from 'utils/translation';
 
 import {
+  getUpdatedNotificationPreferences,
   UnsubscribableActivities,
   verifyEmailParams
 } from '../Home/_components/_utils';
@@ -41,12 +45,12 @@ import {
 type GetNotifcationSettingsType =
   GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
 
-type NotificationSettingsFormType = Omit<
+export type NotificationSettingsFormType = Omit<
   GetNotifcationSettingsType,
   'id' | 'taggedInDiscussionReply' | '__typename'
 >;
 
-type SelectNotificationType<Key extends string> =
+export type SelectNotificationType<Key extends string> =
   Key extends `${string}NotificationType` ? Key : never;
 
 const NotificationSettings = () => {
@@ -75,8 +79,6 @@ const NotificationSettings = () => {
     'notifications:settings.additionalConfigurations.whichModelTypes'
   );
 
-  const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -95,11 +97,30 @@ const NotificationSettings = () => {
 
   const [update] = useUpdateNotificationSettingsMutation();
 
+  const reformedDefaultValues = useMemo(
+    () =>
+      data
+        ? {
+            ...data.currentUser.notificationPreferences,
+            newDiscussionAddedNotificationType:
+              data.currentUser.notificationPreferences
+                .newDiscussionAddedNotificationType ??
+              NewDiscussionAddedNotificationType.ALL_MODELS,
+            datesChangedNotificationType:
+              data.currentUser.notificationPreferences
+                .datesChangedNotificationType ??
+              DatesChangedNotificationType.ALL_MODELS,
+            dataExchangeApproachMarkedCompleteNotificationType:
+              data.currentUser.notificationPreferences
+                .dataExchangeApproachMarkedCompleteNotificationType ??
+              DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS
+          }
+        : undefined,
+    [data]
+  );
+
   const notificationPreferences: Partial<NotificationSettingsFormType> =
-    useMemo(
-      () => data?.currentUser.notificationPreferences || {},
-      [data?.currentUser.notificationPreferences]
-    );
+    useMemo(() => reformedDefaultValues || {}, [reformedDefaultValues]);
 
   const {
     dailyDigestComplete,
@@ -117,32 +138,58 @@ const NotificationSettings = () => {
     dataExchangeApproachMarkedCompleteNotificationType
   } = notificationPreferences;
 
-  const initialValues: NotificationSettingsFormType = {
-    dailyDigestComplete: dailyDigestComplete ?? [],
-    addedAsCollaborator: addedAsCollaborator ?? [],
-    taggedInDiscussion: taggedInDiscussion ?? [],
-    newDiscussionAdded: newDiscussionAdded ?? [],
-    newDiscussionAddedNotificationType:
-      newDiscussionAddedNotificationType ?? undefined,
-    newDiscussionReply: newDiscussionReply ?? [],
-    incorrectModelStatus: incorrectModelStatus ?? [],
-    modelPlanShared: modelPlanShared ?? [],
-    newModelPlan: newModelPlan ?? [],
-    datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? undefined,
-    dataExchangeApproachMarkedComplete:
-      dataExchangeApproachMarkedComplete ?? [],
-    dataExchangeApproachMarkedCompleteNotificationType:
-      dataExchangeApproachMarkedCompleteNotificationType ?? undefined
-  };
+  const methods = useForm<NotificationSettingsFormType>({
+    defaultValues: {
+      dailyDigestComplete: dailyDigestComplete ?? [],
+      addedAsCollaborator: addedAsCollaborator ?? [],
+      taggedInDiscussion: taggedInDiscussion ?? [],
+      newDiscussionAdded: newDiscussionAdded ?? [],
+      newDiscussionAddedNotificationType,
+      newDiscussionReply: newDiscussionReply ?? [],
+      incorrectModelStatus: incorrectModelStatus ?? [],
+      modelPlanShared: modelPlanShared ?? [],
+      newModelPlan: newModelPlan ?? [],
+      datesChanged: datesChanged ?? [],
+      datesChangedNotificationType,
+      dataExchangeApproachMarkedComplete:
+        dataExchangeApproachMarkedComplete ?? [],
+      dataExchangeApproachMarkedCompleteNotificationType
+    },
+    values: reformedDefaultValues,
+    mode: 'onChange'
+  });
 
-  const handleFormSubmit = () => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+    watch
+  } = methods;
+
+  const [notificationTypesChanges, setNotificationTypesChanges] = useState<
+    SelectNotificationType<keyof NotificationSettingsFormType>[]
+  >([]);
+
+  const onSubmit = (formData: NotificationSettingsFormType) => {
+    const dirtyInputs = dirtyInput(notificationPreferences, formData);
+
+    const notificationTypeChanges = notificationTypesChanges.reduce<
+      Partial<
+        Pick<
+          NotificationSettingsFormType,
+          SelectNotificationType<keyof NotificationSettingsFormType>
+        >
+      >
+    >((allChangedTypes, changedType) => {
+      const dirtyType = dirtyInputs[changedType];
+      return {
+        ...allChangedTypes,
+        [changedType]: dirtyType ?? notificationPreferences[changedType]
+      };
+    }, {});
 
     const changes = {
+      ...notificationTypeChanges,
       ...dirtyInputs
     };
 
@@ -286,206 +333,266 @@ const NotificationSettings = () => {
           <p className="margin-bottom-6 font-body-lg line-height-sans-4">
             {notificationsT('settings.subHeading')}
           </p>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={() => {
-              handleFormSubmit();
-            }}
-            enableReinitialize
-            innerRef={formikRef}
-          >
-            {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const { dirty, setFieldValue, values } = formikProps;
-
-              return (
-                <MINTForm
-                  className="maxw-none"
-                  data-testid="notification-settings-form"
-                  id="notification-settings-form"
-                >
-                  <Grid row>
-                    <Grid mobile={{ col: 6 }}>
-                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
-                        {notificationsT('settings.notification')}
-                      </h3>
-                    </Grid>
-
-                    <Grid mobile={{ col: 3 }}>
-                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
-                        {notificationsT('settings.email')}
-                      </h3>
-                    </Grid>
-
-                    <Grid mobile={{ col: 3 }}>
-                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
-                        {notificationsT('settings.inApp')}
-                      </h3>
-                    </Grid>
+          <FormProvider {...methods}>
+            <Form
+              className="maxw-none"
+              data-testid="notification-settings-form"
+              id="notification-settings-form"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Fieldset disabled={loading}>
+                <Grid row>
+                  <Grid mobile={{ col: 6 }}>
+                    <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
+                      {notificationsT('settings.notification')}
+                    </h3>
                   </Grid>
 
-                  {getKeys(notificationSections).map((section, index) => (
-                    <Fieldset key={section}>
-                      {/* notification section info */}
-                      <Grid mobile={{ col: 6 }}>
-                        <h4
-                          className={classNames('margin-bottom-0', {
-                            [index === 0 ? 'margin-top-0' : 'margin-top-5']:
-                              true
-                          })}
-                        >
-                          {notificationSections[section].heading}
-                        </h4>
+                  <Grid mobile={{ col: 3 }}>
+                    <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
+                      {notificationsT('settings.email')}
+                    </h3>
+                  </Grid>
 
-                        {notificationSections[section].subHeading && (
-                          <p className="margin-top-0 margin-bottom-1 text-base-dark">
-                            {notificationSections[section].subHeading}
-                          </p>
-                        )}
+                  <Grid mobile={{ col: 3 }}>
+                    <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
+                      {notificationsT('settings.inApp')}
+                    </h3>
+                  </Grid>
+                </Grid>
 
-                        {notificationSections[section].info && (
-                          <div className="display-flex flex-align-center bg-base-lightest padding-x-2">
-                            <Icon.InfoOutline
-                              size={3}
-                              className="margin-right-1"
-                              aria-label="info icon"
+                {getKeys(notificationSections).map((section, index) => (
+                  <Fieldset key={section}>
+                    {/* notification section info */}
+                    <Grid mobile={{ col: 6 }}>
+                      <h4
+                        className={classNames('margin-bottom-0', {
+                          [index === 0 ? 'margin-top-0' : 'margin-top-5']: true
+                        })}
+                      >
+                        {notificationSections[section].heading}
+                      </h4>
+
+                      {notificationSections[section].subHeading && (
+                        <p className="margin-top-0 margin-bottom-1 text-base-dark">
+                          {notificationSections[section].subHeading}
+                        </p>
+                      )}
+
+                      {notificationSections[section].info && (
+                        <div className="display-flex flex-align-center bg-base-lightest padding-x-2">
+                          <Icon.InfoOutline
+                            size={3}
+                            className="margin-right-1"
+                            aria-label="info icon"
+                          />
+                          <p className="text-italic">
+                            <Trans
+                              i18nKey={`notifications:settings:sections:${section}:info`}
+                              values={{
+                                count: data?.currentUser.leadModelPlanCount || 0
+                              }}
                             />
-                            <p className="text-italic">
-                              <Trans
-                                i18nKey={`notifications:settings:sections:${section}:info`}
-                                values={{
-                                  count:
-                                    data?.currentUser.leadModelPlanCount || 0
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      </Grid>
+                          </p>
+                        </div>
+                      )}
+                    </Grid>
 
-                      {/* notifications in each section */}
-                      {notificationSections[section].notifications.map(
-                        notification => (
-                          <div key={notification.name}>
-                            <Grid row className="flex-align-start">
-                              <Grid mobile={{ col: 6 }}>
-                                <p className="text-wrap margin-y-105">
-                                  {notification.copy}
-                                </p>
-                              </Grid>
-
-                              <Grid mobile={{ col: 3 }}>
-                                <Field
-                                  as={Checkbox}
-                                  id={`notification-setting-email-${notification.name}`}
-                                  data-testid={`notification-setting-email-${notification.name}`}
-                                  className="padding-left-2"
-                                  name={notification.name}
-                                  value={UserNotificationPreferenceFlag.EMAIL}
-                                  disabled={notification.disable?.includes(
-                                    UserNotificationPreferenceFlag.EMAIL
-                                  )}
-                                  checked={(
-                                    values?.[notification.name] ?? []
-                                  ).includes(
-                                    UserNotificationPreferenceFlag.EMAIL
-                                  )}
-                                />
-                              </Grid>
-
-                              <Grid mobile={{ col: 3 }}>
-                                <Field
-                                  as={Checkbox}
-                                  id={`notification-setting-in-app-${notification.name}`}
-                                  data-testid={`notification-setting-in-app-${notification.name}`}
-                                  className="padding-left-2"
-                                  name={notification.name}
-                                  value={UserNotificationPreferenceFlag.IN_APP}
-                                  disabled={notification.disable?.includes(
-                                    UserNotificationPreferenceFlag.IN_APP
-                                  )}
-                                  checked={(
-                                    values?.[notification.name] ?? []
-                                  ).includes(
-                                    UserNotificationPreferenceFlag.IN_APP
-                                  )}
-                                />
-                              </Grid>
+                    {/* notifications in each section */}
+                    {notificationSections[section].notifications.map(
+                      notification => (
+                        <div key={notification.name}>
+                          <Grid row className="flex-align-start">
+                            <Grid mobile={{ col: 6 }}>
+                              <p className="text-wrap margin-y-105">
+                                {notification.copy}
+                              </p>
                             </Grid>
 
-                            {notification.modelSpecific ===
-                              'whichModelTypes' && (
-                              <Grid row>
-                                <Grid
-                                  className="tablet:padding-left-3"
-                                  tablet={{ col: 6 }}
-                                >
-                                  <Label
-                                    htmlFor="notification-setting-whichModel"
-                                    className="text-normal margin-top-0"
+                            <Controller
+                              name={notification.name}
+                              control={control}
+                              render={({
+                                field: { ref, ...field },
+                                formState
+                              }) => (
+                                <>
+                                  <Grid mobile={{ col: 3 }}>
+                                    <Checkbox
+                                      id={`notification-setting-email-${notification.name}`}
+                                      data-testid={`notification-setting-email-${notification.name}`}
+                                      className="padding-left-2"
+                                      name={notification.name}
+                                      value={
+                                        UserNotificationPreferenceFlag.EMAIL
+                                      }
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        const chosenValue = e.target
+                                          .value as UserNotificationPreferenceFlag;
+                                        if (Array.isArray(field.value)) {
+                                          field.onChange(
+                                            getUpdatedNotificationPreferences(
+                                              field.value,
+                                              chosenValue
+                                            )
+                                          );
+                                        }
+
+                                        const hasPrefchanged =
+                                          formState.dirtyFields[
+                                            notification.name
+                                          ];
+
+                                        setNotificationTypesChanges(prev =>
+                                          hasPrefchanged
+                                            ? [
+                                                ...prev,
+                                                notification.notificationType
+                                              ]
+                                            : prev.filter(
+                                                type =>
+                                                  type !==
+                                                  notification.notificationType
+                                              )
+                                        );
+                                      }}
+                                      disabled={notification.disable?.includes(
+                                        UserNotificationPreferenceFlag.EMAIL
+                                      )}
+                                      checked={(field.value || []).includes(
+                                        UserNotificationPreferenceFlag.EMAIL
+                                      )}
+                                      label=""
+                                    />
+                                  </Grid>
+
+                                  <Grid mobile={{ col: 3 }}>
+                                    <Checkbox
+                                      id={`notification-setting-in-app-${notification.name}`}
+                                      data-testid={`notification-setting-in-app-${notification.name}`}
+                                      className="padding-left-2"
+                                      name={notification.name}
+                                      value={
+                                        UserNotificationPreferenceFlag.IN_APP
+                                      }
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        const chosenValue = e.target
+                                          .value as UserNotificationPreferenceFlag;
+                                        if (Array.isArray(field.value)) {
+                                          field.onChange(
+                                            getUpdatedNotificationPreferences(
+                                              field.value,
+                                              chosenValue
+                                            )
+                                          );
+                                        }
+
+                                        const hasPrefchanged =
+                                          formState.dirtyFields[
+                                            notification.name
+                                          ];
+
+                                        setNotificationTypesChanges(prev =>
+                                          hasPrefchanged
+                                            ? [
+                                                ...prev,
+                                                notification.notificationType
+                                              ]
+                                            : prev.filter(
+                                                type =>
+                                                  type !==
+                                                  notification.notificationType
+                                              )
+                                        );
+                                      }}
+                                      disabled={notification.disable?.includes(
+                                        UserNotificationPreferenceFlag.IN_APP
+                                      )}
+                                      checked={(field.value || []).includes(
+                                        UserNotificationPreferenceFlag.IN_APP
+                                      )}
+                                      label=""
+                                    />
+                                  </Grid>
+                                </>
+                              )}
+                            />
+                          </Grid>
+
+                          {notification.modelSpecific === 'whichModelTypes' && (
+                            <Controller
+                              name={notification.notificationType}
+                              control={control}
+                              render={({ field: { ref, ...field } }) => (
+                                <Grid row>
+                                  <Grid
+                                    className="tablet:padding-left-3"
+                                    tablet={{ col: 6 }}
                                   >
-                                    {notificationsT(
-                                      'settings.additionalConfigurations.whichModel'
-                                    )}
-                                  </Label>
-                                  <Field
-                                    as={Select}
-                                    id="notification-setting-whichModel"
-                                    data-testid={`notification-setting-whichModel-${notification.name}`}
-                                    name={notification.notificationType}
-                                    value={
-                                      values?.[notification.notificationType]
-                                    }
-                                    disabled={
-                                      !values[notification.name]?.length
-                                    }
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      setFieldValue(
-                                        notification.notificationType,
-                                        e.target.value
-                                      );
-                                    }}
-                                  >
-                                    {getKeys(whichModelType).map(type => {
-                                      return (
-                                        <option key={type} value={type}>
-                                          {whichModelType[type]}
-                                        </option>
-                                      );
-                                    })}
-                                  </Field>
+                                    <Label
+                                      htmlFor="notification-setting-whichModel"
+                                      className="text-normal margin-top-0"
+                                    >
+                                      {notificationsT(
+                                        'settings.additionalConfigurations.whichModel'
+                                      )}
+                                    </Label>
+
+                                    <Select
+                                      {...field}
+                                      id="notification-setting-whichModel"
+                                      data-testid={`notification-setting-whichModel-${notification.name}`}
+                                      name={notification.notificationType}
+                                      value={field.value ?? undefined}
+                                      disabled={
+                                        watch(notification.name)?.length === 0
+                                      }
+                                    >
+                                      {getKeys(whichModelType).map(type => {
+                                        return (
+                                          <option key={type} value={type}>
+                                            {whichModelType[type]}
+                                          </option>
+                                        );
+                                      })}
+                                    </Select>
+                                  </Grid>
                                 </Grid>
-                              </Grid>
-                            )}
-                          </div>
-                        )
-                      )}
-                    </Fieldset>
-                  ))}
-                  <div className="margin-top-6 margin-bottom-3">
-                    <Button type="submit" disabled={!dirty}>
-                      {notificationsT('settings.save')}
-                    </Button>
-                  </div>
+                              )}
+                            />
+                          )}
+                        </div>
+                      )
+                    )}
+                  </Fieldset>
+                ))}
 
-                  <Button
-                    type="button"
-                    unstyled
-                    onClick={() => navigate('/notifications')}
-                  >
-                    <Icon.ArrowBack
-                      className="margin-right-1"
-                      aria-hidden
-                      aria-label="back"
-                    />
-
-                    {notificationsT('settings.dontUpdate')}
+                <div className="margin-top-6 margin-bottom-3">
+                  <Button type="submit" disabled={!isDirty || isSubmitting}>
+                    {notificationsT('settings.save')}
                   </Button>
-                </MINTForm>
-              );
-            }}
-          </Formik>
+                </div>
+
+                <Button
+                  type="button"
+                  unstyled
+                  onClick={() => navigate('/notifications')}
+                >
+                  <Icon.ArrowBack
+                    className="margin-right-1"
+                    aria-hidden
+                    aria-label="back"
+                  />
+
+                  {notificationsT('settings.dontUpdate')}
+                </Button>
+              </Fieldset>
+            </Form>
+          </FormProvider>
         </Grid>
       </GridContainer>
     </MainContent>

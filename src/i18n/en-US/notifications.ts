@@ -211,20 +211,6 @@ const notifications = {
         ]
       }
     },
-    configurations: {
-      dailyDigestComplete:
-        'Daily digest of changes to the models I’m following',
-      addedAsCollaborator: 'When I’m added as a collaborator to a Model Plan',
-      taggedInDiscussion: 'When I’m tagged in a discussion',
-      newDiscussionReply: 'When someone replies to a discussion I started',
-      modelPlanShared: 'When someone shares a Model Plan with me',
-      incorrectModelStatus: 'When MINT detects an incorrect model status',
-      newModelPlan: 'When a new Model Plan is created',
-      datesChanged: 'When model dates change',
-      newDiscussionAdded: 'When a new discussion is added',
-      dataExchangeApproachMarkedComplete:
-        'When a data exchange approach is completed'
-    },
     additionalConfigurations: {
       whichModel: 'Which models?',
       whichModelTypes: {

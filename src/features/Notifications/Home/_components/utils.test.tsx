@@ -1,9 +1,14 @@
 import {
   AnalyzedAuditChange as ChangeTypes,
-  TableName
+  TableName,
+  UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
 
-import { pushValuesToChangesArray, verifyEmailParams } from './_utils';
+import {
+  getUpdatedNotificationPreferences,
+  pushValuesToChangesArray,
+  verifyEmailParams
+} from './_utils';
 
 describe('VerifyEmailParams Util', () => {
   it('returns boolean to verify if param is valid', () => {
@@ -83,5 +88,26 @@ describe('PushValuesToChangesArray Util', () => {
     };
     const expectedReturnArray = ['crTdls', 'readyForReview', 'planDiscussions'];
     expect(pushValuesToChangesArray(object)).toEqual(expectedReturnArray);
+  });
+});
+
+describe('getUpdatedNotificationPreferences Util', () => {
+  it('returns array with added preference if not already present', () => {
+    const allValues = [] as UserNotificationPreferenceFlag[];
+    const chosenValue = UserNotificationPreferenceFlag.EMAIL;
+
+    const result = getUpdatedNotificationPreferences(allValues, chosenValue);
+    expect(result).toEqual([UserNotificationPreferenceFlag.EMAIL]);
+  });
+
+  it('returns array with removed preference if already present', () => {
+    const allValues = [
+      UserNotificationPreferenceFlag.EMAIL,
+      UserNotificationPreferenceFlag.IN_APP
+    ];
+    const chosenValue = UserNotificationPreferenceFlag.EMAIL;
+
+    const result = getUpdatedNotificationPreferences(allValues, chosenValue);
+    expect(result).toEqual([UserNotificationPreferenceFlag.IN_APP]);
   });
 });
