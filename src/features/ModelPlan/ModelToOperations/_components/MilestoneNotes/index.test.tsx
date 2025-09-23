@@ -47,11 +47,11 @@ const sampleNotes: MilestoneNoteType[] = [
 console.error = vi.fn();
 
 describe('MilestoneNotes', () => {
-  it('renders heading and note count, opens sidepanel to add note', () => {
+  it('renders heading and note count, opens sidepanel to add note and matches snapshot', () => {
     const setNotes = vi.fn();
     const setSelected = vi.fn();
 
-    renderWithProviders(
+    const { asFragment } = renderWithProviders(
       <MilestoneNotes
         mtoMilestoneID="123"
         milestoneNotes={sampleNotes}
@@ -69,6 +69,8 @@ describe('MilestoneNotes', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Add a note forward' }));
     expect(screen.getByTestId('edit-notes-sidepanel')).toBeInTheDocument();
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('shows notes and allows edit/remove buttons for owner notes', () => {

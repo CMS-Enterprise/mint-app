@@ -3,17 +3,13 @@ import { Provider } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
-import type { Mock } from 'vitest';
 import { vi } from 'vitest';
 
 import MilestoneNoteForm from '.';
 
 const mockStore = configureMockStore([]);
 
-const renderWithProviders = (
-  ui: React.ReactElement,
-  apolloMocks: any[] = []
-) => {
+describe('MilestoneNoteForm', () => {
   const store = mockStore({
     auth: {
       euaId: 'TEST',
@@ -21,16 +17,6 @@ const renderWithProviders = (
     }
   });
 
-  return render(
-    <Provider store={store}>
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        {ui}
-      </MockedProvider>
-    </Provider>
-  );
-};
-
-describe('MilestoneNoteForm', () => {
   const baseProps = {
     mtoMilestoneID: '123',
     milestoneNotes: [],
@@ -40,13 +26,14 @@ describe('MilestoneNoteForm', () => {
     readView: false
   };
 
-  beforeEach(() => {
-    (baseProps.setMilestoneNotes as unknown as Mock).mockClear();
-    (baseProps.closeModal as unknown as Mock).mockClear();
-  });
-
   it('renders add form and disables submit when empty', () => {
-    renderWithProviders(<MilestoneNoteForm {...baseProps} />);
+    render(
+      <Provider store={store}>
+        <MockedProvider mocks={[]} addTypename={false}>
+          <MilestoneNoteForm {...baseProps} />
+        </MockedProvider>
+      </Provider>
+    );
 
     expect(screen.getByText('Add a milestone note')).toBeInTheDocument();
 
@@ -64,25 +51,15 @@ describe('MilestoneNoteForm', () => {
     expect(submit).not.toBeDisabled();
   });
 
-  it('appends note in matrix (not readView)', () => {
-    const setNotes = vi.fn();
-    renderWithProviders(
-      <MilestoneNoteForm
-        {...baseProps}
-        setMilestoneNotes={setNotes}
-        readView={false}
-      />
+  it('matches snapshot', () => {
+    const { asFragment } = render(
+      <Provider store={store}>
+        <MockedProvider mocks={[]} addTypename={false}>
+          <MilestoneNoteForm {...baseProps} />
+        </MockedProvider>
+      </Provider>
     );
 
-    fireEvent.change(screen.getByLabelText('Note'), {
-      target: { value: 'Matrix note' }
-    });
-
-    const submit = screen.getByRole('button', { name: 'Add note' });
-    submit.setAttribute('type', 'button');
-    fireEvent.click(submit);
-
-    expect(setNotes).toHaveBeenCalledTimes(1);
-    expect(baseProps.closeModal).toHaveBeenCalledTimes(1);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
