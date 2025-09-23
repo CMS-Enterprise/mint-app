@@ -69,6 +69,8 @@ const changeHistory = {
   mtoLinkUpdate: 'Milestone and solution {{action}}',
   mtoNoteUpdate:
     '{{action}} a note {{inOrTo}} the model-to-operations matrix (MTO) <datetime>on {{date}} at {{time}}</datetime>',
+  mtoNoteUpdateMeta:
+    '{{action}} {{toForFrom}} milestone <bold>{{milestoneName}}</bold>',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   sections: {
@@ -177,6 +179,11 @@ const changeHistory = {
     DELETE: 'from',
     UPDATE: 'for',
     INSERT: 'for'
+  },
+  toForFrom: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'for'
   },
   sort: {
     label: 'Sort',

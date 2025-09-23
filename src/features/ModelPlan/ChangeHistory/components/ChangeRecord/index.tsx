@@ -6,6 +6,7 @@ import {
   DatabaseOperation,
   GetChangeHistoryQuery,
   TableName,
+  TranslatedAuditMetaData,
   TranslationDataType,
   TranslationQuestionType
 } from 'gql/generated/graphql';
@@ -52,6 +53,7 @@ type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
   changeType: DatabaseOperation;
   tableName: TranslationTables;
+  metaData: TranslatedAuditMetaData | undefined;
 };
 
 export const ChangeHeader = ({
@@ -378,7 +380,12 @@ export const ChangeHeader = ({
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
+const SingleChange = ({
+  change,
+  changeType,
+  tableName,
+  metaData
+}: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   // If the field name is in the hidden fields list, do not render the change record
@@ -409,7 +416,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           )}{' '}
           {/* Post text action - updated, created, removed, etc */}
           <span className="text-normal">
-            {getNestedActionText(change, changeType, tableName)}
+            {getNestedActionText(change, changeType, tableName, metaData)}
           </span>
         </span>
       </div>
@@ -659,6 +666,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                 key={change.id}
                 changeType={changeRecord.action}
                 tableName={changeRecord.tableName as TranslationTables}
+                metaData={changeRecord.metaData}
               />
             ))}
           </div>

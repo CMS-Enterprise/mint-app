@@ -10,7 +10,6 @@ const mtoMilestoneNote = {
     dbField: 'content',
     label: 'Content',
     exportLabel: 'Note',
-    isNote: true,
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.0

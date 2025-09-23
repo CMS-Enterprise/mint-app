@@ -1,3 +1,5 @@
+import React from 'react';
+import { Trans } from 'react-i18next';
 import {
   AuditFieldChangeType,
   DatabaseOperation,
@@ -523,7 +525,8 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
 export const getNestedActionText = (
   change: ChangeRecordType['translatedFields'][0],
   changeType: DatabaseOperation,
-  tableName: TranslationTables
+  tableName: TranslationTables,
+  metaData?: TranslatedAuditMetaData | undefined
 ) => {
   // If the change is an insert, render created text rather than answered/updated, etc.
   if (
@@ -531,6 +534,24 @@ export const getNestedActionText = (
     changeType === DatabaseOperation.INSERT
   ) {
     return i18next.t(`changeHistory:changeType.CREATED`);
+  }
+  if (tableName === TableName.MTO_MILESTONE_NOTE) {
+    return (
+      <Trans
+        i18nKey="changeHistory:mtoNoteUpdateMeta"
+        values={{
+          action: i18next.t(`changeHistory:noteUpdateType.${changeType}`),
+          toForFrom: i18next.t(`changeHistory:toForFrom.${changeType}`),
+          milestoneName:
+            metaData && isGenericWithMetaData(metaData)
+              ? metaData.relationContent
+              : ''
+        }}
+        components={{
+          bold: <span className="text-bold" />
+        }}
+      />
+    );
   }
   // Render the change type - answered, removed, updated
   if (changeType !== DatabaseOperation.DELETE) {

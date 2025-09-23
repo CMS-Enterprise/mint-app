@@ -5,7 +5,6 @@
     "dbField": "content",
     "label": "Content",
     "exportLabel": "Note",
-    "isNote": true,
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1
