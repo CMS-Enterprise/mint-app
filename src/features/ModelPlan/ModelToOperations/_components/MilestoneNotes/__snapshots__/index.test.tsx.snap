@@ -1,112 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MilestoneNotes > renders heading and note count, opens sidepanel to add note 1`] = `
-<DocumentFragment>
-  <div>
-    <h3
-      class="margin-0 margin-bottom-1"
-    >
-      Milestone notes
-    </h3>
-    <p
-      class="margin-0 margin-bottom-1"
-    >
-      1 note added to this milestone
-    </p>
-    <button
-      class="usa-button usa-button--unstyled margin-0 display-flex"
-      data-testid="button"
-      type="button"
-    >
-      Add a note
-      <svg
-        aria-label="forward"
-        class="usa-icon top-2px"
-        focusable="false"
-        height="1em"
-        role="img"
-        viewBox="0 0 24 24"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-        />
-      </svg>
-    </button>
-    <div
-      class=""
-    >
-      <button
-        aria-controls="milestone-notes"
-        aria-expanded="true"
-        class="usa-button usa-button--unstyled mint-no-print"
-        data-testid="milestone-notes"
-        type="button"
-      >
-        <svg
-          aria-label="collapse"
-          class="usa-icon margin-right-05"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
-          />
-        </svg>
-        Hide notes
-      </button>
-      <div
-        class="padding-bottom-0 mint-collapsable-link__content-no-bar"
-        data-testid="milestone-notes"
-        id="milestone-notes"
-      >
-        <ol
-          class="usa-process-list padding-x-0 margin-left-neg-1"
-        >
-          <li
-            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-left-2"
-          >
-            <p
-              class="margin-top-0 margin-bottom-1"
-            >
-              First note
-            </p>
-            <p
-              class="text-base-dark margin-top-0 margin-bottom-1"
-            >
-              by Test User | January 1, 2024 at 12:00 PM
-            </p>
-            <div
-              class="display-flex"
-            >
-              <button
-                class="usa-button usa-button--unstyled margin-right-2 margin-top-0"
-                data-testid="button"
-                type="button"
-              >
-                Edit this note
-              </button>
-              <button
-                class="usa-button usa-button--unstyled text-error margin-top-0"
-                data-testid="button"
-                type="button"
-              >
-                Remove this note
-              </button>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`MilestoneNotes > renders heading and note count, opens sidepanel to add note and matches snapshot 1`] = `
 <DocumentFragment>
   <div>
@@ -122,7 +15,7 @@ exports[`MilestoneNotes > renders heading and note count, opens sidepanel to add
     </p>
     <button
       class="usa-button usa-button--unstyled margin-0 display-flex"
-      data-testid="button"
+      data-testid="add-note-button"
       type="button"
     >
       Add a note
@@ -193,14 +86,14 @@ exports[`MilestoneNotes > renders heading and note count, opens sidepanel to add
             >
               <button
                 class="usa-button usa-button--unstyled margin-right-2 margin-top-0"
-                data-testid="button"
+                data-testid="edit-note-button"
                 type="button"
               >
                 Edit this note
               </button>
               <button
                 class="usa-button usa-button--unstyled text-error margin-top-0"
-                data-testid="button"
+                data-testid="remove-note-button"
                 type="button"
               >
                 Remove this note

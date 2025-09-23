@@ -839,7 +839,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
               </p>
               <button
                 class="usa-button usa-button--unstyled margin-0 display-flex"
-                data-testid="button"
+                data-testid="add-note-button"
                 type="button"
               >
                 Add a note

@@ -21,16 +21,16 @@ exports[`MilestoneNoteForm > matches snapshot 1`] = `
         <label
           class="usa-label text-normal"
           data-testid="label"
-          for="note"
+          for="content"
         >
           Note
         </label>
         <textarea
           aria-label="Note"
-          aria-labelledby="label-note hint-note"
+          aria-labelledby="label-content hint-content"
           class="height-card usa-textarea"
-          id="note"
-          name="note"
+          id="content"
+          name="content"
         />
       </div>
       <div
@@ -54,15 +54,15 @@ exports[`MilestoneNoteForm > matches snapshot 1`] = `
       >
         <button
           class="usa-button margin-right-3"
-          data-testid="button"
+          data-testid="save-note-button"
           disabled=""
-          type="submit"
+          type="button"
         >
           Add note
         </button>
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="button"
+          data-testid="cancel-note-button"
           type="button"
         >
           Cancel
