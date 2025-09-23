@@ -131,6 +131,7 @@ const SolutionDetailsModal = ({
         closeModal={closeModal}
         modalHeading={t('operationalSolutions')}
         testid="operational-solution-modal"
+        wideContent
         overlayClassName={
           (milestoneParam && solutionParam) ||
           (milestoneParam && solutionEnumParam) ||

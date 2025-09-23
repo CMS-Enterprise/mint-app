@@ -1,30 +1,26 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/google/uuid"
-
 	"github.com/guregu/null/zero"
-
-	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
-	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
-
+	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-
-	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
 
 var viperConfig = viper.New()
@@ -96,8 +92,6 @@ func getResolverDependencies(config *viper.Viper) (
 	*zap.Logger,
 	*s3.S3Client, //the files for MINT
 	*s3.S3Client, //the files for ECHIMP
-	oddmail.EmailService,
-	email.TemplateService,
 ) {
 	// Create the logger
 	logger := zap.NewNop()
@@ -138,10 +132,10 @@ func getResolverDependencies(config *viper.Viper) (
 		IsLocal: true,
 	}
 
-	s3MINTFileClient := s3.NewS3Client(s3MintFileCfg)
-	s3ECHIMPFileClient := s3.NewS3Client(s3ECHIMPFileCfg)
+	s3MINTFileClient := s3.NewS3Client(context.TODO(), s3MintFileCfg)
+	s3ECHIMPFileClient := s3.NewS3Client(context.TODO(), s3ECHIMPFileCfg)
 
-	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient, nil, nil
+	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient
 }
 
 // SeedData uses seeder to seed data in the database
