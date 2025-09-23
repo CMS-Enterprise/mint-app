@@ -9,7 +9,6 @@ import {
 import { ToastContainer } from 'react-toastify';
 import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
-import Analytics from 'features/Analytics';
 import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
 import ReportAProblem from 'features/Feedback/ReportAProblem';
@@ -51,6 +50,7 @@ import NDAWrapper from 'features/NDA/NDAWrapper';
 import NotFound from 'features/NotFound';
 import { notificationsRoutes } from 'features/Notifications';
 import PrivacyPolicy from 'features/PrivacyPolicy';
+import ReportsAndAnalytics from 'features/ReportsAndAnalytics';
 import Sandbox from 'features/Sandbox';
 import TermsAndConditions from 'features/TermsAndConditions';
 import UserInfo from 'features/UserDiagnostics';
@@ -469,10 +469,10 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/analytics',
+        path: '/reports-and-analytics',
         element: (
           <ProtectedRoute>
-            <Analytics />
+            <ReportsAndAnalytics />
           </ProtectedRoute>
         )
       },

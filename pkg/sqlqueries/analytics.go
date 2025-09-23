@@ -20,6 +20,9 @@ var numberOfFollowersPerModelSQL string
 //go:embed SQL/analytics/number_of_models.sql
 var numberOfModelsSQL string
 
+//go:embed SQL/analytics/number_of_models_over_time.sql
+var numberOfModelsOverTimeSQL string
+
 type analyticsScripts struct {
 	ChangesPerModel           string
 	ChangesPerModelBySection  string
@@ -27,6 +30,7 @@ type analyticsScripts struct {
 	ModelsByStatus            string
 	NumberOfFollowersPerModel string
 	NumberOfModels            string
+	NumberOfModelsOverTime    string
 }
 
 // Analytics houses all the sql for getting analytics data from the database
@@ -37,6 +41,7 @@ var Analytics = analyticsScripts{
 	ModelsByStatus:            modelsByStatusSQL,
 	NumberOfFollowersPerModel: numberOfFollowersPerModelSQL,
 	NumberOfModels:            numberOfModelsSQL,
+	NumberOfModelsOverTime:    numberOfModelsOverTimeSQL,
 }
 
 // Individual query constants for direct access
@@ -47,4 +52,5 @@ var (
 	ModelsByStatus            = modelsByStatusSQL
 	NumberOfFollowersPerModel = numberOfFollowersPerModelSQL
 	NumberOfModels            = numberOfModelsSQL
+	NumberOfModelsOverTime    = numberOfModelsOverTimeSQL
 )

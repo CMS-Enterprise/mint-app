@@ -37,9 +37,9 @@ func (suite *NotificationsSuite) deserializeActivityMetadata(testActivity *model
 	suite.Nil(testActivity.MetaData)       // Assert meta data is not deserialized here
 	suite.NotNil(testActivity.MetaDataRaw) // Assert meta data can be deserialized
 
-	meta, err := parseRawActivityMetaData(testActivity.ActivityType, testActivity.MetaDataRaw)
+	err := testActivity.ParseRawActivityMetaData()
 	suite.NoError(err)
-	suite.NotNil(meta)
+	suite.NotNil(testActivity.MetaData)
 
-	return meta
+	return testActivity.MetaData
 }

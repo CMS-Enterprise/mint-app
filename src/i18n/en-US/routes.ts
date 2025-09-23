@@ -263,7 +263,8 @@ const routes = {
     '/cookies': 'Cookies',
     '/accessibility-statement': 'Accessibility statement',
     '/terms-and-conditions': 'Terms and conditions',
-    '/how-to-get-access': 'How to get access'
+    '/how-to-get-access': 'How to get access',
+    '/reports-and-analytics': 'Reports and analytics'
   }
 };
 
