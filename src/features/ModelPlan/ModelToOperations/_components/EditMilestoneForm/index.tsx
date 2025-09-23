@@ -896,7 +896,9 @@ const EditMilestoneForm = ({
             <Button
               type="button"
               onClick={handleSubmit(onSubmit)}
-              disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
+              disabled={
+                isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
+              }
               className="margin-x-1"
               unstyled
             >

@@ -48,7 +48,7 @@ export default gql(/* GraphQL */ `
         createdByUserAccount {
           id
           commonName
-          isEUAID
+          username
         }
       }
     }

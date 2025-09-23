@@ -45,7 +45,7 @@ const MilestoneNoteForm = ({
 }) => {
   const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
 
-  const { euaId } = useSelector((state: AppState) => state.auth);
+  const { euaId, name } = useSelector((state: AppState) => state.auth);
 
   const [milestoneNote, setMilestoneNote] = useState<string>(
     selectedMilestoneNote?.content || ''
@@ -137,9 +137,9 @@ const MilestoneNoteForm = ({
           createdDts: new Date().toISOString(),
           createdByUserAccount: {
             __typename: 'UserAccount',
-            id: euaId,
-            commonName: euaId,
-            isEUAID: true
+            id: '00000001-0001-0001-0001-000000000001',
+            commonName: name,
+            username: euaId
           }
         }
       ]);
@@ -172,9 +172,11 @@ const MilestoneNoteForm = ({
           />
         </FormGroup>
 
-        <Alert type="info" slim className="margin-top-4">
-          {mtoMilestoneNoteMiscT('noteInfo')}
-        </Alert>
+        {!isEditing && (
+          <Alert type="info" slim className="margin-top-4">
+            {mtoMilestoneNoteMiscT('noteInfo')}
+          </Alert>
+        )}
 
         <div className="display-flex">
           <Button

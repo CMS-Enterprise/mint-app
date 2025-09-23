@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   Button,
   Icon,
@@ -17,6 +18,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
 import toastSuccess from 'components/ToastSuccess';
+import { AppState } from 'types';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import { MilestoneNoteType } from '../EditMilestoneForm';
@@ -53,6 +55,8 @@ const MilestoneNotes = ({
   readView?: boolean;
 }) => {
   const { t: mtoMilestoneNoteMiscT } = useTranslation('mtoMilestoneNoteMisc');
+
+  const { euaId } = useSelector((state: AppState) => state.auth);
 
   const [editNotesOpen, setEditNotesOpen] = useState(false);
 
@@ -192,7 +196,7 @@ const MilestoneNotes = ({
           <ProcessList className="padding-x-0 margin-left-neg-1">
             {milestoneNotes.map((note, index) => (
               <ProcessListItem
-                key={`${note.id}-${note.content}`}
+                key={`${note.id}-${note.createdDts}`}
                 className="read-only-model-plan__timeline__list-item margin-left-2"
               >
                 <p className="margin-top-0 margin-bottom-1">{note.content}</p>
@@ -205,12 +209,12 @@ const MilestoneNotes = ({
                   })}
                 </p>
 
-                {note.createdByUserAccount.isEUAID && (
+                {note.createdByUserAccount.username === euaId && (
                   <div className="display-flex">
                     <Button
                       type="button"
                       unstyled
-                      className="margin-right-2"
+                      className="margin-right-2 margin-top-0"
                       onClick={() => {
                         if (readView) {
                           setNoteToEditReadView(note);
@@ -226,7 +230,7 @@ const MilestoneNotes = ({
                     <Button
                       type="button"
                       unstyled
-                      className="text-error"
+                      className="text-error margin-top-0"
                       onClick={() => {
                         if (readView) {
                           setNoteToRemove(note);
