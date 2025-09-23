@@ -1,0 +1,11 @@
+{
+  "content": {
+    "gqlField": "content",
+    "goField": "Content",
+    "dbField": "content",
+    "label": "Content",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1
+  }
+}
