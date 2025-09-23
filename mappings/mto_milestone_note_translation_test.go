@@ -8,5 +8,6 @@ import (
 )
 
 func TestMTOMilestoneNoteTranslation(t *testing.T) {
-	assertAllTranslationDataGeneric(t, MTOMilestoneNoteTranslation, models.MTOMilestoneNote{}, taskListStructExcludeFields)
+	excludedFields := append(taskListStructExcludeFields, "MTOMilestoneID")
+	assertAllTranslationDataGeneric(t, MTOMilestoneNoteTranslation, models.MTOMilestoneNote{}, excludedFields)
 }
