@@ -165,6 +165,7 @@ const MilestoneNoteForm = ({
             name="note"
             className="height-card"
             onBlur={() => {}}
+            aria-label={mtoMilestoneNoteMiscT('note')}
             onChange={e => {
               setMilestoneNote(e.target.value);
             }}
