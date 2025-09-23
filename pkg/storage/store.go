@@ -1,10 +1,11 @@
 package storage
 
 import (
+	"context"
 	"fmt"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/facebookgo/clock"
 	"github.com/jmoiron/sqlx"
 	ld "github.com/launchdarkly/go-server-sdk/v6"
@@ -51,7 +52,7 @@ func (s *Store) Beginx() (*sqlx.Tx, error) {
 // If config.UseIAM is false, it will connect using the "postgres" driver that SQLx registers in its init() function
 // https://github.com/jmoiron/sqlx/blob/75a7ebf246fd757c9c7742da7dc4d26c6fdb6b5b/bind.go#L33-L40
 func NewStore(
-	config DBConfig,
+	dbConfig DBConfig,
 	ldClient *ld.LDClient,
 ) (*Store, error) {
 	// LifecycleIDs are generated based on Eastern Time
@@ -61,10 +62,14 @@ func NewStore(
 	}
 
 	var db *sqlx.DB
-	if config.UseIAM {
+	if dbConfig.UseIAM {
 		// Connect using the IAM DB package
-		sess := session.Must(session.NewSession())
-		db = newConnectionPoolWithIam(sess, config)
+
+		awsConfig, err := config.LoadDefaultConfig(context.TODO())
+		if err != nil {
+			return nil, err
+		}
+		db = newConnectionPoolWithIam(awsConfig, dbConfig)
 		err = db.Ping()
 		if err != nil {
 			return nil, err
@@ -74,12 +79,12 @@ func NewStore(
 		dataSourceName := fmt.Sprintf(
 			"host=%s port=%s user=%s "+
 				"password=%s dbname=%s sslmode=%s",
-			config.Host,
-			config.Port,
-			config.Username,
-			config.Password,
-			config.Database,
-			config.SSLMode,
+			dbConfig.Host,
+			dbConfig.Port,
+			dbConfig.Username,
+			dbConfig.Password,
+			dbConfig.Database,
+			dbConfig.SSLMode,
 		)
 
 		db, err = sqlx.Connect("postgres", dataSourceName)
@@ -88,7 +93,7 @@ func NewStore(
 		}
 	}
 
-	db.SetMaxOpenConns(config.MaxConnections)
+	db.SetMaxOpenConns(dbConfig.MaxConnections)
 
 	return &Store{
 		db:        db,

@@ -22,6 +22,9 @@ import {
   GetMtoMilestonesDocument,
   GetMtoMilestonesQuery,
   GetMtoMilestonesQueryVariables,
+  GetMtoMilestoneSummaryDocument,
+  GetMtoMilestoneSummaryQuery,
+  GetMtoMilestoneSummaryQueryVariables,
   GetMtoSolutionContactsDocument,
   GetMtoSolutionContactsQuery,
   GetMtoSolutionDocument,
@@ -777,6 +780,74 @@ export const solutionAndMilestoneMock: MockedResponse<
             ]
           }
         }
+      }
+    }
+  }
+];
+
+export const mtoMilestoneSummaryMock: MockedResponse<
+  GetMtoMilestoneSummaryQuery,
+  GetMtoMilestoneSummaryQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoMilestoneSummaryDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlanCollection: [
+          {
+            __typename: 'ModelPlan',
+            id: '123',
+            modelName: 'Test Model 1',
+            mtoMatrix: {
+              __typename: 'ModelsToOperationMatrix',
+              info: {
+                __typename: 'MTOInfo',
+                id: '123'
+              },
+              milestones: [
+                {
+                  __typename: 'MTOMilestone',
+                  id: '123',
+                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  name: 'Test Milestone 1',
+                  needBy: '2022-05-12T15:01:39.190679Z',
+                  facilitatedBy: [MtoFacilitator.MODEL_TEAM],
+                  facilitatedByOther: 'Test Facilitated By Other',
+                  status: MtoMilestoneStatus.NOT_STARTED,
+                  riskIndicator: MtoRiskIndicator.ON_TRACK
+                }
+              ]
+            }
+          },
+          {
+            __typename: 'ModelPlan',
+            id: '456',
+            modelName: 'Test Model 2',
+            mtoMatrix: {
+              __typename: 'ModelsToOperationMatrix',
+              info: {
+                __typename: 'MTOInfo',
+                id: '456'
+              },
+              milestones: [
+                {
+                  __typename: 'MTOMilestone',
+                  id: '456',
+                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  name: 'Test Milestone 2',
+                  needBy: '2022-05-12T15:01:39.190679Z',
+                  facilitatedBy: [MtoFacilitator.MODEL_TEAM],
+                  facilitatedByOther: 'Test Facilitated By Other',
+                  status: MtoMilestoneStatus.NOT_STARTED,
+                  riskIndicator: MtoRiskIndicator.ON_TRACK
+                }
+              ]
+            }
+          }
+        ]
       }
     }
   }

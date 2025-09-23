@@ -116,6 +116,7 @@ export type AnalyticsSummary = {
   changesPerModelOtherData: Array<ModelChangesOtherDataAnalytics>;
   modelsByStatus: Array<ModelsByStatusAnalytics>;
   numberOfFollowersPerModel: Array<ModelFollowersAnalytics>;
+  numberOfModelsOverTime: Array<ModelCountAnalyticsOverTime>;
   totalNumberOfModels?: Maybe<ModelCountAnalytics>;
 };
 
@@ -1370,6 +1371,12 @@ export type ModelChangesOtherDataAnalytics = {
 export type ModelCountAnalytics = {
   __typename: 'ModelCountAnalytics';
   totalNumberOfModels: Scalars['Int']['output'];
+};
+
+export type ModelCountAnalyticsOverTime = {
+  __typename: 'ModelCountAnalyticsOverTime';
+  monthYear: Scalars['String']['output'];
+  numberOfModels: Scalars['Int']['output'];
 };
 
 export type ModelFollowersAnalytics = {
@@ -5222,7 +5229,7 @@ export enum YesNoType {
 export type GetAnalyticsSummaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAnalyticsSummaryQuery = { __typename: 'Query', analytics: { __typename: 'AnalyticsSummary', changesPerModel: Array<{ __typename: 'ModelChangesAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID }>, changesPerModelBySection: Array<{ __typename: 'ModelChangesBySectionAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, tableName: string }>, changesPerModelOtherData: Array<{ __typename: 'ModelChangesOtherDataAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number, modelPlanID: UUID, section: string }>, modelsByStatus: Array<{ __typename: 'ModelsByStatusAnalytics', numberOfModels: number, status: ModelStatus }>, numberOfFollowersPerModel: Array<{ __typename: 'ModelFollowersAnalytics', modelName: string, modelPlanID: UUID, numberOfFollowers: number }>, totalNumberOfModels?: { __typename: 'ModelCountAnalytics', totalNumberOfModels: number } | null } };
+export type GetAnalyticsSummaryQuery = { __typename: 'Query', analytics: { __typename: 'AnalyticsSummary', changesPerModel: Array<{ __typename: 'ModelChangesAnalytics', modelName: string, numberOfChanges: number, numberOfRecordChanges: number }>, changesPerModelBySection: Array<{ __typename: 'ModelChangesBySectionAnalytics', modelName: string, tableName: string, numberOfChanges: number, numberOfRecordChanges: number }>, changesPerModelOtherData: Array<{ __typename: 'ModelChangesOtherDataAnalytics', modelName: string, section: string, numberOfChanges: number, numberOfRecordChanges: number }>, modelsByStatus: Array<{ __typename: 'ModelsByStatusAnalytics', status: ModelStatus, numberOfModels: number }>, numberOfFollowersPerModel: Array<{ __typename: 'ModelFollowersAnalytics', modelName: string, numberOfFollowers: number }>, numberOfModelsOverTime: Array<{ __typename: 'ModelCountAnalyticsOverTime', monthYear: string, numberOfModels: number }> } };
 
 export type GetMtoMilestoneSummaryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6424,33 +6431,30 @@ export const GetAnalyticsSummaryDocument = gql`
       modelName
       numberOfChanges
       numberOfRecordChanges
-      modelPlanID
     }
     changesPerModelBySection {
       modelName
+      tableName
       numberOfChanges
       numberOfRecordChanges
-      modelPlanID
-      tableName
     }
     changesPerModelOtherData {
       modelName
+      section
       numberOfChanges
       numberOfRecordChanges
-      modelPlanID
-      section
     }
     modelsByStatus {
-      numberOfModels
       status
+      numberOfModels
     }
     numberOfFollowersPerModel {
       modelName
-      modelPlanID
       numberOfFollowers
     }
-    totalNumberOfModels {
-      totalNumberOfModels
+    numberOfModelsOverTime {
+      monthYear
+      numberOfModels
     }
   }
 }
@@ -16077,7 +16081,7 @@ export type UpdateTimelineMutationHookResult = ReturnType<typeof useUpdateTimeli
 export type UpdateTimelineMutationResult = Apollo.MutationResult<UpdateTimelineMutation>;
 export type UpdateTimelineMutationOptions = Apollo.BaseMutationOptions<UpdateTimelineMutation, UpdateTimelineMutationVariables>;
 export const TypedReadyForReviewUserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<ReadyForReviewUserFragmentFragment, unknown>;
-export const TypedGetAnalyticsSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnalyticsSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"analytics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changesPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelBySection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelOtherData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelsByStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numberOfModels"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowersPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowers"}}]}},{"kind":"Field","name":{"kind":"Name","value":"totalNumberOfModels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"totalNumberOfModels"}}]}}]}}]}}]} as unknown as DocumentNode<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>;
+export const TypedGetAnalyticsSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnalyticsSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"analytics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changesPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelBySection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelOtherData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelsByStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfModels"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowersPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowers"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfModelsOverTime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"monthYear"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfModels"}}]}}]}}]}}]} as unknown as DocumentNode<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>;
 export const TypedGetMtoMilestoneSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestoneSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"EnumValue","value":"INCLUDE_ALL"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestoneSummaryQuery, GetMtoMilestoneSummaryQueryVariables>;
 export const TypedGetAllBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllBasicsQuery, GetAllBasicsQueryVariables>;
 export const TypedGetBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}}]}}]}}]}}]} as unknown as DocumentNode<GetBasicsQuery, GetBasicsQueryVariables>;

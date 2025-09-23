@@ -21,6 +21,7 @@ type SidepanelProps = {
   backButton?: boolean;
   fixed?: boolean;
   footer?: React.ReactNode;
+  wideContent?: boolean;
 };
 
 const Sidepanel = ({
@@ -37,7 +38,8 @@ const Sidepanel = ({
   showScroll,
   backButton,
   fixed = false,
-  footer
+  footer,
+  wideContent = false
 }: SidepanelProps) => {
   const handleOpenModal = () => {
     noScroll.on();
@@ -59,7 +61,8 @@ const Sidepanel = ({
         overlayClassName
       ),
       className: classNames('mint-sidepanel__content', classname, {
-        'overflow-hidden': fixed
+        'overflow-hidden': fixed,
+        'mint-sidepanel__wide-content': wideContent
       }),
       onAfterOpen: handleOpenModal,
       onAfterClose: () => {
