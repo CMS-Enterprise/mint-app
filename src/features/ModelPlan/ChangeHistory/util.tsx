@@ -69,6 +69,7 @@ export type TranslationTables =
   | TableName.MTO_INFO
   | TableName.MTO_MILESTONE
   | TableName.MTO_MILESTONE_SOLUTION_LINK
+  | TableName.MTO_MILESTONE_NOTE
   | TableName.MTO_SOLUTION
   | TableName.PLAN_DOCUMENT
   | TableName.PLAN_CR
@@ -207,7 +208,8 @@ export const mtoTables: TableName[] = [
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE,
   TableName.MTO_SOLUTION,
-  TableName.MTO_MILESTONE_SOLUTION_LINK
+  TableName.MTO_MILESTONE_SOLUTION_LINK,
+  TableName.MTO_MILESTONE_NOTE
 ];
 
 // Tables where similar audits are batched together
@@ -219,6 +221,7 @@ export const batchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
+  TableName.MTO_MILESTONE_NOTE,
   TableName.MTO_MILESTONE
 ];
 
@@ -229,7 +232,8 @@ export const doubleBatchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
   TableName.MTO_MILESTONE,
-  TableName.MTO_CATEGORY
+  TableName.MTO_CATEGORY,
+  TableName.MTO_MILESTONE_NOTE
 ];
 
 // Fields that are connected to other tables
