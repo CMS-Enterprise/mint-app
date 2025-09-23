@@ -40,8 +40,7 @@ describe('MilestoneNoteForm', () => {
     const submit = screen.getByRole('button', {
       name: 'Add note'
     });
-    // Avoid jsdom requestSubmit by converting the button into a non-submit button
-    submit.setAttribute('type', 'button');
+
     expect(submit).toBeDisabled();
 
     fireEvent.change(screen.getByLabelText('Note'), {

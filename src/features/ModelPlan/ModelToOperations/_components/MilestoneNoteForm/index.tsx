@@ -156,13 +156,13 @@ const MilestoneNoteForm = ({
 
       <Form onSubmit={() => {}} className="maxw-none">
         <FormGroup>
-          <Label htmlFor="note" className="text-normal">
+          <Label htmlFor="content" className="text-normal">
             {mtoMilestoneNoteMiscT('note')}
           </Label>
 
           <TextAreaField
-            id="note"
-            name="note"
+            id="content"
+            name="content"
             className="height-card"
             onBlur={() => {}}
             aria-label={mtoMilestoneNoteMiscT('note')}
@@ -181,8 +181,11 @@ const MilestoneNoteForm = ({
 
         <div className="display-flex">
           <Button
-            type="submit"
-            disabled={!milestoneNote}
+            type="button"
+            disabled={
+              !milestoneNote || milestoneNote === selectedMilestoneNote?.content
+            }
+            data-testid="save-note-button"
             onClick={() => {
               if (readView) {
                 handleAddMilestoneNote();
@@ -200,6 +203,7 @@ const MilestoneNoteForm = ({
 
           <Button
             type="button"
+            data-testid="cancel-note-button"
             onClick={() => {
               setMilestoneNote('');
               closeModal();

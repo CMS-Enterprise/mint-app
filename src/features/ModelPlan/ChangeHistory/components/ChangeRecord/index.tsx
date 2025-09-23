@@ -53,7 +53,7 @@ type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
   changeType: DatabaseOperation;
   tableName: TranslationTables;
-  metaData: TranslatedAuditMetaData | undefined;
+  metaData?: TranslatedAuditMetaData | null;
 };
 
 export const ChangeHeader = ({
@@ -536,7 +536,8 @@ export const RenderChangeValue = ({
 export const ChangedQuestion = ({
   change,
   changeType,
-  tableName
+  tableName,
+  metaData
 }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 

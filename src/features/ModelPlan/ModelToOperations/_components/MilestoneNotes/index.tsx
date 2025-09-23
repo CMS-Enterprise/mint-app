@@ -12,13 +12,13 @@ import {
   GetMtoMilestoneDocument,
   useDeleteMtoMilestoneNoteMutation
 } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import CollapsableLink from 'components/CollapsableLink';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
 import toastSuccess from 'components/ToastSuccess';
-import { AppState } from 'types';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import { MilestoneNoteType } from '../EditMilestoneForm';
@@ -172,6 +172,7 @@ const MilestoneNotes = ({
       <Button
         type="button"
         unstyled
+        data-testid="add-note-button"
         className={classNames('margin-0 display-flex', {
           'margin-bottom-3': readView
         })}
@@ -214,6 +215,7 @@ const MilestoneNotes = ({
                     <Button
                       type="button"
                       unstyled
+                      data-testid="edit-note-button"
                       className="margin-right-2 margin-top-0"
                       onClick={() => {
                         if (readView) {
@@ -230,6 +232,7 @@ const MilestoneNotes = ({
                     <Button
                       type="button"
                       unstyled
+                      data-testid="remove-note-button"
                       className="text-error margin-top-0"
                       onClick={() => {
                         if (readView) {

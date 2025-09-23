@@ -385,7 +385,7 @@ const EditMilestoneForm = ({
     watch,
     setValue,
     reset,
-    formState: { isSubmitting, isDirty, dirtyFields, touchedFields }
+    formState: { isSubmitting, dirtyFields, touchedFields }
   } = methods;
 
   const values = watch();

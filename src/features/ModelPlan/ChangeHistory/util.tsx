@@ -526,7 +526,7 @@ export const getNestedActionText = (
   change: ChangeRecordType['translatedFields'][0],
   changeType: DatabaseOperation,
   tableName: TranslationTables,
-  metaData?: TranslatedAuditMetaData | undefined
+  metaData?: TranslatedAuditMetaData | null
 ) => {
   // If the change is an insert, render created text rather than answered/updated, etc.
   if (
@@ -618,9 +618,15 @@ export const filterQueryAudits = (
       );
 
       if (
-        nestedActionTexts.some(text =>
-          text.toLowerCase().includes(lowerCaseQuery)
-        )
+        nestedActionTexts.some(text => {
+          if (typeof text === 'string') {
+            return text.toLowerCase().includes(lowerCaseQuery);
+          }
+          if (typeof text === 'object' && text !== null) {
+            return text.props.children.toLowerCase().includes(lowerCaseQuery);
+          }
+          return false;
+        })
       ) {
         return true;
       }
