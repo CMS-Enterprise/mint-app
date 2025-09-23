@@ -298,3 +298,7 @@ SELECT audit.AUDIT_TABLE(
     'public','model_plan_mto_template_link','id',NULL,
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]
 );
+
+ALTER TABLE model_plan_mto_template_link 
+ADD CONSTRAINT model_plan_mto_template_link_unique 
+UNIQUE (model_plan_id, template_id);

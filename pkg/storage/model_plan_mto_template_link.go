@@ -54,13 +54,13 @@ func ModelPlanMTOTemplateLinkGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ 
 	return returned, nil
 }
 
-// ModelPlanMTOTemplateLinkCreate creates a new model plan MTO template link
-func ModelPlanMTOTemplateLinkCreate(np sqlutils.NamedPreparer, _ *zap.Logger, link *models.ModelPlanMTOTemplateLink) (*models.ModelPlanMTOTemplateLink, error) {
+// ModelPlanMTOTemplateLinkUpsert creates a new model plan MTO template link or updates an existing one
+func ModelPlanMTOTemplateLinkUpsert(np sqlutils.NamedPreparer, _ *zap.Logger, link *models.ModelPlanMTOTemplateLink) (*models.ModelPlanMTOTemplateLink, error) {
 	if link.ID == uuid.Nil {
 		link.ID = uuid.New()
 	}
 
-	returned, err := sqlutils.GetProcedure[models.ModelPlanMTOTemplateLink](np, sqlqueries.ModelPlanMTOTemplateLink.Create, link)
+	returned, err := sqlutils.GetProcedure[models.ModelPlanMTOTemplateLink](np, sqlqueries.ModelPlanMTOTemplateLink.Upsert, link)
 	if err != nil {
 		return nil, fmt.Errorf("issue creating new ModelPlanMTOTemplateLink object: %w", err)
 	}

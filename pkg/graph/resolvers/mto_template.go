@@ -201,7 +201,7 @@ func ApplyTemplateToMTO(
 				continue
 			}
 
-			categoryAdded, err := storage.MTOCategoryCreate(tx, logger, mtoCategory)
+			categoryAdded, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, mtoCategory)
 			if err != nil {
 				warnings = append(warnings, fmt.Sprintf("failed to create MTO category %s: %v", category.Name, err))
 				continue
@@ -282,7 +282,7 @@ func ApplyTemplateToMTO(
 		)
 
 		// Create the template link record
-		_, err = storage.ModelPlanMTOTemplateLinkCreate(tx, logger, newLink)
+		_, err = storage.ModelPlanMTOTemplateLinkUpsert(tx, logger, newLink)
 		if err != nil {
 			return nil, fmt.Errorf("failed to create template link: %w", err)
 		}
