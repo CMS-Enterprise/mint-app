@@ -427,6 +427,86 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 	return &meta, &metaType, nil
 }
 
+// MTOMilestoneNoteMetaDataGet relies on the changes field to return content and milestone information. If not available, it will attempt to fetch a milestone note to get it's current content and related milestone name.
+func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, milestoneNoteID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+
+	// the data is deletable, so it needs to be a pointer
+	var content *string
+	var milestoneName *string
+
+	contentChange, contentFieldPresent := changesFields["content"]
+	mtoMilestoneIDChange, mtoMilestoneIDFieldPresent := changesFields["mto_milestone_id"]
+
+	if contentFieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			content = models.StringPointer(fmt.Sprint(contentChange.Old))
+		} else {
+			content = models.StringPointer(fmt.Sprint(contentChange.New))
+		}
+	}
+
+	// Get milestone name from the mto_milestone_id field
+	if mtoMilestoneIDFieldPresent {
+		var mtoMilestoneID any
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			mtoMilestoneID = mtoMilestoneIDChange.Old
+		} else {
+			mtoMilestoneID = mtoMilestoneIDChange.New
+		}
+
+		milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, mtoMilestoneID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note. err %w", err)
+		}
+		milestoneName = &milestoneNameStr
+	}
+
+	// If we don't have the content or milestone ID from changes, fetch from database
+	if !contentFieldPresent || !mtoMilestoneIDFieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("there wasn't enough information present for this MTO milestone note, unable to generate metadata for this entry. MTO Milestone Note %v", milestoneNoteID)
+		}
+
+		// Handle the fields carefully here, this is a deletable entry, so we will lose the ability to query on delete
+		milestoneNote, err := loaders.MTOMilestoneNote.ByID.Load(ctx, milestoneNoteID)
+		if err != nil {
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone note. err %w", err)
+			} else { // expect that a nil milestone note can be returned under this circumstance.
+				content = nil
+				milestoneName = nil
+			}
+		} else {
+			if content == nil {
+				content = &milestoneNote.Content
+			}
+			if milestoneName == nil {
+				milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, milestoneNote.MTOMilestoneID)
+				if err != nil {
+					return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note. err %w", err)
+				}
+				milestoneName = &milestoneNameStr
+			}
+		}
+	}
+
+	// Create a combined metadata string that includes both milestone name and content
+	var combinedInfo string
+	if milestoneName != nil && content != nil {
+		combinedInfo = fmt.Sprintf("%s: %s", *milestoneName, *content)
+	} else if milestoneName != nil {
+		combinedInfo = *milestoneName
+	} else if content != nil {
+		combinedInfo = *content
+	} else {
+		combinedInfo = "Data not available"
+	}
+
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNMTOMilestoneNote, 0, "milestone_note", &combinedInfo)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 // MTOSolutionMetaDataGet relies on the changes field to return name information. If not available, it will attempt to fetch a solution to get it's current name.
 func MTOSolutionMetaDataGet(ctx context.Context, store *storage.Store, solutionID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
@@ -665,6 +745,13 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		}
 	case models.TNMTOSolution:
 		metaData, metaDataType, err := MTOSolutionMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
+	case models.TNMTOMilestoneNote:
+		metaData, metaDataType, err := MTOMilestoneNoteMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {

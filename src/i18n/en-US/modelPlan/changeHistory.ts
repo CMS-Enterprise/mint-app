@@ -88,6 +88,7 @@ const changeHistory = {
     mto_common_solution_contact: 'model-to-operations matrix',
     mto_info: 'model-to-operations matrix',
     mto_milestone_solution_link: 'model-to-operations matrix',
+    mto_milestone_note: 'model-to-operations matrix',
     plan_document: 'Documents',
     plan_cr: 'FFS CRs and TDLs',
     plan_tdl: 'FFS CRs and TDLs',
