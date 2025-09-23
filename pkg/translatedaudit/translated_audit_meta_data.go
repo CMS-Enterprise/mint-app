@@ -59,10 +59,6 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 		return nil, nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
 	}
 
-	if err != nil {
-		return nil, nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
-	}
-
 	const statusKey = "status"
 	translatedStatus := getTranslationMapAndTranslateSingleValue("operational_solution", statusKey, fmt.Sprint(opSolutionWithSubtasks.Status))
 
@@ -123,10 +119,6 @@ func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.S
 	}
 
 	opNeed, err := store.OperationalNeedGetByID(logger, opSolutionWithSubtasks.OperationalNeedID)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get operational need for operational solution subtask audit metadata. err %w", err)
-	}
-
 	if err != nil {
 		return nil, fmt.Errorf("unable to get operational need for operational solution subtask audit metadata. err %w", err)
 	}
@@ -431,19 +423,9 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, milestoneNoteID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
 	// the data is deletable, so it needs to be a pointer
-	var content *string
 	var milestoneName *string
 
-	contentChange, contentFieldPresent := changesFields["content"]
 	mtoMilestoneIDChange, mtoMilestoneIDFieldPresent := changesFields["mto_milestone_id"]
-
-	if contentFieldPresent {
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			content = models.StringPointer(fmt.Sprint(contentChange.Old))
-		} else {
-			content = models.StringPointer(fmt.Sprint(contentChange.New))
-		}
-	}
 
 	// Get milestone name from the mto_milestone_id field
 	if mtoMilestoneIDFieldPresent {
@@ -461,8 +443,8 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 		milestoneName = &milestoneNameStr
 	}
 
-	// If we don't have the content or milestone ID from changes, fetch from database
-	if !contentFieldPresent || !mtoMilestoneIDFieldPresent {
+	// If we don't have the milestone ID from changes, fetch from database
+	if !mtoMilestoneIDFieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			return nil, nil, fmt.Errorf("there wasn't enough information present for this MTO milestone note, unable to generate metadata for this entry. MTO Milestone Note %v", milestoneNoteID)
 		}
@@ -473,13 +455,9 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
 				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone note. err %w", err)
 			} else { // expect that a nil milestone note can be returned under this circumstance.
-				content = nil
 				milestoneName = nil
 			}
 		} else {
-			if content == nil {
-				content = &milestoneNote.Content
-			}
 			if milestoneName == nil {
 				milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, milestoneNote.MTOMilestoneID)
 				if err != nil {
@@ -490,19 +468,7 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 		}
 	}
 
-	// Create a combined metadata string that includes both milestone name and content
-	var combinedInfo string
-	if milestoneName != nil && content != nil {
-		combinedInfo = fmt.Sprintf("%s: %s", *milestoneName, *content)
-	} else if milestoneName != nil {
-		combinedInfo = *milestoneName
-	} else if content != nil {
-		combinedInfo = *content
-	} else {
-		combinedInfo = "Data not available"
-	}
-
-	meta := models.NewTranslatedAuditMetaGeneric(models.TNMTOMilestoneNote, 0, "milestone_note", &combinedInfo)
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNMTOMilestone, 0, "name", milestoneName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }

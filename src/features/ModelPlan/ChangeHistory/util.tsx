@@ -50,6 +50,7 @@ export type ChangeType =
   | 'operationalSolutionUpdate'
   | 'operationalNeedCreate'
   | 'operationalNeedUpdate'
+  | 'mtoNoteUpdate'
   | 'standardUpdate';
 
 export type TranslationTables =
@@ -221,7 +222,6 @@ export const batchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
-  TableName.MTO_MILESTONE_NOTE,
   TableName.MTO_MILESTONE
 ];
 
@@ -232,8 +232,7 @@ export const doubleBatchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
   TableName.MTO_MILESTONE,
-  TableName.MTO_CATEGORY,
-  TableName.MTO_MILESTONE_NOTE
+  TableName.MTO_CATEGORY
 ];
 
 // Fields that are connected to other tables
@@ -839,6 +838,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'operationalNeedUpdate';
   }
 
+  if (change.tableName === TableName.MTO_MILESTONE_NOTE) {
+    return 'mtoNoteUpdate';
+  }
+
   return 'standardUpdate';
 };
 
@@ -895,6 +898,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
     case 'documentUpdate':
       headerText = i18next.t('changeHistory:documentUpdate');
       break;
+    case 'mtoNoteUpdate':
+      headerText = i18next.t('changeHistory:mtoNoteUpdate');
+      break;
     default:
       break;
   }
@@ -924,6 +930,9 @@ export const getActionText = (change: ChangeRecordType): string => {
       actionText = i18next.t(
         `changeHistory:documentChangeType.${documentUpdateType(change)}`
       );
+      break;
+    case 'mtoNoteUpdate':
+      actionText = i18next.t(`changeHistory:noteUpdateType.${change.action}`);
       break;
     default:
       break;

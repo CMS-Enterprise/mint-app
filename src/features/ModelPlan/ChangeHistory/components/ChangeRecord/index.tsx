@@ -223,6 +223,24 @@ export const ChangeHeader = ({
     );
   }
 
+  // MTO note audits
+  if (changeRecordType === 'mtoNoteUpdate') {
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          action: getActionText(changeRecord),
+          inOrTo: changeRecord.action === 'INSERT' ? 'to' : 'from',
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
   // CR and TDL audits
   if (changeRecordType === 'cRUpdate' || changeRecordType === 'tDLUpdate') {
     const crTdlName =
@@ -568,7 +586,8 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'cRUpdate' ||
     changeRecordType === 'tDLUpdate' ||
     changeRecordType === 'documentUpdate' ||
-    changeRecordType === 'operationalNeedUpdate';
+    changeRecordType === 'operationalNeedUpdate' ||
+    changeRecordType === 'mtoNoteUpdate';
 
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =

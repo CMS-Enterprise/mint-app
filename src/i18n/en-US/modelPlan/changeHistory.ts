@@ -67,6 +67,8 @@ const changeHistory = {
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   mtoUpdate: '{{mtoType}} {{action}}: {{name}}',
   mtoLinkUpdate: 'Milestone and solution {{action}}',
+  mtoNoteUpdate:
+    '{{action}} a note {{inOrTo}} the model-to-operations matrix (MTO) <datetime>on {{date}} at {{time}}</datetime>',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   sections: {
@@ -135,6 +137,11 @@ const changeHistory = {
   linkUpdateType: {
     INSERT: 'Added',
     DELETE: 'Removed'
+  },
+  noteUpdateType: {
+    INSERT: 'added',
+    DELETE: 'removed',
+    UPDATE: 'edited'
   },
   documentChangeType: {
     uploaded: 'uploaded',
