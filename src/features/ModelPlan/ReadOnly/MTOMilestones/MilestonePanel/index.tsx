@@ -77,6 +77,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         name: '',
         status: MtoMilestoneStatus.NOT_STARTED,
         key: null,
+        responsibleComponent: MtoMilestoneStatus.NOT_STARTED,
         facilitatedBy: null,
         facilitatedByOther: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
@@ -242,6 +243,22 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                     className="font-body-md text-base-darkest"
                     definition={
                       milestone.categories.subCategory?.name || NoneSpecified
+                    }
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid row className="margin-bottom-2">
+                <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
+                  <DescriptionTerm
+                    className="font-body-sm margin-bottom-0"
+                    term={mtoMilestoneT('responsibleComponent.label')}
+                  />
+                  <DescriptionDefinition
+                    className="font-body-md text-base-darkest"
+                    definition={
+                      // todo(Elle):change to milestone.responsibleComponent once query updated
+                      milestone.status ? milestone.status : NoneSpecified
                     }
                   />
                 </Grid>

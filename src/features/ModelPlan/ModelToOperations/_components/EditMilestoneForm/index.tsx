@@ -93,6 +93,8 @@ type FormValues = {
       id: string;
     };
   };
+  // todo(Elle): change to MtoMilestoneResponsibleComponent once query updated
+  responsibleComponent: MtoMilestoneStatus;
   facilitatedBy?: MtoFacilitator[];
   facilitatedByOther?: string;
   needBy?: string;
@@ -129,6 +131,7 @@ const EditMilestoneForm = ({
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
+    responsibleComponent: responsibleComponentConfig,
     facilitatedBy: facilitatedByConfig,
     status: stausConfig,
     riskIndicator: riskIndicatorConfig
@@ -328,6 +331,9 @@ const EditMilestoneForm = ({
         }
       },
       name: milestone?.name || '',
+      responsibleComponent:
+        // todo(Elle):change it to .responsibleComponent once query updated
+        milestone?.status || MtoMilestoneStatus.NOT_STARTED,
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
       needBy: milestone?.needBy || '',
@@ -1013,6 +1019,42 @@ const EditMilestoneForm = ({
                               );
                             }
                           )}
+                        </Select>
+                      </FormGroup>
+                    )}
+                  />
+
+                  <Controller
+                    name="responsibleComponent"
+                    control={control}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-0 margin-bottom-3">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(
+                            'responsibleComponent'
+                          )}
+                          className="maxw-none text-bold"
+                          requiredMarker
+                        >
+                          {responsibleComponentConfig.label}
+                        </Label>
+
+                        <HelpText className="margin-top-1">
+                          {responsibleComponentConfig.sublabel}
+                        </HelpText>
+
+                        <Select
+                          {...field}
+                          id={convertCamelCaseToKebabCase(field.name)}
+                          value={field.value || ''}
+                        >
+                          {getKeys(stausConfig.options).map(option => {
+                            return (
+                              <option key={option} value={option}>
+                                {stausConfig.options[option]}
+                              </option>
+                            );
+                          })}
                         </Select>
                       </FormGroup>
                     )}

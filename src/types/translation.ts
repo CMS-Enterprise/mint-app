@@ -1284,6 +1284,8 @@ export type TranslationMTOMilestoneSolutionLinkCustom = {
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
   isDraft: TranslationFieldPropertiesWithOptions<Bool>;
+  // todo(Elle):change it to MTOMilestoneResponsibleComponent once query updated
+  responsibleComponent: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
   facilitatedByOther: TranslationFieldProperties;
   needBy: TranslationFieldProperties;
