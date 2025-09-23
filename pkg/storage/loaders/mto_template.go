@@ -62,12 +62,14 @@ func batchMTOTemplateGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.U
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.MTOTemplate](modelPlanIDs, err)
 	}
-	getKeyFunc := func(data *models.MTOTemplate) uuid.UUID {
-		return data.ModelPlanID
+
+	// Since this is "get all", every key gets the same result
+	results := make([]*dataloader.Result[[]*models.MTOTemplate], len(modelPlanIDs))
+	for i := range modelPlanIDs {
+		results[i] = &dataloader.Result[[]*models.MTOTemplate]{Data: data}
 	}
 
-	// implement one to many
-	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
+	return results
 }
 
 func batchMTOTemplateGetByKey(ctx context.Context, keys []models.MTOTemplateKey) []*dataloader.Result[*models.MTOTemplate] {

@@ -12,12 +12,14 @@ SELECT
     COALESCE(cat_counts.primary_category_count, 0) AS primary_category_count,
     COALESCE(mil_counts.milestone_count, 0) AS milestone_count,
     COALESCE(sol_counts.solution_count, 0) AS solution_count,
-    -- Values from model plan template link
-    COALESCE(link.is_active, FALSE) AS is_added,
+    -- Values from model plan template link (will be TRUE if applied, FALSE if not)
+    CASE WHEN link.id IS NOT NULL THEN TRUE ELSE FALSE END AS is_added,
     link.applied_date AS date_added
 FROM mto_template t
-INNER JOIN model_plan_mto_template_link link 
-    ON t.id = link.template_id
+LEFT JOIN model_plan_mto_template_link link 
+    ON
+        t.id = link.template_id 
+        AND link.model_plan_id = ANY(:model_plan_ids)
 LEFT JOIN (
     -- Count categories and primary categories (parent_id IS NULL)
     SELECT 
@@ -43,5 +45,4 @@ LEFT JOIN (
     FROM mto_template_solution
     GROUP BY template_id
 ) sol_counts ON t.id = sol_counts.template_id
-WHERE link.model_plan_id = ANY(:model_plan_ids)
 ORDER BY t.name;
