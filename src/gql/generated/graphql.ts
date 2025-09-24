@@ -769,6 +769,7 @@ export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
   categoryName: Scalars['String']['output'];
   commonSolutions: Array<MtoCommonSolution>;
+  description: Scalars['String']['output'];
   facilitatedByRole: Array<MtoFacilitator>;
   /**
    * To represent if this Common Milestone is _already_ part of the Model Plan's MTO.

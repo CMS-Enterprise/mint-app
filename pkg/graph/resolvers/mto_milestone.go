@@ -92,7 +92,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		milestone := models.NewMTOMilestone(
 			principalAccount.ID,
 			nil,
-			nil,
+			&commonMilestone.Description,
 			&commonMilestoneKey,
 			modelPlanID,
 			&finalCategoryID,
