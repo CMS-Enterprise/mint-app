@@ -30,9 +30,7 @@ WITH retVal AS (
         COALESCE(:created_dts, CURRENT_TIMESTAMP)
     )
     ON CONFLICT (model_plan_id, mto_common_milestone_key) 
-    DO UPDATE SET
-    modified_dts = CURRENT_TIMESTAMP,
-    modified_by = EXCLUDED.created_by
+    DO NOTHING
     RETURNING
         id,
         model_plan_id,
