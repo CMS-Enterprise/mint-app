@@ -67,6 +67,10 @@ const changeHistory = {
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   mtoUpdate: '{{mtoType}} {{action}}: {{name}}',
   mtoLinkUpdate: 'Milestone and solution {{action}}',
+  mtoNoteUpdate:
+    '{{action}} a note {{inOrTo}} the model-to-operations matrix (MTO) <datetime>on {{date}} at {{time}}</datetime>',
+  mtoNoteUpdateMeta:
+    '{{action}} {{toForFrom}} milestone <bold>{{milestoneName}}</bold>',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   sections: {
@@ -88,6 +92,7 @@ const changeHistory = {
     mto_common_solution_contact: 'model-to-operations matrix',
     mto_info: 'model-to-operations matrix',
     mto_milestone_solution_link: 'model-to-operations matrix',
+    mto_milestone_note: 'model-to-operations matrix',
     plan_document: 'Documents',
     plan_cr: 'FFS CRs and TDLs',
     plan_tdl: 'FFS CRs and TDLs',
@@ -135,6 +140,11 @@ const changeHistory = {
     INSERT: 'Added',
     DELETE: 'Removed'
   },
+  noteUpdateType: {
+    INSERT: 'added',
+    DELETE: 'removed',
+    UPDATE: 'edited'
+  },
   documentChangeType: {
     uploaded: 'uploaded',
     removed: 'removed',
@@ -169,6 +179,11 @@ const changeHistory = {
     DELETE: 'from',
     UPDATE: 'for',
     INSERT: 'for'
+  },
+  toForFrom: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'for'
   },
   sort: {
     label: 'Sort',

@@ -1,0 +1,37 @@
+meta {
+  name: CreateMTOMilestoneNote
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation createMTOMilestoneNote {
+      createMTOMilestoneNote(input: {
+        mtoMilestoneID: "{{mtoMilestoneID}}",
+        content: "Test note"
+      })
+    {
+      id
+      content
+  	}
+  } 
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOMilestoneNote
+  
+  mtoMilestoneNoteID = responseData.id
+  
+  
+  bru.setVar("mtoMilestoneNoteID", mtoMilestoneNoteID);
+}
+
+settings {
+  encodeUrl: true
+}

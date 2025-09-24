@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Grid, GridContainer, Label } from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import { Label } from '@trussworks/react-uswds';
 import {
   GetMtoAllMilestonesQuery,
   GetMtoSolutionQuery
@@ -11,7 +10,6 @@ import {
 import HelpText from 'components/HelpText';
 import UswdsReactLink from 'components/LinkWrapper';
 import MultiSelect from 'components/MultiSelect';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import '../../index.scss';
 
@@ -32,8 +30,6 @@ const LinkMilestoneForm = ({
   const { t: solutionT } = useTranslation('mtoSolution');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
-
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   // Get all common milestones that have a suggested solution that is the same as the selected solution
   const commonlyUsedMilestones = useMemo(
@@ -91,71 +87,57 @@ const LinkMilestoneForm = ({
   ];
 
   return (
-    <GridContainer
-      className={classNames({
-        'padding-8': !isTablet,
-        'padding-4': isTablet
-      })}
-    >
-      <Grid row>
-        <Grid col={10}>
-          <h3 className="margin-bottom-2">
-            {modelToOperationsMiscT(
-              'modal.editSolution.selectedMilestoneCount',
-              {
-                count: milestoneIDs.length
-              }
-            )}
-          </h3>
+    <div className="padding-8 maxw-tablet">
+      <h3 className="margin-bottom-2">
+        {modelToOperationsMiscT('modal.editSolution.selectedMilestoneCount', {
+          count: milestoneIDs.length
+        })}
+      </h3>
 
-          <div className="text-base-dark mint-body-normal padding-bottom-4 border-bottom border-base-light">
-            <Trans
-              i18nKey="modelToOperationsMisc:modal.editSolution.visitMilestoneLibrary"
-              components={{
-                milestone: (
-                  <UswdsReactLink
-                    to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
-                    state={{ scroll: true }}
-                  >
-                    {' '}
-                  </UswdsReactLink>
-                )
-              }}
-            />
-          </div>
+      <div className="text-base-dark mint-body-normal padding-bottom-4 border-bottom border-base-light">
+        <Trans
+          i18nKey="modelToOperationsMisc:modal.editSolution.visitMilestoneLibrary"
+          components={{
+            milestone: (
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                state={{ scroll: true }}
+              >
+                {' '}
+              </UswdsReactLink>
+            )
+          }}
+        />
+      </div>
 
-          <Label htmlFor="available-solutions">
-            {solutionT('milestones.label')}
-          </Label>
+      <Label htmlFor="available-solutions">
+        {solutionT('milestones.label')}
+      </Label>
 
-          <HelpText className="margin-top-1">
-            {modelToOperationsMiscT('modal.editSolution.helpText')}
-          </HelpText>
+      <HelpText className="margin-top-1">
+        {modelToOperationsMiscT('modal.editSolution.helpText')}
+      </HelpText>
 
-          <MultiSelect
-            id="available-milestones"
-            inputId="available-milestones"
-            ariaLabel={solutionT('milestones.label')}
-            options={
-              commonlyUsedExistingMilestones.length === 0
-                ? groupedOptions[1].options
-                : []
-            }
-            groupedOptions={
-              commonlyUsedExistingMilestones.length > 0
-                ? groupedOptions
-                : undefined
-            }
-            selectedLabel={solutionT('milestones.multiSelectLabel')}
-            initialValues={milestoneIDs}
-            name="availableMilestones"
-            onChange={values => {
-              setMilestoneIDs(values);
-            }}
-          />
-        </Grid>
-      </Grid>
-    </GridContainer>
+      <MultiSelect
+        id="available-milestones"
+        inputId="available-milestones"
+        ariaLabel={solutionT('milestones.label')}
+        options={
+          commonlyUsedExistingMilestones.length === 0
+            ? groupedOptions[1].options
+            : []
+        }
+        groupedOptions={
+          commonlyUsedExistingMilestones.length > 0 ? groupedOptions : undefined
+        }
+        selectedLabel={solutionT('milestones.multiSelectLabel')}
+        initialValues={milestoneIDs}
+        name="availableMilestones"
+        onChange={values => {
+          setMilestoneIDs(values);
+        }}
+      />
+    </div>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   DatabaseOperation,
   GetChangeHistoryQuery,
   TableName,
+  TranslatedAuditMetaData,
   TranslationDataType,
   TranslationQuestionType
 } from 'gql/generated/graphql';
@@ -52,6 +53,7 @@ type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
   changeType: DatabaseOperation;
   tableName: TranslationTables;
+  metaData?: TranslatedAuditMetaData | null;
 };
 
 export const ChangeHeader = ({
@@ -223,6 +225,24 @@ export const ChangeHeader = ({
     );
   }
 
+  // MTO note audits
+  if (changeRecordType === 'mtoNoteUpdate') {
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          action: getActionText(changeRecord),
+          inOrTo: changeRecord.action === 'INSERT' ? 'to' : 'from',
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
   // CR and TDL audits
   if (changeRecordType === 'cRUpdate' || changeRecordType === 'tDLUpdate') {
     const crTdlName =
@@ -360,7 +380,12 @@ export const ChangeHeader = ({
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
+const SingleChange = ({
+  change,
+  changeType,
+  tableName,
+  metaData
+}: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   // If the field name is in the hidden fields list, do not render the change record
@@ -391,7 +416,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           )}{' '}
           {/* Post text action - updated, created, removed, etc */}
           <span className="text-normal">
-            {getNestedActionText(change, changeType, tableName)}
+            {getNestedActionText(change, changeType, tableName, metaData)}
           </span>
         </span>
       </div>
@@ -511,7 +536,8 @@ export const RenderChangeValue = ({
 export const ChangedQuestion = ({
   change,
   changeType,
-  tableName
+  tableName,
+  metaData
 }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
@@ -568,7 +594,8 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'cRUpdate' ||
     changeRecordType === 'tDLUpdate' ||
     changeRecordType === 'documentUpdate' ||
-    changeRecordType === 'operationalNeedUpdate';
+    changeRecordType === 'operationalNeedUpdate' ||
+    changeRecordType === 'mtoNoteUpdate';
 
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
@@ -640,6 +667,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                 key={change.id}
                 changeType={changeRecord.action}
                 tableName={changeRecord.tableName as TranslationTables}
+                metaData={changeRecord.metaData}
               />
             ))}
           </div>

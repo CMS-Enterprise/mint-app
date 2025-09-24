@@ -512,7 +512,8 @@ export const milestoneMock = (
                 isAdded: true
               }
             }
-          ]
+          ],
+          notes: []
         }
       }
     }
@@ -816,7 +817,8 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
                   status: MtoMilestoneStatus.NOT_STARTED,
-                  riskIndicator: MtoRiskIndicator.ON_TRACK
+                  riskIndicator: MtoRiskIndicator.ON_TRACK,
+                  notes: []
                 }
               ]
             }
@@ -841,7 +843,8 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
                   status: MtoMilestoneStatus.NOT_STARTED,
-                  riskIndicator: MtoRiskIndicator.ON_TRACK
+                  riskIndicator: MtoRiskIndicator.ON_TRACK,
+                  notes: []
                 }
               ]
             }

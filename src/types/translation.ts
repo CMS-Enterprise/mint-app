@@ -54,6 +54,7 @@ import {
   MtoCommonSolutionSystemOwnerTranslation,
   MtoFacilitator,
   MtoInfoTranslation,
+  MtoMilestoneNoteTranslation,
   MtoMilestoneSolutionLinkTranslation,
   MtoMilestoneStatus,
   MtoMilestoneTranslation,
@@ -1392,6 +1393,20 @@ export type TranslationMTOCommonSolutionSystemOwnerCustom = {
   [K in keyof TranslationMTOCommonSolutionSystemOwnerCustomGQL]: TranslationMTOCommonSolutionSystemOwnerCustomForm[K]; // FE form type
 };
 
+// MTO Milestone Note - Change History purposes only
+export type TranslationMTOMilestoneNoteCustomForm = {
+  content: TranslationFieldProperties;
+};
+
+type TranslationMTOMilestoneNoteCustomGQL = Omit<
+  MtoMilestoneNoteTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationMTOMilestoneNoteCustom = {
+  [K in keyof TranslationMTOMilestoneNoteCustomGQL]: TranslationMTOMilestoneNoteCustomForm[K]; // FE form type
+};
+
 // Timeline
 export type TranslationTimelineForm = {
   completeICIP: TranslationFieldProperties;
@@ -1447,6 +1462,7 @@ export type TranslationPlan = {
   mtoMilestone: TranslationMTOMilestoneCustom;
   mtoSolution: TranslationMTOSolutionCustom;
   mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
+  mtoMilestoneNote: TranslationMTOMilestoneNoteCustom;
 };
 
 export type TranslationPlanSection =
@@ -1482,5 +1498,6 @@ export enum PlanSection {
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',
   MTO_SOLUTION = 'mtoSolution',
-  MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner'
+  MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
+  MTO_MILESTONE_NOTE = 'mtoMilestoneNote'
 }
