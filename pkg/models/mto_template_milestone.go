@@ -4,9 +4,9 @@ import "github.com/google/uuid"
 
 type MTOTemplateMilestone struct {
 	baseStruct
+	templateRelation
 
 	Name                  string                `json:"name"                  db:"name"`
-	TemplateID            uuid.UUID             `json:"templateID"            db:"template_id"`
 	Key                   MTOCommonMilestoneKey `json:"key" db:"key"`
 	MTOTemplateCategoryID *uuid.UUID            `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
 }
@@ -20,7 +20,7 @@ func NewMTOTemplateMilestone(
 ) *MTOTemplateMilestone {
 	return &MTOTemplateMilestone{
 		baseStruct:            NewBaseStruct(createdBy),
-		TemplateID:            templateID,
+		templateRelation:      NewTemplateRelation(templateID),
 		Key:                   mtoCommonMilestoneKey,
 		MTOTemplateCategoryID: mtoTemplateCategoryID,
 	}

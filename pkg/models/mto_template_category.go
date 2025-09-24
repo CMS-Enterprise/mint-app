@@ -4,11 +4,11 @@ import "github.com/google/uuid"
 
 type MTOTemplateCategory struct {
 	baseStruct
+	templateRelation
 
-	TemplateID uuid.UUID  `json:"templateID" db:"template_id"`
-	Name       string     `json:"name"       db:"name"`
-	ParentID   *uuid.UUID `json:"parentID"   db:"parent_id"`
-	Order      int        `json:"order"      db:"order"`
+	Name     string     `json:"name"       db:"name"`
+	ParentID *uuid.UUID `json:"parentID"   db:"parent_id"`
+	Order    int        `json:"order"      db:"order"`
 }
 
 // MTOTemplateSubCategory is the same as a MTOTemplateCategory in the database. It is separated here so we can be precise in graphql
@@ -23,11 +23,11 @@ func NewMTOTemplateCategory(
 	order int,
 ) *MTOTemplateCategory {
 	return &MTOTemplateCategory{
-		baseStruct: NewBaseStruct(createdBy),
-		TemplateID: templateID,
-		Name:       name,
-		ParentID:   parentID,
-		Order:      order,
+		baseStruct:       NewBaseStruct(createdBy),
+		templateRelation: NewTemplateRelation(templateID),
+		Name:             name,
+		ParentID:         parentID,
+		Order:            order,
 	}
 }
 
@@ -39,10 +39,10 @@ func NewMTOTemplateSubCategory(
 	order int,
 ) *MTOTemplateSubCategory {
 	return &MTOTemplateSubCategory{
-		baseStruct: NewBaseStruct(createdBy),
-		TemplateID: templateID,
-		Name:       name,
-		Order:      order,
+		baseStruct:       NewBaseStruct(createdBy),
+		templateRelation: NewTemplateRelation(templateID),
+		Name:             name,
+		Order:            order,
 	}
 }
 

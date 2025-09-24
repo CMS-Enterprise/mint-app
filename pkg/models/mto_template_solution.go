@@ -4,10 +4,10 @@ import "github.com/google/uuid"
 
 type MTOTemplateSolution struct {
 	baseStruct
+	templateRelation
 
 	Name                string               `json:"name"               db:"name"`
 	Key                 MTOCommonSolutionKey `json:"key"                db:"key"`
-	TemplateID          uuid.UUID            `json:"templateID"         db:"template_id"`
 	MTOCommonSolutionID uuid.UUID            `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
 }
 
@@ -19,7 +19,7 @@ func NewMTOTemplateSolution(
 ) *MTOTemplateSolution {
 	return &MTOTemplateSolution{
 		baseStruct:          NewBaseStruct(createdBy),
-		TemplateID:          templateID,
+		templateRelation:    NewTemplateRelation(templateID),
 		MTOCommonSolutionID: mtoCommonSolutionID,
 	}
 }

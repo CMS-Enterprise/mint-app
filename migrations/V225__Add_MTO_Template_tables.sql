@@ -295,7 +295,7 @@ CREATE INDEX IF NOT EXISTS idx_model_plan_mto_template_template_id
 ON model_plan_mto_template_link (template_id);
 
 SELECT audit.AUDIT_TABLE(
-    'public','model_plan_mto_template_link','id',NULL,
+    'public','model_plan_mto_template_link','id', 'model_plan_id',
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]
 );
 

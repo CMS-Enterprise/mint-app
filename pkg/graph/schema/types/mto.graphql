@@ -13,7 +13,8 @@ type ModelsToOperationMatrix {
   commonSolutions: [MTOCommonSolution!]!
   milestones: [MTOMilestone!]!
   """
-  This returns
+  This returns all mto templates, regardless of whether they're linked to a model plan
+  to check if it is part of this MTO check the returned isAdded field
   """
   mtoTemplates: [MTOTemplate!]!
   """

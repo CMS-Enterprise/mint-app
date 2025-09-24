@@ -131,7 +131,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 }
 
 // MTOMilestoneCreateCommonWithTX uses the provided information to create a new Common MTO Milestone with an existing transaction
-func MTOMilestoneCreateCommonWithTX(
+func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	ctx context.Context,
 	logger *zap.Logger,
 	principal authentication.Principal,
@@ -143,7 +143,7 @@ func MTOMilestoneCreateCommonWithTX(
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
 	commonSolutions []models.MTOCommonSolutionKey,
-) (*models.MTOMilestone, error) {
+) (*models.MTOMilestoneWithNewlyInsertedStatus, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -189,10 +189,7 @@ func MTOMilestoneCreateCommonWithTX(
 	)
 	milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
 
-	if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
-		return nil, err
-	}
-	createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
+	createdMilestone, err := storage.MTOMilestoneCreateAllowConflicts(tx, logger, milestone)
 	if err != nil {
 		logger.Error("failed to create mto milestone from common library", zap.Error(err))
 		return nil, err

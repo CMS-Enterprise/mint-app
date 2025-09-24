@@ -1628,7 +1628,10 @@ export type ModelsToOperationMatrix = {
   info: MtoInfo;
   milestones: Array<MtoMilestone>;
   milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
-  /** This returns */
+  /**
+   * This returns all mto templates, regardless of whether they're linked to a model plan
+   * to check if it is part of this MTO check the returned isAdded field
+   */
   mtoTemplates: Array<MtoTemplate>;
   /**
    * RecentEdit returns the most recent translated audit for the MTO

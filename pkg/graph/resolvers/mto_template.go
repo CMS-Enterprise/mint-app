@@ -104,34 +104,6 @@ func ApplyTemplateToMTO(
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// Verify the model plan exists
-	modelPlan, err := loaders.ModelPlan.GetByID.Load(ctx, modelPlanID)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get model plan: %w", err)
-	}
-	if modelPlan == nil {
-		return nil, fmt.Errorf("model plan not found")
-	}
-
-	// Verify the template exists
-	template, err := loaders.MTOTemplate.ByID.Load(ctx, templateID)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get template: %w", err)
-	}
-	if template == nil {
-		return nil, fmt.Errorf("template not found")
-	}
-
-	// Check if template is already applied to this model plan
-	existingLinks, err := loaders.ModelPlanMTOTemplateLink.ByModelPlanID.Load(ctx, modelPlanID)
-	if err == nil {
-		for _, link := range existingLinks {
-			if link.TemplateID == templateID && link.IsActive {
-				return nil, fmt.Errorf("template is already applied to this model plan")
-			}
-		}
-	}
-
 	// Start a transaction for the rest of the operations
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*model.ApplyTemplateResult, error) {
 		// Get template data using loaders
@@ -195,44 +167,42 @@ func ApplyTemplateToMTO(
 				category.Order,
 			)
 
-			err := BaseStructPreCreate(logger, mtoCategory, principal, store, true)
-			if err != nil {
-				warnings = append(warnings, fmt.Sprintf("failed to prepare MTO category %s: %v", category.Name, err))
-				continue
-			}
-
-			categoryAdded, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, mtoCategory)
+			categoryAddedWithStatus, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, mtoCategory)
 			if err != nil {
 				warnings = append(warnings, fmt.Sprintf("failed to create MTO category %s: %v", category.Name, err))
 				continue
 			}
 
-			categoryIDMap[category.ID] = categoryAdded.ID
+			categoryIDMap[category.ID] = categoryAddedWithStatus.ID
 
-			categoriesCreated++
+			if categoryAddedWithStatus.NewlyInserted {
+				categoriesCreated++
+			}
 		}
 
 		// Copy solutions to MTO solutions
+		solutionsToInsert := make([]models.MTOCommonSolutionKey, 0, len(solutions))
 		for _, solution := range solutions {
 			solutionIDKeyMap[solution.ID] = solution.Key
-			_, err := MTOSolutionCreateCommon(
-				ctx,
-				logger,
-				principal,
-				store,
-				emailService,
-				emailTemplateService,
-				addressBook,
-				modelPlanID,
-				solution.Key,
-				nil,
-			)
+			solutionsToInsert = append(solutionsToInsert, solution.Key)
+		}
 
-			if err != nil {
-				warnings = append(warnings, fmt.Sprintf("failed to create MTO solution %s: %v", solution.Name, err))
-				continue
+		resSolutionsInserted, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(
+			tx,
+			logger,
+			solutionsToInsert,
+			modelPlanID,
+			principalAccount.ID,
+		)
+		if err != nil {
+			warnings = append(warnings, fmt.Sprintf("failed to create MTO solutions %v", err))
+		} else {
+			// count number of newlyInsert is true in resSolutionsInserted
+			for _, inserted := range resSolutionsInserted {
+				if inserted.NewlyInserted {
+					solutionsCreated++
+				}
 			}
-			solutionsCreated++
 		}
 
 		// Copy milestones to MTO milestones
@@ -250,7 +220,7 @@ func ApplyTemplateToMTO(
 				}
 			}
 
-			_, err := MTOMilestoneCreateCommonWithTX(
+			milestoneWithStatus, err := MTOMilestoneCreateCommonWithTXAllowConflicts(
 				ctx,
 				logger,
 				principal,
@@ -267,18 +237,19 @@ func ApplyTemplateToMTO(
 				warnings = append(warnings, fmt.Sprintf("failed to create MTO milestone %s: %v", milestone.Name, err))
 				continue
 			}
-			milestonesCreated++
+
+			if milestoneWithStatus.NewlyInserted {
+				milestonesCreated++
+			}
 		}
 
 		// Create the new template link
-		note := fmt.Sprintf("Template %s applied to model plan %s by %s", template.Name, modelPlan.ModelName, *principalAccount.Username)
 		newLink := models.NewModelPlanMTOTemplateLink(
 			principalAccount.ID,
 			modelPlanID,
 			templateID,
 			time.Now(),
 			true,
-			&note,
 		)
 
 		// Create the template link record
