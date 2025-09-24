@@ -16,6 +16,7 @@ export default gql(/* GraphQL */ `
       isDraft
       commonMilestone {
         key
+        description
         commonSolutions {
           key
         }

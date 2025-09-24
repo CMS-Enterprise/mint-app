@@ -269,6 +269,7 @@ export const commonMilestonesMock: MockedResponse<
                 categoryName: 'Test Category',
                 subCategoryName: 'Test SubCategory',
                 facilitatedByRole: [],
+                description: 'Description 1',
                 commonSolutions: [
                   {
                     __typename: 'MTOCommonSolution',
@@ -491,6 +492,7 @@ export const milestoneMock = (
           commonMilestone: {
             __typename: 'MTOCommonMilestone',
             key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+            description: 'Description 1',
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',

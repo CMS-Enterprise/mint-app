@@ -215,9 +215,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
             {milestone.key && (
               <p className="margin-0 mint-body-normal text-base-dark text-pre-line">
-                {modelToOperationsMiscT(
-                  `milestoneLibrary.milestoneMap.${milestone.key}.description`
-                )}
+                {milestone.description}
               </p>
             )}
 

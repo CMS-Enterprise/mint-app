@@ -47,5 +47,6 @@ ALTER COLUMN description SET NOT NULL;
 UPDATE mto_milestone 
 SET description = mto_common_milestone.description
 FROM mto_common_milestone
-WHERE mto_milestone.mto_common_milestone_key = mto_common_milestone.key
-AND mto_milestone.mto_common_milestone_key IS NOT NULL;
+WHERE
+    mto_milestone.mto_common_milestone_key = mto_common_milestone.key
+    AND mto_milestone.mto_common_milestone_key IS NOT NULL;
