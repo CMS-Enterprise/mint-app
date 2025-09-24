@@ -24,9 +24,9 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCustom() {
 	suite.NoError(err)
 	category1SubA, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat1SubAName, plan.ID, &category1.ID)
 	suite.NoError(err)
-
+	desc := "Description for Custom Milestone"
 	// Create an uncategorized custom milestone
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", nil, plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", &desc, plan.ID, nil)
 	suite.NoError(err)
 	suite.Nil(milestone.MTOCategoryID)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone.CreatedBy)
@@ -34,7 +34,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCustom() {
 	suite.Nil(milestone.ModifiedDts)
 
 	// Create a custom milestone under the parent category
-	milestone1, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone 1", nil, plan.ID, &category1.ID)
+	milestone1, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone 1", &desc, plan.ID, &category1.ID)
 	suite.NoError(err)
 	if suite.NotNil(milestone1.MTOCategoryID) {
 		suite.Equal(category1.ID, *milestone1.MTOCategoryID)
@@ -44,7 +44,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCustom() {
 	suite.Nil(milestone1.ModifiedDts)
 
 	// Create a custom milestone under the subcategory
-	milestone1A, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone 1A", nil, plan.ID, &category1SubA.ID)
+	milestone1A, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone 1A", &desc, plan.ID, &category1SubA.ID)
 	suite.NoError(err)
 	if suite.NotNil(milestone1A.MTOCategoryID) {
 		suite.Equal(category1SubA.ID, *milestone1A.MTOCategoryID)
@@ -58,21 +58,21 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCustom() {
 func (suite *ResolverSuite) TestMTOMilestoneCreateCustomDuplicates() {
 	// Create model plan
 	plan := suite.createModelPlan("testing duplicate custom milestone creation")
-
+	desc := "Description for Custom Milestone"
 	// Create an uncategorized custom milestone
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", nil, plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", &desc, plan.ID, nil)
 	suite.NoError(err)
 	suite.NotNil(milestone)
 
 	// Try and create one with the same name
-	milestoneDupe, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", nil, plan.ID, nil)
+	milestoneDupe, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", &desc, plan.ID, nil)
 	suite.Error(err)
 	suite.Nil(milestoneDupe)
 
 	// Try and create one with the same even though it's in a different category
 	category, err := MTOCategoryCreate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Category", plan.ID, nil)
 	suite.NoError(err)
-	milestoneDupe, err = MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", nil, plan.ID, &category.ID)
+	milestoneDupe, err = MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Custom Milestone", &desc, plan.ID, &category.ID)
 	suite.Error(err)
 	suite.Nil(milestoneDupe)
 }
@@ -184,9 +184,9 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 func (suite *ResolverSuite) TestMTOMilestoneDescription() {
 	// Create model plan
 	plan := suite.createModelPlan("testing milestone description")
-
+	desc := "Description for Test Milestone"
 	// Create a custom milestone with a description
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Test Milestone", nil, plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Test Milestone", &desc, plan.ID, nil)
 	suite.NoError(err)
 	suite.NotNil(milestone)
 
@@ -377,7 +377,8 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionID() {
 	plan := suite.createModelPlan("plan for adding solutions by solution ID")
 	// Create a milestone with no linked solutions
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone", nil, plan.ID, nil)
+	desc := "Description for Initial Milestone CK"
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone", &desc, plan.ID, nil)
 	suite.NoError(err)
 
 	// Create a custom solution (no common key)
@@ -425,8 +426,9 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionI
 
 func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddByCommonKey() {
 	plan := suite.createModelPlan("plan for adding solutions by common key")
+	descCk := "Description for Initial Milestone CK"
 	// Create a milestone with no linked solutions
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone CK", nil, plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone CK", &descCk, plan.ID, nil)
 	suite.NoError(err)
 
 	// Use a known common solution key from your codebase
@@ -462,8 +464,9 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddByCommonKey
 
 func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySolutionID() {
 	plan := suite.createModelPlan("plan for unlinking solutions by solution ID")
+	descUnlink := "Description for Milestone to Unlink ID"
 	// Create a milestone and link a solution
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone to Unlink ID", nil, plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone to Unlink ID", &descUnlink, plan.ID, nil)
 	suite.NoError(err)
 
 	solName := "To Unlink Solution"
@@ -525,8 +528,9 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 
 func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommonKey() {
 	plan := suite.createModelPlan("plan for unlinking solutions by common key")
+	descUnlink := "Description for Milestone Unlink CK"
 	// Create a milestone and link a common solution key
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone Unlink CK", nil, plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone Unlink CK", &descUnlink, plan.ID, nil)
 	suite.NoError(err)
 
 	commonKey := models.MTOCSKCcw // Example common solution key
