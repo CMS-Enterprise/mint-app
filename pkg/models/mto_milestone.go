@@ -28,8 +28,9 @@ type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation
 
-	Name *string                `json:"name" db:"name"`                    // From Common Milestone Table if linked
-	Key  *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"` // Foreign Key to the Common Milestone Table
+	Name        *string                `json:"name" db:"name"`                    // From Common Milestone Table if linked
+	Description *string                `json:"description" db:"description"`      // From Common Milestone Table if linked
+	Key         *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"` // Foreign Key to the Common Milestone Table
 
 	MTOCategoryID      *uuid.UUID                 `json:"mtoCategoryID" db:"mto_category_id"`
 	FacilitatedBy      *EnumArray[MTOFacilitator] `json:"facilitatedBy" db:"facilitated_by"`
@@ -47,9 +48,10 @@ func (m *MTOMilestone) AddedFromMilestoneLibrary() bool {
 }
 
 // NewMTOMilestone returns a new mtoMileMTOMilestone object
-func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneKey *MTOCommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
+func NewMTOMilestone(createdBy uuid.UUID, name *string, description *string, commonMilestoneKey *MTOCommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{
 		Name:              name,
+		Description:       description,
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		Key:               commonMilestoneKey,

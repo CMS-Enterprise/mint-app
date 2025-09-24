@@ -15,6 +15,14 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// Description is the resolver for the description field.
+func (r *mTOMilestoneResolver) Description(ctx context.Context, obj *models.MTOMilestone) (*string, error) {
+	if obj.Description == nil {
+		return nil, nil
+	}
+	return obj.Description, nil
+}
+
 // FacilitatedBy is the resolver for the facilitatedBy field.
 func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
 	if obj.FacilitatedBy == nil {
@@ -43,7 +51,7 @@ func (r *mTOMilestoneResolver) Categories(ctx context.Context, obj *models.MTOMi
 }
 
 // CreateMTOMilestoneCustom is the resolver for the createMTOMilestoneCustom field.
-func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPlanID uuid.UUID, name string, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPlanID uuid.UUID, name string, description *string, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return MTOMilestoneCreateCustom(ctx, logger, principal, r.store, name, modelPlanID, mtoCategoryID)
