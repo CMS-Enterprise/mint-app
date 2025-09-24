@@ -7,9 +7,11 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -83,5 +85,17 @@ func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 	if err != nil {
 		return nil, fmt.Errorf("unable to delete MTO milestone note. Err %w", err)
 	}
-	return storage.MTOMilestoneNoteDelete(store, logger, note)
+
+	var result *models.MTOMilestoneNote
+	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		var deleteErr error
+		result, deleteErr = storage.MTOMilestoneNoteDelete(tx, logger, note, principalAccount.ID)
+		return deleteErr
+	})
+
+	if err != nil {
+		return nil, fmt.Errorf("unable to delete MTO milestone note. Err %w", err)
+	}
+
+	return result, nil
 }
