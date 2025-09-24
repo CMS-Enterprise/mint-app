@@ -357,4 +357,82 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
   });
+
+  it('adds, edits, and removes a note', () => {
+    cy.get('table').within(() => {
+      cy.get('td')
+        .contains('Custom Milestone')
+        .should('exist')
+        .parent('tr')
+        .within(() => {
+          cy.contains('Edit details').click({ force: true });
+        });
+    });
+
+    cy.get('[data-testid="add-note-button"]').click();
+
+    cy.contains('h3', 'Add a milestone note').should('exist');
+
+    cy.get('[data-testid="save-note-button"]').should('be.disabled');
+
+    cy.get('#content').type('Test note');
+
+    cy.get('[data-testid="save-note-button"]')
+      .should('be.not.disabled')
+      .click();
+
+    cy.contains('p', '1 note added to this milestone').should('exist');
+
+    cy.contains('button', 'Save changes').should('be.not.disabled').click();
+
+    cy.get('[data-testid="toast-success"]').should('exist');
+
+    cy.get('table').within(() => {
+      cy.get('td')
+        .contains('Custom Milestone')
+        .should('exist')
+        .parent('tr')
+        .within(() => {
+          cy.contains('Edit details').click({ force: true });
+        });
+    });
+
+    cy.get('[data-testid="edit-note-button"]')
+      .should('be.not.disabled')
+      .click();
+
+    cy.contains('h3', 'Edit milestone note').should('exist');
+
+    cy.get('[data-testid="save-note-button"]').should('be.disabled');
+
+    cy.get('#content').should('have.value', 'Test note');
+
+    cy.get('#content').type('Test note 2');
+
+    cy.get('[data-testid="save-note-button"]')
+      .should('be.not.disabled')
+      .click();
+
+    cy.contains('p', '1 note added to this milestone').should('exist');
+
+    cy.get('[data-testid="remove-note-button"]').click();
+
+    cy.contains('p', '0 notes added to this milestone').should('exist');
+
+    cy.get('[data-testid="add-note-button"]').click();
+
+    cy.contains('h3', 'Add a milestone note').should('exist');
+
+    cy.get('[data-testid="save-note-button"]').should('be.disabled');
+
+    cy.get('#content').type('Test note 3');
+
+    cy.get('[data-testid="save-note-button"]')
+      .should('be.not.disabled')
+      .click();
+
+    cy.contains('button', 'Save changes').should('be.not.disabled').click();
+
+    cy.get('[data-testid="toast-success"]').should('exist');
+  });
 });

@@ -26,8 +26,6 @@ import {
   Fieldset,
   Form,
   FormGroup,
-  Grid,
-  GridContainer,
   Icon,
   Label,
   Radio,
@@ -118,7 +116,6 @@ const EditSolutionForm = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
@@ -631,406 +628,144 @@ const EditSolutionForm = ({
         </div>
       )}
 
-      <GridContainer
-        className={classNames({
-          'padding-8': !isTablet,
-          'padding-4': isTablet
-        })}
-      >
-        <Grid row>
-          <Grid col={10}>
-            {!solution.addedFromSolutionLibrary && (
-              <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
-                <Icon.Construction
-                  className="margin-left-1"
-                  style={{ top: '2px' }}
-                  aria-label="construction"
-                />{' '}
-                {modelToOperationsMiscT('modal.editSolution.custom')}
-              </span>
-            )}
+      <div className="padding-8 maxw-tablet">
+        {!solution.addedFromSolutionLibrary && (
+          <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
+            <Icon.Construction
+              className="margin-left-1"
+              style={{ top: '2px' }}
+              aria-label="construction"
+            />{' '}
+            {modelToOperationsMiscT('modal.editSolution.custom')}
+          </span>
+        )}
 
-            <FormProvider {...methods}>
-              <Form
-                className="maxw-none"
-                id="edit-solution-form"
-                onSubmit={handleSubmit(onSubmit)}
+        <FormProvider {...methods}>
+          <Form
+            className="maxw-none"
+            id="edit-solution-form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <ConfirmLeaveRHF />
+
+            <div className="border-bottom-1px border-base-lighter padding-bottom-3 margin-bottom-3">
+              <h2
+                className={classNames(
+                  'margin-y-2 margin-bottom-2 line-height-large',
+                  {
+                    'margin-top-0': solution.addedFromSolutionLibrary
+                  }
+                )}
               >
-                <ConfirmLeaveRHF />
+                {solution.name}
+              </h2>
 
-                <div className="border-bottom-1px border-base-lighter padding-bottom-3 margin-bottom-3">
-                  <h2
-                    className={classNames(
-                      'margin-y-2 margin-bottom-2 line-height-large',
-                      {
-                        'margin-top-0': solution.addedFromSolutionLibrary
-                      }
-                    )}
+              <p className="text-base margin-bottom-0">
+                {mtoSolutionT(`solutionType.options.${solution.type}`)}
+              </p>
+
+              {solution.addedFromSolutionLibrary && (
+                <div className="margin-top-2">
+                  <UswdsReactLink
+                    to={`/help-and-knowledge/operational-solutions?page=1&solution-key=${solution?.key}&section=about`}
+                    target="_blank"
+                    variant="external"
                   >
-                    {solution.name}
-                  </h2>
-
-                  <p className="text-base margin-bottom-0">
-                    {mtoSolutionT(`solutionType.options.${solution.type}`)}
-                  </p>
-
-                  {solution.addedFromSolutionLibrary && (
-                    <div className="margin-top-2">
-                      <UswdsReactLink
-                        to={`/help-and-knowledge/operational-solutions?page=1&solution-key=${solution?.key}&section=about`}
-                        target="_blank"
-                        variant="external"
-                      >
-                        {modelToOperationsMiscT('modal.editSolution.learnMore')}
-                      </UswdsReactLink>
-                    </div>
-                  )}
+                    {modelToOperationsMiscT('modal.editSolution.learnMore')}
+                  </UswdsReactLink>
                 </div>
+              )}
+            </div>
 
-                <Fieldset disabled={loading} className="margin-bottom-8">
-                  <p className="margin-top-0 margin-bottom-3 text-base">
-                    <Trans
-                      i18nKey={modelToOperationsMiscT(
-                        'modal.allFieldsRequired'
-                      )}
-                      components={{
-                        s: <span className="text-secondary-dark" />
-                      }}
-                    />
-                  </p>
+            <Fieldset disabled={loading} className="margin-bottom-8">
+              <p className="margin-top-0 margin-bottom-3 text-base">
+                <Trans
+                  i18nKey={modelToOperationsMiscT('modal.allFieldsRequired')}
+                  components={{
+                    s: <span className="text-secondary-dark" />
+                  }}
+                />
+              </p>
 
-                  {!solution.addedFromSolutionLibrary && (
-                    <>
-                      <Controller
-                        name="name"
-                        control={control}
-                        rules={{
-                          required:
-                            modelToOperationsMiscT('validation.fillOut'),
-                          validate: value => {
-                            const trimmedValue = value.trim();
-                            if (!trimmedValue) {
-                              return modelToOperationsMiscT(
-                                'validation.fillOut'
-                              );
-                            }
-                            return true;
-                          }
-                        }}
-                        render={({
-                          field: { ref, ...field },
-                          fieldState: { error }
-                        }) => (
-                          <FormGroup className="margin-bottom-3">
-                            <Label requiredMarker htmlFor="name">
-                              {modelToOperationsMiscT(
-                                'modal.editSolution.label.solutionTitle'
-                              )}
-                            </Label>
-
-                            {!!error && (
-                              <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                            )}
-
-                            <TextInput
-                              {...field}
-                              ref={null}
-                              id="name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        )}
-                      />
-                      <Controller
-                        name="type"
-                        control={control}
-                        rules={{
-                          required:
-                            modelToOperationsMiscT('validation.fillOut'),
-                          validate: value =>
-                            value !== 'default' ||
-                            modelToOperationsMiscT('validation.fillOut')
-                        }}
-                        render={({
-                          field: { ref, ...field },
-                          fieldState: { error }
-                        }) => (
-                          <FormGroup className="margin-top-0 margin-bottom-2">
-                            <Label
-                              htmlFor={convertCamelCaseToKebabCase(field.name)}
-                              className="mint-text-normal line-height-normal maxw-none margin-bottom-1 text-bold"
-                              requiredMarker
-                            >
-                              {modelToOperationsMiscT(
-                                'modal.editSolution.label.solutionType'
-                              )}
-                            </Label>
-                            {!!error && (
-                              <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                            )}
-                            <Select
-                              {...field}
-                              id={convertCamelCaseToKebabCase(field.name)}
-                              value={field.value || ''}
-                              defaultValue="default"
-                            >
-                              <option value="default">- Select - </option>
-                              {getKeys(solutionTypeConfig.options).map(
-                                option => {
-                                  return (
-                                    <option
-                                      key={`select-${convertCamelCaseToKebabCase(option)}`}
-                                      value={option}
-                                    >
-                                      {solutionTypeConfig.options[option]}
-                                    </option>
-                                  );
-                                }
-                              )}
-                            </Select>
-                          </FormGroup>
-                        )}
-                      />
-
-                      <div className="margin-top-0 padding-top-1 margin-bottom-2">
-                        <p className="text-bold margin-y-0">
-                          {modelToOperationsMiscT('modal.solution.pocHeading')}
-                        </p>
-                        <p className="text-base margin-y-0">
-                          {modelToOperationsMiscT(
-                            'modal.solution.pocSubheading'
-                          )}
-                        </p>
-                      </div>
-
-                      <Controller
-                        name="pocName"
-                        control={control}
-                        render={({ field: { ref, ...field } }) => (
-                          <FormGroup className="margin-top-0 margin-bottom-2">
-                            <Label
-                              htmlFor={convertCamelCaseToKebabCase(field.name)}
-                              className="mint-body-normal maxw-none margin-bottom-1"
-                            >
-                              {modelToOperationsMiscT(
-                                'modal.solution.label.pocName'
-                              )}
-                            </Label>
-                            {errors.pocName && (
-                              <span className="usa-error-message" role="alert">
-                                {errors.pocName.message}
-                              </span>
-                            )}
-
-                            <TextInput
-                              type="text"
-                              {...field}
-                              id={convertCamelCaseToKebabCase(field.name)}
-                              value={field.value || ''}
-                            />
-                          </FormGroup>
-                        )}
-                      />
-
-                      <Controller
-                        name="pocEmail"
-                        control={control}
-                        rules={{
-                          pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
-                          }
-                        }}
-                        render={({ field: { ref, ...field } }) => (
-                          <FormGroup className="margin-top-0 margin-bottom-2">
-                            <Label
-                              htmlFor={convertCamelCaseToKebabCase(field.name)}
-                              className="mint-body-normal maxw-none margin-bottom-1"
-                            >
-                              {modelToOperationsMiscT(
-                                'modal.solution.label.pocEmail'
-                              )}
-                            </Label>
-                            {errors.pocEmail && (
-                              <span className="usa-error-message" role="alert">
-                                {errors.pocEmail.message}
-                              </span>
-                            )}
-
-                            <TextInput
-                              type="text"
-                              {...field}
-                              id={convertCamelCaseToKebabCase(field.name)}
-                              value={field.value || ''}
-                            />
-                          </FormGroup>
-                        )}
-                      />
-                    </>
-                  )}
-
+              {!solution.addedFromSolutionLibrary && (
+                <>
                   <Controller
-                    name="facilitatedBy"
+                    name="name"
                     control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-0 margin-bottom-3">
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase('facilitatedBy')}
-                        >
-                          {facilitatedByConfig.label}
+                    rules={{
+                      required: modelToOperationsMiscT('validation.fillOut'),
+                      validate: value => {
+                        const trimmedValue = value.trim();
+                        if (!trimmedValue) {
+                          return modelToOperationsMiscT('validation.fillOut');
+                        }
+                        return true;
+                      }
+                    }}
+                    render={({
+                      field: { ref, ...field },
+                      fieldState: { error }
+                    }) => (
+                      <FormGroup className="margin-bottom-3">
+                        <Label requiredMarker htmlFor="name">
+                          {modelToOperationsMiscT(
+                            'modal.editSolution.label.solutionTitle'
+                          )}
                         </Label>
 
-                        <HelpText className="margin-top-1">
-                          {facilitatedByConfig.sublabel}
-                        </HelpText>
+                        {!!error && (
+                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                        )}
 
-                        <MultiSelect
+                        <TextInput
                           {...field}
-                          id={convertCamelCaseToKebabCase(
-                            'multiSourceDataToCollect'
-                          )}
-                          inputId={convertCamelCaseToKebabCase('facilitatedBy')}
-                          ariaLabel={convertCamelCaseToKebabCase(
-                            'facilitatedBy'
-                          )}
-                          ariaLabelText={facilitatedByConfig.label}
-                          options={composeMultiSelectOptions(
-                            facilitatedByConfig.options
-                          )}
-                          selectedLabel={
-                            facilitatedByConfig.multiSelectLabel || ''
-                          }
-                          initialValues={watch('facilitatedBy')}
+                          ref={null}
+                          id="name"
+                          type="text"
                         />
                       </FormGroup>
                     )}
                   />
-
-                  {watch('facilitatedBy')?.includes(MtoFacilitator.OTHER) && (
-                    <Controller
-                      name="facilitatedByOther"
-                      control={control}
-                      rules={{
-                        required: modelToOperationsMiscT('validation.fillOut')
-                      }}
-                      render={({
-                        field: { ref, ...field },
-                        fieldState: { error }
-                      }) => (
-                        <FormGroup
-                          className="margin-0 margin-bottom-3"
-                          error={!!error}
-                        >
-                          <Label
-                            htmlFor={convertCamelCaseToKebabCase(
-                              'facilitatedByOther'
-                            )}
-                            requiredMarker
-                            className="text-normal"
-                          >
-                            {mtoSolutionT('facilitatedByOther.label')}
-                          </Label>
-
-                          {!!error && (
-                            <FieldErrorMsg>{error.message}</FieldErrorMsg>
-                          )}
-
-                          <HelpText className="margin-top-1">
-                            {mtoSolutionT('facilitatedByOther.sublabel')}
-                          </HelpText>
-
-                          <TextInput
-                            {...field}
-                            ref={null}
-                            id={convertCamelCaseToKebabCase(
-                              'facilitatedByOther'
-                            )}
-                            type="text"
-                            maxLength={75}
-                          />
-
-                          <HelpText className="margin-top-1">
-                            {modelToOperationsMiscT(
-                              'modal.editMilestone.charactersAllowed'
-                            )}
-                          </HelpText>
-                        </FormGroup>
-                      )}
-                    />
-                  )}
-
                   <Controller
-                    name="neededBy"
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-0 margin-bottom-3">
-                        <Label
-                          htmlFor={convertCamelCaseToKebabCase('neededBy')}
-                        >
-                          {mtoSolutionT('neededBy.label')}
-                        </Label>
-
-                        <HelpText className="margin-top-1">
-                          {mtoSolutionT('neededBy.sublabel')}
-                        </HelpText>
-
-                        <div className="position-relative">
-                          <DatePickerFormatted
-                            {...field}
-                            aria-labelledby={convertCamelCaseToKebabCase(
-                              'neededBy'
-                            )}
-                            id="solution-needed-by"
-                            defaultValue={field.value}
-                            suppressMilliseconds
-                          />
-
-                          {isDateInPast(watch('neededBy')) && (
-                            <DatePickerWarning
-                              label={generalT('dateWarning')}
-                            />
-                          )}
-                        </div>
-
-                        {isDateInPast(watch('neededBy')) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-2"
-                            headingLevel="h4"
-                            slim
-                          >
-                            {generalT('dateWarning')}
-                          </Alert>
-                        )}
-                      </FormGroup>
-                    )}
-                  />
-
-                  <Controller
-                    name="status"
+                    name="type"
                     control={control}
                     rules={{
-                      required: true
+                      required: modelToOperationsMiscT('validation.fillOut'),
+                      validate: value =>
+                        value !== 'default' ||
+                        modelToOperationsMiscT('validation.fillOut')
                     }}
-                    render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
+                    render={({
+                      field: { ref, ...field },
+                      fieldState: { error }
+                    }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-2">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
+                          className="mint-text-normal line-height-normal maxw-none margin-bottom-1 text-bold"
                           requiredMarker
                         >
-                          {mtoSolutionT('status.label')}
+                          {modelToOperationsMiscT(
+                            'modal.editSolution.label.solutionType'
+                          )}
                         </Label>
-
+                        {!!error && (
+                          <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                        )}
                         <Select
                           {...field}
                           id={convertCamelCaseToKebabCase(field.name)}
                           value={field.value || ''}
+                          defaultValue="default"
                         >
-                          {getKeys(stausConfig.options).map(option => {
+                          <option value="default">- Select - </option>
+                          {getKeys(solutionTypeConfig.options).map(option => {
                             return (
-                              <option key={option} value={option}>
-                                {stausConfig.options[option]}
+                              <option
+                                key={`select-${convertCamelCaseToKebabCase(option)}`}
+                                value={option}
+                              >
+                                {solutionTypeConfig.options[option]}
                               </option>
                             );
                           })}
@@ -1039,227 +774,447 @@ const EditSolutionForm = ({
                     )}
                   />
 
-                  <MTOStatusInfoToggle className="margin-bottom-4" />
+                  <div className="margin-top-0 padding-top-1 margin-bottom-2">
+                    <p className="text-bold margin-y-0">
+                      {modelToOperationsMiscT('modal.solution.pocHeading')}
+                    </p>
+                    <p className="text-base margin-y-0">
+                      {modelToOperationsMiscT('modal.solution.pocSubheading')}
+                    </p>
+                  </div>
 
                   <Controller
-                    name="riskIndicator"
+                    name="pocName"
                     control={control}
-                    rules={{
-                      required: true
-                    }}
                     render={({ field: { ref, ...field } }) => (
-                      <FormGroup className="margin-top-0 margin-bottom-3">
+                      <FormGroup className="margin-top-0 margin-bottom-2">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="maxw-none text-bold"
-                          requiredMarker
+                          className="mint-body-normal maxw-none margin-bottom-1"
                         >
-                          {mtoSolutionT('riskIndicator.label')}
+                          {modelToOperationsMiscT(
+                            'modal.solution.label.pocName'
+                          )}
                         </Label>
+                        {errors.pocName && (
+                          <span className="usa-error-message" role="alert">
+                            {errors.pocName.message}
+                          </span>
+                        )}
 
-                        <HelpText className="margin-top-1">
-                          {mtoSolutionT('riskIndicator.sublabel')}
-                        </HelpText>
-
-                        {getKeys(riskIndicatorConfig.options).map(value => (
-                          <div className="display-flex" key={value}>
-                            <Radio
-                              {...field}
-                              id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
-                              value={value}
-                              label={riskIndicatorConfig.options[value]}
-                              checked={field.value === value}
-                              className="margin-right-1"
-                            />
-                            {(() => {
-                              if (value === MtoRiskIndicator.AT_RISK)
-                                return (
-                                  <Icon.Error
-                                    aria-label="error"
-                                    className="text-error-dark"
-                                    style={{ top: '10px' }}
-                                    size={3}
-                                  />
-                                );
-
-                              if (value === MtoRiskIndicator.OFF_TRACK)
-                                return (
-                                  <Icon.Warning
-                                    className="text-warning-dark"
-                                    style={{ top: '10px' }}
-                                    size={3}
-                                    aria-label="warning"
-                                  />
-                                );
-
-                              return <></>;
-                            })()}
-                          </div>
-                        ))}
+                        <TextInput
+                          type="text"
+                          {...field}
+                          id={convertCamelCaseToKebabCase(field.name)}
+                          value={field.value || ''}
+                        />
                       </FormGroup>
                     )}
                   />
 
-                  <div className="border-top-1px border-base-lighter padding-y-4">
-                    <h3 className="margin-0 margin-bottom-1">
-                      {modelToOperationsMiscT(
-                        'modal.editSolution.selectedMilestones'
-                      )}
-                    </h3>
-
-                    <p className="margin-0 margin-bottom-1">
-                      {modelToOperationsMiscT(
-                        'modal.editSolution.selectedMilestonesCount',
-                        {
-                          count: tableMilestones?.length || 0
-                        }
-                      )}
-                    </p>
-
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setEditMilestonesOpen(true);
-                      }}
-                      unstyled
-                      className="margin-0 display-flex"
-                    >
-                      {modelToOperationsMiscT(
-                        'modal.editSolution.editMilestones'
-                      )}
-                      <Icon.ArrowForward
-                        className="top-2px"
-                        aria-label="forward"
-                      />
-                    </Button>
-
-                    {tableMilestones.length === 0 ? (
-                      <Alert type="info" slim>
-                        {modelToOperationsMiscT(
-                          'modal.editSolution.noMilestones'
-                        )}
-                      </Alert>
-                    ) : (
-                      <div ref={scrollRef}>
-                        <UswdsTable
-                          bordered={false}
-                          {...getTableProps()}
-                          className="margin-top-0"
-                          fullWidth
+                  <Controller
+                    name="pocEmail"
+                    control={control}
+                    rules={{
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
+                      }
+                    }}
+                    render={({ field: { ref, ...field } }) => (
+                      <FormGroup className="margin-top-0 margin-bottom-2">
+                        <Label
+                          htmlFor={convertCamelCaseToKebabCase(field.name)}
+                          className="mint-body-normal maxw-none margin-bottom-1"
                         >
-                          <thead>
-                            {headerGroups.map(headerGroup => (
-                              <tr
-                                {...headerGroup.getHeaderGroupProps()}
-                                key={
-                                  { ...headerGroup.getHeaderGroupProps() }.key
-                                }
-                              >
-                                {headerGroup.headers.map(column => (
-                                  <th
-                                    {...column.getHeaderProps()}
-                                    scope="col"
-                                    key={column.id}
-                                    className="padding-left-0 padding-bottom-0"
-                                    style={{
-                                      width: column.width
-                                    }}
-                                  >
-                                    <button
-                                      className="usa-button usa-button--unstyled position-relative"
-                                      type="button"
-                                      {...column.getSortByToggleProps()}
-                                    >
-                                      {
-                                        column.render(
-                                          'Header'
-                                        ) as React.ReactElement
-                                      }
-                                      {column.canSort &&
-                                        getHeaderSortIcon(column, false)}
-                                    </button>
-                                  </th>
-                                ))}
-                              </tr>
-                            ))}
-                          </thead>
-                          <tbody {...getTableBodyProps()}>
-                            {page.map((row, i) => {
-                              const { getRowProps, cells, id } = { ...row };
-
-                              prepareRow(row);
-                              return (
-                                <tr {...getRowProps()} key={id}>
-                                  {cells.map(cell => {
-                                    return (
-                                      <td
-                                        {...cell.getCellProps()}
-                                        key={cell.getCellProps().key}
-                                        className="padding-left-0"
-                                      >
-                                        {
-                                          cell.render(
-                                            'Cell'
-                                          ) as React.ReactElement
-                                        }
-                                      </td>
-                                    );
-                                  })}
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </UswdsTable>
-
-                        {tableMilestones.length > 5 && (
-                          <TablePagination
-                            className="flex-justify-start margin-left-neg-05"
-                            gotoPage={gotoPage}
-                            previousPage={previousPage}
-                            nextPage={nextPage}
-                            canNextPage={canNextPage}
-                            pageIndex={state.pageIndex}
-                            pageOptions={pageOptions}
-                            canPreviousPage={canPreviousPage}
-                            pageCount={pageCount}
-                            pageSize={state.pageSize}
-                            setPageSize={setPageSize}
-                            page={[]}
-                          />
+                          {modelToOperationsMiscT(
+                            'modal.solution.label.pocEmail'
+                          )}
+                        </Label>
+                        {errors.pocEmail && (
+                          <span className="usa-error-message" role="alert">
+                            {errors.pocEmail.message}
+                          </span>
                         )}
 
-                        <Alert type="info" slim className="margin-top-3">
-                          <Trans
-                            i18nKey={modelToOperationsMiscT(
-                              'modal.editSolution.milestoneInfo'
-                            )}
-                            components={{
-                              link1: (
-                                <Button
-                                  type="button"
-                                  unstyled
-                                  className="usa-button--unstyled margin-0"
-                                  onClick={() => {
-                                    setCloseDestination(
-                                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
-                                    );
-                                  }}
-                                >
-                                  {' '}
-                                </Button>
-                              )
-                            }}
-                          />
-                        </Alert>
-                      </div>
+                        <TextInput
+                          type="text"
+                          {...field}
+                          id={convertCamelCaseToKebabCase(field.name)}
+                          value={field.value || ''}
+                        />
+                      </FormGroup>
                     )}
+                  />
+                </>
+              )}
+
+              <Controller
+                name="facilitatedBy"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase('facilitatedBy')}
+                    >
+                      {facilitatedByConfig.label}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {facilitatedByConfig.sublabel}
+                    </HelpText>
+
+                    <MultiSelect
+                      {...field}
+                      id={convertCamelCaseToKebabCase(
+                        'multiSourceDataToCollect'
+                      )}
+                      inputId={convertCamelCaseToKebabCase('facilitatedBy')}
+                      ariaLabel={convertCamelCaseToKebabCase('facilitatedBy')}
+                      ariaLabelText={facilitatedByConfig.label}
+                      options={composeMultiSelectOptions(
+                        facilitatedByConfig.options
+                      )}
+                      selectedLabel={facilitatedByConfig.multiSelectLabel || ''}
+                      initialValues={watch('facilitatedBy')}
+                    />
+                  </FormGroup>
+                )}
+              />
+
+              {watch('facilitatedBy')?.includes(MtoFacilitator.OTHER) && (
+                <Controller
+                  name="facilitatedByOther"
+                  control={control}
+                  rules={{
+                    required: modelToOperationsMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup
+                      className="margin-0 margin-bottom-3"
+                      error={!!error}
+                    >
+                      <Label
+                        htmlFor={convertCamelCaseToKebabCase(
+                          'facilitatedByOther'
+                        )}
+                        requiredMarker
+                        className="text-normal"
+                      >
+                        {mtoSolutionT('facilitatedByOther.label')}
+                      </Label>
+
+                      {!!error && (
+                        <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                      )}
+
+                      <HelpText className="margin-top-1">
+                        {mtoSolutionT('facilitatedByOther.sublabel')}
+                      </HelpText>
+
+                      <TextInput
+                        {...field}
+                        ref={null}
+                        id={convertCamelCaseToKebabCase('facilitatedByOther')}
+                        type="text"
+                        maxLength={75}
+                      />
+
+                      <HelpText className="margin-top-1">
+                        {modelToOperationsMiscT(
+                          'modal.editMilestone.charactersAllowed'
+                        )}
+                      </HelpText>
+                    </FormGroup>
+                  )}
+                />
+              )}
+
+              <Controller
+                name="neededBy"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-0 margin-bottom-3">
+                    <Label htmlFor={convertCamelCaseToKebabCase('neededBy')}>
+                      {mtoSolutionT('neededBy.label')}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {mtoSolutionT('neededBy.sublabel')}
+                    </HelpText>
+
+                    <div className="position-relative">
+                      <DatePickerFormatted
+                        {...field}
+                        aria-labelledby={convertCamelCaseToKebabCase(
+                          'neededBy'
+                        )}
+                        id="solution-needed-by"
+                        defaultValue={field.value}
+                        suppressMilliseconds
+                      />
+
+                      {isDateInPast(watch('neededBy')) && (
+                        <DatePickerWarning label={generalT('dateWarning')} />
+                      )}
+                    </div>
+
+                    {isDateInPast(watch('neededBy')) && (
+                      <Alert
+                        type="warning"
+                        className="margin-top-2"
+                        headingLevel="h4"
+                        slim
+                      >
+                        {generalT('dateWarning')}
+                      </Alert>
+                    )}
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="status"
+                control={control}
+                rules={{
+                  required: true
+                }}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-top-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoSolutionT('status.label')}
+                    </Label>
+
+                    <Select
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      value={field.value || ''}
+                    >
+                      {getKeys(stausConfig.options).map(option => {
+                        return (
+                          <option key={option} value={option}>
+                            {stausConfig.options[option]}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </FormGroup>
+                )}
+              />
+
+              <MTOStatusInfoToggle className="margin-bottom-4" />
+
+              <Controller
+                name="riskIndicator"
+                control={control}
+                rules={{
+                  required: true
+                }}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-top-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoSolutionT('riskIndicator.label')}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {mtoSolutionT('riskIndicator.sublabel')}
+                    </HelpText>
+
+                    {getKeys(riskIndicatorConfig.options).map(value => (
+                      <div className="display-flex" key={value}>
+                        <Radio
+                          {...field}
+                          id={`${convertCamelCaseToKebabCase(field.name)}-${value}`}
+                          value={value}
+                          label={riskIndicatorConfig.options[value]}
+                          checked={field.value === value}
+                          className="margin-right-1"
+                        />
+                        {(() => {
+                          if (value === MtoRiskIndicator.AT_RISK)
+                            return (
+                              <Icon.Error
+                                aria-label="error"
+                                className="text-error-dark"
+                                style={{ top: '10px' }}
+                                size={3}
+                              />
+                            );
+
+                          if (value === MtoRiskIndicator.OFF_TRACK)
+                            return (
+                              <Icon.Warning
+                                className="text-warning-dark"
+                                style={{ top: '10px' }}
+                                size={3}
+                                aria-label="warning"
+                              />
+                            );
+
+                          return <></>;
+                        })()}
+                      </div>
+                    ))}
+                  </FormGroup>
+                )}
+              />
+
+              <div className="border-top-1px border-base-lighter padding-y-4">
+                <h3 className="margin-0 margin-bottom-1">
+                  {modelToOperationsMiscT(
+                    'modal.editSolution.selectedMilestones'
+                  )}
+                </h3>
+
+                <p className="margin-0 margin-bottom-1">
+                  {modelToOperationsMiscT(
+                    'modal.editSolution.selectedMilestonesCount',
+                    {
+                      count: tableMilestones?.length || 0
+                    }
+                  )}
+                </p>
+
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setEditMilestonesOpen(true);
+                  }}
+                  unstyled
+                  className="margin-0 display-flex"
+                >
+                  {modelToOperationsMiscT('modal.editSolution.editMilestones')}
+                  <Icon.ArrowForward className="top-2px" aria-label="forward" />
+                </Button>
+
+                {tableMilestones.length === 0 ? (
+                  <Alert type="info" slim>
+                    {modelToOperationsMiscT('modal.editSolution.noMilestones')}
+                  </Alert>
+                ) : (
+                  <div ref={scrollRef}>
+                    <UswdsTable
+                      bordered={false}
+                      {...getTableProps()}
+                      className="margin-top-0"
+                      fullWidth
+                    >
+                      <thead>
+                        {headerGroups.map(headerGroup => (
+                          <tr
+                            {...headerGroup.getHeaderGroupProps()}
+                            key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                          >
+                            {headerGroup.headers.map(column => (
+                              <th
+                                {...column.getHeaderProps()}
+                                scope="col"
+                                key={column.id}
+                                className="padding-left-0 padding-bottom-0"
+                                style={{
+                                  width: column.width
+                                }}
+                              >
+                                <button
+                                  className="usa-button usa-button--unstyled position-relative"
+                                  type="button"
+                                  {...column.getSortByToggleProps()}
+                                >
+                                  {
+                                    column.render(
+                                      'Header'
+                                    ) as React.ReactElement
+                                  }
+                                  {column.canSort &&
+                                    getHeaderSortIcon(column, false)}
+                                </button>
+                              </th>
+                            ))}
+                          </tr>
+                        ))}
+                      </thead>
+                      <tbody {...getTableBodyProps()}>
+                        {page.map((row, i) => {
+                          const { getRowProps, cells, id } = { ...row };
+
+                          prepareRow(row);
+                          return (
+                            <tr {...getRowProps()} key={id}>
+                              {cells.map(cell => {
+                                return (
+                                  <td
+                                    {...cell.getCellProps()}
+                                    key={cell.getCellProps().key}
+                                    className="padding-left-0"
+                                  >
+                                    {cell.render('Cell') as React.ReactElement}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </UswdsTable>
+
+                    {tableMilestones.length > 5 && (
+                      <TablePagination
+                        className="flex-justify-start margin-left-neg-05"
+                        gotoPage={gotoPage}
+                        previousPage={previousPage}
+                        nextPage={nextPage}
+                        canNextPage={canNextPage}
+                        pageIndex={state.pageIndex}
+                        pageOptions={pageOptions}
+                        canPreviousPage={canPreviousPage}
+                        pageCount={pageCount}
+                        pageSize={state.pageSize}
+                        setPageSize={setPageSize}
+                        page={[]}
+                      />
+                    )}
+
+                    <Alert type="info" slim className="margin-top-3">
+                      <Trans
+                        i18nKey={modelToOperationsMiscT(
+                          'modal.editSolution.milestoneInfo'
+                        )}
+                        components={{
+                          link1: (
+                            <Button
+                              type="button"
+                              unstyled
+                              className="usa-button--unstyled margin-0"
+                              onClick={() => {
+                                setCloseDestination(
+                                  `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+                                );
+                              }}
+                            >
+                              {' '}
+                            </Button>
+                          )
+                        }}
+                      />
+                    </Alert>
                   </div>
-                </Fieldset>
-              </Form>
-            </FormProvider>
-          </Grid>
-        </Grid>
-      </GridContainer>
+                )}
+              </div>
+            </Fieldset>
+          </Form>
+        </FormProvider>
+      </div>
     </div>
   );
 };
