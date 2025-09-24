@@ -350,6 +350,7 @@ export const downloadMTOMilestoneSummary = (
         'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
+        Notes: milestone.notes.map(note => note.content).join(', '),
         ...quarterObject
       });
 
