@@ -3,6 +3,7 @@ WITH retVal AS (
     SET 
         mto_category_id = :mto_category_id,
         name= :name,
+        description= :description,
         facilitated_by= :facilitated_by,
         facilitated_by_other= :facilitated_by_other,
         need_by= :need_by,
@@ -18,6 +19,7 @@ WITH retVal AS (
         mto_common_milestone_key,
         mto_category_id,
         name,
+        description,
         facilitated_by,
         facilitated_by_other,
         need_by,
@@ -37,6 +39,7 @@ SELECT
     retVal.mto_common_milestone_key,
     retVal.mto_category_id,
     COALESCE(retVal.name, mto_common_milestone.name) AS "name",
+    retVal.description,
     retVal.facilitated_by,
     retVal.facilitated_by_other,
     retVal.need_by,

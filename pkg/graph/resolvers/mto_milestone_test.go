@@ -180,6 +180,35 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 
 // TODO We might also want to test making sure sub-categories also fail silently a category and making sure it's re-created
 
+// This test ensures that the description field can be set and retrieved correctly
+func (suite *ResolverSuite) TestMTOMilestoneDescription() {
+	// Create model plan
+	plan := suite.createModelPlan("testing milestone description")
+
+	// Create a custom milestone with a description
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Test Milestone", plan.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(milestone)
+
+	// Update the milestone to add a description
+	description := "This is a test description for the milestone"
+	changes := map[string]interface{}{
+		"description": description,
+	}
+	updatedMilestone, err := MTOMilestoneUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{}, milestone.ID, changes, nil)
+	suite.NoError(err)
+	suite.NotNil(updatedMilestone)
+	suite.NotNil(updatedMilestone.Description)
+	suite.Equal(description, *updatedMilestone.Description)
+
+	// Verify the milestone can be retrieved with the description
+	retrievedMilestone, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestone.ID)
+	suite.NoError(err)
+	suite.NotNil(retrievedMilestone)
+	suite.NotNil(retrievedMilestone.Description)
+	suite.Equal(description, *retrievedMilestone.Description)
+}
+
 // TODO (mto) Write tests for MTOMilestoneUpdate
 
 // TODO (mto) Maybe(?) write MTOMilestoneGetByModelPlanIDLOADER

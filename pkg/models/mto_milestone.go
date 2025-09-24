@@ -28,8 +28,8 @@ type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation
 
-	Name        *string                `json:"name" db:"name"`                    // From Common Milestone Table if linked
-	Description *string                `json:"description" db:"description"`      // From Common Milestone Table if linked
+	Name        *string                `json:"name" db:"name"` // From Common Milestone Table if linked
+	Description *string                `json:"description" db:"description"`
 	Key         *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"` // Foreign Key to the Common Milestone Table
 
 	MTOCategoryID      *uuid.UUID                 `json:"mtoCategoryID" db:"mto_category_id"`
