@@ -114,6 +114,8 @@ type EditMilestoneFormProps = {
   setFooter: (footer: React.ReactNode | null) => void; // Set footer of modal
 };
 
+// TODO: CUSTOM MILESTONE WORK HERE
+
 const EditMilestoneForm = ({
   closeModal,
   setIsDirty,
