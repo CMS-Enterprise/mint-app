@@ -176,6 +176,14 @@ const EditMilestoneForm = ({
     }
   });
 
+  const sortedMilestoneNotes = useMemo(() => {
+    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
+      return (
+        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
+      );
+    });
+  }, [data]);
+
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
   }, [data]);
@@ -330,26 +338,32 @@ const EditMilestoneForm = ({
     ]);
 
     // Sets the milestone notes from the milestone
-    setMilestoneNotes(data?.mtoMilestone.notes || []);
-  }, [data, solutionIDs, commonSolutionKeys, formatSolutionForTable]);
+    setMilestoneNotes(sortedMilestoneNotes || []);
+  }, [
+    data,
+    solutionIDs,
+    commonSolutionKeys,
+    formatSolutionForTable,
+    sortedMilestoneNotes
+  ]);
 
   // Determines which notes to add, remove, and update based on the original notes and the current notes
   useEffect(() => {
     setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
 
     setNotesToRemove(
-      data?.mtoMilestone.notes.filter(
+      sortedMilestoneNotes?.filter(
         note => !milestoneNotes.find(n => n.id === note.id)
       ) || []
     );
 
     setNotesToUpdate(
       milestoneNotes.filter(note => {
-        const foundNote = data?.mtoMilestone.notes.find(n => n.id === note.id);
+        const foundNote = sortedMilestoneNotes?.find(n => n.id === note.id);
         return foundNote && foundNote.content !== note.content;
       }) || []
     );
-  }, [milestoneNotes, data]);
+  }, [milestoneNotes, sortedMilestoneNotes]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -602,7 +616,7 @@ const EditMilestoneForm = ({
 
       if (notesToAdd.length > 0) {
         Promise.all(
-          notesToAdd.map(note =>
+          notesToAdd.reverse().map(note =>
             addMilestoneNote({
               variables: {
                 input: {

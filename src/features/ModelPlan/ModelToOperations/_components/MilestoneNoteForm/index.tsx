@@ -128,7 +128,6 @@ const MilestoneNoteForm = ({
       );
     } else {
       setMilestoneNotes([
-        ...milestoneNotes,
         // Dummy data to add a new note in app memory
         {
           __typename: 'MTOMilestoneNote',
@@ -141,7 +140,8 @@ const MilestoneNoteForm = ({
             commonName: name,
             username: euaId
           }
-        }
+        },
+        ...milestoneNotes
       ]);
     }
   };
