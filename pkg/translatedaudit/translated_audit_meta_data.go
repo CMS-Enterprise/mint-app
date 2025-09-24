@@ -419,7 +419,7 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 	return &meta, &metaType, nil
 }
 
-// MTOMilestoneNoteMetaDataGet relies on the changes field to return content and milestone information. If not available, it will attempt to fetch a milestone note to get it's current content and related milestone name.
+// MTOMilestoneNoteMetaDataGet relies on the changes field to return content and milestone information. If not available, it will attempt to fetch a milestone note to get its current content and related milestone name.
 func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, milestoneNoteID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
 	// the data is deletable, so it needs to be a pointer
@@ -427,33 +427,40 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 
 	mtoMilestoneIDChange, mtoMilestoneIDFieldPresent := changesFields["mto_milestone_id"]
 
+	operationIsDelete := operation == models.DBOpDelete || operation == models.DBOpTruncate
+
 	// Get milestone name from the mto_milestone_id field
 	if mtoMilestoneIDFieldPresent {
 		var mtoMilestoneID any
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+		if operationIsDelete {
 			mtoMilestoneID = mtoMilestoneIDChange.Old
 		} else {
 			mtoMilestoneID = mtoMilestoneIDChange.New
 		}
 
+		// Guard against nil milestone ID values
+		if mtoMilestoneID == nil {
+			return nil, nil, fmt.Errorf("mto_milestone_id field present but value is nil (operation: %s, milestoneNoteID: %v)", operation, milestoneNoteID)
+		}
+
 		milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, mtoMilestoneID)
 		if err != nil {
-			return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note. err %w", err)
+			return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note (operation: %s, milestoneNoteID: %v). err %w", operation, milestoneNoteID, err)
 		}
 		milestoneName = &milestoneNameStr
 	}
 
 	// If we don't have the milestone ID from changes, fetch from database
 	if !mtoMilestoneIDFieldPresent {
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			return nil, nil, fmt.Errorf("there wasn't enough information present for this MTO milestone note, unable to generate metadata for this entry. MTO Milestone Note %v", milestoneNoteID)
+		if operationIsDelete {
+			return nil, nil, fmt.Errorf("there wasn't enough information present for this MTO milestone note, unable to generate metadata for this entry (operation: %s, milestoneNoteID: %v)", operation, milestoneNoteID)
 		}
 
 		// Handle the fields carefully here, this is a deletable entry, so we will lose the ability to query on delete
 		milestoneNote, err := loaders.MTOMilestoneNote.ByID.Load(ctx, milestoneNoteID)
 		if err != nil {
 			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
-				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone note. err %w", err)
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for mto milestone note (operation: %s, milestoneNoteID: %v). err %w", operation, milestoneNoteID, err)
 			} else { // expect that a nil milestone note can be returned under this circumstance.
 				milestoneName = nil
 			}
@@ -461,7 +468,7 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 			if milestoneName == nil {
 				milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, milestoneNote.MTOMilestoneID)
 				if err != nil {
-					return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note. err %w", err)
+					return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note (operation: %s, milestoneNoteID: %v). err %w", operation, milestoneNoteID, err)
 				}
 				milestoneName = &milestoneNameStr
 			}
