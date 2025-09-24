@@ -14,7 +14,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { NotFoundPartial } from 'features/NotFound';
+import NotFound from 'features/NotFound';
 import {
   DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
@@ -32,6 +32,10 @@ import PageHeading from 'components/PageHeading';
 import toastSuccess from 'components/ToastSuccess';
 import { statusAlert, useErrorMessage } from 'contexts/ErrorContext';
 import useMessage from 'hooks/useMessage';
+import {
+  NotificationSettingsSection,
+  SelectNotificationType
+} from 'i18n/en-US/notifications';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
 import { tObject } from 'utils/translation';
@@ -50,32 +54,15 @@ export type NotificationSettingsFormType = Omit<
   'id' | 'taggedInDiscussionReply' | '__typename'
 >;
 
-export type SelectNotificationType<Key extends string> =
-  Key extends `${string}NotificationType` ? Key : never;
-
 const NotificationSettings = () => {
   const { t: notificationsT } = useTranslation('notifications');
 
-  // matching notification i18n
-  const notificationSections = tObject<
+  const notificationSectionsConfig = tObject<
     string,
-    {
-      heading: string;
-      subHeading?: string;
-      info?: string;
-      notifications: {
-        name: keyof NotificationSettingsFormType;
-        copy: string;
-        disable?: UserNotificationPreferenceFlag[];
-        modelSpecific?: 'whichModelTypes';
-        notificationType: SelectNotificationType<
-          keyof NotificationSettingsFormType
-        >;
-      }[];
-    }
+    NotificationSettingsSection
   >('notifications:settings.sections');
 
-  const whichModelType = tObject<string, string>(
+  const whichModelTypeConfig = tObject<string, string>(
     'notifications:settings.additionalConfigurations.whichModelTypes'
   );
 
@@ -308,7 +295,7 @@ const NotificationSettings = () => {
   ]);
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
   return (
@@ -361,7 +348,7 @@ const NotificationSettings = () => {
                   </Grid>
                 </Grid>
 
-                {getKeys(notificationSections).map((section, index) => (
+                {getKeys(notificationSectionsConfig).map((section, index) => (
                   <Fieldset key={section}>
                     {/* notification section info */}
                     <Grid mobile={{ col: 6 }}>
@@ -370,16 +357,16 @@ const NotificationSettings = () => {
                           [index === 0 ? 'margin-top-0' : 'margin-top-5']: true
                         })}
                       >
-                        {notificationSections[section].heading}
+                        {notificationSectionsConfig[section].heading}
                       </h4>
 
-                      {notificationSections[section].subHeading && (
+                      {notificationSectionsConfig[section].subHeading && (
                         <p className="margin-top-0 margin-bottom-1 text-base-dark">
-                          {notificationSections[section].subHeading}
+                          {notificationSectionsConfig[section].subHeading}
                         </p>
                       )}
 
-                      {notificationSections[section].info && (
+                      {notificationSectionsConfig[section].info && (
                         <div className="display-flex flex-align-center bg-base-lightest padding-x-2">
                           <Icon.InfoOutline
                             size={3}
@@ -399,7 +386,7 @@ const NotificationSettings = () => {
                     </Grid>
 
                     {/* notifications in each section */}
-                    {notificationSections[section].notifications.map(
+                    {notificationSectionsConfig[section].notifications.map(
                       notification => (
                         <div key={notification.name}>
                           <Grid row className="flex-align-start">
@@ -552,13 +539,15 @@ const NotificationSettings = () => {
                                         watch(notification.name)?.length === 0
                                       }
                                     >
-                                      {getKeys(whichModelType).map(type => {
-                                        return (
-                                          <option key={type} value={type}>
-                                            {whichModelType[type]}
-                                          </option>
-                                        );
-                                      })}
+                                      {getKeys(whichModelTypeConfig).map(
+                                        type => {
+                                          return (
+                                            <option key={type} value={type}>
+                                              {whichModelTypeConfig[type]}
+                                            </option>
+                                          );
+                                        }
+                                      )}
                                     </Select>
                                   </Grid>
                                 </Grid>

@@ -1,3 +1,24 @@
+import { NotificationSettingsFormType } from 'features/Notifications/Settings';
+import { UserNotificationPreferenceFlag } from 'gql/generated/graphql';
+
+export type SelectNotificationType<Key extends string> =
+  Key extends `${string}NotificationType` ? Key : never;
+
+export type NotificationSettingsSection = {
+  heading: string;
+  subHeading?: string;
+  info?: string;
+  notifications: {
+    name: keyof NotificationSettingsFormType;
+    copy: string;
+    disable?: UserNotificationPreferenceFlag[];
+    modelSpecific?: 'whichModelTypes';
+    notificationType: SelectNotificationType<
+      keyof NotificationSettingsFormType
+    >;
+  }[];
+};
+
 const notifications = {
   breadcrumb: 'Notifications',
   index: {

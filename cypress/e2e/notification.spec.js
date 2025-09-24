@@ -215,7 +215,6 @@ describe('Notification Center', () => {
   it('testing Incorrect Model Status Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
-    cy.wait(500);
 
     // Check the incorrect model status in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-incorrectModelStatus"]')
@@ -292,7 +291,6 @@ describe('Notification Center', () => {
   it('testing New Model Plan Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
-    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
@@ -355,7 +353,6 @@ describe('Notification Center', () => {
   it('testing Dates Changed Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
-    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-datesChanged"]')
@@ -431,7 +428,6 @@ describe('Notification Center', () => {
   it('testing New Discussion Added Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
-    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-newDiscussionAdded"]')
@@ -506,7 +502,6 @@ describe('Notification Center', () => {
   it('testing Data Exchange Approach is marked Complete Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
-    cy.wait(500);
 
     // Check the new model plan in-app checkbox
     cy.get(
