@@ -404,6 +404,9 @@ const EditMilestoneForm = ({
 
   const values = watch();
 
+  console.log(formValues);
+  console.log(values);
+
   // Hacky hook to reset form values after loading due to DatePicker needing to use the onchange handler to update the default value
   // This is needed to prevent the form from being dirty on load
   useEffect(() => {
@@ -1226,6 +1229,7 @@ const EditMilestoneForm = ({
                         {...field}
                         aria-labelledby={convertCamelCaseToKebabCase('needBy')}
                         id="milestone-need-by"
+                        suppressMilliseconds
                         defaultValue={field.value}
                       />
 
