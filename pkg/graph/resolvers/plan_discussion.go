@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
@@ -77,31 +78,65 @@ func CreatePlanDiscussion(
 
 		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
 
-		// Send email to MINT Dev Team
+		recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDiscussionAdded(store, modelPlan.ID)
+		if err != nil {
+			logger.Error("Error getting user accounts for discussion added notifications",
+				zap.Error(err),
+				zap.String("modelPlanID", modelPlan.ID.String()),
+			)
+			return nil, err
+		}
+
+		emailRecipientUserAccounts, inAppRecipientUserAccounts := models.FilterNotificationPreferences(recipientUserAccounts)
+
+		recipientEmails := lo.Map(emailRecipientUserAccounts, func(user *models.UserAccountAndNotificationPreferences, _ int) string {
+			return user.Email
+		})
+
+		// Send email to MINT Dev Team and those subscribed to discussion created emails
 		go func() {
-			sendEmailErr := sendPlanDiscussionCreatedEmail(
+			// MINT dev team always gets an email for this
+			recipientEmails = append(recipientEmails, addressBook.MINTTeamEmail)
+
+			err = sendPlanDiscussionCreatedEmail(
 				ctx,
 				logger,
 				emailService,
 				emailTemplateService,
 				addressBook,
-				addressBook.MINTTeamEmail,
+				recipientEmails,
 				discussion,
 				modelPlan,
 				commonName,
 				userRole,
 			)
-
-			if sendEmailErr != nil {
-				logger.Error("error sending plan discussion created email to MINT Team",
+			if err != nil {
+				logger.Error("error sending plan discussion created email to MINT Team and users subscribed to the email",
 					zap.String("discussionID", discussion.ID.String()),
-					zap.Error(sendEmailErr))
+					zap.Error(err))
 			}
 		}()
 
+		// send notification for those following new plan discussion creation
+		_, err = notifications.ActivityNewDiscussionAddedCreate(
+			ctx,
+			tx,
+			principal.Account().ID,
+			inAppRecipientUserAccounts,
+			discussion,
+			modelPlan,
+			commonName,
+			userRole,
+		)
+		if err != nil {
+			logger.Error("error sending plan discussion created notification to users",
+				zap.String("discussionID", discussion.ID.String()),
+				zap.Error(err))
+		}
+
 		_, notificationErr := notifications.ActivityTaggedInDiscussionCreate(ctx, tx, principal.Account().ID, discussion.ModelPlanID, discussion.ID, discussion.Content, loaders.UserNotificationPreferencesGetByUserID)
 		if notificationErr != nil {
-			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
+			return nil, fmt.Errorf("unable to generate notification for tagged in discussion, %w", notificationErr)
 		}
 		go func() {
 			err = sendPlanDiscussionTagEmails(
@@ -323,7 +358,7 @@ func sendPlanDiscussionCreatedEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	receiverEmail string,
+	receiverEmails []string,
 	planDiscussion *models.PlanDiscussion,
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
@@ -347,20 +382,18 @@ func sendPlanDiscussionCreatedEmail(
 		return err
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionCreatedBodyContent{
-		ClientAddress:     emailService.GetConfig().GetClientAddress(),
-		DiscussionID:      planDiscussion.ID.String(),
-		UserName:          createdByUserName,
-		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
-		ModelID:           modelPlan.ID.String(),
-		ModelName:         modelPlan.ModelName,
-		Role:              createdByUserRole,
-	})
+	emailBody, err := emailTemplate.GetExecutedBody(email.NewPlanDiscussionCreatedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		planDiscussion,
+		modelPlan,
+		createdByUserName,
+		createdByUserRole,
+	))
 	if err != nil {
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}

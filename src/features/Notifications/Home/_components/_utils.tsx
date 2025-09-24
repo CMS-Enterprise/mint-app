@@ -9,6 +9,7 @@ import {
   DatesChangedActivityMeta,
   IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
+  NewDiscussionAddedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
   PlanDataExchangeApproachMarkedCompleteActivityMeta,
@@ -20,6 +21,7 @@ type MetaDataType =
   | TaggedInDiscussionReplyActivityMeta
   | TaggedInPlanDiscussionActivityMeta
   | DailyDigestCompleteActivityMeta
+  | NewDiscussionAddedActivityMeta
   | NewDiscussionRepliedActivityMeta
   | IncorrectModelStatusActivityMeta
   | ModelPlanSharedActivityMeta
@@ -48,6 +50,13 @@ export const isDailyDigest = (
 ): data is DailyDigestCompleteActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'DailyDigestCompleteActivityMeta';
+};
+
+export const isNewDiscussionAdded = (
+  data: MetaDataType
+): data is NewDiscussionAddedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'NewDiscussionAddedActivityMeta';
 };
 
 export const isNewDiscussionReply = (
@@ -136,6 +145,14 @@ export const activityText = (data: MetaDataType) => {
       <Trans
         i18nKey="notifications:index.activityType.INCORRECT_MODEL_STATUS.text"
         values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+  if (isNewDiscussionAdded(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.NEW_DISCUSSION_ADDED.text"
+        values={{ modelName: data.modelPlanName }}
       />
     );
   }
@@ -293,6 +310,20 @@ export const ActivityCTA = ({
       </>
     );
   }
+
+  if (isNewDiscussionAdded(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_ADDED.cta" />
+        <Icon.ArrowForward
+          className="margin-left-1"
+          aria-hidden
+          aria-label="forward"
+        />
+      </>
+    );
+  }
+
   if (isNewDiscussionReply(data)) {
     return (
       <>

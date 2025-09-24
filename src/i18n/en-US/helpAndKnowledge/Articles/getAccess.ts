@@ -72,8 +72,8 @@ const getAccess = {
         'After you’ve received an email that your job code request is approved, you can <0>sign in to MINT</0> using your EUA credentials (this is your four-character user ID and password).'
     }
   },
-  accessThroughIDM: 'Requesting access through IDM',
   stepsIDM: {
+    heading: 'Requesting access through IDM',
     first: {
       heading: 'Sign in to IDM',
       description: {

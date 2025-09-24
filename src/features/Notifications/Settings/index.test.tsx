@@ -35,6 +35,10 @@ const notificationPreferences: NotificationPerferenceType = {
     UserNotificationPreferenceFlag.EMAIL,
     UserNotificationPreferenceFlag.IN_APP
   ],
+  newDiscussionAdded: [
+    UserNotificationPreferenceFlag.EMAIL,
+    UserNotificationPreferenceFlag.IN_APP
+  ],
   newDiscussionReply: [
     UserNotificationPreferenceFlag.EMAIL,
     UserNotificationPreferenceFlag.IN_APP
@@ -50,6 +54,7 @@ const notificationPreferences: NotificationPerferenceType = {
     UserNotificationPreferenceFlag.EMAIL,
     UserNotificationPreferenceFlag.IN_APP
   ],
+  newDiscussionAddedNotificationType: null,
   dataExchangeApproachMarkedCompleteNotificationType: null,
   incorrectModelStatus: [UserNotificationPreferenceFlag.EMAIL]
 };
