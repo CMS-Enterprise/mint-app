@@ -15,14 +15,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// Description is the resolver for the description field.
-func (r *mTOMilestoneResolver) Description(ctx context.Context, obj *models.MTOMilestone) (*string, error) {
-	if obj.Description == nil {
-		return nil, nil
-	}
-	return obj.Description, nil
-}
-
 // FacilitatedBy is the resolver for the facilitatedBy field.
 func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
 	if obj.FacilitatedBy == nil {

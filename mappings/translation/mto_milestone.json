@@ -8,6 +8,15 @@
     "formType": "TEXT",
     "order": 1
   },
+  "description": {
+    "gqlField": "description",
+    "goField": "Description",
+    "dbField": "description",
+    "label": "Description",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.001
+  },
   "isDraft": {
     "gqlField": "isDraft",
     "goField": "IsDraft",

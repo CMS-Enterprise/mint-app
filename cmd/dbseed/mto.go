@@ -64,41 +64,41 @@ func (s *Seeder) seedModelPlanWithMTOData(
 	}
 
 	// Make milestones to go under the categories
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0Name, plan.ID, &category0.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0Name, nil, plan.ID, &category0.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0SubAName, plan.ID, &category0SubA.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0SubAName, nil, plan.ID, &category0SubA.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0SubBName, plan.ID, &category0SubB.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0SubBName, nil, plan.ID, &category0SubB.ID)
 	if err != nil {
 		panic(err)
 	}
 
 	// Make milestones to go under the categories
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat1Name, plan.ID, &category1.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat1Name, nil, plan.ID, &category1.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat1SubAName, plan.ID, &category1SubA.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat1SubAName, nil, plan.ID, &category1SubA.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat1SubBName, plan.ID, &category1SubB.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat1SubBName, nil, plan.ID, &category1SubB.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "MilestoneB"+cat1SubBName, plan.ID, &category1SubB.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "MilestoneB"+cat1SubBName, nil, plan.ID, &category1SubB.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "MilestoneC"+cat1SubBName, plan.ID, &category1SubB.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "MilestoneC"+cat1SubBName, nil, plan.ID, &category1SubB.ID)
 	if err != nil {
 		panic(err)
 	}
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "MilestoneD"+cat1SubBName, plan.ID, &category1SubB.ID)
+	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "MilestoneD"+cat1SubBName, nil, plan.ID, &category1SubB.ID)
 	if err != nil {
 		panic(err)
 	}

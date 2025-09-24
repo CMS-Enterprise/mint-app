@@ -758,11 +758,11 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_TopLevelCategory() {
 	subCategories := suite.createMultipleMTOcategories(subCatNames, plan.ID, &topCategory.ID)
 
 	// Create a milestone in the top-level category
-	milestoneTop, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Top", plan.ID, &topCategory.ID)
+	milestoneTop, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Top", nil, plan.ID, &topCategory.ID)
 	suite.NoError(err)
 
 	// Create a milestone in a subcategory
-	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Sub", plan.ID, &subCategories[0].ID)
+	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Sub", nil, plan.ID, &subCategories[0].ID)
 	suite.NoError(err)
 
 	// Delete the top-level category
@@ -808,6 +808,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		"SubCategory Milestone",
+		nil,
 		plan.ID,
 		&subCategory.ID,
 	)

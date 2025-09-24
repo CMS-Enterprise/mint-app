@@ -1283,6 +1283,7 @@ export type TranslationMTOMilestoneSolutionLinkCustom = {
 // MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
+  description: TranslationFieldProperties;
   isDraft: TranslationFieldPropertiesWithOptions<Bool>;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
   facilitatedByOther: TranslationFieldProperties;
