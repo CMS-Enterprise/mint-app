@@ -54,7 +54,9 @@ exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] =
         </p>
         <p
           style="white-space: pre-line;"
-        />
+        >
+          Description 1
+        </p>
         <p
           class="text-base-dark margin-top-0 margin-bottom-4"
         >
