@@ -60,7 +60,7 @@ exports[`Sidepanel > matches snapshot 1`] = `
             </h4>
           </div>
           <div
-            class="mint-modal__body padding-x-0"
+            class="padding-x-0"
           >
             <div>
               children

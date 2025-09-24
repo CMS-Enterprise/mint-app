@@ -38,6 +38,7 @@ const (
 	TNMTOSolution                = "mto_solution"
 	TNMTOMilestoneSolutionLink   = "mto_milestone_solution_link"
 	TNMTOInfo                    = "mto_info"
+	TNMTOMilestoneNote           = "mto_milestone_note"
 )
 
 const (
@@ -72,6 +73,7 @@ var humanizedTableNames = map[string]string{
 	TNMTOSolution:              MTOHumanizedName,
 	TNMTOMilestoneSolutionLink: MTOHumanizedName,
 	TNMTOInfo:                  MTOHumanizedName,
+	TNMTOMilestoneNote:         MTOHumanizedName,
 }
 
 // GetHumanizedTableName returns the humanized name for the given table name

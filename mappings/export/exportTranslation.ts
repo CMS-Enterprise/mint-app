@@ -21,6 +21,7 @@ import mtoCategory from '../../src/i18n/en-US/modelPlan/mtoCategory';
 import mtoCommonSolutionContact from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContact';
 import mtoCommonSolutionContractor from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 import mtoMilestone from '../../src/i18n/en-US/modelPlan/mtoMilestone';
+import mtoMilestoneNote from '../../src/i18n/en-US/modelPlan/mtoMilestoneNote';
 import mtoMilestoneSolutionLink from '../../src/i18n/en-US/modelPlan/mtoMilestoneSolutionLink';
 import mtoSolution from '../../src/i18n/en-US/modelPlan/mtoSolution';
 import operationalNeeds from '../../src/i18n/en-US/modelPlan/operationalNeeds';
@@ -62,7 +63,8 @@ export const translationSections = {
   mto_milestone_solution_link: mtoMilestoneSolutionLink,
   mto_common_solution_contact: mtoCommonSolutionContact,
   mto_common_solution_contractor: mtoCommonSolutionContractor,
-  mto_category: mtoCategory
+  mto_category: mtoCategory,
+  mto_milestone_note: mtoMilestoneNote
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
