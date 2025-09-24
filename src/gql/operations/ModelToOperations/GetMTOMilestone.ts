@@ -5,6 +5,7 @@ export default gql(/* GraphQL */ `
     mtoMilestone(id: $id) {
       id
       name
+      description
       key
       facilitatedBy
       facilitatedByOther

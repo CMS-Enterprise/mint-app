@@ -341,7 +341,7 @@ export const downloadMTOMilestoneSummary = (
         Milestone: milestone.name,
         Description: milestone.key
           ? milestoneMap[milestone.key]?.description
-          : '',
+          : milestone.description || '',
         'Facilitated by': (milestone.facilitatedBy || [])
           ?.map(facilitator =>
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
