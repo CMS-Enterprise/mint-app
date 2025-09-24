@@ -66,6 +66,8 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return MTOCommonSolutionContractorTranslation()
 	case models.TNPlanTimeline:
 		return PlanTimelineTranslation()
+	case models.TNMTOMilestoneNote:
+		return MTOMilestoneNoteTranslation()
 	default:
 
 		return nil, fmt.Errorf("no translation for table: %s ", tableName)

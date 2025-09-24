@@ -102,6 +102,11 @@ type MTOMilestoneLinks struct {
 	MilestoneIDs []uuid.UUID `json:"milestoneIDs,omitempty"`
 }
 
+// Represents MTO Milestone Note translation data
+type MTOMilestoneNoteTranslation struct {
+	Content models.TranslationField `json:"content" db:"content"`
+}
+
 // Represents MTO Milestone Solution Link translation data
 type MTOMilestoneSolutionLinkTranslation struct {
 	MilestoneID models.TranslationField `json:"milestoneID" db:"milestone_id"`

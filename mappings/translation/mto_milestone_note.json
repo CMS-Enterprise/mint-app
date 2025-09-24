@@ -1,0 +1,12 @@
+{
+  "content": {
+    "gqlField": "content",
+    "goField": "Content",
+    "dbField": "content",
+    "label": "Content",
+    "exportLabel": "Note",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1
+  }
+}

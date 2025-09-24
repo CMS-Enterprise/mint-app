@@ -68,6 +68,10 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getMTOSolutionForeignKeyReference(ctx, store, value)
 		}
+	case models.TNMTOMilestoneNote:
+		{
+			return getMTOMilestoneNoteForeignKeyReference(ctx, store, value)
+		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
 	}
@@ -280,6 +284,30 @@ func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Stor
 		return DataNotAvailableMessage, nil
 	}
 	return *milestone.Name, nil
+}
+
+func getMTOMilestoneNoteForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+
+	// cast interface to key
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a uuid to get the mto milestone note reference. err %w", err)
+	}
+
+	// get the milestone note
+	milestoneNote, err := loaders.MTOMilestoneNote.ByID.Load(ctx, uuidKey)
+	if err != nil {
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return "", fmt.Errorf("there was an issue getting the mto milestone note for translation. err %w", err)
+		}
+	}
+	if milestoneNote == nil { // expect that a nil milestone note can be returned, since they can be deleted
+		return DataNotAvailableMessage, nil
+	}
+	if milestoneNote.Content == "" {
+		return DataNotAvailableMessage, nil
+	}
+	return milestoneNote.Content, nil
 }
 
 func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {

@@ -19,6 +19,10 @@ export default gql(/* GraphQL */ `
           needBy
           facilitatedBy
           facilitatedByOther
+          notes {
+            id
+            content
+          }
         }
       }
     }

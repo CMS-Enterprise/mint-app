@@ -37,6 +37,13 @@ func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMil
 	return MTOSolutionGetByMilestoneIDLOADER(ctx, obj.ID)
 }
 
+// Notes is the resolver for the notes field.
+func (r *mTOMilestoneResolver) Notes(ctx context.Context, obj *models.MTOMilestone) ([]*models.MTOMilestoneNote, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return GetMTOMilestoneNotesByMilestoneIDLOADER(ctx, logger, principal, r.store, obj.ID)
+}
+
 // Categories is the resolver for the categories field.
 func (r *mTOMilestoneResolver) Categories(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCategories, error) {
 	return MTOCategoriesGetByID(ctx, obj.MTOCategoryID, obj.ModelPlanID)

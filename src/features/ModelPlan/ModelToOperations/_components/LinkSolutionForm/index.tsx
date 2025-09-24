@@ -8,14 +8,7 @@ import React, {
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import {
-  Button,
-  Grid,
-  GridContainer,
-  Label,
-  Link
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import { Button, Label, Link } from '@trussworks/react-uswds';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetMtoAllSolutionsQuery,
@@ -25,7 +18,6 @@ import {
 
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { sortedSelectOptions } from 'utils/modelPlan';
 
 import { SolutionCard } from '../SolutionCard';
@@ -55,8 +47,6 @@ const LinkSolutionForm = ({
   const { t: milestoneT } = useTranslation('mtoMilestone');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
-
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   // Map the common solutions to the FE help solutions
   const mappedSolutions = useMemo(
@@ -170,109 +160,97 @@ const LinkSolutionForm = ({
     commonSolutionKeys.length + solutionIDs.length;
 
   return (
-    <GridContainer
-      className={classNames({
-        'padding-8': !isTablet,
-        'padding-4': isTablet
-      })}
-    >
-      <Grid row>
-        <Grid col={10}>
-          <h3 className="margin-bottom-2">
-            {modelToOperationsMiscT(
-              'modal.editMilestone.selectedSolutionCount',
-              {
-                count: selectedSolutionCount
-              }
-            )}
-          </h3>
+    <div className="padding-8 maxw-tablet">
+      <div className="maxw-mobile-lg">
+        <h3 className="margin-bottom-2">
+          {modelToOperationsMiscT('modal.editMilestone.selectedSolutionCount', {
+            count: selectedSolutionCount
+          })}
+        </h3>
 
-          <div className="text-base-dark mint-body-normal margin-bottom-4">
-            <Trans
-              i18nKey="modelToOperationsMisc:modal.editMilestone.visitSolutionLibrary"
-              components={{
-                solution: (
-                  <Button
-                    type="button"
-                    unstyled
-                    className="usa-button--unstyled margin-0"
-                    onClick={() => {
-                      setCloseDestination(
-                        `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-                      );
-                    }}
-                  >
-                    {' '}
-                  </Button>
-                ),
-                help: (
-                  <Link
-                    href="/help-and-knowledge/operational-solutions"
-                    target="_blank"
-                    variant="external"
-                  >
-                    {' '}
-                  </Link>
-                )
-              }}
-            />
-          </div>
-
-          <div className="border-bottom-1px border-base-lighter border-top-1px " />
-
-          {milestone.addedFromMilestoneLibrary && (
-            <div className="padding-top-4 padding-bottom-2 margin-bottom-4">
-              <h4 className="margin-0">
-                {modelToOperationsMiscT(
-                  'modal.editMilestone.suggestedSolutions'
-                )}
-              </h4>
-
-              <p className="margin-top-0 margin-bottom-3 mint-body-normal text-base">
-                {modelToOperationsMiscT(
-                  'modal.editMilestone.selectedSolutionsDescription'
-                )}
-              </p>
-
-              {mappedSolutions.map(solution =>
-                solution ? (
-                  <SolutionCard
-                    key={solution.key}
-                    solution={solution}
-                    setChecked={setChecked}
-                    checked={commonSolutionKeys.includes(solution.key)}
-                  />
-                ) : null
-              )}
-            </div>
-          )}
-
-          <Label htmlFor="available-solutions">
-            {milestoneT('solutions.label')}
-          </Label>
-
-          <HelpText className="margin-top-1 text-base-dark mint-body-normal">
-            {modelToOperationsMiscT(
-              'modal.editMilestone.availableSolutionsDescription'
-            )}
-          </HelpText>
-
-          <MultiSelect
-            id="available-solutions"
-            inputId="available-solutions"
-            ariaLabel={milestoneT('solutions.label')}
-            options={[]}
-            groupedOptions={groupedOptions}
-            selectedLabel="Selected solutions"
-            initialValues={selectedSolutions}
-            name="availableSolutions"
-            onChange={values => {
-              setSelectedSolutions(values);
+        <div className="text-base-dark mint-body-normal margin-bottom-4">
+          <Trans
+            i18nKey="modelToOperationsMisc:modal.editMilestone.visitSolutionLibrary"
+            components={{
+              solution: (
+                <Button
+                  type="button"
+                  unstyled
+                  className="usa-button--unstyled margin-0"
+                  onClick={() => {
+                    setCloseDestination(
+                      `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                    );
+                  }}
+                >
+                  {' '}
+                </Button>
+              ),
+              help: (
+                <Link
+                  href="/help-and-knowledge/operational-solutions"
+                  target="_blank"
+                  variant="external"
+                >
+                  {' '}
+                </Link>
+              )
             }}
           />
-        </Grid>
-      </Grid>
-    </GridContainer>
+        </div>
+
+        <div className="border-bottom-1px border-base-lighter border-top-1px " />
+
+        {milestone.addedFromMilestoneLibrary && (
+          <div className="padding-top-4 padding-bottom-2 margin-bottom-4">
+            <h4 className="margin-0">
+              {modelToOperationsMiscT('modal.editMilestone.suggestedSolutions')}
+            </h4>
+
+            <p className="margin-top-0 margin-bottom-3 mint-body-normal text-base">
+              {modelToOperationsMiscT(
+                'modal.editMilestone.selectedSolutionsDescription'
+              )}
+            </p>
+
+            {mappedSolutions.map(solution =>
+              solution ? (
+                <SolutionCard
+                  key={solution.key}
+                  solution={solution}
+                  setChecked={setChecked}
+                  checked={commonSolutionKeys.includes(solution.key)}
+                />
+              ) : null
+            )}
+          </div>
+        )}
+
+        <Label htmlFor="available-solutions">
+          {milestoneT('solutions.label')}
+        </Label>
+
+        <HelpText className="margin-top-1 text-base-dark mint-body-normal">
+          {modelToOperationsMiscT(
+            'modal.editMilestone.availableSolutionsDescription'
+          )}
+        </HelpText>
+
+        <MultiSelect
+          id="available-solutions"
+          inputId="available-solutions"
+          ariaLabel={milestoneT('solutions.label')}
+          options={[]}
+          groupedOptions={groupedOptions}
+          selectedLabel="Selected solutions"
+          initialValues={selectedSolutions}
+          name="availableSolutions"
+          onChange={values => {
+            setSelectedSolutions(values);
+          }}
+        />
+      </div>
+    </div>
   );
 };
 
