@@ -6,6 +6,7 @@ type MTOTemplateMilestone struct {
 	baseStruct
 	templateRelation
 
+	// Note name and key are copied from the common milestone table when the template milestone is applied
 	Name                  string                `json:"name"                  db:"name"`
 	Key                   MTOCommonMilestoneKey `json:"key" db:"key"`
 	MTOTemplateCategoryID *uuid.UUID            `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
