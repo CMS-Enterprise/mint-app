@@ -24,6 +24,7 @@ type MTOMilestone {
   Note, this data will be cleared if other is removed as an option
   """
   facilitatedByOther: String
+  assignedTo: UUID
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
@@ -53,6 +54,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   mtoCategoryID: UUID
   facilitatedBy: [MTOFacilitator!]
   facilitatedByOther: String
+  assignedTo: UUID
   needBy: Time
   status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator

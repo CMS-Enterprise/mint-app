@@ -8,6 +8,7 @@ type MTOMilestoneTranslation {
     @goTag(key: "db", value: "facilitated_by")
   facilitatedByOther: TranslationField!
     @goTag(key: "db", value: "facilitated_by_other")
+  assignedTo: TranslationField! @goTag(key: "db", value: "assigned_to")
   needBy: TranslationField! @goTag(key: "db", value: "need_by")
   riskIndicator: TranslationFieldWithOptions!
     @goTag(key: "db", value: "risk_indicator")

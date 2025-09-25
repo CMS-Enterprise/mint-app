@@ -10,6 +10,7 @@ SELECT
     COALESCE(m.name, cm.name) AS name,
     m.facilitated_by,
     m.facilitated_by_other,
+    m.assigned_to,
     m.need_by,
     m.status,
     m.risk_indicator,

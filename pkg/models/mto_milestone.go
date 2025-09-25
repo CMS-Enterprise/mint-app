@@ -34,6 +34,7 @@ type MTOMilestone struct {
 	MTOCategoryID      *uuid.UUID                 `json:"mtoCategoryID" db:"mto_category_id"`
 	FacilitatedBy      *EnumArray[MTOFacilitator] `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther *string                    `json:"facilitatedByOther" db:"facilitated_by_other"`
+	AssignedTo         *uuid.UUID                 `json:"assignedTo" db:"assigned_to"`
 	NeedBy             *time.Time                 `json:"needBy" db:"need_by"`
 	Status             MTOMilestoneStatus         `json:"status" db:"status"`
 	RiskIndicator      MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`

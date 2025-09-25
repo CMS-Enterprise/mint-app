@@ -119,6 +119,7 @@ type MTOMilestoneTranslation struct {
 	IsDraft            models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
 	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	AssignedTo         models.TranslationField            `json:"assignedTo" db:"assigned_to"`
 	NeedBy             models.TranslationField            `json:"needBy" db:"need_by"`
 	RiskIndicator      models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
 	CommonSolutions    models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
