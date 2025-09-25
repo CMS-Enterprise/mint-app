@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"go.uber.org/zap"
 
@@ -87,7 +88,8 @@ func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 		// First, fetch the existing milestone note so we can check permissions
 		existing, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, id)
 		if err != nil {
-			if errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			if errors.Is(err, loaders.ErrRecordNotFoundForKey) ||
+				strings.Contains(err.Error(), "record not found for given key") {
 				return fmt.Errorf("unable to delete MTO milestone note")
 			}
 			return fmt.Errorf("error fetching mto milestone note during deletion: %s", err)
