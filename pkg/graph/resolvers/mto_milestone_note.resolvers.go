@@ -6,19 +6,12 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// MilestoneID is the resolver for the milestoneID field.
-func (r *mTOMilestoneNoteResolver) MilestoneID(ctx context.Context, obj *models.MTOMilestoneNote) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: MilestoneID - milestoneID"))
-}
 
 // CreateMTOMilestoneNote is the resolver for the createMTOMilestoneNote field.
 func (r *mutationResolver) CreateMTOMilestoneNote(ctx context.Context, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
@@ -47,21 +40,3 @@ func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, id uuid.U
 	}
 	return true, nil
 }
-
-// MilestoneID is the resolver for the milestoneID field.
-func (r *mTOMilestoneNoteCreateInputResolver) MilestoneID(ctx context.Context, obj *models.MTOMilestoneNoteCreateInput, data uuid.UUID) error {
-	panic(fmt.Errorf("not implemented: MilestoneID - milestoneID"))
-}
-
-// MTOMilestoneNote returns generated.MTOMilestoneNoteResolver implementation.
-func (r *Resolver) MTOMilestoneNote() generated.MTOMilestoneNoteResolver {
-	return &mTOMilestoneNoteResolver{r}
-}
-
-// MTOMilestoneNoteCreateInput returns generated.MTOMilestoneNoteCreateInputResolver implementation.
-func (r *Resolver) MTOMilestoneNoteCreateInput() generated.MTOMilestoneNoteCreateInputResolver {
-	return &mTOMilestoneNoteCreateInputResolver{r}
-}
-
-type mTOMilestoneNoteResolver struct{ *Resolver }
-type mTOMilestoneNoteCreateInputResolver struct{ *Resolver }
