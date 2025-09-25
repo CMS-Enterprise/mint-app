@@ -18,53 +18,60 @@ auth:apikey {
 
 body:graphql {
   query ModelPlanMTOCategories {
-  modelPlan(id: "{{modelPlanID}}") {
-      mtoMatrix{
-          status
-          milestonesWithNoLinkedSolutions {
-              name
+    modelPlan(id: "{{modelPlanID}}") {
+      mtoMatrix {
+        status
+        milestonesWithNoLinkedSolutions {
+          name
+        }
+        recentEdit {
+          date
+          tableName
+          actorName
+          modifiedBy
+          modifiedDts
+          modifiedByUserAccount {
+            commonName
           }
-          recentEdit{
-              date
-              tableName
-              actorName
-              modifiedBy
-              modifiedDts
-              modifiedByUserAccount{
-                  commonName
-              }
-          }
-          milestones {
-              name
-              createdDts
-              createdBy
-          }
-          categories{
-              id
-              position
-              name
-              isUncategorized
-              subCategories {
-                  id
-                  position
-                  name
-                  isUncategorized
-                  milestones {
-                          id
-                          name
-                          addedFromMilestoneLibrary
-                          key
-                          facilitatedBy
-                          needBy
-                          status
-                          riskIndicator
-                          # isDraftMilestone
-                  }
-              }
-              }
-          }
+        }
+        milestones {
+          name
+          createdDts
+          createdBy
+        }
+        categories {
           id
-          modelName
+          position
+          name
+          isUncategorized
+          subCategories {
+            id
+            position
+            name
+            isUncategorized
+            milestones {
+              id
+              name
+              addedFromMilestoneLibrary
+              key
+              facilitatedBy
+              needBy
+              status
+              riskIndicator
+              # isDraftMilestone
+            }
+          }
+        }
+        mtoTemplates {
+          id
+          name
+          isAdded
+          dateAdded
+        }
       }
+      id
+      modelName
+    }
   }
+  
 }

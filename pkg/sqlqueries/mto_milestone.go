@@ -29,12 +29,16 @@ var mtoMilestoneGetBySolutionIDLoaderSQL string
 //go:embed SQL/mto/milestone/get_by_model_plan_id_no_linked_solution_LOADER.sql
 var mtoMilestoneGetByModelPlanIDNoLinkedSolutionLoaderSQL string
 
+//go:embed SQL/mto/milestone/create_allow_conflicts.sql
+var mtoMilestoneCreateAllowConflictsSQL string
+
 type mtoMilestoneScripts struct {
-	Create        string
-	Update        string
-	Delete        string
-	GetByID       string
-	GetByIDLoader string
+	Create               string
+	CreateAllowConflicts string
+	Update               string
+	Delete               string
+	GetByID              string
+	GetByIDLoader        string
 	// returns all Milestones by a model plan ID
 	GetByModelPlanIDLoader string
 	// returns all Milestones by a model plan and category
@@ -47,6 +51,7 @@ type mtoMilestoneScripts struct {
 
 var MTOMilestone = mtoMilestoneScripts{
 	Create:                                 mtoMilestoneCreateSQL,
+	CreateAllowConflicts:                   mtoMilestoneCreateAllowConflictsSQL,
 	Update:                                 mtoMilestoneUpdateSQL,
 	Delete:                                 mtoMilestoneDeleteSQL,
 	GetByID:                                mtoMilestoneGetByIDSQL,

@@ -11,11 +11,8 @@ post {
 }
 
 body:graphql {
-  mutation ApplyMtoTemplate {
-    createTemplateToMTO(
-      modelPlanID: "12345678-1234-1234-1234-123456789012"
-      templateID: "00000000-0000-0000-0000-000000000000"
-    ) {
+  mutation ApplyMtoTemplate($modelPlanID: UUID!, $templateID: UUID!) {
+    createTemplateToMTO(modelPlanID: $modelPlanID, templateID: $templateID) {
       id
       modelPlanID
       templateID
@@ -24,6 +21,14 @@ body:graphql {
       solutionsAdded
       warnings
     }
+  }
+  
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": "{{modelPlanID}}",
+    "templateID": "{{templateID}}"
   }
 }
 

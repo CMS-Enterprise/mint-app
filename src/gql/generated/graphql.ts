@@ -1291,8 +1291,14 @@ export type MtoTemplate = {
   categoryCount: Scalars['Int']['output'];
   createdBy: Scalars['UUID']['output'];
   createdDts: Scalars['Time']['output'];
+  dateAdded?: Maybe<Scalars['Time']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
+  /**
+   * To represent if this template is _already_ part of the Model Plan's MTO.
+   * This will automatically return false if it is not in the context of a model plan
+   */
+  isAdded: Scalars['Boolean']['output'];
   key: MtoTemplateKey;
   milestoneCount: Scalars['Int']['output'];
   milestones: Array<MtoTemplateMilestone>;
@@ -1346,6 +1352,7 @@ export type MtoTemplateSolution = {
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   key?: Maybe<MtoCommonSolutionKey>;
+  milestones: Array<MtoTemplateMilestone>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   mtoCommonSolutionID: Scalars['UUID']['output'];
@@ -1612,11 +1619,21 @@ export type ModelsByStatusAnalytics = {
 export type ModelsToOperationMatrix = {
   __typename: 'ModelsToOperationMatrix';
   categories: Array<MtoCategory>;
+  /** This returns all common milestones, regardless of whether they're linked to a category */
   commonMilestones: Array<MtoCommonMilestone>;
+  /**
+   * This returns all common solutions, regardless of whether they're linked to a category
+   * to check if it is part of this MTO check the returned isAdded field
+   */
   commonSolutions: Array<MtoCommonSolution>;
   info: MtoInfo;
   milestones: Array<MtoMilestone>;
   milestonesWithNoLinkedSolutions: Array<MtoMilestone>;
+  /**
+   * This returns all mto templates, regardless of whether they're linked to a model plan
+   * to check if it is part of this MTO check the returned isAdded field
+   */
+  mtoTemplates: Array<MtoTemplate>;
   /**
    * RecentEdit returns the most recent translated audit for the MTO
    * Note, this should not be called when fetching a list of model plans as it is not data loaded

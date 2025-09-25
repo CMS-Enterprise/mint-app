@@ -66,7 +66,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 		// Next, attempt to insert a category with the same name as the configured category in the Common Milestone
 		// Here we use a special storage method that handles conflicts without returning an error
-		// to ensure that we create a cateogry if needed, otherwise we just return the existing one
+		// to ensure that we create a category if needed, otherwise we just return the existing one
 
 		// Note, the position for the category & subcategory (coded as `0` here) is not respected when inserted, but is a required parameter in the constructor
 		// It will be have a position equal to the max of all other positions
@@ -128,6 +128,94 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 		return createdMilestone, err
 	})
+}
+
+// MTOMilestoneCreateCommonWithTX uses the provided information to create a new Common MTO Milestone with an existing transaction
+func MTOMilestoneCreateCommonWithTXAllowConflicts(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	tx *sqlx.Tx,
+	store *storage.Store, // Still needed for emails
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	modelPlanID uuid.UUID,
+	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonSolutions []models.MTOCommonSolutionKey,
+) (*models.MTOMilestoneWithNewlyInsertedStatus, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// First, fetch the Common Milestone object from the DB
+	commonMilestone, err := MTOCommonMilestoneGetByKeyLOADER(ctx, commonMilestoneKey)
+	if err != nil {
+		logger.Error("failed to fetch common milestone when creating milestone from library", zap.Error(err))
+		return nil, err
+	}
+
+	// Next, attempt to insert a category with the same name as the configured category in the Common Milestone
+	// Here we use a special storage method that handles conflicts without returning an error
+	// to ensure that we create a category if needed, otherwise we just return the existing one
+
+	// Note, the position for the category & subcategory (coded as `0` here) is not respected when inserted, but is a required parameter in the constructor
+	// It will be have a position equal to the max of all other positions
+	parentCategoryToCreate := models.NewMTOCategory(principalAccount.ID, commonMilestone.CategoryName, modelPlanID, nil, 0)
+	parentCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, parentCategoryToCreate)
+	if err != nil {
+		logger.Error("failed to create parent category when creating milestone from library", zap.Error(err))
+		return nil, err
+	}
+	finalCategoryID := parentCategory.ID // track the eventual category ID that we will attach to the milestone
+	if commonMilestone.SubCategoryName != nil {
+		subCategoryToCreate := models.NewMTOCategory(principalAccount.ID, *commonMilestone.SubCategoryName, modelPlanID, &parentCategory.ID, 0)
+		subCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, subCategoryToCreate)
+		if err != nil {
+			logger.Error("failed to create subcategory when creating milestone from library", zap.Error(err))
+			return nil, err
+		}
+		finalCategoryID = subCategory.ID
+	}
+
+	// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
+	milestone := models.NewMTOMilestone(
+		principalAccount.ID,
+		nil,
+		&commonMilestoneKey,
+		modelPlanID,
+		&finalCategoryID,
+	)
+	milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
+
+	createdMilestone, err := storage.MTOMilestoneCreateAllowConflicts(tx, logger, milestone)
+	if err != nil {
+		logger.Error("failed to create mto milestone from common library", zap.Error(err))
+		return nil, err
+	}
+
+	// create common solutions and link them
+	_, err = MTOMilestoneUpdateLinkedSolutionsWithTX(
+		ctx,
+		principal,
+		logger,
+		tx,
+		store, // this is used for the emails being sent later
+		emailService,
+		emailTemplateService,
+		addressBook,
+		createdMilestone.ID,
+		createdMilestone.ModelPlanID,
+		[]uuid.UUID{},
+		commonSolutions,
+	)
+	if err != nil {
+		logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+		return nil, err
+	}
+
+	return createdMilestone, err
 }
 
 // MTOMilestoneUpdate updates the fields of an MTOMilestone

@@ -262,3 +262,43 @@ SELECT audit.AUDIT_TABLE(
 );
 
 COMMIT;
+
+-- =========================================================
+-- 7) model_plan_mto_template_link
+--    - Links a model plan to an MTO template with timestamp
+-- =========================================================
+CREATE TABLE IF NOT EXISTS model_plan_mto_template_link (
+    id              UUID PRIMARY KEY NOT NULL,
+    model_plan_id   UUID NOT NULL REFERENCES model_plan(id) ON DELETE CASCADE,
+    template_id     UUID NOT NULL REFERENCES mto_template(id) ON DELETE RESTRICT,
+    applied_date    DATE NOT NULL DEFAULT CURRENT_DATE,
+
+    created_by      UUID NOT NULL REFERENCES user_account(id),
+    created_dts     TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by     UUID REFERENCES user_account(id),
+    modified_dts    TIMESTAMP WITH TIME ZONE
+);
+
+COMMENT ON TABLE model_plan_mto_template_link IS 'Links model plans to MTO templates, tracking when templates were applied.';
+
+COMMENT ON COLUMN model_plan_mto_template_link.id IS 'Unique identifier for the link record.';
+COMMENT ON COLUMN model_plan_mto_template_link.model_plan_id IS 'FK to the model plan using this template.';
+COMMENT ON COLUMN model_plan_mto_template_link.template_id IS 'FK to the MTO template being applied.';
+COMMENT ON COLUMN model_plan_mto_template_link.applied_date IS 'Date when this template was applied to the model.';
+
+-- Index for finding templates by model
+CREATE INDEX IF NOT EXISTS idx_model_plan_mto_template_model_id
+ON model_plan_mto_template_link (model_plan_id);
+
+-- Index for finding models by template
+CREATE INDEX IF NOT EXISTS idx_model_plan_mto_template_template_id
+ON model_plan_mto_template_link (template_id);
+
+SELECT audit.AUDIT_TABLE(
+    'public','model_plan_mto_template_link','id', 'model_plan_id',
+    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]
+);
+
+ALTER TABLE model_plan_mto_template_link 
+ADD CONSTRAINT model_plan_mto_template_link_unique 
+UNIQUE (model_plan_id, template_id);
