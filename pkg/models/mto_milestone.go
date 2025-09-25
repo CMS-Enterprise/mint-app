@@ -31,15 +31,14 @@ type MTOMilestone struct {
 	Name *string                `json:"name" db:"name"`                    // From Common Milestone Table if linked
 	Key  *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"` // Foreign Key to the Common Milestone Table
 
-	MTOCategoryID *uuid.UUID `json:"mtoCategoryID" db:"mto_category_id"`
-	// todo(Elle):change it to MTOMilestoneResponsibleComponent once query updated
-	ResponsibleComponent *MTOMilestoneStatus        `json:"responsibleComponent" db:"responsible_component"`
-	FacilitatedBy        *EnumArray[MTOFacilitator] `json:"facilitatedBy" db:"facilitated_by"`
-	FacilitatedByOther   *string                    `json:"facilitatedByOther" db:"facilitated_by_other"`
-	NeedBy               *time.Time                 `json:"needBy" db:"need_by"`
-	Status               MTOMilestoneStatus         `json:"status" db:"status"`
-	RiskIndicator        MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`
-	IsDraft              bool                       `json:"isDraft" db:"is_draft"`
+	MTOCategoryID        *uuid.UUID                                  `json:"mtoCategoryID" db:"mto_category_id"`
+	ResponsibleComponent EnumArray[MTOMilestoneResponsibleComponent] `json:"responsibleComponent" db:"responsible_component"`
+	FacilitatedBy        *EnumArray[MTOFacilitator]                  `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther   *string                                     `json:"facilitatedByOther" db:"facilitated_by_other"`
+	NeedBy               *time.Time                                  `json:"needBy" db:"need_by"`
+	Status               MTOMilestoneStatus                          `json:"status" db:"status"`
+	RiskIndicator        MTORiskIndicator                            `json:"riskIndicator" db:"risk_indicator"`
+	IsDraft              bool                                        `json:"isDraft" db:"is_draft"`
 }
 
 // AddedFromMilestoneLibrary returns true or false if this was added from the common milestone library.
@@ -51,13 +50,14 @@ func (m *MTOMilestone) AddedFromMilestoneLibrary() bool {
 // NewMTOMilestone returns a new mtoMileMTOMilestone object
 func NewMTOMilestone(createdBy uuid.UUID, name *string, commonMilestoneKey *MTOCommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{
-		Name:              name,
-		baseStruct:        NewBaseStruct(createdBy),
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		Key:               commonMilestoneKey,
-		MTOCategoryID:     mtoCategoryID,
-		IsDraft:           true,
-		RiskIndicator:     MTORiskIndicatorOnTrack,
-		Status:            MTMNotStarted,
+		Name:                 name,
+		baseStruct:           NewBaseStruct(createdBy),
+		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
+		Key:                  commonMilestoneKey,
+		MTOCategoryID:        mtoCategoryID,
+		IsDraft:              true,
+		RiskIndicator:        MTORiskIndicatorOnTrack,
+		Status:               MTMNotStarted,
+		ResponsibleComponent: []MTOMilestoneResponsibleComponent{},
 	}
 }

@@ -34,6 +34,7 @@ import {
   GetMtoMilestoneQuery,
   MtoCommonSolutionKey,
   MtoFacilitator,
+  MtoMilestoneResponsibleComponent,
   MtoMilestoneStatus,
   MtoRiskIndicator,
   MtoSolution,
@@ -98,8 +99,7 @@ type FormValues = {
       id: string;
     };
   };
-  // todo(Elle): change to MtoMilestoneResponsibleComponent once query updated
-  responsibleComponent: MtoMilestoneStatus;
+  responsibleComponent: MtoMilestoneResponsibleComponent[];
   facilitatedBy?: MtoFacilitator[];
   facilitatedByOther?: string;
   needBy?: string;
@@ -380,9 +380,7 @@ const EditMilestoneForm = ({
         }
       },
       name: milestone?.name || '',
-      responsibleComponent:
-        // todo(Elle):change it to .responsibleComponent once query updated
-        milestone?.status || MtoMilestoneStatus.NOT_STARTED,
+      responsibleComponent: milestone?.responsibleComponent || [],
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
       needBy: milestone?.needBy || '',
@@ -552,6 +550,7 @@ const EditMilestoneForm = ({
         categories,
         needBy,
         name,
+        responsibleComponent,
         facilitatedBy,
         facilitatedByOther,
         ...formChanges
@@ -582,6 +581,7 @@ const EditMilestoneForm = ({
           id: editMilestoneID || '',
           changes: {
             ...formChanges,
+            ...(responsibleComponent && { responsibleComponent }),
             ...(facilitatedBy && {
               facilitatedBy
             }),
@@ -1133,8 +1133,20 @@ const EditMilestoneForm = ({
               <Controller
                 name="responsibleComponent"
                 control={control}
-                render={({ field: { ref, ...field } }) => (
-                  <FormGroup className="margin-0 margin-bottom-3">
+                rules={{
+                  required: modelToOperationsMiscT('validation.fillOut'),
+                  validate: value =>
+                    value.length !== 0 ||
+                    modelToOperationsMiscT('validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    className="margin-0 margin-bottom-3"
+                    error={!!error}
+                  >
                     <Label
                       htmlFor={convertCamelCaseToKebabCase(
                         'responsibleComponent'
@@ -1144,22 +1156,27 @@ const EditMilestoneForm = ({
                     >
                       {responsibleComponentConfig.label}
                     </Label>
+
                     <HelpText className="margin-top-1">
                       {responsibleComponentConfig.sublabel}
                     </HelpText>
-                    <Select
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <MultiSelect
                       {...field}
                       id={convertCamelCaseToKebabCase(field.name)}
-                      value={field.value || ''}
-                    >
-                      {getKeys(stausConfig.options).map(option => {
-                        return (
-                          <option key={option} value={option}>
-                            {stausConfig.options[option]}
-                          </option>
-                        );
-                      })}
-                    </Select>
+                      inputId={convertCamelCaseToKebabCase(field.name)}
+                      ariaLabel={convertCamelCaseToKebabCase(field.name)}
+                      ariaLabelText={responsibleComponentConfig.label}
+                      options={composeMultiSelectOptions(
+                        responsibleComponentConfig.options
+                      )}
+                      selectedLabel={
+                        responsibleComponentConfig.multiSelectLabel || ''
+                      }
+                      initialValues={watch('responsibleComponent')}
+                    />
                   </FormGroup>
                 )}
               />

@@ -16,6 +16,7 @@ import MilestoneStatusTag from 'features/ModelPlan/ModelToOperations/_components
 import MTOTag from 'features/ModelPlan/ModelToOperations/_components/MTOTag';
 import {
   GetMtoMilestoneQuery,
+  MtoMilestoneResponsibleComponent,
   MtoMilestoneStatus,
   MtoRiskIndicator,
   useGetMtoMilestoneQuery
@@ -77,7 +78,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         name: '',
         status: MtoMilestoneStatus.NOT_STARTED,
         key: null,
-        responsibleComponent: MtoMilestoneStatus.NOT_STARTED,
+        responsibleComponent: [],
         facilitatedBy: null,
         facilitatedByOther: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
@@ -251,8 +252,16 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               <DescriptionDefinition
                 className="font-body-md text-base-darkest"
                 definition={
-                  // todo(Elle):change to milestone.responsibleComponent once query updated
-                  milestone.status ? milestone.status : NoneSpecified
+                  milestone.responsibleComponent.length > 0
+                    ? milestone.responsibleComponent
+                        .map(
+                          (component: MtoMilestoneResponsibleComponent) =>
+                            `${mtoMilestoneT(
+                              `responsibleComponentons.${component}`
+                            )}`
+                        )
+                        .join(', ')
+                    : NoneSpecified
                 }
               />
             </Grid>

@@ -467,6 +467,7 @@ export const milestoneMock = (
           id: '123',
           name: 'Milestone 1',
           key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+          responsibleComponent: [],
           facilitatedBy: [],
           facilitatedByOther: '',
           needBy: '2021-08-01',

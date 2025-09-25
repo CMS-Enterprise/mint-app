@@ -7,6 +7,46 @@ enum MTOMilestoneStatus {
   COMPLETED
 }
 
+enum MTOMilestoneResponsibleComponent {
+  CCIIO
+  CCSQ
+  CM
+  CMCS
+  CMMI_BSG
+  CMMI_LDG
+  CMMI_PCMG
+  CMMI_PPG
+  CMMI_RRCEG
+  CMMI_SCMG
+  CMMI_SPHG
+  CPI
+  FCHCO
+  OA
+  OACT
+  OAGM
+  OC
+  OEDA
+  OEOCR
+  OFM
+  OHC
+  OHEI
+  OHI
+  OIT_AMG
+  OIT_BOG
+  OIT_EADG
+  OIT_ESSG
+  OIT_ICPG
+  OIT_ISPG
+  OIT_IUSG
+  OIT_NTSS
+  OL
+  OMH
+  OPOLE
+  OSFLO
+  OSORA
+  OSPR
+}
+
 # MTOMilestone represents a Milestone that has been added to a Model Plan's MTO
 type MTOMilestone {
   # DB Fields
@@ -18,6 +58,7 @@ type MTOMilestone {
   This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
   """
   mtoCategoryID: UUID
+  responsibleComponent: [MTOMilestoneResponsibleComponent!]!
   facilitatedBy: [MTOFacilitator!]
   """
   A place to store the other facilitator information if selected as an option for facilitatedBy.
