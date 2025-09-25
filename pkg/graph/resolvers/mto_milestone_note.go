@@ -44,12 +44,12 @@ func CreateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 	}
 
 	// Get the milestone to get its model plan ID
-	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, input.MTOMilestoneID)
+	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, input.MilestoneID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get milestone: %w", err)
 	}
 
-	note := models.NewMTOMilestoneNote(principalAccount.ID, input.Content, input.MTOMilestoneID, milestone.ModelPlanID)
+	note := models.NewMTOMilestoneNote(principalAccount.ID, input.Content, input.MilestoneID, milestone.ModelPlanID)
 	err = BaseStructPreCreate(logger, note, principal, store, false)
 	if err != nil {
 		return nil, err

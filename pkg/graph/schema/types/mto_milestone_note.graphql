@@ -3,7 +3,7 @@ MTOMilestoneNote represents a note for a milestone
 """
 type MTOMilestoneNote {
   id: UUID!
-  mtoMilestoneID: UUID!
+  milestoneID: UUID!
   content: String!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -17,7 +17,7 @@ type MTOMilestoneNote {
 MTOMilestoneNoteCreateInput represents the necessary fields to create a milestone note
 """
 input MTOMilestoneNoteCreateInput {
-  mtoMilestoneID: UUID!
+  milestoneID: UUID!
   content: String!
 }
 

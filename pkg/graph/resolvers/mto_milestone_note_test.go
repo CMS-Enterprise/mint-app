@@ -22,8 +22,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreate() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		models.MTOMilestoneNoteCreateInput{
-			Content:        content,
-			MTOMilestoneID: milestone.ID,
+			Content:     content,
+			MilestoneID: milestone.ID,
 		},
 	)
 
@@ -32,7 +32,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreate() {
 	suite.NotNil(note)
 	suite.NotEqual(uuid.Nil, note.ID) // Should have a generated UUID
 	suite.Equal(content, note.Content)
-	suite.Equal(milestone.ID, note.MTOMilestoneID)
+	suite.Equal(milestone.ID, note.MilestoneID)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, note.CreatedBy)
 	suite.NotNil(note.CreatedDts)
 	suite.Nil(note.ModifiedBy)
@@ -50,8 +50,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithEmptyContent() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		models.MTOMilestoneNoteCreateInput{
-			Content:        "", // Empty content should be rejected by ZERO_STRING constraint
-			MTOMilestoneID: milestone.ID,
+			Content:     "", // Empty content should be rejected by ZERO_STRING constraint
+			MilestoneID: milestone.ID,
 		},
 	)
 
@@ -70,8 +70,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithInvalidMilestoneID() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		models.MTOMilestoneNoteCreateInput{
-			Content:        "Test content",
-			MTOMilestoneID: invalidMilestoneID,
+			Content:     "Test content",
+			MilestoneID: invalidMilestoneID,
 		},
 	)
 
@@ -105,7 +105,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteUpdate() {
 	suite.NotNil(updatedNote)
 	suite.Equal(note.ID, updatedNote.ID)
 	suite.Equal(newContent, updatedNote.Content)
-	suite.Equal(note.MTOMilestoneID, updatedNote.MTOMilestoneID)
+	suite.Equal(note.MilestoneID, updatedNote.MilestoneID)
 	suite.Equal(note.CreatedBy, updatedNote.CreatedBy)
 	suite.Equal(note.CreatedDts, updatedNote.CreatedDts)
 	suite.NotNil(updatedNote.ModifiedBy)
@@ -197,7 +197,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteGetByMilestoneID() {
 	noteIDs := make([]uuid.UUID, len(notes))
 	for i, note := range notes {
 		noteIDs[i] = note.ID
-		suite.Equal(milestone.ID, note.MTOMilestoneID)
+		suite.Equal(milestone.ID, note.MilestoneID)
 	}
 
 	suite.Contains(noteIDs, note1.ID)
@@ -240,7 +240,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteGetByID() {
 	suite.NotNil(retrievedNote)
 	suite.Equal(note.ID, retrievedNote.ID)
 	suite.Equal(note.Content, retrievedNote.Content)
-	suite.Equal(note.MTOMilestoneID, retrievedNote.MTOMilestoneID)
+	suite.Equal(note.MilestoneID, retrievedNote.MilestoneID)
 	suite.Equal(note.ModelPlanID, retrievedNote.ModelPlanID)
 }
 
@@ -301,13 +301,13 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteMultipleMilestones() {
 	note1IDs := make([]uuid.UUID, len(notes1))
 	for i, note := range notes1 {
 		note1IDs[i] = note.ID
-		suite.Equal(milestone1.ID, note.MTOMilestoneID)
+		suite.Equal(milestone1.ID, note.MilestoneID)
 	}
 
 	suite.Contains(note1IDs, note1.ID)
 	suite.Contains(note1IDs, note2.ID)
 	suite.Equal(note3.ID, notes2[0].ID)
-	suite.Equal(milestone2.ID, notes2[0].MTOMilestoneID)
+	suite.Equal(milestone2.ID, notes2[0].MilestoneID)
 }
 
 // Helper function to create an MTO milestone note for testing
@@ -318,8 +318,8 @@ func (suite *ResolverSuite) createMTOMilestoneNote(milestone *models.MTOMileston
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		models.MTOMilestoneNoteCreateInput{
-			Content:        content,
-			MTOMilestoneID: milestone.ID,
+			Content:     content,
+			MilestoneID: milestone.ID,
 		},
 	)
 	suite.NoError(err)

@@ -425,25 +425,25 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 	// the data is deletable, so it needs to be a pointer
 	var milestoneName *string
 
-	mtoMilestoneIDChange, mtoMilestoneIDFieldPresent := changesFields["mto_milestone_id"]
+	milestoneIDChange, milestoneIDFieldPresent := changesFields["milestone_id"]
 
 	operationIsDelete := operation == models.DBOpDelete || operation == models.DBOpTruncate
 
-	// Get milestone name from the mto_milestone_id field
-	if mtoMilestoneIDFieldPresent {
-		var mtoMilestoneID any
+	// Get milestone name from the milestone_id field
+	if milestoneIDFieldPresent {
+		var milestoneID any
 		if operationIsDelete {
-			mtoMilestoneID = mtoMilestoneIDChange.Old
+			milestoneID = milestoneIDChange.Old
 		} else {
-			mtoMilestoneID = mtoMilestoneIDChange.New
+			milestoneID = milestoneIDChange.New
 		}
 
 		// Guard against nil milestone ID values
-		if mtoMilestoneID == nil {
-			return nil, nil, fmt.Errorf("mto_milestone_id field present but value is nil (operation: %s, milestoneNoteID: %v)", operation, milestoneNoteID)
+		if milestoneID == nil {
+			return nil, nil, fmt.Errorf("milestone_id field present but value is nil (operation: %s, milestoneNoteID: %v)", operation, milestoneNoteID)
 		}
 
-		milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, mtoMilestoneID)
+		milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, milestoneID)
 		if err != nil {
 			return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note (operation: %s, milestoneNoteID: %v). err %w", operation, milestoneNoteID, err)
 		}
@@ -451,7 +451,7 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 	}
 
 	// If we don't have the milestone ID from changes, fetch from database
-	if !mtoMilestoneIDFieldPresent {
+	if !milestoneIDFieldPresent {
 		if operationIsDelete {
 			return nil, nil, fmt.Errorf("there wasn't enough information present for this MTO milestone note, unable to generate metadata for this entry (operation: %s, milestoneNoteID: %v)", operation, milestoneNoteID)
 		}
@@ -466,7 +466,7 @@ func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, mile
 			}
 		} else {
 			if milestoneName == nil {
-				milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, milestoneNote.MTOMilestoneID)
+				milestoneNameStr, err := getMTOMilestoneForeignKeyReference(ctx, store, milestoneNote.MilestoneID)
 				if err != nil {
 					return nil, nil, fmt.Errorf("there was an issue getting the milestone name for mto milestone note (operation: %s, milestoneNoteID: %v). err %w", operation, milestoneNoteID, err)
 				}

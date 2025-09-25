@@ -1155,16 +1155,16 @@ export type MtoMilestoneNote = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
+  milestoneID: Scalars['UUID']['output'];
   modifiedBy: Scalars['UUID']['output'];
   modifiedByUserAccount: UserAccount;
   modifiedDts: Scalars['Time']['output'];
-  mtoMilestoneID: Scalars['UUID']['output'];
 };
 
 /** MTOMilestoneNoteCreateInput represents the necessary fields to create a milestone note */
 export type MtoMilestoneNoteCreateInput = {
   content: Scalars['String']['input'];
-  mtoMilestoneID: Scalars['UUID']['input'];
+  milestoneID: Scalars['UUID']['input'];
 };
 
 /** Represents MTO Milestone Note translation data */

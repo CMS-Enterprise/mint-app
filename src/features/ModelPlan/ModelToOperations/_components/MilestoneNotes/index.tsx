@@ -30,7 +30,7 @@ import MilestoneNoteForm from '../MilestoneNoteForm';
  * Opens a sidepanel/form to add a new note or edit an existing note
  * Opens a modal to confirm the deletion of a note
  *
- * @param {string} mtoMilestoneID - The ID of the MTO milestone
+ * @param {string} milestoneID - The ID of the MTO milestone
  * @param {MilestoneNoteType[]} props.milestoneNotes - The list of milestone notes
  * @param {function} setMilestoneNotes - The function to set the list of milestone notes
  * @param {MilestoneNoteType | null} selectedMilestoneNote - The selected milestone note
@@ -38,14 +38,14 @@ import MilestoneNoteForm from '../MilestoneNoteForm';
  * @param {boolean} props.readView - Whether the component is in read view
  */
 const MilestoneNotes = ({
-  mtoMilestoneID,
+  milestoneID,
   milestoneNotes,
   setMilestoneNotes,
   selectedMilestoneNote,
   setSelectedMilestoneNote,
   readView = false
 }: {
-  mtoMilestoneID: string;
+  milestoneID: string;
   milestoneNotes: MilestoneNoteType[];
   setMilestoneNotes: (milestoneNotes: MilestoneNoteType[]) => void;
   selectedMilestoneNote: MilestoneNoteType | null;
@@ -79,7 +79,7 @@ const MilestoneNotes = ({
       refetchQueries: [
         {
           query: GetMtoMilestoneDocument,
-          variables: { id: mtoMilestoneID }
+          variables: { id: milestoneID }
         }
       ]
     }).then(() => {
@@ -111,7 +111,7 @@ const MilestoneNotes = ({
             setEditNotesOpen(false);
           }}
           selectedMilestoneNote={selectedMilestoneNote || noteToEditReadView}
-          mtoMilestoneID={mtoMilestoneID}
+          milestoneID={milestoneID}
           readView={readView}
         />
       </Sidepanel>
