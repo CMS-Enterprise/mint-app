@@ -3,6 +3,7 @@ Represents MTO Custom Milestone translation data
 """
 type MTOMilestoneTranslation {
   name: TranslationField! @goTag(key: "db", value: "name")
+  description: TranslationField! @goTag(key: "db", value: "description")
   isDraft: TranslationFieldWithOptions! @goTag(key: "db", value: "is_draft")
   facilitatedBy: TranslationFieldWithOptions!
     @goTag(key: "db", value: "facilitated_by")

@@ -18,6 +18,15 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.0
   },
+  description: {
+    gqlField: 'description',
+    goField: 'Description',
+    dbField: 'description',
+    label: 'Description',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.001
+  },
   isDraft: {
     gqlField: 'isDraft',
     goField: 'IsDraft',

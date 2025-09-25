@@ -111,6 +111,7 @@ type MTOMilestoneSolutionLinkTranslation struct {
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
 	Name               models.TranslationField            `json:"name" db:"name"`
+	Description        models.TranslationField            `json:"description" db:"description"`
 	IsDraft            models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
 	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
