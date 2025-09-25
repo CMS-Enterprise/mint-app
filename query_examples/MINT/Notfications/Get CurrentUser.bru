@@ -26,6 +26,7 @@ body:graphql {
       account {
         commonName
         email
+        id
       }
       notifications {
         numUnreadNotifications
@@ -79,4 +80,12 @@ body:graphql {
 
 body:graphql:vars {
   {}
+}
+
+tests {
+  let responseData = res.getBody().data.currentUser.account
+  
+  currentUserID = responseData.id
+  
+  bru.setVar("currentUserID", currentUserID);
 }

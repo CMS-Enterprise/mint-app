@@ -29,8 +29,6 @@ input MTOMilestoneNoteUpdateInput {
   content: String!
 }
 
-
-
 extend type Mutation {
   createMTOMilestoneNote(
     input: MTOMilestoneNoteCreateInput!
