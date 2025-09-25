@@ -81,7 +81,7 @@ func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
+	// Write up a transaction since storage.MTOMilestoneNoteDelete needs one for setting `delete` session user variables
 	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 		// First, fetch the existing milestone note so we can check permissions
 		existing, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, id)
