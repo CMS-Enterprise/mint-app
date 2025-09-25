@@ -29,6 +29,8 @@ input MTOMilestoneNoteUpdateInput {
   content: String!
 }
 
+
+
 extend type Mutation {
   createMTOMilestoneNote(
     input: MTOMilestoneNoteCreateInput!
@@ -38,5 +40,5 @@ extend type Mutation {
     input: MTOMilestoneNoteUpdateInput!
   ): MTOMilestoneNote! @hasRole(role: MINT_USER)
 
-  deleteMTOMilestoneNote(id: UUID!): Boolean! @hasRole(role: MINT_USER)
+  deleteMTOMilestoneNote(id: UUID!): MTOMilestoneNote! @hasRole(role: MINT_USER)
 }
