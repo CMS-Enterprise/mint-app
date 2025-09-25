@@ -75,27 +75,29 @@ func UpdateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 	return storage.MTOMilestoneNoteUpdate(store, logger, note)
 }
 
-func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteDeleteInput) (*models.MTOMilestoneNote, error) {
+func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
-		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	note, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, input.ID)
-	if err != nil {
-		return nil, fmt.Errorf("unable to delete MTO milestone note. Err %w", err)
-	}
+	// Write up a transaction since storage.MTOSolutionDelete needs one for setting `delete` session user variables
+	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		// First, fetch the existing milestone note so we can check permissions
+		existing, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, id)
+		if err != nil {
+			return fmt.Errorf("error fetching mto milestone note during deletion: %s", err)
+		}
 
-	var result *models.MTOMilestoneNote
-	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
-		var deleteErr error
-		result, deleteErr = storage.MTOMilestoneNoteDelete(tx, logger, note, principalAccount.ID)
-		return deleteErr
+		// Check permissions
+		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+			return fmt.Errorf("error deleting mto milestone note. user doesnt have permissions. %s", err)
+		}
+
+		// Finally, delete the milestone note
+		if err := storage.MTOMilestoneNoteDelete(tx, principalAccount.ID, logger, id); err != nil {
+			return fmt.Errorf("unable to delete mto milestone note. Err %w", err)
+		}
+		return nil
 	})
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to delete MTO milestone note. Err %w", err)
-	}
-
-	return result, nil
 }

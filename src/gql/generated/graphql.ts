@@ -1641,7 +1641,7 @@ export type Mutation = {
   deleteMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   deleteMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   deleteMTOMilestone: Scalars['Boolean']['output'];
-  deleteMTOMilestoneNote?: Maybe<Scalars['Boolean']['output']>;
+  deleteMTOMilestoneNote: Scalars['Boolean']['output'];
   deleteMTOSolution: Scalars['Boolean']['output'];
   deletePlanCR: PlanCr;
   deletePlanCollaborator: PlanCollaborator;
@@ -5846,7 +5846,7 @@ export type DeleteMtoMilestoneNoteMutationVariables = Exact<{
 }>;
 
 
-export type DeleteMtoMilestoneNoteMutation = { __typename: 'Mutation', deleteMTOMilestoneNote?: boolean | null };
+export type DeleteMtoMilestoneNoteMutation = { __typename: 'Mutation', deleteMTOMilestoneNote: boolean };
 
 export type DeleteMtoSolutionMutationVariables = Exact<{
   id: Scalars['UUID']['input'];

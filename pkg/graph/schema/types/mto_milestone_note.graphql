@@ -40,5 +40,5 @@ extend type Mutation {
 
   deleteMTOMilestoneNote(
     id: UUID!
-  ): Boolean @hasRole(role: MINT_USER)
+  ): Boolean! @hasRole(role: MINT_USER)
 }
