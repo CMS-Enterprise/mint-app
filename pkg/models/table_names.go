@@ -66,6 +66,12 @@ const (
 	TNMTOCommonSolutionSystemOwner       TableName = "mto_common_solution_system_owner"
 	TNPlanTimeline                       TableName = "plan_timeline"
 	TNMTOSuggestedMilestone              TableName = "mto_suggested_milestone"
+	TNMTOTemplate                        TableName = "mto_template"
+	TNMTOTemplateCategory                TableName = "mto_template_category"
+	TNMTOTemplateMilestone               TableName = "mto_template_milestone"
+	TNMTOTemplateMilestoneSolutionLink   TableName = "mto_template_milestone_solution_link"
+	TNMTOTemplateSolution                TableName = "mto_template_solution"
+	TNModelPlanMTOTemplateLink           TableName = "model_plan_mto_template_link"
 )
 
 // MTOTables is a list of all tables that are related to the MTO section
