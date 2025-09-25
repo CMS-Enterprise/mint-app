@@ -1226,6 +1226,7 @@ const EditMilestoneForm = ({
                         {...field}
                         aria-labelledby={convertCamelCaseToKebabCase('needBy')}
                         id="milestone-need-by"
+                        suppressMilliseconds
                         defaultValue={field.value}
                       />
 

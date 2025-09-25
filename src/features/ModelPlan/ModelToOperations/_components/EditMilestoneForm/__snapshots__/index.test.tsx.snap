@@ -312,7 +312,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                   readonly=""
                   tabindex="-1"
                   type="text"
-                  value="2021-08-01T00:00:00.000Z"
+                  value="2021-08-01T00:00:00Z"
                 />
                 <div
                   class="usa-date-picker__wrapper"
