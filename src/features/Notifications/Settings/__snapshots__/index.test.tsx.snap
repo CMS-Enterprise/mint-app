@@ -72,58 +72,10 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
         >
           Choose whether you would like to receive notifications via email, in the MINT application, or both.
         </p>
-        <div
-          class="grid-row"
-          data-testid="grid"
-        >
-          <div
-            class="mobile:grid-col-6"
-            data-testid="grid"
-          >
-            <h3
-              class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
-            >
-              Notification
-            </h3>
-          </div>
-          <div
-            class="mobile:grid-col-3"
-            data-testid="grid"
-          >
-            <h3
-              class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
-            >
-              Email
-            </h3>
-          </div>
-          <div
-            class="mobile:grid-col-3"
-            data-testid="grid"
-          >
-            <h3
-              class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
-            >
-              In-app
-            </h3>
-          </div>
-          <div
-            class="mobile:grid-col-6"
-            data-testid="grid"
-          >
-            <h4
-              class="margin-top-0 margin-bottom-05"
-            >
-              Basic notifications
-            </h4>
-            <p
-              class="margin-top-0 margin-bottom-1 text-base-dark"
-            >
-              You will always receive basic notifications in-app, but may opt out of receiving them via email.
-            </p>
-          </div>
-        </div>
         <form
-          action="#"
+          class="usa-form maxw-none"
+          data-testid="notification-settings-form"
+          id="notification-settings-form"
         >
           <fieldset
             class="usa-fieldset"
@@ -137,308 +89,373 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 class="mobile:grid-col-6"
                 data-testid="grid"
               >
-                <p
-                  class="text-wrap margin-y-105"
+                <h3
+                  class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
                 >
-                  Daily digest of changes to the models I’m following
-                </p>
+                  Notification
+                </h3>
               </div>
               <div
                 class="mobile:grid-col-3"
                 data-testid="grid"
               >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
+                <h3
+                  class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-dailyDigestComplete"
-                    id="notification-setting-email-dailyDigestComplete"
-                    name="dailyDigestComplete"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-dailyDigestComplete"
-                  />
-                </div>
+                  Email
+                </h3>
               </div>
               <div
                 class="mobile:grid-col-3"
                 data-testid="grid"
               >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
+                <h3
+                  class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-dailyDigestComplete"
-                    disabled=""
-                    id="notification-setting-in-app-dailyDigestComplete"
-                    name="dailyDigestComplete"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-dailyDigestComplete"
-                  />
-                </div>
+                  In-app
+                </h3>
               </div>
             </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When I’m added as a collaborator to a Model Plan
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-addedAsCollaborator"
-                    id="notification-setting-email-addedAsCollaborator"
-                    name="addedAsCollaborator"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-addedAsCollaborator"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-addedAsCollaborator"
-                    disabled=""
-                    id="notification-setting-in-app-addedAsCollaborator"
-                    name="addedAsCollaborator"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-addedAsCollaborator"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When I’m tagged in a discussion
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-taggedInDiscussion"
-                    id="notification-setting-email-taggedInDiscussion"
-                    name="taggedInDiscussion"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-taggedInDiscussion"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-taggedInDiscussion"
-                    disabled=""
-                    id="notification-setting-in-app-taggedInDiscussion"
-                    name="taggedInDiscussion"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-taggedInDiscussion"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When someone replies to a discussion I started
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-newDiscussionReply"
-                    id="notification-setting-email-newDiscussionReply"
-                    name="newDiscussionReply"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-newDiscussionReply"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-newDiscussionReply"
-                    disabled=""
-                    id="notification-setting-in-app-newDiscussionReply"
-                    name="newDiscussionReply"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-newDiscussionReply"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When someone shares a Model Plan with me
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-modelPlanShared"
-                    id="notification-setting-email-modelPlanShared"
-                    name="modelPlanShared"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-modelPlanShared"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-modelPlanShared"
-                    disabled=""
-                    id="notification-setting-in-app-modelPlanShared"
-                    name="modelPlanShared"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-modelPlanShared"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
             >
               <div
                 class="mobile:grid-col-6"
                 data-testid="grid"
               >
                 <h4
-                  class="margin-top-5 margin-bottom-0"
+                  class="margin-bottom-0 margin-top-0"
+                >
+                  Basic notifications
+                </h4>
+                <p
+                  class="margin-top-0 margin-bottom-1 text-base-dark"
+                >
+                  You will always receive basic notifications in-app, but may opt out of receiving them via email.
+                </p>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      Daily digest of changes to the models I’m following
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-dailyDigestComplete"
+                        id="notification-setting-email-dailyDigestComplete"
+                        name="dailyDigestComplete"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-dailyDigestComplete"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-dailyDigestComplete"
+                        disabled=""
+                        id="notification-setting-in-app-dailyDigestComplete"
+                        name="dailyDigestComplete"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-dailyDigestComplete"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When I’m added as a collaborator to a Model Plan
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-addedAsCollaborator"
+                        id="notification-setting-email-addedAsCollaborator"
+                        name="addedAsCollaborator"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-addedAsCollaborator"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-addedAsCollaborator"
+                        disabled=""
+                        id="notification-setting-in-app-addedAsCollaborator"
+                        name="addedAsCollaborator"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-addedAsCollaborator"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When I’m tagged in a discussion
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-taggedInDiscussion"
+                        id="notification-setting-email-taggedInDiscussion"
+                        name="taggedInDiscussion"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-taggedInDiscussion"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-taggedInDiscussion"
+                        disabled=""
+                        id="notification-setting-in-app-taggedInDiscussion"
+                        name="taggedInDiscussion"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-taggedInDiscussion"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When someone replies to a discussion I started
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-newDiscussionReply"
+                        id="notification-setting-email-newDiscussionReply"
+                        name="newDiscussionReply"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-newDiscussionReply"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-newDiscussionReply"
+                        disabled=""
+                        id="notification-setting-in-app-newDiscussionReply"
+                        name="newDiscussionReply"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-newDiscussionReply"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When someone shares a Model Plan with me
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-modelPlanShared"
+                        id="notification-setting-email-modelPlanShared"
+                        name="modelPlanShared"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-modelPlanShared"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-modelPlanShared"
+                        disabled=""
+                        id="notification-setting-in-app-modelPlanShared"
+                        name="modelPlanShared"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-modelPlanShared"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <h4
+                  class="margin-bottom-0 margin-top-5"
                 >
                   Notifications about my models
                 </h4>
@@ -475,430 +492,445 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   </p>
                 </div>
               </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When MINT detects an incorrect model status
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-incorrectModelStatus"
+                        id="notification-setting-email-incorrectModelStatus"
+                        name="incorrectModelStatus"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-incorrectModelStatus"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-incorrectModelStatus"
+                        id="notification-setting-in-app-incorrectModelStatus"
+                        name="incorrectModelStatus"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-incorrectModelStatus"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
             >
               <div
                 class="mobile:grid-col-6"
                 data-testid="grid"
               >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When MINT detects an incorrect model status
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-incorrectModelStatus"
-                    id="notification-setting-email-incorrectModelStatus"
-                    name="incorrectModelStatus"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-incorrectModelStatus"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-incorrectModelStatus"
-                    id="notification-setting-in-app-incorrectModelStatus"
-                    name="incorrectModelStatus"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-incorrectModelStatus"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-12"
-                data-testid="grid"
-              >
                 <h4
-                  class="margin-top-5 margin-bottom-0"
+                  class="margin-bottom-0 margin-top-5"
                 >
                   Additional notifications
                 </h4>
               </div>
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When a new Model Plan is created
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
+              <div>
                 <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-newModelPlan"
-                    id="notification-setting-email-newModelPlan"
-                    name="newModelPlan"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-newModelPlan"
-                  />
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When a new Model Plan is created
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-newModelPlan"
+                        id="notification-setting-email-newModelPlan"
+                        name="newModelPlan"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-newModelPlan"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-newModelPlan"
+                        id="notification-setting-in-app-newModelPlan"
+                        name="newModelPlan"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-newModelPlan"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
+              <div>
                 <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-newModelPlan"
-                    id="notification-setting-in-app-newModelPlan"
-                    name="newModelPlan"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-newModelPlan"
-                  />
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When model dates change
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-datesChanged"
+                        id="notification-setting-email-datesChanged"
+                        name="datesChanged"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-datesChanged"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-datesChanged"
+                        id="notification-setting-in-app-datesChanged"
+                        name="datesChanged"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-datesChanged"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="grid-row"
+                  data-testid="grid"
+                >
+                  <div
+                    class="tablet:grid-col-6 tablet:padding-left-3"
+                    data-testid="grid"
+                  >
+                    <label
+                      class="usa-label text-normal margin-top-0"
+                      data-testid="label"
+                      for="notification-setting-whichModel"
+                    >
+                      Which models?
+                    </label>
+                    <select
+                      class="usa-select"
+                      data-testid="notification-setting-whichModel-datesChanged"
+                      disabled=""
+                      id="notification-setting-whichModel"
+                      name="datesChangedNotificationType"
+                    >
+                      <option
+                        value="ALL_MODELS"
+                      >
+                        All models
+                      </option>
+                      <option
+                        value="FOLLOWED_MODELS"
+                      >
+                        Models I’m following
+                      </option>
+                      <option
+                        value="MY_MODELS"
+                      >
+                        My Model Plans
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When model dates change
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
+              <div>
                 <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-datesChanged"
-                    id="notification-setting-email-datesChanged"
-                    name="datesChanged"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-datesChanged"
-                  />
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When a new discussion is added
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-newDiscussionAdded"
+                        id="notification-setting-email-newDiscussionAdded"
+                        name="newDiscussionAdded"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-newDiscussionAdded"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-newDiscussionAdded"
+                        id="notification-setting-in-app-newDiscussionAdded"
+                        name="newDiscussionAdded"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-newDiscussionAdded"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="grid-row"
+                  data-testid="grid"
+                >
+                  <div
+                    class="tablet:grid-col-6 tablet:padding-left-3"
+                    data-testid="grid"
+                  >
+                    <label
+                      class="usa-label text-normal margin-top-0"
+                      data-testid="label"
+                      for="notification-setting-whichModel"
+                    >
+                      Which models?
+                    </label>
+                    <select
+                      class="usa-select"
+                      data-testid="notification-setting-whichModel-newDiscussionAdded"
+                      id="notification-setting-whichModel"
+                      name="newDiscussionAddedNotificationType"
+                    >
+                      <option
+                        value="ALL_MODELS"
+                      >
+                        All models
+                      </option>
+                      <option
+                        value="FOLLOWED_MODELS"
+                      >
+                        Models I’m following
+                      </option>
+                      <option
+                        value="MY_MODELS"
+                      >
+                        My Model Plans
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
+              <div>
                 <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
                 >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-datesChanged"
-                    id="notification-setting-in-app-datesChanged"
-                    name="datesChanged"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-datesChanged"
-                  />
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When a data exchange approach is completed
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"
+                        id="notification-setting-email-dataExchangeApproachMarkedComplete"
+                        name="dataExchangeApproachMarkedComplete"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-dataExchangeApproachMarkedComplete"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"
+                        id="notification-setting-in-app-dataExchangeApproachMarkedComplete"
+                        name="dataExchangeApproachMarkedComplete"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-dataExchangeApproachMarkedComplete"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="grid-row"
+                  data-testid="grid"
+                >
+                  <div
+                    class="tablet:grid-col-6 tablet:padding-left-3"
+                    data-testid="grid"
+                  >
+                    <label
+                      class="usa-label text-normal margin-top-0"
+                      data-testid="label"
+                      for="notification-setting-whichModel"
+                    >
+                      Which models?
+                    </label>
+                    <select
+                      class="usa-select"
+                      data-testid="notification-setting-whichModel-dataExchangeApproachMarkedComplete"
+                      id="notification-setting-whichModel"
+                      name="dataExchangeApproachMarkedCompleteNotificationType"
+                    >
+                      <option
+                        value="ALL_MODELS"
+                      >
+                        All models
+                      </option>
+                      <option
+                        value="FOLLOWED_MODELS"
+                      >
+                        Models I’m following
+                      </option>
+                      <option
+                        value="MY_MODELS"
+                      >
+                        My Model Plans
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="tablet:grid-col-6 tablet:padding-left-3"
-                data-testid="grid"
-              >
-                <label
-                  class="usa-label text-normal margin-top-0"
-                  data-testid="label"
-                  for="notification-setting-whichModel"
-                >
-                  Which models?
-                </label>
-                <select
-                  class="usa-select"
-                  data-testid="notification-setting-whichModel-datesChanged"
-                  disabled=""
-                  id="notification-setting-whichModel"
-                  name="datesChangedNotificationType"
-                >
-                  <option
-                    value="ALL_MODELS"
-                  >
-                    All models
-                  </option>
-                  <option
-                    value="FOLLOWED_MODELS"
-                  >
-                    Models I’m following
-                  </option>
-                  <option
-                    value="MY_MODELS"
-                  >
-                    My Model Plans
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When a new discussion is added
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-newDiscussionAdded"
-                    id="notification-setting-email-newDiscussionAdded"
-                    name="newDiscussionAdded"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-newDiscussionAdded"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-newDiscussionAdded"
-                    id="notification-setting-in-app-newDiscussionAdded"
-                    name="newDiscussionAdded"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-newDiscussionAdded"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="tablet:grid-col-6 tablet:padding-left-3"
-                data-testid="grid"
-              >
-                <label
-                  class="usa-label text-normal margin-top-0"
-                  data-testid="label"
-                  for="notification-setting-whichModel"
-                >
-                  Which models?
-                </label>
-                <select
-                  class="usa-select"
-                  data-testid="notification-setting-whichModel-newDiscussionAdded"
-                  id="notification-setting-whichModel"
-                  name="newDiscussionAddedNotificationType"
-                >
-                  <option
-                    value="ALL_MODELS"
-                  >
-                    All models
-                  </option>
-                  <option
-                    value="FOLLOWED_MODELS"
-                  >
-                    Models I’m following
-                  </option>
-                  <option
-                    value="MY_MODELS"
-                  >
-                    My Model Plans
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <p
-                  class="text-wrap margin-y-105"
-                >
-                  When a data exchange approach is completed
-                </p>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"
-                    id="notification-setting-email-dataExchangeApproachMarkedComplete"
-                    name="dataExchangeApproachMarkedComplete"
-                    type="checkbox"
-                    value="EMAIL"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-email-dataExchangeApproachMarkedComplete"
-                  />
-                </div>
-              </div>
-              <div
-                class="mobile:grid-col-3"
-                data-testid="grid"
-              >
-                <div
-                  class="usa-checkbox padding-left-2"
-                  data-testid="checkbox"
-                >
-                  <input
-                    class="usa-checkbox__input"
-                    data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"
-                    id="notification-setting-in-app-dataExchangeApproachMarkedComplete"
-                    name="dataExchangeApproachMarkedComplete"
-                    type="checkbox"
-                    value="IN_APP"
-                  />
-                  <label
-                    class="usa-checkbox__label"
-                    for="notification-setting-in-app-dataExchangeApproachMarkedComplete"
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="grid-row"
-              data-testid="grid"
-            >
-              <div
-                class="tablet:grid-col-6 tablet:padding-left-3"
-                data-testid="grid"
-              >
-                <label
-                  class="usa-label text-normal margin-top-0"
-                  data-testid="label"
-                  for="notification-setting-whichModel"
-                >
-                  Which models?
-                </label>
-                <select
-                  class="usa-select"
-                  data-testid="notification-setting-whichModel-dataExchangeApproachMarkedComplete"
-                  id="notification-setting-whichModel"
-                  name="dataExchangeApproachMarkedCompleteNotificationType"
-                >
-                  <option
-                    value="ALL_MODELS"
-                  >
-                    All models
-                  </option>
-                  <option
-                    value="FOLLOWED_MODELS"
-                  >
-                    Models I’m following
-                  </option>
-                  <option
-                    value="MY_MODELS"
-                  >
-                    My Model Plans
-                  </option>
-                </select>
-              </div>
-            </div>
+            </fieldset>
             <div
               class="margin-top-6 margin-bottom-3"
             >
@@ -912,7 +944,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
               </button>
             </div>
             <button
-              class="usa-button usa-button usa-button--unstyled"
+              class="usa-button usa-button--unstyled"
               data-testid="button"
               type="button"
             >
