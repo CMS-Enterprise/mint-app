@@ -30,13 +30,22 @@ func (r *mutationResolver) UpdateMTOMilestoneNote(ctx context.Context, input mod
 }
 
 // DeleteMTOMilestoneNote is the resolver for the deleteMTOMilestoneNote field.
-func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, id uuid.UUID) (bool, error) {
+func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, id uuid.UUID) (*models.MTOMilestoneNote, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	store := r.store
-	err := DeleteMTOMilestoneNote(ctx, logger, principal, store, id)
+
+	// First get the note before deleting it so we can return it
+	note, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, id)
 	if err != nil {
-		return false, err
+		return nil, err
 	}
-	return true, nil
+
+	// Now delete it
+	err = DeleteMTOMilestoneNote(ctx, logger, principal, store, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return note, nil
 }
