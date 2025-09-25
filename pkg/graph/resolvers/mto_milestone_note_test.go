@@ -141,40 +141,31 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteDelete() {
 	note := suite.createMTOMilestoneNote(milestone, "Content to be deleted")
 
 	// Delete the note
-	deletedNote, err := DeleteMTOMilestoneNote(
+	err := DeleteMTOMilestoneNote(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		models.MTOMilestoneNoteDeleteInput{
-			ID: note.ID,
-		},
+		note.ID,
 	)
 
 	// Assertions
 	suite.NoError(err)
-	suite.NotNil(deletedNote)
-	suite.Equal(note.ID, deletedNote.ID)
-	suite.Equal(note.Content, deletedNote.Content)
-	suite.Equal(note.MTOMilestoneID, deletedNote.MTOMilestoneID)
 }
 
 // TestMTOMilestoneNoteDeleteWithInvalidID tests deleting a note with invalid ID
 func (suite *ResolverSuite) TestMTOMilestoneNoteDeleteWithInvalidID() {
 	invalidID := uuid.New()
 
-	deletedNote, err := DeleteMTOMilestoneNote(
+	err := DeleteMTOMilestoneNote(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		models.MTOMilestoneNoteDeleteInput{
-			ID: invalidID,
-		},
+		invalidID,
 	)
 
 	suite.Error(err)
-	suite.Nil(deletedNote)
 	suite.Contains(err.Error(), "unable to delete MTO milestone note")
 }
 
