@@ -369,6 +369,18 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
+    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
+    cy.get('#clear-selection')
+      .parent()
+      .find('[class$="indicatorContainer"]')
+      .eq(1)
+      .click({ force: true });
+    cy.get('#responsible-component-tags li').should(
+      'have.length.greaterThan',
+      0
+    );
+    cy.contains('FCHCO').click({ force: true });
+
     cy.get('[data-testid="add-note-button"]').click();
 
     cy.contains('h3', 'Add a milestone note').should('exist');
