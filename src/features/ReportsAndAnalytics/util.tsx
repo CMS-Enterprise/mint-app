@@ -342,6 +342,11 @@ export const downloadMTOMilestoneSummary = (
         Description: milestone.key
           ? milestoneMap[milestone.key]?.description
           : '',
+        'Responsible Component': (milestone.responsibleComponent || [])
+          ?.map(component =>
+            i18next.t(`mtoMilestone:responsibleComponent.options.${component}`)
+          )
+          .join(', '),
         'Facilitated by': (milestone.facilitatedBy || [])
           ?.map(facilitator =>
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)

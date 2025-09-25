@@ -17,6 +17,7 @@ export default gql(/* GraphQL */ `
           status
           riskIndicator
           needBy
+          responsibleComponent
           facilitatedBy
           facilitatedByOther
           notes {
