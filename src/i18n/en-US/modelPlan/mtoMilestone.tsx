@@ -43,7 +43,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     label: 'Responsible component',
     exportLabel: 'Milestone responsible component',
     sublabel:
-      'Choose the CMS component or CMMI group responsible for this work.',
+      'Choose the CMS component or CMMI group responsible for this work. Select all that apply.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected components',

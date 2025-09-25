@@ -257,7 +257,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                         .map(
                           (component: MtoMilestoneResponsibleComponent) =>
                             `${mtoMilestoneT(
-                              `responsibleComponentons.${component}`
+                              `responsibleComponent.options.${component}`
                             )}`
                         )
                         .join(', ')

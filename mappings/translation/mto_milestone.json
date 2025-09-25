@@ -30,7 +30,7 @@
     "dbField": "responsible_component",
     "label": "Responsible component",
     "exportLabel": "Milestone responsible component",
-    "sublabel": "Choose the CMS component or CMMI group responsible for this work.",
+    "sublabel": "Choose the CMS component or CMMI group responsible for this work. Select all that apply.",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "multiSelectLabel": "Selected components",
