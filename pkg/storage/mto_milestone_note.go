@@ -49,16 +49,17 @@ func MTOMilestoneNoteUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilesto
 	return returned, nil
 }
 
-func MTOMilestoneNoteDelete(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote, actorUserID uuid.UUID) (*models.MTOMilestoneNote, error) {
+func MTOMilestoneNoteDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, milestoneID uuid.UUID) error {
 	// We need to set the session user variable so that the audit trigger knows who made the delete operation
-	err := setCurrentSessionUserVariable(np.(*sqlx.Tx), actorUserID)
+	err := setCurrentSessionUserVariable(tx, actorUserID)
 	if err != nil {
-		return nil, fmt.Errorf("issue setting session user variable: %w", err)
+		return fmt.Errorf("issue setting session user variable: %w", err)
 	}
 
-	err = sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Delete, MTOMilestoneNote)
+	arg := map[string]interface{}{"id": milestoneID}
+	err = sqlutils.ExecProcedure(tx, sqlqueries.MTOMilestoneNote.Delete, arg)
 	if err != nil {
-		return nil, fmt.Errorf("issue deleting MTOMilestoneNote object: %w", err)
+		return fmt.Errorf("issue deleting MTOMilestoneNote object: %w", err)
 	}
-	return MTOMilestoneNote, nil
+	return nil
 }

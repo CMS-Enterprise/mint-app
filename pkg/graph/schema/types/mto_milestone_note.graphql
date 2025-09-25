@@ -29,13 +29,6 @@ input MTOMilestoneNoteUpdateInput {
   content: String!
 }
 
-"""
-MTOMilestoneNoteDeleteInput represents the necessary fields to delete a milestone note
-"""
-input MTOMilestoneNoteDeleteInput {
-  id: UUID!
-}
-
 extend type Mutation {
   createMTOMilestoneNote(
     input: MTOMilestoneNoteCreateInput!
@@ -46,6 +39,6 @@ extend type Mutation {
   ): MTOMilestoneNote! @hasRole(role: MINT_USER)
 
   deleteMTOMilestoneNote(
-    input: MTOMilestoneNoteDeleteInput!
-  ): MTOMilestoneNote! @hasRole(role: MINT_USER)
+    id: UUID!
+  ): Boolean @hasRole(role: MINT_USER)
 }

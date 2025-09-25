@@ -74,9 +74,7 @@ const MilestoneNotes = ({
   const handleDeleteMilestoneNote = (note: MilestoneNoteType) => {
     deleteMilestoneNote({
       variables: {
-        input: {
-          id: note.id
-        }
+        id: note.id
       },
       refetchQueries: [
         {

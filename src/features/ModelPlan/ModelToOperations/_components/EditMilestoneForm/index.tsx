@@ -634,9 +634,7 @@ const EditMilestoneForm = ({
           notesToRemove.map(note =>
             deleteMilestoneNote({
               variables: {
-                input: {
-                  id: note.id
-                }
+                id: note.id
               }
             })
           )

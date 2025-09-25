@@ -1,9 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation DeleteMTOMilestoneNote($input: MTOMilestoneNoteDeleteInput!) {
-    deleteMTOMilestoneNote(input: $input) {
-      id
-    }
+  mutation DeleteMTOMilestoneNote($id: UUID!) {
+    deleteMTOMilestoneNote(id: $id)
   }
 `);
