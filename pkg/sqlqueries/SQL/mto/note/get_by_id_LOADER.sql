@@ -5,7 +5,7 @@ WITH QUERIED_IDs AS (
 
 SELECT
     mto_milestone_note.id,
-    mto_milestone_note.mto_milestone_id,
+    mto_milestone_note.milestone_id,
     mto_milestone_note.content,
     mto_milestone_note.created_by,
     mto_milestone_note.created_dts,

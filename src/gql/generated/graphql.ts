@@ -1155,21 +1155,16 @@ export type MtoMilestoneNote = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
+  milestoneID: Scalars['UUID']['output'];
   modifiedBy: Scalars['UUID']['output'];
   modifiedByUserAccount: UserAccount;
   modifiedDts: Scalars['Time']['output'];
-  mtoMilestoneID: Scalars['UUID']['output'];
 };
 
 /** MTOMilestoneNoteCreateInput represents the necessary fields to create a milestone note */
 export type MtoMilestoneNoteCreateInput = {
   content: Scalars['String']['input'];
-  mtoMilestoneID: Scalars['UUID']['input'];
-};
-
-/** MTOMilestoneNoteDeleteInput represents the necessary fields to delete a milestone note */
-export type MtoMilestoneNoteDeleteInput = {
-  id: Scalars['UUID']['input'];
+  milestoneID: Scalars['UUID']['input'];
 };
 
 /** Represents MTO Milestone Note translation data */
@@ -1885,7 +1880,7 @@ export type MutationDeleteMtoMilestoneArgs = {
 
 /** Mutations definition for the schema */
 export type MutationDeleteMtoMilestoneNoteArgs = {
-  input: MtoMilestoneNoteDeleteInput;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -5847,7 +5842,7 @@ export type DeleteMtoMilestoneMutationVariables = Exact<{
 export type DeleteMtoMilestoneMutation = { __typename: 'Mutation', deleteMTOMilestone: boolean };
 
 export type DeleteMtoMilestoneNoteMutationVariables = Exact<{
-  input: MtoMilestoneNoteDeleteInput;
+  id: Scalars['UUID']['input'];
 }>;
 
 
@@ -11866,8 +11861,8 @@ export type DeleteMtoMilestoneMutationHookResult = ReturnType<typeof useDeleteMt
 export type DeleteMtoMilestoneMutationResult = Apollo.MutationResult<DeleteMtoMilestoneMutation>;
 export type DeleteMtoMilestoneMutationOptions = Apollo.BaseMutationOptions<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
 export const DeleteMtoMilestoneNoteDocument = gql`
-    mutation DeleteMTOMilestoneNote($input: MTOMilestoneNoteDeleteInput!) {
-  deleteMTOMilestoneNote(input: $input) {
+    mutation DeleteMTOMilestoneNote($id: UUID!) {
+  deleteMTOMilestoneNote(id: $id) {
     id
   }
 }
@@ -11887,7 +11882,7 @@ export type DeleteMtoMilestoneNoteMutationFn = Apollo.MutationFunction<DeleteMto
  * @example
  * const [deleteMtoMilestoneNoteMutation, { data, loading, error }] = useDeleteMtoMilestoneNoteMutation({
  *   variables: {
- *      input: // value for 'input'
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -16172,7 +16167,7 @@ export const TypedDeleteMtoCommonSolutionContactDocument = {"kind":"Document","d
 export const TypedDeleteMtoCommonSolutionContractorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOCommonSolutionContractor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOCommonSolutionContractor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"contractTitle"}},{"kind":"Field","name":{"kind":"Name","value":"contractorName"}}]}}]}}]} as unknown as DocumentNode<DeleteMtoCommonSolutionContractorMutation, DeleteMtoCommonSolutionContractorMutationVariables>;
 export const TypedDeleteMtoCommonSolutionSystemOwnerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOCommonSolutionSystemOwner"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOCommonSolutionSystemOwner"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"ownerType"}},{"kind":"Field","name":{"kind":"Name","value":"cmsComponent"}}]}}]}}]} as unknown as DocumentNode<DeleteMtoCommonSolutionSystemOwnerMutation, DeleteMtoCommonSolutionSystemOwnerMutationVariables>;
 export const TypedDeleteMtoMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoMilestoneMutation, DeleteMtoMilestoneMutationVariables>;
-export const TypedDeleteMtoMilestoneNoteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOMilestoneNote"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOMilestoneNoteDeleteInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOMilestoneNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteMtoMilestoneNoteMutation, DeleteMtoMilestoneNoteMutationVariables>;
+export const TypedDeleteMtoMilestoneNoteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOMilestoneNote"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOMilestoneNote"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteMtoMilestoneNoteMutation, DeleteMtoMilestoneNoteMutationVariables>;
 export const TypedDeleteMtoSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteMTOSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteMTOSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteMtoSolutionMutation, DeleteMtoSolutionMutationVariables>;
 export const TypedGetCustomMtoSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomMTOSolutions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"solutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"addedFromSolutionLibrary"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCustomMtoSolutionsQuery, GetCustomMtoSolutionsQueryVariables>;
 export const TypedGetGlobalMtoCommonSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGlobalMTOCommonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoCommonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<GetGlobalMtoCommonSolutionsQuery, GetGlobalMtoCommonSolutionsQueryVariables>;

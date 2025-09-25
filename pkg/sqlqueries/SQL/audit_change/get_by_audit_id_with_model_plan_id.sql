@@ -31,7 +31,7 @@ SELECT
                         mto_milestone
                     WHERE mto_milestone.id = audit.change.foreign_key LIMIT 1
                 )
-            WHEN audit.table_config.fkey_field = 'mto_milestone_id'
+            WHEN audit.table_config.fkey_field = 'milestone_id' 
                 THEN (
                     SELECT mto_milestone.model_plan_id FROM
                         mto_milestone
