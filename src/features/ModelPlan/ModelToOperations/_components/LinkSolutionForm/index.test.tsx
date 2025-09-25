@@ -49,6 +49,7 @@ const milestone: MilestoneType = {
   },
   commonMilestone: {
     __typename: 'MTOCommonMilestone',
+    description: 'Description 1',
     key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
     commonSolutions: [
       {

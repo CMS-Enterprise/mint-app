@@ -59,6 +59,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -85,6 +86,7 @@ export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
 type FormValues = {
   isDraft: boolean;
   name: string;
+  description: string;
   categories: {
     category: {
       id: string;
@@ -330,6 +332,7 @@ const EditMilestoneForm = ({
         }
       },
       name: milestone?.name || '',
+      description: milestone?.description || '',
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
       needBy: milestone?.needBy || '',
@@ -875,6 +878,44 @@ const EditMilestoneForm = ({
                             ref={null}
                             id="name"
                             type="text"
+                          />
+                        </FormGroup>
+                      )}
+                    />
+                  )}
+
+                  {!milestone.addedFromMilestoneLibrary && (
+                    <Controller
+                      name="description"
+                      control={control}
+                      rules={{
+                        required: modelToOperationsMiscT('validation.fillOut')
+                      }}
+                      render={({
+                        field: { ref, ...formField },
+                        fieldState: { error }
+                      }) => (
+                        <FormGroup
+                          error={!!error}
+                          className="margin-top-0 margin-bottom-3"
+                        >
+                          <Label
+                            htmlFor="description"
+                            className="maxw-none text-bold"
+                            requiredMarker
+                          >
+                            {mtoMilestoneT('description.label')}
+                          </Label>
+
+                          <HelpText className="margin-top-1">
+                            {mtoMilestoneT('description.sublabel')}
+                          </HelpText>
+
+                          <TextAreaField
+                            {...formField}
+                            value={formField.value || ''}
+                            className="height-card"
+                            id="description"
                           />
                         </FormGroup>
                       )}
