@@ -24,7 +24,7 @@ type MTOMilestone {
   Note, this data will be cleared if other is removed as an option
   """
   facilitatedByOther: String
-  assignedTo: UUID
+  assignedTo: UserAccount
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
