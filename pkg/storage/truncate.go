@@ -13,9 +13,6 @@ import (
 func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	// Using table names as constants defined in this file for better maintainability
 	tables := []string{
-		// Audit tables first (they reference everything)
-		"audit.change",
-
 		// MTO tables
 		string(models.TNMTOMilestoneSolutionLink),
 		string(models.TNMTOMilestoneNote),
@@ -63,8 +60,10 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNTranslatedAuditQueue),
 		string(models.TNTranslatedAudit),
 
-		// Core tables last
+		// Core tables
 		string(models.TNModelPlan),
+
+		"audit.change",
 	}
 
 	// Join table names for the TRUNCATE statement

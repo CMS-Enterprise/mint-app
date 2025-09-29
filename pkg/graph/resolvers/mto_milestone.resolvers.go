@@ -24,8 +24,8 @@ func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MT
 	return *obj.FacilitatedBy, nil
 }
 
-// AssignedTo is the resolver for the assignedTo field.
-func (r *mTOMilestoneResolver) AssignedTo(ctx context.Context, obj *models.MTOMilestone) (*authentication.UserAccount, error) {
+// AssignedToUserAccount is the resolver for the assignedToUserAccount field.
+func (r *mTOMilestoneResolver) AssignedToUserAccount(ctx context.Context, obj *models.MTOMilestone) (*authentication.UserAccount, error) {
 	if obj.AssignedTo == nil {
 		return nil, nil
 	}

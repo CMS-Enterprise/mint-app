@@ -1101,7 +1101,8 @@ export type MtoInfoTranslation = {
 export type MtoMilestone = {
   __typename: 'MTOMilestone';
   addedFromMilestoneLibrary: Scalars['Boolean']['output'];
-  assignedTo?: Maybe<UserAccount>;
+  assignedTo?: Maybe<Scalars['UUID']['output']>;
+  assignedToUserAccount?: Maybe<UserAccount>;
   /** Category resolves relational category information. */
   categories: MtoCategories;
   commonMilestone?: Maybe<MtoCommonMilestone>;
