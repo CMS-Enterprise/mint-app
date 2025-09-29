@@ -592,6 +592,7 @@ func (suite *ResolverSuite) TestMTOMilestoneAssignedTo() {
 	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Test Milestone", plan.ID, nil)
 	suite.NoError(err)
 	suite.NotNil(milestone)
+	suite.Nil(milestone.AssignedTo)
 
 	changes := map[string]interface{}{
 		"assignedTo": assignedTo,
@@ -599,7 +600,9 @@ func (suite *ResolverSuite) TestMTOMilestoneAssignedTo() {
 	updatedMilestone, err := MTOMilestoneUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{}, milestone.ID, changes, nil)
 	suite.NoError(err)
 	suite.NotNil(updatedMilestone)
-	suite.NotNil(updatedMilestone.AssignedTo)
+	if suite.NotNil(updatedMilestone.AssignedTo) {
+		suite.Equal(assignedTo, *updatedMilestone.AssignedTo)
+	}
 	suite.Equal(assignedTo, *updatedMilestone.AssignedTo)
 
 	// Verify the milestone can be retrieved with the description
