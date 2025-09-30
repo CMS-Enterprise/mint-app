@@ -1140,7 +1140,7 @@ export type MtoMilestoneChanges = {
   mtoCategoryID?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   needBy?: InputMaybe<Scalars['Time']['input']>;
-  responsibleComponent: Array<MtoMilestoneResponsibleComponent>;
+  responsibleComponent?: InputMaybe<Array<MtoMilestoneResponsibleComponent>>;
   riskIndicator?: InputMaybe<MtoRiskIndicator>;
   status?: InputMaybe<MtoMilestoneStatus>;
 };
