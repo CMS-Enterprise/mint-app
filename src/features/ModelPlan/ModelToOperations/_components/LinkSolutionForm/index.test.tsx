@@ -28,6 +28,7 @@ const milestone: MilestoneType = {
   id: '123',
   name: 'Milestone 1',
   key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+  responsibleComponent: [],
   facilitatedBy: [],
   needBy: '2021-08-01',
   status: MtoMilestoneStatus.COMPLETED,

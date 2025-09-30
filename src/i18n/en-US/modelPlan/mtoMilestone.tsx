@@ -36,6 +36,58 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       false: ' No'
     }
   },
+  responsibleComponent: {
+    gqlField: 'responsibleComponent',
+    goField: 'ResponsibleComponent',
+    dbField: 'responsible_component',
+    label: 'Responsible component',
+    exportLabel: 'Milestone responsible component',
+    sublabel:
+      'Choose the CMS component or CMMI group responsible for this work. Select all that apply.',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
+    multiSelectLabel: 'Selected components',
+    order: 1.03,
+    options: {
+      CCIIO: 'CCIIO',
+      CCSQ: 'CCSQ',
+      CM: 'CM',
+      CMCS: 'CMCS',
+      CMMI_BSG: 'CMMI/BSG',
+      CMMI_LDG: 'CMMI/LDG',
+      CMMI_PCMG: 'CMMI/PCMG',
+      CMMI_PPG: 'CMMI/PPG',
+      CMMI_RRCEG: 'CMMI/RRCEG',
+      CMMI_SCMG: 'CMMI/SCMG',
+      CMMI_SPHG: 'CMMI/SPHG',
+      CPI: 'CPI',
+      FCHCO: 'FCHCO',
+      OA: 'OA',
+      OACT: 'OACT',
+      OAGM: 'OAGM',
+      OC: 'OC',
+      OEDA: 'OEDA',
+      OEOCR: 'OEOCR',
+      OFM: 'OFM',
+      OHC: 'OHC',
+      OHEI: 'OHEI',
+      OHI: 'OHI',
+      OIT_AMG: 'OIT/AMG',
+      OIT_BOG: 'OIT/BOG',
+      OIT_EADG: 'OIT/EADG',
+      OIT_ESSG: 'OIT/ESSG',
+      OIT_ICPG: 'OIT/ICPG',
+      OIT_ISPG: 'OIT/ISPG',
+      OIT_IUSG: 'OIT/IUSG',
+      OIT_NTSS: 'OIT/NTSS',
+      OL: 'OL',
+      OMH: 'OMH',
+      OPOLE: 'OPOLE',
+      OSFLO: 'OSFLO',
+      OSORA: 'OSORA',
+      OSPR: 'OSPR'
+    }
+  },
   facilitatedBy: {
     gqlField: 'facilitatedBy',
     goField: 'FacilitatedBy',
@@ -46,7 +98,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     multiSelectLabel: 'Selected roles',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.MULTISELECT,
-    order: 1.03,
+    order: 1.04,
     options: {
       IT_LEAD: 'IT Lead',
       MODEL_TEAM: 'Model team',
@@ -81,7 +133,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       'Because you selected “Other” above, please provide a role or title.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.035
+    order: 1.045
   },
   needBy: {
     gqlField: 'needBy',
@@ -93,7 +145,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       'Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
-    order: 1.04
+    order: 1.05
   },
   status: {
     gqlField: 'status',
@@ -122,7 +174,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1.05,
+    order: 1.06,
     options: {
       NOT_STARTED: 'Not started',
       IN_PROGRESS: 'In progress',
@@ -149,7 +201,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1.06,
+    order: 1.07,
     options: {
       ON_TRACK: 'No risk (on track)',
       OFF_TRACK: 'Some risk (off track)',

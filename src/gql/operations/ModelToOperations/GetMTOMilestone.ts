@@ -6,6 +6,7 @@ export default gql(/* GraphQL */ `
       id
       name
       key
+      responsibleComponent
       facilitatedBy
       facilitatedByOther
       needBy

@@ -115,17 +115,18 @@ type MTOMilestoneSolutionLinkTranslation struct {
 
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
-	Name               models.TranslationField            `json:"name" db:"name"`
-	IsDraft            models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
-	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
-	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
-	NeedBy             models.TranslationField            `json:"needBy" db:"need_by"`
-	RiskIndicator      models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
-	CommonSolutions    models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
-	Solutions          models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
-	Status             models.TranslationFieldWithOptions `json:"status" db:"status"`
-	Key                models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
-	MtoCategoryID      models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+	Name                 models.TranslationField            `json:"name" db:"name"`
+	IsDraft              models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
+	ResponsibleComponent models.TranslationFieldWithOptions `json:"responsibleComponent" db:"responsible_component"`
+	FacilitatedBy        models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
+	FacilitatedByOther   models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	NeedBy               models.TranslationField            `json:"needBy" db:"need_by"`
+	RiskIndicator        models.TranslationFieldWithOptions `json:"riskIndicator" db:"risk_indicator"`
+	CommonSolutions      models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
+	Solutions            models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
+	Status               models.TranslationFieldWithOptions `json:"status" db:"status"`
+	Key                  models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCategoryID        models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
 }
 
 type MTOSolutionLinks struct {

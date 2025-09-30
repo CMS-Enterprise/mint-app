@@ -15,6 +15,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// ResponsibleComponent is the resolver for the responsibleComponent field.
+func (r *mTOMilestoneResolver) ResponsibleComponent(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOMilestoneResponsibleComponent, error) {
+	return obj.ResponsibleComponent, nil
+}
+
 // FacilitatedBy is the resolver for the facilitatedBy field.
 func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
 	if obj.FacilitatedBy == nil {
