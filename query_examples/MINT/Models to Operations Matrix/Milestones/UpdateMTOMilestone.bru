@@ -21,6 +21,7 @@ body:graphql {
   updateMTOMilestone(id: "{{mtoMilestoneID}}",
   changes: {
       mtoCategoryID: "{{mtoCategoryID}}"
+      responsibleComponent:[CMMI_SPHG, FCHCO],
       facilitatedBy: [IT_LEAD, OTHER],
       facilitatedByOther: "Someone really cool"
       riskIndicator: AT_RISK,
@@ -34,6 +35,7 @@ body:graphql {
   ) {
       id
       name
+      responsibleComponent
       facilitatedBy
       facilitatedByOther
       needBy
