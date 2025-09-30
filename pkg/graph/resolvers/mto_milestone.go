@@ -3,6 +3,8 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/samber/lo"
 
@@ -280,15 +282,38 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	})
 	if len(newlyInserted) > 0 {
 		for _, solution := range newlyInserted {
+			sol := solution // capture for goroutine
 			go func() {
-				sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+				// Add a small delay to ensure transaction has committed
+				time.Sleep(100 * time.Millisecond)
+
+				// Retry logic
+				var sendEmailErr error
+				for attempts := 0; attempts < 3; attempts++ {
+					sendEmailErr = sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol.ToMTOSolution())
+					if sendEmailErr == nil {
+						break // Success
+					}
+
+					if strings.Contains(sendEmailErr.Error(), "no rows in result set") {
+						logger.Warn("solution not found, retrying email send",
+							zap.Int("attempt", attempts+1),
+							zap.String("solutionID", sol.ID.String()))
+						time.Sleep(time.Duration(attempts+1) * 200 * time.Millisecond)
+						continue
+					}
+
+					// For other errors, don't retry
+					break
+				}
+
 				if sendEmailErr != nil {
 					logger.Error("error sending solution selected emails",
-						zap.Any("solution", solution.Key),
+						zap.Any("solution", sol.Key),
+						zap.String("solutionID", sol.ID.String()),
 						zap.Error(sendEmailErr))
 				}
 			}()
-
 		}
 	}
 
