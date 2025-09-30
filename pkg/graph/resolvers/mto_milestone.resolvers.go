@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -21,6 +22,14 @@ func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MT
 		return nil, nil
 	}
 	return *obj.FacilitatedBy, nil
+}
+
+// AssignedToUserAccount is the resolver for the assignedToUserAccount field.
+func (r *mTOMilestoneResolver) AssignedToUserAccount(ctx context.Context, obj *models.MTOMilestone) (*authentication.UserAccount, error) {
+	if obj.AssignedTo == nil {
+		return nil, nil
+	}
+	return UserAccountGetByIDLOADER(ctx, *obj.AssignedTo)
 }
 
 // CommonMilestone is the resolver for the commonMilestone field.

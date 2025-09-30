@@ -83,6 +83,18 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.035
   },
+  assignedTo: {
+    gqlField: 'assignedTo',
+    goField: 'AssignedTo',
+    dbField: 'assigned_to',
+    label: 'Assigned to',
+    exportLabel: 'Milestone assigned to',
+    sublabel: 'Select the person responsible for completing this milestone.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.SELECT,
+    order: 1.037,
+    tableReference: TableName.USER_ACCOUNT
+  },
   needBy: {
     gqlField: 'needBy',
     goField: 'NeedBy',

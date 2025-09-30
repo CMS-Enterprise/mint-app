@@ -6,6 +6,7 @@ SELECT
     COALESCE(mto_milestone.name, mto_common_milestone.name) AS "name",
     mto_milestone.facilitated_by,
     mto_milestone.facilitated_by_other,
+    mto_milestone.assigned_to,
     mto_milestone.need_by,
     mto_milestone.status,
     mto_milestone.risk_indicator,

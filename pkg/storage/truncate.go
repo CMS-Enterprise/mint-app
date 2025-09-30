@@ -13,46 +13,56 @@ import (
 func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	// Using table names as constants defined in this file for better maintainability
 	tables := []string{
+		// MTO tables
+		string(models.TNMTOMilestoneSolutionLink),
+		string(models.TNMTOMilestoneNote),
+		string(models.TNMTOMilestone),
+		string(models.TNMTOSolution),
+		string(models.TNMTOSuggestedMilestone),
+		string(models.TNMTOCategory),
+		string(models.TNMTOInfo),
+
+		// Solution and operational tables
 		string(models.TNMTOCommonSolutionSystemOwner),
 		string(models.TNMTOCommonSolutionContact),
 		string(models.TNMTOCommonSolutionContractor),
-		string(models.TNTag),
-		string(models.TNNdaAgreement),
-		string(models.TNDiscussionReply),
-		string(models.TNPlanBasics),
-		string(models.TNPlanCollaborator),
-		string(models.TNPlanDataExchangeApproach),
-		string(models.TNPlanDiscussion),
+		string(models.TNOperationalSolutionSubtask),
+		string(models.TNOperationalSolution),
+		string(models.TNOperationalNeed),
+
+		// Plan related tables
 		string(models.TNPlanDocumentSolutionLink),
 		string(models.TNPlanDocument),
+		string(models.TNDiscussionReply),
+		string(models.TNPlanDiscussion),
+		string(models.TNPlanCollaborator),
+		string(models.TNPlanFavorite),
+		string(models.TNPlanBasics),
+		string(models.TNPlanDataExchangeApproach),
 		string(models.TNPlanGeneralCharacteristics),
 		string(models.TNPlanBeneficiaries),
 		string(models.TNPlanParticipantsAndProviders),
 		string(models.TNPlanOpsEvalAndLearning),
 		string(models.TNPlanPayments),
 		string(models.TNPlanTimeline),
-		string(models.TNPlanFavorite),
 		string(models.TNPlanCr),
 		string(models.TNPlanTdl),
-		string(models.TNOperationalSolutionSubtask),
-		string(models.TNOperationalSolution),
-		string(models.TNOperationalNeed),
-		string(models.TNAnalyzedAudit),
+
+		// Other dependent tables
 		string(models.TNExistingModelLink),
-		string(models.TNMTOCategory),
-		string(models.TNMTOSuggestedMilestone),
-		string(models.TNMTOMilestoneNote),
-		string(models.TNMTOMilestone),
-		string(models.TNMTOSolution),
-		string(models.TNMTOMilestoneSolutionLink),
-		string(models.TNMTOInfo),
-		string(models.TNModelPlan),
+		string(models.TNAnalyzedAudit),
+		string(models.TNTag),
+		string(models.TNNdaAgreement),
 		string(models.TNUserNotification),
 		string(models.TNActivity),
 		string(models.TNUserViewCustomization),
 		string(models.TNTranslatedAuditField),
 		string(models.TNTranslatedAuditQueue),
 		string(models.TNTranslatedAudit),
+
+		// Core tables
+		string(models.TNModelPlan),
+
 		"audit.change",
 	}
 

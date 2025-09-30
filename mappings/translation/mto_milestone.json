@@ -67,6 +67,18 @@
     "formType": "TEXT",
     "order": 1.035
   },
+  "assignedTo": {
+    "gqlField": "assignedTo",
+    "goField": "AssignedTo",
+    "dbField": "assigned_to",
+    "label": "Assigned to",
+    "exportLabel": "Milestone assigned to",
+    "sublabel": "Select the person responsible for completing this milestone.",
+    "dataType": "UUID",
+    "formType": "SELECT",
+    "order": 1.037,
+    "tableReference": "user_account"
+  },
   "needBy": {
     "gqlField": "needBy",
     "goField": "NeedBy",

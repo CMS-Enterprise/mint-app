@@ -1,0 +1,2 @@
+ALTER TABLE mto_milestone
+ADD ASSIGNED_TO UUID REFERENCES user_account(id) DEFAULT NULL;
