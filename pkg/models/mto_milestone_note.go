@@ -6,13 +6,13 @@ type MTOMilestoneNote struct {
 	baseStruct
 	modelPlanRelation
 
-	MTOMilestoneID uuid.UUID `json:"mtoMilestoneID" db:"mto_milestone_id"`
-	Content        string    `json:"content" db:"content"`
+	MilestoneID uuid.UUID `json:"milestoneID" db:"milestone_id"`
+	Content     string    `json:"content" db:"content"`
 }
 
 type MTOMilestoneNoteCreateInput struct {
-	Content        string    `json:"content" db:"content"`
-	MTOMilestoneID uuid.UUID `json:"mtoMilestoneID" db:"mto_milestone_id"`
+	Content     string    `json:"content" db:"content"`
+	MilestoneID uuid.UUID `json:"milestoneID" db:"milestone_id"`
 }
 
 type MTOMilestoneNoteUpdateInput struct {
@@ -24,9 +24,9 @@ type MTOMilestoneNoteDeleteInput struct {
 	ID uuid.UUID `json:"id" db:"id"`
 }
 
-func NewMTOMilestoneNote(createdBy uuid.UUID, content string, mtoMilestoneID uuid.UUID, modelPlanID uuid.UUID) *MTOMilestoneNote {
+func NewMTOMilestoneNote(createdBy uuid.UUID, content string, milestoneID uuid.UUID, modelPlanID uuid.UUID) *MTOMilestoneNote {
 	return &MTOMilestoneNote{
-		MTOMilestoneID:    mtoMilestoneID,
+		MilestoneID:       milestoneID,
 		Content:           content,
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),

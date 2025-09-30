@@ -53,7 +53,7 @@ describe('MilestoneNotes', () => {
 
     const { asFragment } = renderWithProviders(
       <MilestoneNotes
-        mtoMilestoneID="123"
+        milestoneID="123"
         milestoneNotes={sampleNotes}
         setMilestoneNotes={setNotes}
         selectedMilestoneNote={null}
@@ -79,7 +79,7 @@ describe('MilestoneNotes', () => {
 
     renderWithProviders(
       <MilestoneNotes
-        mtoMilestoneID="123"
+        milestoneID="123"
         milestoneNotes={sampleNotes}
         setMilestoneNotes={setNotes}
         selectedMilestoneNote={null}
@@ -112,7 +112,7 @@ describe('MilestoneNotes', () => {
 
     renderWithProviders(
       <MilestoneNotes
-        mtoMilestoneID="123"
+        milestoneID="123"
         milestoneNotes={notes}
         setMilestoneNotes={setNotes}
         selectedMilestoneNote={null}

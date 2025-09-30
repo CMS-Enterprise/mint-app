@@ -6,7 +6,7 @@ SET
 WHERE id = :id
 RETURNING
     id,
-    mto_milestone_id,
+    milestone_id,
     content,
     created_by,
     created_dts,

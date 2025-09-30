@@ -32,7 +32,7 @@ func batchMTOMilestoneNoteGetByMilestoneID(ctx context.Context, milestoneIDs []u
 		return errorPerEachKey[uuid.UUID, []*models.MTOMilestoneNote](milestoneIDs, err)
 	}
 	getKeyFunc := func(data *models.MTOMilestoneNote) uuid.UUID {
-		return data.MTOMilestoneID
+		return data.MilestoneID
 	}
 	return oneToManyDataLoader(milestoneIDs, data, getKeyFunc)
 }

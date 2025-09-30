@@ -626,7 +626,7 @@ const EditMilestoneForm = ({
             addMilestoneNote({
               variables: {
                 input: {
-                  mtoMilestoneID: editMilestoneID || '',
+                  milestoneID: editMilestoneID || '',
                   content: note.content
                 }
               }
@@ -640,9 +640,7 @@ const EditMilestoneForm = ({
           notesToRemove.map(note =>
             deleteMilestoneNote({
               variables: {
-                input: {
-                  id: note.id
-                }
+                id: note.id
               }
             })
           )
@@ -1283,6 +1281,7 @@ const EditMilestoneForm = ({
                         {...field}
                         aria-labelledby={convertCamelCaseToKebabCase('needBy')}
                         id="milestone-need-by"
+                        suppressMilliseconds
                         defaultValue={field.value}
                       />
 
@@ -1548,7 +1547,7 @@ const EditMilestoneForm = ({
 
               <div className="border-top-1px border-base-lighter padding-y-4">
                 <MilestoneNotes
-                  mtoMilestoneID={editMilestoneID || ''}
+                  milestoneID={editMilestoneID || ''}
                   milestoneNotes={milestoneNotes}
                   setMilestoneNotes={setMilestoneNotes}
                   selectedMilestoneNote={selectedMilestoneNote}

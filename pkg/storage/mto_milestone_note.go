@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
@@ -48,10 +49,17 @@ func MTOMilestoneNoteUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilesto
 	return returned, nil
 }
 
-func MTOMilestoneNoteDelete(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestoneNote *models.MTOMilestoneNote) (*models.MTOMilestoneNote, error) {
-	err := sqlutils.ExecProcedure(np, sqlqueries.MTOMilestoneNote.Delete, MTOMilestoneNote)
+func MTOMilestoneNoteDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, milestoneNoteID uuid.UUID) error {
+	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	err := setCurrentSessionUserVariable(tx, actorUserID)
 	if err != nil {
-		return nil, fmt.Errorf("issue deleting MTOMilestoneNote object: %w", err)
+		return err
 	}
-	return MTOMilestoneNote, nil
+
+	arg := map[string]interface{}{"id": milestoneNoteID}
+	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOMilestoneNote.Delete, arg)
+	if procErr != nil {
+		return fmt.Errorf("issue deleting MTOMilestoneNote object: %w", procErr)
+	}
+	return nil
 }

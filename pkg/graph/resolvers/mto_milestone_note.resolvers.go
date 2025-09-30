@@ -7,6 +7,8 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -28,9 +30,22 @@ func (r *mutationResolver) UpdateMTOMilestoneNote(ctx context.Context, input mod
 }
 
 // DeleteMTOMilestoneNote is the resolver for the deleteMTOMilestoneNote field.
-func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, input models.MTOMilestoneNoteDeleteInput) (*models.MTOMilestoneNote, error) {
+func (r *mutationResolver) DeleteMTOMilestoneNote(ctx context.Context, id uuid.UUID) (*models.MTOMilestoneNote, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	store := r.store
-	return DeleteMTOMilestoneNote(ctx, logger, principal, store, input)
+
+	// First get the note before deleting it so we can return it
+	note, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, id)
+	if err != nil {
+		return nil, err
+	}
+
+	// Now delete it
+	err = DeleteMTOMilestoneNote(ctx, logger, principal, store, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return note, nil
 }

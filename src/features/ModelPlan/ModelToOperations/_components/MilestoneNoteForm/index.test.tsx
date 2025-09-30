@@ -18,7 +18,7 @@ describe('MilestoneNoteForm', () => {
   });
 
   const baseProps = {
-    mtoMilestoneID: '123',
+    milestoneID: '123',
     milestoneNotes: [],
     setMilestoneNotes: vi.fn(),
     closeModal: vi.fn(),

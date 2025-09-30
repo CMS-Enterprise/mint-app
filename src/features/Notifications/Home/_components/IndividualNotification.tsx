@@ -14,14 +14,8 @@ import { getTimeElapsed } from 'utils/date';
 import {
   ActivityCTA,
   activityText,
-  isAddingCollaborator,
-  isDailyDigest,
-  isDataExchangeApproach,
-  isDatesChanged,
-  isIncorrectModelStatus,
-  isNewDiscussionAdded,
+  getNavUrl,
   isNewDiscussionReply,
-  isNewModelPlan,
   isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
@@ -39,6 +33,21 @@ export type IndividualNotificationProps = {
   activity: NotificationActivityType;
 };
 
+const ExpandableNotifications = [
+  'DailyDigestCompleteActivityMeta',
+  'DatesChangedActivityMeta',
+  'IncorrectModelStatusActivityMeta'
+];
+
+const formatExpandableNotifications: Record<string, boolean> =
+  ExpandableNotifications.reduce(
+    (notificationsExpandStatus, notification) => ({
+      ...notificationsExpandStatus,
+      [notification]: false
+    }),
+    {}
+  );
+
 const IndividualNotification = ({
   id,
   isRead,
@@ -49,15 +58,32 @@ const IndividualNotification = ({
   }
 }: IndividualNotificationProps) => {
   const { t: discussionT } = useTranslation('discussionsMisc');
-
-  const [isDailyDigestExpanded, setIsDailyDigestExpanded] = useState(false);
-  const [isDatesChangedExpanded, setIsDatesChangedExpanded] = useState(false);
-  const [isIncorrectModelStatusExpanded, setIsIncorrectModelStatusExpanded] =
-    useState(false);
+  const [isExpanded, setIsExpanded] = useState(formatExpandableNotifications);
 
   const navigate = useNavigate();
 
   const [markAsRead] = useMarkNotificationAsReadMutation();
+
+  const isNotificationWithContent =
+    isTaggedInDiscussion(metaData) ||
+    isTaggedInDiscussionReply(metaData) ||
+    isNewDiscussionReply(metaData);
+
+  const isNotificationWithOptionalMessage =
+    isSharedActivity(metaData) && metaData.optionalMessage;
+
+  const renderExpandedNotification = () => {
+    switch (metaData.__typename) {
+      case 'DailyDigestCompleteActivityMeta':
+        return <DailyDigest {...metaData} />;
+      case 'DatesChangedActivityMeta':
+        return <DatesChanged {...metaData} />;
+      case 'IncorrectModelStatusActivityMeta':
+        return <IncorrectModelStatus {...metaData} />;
+      default:
+        return null;
+    }
+  };
 
   const handleMarkAsRead = (action: () => void) => {
     if (!isRead) {
@@ -76,65 +102,23 @@ const IndividualNotification = ({
   };
 
   const handleClick = () => {
-    if (
-      isTaggedInDiscussion(metaData) ||
-      isTaggedInDiscussionReply(metaData) ||
-      isNewDiscussionAdded(metaData) ||
-      isNewDiscussionReply(metaData)
-    ) {
+    const isExpandable = ExpandableNotifications.includes(metaData.__typename);
+
+    if (!isExpandable) {
+      const navUrl = getNavUrl(metaData);
+      handleMarkAsRead(() => navigate(navUrl));
+    } else {
       handleMarkAsRead(() =>
-        navigate(
-          `/models/${metaData.modelPlanID}/read-view/discussions?discussionID=${metaData.discussionID}`
-        )
+        setIsExpanded(prev => ({
+          ...prev,
+          [metaData.__typename]: !prev[metaData.__typename]
+        }))
       );
-    }
-    if (isDailyDigest(metaData)) {
-      handleMarkAsRead(() => setIsDailyDigestExpanded(!isDailyDigestExpanded));
-    }
-    if (isDatesChanged(metaData)) {
-      handleMarkAsRead(() =>
-        setIsDatesChangedExpanded(!isDatesChangedExpanded)
-      );
-    }
-    if (isIncorrectModelStatus(metaData)) {
-      handleMarkAsRead(() =>
-        setIsIncorrectModelStatusExpanded(!isIncorrectModelStatusExpanded)
-      );
-    }
-    if (isAddingCollaborator(metaData)) {
-      handleMarkAsRead(() => {
-        navigate(`/models/${metaData.modelPlanID}/collaboration-area`);
-      });
-    }
-    if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {
-      handleMarkAsRead(() => {
-        navigate(`/models/${metaData.modelPlanID}/read-view`);
-      });
-    }
-    if (isDataExchangeApproach(metaData)) {
-      handleMarkAsRead(() => {
-        navigate(
-          `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`
-        );
-      });
     }
   };
 
   // Mint System Account -> MINT
   const name = commonName === 'Mint System Account' ? 'MINT' : commonName;
-
-  const getExpandButtonStatus = () => {
-    if (isDailyDigest(metaData)) {
-      return isDailyDigestExpanded;
-    }
-    if (isDatesChanged(metaData)) {
-      return isDatesChangedExpanded;
-    }
-    if (isIncorrectModelStatus(metaData)) {
-      return isIncorrectModelStatusExpanded;
-    }
-    return false;
-  };
 
   return (
     <Grid row data-testid="individual-notification">
@@ -163,22 +147,16 @@ const IndividualNotification = ({
                   <strong>{name}</strong>
                   {activityText(metaData)}
                 </p>
-                {!isDailyDigest(metaData) &&
-                  !isNewModelPlan(metaData) &&
-                  !isIncorrectModelStatus(metaData) &&
-                  !isNewDiscussionAdded(metaData) &&
-                  !isSharedActivity(metaData) &&
-                  !isDatesChanged(metaData) &&
-                  !isDataExchangeApproach(metaData) &&
-                  !isAddingCollaborator(metaData) && (
-                    <MentionTextArea
-                      className="notification__content text-base-darker margin-bottom-1"
-                      id={`mention-${metaData.discussionID}`}
-                      editable={false}
-                      initialContent={metaData.content}
-                    />
-                  )}
-                {isSharedActivity(metaData) && metaData.optionalMessage && (
+
+                {isNotificationWithContent && (
+                  <MentionTextArea
+                    className="notification__content text-base-darker margin-bottom-1"
+                    id={`mention-${metaData.discussionID}`}
+                    editable={false}
+                    initialContent={metaData.content}
+                  />
+                )}
+                {isNotificationWithOptionalMessage && (
                   <p className="margin-bottom-1 margin-top-0 text-base-darker">
                     “{metaData.optionalMessage}”
                   </p>
@@ -192,7 +170,7 @@ const IndividualNotification = ({
                 >
                   <ActivityCTA
                     data={metaData}
-                    isExpanded={getExpandButtonStatus()}
+                    isExpanded={isExpanded[metaData.__typename]}
                   />
                 </Button>
               </div>
@@ -207,17 +185,8 @@ const IndividualNotification = ({
           </Grid>
         </Grid>
       </Grid>
-      {isDailyDigestExpanded && isDailyDigest(metaData) && (
-        <DailyDigest {...metaData} />
-      )}
 
-      {isDatesChangedExpanded && isDatesChanged(metaData) && (
-        <DatesChanged {...metaData} />
-      )}
-
-      {isIncorrectModelStatusExpanded && isIncorrectModelStatus(metaData) && (
-        <IncorrectModelStatus {...metaData} />
-      )}
+      {isExpanded[metaData.__typename] && renderExpandedNotification()}
     </Grid>
   );
 };

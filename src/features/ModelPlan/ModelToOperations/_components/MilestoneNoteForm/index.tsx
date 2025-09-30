@@ -21,7 +21,7 @@ import { MilestoneNoteType } from '../EditMilestoneForm';
  * If in read view, will directly call mutation to add/update note
  * If in MTO matrix, will add/update note in app memory
  *
- * @param {string} mtoMilestoneID - The ID of the MTO milestone
+ * @param {string} milestoneID - The ID of the MTO milestone
  * @param {MilestoneNoteType[]} milestoneNotes - The list of milestone notes
  * @param {function} setMilestoneNotes - The function to set the list of milestone notes
  * @param {function} closeModal - The function to close the modal
@@ -29,14 +29,14 @@ import { MilestoneNoteType } from '../EditMilestoneForm';
  * @param {boolean} readView - Whether the component is in read view
  */
 const MilestoneNoteForm = ({
-  mtoMilestoneID,
+  milestoneID,
   milestoneNotes,
   setMilestoneNotes,
   closeModal,
   selectedMilestoneNote,
   readView = false
 }: {
-  mtoMilestoneID: string;
+  milestoneID: string;
   milestoneNotes: MilestoneNoteType[];
   setMilestoneNotes: (notes: MilestoneNoteType[]) => void;
   selectedMilestoneNote: MilestoneNoteType | null;
@@ -71,14 +71,14 @@ const MilestoneNoteForm = ({
       addMilestoneNote({
         variables: {
           input: {
-            mtoMilestoneID,
+            milestoneID,
             content: milestoneNote
           }
         },
         refetchQueries: [
           {
             query: GetMtoMilestoneDocument,
-            variables: { id: mtoMilestoneID }
+            variables: { id: milestoneID }
           }
         ]
       }).then(() => {
@@ -95,7 +95,7 @@ const MilestoneNoteForm = ({
         refetchQueries: [
           {
             query: GetMtoMilestoneDocument,
-            variables: { id: mtoMilestoneID }
+            variables: { id: milestoneID }
           }
         ]
       }).then(() => {
@@ -104,7 +104,7 @@ const MilestoneNoteForm = ({
     }
   }, [
     isEditing,
-    mtoMilestoneID,
+    milestoneID,
     addMilestoneNote,
     updateMilestoneNote,
     mtoMilestoneNoteMiscT,

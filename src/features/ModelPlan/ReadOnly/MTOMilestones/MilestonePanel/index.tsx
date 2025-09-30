@@ -464,7 +464,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         )}
         <div className="border-top-1px border-base-lighter padding-y-4 margin-top-6">
           <MilestoneNotes
-            mtoMilestoneID={milestone.id}
+            milestoneID={milestone.id}
             milestoneNotes={sortedMilestoneNotes}
             setMilestoneNotes={() => {}}
             selectedMilestoneNote={null}
