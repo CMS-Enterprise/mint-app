@@ -247,6 +247,13 @@ func MTOMilestoneGetBySolutionIDLOADER(
 	return loaders.MTOMilestone.BySolutionID.Load(ctx, solutionID)
 }
 
+// Email retry configuration constants (there is probably a better place to put this honestly)
+const (
+	emailSendInitialDelay   = 100 * time.Millisecond // Initial delay to allow transaction commit
+	emailSendMaxRetries     = 3                      // Maximum number of retry attempts
+	emailSendRetryBaseDelay = 200 * time.Millisecond // Base delay between retries (multiplied by attempt number)
+)
+
 // MTOMilestoneUpdateLinkedSolutionsWithTX updates the linked solutions for a milestone, deleting ones that are not included in the list
 func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	ctx context.Context,
@@ -285,11 +292,11 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 			sol := solution // capture for goroutine
 			go func() {
 				// Add a small delay to ensure transaction has committed
-				time.Sleep(100 * time.Millisecond)
+				time.Sleep(emailSendInitialDelay)
 
 				// Retry logic
 				var sendEmailErr error
-				for attempts := 0; attempts < 3; attempts++ {
+				for attempts := 0; attempts < emailSendMaxRetries; attempts++ {
 					sendEmailErr = sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol.ToMTOSolution())
 					if sendEmailErr == nil {
 						break // Success
@@ -299,7 +306,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 						logger.Warn("solution not found, retrying email send",
 							zap.Int("attempt", attempts+1),
 							zap.String("solutionID", sol.ID.String()))
-						time.Sleep(time.Duration(attempts+1) * 200 * time.Millisecond)
+						time.Sleep(time.Duration(attempts+1) * emailSendRetryBaseDelay)
 						continue
 					}
 
