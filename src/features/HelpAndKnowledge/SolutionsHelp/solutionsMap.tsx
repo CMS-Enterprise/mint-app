@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   GetMtoSolutionContactsQuery,
+  ModelStatus,
   MtoCommonSolutionKey,
   MtoCommonSolutionSubject,
   MtoSolutionType
@@ -38,10 +39,17 @@ export type SolutionContractorType =
 export type SolutionSystemOwnerType =
   GetMtoSolutionContactsQuery['mtoCommonSolutions'][0]['systemOwners'][0];
 
+// todo(Elle) replace it with query[''] type
+export type SolutionModelUsageType = {
+  modelName: string;
+  modelStatus: ModelStatus;
+};
+
 export type SolutionGenericType = {
   about: boolean;
   timeline: boolean;
   'points-of-contact': boolean;
+  'model-usage': boolean;
 };
 
 type SolutionComponentType = (props: SolutionDetailProps) => React.ReactNode;
@@ -50,6 +58,7 @@ export type ModalSolutionComponentType = {
   about?: SolutionComponentType;
   timeline?: SolutionComponentType;
   'points-of-contact'?: SolutionComponentType;
+  'model-usage'?: SolutionComponentType;
 };
 
 export interface HelpSolutionBaseType {
@@ -67,6 +76,7 @@ export type HelpSolutionType = HelpSolutionBaseType & {
   pointsOfContact?: SolutionContactType[];
   systemOwners?: SolutionSystemOwnerType[];
   alertPrimaryContact?: boolean;
+  modelUsage?: SolutionModelUsageType[];
 };
 
 export type HelpSolutionsType = Record<

@@ -15,6 +15,7 @@ import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';
 import Header from '../_components/Header';
 import About from '../About';
+import ModelUsage from '../ModelUsage';
 import PointsOfContact from '../PointsOfContact';
 import Timeline from '../Timeline';
 
@@ -23,7 +24,7 @@ import './index.scss';
 // Formats the query params on modal route change
 export const formatQueryParam = (
   paramValues: string[],
-  section: 'about' | 'timeline' | 'points-of-contact',
+  section: 'about' | 'timeline' | 'points-of-contact' | 'model-usage',
   closeRoute: string
 ) =>
   `${closeRoute}?${paramValues
@@ -52,6 +53,11 @@ const subComponents = (
       route: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
       helpRoute: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
       component: <PointsOfContact solution={solution} />
+    },
+    'model-usage': {
+      route: formatQueryParam(paramValues, 'model-usage', closeRoute),
+      helpRoute: formatQueryParam(paramValues, 'model-usage', closeRoute),
+      component: <ModelUsage solution={solution} />
     }
   };
 };

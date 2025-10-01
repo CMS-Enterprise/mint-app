@@ -2595,7 +2595,8 @@ const helpAndKnowledge = {
   navigation: {
     about: 'About this solution',
     timeline: 'Timeline',
-    'points-of-contact': 'Points of contact'
+    'points-of-contact': 'Points of contact',
+    'model-usage': 'Model usage'
   },
   primaryPointOfContact: 'Primary point of contact',
   mailboxesAndTeamMembers: 'Mailboxes and team members',
@@ -2603,6 +2604,17 @@ const helpAndKnowledge = {
   addTeamMember: 'Add a team member',
   edit: 'Edit',
   removePointOfContact: 'Remove point of contact',
+  modelUsage: {
+    description:
+      'The models below use or plan to use {{-solutionTitle}} to implement and run their model. Click on each model to learn more about the model and its solutions and IT systems.',
+    info: 'This list shows solutions and IT systems identified for models in MINT. Older models, past models, or other models listed in MINT may not appear here. If you have any questions, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+    resultsInfo: 'Showing {{-resultsNum}} of {{-resultsMax}} models',
+    modelName: 'Model name',
+    status: 'Status',
+    noResults:
+      'There are not currently any models in MINT using {{-solutionTitle}}.',
+    suffix: 'rows'
+  },
   backToSolutions: 'Back to solutions',
   receivesNotifications: 'Receives notifications',
   receivesNotificationsTooltip:
