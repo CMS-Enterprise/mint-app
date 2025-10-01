@@ -339,6 +339,11 @@ export const downloadMTOMilestoneSummary = (
         Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
         Description: milestone.description || '',
+        'Responsible Component': (milestone.responsibleComponent || [])
+          ?.map(component =>
+            i18next.t(`mtoMilestone:responsibleComponent.options.${component}`)
+          )
+          .join(', '),
         'Facilitated by': (milestone.facilitatedBy || [])
           ?.map(facilitator =>
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
@@ -347,6 +352,7 @@ export const downloadMTOMilestoneSummary = (
         'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
+        Notes: milestone.notes.map(note => note.content).join(', '),
         ...quarterObject
       });
 

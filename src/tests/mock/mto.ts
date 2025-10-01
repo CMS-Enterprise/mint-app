@@ -469,6 +469,7 @@ export const milestoneMock = (
           name: 'Milestone 1',
           description: 'Description 1',
           key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+          responsibleComponent: [],
           facilitatedBy: [],
           facilitatedByOther: '',
           needBy: '2021-08-01',
@@ -515,7 +516,8 @@ export const milestoneMock = (
                 isAdded: true
               }
             }
-          ]
+          ],
+          notes: []
         }
       }
     }
@@ -816,10 +818,12 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                   name: 'Test Milestone 1',
                   needBy: '2022-05-12T15:01:39.190679Z',
+                  responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
                   status: MtoMilestoneStatus.NOT_STARTED,
-                  riskIndicator: MtoRiskIndicator.ON_TRACK
+                  riskIndicator: MtoRiskIndicator.ON_TRACK,
+                  notes: []
                 }
               ]
             }
@@ -841,10 +845,12 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                   name: 'Test Milestone 2',
                   needBy: '2022-05-12T15:01:39.190679Z',
+                  responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
                   status: MtoMilestoneStatus.NOT_STARTED,
-                  riskIndicator: MtoRiskIndicator.ON_TRACK
+                  riskIndicator: MtoRiskIndicator.ON_TRACK,
+                  notes: []
                 }
               ]
             }

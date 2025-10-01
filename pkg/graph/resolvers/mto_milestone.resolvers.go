@@ -15,6 +15,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// ResponsibleComponent is the resolver for the responsibleComponent field.
+func (r *mTOMilestoneResolver) ResponsibleComponent(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOMilestoneResponsibleComponent, error) {
+	return obj.ResponsibleComponent, nil
+}
+
 // FacilitatedBy is the resolver for the facilitatedBy field.
 func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOFacilitator, error) {
 	if obj.FacilitatedBy == nil {
@@ -35,6 +40,13 @@ func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.
 // Solutions is the resolver for the solutions field.
 func (r *mTOMilestoneResolver) Solutions(ctx context.Context, obj *models.MTOMilestone) ([]*models.MTOSolution, error) {
 	return MTOSolutionGetByMilestoneIDLOADER(ctx, obj.ID)
+}
+
+// Notes is the resolver for the notes field.
+func (r *mTOMilestoneResolver) Notes(ctx context.Context, obj *models.MTOMilestone) ([]*models.MTOMilestoneNote, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return GetMTOMilestoneNotesByMilestoneIDLOADER(ctx, logger, principal, r.store, obj.ID)
 }
 
 // Categories is the resolver for the categories field.

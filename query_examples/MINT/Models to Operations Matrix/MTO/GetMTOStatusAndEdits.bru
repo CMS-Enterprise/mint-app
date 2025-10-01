@@ -35,10 +35,20 @@ body:graphql {
               }
           }
           milestones {
+              id
               name
               createdDts
               createdBy
+              notes {
+                id
+                createdByUserAccount {
+                  id
+                  commonName
+                }
+              }
+              
           }
+  
           categories{
               id
               position

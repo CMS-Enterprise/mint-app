@@ -7,6 +7,7 @@ export default gql(/* GraphQL */ `
       name
       description
       key
+      responsibleComponent
       facilitatedBy
       facilitatedByOther
       needBy
@@ -41,6 +42,16 @@ export default gql(/* GraphQL */ `
           name
           key
           isAdded
+        }
+      }
+      notes {
+        id
+        content
+        createdDts
+        createdByUserAccount {
+          id
+          commonName
+          username
         }
       }
     }

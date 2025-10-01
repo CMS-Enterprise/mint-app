@@ -15,6 +15,7 @@ SELECT
     mto_milestone.mto_category_id,
     COALESCE(mto_milestone.name, mto_common_milestone.name) AS "name",
     mto_milestone.description,
+    mto_milestone.responsible_component,
     mto_milestone.facilitated_by,
     mto_milestone.facilitated_by_other,
     mto_milestone.need_by,

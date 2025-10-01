@@ -1,13 +1,24 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import i18next from 'i18next';
+import configureMockStore from 'redux-mock-store';
 import { milestoneMock, modelID } from 'tests/mock/mto';
 
 import MilestonePanel from './index';
 
+const mockStore = configureMockStore([]);
+
 describe('MilestonePanel Component', () => {
+  const store = mockStore({
+    auth: {
+      euaId: 'TEST',
+      name: 'Test User'
+    }
+  });
+
   it('renders correctly with milestone data', async () => {
     const router = createMemoryRouter(
       [
@@ -24,9 +35,11 @@ describe('MilestonePanel Component', () => {
     );
 
     render(
-      <MockedProvider addTypename={false} mocks={milestoneMock('123')}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <Provider store={store}>
+        <MockedProvider addTypename={false} mocks={milestoneMock('123')}>
+          <RouterProvider router={router} />
+        </MockedProvider>
+      </Provider>
     );
 
     // Wait for the milestone data to load
@@ -65,9 +78,11 @@ describe('MilestonePanel Component', () => {
     );
 
     render(
-      <MockedProvider addTypename={false} mocks={noSolutionsMock}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <Provider store={store}>
+        <MockedProvider addTypename={false} mocks={noSolutionsMock}>
+          <RouterProvider router={router} />
+        </MockedProvider>
+      </Provider>
     );
     // Wait for the milestone data to load
     await waitFor(() => {
