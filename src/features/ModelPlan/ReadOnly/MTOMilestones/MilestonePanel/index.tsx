@@ -76,6 +76,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         __typename: 'MTOMilestone',
         id: '',
         name: '',
+        description: '',
         status: MtoMilestoneStatus.NOT_STARTED,
         key: null,
         responsibleComponent: [],
@@ -201,16 +202,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         </div>
 
         <h2 className="line-height-large margin-top-1">{milestone.name}</h2>
-
-        {milestone.key && (
-          <p className="margin-0 mint-body-normal text-base-dark text-pre-line">
-            {modelToOperationsMiscT(
-              `milestoneLibrary.milestoneMap.${milestone.key}.description`
-            )}
-          </p>
-        )}
-
-        <div className="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-y-4">
+        <div className="border-base-light border-top-1px border-bottom-1px padding-y-3 margin-bottom-4 margin-top-3">
           <Grid row className="margin-bottom-2">
             <Grid tablet={{ col: 6 }} mobile={{ col: 12 }}>
               <DescriptionTerm
@@ -238,30 +230,6 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                 className="font-body-md text-base-darkest"
                 definition={
                   milestone.categories.subCategory?.name || NoneSpecified
-                }
-              />
-            </Grid>
-          </Grid>
-
-          <Grid row className="margin-bottom-2">
-            <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
-              <DescriptionTerm
-                className="font-body-sm margin-bottom-0"
-                term={mtoMilestoneT('responsibleComponent.label')}
-              />
-              <DescriptionDefinition
-                className="font-body-md text-base-darkest"
-                definition={
-                  milestone.responsibleComponent.length > 0
-                    ? milestone.responsibleComponent
-                        .map(
-                          (component: MtoMilestoneResponsibleComponent) =>
-                            `${mtoMilestoneT(
-                              `responsibleComponent.options.${component}`
-                            )}`
-                        )
-                        .join(', ')
-                    : NoneSpecified
                 }
               />
             </Grid>

@@ -5,6 +5,7 @@ WITH QUERIED_IDS AS (
 
 SELECT
     mto_common_milestone.name,
+    mto_common_milestone.description,
     mto_common_milestone.key,
     mto_common_milestone.category_name,
     mto_common_milestone.sub_category_name,

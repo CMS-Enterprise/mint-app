@@ -55,7 +55,7 @@ exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] =
         <p
           style="white-space: pre-line;"
         >
-          Advertise the opportunity to bid on work related to evaluating a model, review the bids and select evaluation contractor.
+          Description 1
         </p>
         <p
           class="text-base-dark margin-top-0 margin-bottom-4"

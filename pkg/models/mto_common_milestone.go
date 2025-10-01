@@ -4,6 +4,7 @@ import "github.com/google/uuid"
 
 type MTOCommonMilestone struct {
 	Name              string                    `json:"name" db:"name"`
+	Description       string                    `json:"description" db:"description"`
 	Key               MTOCommonMilestoneKey     `json:"key" db:"key"`
 	CategoryName      string                    `json:"categoryName" db:"category_name"`
 	SubCategoryName   *string                   `json:"subCategoryName" db:"sub_category_name"`

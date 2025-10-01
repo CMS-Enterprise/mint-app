@@ -20,6 +20,7 @@ describe('MilestonePanel Component', () => {
     __typename: 'MTOCommonMilestone',
     key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
     name: 'Test Milestone',
+    description: 'Description 1',
     categoryName: 'Test Category',
     subCategoryName: 'Test SubCategory',
     isAdded: false,

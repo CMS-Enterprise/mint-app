@@ -41,6 +41,7 @@ MTOCommonMilestone represents a Milestone from the "Common Milestones" library
 type MTOCommonMilestone {
   # DB Fields
   name: String!
+  description: String!
   key: MTOCommonMilestoneKey!
   categoryName: String!
   subCategoryName: String

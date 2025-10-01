@@ -62,9 +62,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
               {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
             </p>
 
-            <p style={{ whiteSpace: 'pre-line' }}>
-              {t(`milestoneLibrary.milestoneMap.${milestone.key}.description`)}
-            </p>
+            <p style={{ whiteSpace: 'pre-line' }}>{milestone.description}</p>
 
             <p className="text-base-dark margin-top-0 margin-bottom-4">
               {t('milestoneLibrary.facilitatedByArray', {
