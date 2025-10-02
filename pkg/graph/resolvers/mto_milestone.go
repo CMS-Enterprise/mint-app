@@ -8,6 +8,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
@@ -155,69 +156,16 @@ func MTOMilestoneUpdate(
 	// Check if assignedTo is being changed
 	var newAssignedToID *uuid.UUID
 	var assignedToChanged bool
-	if assignedToRaw, exists := changes["assignedTo"]; exists {
 
-		switch valueType := assignedToRaw.(type) {
-		case *uuid.UUID:
-			temp, ok := assignedToRaw.(*uuid.UUID)
-			if !ok {
-				logger.Error("invalid assignedTo UUID",
-					zap.String("milestoneID", existing.ID.String()),
-					zap.Any("assignedTo", assignedToRaw))
-			}
-			newAssignedToID = temp
-
-		case uuid.UUID:
-			temp, ok := assignedToRaw.(uuid.UUID)
-			if !ok {
-				logger.Error("invalid assignedTo UUID",
-					zap.String("milestoneID", existing.ID.String()),
-					zap.Any("assignedTo", assignedToRaw))
-			}
-			newAssignedToID = &temp
-
-		case *string:
-			temp, ok := assignedToRaw.(*string)
-			if !ok {
-				logger.Error("invalid assignedTo UUID string",
-					zap.String("milestoneID", existing.ID.String()),
-					zap.Any("assignedTo", assignedToRaw))
-			}
-			if parsedID, err := uuid.Parse(*temp); err == nil {
-				newAssignedToID = &parsedID
-			} else {
-				logger.Error("invalid assignedTo UUID string",
-					zap.String("milestoneID", existing.ID.String()),
-					zap.String("assignedToType", *valueType),
-					zap.Error(err))
-			}
-
-		case string:
-			temp, ok := assignedToRaw.(string)
-			if !ok {
-				logger.Error("invalid assignedTo UUID string",
-					zap.String("milestoneID", existing.ID.String()),
-					zap.Any("assignedTo", assignedToRaw))
-			}
-			if parsedID, err := uuid.Parse(temp); err == nil {
-				newAssignedToID = &parsedID
-			} else {
-				logger.Error("invalid assignedTo UUID string",
-					zap.String("milestoneID", existing.ID.String()),
-					zap.String("assignedToType", valueType),
-					zap.Error(err))
-			}
-
-		case nil:
-			// explicit null in payload -> clear the assignment
-			newAssignedToID = nil
-
-		default:
-			logger.Error("invalid assignedTo type",
+	if raw, ok := changes["assignedTo"]; ok {
+		u, err := helpers.CoerceUUIDPtr(raw)
+		if err != nil {
+			logger.Error("invalid assignedTo value",
 				zap.String("milestoneID", existing.ID.String()),
-				zap.String("assignedToType", fmt.Sprintf("%T", valueType)))
+				zap.String("assignedToType", fmt.Sprintf("%T", raw)),
+				zap.Error(err))
 		}
-
+		newAssignedToID = u
 		assignedToChanged =
 			(existing.AssignedTo == nil && newAssignedToID != nil) ||
 				(existing.AssignedTo != nil && newAssignedToID == nil) ||
