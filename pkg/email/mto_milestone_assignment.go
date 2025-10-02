@@ -1,7 +1,6 @@
 package email
 
 import (
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -24,7 +23,6 @@ func NewMilestoneAssignedBodyContent(
 	clientAddress string,
 	modelPlan *models.ModelPlan,
 	milestone *models.MTOMilestone,
-	assignedUser *authentication.UserAccount,
 	solutions []string,
 ) MilestoneAssignedBodyContent {
 	return MilestoneAssignedBodyContent{

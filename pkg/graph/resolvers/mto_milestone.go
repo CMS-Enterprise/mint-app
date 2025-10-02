@@ -513,7 +513,6 @@ func sendMTOMilestoneAssignedEmail(
 		emailService.GetConfig().GetClientAddress(),
 		modelPlan,
 		milestone,
-		assignedUser,
 		solutionsNames,
 	)
 

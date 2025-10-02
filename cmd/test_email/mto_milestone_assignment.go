@@ -5,7 +5,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -64,15 +63,6 @@ func sendMTOMilestoneAssignedTestEmailHelper(
 		return nil
 	}
 
-	// Create test assigned user
-	username := "test_user123"
-	assignedUser := &authentication.UserAccount{
-		ID:         uuid.New(),
-		Username:   &username,
-		Email:      "test.user@cms.hhs.gov",
-		CommonName: "Test User",
-	}
-
 	// Get email template
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOMilestoneAssignedTemplateName)
 	if err != nil {
@@ -89,7 +79,6 @@ func sendMTOMilestoneAssignedTestEmailHelper(
 		emailService.GetConfig().GetClientAddress(),
 		modelPlan,
 		milestone,
-		assignedUser,
 		solutionNames,
 	)
 
