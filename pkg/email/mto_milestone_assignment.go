@@ -27,13 +27,25 @@ func NewMilestoneAssignedBodyContent(
 	assignedUser *authentication.UserAccount,
 	solutions []string,
 ) MilestoneAssignedBodyContent {
+	var milestoneTitle string
+	var needByDate string
+	if milestone != nil && milestone.Name != nil {
+		milestoneTitle = *milestone.Name
+	} else {
+		milestoneTitle = ""
+	}
+	if milestone != nil && milestone.NeedBy != nil {
+		needByDate = milestone.NeedBy.Format("01/02/2006")
+	} else {
+		needByDate = ""
+	}
 	return MilestoneAssignedBodyContent{
 		ModelName:       modelPlan.ModelName,
 		ModelID:         modelPlan.ID.String(),
 		ClientAddress:   clientAddress,
-		MilestoneTitle:  *milestone.Name,
+		MilestoneTitle:  milestoneTitle,
 		MilestoneStatus: string(milestone.Status),
-		NeedByDate:      milestone.NeedBy.Format("01/02/2006"),
+		NeedByDate:      needByDate,
 		RiskIndicator:   string(milestone.RiskIndicator),
 		Solutions:       solutions,
 	}
