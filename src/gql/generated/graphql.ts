@@ -1135,7 +1135,6 @@ export type MtoMilestone = {
 };
 
 export type MtoMilestoneChanges = {
-  assignedTo?: InputMaybe<Scalars['UUID']['input']>;
   facilitatedBy?: InputMaybe<Array<MtoFacilitator>>;
   facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   isDraft?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1682,6 +1681,7 @@ export type Mutation = {
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
   unlockLockableSection: Scalars['Boolean']['output'];
+  updateAssignedToMTOMilestone: MtoMilestone;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
@@ -2004,6 +2004,13 @@ export type MutationUnlockAllLockableSectionsArgs = {
 export type MutationUnlockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateAssignedToMtoMilestoneArgs = {
+  assignedTo: Scalars['UUID']['input'];
+  id: Scalars['UUID']['input'];
 };
 
 
