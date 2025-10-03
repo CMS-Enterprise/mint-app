@@ -27,26 +27,28 @@ func NewMilestoneAssignedBodyContent(
 	milestone *models.MTOMilestone,
 	solutions []string,
 ) MilestoneAssignedBodyContent {
-	var milestoneTitle string
-	var needByDate string
+	var milestoneTitle = "No Title Set"
+	var needByDate = "No Date Set"
+	var milestoneStatus = "Not Set"
+	var milestoneRisk = "Not Set"
+	if milestone != nil {
+		milestoneStatus = string(milestone.Status)
+		milestoneRisk = string(milestone.RiskIndicator)
+	}
 	if milestone != nil && milestone.Name != nil {
 		milestoneTitle = *milestone.Name
-	} else {
-		milestoneTitle = ""
 	}
 	if milestone != nil && milestone.NeedBy != nil {
 		needByDate = milestone.NeedBy.Format("01/02/2006")
-	} else {
-		needByDate = ""
 	}
 	return MilestoneAssignedBodyContent{
 		ModelName:       modelPlan.ModelName,
 		ModelID:         modelPlan.ID.String(),
 		ClientAddress:   clientAddress,
 		MilestoneTitle:  milestoneTitle,
-		MilestoneStatus: string(milestone.Status),
+		MilestoneStatus: milestoneStatus,
 		NeedByDate:      needByDate,
-		RiskIndicator:   string(milestone.RiskIndicator),
+		RiskIndicator:   milestoneRisk,
 		SolutionsList:   strings.Join(solutions, ", "),
 	}
 }
