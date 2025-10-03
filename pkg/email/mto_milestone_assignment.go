@@ -1,6 +1,8 @@
 package email
 
 import (
+	"strings"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -16,7 +18,7 @@ type MilestoneAssignedBodyContent struct {
 	MilestoneStatus string
 	NeedByDate      string
 	RiskIndicator   string
-	Solutions       []string
+	SolutionsList   string
 }
 
 func NewMilestoneAssignedBodyContent(
@@ -45,6 +47,6 @@ func NewMilestoneAssignedBodyContent(
 		MilestoneStatus: string(milestone.Status),
 		NeedByDate:      needByDate,
 		RiskIndicator:   string(milestone.RiskIndicator),
-		Solutions:       solutions,
+		SolutionsList:   strings.Join(solutions, ", "),
 	}
 }

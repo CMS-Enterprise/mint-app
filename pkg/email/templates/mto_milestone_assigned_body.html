@@ -24,16 +24,7 @@
 <p><strong>Status:</strong> {{.MilestoneStatus}}</p>
 <p><strong>Need by:</strong> {{.NeedByDate}}</p>
 <p><strong>Risk:</strong> {{.RiskIndicator}}</p>
-<p>
-  <strong>Solution(s):</strong>
-  {{if .Solutions}}
-    {{- range $index, $element := .Solutions -}}
-      {{if $index}}, {{end}}{{$element}}
-    {{- end -}}
-  {{else}}
-    None specified
-  {{end}}
-</p>
+<p><strong>Solution(s):</strong> {{.SolutionsList}}</p>
 
 <br/>
 
