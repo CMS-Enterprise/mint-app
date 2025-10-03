@@ -34,13 +34,16 @@ func NewMilestoneAssignedBodyContent(
 	if milestone != nil {
 		milestoneStatus = string(milestone.Status)
 		milestoneRisk = string(milestone.RiskIndicator)
+
+		if milestone.Name != nil {
+			milestoneTitle = *milestone.Name
+		}
+
+		if milestone.NeedBy != nil {
+			needByDate = milestone.NeedBy.Format("01/02/2006")
+		}
 	}
-	if milestone != nil && milestone.Name != nil {
-		milestoneTitle = *milestone.Name
-	}
-	if milestone != nil && milestone.NeedBy != nil {
-		needByDate = milestone.NeedBy.Format("01/02/2006")
-	}
+
 	return MilestoneAssignedBodyContent{
 		ModelName:       modelPlan.ModelName,
 		ModelID:         modelPlan.ID.String(),
