@@ -497,6 +497,9 @@ func sendMTOMilestoneAssignedEmail(
 
 	// Prepare body content
 	solutionsNames := lo.Map(solutions, func(item *models.MTOSolution, _ int) string {
+		if item == nil || item.Name == nil {
+			return ""
+		}
 		return *item.Name
 	})
 	bodyContent := email.NewMilestoneAssignedBodyContent(
