@@ -1250,6 +1250,7 @@ export type MtoMilestoneTranslation = {
   mtoCategoryID: TranslationField;
   name: TranslationField;
   needBy: TranslationField;
+  notes: TranslationField;
   responsibleComponent: TranslationFieldWithOptions;
   riskIndicator: TranslationFieldWithOptions;
   solutions: TranslationFieldWithOptions;

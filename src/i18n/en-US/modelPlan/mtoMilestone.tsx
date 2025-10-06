@@ -381,6 +381,16 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 4.0,
     tableReference: TableName.MTO_CATEGORY
+  },
+  notes: {
+    gqlField: 'notes',
+    goField: 'Notes',
+    dbField: 'notes',
+    label: 'Notes',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    flattenNestedData: 'content',
+    order: 4.1
   }
 };
 

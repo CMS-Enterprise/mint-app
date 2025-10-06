@@ -1297,6 +1297,7 @@ export type TranslationMTOMilestoneCustomForm = {
   status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
   key: TranslationFieldProperties;
   mtoCategoryID: TranslationFieldProperties;
+  notes: TranslationFieldProperties;
 };
 
 type TranslationMTOMilestoneCustomGQL = Omit<
