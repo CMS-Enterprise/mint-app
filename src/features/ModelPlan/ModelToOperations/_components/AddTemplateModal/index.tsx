@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Form } from '@trussworks/react-uswds';
 import {
   GetModelToOperationsMatrixDocument,
+  GetMtoModelPlanTemplatesDocument,
   useCreateMtoTemplateMutation
 } from 'gql/generated/graphql';
 
@@ -24,7 +25,18 @@ const AddTemplateModal = () => {
 
   const { setErrorMeta } = useErrorMessage();
 
-  const [create] = useCreateMtoTemplateMutation();
+  const [create] = useCreateMtoTemplateMutation({
+    refetchQueries: [
+      {
+        query: GetModelToOperationsMatrixDocument,
+        variables: { id: modelID }
+      },
+      {
+        query: GetMtoModelPlanTemplatesDocument,
+        variables: { id: modelID }
+      }
+    ]
+  });
 
   if (!mtoTemplate)
     return <Alert type="error">{t('modal.addTemplate.failedToFetch')}</Alert>;

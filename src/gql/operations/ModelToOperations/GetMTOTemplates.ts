@@ -6,6 +6,7 @@ export default gql(/* GraphQL */ `
       id
       name
       key
+      isAdded
       description
       categoryCount
       milestoneCount

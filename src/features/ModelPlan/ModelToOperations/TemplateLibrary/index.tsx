@@ -4,8 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import { TemplateCardType } from 'features/ModelPlan/ModelToOperations/_components/TemplateCard';
 import NotFound from 'features/NotFound';
-import { useGetMtoTemplatesQuery } from 'gql/generated/graphql';
-import { mtoTemplateMock } from 'tests/mock/mto';
+import { useGetMtoModelPlanTemplatesQuery } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
@@ -27,17 +26,19 @@ const TemplateLibrary = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const templates = mtoTemplateMock?.[0]?.result?.data?.mtoTemplates || [];
+  const { data, loading, error } = useGetMtoModelPlanTemplatesQuery({
+    variables: {
+      id: modelID
+    }
+  });
 
-  const { data, loading, error } = useGetMtoTemplatesQuery();
+  const dataAvalilable: boolean =
+    !loading || !!data?.modelPlan?.mtoMatrix?.mtoTemplates;
 
-  const dataAvalilable: boolean = true;
-  //   const dataAvalilable: boolean = !loading || !!data?.mtoTemplates;
-
-  //   const templates = useMemo(
-  //     () => data?.mtoTemplates || [],
-  //     [data?.mtoTemplates]
-  //   );
+  const templates = useMemo(
+    () => data?.modelPlan?.mtoMatrix?.mtoTemplates || [],
+    [data?.modelPlan?.mtoMatrix?.mtoTemplates]
+  );
 
   if (error) {
     return <NotFound errorMessage={error.message} />;
