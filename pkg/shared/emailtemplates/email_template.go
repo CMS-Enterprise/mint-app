@@ -2,6 +2,7 @@ package emailtemplates
 
 import (
 	"bytes"
+	"fmt"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
 )
@@ -66,6 +67,21 @@ func MustNewGenEmailTemplate[subjectType any, bodyType any](
 		panic(err)
 	}
 	return tpl
+}
+
+// GetContent gets both the subject and body portions of an email template executed with the data provided
+func (e *GenEmailTemplate[subjectType, bodyType]) GetContent(subject subjectType, body bodyType) (string, string, error) {
+	subjectStr, err := e.GetSubject(subject)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get subject for email template %q: %w", e.Name, err)
+	}
+
+	bodyStr, err := e.GetBody(body)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to get body for email template %q: %w", e.Name, err)
+	}
+
+	return subjectStr, bodyStr, nil
 }
 
 // GetSubject gets the subject portion of an email template executed with the data provided
