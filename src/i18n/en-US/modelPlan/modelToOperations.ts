@@ -663,7 +663,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     hideAdded: 'Hide milestones without solutions ({{count}})'
   },
   validation: {
-    fillOut: 'Please fill out the required field.'
+    fillOut: 'Please fill out the required field.',
+    invalidDate: 'Please enter a valid date.'
   },
   solutionStatusButton: 'Solution implementation statuses',
   solutionStatuses,

@@ -1309,8 +1309,19 @@ const EditMilestoneForm = ({
               <Controller
                 name="needBy"
                 control={control}
-                render={({ field: { ref, ...field } }) => (
-                  <FormGroup className="margin-0 margin-bottom-3">
+                rules={{
+                  validate: value =>
+                    value !== undefined ||
+                    modelToOperationsMiscT('validation.invalidDate')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    className="margin-0 margin-bottom-3"
+                    error={!!error}
+                  >
                     <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
                       {mtoMilestoneT('needBy.label')}
                     </Label>
@@ -1318,6 +1329,8 @@ const EditMilestoneForm = ({
                     <HelpText className="margin-top-1">
                       {mtoMilestoneT('needBy.sublabel')}
                     </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
 
                     <div className="position-relative">
                       <DatePickerFormatted
