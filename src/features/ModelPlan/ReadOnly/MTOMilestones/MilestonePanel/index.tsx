@@ -239,6 +239,30 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
             <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
               <DescriptionTerm
                 className="font-body-sm margin-bottom-0"
+                term={mtoMilestoneT('responsibleComponent.label')}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.responsibleComponent.length > 0
+                    ? milestone.responsibleComponent
+                        .map(
+                          (component: MtoMilestoneResponsibleComponent) =>
+                            `${mtoMilestoneT(
+                              `responsibleComponent.options.${component}`
+                            )}`
+                        )
+                        .join(', ')
+                    : NoneSpecified
+                }
+              />
+            </Grid>
+          </Grid>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
                 term={mtoMilestoneT('facilitatedBy.label')}
               />
               <DescriptionDefinition
