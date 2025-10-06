@@ -5,12 +5,9 @@ import {
   helpSolutions,
   HelpSolutionsType,
   HelpSolutionType
-  // SolutionModelUsageType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   GetMtoSolutionContactsQuery,
-  ModelStatus,
-  MtoCommonSolutionKey,
   useGetMtoSolutionContactsQuery
 } from 'gql/generated/graphql';
 
@@ -41,31 +38,6 @@ export const mapContactsToSolutions = (
   });
 };
 
-export const mapModelUsageToSolutions = (
-  solutions: HelpSolutionsType,
-  // todo(Elle) replace it with query[''] type
-  modelUsageSolutions: {
-    key: MtoCommonSolutionKey;
-    modelUsage: {
-      modelName: string;
-      modelStatus: ModelStatus;
-    }[];
-  }[]
-): HelpSolutionType[] => {
-  return getKeys(solutions).map(solution => {
-    // Find fetch possible solution that corresponds to the FE `enum` mapped solution
-    const foundSolution = modelUsageSolutions?.find(
-      model => solution === model.key
-    );
-
-    // Add fetch model usage field to existing FE solution map
-    return {
-      ...solutions[solution],
-      modelUsage: foundSolution?.modelUsage
-    };
-  });
-};
-
 const useHelpSolution = (): UseHelpSolutionType => {
   const { data, loading } = useGetMtoSolutionContactsQuery();
 
@@ -75,14 +47,6 @@ const useHelpSolution = (): UseHelpSolutionType => {
       data?.mtoCommonSolutions || []
     );
   }, [data?.mtoCommonSolutions]);
-
-  // const helpSolutionsWithModelUsage = useMemo(() => {
-  //   return mapModelUsageToSolutions(
-  //     helpSolutions,
-  //     []
-  //     // data?.modelUsageSolutions || []
-  //   );
-  // }, []);
 
   return { helpSolutions: helpSolutionsWithContacts, loading };
 };

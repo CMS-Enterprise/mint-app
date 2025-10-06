@@ -1,24 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Column, Row, useSortBy, useTable } from 'react-table';
+import { Column, Row, usePagination, useSortBy, useTable } from 'react-table';
 import { Button, Link, Table as UswdsTable } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { useGetModelsByMtoSolutionQuery } from 'gql/generated/graphql';
+import {
+  GetModelsByMtoSolutionQuery,
+  useGetModelsByMtoSolutionQuery
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
 import TablePageSize from 'components/TablePageSize';
-import usePagination from 'hooks/usePagination';
+import TablePagination from 'components/TablePagination';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
-type ModelsUsageType = {
-  modelId: string;
-  modelName: string;
-  modelStatus: string;
-}[];
+import './index.scss';
 
-type SingleModelUsageType = ModelsUsageType[number];
+type ModelUsageType =
+  GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'][0];
 
 const DEFAULT_ROWS_PER_PAGE = 10;
 const PAGE_SIZE_VALUE_ARRAY: (number | 'all')[] = [5, 10, 15, 20, 'all'];
@@ -37,57 +38,30 @@ export const GenericModelUsage = ({
   });
 
   const modelsPerSolution = useMemo(() => {
-    const rawModels = data?.modelPlansByMTOSolutionKey || [];
-    const formattedModels = rawModels.map(model => {
-      const modelPlanNameWithAbbr = model.modelPlan.abbreviation
-        ? `${model.modelPlan.modelName} (${model.modelPlan.abbreviation})`
-        : model.modelPlan.modelName;
-      return {
-        modelId: model.modelPlanID,
-        modelName: modelPlanNameWithAbbr,
-        modelStatus: i18next.t(
-          `modelPlan:status:options.${model.modelPlan.status}`
-        )
-      };
-    });
-
+    const models = data?.modelPlansByMTOSolutionKey || [];
     return (
-      [...formattedModels].sort((a, b) =>
-        a.modelName.localeCompare(b.modelName)
+      [...models].sort((a, b) =>
+        a.modelPlan.modelName.localeCompare(b.modelPlan.modelName)
       ) || []
     );
   }, [data]);
 
-  const [resultsNum, setResultsNum] = useState<number>(0);
-
-  const [pageSize, setPageSize] = useState<'all' | number>(
-    DEFAULT_ROWS_PER_PAGE
-  );
-
-  const { currentItems, Pagination } = usePagination<ModelsUsageType>({
-    items: modelsPerSolution,
-    itemsPerPage: pageSize === 'all' ? modelsPerSolution.length : pageSize,
-    loading,
-    showPageIfOne: true
-  });
-
-  const columns: Column<SingleModelUsageType>[] = useMemo(
+  const columns: Column<ModelUsageType>[] = useMemo(
     () => [
       {
         id: 'modelName',
         Header: t('modelUsage.modelName'),
-        accessor: 'modelName',
+        accessor: ({ modelPlan: { modelName, abbreviation } }) => {
+          const modelPlanNameWithAbbr = abbreviation
+            ? `${modelName} (${abbreviation})`
+            : modelName;
+          return modelPlanNameWithAbbr;
+        },
         sortType: 'alphanumeric',
-        Cell: ({
-          row,
-          value
-        }: {
-          row: Row<SingleModelUsageType>;
-          value: string;
-        }) => {
+        Cell: ({ row, value }: { row: Row<ModelUsageType>; value: string }) => {
           return (
             <UswdsReactLink
-              to={`/models/${row.original.modelId}/read-only/model-basics`}
+              to={`/models/${row.original.modelPlanID}/read-only/model-basics`}
             >
               {value}
             </UswdsReactLink>
@@ -97,7 +71,8 @@ export const GenericModelUsage = ({
       {
         id: 'modelStatus',
         Header: t('modelUsage.status'),
-        accessor: 'modelStatus',
+        accessor: ({ modelPlan: { status } }) =>
+          i18next.t(`modelPlan:status:options.${status}`),
         sortType: 'alphanumeric',
         Cell: ({ value }: { value: string }) => value
       }
@@ -107,15 +82,24 @@ export const GenericModelUsage = ({
 
   const {
     page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    state,
     rows,
     prepareRow
   } = useTable(
     {
       columns: columns as Column<object>[],
-      data: currentItems,
+      data: modelsPerSolution as ModelUsageType[],
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
@@ -126,21 +110,16 @@ export const GenericModelUsage = ({
       },
       initialState: { pageIndex: 0, pageSize: DEFAULT_ROWS_PER_PAGE }
     },
-    useSortBy
+    useSortBy,
+    usePagination
   );
+
+  if (!solution || loading) {
+    return <PageLoading testId="model-usage" />;
+  }
 
   rows.map(row => prepareRow(row));
 
-  const totalPages = useMemo(() => {
-    return Math.ceil(
-      resultsNum / (pageSize === 'all' ? modelsPerSolution.length : pageSize)
-    );
-  }, [resultsNum, pageSize, modelsPerSolution.length]);
-
-  useEffect(() => {
-    setResultsNum(currentItems.length);
-  }, [setResultsNum, currentItems]);
-  console.log('page', page);
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
       <p>
@@ -161,15 +140,15 @@ export const GenericModelUsage = ({
 
       <p className="margin-y-0">
         {t('modelUsage.resultsInfo', {
-          resultsNum,
-          resultsMax: modelsPerSolution.length
+          resultsNum: page.length,
+          resultsMax: rows.length
         })}
       </p>
 
       <UswdsTable
         bordered={false}
         {...getTableProps()}
-        className="margin-top-0"
+        className="margin-y-0"
         fullWidth
       >
         <thead>
@@ -201,7 +180,7 @@ export const GenericModelUsage = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.length === 0 && (
+          {page.length === 0 && (
             <tr>
               <td className="border-0">
                 <p className="margin-top-1 text-italic w-full">
@@ -213,7 +192,7 @@ export const GenericModelUsage = ({
               </td>
             </tr>
           )}
-          {rows.map((row, i) => {
+          {page.map((row, i) => {
             const { getRowProps, cells, id } = { ...row };
             prepareRow(row);
 
@@ -237,13 +216,25 @@ export const GenericModelUsage = ({
       </UswdsTable>
 
       <div className="display-flex">
-        {/* TODO(Elle) or just {totalPages > 0 && Pagination} ? */}
-        {currentItems.length > 0 && totalPages > 0 && Pagination}
+        <TablePagination
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canNextPage={canNextPage}
+          pageIndex={state.pageIndex}
+          pageOptions={pageOptions}
+          canPreviousPage={canPreviousPage}
+          pageCount={pageCount}
+          pageSize={state.pageSize}
+          setPageSize={setPageSize}
+          page={[]}
+          className="noMarginList"
+        />
 
-        {rows.length > 0 && (
+        {pageCount > 0 && (
           <TablePageSize
             className="margin-left-auto desktop:grid-col-auto"
-            pageSize={pageSize}
+            pageSize={state.pageSize}
             setPageSize={setPageSize}
             valueArray={PAGE_SIZE_VALUE_ARRAY}
             suffix={t('modelUsage.suffix')}
