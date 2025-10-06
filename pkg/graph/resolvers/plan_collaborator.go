@@ -114,7 +114,7 @@ func sendCollaboratorAddedEmail(
 		ModelID:       modelPlan.GetModelPlanID().String(),
 	}
 
-	emailSubject, emailBody, err := email.Collaborator.AddedAsCollaborator.GetContent(subjectContent, bodyContent)
+	emailSubject, emailBody, err := email.Collaborator.Added.GetContent(subjectContent, bodyContent)
 
 	if err != nil {
 		return err

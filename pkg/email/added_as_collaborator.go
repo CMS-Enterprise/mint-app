@@ -18,11 +18,12 @@ var addedAsCollaboratorBodyTemplate string
 // var AddedAsCollaboratorEmailTemplate *emailtemplates.EmailTemplate = mustLoadEmailTemplate(SharedEmailService, AddedAsCollaboratorTemplateName, addedAsCollaboratorSubjectTemplate, addedAsCollaboratorBodyTemplate)
 
 type collabEmails struct {
-	AddedAsCollaborator *emailtemplates.GenEmailTemplate[AddedAsCollaboratorSubjectContent, AddedAsCollaboratorBodyContent]
+	// The email to be sent when a user is added as a collaborator on a model plan
+	Added *emailtemplates.GenEmailTemplate[AddedAsCollaboratorSubjectContent, AddedAsCollaboratorBodyContent]
 }
 
 var Collaborator = collabEmails{
-	AddedAsCollaborator: NewEmailTemplate[AddedAsCollaboratorSubjectContent, AddedAsCollaboratorBodyContent](
+	Added: NewEmailTemplate[AddedAsCollaboratorSubjectContent, AddedAsCollaboratorBodyContent](
 		AddedAsCollaboratorTemplateName,
 		addedAsCollaboratorSubjectTemplate,
 		addedAsCollaboratorBodyTemplate,
