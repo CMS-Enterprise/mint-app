@@ -81,6 +81,14 @@ func (r *mutationResolver) UpdateMTOMilestone(ctx context.Context, id uuid.UUID,
 	return MTOMilestoneUpdate(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, changes, solutionLinks)
 }
 
+// UpdateAssignedToMTOMilestone is the resolver for the updateAssignedToMTOMilestone field.
+func (r *mutationResolver) UpdateAssignedToMTOMilestone(ctx context.Context, id uuid.UUID, assignedTo uuid.UUID) (*models.MTOMilestone, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return UpdateAssignedToMTOMilestone(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, assignedTo)
+}
+
 // DeleteMTOMilestone is the resolver for the deleteMTOMilestone field.
 func (r *mutationResolver) DeleteMTOMilestone(ctx context.Context, id uuid.UUID) (bool, error) {
 	principal := appcontext.Principal(ctx)
