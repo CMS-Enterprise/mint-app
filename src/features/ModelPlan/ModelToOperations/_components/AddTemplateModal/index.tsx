@@ -25,18 +25,7 @@ const AddTemplateModal = () => {
 
   const { setErrorMeta } = useErrorMessage();
 
-  const [create] = useCreateMtoTemplateMutation({
-    refetchQueries: [
-      {
-        query: GetModelToOperationsMatrixDocument,
-        variables: { id: modelID }
-      },
-      {
-        query: GetMtoModelPlanTemplatesDocument,
-        variables: { id: modelID }
-      }
-    ]
-  });
+  const [create] = useCreateMtoTemplateMutation();
 
   if (!mtoTemplate)
     return <Alert type="error">{t('modal.addTemplate.failedToFetch')}</Alert>;
@@ -54,6 +43,10 @@ const AddTemplateModal = () => {
       refetchQueries: [
         {
           query: GetModelToOperationsMatrixDocument,
+          variables: { id: modelID }
+        },
+        {
+          query: GetMtoModelPlanTemplatesDocument,
           variables: { id: modelID }
         }
       ]

@@ -1,12 +1,20 @@
 import React, { useContext, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CardGroup, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import {
+  CardGroup,
+  Grid,
+  GridContainer,
+  Icon,
+  Link
+} from '@trussworks/react-uswds';
 import { TemplateCardType } from 'features/ModelPlan/ModelToOperations/_components/TemplateCard';
 import NotFound from 'features/NotFound';
 import { useGetMtoModelPlanTemplatesQuery } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -105,23 +113,17 @@ const TemplateCardGroup = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
-
   const navigate = useNavigate();
 
-  const { clearMessage, message } = useMessage();
+  const { message } = useMessage();
 
-  const {
-    setMTOModalOpen: setIsModalOpen,
-    setMTOModalState,
-    isMTOModalOpen
-  } = useContext(MTOModalContext);
+  const { isMTOModalOpen } = useContext(MTOModalContext);
 
   // Query parameters
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const templateParam: string = params.get('template') || '';
-  //   const addedTemplatesHidden = params.get('hide-added-templates') === 'true';
+  const addedTemplatesHidden = params.get('hide-added-templates') === 'true';
 
   const [, setIsSidepanelOpen] = useState(false);
 
@@ -129,28 +131,28 @@ const TemplateCardGroup = ({
     return templates.find(template => template.key === templateParam);
   }, [templates, templateParam]);
 
-  //   const addedMilestones = useMemo(
-  //     () => templates.filter(template => template.isAdded),
-  //     [templates]
-  //   );
+  const addedTemplates = useMemo(
+    () => templates.filter(template => template.isAdded),
+    [templates]
+  );
 
-  //   // Filter the milestones based on the Hide added milestones checkbox
-  //   const milestonesNotAdded = useMemo(
-  //     () =>
-  //       templates.filter(template => {
-  //         if (addedTemplatesHidden) {
-  //           return !template.isAdded;
-  //         }
-  //         return template;
-  //       }),
-  //     [templates, addedTemplatesHidden]
-  //   );
+  // Filter the milestones based on the Hide added milestones checkbox
+  const templatesNotAdded = useMemo(
+    () =>
+      templates.filter(template => {
+        if (addedTemplatesHidden) {
+          return !template.isAdded;
+        }
+        return template;
+      }),
+    [templates, addedTemplatesHidden]
+  );
 
   const { allItems, search, pageSize } = useSearchSortPagination<
     TemplateCardType,
     any
   >({
-    items: templates,
+    items: templatesNotAdded,
     filterFunction: useMemo(() => searchTemplates, []),
     sortFunction: (items: TemplateCardType[], sort: any) => items,
     sortOptions: [
@@ -191,18 +193,7 @@ const TemplateCardGroup = ({
         modalHeading={t('templateLibrary.aboutThisTemplate')}
         noScrollable
       >
-        <>
-          {selectedTemplate && (
-            <TemplatePanel
-              template={selectedTemplate}
-              closeModal={() => {
-                params.delete('template');
-                navigate({ search: params.toString() }, { replace: true });
-                setIsSidepanelOpen(false);
-              }}
-            />
-          )}
-        </>
+        {selectedTemplate && <TemplatePanel template={selectedTemplate} />}
       </Sidepanel>
 
       {!isMTOModalOpen && message && <Expire delay={45000}>{message}</Expire>}
@@ -210,15 +201,41 @@ const TemplateCardGroup = ({
       <div className="template-card-group">
         <div className="margin-top-2">
           <Grid row>
-            <Grid tablet={{ col: 6 }}>
+            <Grid desktop={{ col: 12 }}>
               {/* Search bar and results info */}
-              <GlobalClientFilter
-                globalFilter={query}
-                setGlobalFilter={setQuery}
-                tableID="help-articles"
-                tableName=""
-                className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
-              />
+              <div className="display-flex flex-wrap margin-bottom-2">
+                <GlobalClientFilter
+                  globalFilter={query}
+                  setGlobalFilter={setQuery}
+                  tableID="help-articles"
+                  tableName=""
+                  className="margin-bottom-3 maxw-none tablet:width-mobile-lg margin-right-4"
+                />
+
+                <div className="margin-top-05">
+                  <CheckboxField
+                    id="hide-added-templates"
+                    name="hide-added-templates"
+                    label={t('templateLibrary.hideAdded', {
+                      count: addedTemplates.length
+                    })}
+                    value="true"
+                    checked={addedTemplatesHidden}
+                    onBlur={() => null}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      params.set(
+                        'hide-added-templates',
+                        addedTemplatesHidden ? 'false' : 'true'
+                      );
+                      navigate(
+                        { search: params.toString() },
+                        { replace: true }
+                      );
+                    }}
+                    noMargin
+                  />
+                </div>
+              </div>
             </Grid>
 
             {!!query && (
@@ -233,29 +250,6 @@ const TemplateCardGroup = ({
                 />
               </Grid>
             )}
-
-            {/* <Grid
-              desktop={{ col: 12 }}
-              className="display-flex flex-wrap margin-bottom-2"
-            >
-              <CheckboxField
-                id="hide-added-milestones"
-                name="hide-added-milestones"
-                label={t('milestoneLibrary.hideAdded', {
-                  count: addedMilestones.length
-                })}
-                value="true"
-                checked={addedMilestonesHidden}
-                onBlur={() => null}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  params.set(
-                    'hide-added-milestones',
-                    addedMilestonesHidden ? 'false' : 'true'
-                  );
-                  navigate({ search: params.toString() }, { replace: true });
-                }}
-              />
-            </Grid> */}
           </Grid>
         </div>
 
@@ -276,24 +270,24 @@ const TemplateCardGroup = ({
             </Grid>
           </CardGroup>
 
-          {/* {!!query && currentItems.length === 0 && (
+          {!!query && currentItems.length === 0 && (
             <>
               <Alert
                 type={addedTemplatesHidden ? 'info' : 'warning'}
-                heading={t('milestoneLibrary.alertHeading', {
+                heading={t('templateLibrary.alertHeading', {
                   query
                 })}
               >
                 <Trans
                   t={t}
-                  i18nKey="milestoneLibrary.alertDescription"
+                  i18nKey="templateLibrary.alertDescription"
                   components={{
                     email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
                   }}
                 />
               </Alert>
             </>
-          )} */}
+          )}
 
           {/* Pagination */}
           <div className="display-flex flex-wrap">
