@@ -400,6 +400,9 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
+    cy.get('#description').type('Test description');
+    cy.get('#description').should('have.value', 'Test description');
+
     cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
     cy.get('#clear-selection')
       .parent()
