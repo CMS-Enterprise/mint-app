@@ -1,5 +1,6 @@
 import React, { MutableRefObject } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FilterValue } from 'react-table';
 import { Button, Form, Icon, Label, TextInput } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -33,6 +34,9 @@ const GlobalClientFilter = ({
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <Form
       data-testid="table-client-filter"
@@ -59,7 +63,14 @@ const GlobalClientFilter = ({
             skipPageResetRef.current = false;
           }
           // Currently only client-side filtering - updates search filter onChange
-          setGlobalFilter(e.target.value);
+          setGlobalFilter((prev: FilterValue) => {
+            if (prev === '') {
+              const paramsChange = new URLSearchParams(location.search);
+              paramsChange.set('page', '1');
+              navigate({ search: paramsChange.toString() });
+            }
+            return e.target.value;
+          });
         }}
         value={globalFilter ?? ''}
         name={`${tableName} Search`}
