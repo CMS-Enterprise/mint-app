@@ -528,11 +528,17 @@ const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
     ),
     value: 'mtoMilestone.categories.subCategory.name'
   },
+  'mtoMilestone.description',
+  'mtoMilestone.responsibleComponent',
   'mtoMilestone.facilitatedBy',
   'mtoMilestone.facilitatedByOther',
   'mtoMilestone.needBy',
   'mtoMilestone.status',
   'mtoMilestone.riskIndicator',
+  {
+    label: t('mtoMilestoneNote:content.exportLabel'),
+    value: 'mtoMilestone.notes.content'
+  },
   'mtoMilestone.solutions'
 ];
 

@@ -4,7 +4,7 @@
     "goField": "Content",
     "dbField": "content",
     "label": "Content",
-    "exportLabel": "Note",
+    "exportLabel": "Notes",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1
