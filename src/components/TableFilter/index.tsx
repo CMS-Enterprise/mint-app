@@ -63,7 +63,7 @@ const GlobalClientFilter = ({
             skipPageResetRef.current = false;
           }
           // Currently only client-side filtering - updates search filter onChange
-          if (globalFilter === '') {
+          if (globalFilter === '' || e.target.value === '') {
             const paramsChange = new URLSearchParams(location.search);
             paramsChange.set('page', '1');
             navigate({ search: paramsChange.toString() });
