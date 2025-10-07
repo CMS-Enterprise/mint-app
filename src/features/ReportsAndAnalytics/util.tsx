@@ -338,7 +338,7 @@ export const downloadMTOMilestoneSummary = (
       flattenedData.push({
         Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
-        Description: milestone.description || '',
+        Description: milestone.description || milestone.description || '',
         'Responsible Component': (milestone.responsibleComponent || [])
           ?.map(component =>
             i18next.t(`mtoMilestone:responsibleComponent.options.${component}`)
