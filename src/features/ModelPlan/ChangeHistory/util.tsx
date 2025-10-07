@@ -623,7 +623,7 @@ export const filterQueryAudits = (
             return text.toLowerCase().includes(lowerCaseQuery);
           }
           if (typeof text === 'object' && text !== null) {
-            return !!text.props.children
+            return !!text.props?.children
               ?.toLowerCase()
               ?.includes(lowerCaseQuery);
           }
