@@ -706,7 +706,7 @@ export const filterQueryAudits = (
       if (
         i18next
           .t(`changeHistory:sections:${audit.tableName}`)
-          ?.toLowerCase()
+          .toLowerCase()
           .includes(lowerCaseQuery)
       ) {
         return true;
