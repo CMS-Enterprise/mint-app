@@ -11,6 +11,9 @@ var mtoMilestoneUpdateSQL string
 //go:embed SQL/mto/milestone/delete.sql
 var mtoMilestoneDeleteSQL string
 
+//go:embed SQL/mto/milestone/delete_assigned_to.sql
+var mtoMilestoneDeleteAssignedToSQL string
+
 //go:embed SQL/mto/milestone/get_by_id.sql
 var mtoMilestoneGetByIDSQL string
 
@@ -30,11 +33,12 @@ var mtoMilestoneGetBySolutionIDLoaderSQL string
 var mtoMilestoneGetByModelPlanIDNoLinkedSolutionLoaderSQL string
 
 type mtoMilestoneScripts struct {
-	Create        string
-	Update        string
-	Delete        string
-	GetByID       string
-	GetByIDLoader string
+	Create           string
+	Update           string
+	Delete           string
+	DeleteAssignedTo string
+	GetByID          string
+	GetByIDLoader    string
 	// returns all Milestones by a model plan ID
 	GetByModelPlanIDLoader string
 	// returns all Milestones by a model plan and category
@@ -49,6 +53,7 @@ var MTOMilestone = mtoMilestoneScripts{
 	Create:                                 mtoMilestoneCreateSQL,
 	Update:                                 mtoMilestoneUpdateSQL,
 	Delete:                                 mtoMilestoneDeleteSQL,
+	DeleteAssignedTo:                       mtoMilestoneDeleteAssignedToSQL,
 	GetByID:                                mtoMilestoneGetByIDSQL,
 	GetByIDLoader:                          mtoMilestoneGetByIDLoaderSQL,
 	GetByModelPlanIDLoader:                 mtoMilestoneGetByModelPlanIDLoaderSQL,
