@@ -432,7 +432,7 @@ const EditMilestoneForm = ({
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
 
-    const { facilitatedBy, ...rest } = flattenedDir;
+    const { facilitatedBy, responsibleComponent, ...rest } = flattenedDir;
 
     // Counts amount of changes in facilitatedBy array
     let facilitatedByChangeCount: number = 0;
@@ -440,6 +440,15 @@ const EditMilestoneForm = ({
       facilitatedByChangeCount = Math.abs(
         (values.facilitatedBy?.length || 0) -
           (formValues.facilitatedBy.length || 0)
+      );
+    }
+
+    // Counts amount of changes in responsibleComponent array
+    let responsibleComponentChangeCount: number = 0;
+    if (responsibleComponent) {
+      responsibleComponentChangeCount = Math.abs(
+        (values.responsibleComponent?.length || 0) -
+          (formValues.responsibleComponent.length || 0)
       );
     }
 
@@ -454,6 +463,7 @@ const EditMilestoneForm = ({
 
     const totalChanges =
       facilitatedByChangeCount +
+      responsibleComponentChangeCount +
       Object.keys(rest).length +
       notesToAddChangeCount +
       notesToRemoveChangeCount +
@@ -464,6 +474,7 @@ const EditMilestoneForm = ({
     dirtyFields,
     touchedFields.needBy,
     values,
+    formValues.responsibleComponent.length,
     formValues.needBy,
     formValues.facilitatedBy.length,
     notesToAdd.length,
