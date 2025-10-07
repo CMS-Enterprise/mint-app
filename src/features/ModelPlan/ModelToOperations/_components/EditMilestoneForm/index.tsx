@@ -43,6 +43,7 @@ import {
   useDeleteMtoMilestoneNoteMutation,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
+  UserAccount,
   useUpdateMtoMilestoneMutation,
   useUpdateMtoMilestoneNoteMutation
 } from 'gql/generated/graphql';
@@ -56,6 +57,7 @@ import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
+import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
@@ -100,6 +102,11 @@ type FormValues = {
   };
   facilitatedBy?: MtoFacilitator[];
   facilitatedByOther?: string;
+  assignedTo?: string;
+  assignedToUserAccount?: Pick<
+    UserAccount,
+    'id' | 'commonName' | 'username' | 'email'
+  >;
   needBy?: string;
   status: MtoMilestoneStatus;
   riskIndicator: MtoRiskIndicator;
@@ -134,7 +141,8 @@ const EditMilestoneForm = ({
 
   const {
     facilitatedBy: facilitatedByConfig,
-    status: stausConfig,
+    assignedTo: assignedToConfig,
+    status: statusConfig,
     riskIndicator: riskIndicatorConfig
   } = usePlanTranslation('mtoMilestone');
 
@@ -379,6 +387,13 @@ const EditMilestoneForm = ({
       name: milestone?.name || '',
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
+      assignedTo: milestone?.assignedTo || '',
+      assignedToUserAccount: milestone?.assignedToUserAccount || {
+        id: '',
+        commonName: '',
+        username: '',
+        email: ''
+      },
       needBy: milestone?.needBy || '',
       status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
       riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
@@ -548,6 +563,7 @@ const EditMilestoneForm = ({
         name,
         facilitatedBy,
         facilitatedByOther,
+        assignedTo,
         ...formChanges
       } = dirtyInput(formValues, formData);
 
@@ -582,6 +598,7 @@ const EditMilestoneForm = ({
             ...(facilitatedByOther !== undefined && {
               facilitatedByOther
             }),
+            ...(assignedTo && { assignedTo }),
             ...(isCategoryDirty && { mtoCategoryID }),
             ...(needBy !== undefined && {
               needBy: needBy ? new Date(needBy).toISOString() : null
@@ -1207,6 +1224,45 @@ const EditMilestoneForm = ({
               )}
 
               <Controller
+                name="assignedToUserAccount"
+                control={control}
+                render={({ field: { ref, ...field } }) => (
+                  <FormGroup className="margin-top-0 margin-bottom-2">
+                    <Label htmlFor={convertCamelCaseToKebabCase('assignedTo')}>
+                      {assignedToConfig.label}
+                    </Label>
+                    <span className="text-base-dark">
+                      {assignedToConfig.sublabel}
+                    </span>
+
+                    <OktaUserSelect
+                      id="assigned-to"
+                      name="assigned-to"
+                      ariaLabelledBy="label-assigned-to"
+                      ariaDescribedBy="hint-assigned-to"
+                      value={{
+                        username: field.value?.username || '',
+                        displayName: field.value?.commonName || '',
+                        email: field.value?.email || ''
+                      }}
+                      onChange={oktaUser => {
+                        setValue(
+                          'assignedTo',
+                          oktaUser ? oktaUser.username : '',
+                          { shouldDirty: true }
+                        );
+                      }}
+                    />
+                  </FormGroup>
+                )}
+              />
+              {watch('assignedTo') && (
+                <Alert type="info" slim className="margin-y-3">
+                  {modelToOperationsMiscT('modal.editMilestone.assignedToInfo')}
+                </Alert>
+              )}
+
+              <Controller
                 name="needBy"
                 control={control}
                 render={({ field: { ref, ...field } }) => (
@@ -1268,10 +1324,10 @@ const EditMilestoneForm = ({
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || ''}
                     >
-                      {getKeys(stausConfig.options).map(option => {
+                      {getKeys(statusConfig.options).map(option => {
                         return (
                           <option key={option} value={option}>
-                            {stausConfig.options[option]}
+                            {statusConfig.options[option]}
                           </option>
                         );
                       })}

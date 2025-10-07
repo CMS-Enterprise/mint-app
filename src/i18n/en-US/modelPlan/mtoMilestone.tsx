@@ -89,7 +89,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     dbField: 'assigned_to',
     label: 'Assigned to',
     exportLabel: 'Milestone assigned to',
-    sublabel: 'Select the person responsible for completing this milestone.',
+    sublabel:
+      'Assign the person who is responsible for ensuring the work for this milestone is completed. This field searches CMS’ EUA database but is limited to individuals added to this model in MINT.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.SELECT,
     order: 1.037,

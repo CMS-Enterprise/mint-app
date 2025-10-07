@@ -413,6 +413,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         error:
           'There was an error adding your milestone. Please try again. If the error persists, please try again another time.'
       },
+      assignedToInfo:
+        'This individual will receive an email notification from MINT when you assign this milestone.',
       statusInfo: [
         '<bold>Not started</bold>: No work has started on any part of this milestone or any solution associated with it',
         '<bold>In progress</bold>: Work for this milestone and/or any of its selected solutions is in progress (e.g., coordination, development, configuration, testing, etc.)',
