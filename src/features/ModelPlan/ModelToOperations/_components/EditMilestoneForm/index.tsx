@@ -61,6 +61,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -91,6 +92,7 @@ export type MilestoneNoteType =
 type FormValues = {
   isDraft: boolean;
   name: string;
+  description: string;
   categories: {
     category: {
       id: string;
@@ -120,6 +122,8 @@ type EditMilestoneFormProps = {
   setCloseDestination: (leaveDestination: string | null) => void; // Set destination to leave to when confirming leave from info alert
   setFooter: (footer: React.ReactNode | null) => void; // Set footer of modal
 };
+
+// TODO: CUSTOM MILESTONE WORK HERE
 
 const EditMilestoneForm = ({
   closeModal,
@@ -380,6 +384,7 @@ const EditMilestoneForm = ({
         }
       },
       name: milestone?.name || '',
+      description: milestone?.description || '',
       responsibleComponent: milestone?.responsibleComponent || [],
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
@@ -1003,6 +1008,44 @@ const EditMilestoneForm = ({
                       )}
 
                       <TextInput {...field} ref={null} id="name" type="text" />
+                    </FormGroup>
+                  )}
+                />
+              )}
+
+              {!milestone.addedFromMilestoneLibrary && (
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={{
+                    required: modelToOperationsMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...formField },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup
+                      error={!!error}
+                      className="margin-top-0 margin-bottom-3"
+                    >
+                      <Label
+                        htmlFor="description"
+                        className="maxw-none text-bold"
+                        requiredMarker
+                      >
+                        {mtoMilestoneT('description.label')}
+                      </Label>
+
+                      <HelpText className="margin-top-1">
+                        {mtoMilestoneT('description.sublabel')}
+                      </HelpText>
+
+                      <TextAreaField
+                        {...formField}
+                        value={formField.value || ''}
+                        className="height-card"
+                        id="description"
+                      />
                     </FormGroup>
                   )}
                 />

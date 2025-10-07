@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
           id
           key
           name
+          description
           status
           riskIndicator
           needBy

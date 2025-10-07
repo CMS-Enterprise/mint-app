@@ -17,7 +17,6 @@ import {
   columnHeaderTranslations,
   typenameTranslations
 } from 'i18n/en-US/analytics';
-import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
@@ -339,9 +338,7 @@ export const downloadMTOMilestoneSummary = (
       flattenedData.push({
         Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
-        Description: milestone.key
-          ? milestoneMap[milestone.key]?.description
-          : '',
+        Description: milestone.description || milestone.description || '',
         'Responsible Component': (milestone.responsibleComponent || [])
           ?.map(component =>
             i18next.t(`mtoMilestone:responsibleComponent.options.${component}`)

@@ -11,6 +11,7 @@ export default gql(/* GraphQL */ `
         }
         commonMilestones {
           name
+          description
           key
           isAdded
           isSuggested
