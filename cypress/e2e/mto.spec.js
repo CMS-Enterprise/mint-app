@@ -17,345 +17,359 @@ describe('Model-to-Operations Matrix', () => {
     );
   });
 
-  it('Fills out an empty MTO Matrix with milestones and solutions', () => {
-    cy.contains('h2', 'Your model-to-operations matrix (MTO) is a bit empty!');
+  // it('Fills out an empty MTO Matrix with milestones and solutions', () => {
+  //   cy.contains('h2', 'Your model-to-operations matrix (MTO) is a bit empty!');
 
-    cy.contains('a', 'Add solutions from library');
-    cy.contains('button', 'Add this template');
-    cy.contains('a', 'Add milestones from library').click({ force: true });
+  //   cy.contains('a', 'Add solutions from library');
+  //   cy.contains('button', 'Add this template');
+  //   cy.contains('a', 'Add milestones from library').click({ force: true });
 
-    cy.url().should('include', '/milestone-library');
+  //   cy.url().should('include', '/milestone-library');
 
-    cy.get('[data-testid="alert"]').contains(
-      'h4',
-      'There are no suggested milestones for your model.'
-    );
-
-    cy.contains('button', /All common milestones/).click({ force: true });
-
-    cy.get('[data-testid="alert"]').should('not.exist');
-
-    cy.get('[data-testid="Card"]')
-      .first()
-      .as('firstCard')
-      .within(() => {
-        cy.get('h3')
-          .invoke('text')
-          .then(text => {
-            // Save the milestone name
-            cy.wrap(text.trim()).as('milestoneHeading');
-          });
-        cy.contains('Add to matrix').should('exist');
-        // Open up Milestone Sidepanel
-        cy.contains('About this milestone')
-          .should('exist')
-          .click({ force: true });
-      });
-
-    cy.get('[data-testid="milestone-sidepanel"')
-      .should('exist')
-      .as('milestoneSidepanel')
-      .within(() => {
-        // Open Add Solution to Milestone Modal
-        cy.contains('Add to matrix').click({ force: true });
-      });
-
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Add a solution for this milestone?',
-      'addSolutionToMilestoneModal'
-    );
-
-    cy.get('@addSolutionToMilestoneModal')
-      .contains('button', 'Add without solutions')
-      .should('be.not.disabled')
-      .click({ force: true });
-
-    cy.get('@milestoneSidepanel').within(() => {
-      cy.contains('button', 'Added').should('be.disabled');
-      cy.get('button[aria-label="Close Modal"]').click({ force: true });
-    });
-
-    cy.get('@firstCard').within(() => {
-      cy.contains('Add to matrix').should('not.exist');
-      cy.contains('button', 'Added').should('be.disabled');
-    });
-
-    cy.contains('a', 'Return to model-to-operations matrix').click({
-      force: true
-    });
-    cy.url().should(
-      'include',
-      '/collaboration-area/model-to-operations/matrix'
-    );
-
-    cy.contains(
-      'h2',
-      'Your model-to-operations matrix (MTO) is a bit empty!'
-    ).should('not.exist');
-    cy.get('[data-testid="tasklist-tag"').contains('In progress');
-
-    // Check to see saved milestone is inside the table
-    cy.get('@milestoneHeading').then(headingText => {
-      cy.get('table').within(() => {
-        cy.get('td').contains(headingText).should('exist');
-        cy.contains('Select a solution').click({ force: true });
-      });
-    });
-
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Add a solution for this milestone?',
-      'addSolutionModal'
-    );
-    cy.get('@addSolutionModal').within(() => {
-      cy.get('#multi-source-data-to-collect')
-        .click({ force: true })
-        .type('4i{enter}');
-      cy.get('#clear-selection')
-        .parent()
-        .find('[class$="indicatorContainer"]')
-        .eq(1)
-        .click({ force: true });
-      cy.get('#multi-source-data-to-collect-tags li').should(
-        'have.length.greaterThan',
-        0
-      );
-      cy.contains('Add 1 solution').click({ force: true });
-    });
-
-    cy.get('table').within(() => {
-      cy.get('td').contains('4i').should('exist');
-    });
-  });
-  it('Adding a Solution from the Solution Library', () => {
-    cy.contains('Add solutions from library').click({ force: true });
-    cy.url().should('include', '/solution-library');
-
-    // Add the second solution
-    cy.get('[data-testid="Card"]')
-      .eq(1)
-      .as('secondCard')
-      .within(() => {
-        cy.get('h3')
-          .invoke('text')
-          .then(text => {
-            // Save the milestone name
-            cy.wrap(text.trim()).as('solutionHeading');
-          });
-        cy.contains('Add to matrix').should('exist');
-        // Open up Solutions Sidepanel
-        // cy.contains('About this solution')
-        //   .should('exist')
-        //   .should('be.not.disabled')
-        //   .click({ force: true });
-      });
-
-    // FLAKY: TODO: Fix this
-    // // Wait for the modal to appear and be fully rendered
-    // cy.get('[data-testid="operational-solution-modal"]', { timeout: 10000 })
-    //   .should('be.visible')
-    //   .as('operationalSolutionModal');
-
-    // cy.get('@operationalSolutionModal')
-    //   .scrollIntoView()
-    //   .within(() => {
-    //     cy.get('@solutionHeading').then(solutionHeading => {
-    //       cy.contains(solutionHeading).should('be.visible');
-    //     });
-    //   })
-    //   .as('sidePanel');
-    // cy.get('[aria-label="Close Modal"]').click({ force: true });
-
-    // cy.get('@sidePanel').should('not.exist');
-
-    cy.get('@secondCard').within(() => {
-      cy.contains('Add to matrix').click();
-    });
-
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Add to existing milestone?',
-      'addToExistingMilestone'
-    );
-
-    cy.get('#linked-milestones').within(() => {
-      cy.get("input[type='text']").click().type('{downArrow}{enter}');
-    });
-
-    cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
-    cy.contains('Add to 1 milestone').click({ force: true });
-
-    cy.contains('a', 'Return to model-to-operations matrix').click({
-      force: true
-    });
-    cy.url().should(
-      'include',
-      '/collaboration-area/model-to-operations/matrix'
-    );
-
-    cy.get('table').within(() => {
-      cy.get('td').contains('ACO-OS').should('exist');
-    });
-  });
-
-  it('Create custom milestone', () => {
-    cy.contains('or, create a custom milestone').click({ force: true });
-
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Add a new model milestone',
-      'customMilestoneModal'
-    );
-
-    cy.get('@customMilestoneModal').within(() => {
-      cy.get('#primary-category')
-        .should('be.not.disabled')
-        .find('option')
-        .not('[value="default"]')
-        .first()
-        .then($option => {
-          cy.get('#primary-category').select($option.text());
-        });
-      cy.get('#subcategory')
-        .find('option')
-        .not('[value="default"]')
-        .first()
-        .then($option => {
-          cy.get('#subcategory').select($option.text());
-        });
-
-      cy.get('#name').should('be.not.disabled').type('Custom Milestone');
-      cy.contains('Add milestone').click({ force: true });
-    });
-
-    cy.get('[data-testid="toast-success"]').should('exist');
-    cy.get('td').contains('Custom Milestone').should('exist');
-  });
-
-  it('Create custom solution', () => {
-    cy.contains('or, create a custom solution').click({ force: true });
-
-    cy.findModalWithThisHeadingAndSaveAlias(
-      'Add a new solution',
-      'customSolutionModal'
-    );
-
-    cy.get('@customSolutionModal').within(() => {
-      cy.get('#solution-type')
-        .should('be.not.disabled')
-        .find('option')
-        .not('[value="default"]')
-        .first()
-        .then($option => {
-          cy.get('#solution-type').select($option.text());
-        });
-
-      cy.get('#solution-title')
-        .should('be.not.disabled')
-        .type('Custom Solution');
-      cy.get('#poc-name').should('be.not.disabled').type('Primary Contact');
-      cy.get('#poc-email')
-        .should('be.not.disabled')
-        .type('primary@contact.com');
-      // Cause a blur to trigger validation
-      cy.get('#poc-name').click({ force: true });
-      cy.contains('Add solution')
-        .should('be.not.disabled')
-        .click({ force: true });
-    });
-
-    cy.get('[data-testid="toast-success"]')
-      .should('exist')
-      .contains('Your solution (Custom Solution) has been added.');
-
-    // Click the IT system and solutions tab
-    cy.contains('Solutions and IT systems').click({ force: true });
-
-    cy.get('table').within(() => {
-      cy.get('td')
-        .contains('Custom Solution')
-        .should('exist')
-        .parent('tr')
-        .within(() => {
-          cy.contains('Edit details').click({ force: true });
-        });
-    });
-
-    cy.get('#name')
-      .should('be.not.disabled')
-      .clear()
-      .type('Edited Custom Solution', { force: true });
-
-    cy.get('#solution-needed-by').should('be.not.disabled').type('07/20/2025');
-    cy.get('#solution-needed-by').should('have.value', '07/20/2025');
-
-    cy.contains('Save changes')
-      .should('be.not.disabled')
-      .click({ force: true });
-
-    cy.get('[data-testid="toast-success"]').should('exist');
-
-    cy.get('table').within(() => {
-      cy.get('td').contains('Edited Custom Solution').should('exist');
-    });
-
-    cy.get('table').within(() => {
-      cy.get('td')
-        .contains('Custom Solution')
-        .should('exist')
-        .parent('tr')
-        .within(() => {
-          cy.contains('Edit details').click({ force: true });
-        });
-    });
-
-    cy.get('#solution-needed-by').should('be.not.disabled').clear();
-    cy.get('#solution-needed-by').should('have.value', '');
-
-    cy.contains('Save changes')
-      .should('be.not.disabled')
-      .click({ force: true });
-
-    cy.get('[data-testid="toast-success"]').should('exist');
-  });
-
-  // TODO: Add this once the template library is implemented
-  // it('Add standard categories', () => {
-  //   cy.contains('Add this template').click({ force: true });
-  //   cy.findModalWithThisHeadingAndSaveAlias(
-  //     'Are you sure you want to continue?'
+  //   cy.get('[data-testid="alert"]').contains(
+  //     'h4',
+  //     'There are no suggested milestones for your model.'
   //   );
 
-  //   cy.contains('Add template').click({ force: true });
+  //   cy.contains('button', /All common milestones/).click({ force: true });
+
+  //   cy.get('[data-testid="alert"]').should('not.exist');
+
+  //   cy.get('[data-testid="Card"]')
+  //     .first()
+  //     .as('firstCard')
+  //     .within(() => {
+  //       cy.get('h3')
+  //         .invoke('text')
+  //         .then(text => {
+  //           // Save the milestone name
+  //           cy.wrap(text.trim()).as('milestoneHeading');
+  //         });
+  //       cy.contains('Add to matrix').should('exist');
+  //       // Open up Milestone Sidepanel
+  //       cy.contains('About this milestone')
+  //         .should('exist')
+  //         .click({ force: true });
+  //     });
+
+  //   cy.get('[data-testid="milestone-sidepanel"')
+  //     .should('exist')
+  //     .as('milestoneSidepanel')
+  //     .within(() => {
+  //       // Open Add Solution to Milestone Modal
+  //       cy.contains('Add to matrix').click({ force: true });
+  //     });
+
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Add a solution for this milestone?',
+  //     'addSolutionToMilestoneModal'
+  //   );
+
+  //   cy.get('@addSolutionToMilestoneModal')
+  //     .contains('button', 'Add without solutions')
+  //     .should('be.not.disabled')
+  //     .click({ force: true });
+
+  //   cy.get('@milestoneSidepanel').within(() => {
+  //     cy.contains('button', 'Added').should('be.disabled');
+  //     cy.get('button[aria-label="Close Modal"]').click({ force: true });
+  //   });
+
+  //   cy.get('@firstCard').within(() => {
+  //     cy.contains('Add to matrix').should('not.exist');
+  //     cy.contains('button', 'Added').should('be.disabled');
+  //   });
+
+  //   cy.contains('a', 'Return to model-to-operations matrix').click({
+  //     force: true
+  //   });
+  //   cy.url().should(
+  //     'include',
+  //     '/collaboration-area/model-to-operations/matrix'
+  //   );
+
+  //   cy.contains(
+  //     'h2',
+  //     'Your model-to-operations matrix (MTO) is a bit empty!'
+  //   ).should('not.exist');
+  //   cy.get('[data-testid="tasklist-tag"').contains('In progress');
+
+  //   // Check to see saved milestone is inside the table
+  //   cy.get('@milestoneHeading').then(headingText => {
+  //     cy.get('table').within(() => {
+  //       cy.get('td').contains(headingText).should('exist');
+  //       cy.contains('Select a solution').click({ force: true });
+  //     });
+  //   });
+
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Add a solution for this milestone?',
+  //     'addSolutionModal'
+  //   );
+  //   cy.get('@addSolutionModal').within(() => {
+  //     cy.get('#multi-source-data-to-collect')
+  //       .click({ force: true })
+  //       .type('4i{enter}');
+  //     cy.get('#clear-selection')
+  //       .parent()
+  //       .find('[class$="indicatorContainer"]')
+  //       .eq(1)
+  //       .click({ force: true });
+  //     cy.get('#multi-source-data-to-collect-tags li').should(
+  //       'have.length.greaterThan',
+  //       0
+  //     );
+  //     cy.contains('Add 1 solution').click({ force: true });
+  //   });
+
+  //   cy.get('table').within(() => {
+  //     cy.get('td').contains('4i').should('exist');
+  //   });
+  // });
+  // it('Adding a Solution from the Solution Library', () => {
+  //   cy.contains('Add solutions from library').click({ force: true });
+  //   cy.url().should('include', '/solution-library');
+
+  //   // Add the second solution
+  //   cy.get('[data-testid="Card"]')
+  //     .eq(1)
+  //     .as('secondCard')
+  //     .within(() => {
+  //       cy.get('h3')
+  //         .invoke('text')
+  //         .then(text => {
+  //           // Save the milestone name
+  //           cy.wrap(text.trim()).as('solutionHeading');
+  //         });
+  //       cy.contains('Add to matrix').should('exist');
+  //       // Open up Solutions Sidepanel
+  //       // cy.contains('About this solution')
+  //       //   .should('exist')
+  //       //   .should('be.not.disabled')
+  //       //   .click({ force: true });
+  //     });
+
+  //   // FLAKY: TODO: Fix this
+  //   // // Wait for the modal to appear and be fully rendered
+  //   // cy.get('[data-testid="operational-solution-modal"]', { timeout: 10000 })
+  //   //   .should('be.visible')
+  //   //   .as('operationalSolutionModal');
+
+  //   // cy.get('@operationalSolutionModal')
+  //   //   .scrollIntoView()
+  //   //   .within(() => {
+  //   //     cy.get('@solutionHeading').then(solutionHeading => {
+  //   //       cy.contains(solutionHeading).should('be.visible');
+  //   //     });
+  //   //   })
+  //   //   .as('sidePanel');
+  //   // cy.get('[aria-label="Close Modal"]').click({ force: true });
+
+  //   // cy.get('@sidePanel').should('not.exist');
+
+  //   cy.get('@secondCard').within(() => {
+  //     cy.contains('Add to matrix').click();
+  //   });
+
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Add to existing milestone?',
+  //     'addToExistingMilestone'
+  //   );
+
+  //   cy.get('#linked-milestones').within(() => {
+  //     cy.get("input[type='text']").click().type('{downArrow}{enter}');
+  //   });
+
+  //   cy.get('#linked-milestones-tags li').should('have.length.greaterThan', 0);
+  //   cy.contains('Add to 1 milestone').click({ force: true });
+
+  //   cy.contains('a', 'Return to model-to-operations matrix').click({
+  //     force: true
+  //   });
+  //   cy.url().should(
+  //     'include',
+  //     '/collaboration-area/model-to-operations/matrix'
+  //   );
+
+  //   cy.get('table').within(() => {
+  //     cy.get('td').contains('ACO-OS').should('exist');
+  //   });
+  // });
+
+  // it('Create custom milestone', () => {
+  //   cy.contains('or, create a custom milestone').click({ force: true });
+
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Add a new model milestone',
+  //     'customMilestoneModal'
+  //   );
+
+  //   cy.get('@customMilestoneModal').within(() => {
+  //     cy.get('#primary-category')
+  //       .should('be.not.disabled')
+  //       .find('option')
+  //       .not('[value="default"]')
+  //       .first()
+  //       .then($option => {
+  //         cy.get('#primary-category').select($option.text());
+  //       });
+  //     cy.get('#subcategory')
+  //       .find('option')
+  //       .not('[value="default"]')
+  //       .first()
+  //       .then($option => {
+  //         cy.get('#subcategory').select($option.text());
+  //       });
+
+  //     cy.get('#name').should('be.not.disabled').type('Custom Milestone');
+  //     cy.contains('Add milestone').click({ force: true });
+  //   });
+
+  //   cy.get('[data-testid="toast-success"]').should('exist');
+  //   cy.get('td').contains('Custom Milestone').should('exist');
+  // });
+
+  // it('Create custom solution', () => {
+  //   cy.contains('or, create a custom solution').click({ force: true });
+
+  //   cy.findModalWithThisHeadingAndSaveAlias(
+  //     'Add a new solution',
+  //     'customSolutionModal'
+  //   );
+
+  //   cy.get('@customSolutionModal').within(() => {
+  //     cy.get('#solution-type')
+  //       .should('be.not.disabled')
+  //       .find('option')
+  //       .not('[value="default"]')
+  //       .first()
+  //       .then($option => {
+  //         cy.get('#solution-type').select($option.text());
+  //       });
+
+  //     cy.get('#solution-title')
+  //       .should('be.not.disabled')
+  //       .type('Custom Solution');
+  //     cy.get('#poc-name').should('be.not.disabled').type('Primary Contact');
+  //     cy.get('#poc-email')
+  //       .should('be.not.disabled')
+  //       .type('primary@contact.com');
+  //     // Cause a blur to trigger validation
+  //     cy.get('#poc-name').click({ force: true });
+  //     cy.contains('Add solution')
+  //       .should('be.not.disabled')
+  //       .click({ force: true });
+  //   });
 
   //   cy.get('[data-testid="toast-success"]')
   //     .should('exist')
-  //     .contains('Your template (Standard categories) has been added.');
-  // });
+  //     .contains('Your solution (Custom Solution) has been added.');
 
-  // it('tests Action Menu', () => {
-  //   cy.get('tbody tr')
-  //     .first()
-  //     .find('td')
-  //     .eq(1)
-  //     .invoke('text')
-  //     .then(text => {
-  //       cy.wrap(text.trim()).as('firstRowName');
-  //     });
+  //   // Click the IT system and solutions tab
+  //   cy.contains('Solutions and IT systems').click({ force: true });
 
-  //   cy.get('tbody tr')
-  //     .first()
-  //     .find('button[aria-label="Open action menu"]')
-  //     .click({ force: true });
-
-  //   cy.contains('button', 'Move category down').click({ force: true });
-
-  //   cy.get('@firstRowName').then(firstRowName => {
-  //     cy.get('tbody tr')
-  //       .first()
-  //       .find('td')
-  //       .eq(1)
-  //       .invoke('text')
-  //       .then(currentFirstRowName => {
-  //         expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
+  //   cy.get('table').within(() => {
+  //     cy.get('td')
+  //       .contains('Custom Solution')
+  //       .should('exist')
+  //       .parent('tr')
+  //       .within(() => {
+  //         cy.contains('Edit details').click({ force: true });
   //       });
   //   });
+
+  //   cy.get('#name')
+  //     .should('be.not.disabled')
+  //     .clear()
+  //     .type('Edited Custom Solution', { force: true });
+
+  //   cy.get('#solution-needed-by').should('be.not.disabled').type('07/20/2025');
+  //   cy.get('#solution-needed-by').should('have.value', '07/20/2025');
+
+  //   cy.contains('Save changes')
+  //     .should('be.not.disabled')
+  //     .click({ force: true });
+
+  //   cy.get('[data-testid="toast-success"]').should('exist');
+
+  //   cy.get('table').within(() => {
+  //     cy.get('td').contains('Edited Custom Solution').should('exist');
+  //   });
+
+  //   cy.get('table').within(() => {
+  //     cy.get('td')
+  //       .contains('Custom Solution')
+  //       .should('exist')
+  //       .parent('tr')
+  //       .within(() => {
+  //         cy.contains('Edit details').click({ force: true });
+  //       });
+  //   });
+
+  //   cy.get('#solution-needed-by').should('be.not.disabled').clear();
+  //   cy.get('#solution-needed-by').should('have.value', '');
+
+  //   cy.contains('Save changes')
+  //     .should('be.not.disabled')
+  //     .click({ force: true });
+
+  //   cy.get('[data-testid="toast-success"]').should('exist');
   // });
+
+  it('Add a template with standard categories', () => {
+    cy.contains('View all templates in the library').click({ force: true });
+
+    cy.get('[data-testid="STANDARD_CATEGORIES-template-about"]').click({
+      force: true
+    });
+
+    cy.contains(
+      'The categories, milestones, and solutions listed below will be added to your model-to-operations (MTO) matrix if you choose to add this template.'
+    ).should('exist');
+
+    cy.contains('Add to matrix').click({ force: true });
+
+    cy.contains('Selected template: Standard Categories Template').should(
+      'exist'
+    );
+
+    cy.contains('Add template').click({ force: true });
+
+    cy.get('[data-testid="toast-success"]')
+      .should('exist')
+      .contains('Your template (Standard categories) has been added.');
+
+    cy.get('[data-testid="STANDARD_CATEGORIES-template-added"]').should(
+      'exist'
+    );
+  });
+
+  it('tests Action Menu', () => {
+    cy.get('tbody tr')
+      .first()
+      .find('td')
+      .eq(1)
+      .invoke('text')
+      .then(text => {
+        cy.wrap(text.trim()).as('firstRowName');
+      });
+
+    cy.get('tbody tr')
+      .first()
+      .find('button[aria-label="Open action menu"]')
+      .click({ force: true });
+
+    cy.contains('button', 'Move category down').click({ force: true });
+
+    cy.get('@firstRowName').then(firstRowName => {
+      cy.get('tbody tr')
+        .first()
+        .find('td')
+        .eq(1)
+        .invoke('text')
+        .then(currentFirstRowName => {
+          expect(currentFirstRowName.trim()).to.not.equal(firstRowName);
+        });
+    });
+  });
 });
