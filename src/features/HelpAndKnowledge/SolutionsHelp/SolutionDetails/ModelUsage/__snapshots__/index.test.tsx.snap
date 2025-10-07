@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Operational Solutions Model Usage Components > should render correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Model usage
+    </h2>
+    <div
+      class="margin-y-10"
+      data-testid="model-usage"
+    >
+      <div
+        class="text-center"
+      >
+        <span
+          aria-busy="true"
+          aria-valuetext="Loading the page"
+          class="mint-spinner mint-spinner--xl"
+          data-testid="spinner"
+          role="progressbar"
+        />
+      </div>
+      <h1
+        class="margin-top-6 text-center"
+      >
+        Loading the page
+      </h1>
+    </div>
+  </div>
+</DocumentFragment>
+`;

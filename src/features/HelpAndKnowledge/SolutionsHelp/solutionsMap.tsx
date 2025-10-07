@@ -42,6 +42,7 @@ export type SolutionGenericType = {
   about: boolean;
   timeline: boolean;
   'points-of-contact': boolean;
+  'model-usage': boolean;
 };
 
 type SolutionComponentType = (props: SolutionDetailProps) => React.ReactNode;
@@ -50,6 +51,7 @@ export type ModalSolutionComponentType = {
   about?: SolutionComponentType;
   timeline?: SolutionComponentType;
   'points-of-contact'?: SolutionComponentType;
+  'model-usage'?: SolutionComponentType;
 };
 
 export interface HelpSolutionBaseType {

@@ -91,6 +91,7 @@ type MTOCommonSolution {
   """
   isAdded: Boolean!
   contactInformation: MTOCommonSolutionContactInformation!
+  modelUsage: MTOCommonSolutionModelUsage!
 }
 
 extend type Query {

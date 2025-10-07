@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -29,6 +30,11 @@ func (r *mTOCommonSolutionResolver) SystemOwners(ctx context.Context, obj *model
 // ContactInformation is the resolver for the contactInformation field.
 func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionContactInformation, error) {
 	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)
+}
+
+// ModelUsage is the resolver for the modelUsage field.
+func (r *mTOCommonSolutionResolver) ModelUsage(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionModelUsage, error) {
+	panic(fmt.Errorf("not implemented: ModelUsage - modelUsage"))
 }
 
 // MtoCommonSolutions is the resolver for the mtoCommonSolutions field.
