@@ -20,6 +20,15 @@ const (
 	MTOTemplateKeyStateAndLocalModels               MTOTemplateKey = "STATE_AND_LOCAL_MODELS"
 )
 
+// list of all template keys
+var AllMTOTemplateKeys = []MTOTemplateKey{
+	MTOTemplateKeyAcoAndKidneyModels,
+	MTOTemplateKeyEpisodePrimaryCareAndNonAcoModels,
+	MTOTemplateKeyMedicareAdvantageAndDrugModels,
+	MTOTemplateKeyStandardCategories,
+	MTOTemplateKeyStateAndLocalModels,
+}
+
 // MTOTemplate Represents a Master Template of MTO that can be applied to a Model Plan
 type MTOTemplate struct {
 	baseStruct

@@ -53,8 +53,7 @@ func MTOTemplateMilestoneGetByCategoryIDLOADER(ctx context.Context, categoryID u
 // MTOTemplateGetByKeysLOADER implements resolver logic to get all MTO templates, optionally filtered by keys using a data loader
 func MTOTemplateGetByKeysLOADER(ctx context.Context, keys []models.MTOTemplateKey) ([]*models.MTOTemplate, error) {
 	if len(keys) == 0 {
-		// No keys provided, get all templates
-		return loaders.MTOTemplate.GetAll.Load(ctx, "")
+		keys = models.AllMTOTemplateKeys
 	}
 
 	// Keys provided, filter by those keys
