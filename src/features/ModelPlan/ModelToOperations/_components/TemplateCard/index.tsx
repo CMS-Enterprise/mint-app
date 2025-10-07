@@ -6,7 +6,8 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
@@ -37,7 +38,8 @@ const TemplateCard = ({
     <>
       <Card
         containerProps={{
-          className: 'radius-md minh-mobile padding-0 margin-0'
+          className: 'radius-md padding-0 margin-0',
+          style: { minHeight: '335px' }
         }}
         className={classNames(className, 'margin-bottom-2')}
       >
@@ -51,7 +53,7 @@ const TemplateCard = ({
           <h3 className="line-height-normal margin-top-1">{template.name}</h3>
         </CardHeader>
 
-        <CardBody className="padding-x-3 ">
+        <CardBody className="padding-x-3" style={{ minHeight: '100px' }}>
           <div className="text-base-dark">
             {t('templateLibrary.templateCount', {
               categoryCount: template.categoryCount,
@@ -60,24 +62,35 @@ const TemplateCard = ({
             })}
           </div>
 
-          <p>{template.description}</p>
+          <p className="line-clamped">{template.description}</p>
         </CardBody>
 
         <CardFooter className="padding-3">
-          <Button
-            type="button"
-            outline
-            className="margin-right-2"
-            onClick={() => {
-              setMTOModalState({
-                modalType: 'addTemplate',
-                mtoTemplate: template
-              });
-              setMTOModalOpen(true);
-            }}
-          >
-            {t('templateLibrary.addToMatrix')}
-          </Button>
+          {!template.isAdded ? (
+            <Button
+              type="button"
+              outline
+              className="margin-right-2"
+              onClick={() => {
+                setMTOModalState({
+                  modalType: 'addTemplate',
+                  mtoTemplate: template
+                });
+                setMTOModalOpen(true);
+              }}
+            >
+              {t('templateLibrary.addToMatrix')}
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              disabled
+              className="margin-right-2 model-to-operations__milestone-added text-normal"
+            >
+              <Icon.Check aria-label="check" />
+              {t('templateLibrary.added')}
+            </Button>
+          )}
 
           <Button
             unstyled

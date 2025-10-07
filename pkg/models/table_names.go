@@ -76,4 +76,4 @@ const (
 
 // MTOTables is a list of all tables that are related to the MTO section
 // This is used to filter the translated audit collection to only include MTO related tables
-var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo}
+var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo, TNMTOTemplate}

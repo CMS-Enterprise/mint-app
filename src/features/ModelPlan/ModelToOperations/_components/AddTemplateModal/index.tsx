@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Button, Form } from '@trussworks/react-uswds';
 import {
   GetModelToOperationsMatrixDocument,
+  GetMtoModelPlanTemplatesDocument,
   useCreateMtoTemplateMutation
 } from 'gql/generated/graphql';
 
@@ -42,6 +43,10 @@ const AddTemplateModal = () => {
       refetchQueries: [
         {
           query: GetModelToOperationsMatrixDocument,
+          variables: { id: modelID }
+        },
+        {
+          query: GetMtoModelPlanTemplatesDocument,
           variables: { id: modelID }
         }
       ]
