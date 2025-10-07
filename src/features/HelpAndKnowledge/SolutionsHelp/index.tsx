@@ -122,7 +122,7 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
     } else {
       setQuerySolutions(helpSolutions);
     }
-  }, [query, selectedSolution, helpSolutions, location.search, navigate]);
+  }, [query, selectedSolution, helpSolutions, navigate]);
 
   // If viewing by category, render those solutions, otherwise render querySolutions
   const solutions = !category

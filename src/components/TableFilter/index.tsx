@@ -63,14 +63,12 @@ const GlobalClientFilter = ({
             skipPageResetRef.current = false;
           }
           // Currently only client-side filtering - updates search filter onChange
-          setGlobalFilter((prev: FilterValue) => {
-            if (prev === '') {
-              const paramsChange = new URLSearchParams(location.search);
-              paramsChange.set('page', '1');
-              navigate({ search: paramsChange.toString() });
-            }
-            return e.target.value;
-          });
+          if (globalFilter === '') {
+            const paramsChange = new URLSearchParams(location.search);
+            paramsChange.set('page', '1');
+            navigate({ search: paramsChange.toString() });
+          }
+          setGlobalFilter(e.target.value);
         }}
         value={globalFilter ?? ''}
         name={`${tableName} Search`}
