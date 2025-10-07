@@ -623,7 +623,7 @@ export const filterQueryAudits = (
             return text.toLowerCase().includes(lowerCaseQuery);
           }
           if (typeof text === 'object' && text !== null) {
-            return text.props.children.toLowerCase().includes(lowerCaseQuery);
+            return text.props.children?.toLowerCase().includes(lowerCaseQuery);
           }
           return false;
         })
@@ -706,7 +706,7 @@ export const filterQueryAudits = (
       if (
         i18next
           .t(`changeHistory:sections:${audit.tableName}`)
-          .toLowerCase()
+          ?.toLowerCase()
           .includes(lowerCaseQuery)
       ) {
         return true;
