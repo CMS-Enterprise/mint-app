@@ -17,6 +17,8 @@ interface MobileNavProps {
   isHelpArticle: boolean | undefined;
   solutionDetailRoute?: string;
   isFilteredView?: boolean;
+  solutionNavigation?: boolean;
+  paramActive?: boolean;
 }
 
 const MobileNav = ({
@@ -24,7 +26,9 @@ const MobileNav = ({
   subinfo,
   isHelpArticle,
   solutionDetailRoute,
-  isFilteredView
+  isFilteredView,
+  solutionNavigation,
+  paramActive
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
@@ -41,7 +45,7 @@ const MobileNav = ({
     }
   }, [isMobile]);
 
-  const translationKey = solutionDetailRoute ? hk : t;
+  const translationKey = solutionDetailRoute || solutionNavigation ? hk : t;
 
   return (
     <div className="read-only-model-plan__subNav-accordion">
@@ -75,6 +79,8 @@ const MobileNav = ({
               subComponents={subComponents}
               isHelpArticle={isHelpArticle}
               isMobile
+              solutionNavigation={solutionNavigation}
+              paramActive={paramActive}
             />
             <li>
               <NavLink

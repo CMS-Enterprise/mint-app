@@ -181,7 +181,8 @@ const SideNav = ({
         key={key}
         className={() => {
           return classNames({
-            'usa-current': isLinkActive(key, location)
+            'usa-current': isLinkActive(key, location),
+            'subNav--current': isMobile && isLinkActive(key, location)
           });
         }}
         onClick={scrollToAboveReadOnlyBodyContent}
@@ -235,11 +236,6 @@ const SideNav = ({
       </div>
     </>
   );
-
-  // If mobile return links to plug in to <MobileNav /> wrapper
-  if (isMobile) {
-    return SideNavLinks;
-  }
 
   return (
     <div
