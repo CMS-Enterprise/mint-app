@@ -763,6 +763,7 @@ export const formatAndHomogenizeMilestoneData = (
     formattedCategory.actions = undefined;
     formattedCategory.riskIndicator = undefined;
     formattedCategory.facilitatedBy = undefined;
+    formattedCategory.assignedToUserAccount = undefined;
     formattedCategory.needBy = undefined;
     formattedCategory.status = undefined;
     formattedCategory.addedFromMilestoneLibrary = undefined;
@@ -777,6 +778,7 @@ export const formatAndHomogenizeMilestoneData = (
       formattedSubCategory.actions = undefined;
       formattedSubCategory.riskIndicator = undefined;
       formattedSubCategory.facilitatedBy = undefined;
+      formattedSubCategory.assignedToUserAccount = undefined;
       formattedSubCategory.needBy = undefined;
       formattedSubCategory.status = undefined;
       formattedSubCategory.addedFromMilestoneLibrary = undefined;
@@ -816,6 +818,7 @@ export const formatAndHomogenizeMilestoneData = (
     const { isUncategorized, ...restCategoryData } = categoryData;
     formatData.push({ ...formattedCategory, ...restCategoryData });
   });
+
   return formatData;
 };
 
