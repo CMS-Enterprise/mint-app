@@ -23,6 +23,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { Avatar } from 'components/Avatar';
 import {
   DescriptionDefinition,
   DescriptionTerm
@@ -82,6 +83,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         responsibleComponent: [],
         facilitatedBy: null,
         facilitatedByOther: null,
+        assignedToUserAccount: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
         addedFromMilestoneLibrary: false,
         solutions: [],
@@ -237,6 +239,25 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                 className="font-body-md text-base-darkest"
                 definition={
                   milestone.categories.subCategory?.name || NoneSpecified
+                }
+              />
+            </Grid>
+          </Grid>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={mtoMilestoneT('assignedTo.label')}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.assignedToUserAccount?.commonName ? (
+                    <Avatar user={milestone.assignedToUserAccount.commonName} />
+                  ) : (
+                    NoneSpecified
+                  )
                 }
               />
             </Grid>

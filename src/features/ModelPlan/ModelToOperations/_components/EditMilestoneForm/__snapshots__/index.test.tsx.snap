@@ -402,11 +402,11 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
             >
               Assigned to
             </label>
-            <span
-              class="text-base-dark"
+            <div
+              class="mint-help-text margin-top-1"
             >
               Assign the person who is responsible for ensuring the work for this milestone is completed. This field searches CMS’ EUA database but is limited to individuals added to this model in MINT.
-            </span>
+            </div>
             <div
               class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
               id="assigned-to"

@@ -1342,9 +1342,9 @@ const EditMilestoneForm = ({
                     <Label htmlFor={convertCamelCaseToKebabCase('assignedTo')}>
                       {assignedToConfig.label}
                     </Label>
-                    <span className="text-base-dark">
+                    <HelpText className="margin-top-1">
                       {assignedToConfig.sublabel}
-                    </span>
+                    </HelpText>
 
                     <OktaUserSelect
                       id="assigned-to"
