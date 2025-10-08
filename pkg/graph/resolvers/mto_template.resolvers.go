@@ -17,7 +17,20 @@ import (
 
 // Categories is the resolver for the categories field.
 func (r *mTOTemplateResolver) Categories(ctx context.Context, obj *models.MTOTemplate) ([]*models.MTOTemplateCategory, error) {
-	return MTOTemplateCategoryGetByTemplateIDLOADER(ctx, obj.ID)
+	categories, err := MTOTemplateCategoryGetByTemplateIDLOADER(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	// remove all items from categories that have a non null parent id
+	var topLevelCategories []*models.MTOTemplateCategory
+	for _, category := range categories {
+		if category.ParentID == nil {
+			topLevelCategories = append(topLevelCategories, category)
+		}
+	}
+
+	return topLevelCategories, nil
 }
 
 // Milestones is the resolver for the milestones field.

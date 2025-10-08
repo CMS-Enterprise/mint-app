@@ -63,3 +63,15 @@ func MTOTemplateSubCategoryGetByCategoryIDLoader(np sqlutils.NamedPreparer, _ *z
 	}
 	return returned, nil
 }
+
+func MTOTemplateSubCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, templateIDs []uuid.UUID) ([]*models.MTOTemplateSubCategory, error) {
+	args := map[string]interface{}{
+		"template_ids": pq.Array(templateIDs),
+	}
+
+	returned, err := sqlutils.SelectProcedure[models.MTOTemplateSubCategory](np, sqlqueries.MTOTemplateCategory.GetByTemplateIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}
