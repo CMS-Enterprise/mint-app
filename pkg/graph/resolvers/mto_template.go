@@ -237,6 +237,21 @@ func ApplyTemplateToMTO(
 				continue
 			}
 
+			// update milestone so it has the new category id from the map
+			if milestone.MTOTemplateCategoryID != nil {
+				if newCategoryID, exists := categoryIDMap[*milestone.MTOTemplateCategoryID]; exists {
+					milestoneWithStatus.MTOCategoryID = &newCategoryID
+
+					// link milestone with category if category exists
+					_, err = storage.MTOMilestoneUpdate(tx, logger, &milestoneWithStatus.MTOMilestone)
+					if err != nil {
+						warnings = append(warnings, fmt.Sprintf("failed to update MTO milestone %s with new category ID: %v", milestone.Name, err))
+					}
+				} else {
+					warnings = append(warnings, fmt.Sprintf("milestone %s references unknown category ID %s", milestone.ID, *milestone.MTOTemplateCategoryID))
+				}
+			}
+
 			if milestoneWithStatus.NewlyInserted {
 				milestonesCreated++
 			}

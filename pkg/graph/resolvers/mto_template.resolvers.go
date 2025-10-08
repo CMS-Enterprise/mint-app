@@ -47,7 +47,12 @@ func (r *mTOTemplateSolutionResolver) Milestones(ctx context.Context, obj *model
 
 // Milestones is the resolver for the milestones field.
 func (r *mTOTemplateSubCategoryResolver) Milestones(ctx context.Context, obj *models.MTOTemplateSubCategory) ([]*models.MTOTemplateMilestone, error) {
-	return MTOTemplateMilestoneGetByCategoryIDLOADER(ctx, obj.ID)
+	res, err := MTOTemplateMilestoneGetByCategoryIDLOADER(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 // CreateTemplateToMto is the resolver for the createTemplateToMTO field.
