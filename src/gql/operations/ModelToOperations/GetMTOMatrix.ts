@@ -24,6 +24,10 @@ export default gql(/* GraphQL */ `
               key
               facilitatedBy
               facilitatedByOther
+              assignedToUserAccount {
+                id
+                commonName
+              }
               needBy
               status
               riskIndicator

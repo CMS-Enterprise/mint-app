@@ -10,6 +10,7 @@ import {
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
 import { MTOMilestonePanelContext } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalState } from 'contexts/MTOModalContext';
@@ -43,6 +44,10 @@ export type MilestoneType = {
   name: string;
   facilitatedBy: MtoFacilitator[] | null;
   facilitatedByOther?: string | null;
+  assignedToUserAccount?: {
+    id: string;
+    commonName: string;
+  } | null;
   solutions: MtoSolutionType[];
   needBy: string | null;
   status: MtoMilestoneStatus;
@@ -64,6 +69,10 @@ export type SubCategoryType = {
   name: string;
   facilitatedBy: undefined;
   facilitatedByOther?: undefined;
+  assignedToUserAccount?: {
+    id: string;
+    commonName: string;
+  } | null;
   solutions: string[];
   needBy: undefined;
   status: undefined;
@@ -82,6 +91,10 @@ export type CategoryType = {
   name: string;
   facilitatedBy: undefined;
   facilitatedByOther?: undefined;
+  assignedToUserAccount?: {
+    id: string;
+    commonName: string;
+  } | null;
   solutions: string[];
   needBy: undefined;
   status: undefined;
@@ -284,18 +297,31 @@ export const columns: ColumnType[] = [
     Cell: ({ row, rowType, expanded }: RowProps) => {
       if (rowType !== 'milestone') return <></>;
 
-      if (!row.facilitatedBy || row.facilitatedBy.length === 0)
-        return <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>;
-      return (
-        <>
-          {row.facilitatedBy
-            .map(
-              facilitator =>
-                `${i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)}${facilitator === 'OTHER' ? ` (${row.facilitatedByOther})` : ''}`
-            )
-            .join(', ')}
-        </>
-      );
+      if ('assignedToUserAccount' in row) {
+        return (
+          <div>
+            {row.facilitatedBy ? (
+              row.facilitatedBy
+                .map(
+                  facilitator =>
+                    `${i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)}${facilitator === 'OTHER' ? ` (${row.facilitatedByOther})` : ''}`
+                )
+                .join(', ')
+            ) : (
+              <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>
+            )}
+
+            {row.assignedToUserAccount?.commonName && (
+              <p className="margin-top-1 margin-bottom-0">
+                {i18next.t('mtoMilestone:assignedTo.label')}
+                <Avatar user={row.assignedToUserAccount.commonName} />
+              </p>
+            )}
+          </div>
+        );
+      }
+
+      return <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>;
     }
   },
   {
