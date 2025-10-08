@@ -69,6 +69,10 @@
         margin-left: 0rem;
         right: 0;
     }
+
+    @media screen and (max-width: $mobile) {
+        margin-top: -3rem;
+    }
 }
 
 .panel-footer {
