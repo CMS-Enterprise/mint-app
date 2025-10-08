@@ -59,12 +59,16 @@
     display: flex;
     flex-direction: column;
     align-items: end;
-    padding-right: 2rem;
-    margin-top: -3rem;
+    margin-top: -7rem;
     margin-bottom: .9rem;
+    margin-left: 17rem;
     position: fixed;
-    right: 0;
     z-index: 1000;
+
+    @media screen and (max-width: $tablet) {
+        margin-left: 0rem;
+        right: 0;
+    }
 }
 
 .panel-footer {
