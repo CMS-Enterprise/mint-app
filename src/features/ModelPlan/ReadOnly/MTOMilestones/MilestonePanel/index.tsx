@@ -256,7 +256,11 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                   milestone.assignedToUserAccount?.commonName ? (
                     <Avatar user={milestone.assignedToUserAccount.commonName} />
                   ) : (
-                    NoneSpecified
+                    <p className="margin-0 text-base-dark text-italic">
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.notAssigned'
+                      )}
+                    </p>
                   )
                 }
               />

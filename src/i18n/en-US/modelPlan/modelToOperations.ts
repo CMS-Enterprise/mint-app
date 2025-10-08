@@ -295,6 +295,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       unsavedChanges_other: '{{count}} unsaved changes',
       removeMilestone: 'Remove milestone',
       noneSpecified: 'None specified',
+      notAssigned: 'Not assigned',
       areYouSure: 'Are you sure you want to remove this custom milestone?',
       areYouSureCommon: 'Are you sure you want to remove this milestone?',
       customTooltip:
