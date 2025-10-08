@@ -752,17 +752,18 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_TopLevelCategory() {
 
 	plan := suite.createModelPlan("Test Top-Level Deletion")
 	topCategory := suite.createMTOCategory("Top Category To Delete", plan.ID, nil)
-
+	descTop := "Description for Top Category Milestone"
+	descSub := "Description for Sub Category Milestone"
 	// Create subcategories
 	subCatNames := []string{"SubCat A", "SubCat B"}
 	subCategories := suite.createMultipleMTOcategories(subCatNames, plan.ID, &topCategory.ID)
 
 	// Create a milestone in the top-level category
-	milestoneTop, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Top", plan.ID, &topCategory.ID)
+	milestoneTop, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Top", &descTop, plan.ID, &topCategory.ID)
 	suite.NoError(err)
 
 	// Create a milestone in a subcategory
-	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Sub", plan.ID, &subCategories[0].ID)
+	milestoneSub, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Milestone in Sub", &descSub, plan.ID, &subCategories[0].ID)
 	suite.NoError(err)
 
 	// Delete the top-level category
@@ -800,7 +801,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
 	plan := suite.createModelPlan("Test Subcategory Deletion")
 	parentCategory := suite.createMTOCategory("Parent Category", plan.ID, nil)
 	subCategory := suite.createMTOCategory("SubCategory To Delete", plan.ID, &parentCategory.ID)
-
+	descSub := "Description for SubCategory Milestone"
 	// Create a milestone in the subcategory
 	milestoneSub, err := MTOMilestoneCreateCustom(
 		suite.testConfigs.Context,
@@ -808,6 +809,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		"SubCategory Milestone",
+		&descSub,
 		plan.ID,
 		&subCategory.ID,
 	)

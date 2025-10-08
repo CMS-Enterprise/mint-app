@@ -137,6 +137,8 @@ func (suite *ResolverSuite) TestMTOSolutionsGetByModelPlanIDAndFilterView() {
 
 func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 	plan := suite.createModelPlan("Plan for testing CreateCommonSolutionAndLinkMilestones")
+	descMilestoneA := "Description for Milestone A"
+	descMilestoneB := "Description for Milestone B"
 	// We'll make two new, existing milestones to link to
 	// We'll just create them as custom milestones for simplicity here
 	milestoneA, err := MTOMilestoneCreateCustom(
@@ -145,6 +147,7 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		"Milestone A",
+		&descMilestoneA,
 		plan.ID,
 		nil,
 	)
@@ -156,6 +159,7 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		"Milestone B",
+		&descMilestoneB,
 		plan.ID,
 		nil,
 	)
@@ -211,9 +215,9 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 
 func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMilestoneID() {
 	plan := suite.createModelPlan("plan for adding milestones by milestone ID")
-
+	descInitialMilestone := "Description for Initial Milestone"
 	// Create a milestone with no linked solutions
-	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone", plan.ID, nil)
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Initial Milestone", &descInitialMilestone, plan.ID, nil)
 	suite.NoError(err)
 
 	// Create a custom solution

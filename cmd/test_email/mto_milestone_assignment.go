@@ -17,10 +17,12 @@ func sendMTOMilestoneAssignedTestEmail(
 ) {
 	// Create test milestone
 	milestoneName := "Complete data validation and testing"
+	key := models.MTOCommonMilestoneKeyManageCd
 	milestone := models.NewMTOMilestone(
 		uuid.New(),
 		&milestoneName,
 		nil,
+		&key,
 		uuid.New(),
 		nil,
 	)

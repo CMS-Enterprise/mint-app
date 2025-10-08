@@ -20,6 +20,49 @@ type MTO struct {
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 }
 
+type MTOMilestoneResponsibleComponent string
+
+// These are the options for MTOMilestoneResponsibleComponent
+const (
+	MTOMilestoneResponsibleComponentCCIIO     MTOMilestoneResponsibleComponent = "CIIO"
+	MTOMilestoneResponsibleComponentCCSQ      MTOMilestoneResponsibleComponent = "CCSQ"
+	MTOMilestoneResponsibleComponentCM        MTOMilestoneResponsibleComponent = "CM"
+	MTOMilestoneResponsibleComponentCMCS      MTOMilestoneResponsibleComponent = "CMCS"
+	MTOMilestoneResponsibleComponentCMMIBSG   MTOMilestoneResponsibleComponent = "CMMI_BSG"
+	MTOMilestoneResponsibleComponentCMMILDG   MTOMilestoneResponsibleComponent = "CMMI_LDG"
+	MTOMilestoneResponsibleComponentCMMIPCMG  MTOMilestoneResponsibleComponent = "CMMI_PCMG"
+	MTOMilestoneResponsibleComponentCMMIPPG   MTOMilestoneResponsibleComponent = "CMMI_PPG"
+	MTOMilestoneResponsibleComponentCMMIRRCEG MTOMilestoneResponsibleComponent = "CMMI_RRCEG"
+	MTOMilestoneResponsibleComponentCMMISCMG  MTOMilestoneResponsibleComponent = "CMMI_SCMG"
+	MTOMilestoneResponsibleComponentCMMISPHG  MTOMilestoneResponsibleComponent = "CMMI_SPHG"
+	MTOMilestoneResponsibleComponentCPI       MTOMilestoneResponsibleComponent = "CPI"
+	MTOMilestoneResponsibleComponentFCHCO     MTOMilestoneResponsibleComponent = "FCHCO"
+	MTOMilestoneResponsibleComponentOA        MTOMilestoneResponsibleComponent = "OA"
+	MTOMilestoneResponsibleComponentOACT      MTOMilestoneResponsibleComponent = "OACT"
+	MTOMilestoneResponsibleComponentOAGM      MTOMilestoneResponsibleComponent = "OAGM"
+	MTOMilestoneResponsibleComponentOC        MTOMilestoneResponsibleComponent = "OC"
+	MTOMilestoneResponsibleComponentOEDA      MTOMilestoneResponsibleComponent = "OEDA"
+	MTOMilestoneResponsibleComponentOEOCR     MTOMilestoneResponsibleComponent = "OEOCR"
+	MTOMilestoneResponsibleComponentOFM       MTOMilestoneResponsibleComponent = "OFM"
+	MTOMilestoneResponsibleComponentOHC       MTOMilestoneResponsibleComponent = "OHC"
+	MTOMilestoneResponsibleComponentOHEI      MTOMilestoneResponsibleComponent = "OHEI"
+	MTOMilestoneResponsibleComponentOHI       MTOMilestoneResponsibleComponent = "OHI"
+	MTOMilestoneResponsibleComponentOITAMG    MTOMilestoneResponsibleComponent = "OIT_AMG"
+	MTOMilestoneResponsibleComponentOITBOG    MTOMilestoneResponsibleComponent = "OIT_BOG"
+	MTOMilestoneResponsibleComponentOITEADG   MTOMilestoneResponsibleComponent = "OIT_EADG"
+	MTOMilestoneResponsibleComponentOITESSG   MTOMilestoneResponsibleComponent = "OIT_ESSG"
+	MTOMilestoneResponsibleComponentOITICPG   MTOMilestoneResponsibleComponent = "OIT_ICPG"
+	MTOMilestoneResponsibleComponentOITISPG   MTOMilestoneResponsibleComponent = "OIT_ISPG"
+	MTOMilestoneResponsibleComponentOITIUSG   MTOMilestoneResponsibleComponent = "OIT_IUSG"
+	MTOMilestoneResponsibleComponentOITNTSS   MTOMilestoneResponsibleComponent = "OIT_NTSS"
+	MTOMilestoneResponsibleComponentOL        MTOMilestoneResponsibleComponent = "OL"
+	MTOMilestoneResponsibleComponentOMH       MTOMilestoneResponsibleComponent = "OMH"
+	MTOMilestoneResponsibleComponentOPOLE     MTOMilestoneResponsibleComponent = "OPOLE"
+	MTOMilestoneResponsibleComponentOSFLO     MTOMilestoneResponsibleComponent = "OSFLO"
+	MTOMilestoneResponsibleComponentOSORA     MTOMilestoneResponsibleComponent = "OSORA"
+	MTOMilestoneResponsibleComponentOSPR      MTOMilestoneResponsibleComponent = "OSPR"
+)
+
 type MTOFacilitator string
 
 // These are the options for MTOFacilitator

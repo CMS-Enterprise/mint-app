@@ -34,6 +34,7 @@ import {
   GetMtoMilestoneQuery,
   MtoCommonSolutionKey,
   MtoFacilitator,
+  MtoMilestoneResponsibleComponent,
   MtoMilestoneStatus,
   MtoRiskIndicator,
   MtoSolution,
@@ -60,6 +61,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -90,6 +92,7 @@ export type MilestoneNoteType =
 type FormValues = {
   isDraft: boolean;
   name: string;
+  description: string;
   categories: {
     category: {
       id: string;
@@ -98,6 +101,7 @@ type FormValues = {
       id: string;
     };
   };
+  responsibleComponent: MtoMilestoneResponsibleComponent[];
   facilitatedBy?: MtoFacilitator[];
   facilitatedByOther?: string;
   needBy?: string;
@@ -119,6 +123,8 @@ type EditMilestoneFormProps = {
   setFooter: (footer: React.ReactNode | null) => void; // Set footer of modal
 };
 
+// TODO: CUSTOM MILESTONE WORK HERE
+
 const EditMilestoneForm = ({
   closeModal,
   setIsDirty,
@@ -133,6 +139,7 @@ const EditMilestoneForm = ({
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
+    responsibleComponent: responsibleComponentConfig,
     facilitatedBy: facilitatedByConfig,
     status: stausConfig,
     riskIndicator: riskIndicatorConfig
@@ -377,6 +384,8 @@ const EditMilestoneForm = ({
         }
       },
       name: milestone?.name || '',
+      description: milestone?.description || '',
+      responsibleComponent: milestone?.responsibleComponent || [],
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
       needBy: milestone?.needBy || '',
@@ -428,7 +437,7 @@ const EditMilestoneForm = ({
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
 
-    const { facilitatedBy, ...rest } = flattenedDir;
+    const { facilitatedBy, responsibleComponent, ...rest } = flattenedDir;
 
     // Counts amount of changes in facilitatedBy array
     let facilitatedByChangeCount: number = 0;
@@ -436,6 +445,15 @@ const EditMilestoneForm = ({
       facilitatedByChangeCount = Math.abs(
         (values.facilitatedBy?.length || 0) -
           (formValues.facilitatedBy.length || 0)
+      );
+    }
+
+    // Counts amount of changes in responsibleComponent array
+    let responsibleComponentChangeCount: number = 0;
+    if (responsibleComponent) {
+      responsibleComponentChangeCount = Math.abs(
+        (values.responsibleComponent?.length || 0) -
+          (formValues.responsibleComponent.length || 0)
       );
     }
 
@@ -450,6 +468,7 @@ const EditMilestoneForm = ({
 
     const totalChanges =
       facilitatedByChangeCount +
+      responsibleComponentChangeCount +
       Object.keys(rest).length +
       notesToAddChangeCount +
       notesToRemoveChangeCount +
@@ -460,6 +479,7 @@ const EditMilestoneForm = ({
     dirtyFields,
     touchedFields.needBy,
     values,
+    formValues.responsibleComponent.length,
     formValues.needBy,
     formValues.facilitatedBy.length,
     notesToAdd.length,
@@ -546,6 +566,7 @@ const EditMilestoneForm = ({
         categories,
         needBy,
         name,
+        responsibleComponent,
         facilitatedBy,
         facilitatedByOther,
         ...formChanges
@@ -576,6 +597,7 @@ const EditMilestoneForm = ({
           id: editMilestoneID || '',
           changes: {
             ...formChanges,
+            ...(responsibleComponent && { responsibleComponent }),
             ...(facilitatedBy && {
               facilitatedBy
             }),
@@ -991,6 +1013,44 @@ const EditMilestoneForm = ({
                 />
               )}
 
+              {!milestone.addedFromMilestoneLibrary && (
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={{
+                    required: modelToOperationsMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...formField },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup
+                      error={!!error}
+                      className="margin-top-0 margin-bottom-3"
+                    >
+                      <Label
+                        htmlFor="description"
+                        className="maxw-none text-bold"
+                        requiredMarker
+                      >
+                        {mtoMilestoneT('description.label')}
+                      </Label>
+
+                      <HelpText className="margin-top-1">
+                        {mtoMilestoneT('description.sublabel')}
+                      </HelpText>
+
+                      <TextAreaField
+                        {...formField}
+                        value={formField.value || ''}
+                        className="height-card"
+                        id="description"
+                      />
+                    </FormGroup>
+                  )}
+                />
+              )}
+
               <Controller
                 name="isDraft"
                 control={control}
@@ -1123,6 +1183,57 @@ const EditMilestoneForm = ({
               />
 
               <Controller
+                name="responsibleComponent"
+                control={control}
+                rules={{
+                  required: modelToOperationsMiscT('validation.fillOut'),
+                  validate: value =>
+                    value.length !== 0 ||
+                    modelToOperationsMiscT('validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    className="margin-0 margin-bottom-3"
+                    error={!!error}
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(
+                        'responsibleComponent'
+                      )}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {responsibleComponentConfig.label}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {responsibleComponentConfig.sublabel}
+                    </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <MultiSelect
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      inputId={convertCamelCaseToKebabCase(field.name)}
+                      ariaLabel={convertCamelCaseToKebabCase(field.name)}
+                      ariaLabelText={responsibleComponentConfig.label}
+                      options={composeMultiSelectOptions(
+                        responsibleComponentConfig.options
+                      )}
+                      selectedLabel={
+                        responsibleComponentConfig.multiSelectLabel || ''
+                      }
+                      initialValues={watch('responsibleComponent')}
+                    />
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
                 name="facilitatedBy"
                 control={control}
                 render={({ field: { ref, ...field } }) => (
@@ -1209,8 +1320,19 @@ const EditMilestoneForm = ({
               <Controller
                 name="needBy"
                 control={control}
-                render={({ field: { ref, ...field } }) => (
-                  <FormGroup className="margin-0 margin-bottom-3">
+                rules={{
+                  validate: value =>
+                    value !== undefined ||
+                    modelToOperationsMiscT('validation.invalidDate')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    className="margin-0 margin-bottom-3"
+                    error={!!error}
+                  >
                     <Label htmlFor={convertCamelCaseToKebabCase('needBy')}>
                       {mtoMilestoneT('needBy.label')}
                     </Label>
@@ -1218,6 +1340,8 @@ const EditMilestoneForm = ({
                     <HelpText className="margin-top-1">
                       {mtoMilestoneT('needBy.sublabel')}
                     </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
 
                     <div className="position-relative">
                       <DatePickerFormatted

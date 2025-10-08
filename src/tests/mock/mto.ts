@@ -269,6 +269,7 @@ export const commonMilestonesMock: MockedResponse<
                 categoryName: 'Test Category',
                 subCategoryName: 'Test SubCategory',
                 facilitatedByRole: [],
+                description: 'Description 1',
                 commonSolutions: [
                   {
                     __typename: 'MTOCommonSolution',
@@ -466,7 +467,9 @@ export const milestoneMock = (
           __typename: 'MTOMilestone',
           id: '123',
           name: 'Milestone 1',
+          description: 'Description 1',
           key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+          responsibleComponent: [],
           facilitatedBy: [],
           facilitatedByOther: '',
           needBy: '2021-08-01',
@@ -490,6 +493,7 @@ export const milestoneMock = (
           commonMilestone: {
             __typename: 'MTOCommonMilestone',
             key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+            description: 'Description 1',
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',
@@ -814,6 +818,7 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                   name: 'Test Milestone 1',
                   needBy: '2022-05-12T15:01:39.190679Z',
+                  responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
                   status: MtoMilestoneStatus.NOT_STARTED,
@@ -840,6 +845,7 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                   name: 'Test Milestone 2',
                   needBy: '2022-05-12T15:01:39.190679Z',
+                  responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
                   status: MtoMilestoneStatus.NOT_STARTED,
