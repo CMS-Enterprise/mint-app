@@ -1,7 +1,9 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 import {
   allMTOSolutionsMock,
   categoryMock,
@@ -13,7 +15,16 @@ import MessageProvider from 'contexts/MessageContext';
 
 import EditMilestoneForm from '.';
 
+const mockStore = configureMockStore([]);
+
 describe('EditMilestoneForm', () => {
+  const store = mockStore({
+    auth: {
+      euaId: 'TEST',
+      name: 'Test User'
+    }
+  });
+
   it('matches snapshot', async () => {
     const router = createMemoryRouter(
       [
@@ -40,16 +51,18 @@ describe('EditMilestoneForm', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider
-        mocks={[
-          ...milestoneMock('123'),
-          ...categoryMock,
-          ...allMTOSolutionsMock
-        ]}
-        addTypename={false}
-      >
-        <RouterProvider router={router} />
-      </MockedProvider>
+      <Provider store={store}>
+        <MockedProvider
+          mocks={[
+            ...milestoneMock('123'),
+            ...categoryMock,
+            ...allMTOSolutionsMock
+          ]}
+          addTypename={false}
+        >
+          <RouterProvider router={router} />
+        </MockedProvider>
+      </Provider>
     );
 
     await waitFor(() => {

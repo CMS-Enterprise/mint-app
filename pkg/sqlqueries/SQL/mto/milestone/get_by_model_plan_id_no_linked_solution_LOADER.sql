@@ -8,6 +8,8 @@ SELECT
     m.mto_common_milestone_key,
     m.mto_category_id,
     COALESCE(m.name, cm.name) AS name,
+    m.description,
+    m.responsible_component,
     m.facilitated_by,
     m.facilitated_by_other,
     m.need_by,

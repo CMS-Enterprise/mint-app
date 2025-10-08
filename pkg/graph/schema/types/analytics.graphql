@@ -40,6 +40,11 @@ type ModelCountAnalytics {
   totalNumberOfModels: Int!
 }
 
+type ModelCountAnalyticsOverTime {
+  monthYear: String!
+  numberOfModels: Int!
+}
+
 type AnalyticsSummary {
   changesPerModel: [ModelChangesAnalytics!]!
   changesPerModelBySection: [ModelChangesBySectionAnalytics!]!
@@ -47,6 +52,7 @@ type AnalyticsSummary {
   modelsByStatus: [ModelsByStatusAnalytics!]!
   numberOfFollowersPerModel: [ModelFollowersAnalytics!]!
   totalNumberOfModels: ModelCountAnalytics
+  numberOfModelsOverTime: [ModelCountAnalyticsOverTime!]!
 }
 
 extend type Query {

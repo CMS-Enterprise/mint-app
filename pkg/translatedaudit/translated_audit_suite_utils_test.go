@@ -240,7 +240,7 @@ func (suite *TAuditSuite) createMTOSolution(modelPlanID uuid.UUID, name string, 
 // createMTOMilestone creates an MTO Milestone using the store. It is just for testing
 func (suite *TAuditSuite) createMTOMilestone(modelPlanID uuid.UUID, name string, preHooks ...func(*models.MTOMilestone)) *models.MTOMilestone {
 
-	milestoneToCreate := models.NewMTOMilestone(suite.testConfigs.Principal.UserAccount.ID, &name, nil, modelPlanID, nil)
+	milestoneToCreate := models.NewMTOMilestone(suite.testConfigs.Principal.UserAccount.ID, &name, nil, nil, modelPlanID, nil)
 	milestoneToCreate.Name = &name
 	for _, preHook := range preHooks {
 		preHook(milestoneToCreate)

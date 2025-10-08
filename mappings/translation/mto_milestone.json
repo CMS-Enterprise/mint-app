@@ -8,6 +8,16 @@
     "formType": "TEXT",
     "order": 1
   },
+  "description": {
+    "gqlField": "description",
+    "goField": "Description",
+    "dbField": "description",
+    "label": "Milestone description",
+    "sublabel": "Describe the purpose of this milestone and the work needed to complete it.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.001
+  },
   "isDraft": {
     "gqlField": "isDraft",
     "goField": "IsDraft",
@@ -24,6 +34,57 @@
       "false": " No"
     }
   },
+  "responsibleComponent": {
+    "gqlField": "responsibleComponent",
+    "goField": "ResponsibleComponent",
+    "dbField": "responsible_component",
+    "label": "Responsible component",
+    "exportLabel": "Milestone responsible component",
+    "sublabel": "Choose the CMS component or CMMI group responsible for this work. Select all that apply.",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "multiSelectLabel": "Selected components",
+    "order": 1.03,
+    "options": {
+      "CCIIO": "CCIIO",
+      "CCSQ": "CCSQ",
+      "CM": "CM",
+      "CMCS": "CMCS",
+      "CMMI_BSG": "CMMI/BSG",
+      "CMMI_LDG": "CMMI/LDG",
+      "CMMI_PCMG": "CMMI/PCMG",
+      "CMMI_PPG": "CMMI/PPG",
+      "CMMI_RRCEG": "CMMI/RRCEG",
+      "CMMI_SCMG": "CMMI/SCMG",
+      "CMMI_SPHG": "CMMI/SPHG",
+      "CPI": "CPI",
+      "FCHCO": "FCHCO",
+      "OA": "OA",
+      "OACT": "OACT",
+      "OAGM": "OAGM",
+      "OC": "OC",
+      "OEDA": "OEDA",
+      "OEOCR": "OEOCR",
+      "OFM": "OFM",
+      "OHC": "OHC",
+      "OHEI": "OHEI",
+      "OHI": "OHI",
+      "OIT_AMG": "OIT/AMG",
+      "OIT_BOG": "OIT/BOG",
+      "OIT_EADG": "OIT/EADG",
+      "OIT_ESSG": "OIT/ESSG",
+      "OIT_ICPG": "OIT/ICPG",
+      "OIT_ISPG": "OIT/ISPG",
+      "OIT_IUSG": "OIT/IUSG",
+      "OIT_NTSS": "OIT/NTSS",
+      "OL": "OL",
+      "OMH": "OMH",
+      "OPOLE": "OPOLE",
+      "OSFLO": "OSFLO",
+      "OSORA": "OSORA",
+      "OSPR": "OSPR"
+    }
+  },
   "facilitatedBy": {
     "gqlField": "facilitatedBy",
     "goField": "FacilitatedBy",
@@ -34,7 +95,7 @@
     "multiSelectLabel": "Selected roles",
     "dataType": "STRING",
     "formType": "MULTISELECT",
-    "order": 1.03,
+    "order": 1.04,
     "options": {
       "IT_LEAD": "IT Lead",
       "MODEL_TEAM": "Model team",
@@ -65,7 +126,7 @@
     "sublabel": "Because you selected “Other” above, please provide a role or title.",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.035
+    "order": 1.045
   },
   "needBy": {
     "gqlField": "needBy",
@@ -76,7 +137,7 @@
     "sublabel": "Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy",
     "dataType": "DATE",
     "formType": "DATEPICKER",
-    "order": 1.04
+    "order": 1.05
   },
   "status": {
     "gqlField": "status",
@@ -140,7 +201,7 @@
     },
     "dataType": "ENUM",
     "formType": "SELECT",
-    "order": 1.05,
+    "order": 1.06,
     "options": {
       "NOT_STARTED": "Not started",
       "IN_PROGRESS": "In progress",
@@ -210,7 +271,7 @@
     },
     "dataType": "ENUM",
     "formType": "SELECT",
-    "order": 1.06,
+    "order": 1.07,
     "options": {
       "ON_TRACK": "No risk (on track)",
       "OFF_TRACK": "Some risk (off track)",
@@ -376,5 +437,15 @@
     "formType": "TEXT",
     "order": 4,
     "tableReference": "mto_category"
+  },
+  "notes": {
+    "gqlField": "notes",
+    "goField": "Notes",
+    "dbField": "notes",
+    "label": "Notes",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "flattenNestedData": "content",
+    "order": 4.1
   }
 }

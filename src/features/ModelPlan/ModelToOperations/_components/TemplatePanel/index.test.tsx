@@ -31,6 +31,7 @@ const mockMTOModalContext = {
       milestoneCount: 0,
       solutionCount: 0,
       primaryCategoryCount: 9,
+      isAdded: true,
       categories: []
     } as MtoTemplateType,
     categoryID: '',
@@ -55,6 +56,7 @@ describe('flattenTemplateData Function', () => {
     milestoneCount: 1,
     solutionCount: 1,
     primaryCategoryCount: 1,
+    isAdded: true,
     categories: [
       {
         __typename: 'MTOTemplateCategory',
@@ -158,6 +160,7 @@ describe('flattenTemplateData Function', () => {
       milestoneCount: 0,
       solutionCount: 0,
       primaryCategoryCount: 0,
+      isAdded: true,
       categories: []
     };
 
@@ -171,6 +174,7 @@ describe('flattenTemplateData Function', () => {
   it('handles template with no subcategories', () => {
     const templateNoSubCats: MtoTemplateType = {
       ...mockTemplate,
+      isAdded: true,
       categories: [
         {
           __typename: 'MTOTemplateCategory',
@@ -191,6 +195,7 @@ describe('flattenTemplateData Function', () => {
   it('handles template with no milestones', () => {
     const templateNoMilestones: MtoTemplateType = {
       ...mockTemplate,
+      isAdded: true,
       categories: [
         {
           __typename: 'MTOTemplateCategory',
@@ -228,6 +233,7 @@ describe('flattenTemplateData Function', () => {
   it('handles template with no solutions', () => {
     const templateNoSolutions: MtoTemplateType = {
       ...mockTemplate,
+      isAdded: true,
       categories: [
         {
           __typename: 'MTOTemplateCategory',
@@ -514,6 +520,7 @@ describe('TemplatePanel Component', () => {
       milestoneCount: 0,
       solutionCount: 0,
       primaryCategoryCount: 0,
+      isAdded: true,
       categories: []
     };
 

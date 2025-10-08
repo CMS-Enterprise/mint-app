@@ -1,6 +1,9 @@
 import { MockedResponse } from '@apollo/client/testing';
 import {
   DataExchangeApproachStatus,
+  GetAnalyticsSummaryDocument,
+  GetAnalyticsSummaryQuery,
+  GetAnalyticsSummaryQueryVariables,
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   GetCollaborationAreaQueryVariables,
@@ -384,6 +387,102 @@ export const echimpCRsAndTDLsMock: MockedResponse<
           echimpCRsAndTDLs: echimpCRandTDLMockData
         }
       }
+    }
+  }
+];
+
+type GetAnalyticsSummaryType = GetAnalyticsSummaryQuery;
+
+// Mock data
+export const mockAnalyticsData: GetAnalyticsSummaryType = {
+  __typename: 'Query',
+  analytics: {
+    __typename: 'AnalyticsSummary',
+    changesPerModel: [
+      {
+        __typename: 'ModelChangesAnalytics',
+        modelName: 'Test Model 1',
+        numberOfChanges: 10,
+        numberOfRecordChanges: 5
+      },
+      {
+        __typename: 'ModelChangesAnalytics',
+        modelName: 'Test Model 2',
+        numberOfChanges: 15,
+        numberOfRecordChanges: 8
+      }
+    ],
+    modelsByStatus: [
+      {
+        __typename: 'ModelsByStatusAnalytics',
+        status: ModelStatus.ACTIVE,
+        numberOfModels: 25
+      },
+      {
+        __typename: 'ModelsByStatusAnalytics',
+        status: ModelStatus.PLAN_DRAFT,
+        numberOfModels: 15
+      }
+    ],
+    numberOfFollowersPerModel: [
+      {
+        __typename: 'ModelFollowersAnalytics',
+        modelName: 'Test Model 1',
+        numberOfFollowers: 12
+      }
+    ],
+    numberOfModelsOverTime: [
+      {
+        __typename: 'ModelCountAnalyticsOverTime',
+        monthYear: '2022-01-01',
+        numberOfModels: 10
+      }
+    ],
+    changesPerModelBySection: [
+      {
+        __typename: 'ModelChangesBySectionAnalytics',
+        modelName: 'Test Model 1',
+        tableName: 'plan_basics',
+        numberOfChanges: 5,
+        numberOfRecordChanges: 3
+      },
+      {
+        __typename: 'ModelChangesBySectionAnalytics',
+        modelName: 'Test Model 2',
+        tableName: 'plan_basics',
+        numberOfChanges: 3,
+        numberOfRecordChanges: 2
+      }
+    ],
+    changesPerModelOtherData: [
+      {
+        __typename: 'ModelChangesOtherDataAnalytics',
+        modelName: 'Test Model 1',
+        numberOfChanges: 3,
+        numberOfRecordChanges: 2,
+        section: 'plan_documents'
+      },
+      {
+        __typename: 'ModelChangesOtherDataAnalytics',
+        modelName: 'Test Model 2',
+        numberOfChanges: 2,
+        numberOfRecordChanges: 1,
+        section: 'plan_documents'
+      }
+    ]
+  }
+};
+
+export const analyticsSummaryMock: MockedResponse<
+  GetAnalyticsSummaryQuery,
+  GetAnalyticsSummaryQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAnalyticsSummaryDocument
+    },
+    result: {
+      data: mockAnalyticsData
     }
   }
 ];

@@ -41,6 +41,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNExistingModelLink),
 		string(models.TNMTOCategory),
 		string(models.TNMTOSuggestedMilestone),
+		string(models.TNMTOMilestoneNote),
 		string(models.TNMTOMilestone),
 		string(models.TNMTOSolution),
 		string(models.TNMTOMilestoneSolutionLink),

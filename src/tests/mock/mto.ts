@@ -22,6 +22,9 @@ import {
   GetMtoMilestonesDocument,
   GetMtoMilestonesQuery,
   GetMtoMilestonesQueryVariables,
+  GetMtoMilestoneSummaryDocument,
+  GetMtoMilestoneSummaryQuery,
+  GetMtoMilestoneSummaryQueryVariables,
   GetMtoSolutionContactsDocument,
   GetMtoSolutionContactsQuery,
   GetMtoSolutionDocument,
@@ -272,6 +275,7 @@ export const commonMilestonesMock: MockedResponse<
                 categoryName: 'Test Category',
                 subCategoryName: 'Test SubCategory',
                 facilitatedByRole: [],
+                description: 'Description 1',
                 commonSolutions: [
                   {
                     __typename: 'MTOCommonSolution',
@@ -469,7 +473,9 @@ export const milestoneMock = (
           __typename: 'MTOMilestone',
           id: '123',
           name: 'Milestone 1',
+          description: 'Description 1',
           key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+          responsibleComponent: [],
           facilitatedBy: [],
           facilitatedByOther: '',
           needBy: '2021-08-01',
@@ -493,6 +499,7 @@ export const milestoneMock = (
           commonMilestone: {
             __typename: 'MTOCommonMilestone',
             key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+            description: 'Description 1',
             commonSolutions: [
               {
                 __typename: 'MTOCommonSolution',
@@ -515,7 +522,8 @@ export const milestoneMock = (
                 isAdded: true
               }
             }
-          ]
+          ],
+          notes: []
         }
       }
     }
@@ -798,6 +806,7 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
     milestoneCount: 0,
     solutionCount: 0,
     primaryCategoryCount: 9,
+    isAdded: true,
     categories: [
       {
         __typename: 'MTOTemplateCategory',
@@ -843,6 +852,7 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
     milestoneCount: 12,
     solutionCount: 10,
     primaryCategoryCount: 4,
+    isAdded: true,
     categories: []
   },
   {
@@ -856,6 +866,7 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
     milestoneCount: 13,
     solutionCount: 11,
     primaryCategoryCount: 4,
+    isAdded: true,
     categories: []
   },
   {
@@ -868,6 +879,7 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
     milestoneCount: 3,
     solutionCount: 0,
     primaryCategoryCount: 1,
+    isAdded: true,
     categories: []
   },
   {
@@ -880,6 +892,7 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
     milestoneCount: 0,
     solutionCount: 0,
     primaryCategoryCount: 0,
+    isAdded: true,
     categories: []
   }
 ];
@@ -896,6 +909,78 @@ export const mtoTemplateMock: MockedResponse<
       data: {
         __typename: 'Query',
         mtoTemplates: mtoTemplateMockData
+      }
+    }
+  }
+];
+
+export const mtoMilestoneSummaryMock: MockedResponse<
+  GetMtoMilestoneSummaryQuery,
+  GetMtoMilestoneSummaryQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoMilestoneSummaryDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlanCollection: [
+          {
+            __typename: 'ModelPlan',
+            id: '123',
+            modelName: 'Test Model 1',
+            mtoMatrix: {
+              __typename: 'ModelsToOperationMatrix',
+              info: {
+                __typename: 'MTOInfo',
+                id: '123'
+              },
+              milestones: [
+                {
+                  __typename: 'MTOMilestone',
+                  id: '123',
+                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  name: 'Test Milestone 1',
+                  needBy: '2022-05-12T15:01:39.190679Z',
+                  responsibleComponent: [],
+                  facilitatedBy: [MtoFacilitator.MODEL_TEAM],
+                  facilitatedByOther: 'Test Facilitated By Other',
+                  status: MtoMilestoneStatus.NOT_STARTED,
+                  riskIndicator: MtoRiskIndicator.ON_TRACK,
+                  notes: []
+                }
+              ]
+            }
+          },
+          {
+            __typename: 'ModelPlan',
+            id: '456',
+            modelName: 'Test Model 2',
+            mtoMatrix: {
+              __typename: 'ModelsToOperationMatrix',
+              info: {
+                __typename: 'MTOInfo',
+                id: '456'
+              },
+              milestones: [
+                {
+                  __typename: 'MTOMilestone',
+                  id: '456',
+                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  name: 'Test Milestone 2',
+                  needBy: '2022-05-12T15:01:39.190679Z',
+                  responsibleComponent: [],
+                  facilitatedBy: [MtoFacilitator.MODEL_TEAM],
+                  facilitatedByOther: 'Test Facilitated By Other',
+                  status: MtoMilestoneStatus.NOT_STARTED,
+                  riskIndicator: MtoRiskIndicator.ON_TRACK,
+                  notes: []
+                }
+              ]
+            }
+          }
+        ]
       }
     }
   }

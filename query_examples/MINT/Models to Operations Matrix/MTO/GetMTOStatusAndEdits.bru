@@ -18,20 +18,60 @@ auth:apikey {
 
 body:graphql {
   query ModelPlanMTOCategories {
-    modelPlan(id: "{{modelPlanID}}") {
-      mtoMatrix {
-        status
-        milestonesWithNoLinkedSolutions {
-          name
-        }
-        recentEdit {
-          date
-          tableName
-          actorName
-          modifiedBy
-          modifiedDts
-          modifiedByUserAccount {
-            commonName
+  modelPlan(id: "{{modelPlanID}}") {
+      mtoMatrix{
+          status
+          milestonesWithNoLinkedSolutions {
+              name
+          }
+          recentEdit{
+              date
+              tableName
+              actorName
+              modifiedBy
+              modifiedDts
+              modifiedByUserAccount{
+                  commonName
+              }
+          }
+          milestones {
+              id
+              name
+              createdDts
+              createdBy
+              notes {
+                id
+                createdByUserAccount {
+                  id
+                  commonName
+                }
+              }
+              
+          }
+  
+          categories{
+              id
+              position
+              name
+              isUncategorized
+              subCategories {
+                  id
+                  position
+                  name
+                  isUncategorized
+                  milestones {
+                          id
+                          name
+                          addedFromMilestoneLibrary
+                          key
+                          facilitatedBy
+                          needBy
+                          status
+                          riskIndicator
+                          # isDraftMilestone
+                  }
+              }
+              }
           }
         }
         milestones {

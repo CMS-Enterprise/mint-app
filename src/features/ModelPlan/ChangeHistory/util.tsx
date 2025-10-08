@@ -1,3 +1,5 @@
+import React from 'react';
+import { Trans } from 'react-i18next';
 import {
   AuditFieldChangeType,
   DatabaseOperation,
@@ -50,6 +52,7 @@ export type ChangeType =
   | 'operationalSolutionUpdate'
   | 'operationalNeedCreate'
   | 'operationalNeedUpdate'
+  | 'mtoNoteUpdate'
   | 'standardUpdate';
 
 export type TranslationTables =
@@ -69,6 +72,7 @@ export type TranslationTables =
   | TableName.MTO_INFO
   | TableName.MTO_MILESTONE
   | TableName.MTO_MILESTONE_SOLUTION_LINK
+  | TableName.MTO_MILESTONE_NOTE
   | TableName.MTO_SOLUTION
   | TableName.PLAN_DOCUMENT
   | TableName.PLAN_CR
@@ -207,7 +211,8 @@ export const mtoTables: TableName[] = [
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE,
   TableName.MTO_SOLUTION,
-  TableName.MTO_MILESTONE_SOLUTION_LINK
+  TableName.MTO_MILESTONE_SOLUTION_LINK,
+  TableName.MTO_MILESTONE_NOTE
 ];
 
 // Tables where similar audits are batched together
@@ -520,7 +525,8 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
 export const getNestedActionText = (
   change: ChangeRecordType['translatedFields'][0],
   changeType: DatabaseOperation,
-  tableName: TranslationTables
+  tableName: TranslationTables,
+  metaData?: TranslatedAuditMetaData | null
 ) => {
   // If the change is an insert, render created text rather than answered/updated, etc.
   if (
@@ -528,6 +534,24 @@ export const getNestedActionText = (
     changeType === DatabaseOperation.INSERT
   ) {
     return i18next.t(`changeHistory:changeType.CREATED`);
+  }
+  if (tableName === TableName.MTO_MILESTONE_NOTE) {
+    return (
+      <Trans
+        i18nKey="changeHistory:mtoNoteUpdateMeta"
+        values={{
+          action: i18next.t(`changeHistory:noteUpdateType.${changeType}`),
+          toForFrom: i18next.t(`changeHistory:toForFrom.${changeType}`),
+          milestoneName:
+            metaData && isGenericWithMetaData(metaData)
+              ? metaData.relationContent
+              : ''
+        }}
+        components={{
+          bold: <span className="text-bold" />
+        }}
+      />
+    );
   }
   // Render the change type - answered, removed, updated
   if (changeType !== DatabaseOperation.DELETE) {
@@ -594,9 +618,17 @@ export const filterQueryAudits = (
       );
 
       if (
-        nestedActionTexts.some(text =>
-          text.toLowerCase().includes(lowerCaseQuery)
-        )
+        nestedActionTexts.some(text => {
+          if (typeof text === 'string') {
+            return text.toLowerCase().includes(lowerCaseQuery);
+          }
+          if (typeof text === 'object' && text !== null) {
+            return !!text.props?.children
+              ?.toLowerCase()
+              ?.includes(lowerCaseQuery);
+          }
+          return false;
+        })
       ) {
         return true;
       }
@@ -835,6 +867,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'operationalNeedUpdate';
   }
 
+  if (change.tableName === TableName.MTO_MILESTONE_NOTE) {
+    return 'mtoNoteUpdate';
+  }
+
   return 'standardUpdate';
 };
 
@@ -891,6 +927,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
     case 'documentUpdate':
       headerText = i18next.t('changeHistory:documentUpdate');
       break;
+    case 'mtoNoteUpdate':
+      headerText = i18next.t('changeHistory:mtoNoteUpdate');
+      break;
     default:
       break;
   }
@@ -920,6 +959,9 @@ export const getActionText = (change: ChangeRecordType): string => {
       actionText = i18next.t(
         `changeHistory:documentChangeType.${documentUpdateType(change)}`
       );
+      break;
+    case 'mtoNoteUpdate':
+      actionText = i18next.t(`changeHistory:noteUpdateType.${change.action}`);
       break;
     default:
       break;

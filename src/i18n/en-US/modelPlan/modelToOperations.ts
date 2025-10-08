@@ -1,144 +1,12 @@
 import { TranslationMTOInfo } from 'types/translation';
 
 import {
-  MtoCommonMilestoneKey,
   MtoMilestoneStatus,
   MtoSolutionStatus,
   TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
-
-type MilestoneCardType = {
-  description: string;
-};
-
-export const milestoneMap: Record<MtoCommonMilestoneKey, MilestoneCardType> = {
-  [MtoCommonMilestoneKey.MANAGE_CD]: {
-    description:
-      'Identify the Part D and Parts C/D beneficiaries based on their enrollment in a participating Medicare Advantage and Prescription Drug (MAPD) or Prescription Drug Plan (PDP) plan.'
-  },
-  [MtoCommonMilestoneKey.REV_COL_BIDS]: {
-    description:
-      'Receive bids from interested plans regarding a particular pilot or demonstration.'
-  },
-  [MtoCommonMilestoneKey.UPDATE_CONTRACT]: {
-    description:
-      'Update the contract between CMS and the plan regarding the product that is being offered to beneficiaries.'
-  },
-  [MtoCommonMilestoneKey.SIGN_PARTICIPATION_AGREEMENTS]: {
-    description:
-      'Support the signing of Participation Agreements between CMS and each participant. There would be a unique document for each participant with signatures from both CMS and the participant. Most often, ACO models will use 4i to fulfill this milestone, while non-ACO models will use Salesforce.'
-  },
-  [MtoCommonMilestoneKey.RECRUIT_PARTICIPANTS]: {
-    description:
-      'Enable interested parties to communicate their interest to CMS. Support interested parties providing information about their organization and about their experience or interest in the model or demonstration.'
-  },
-  [MtoCommonMilestoneKey.REV_SCORE_APP]: {
-    description:
-      'Receive applications from interested parties and support panel reviews using standard evaluation criteria.'
-  },
-  [MtoCommonMilestoneKey.APP_SUPPORT_CON]: {
-    description:
-      'Advertise the opportunity to bid on work related to managing applications to a model, review the bids and select the application support contractor.'
-  },
-  [MtoCommonMilestoneKey.COMM_W_PART]: {
-    description:
-      'Offer one or more mechanisms to send information to participants (individually and/or as a group) and to receive information from participants.'
-  },
-  [MtoCommonMilestoneKey.VET_PROVIDERS_FOR_PROGRAM_INTEGRITY]: {
-    description:
-      'Screen potential participants or providers in a model for significant program integrity concerns, such as convictions of fraud or abuse or pending fraud or abuse cases. ACO models will often use 4i which will integrate with CPI to vet providers. Non-ACO models will often use Salesforce to integrate with CPI to vet providers.'
-  },
-  [MtoCommonMilestoneKey.MANAGE_PROV_OVERLAP]: {
-    description:
-      'Check for non-permitted provider overlaps between models (same provider in two models at the same time when that particular overlap is prohibited).'
-  },
-  [MtoCommonMilestoneKey.MANAGE_BEN_OVERLAP]: {
-    description:
-      'Check for non-permitted beneficiary overlaps between models (same beneficiary in two models at the same time when that particular overlap is prohibited).'
-  },
-  [MtoCommonMilestoneKey.HELPDESK_SUPPORT]: {
-    description:
-      'Offer mechanisms for participants to share questions and receive answers from CMS.'
-  },
-  [MtoCommonMilestoneKey.IDDOC_SUPPORT]: {
-    description:
-      'For a kidney or ACO model, get set up in the 4i/ACO-OS systems for various aspects of model operations.'
-  },
-  [MtoCommonMilestoneKey.ESTABLISH_BENCH]: {
-    description:
-      'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.\n\nNote: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
-  },
-  [MtoCommonMilestoneKey.PROCESS_PART_APPEALS]: {
-    description:
-      'Offer mechanisms for participants to appeal decisions or performance results to CMS.'
-  },
-  [MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT]: {
-    description:
-      'Advertise the opportunity to bid on work related to evaluating a model, review the bids and select evaluation contractor.'
-  },
-  [MtoCommonMilestoneKey.DATA_TO_MONITOR]: {
-    description:
-      'Gather information from participants, intermediaries, or both, to help support model evaluation. Non-ACO models will likely use one or more ISP systems and/or the Salesforce Project Officer Support Tool / Portal, while ACO models are likely to use 4i to accomplish this milestone. Teams using ISP systems may select ISP for this milestone until they are sure which specific systems they will use.\n\nNote: Some of this collected data may also be used for the purposes of model monitoring.'
-  },
-  [MtoCommonMilestoneKey.DATA_TO_SUPPORT_EVAL]: {
-    description:
-      'Gather information from participants, intermediaries, or both, to help support model evaluation. Non-ACO models will likely use one or more ISP systems and/or the Salesforce Project Officer Support Tool / Portal, while ACO models are likely to use 4i to accomplish this milestone. Teams using ISP systems may select ISP for this milestone until they are sure which specific systems they will use.\n\nNote: Some of this collected data may also be used for the purposes of model monitoring.'
-  },
-  [MtoCommonMilestoneKey.CLAIMS_BASED_MEASURES]: {
-    description:
-      'Analyze claims information to calculate a claims-based measure. This measure may be part of a broader quality strategy or methodology for the model. Different team members may use different tools for different activities related to this milestone. For example, Implementation contractors are likely to use Model Space, while Evaluation contractors may use CCW.\n\nNote: RMADA 3 requires Implementation Contractors to use Model Space unless there is a justifiable reason not to.'
-  },
-  [MtoCommonMilestoneKey.QUALITY_PERFORMANCE_SCORES]: {
-    description:
-      'Gather information about participant quality performance and use it to calculate quality performance scores.'
-  },
-  [MtoCommonMilestoneKey.SEND_REPDATA_TO_PART]: {
-    description:
-      'Share information with participants. Information may include reports or dashboards (e.g. participant feedback and other dashboards), raw data  (e.g., CMS Claims and Claims Line Feeds (CCLF)), written materials, or data via API. Non-ACO models will likely use one or more ISP systems, while ACO models are likely to use 4i to accomplish this milestone.'
-  },
-  [MtoCommonMilestoneKey.UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR]: {
-    description:
-      'Execute a task order on the existing quality measures development contract or solicit a new contract. Solicitation involves advertising the opportunity to bid on work related to quality measures development for a model, reviewing the bids, and selecting a quality measures development contractor.'
-  },
-  [MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT]: {
-    description:
-      'Select from cross-model learning contractors or solicit a new contract. Solicitation involves advertising the opportunity to bid on work related to the learning system of a model, reviewing the bids, and selecting a learning contractor.'
-  },
-  [MtoCommonMilestoneKey.PART_TO_PART_COLLAB]: {
-    description:
-      'Support participants sharing ideas and experiences with each other. This can help participants learn from the successes and challenges of others involved with the same model.'
-  },
-  [MtoCommonMilestoneKey.EDUCATE_BENEF]: {
-    description:
-      'Share information with beneficiaries, either directly or via participants. This information may educate beneficiaries about their involvement in a model, about their health condition, or something else.'
-  },
-  [MtoCommonMilestoneKey.IT_PLATFORM_FOR_LEARNING]: {
-    description:
-      'Support participants learning by providing resources, in addition to the sharing of ideas and experiences. This can help participants learn from the successes and challenges of others involved with the same model.'
-  },
-  [MtoCommonMilestoneKey.ADJUST_FFS_CLAIMS]: {
-    description:
-      'Make payment changes to the Fee-For-Service payment system for Medicare-enrolled providers or suppliers. This may involve updating payment rates to existing payments or may involve paying for things the Fee-for-Service System has not typically paid for (or no longer paying for things it typically does pay for). Work for this milestone may include establishing new codes.'
-  },
-  [MtoCommonMilestoneKey.MANAGE_FFS_EXCL_PAYMENTS]: {
-    description:
-      "Support the model ability to make changes to the way providers are paid in the current fee-for-service payment system, to match the model's policies."
-  },
-  [MtoCommonMilestoneKey.MAKE_NON_CLAIMS_BASED_PAYMENTS]: {
-    description:
-      'Make payments outside of the Fee-for-Service payment system. This may include payments to participants, providers, beneficiaries, or other parties. For work related to this milestone, Medicare Fee-for-service (FFS) models will most often use the Innovation Payment Contractor (IPC), MAPD models are likely to use the Automated Plan Payment System (APPS), and in extremely rare cases, some FFS models may make non-claims based payments through Medicare Administrative Contractors (MAC). All models making non-claims based payments must also share information about the non-claims based payments in order to support internal CMS functions. This is currently done through Master Data Management for Non-Claims Based Payments (MDM-NCBP).'
-  },
-  [MtoCommonMilestoneKey.COMPUTE_SHARED_SAVINGS_PAYMENT]: {
-    description:
-      'Calculate the performance of participants relative to the benchmark. This calculation may take into account the quality performance score and other factors. Positive results could result in shared savings and negative results could result in shared losses. RMADA contractors will use Model Space to complete this work.'
-  },
-  [MtoCommonMilestoneKey.RECOVER_PAYMENTS]: {
-    description:
-      'When needed, recover payments from participants or providers. Payments may have been errors and may need to be recovered, or participants may have incurred losses and CMS may be recovering that money. For work related to this milestone, Medicare Fee-for-service (FFS) models will most often use the Innovation Payment Contractor (IPC), MAPD models are likely to use the Automated Plan Payment System (APPS), and in extremely rare cases, some FFS models may make non-claims based payments through Medicare Administrative Contractors (MAC).'
-  }
-};
 
 const solutionStatuses: Record<MtoSolutionStatus, any> = {
   NOT_STARTED: {
@@ -742,7 +610,6 @@ export const modelToOperationsMisc: Record<string, any> = {
     heading: 'Milestone library',
     description:
       'Browse this collection of common model milestones that are frequently used in CMMI models and demonstrations. Add any milestones that are relevant for your model to your model-to-operations matrix (MTO). Some milestones are suggested for your model based on answers to questions in your Model Plan.',
-    milestoneMap,
     suggestedMilestones: 'Suggested milestones only ({{count}})',
     allMilestones: 'All common milestones ({{count}})',
     hideAdded: 'Hide added milestones ({{count}})',
@@ -836,7 +703,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     hideAdded: 'Hide milestones without solutions ({{count}})'
   },
   validation: {
-    fillOut: 'Please fill out the required field.'
+    fillOut: 'Please fill out the required field.',
+    invalidDate: 'Please enter a valid date.'
   },
   solutionStatusButton: 'Solution implementation statuses',
   solutionStatuses,

@@ -32,6 +32,7 @@ const mockMTOModalContext = {
       milestoneCount: 0,
       solutionCount: 0,
       primaryCategoryCount: 9,
+      isAdded: true,
       categories: []
     } as MtoTemplateType,
     categoryID: '',
@@ -56,6 +57,7 @@ describe('TemplateCard Component', () => {
     milestoneCount: 0,
     solutionCount: 0,
     primaryCategoryCount: 9,
+    isAdded: true,
     categories: []
   };
 

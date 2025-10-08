@@ -1,0 +1,12 @@
+{
+  "content": {
+    "gqlField": "content",
+    "goField": "Content",
+    "dbField": "content",
+    "label": "Notes",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "flattenNestedData": "content",
+    "order": 1
+  }
+}

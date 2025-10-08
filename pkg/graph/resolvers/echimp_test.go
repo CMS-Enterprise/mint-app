@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/s3"
@@ -39,7 +41,7 @@ func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
 		IsLocal:        true,
 		ExpectNoBucket: true,
 	}
-	realClient := s3.NewS3Client(testConfig)
+	realClient := s3.NewS3Client(context.TODO(), testConfig)
 	result, err = GetEchimpCRAndTdlsByModelPlanID(&realClient, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
 	suite.Nil(result)
 	suite.Nil(err)

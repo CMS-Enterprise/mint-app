@@ -21,6 +21,13 @@ Object.defineProperty(window, 'DragEvent', {
   value: vi.fn()
 });
 
+// Mock ResizeObserver for ResponsiveContainer (Recharts)
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn()
+}));
+
 vi.mock('src/app/Clients/github', () => ({
   default: {
     query: vi.fn()

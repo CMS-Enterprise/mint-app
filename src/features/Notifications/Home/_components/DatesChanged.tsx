@@ -30,7 +30,7 @@ const DatesChanged = ({
   dateChanges
 }: DatesChangedProps) => {
   const { t: notificationsT } = useTranslation('notifications');
-  const { t: basicsMiscT } = useTranslation('basicsMisc');
+  const { t: timelineMiscT } = useTranslation('timelineMisc');
 
   return (
     <Grid
@@ -47,7 +47,7 @@ const DatesChanged = ({
         {notificationsT('index.datesChanged.subheading')}
       </p>
       <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
-        {basicsMiscT('highLevelTimeline')}
+        {timelineMiscT('highLevelTimeline')}
       </PageHeading>
 
       {dateChanges.map(

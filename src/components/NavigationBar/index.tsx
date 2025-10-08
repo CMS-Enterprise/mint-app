@@ -25,6 +25,10 @@ export const navLinks = [
     label: 'models'
   },
   {
+    link: '/reports-and-analytics',
+    label: 'reportsAndAnalytics'
+  },
+  {
     link: '/help-and-knowledge',
     label: 'help'
   }

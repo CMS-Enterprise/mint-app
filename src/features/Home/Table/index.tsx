@@ -10,7 +10,6 @@ import {
 } from 'react-table';
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { downloadMTOMilestoneSummary } from 'features/Analytics/util';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import {
   GetEchimpCrandTdlQuery,
@@ -20,13 +19,11 @@ import {
   ModelPlanFilter,
   TeamRole,
   useGetModelPlansQuery,
-  useGetMtoMilestoneSummaryQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
-import CsvExportLink from 'components/CSVExportLink/CsvExportLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
@@ -100,12 +97,6 @@ const ModelPlansTable = ({
   const data = useMemo(() => {
     return (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
   }, [modelPlans?.modelPlanCollection]);
-
-  const { data: mtoMilestoneSummary } = useGetMtoMilestoneSummaryQuery();
-
-  const mtoMilestoneSummaryData = useMemo(() => {
-    return mtoMilestoneSummary?.modelPlanCollection ?? [];
-  }, [mtoMilestoneSummary?.modelPlanCollection]);
 
   const columns = useMemo<Column<any>[]>(() => {
     const homeColumns: string[] = [
@@ -527,30 +518,6 @@ const ModelPlansTable = ({
             />
           )}
         </div>
-
-        <>
-          {type === ViewCustomizationType.ALL_MODEL_PLANS && (
-            <div className="display-flex flex-align-start padding-top-1">
-              <CsvExportLink />
-              <Button
-                type="button"
-                className="usa-button usa-button--unstyled display-flex margin-left-4"
-                onClick={() => {
-                  downloadMTOMilestoneSummary(
-                    mtoMilestoneSummaryData,
-                    'mto-milestone-summary.xlsx'
-                  );
-                }}
-              >
-                <Icon.FileDownload
-                  className="margin-right-1"
-                  aria-label="download"
-                />
-                {homeT('downloadMTOMilestoneSummary')}
-              </Button>
-            </div>
-          )}
-        </>
       </div>
 
       <TopScrollContainer>
