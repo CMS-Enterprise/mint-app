@@ -5,7 +5,9 @@ export default gql(/* GraphQL */ `
     mtoMilestone(id: $id) {
       id
       name
+      description
       key
+      responsibleComponent
       facilitatedBy
       facilitatedByOther
       assignedTo
@@ -22,6 +24,7 @@ export default gql(/* GraphQL */ `
       isDraft
       commonMilestone {
         key
+        description
         commonSolutions {
           key
         }

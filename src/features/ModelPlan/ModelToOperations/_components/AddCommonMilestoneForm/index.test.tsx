@@ -21,6 +21,7 @@ describe('Add common milestone form', () => {
                 milestone={{
                   __typename: 'MTOCommonMilestone',
                   name: 'Milestone 1',
+                  description: 'Description 1',
                   key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                   isAdded: false,
                   isSuggested: false,
