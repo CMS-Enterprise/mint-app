@@ -168,8 +168,8 @@ func ApplyTemplateToMTO(
 
 			categoryAddedWithStatus, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, mtoCategory)
 			if err != nil {
-				warnings = append(warnings, fmt.Sprintf("failed to create MTO category %s: %v", category.Name, err))
-				continue
+				// This is a critical error, return immediately instead of continuing
+				return nil, fmt.Errorf("failed to create MTO category %s: %w", category.Name, err)
 			}
 
 			categoryIDMap[category.ID] = categoryAddedWithStatus.ID
@@ -241,6 +241,12 @@ func ApplyTemplateToMTO(
 			if milestone.MTOTemplateCategoryID != nil {
 				if newCategoryID, exists := categoryIDMap[*milestone.MTOTemplateCategoryID]; exists {
 					milestoneWithStatus.MTOCategoryID = &newCategoryID
+
+					// Clear the name field since this is a common milestone (has a key)
+					// This prevents violating the check_name_or_common_milestone_null constraint
+					milestoneWithStatus.Name = nil
+					// Set modified_by to prevent null constraint violation
+					milestoneWithStatus.ModifiedBy = &principalAccount.ID
 
 					// link milestone with category if category exists
 					_, err = storage.MTOMilestoneUpdate(tx, logger, &milestoneWithStatus.MTOMilestone)
