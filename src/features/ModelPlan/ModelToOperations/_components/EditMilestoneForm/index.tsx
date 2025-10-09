@@ -64,7 +64,6 @@ import TablePagination from 'components/TablePagination';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -135,8 +134,6 @@ const EditMilestoneForm = ({
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
-
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
     responsibleComponent: responsibleComponentConfig,
@@ -910,39 +907,35 @@ const EditMilestoneForm = ({
         </>
       )}
 
-      {unsavedChanges + unsavedSolutionChanges > 0 && (
-        <div
-          className={classNames('save-tag', {
-            'margin-top-4': isMobile
-          })}
-        >
-          <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning
-              className="margin-right-1 top-2px text-warning"
-              aria-label="warning"
-            />
-            <p className="margin-0 display-inline margin-right-1">
-              {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
-                count: unsavedChanges + unsavedSolutionChanges
-              })}
-            </p>
-            -
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              disabled={
-                isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
-              }
-              className="margin-x-1"
-              unstyled
-            >
-              {modelToOperationsMiscT('modal.editMilestone.save')}
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="padding-8 maxw-tablet">
+        {unsavedChanges + unsavedSolutionChanges > 0 && (
+          <div className={classNames('save-tag')}>
+            <div className="bg-warning-lighter padding-y-05 padding-x-1">
+              <Icon.Warning
+                className="margin-right-1 top-2px text-warning"
+                aria-label="warning"
+              />
+              <p className="margin-0 display-inline margin-right-1">
+                {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
+                  count: unsavedChanges + unsavedSolutionChanges
+                })}
+              </p>
+              -
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={
+                  isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
+                }
+                className="margin-x-1"
+                unstyled
+              >
+                {modelToOperationsMiscT('modal.editMilestone.save')}
+              </Button>
+            </div>
+          </div>
+        )}
+
         {watch('isDraft') && (
           <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
             <Icon.Science
