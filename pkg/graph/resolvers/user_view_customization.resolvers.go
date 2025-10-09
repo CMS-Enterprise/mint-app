@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
@@ -36,6 +37,11 @@ func (r *userViewCustomizationResolver) ViewCustomization(ctx context.Context, o
 // Solutions is the resolver for the solutions field.
 func (r *userViewCustomizationResolver) Solutions(ctx context.Context, obj *models.UserViewCustomization) ([]models.MTOCommonSolutionKey, error) {
 	return models.ConvertEnums[models.MTOCommonSolutionKey](obj.Solutions), nil
+}
+
+// ComponentGroups is the resolver for the componentGroups field.
+func (r *userViewCustomizationResolver) ComponentGroups(ctx context.Context, obj *models.UserViewCustomization) ([]models.ComponentGroup, error) {
+	panic(fmt.Errorf("not implemented: ComponentGroups - componentGroups"))
 }
 
 // UserViewCustomization returns generated.UserViewCustomizationResolver implementation.

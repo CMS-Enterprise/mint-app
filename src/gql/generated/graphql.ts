@@ -287,6 +287,19 @@ export enum ComplexityCalculationLevelType {
   MIDDLE = 'MIDDLE'
 }
 
+export enum ComponentGroup {
+  CCMI_PCMG = 'CCMI_PCMG',
+  CCMI_PPG = 'CCMI_PPG',
+  CCMI_SCMG = 'CCMI_SCMG',
+  CCMI_SPHG = 'CCMI_SPHG',
+  CCMI_TBD = 'CCMI_TBD',
+  CCSQ = 'CCSQ',
+  CM = 'CM',
+  CMCS = 'CMCS',
+  CPI = 'CPI',
+  FCHCO = 'FCHCO'
+}
+
 export enum ConfidenceType {
   COMPLETELY = 'COMPLETELY',
   FAIRLY = 'FAIRLY',
@@ -5226,6 +5239,7 @@ export type UserNotifications = {
 
 export type UserViewCustomization = {
   __typename: 'UserViewCustomization';
+  componentGroups: Array<ComponentGroup>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
@@ -5240,6 +5254,7 @@ export type UserViewCustomization = {
 };
 
 export type UserViewCustomizationChanges = {
+  componentGroups: Array<ComponentGroup>;
   solutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
   viewCustomization?: InputMaybe<Array<ViewCustomizationType>>;
 };
@@ -5248,6 +5263,7 @@ export enum ViewCustomizationType {
   ALL_MODEL_PLANS = 'ALL_MODEL_PLANS',
   FOLLOWED_MODELS = 'FOLLOWED_MODELS',
   MODELS_APPROACHING_CLEARANCE = 'MODELS_APPROACHING_CLEARANCE',
+  MODELS_BY_GROUP = 'MODELS_BY_GROUP',
   MODELS_BY_SOLUTION = 'MODELS_BY_SOLUTION',
   MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
   MY_MODEL_PLANS = 'MY_MODEL_PLANS'
