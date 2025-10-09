@@ -39,7 +39,7 @@ type UserViewCustomization {
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
   viewCustomization: [ViewCustomizationType!]
   solutions: [MTOCommonSolutionKey!]
-  componentGroups: [ComponentGroup!]!
+  componentGroups: [ComponentGroup!]
 }
 
 extend type Query {

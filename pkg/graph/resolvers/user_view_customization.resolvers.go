@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
@@ -41,7 +40,7 @@ func (r *userViewCustomizationResolver) Solutions(ctx context.Context, obj *mode
 
 // ComponentGroups is the resolver for the componentGroups field.
 func (r *userViewCustomizationResolver) ComponentGroups(ctx context.Context, obj *models.UserViewCustomization) ([]models.ComponentGroup, error) {
-	panic(fmt.Errorf("not implemented: ComponentGroups - componentGroups"))
+	return models.ConvertEnums[models.ComponentGroup](obj.ComponentGroups), nil
 }
 
 // UserViewCustomization returns generated.UserViewCustomizationResolver implementation.

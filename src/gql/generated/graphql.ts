@@ -5254,7 +5254,7 @@ export type UserViewCustomization = {
 };
 
 export type UserViewCustomizationChanges = {
-  componentGroups: Array<ComponentGroup>;
+  componentGroups?: InputMaybe<Array<ComponentGroup>>;
   solutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
   viewCustomization?: InputMaybe<Array<ViewCustomizationType>>;
 };
