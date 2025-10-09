@@ -5,6 +5,7 @@ export type HomepageSettingsType = Record<
   Record<'heading' | 'description', string>
 >;
 
+// TODO: Add translations for MODELS_BY_GROUP
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
