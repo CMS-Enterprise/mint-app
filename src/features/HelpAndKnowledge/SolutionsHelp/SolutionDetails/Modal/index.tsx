@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import {
-  Grid,
-  GridContainer,
-  Icon,
-  SideNav as TrussSideNav
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
 import { subComponentsProps } from 'features/ModelPlan/ReadOnly';
 import MobileNav from 'features/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'features/ModelPlan/ReadOnly/_components/Sidenav';
