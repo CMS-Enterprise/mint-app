@@ -408,84 +408,93 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
               Assign the person who is responsible for ensuring the work for this milestone is completed. This field searches CMS’ EUA database but is limited to individuals added to this model in MINT.
             </div>
             <div
-              class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
-              id="assigned-to"
+              class="usa-combo-box"
+              data-enhanced="true"
+              data-testid="combo-box"
             >
-              <span
-                class="css-1f43avz-a11yText-A11yText"
-                id="react-select-assigned-to-live-region"
+              <select
+                aria-hidden="true"
+                class="usa-select usa-sr-only usa-combo-box__select"
+                data-testid="combo-box-select"
+                name="assignedTo"
+                tabindex="-1"
               />
-              <span
-                aria-atomic="false"
-                aria-live="polite"
-                aria-relevant="additions text"
-                class="css-1f43avz-a11yText-A11yText"
-                role="log"
-              />
-              <div
-                class="cedar-contact-select__control css-79rxjr-control"
-              >
-                <div
-                  class="cedar-contact-select__value-container cedar-contact-select__value-container--has-value css-1fdsijx-ValueContainer"
-                >
-                  <div
-                    class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
-                    id="react-select-assigned-to-placeholder"
-                  />
-                  <div
-                    class="cedar-contact-select__input-container css-qbdosj-Input"
-                    data-value=""
-                  >
-                    <input
-                      aria-activedescendant=""
-                      aria-autocomplete="list"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      aria-labelledby="label-assigned-to"
-                      autocapitalize="none"
-                      autocomplete="off"
-                      autocorrect="off"
-                      class="cedar-contact-select__input"
-                      id="react-select-assigned-to-input"
-                      role="combobox"
-                      spellcheck="false"
-                      style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
-                      tabindex="0"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div
-                  class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
-                >
-                  <span
-                    class="cedar-contact-select__indicator-separator css-1u9des2-indicatorSeparator"
-                  />
-                  <div
-                    aria-hidden="true"
-                    class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1h8bgg-indicatorContainer"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="css-tj5bde-Svg"
-                      focusable="false"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      width="20"
-                    >
-                      <path
-                        d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
               <input
-                name="assigned-to"
-                type="hidden"
-                value="[object Object]"
+                aria-activedescendant=""
+                aria-autocomplete="list"
+                aria-controls="assigned-to--list"
+                aria-describedby="assigned-to--assistiveHint"
+                aria-expanded="false"
+                aria-owns="assigned-to--list"
+                autocapitalize="off"
+                autocomplete="off"
+                class="usa-combo-box__input"
+                data-testid="combo-box-input"
+                id="assigned-to"
+                role="combobox"
+                type="text"
+                value=""
               />
+              <span
+                class="usa-combo-box__clear-input__wrapper"
+                tabindex="-1"
+              >
+                <button
+                  aria-label="Clear the select contents"
+                  class="usa-combo-box__clear-input"
+                  data-testid="combo-box-clear-button"
+                  hidden=""
+                  type="button"
+                >
+                   
+                </button>
+              </span>
+              <span
+                class="usa-combo-box__input-button-separator"
+              >
+                 
+              </span>
+              <span
+                class="usa-combo-box__toggle-list__wrapper"
+                tabindex="-1"
+              >
+                <button
+                  aria-label="Toggle the dropdown list"
+                  class="usa-combo-box__toggle-list"
+                  data-testid="combo-box-toggle"
+                  tabindex="-1"
+                  type="button"
+                >
+                   
+                </button>
+              </span>
+              <ul
+                class="usa-combo-box__list"
+                data-testid="combo-box-option-list"
+                hidden=""
+                id="assigned-to--list"
+                role="listbox"
+                tabindex="-1"
+              >
+                <li
+                  class="usa-combo-box__list-option--no-results"
+                >
+                  No results found
+                </li>
+              </ul>
+              <div
+                class="usa-combo-box__status usa-sr-only"
+                role="status"
+              />
+              <span
+                class="usa-sr-only"
+                data-testid="combo-box-assistive-hint"
+                id="assigned-to--assistiveHint"
+              >
+                When autocomplete results are available use up and down arrows to review
+           and enter to select. Touch device users, explore by touch or with swipe
+           gestures.
+              </span>
             </div>
           </div>
           <div

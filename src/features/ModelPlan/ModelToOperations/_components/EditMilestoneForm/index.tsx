@@ -17,6 +17,7 @@ import {
 } from 'react-table';
 import {
   Button,
+  ComboBox,
   Fieldset,
   Form,
   FormGroup,
@@ -42,9 +43,9 @@ import {
   useCreateMtoMilestoneNoteMutation,
   useDeleteMtoMilestoneMutation,
   useDeleteMtoMilestoneNoteMutation,
+  useGetModelCollaboratorsQuery,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
-  UserAccount,
   useUpdateMtoMilestoneMutation,
   useUpdateMtoMilestoneNoteMutation
 } from 'gql/generated/graphql';
@@ -58,7 +59,6 @@ import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import Modal from 'components/Modal';
 import MultiSelect from 'components/MultiSelect';
-import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
@@ -107,10 +107,6 @@ type FormValues = {
   facilitatedBy?: MtoFacilitator[];
   facilitatedByOther?: string;
   assignedTo?: string;
-  assignedToUserAccount?: Pick<
-    UserAccount,
-    'id' | 'commonName' | 'username' | 'email'
-  >;
   needBy?: string;
   status: MtoMilestoneStatus;
   riskIndicator: MtoRiskIndicator;
@@ -191,6 +187,13 @@ const EditMilestoneForm = ({
     }
   });
 
+  const { data: allCollaboratorsData, loading: collaboratorsQueryLoading } =
+    useGetModelCollaboratorsQuery({
+      variables: {
+        id: modelID ?? ''
+      }
+    });
+
   const sortedMilestoneNotes = useMemo(() => {
     return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
       return (
@@ -202,6 +205,15 @@ const EditMilestoneForm = ({
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
   }, [data]);
+
+  const modelCollaboratorsOptions = useMemo(() => {
+    return (
+      allCollaboratorsData?.modelPlan.collaborators.map(({ userAccount }) => ({
+        value: userAccount.id,
+        label: `${userAccount.commonName} (${userAccount.email})`
+      })) || []
+    );
+  }, [allCollaboratorsData]);
 
   const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
     variables: {
@@ -397,12 +409,6 @@ const EditMilestoneForm = ({
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
       assignedTo: milestone?.assignedTo || '',
-      assignedToUserAccount: milestone?.assignedToUserAccount || {
-        id: '',
-        commonName: '',
-        username: '',
-        email: ''
-      },
       needBy: milestone?.needBy || '',
       status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
       riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
@@ -847,7 +853,7 @@ const EditMilestoneForm = ({
 
   rows.map(row => prepareRow(row));
 
-  if (loading && !milestone) {
+  if ((loading || collaboratorsQueryLoading) && !milestone) {
     return <PageLoading />;
   }
 
@@ -1335,37 +1341,33 @@ const EditMilestoneForm = ({
               )}
 
               <Controller
-                name="assignedToUserAccount"
+                name="assignedTo"
                 control={control}
-                render={({ field: { ref, ...field } }) => (
-                  <FormGroup className="margin-top-0 margin-bottom-2">
-                    <Label htmlFor={convertCamelCaseToKebabCase('assignedTo')}>
-                      {assignedToConfig.label}
-                    </Label>
-                    <HelpText className="margin-top-1">
-                      {assignedToConfig.sublabel}
-                    </HelpText>
+                render={({ field: { ref, ...field } }) => {
+                  return (
+                    <FormGroup className="margin-top-0 margin-bottom-2">
+                      <Label
+                        htmlFor={convertCamelCaseToKebabCase('assignedTo')}
+                      >
+                        {assignedToConfig.label}
+                      </Label>
+                      <HelpText className="margin-top-1">
+                        {assignedToConfig.sublabel}
+                      </HelpText>
 
-                    <OktaUserSelect
-                      id="assigned-to"
-                      name="assigned-to"
-                      ariaLabelledBy="label-assigned-to"
-                      ariaDescribedBy="hint-assigned-to"
-                      value={{
-                        username: field.value?.username || '',
-                        displayName: field.value?.commonName || '',
-                        email: field.value?.email || ''
-                      }}
-                      onChange={oktaUser => {
-                        setValue(
-                          'assignedTo',
-                          oktaUser ? oktaUser.username : '',
-                          { shouldDirty: true }
-                        );
-                      }}
-                    />
-                  </FormGroup>
-                )}
+                      <ComboBox
+                        {...field}
+                        id={convertCamelCaseToKebabCase(field.name)}
+                        name="assignedTo"
+                        onChange={value => {
+                          field.onChange(value || '');
+                        }}
+                        defaultValue={field.value || ''}
+                        options={modelCollaboratorsOptions}
+                      />
+                    </FormGroup>
+                  );
+                }}
               />
               {watch('assignedTo') && (
                 <Alert type="info" slim className="margin-y-3">
