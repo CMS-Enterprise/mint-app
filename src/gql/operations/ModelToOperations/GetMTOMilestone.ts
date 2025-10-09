@@ -10,6 +10,13 @@ export default gql(/* GraphQL */ `
       responsibleComponent
       facilitatedBy
       facilitatedByOther
+      assignedTo
+      assignedToUserAccount {
+        id
+        commonName
+        username
+        email
+      }
       needBy
       status
       riskIndicator
