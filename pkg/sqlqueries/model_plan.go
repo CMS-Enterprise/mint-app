@@ -60,7 +60,7 @@ type modelPlanScripts struct {
 	GetByIDLoader                          string
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
-	GetByMTOSolutionKey                    string
+	GetByMTOSolutionKeyLoader              string
 	CollectionWhereFavoritedByUserID       string
 	GetTaskListStatus                      string
 }
@@ -79,7 +79,7 @@ var ModelPlan = modelPlanScripts{
 	GetByIDLoader:                          modelPlanGetByIDLoaderSQL,
 	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,
 	GetByOperationalSolutionKey:            modelPlanGetByOperationalSolutionKeySQL,
-	GetByMTOSolutionKey:                    modelPlanGetByMTOCommonSolutionKeySQL,
+	GetByMTOSolutionKeyLoader:              modelPlanGetByMTOCommonSolutionKeySQL,
 	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
 	GetTaskListStatus:                      modelPlanGetTaskListStatus,
 }

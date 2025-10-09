@@ -31,6 +31,7 @@ func (r *modelPlanAndMTOCommonSolutionResolver) ModelPlan(ctx context.Context, o
 func (r *queryResolver) ModelPlansByMTOSolutionKey(ctx context.Context, solutionKey models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 	return ModelPlansByMTOSolutionKey(
+		ctx,
 		logger,
 		r.store,
 		solutionKey,

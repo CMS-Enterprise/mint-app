@@ -4265,7 +4265,7 @@ export type Query = {
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoCommonSolutionContact: MtoCommonSolutionContact;
   mtoCommonSolutionContractor: MtoCommonSolutionContractor;
-  mtoCommonSolutionModelUsage: MtoCommonSolutionModelUsage;
+  mtoCommonSolutionModelUsages: Array<MtoCommonSolutionModelUsage>;
   mtoCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
   mtoCommonSolutions: Array<MtoCommonSolution>;
   mtoMilestone: MtoMilestone;
@@ -4343,12 +4343,6 @@ export type QueryMtoCommonSolutionContactArgs = {
 /** Query definition for the schema */
 export type QueryMtoCommonSolutionContractorArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryMtoCommonSolutionModelUsageArgs = {
-  key: MtoCommonSolutionKey;
 };
 
 

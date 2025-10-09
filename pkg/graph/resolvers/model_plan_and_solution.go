@@ -1,11 +1,14 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func ModelPlansByOperationalSolutionKey(
@@ -18,11 +21,12 @@ func ModelPlansByOperationalSolutionKey(
 
 // ModelPlansByMTOSolutionKey returns a list of model plans which utilize an mto common solution
 func ModelPlansByMTOSolutionKey(
+	ctx context.Context,
 	logger *zap.Logger,
 	np sqlutils.NamedPreparer,
 	solutionKey models.MTOCommonSolutionKey,
 ) ([]*models.ModelPlanAndMTOCommonSolution, error) {
-	return storage.ModelPlanGetByMTOSolutionKey(np, logger, solutionKey)
+	return loaders.ModelPlan.ByMTOSolutionKey.Load(ctx, solutionKey)()
 }
 
 // ModelBySolutionStatus converts a Model status to a ModelBySolutionStatus

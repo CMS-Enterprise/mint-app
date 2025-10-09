@@ -19,9 +19,9 @@ func (r *mTOCommonSolutionModelUsageResolver) ModelID(ctx context.Context, obj *
 	return obj.ModelPlanID, nil
 }
 
-// MtoCommonSolutionModelUsage is the resolver for the mtoCommonSolutionModelUsage field.
-func (r *queryResolver) MtoCommonSolutionModelUsage(ctx context.Context, key models.MTOCommonSolutionKey) (*models.MTOCommonSolutionModelUsage, error) {
-	panic(fmt.Errorf("not implemented: MtoCommonSolutionModelUsage - mtoCommonSolutionModelUsage"))
+// MtoCommonSolutionModelUsages is the resolver for the mtoCommonSolutionModelUsages field.
+func (r *queryResolver) MtoCommonSolutionModelUsages(ctx context.Context) ([]*models.MTOCommonSolutionModelUsage, error) {
+	panic(fmt.Errorf("not implemented: MtoCommonSolutionModelUsages - mtoCommonSolutionModelUsages"))
 }
 
 // MTOCommonSolutionModelUsage returns generated.MTOCommonSolutionModelUsageResolver implementation.
@@ -30,3 +30,15 @@ func (r *Resolver) MTOCommonSolutionModelUsage() generated.MTOCommonSolutionMode
 }
 
 type mTOCommonSolutionModelUsageResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+/*
+	func (r *queryResolver) MtoCommonSolutionModelUsage(ctx context.Context, key models.MTOCommonSolutionKey) (*models.MTOCommonSolutionModelUsage, error) {
+	panic(fmt.Errorf("not implemented: MtoCommonSolutionModelUsage - mtoCommonSolutionModelUsage"))
+}
+*/
