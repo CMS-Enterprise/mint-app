@@ -107,7 +107,7 @@ func (s *Store) PlanCollaboratorUpdate(
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(
+func PlanCollaboratorDelete(
 	tx *sqlx.Tx,
 	_ *zap.Logger,
 	id uuid.UUID,
@@ -125,16 +125,12 @@ func (s *Store) PlanCollaboratorDelete(
 		"modified_by": userID,
 	}
 
-	retCollaborator, err := sqlutils.SelectProcedure[models.PlanCollaborator](tx, sqlqueries.PlanCollaborator.Delete, args)
+	retCollaborator, err := sqlutils.GetProcedure[models.PlanCollaborator](tx, sqlqueries.PlanCollaborator.Delete, args)
 	if err != nil {
 		return nil, fmt.Errorf("issue deleting plan collaborator with id %s, %w", id.String(), err)
 	}
 
-	if len(retCollaborator) == 0 {
-		return nil, fmt.Errorf("plan collaborator with id %s not found", id.String())
-	}
-
-	return retCollaborator[0], nil
+	return retCollaborator, nil
 }
 
 // PlanCollaboratorGetByID returns a plan collaborator for a given database ID, or nil if none found

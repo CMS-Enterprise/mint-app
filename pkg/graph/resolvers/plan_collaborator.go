@@ -185,7 +185,7 @@ func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authenti
 		}
 
 		// Then delete the collaborator
-		retCollaborator, err := store.PlanCollaboratorDelete(tx, logger, id, principal.Account().ID)
+		retCollaborator, err := storage.PlanCollaboratorDelete(tx, logger, id, principal.Account().ID)
 		if err != nil {
 			logger.Error("Failed to delete collaborator",
 				zap.String("collaborator_id", id.String()),
