@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Icon } from '@trussworks/react-uswds';
 
 import { ModelSubSectionRouteKey } from 'components/ShareExport/util';
@@ -17,6 +17,8 @@ interface MobileNavProps {
   isHelpArticle: boolean | undefined;
   solutionDetailRoute?: string;
   isFilteredView?: boolean;
+  solutionNavigation?: boolean;
+  paramActive?: boolean;
 }
 
 const MobileNav = ({
@@ -24,15 +26,23 @@ const MobileNav = ({
   subinfo,
   isHelpArticle,
   solutionDetailRoute,
-  isFilteredView
+  isFilteredView,
+  solutionNavigation,
+  paramActive
 }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const { t: hk } = useTranslation('helpAndKnowledge');
 
+  const location = useLocation();
+
   const isMobile = useCheckResponsiveScreen('tablet');
 
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsAccordionOpen(false);
+  }, [location]);
 
   useEffect(() => {
     // Fixes edge case: subnavigation remains open when user (when in small screen size) expands window to large size really fast (using window manager)
@@ -41,10 +51,13 @@ const MobileNav = ({
     }
   }, [isMobile]);
 
-  const translationKey = solutionDetailRoute ? hk : t;
+  const translationKey = solutionDetailRoute || solutionNavigation ? hk : t;
 
   return (
-    <div className="read-only-model-plan__subNav-accordion">
+    <div
+      className="read-only-model-plan__subNav-accordion"
+      style={{ top: solutionNavigation ? '0' : '177px' }}
+    >
       <button
         type="button"
         className={`usa-menu-btn mint-header__basic width-full display-flex flex-justify flex-align-center desktop:display-none ${
@@ -75,6 +88,8 @@ const MobileNav = ({
               subComponents={subComponents}
               isHelpArticle={isHelpArticle}
               isMobile
+              solutionNavigation={solutionNavigation}
+              paramActive={paramActive}
             />
             <li>
               <NavLink

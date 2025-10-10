@@ -19,6 +19,7 @@ describe('MilestoneCard Component', () => {
   const mockMilestone: MilestoneCardType = {
     __typename: 'MTOCommonMilestone',
     name: 'Test Milestone',
+    description: 'Description 1',
     categoryName: 'Test Category',
     subCategoryName: 'Test SubCategory',
     isSuggested: true,

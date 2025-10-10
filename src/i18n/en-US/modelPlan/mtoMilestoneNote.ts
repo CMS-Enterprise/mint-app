@@ -8,10 +8,10 @@ const mtoMilestoneNote = {
     gqlField: 'content',
     goField: 'Content',
     dbField: 'content',
-    label: 'Content',
-    exportLabel: 'Note',
+    label: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    flattenNestedData: 'content',
     order: 1.0
   }
 };

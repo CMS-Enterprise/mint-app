@@ -18,6 +18,17 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.0
   },
+  description: {
+    gqlField: 'description',
+    goField: 'Description',
+    dbField: 'description',
+    label: 'Milestone description',
+    sublabel:
+      'Describe the purpose of this milestone and the work needed to complete it.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.001
+  },
   isDraft: {
     gqlField: 'isDraft',
     goField: 'IsDraft',
@@ -370,6 +381,16 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 4.0,
     tableReference: TableName.MTO_CATEGORY
+  },
+  notes: {
+    gqlField: 'notes',
+    goField: 'Notes',
+    dbField: 'notes',
+    label: 'Notes',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    flattenNestedData: 'content',
+    order: 4.1
   }
 };
 
