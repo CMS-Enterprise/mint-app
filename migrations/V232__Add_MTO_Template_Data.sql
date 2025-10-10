@@ -10,8 +10,8 @@ INSERT INTO mto_template (id, key, name, description, created_by, created_dts)
 VALUES (
     gen_random_uuid(),
     'MEDICARE_ADVANTAGE_AND_DRUG_MODELS',
-    'Medicare Advantage and Drug Models Template',
-    'Template for Medicare Advantage and prescription drug models with standardized categories, milestones, and solutions.',
+    'Medicare Advantage and Part D models',
+    'Medicare Advantage and Part D models involve changes to payments or services for Medicare Advantage (Part C) and/or to Part D models. These models often leverage a set of systems supported by the Center for Medicare (CM) and/or Office of Information Technology (OIT) teams who support Parts C and D. ',
     '00000001-0001-0001-0001-000000000001'::UUID, -- System user
     current_timestamp
 );
@@ -438,8 +438,8 @@ INSERT INTO mto_template (id, key, name, description, created_by, created_dts)
 VALUES (
   gen_random_uuid(),
   'ACO_AND_KIDNEY_MODELS',
-  'ACO and Kidney Models Template',
-  'Template for ACO and Kidney models with standardized categories, milestones, and solutions.',
+  'ACO and kidney models',
+  'Accountable Care Organization (ACO) models and the kidney models use a slightly different set of systems from many other models. ACO models incentivize providers through financial rewards for achieving high-quality care and cost savings. The kidney models involve improving care for patients with End-Stage Renal Disease and chronic kidney disease through a range of approaches.',
   '00000001-0001-0001-0001-000000000001'::UUID,
   CURRENT_TIMESTAMP
 );
@@ -810,8 +810,8 @@ INSERT INTO mto_template (id, key, name, description, created_by, created_dts)
 VALUES (
   gen_random_uuid(),
   'EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS',
-  'Episode, Primary Care, and non-ACO Models',
-  'Template for episode-based, primary care, and non-ACO models.',
+  'Episode, primary care, and non-ACO models',
+  'Episode-based models, primary care models, and non-Accountable Care Organization (ACO) models tend to use a similar set of systems for their operations. Episode-based models involve a pre-determined, often bundled payment for a defined, comprehensive episode of care. Primary care models involve advanced approaches to the delivery of primary care. Non-ACO models are other models that are not ACOs or kidney models and may use this similar set of systems as episode-based and primary care models.',
   '00000001-0001-0001-0001-000000000001'::uuid,
   CURRENT_TIMESTAMP
 );
@@ -998,8 +998,8 @@ INSERT INTO mto_template (id, key, name, description, created_by, created_dts)
 VALUES (
     gen_random_uuid(),
     'STANDARD_CATEGORIES',
-    'Standard Categories Template',
-    'Template with standard categories/subcategories but no predefined solutions or milestones.',
+    'Standard categories',
+    'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories and sub-categories in this template represent some of the most common model phases and/or groupings for model activities. Once you’ve added this template, you may add or remove categories as your model requires, and you may add milestones to the added categories. This template does not include milestones or solutions and IT systems.',
     '00000001-0001-0001-0001-000000000001'::UUID,
     current_timestamp
 );
@@ -1153,8 +1153,8 @@ INSERT INTO mto_template (id, key, name, description, created_by, created_dts)
 VALUES (
   gen_random_uuid(),
   'STATE_AND_LOCAL_MODELS',
-  'State and Local Models',
-  'Template for state and local models.',
+  'State and local models',
+  'State and local models often involve working with states, or with states in conjunction with providers. Many state and local models involve Cooperative Agreements to financially support those we are collaborating with in preparing for an implementation phase, when payments and care will change for a particular population.',
   '00000001-0001-0001-0001-000000000001'::uuid,
   CURRENT_TIMESTAMP
 );
