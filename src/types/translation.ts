@@ -55,6 +55,7 @@ import {
   MtoFacilitator,
   MtoInfoTranslation,
   MtoMilestoneNoteTranslation,
+  MtoMilestoneResponsibleComponent,
   MtoMilestoneSolutionLinkTranslation,
   MtoMilestoneStatus,
   MtoMilestoneTranslation,
@@ -1284,7 +1285,9 @@ export type TranslationMTOMilestoneSolutionLinkCustom = {
 // MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
+  description: TranslationFieldProperties;
   isDraft: TranslationFieldPropertiesWithOptions<Bool>;
+  responsibleComponent: TranslationFieldPropertiesWithOptions<MtoMilestoneResponsibleComponent>;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
   facilitatedByOther: TranslationFieldProperties;
   assignedTo: TranslationFieldProperties;
@@ -1295,6 +1298,7 @@ export type TranslationMTOMilestoneCustomForm = {
   status: TranslationFieldPropertiesWithOptions<MtoMilestoneStatus>;
   key: TranslationFieldProperties;
   mtoCategoryID: TranslationFieldProperties;
+  notes: TranslationFieldProperties;
 };
 
 type TranslationMTOMilestoneCustomGQL = Omit<

@@ -227,6 +227,37 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('[data-testid="toast-success"]').should('exist');
     cy.get('td').contains('Custom Milestone').should('exist');
+
+    cy.get('table').within(() => {
+      cy.get('td')
+        .contains('Custom Milestone')
+        .should('exist')
+        .parent('tr')
+        .within(() => {
+          cy.contains('Edit details').click({ force: true });
+        });
+    });
+
+    cy.get('#name')
+      .should('be.not.disabled')
+      .clear()
+      .type('Edited Custom Milestone', { force: true });
+
+    cy.get('#description')
+      .should('be.not.disabled')
+      .type('Edited Custom Milestone Description');
+    cy.get('#description').should(
+      'have.value',
+      'Edited Custom Milestone Description'
+    );
+
+    cy.get('#isDraft').should('be.not.disabled').click({ force: true });
+
+    cy.contains('Save changes')
+      .should('be.not.disabled')
+      .click({ force: true });
+
+    cy.get('[data-testid="toast-success"]').should('exist');
   });
 
   it('Create custom solution', () => {
@@ -368,6 +399,21 @@ describe('Model-to-Operations Matrix', () => {
           cy.contains('Edit details').click({ force: true });
         });
     });
+
+    cy.get('#description').type('Test description');
+    cy.get('#description').should('have.value', 'Test description');
+
+    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
+    cy.get('#clear-selection')
+      .parent()
+      .find('[class$="indicatorContainer"]')
+      .eq(1)
+      .click({ force: true });
+    cy.get('#responsible-component-tags li').should(
+      'have.length.greaterThan',
+      0
+    );
+    cy.contains('FCHCO').click({ force: true });
 
     cy.get('[data-testid="add-note-button"]').click();
 

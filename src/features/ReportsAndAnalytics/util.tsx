@@ -17,7 +17,6 @@ import {
   columnHeaderTranslations,
   typenameTranslations
 } from 'i18n/en-US/analytics';
-import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
@@ -339,9 +338,12 @@ export const downloadMTOMilestoneSummary = (
       flattenedData.push({
         Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
-        Description: milestone.key
-          ? milestoneMap[milestone.key]?.description
-          : '',
+        Description: milestone.description || milestone.description || '',
+        'Responsible Component': (milestone.responsibleComponent || [])
+          ?.map(component =>
+            i18next.t(`mtoMilestone:responsibleComponent.options.${component}`)
+          )
+          .join(', '),
         'Facilitated by': (milestone.facilitatedBy || [])
           ?.map(facilitator =>
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
@@ -379,7 +381,7 @@ export const downloadMTOMilestoneSummary = (
   }
 
   // Add borders to all cells in the sheet
-  const concernsColumnIndex = 6; // Column E (0-indexed)
+  const concernsColumnIndex = 7; // Column H (0-indexed)
   const borderStyle = {
     top: { style: 'thin', color: { rgb: '000000' } },
     bottom: { style: 'thin', color: { rgb: '000000' } },
@@ -457,7 +459,7 @@ export const downloadMTOMilestoneSummary = (
 
   // NOT NEEDED ANYMORE, may need for future
   // Style "Needed By" column - make 'Completed' text grey
-  const neededByColumnIndex = 4; // "Needed By" is the 3rd column (0-indexed)
+  const neededByColumnIndex = 5; // "Needed By" is the 4th column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     const cellAddress = XLSX.utils.encode_cell({
       r: row,
