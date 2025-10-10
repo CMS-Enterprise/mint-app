@@ -27,7 +27,7 @@ WITH retVal AS (
         :risk_indicator,
         :is_draft,
         :created_by,
-        COALESCE(:created_dts, CURRENT_TIMESTAMP)
+        CURRENT_TIMESTAMP
     )
     ON CONFLICT (model_plan_id, mto_common_milestone_key) 
     DO NOTHING
