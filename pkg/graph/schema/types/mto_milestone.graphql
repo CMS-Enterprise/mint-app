@@ -66,6 +66,8 @@ type MTOMilestone {
   Note, this data will be cleared if other is removed as an option
   """
   facilitatedByOther: String
+  assignedTo: UUID
+  assignedToUserAccount: UserAccount
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
@@ -125,6 +127,8 @@ extend type Mutation {
     changes: MTOMilestoneChanges!
     solutionLinks: MTOSolutionLinks
   ): MTOMilestone! @hasRole(role: MINT_USER)
+  updateAssignedToMTOMilestone(id: UUID!, assignedTo: UUID!): MTOMilestone!
+    @hasRole(role: MINT_USER)
   deleteMTOMilestone(id: UUID!): Boolean! @hasRole(role: MINT_USER)
   mtoMilestoneUpdateLinkedSolutions(
     id: UUID!

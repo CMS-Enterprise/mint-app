@@ -38,27 +38,33 @@ body:graphql {
       responsibleComponent
       facilitatedBy
       facilitatedByOther
+      assignedTo
+      assignedToUserAccount {
+        id
+        username
+      }
       needBy
       status
       riskIndicator
       # isDraftMilestone
       mtoCategoryID
       categories {
-          category{
-              name
-          }
-          subCategory{
-              name
-          }
+        category {
+          name
+        }
+        subCategory {
+          name
+        }
       }
       modifiedBy
       modifiedDts
       # addedFromMilestoneLibrary
       # commonMilestone
       solutions {
-          id
-          name
+        id
+        name
       }
-      }
+    }
   }
+  
 }
