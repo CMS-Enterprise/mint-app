@@ -603,7 +603,8 @@ export const modelToOperationsMisc: Record<string, any> = {
     noMilestones:
       'There are no milestones or categories included in this template.',
     noSolutions:
-      'There are no solutions or IT systems included in this template.'
+      'There are no solutions or IT systems included in this template.',
+    noneSpecified: 'None specified'
   },
   milestoneLibrary: {
     heading: 'Milestone library',

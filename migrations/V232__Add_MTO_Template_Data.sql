@@ -451,9 +451,6 @@ DECLARE
   -- Category UUIDs
   participants_cat_uuid UUID;
   operations_cat_uuid UUID;
-  collect_data_cat_uuid UUID;
-  tracking_align_cat_uuid UUID;
-  benchmarks_cat_uuid UUID;
   legal_cat_uuid UUID;
   payment_cat_uuid UUID;
   evaluation_cat_uuid UUID;
@@ -462,7 +459,10 @@ DECLARE
   app_review_subcat_uuid UUID;
   participant_support_subcat_uuid UUID;
   setup_ops_subcat_uuid UUID;
+  collect_data_cat_uuid UUID;
   send_data_subcat_uuid UUID;
+  tracking_align_cat_uuid UUID;
+  benchmarks_cat_uuid UUID;
   agreements_subcat_uuid UUID;
   claims_based_subcat_uuid UUID;
   non_claims_based_subcat_uuid UUID;
@@ -532,23 +532,23 @@ BEGIN
 
   collect_data_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (collect_data_cat_uuid, template_uuid, 'Collect data', NULL, 5,
+  VALUES (collect_data_cat_uuid, template_uuid, 'Collect data', operations_cat_uuid, 5,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   send_data_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (send_data_subcat_uuid, template_uuid, 'Send data to participants',
-          collect_data_cat_uuid, 6,
+          operations_cat_uuid, 6,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   tracking_align_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (tracking_align_cat_uuid, template_uuid, 'Participant and beneficiary tracking/alignment', NULL, 7,
+  VALUES (tracking_align_cat_uuid, template_uuid, 'Participant and beneficiary tracking/alignment', operations_cat_uuid, 7,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   benchmarks_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (benchmarks_cat_uuid, template_uuid, 'Benchmarks', NULL, 8,
+  VALUES (benchmarks_cat_uuid, template_uuid, 'Benchmarks', operations_cat_uuid, 8,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   legal_cat_uuid := gen_random_uuid();
@@ -841,6 +841,10 @@ DECLARE
   -- milestones
   recruit_participants uuid;
   helpdesk_support uuid;
+  participant_collaboration uuid;
+  collect_data_to_monitor uuid;
+  collect_data_to_support_eval uuid;
+  send_reports_to_part uuid;
   manage_prov_overlap uuid;
   manage_ben_overlap uuid;
   sign_participation_agreements uuid;
@@ -907,6 +911,18 @@ BEGIN
   helpdesk_support := gen_random_uuid();
   INSERT INTO mto_template_milestone VALUES (helpdesk_support, template_uuid, 'HELPDESK_SUPPORT', participant_support_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
+  participant_collaboration := gen_random_uuid();
+  INSERT INTO mto_template_milestone VALUES (participant_collaboration, template_uuid, 'PART_TO_PART_COLLAB', participant_support_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  collect_data_to_monitor := gen_random_uuid();
+  INSERT INTO mto_template_milestone VALUES (collect_data_to_monitor, template_uuid, 'DATA_TO_MONITOR', collect_data_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  collect_data_to_support_eval := gen_random_uuid();
+  INSERT INTO mto_template_milestone VALUES (collect_data_to_support_eval, template_uuid, 'DATA_TO_SUPPORT_EVAL', collect_data_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  send_reports_to_part := gen_random_uuid();
+  INSERT INTO mto_template_milestone VALUES (send_reports_to_part, template_uuid, 'SEND_REPDATA_TO_PART', send_data_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
   manage_prov_overlap := gen_random_uuid();
   INSERT INTO mto_template_milestone VALUES (manage_prov_overlap, template_uuid, 'MANAGE_PROV_OVERLAP', track_align_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
@@ -968,6 +984,13 @@ BEGIN
   -- links
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, rfa, recruit_participants, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, cbosc, helpdesk_support, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, connect, participant_collaboration, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp, collect_data_to_monitor, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp, collect_data_to_support_eval, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp, send_reports_to_part, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg, manage_prov_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams,      manage_prov_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);

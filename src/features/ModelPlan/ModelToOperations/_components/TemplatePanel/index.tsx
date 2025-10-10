@@ -222,7 +222,9 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
                     {item.type === 'milestone' && (
                       <p className="margin-0 text-base">
                         {t('templateLibrary.selectedSolutions')}:{' '}
-                        {item.solutions}
+                        {!item.solutions
+                          ? t('templateLibrary.noneSpecified')
+                          : item.solutions}
                       </p>
                     )}
                   </div>
