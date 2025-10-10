@@ -4,6 +4,9 @@
 
 .read-only-model-plan {
   &__subNav-accordion {
+    position: sticky !important;
+    z-index: 10000 !important;
+
     button.usa-menu-btn {
       text-transform: none;
     }
