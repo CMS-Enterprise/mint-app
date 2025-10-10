@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -163,38 +162,8 @@ func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authenti
 		return nil, err
 	}
 
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanCollaborator, error) {
-		// First, update any milestones assigned to this collaborator
-		updatedMilestones, err := storage.MTOMilestoneUpdateAssignedToNullByCollaborator(
-			tx,
-			logger,
-			id,
-			principal.Account().ID,
-		)
-		if err != nil {
-			logger.Error("Failed to update milestone assignments when removing collaborator",
-				zap.String("collaborator_id", id.String()),
-				zap.Error(err))
-			return nil, fmt.Errorf("failed to update milestone assignments: %w", err)
-		}
-
-		if len(updatedMilestones) > 0 {
-			logger.Info("Updated milestone assignments when removing collaborator",
-				zap.String("collaborator_id", id.String()),
-				zap.Int("milestones_updated", len(updatedMilestones)))
-		}
-
-		// Then delete the collaborator
-		retCollaborator, err := storage.PlanCollaboratorDelete(tx, logger, id, principal.Account().ID)
-		if err != nil {
-			logger.Error("Failed to delete collaborator",
-				zap.String("collaborator_id", id.String()),
-				zap.Error(err))
-			return nil, fmt.Errorf("failed to delete collaborator: %w", err)
-		}
-
-		return retCollaborator, nil
-	})
+	retCollaborator, err := store.PlanCollaboratorDelete(logger, id, principal.Account().ID)
+	return retCollaborator, err
 }
 
 // PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader

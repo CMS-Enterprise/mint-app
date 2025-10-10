@@ -152,27 +152,3 @@ func MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(np sqlutils.NamedPrepare
 
 	return returned, nil
 }
-
-// MTOMilestoneUpdateAssignedToNullByCollaborator sets assigned_to to NULL for all milestones assigned to a specific collaborator
-func MTOMilestoneUpdateAssignedToNullByCollaborator(
-	np sqlutils.NamedPreparer,
-	logger *zap.Logger,
-	collaboratorID uuid.UUID,
-	modifiedBy uuid.UUID,
-) ([]*models.MTOMilestone, error) {
-	args := map[string]interface{}{
-		"collaborator_id": collaboratorID,
-		"modified_by":     modifiedBy,
-	}
-
-	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.DeleteAssignedTo, args)
-	if err != nil {
-		logger.Error(
-			fmt.Sprintf("Failed to update milestone assignments when removing collaborator %s", collaboratorID.String()),
-			zap.Error(err),
-		)
-		return nil, err
-	}
-
-	return returned, nil
-}

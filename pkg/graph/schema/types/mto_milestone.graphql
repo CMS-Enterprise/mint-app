@@ -59,6 +59,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator
   isDraft: Boolean
+  assignedTo: UUID
 }
 
 input MTOSolutionLinks {
@@ -82,8 +83,6 @@ extend type Mutation {
     changes: MTOMilestoneChanges!
     solutionLinks: MTOSolutionLinks
   ): MTOMilestone! @hasRole(role: MINT_USER)
-  updateAssignedToMTOMilestone(id: UUID!, assignedTo: UUID!): MTOMilestone!
-    @hasRole(role: MINT_USER)
   deleteMTOMilestone(id: UUID!): Boolean! @hasRole(role: MINT_USER)
   mtoMilestoneUpdateLinkedSolutions(
     id: UUID!

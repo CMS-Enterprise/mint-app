@@ -4,8 +4,6 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/jmoiron/sqlx"
-
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -107,30 +105,38 @@ func (s *Store) PlanCollaboratorUpdate(
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func PlanCollaboratorDelete(
-	tx *sqlx.Tx,
+func (s *Store) PlanCollaboratorDelete(
 	_ *zap.Logger,
 	id uuid.UUID,
 	userID uuid.UUID,
 ) (*models.PlanCollaborator, error) {
 
-	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
 	}
 
-	args := map[string]interface{}{
-		"id":          id,
-		"modified_by": userID,
-	}
-
-	retCollaborator, err := sqlutils.GetProcedure[models.PlanCollaborator](tx, sqlqueries.PlanCollaborator.Delete, args)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanCollaborator.Delete)
 	if err != nil {
-		return nil, fmt.Errorf("issue deleting plan collaborator with id %s, %w", id.String(), err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	collaborator := &models.PlanCollaborator{}
+	err = stmt.Get(collaborator, utilitysql.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, err
 	}
 
-	return retCollaborator, nil
+	err = tx.Commit()
+	if err != nil {
+		return nil, fmt.Errorf("could not commit collaborator delete transaction: %w", err)
+	}
+
+	return collaborator, nil
 }
 
 // PlanCollaboratorGetByID returns a plan collaborator for a given database ID, or nil if none found
