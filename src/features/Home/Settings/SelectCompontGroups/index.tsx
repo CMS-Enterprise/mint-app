@@ -111,12 +111,17 @@ const SelectComponentGroupsSettings = () => {
     'homepageSettings:componentGroups'
   );
 
+  const componentGroupAcronymTrans = tObject<keyof ComponentGroup, any>(
+    'homepageSettings:componentGroupAcronyms'
+  );
+
   const componentGroupOptions = useMemo(() => {
     return getKeys(ComponentGroup).map(group => ({
       label: componentGroupTrans[group as keyof ComponentGroup],
+      readonlyLabel: componentGroupAcronymTrans[group as keyof ComponentGroup],
       value: group
     }));
-  }, [componentGroupTrans]);
+  }, [componentGroupTrans, componentGroupAcronymTrans]);
 
   return (
     <MainContent>
@@ -169,11 +174,11 @@ const SelectComponentGroupsSettings = () => {
                       >
                         <Fieldset disabled={!!error || loading}>
                           <Label htmlFor="component-groups">
-                            {homepageSettingsT('componentGroups')}
+                            {homepageSettingsT('componentsAndGroups')}
                           </Label>
 
-                          <p className="text-base margin-y-1 line-height-body-4">
-                            {homepageSettingsT('startTyping')}
+                          <p className="text-base margin-bottom-1 margin-top-0 line-height-body-4">
+                            {homepageSettingsT('startTypingComponentGroup')}
                           </p>
 
                           <Field
@@ -183,7 +188,7 @@ const SelectComponentGroupsSettings = () => {
                             name="componentGroups"
                             options={componentGroupOptions}
                             selectedLabel={homepageSettingsT(
-                              'multiselectLabel'
+                              'multiselectLabelGroups'
                             )}
                             onChange={(value: string[] | []) => {
                               setFieldValue('componentGroups', value);
@@ -214,7 +219,7 @@ const SelectComponentGroupsSettings = () => {
               className="display-flex flex-align-center"
             >
               <Icon.ArrowBack className="margin-right-2" aria-label="back" />
-              {homepageSettingsT('dontSelect')}
+              {homepageSettingsT('dontSelectComponentGroups')}
             </UswdsReactLink>
           </div>
         </Grid>

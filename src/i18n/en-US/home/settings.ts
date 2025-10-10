@@ -109,6 +109,14 @@ const homepageSettings = {
   noneSelected: 'None selected',
   componentGroups,
   componentGroupAcronyms,
+  componentGroupsHeading: 'Select groups',
+  componentGroupDescription:
+    'Models owned by a specific CMS component or CMMI group chosen below will show in a tabbed section.',
+  componentsAndGroups: 'Components and groups',
+  startTypingComponentGroup:
+    'Start typing the name or acronym of the component or group.',
+  multiselectLabelGroups: 'Selected groups',
+  dontSelectComponentGroups: 'Don’t select groups and return to previous page',
   selectComponentGroups: 'Select groups',
   updateGroups: 'Update groups'
 };
