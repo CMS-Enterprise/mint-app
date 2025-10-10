@@ -73,6 +73,7 @@ func createAndInitializeUserViewCustomization(
 	uvcToCreate := models.UserViewCustomization{
 		ViewCustomization: pq.StringArray{},
 		Solutions:         pq.StringArray{},
+		ComponentGroups:   pq.StringArray{},
 	}
 
 	// should be created for (and by) the user who made the query
