@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import {
+  ComponentGroup,
   GetGlobalMtoCommonSolutionsDocument,
   GetGlobalMtoCommonSolutionsQuery,
   GetGlobalMtoCommonSolutionsQueryVariables,
@@ -15,9 +16,9 @@ import {
 
 import MessageProvider from 'contexts/MessageContext';
 
-import SelectSolutionSettings from './selectSolutions';
-import HomePageSettings from './settings';
-import SettingsOrder, { moveItem } from './settingsOrder';
+import SelectSolutionSettings from './SelectSolutions';
+import SettingsOrder, { moveItem } from './SettingsOrder';
+import HomePageSettings from '.';
 
 const mocks: MockedResponse<
   GetHomepageSettingsQuery,
@@ -40,6 +41,7 @@ const mocks: MockedResponse<
             MtoCommonSolutionKey.INNOVATION,
             MtoCommonSolutionKey.ACO_OS
           ],
+          componentGroups: [] as unknown as ComponentGroup[],
           __typename: 'UserViewCustomization'
         }
       }

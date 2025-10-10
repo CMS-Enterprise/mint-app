@@ -3,6 +3,7 @@ SELECT
     user_id,
     view_customization,
     solutions,
+    component_groups,
     created_by,
     created_dts,
     modified_by,

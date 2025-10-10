@@ -207,6 +207,13 @@ const Home = () => {
 
         <ModelsBySolutions solutionKeys={solutionKeys} />
       </>
+    ),
+    [ViewCustomizationType.MODELS_BY_GROUP]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        {/* <ModelsByGroup /> */}
+      </>
     )
   };
 

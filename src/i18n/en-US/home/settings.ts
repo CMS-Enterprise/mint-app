@@ -1,10 +1,11 @@
-import { ViewCustomizationType } from 'gql/generated/graphql';
+import { ComponentGroup, ViewCustomizationType } from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
   Record<'heading' | 'description', string>
 >;
 
+// TODO: Add translations for MODELS_BY_GROUP
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
@@ -35,7 +36,38 @@ const settings: HomepageSettingsType = {
     heading: 'Models using specific solutions',
     description:
       'This tabbed section displays the models using the solutions and IT systems you care about.'
+  },
+  [ViewCustomizationType.MODELS_BY_GROUP]: {
+    heading: 'Models by group',
+    description:
+      'This tabbed section displays the models owned by a specific CMS component or CMMI group.'
   }
+};
+
+const componentGroups: Record<ComponentGroup, string> = {
+  [ComponentGroup.CCMI_PCMG]: 'Patient Care Models Group (PCMG)',
+  [ComponentGroup.CCMI_PPG]: 'Policy and Programs Group (PPG)',
+  [ComponentGroup.CCMI_SCMG]: 'Seamless Care Models Group (SCMG)',
+  [ComponentGroup.CCMI_SPHG]: 'State and Population Health Group (SPHG)',
+  [ComponentGroup.CCMI_TBD]: 'To be determined',
+  [ComponentGroup.CCSQ]: 'Center for Clinical Standards and Quality (CCSQ)',
+  [ComponentGroup.CM]: 'Center for Medicare (CM)',
+  [ComponentGroup.CMCS]: 'Center for Medicaid and CHIP Services (CMCS)',
+  [ComponentGroup.CPI]: 'Center for Program Integrity (CPI)',
+  [ComponentGroup.FCHCO]: 'Federal Coordinated Health Care Office (FCHCO)'
+};
+
+const componentGroupAcronyms: Record<ComponentGroup, string> = {
+  [ComponentGroup.CCMI_PCMG]: 'CMMI/PCMG',
+  [ComponentGroup.CCMI_PPG]: 'CMMI/PPG',
+  [ComponentGroup.CCMI_SCMG]: 'CMMI/SCMG',
+  [ComponentGroup.CCMI_SPHG]: 'CMMI/SPHG',
+  [ComponentGroup.CCMI_TBD]: 'CMMI/TBD',
+  [ComponentGroup.CCSQ]: 'CCSQ',
+  [ComponentGroup.CM]: 'CM',
+  [ComponentGroup.CMCS]: 'CMCS',
+  [ComponentGroup.CPI]: 'CPI',
+  [ComponentGroup.FCHCO]: 'FCHCO'
 };
 
 const homepageSettings = {
@@ -74,7 +106,19 @@ const homepageSettings = {
   save: 'Save',
   dontSelect: 'Don’t select solutions and return to previous page',
   success: ' Success! Your homepage has been updated.',
-  noneSelected: 'None selected'
+  noneSelected: 'None selected',
+  componentGroups,
+  componentGroupAcronyms,
+  componentGroupsHeading: 'Select groups',
+  componentGroupDescription:
+    'Models owned by a specific CMS component or CMMI group chosen below will show in a tabbed section.',
+  componentsAndGroups: 'Components and groups',
+  startTypingComponentGroup:
+    'Start typing the name or acronym of the component or group.',
+  multiselectLabelGroups: 'Selected groups',
+  dontSelectComponentGroups: 'Don’t select groups and return to previous page',
+  selectComponentGroups: 'Select groups',
+  updateGroups: 'Update groups'
 };
 
 export default homepageSettings;

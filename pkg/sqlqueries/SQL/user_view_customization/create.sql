@@ -3,6 +3,7 @@ INSERT INTO public.user_view_customization(
     user_id,
     view_customization,
     solutions,
+    component_groups,
     created_by
 )
 VALUES (
@@ -10,6 +11,7 @@ VALUES (
     :user_id,
     :view_customization,
     :solutions,
+    :component_groups,
     :created_by
 )
 RETURNING
@@ -17,6 +19,7 @@ RETURNING
     user_id,
     view_customization,
     solutions,
+    component_groups,
     created_by,
     created_dts,
     modified_by,

@@ -50,6 +50,13 @@ const settings: HomepageSettingsType = {
     noResultsHeading:
       'It looks like you forgot to select at least one solution.',
     noResultsDescription: 'Select solutions'
+  },
+  [ViewCustomizationType.MODELS_BY_GROUP]: {
+    heading: 'Models by group',
+    description:
+      'This tabbed section displays the models owned by a specific CMS component or CMMI group.',
+    noResultsHeading: 'It looks like you forgot to select at least one group.',
+    noResultsDescription: 'Select groups'
   }
 };
 

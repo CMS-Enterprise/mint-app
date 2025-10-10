@@ -8,6 +8,7 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import {
+  ComponentGroup,
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
@@ -58,6 +59,7 @@ const settingsMock: MockedResponse<
           id: '3b29f11e-7dd4-4385-8056-27468d3dd562',
           viewCustomization: [] as ViewCustomizationType[],
           solutions: [] as unknown as MtoCommonSolutionKey[],
+          componentGroups: [] as unknown as ComponentGroup[],
           __typename: 'UserViewCustomization'
         }
       }
