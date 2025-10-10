@@ -80,7 +80,7 @@ func batchMTOTemplateSolutionGetByMilestoneID(ctx context.Context, milestoneIDs 
 		return errorPerEachKey[uuid.UUID, []*models.MTOTemplateSolution](milestoneIDs, err)
 	}
 	getKeyFunc := func(data *models.MTOTemplateSolution) uuid.UUID {
-		return data.ID
+		return *data.MTOMilestoneID
 	}
 
 	return oneToManyDataLoader(milestoneIDs, data, getKeyFunc)

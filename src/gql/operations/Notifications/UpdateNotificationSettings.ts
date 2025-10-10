@@ -17,6 +17,8 @@ export default gql(/* GraphQL */ `
       newModelPlan
       datesChanged
       datesChangedNotificationType
+      dataExchangeApproachMarkedComplete
+      dataExchangeApproachMarkedCompleteNotificationType
       incorrectModelStatus
     }
   }

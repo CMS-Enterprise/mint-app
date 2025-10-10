@@ -283,7 +283,7 @@ describe('Notification Center', () => {
       '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
     );
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when MINT detects an incorrect model status.'
     );
   });
@@ -345,7 +345,7 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a new Model Plan is created.'
     );
   });
@@ -420,7 +420,7 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when model dates change.'
     );
   });
@@ -494,7 +494,7 @@ describe('Notification Center', () => {
 
     cy.visit('/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED');
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a new discussion is added.'
     );
   });
@@ -589,7 +589,7 @@ describe('Notification Center', () => {
       '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
     );
 
-    cy.get('[data-testid="error-alert"]').contains(
+    cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a data exchange approach is completed.'
     );
   });

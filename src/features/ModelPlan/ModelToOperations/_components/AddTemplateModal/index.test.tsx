@@ -44,6 +44,7 @@ const mockTemplate: MtoTemplateType = {
   milestoneCount: 12,
   solutionCount: 8,
   primaryCategoryCount: 9,
+  isAdded: true,
   categories: []
 };
 

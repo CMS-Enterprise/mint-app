@@ -1,0 +1,25 @@
+meta {
+  name: DeleteMTOMilestoneNote
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation deleteMTOMilestoneNote {
+      deleteMTOMilestoneNote(input: {
+        id: "{{mtoMilestoneNoteID}}"
+      }) {
+      id
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

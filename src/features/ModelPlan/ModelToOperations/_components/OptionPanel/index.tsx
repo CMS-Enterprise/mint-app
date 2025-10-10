@@ -16,7 +16,7 @@ import { MtoTemplateKey, useGetMtoTemplatesQuery } from 'gql/generated/graphql';
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
-import { MTOModalContext, MtoTemplateType } from 'contexts/MTOModalContext';
+import { MTOModalContext } from 'contexts/MTOModalContext';
 
 import { MTOOption, mtoOptions } from '../../Home';
 

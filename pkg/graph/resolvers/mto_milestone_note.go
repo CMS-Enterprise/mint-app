@@ -1,0 +1,109 @@
+package resolvers
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"strings"
+
+	"go.uber.org/zap"
+
+	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+)
+
+func GetMTOMilestoneNoteByIDLOADER(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) (*models.MTOMilestoneNote, error) {
+	if principal == nil {
+		return nil, fmt.Errorf("principal is nil")
+	}
+	return loaders.MTOMilestoneNote.ByID.Load(ctx, id)
+}
+
+func GetMTOMilestoneNotesByMilestoneIDLOADER(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, milestoneID uuid.UUID) ([]*models.MTOMilestoneNote, error) {
+	if principal == nil {
+		return nil, fmt.Errorf("principal is nil")
+	}
+	notes, err := loaders.MTOMilestoneNote.ByMilestoneID.Load(ctx, milestoneID)
+	if err != nil {
+		return nil, err
+	}
+	if notes == nil {
+		return []*models.MTOMilestoneNote{}, nil
+	}
+	return notes, nil
+}
+
+func CreateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// Get the milestone to get its model plan ID
+	milestone, err := loaders.MTOMilestone.ByID.Load(ctx, input.MilestoneID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get milestone: %w", err)
+	}
+
+	note := models.NewMTOMilestoneNote(principalAccount.ID, input.Content, input.MilestoneID, milestone.ModelPlanID)
+	err = BaseStructPreCreate(logger, note, principal, store, false)
+	if err != nil {
+		return nil, err
+	}
+	return storage.MTOMilestoneNoteCreate(store, logger, note)
+}
+
+func UpdateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteUpdateInput) (*models.MTOMilestoneNote, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	note, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("unable to update MTO milestone note. Err %w", err)
+	}
+	note.Content = input.Content
+	err = BaseStructPreUpdate(logger, note, nil, principal, store, false, true)
+	if err != nil {
+		return nil, err
+	}
+	return storage.MTOMilestoneNoteUpdate(store, logger, note)
+}
+
+func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// Write up a transaction since storage.MTOMilestoneNoteDelete needs one for setting `delete` session user variables
+	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		// First, fetch the existing milestone note so we can check permissions
+		existing, err := GetMTOMilestoneNoteByIDLOADER(ctx, logger, principal, store, id)
+		if err != nil {
+			if errors.Is(err, loaders.ErrRecordNotFoundForKey) ||
+				strings.Contains(err.Error(), "record not found for given key") {
+				return fmt.Errorf("unable to delete MTO milestone note")
+			}
+			return fmt.Errorf("error fetching mto milestone note during deletion: %s", err)
+		}
+
+		// Check permissions
+		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+			return fmt.Errorf("error deleting mto milestone note. user doesnt have permissions. %s", err)
+		}
+
+		// Finally, delete the milestone note
+		if err := storage.MTOMilestoneNoteDelete(tx, principalAccount.ID, logger, id); err != nil {
+			return fmt.Errorf("unable to delete mto milestone note. Err %w", err)
+		}
+		return nil
+	})
+}

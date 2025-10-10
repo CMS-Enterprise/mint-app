@@ -53,7 +53,9 @@
 {{if .ShowFooter}}
   <hr>
   <br/>
-  {{template "shared_subscribed_footer.html" .}}
+   <p>
+    You are currently subscribed to notifications about changes to model dates. If you no longer wish to receive these email notifications, please <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=DATES_CHANGED">unsubscribe</a> or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+  </p>
 {{end}}
 
 {{template "shared_footer.html"}}

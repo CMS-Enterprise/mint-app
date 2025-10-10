@@ -56,6 +56,7 @@ const AddTemplateModal = () => {
           <Trans
             i18nKey="modal.addTemplate.success"
             t={t}
+            values={{ category: mtoTemplate.name }}
             components={{
               bold: <span className="text-bold " />
             }}

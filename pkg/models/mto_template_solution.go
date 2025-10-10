@@ -10,6 +10,9 @@ type MTOTemplateSolution struct {
 	Name                string               `json:"name"               db:"name"`
 	Key                 MTOCommonSolutionKey `json:"key"                db:"key"`
 	MTOCommonSolutionID uuid.UUID            `json:"mtoCommonSolutionID" db:"mto_common_solution_id"`
+
+	// Filled in by sql query
+	MTOMilestoneID *uuid.UUID `json:"mtoMilestoneID" db:"mto_milestone_id"`
 }
 
 // NewMTOTemplateSolution returns a new MTOTemplateSolution object

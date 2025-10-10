@@ -2,6 +2,7 @@
 package s3testconfigs
 
 import (
+	"context"
 	"os"
 
 	"github.com/spf13/viper"
@@ -23,7 +24,7 @@ func S3TestClient(viperConfig *viper.Viper) s3.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, viperConfig.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, viperConfig.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return s3.NewS3Client(s3Cfg)
+	return s3.NewS3Client(context.TODO(), s3Cfg)
 }
 
 // S3TestECHIMPClient returns an ECHIMPClient client for testing
@@ -39,5 +40,5 @@ func S3TestECHIMPClient(viperConf *viper.Viper) s3.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, viperConf.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, viperConf.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return s3.NewS3Client(s3Cfg)
+	return s3.NewS3Client(context.TODO(), s3Cfg)
 }

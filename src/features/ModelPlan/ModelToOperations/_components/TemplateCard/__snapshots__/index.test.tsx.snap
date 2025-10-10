@@ -7,7 +7,8 @@ exports[`TemplateCard Component > renders correctly and matches snapshot 1`] = `
     data-testid="Card"
   >
     <div
-      class="usa-card__container radius-md minh-mobile padding-0 margin-0"
+      class="usa-card__container radius-md padding-0 margin-0"
+      style="min-height: 335px;"
     >
       <div
         class="usa-card__header padding-3 padding-bottom-0"
@@ -29,15 +30,18 @@ exports[`TemplateCard Component > renders correctly and matches snapshot 1`] = `
         </h3>
       </div>
       <div
-        class="usa-card__body padding-x-3 "
+        class="usa-card__body padding-x-3"
         data-testid="CardBody"
+        style="min-height: 100px;"
       >
         <div
           class="text-base-dark"
         >
           24 categories, 0 milestones, 0 solutions
         </div>
-        <p>
+        <p
+          class="line-clamped"
+        >
           These are the standard categories for MTOs.
         </p>
       </div>

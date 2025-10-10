@@ -32,6 +32,7 @@ const mockMTOModalContext = {
       milestoneCount: 0,
       solutionCount: 0,
       primaryCategoryCount: 9,
+      isAdded: true,
       categories: []
     } as MtoTemplateType,
     categoryID: '',
@@ -56,6 +57,7 @@ describe('TemplateCard Component', () => {
     milestoneCount: 0,
     solutionCount: 0,
     primaryCategoryCount: 9,
+    isAdded: false,
     categories: []
   };
 
@@ -67,7 +69,7 @@ describe('TemplateCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/collaboration-area/model-to-operations/template-library',
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
@@ -78,12 +80,14 @@ describe('TemplateCard Component', () => {
         }
       ],
       {
-        initialEntries: ['/']
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations/template-library`
+        ]
       }
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mtoTemplateMock} addTypename={false}>
+      <MockedProvider mocks={mtoTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -132,7 +136,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock} addTypename={false}>
+      <MockedProvider mocks={mtoTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -147,7 +151,7 @@ describe('TemplateCard Component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/',
+          path: '/models/:modelID/collaboration-area/model-to-operations/template-library',
           element: (
             <MessageProvider>
               <MTOModalContext.Provider value={mockMTOModalContext}>
@@ -165,7 +169,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock} addTypename={false}>
+      <MockedProvider mocks={mtoTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -202,7 +206,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock} addTypename={false}>
+      <MockedProvider mocks={mtoTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -244,7 +248,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock} addTypename={false}>
+      <MockedProvider mocks={mtoTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

@@ -471,11 +471,17 @@ export default gql(/* GraphQL */ `
           id
           name
           isDraft
+          description
+          responsibleComponent
           facilitatedBy
           facilitatedByOther
           needBy
           status
           riskIndicator
+          notes {
+            id
+            content
+          }
           categories {
             category {
               id

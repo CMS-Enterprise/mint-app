@@ -86,7 +86,41 @@ func MTOTemplateMilestoneGetBySolutionIDLOADER(ctx context.Context, solutionID u
 	return loaders.MTOTemplateMilestone.BySolutionID.Load(ctx, solutionID)
 }
 
-// ApplyTemplateToMTO applies a template to a model plan's MTO
+// --- types & deps ---
+type ApplyTemplateDeps struct {
+	Store                *storage.Store
+	Logger               *zap.Logger
+	EmailService         oddmail.EmailService
+	EmailTemplateService email.TemplateService
+	AddressBook          email.AddressBook
+}
+
+type ApplyTemplateArgs struct {
+	Ctx         context.Context
+	Principal   authentication.Principal
+	ModelPlanID uuid.UUID
+	TemplateID  uuid.UUID
+}
+
+type TemplateBundle struct {
+	Categories             []*models.MTOTemplateCategory
+	Milestones             []*models.MTOTemplateMilestone
+	Solutions              []*models.MTOTemplateSolution
+	MilestoneSolutionLinks []*models.MTOTemplateMilestoneSolutionLink
+}
+
+type ApplyCounts struct {
+	Categories int
+	Milestones int
+	Solutions  int
+}
+
+type WarningSink []string
+
+func (w *WarningSink) Add(msg string) { *w = append(*w, msg) }
+
+// --- orchestrator ---
+
 func ApplyTemplateToMTO(
 	ctx context.Context,
 	store *storage.Store,
@@ -98,176 +132,255 @@ func ApplyTemplateToMTO(
 	modelPlanID uuid.UUID,
 	templateID uuid.UUID,
 ) (*model.ApplyTemplateResult, error) {
+
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// Start a transaction for the rest of the operations
+	deps := ApplyTemplateDeps{
+		Store:                store,
+		Logger:               logger,
+		EmailService:         emailService,
+		EmailTemplateService: emailTemplateService,
+		AddressBook:          addressBook,
+	}
+	args := ApplyTemplateArgs{
+		Ctx:         ctx,
+		Principal:   principal,
+		ModelPlanID: modelPlanID,
+		TemplateID:  templateID,
+	}
+
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*model.ApplyTemplateResult, error) {
-		// Get template data using loaders
-		categories, err := loaders.MTOTemplateCategory.ByTemplateID.Load(ctx, templateID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get template categories: %w", err)
-		}
-
-		milestones, err := loaders.MTOTemplateMilestone.ByTemplateID.Load(ctx, templateID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get template milestones: %w", err)
-		}
-
-		solutions, err := loaders.MTOTemplateSolution.ByTemplateID.Load(ctx, templateID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get template solutions: %w", err)
-		}
-
-		milestoneSolutionLinks, err := loaders.MTOTemplateMilestoneSolutionLink.ByTemplateID.Load(ctx, templateID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to get template milestone-solution links: %w", err)
-		}
-
-		// Apply template data to the model plan's MTO
-		warnings := []string{}
-		categoriesCreated := 0
-		milestonesCreated := 0
-		solutionsCreated := 0
-
-		// Map template category IDs to new MTO category IDs,
-		// to maintain parent-child relationships and associations
-		// when copying categories, milestones, and solutions
-		categoryIDMap := make(map[uuid.UUID]uuid.UUID)
-
-		// Map template solution IDs to their keys for linking with milestones
-		// the links in the DB are based on template solution IDs so we need to preserve them
-		solutionIDKeyMap := make(map[uuid.UUID]models.MTOCommonSolutionKey)
-
-		// Copy categories to MTO categories
-		// Sort categories by order to maintain proper hierarchy
-		sort.Slice(categories, func(i, j int) bool {
-			return categories[i].Order < categories[j].Order
-		})
-
-		for _, category := range categories {
-			var parentID *uuid.UUID
-			if category.ParentID != nil {
-				if mappedID, exists := categoryIDMap[*category.ParentID]; exists {
-					parentID = &mappedID
-				} else {
-					warnings = append(warnings, fmt.Sprintf("category %s references unknown parent ID %s", category.Name, *category.ParentID))
-					continue
-				}
-			}
-
-			mtoCategory := models.NewMTOCategory(
-				principalAccount.ID,
-				category.Name,
-				modelPlanID,
-				parentID,
-				category.Order,
-			)
-
-			categoryAddedWithStatus, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, mtoCategory)
-			if err != nil {
-				warnings = append(warnings, fmt.Sprintf("failed to create MTO category %s: %v", category.Name, err))
-				continue
-			}
-
-			categoryIDMap[category.ID] = categoryAddedWithStatus.ID
-
-			if categoryAddedWithStatus.NewlyInserted {
-				categoriesCreated++
-			}
-		}
-
-		// Copy solutions to MTO solutions
-		solutionsToInsert := make([]models.MTOCommonSolutionKey, 0, len(solutions))
-		for _, solution := range solutions {
-			solutionIDKeyMap[solution.ID] = solution.Key
-			solutionsToInsert = append(solutionsToInsert, solution.Key)
-		}
-
-		resSolutionsInserted, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(
-			tx,
-			logger,
-			solutionsToInsert,
-			modelPlanID,
-			principalAccount.ID,
-		)
-		if err != nil {
-			warnings = append(warnings, fmt.Sprintf("failed to create MTO solutions %v", err))
-		} else {
-			// count number of newlyInsert is true in resSolutionsInserted
-			for _, inserted := range resSolutionsInserted {
-				if inserted.NewlyInserted {
-					solutionsCreated++
-				}
-			}
-		}
-
-		// Copy milestones to MTO milestones
-		for _, milestone := range milestones {
-
-			// // find records in milestoneSolutionLinks that match this milestone ID
-			var associatedSolutions []models.MTOCommonSolutionKey
-			for _, link := range milestoneSolutionLinks {
-				if link.TemplateMilestoneID == milestone.ID {
-					if solutionKey, ok := solutionIDKeyMap[link.TemplateSolutionID]; ok {
-						associatedSolutions = append(associatedSolutions, solutionKey)
-					} else {
-						warnings = append(warnings, fmt.Sprintf("solution ID %s linked to milestone ID %s not found in solutionIDKeyMap", link.TemplateSolutionID, milestone.ID))
-					}
-				}
-			}
-
-			milestoneWithStatus, err := MTOMilestoneCreateCommonWithTXAllowConflicts(
-				ctx,
-				logger,
-				principal,
-				tx,
-				store,
-				emailService,
-				emailTemplateService,
-				addressBook,
-				modelPlanID,
-				milestone.Key,
-				associatedSolutions,
-			)
-			if err != nil {
-				warnings = append(warnings, fmt.Sprintf("failed to create MTO milestone %s: %v", milestone.Name, err))
-				continue
-			}
-
-			if milestoneWithStatus.NewlyInserted {
-				milestonesCreated++
-			}
-		}
-
-		// Create the new template link
-		newLink := models.NewModelPlanMTOTemplateLink(
-			principalAccount.ID,
-			modelPlanID,
-			templateID,
-			time.Now(),
-			true,
-		)
-
-		// Create the template link record
-		_, err = storage.ModelPlanMTOTemplateLinkUpsert(tx, logger, newLink)
-		if err != nil {
-			return nil, fmt.Errorf("failed to create template link: %w", err)
-		}
-
-		// Return the result
-		result := &model.ApplyTemplateResult{
-			ID:              templateID,
-			ModelPlanID:     modelPlanID,
-			TemplateID:      templateID,
-			CategoriesAdded: categoriesCreated,
-			MilestonesAdded: milestonesCreated,
-			SolutionsAdded:  solutionsCreated,
-			Warnings:        warnings,
-		}
-
-		return result, nil
+		return applyTemplateTx(tx, deps, args)
 	})
+}
+
+// --- transactional core ---
+
+func applyTemplateTx(
+	tx *sqlx.Tx,
+	deps ApplyTemplateDeps,
+	args ApplyTemplateArgs,
+) (*model.ApplyTemplateResult, error) {
+	var warnings WarningSink
+	var counts ApplyCounts
+
+	principalAccount := args.Principal.Account()
+
+	// 1) Load bundle
+	bundle, err := loadTemplateBundle(args.Ctx, args.TemplateID)
+	if err != nil {
+		return nil, err
+	}
+
+	// 2) Categories
+	categoryIDMap, categoriesCreated, categoryWarnings := copyCategories(tx, deps.Logger, bundle.Categories, args.ModelPlanID, principalAccount.ID)
+	counts.Categories += categoriesCreated
+	warnings = append(warnings, categoryWarnings...)
+
+	// 3) Solutions
+	solutionIDKeyMap, solutionCreatedCount, solutionWarnings := insertSolutions(tx, deps.Logger, bundle.Solutions, args.ModelPlanID, principalAccount.ID)
+	counts.Solutions += solutionCreatedCount
+	warnings = append(warnings, solutionWarnings...)
+
+	// 4) Milestones
+	milestonesCreated, milestoneWarnings := copyMilestones(
+		tx, deps, args,
+		bundle.Milestones,
+		bundle.MilestoneSolutionLinks,
+		categoryIDMap, solutionIDKeyMap,
+	)
+	counts.Milestones += milestonesCreated
+	warnings = append(warnings, milestoneWarnings...)
+
+	// 5) Link template
+	if err := upsertTemplateLink(tx, deps.Logger, principalAccount.ID, args.ModelPlanID, args.TemplateID); err != nil {
+		return nil, fmt.Errorf("failed to create template link: %w", err)
+	}
+
+	return &model.ApplyTemplateResult{
+		ID:              args.TemplateID,
+		ModelPlanID:     args.ModelPlanID,
+		TemplateID:      args.TemplateID,
+		CategoriesAdded: counts.Categories,
+		MilestonesAdded: counts.Milestones,
+		SolutionsAdded:  counts.Solutions,
+		Warnings:        warnings,
+	}, nil
+}
+
+// --- phase helpers ---
+
+func loadTemplateBundle(ctx context.Context, templateID uuid.UUID) (*TemplateBundle, error) {
+	categories, err := loaders.MTOTemplateCategory.ByTemplateID.Load(ctx, templateID)
+	if err != nil {
+		return nil, fmt.Errorf("get template categories: %w", err)
+	}
+
+	milestones, err := loaders.MTOTemplateMilestone.ByTemplateID.Load(ctx, templateID)
+	if err != nil {
+		return nil, fmt.Errorf("get template milestones: %w", err)
+	}
+
+	solutions, err := loaders.MTOTemplateSolution.ByTemplateID.Load(ctx, templateID)
+	if err != nil {
+		return nil, fmt.Errorf("get template solutions: %w", err)
+	}
+
+	links, err := loaders.MTOTemplateMilestoneSolutionLink.ByTemplateID.Load(ctx, templateID)
+	if err != nil {
+		return nil, fmt.Errorf("get milestone-solution links: %w", err)
+	}
+
+	// Keep deterministic category order
+	sort.Slice(categories, func(i, j int) bool { return categories[i].Order < categories[j].Order })
+
+	return &TemplateBundle{
+		Categories:             categories,
+		Milestones:             milestones,
+		Solutions:              solutions,
+		MilestoneSolutionLinks: links,
+	}, nil
+}
+
+func copyCategories(
+	tx *sqlx.Tx,
+	logger *zap.Logger,
+	categories []*models.MTOTemplateCategory,
+	modelPlanID, actor uuid.UUID,
+) (map[uuid.UUID]uuid.UUID, int, WarningSink) {
+
+	var warnings WarningSink
+	created := 0
+	categoryIDMap := make(map[uuid.UUID]uuid.UUID)
+
+	for _, category := range categories {
+		var parentID *uuid.UUID
+		if category.ParentID != nil {
+			if mapped, ok := categoryIDMap[*category.ParentID]; ok {
+				parentID = &mapped
+			} else {
+				warnings.Add(fmt.Sprintf("category %s references unknown parent ID %s", category.Name, *category.ParentID))
+				continue
+			}
+		}
+
+		newCategory := models.NewMTOCategory(actor, category.Name, modelPlanID, parentID, category.Order)
+		added, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, newCategory)
+		if err != nil {
+			return nil, created, append(warnings, fmt.Sprintf("create MTO category %s: %v", category.Name, err))
+		}
+		categoryIDMap[category.ID] = added.ID
+		if added.NewlyInserted {
+			created++
+		}
+	}
+	return categoryIDMap, created, warnings
+}
+
+func insertSolutions(
+	tx *sqlx.Tx,
+	logger *zap.Logger,
+	solutions []*models.MTOTemplateSolution,
+	modelPlanID, actor uuid.UUID,
+) (map[uuid.UUID]models.MTOCommonSolutionKey, int, WarningSink) {
+
+	var warnings WarningSink
+	solutionIDKeyMap := make(map[uuid.UUID]models.MTOCommonSolutionKey)
+	toInsert := make([]models.MTOCommonSolutionKey, 0, len(solutions))
+
+	for _, s := range solutions {
+		solutionIDKeyMap[s.ID] = s.Key
+		toInsert = append(toInsert, s.Key)
+	}
+
+	inserted, err := storage.MTOSolutionCreateCommonAllowConflictsSQL(tx, logger, toInsert, modelPlanID, actor)
+	if err != nil {
+		warnings.Add(fmt.Sprintf("failed to create MTO solutions %v", err))
+		return solutionIDKeyMap, 0, warnings
+	}
+
+	created := 0
+	for _, status := range inserted {
+		if status.NewlyInserted {
+			created++
+		}
+	}
+	return solutionIDKeyMap, created, warnings
+}
+
+func copyMilestones(
+	tx *sqlx.Tx,
+	deps ApplyTemplateDeps,
+	args ApplyTemplateArgs,
+	milestones []*models.MTOTemplateMilestone,
+	links []*models.MTOTemplateMilestoneSolutionLink,
+	categoryIDMap map[uuid.UUID]uuid.UUID,
+	solutionIDKeyMap map[uuid.UUID]models.MTOCommonSolutionKey,
+) (int, WarningSink) {
+
+	var warnings WarningSink
+	created := 0
+	pacct := args.Principal.Account()
+
+	for _, ms := range milestones {
+		solutionKeys := associatedSolutionKeysForMilestone(ms.ID, links, solutionIDKeyMap, &warnings)
+
+		msWithStatus, err := MTOMilestoneCreateCommonWithTXAllowConflicts(
+			args.Ctx, deps.Logger, args.Principal, tx, deps.Store,
+			deps.EmailService, deps.EmailTemplateService, deps.AddressBook,
+			args.ModelPlanID, ms.Key, solutionKeys,
+		)
+		if err != nil {
+			warnings.Add(fmt.Sprintf("failed to create MTO milestone %s: %v", ms.Name, err))
+			continue
+		}
+
+		// Category linkage (if present)
+		if ms.MTOTemplateCategoryID != nil {
+			if newCategoryID, ok := categoryIDMap[*ms.MTOTemplateCategoryID]; ok {
+				msWithStatus.MTOCategoryID = &newCategoryID
+				msWithStatus.Name = nil // common milestone => enforce constraint
+				msWithStatus.ModifiedBy = &pacct.ID
+
+				if _, err := storage.MTOMilestoneUpdate(tx, deps.Logger, &msWithStatus.MTOMilestone); err != nil {
+					warnings.Add(fmt.Sprintf("failed to update milestone %s with new category ID: %v", ms.Name, err))
+				}
+			} else {
+				warnings.Add(fmt.Sprintf("milestone %s references unknown category ID %s", ms.ID, *ms.MTOTemplateCategoryID))
+			}
+		}
+
+		if msWithStatus.NewlyInserted {
+			created++
+		}
+	}
+	return created, warnings
+}
+
+func associatedSolutionKeysForMilestone(
+	milestoneID uuid.UUID,
+	links []*models.MTOTemplateMilestoneSolutionLink,
+	solutionIDKeyMap map[uuid.UUID]models.MTOCommonSolutionKey,
+	warnings *WarningSink,
+) []models.MTOCommonSolutionKey {
+	var keys []models.MTOCommonSolutionKey
+	for _, l := range links {
+		if l.TemplateMilestoneID == milestoneID {
+			if k, ok := solutionIDKeyMap[l.TemplateSolutionID]; ok {
+				keys = append(keys, k)
+			} else if warnings != nil {
+				warnings.Add(fmt.Sprintf("solution ID %s linked to milestone ID %s not found", l.TemplateSolutionID, milestoneID))
+			}
+		}
+	}
+	return keys
+}
+
+func upsertTemplateLink(tx *sqlx.Tx, logger *zap.Logger, actor, modelPlanID, templateID uuid.UUID) error {
+	link := models.NewModelPlanMTOTemplateLink(actor, modelPlanID, templateID, time.Now(), true)
+	_, err := storage.ModelPlanMTOTemplateLinkUpsert(tx, logger, link)
+	return err
 }

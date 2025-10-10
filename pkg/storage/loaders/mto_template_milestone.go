@@ -83,7 +83,7 @@ func batchMTOTemplateMilestoneGetByCategoryID(ctx context.Context, subCategoryID
 		return errorPerEachKey[uuid.UUID, []*models.MTOTemplateMilestone](subCategoryIDs, err)
 	}
 	getKeyFunc := func(data *models.MTOTemplateMilestone) uuid.UUID {
-		return data.ID
+		return *data.MTOTemplateCategoryID
 	}
 
 	return oneToManyDataLoader(subCategoryIDs, data, getKeyFunc)

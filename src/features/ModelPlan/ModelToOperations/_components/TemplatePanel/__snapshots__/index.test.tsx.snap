@@ -4,7 +4,7 @@ exports[`TemplatePanel Component > renders correctly and matches snapshot 1`] = 
 <DocumentFragment>
   <div
     class="padding-4 padding-x-8 mint-body-normal"
-    style="max-width: 530px;"
+    style="max-width: 575px;"
   >
     <h2
       class="margin-y-2 line-height-large"

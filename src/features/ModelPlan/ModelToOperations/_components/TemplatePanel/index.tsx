@@ -98,7 +98,7 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
   return (
     <div
       className="padding-4 padding-x-8 mint-body-normal"
-      style={{ maxWidth: '530px' }}
+      style={{ maxWidth: '575px' }}
     >
       <h2 className="margin-y-2 line-height-large">{template.name}</h2>
 
@@ -222,7 +222,9 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
                     {item.type === 'milestone' && (
                       <p className="margin-0 text-base">
                         {t('templateLibrary.selectedSolutions')}:{' '}
-                        {item.solutions}
+                        {!item.solutions
+                          ? t('templateLibrary.noneSpecified')
+                          : item.solutions}
                       </p>
                     )}
                   </div>

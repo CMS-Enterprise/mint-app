@@ -8,7 +8,9 @@ SELECT
     ts.modified_dts,
     -- Get the name and key from the common solution
     cs.name,
-    cs.key
+    cs.key,
+    -- Add the milestone ID to populate MTOMilestoneID field
+    tm.id AS mto_milestone_id
 FROM mto_template_solution ts
 INNER JOIN mto_common_solution cs ON ts.mto_common_solution_id = cs.id
 INNER JOIN mto_template_milestone_solution_link link 

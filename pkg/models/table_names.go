@@ -72,8 +72,9 @@ const (
 	TNMTOTemplateMilestoneSolutionLink   TableName = "mto_template_milestone_solution_link"
 	TNMTOTemplateSolution                TableName = "mto_template_solution"
 	TNModelPlanMTOTemplateLink           TableName = "model_plan_mto_template_link"
+	TNMTOMilestoneNote                   TableName = "mto_milestone_note"
 )
 
 // MTOTables is a list of all tables that are related to the MTO section
 // This is used to filter the translated audit collection to only include MTO related tables
-var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo, TNMTOTemplate}
+var MTOTables []TableName = []TableName{TNMTOCategory, TNMTOMilestone, TNMTOSolution, TNMTOMilestoneSolutionLink, TNMTOInfo, TNMTOMilestoneNote, TNMTOTemplate}

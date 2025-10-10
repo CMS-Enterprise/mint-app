@@ -33,7 +33,8 @@ WHERE
             'plan_general_characteristics',
             'plan_participants_and_providers',
             'plan_beneficiaries',
-            'plan_ops_eval_and_learning'
+            'plan_ops_eval_and_learning',
+            'plan_payments'
 
         ))
         AND model_plan.archived != TRUE

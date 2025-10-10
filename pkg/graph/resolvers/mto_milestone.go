@@ -24,6 +24,7 @@ import (
 // MTOMilestoneCreateCustom uses the provided information to create a new Custom MTO Milestone
 func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	name string,
+	description *string,
 	modelPlanID uuid.UUID,
 	mtoCategoryID *uuid.UUID,
 ) (*models.MTOMilestone, error) {
@@ -33,7 +34,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 	}
 
 	// A custom milestone never has a CommonMilestoneKey, so pass in `nil`
-	milestone := models.NewMTOMilestone(principalAccount.ID, &name, nil, modelPlanID, mtoCategoryID)
+	milestone := models.NewMTOMilestone(principalAccount.ID, &name, description, nil, modelPlanID, mtoCategoryID)
 
 	err := BaseStructPreCreate(logger, milestone, principal, store, true)
 	if err != nil {
@@ -91,6 +92,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		milestone := models.NewMTOMilestone(
 			principalAccount.ID,
 			nil,
+			&commonMilestone.Description,
 			&commonMilestoneKey,
 			modelPlanID,
 			&finalCategoryID,
@@ -112,7 +114,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			principal,
 			logger,
 			tx,
-			store, // this is used for the emails being sent later
+			store,
 			emailService,
 			emailTemplateService,
 			addressBook,
@@ -183,6 +185,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	milestone := models.NewMTOMilestone(
 		principalAccount.ID,
 		nil,
+		&commonMilestone.Description,
 		&commonMilestoneKey,
 		modelPlanID,
 		&finalCategoryID,
@@ -259,7 +262,7 @@ func MTOMilestoneUpdate(
 				principal,
 				logger,
 				tx,
-				store, // this is used for the emails being sent later
+				store,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -339,7 +342,6 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	principal authentication.Principal,
 	logger *zap.Logger,
 	tx *sqlx.Tx,
-	// The store is used only for the email, all other operations are done in the transaction
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -368,15 +370,12 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	})
 	if len(newlyInserted) > 0 {
 		for _, solution := range newlyInserted {
-			go func() {
-				sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
-				if sendEmailErr != nil {
-					logger.Error("error sending solution selected emails",
-						zap.Any("solution", solution.Key),
-						zap.Error(sendEmailErr))
-				}
-			}()
-
+			sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+			if sendEmailErr != nil {
+				logger.Error("error sending solution selected emails",
+					zap.Any("solution", solution.Key),
+					zap.Error(sendEmailErr))
+			}
 		}
 	}
 
@@ -408,7 +407,8 @@ func MTOMilestoneUpdateLinkedSolutions(
 	// Future Enhancement see about replacing this with a helper function that expects to return a slice instead of a single type
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 
-		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx, store,
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx,
+			store,
 			emailService,
 			emailTemplateService,
 			addressBook,

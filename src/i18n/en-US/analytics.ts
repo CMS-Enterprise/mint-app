@@ -1,16 +1,85 @@
+import { ReportsType } from 'features/ReportsAndAnalytics';
+
+export const reports: Record<
+  ReportsType,
+  { heading: string; description: string; formatExcel: string }
+> = {
+  mtoMilestoneSummary: {
+    heading: 'MTO milestone summary',
+    description:
+      'This report downloads an excel file of all model-to-operations matrix (MTO) milestones, separated by model. It contains a subset of data about each milestone.',
+    formatExcel: 'Format: Excel'
+  },
+  allModels: {
+    heading: 'All models',
+    description:
+      'This report downloads a csv of information about all models in MINT including Model Plan details and more.',
+    formatExcel: 'Format: CSV'
+  }
+};
+
+// Column header translations for Excel export
+export const columnHeaderTranslations: Record<string, string> = {
+  __typename: 'Report name',
+  modelName: 'Model name',
+  numberOfChanges: 'Number of changes',
+  numberOfRecordChanges: 'Number of record changes',
+  modelPlanID: 'Model plan ID',
+  status: 'Status',
+  numberOfModels: 'Number of models',
+  numberOfFollowers: 'Number of followers',
+  totalNumberOfModels: 'Total number of models',
+  tableName: 'Section',
+  section: 'Section',
+  monthYear: 'Date'
+};
+
+export const typenameTranslations: Record<string, string> = {
+  ModelChangesAnalytics: 'Changes per model',
+  ModelChangesBySectionAnalytics: 'Changes per model by section',
+  ModelChangesOtherDataAnalytics: 'Changes per model other data',
+  ModelsByStatusAnalytics: 'Models by status',
+  ModelFollowersAnalytics: 'Number of followers per model',
+  ModelCountAnalytics: 'Total number of models',
+  ModelCountAnalyticsOverTime: 'Number of models over time'
+};
+
 const analytics = {
-  heading: 'Analytics',
-  changesPerModel: 'Changes Per Model',
-  changesPerModelBySection: 'Changes Per Model By Section',
-  changesPerModelOtherData: 'Changes Per Model Other Data',
-  modelsByStatus: 'Models By Status',
-  numberOfFollowersPerModel: 'Number of Followers Per Model',
-  totalNumberOfModels: 'Total Number of Models',
-  numberOfChanges: 'Number of Changes',
-  numberOfModels: 'Number of Models',
-  numberOfFollowers: 'Number of Followers',
-  downloadAnalytics: 'Download Analytics summary as XLSX',
-  noAnalyticsData: 'No analytics data found'
+  heading: 'Reports and analytics',
+  description:
+    'Download reports containing a variety of information about models in MINT or view the latest analytics about content in MINT.',
+  contactMINTTeam:
+    '<email>Contact the MINT Team</email> if you have any questions about the available reports.',
+  downloadableReports: 'Downloadable reports',
+  downloadableReportsDescription:
+    'Download reports of the latest model information in MINT. Each report will be downloaded in a specific format and will include a subset of model information available in MINT.',
+  reports,
+  formatExcel: 'Format: Excel',
+  formatCSV: 'Format: CSV',
+  download: 'Download',
+  mintAnalytics: 'MINT analytics',
+  mintAnalyticsDescription: 'Charts and graphs of current statistics for MINT.',
+  mtoCategorySummary: 'MTO category summary',
+  changesPerModel: 'Changes per model',
+  changesPerModelBySection: 'Changes per model by section',
+  changesPerModelOtherData: 'Changes per model other data',
+  modelsByStatus: 'Models by status',
+  numberOfFollowersPerModel: 'Number of followers per model',
+  totalNumberOfModels: 'Total number of models',
+  numberOfModelsOverTime: 'Number of models over time',
+  numberOfChanges: 'Number of changes',
+  numberOfModels: 'Number of models',
+  numberOfFollowers: 'Number of followers',
+  downloadAnalytics: 'Download analytics summary as XLSX',
+  noAnalyticsData: 'No analytics data found',
+  report: 'Report',
+  downloadExcel: 'Download data (excel)',
+  downloadPDF: 'Download chart (PDF)',
+  downloadMultipleChartsPDF: 'Download all charts (PDF)',
+  columnHeaderTranslations,
+  errorGeneratingMultiChartPDF: 'Error generating multi-chart PDF',
+  errorGeneratingPDF: 'Error generating PDF',
+  appendTableToChart: 'Append table to chart export'
 };
 
 export default analytics;

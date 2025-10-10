@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
-import { NotFoundPartial } from 'features/NotFound';
+import NotFound from 'features/NotFound';
 import {
   Activity,
   GetNotificationsQuery,
@@ -46,7 +46,7 @@ const NotificationsHome = () => {
   });
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
   return (
