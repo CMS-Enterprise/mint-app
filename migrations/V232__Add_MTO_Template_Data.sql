@@ -1187,11 +1187,17 @@ DECLARE
   template_uuid uuid;
 
   -- categories
-  participants uuid; operations uuid; legal uuid; learning uuid; evaluation uuid;
+  participants uuid; 
+  operations uuid; 
+  legal uuid; 
+  learning uuid; 
+  evaluation uuid;
 
   -- sub-categories
-  app_review uuid; participant_support uuid;
-  collect_data uuid; send_data uuid;
+  app_review uuid; 
+  participant_support uuid;
+  collect_data uuid; 
+  send_data uuid;
   agreements uuid;
   learning_uncat uuid;
   eval_uncat uuid;
@@ -1201,10 +1207,20 @@ DECLARE
   review_score_app uuid;
   comm_with_part uuid;
   helpdesk_support uuid;
+  collect_data_to_monitor uuid;
+  collect_data_to_support_eval uuid;
+  send_reports_to_part uuid;
+  acquire_learn_contractor uuid;
   acquire_eval_contractor uuid;
 
   -- solutions (keys provided)
-  gs uuid; cbosc uuid; ccw uuid; ipc uuid;
+  gs uuid; 
+  cbosc uuid; 
+  isp uuid;
+  portal uuid;
+  ccw uuid; 
+  ipc uuid;
+
 BEGIN
   SELECT id INTO template_uuid FROM mto_template WHERE key='STATE_AND_LOCAL_MODELS';
 
@@ -1311,12 +1327,35 @@ BEGIN
   VALUES (helpdesk_support, template_uuid, 'HELPDESK_SUPPORT', participant_support,
           '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
+  -- Operations → Collect data
+  collect_data_to_monitor := gen_random_uuid();
+  INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
+  VALUES (collect_data_to_monitor, template_uuid, 'DATA_TO_MONITOR', collect_data,
+          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Collect data
+  collect_data_to_support_eval := gen_random_uuid();
+  INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
+  VALUES (collect_data_to_support_eval, template_uuid, 'DATA_TO_SUPPORT_EVAL', collect_data,
+          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Send data to participants
+  send_reports_to_part := gen_random_uuid();
+  INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
+  VALUES (send_reports_to_part, template_uuid, 'SEND_REPDATA_TO_PART', send_data,
+          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
   -- Evaluation → Uncategorized
   acquire_eval_contractor := gen_random_uuid();
   INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
   VALUES (acquire_eval_contractor, template_uuid, 'ACQUIRE_AN_EVAL_CONT', eval_uncat,
           '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
+  -- Learning → Uncategorized
+  acquire_learn_contractor := gen_random_uuid();
+  INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
+  VALUES (acquire_learn_contractor, template_uuid, 'ACQUIRE_A_LEARN_CONT', learning_uncat,
+          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   /* =========
      Solutions
@@ -1334,6 +1373,20 @@ BEGIN
   INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
   VALUES (cbosc, template_uuid,
           (SELECT id FROM mto_common_solution WHERE key='CBOSC'),
+          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Innovation Support Platform (ISP)
+  isp := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (isp, template_uuid,
+        (SELECT id FROM mto_common_solution WHERE key='ISP'),
+        '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Portal
+  portal := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (portal, template_uuid,
+          (SELECT id FROM mto_common_solution WHERE key='POST_PORTAL'),
           '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   -- Chronic Conditions Warehouse (CCW) — (no specific milestone link provided)
@@ -1375,6 +1428,43 @@ BEGIN
   VALUES
     (gen_random_uuid(), template_uuid, cbosc, helpdesk_support,
      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Collect data - ISP
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, isp, collect_data_to_monitor,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Collect data - Portal
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, portal, collect_data_to_monitor,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Collect data - ISP
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, isp, collect_data_to_support_eval,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Collect data - Portal
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, portal, collect_data_to_support_eval,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Operations → Send data to participants - ISP
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, isp, send_reports_to_part,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+
 
 END $$;
 
