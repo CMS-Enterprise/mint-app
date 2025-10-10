@@ -3,9 +3,9 @@ import { Outlet } from 'react-router-dom';
 
 import ProtectedRoute from 'components/ProtectedRoute';
 
-import SelectSolutionSettings from './selectSolutions';
-import SettingsForm from './settings';
-import SettingsOrder from './settingsOrder';
+import SelectSolutionSettings from './SelectSolutions';
+import SettingsForm from './Settings';
+import SettingsOrder from './SettingsOrder';
 
 export const HomePageSettings = () => {
   return <Outlet />;

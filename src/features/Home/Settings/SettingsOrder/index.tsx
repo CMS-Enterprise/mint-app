@@ -26,9 +26,9 @@ import PageLoading from 'components/PageLoading';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 
-import { HomepageSettingsLocationType } from './settings';
+import { HomepageSettingsLocationType } from '../Settings';
 
-import './index.scss';
+import '../index.scss';
 
 /**
  * Moves an item in an array up or down by one position.

@@ -15,9 +15,9 @@ import {
 
 import MessageProvider from 'contexts/MessageContext';
 
-import SelectSolutionSettings from './selectSolutions';
-import HomePageSettings from './settings';
-import SettingsOrder, { moveItem } from './settingsOrder';
+import SelectSolutionSettings from './SelectSolutions';
+import SettingsOrder, { moveItem } from './SettingsOrder';
+import HomePageSettings from '.';
 
 const mocks: MockedResponse<
   GetHomepageSettingsQuery,

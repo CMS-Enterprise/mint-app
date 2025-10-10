@@ -14,6 +14,7 @@ import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solu
 import NotFound from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
+  ComponentGroup,
   GetHomepageSettingsQuery,
   MtoCommonSolutionKey,
   useGetHomepageSettingsQuery,
@@ -31,7 +32,7 @@ import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
 
-import './index.scss';
+import '../index.scss';
 
 export type HomepageSettingsLocationType = {
   homepageSettings: HomepageSettingsFormType;
@@ -70,6 +71,17 @@ const SettingsForm = () => {
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
+
+  const componentGroupTrans = tObject<keyof ComponentGroup, any>(
+    'homepageSettings:componentGroupAcronyms'
+  );
+
+  const selectedComponentGroups = useMemo(() => {
+    return (data?.userViewCustomization.componentGroups || []).map(
+      (componentGroup: ComponentGroup) =>
+        componentGroupTrans[componentGroup as unknown as keyof ComponentGroup]
+    );
+  }, [data?.userViewCustomization, componentGroupTrans]);
 
   // Get the settings options from the translation file
   const settingOptions = tObject<keyof HomepageSettingsType, any>(
@@ -216,6 +228,44 @@ const SettingsForm = () => {
                                     className="text-bold display-flex flex-align-center settings__update"
                                   >
                                     {homepageSettingsT('updateSolutions')}
+
+                                    <Icon.ArrowForward
+                                      className="margin-left-1"
+                                      aria-label="forward"
+                                    />
+                                  </UswdsReactLink>
+                                </div>
+                              )}
+
+                            {settionOption ===
+                              ViewCustomizationType.MODELS_BY_GROUP &&
+                              selectedComponentGroups.length === 0 && (
+                                <UswdsReactLink
+                                  to="/homepage-settings/component-groups"
+                                  state={{ homepageSettings: values }}
+                                  className="text-bold display-flex flex-align-center settings__update"
+                                  data-testid="add-groups-settings"
+                                >
+                                  {homepageSettingsT('selectGroups')}
+                                </UswdsReactLink>
+                              )}
+
+                            {settionOption ===
+                              ViewCustomizationType.MODELS_BY_GROUP &&
+                              selectedComponentGroups.length > 0 && (
+                                <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
+                                  <p className="text-bold margin-0 margin-right-105">
+                                    {selectedComponentGroups.join(', ')}
+                                  </p>
+
+                                  <UswdsReactLink
+                                    to="/homepage-settings/component-groups"
+                                    state={{
+                                      homepageSettings: values
+                                    }}
+                                    className="text-bold display-flex flex-align-center settings__update"
+                                  >
+                                    {homepageSettingsT('updateGroups')}
 
                                     <Icon.ArrowForward
                                       className="margin-left-1"
