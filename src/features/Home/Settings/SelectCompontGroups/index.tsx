@@ -13,7 +13,6 @@ import { Field, Formik, FormikProps } from 'formik';
 import {
   ComponentGroup,
   GetHomepageSettingsQuery,
-  useGetGlobalMtoCommonSolutionsQuery,
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
@@ -167,7 +166,7 @@ const SelectComponentGroupsSettings = () => {
                   return (
                     <>
                       <MINTForm
-                        data-testid="it-component-groups-add-component-group"
+                        data-testid="component-groups-add-component-group"
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                         }}
