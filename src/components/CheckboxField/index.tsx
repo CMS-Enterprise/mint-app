@@ -14,6 +14,7 @@ type CheckboxFieldProps = {
   value: string;
   inputProps?: React.ComponentProps<'input'>;
   icon?: React.ReactNode;
+  noMargin?: boolean;
 };
 
 const CheckboxField = ({
@@ -28,7 +29,8 @@ const CheckboxField = ({
   onBlur,
   value,
   inputProps,
-  icon
+  icon,
+  noMargin
 }: CheckboxFieldProps) => {
   const checkboxClassNames = classnames('mint-checkbox', 'usa-checkbox', {
     'easy-checkbox--disabled': disabled
@@ -49,7 +51,9 @@ const CheckboxField = ({
         {...inputProps}
       />
       <label
-        className="usa-checkbox__label"
+        className={classnames('usa-checkbox__label', {
+          'margin-0': noMargin
+        })}
         htmlFor={id}
         style={{ width: 'fit-content' }}
       >
