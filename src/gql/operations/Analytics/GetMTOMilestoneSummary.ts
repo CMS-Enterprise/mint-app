@@ -21,6 +21,11 @@ export default gql(/* GraphQL */ `
           responsibleComponent
           facilitatedBy
           facilitatedByOther
+          assignedToUserAccount {
+            id
+            commonName
+            email
+          }
           notes {
             id
             content

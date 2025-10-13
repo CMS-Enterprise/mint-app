@@ -349,6 +349,9 @@ export const downloadMTOMilestoneSummary = (
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
           )
           .join(', '),
+        'Assigned to': milestone.assignedToUserAccount
+          ? `${milestone.assignedToUserAccount.commonName} (${milestone.assignedToUserAccount.email})`
+          : '',
         'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
@@ -381,7 +384,7 @@ export const downloadMTOMilestoneSummary = (
   }
 
   // Add borders to all cells in the sheet
-  const concernsColumnIndex = 7; // Column H (0-indexed)
+  const concernsColumnIndex = 8; // Column I (0-indexed)
   const borderStyle = {
     top: { style: 'thin', color: { rgb: '000000' } },
     bottom: { style: 'thin', color: { rgb: '000000' } },
@@ -459,7 +462,7 @@ export const downloadMTOMilestoneSummary = (
 
   // NOT NEEDED ANYMORE, may need for future
   // Style "Needed By" column - make 'Completed' text grey
-  const neededByColumnIndex = 5; // "Needed By" is the 4th column (0-indexed)
+  const neededByColumnIndex = 6; // "Needed By" is the 6th column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     const cellAddress = XLSX.utils.encode_cell({
       r: row,
@@ -477,7 +480,7 @@ export const downloadMTOMilestoneSummary = (
   }
 
   // Style quarter columns - add grey background for cells with 'X'
-  const quarterStartColumn = 7; // Quarters start after Concerns column (0-indexed)
+  const quarterStartColumn = 9; // Quarters start after Concerns column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     for (let col = quarterStartColumn; col <= range.e.c; col += 1) {
       const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });

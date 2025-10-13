@@ -17,7 +17,7 @@ describe('Model-to-Operations Matrix', () => {
     );
   });
 
-  it('Fills out an empty MTO Matrix with milestones and solutions', () => {
+  it.only('Fills out an empty MTO Matrix with milestones and solutions', () => {
     cy.contains('h2', 'Your model-to-operations matrix (MTO) is a bit empty!');
 
     cy.contains('a', 'Add solutions from library');
@@ -125,8 +125,28 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('table').within(() => {
       cy.get('td').contains('4i').should('exist');
     });
+
+    // Add collaborators
+    // cy.get('[data-testid="manage-collaborators"]').click();
+    // cy.contains('a', 'Add team member').click();
+
+    // cy.get('#react-select-model-team-cedar-contact-input')
+    //   .click()
+    //   .type('Jerry');
+
+    // cy.get('#react-select-model-team-cedar-contact-option-0')
+    //   .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
+    //   .click();
+
+    // cy.get('#collaborator-role').within(() => {
+    //   cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+    // });
+
+    // cy.clickOutside();
+
+    // cy.contains('button', 'Add team member').click();
   });
-  it('Adding a Solution from the Solution Library', () => {
+  it.only('Adding a Solution from the Solution Library', () => {
     cy.contains('Add solutions from library').click({ force: true });
     cy.url().should('include', '/solution-library');
 
@@ -196,7 +216,7 @@ describe('Model-to-Operations Matrix', () => {
     });
   });
 
-  it('Create custom milestone', () => {
+  it.only('Create custom milestone', () => {
     cy.contains('or, create a custom milestone').click({ force: true });
 
     cy.findModalWithThisHeadingAndSaveAlias(
@@ -252,6 +272,35 @@ describe('Model-to-Operations Matrix', () => {
     );
 
     cy.get('#isDraft').should('be.not.disabled').click({ force: true });
+
+    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
+    cy.get('#clear-selection')
+      .parent()
+      .find('[class$="indicatorContainer"]')
+      .eq(1)
+      .click({ force: true });
+    cy.get('#responsible-component-tags li').should(
+      'have.length.greaterThan',
+      0
+    );
+    cy.contains('FCHCO').click({ force: true });
+
+    cy.contains(
+      'This individual will receive an email notification from MINT when you assign this milestone.'
+    ).should('not.exist');
+
+    cy.get('#assigned-to').click({ force: true });
+    cy.get('[data-testid="combo-box-input"').type('min{enter}', {
+      force: true
+    });
+    cy.get('[data-testid="combo-box-option-list"] li')
+      .should('have.length.greaterThan', 0)
+      .contains('MINT Doe (MINT@local.cms.gov)')
+      .click({ force: true });
+
+    cy.contains(
+      'This individual will receive an email notification from MINT when you assign this milestone.'
+    ).should('exist');
 
     cy.contains('Save changes')
       .should('be.not.disabled')

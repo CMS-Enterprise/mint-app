@@ -821,6 +821,12 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
+                  assignedToUserAccount: {
+                    __typename: 'UserAccount',
+                    id: 'user-123',
+                    commonName: 'John Doe',
+                    email: 'john.doe@example.com'
+                  },
                   status: MtoMilestoneStatus.NOT_STARTED,
                   riskIndicator: MtoRiskIndicator.ON_TRACK,
                   notes: []
