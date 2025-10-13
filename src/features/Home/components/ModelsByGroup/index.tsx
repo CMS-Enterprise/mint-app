@@ -68,7 +68,7 @@ const ModelsByGroup = ({
         heading={customHomeT(`settings.MODELS_BY_GROUP.noResultsHeading`)}
       >
         <UswdsReactLink
-          to="/homepage-settings/groups"
+          to="/homepage-settings/component-groups"
           state={{ fromHome: true }}
           className="display-flex flex-align-center text-bold"
         >
