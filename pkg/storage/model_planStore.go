@@ -415,7 +415,7 @@ func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key 
 
 func (s *Store) ModelPlanGetByComponentGroup(logger *zap.Logger, componentGroup models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
 	args := map[string]interface{}{
-		"group_key": componentGroup,
+		"component_group_key": componentGroup,
 	}
 	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroup, args)
 	if err != nil {
