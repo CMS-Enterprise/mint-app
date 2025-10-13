@@ -348,6 +348,21 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('Adds a template', () => {
+    cy.get('a').contains('Home').click({ force: true });
+
+    cy.enterModelPlanCollaborationArea('Plan with Basics');
+
+    cy.get('[data-testid="Card"]')
+      .filter(':has(h3:contains("Model-to-operations matrix"))')
+      .within(() => {
+        cy.contains('button', 'Go to matrix').click({ force: true });
+      });
+
+    cy.url().should(
+      'include',
+      '/collaboration-area/model-to-operations/matrix'
+    );
+
     cy.contains('View all templates in the library').click({ force: true });
 
     cy.contains(
@@ -405,6 +420,21 @@ describe('Model-to-Operations Matrix', () => {
   });
 
   it('tests Action Menu', () => {
+    cy.get('a').contains('Home').click({ force: true });
+
+    cy.enterModelPlanCollaborationArea('Plan with Basics');
+
+    cy.get('[data-testid="Card"]')
+      .filter(':has(h3:contains("Model-to-operations matrix"))')
+      .within(() => {
+        cy.contains('button', 'Go to matrix').click({ force: true });
+      });
+
+    cy.url().should(
+      'include',
+      '/collaboration-area/model-to-operations/matrix'
+    );
+
     cy.get('tbody tr')
       .first()
       .find('td')
