@@ -34,7 +34,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -75,7 +75,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[loadingMock]} addTypename={false}>
+      <MockedProvider mocks={[loadingMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -113,7 +113,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[errorMock]} addTypename={false}>
+      <MockedProvider mocks={[errorMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -145,7 +145,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -184,7 +184,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -224,7 +224,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -274,7 +274,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -309,7 +309,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -347,7 +347,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -413,7 +413,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

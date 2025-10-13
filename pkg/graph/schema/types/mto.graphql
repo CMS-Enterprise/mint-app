@@ -16,7 +16,7 @@ type ModelsToOperationMatrix {
   This returns all mto templates, regardless of whether they're linked to a model plan
   to check if it is part of this MTO check the returned isAdded field
   """
-  mtoTemplates: [MTOTemplate!]!
+  templates: [MTOTemplate!]!
   """
   Solutions returns solutions that are linked to a Model Plan's MTO.
    -- filterView is used to return only solutions that are relevant to a specific ModelViewFilter

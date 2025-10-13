@@ -51,14 +51,14 @@ exports[`TemplateCard Component > renders correctly and matches snapshot 1`] = `
       >
         <button
           class="usa-button usa-button--outline margin-right-2"
-          data-testid="button"
+          data-testid="STANDARD_CATEGORIES-template-add"
           type="button"
         >
           Add to matrix
         </button>
         <button
           class="usa-button usa-button--unstyled margin-top-2"
-          data-testid="button"
+          data-testid="STANDARD_CATEGORIES-template-about"
           type="button"
         >
           About this template

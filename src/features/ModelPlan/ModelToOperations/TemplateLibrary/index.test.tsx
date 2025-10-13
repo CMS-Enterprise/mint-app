@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { mtoTemplateMock } from 'tests/mock/mto';
+import { mtoModelPlanTemplateMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
 import { vi } from 'vitest';
 
@@ -56,9 +56,7 @@ const renderWithProviders = (ui: React.ReactElement) => {
   return render(
     <BrowserRouter>
       <MTOModalContext.Provider value={mockContextValue}>
-        <MockedProvider mocks={mtoTemplateMock} addTypename={false}>
-          {ui}
-        </MockedProvider>
+        <MockedProvider mocks={mtoModelPlanTemplateMock}>{ui}</MockedProvider>
       </MTOModalContext.Provider>
     </BrowserRouter>
   );
@@ -109,8 +107,12 @@ describe('TemplateLibrary', () => {
     ).toBeInTheDocument();
   });
 
-  it('shows search functionality', () => {
+  it('shows search functionality', async () => {
     renderWithProviders(<TemplateLibrary />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Standard categories')).toBeInTheDocument();
+    });
 
     // Look for search input by placeholder or label
     const searchInput = screen.getByRole('searchbox');

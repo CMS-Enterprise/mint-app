@@ -27,7 +27,7 @@ exports[`TemplatePanel Component > renders correctly and matches snapshot 1`] = 
     >
       <button
         class="usa-button usa-button--outline margin-right-2"
-        data-testid="button"
+        data-testid="add-to-matrix-panel-button"
         type="button"
       >
         Add to matrix

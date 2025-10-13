@@ -25,6 +25,9 @@ import {
   GetMtoMilestoneSummaryDocument,
   GetMtoMilestoneSummaryQuery,
   GetMtoMilestoneSummaryQueryVariables,
+  GetMtoModelPlanTemplatesDocument,
+  GetMtoModelPlanTemplatesQuery,
+  GetMtoModelPlanTemplatesQueryVariables,
   GetMtoSolutionContactsDocument,
   GetMtoSolutionContactsQuery,
   GetMtoSolutionDocument,
@@ -795,7 +798,7 @@ export const solutionAndMilestoneMock: MockedResponse<
   }
 ];
 
-export const mtoTemplateMockData: MtoTemplateType[] = [
+export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
   {
     __typename: 'MTOTemplate',
     id: '1',
@@ -806,7 +809,7 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
     milestoneCount: 0,
     solutionCount: 0,
     primaryCategoryCount: 9,
-    isAdded: true,
+    isAdded: false,
     categories: [
       {
         __typename: 'MTOTemplateCategory',
@@ -897,18 +900,56 @@ export const mtoTemplateMockData: MtoTemplateType[] = [
   }
 ];
 
+export const mtoModelPlanTemplateMock: MockedResponse<
+  GetMtoModelPlanTemplatesQuery,
+  GetMtoModelPlanTemplatesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoModelPlanTemplatesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
+            templates: mtoModelPlanTemplateMockData
+          }
+        }
+      }
+    }
+  }
+];
+
 export const mtoTemplateMock: MockedResponse<
   GetMtoTemplatesQuery,
   GetMtoTemplatesQueryVariables
 >[] = [
   {
     request: {
-      query: GetMtoTemplatesDocument
+      query: GetMtoTemplatesDocument,
+      variables: {
+        keys: [
+          MtoTemplateKey.STANDARD_CATEGORIES,
+          MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+          MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+        ]
+      }
     },
     result: {
       data: {
         __typename: 'Query',
-        mtoTemplates: mtoTemplateMockData
+        mtoTemplates: mtoModelPlanTemplateMockData.slice(0, 3)
       }
     }
   }

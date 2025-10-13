@@ -2,7 +2,7 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MtoTemplateKey } from 'gql/generated/graphql';
-import { modelID, mtoTemplateMockData } from 'tests/mock/mto';
+import { modelID, mtoModelPlanTemplateMockData } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 import {
@@ -278,7 +278,7 @@ describe('flattenTemplateData Function', () => {
 });
 
 describe('TemplatePanel Component', () => {
-  const mockTemplate: MtoTemplateType = mtoTemplateMockData[0];
+  const mockTemplate: MtoTemplateType = mtoModelPlanTemplateMockData[0];
 
   beforeEach(() => {
     vi.clearAllMocks();
