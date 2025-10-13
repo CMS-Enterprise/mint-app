@@ -185,7 +185,7 @@ const MTOOptionsPanel = () => {
                 <div className="margin-right-2 margin-top-4 display-inline-block">
                   {t('optionsCard.template.availableTemplates', {
                     selected: templates.length,
-                    available: templates.length
+                    available: '5'
                   })}
                 </div>
                 <UswdsReactLink
