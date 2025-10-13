@@ -74,10 +74,12 @@ func (suite *ResolverSuite) TestMTOTemplateComponents() {
 	suite.NoError(err)
 	suite.Empty(solutions)
 
-	// Test template retrieval
+	// Test template retrieval - empty keys returns all templates
 	templates, err := MTOTemplateGetByKeysLOADER(ctx, []models.MTOTemplateKey{})
 	suite.NoError(err)
-	suite.Nil(templates)
+	suite.NotNil(templates)
+	// Should return all 5 templates when keys array is empty
+	suite.Len(templates, 5)
 }
 
 func (suite *ResolverSuite) TestApplyTemplateToMTO_MultipleApplications() {
