@@ -117,19 +117,17 @@ const MTOOptionsPanel = () => {
   const { setMTOModalOpen: setIsModalOpen, setMTOModalState } =
     useContext(MTOModalContext);
 
-  const { data, loading, error } = useGetMtoTemplatesQuery();
+  const { data, loading, error } = useGetMtoTemplatesQuery({
+    variables: {
+      keys: [
+        MtoTemplateKey.STANDARD_CATEGORIES,
+        MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+        MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+      ]
+    }
+  });
 
   const templates = data?.mtoTemplates || [];
-
-  const defaultTemplateKeys = [
-    MtoTemplateKey.STANDARD_CATEGORIES,
-    MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
-    MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
-  ];
-
-  const defaultTemplates = templates.filter(template =>
-    defaultTemplateKeys.includes(template.key)
-  );
 
   return (
     <div className="model-to-operations__options-panel">
@@ -186,7 +184,7 @@ const MTOOptionsPanel = () => {
               <div>
                 <div className="margin-right-2 margin-top-4 display-inline-block">
                   {t('optionsCard.template.availableTemplates', {
-                    selected: defaultTemplates.length,
+                    selected: templates.length,
                     available: templates.length
                   })}
                 </div>
@@ -197,7 +195,7 @@ const MTOOptionsPanel = () => {
                 </UswdsReactLink>
               </div>
 
-              {defaultTemplates.map(template => (
+              {templates.map(template => (
                 <Card
                   containerProps={{
                     className: 'shadow-2 padding-0 margin-0',
