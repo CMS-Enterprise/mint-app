@@ -8,13 +8,13 @@ import ModelStatusTag from 'components/ModelStatusTag';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 
-import { ModelsBySolutionType } from './table';
+import { ModelType } from '../ModelCardTable';
 
-import './index.scss';
+import '../ModelsBySolution/index.scss';
 
 type ModelSolutionCardProps = {
   className?: string;
-  modelPlan: ModelsBySolutionType[0]['modelPlan'];
+  modelPlan: ModelType;
 };
 
 const ModelSolutionCard = ({

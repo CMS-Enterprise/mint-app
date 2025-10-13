@@ -13,7 +13,7 @@ import {
 } from 'gql/generated/graphql';
 import setup from 'tests/util';
 
-import ModelsBySolutionTable from './table';
+import ModelsBySolutionTable from '../ModelCardTable';
 
 const mocks: MockedResponse<
   GetModelsByMtoSolutionQuery,

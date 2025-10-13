@@ -12,21 +12,20 @@ post {
 
 body:graphql {
   query modelPlansByComponentGroup {
-      modelPlansByComponentGroup (key:
-       CMCS) {
-          key
-          modelPlan{
-              id
-              modelName
-              abbreviation
-              archived
-              createdBy
-              createdDts
-              modifiedBy
-              modifiedDts
-              status
-              taskListStatus
-          }
+      modelPlansByComponentGroup(key: CMCS) {
+        key
+        modelPlan {
+          id
+          modelName
+          abbreviation
+          archived
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          status
+          taskListStatus
+        }
       }
   }
 }

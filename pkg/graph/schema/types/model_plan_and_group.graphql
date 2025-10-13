@@ -16,5 +16,5 @@ type ModelPlanAndGroup {
 }
 
 extend type Query {
-  modelPlansByGroupKey(key: ComponentGroup!): [ModelPlanAndGroup!]! @hasRole(role: MINT_USER)
+  modelPlansByComponentGroup(key: ComponentGroup!): [ModelPlanAndGroup!]! @hasRole(role: MINT_USER)
 }

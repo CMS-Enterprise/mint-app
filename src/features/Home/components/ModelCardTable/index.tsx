@@ -1,37 +1,45 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Grid, Link } from '@trussworks/react-uswds';
-import ModelsBySolutionsBanner, {
+import ModelsBanner, {
   StatusCategories
-} from 'features/Home/components/ModelsBySolutions/banner';
+} from 'features/Home/components/ModelsBanner';
 import {
+  ComponentGroup,
+  GetModelPlansByComponentGroupQuery,
   GetModelsByMtoSolutionQuery,
   ModelCategory,
-  MtoCommonSolutionKey,
-  useGetModelsByMtoSolutionQuery
+  MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
-import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import usePagination from 'hooks/usePagination';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { TranslationBasics } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 
-import ModelSolutionCard from './card';
+import ModelSolutionCard from '../ModelCard';
 
 export type ModelsBySolutionType =
-  GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'];
+  GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'][0]['modelPlan'];
 
-type ModelPlansTableProps = {
-  solutionKey: MtoCommonSolutionKey;
+export type ModelsByGroupType =
+  GetModelPlansByComponentGroupQuery['modelPlansByComponentGroup'][0]['modelPlan'];
+
+export type ModelType = ModelsBySolutionType | ModelsByGroupType;
+
+export type ModelsType = ModelsBySolutionType[] | ModelsByGroupType[];
+
+type ModelsCardTableProps = {
+  models: ModelsBySolutionType[] | ModelsByGroupType[];
+  key: MtoCommonSolutionKey | ComponentGroup;
 };
 
-const ModelsBySolutionTable = ({ solutionKey }: ModelPlansTableProps) => {
+const ModelsCardTable = ({ models, key }: ModelsCardTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
   const [selectedStatus, setSelectedStatus] =
@@ -39,84 +47,55 @@ const ModelsBySolutionTable = ({ solutionKey }: ModelPlansTableProps) => {
 
   const basicsConfig = usePlanTranslation('basics');
 
-  const { data, loading } = useGetModelsByMtoSolutionQuery({
-    variables: {
-      solutionKey
-    }
-  });
-
-  const modelsBySolution = useMemo(() => {
-    const models = (data?.modelPlansByMTOSolutionKey ||
-      []) as unknown as ModelsBySolutionType;
-    return (
-      [...models].sort((a, b) =>
-        a.modelPlan.modelName.localeCompare(b.modelPlan.modelName)
-      ) || ([] as ModelsBySolutionType)
-    );
-  }, [data]);
-
-  const [filteredModels, setFilteredModels] = useState<ModelsBySolutionType>([
-    ...modelsBySolution
-  ]);
+  const [filteredModels, setFilteredModels] = useState<ModelsType>([...models]);
 
   const [query, setQuery] = useState<string>('');
 
-  const { currentItems, Pagination, Results } =
-    usePagination<ModelsBySolutionType>({
-      items: filteredModels,
-      itemsPerPage: 3,
-      loading,
-      query
-    });
+  const { currentItems, Pagination, Results } = usePagination<ModelsType>({
+    items: filteredModels,
+    itemsPerPage: 3,
+    loading: false,
+    query
+  });
 
   useEffect(() => {
     if (selectedStatus === 'total' && query.trim() === '') {
-      setFilteredModels([...modelsBySolution]);
+      setFilteredModels([...models]);
       return;
     }
 
     if (selectedStatus === 'total' && query.trim() !== '') {
-      setFilteredModels(
-        searchModelsFilter(modelsBySolution, query, basicsConfig)
-      );
+      setFilteredModels(searchModelsFilter(models, query, basicsConfig));
       return;
     }
 
     if (selectedStatus !== 'total' && query.trim() === '') {
-      setFilteredModels(modelsWithStatus(modelsBySolution, selectedStatus));
+      setFilteredModels(modelsWithStatus(models, selectedStatus));
       return;
     }
 
     if (selectedStatus !== 'total' && query.trim() !== '') {
       setFilteredModels(
         modelsWithStatus(
-          searchModelsFilter(modelsBySolution, query, basicsConfig),
+          searchModelsFilter(models, query, basicsConfig),
           selectedStatus
         )
       );
     }
-  }, [selectedStatus, modelsBySolution, query, basicsConfig]);
-
-  if (loading) {
-    return (
-      <div className="padding-left-4 padding-top-3">
-        <Spinner />
-      </div>
-    );
-  }
+  }, [selectedStatus, models, query, basicsConfig]);
 
   return (
     <div id="models-by-solution-table">
-      <ModelsBySolutionsBanner
-        solutionKey={solutionKey}
-        solutionModels={modelsBySolution}
+      <ModelsBanner
+        key={key}
+        models={models}
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
       />
 
-      {modelsBySolution.length !== 0 &&
+      {models.length !== 0 &&
         (filteredModels.length > 4 ||
-          modelsWithStatus(modelsBySolution, selectedStatus).length > 4 ||
+          modelsWithStatus(models, selectedStatus).length > 4 ||
           !!query.trim()) && (
           <div className="margin-top-3">
             <GlobalClientFilter
@@ -131,8 +110,8 @@ const ModelsBySolutionTable = ({ solutionKey }: ModelPlansTableProps) => {
           </div>
         )}
 
-      {(modelsWithStatus(modelsBySolution, selectedStatus).length === 0 ||
-        modelsBySolution.length === 0) && (
+      {(modelsWithStatus(models, selectedStatus).length === 0 ||
+        models.length === 0) && (
         <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
           <Trans
             i18nKey="customHome:noModelSolutionDescription"
@@ -151,15 +130,8 @@ const ModelsBySolutionTable = ({ solutionKey }: ModelPlansTableProps) => {
       <>
         <Grid row gap={2} className="margin-bottom-2 margin-top-4">
           {currentItems.map(model => (
-            <Grid
-              desktop={{ col: 4 }}
-              tablet={{ col: 6 }}
-              key={model.modelPlan.id}
-            >
-              <ModelSolutionCard
-                key={model.modelPlan.id}
-                modelPlan={model.modelPlan}
-              />
+            <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={model.id}>
+              <ModelSolutionCard key={model.id} modelPlan={model} />
             </Grid>
           ))}
         </Grid>
@@ -171,42 +143,40 @@ const ModelsBySolutionTable = ({ solutionKey }: ModelPlansTableProps) => {
 };
 
 const modelsWithStatus = (
-  models: ModelsBySolutionType,
+  models: ModelsType,
   status: StatusCategories
-): ModelsBySolutionType => {
+): ModelsType => {
   if (status === 'total') {
     return models;
   }
-  return models.filter(
-    model => model.modelPlan.modelBySolutionStatus === status
-  );
+  return models.filter(model => model.modelBySolutionStatus === status);
 };
 
 const searchModelsFilter = (
-  models: ModelsBySolutionType,
+  models: ModelsType,
   query: string,
   basicsConfig: TranslationBasics
-): ModelsBySolutionType => {
+): ModelsType => {
   const queryValueLower = query.toLowerCase();
   return models.filter(model => {
     return (
-      model.modelPlan?.modelName?.toLowerCase().includes(queryValueLower) ||
-      model.modelPlan?.status?.toLowerCase().includes(queryValueLower) ||
+      model?.modelName?.toLowerCase().includes(queryValueLower) ||
+      model?.status?.toLowerCase().includes(queryValueLower) ||
       basicsConfig.modelCategory.options[
-        model.modelPlan?.basics?.modelCategory as ModelCategory
+        model?.basics?.modelCategory as ModelCategory
       ]
         ?.toLowerCase()
         .includes(queryValueLower) ||
       formatDateUtc(
-        model.modelPlan?.timeline?.performancePeriodStarts,
+        model?.timeline?.performancePeriodStarts,
         'MM/dd/yyyy'
       ).includes(queryValueLower) ||
       formatDateUtc(
-        model.modelPlan?.timeline?.performancePeriodEnds,
+        model?.timeline?.performancePeriodEnds,
         'MM/dd/yyyy'
       ).includes(queryValueLower)
     );
   });
 };
 
-export default ModelsBySolutionTable;
+export default ModelsCardTable;
