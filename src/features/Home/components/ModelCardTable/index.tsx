@@ -36,10 +36,11 @@ export type ModelsType = ModelsBySolutionType[] | ModelsByGroupType[];
 
 type ModelsCardTableProps = {
   models: ModelsBySolutionType[] | ModelsByGroupType[];
-  key: MtoCommonSolutionKey | ComponentGroup;
+  filterKey: MtoCommonSolutionKey | ComponentGroup;
+  type: 'solution' | 'group';
 };
 
-const ModelsCardTable = ({ models, key }: ModelsCardTableProps) => {
+const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
   const [selectedStatus, setSelectedStatus] =
@@ -87,7 +88,8 @@ const ModelsCardTable = ({ models, key }: ModelsCardTableProps) => {
   return (
     <div id="models-by-solution-table">
       <ModelsBanner
-        key={key}
+        type={type}
+        filterKey={filterKey}
         models={models}
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
@@ -102,7 +104,11 @@ const ModelsCardTable = ({ models, key }: ModelsCardTableProps) => {
               globalFilter={query}
               setGlobalFilter={setQuery}
               tableID="models-by-solution-table"
-              tableName={customHomeT('settings.MODELS_BY_SOLUTION.heading')}
+              tableName={
+                type === 'solution'
+                  ? customHomeT('settings.MODELS_BY_SOLUTION.heading')
+                  : customHomeT('settings.MODELS_BY_GROUP.heading')
+              }
               className="margin-bottom-3 maxw-none width-mobile-lg"
             />
 
@@ -112,18 +118,34 @@ const ModelsCardTable = ({ models, key }: ModelsCardTableProps) => {
 
       {(modelsWithStatus(models, selectedStatus).length === 0 ||
         models.length === 0) && (
-        <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
-          <Trans
-            i18nKey="customHome:noModelSolutionDescription"
-            components={{
-              report: (
-                <UswdsReactLink to="/report-a-problem" target="_blank">
-                  {' '}
-                </UswdsReactLink>
-              ),
-              email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
-            }}
-          />
+        <Alert type="info">
+          <>
+            <Trans
+              i18nKey="customHome:noModelsHeading"
+              components={{
+                h3: <h3 className="margin-0"> </h3>
+              }}
+              values={{
+                status:
+                  selectedStatus === 'total'
+                    ? ''
+                    : customHomeT(`modelBySolutionStatus.${selectedStatus}`),
+                type,
+                article: type === 'solution' ? 'using' : 'in'
+              }}
+            />
+            <Trans
+              i18nKey="customHome:noModelsDescription"
+              components={{
+                report: (
+                  <UswdsReactLink to="/report-a-problem" target="_blank">
+                    {' '}
+                  </UswdsReactLink>
+                ),
+                email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+              }}
+            />
+          </>
         </Alert>
       )}
 

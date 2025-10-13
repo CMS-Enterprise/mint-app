@@ -1,4 +1,7 @@
-import { ViewCustomizationType } from 'gql/generated/graphql';
+import {
+  ModelBySolutionStatus,
+  ViewCustomizationType
+} from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
@@ -58,6 +61,13 @@ const settings: HomepageSettingsType = {
     noResultsHeading: 'It looks like you forgot to select at least one group.',
     noResultsDescription: 'Select groups'
   }
+};
+
+export const modelBySolutionStatus: Record<ModelBySolutionStatus, string> = {
+  [ModelBySolutionStatus.PLANNED]: 'planned',
+  [ModelBySolutionStatus.ACTIVE]: 'active',
+  [ModelBySolutionStatus.ENDED]: 'ended',
+  [ModelBySolutionStatus.OTHER]: 'other'
 };
 
 const customHome = {
@@ -134,16 +144,17 @@ const customHome = {
     endDate: 'End date',
     tbd: 'To be determined'
   },
-  noModelSolutionHeading:
-    'There is no record of any models using this solution.',
-  noModelSolutionDescription:
+  noModelsHeading:
+    '<h3>There is no record of any {{status}} models {{article}} this {{type}}.</h3>',
+  noModelsDescription:
     'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
   solutionStatus: {
     total: 'Total',
     planned: 'Planned',
     active: 'Active',
     ended: 'Ended'
-  }
+  },
+  modelBySolutionStatus
 };
 
 export default customHome;

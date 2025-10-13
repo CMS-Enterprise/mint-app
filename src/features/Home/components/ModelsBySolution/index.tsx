@@ -153,7 +153,11 @@ const ModelsBySolutions = ({
         </div>
       )}
 
-      <ModelsCardTable models={modelsBySolution} key={isCurrentSolution} />
+      <ModelsCardTable
+        models={modelsBySolution}
+        filterKey={isCurrentSolution}
+        type="solution"
+      />
     </div>
   );
 };

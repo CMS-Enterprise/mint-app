@@ -21,12 +21,14 @@ export type StatusCategories =
   | ModelBySolutionStatus.ENDED;
 
 const ModelsBanner = ({
-  key,
+  type,
+  filterKey,
   models,
   selectedStatus,
   setSelectedStatus
 }: {
-  key: MtoCommonSolutionKey | ComponentGroup;
+  type: 'solution' | 'group';
+  filterKey: MtoCommonSolutionKey | ComponentGroup;
   models: ModelsType;
   selectedStatus: StatusCategories;
   setSelectedStatus: (status: StatusCategories) => void;
@@ -35,7 +37,7 @@ const ModelsBanner = ({
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const selectedSolution = helpSolutions[key as MtoCommonSolutionKey];
+  const selectedSolution = helpSolutions[filterKey as MtoCommonSolutionKey];
 
   return (
     <div className="models-by-solutions">

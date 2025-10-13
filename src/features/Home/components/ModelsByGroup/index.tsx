@@ -2,14 +2,16 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header, Icon, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { ComponentGroup, MtoCommonSolutionKey } from 'gql/generated/graphql';
+import {
+  ComponentGroup,
+  useGetModelPlansByComponentGroupQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
-import ModelsBySolutionTable from '../ModelCardTable';
+import ModelsCardTable from '../ModelCardTable';
 
 const ModelsByGroup = ({
   componentGroupKeys
@@ -26,6 +28,16 @@ const ModelsByGroup = ({
 
   const [isCurrentComponentGroup, setIsCurrentComponentGroup] =
     useState<ComponentGroup>(orderedComponentGroupKeys[0]);
+
+  const { data } = useGetModelPlansByComponentGroupQuery({
+    variables: {
+      key: isCurrentComponentGroup
+    },
+    skip: !isCurrentComponentGroup
+  });
+
+  const modelsByGroup =
+    data?.modelPlansByComponentGroup?.map(item => item.modelPlan) || [];
 
   const componentGroupNavs = orderedComponentGroupKeys.map(
     componentGroupKey => (
@@ -108,7 +120,11 @@ const ModelsByGroup = ({
         </div>
       )}
 
-      <ModelsBySolutionTable solutionKey={isCurrentComponentGroup} />
+      <ModelsCardTable
+        models={modelsByGroup}
+        filterKey={isCurrentComponentGroup}
+        type="group"
+      />
     </div>
   );
 };
