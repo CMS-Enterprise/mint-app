@@ -27,7 +27,7 @@ body:graphql {
         riskIndicator: AT_RISK
         status: IN_PROGRESS
         needBy: "2024-10-31T17:20:21.959953Z"
-        assignedTo: "{{currentUserID}}"
+        assignedTo: "{{modelLeadID}}"
       }
       solutionLinks: {
         solutionIDs: ["{{mtoSolutionID}}"]
@@ -40,9 +40,11 @@ body:graphql {
       facilitatedBy
       facilitatedByOther
       assignedTo
-      assignedToUserAccount {
-        id
-        username
+      assignedToPlanCollaborator {
+        userAccount {
+          id
+          username
+        }
       }
       needBy
       status

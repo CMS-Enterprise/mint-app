@@ -67,7 +67,7 @@ type MTOMilestone {
   """
   facilitatedByOther: String
   assignedTo: UUID
-  assignedToUserAccount: UserAccount
+  assignedToPlanCollaborator: PlanCollaborator
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
