@@ -208,10 +208,12 @@ const EditMilestoneForm = ({
 
   const modelCollaboratorsOptions = useMemo(() => {
     return (
-      allCollaboratorsData?.modelPlan.collaborators.map(({ userAccount }) => ({
-        value: userAccount.id,
-        label: `${userAccount.commonName} (${userAccount.email})`
-      })) || []
+      allCollaboratorsData?.modelPlan.collaborators.map(
+        ({ id, userAccount }) => ({
+          value: id,
+          label: `${userAccount.commonName} (${userAccount.email})`
+        })
+      ) || []
     );
   }, [allCollaboratorsData]);
 
