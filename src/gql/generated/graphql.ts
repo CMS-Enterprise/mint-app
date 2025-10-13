@@ -1379,6 +1379,13 @@ export enum MintUses {
   VIEW_MODEL = 'VIEW_MODEL'
 }
 
+export enum ModelByGroupStatus {
+  ACTIVE = 'ACTIVE',
+  ENDED = 'ENDED',
+  OTHER = 'OTHER',
+  PLANNED = 'PLANNED'
+}
+
 export enum ModelBySolutionStatus {
   ACTIVE = 'ACTIVE',
   ENDED = 'ENDED',
@@ -1480,6 +1487,7 @@ export type ModelPlan = {
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
   isFavorite: Scalars['Boolean']['output'];
+  modelByGroupStatus: ModelByGroupStatus;
   modelBySolutionStatus: ModelBySolutionStatus;
   modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -1510,6 +1518,13 @@ export type ModelPlan = {
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlanNameHistoryArgs = {
   sort?: SortDirection;
+};
+
+export type ModelPlanAndGroup = {
+  __typename: 'ModelPlanAndGroup';
+  key: ComponentGroup;
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
 };
 
 export type ModelPlanAndMtoCommonSolution = {
@@ -4269,6 +4284,7 @@ export type Query = {
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
+  modelPlansByComponentGroup: Array<ModelPlanAndGroup>;
   modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   mtoCommonSolutionContact: MtoCommonSolutionContact;
@@ -4332,6 +4348,12 @@ export type QueryModelPlanArgs = {
 /** Query definition for the schema */
 export type QueryModelPlanCollectionArgs = {
   filter?: ModelPlanFilter;
+};
+
+
+/** Query definition for the schema */
+export type QueryModelPlansByComponentGroupArgs = {
+  key: ComponentGroup;
 };
 
 

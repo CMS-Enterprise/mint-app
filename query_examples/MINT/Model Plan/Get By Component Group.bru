@@ -1,0 +1,36 @@
+meta {
+  name: Get By Component Group
+  type: graphql
+  seq: 13
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query modelPlansByComponentGroup {
+      modelPlansByComponentGroup (key:
+       CMCS) {
+          key
+          modelPlan{
+              id
+              modelName
+              abbreviation
+              archived
+              createdBy
+              createdDts
+              modifiedBy
+              modifiedDts
+              status
+              taskListStatus
+          }
+      }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,20 @@
+enum ModelByGroupStatus {
+  PLANNED
+  ACTIVE
+  ENDED
+  OTHER
+}
+
+extend type ModelPlan {
+  modelByGroupStatus: ModelByGroupStatus!
+}
+
+type ModelPlanAndGroup {
+  key: ComponentGroup!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByGroupKey(key: ComponentGroup!): [ModelPlanAndGroup!]! @hasRole(role: MINT_USER)
+}
