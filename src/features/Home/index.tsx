@@ -215,6 +215,16 @@ const Home = () => {
       <>
         <Divider className="margin-y-6" />
 
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_BY_GROUP}.heading`)}
+        </h2>
+
+        {componentGroupKeys.length > 0 && (
+          <p>
+            {t(`settings.${ViewCustomizationType.MODELS_BY_GROUP}.description`)}
+          </p>
+        )}
+
         <ModelsByGroup componentGroupKeys={componentGroupKeys} />
       </>
     )
