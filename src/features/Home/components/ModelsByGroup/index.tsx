@@ -19,6 +19,7 @@ const ModelsByGroup = ({
   componentGroupKeys: ComponentGroup[];
 }) => {
   const { t: customHomeT } = useTranslation('customHome');
+  const { t: homepageSettingsT } = useTranslation('homepageSettings');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -52,7 +53,9 @@ const ModelsByGroup = ({
           }
         )}
       >
-        <span>{componentGroupKey}</span>
+        <span>
+          {homepageSettingsT(`componentGroupAcronyms.${componentGroupKey}`)}
+        </span>
       </button>
     )
   );

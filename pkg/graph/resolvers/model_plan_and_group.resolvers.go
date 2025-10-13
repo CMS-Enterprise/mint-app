@@ -12,11 +12,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// ModelByGroupStatus is the resolver for the modelByGroupStatus field.
-func (r *modelPlanResolver) ModelByGroupStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelByGroupStatus, error) {
-	return ModelByGroupStatus(obj.Status), nil
-}
-
 // Key is the resolver for the key field.
 func (r *modelPlanAndGroupResolver) Key(ctx context.Context, obj *models.ModelPlanAndGroup) (models.ComponentGroup, error) {
 	return obj.ComponentGroup, nil

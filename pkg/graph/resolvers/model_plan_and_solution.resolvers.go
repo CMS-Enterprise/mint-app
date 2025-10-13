@@ -12,9 +12,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// ModelBySolutionStatus is the resolver for the modelBySolutionStatus field.
-func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
-	return ModelBySolutionStatus(obj.Status), nil
+// GeneralStatus is the resolver for the generalStatus field.
+func (r *modelPlanResolver) GeneralStatus(ctx context.Context, obj *models.ModelPlan) (models.GeneralStatus, error) {
+	return GeneralStatus(obj.Status), nil
 }
 
 // MtoCommonSolution is the resolver for the mtoCommonSolution field.
@@ -43,3 +43,15 @@ func (r *Resolver) ModelPlanAndMTOCommonSolution() generated.ModelPlanAndMTOComm
 }
 
 type modelPlanAndMTOCommonSolutionResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+/*
+	func (r *modelPlanResolver) GeneralStatus(ctx context.Context, obj *models.ModelPlan) (models.GeneralStatus, error) {
+	return GeneralStatus(obj.Status), nil
+}
+*/

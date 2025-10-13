@@ -1,7 +1,4 @@
-import {
-  ModelBySolutionStatus,
-  ViewCustomizationType
-} from 'gql/generated/graphql';
+import { GeneralStatus, ViewCustomizationType } from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
@@ -63,11 +60,11 @@ const settings: HomepageSettingsType = {
   }
 };
 
-export const modelBySolutionStatus: Record<ModelBySolutionStatus, string> = {
-  [ModelBySolutionStatus.PLANNED]: 'planned',
-  [ModelBySolutionStatus.ACTIVE]: 'active',
-  [ModelBySolutionStatus.ENDED]: 'ended',
-  [ModelBySolutionStatus.OTHER]: 'other'
+export const generalStatus: Record<GeneralStatus, string> = {
+  [GeneralStatus.PLANNED]: 'Planned',
+  [GeneralStatus.ACTIVE]: 'Active',
+  [GeneralStatus.ENDED]: 'Ended',
+  [GeneralStatus.OTHER]: 'Total'
 };
 
 const customHome = {
@@ -148,13 +145,7 @@ const customHome = {
     '<h3>There is no record of any {{status}} models {{article}} this {{type}}.</h3>',
   noModelsDescription:
     'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
-  solutionStatus: {
-    total: 'Total',
-    planned: 'Planned',
-    active: 'Active',
-    ended: 'Ended'
-  },
-  modelBySolutionStatus
+  generalStatus
 };
 
 export default customHome;

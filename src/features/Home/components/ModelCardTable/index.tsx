@@ -129,7 +129,9 @@ const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
                 status:
                   selectedStatus === 'total'
                     ? ''
-                    : customHomeT(`modelBySolutionStatus.${selectedStatus}`),
+                    : customHomeT(
+                        `generalStatus.${selectedStatus}`
+                      )?.toLowerCase(),
                 type,
                 article: type === 'solution' ? 'using' : 'in'
               }}
@@ -171,7 +173,7 @@ const modelsWithStatus = (
   if (status === 'total') {
     return models;
   }
-  return models.filter(model => model.modelBySolutionStatus === status);
+  return models.filter(model => model.generalStatus === status);
 };
 
 const searchModelsFilter = (

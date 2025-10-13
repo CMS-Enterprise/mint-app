@@ -6,7 +6,7 @@ import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutions
 import { ModelsType } from 'features/Home/components/ModelCardTable';
 import {
   ComponentGroup,
-  ModelBySolutionStatus,
+  GeneralStatus,
   MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 
@@ -16,9 +16,9 @@ import '../ModelsBySolution/index.scss';
 
 export type StatusCategories =
   | 'total'
-  | ModelBySolutionStatus.PLANNED
-  | ModelBySolutionStatus.ACTIVE
-  | ModelBySolutionStatus.ENDED;
+  | GeneralStatus.PLANNED
+  | GeneralStatus.ACTIVE
+  | GeneralStatus.ENDED;
 
 const ModelsBanner = ({
   type,
@@ -34,22 +34,31 @@ const ModelsBanner = ({
   setSelectedStatus: (status: StatusCategories) => void;
 }) => {
   const { t: customHomeT } = useTranslation('customHome');
+  const { t: homepageSettingsT } = useTranslation('homepageSettings');
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const selectedSolution = helpSolutions[filterKey as MtoCommonSolutionKey];
+  const headerText = () => {
+    if (type === 'solution') {
+      const selectedSolution = helpSolutions[filterKey as MtoCommonSolutionKey];
+
+      return (
+        <>
+          {' '}
+          {selectedSolution?.name}{' '}
+          {selectedSolution?.acronym ? `(${selectedSolution?.acronym})` : ''}
+        </>
+      );
+    }
+    return homepageSettingsT(`componentGroupAcronyms.${filterKey}`);
+  };
 
   return (
     <div className="models-by-solutions">
       <div className="bg-primary-lighter radius-md padding-2">
         <Grid row className="flex-align-center">
           <Grid desktop={{ col: 7 }} tablet={{ col: 6 }}>
-            <h3 className="margin-y-1">
-              {selectedSolution?.name}{' '}
-              {selectedSolution?.acronym
-                ? `(${selectedSolution?.acronym})`
-                : ''}
-            </h3>
+            <h3 className="margin-y-1">{headerText()}</h3>
           </Grid>
 
           <Grid
@@ -67,62 +76,57 @@ const ModelsBanner = ({
                   'bg-primary-darker': selectedStatus === 'total'
                 })}
               >
-                <div>{customHomeT(`solutionStatus.total`)}</div>
+                <div>{customHomeT(`generalStatus.${GeneralStatus.OTHER}`)}</div>
                 <div data-testid="total-count">{models.length}</div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelBySolutionStatus.PLANNED)}
+                onClick={() => setSelectedStatus(GeneralStatus.PLANNED)}
                 className={classNames('padding-y-2', {
-                  'bg-primary-darker':
-                    selectedStatus === ModelBySolutionStatus.PLANNED
+                  'bg-primary-darker': selectedStatus === GeneralStatus.PLANNED
                 })}
               >
-                <div>{customHomeT(`solutionStatus.planned`)}</div>
+                <div>
+                  {customHomeT(`generalStatus.${GeneralStatus.PLANNED}`)}
+                </div>
                 <div data-testid="planned-count">
                   {
                     models.filter(
-                      model =>
-                        model.modelBySolutionStatus ===
-                        ModelBySolutionStatus.PLANNED
+                      model => model.generalStatus === GeneralStatus.PLANNED
                     ).length
                   }
                 </div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelBySolutionStatus.ACTIVE)}
+                onClick={() => setSelectedStatus(GeneralStatus.ACTIVE)}
                 className={classNames('padding-y-2', {
-                  'bg-primary-darker':
-                    selectedStatus === ModelBySolutionStatus.ACTIVE
+                  'bg-primary-darker': selectedStatus === GeneralStatus.ACTIVE
                 })}
               >
-                <div>{customHomeT(`solutionStatus.active`)}</div>
+                <div>
+                  {customHomeT(`generalStatus.${GeneralStatus.ACTIVE}`)}
+                </div>
                 <div data-testid="active-count">
                   {
                     models.filter(
-                      model =>
-                        model.modelBySolutionStatus ===
-                        ModelBySolutionStatus.ACTIVE
+                      model => model.generalStatus === GeneralStatus.ACTIVE
                     ).length
                   }
                 </div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelBySolutionStatus.ENDED)}
+                onClick={() => setSelectedStatus(GeneralStatus.ENDED)}
                 className={classNames('padding-y-2', {
-                  'bg-primary-darker':
-                    selectedStatus === ModelBySolutionStatus.ENDED
+                  'bg-primary-darker': selectedStatus === GeneralStatus.ENDED
                 })}
               >
-                <div>{customHomeT(`solutionStatus.ended`)}</div>
+                <div>{customHomeT(`generalStatus.${GeneralStatus.ENDED}`)}</div>
                 <div data-testid="ended-count">
                   {
                     models.filter(
-                      model =>
-                        model.modelBySolutionStatus ===
-                        ModelBySolutionStatus.ENDED
+                      model => model.generalStatus === GeneralStatus.ENDED
                     ).length
                   }
                 </div>
