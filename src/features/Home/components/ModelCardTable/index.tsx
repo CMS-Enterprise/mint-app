@@ -22,7 +22,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { TranslationBasics } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 
-import ModelSolutionCard from '../ModelCard';
+import ModelCard from '../ModelCard';
 
 export type ModelsBySolutionType =
   GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'][0]['modelPlan'];
@@ -155,7 +155,7 @@ const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
         <Grid row gap={2} className="margin-bottom-2 margin-top-4">
           {currentItems.map(model => (
             <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={model.id}>
-              <ModelSolutionCard key={model.id} modelPlan={model} />
+              <ModelCard key={model.id} modelPlan={model} />
             </Grid>
           ))}
         </Grid>

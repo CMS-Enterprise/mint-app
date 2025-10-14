@@ -12,15 +12,12 @@ import { ModelType } from '../ModelCardTable';
 
 import '../ModelsBySolution/index.scss';
 
-type ModelSolutionCardProps = {
+type ModelCardProps = {
   className?: string;
   modelPlan: ModelType;
 };
 
-const ModelSolutionCard = ({
-  className,
-  modelPlan
-}: ModelSolutionCardProps) => {
+const ModelCard = ({ className, modelPlan }: ModelCardProps) => {
   const { t: customHomeT } = useTranslation('customHome');
   const basicsConfig = usePlanTranslation('basics');
 
@@ -104,4 +101,4 @@ const ModelSolutionCard = ({
   );
 };
 
-export default ModelSolutionCard;
+export default ModelCard;
