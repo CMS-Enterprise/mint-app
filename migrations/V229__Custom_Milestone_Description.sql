@@ -45,7 +45,10 @@ ALTER COLUMN description SET NOT NULL;
 
 -- Update mto_milestone descriptions for milestones linked to common milestones
 UPDATE mto_milestone 
-SET description = mto_common_milestone.description
+SET 
+    description = mto_common_milestone.description,
+    modified_by = '00000001-0001-0001-0001-000000000001', -- System Account
+    modified_dts = CURRENT_TIMESTAMP
 FROM mto_common_milestone
 WHERE
     mto_milestone.mto_common_milestone_key = mto_common_milestone.key
