@@ -6,7 +6,8 @@ import {
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  PlanCollaborator
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
@@ -44,9 +45,8 @@ export type MilestoneType = {
   name: string;
   facilitatedBy: MtoFacilitator[] | null;
   facilitatedByOther?: string | null;
-  assignedToUserAccount?: {
-    id: string;
-    commonName: string;
+  assignedToPlanCollaborator?: {
+    userAccount: Pick<PlanCollaborator['userAccount'], 'commonName'>;
   } | null;
   solutions: MtoSolutionType[];
   needBy: string | null;
@@ -69,9 +69,8 @@ export type SubCategoryType = {
   name: string;
   facilitatedBy: undefined;
   facilitatedByOther?: undefined;
-  assignedToUserAccount?: {
-    id: string;
-    commonName: string;
+  assignedToPlanCollaborator?: {
+    userAccount: Pick<PlanCollaborator['userAccount'], 'commonName'>;
   } | null;
   solutions: string[];
   needBy: undefined;
@@ -91,9 +90,8 @@ export type CategoryType = {
   name: string;
   facilitatedBy: undefined;
   facilitatedByOther?: undefined;
-  assignedToUserAccount?: {
-    id: string;
-    commonName: string;
+  assignedToPlanCollaborator?: {
+    userAccount: Pick<PlanCollaborator['userAccount'], 'commonName'>;
   } | null;
   solutions: string[];
   needBy: undefined;
@@ -297,7 +295,7 @@ export const columns: ColumnType[] = [
     Cell: ({ row, rowType, expanded }: RowProps) => {
       if (rowType !== 'milestone') return <></>;
 
-      if ('assignedToUserAccount' in row) {
+      if ('assignedToPlanCollaborator' in row) {
         return (
           <div>
             {row.facilitatedBy ? (
@@ -311,10 +309,12 @@ export const columns: ColumnType[] = [
               <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>
             )}
 
-            {row.assignedToUserAccount?.commonName && (
+            {row.assignedToPlanCollaborator?.userAccount.commonName && (
               <p className="margin-top-1 margin-bottom-0">
                 {i18next.t('mtoMilestone:assignedTo.label')}
-                <Avatar user={row.assignedToUserAccount.commonName} />
+                <Avatar
+                  user={row.assignedToPlanCollaborator.userAccount.commonName}
+                />
               </p>
             )}
           </div>

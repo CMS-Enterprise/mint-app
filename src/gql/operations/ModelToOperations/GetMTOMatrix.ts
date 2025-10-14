@@ -24,9 +24,12 @@ export default gql(/* GraphQL */ `
               key
               facilitatedBy
               facilitatedByOther
-              assignedToUserAccount {
+              assignedToPlanCollaborator {
                 id
-                commonName
+                userAccount {
+                  id
+                  commonName
+                }
               }
               needBy
               status
