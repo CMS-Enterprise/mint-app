@@ -1,21 +1,46 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   GeneralStatus,
   GetModelsByMtoSolutionDocument,
   GetModelsByMtoSolutionQuery,
   GetModelsByMtoSolutionQueryVariables,
-  ModelCategory,
   ModelStatus,
   MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 import setup from 'tests/util';
 
-import ModelsCardTable from '../ModelCardTable';
+import ModelsBySolution from './index';
 
-const mocks: MockedResponse<
+const createMockModels = (solutionKey: MtoCommonSolutionKey, count: number) => {
+  return Array.from({ length: count }, (_, i) => ({
+    modelPlanID: `model-plan-${solutionKey}-${i}`,
+    modelPlan: {
+      id: `model-${solutionKey}-${i}`,
+      modelName: `Model ${i + 1} for ${solutionKey}`,
+      status: i % 3 === 0 ? ModelStatus.ACTIVE : ModelStatus.PLAN_DRAFT,
+      generalStatus: i % 3 === 0 ? GeneralStatus.ACTIVE : GeneralStatus.PLANNED,
+      abbreviation: `M${i + 1}`,
+      basics: {
+        id: `basics-${i}`,
+        modelCategory: null,
+        __typename: 'PlanBasics' as const
+      },
+      timeline: {
+        id: `timeline-${i}`,
+        performancePeriodStarts: null,
+        performancePeriodEnds: null,
+        __typename: 'PlanTimeline' as const
+      },
+      __typename: 'ModelPlan' as const
+    },
+    __typename: 'ModelPlanAndMTOCommonSolution' as const
+  }));
+};
+
+const mockInnovation: MockedResponse<
   GetModelsByMtoSolutionQuery,
   GetModelsByMtoSolutionQueryVariables
 >[] = [
@@ -27,225 +52,549 @@ const mocks: MockedResponse<
     result: {
       data: {
         __typename: 'Query',
-        modelPlansByMTOSolutionKey: [
-          {
-            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae1',
-            modelPlan: {
-              id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-              modelName: 'Plan With CRs and TDLs',
-              status: ModelStatus.PLAN_DRAFT,
-              generalStatus: GeneralStatus.PLANNED,
-              abbreviation: 'PWCRT',
-              basics: {
-                id: '6a3c2f25-81ce-4364-b631-4c3b08eeb5af',
-                modelCategory: null,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: null,
-                performancePeriodEnds: null,
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          },
-          {
-            modelPlanID: 'e671f056-2634-4af4-abad-a63850832a0a',
-            modelPlan: {
-              id: 'e671f056-2634-4af4-abad-a63850832a0a',
-              modelName: 'Plan With Collaborators',
-              status: ModelStatus.PLAN_DRAFT,
-              generalStatus: GeneralStatus.PLANNED,
-              abbreviation: 'PWCLB',
-              basics: {
-                id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
-                modelCategory: null,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: null,
-                performancePeriodEnds: null,
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          },
-          {
-            modelPlanID: '598db9f0-54c0-4346-bb6b-da46a36eff1a',
-            modelPlan: {
-              id: '598db9f0-54c0-4346-bb6b-da46a36eff1a',
-              modelName: 'Enhancing Oncology Model',
-              status: ModelStatus.PLAN_DRAFT,
-              generalStatus: GeneralStatus.PLANNED,
-              abbreviation: 'EOM',
-              basics: {
-                id: '3f77db11-da8c-4282-a5c7-c50282833244',
-                modelCategory: null,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: null,
-                performancePeriodEnds: null,
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          },
-          {
-            modelPlanID: 'c9cf987d-8543-46bb-a668-2c560ce5b149',
-            modelPlan: {
-              id: 'c9cf987d-8543-46bb-a668-2c560ce5b149',
-              modelName: 'Empty Plan',
-              status: ModelStatus.PLAN_DRAFT,
-              generalStatus: GeneralStatus.PLANNED,
-              abbreviation: 'EP',
-              basics: {
-                id: '9a9547e2-b1d0-4ff7-a86b-9dc9339500fa',
-                modelCategory: ModelCategory.STATE_BASED,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: '2024-07-24T05:00:00Z',
-                performancePeriodEnds: '2024-07-31T05:00:00Z',
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          },
-          {
-            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae2',
-            modelPlan: {
-              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae2',
-              modelName: 'Plan with Basics',
-              generalStatus: GeneralStatus.ENDED,
-              status: ModelStatus.ENDED,
-              abbreviation: 'PWB',
-              basics: {
-                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
-                modelCategory: null,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: null,
-                performancePeriodEnds: null,
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          },
-          {
-            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae3',
-            modelPlan: {
-              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae3',
-              modelName: 'Z Paused Model',
-              generalStatus: GeneralStatus.OTHER,
-              status: ModelStatus.PAUSED,
-              abbreviation: 'ZPM',
-              basics: {
-                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
-                modelCategory: null,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: null,
-                performancePeriodEnds: null,
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          },
-          {
-            modelPlanID: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae4',
-            modelPlan: {
-              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae4',
-              modelName: 'Z Canceled Model',
-              generalStatus: GeneralStatus.OTHER,
-              status: ModelStatus.CANCELED,
-              abbreviation: 'ZCM',
-              basics: {
-                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
-                modelCategory: null,
-                __typename: 'PlanBasics'
-              },
-              timeline: {
-                id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
-                performancePeriodStarts: null,
-                performancePeriodEnds: null,
-                __typename: 'PlanTimeline'
-              },
-              __typename: 'ModelPlan'
-            },
-            __typename: 'ModelPlanAndMTOCommonSolution'
-          }
-        ]
+        modelPlansByMTOSolutionKey: createMockModels(
+          MtoCommonSolutionKey.INNOVATION,
+          5
+        )
       }
     }
   }
 ];
 
-describe('ModelsBySolution Table and Card', () => {
-  it('renders solution models banner and cards and matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/',
-          element: (
-            <ModelsCardTable
-              // @ts-expect-error - result is not typed
-              models={mocks[0].result?.data?.modelPlansByMTOSolutionKey ?? []}
-              filterKey={MtoCommonSolutionKey.INNOVATION}
-              type="solution"
-            />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/']
+const mockCbosc: MockedResponse<
+  GetModelsByMtoSolutionQuery,
+  GetModelsByMtoSolutionQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelsByMtoSolutionDocument,
+      variables: { solutionKey: MtoCommonSolutionKey.CBOSC }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlansByMTOSolutionKey: createMockModels(
+          MtoCommonSolutionKey.CBOSC,
+          3
+        )
       }
+    }
+  }
+];
+
+const mockEmpty: MockedResponse<
+  GetModelsByMtoSolutionQuery,
+  GetModelsByMtoSolutionQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelsByMtoSolutionDocument,
+      variables: { solutionKey: MtoCommonSolutionKey.ACO_OS }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlansByMTOSolutionKey: []
+      }
+    }
+  }
+];
+
+describe('ModelsBySolution', () => {
+  it('renders with no solutions selected', () => {
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={[]}>
+          <ModelsBySolution solutionKeys={[]} />
+        </MockedProvider>
+      </MemoryRouter>
     );
 
-    const { getByText, getByTestId, user, asFragment } = setup(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
+    expect(
+      screen.getByText(
+        'It looks like you forgot to select at least one solution.'
+      )
+    ).toBeInTheDocument();
+    expect(screen.getByText('Select solutions')).toBeInTheDocument();
+  });
+
+  it('shows loading spinner while fetching data', () => {
+    const loadingMock: MockedResponse<
+      GetModelsByMtoSolutionQuery,
+      GetModelsByMtoSolutionQueryVariables
+    >[] = [
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.INNOVATION }
+        },
+        result: {
+          data: {
+            __typename: 'Query',
+            modelPlansByMTOSolutionKey: []
+          }
+        },
+        delay: 100
+      }
+    ];
+
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={loadingMock}>
+          <ModelsBySolution solutionKeys={[MtoCommonSolutionKey.INNOVATION]} />
+        </MockedProvider>
+      </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('spinner'));
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+  });
 
-    // Counts on banner should reflect the number of models with each status
+  it('displays models after loading', async () => {
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={mockInnovation}>
+          <ModelsBySolution solutionKeys={[MtoCommonSolutionKey.INNOVATION]} />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
     await waitFor(() => {
-      expect(getByTestId('total-count')).toHaveTextContent('7');
-      expect(getByTestId('planned-count')).toHaveTextContent('4');
-      expect(getByTestId('active-count')).toHaveTextContent('0');
-      expect(getByTestId('ended-count')).toHaveTextContent('1');
+      expect(screen.getByText(/Model 1 for INNOVATION/)).toBeInTheDocument();
     });
 
-    await waitFor(async () => {
-      await user.click(getByTestId('active-count'));
+    // Should show banner with counts
+    expect(screen.getByTestId('total-count')).toHaveTextContent('5');
+  });
+
+  it('displays navigation tabs when fewer than 6 solutions', async () => {
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={[...mockInnovation, ...mockCbosc]}>
+          <ModelsBySolution
+            solutionKeys={[
+              MtoCommonSolutionKey.INNOVATION,
+              MtoCommonSolutionKey.CBOSC
+            ]}
+          />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Should show navigation buttons (solution names/acronyms)
+      expect(screen.getByText('4innovation')).toBeInTheDocument(); // INNOVATION acronym
+      expect(screen.getByText('CBOSC')).toBeInTheDocument();
+    });
+  });
+
+  it('displays select dropdown when 6 or more solutions', async () => {
+    const allMocks = [
+      ...mockInnovation,
+      ...mockCbosc,
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.ACO_OS }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.ACO_OS,
+              2
+            )
+          }
+        }
+      },
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.CCW }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.CCW,
+              2
+            )
+          }
+        }
+      },
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.AMS }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.AMS,
+              2
+            )
+          }
+        }
+      },
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.APPS }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.APPS,
+              2
+            )
+          }
+        }
+      }
+    ];
+
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={allMocks}>
+          <ModelsBySolution
+            solutionKeys={[
+              MtoCommonSolutionKey.INNOVATION,
+              MtoCommonSolutionKey.CBOSC,
+              MtoCommonSolutionKey.ACO_OS,
+              MtoCommonSolutionKey.CCW,
+              MtoCommonSolutionKey.AMS,
+              MtoCommonSolutionKey.APPS
+            ]}
+          />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Should show select dropdown instead of tabs
+      const select = screen.getByRole('combobox');
+      expect(select).toBeInTheDocument();
+    });
+  });
+
+  it('switches between solutions using navigation', async () => {
+    const { user } = setup(
+      <MemoryRouter>
+        <MockedProvider mocks={[...mockInnovation, ...mockCbosc]}>
+          <ModelsBySolution
+            solutionKeys={[
+              MtoCommonSolutionKey.INNOVATION,
+              MtoCommonSolutionKey.CBOSC
+            ]}
+          />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    // Initially shows INNOVATION models
+    await waitFor(() => {
+      expect(screen.getByText(/Model 1 for INNOVATION/)).toBeInTheDocument();
+    });
+
+    // Click on CBOSC button
+    const cboscButton = screen.getByText('CBOSC');
+    await user.click(cboscButton);
+
+    // Should now show CBOSC models
+    await waitFor(() => {
+      expect(screen.getByText(/Model 1 for CBOSC/)).toBeInTheDocument();
       expect(
-        getByText('There is no record of any models using this solution.')
+        screen.queryByText(/Model 1 for INNOVATION/)
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('switches solutions using select dropdown', async () => {
+    const allMocks = [
+      ...mockInnovation,
+      ...mockCbosc,
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.ACO_OS }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.ACO_OS,
+              2
+            )
+          }
+        }
+      },
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.CCW }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.CCW,
+              2
+            )
+          }
+        }
+      },
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.AMS }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.AMS,
+              2
+            )
+          }
+        }
+      },
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.APPS }
+        },
+        result: {
+          data: {
+            __typename: 'Query' as const,
+            modelPlansByMTOSolutionKey: createMockModels(
+              MtoCommonSolutionKey.APPS,
+              2
+            )
+          }
+        }
+      }
+    ];
+
+    const { user } = setup(
+      <MemoryRouter>
+        <MockedProvider mocks={allMocks}>
+          <ModelsBySolution
+            solutionKeys={[
+              MtoCommonSolutionKey.INNOVATION,
+              MtoCommonSolutionKey.CBOSC,
+              MtoCommonSolutionKey.ACO_OS,
+              MtoCommonSolutionKey.CCW,
+              MtoCommonSolutionKey.AMS,
+              MtoCommonSolutionKey.APPS
+            ]}
+          />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      const select = screen.getByRole('combobox');
+      expect(select).toBeInTheDocument();
+    });
+
+    // Change selection to CBOSC
+    const select = screen.getByRole('combobox') as HTMLSelectElement;
+    await user.selectOptions(select, MtoCommonSolutionKey.CBOSC);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Model 1 for CBOSC/)).toBeInTheDocument();
+    });
+  });
+
+  it('sorts solutions alphabetically by name', async () => {
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={[...mockInnovation, ...mockCbosc]}>
+          <ModelsBySolution
+            solutionKeys={[
+              MtoCommonSolutionKey.CBOSC,
+              MtoCommonSolutionKey.INNOVATION
+            ]}
+          />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      const buttons = screen.getAllByRole('button');
+      const buttonTexts = buttons
+        .map(btn => btn.textContent)
+        .filter(
+          text =>
+            text && (text.includes('4innovation') || text.includes('CBOSC'))
+        );
+
+      // 4innovation should come before CBOSC alphabetically
+      expect(buttonTexts[0]).toContain('4innovation');
+      expect(buttonTexts[1]).toContain('CBOSC');
+    });
+  });
+
+  it('handles empty results from query', async () => {
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={mockEmpty}>
+          <ModelsBySolution solutionKeys={[MtoCommonSolutionKey.ACO_OS]} />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/There is no record of any models using this solution/)
       ).toBeInTheDocument();
     });
+  });
 
-    // First three models should be visible
-    await waitFor(async () => {
-      await user.click(getByTestId('total-count'));
-      expect(getByText('Empty Plan (EP)')).toBeInTheDocument();
-      expect(getByText('Enhancing Oncology Model (EOM)')).toBeInTheDocument();
-      expect(getByText('Plan with Basics (PWB)')).toBeInTheDocument();
+  it('sorts models alphabetically by name', async () => {
+    const unsortedMocks: MockedResponse<
+      GetModelsByMtoSolutionQuery,
+      GetModelsByMtoSolutionQueryVariables
+    >[] = [
+      {
+        request: {
+          query: GetModelsByMtoSolutionDocument,
+          variables: { solutionKey: MtoCommonSolutionKey.INNOVATION }
+        },
+        result: {
+          data: {
+            __typename: 'Query',
+            modelPlansByMTOSolutionKey: [
+              {
+                modelPlanID: 'model-z',
+                modelPlan: {
+                  id: 'model-z',
+                  modelName: 'Zebra Model',
+                  status: ModelStatus.PLAN_DRAFT,
+                  generalStatus: GeneralStatus.PLANNED,
+                  abbreviation: 'ZM',
+                  basics: {
+                    id: 'basics-z',
+                    modelCategory: null,
+                    __typename: 'PlanBasics' as const
+                  },
+                  timeline: {
+                    id: 'timeline-z',
+                    performancePeriodStarts: null,
+                    performancePeriodEnds: null,
+                    __typename: 'PlanTimeline' as const
+                  },
+                  __typename: 'ModelPlan' as const
+                },
+                __typename: 'ModelPlanAndMTOCommonSolution' as const
+              },
+              {
+                modelPlanID: 'model-a',
+                modelPlan: {
+                  id: 'model-a',
+                  modelName: 'Alpha Model',
+                  status: ModelStatus.PLAN_DRAFT,
+                  generalStatus: GeneralStatus.PLANNED,
+                  abbreviation: 'AM',
+                  basics: {
+                    id: 'basics-a',
+                    modelCategory: null,
+                    __typename: 'PlanBasics' as const
+                  },
+                  timeline: {
+                    id: 'timeline-a',
+                    performancePeriodStarts: null,
+                    performancePeriodEnds: null,
+                    __typename: 'PlanTimeline' as const
+                  },
+                  __typename: 'ModelPlan' as const
+                },
+                __typename: 'ModelPlanAndMTOCommonSolution' as const
+              }
+            ]
+          }
+        }
+      }
+    ];
+
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={unsortedMocks}>
+          <ModelsBySolution solutionKeys={[MtoCommonSolutionKey.INNOVATION]} />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      const cards = screen.getAllByRole('heading', { level: 3 });
+      // Alpha should come before Zebra
+      expect(cards[1]).toHaveTextContent('Alpha Model');
+      expect(cards[2]).toHaveTextContent('Zebra Model');
     });
+  });
+
+  it('displays correct solution name in banner', async () => {
+    render(
+      <MemoryRouter>
+        <MockedProvider mocks={mockCbosc}>
+          <ModelsBySolution solutionKeys={[MtoCommonSolutionKey.CBOSC]} />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Should show full solution name and acronym in banner
+      expect(
+        screen.getByText(/Consolidated Business Operations Support Center/i)
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('matches snapshot with single solution', async () => {
+    const { asFragment } = render(
+      <MemoryRouter>
+        <MockedProvider mocks={mockInnovation}>
+          <ModelsBySolution solutionKeys={[MtoCommonSolutionKey.INNOVATION]} />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('total-count')).toBeInTheDocument();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('matches snapshot with multiple solutions', async () => {
+    const { asFragment } = render(
+      <MemoryRouter>
+        <MockedProvider mocks={[...mockInnovation, ...mockCbosc]}>
+          <ModelsBySolution
+            solutionKeys={[
+              MtoCommonSolutionKey.INNOVATION,
+              MtoCommonSolutionKey.CBOSC
+            ]}
+          />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('total-count')).toBeInTheDocument();
+    });
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('matches snapshot with no solutions selected', () => {
+    const { asFragment } = render(
+      <MemoryRouter>
+        <MockedProvider mocks={[]}>
+          <ModelsBySolution solutionKeys={[]} />
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });

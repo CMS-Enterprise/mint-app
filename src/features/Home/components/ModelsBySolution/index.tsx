@@ -55,7 +55,8 @@ const ModelsBySolutions = ({
   const { data, loading } = useGetModelsByMtoSolutionQuery({
     variables: {
       solutionKey: isCurrentSolution
-    }
+    },
+    skip: !isCurrentSolution
   });
 
   const modelsBySolution = useMemo(() => {
