@@ -2,7 +2,7 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { GetMtoTemplatesDocument } from 'gql/generated/graphql';
+import { GetMtoTemplatesDocument, MtoTemplateKey } from 'gql/generated/graphql';
 import { mtoTemplateMock } from 'tests/mock/mto';
 import { modelID } from 'tests/mock/readonly';
 
@@ -34,7 +34,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -46,7 +46,13 @@ describe('MTOOptionsPanel', () => {
     const loadingMock = {
       request: {
         query: GetMtoTemplatesDocument,
-        variables: {}
+        variables: {
+          keys: [
+            MtoTemplateKey.STANDARD_CATEGORIES,
+            MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+            MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+          ]
+        }
       },
       result: {
         data: { mtoTemplates: [] }
@@ -75,7 +81,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[loadingMock]} addTypename={false}>
+      <MockedProvider mocks={[loadingMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -87,7 +93,13 @@ describe('MTOOptionsPanel', () => {
     const errorMock = {
       request: {
         query: GetMtoTemplatesDocument,
-        variables: {}
+        variables: {
+          keys: [
+            MtoTemplateKey.STANDARD_CATEGORIES,
+            MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+            MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+          ]
+        }
       },
       error: new Error('Failed to fetch templates')
     };
@@ -113,7 +125,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[errorMock]} addTypename={false}>
+      <MockedProvider mocks={[errorMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -145,7 +157,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -184,7 +196,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -224,7 +236,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -274,7 +286,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -309,7 +321,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -347,7 +359,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -413,7 +425,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

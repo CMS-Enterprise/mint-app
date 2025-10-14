@@ -71,6 +71,7 @@ const TemplateCard = ({
               type="button"
               outline
               className="margin-right-2"
+              data-testid={`${template.key}-template-add`}
               onClick={() => {
                 setMTOModalState({
                   modalType: 'addTemplate',
@@ -85,6 +86,7 @@ const TemplateCard = ({
             <Button
               type="button"
               disabled
+              data-testid={`${template.key}-template-added`}
               className="margin-right-2 model-to-operations__milestone-added text-normal"
             >
               <Icon.Check aria-label="check" />
@@ -96,6 +98,7 @@ const TemplateCard = ({
             unstyled
             type="button"
             className="margin-top-2"
+            data-testid={`${template.key}-template-about`}
             onClick={() => {
               params.set('template', template.key);
               navigate({ search: params.toString() });

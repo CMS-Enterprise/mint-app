@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MtoTemplateKey } from 'gql/generated/graphql';
-import { modelID, mtoTemplateMock } from 'tests/mock/mto';
+import { modelID, mtoModelPlanTemplateMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 import {
@@ -87,7 +87,7 @@ describe('TemplateCard Component', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mtoTemplateMock}>
+      <MockedProvider mocks={mtoModelPlanTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -136,7 +136,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock}>
+      <MockedProvider mocks={mtoModelPlanTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -169,7 +169,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock}>
+      <MockedProvider mocks={mtoModelPlanTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -206,7 +206,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock}>
+      <MockedProvider mocks={mtoModelPlanTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -248,7 +248,7 @@ describe('TemplateCard Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mtoTemplateMock}>
+      <MockedProvider mocks={mtoModelPlanTemplateMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

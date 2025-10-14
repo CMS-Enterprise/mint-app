@@ -119,6 +119,7 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
           type="button"
           outline
           className="margin-right-2"
+          data-testid="add-to-matrix-panel-button"
           onClick={() => {
             setMTOModalState({
               modalType: 'addTemplate',

@@ -41,11 +41,11 @@ const TemplateLibrary = () => {
   });
 
   const dataAvalilable: boolean =
-    !loading || !!data?.modelPlan?.mtoMatrix?.mtoTemplates;
+    !loading || !!data?.modelPlan?.mtoMatrix?.templates;
 
   const templates = useMemo(
-    () => data?.modelPlan?.mtoMatrix?.mtoTemplates || [],
-    [data?.modelPlan?.mtoMatrix?.mtoTemplates]
+    () => data?.modelPlan?.mtoMatrix?.templates || [],
+    [data?.modelPlan?.mtoMatrix?.templates]
   );
 
   if (error) {

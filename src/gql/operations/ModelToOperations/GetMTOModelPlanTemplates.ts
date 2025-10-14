@@ -9,7 +9,7 @@ export default gql(/* GraphQL */ `
         info {
           id
         }
-        mtoTemplates {
+        templates {
           id
           name
           key
