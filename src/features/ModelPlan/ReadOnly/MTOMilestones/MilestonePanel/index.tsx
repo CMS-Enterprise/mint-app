@@ -253,8 +253,14 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               <DescriptionDefinition
                 className="font-body-md text-base-darkest"
                 definition={
-                  milestone.assignedToUserAccount?.commonName ? (
-                    <Avatar user={milestone.assignedToUserAccount.commonName} />
+                  milestone.assignedToPlanCollaborator?.userAccount
+                    ?.commonName ? (
+                    <Avatar
+                      user={
+                        milestone.assignedToPlanCollaborator.userAccount
+                          .commonName
+                      }
+                    />
                   ) : (
                     <p className="margin-0 text-base-dark text-italic">
                       {modelToOperationsMiscT(

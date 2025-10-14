@@ -12,6 +12,7 @@ export default gql(/* GraphQL */ `
       solutionLinks: $solutionLinks
     ) {
       id
+      assignedTo
     }
   }
 `);

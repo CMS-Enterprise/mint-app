@@ -628,7 +628,7 @@ const EditMilestoneForm = ({
             ...(facilitatedByOther !== undefined && {
               facilitatedByOther
             }),
-            ...(assignedTo && { assignedTo }),
+            ...(assignedTo !== undefined && { assignedTo }),
             ...(isCategoryDirty && { mtoCategoryID }),
             ...(needBy !== undefined && {
               needBy: needBy ? new Date(needBy).toISOString() : null
@@ -1364,7 +1364,7 @@ const EditMilestoneForm = ({
                         onChange={value => {
                           field.onChange(value || '');
                         }}
-                        defaultValue={field.value || ''}
+                        defaultValue={milestone.assignedTo || ''}
                         options={modelCollaboratorsOptions}
                       />
                     </FormGroup>

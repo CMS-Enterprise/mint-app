@@ -11,11 +11,13 @@ export default gql(/* GraphQL */ `
       facilitatedBy
       facilitatedByOther
       assignedTo
-      assignedToUserAccount {
+      assignedToPlanCollaborator {
         id
-        commonName
-        username
-        email
+        userAccount {
+          id
+          commonName
+          email
+        }
       }
       needBy
       status
