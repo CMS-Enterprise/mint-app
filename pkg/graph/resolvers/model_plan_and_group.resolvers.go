@@ -7,7 +7,6 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -24,8 +23,7 @@ func (r *modelPlanAndGroupResolver) ModelPlan(ctx context.Context, obj *models.M
 
 // ModelPlansByComponentGroup is the resolver for the modelPlansByComponentGroup field.
 func (r *queryResolver) ModelPlansByComponentGroup(ctx context.Context, key models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
-	logger := appcontext.ZLogger(ctx)
-	return ModelPlansByComponentGroup(logger, r.store, key)
+	return ModelPlansByComponentGroupLOADER(ctx, key)
 }
 
 // ModelPlanAndGroup returns generated.ModelPlanAndGroupResolver implementation.

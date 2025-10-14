@@ -1,12 +1,13 @@
 package resolvers
 
 import (
-	"go.uber.org/zap"
+	"context"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-func ModelPlansByComponentGroup(logger *zap.Logger, store *storage.Store, componentGroup models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
-	return store.ModelPlanGetByComponentGroup(logger, componentGroup)
+// ModelPlansByComponentGroupLOADER implements resolver logic to get model plans by component group using a data loader
+func ModelPlansByComponentGroupLOADER(ctx context.Context, componentGroup models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
+	return loaders.ModelPlanAndGroup.ByComponentGroup.Load(ctx, componentGroup)
 }

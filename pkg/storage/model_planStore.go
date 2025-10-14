@@ -413,11 +413,12 @@ func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key 
 	return res, nil
 }
 
-func (s *Store) ModelPlanGetByComponentGroup(logger *zap.Logger, componentGroup models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
+// ModelPlanGetByComponentGroupLoader returns model plans for multiple component group keys using a batched loader query
+func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
 	args := map[string]interface{}{
-		"component_group_key": componentGroup,
+		"component_group_keys": pq.Array(componentGroups),
 	}
-	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroup, args)
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroupLoader, args)
 	if err != nil {
 		return nil, err
 	}
