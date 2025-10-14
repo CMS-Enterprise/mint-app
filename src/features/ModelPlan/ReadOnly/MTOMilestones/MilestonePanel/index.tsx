@@ -83,7 +83,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         responsibleComponent: [],
         facilitatedBy: null,
         facilitatedByOther: null,
-        assignedToUserAccount: null,
+        assignedToPlanCollaborator: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
         addedFromMilestoneLibrary: false,
         solutions: [],
