@@ -18,30 +18,33 @@ auth:apikey {
 
 body:graphql {
   mutation udpateMTOMilestone {
-  updateMTOMilestone(id: "{{mtoMilestoneID}}",
-  changes: {
-      mtoCategoryID: "{{mtoCategoryID}}"
-      responsibleComponent:[CMMI_SPHG, FCHCO],
-      facilitatedBy: [IT_LEAD, OTHER],
-      facilitatedByOther: "Someone really cool"
-      riskIndicator: AT_RISK,
-      status: IN_PROGRESS
-      needBy: "2024-10-31T17:20:21.959953Z"
-  },
-  solutionLinks: {
-      solutionIDs: ["{{mtoSolutionID}}"],
-      commonSolutionKeys: [APPS],
-  }
-  ) {
+    updateMTOMilestone(
+      id: "{{mtoMilestoneID}}"
+      changes: {
+        mtoCategoryID: "{{mtoCategoryID}}"
+        facilitatedBy: [IT_LEAD, OTHER]
+        facilitatedByOther: "Someone really cool"
+        riskIndicator: AT_RISK
+        status: IN_PROGRESS
+        needBy: "2024-10-31T17:20:21.959953Z"
+        assignedTo: "{{modelLeadID}}"
+      }
+      solutionLinks: {
+        solutionIDs: ["{{mtoSolutionID}}"]
+        commonSolutionKeys: [APPS]
+      }
+    ) {
       id
       name
       responsibleComponent
       facilitatedBy
       facilitatedByOther
       assignedTo
-      assignedToUserAccount {
-        id
-        username
+      assignedToPlanCollaborator {
+        userAccount {
+          id
+          username
+        }
       }
       needBy
       status

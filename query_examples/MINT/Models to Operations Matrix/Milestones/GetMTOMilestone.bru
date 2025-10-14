@@ -28,17 +28,19 @@ body:graphql {
       facilitatedBy
       facilitatedByOther
       assignedTo
-      assignedToUserAccount {
-        id
-        username
-        isEUAID
-        commonName
-        locale
-        email
-        givenName
-        familyName
-        zoneInfo
-        hasLoggedIn
+      assignedToPlanCollaborator {
+        userAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
       }
       needBy
       status
