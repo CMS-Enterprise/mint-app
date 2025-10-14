@@ -12,6 +12,7 @@ import {
 import classNames from 'classnames';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
+  ComponentGroup,
   MtoCommonSolutionKey,
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
@@ -25,6 +26,7 @@ import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
+import { tObject } from 'utils/translation';
 
 import { HomepageSettingsLocationType } from '../Settings';
 
@@ -91,6 +93,17 @@ const SettingsOrder = () => {
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
+
+  const componentGroupTrans = tObject<keyof ComponentGroup, any>(
+    'homepageSettings:componentGroupAcronyms'
+  );
+
+  const selectedComponentGroups = useMemo(() => {
+    return (data?.userViewCustomization.componentGroups || []).map(
+      (componentGroup: ComponentGroup) =>
+        componentGroupTrans[componentGroup as unknown as keyof ComponentGroup]
+    );
+  }, [data?.userViewCustomization, componentGroupTrans]);
 
   // Waits for data to be loaded, then sets the selected settings to the current state if no router state
   useEffect(() => {
@@ -191,6 +204,15 @@ const SettingsOrder = () => {
                                 <p className="margin-0">
                                   {selectedSolutions.length > 0
                                     ? selectedSolutions.join(', ')
+                                    : homepageSettingsT('noneSelected')}
+                                </p>
+                              )}
+
+                              {setting ===
+                                ViewCustomizationType.MODELS_BY_GROUP && (
+                                <p className="margin-0">
+                                  {selectedComponentGroups.length > 0
+                                    ? selectedComponentGroups.join(', ')
                                     : homepageSettingsT('noneSelected')}
                                 </p>
                               )}
