@@ -8,7 +8,6 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
@@ -158,20 +157,20 @@ func MTOMilestoneUpdate(
 	var newAssignedToID *uuid.UUID
 	var assignedToChanged bool
 
-	if raw, ok := changes["assignedTo"]; ok {
-		u, err := helpers.CoerceUUIDPtr(raw)
-		if err != nil {
-			logger.Error("invalid assignedTo value",
-				zap.String("milestoneID", existing.ID.String()),
-				zap.String("assignedToType", fmt.Sprintf("%T", raw)),
-				zap.Error(err))
-		}
-		newAssignedToID = u
-		assignedToChanged =
-			(existing.AssignedTo == nil && newAssignedToID != nil) ||
-				(existing.AssignedTo != nil && newAssignedToID == nil) ||
-				(existing.AssignedTo != nil && newAssignedToID != nil && *existing.AssignedTo != *newAssignedToID)
+	newAssignedToID, ok := changes["assignedTo"].(*uuid.UUID)
+	if !ok {
+		logger.Error("invalid assignedTo value",
+			zap.String("milestoneID", existing.ID.String()),
+			zap.String("assignedToType", fmt.Sprintf("%T", changes["assignedTo"])),
+			zap.Error(err))
+
+		return nil, fmt.Errorf("invalid assignedTo value, expected UUID")
 	}
+
+	assignedToChanged =
+		(existing.AssignedTo == nil && newAssignedToID != nil) ||
+			(existing.AssignedTo != nil && newAssignedToID == nil) ||
+			(existing.AssignedTo != nil && newAssignedToID != nil && *existing.AssignedTo != *newAssignedToID)
 
 	// Since storage.MTOMilestoneGetByID will return a `Name` property when
 	// fetching milestones sourced from the common milestone library, we need to clear out that field
