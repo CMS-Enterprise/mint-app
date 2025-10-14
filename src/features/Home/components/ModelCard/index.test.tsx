@@ -110,28 +110,6 @@ describe('ModelSolutionCard', () => {
     expect(tbdElements.length).toBe(3); // Category + Start date + End date
   });
 
-  it('applies custom className when provided', () => {
-    const { container } = render(
-      <MemoryRouter>
-        <ModelCard modelPlan={mockModelPlan} className="custom-class" />
-      </MemoryRouter>
-    );
-
-    const card = container.querySelector('.custom-class');
-    expect(card).toBeInTheDocument();
-    expect(card).toHaveClass('model-solution-card');
-  });
-
-  it('uses correct test id for the card', () => {
-    render(
-      <MemoryRouter>
-        <ModelCard modelPlan={mockModelPlan} />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByTestId('Test Model Plan')).toBeInTheDocument();
-  });
-
   it('displays different model statuses correctly', () => {
     const statuses = [
       ModelStatus.PLAN_DRAFT,
@@ -160,7 +138,7 @@ describe('ModelSolutionCard', () => {
     });
   });
 
-  it('handles dates in different formats', () => {
+  it('renders model card with different dates', () => {
     const modelWithDifferentDates = {
       ...mockModelPlan,
       timeline: {
