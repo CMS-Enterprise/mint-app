@@ -152,10 +152,19 @@ const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
       )}
 
       <>
-        <Grid row gap={2} className="margin-bottom-2 margin-top-4">
+        <Grid row gap={2} className="margin-bottom-1 margin-top-4">
           {currentItems.map(model => (
-            <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={model.id}>
-              <ModelCard key={model.id} modelPlan={model} />
+            <Grid
+              desktop={{ col: 4 }}
+              tablet={{ col: 6 }}
+              key={model.id}
+              className="display-flex"
+            >
+              <ModelCard
+                key={model.id}
+                modelPlan={model}
+                className="width-full"
+              />
             </Grid>
           ))}
         </Grid>
@@ -186,6 +195,7 @@ const searchModelsFilter = (
     return (
       model?.modelName?.toLowerCase().includes(queryValueLower) ||
       model?.status?.toLowerCase().includes(queryValueLower) ||
+      model?.abbreviation?.toLowerCase().includes(queryValueLower) ||
       basicsConfig.modelCategory.options[
         model?.basics?.modelCategory as ModelCategory
       ]

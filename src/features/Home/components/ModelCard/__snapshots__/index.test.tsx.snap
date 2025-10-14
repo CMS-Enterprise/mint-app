@@ -3,13 +3,15 @@
 exports[`ModelSolutionCard > matches snapshot 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card model-solution-card"
+    class="usa-card model-solution-card margin-bottom-0"
     data-testid="Test Model Plan"
   >
     <div
       class="usa-card__container"
     >
-      <div>
+      <div
+        class="height-full display-flex flex-column"
+      >
         <div
           class="grid-row"
           data-testid="grid"
@@ -19,7 +21,7 @@ exports[`ModelSolutionCard > matches snapshot 1`] = `
             data-testid="grid"
           >
             <h3
-              class="model-solution-card__title margin-top-0"
+              class="margin-top-0"
             >
               <a
                 class="usa-link"
@@ -111,13 +113,15 @@ exports[`ModelSolutionCard > matches snapshot 1`] = `
 exports[`ModelSolutionCard > matches snapshot with minimal data 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card model-solution-card"
+    class="usa-card model-solution-card margin-bottom-0"
     data-testid="Minimal Model Plan"
   >
     <div
       class="usa-card__container"
     >
-      <div>
+      <div
+        class="height-full display-flex flex-column"
+      >
         <div
           class="grid-row"
           data-testid="grid"
@@ -127,7 +131,7 @@ exports[`ModelSolutionCard > matches snapshot with minimal data 1`] = `
             data-testid="grid"
           >
             <h3
-              class="model-solution-card__title margin-top-0"
+              class="margin-top-0"
             >
               <a
                 class="usa-link"

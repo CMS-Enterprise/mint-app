@@ -210,3 +210,177 @@ exports[`ModelsByGroup > matches snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`ModelsByGroup > matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="models-by-solutions"
+  >
+    <header
+      class="usa-header usa-header--basic margin-bottom-4 models-by-solutions__nav-container"
+      data-testid="header"
+    >
+      <div
+        class="usa-nav-container padding-0"
+      >
+        <nav
+          class="usa-nav flex-justify-start margin-0 padding-0"
+        >
+          <button
+            aria-label="Close Navigation Menu"
+            class="usa-nav__close"
+            data-testid="navCloseButton"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+          <ul
+            class="usa-nav__primary usa-accordion"
+          >
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                type="button"
+              >
+                <span>
+                  CMMI/PCMG
+                </span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div
+      id="models-by-solution-table"
+    >
+      <div
+        class="models-by-solutions"
+      >
+        <div
+          class="bg-primary-lighter radius-md padding-2"
+        >
+          <div
+            class="grid-row flex-align-center"
+            data-testid="grid"
+          >
+            <div
+              class="tablet:grid-col-6 desktop:grid-col-7"
+              data-testid="grid"
+            >
+              <h3
+                class="margin-y-1"
+              >
+                CMMI/PCMG
+              </h3>
+            </div>
+            <div
+              class="tablet:grid-col-6 desktop:grid-col-5 models-by-solutions__banner-buttons row-reverse"
+              data-testid="grid"
+            >
+              <ul
+                class="usa-button-group usa-button-group--segmented"
+              >
+                <li
+                  class="usa-button-group__item"
+                >
+                  <button
+                    class="usa-button padding-y-2 bg-primary-darker"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <div>
+                      Total
+                    </div>
+                    <div
+                      data-testid="total-count"
+                    >
+                      2
+                    </div>
+                  </button>
+                </li>
+                <li
+                  class="usa-button-group__item"
+                >
+                  <button
+                    class="usa-button padding-y-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <div>
+                      Planned
+                    </div>
+                    <div
+                      data-testid="planned-count"
+                    >
+                      1
+                    </div>
+                  </button>
+                </li>
+                <li
+                  class="usa-button-group__item"
+                >
+                  <button
+                    class="usa-button padding-y-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <div>
+                      Active
+                    </div>
+                    <div
+                      data-testid="active-count"
+                    >
+                      1
+                    </div>
+                  </button>
+                </li>
+                <li
+                  class="usa-button-group__item"
+                >
+                  <button
+                    class="usa-button padding-y-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <div>
+                      Ended
+                    </div>
+                    <div
+                      data-testid="ended-count"
+                    >
+                      0
+                    </div>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid-row grid-gap-2 margin-bottom-1 margin-top-4"
+        data-testid="grid"
+      />
+      <div
+        class=""
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
