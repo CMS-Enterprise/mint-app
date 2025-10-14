@@ -153,25 +153,6 @@ func MTOMilestoneUpdate(
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
 
-	// Check if assignedTo is being changed
-	var newAssignedToID *uuid.UUID
-	var assignedToChanged bool
-
-	newAssignedToID, ok := changes["assignedTo"].(*uuid.UUID)
-	if !ok {
-		logger.Error("invalid assignedTo value",
-			zap.String("milestoneID", existing.ID.String()),
-			zap.String("assignedToType", fmt.Sprintf("%T", changes["assignedTo"])),
-			zap.Error(err))
-
-		return nil, fmt.Errorf("invalid assignedTo value, expected UUID")
-	}
-
-	assignedToChanged =
-		(existing.AssignedTo == nil && newAssignedToID != nil) ||
-			(existing.AssignedTo != nil && newAssignedToID == nil) ||
-			(existing.AssignedTo != nil && newAssignedToID != nil && *existing.AssignedTo != *newAssignedToID)
-
 	// Since storage.MTOMilestoneGetByID will return a `Name` property when
 	// fetching milestones sourced from the common milestone library, we need to clear out that field
 	// or else storage.MTOMilestoneUpdate will attempt to update the name (which won't be allowed, since this is a Milestone sourced from the common milestone library
@@ -215,14 +196,20 @@ func MTOMilestoneUpdate(
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
 
+	// Check if assignedTo is being changed
+	var assignedToChanged bool
+	if updatedMilestone.AssignedTo != nil {
+		assignedToChanged = *existing.AssignedTo != *updatedMilestone.AssignedTo
+	}
+
 	// Send email notification if assignedTo changed and there's a new assignee
-	if assignedToChanged && newAssignedToID != nil {
+	if assignedToChanged && updatedMilestone.AssignedTo != nil {
 		go func() {
 			modelPlan, modelPlanErr := loaders.ModelPlan.GetByID.Load(ctx, updatedMilestone.ModelPlanID)
 			if modelPlanErr != nil {
 				logger.Error("error loading model plan for milestone assigned email",
 					zap.String("milestoneID", updatedMilestone.ID.String()),
-					zap.String("assignedToID", newAssignedToID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
 					zap.Error(modelPlanErr))
 				return
 			}
@@ -231,16 +218,16 @@ func MTOMilestoneUpdate(
 			if solutionsErr != nil {
 				logger.Error("error loading solutions for milestone assigned email",
 					zap.String("milestoneID", updatedMilestone.ID.String()),
-					zap.String("assignedToID", newAssignedToID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
 					zap.Error(solutionsErr))
 				return
 			}
 
-			sendEmailErr := sendMTOMilestoneAssignedEmail(ctx, store, logger, emailService, emailTemplateService, addressBook, updatedMilestone, *newAssignedToID, modelPlan, solutions)
+			sendEmailErr := sendMTOMilestoneAssignedEmail(ctx, store, logger, emailService, emailTemplateService, addressBook, updatedMilestone, *updatedMilestone.AssignedTo, modelPlan, solutions)
 			if sendEmailErr != nil {
 				logger.Error("error sending milestone assigned email",
 					zap.String("milestoneID", updatedMilestone.ID.String()),
-					zap.String("assignedToID", newAssignedToID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
 					zap.Error(sendEmailErr))
 			}
 		}()

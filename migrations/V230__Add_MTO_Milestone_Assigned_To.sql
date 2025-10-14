@@ -2,31 +2,16 @@
 ALTER TABLE mto_milestone
 ADD ASSIGNED_TO UUID REFERENCES plan_collaborator(id) ON DELETE SET NULL DEFAULT NULL;
 
--- Create a function to enforce that the assigned collaborator belongs to the same model plan
-CREATE OR REPLACE FUNCTION check_milestone_assigned_to_same_model_plan()
-RETURNS TRIGGER AS $$
-BEGIN
-    -- If assigned_to is NULL, allow it
-    IF NEW.assigned_to IS NULL THEN
-        RETURN NEW;
-    END IF;
-    
-    -- Check if the assigned collaborator belongs to the same model plan
-    IF NOT EXISTS (
-        SELECT 1 FROM plan_collaborator pc 
-        WHERE pc.id = NEW.assigned_to 
-        AND pc.model_plan_id = NEW.model_plan_id
-    ) THEN
-        RAISE EXCEPTION 'Cannot assign milestone to collaborator: collaborator % does not belong to model plan %', 
-            NEW.assigned_to, NEW.model_plan_id;
-    END IF;
-    
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+-- Add unique constraint on plan_collaborator to support composite foreign key
+ALTER TABLE plan_collaborator
+ADD CONSTRAINT unique_collaborator_id_model_plan 
+UNIQUE (id, model_plan_id);
 
--- Create trigger to enforce the constraint on INSERT and UPDATE
-CREATE TRIGGER trigger_check_milestone_assigned_to_same_model_plan
-BEFORE INSERT OR UPDATE ON mto_milestone
-FOR EACH ROW
-EXECUTE FUNCTION check_milestone_assigned_to_same_model_plan();
+-- Enforce the same model_plan_id for collaborator and milestone
+ALTER TABLE mto_milestone
+ADD CONSTRAINT fk_assigned_to_model_plan 
+FOREIGN KEY (assigned_to, model_plan_id) 
+REFERENCES plan_collaborator(id, model_plan_id);
+-- Comment for the foreign key constraint enforcing the same model_plan_id for subcategories
+COMMENT ON CONSTRAINT fk_assigned_to_model_plan ON mto_milestone IS
+'Ensures that if a milestone is assigned to a collaborator, the model_plan_id of the milestone matches the model_plan_id of the collaborator.';
