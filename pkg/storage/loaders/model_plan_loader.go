@@ -16,13 +16,13 @@ import (
 type modelPlanLoaders struct {
 	// GetByID returns a model plan record associated with a uuid
 	GetByID          LoaderWrapper[uuid.UUID, *models.ModelPlan]
-	ByMTOSolutionKey *dataloader.Loader[models.MTOCommonSolutionKey, []*models.ModelPlanAndMTOCommonSolution]
+	ByMTOSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, []*models.ModelPlanAndMTOCommonSolution]
 }
 
 // ModelPlan is the singleton instance of all LoaderWrappers related to Model Plans
 var ModelPlan = &modelPlanLoaders{
 	GetByID:          NewLoaderWrapper(batchModelPlanByModelPlanID),
-	ByMTOSolutionKey: dataloader.NewBatchedLoader(batchModelPlanGetByMTOSolutionKey),
+	ByMTOSolutionKey: NewLoaderWrapper(batchModelPlanGetByMTOSolutionKey),
 }
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {

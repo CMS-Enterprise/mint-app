@@ -5,11 +5,12 @@ export default gql(/* GraphQL */ `
     mtoCommonSolutions {
       key
       modelUsage {
-        id
         key
-        modelName
-        modelStatus
-        modelId
+        modelPlanID
+        modelPlan {
+          modelName
+          status
+        }
       }
     }
   }

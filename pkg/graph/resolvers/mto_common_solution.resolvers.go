@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -33,8 +32,8 @@ func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj 
 }
 
 // ModelUsage is the resolver for the modelUsage field.
-func (r *mTOCommonSolutionResolver) ModelUsage(ctx context.Context, obj *models.MTOCommonSolution) (*models.MTOCommonSolutionModelUsage, error) {
-	panic(fmt.Errorf("not implemented: ModelUsage - modelUsage"))
+func (r *mTOCommonSolutionResolver) ModelUsage(ctx context.Context, obj *models.MTOCommonSolution) ([]*models.ModelPlanAndMTOCommonSolution, error) {
+	return ModelPlansByMTOSolutionKey(ctx, obj.Key)
 }
 
 // MtoCommonSolutions is the resolver for the mtoCommonSolutions field.
