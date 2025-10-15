@@ -7,6 +7,7 @@ import {
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
@@ -107,21 +108,14 @@ const MTOTableActions = () => {
                   })}
                 </p>
 
-                <Button
-                  type="button"
-                  className="display-block margin-bottom-1"
-                  outline
-                  onClick={() => {
-                    navigate(
-                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                      {
-                        state: { scroll: true }
-                      }
-                    );
-                  }}
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                  className="display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+                  state={{ scroll: true }}
                 >
                   {t('table.tableActions.browseMilestoneLibrary')}
-                </Button>
+                </UswdsReactLink>
+
                 <Button
                   type="button"
                   className="display-block"
@@ -168,21 +162,14 @@ const MTOTableActions = () => {
                   })}
                 </p>
 
-                <Button
-                  type="button"
-                  className="display-block margin-bottom-1"
-                  outline
-                  onClick={() => {
-                    navigate(
-                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                      {
-                        state: { scroll: true }
-                      }
-                    );
-                  }}
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                  state={{ scroll: true }}
+                  className="display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
                 >
                   {t('table.tableActions.browseSolutionLibrary')}
-                </Button>
+                </UswdsReactLink>
+
                 <Button
                   type="button"
                   className="display-block"
@@ -223,21 +210,13 @@ const MTOTableActions = () => {
                 {t('table.tableActions.availableTemplates')}
               </p>
 
-              <Button
-                type="button"
-                className="display-block margin-bottom-1"
-                outline
-                onClick={() => {
-                  navigate(
-                    `/models/${modelID}/collaboration-area/model-to-operations/template-library`,
-                    {
-                      state: { scroll: true }
-                    }
-                  );
-                }}
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area/model-to-operations/template-library`}
+                className="display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+                state={{ scroll: true }}
               >
                 {t('table.tableActions.addTemplateFromLibrary')}
-              </Button>
+              </UswdsReactLink>
 
               <Button
                 type="button"
