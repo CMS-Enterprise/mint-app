@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
   useGetMtoCommonSolutionsQuery,
@@ -16,7 +16,6 @@ import './index.scss';
 const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { clearMessage } = useMessage();

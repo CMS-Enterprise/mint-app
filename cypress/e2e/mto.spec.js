@@ -126,6 +126,66 @@ describe('Model-to-Operations Matrix', () => {
       cy.get('td').contains('4i').should('exist');
     });
   });
+
+  it('Adds a template', () => {
+    cy.contains('Add templates from library').click({ force: true });
+
+    cy.url().should('include', '/template-library');
+
+    cy.contains(
+      'Browse the model-to-operations (MTO) matrix templates available in MINT. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added. Add any templates that are relevant for your MTO.'
+    ).should('exist');
+
+    cy.get('input[type="search"]').type('Standard categories');
+
+    cy.contains('Showing 1-1 of 1 results for "Standard categories"').should(
+      'exist'
+    );
+
+    cy.get('[data-testid="STANDARD_CATEGORIES-template-about"]').click({
+      force: true
+    });
+
+    cy.contains(
+      'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories and sub-categories in this template represent some of the most common model phases and/or groupings for model activities. Once you’ve added this template, you may add or remove categories as your model requires, and you may add milestones to the added categories. This template does not include milestones or solutions and IT systems.'
+    ).should('exist');
+
+    cy.contains('Template content').should('exist');
+
+    cy.contains('Category: Participants').should('exist');
+
+    cy.contains('Solutions and IT systems').click({ force: true });
+
+    cy.contains(
+      'There are no solutions or IT systems included in this template.'
+    ).should('exist');
+
+    cy.get('[data-testid="add-to-matrix-panel-button"]').click({ force: true });
+
+    cy.contains('Selected template: Standard categories').should('exist');
+
+    cy.get('button').contains('Add template').click({ force: true });
+
+    cy.get('[data-testid="toast-success"]')
+      .should('exist')
+      .contains('Your template (Standard categories) has been added.');
+
+    // Click to close te mod
+    cy.get('[data-testid="close-discussions"]').click({ force: true });
+
+    cy.get('li').contains('Model-to-operations matrix').click({ force: true });
+
+    cy.contains('Participants').should('exist');
+    cy.contains('Operations').should('exist');
+    cy.contains('Legal').should('exist');
+    cy.contains('Payment').should('exist');
+    cy.contains('Payers').should('exist');
+    cy.contains('Quality').should('exist');
+    cy.contains('Learning').should('exist');
+    cy.contains('Evaluation').should('exist');
+    cy.contains('Model closeout or extension').should('exist');
+  });
+
   it('Adding a Solution from the Solution Library', () => {
     cy.contains('Add solutions from library').click({ force: true });
     cy.url().should('include', '/solution-library');
@@ -232,7 +292,7 @@ describe('Model-to-Operations Matrix', () => {
       cy.get('td')
         .contains('Custom Milestone')
         .should('exist')
-        .parent('tr')
+        .closest('tr')
         .within(() => {
           cy.contains('Edit details').click({ force: true });
         });
@@ -303,7 +363,7 @@ describe('Model-to-Operations Matrix', () => {
       cy.get('td')
         .contains('Custom Solution')
         .should('exist')
-        .parent('tr')
+        .closest('tr')
         .within(() => {
           cy.contains('Edit details').click({ force: true });
         });
@@ -331,7 +391,7 @@ describe('Model-to-Operations Matrix', () => {
       cy.get('td')
         .contains('Custom Solution')
         .should('exist')
-        .parent('tr')
+        .closest('tr')
         .within(() => {
           cy.contains('Edit details').click({ force: true });
         });
@@ -347,93 +407,9 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('[data-testid="toast-success"]').should('exist');
   });
 
-  it('Adds a template', () => {
-    cy.get('a').contains('Home').click({ force: true });
-
-    cy.enterModelPlanCollaborationArea('Plan with Basics');
-
-    cy.get('[data-testid="Card"]')
-      .filter(':has(h3:contains("Model-to-operations matrix"))')
-      .within(() => {
-        cy.contains('button', 'Go to matrix').click({ force: true });
-      });
-
-    cy.url().should(
-      'include',
-      '/collaboration-area/model-to-operations/matrix'
-    );
-
-    cy.contains('View all templates in the library').click({ force: true });
-
-    cy.contains(
-      'Browse the model-to-operations (MTO) matrix templates available in MINT. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added. Add any templates that are relevant for your MTO.'
-    ).should('exist');
-
-    cy.get('input[type="search"]').type('Standard categories');
-
-    cy.contains('Showing 1-1 of 1 results for "Standard categories"').should(
-      'exist'
-    );
-
-    cy.get('[data-testid="STANDARD_CATEGORIES-template-about"]').click({
-      force: true
-    });
-
-    cy.contains(
-      'Many teams find it useful to organize the model milestones in their into overarching high-level categories and sub-categories. MINT offers a template set of standard categories as a starting point for new MTOs. The categories and sub-categories in this template represent some of the most common model phases and/or groupings for model activities. Once you’ve added this template, you may add or remove categories as your model requires, and you may add milestones to the added categories. This template does not include milestones or solutions and IT systems.'
-    ).should('exist');
-
-    cy.contains('Template content').should('exist');
-
-    cy.contains('Category: Participants').should('exist');
-
-    cy.contains('Solutions and IT systems').click({ force: true });
-
-    cy.contains(
-      'There are no solutions or IT systems included in this template.'
-    ).should('exist');
-
-    cy.get('[data-testid="add-to-matrix-panel-button"]').click({ force: true });
-
-    cy.contains('Selected template: Standard categories').should('exist');
-
-    cy.get('button').contains('Add template').click({ force: true });
-
-    cy.get('[data-testid="toast-success"]')
-      .should('exist')
-      .contains('Your template (Standard categories) has been added.');
-
-    // Click to close te mod
-    cy.get('[data-testid="close-discussions"]').click({ force: true });
-
-    cy.get('li').contains('Model-to-operations matrix').click({ force: true });
-
-    cy.contains('Participants').should('exist');
-    cy.contains('Operations').should('exist');
-    cy.contains('Legal').should('exist');
-    cy.contains('Payment').should('exist');
-    cy.contains('Payers').should('exist');
-    cy.contains('Quality').should('exist');
-    cy.contains('Learning').should('exist');
-    cy.contains('Evaluation').should('exist');
-    cy.contains('Model closeout or extension').should('exist');
-  });
-
   it('tests Action Menu', () => {
-    cy.get('a').contains('Home').click({ force: true });
-
-    cy.enterModelPlanCollaborationArea('Plan with Basics');
-
-    cy.get('[data-testid="Card"]')
-      .filter(':has(h3:contains("Model-to-operations matrix"))')
-      .within(() => {
-        cy.contains('button', 'Go to matrix').click({ force: true });
-      });
-
-    cy.url().should(
-      'include',
-      '/collaboration-area/model-to-operations/matrix'
-    );
+    // Wait for table to load
+    cy.get('tbody tr', { timeout: 10000 }).should('exist');
 
     cy.get('tbody tr')
       .first()
@@ -468,7 +444,7 @@ describe('Model-to-Operations Matrix', () => {
       cy.get('td')
         .contains('Custom Milestone')
         .should('exist')
-        .parent('tr')
+        .closest('tr')
         .within(() => {
           cy.contains('Edit details').click({ force: true });
         });
@@ -511,7 +487,7 @@ describe('Model-to-Operations Matrix', () => {
       cy.get('td')
         .contains('Custom Milestone')
         .should('exist')
-        .parent('tr')
+        .closest('tr')
         .within(() => {
           cy.contains('Edit details').click({ force: true });
         });
