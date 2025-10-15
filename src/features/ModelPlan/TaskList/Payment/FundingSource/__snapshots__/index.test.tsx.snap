@@ -212,7 +212,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«rk»"
+                            aria-describedby="tooltip-_r_k_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -237,7 +237,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«rk»"
+                            id="tooltip-_r_k_"
                             role="tooltip"
                             title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                           >
@@ -276,7 +276,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«rl»"
+                            aria-describedby="tooltip-_r_l_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -301,7 +301,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«rl»"
+                            id="tooltip-_r_l_"
                             role="tooltip"
                             title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                           >
@@ -456,7 +456,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«rm»"
+                            aria-describedby="tooltip-_r_m_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -481,7 +481,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«rm»"
+                            id="tooltip-_r_m_"
                             role="tooltip"
                             title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                           >
@@ -520,7 +520,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«rn»"
+                            aria-describedby="tooltip-_r_n_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -545,7 +545,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«rn»"
+                            id="tooltip-_r_n_"
                             role="tooltip"
                             title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                           >
