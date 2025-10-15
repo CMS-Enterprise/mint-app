@@ -395,3 +395,19 @@ th {
 .Toastify__toast-container {
   z-index: 100000;
 }
+
+.usa-pagination__item {
+  margin-bottom: .5rem;
+}
+
+.usa-pagination__overflow {
+  display: inline;
+}
+
+.usa-pagination__arrow {
+  display: inline-flex;
+}
+
+.usa-pagination__list {
+  display: block;
+}
