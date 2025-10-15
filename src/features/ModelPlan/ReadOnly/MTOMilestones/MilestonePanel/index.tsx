@@ -62,13 +62,10 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
     }
   });
 
-  const sortedMilestoneNotes = useMemo(() => {
-    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
-      return (
-        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
-      );
-    });
-  }, [data]);
+  const milestoneNoteData = useMemo(
+    () => [...(data?.mtoMilestone.notes || [])],
+    [data]
+  );
 
   const milestone = useMemo(() => {
     return (
@@ -495,7 +492,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         <div className="border-top-1px border-base-lighter padding-y-4 margin-top-6">
           <MilestoneNotes
             milestoneID={milestone.id}
-            milestoneNotes={sortedMilestoneNotes}
+            milestoneNotes={milestoneNoteData}
             setMilestoneNotes={() => {}}
             selectedMilestoneNote={null}
             setSelectedMilestoneNote={() => {}}
