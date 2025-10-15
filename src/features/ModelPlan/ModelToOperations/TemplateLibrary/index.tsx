@@ -149,7 +149,7 @@ const TemplateCardGroup = ({
         label: ''
       }
     ],
-    defaultItemsPerPage: 6
+    defaultItemsPerPage: 3
   });
 
   // Filter the milestones based on the Hide added milestones checkbox
@@ -304,7 +304,7 @@ const TemplateCardGroup = ({
                 className="margin-left-auto desktop:grid-col-auto"
                 pageSize={itemsPerPage}
                 setPageSize={setItemsPerPage}
-                valueArray={[6, 9, 'all']}
+                valueArray={[3, 6, 9, 'all']}
                 suffix={t('templates').toLowerCase()}
               />
             )}
