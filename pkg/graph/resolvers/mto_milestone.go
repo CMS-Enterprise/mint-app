@@ -24,6 +24,7 @@ import (
 // MTOMilestoneCreateCustom uses the provided information to create a new Custom MTO Milestone
 func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	name string,
+	description *string,
 	modelPlanID uuid.UUID,
 	mtoCategoryID *uuid.UUID,
 ) (*models.MTOMilestone, error) {
@@ -33,7 +34,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 	}
 
 	// A custom milestone never has a CommonMilestoneKey, so pass in `nil`
-	milestone := models.NewMTOMilestone(principalAccount.ID, &name, nil, modelPlanID, mtoCategoryID)
+	milestone := models.NewMTOMilestone(principalAccount.ID, &name, description, nil, modelPlanID, mtoCategoryID)
 
 	err := BaseStructPreCreate(logger, milestone, principal, store, true)
 	if err != nil {
@@ -91,6 +92,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		milestone := models.NewMTOMilestone(
 			principalAccount.ID,
 			nil,
+			&commonMilestone.Description,
 			&commonMilestoneKey,
 			modelPlanID,
 			&finalCategoryID,

@@ -108,6 +108,10 @@ const SolutionDetailsModal = ({
     setIsOpen(!!solution);
   }, [solution]);
 
+  if (!solution) {
+    return <NotFoundPartial />;
+  }
+
   const setCloseRoute =
     typeof closeRoute === 'function' ? closeRoute() : closeRoute;
 
@@ -125,9 +129,7 @@ const SolutionDetailsModal = ({
     });
   };
 
-  if (!solution) {
-    return <NotFoundPartial />;
-  }
+  const subComponentsLinks = subComponents(solution, location, setCloseRoute);
 
   const renderModal = () => {
     return (
@@ -151,10 +153,12 @@ const SolutionDetailsModal = ({
 
         {isMobile && (
           <MobileNav
-            subComponents={subComponents(solution, location, setCloseRoute)}
+            subComponents={subComponentsLinks}
             subinfo={section}
             isHelpArticle
             solutionDetailRoute={prevRoute}
+            solutionNavigation
+            paramActive
           />
         )}
 
@@ -164,11 +168,7 @@ const SolutionDetailsModal = ({
               <Grid desktop={{ col: 4 }}>
                 <div className="margin-bottom-6">
                   <SideNav
-                    subComponents={subComponents(
-                      solution,
-                      location,
-                      setCloseRoute
-                    )}
+                    subComponents={subComponentsLinks}
                     isHelpArticle
                     solutionNavigation
                     paramActive

@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
           id
           key
           name
+          description
           status
           riskIndicator
           needBy
@@ -23,6 +24,7 @@ export default gql(/* GraphQL */ `
           notes {
             id
             content
+            createdDts
           }
         }
       }

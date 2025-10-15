@@ -337,7 +337,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«r0»"
+                      aria-describedby="tooltip-_r_0_"
                       class="usa-tooltip__trigger"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -361,7 +361,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«r0»"
+                      id="tooltip-_r_0_"
                       role="tooltip"
                       title="Significantly at risk"
                     >
@@ -449,7 +449,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«r1»"
+                      aria-describedby="tooltip-_r_1_"
                       class="usa-tooltip__trigger"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -459,7 +459,7 @@ exports[`ITSystemsTable Component > renders correctly and matches snapshot 1`] =
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«r1»"
+                      id="tooltip-_r_1_"
                       role="tooltip"
                       title="No risk (on track)"
                     >

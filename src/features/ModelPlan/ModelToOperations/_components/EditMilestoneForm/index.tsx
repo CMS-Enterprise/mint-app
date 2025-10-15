@@ -61,9 +61,9 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
+import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -91,6 +91,7 @@ export type MilestoneNoteType =
 type FormValues = {
   isDraft: boolean;
   name: string;
+  description: string;
   categories: {
     category: {
       id: string;
@@ -121,6 +122,8 @@ type EditMilestoneFormProps = {
   setFooter: (footer: React.ReactNode | null) => void; // Set footer of modal
 };
 
+// TODO: CUSTOM MILESTONE WORK HERE
+
 const EditMilestoneForm = ({
   closeModal,
   setIsDirty,
@@ -131,8 +134,6 @@ const EditMilestoneForm = ({
   const { t: mtoMilestoneT } = useTranslation('mtoMilestone');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
-
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
     responsibleComponent: responsibleComponentConfig,
@@ -179,13 +180,10 @@ const EditMilestoneForm = ({
     }
   });
 
-  const sortedMilestoneNotes = useMemo(() => {
-    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
-      return (
-        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
-      );
-    });
-  }, [data]);
+  const milestoneNoteData = useMemo(
+    () => [...(data?.mtoMilestone.notes || [])],
+    [data]
+  );
 
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
@@ -341,13 +339,13 @@ const EditMilestoneForm = ({
     ]);
 
     // Sets the milestone notes from the milestone
-    setMilestoneNotes(sortedMilestoneNotes || []);
+    setMilestoneNotes(milestoneNoteData || []);
   }, [
     data,
     solutionIDs,
     commonSolutionKeys,
     formatSolutionForTable,
-    sortedMilestoneNotes
+    milestoneNoteData
   ]);
 
   // Determines which notes to add, remove, and update based on the original notes and the current notes
@@ -355,18 +353,18 @@ const EditMilestoneForm = ({
     setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
 
     setNotesToRemove(
-      sortedMilestoneNotes?.filter(
+      milestoneNoteData?.filter(
         note => !milestoneNotes.find(n => n.id === note.id)
       ) || []
     );
 
     setNotesToUpdate(
       milestoneNotes.filter(note => {
-        const foundNote = sortedMilestoneNotes?.find(n => n.id === note.id);
+        const foundNote = milestoneNoteData?.find(n => n.id === note.id);
         return foundNote && foundNote.content !== note.content;
       }) || []
     );
-  }, [milestoneNotes, sortedMilestoneNotes]);
+  }, [milestoneNotes, milestoneNoteData]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -380,6 +378,7 @@ const EditMilestoneForm = ({
         }
       },
       name: milestone?.name || '',
+      description: milestone?.description || '',
       responsibleComponent: milestone?.responsibleComponent || [],
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
@@ -432,7 +431,7 @@ const EditMilestoneForm = ({
       ...(categories?.subCategory && { subCategory: categories?.subCategory })
     };
 
-    const { facilitatedBy, ...rest } = flattenedDir;
+    const { facilitatedBy, responsibleComponent, ...rest } = flattenedDir;
 
     // Counts amount of changes in facilitatedBy array
     let facilitatedByChangeCount: number = 0;
@@ -440,6 +439,15 @@ const EditMilestoneForm = ({
       facilitatedByChangeCount = Math.abs(
         (values.facilitatedBy?.length || 0) -
           (formValues.facilitatedBy.length || 0)
+      );
+    }
+
+    // Counts amount of changes in responsibleComponent array
+    let responsibleComponentChangeCount: number = 0;
+    if (responsibleComponent) {
+      responsibleComponentChangeCount = Math.abs(
+        (values.responsibleComponent?.length || 0) -
+          (formValues.responsibleComponent.length || 0)
       );
     }
 
@@ -454,6 +462,7 @@ const EditMilestoneForm = ({
 
     const totalChanges =
       facilitatedByChangeCount +
+      responsibleComponentChangeCount +
       Object.keys(rest).length +
       notesToAddChangeCount +
       notesToRemoveChangeCount +
@@ -464,6 +473,7 @@ const EditMilestoneForm = ({
     dirtyFields,
     touchedFields.needBy,
     values,
+    formValues.responsibleComponent.length,
     formValues.needBy,
     formValues.facilitatedBy.length,
     notesToAdd.length,
@@ -894,39 +904,35 @@ const EditMilestoneForm = ({
         </>
       )}
 
-      {unsavedChanges + unsavedSolutionChanges > 0 && (
-        <div
-          className={classNames('save-tag', {
-            'margin-top-4': isMobile
-          })}
-        >
-          <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning
-              className="margin-right-1 top-2px text-warning"
-              aria-label="warning"
-            />
-            <p className="margin-0 display-inline margin-right-1">
-              {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
-                count: unsavedChanges + unsavedSolutionChanges
-              })}
-            </p>
-            -
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              disabled={
-                isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
-              }
-              className="margin-x-1"
-              unstyled
-            >
-              {modelToOperationsMiscT('modal.editMilestone.save')}
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="padding-8 maxw-tablet">
+        {unsavedChanges + unsavedSolutionChanges > 0 && (
+          <div className={classNames('save-tag')}>
+            <div className="bg-warning-lighter padding-y-05 padding-x-1">
+              <Icon.Warning
+                className="margin-right-1 top-2px text-warning"
+                aria-label="warning"
+              />
+              <p className="margin-0 display-inline margin-right-1">
+                {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
+                  count: unsavedChanges + unsavedSolutionChanges
+                })}
+              </p>
+              -
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={
+                  isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
+                }
+                className="margin-x-1"
+                unstyled
+              >
+                {modelToOperationsMiscT('modal.editMilestone.save')}
+              </Button>
+            </div>
+          </div>
+        )}
+
         {watch('isDraft') && (
           <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
             <Icon.Science
@@ -992,6 +998,44 @@ const EditMilestoneForm = ({
                       )}
 
                       <TextInput {...field} ref={null} id="name" type="text" />
+                    </FormGroup>
+                  )}
+                />
+              )}
+
+              {!milestone.addedFromMilestoneLibrary && (
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={{
+                    required: modelToOperationsMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...formField },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup
+                      error={!!error}
+                      className="margin-top-0 margin-bottom-3"
+                    >
+                      <Label
+                        htmlFor="description"
+                        className="maxw-none text-bold"
+                        requiredMarker
+                      >
+                        {mtoMilestoneT('description.label')}
+                      </Label>
+
+                      <HelpText className="margin-top-1">
+                        {mtoMilestoneT('description.sublabel')}
+                      </HelpText>
+
+                      <TextAreaField
+                        {...formField}
+                        value={formField.value || ''}
+                        className="height-card"
+                        id="description"
+                      />
                     </FormGroup>
                   )}
                 />
