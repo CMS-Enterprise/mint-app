@@ -156,8 +156,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       'Assign the person who is responsible for ensuring the work for this milestone is completed. This field searches CMS’ EUA database but is limited to individuals added to this model in MINT.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.SELECT,
-    order: 1.037,
-    tableReference: TableName.USER_ACCOUNT
+    order: 1.05,
+    tableReference: TableName.PLAN_COLLABORATOR
   },
   needBy: {
     gqlField: 'needBy',
@@ -169,7 +169,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       'Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
-    order: 1.05
+    order: 1.06
   },
   status: {
     gqlField: 'status',
@@ -198,7 +198,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1.06,
+    order: 1.07,
     options: {
       NOT_STARTED: 'Not started',
       IN_PROGRESS: 'In progress',
@@ -225,7 +225,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1.07,
+    order: 1.08,
     options: {
       ON_TRACK: 'No risk (on track)',
       OFF_TRACK: 'Some risk (off track)',
