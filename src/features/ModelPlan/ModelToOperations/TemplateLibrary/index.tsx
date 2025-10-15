@@ -171,7 +171,7 @@ const TemplateCardGroup = ({
   const {
     currentItems,
     Pagination: PaginationComponent,
-    pagination: { currentPage, pageCount }
+    pagination: { currentPage }
   } = usePagination<TemplateCardType[]>({
     items: templatesNotAdded,
     itemsPerPage,
@@ -274,40 +274,41 @@ const TemplateCardGroup = ({
             </Grid>
           </CardGroup>
 
-          {!!query && currentItems.length === 0 && (
-            <>
-              <Alert
-                type="info"
-                heading={t('templateLibrary.alertHeading', {
-                  query
-                })}
-              >
-                <Trans
-                  t={t}
-                  i18nKey="templateLibrary.alertDescription"
-                  components={{
-                    email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
-                  }}
-                />
-              </Alert>
-            </>
-          )}
+          {(!!query && currentItems.length === 0) ||
+            (addedTemplatesHidden && currentItems.length === 0 && (
+              <>
+                <Alert
+                  type={addedTemplatesHidden ? 'info' : 'warning'}
+                  heading={t('templateLibrary.alertHeading', {
+                    query
+                  })}
+                >
+                  <Trans
+                    t={t}
+                    i18nKey={
+                      !addedTemplatesHidden
+                        ? 'templateLibrary.alertDescription'
+                        : 'templateLibrary.alertDescriptionWithFilter'
+                    }
+                    components={{
+                      email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                    }}
+                  />
+                </Alert>
+              </>
+            ))}
 
           {/* Pagination */}
           <div className="display-flex flex-wrap">
-            {currentItems.length > 0 && pageCount > 0 && (
-              <>{PaginationComponent}</>
-            )}
+            {PaginationComponent}
 
-            {currentItems.length > 0 && (
-              <TablePageSize
-                className="margin-left-auto desktop:grid-col-auto"
-                pageSize={itemsPerPage}
-                setPageSize={setItemsPerPage}
-                valueArray={[3, 6, 9, 'all']}
-                suffix={t('templates').toLowerCase()}
-              />
-            )}
+            <TablePageSize
+              className="margin-left-auto desktop:grid-col-auto"
+              pageSize={itemsPerPage}
+              setPageSize={setItemsPerPage}
+              valueArray={[3, 6, 9, 'all']}
+              suffix={t('templates').toLowerCase()}
+            />
           </div>
         </div>
       </div>
