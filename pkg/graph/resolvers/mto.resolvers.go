@@ -7,10 +7,11 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/google/uuid"
 )
 
 // Categories is the resolver for the categories field.
