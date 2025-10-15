@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   MtoCommonMilestoneKey,
@@ -251,7 +252,7 @@ export const columns: ColumnType[] = [
               setMilestoneID(row.id);
             }}
           >
-            {row.name}{' '}
+            <span className="text-bold position-absolute">{row.name} </span>
             {rowType !== 'milestone' && (
               <span className="text-base-dark margin-left-2 mint-body-normal position-absolute">
                 {i18next.t('modelToOperationsMisc:table.milestonesCount', {
@@ -263,16 +264,20 @@ export const columns: ColumnType[] = [
         );
       }
       return (
-        <>
+        <span
+          className={classNames({
+            'position-absolute': rowType !== 'milestone'
+          })}
+        >
           {row.name}{' '}
           {rowType !== 'milestone' && (
-            <span className="text-base-dark margin-left-2 mint-body-normal position-absolute">
+            <span className="text-base-dark margin-left-2 mint-body-normal">
               {i18next.t('modelToOperationsMisc:table.milestonesCount', {
                 count: numberOfMilestones
               })}
             </span>
           )}
-        </>
+        </span>
       );
     }
   },

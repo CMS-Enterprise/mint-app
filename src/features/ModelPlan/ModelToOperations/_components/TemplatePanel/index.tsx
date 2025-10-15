@@ -49,13 +49,14 @@ export const flattenTemplateData = (
           milestone.solutions.forEach(solution => {
             if (!solutionMap[solution.name]) {
               solutionMap[solution.name] = [];
+              // Only add solution to flattenedSolutions once
+              flattenedSolutions.push({
+                ...solution,
+                type: 'solution',
+                name: solution.name
+              });
             }
             solutionMap[solution.name].push(milestone.name);
-            flattenedSolutions.push({
-              ...solution,
-              type: 'solution',
-              name: solution.name
-            });
           });
         }
       });
@@ -86,6 +87,8 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
     () => flattenTemplateData(template, tableType),
     [template, tableType]
   );
+
+  console.log(formattedItems);
 
   const { currentItems, Pagination: PaginationComponent } = usePagination<
     any[]
@@ -200,49 +203,52 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
       <div className="margin-y-4">
         {currentItems.length > 0 ? (
           <div className="border-top border-bottom">
-            {currentItems.map((item, index) => (
-              <div
-                key={item.id}
-                className={classNames(`padding-105`, {
-                  'border-bottom': index < currentItems.length - 1,
-                  'bg-accent-cool-lighter': item.type === 'category',
-                  'bg-base-lightest': item.type === 'subCategory'
-                })}
-              >
-                {tableType === 'milestones' && (
-                  <div
-                    className={classNames({
-                      'text-normal': item.type === 'milestone',
-                      'text-bold':
-                        item.type === 'category' || item.type === 'subCategory'
-                    })}
-                  >
-                    <p className="margin-0">
-                      {t(`templateLibrary.${item.type}`)}: {item.name}
-                    </p>
-                    {item.type === 'milestone' && (
-                      <p className="margin-0 text-base">
-                        {t('templateLibrary.selectedSolutions')}:{' '}
-                        {!item.solutions
-                          ? t('templateLibrary.noneSpecified')
-                          : item.solutions}
+            {currentItems.map((item, index) => {
+              return (
+                <div
+                  key={item.id + item.type}
+                  className={classNames(`padding-105`, {
+                    'border-bottom': index < currentItems.length - 1,
+                    'bg-accent-cool-lighter': item.type === 'category',
+                    'bg-base-lightest': item.type === 'subCategory'
+                  })}
+                >
+                  {tableType === 'milestones' && (
+                    <div
+                      className={classNames({
+                        'text-normal': item.type === 'milestone',
+                        'text-bold':
+                          item.type === 'category' ||
+                          item.type === 'subCategory'
+                      })}
+                    >
+                      <p className="margin-0">
+                        {t(`templateLibrary.${item.type}`)}: {item.name}
                       </p>
-                    )}
-                  </div>
-                )}
-                {tableType === 'solutions' && (
-                  <>
-                    <p className="margin-0">
-                      {t('templateLibrary.solution')}: {item.name}
-                    </p>
-                    <p className="margin-0 text-base">
-                      {t('templateLibrary.relatedMilestones')}:{' '}
-                      {item.relatedMilestones}
-                    </p>
-                  </>
-                )}
-              </div>
-            ))}
+                      {item.type === 'milestone' && (
+                        <p className="margin-0 text-base">
+                          {t('templateLibrary.selectedSolutions')}:{' '}
+                          {!item.solutions
+                            ? t('templateLibrary.noneSpecified')
+                            : item.solutions}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  {tableType === 'solutions' && (
+                    <>
+                      <p className="margin-0">
+                        {t('templateLibrary.solution')}: {item.name}
+                      </p>
+                      <p className="margin-0 text-base">
+                        {t('templateLibrary.relatedMilestones')}:{' '}
+                        {item.relatedMilestones}
+                      </p>
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ) : (
           <Alert type="info" slim>
