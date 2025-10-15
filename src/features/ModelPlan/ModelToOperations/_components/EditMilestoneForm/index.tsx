@@ -589,10 +589,8 @@ const EditMilestoneForm = ({
         categories,
         needBy,
         name,
-        responsibleComponent,
         facilitatedBy,
         facilitatedByOther,
-        assignedTo,
         ...formChanges
       } = dirtyInput(formValues, formData);
 
@@ -621,14 +619,12 @@ const EditMilestoneForm = ({
           id: editMilestoneID || '',
           changes: {
             ...formChanges,
-            ...(responsibleComponent && { responsibleComponent }),
             ...(facilitatedBy && {
               facilitatedBy
             }),
             ...(facilitatedByOther !== undefined && {
               facilitatedByOther
             }),
-            ...(assignedTo !== undefined && { assignedTo }),
             ...(isCategoryDirty && { mtoCategoryID }),
             ...(needBy !== undefined && {
               needBy: needBy ? new Date(needBy).toISOString() : null

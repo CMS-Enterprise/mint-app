@@ -24,7 +24,6 @@ import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import Spinner from 'components/Spinner';
 import toastSuccess from 'components/ToastSuccess';
@@ -165,10 +164,6 @@ const Collaborators = () => {
 
   if (!isFromCollaborationArea || manageOrAdd === 'add') {
     breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
-  }
-
-  if (queryLoading) {
-    return <PageLoading />;
   }
 
   return (
