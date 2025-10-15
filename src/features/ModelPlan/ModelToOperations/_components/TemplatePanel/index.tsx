@@ -88,8 +88,6 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
     [template, tableType]
   );
 
-  console.log(formattedItems);
-
   const { currentItems, Pagination: PaginationComponent } = usePagination<
     any[]
   >({

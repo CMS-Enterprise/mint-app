@@ -136,23 +136,11 @@ const TemplateCardGroup = ({
     [templates]
   );
 
-  // Filter the milestones based on the Hide added milestones checkbox
-  const templatesNotAdded = useMemo(
-    () =>
-      templates.filter(template => {
-        if (addedTemplatesHidden) {
-          return !template.isAdded;
-        }
-        return template;
-      }),
-    [templates, addedTemplatesHidden]
-  );
-
   const { allItems, search, pageSize } = useSearchSortPagination<
     TemplateCardType,
     any
   >({
-    items: templatesNotAdded,
+    items: templates,
     filterFunction: useMemo(() => searchTemplates, []),
     sortFunction: (items: TemplateCardType[], sort: any) => items,
     sortOptions: [
@@ -164,6 +152,18 @@ const TemplateCardGroup = ({
     defaultItemsPerPage: 6
   });
 
+  // Filter the milestones based on the Hide added milestones checkbox
+  const templatesNotAdded = useMemo(
+    () =>
+      allItems.filter(template => {
+        if (addedTemplatesHidden) {
+          return !template.isAdded;
+        }
+        return template;
+      }),
+    [allItems, addedTemplatesHidden]
+  );
+
   const { query, setQuery, rowLength } = search;
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
@@ -173,7 +173,7 @@ const TemplateCardGroup = ({
     Pagination: PaginationComponent,
     pagination: { currentPage, pageCount }
   } = usePagination<TemplateCardType[]>({
-    items: allItems,
+    items: templatesNotAdded,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
@@ -223,10 +223,14 @@ const TemplateCardGroup = ({
                     checked={addedTemplatesHidden}
                     onBlur={() => null}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      params.set(
-                        'hide-added-templates',
-                        addedTemplatesHidden ? 'false' : 'true'
-                      );
+                      // Toggle the hide-added-templates param while preserving other params
+                      if (addedTemplatesHidden) {
+                        params.delete('hide-added-templates');
+                      } else {
+                        params.set('hide-added-templates', 'true');
+                      }
+                      // Reset to page 1 when filter changes
+                      params.delete('page');
                       navigate(
                         { search: params.toString() },
                         { replace: true }
@@ -273,7 +277,7 @@ const TemplateCardGroup = ({
           {!!query && currentItems.length === 0 && (
             <>
               <Alert
-                type={addedTemplatesHidden ? 'info' : 'warning'}
+                type="info"
                 heading={t('templateLibrary.alertHeading', {
                   query
                 })}
