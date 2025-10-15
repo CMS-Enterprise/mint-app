@@ -6,43 +6,43 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
     class="margin-top-8"
   >
     <div
-      class="save-tag"
-    >
-      <div
-        class="bg-warning-lighter padding-y-05 padding-x-1"
-      >
-        <svg
-          aria-label="warning"
-          class="usa-icon margin-right-1 top-2px text-warning"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
-          />
-        </svg>
-        <p
-          class="margin-0 display-inline margin-right-1"
-        >
-          1 unsaved change
-        </p>
-        -
-        <button
-          class="usa-button usa-button--unstyled margin-x-1"
-          data-testid="button"
-          type="button"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-    <div
       class="padding-8 maxw-tablet"
     >
+      <div
+        class="save-tag"
+      >
+        <div
+          class="bg-warning-lighter padding-y-05 padding-x-1"
+        >
+          <svg
+            aria-label="warning"
+            class="usa-icon margin-right-1 top-2px text-warning"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+            />
+          </svg>
+          <p
+            class="margin-0 display-inline margin-right-1"
+          >
+            1 unsaved change
+          </p>
+          -
+          <button
+            class="usa-button usa-button--unstyled margin-x-1"
+            data-testid="button"
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+      </div>
       <form
         class="usa-form maxw-none"
         data-testid="form"
@@ -467,7 +467,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-«r0»"
+                    aria-describedby="tooltip-_r_0_"
                     class="usa-tooltip__trigger"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -492,7 +492,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-«r0»"
+                    id="tooltip-_r_0_"
                     role="tooltip"
                     title="You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate."
                   >
@@ -873,7 +873,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                         data-testid="tooltipWrapper"
                       >
                         <div
-                          aria-describedby="tooltip-«r1»"
+                          aria-describedby="tooltip-_r_1_"
                           class="usa-tooltip__trigger"
                           data-testid="triggerElement"
                           tabindex="0"
@@ -897,7 +897,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                           aria-hidden="true"
                           class="usa-tooltip__body"
                           data-testid="tooltipBody"
-                          id="tooltip-«r1»"
+                          id="tooltip-_r_1_"
                           role="tooltip"
                           title="Significantly at risk"
                         >

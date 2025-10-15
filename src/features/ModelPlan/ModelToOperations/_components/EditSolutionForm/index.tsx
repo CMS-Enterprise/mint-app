@@ -63,7 +63,6 @@ import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
@@ -115,8 +114,6 @@ const EditSolutionForm = ({
   const { t: mtoSolutionT } = useTranslation('mtoSolution');
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
-
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
   const {
     facilitatedBy: facilitatedByConfig,
@@ -598,37 +595,33 @@ const EditSolutionForm = ({
         </Sidepanel>
       )}
 
-      {unsavedChanges + unsavedSolutionChanges > 0 && (
-        <div
-          className={classNames('save-tag', {
-            'margin-top-4': isMobile
-          })}
-        >
-          <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning
-              className="margin-right-1 top-2px text-warning"
-              aria-label="warning"
-            />
-            <p className="margin-0 display-inline margin-right-1">
-              {modelToOperationsMiscT('modal.editSolution.unsavedChanges', {
-                count: unsavedChanges + unsavedSolutionChanges
-              })}
-            </p>
-            -
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
-              className="margin-x-1"
-              unstyled
-            >
-              {modelToOperationsMiscT('modal.editSolution.save')}
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="padding-8 maxw-tablet">
+        {unsavedChanges + unsavedSolutionChanges > 0 && (
+          <div className={classNames('save-tag')}>
+            <div className="bg-warning-lighter padding-y-05 padding-x-1">
+              <Icon.Warning
+                className="margin-right-1 top-2px text-warning"
+                aria-label="warning"
+              />
+              <p className="margin-0 display-inline margin-right-1">
+                {modelToOperationsMiscT('modal.editSolution.unsavedChanges', {
+                  count: unsavedChanges + unsavedSolutionChanges
+                })}
+              </p>
+              -
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
+                className="margin-x-1"
+                unstyled
+              >
+                {modelToOperationsMiscT('modal.editSolution.save')}
+              </Button>
+            </div>
+          </div>
+        )}
+
         {!solution.addedFromSolutionLibrary && (
           <span className="padding-right-1 model-to-operations__custom-tag padding-y-05">
             <Icon.Construction

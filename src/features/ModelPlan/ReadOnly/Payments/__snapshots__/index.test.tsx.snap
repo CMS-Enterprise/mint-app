@@ -290,7 +290,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-«r8»"
+                    aria-describedby="tooltip-_r_8_"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -315,7 +315,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-«r8»"
+                    id="tooltip-_r_8_"
                     role="tooltip"
                     title="If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer."
                   >
@@ -398,7 +398,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«r9»"
+                      aria-describedby="tooltip-_r_9_"
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -423,7 +423,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«r9»"
+                      id="tooltip-_r_9_"
                       role="tooltip"
                       title="If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer."
                     >
@@ -555,7 +555,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«ra»"
+                      aria-describedby="tooltip-_r_a_"
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -580,7 +580,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«ra»"
+                      id="tooltip-_r_a_"
                       role="tooltip"
                       title="If so, it might impact Critical Access Hospitals paid under Method II."
                     >
@@ -739,7 +739,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«rb»"
+                      aria-describedby="tooltip-_r_b_"
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -764,7 +764,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«rb»"
+                      id="tooltip-_r_b_"
                       role="tooltip"
                       title="Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments."
                     >
@@ -834,7 +834,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«rc»"
+                      aria-describedby="tooltip-_r_c_"
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -859,7 +859,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«rc»"
+                      id="tooltip-_r_c_"
                       role="tooltip"
                       title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid."
                     >
@@ -929,7 +929,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«rd»"
+                      aria-describedby="tooltip-_r_d_"
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -954,7 +954,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«rd»"
+                      id="tooltip-_r_d_"
                       role="tooltip"
                       title="If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)"
                     >
@@ -1024,7 +1024,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-«re»"
+                      aria-describedby="tooltip-_r_e_"
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -1049,7 +1049,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-«re»"
+                      id="tooltip-_r_e_"
                       role="tooltip"
                       title="Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC)."
                     >
@@ -1860,7 +1860,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-«rf»"
+                    aria-describedby="tooltip-_r_f_"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -1885,7 +1885,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-«rf»"
+                    id="tooltip-_r_f_"
                     role="tooltip"
                     title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
                   >

@@ -24,6 +24,7 @@ export default gql(/* GraphQL */ `
           notes {
             id
             content
+            createdDts
           }
         }
       }

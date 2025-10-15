@@ -64,7 +64,6 @@ import TablePagination from 'components/TablePagination';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -136,8 +135,6 @@ const EditMilestoneForm = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
-
   const {
     responsibleComponent: responsibleComponentConfig,
     facilitatedBy: facilitatedByConfig,
@@ -183,13 +180,10 @@ const EditMilestoneForm = ({
     }
   });
 
-  const sortedMilestoneNotes = useMemo(() => {
-    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
-      return (
-        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
-      );
-    });
-  }, [data]);
+  const milestoneNoteData = useMemo(
+    () => [...(data?.mtoMilestone.notes || [])],
+    [data]
+  );
 
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
@@ -345,13 +339,13 @@ const EditMilestoneForm = ({
     ]);
 
     // Sets the milestone notes from the milestone
-    setMilestoneNotes(sortedMilestoneNotes || []);
+    setMilestoneNotes(milestoneNoteData || []);
   }, [
     data,
     solutionIDs,
     commonSolutionKeys,
     formatSolutionForTable,
-    sortedMilestoneNotes
+    milestoneNoteData
   ]);
 
   // Determines which notes to add, remove, and update based on the original notes and the current notes
@@ -359,18 +353,18 @@ const EditMilestoneForm = ({
     setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
 
     setNotesToRemove(
-      sortedMilestoneNotes?.filter(
+      milestoneNoteData?.filter(
         note => !milestoneNotes.find(n => n.id === note.id)
       ) || []
     );
 
     setNotesToUpdate(
       milestoneNotes.filter(note => {
-        const foundNote = sortedMilestoneNotes?.find(n => n.id === note.id);
+        const foundNote = milestoneNoteData?.find(n => n.id === note.id);
         return foundNote && foundNote.content !== note.content;
       }) || []
     );
-  }, [milestoneNotes, sortedMilestoneNotes]);
+  }, [milestoneNotes, milestoneNoteData]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -910,39 +904,35 @@ const EditMilestoneForm = ({
         </>
       )}
 
-      {unsavedChanges + unsavedSolutionChanges > 0 && (
-        <div
-          className={classNames('save-tag', {
-            'margin-top-4': isMobile
-          })}
-        >
-          <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning
-              className="margin-right-1 top-2px text-warning"
-              aria-label="warning"
-            />
-            <p className="margin-0 display-inline margin-right-1">
-              {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
-                count: unsavedChanges + unsavedSolutionChanges
-              })}
-            </p>
-            -
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              disabled={
-                isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
-              }
-              className="margin-x-1"
-              unstyled
-            >
-              {modelToOperationsMiscT('modal.editMilestone.save')}
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="padding-8 maxw-tablet">
+        {unsavedChanges + unsavedSolutionChanges > 0 && (
+          <div className={classNames('save-tag')}>
+            <div className="bg-warning-lighter padding-y-05 padding-x-1">
+              <Icon.Warning
+                className="margin-right-1 top-2px text-warning"
+                aria-label="warning"
+              />
+              <p className="margin-0 display-inline margin-right-1">
+                {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
+                  count: unsavedChanges + unsavedSolutionChanges
+                })}
+              </p>
+              -
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={
+                  isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
+                }
+                className="margin-x-1"
+                unstyled
+              >
+                {modelToOperationsMiscT('modal.editMilestone.save')}
+              </Button>
+            </div>
+          </div>
+        )}
+
         {watch('isDraft') && (
           <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
             <Icon.Science
