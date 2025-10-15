@@ -347,19 +347,6 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
-  [MtoCommonSolutionKey.MDM_NCBP]: {
-    key: MtoCommonSolutionKey.MDM_NCBP,
-    categories: [
-      MtoCommonSolutionSubject.DATA,
-      MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS
-    ],
-    acronym: 'MDM-NCBP',
-    type: MtoSolutionType.IT_SYSTEM,
-    name: 'Master Data Management for Non-Claims Based Payments',
-    components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
-    }
-  },
   [MtoCommonSolutionKey.MIDS]: {
     key: MtoCommonSolutionKey.MIDS,
     categories: [
@@ -842,7 +829,6 @@ export const routeToEnumMap: Record<string, MtoCommonSolutionKey> = {
   'integrated-data-repository': MtoCommonSolutionKey.IDR,
   'learning-and-diffusion-group': MtoCommonSolutionKey.LDG,
   'legal-vertical': MtoCommonSolutionKey.LV,
-  'master-data-management-for-ncbp': MtoCommonSolutionKey.MDM_NCBP,
   'measure-and-instrument-development-and-support': MtoCommonSolutionKey.MIDS,
   'medicare-advantage-prescription-drug-system': MtoCommonSolutionKey.MARX,
   'model-space': MtoCommonSolutionKey.MODEL_SPACE,
