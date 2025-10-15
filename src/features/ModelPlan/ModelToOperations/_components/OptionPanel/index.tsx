@@ -190,6 +190,7 @@ const MTOOptionsPanel = () => {
                 </div>
                 <UswdsReactLink
                   to={`/models/${modelID}/collaboration-area/model-to-operations/template-library`}
+                  state={{ scroll: true }}
                 >
                   {t('optionsCard.template.viewTemplates')}
                 </UswdsReactLink>
