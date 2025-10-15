@@ -1,5 +1,5 @@
 {
-    "go.testEnvVars": {
+  "go.testEnvVars": {
     "PGHOST": "localhost",
     "PGPORT": "5437",
     "PGDATABASE": "postgres",
@@ -34,31 +34,35 @@
     "MINIO_ACCESS_KEY": "minioadmin",
     "MINIO_SECRET_KEY": "minioadmin"
   },
-    "editor.formatOnSave": false,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
-    },
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[graphql]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   "typescript.tsdk": "./node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "sqlfluff.config": "${workspaceFolder}/.sqlfluff",
-		// #region Cspell Settings
-    "cSpell.enabled": true,
-      "cSpell.diagnosticLevel": "Hint", // This makes it so spelling doesn't show up in the problems tab, but it isn't as obvious in the editor. Need to handle that in theme customization levels
-		"cSpell.customDictionaries": {
-			"project-words": {
-			  "name": "project-words",
-			  "path": "${workspaceFolder}/project_words.txt",
-			  "description": "Words used in this project",
-			  "addWords": true,
-        "scope": "workspace"
-			},
-			"mint spelling file": {
-				"name": "Mint Spelling file",
-				"path": "${workspaceFolder}/.spelling",
-				"description": "the .spelling file part of the mint repo. Used by the spell check linter",
-				"addWords": true,
-				"scope": "workspace"
-			}
-		},
-    // #endregion Cspell Settings
+  // #region Cspell Settings
+  "cSpell.enabled": true,
+  "cSpell.diagnosticLevel": "Hint", // This makes it so spelling doesn't show up in the problems tab, but it isn't as obvious in the editor. Need to handle that in theme customization levels
+  "cSpell.customDictionaries": {
+    "project-words": {
+      "name": "project-words",
+      "path": "${workspaceFolder}/project_words.txt",
+      "description": "Words used in this project",
+      "addWords": true,
+      "scope": "workspace"
+    },
+    "mint spelling file": {
+      "name": "Mint Spelling file",
+      "path": "${workspaceFolder}/.spelling",
+      "description": "the .spelling file part of the mint repo. Used by the spell check linter",
+      "addWords": true,
+      "scope": "workspace"
+    }
+  }
+  // #endregion Cspell Settings
 }
