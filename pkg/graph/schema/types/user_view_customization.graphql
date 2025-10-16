@@ -5,6 +5,7 @@ enum ViewCustomizationType {
   MODELS_WITH_CR_TDL
   MODELS_BY_SOLUTION
   MODELS_APPROACHING_CLEARANCE
+  NEWLY_CREATED_MODEL_PLANS
 }
 
 type UserViewCustomization {
