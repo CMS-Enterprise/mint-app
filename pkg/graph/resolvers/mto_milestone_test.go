@@ -619,7 +619,10 @@ func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 func (suite *ResolverSuite) TestMTOMilestoneAssignedTo() {
 	// Create model plan
 	plan := suite.createModelPlan("testing milestone assigned_to")
-	assignedTo := uuid.MustParse("00000001-0001-0001-0001-000000000001") // Mint user ID
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", []models.TeamRole{models.TeamRoleLeadership})
+	suite.Nil(collaborator.ModifiedBy)
+	suite.Nil(collaborator.ModifiedDts)
+	assignedTo := collaborator.ID // Plan Collaborator ID
 
 	// Create a custom milestone with an assigned_to
 	description := "Description for Test Milestone"
