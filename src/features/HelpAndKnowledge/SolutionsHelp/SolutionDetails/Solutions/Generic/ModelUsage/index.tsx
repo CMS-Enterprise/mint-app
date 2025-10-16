@@ -118,8 +118,6 @@ export const GenericModelUsage = ({
     return <PageLoading testId="model-usage" />;
   }
 
-  rows.map(row => prepareRow(row));
-
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
       <p>
@@ -182,7 +180,7 @@ export const GenericModelUsage = ({
         <tbody {...getTableBodyProps()}>
           {page.length === 0 && (
             <tr>
-              <td className="border-0">
+              <td className="border-0" colSpan={headerGroups[0].headers.length}>
                 <p className="margin-top-1 text-italic w-full">
                   <Trans
                     i18nKey="helpAndKnowledge:modelUsage.noResults"
@@ -193,8 +191,8 @@ export const GenericModelUsage = ({
             </tr>
           )}
           {page.map((row, i) => {
-            const { getRowProps, cells, id } = { ...row };
             prepareRow(row);
+            const { getRowProps, cells, id } = { ...row };
 
             return (
               <tr {...getRowProps()} key={id}>

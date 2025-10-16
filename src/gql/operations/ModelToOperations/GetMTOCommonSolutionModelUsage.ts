@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
         key
         modelPlanID
         modelPlan {
+          id
           modelName
           status
         }

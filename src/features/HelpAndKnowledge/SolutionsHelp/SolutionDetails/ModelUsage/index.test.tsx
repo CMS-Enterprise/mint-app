@@ -82,7 +82,7 @@ describe('Operational Solutions Model Usage Components', () => {
 
     await waitFor(() => {
       expect(getByText('Model usage')).toBeInTheDocument();
-      expect(asFragment()).toMatchSnapshot();
     });
+    expect(asFragment()).toMatchSnapshot();
   });
 });
