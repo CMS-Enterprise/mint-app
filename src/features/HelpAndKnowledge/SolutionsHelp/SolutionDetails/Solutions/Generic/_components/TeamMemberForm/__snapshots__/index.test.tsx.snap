@@ -57,7 +57,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
             >
               <div
                 class="cedar-contact-select__input-container css-166bipr-Input"
-                data-value="Blue Bonnet"
+                data-value="Blue Bonnet (memberemail@email.com)"
               >
                 <input
                   aria-activedescendant=""
@@ -76,7 +76,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
                   style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                   tabindex="0"
                   type="text"
-                  value="Blue Bonnet"
+                  value="Blue Bonnet (memberemail@email.com)"
                 />
               </div>
             </div>
@@ -219,7 +219,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
             data-testid="tooltipWrapper"
           >
             <button
-              aria-describedby="tooltip-«r2»"
+              aria-describedby="tooltip-_r_2_"
               class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
               data-testid="triggerElement"
               style="gap: 0.25rem;"
@@ -245,7 +245,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
               aria-hidden="true"
               class="usa-tooltip__body"
               data-testid="tooltipBody"
-              id="tooltip-«r2»"
+              id="tooltip-_r_2_"
               role="tooltip"
               title="The primary point of contact is the main person or mailbox that should be contacted with questions about this IT system or solution. They will receive update emails from MINT when a model chooses to use their system or solution."
             >

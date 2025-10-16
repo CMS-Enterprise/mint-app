@@ -23,6 +23,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { Avatar } from 'components/Avatar';
 import {
   DescriptionDefinition,
   DescriptionTerm
@@ -61,13 +62,10 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
     }
   });
 
-  const sortedMilestoneNotes = useMemo(() => {
-    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
-      return (
-        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
-      );
-    });
-  }, [data]);
+  const milestoneNoteData = useMemo(
+    () => [...(data?.mtoMilestone.notes || [])],
+    [data]
+  );
 
   const milestone = useMemo(() => {
     return (
@@ -82,6 +80,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         responsibleComponent: [],
         facilitatedBy: null,
         facilitatedByOther: null,
+        assignedToPlanCollaborator: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
         addedFromMilestoneLibrary: false,
         solutions: [],
@@ -237,6 +236,35 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
                 className="font-body-md text-base-darkest"
                 definition={
                   milestone.categories.subCategory?.name || NoneSpecified
+                }
+              />
+            </Grid>
+          </Grid>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
+                term={mtoMilestoneT('assignedTo.label')}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.assignedToPlanCollaborator?.userAccount
+                    ?.commonName ? (
+                    <Avatar
+                      user={
+                        milestone.assignedToPlanCollaborator.userAccount
+                          .commonName
+                      }
+                    />
+                  ) : (
+                    <p className="margin-0 text-base-dark text-italic">
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.notAssigned'
+                      )}
+                    </p>
+                  )
                 }
               />
             </Grid>
@@ -464,7 +492,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         <div className="border-top-1px border-base-lighter padding-y-4 margin-top-6">
           <MilestoneNotes
             milestoneID={milestone.id}
-            milestoneNotes={sortedMilestoneNotes}
+            milestoneNotes={milestoneNoteData}
             setMilestoneNotes={() => {}}
             selectedMilestoneNote={null}
             setSelectedMilestoneNote={() => {}}

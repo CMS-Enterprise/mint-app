@@ -17,6 +17,7 @@ import {
 } from 'react-table';
 import {
   Button,
+  ComboBox,
   Fieldset,
   Form,
   FormGroup,
@@ -42,6 +43,7 @@ import {
   useCreateMtoMilestoneNoteMutation,
   useDeleteMtoMilestoneMutation,
   useDeleteMtoMilestoneNoteMutation,
+  useGetModelCollaboratorsQuery,
   useGetMtoAllSolutionsQuery,
   useGetMtoMilestoneQuery,
   useUpdateMtoMilestoneMutation,
@@ -64,7 +66,6 @@ import TablePagination from 'components/TablePagination';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -104,6 +105,7 @@ type FormValues = {
   responsibleComponent: MtoMilestoneResponsibleComponent[];
   facilitatedBy?: MtoFacilitator[];
   facilitatedByOther?: string;
+  assignedTo?: string;
   needBy?: string;
   status: MtoMilestoneStatus;
   riskIndicator: MtoRiskIndicator;
@@ -136,12 +138,11 @@ const EditMilestoneForm = ({
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
   const { t: generalT } = useTranslation('general');
 
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
-
   const {
     responsibleComponent: responsibleComponentConfig,
     facilitatedBy: facilitatedByConfig,
-    status: stausConfig,
+    assignedTo: assignedToConfig,
+    status: statusConfig,
     riskIndicator: riskIndicatorConfig
   } = usePlanTranslation('mtoMilestone');
 
@@ -183,17 +184,32 @@ const EditMilestoneForm = ({
     }
   });
 
-  const sortedMilestoneNotes = useMemo(() => {
-    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
-      return (
-        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
-      );
+  const { data: allCollaboratorsData, loading: collaboratorsQueryLoading } =
+    useGetModelCollaboratorsQuery({
+      variables: {
+        id: modelID ?? ''
+      }
     });
-  }, [data]);
+
+  const milestoneNoteData = useMemo(
+    () => [...(data?.mtoMilestone.notes || [])],
+    [data]
+  );
 
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
   }, [data]);
+
+  const modelCollaboratorsOptions = useMemo(() => {
+    return (
+      allCollaboratorsData?.modelPlan.collaborators.map(
+        ({ id, userAccount }) => ({
+          value: id,
+          label: `${userAccount.commonName} (${userAccount.email})`
+        })
+      ) || []
+    );
+  }, [allCollaboratorsData]);
 
   const { data: allSolutionData } = useGetMtoAllSolutionsQuery({
     variables: {
@@ -345,13 +361,13 @@ const EditMilestoneForm = ({
     ]);
 
     // Sets the milestone notes from the milestone
-    setMilestoneNotes(sortedMilestoneNotes || []);
+    setMilestoneNotes(milestoneNoteData || []);
   }, [
     data,
     solutionIDs,
     commonSolutionKeys,
     formatSolutionForTable,
-    sortedMilestoneNotes
+    milestoneNoteData
   ]);
 
   // Determines which notes to add, remove, and update based on the original notes and the current notes
@@ -359,18 +375,18 @@ const EditMilestoneForm = ({
     setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
 
     setNotesToRemove(
-      sortedMilestoneNotes?.filter(
+      milestoneNoteData?.filter(
         note => !milestoneNotes.find(n => n.id === note.id)
       ) || []
     );
 
     setNotesToUpdate(
       milestoneNotes.filter(note => {
-        const foundNote = sortedMilestoneNotes?.find(n => n.id === note.id);
+        const foundNote = milestoneNoteData?.find(n => n.id === note.id);
         return foundNote && foundNote.content !== note.content;
       }) || []
     );
-  }, [milestoneNotes, sortedMilestoneNotes]);
+  }, [milestoneNotes, milestoneNoteData]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -388,6 +404,7 @@ const EditMilestoneForm = ({
       responsibleComponent: milestone?.responsibleComponent || [],
       facilitatedBy: milestone?.facilitatedBy || [],
       facilitatedByOther: milestone?.facilitatedByOther || '',
+      assignedTo: milestone?.assignedTo || '',
       needBy: milestone?.needBy || '',
       status: milestone?.status || MtoMilestoneStatus.NOT_STARTED,
       riskIndicator: milestone?.riskIndicator || MtoRiskIndicator.ON_TRACK,
@@ -566,7 +583,6 @@ const EditMilestoneForm = ({
         categories,
         needBy,
         name,
-        responsibleComponent,
         facilitatedBy,
         facilitatedByOther,
         ...formChanges
@@ -597,7 +613,6 @@ const EditMilestoneForm = ({
           id: editMilestoneID || '',
           changes: {
             ...formChanges,
-            ...(responsibleComponent && { responsibleComponent }),
             ...(facilitatedBy && {
               facilitatedBy
             }),
@@ -830,7 +845,7 @@ const EditMilestoneForm = ({
 
   rows.map(row => prepareRow(row));
 
-  if (loading && !milestone) {
+  if ((loading || collaboratorsQueryLoading) && !milestone) {
     return <PageLoading />;
   }
 
@@ -910,39 +925,35 @@ const EditMilestoneForm = ({
         </>
       )}
 
-      {unsavedChanges + unsavedSolutionChanges > 0 && (
-        <div
-          className={classNames('save-tag', {
-            'margin-top-4': isMobile
-          })}
-        >
-          <div className="bg-warning-lighter padding-y-05 padding-x-1">
-            <Icon.Warning
-              className="margin-right-1 top-2px text-warning"
-              aria-label="warning"
-            />
-            <p className="margin-0 display-inline margin-right-1">
-              {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
-                count: unsavedChanges + unsavedSolutionChanges
-              })}
-            </p>
-            -
-            <Button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              disabled={
-                isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
-              }
-              className="margin-x-1"
-              unstyled
-            >
-              {modelToOperationsMiscT('modal.editMilestone.save')}
-            </Button>
-          </div>
-        </div>
-      )}
-
       <div className="padding-8 maxw-tablet">
+        {unsavedChanges + unsavedSolutionChanges > 0 && (
+          <div className={classNames('save-tag')}>
+            <div className="bg-warning-lighter padding-y-05 padding-x-1">
+              <Icon.Warning
+                className="margin-right-1 top-2px text-warning"
+                aria-label="warning"
+              />
+              <p className="margin-0 display-inline margin-right-1">
+                {modelToOperationsMiscT('modal.editMilestone.unsavedChanges', {
+                  count: unsavedChanges + unsavedSolutionChanges
+                })}
+              </p>
+              -
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={
+                  isSubmitting || (!unsavedSolutionChanges && !unsavedChanges)
+                }
+                className="margin-x-1"
+                unstyled
+              >
+                {modelToOperationsMiscT('modal.editMilestone.save')}
+              </Button>
+            </div>
+          </div>
+        )}
+
         {watch('isDraft') && (
           <span className="padding-right-1 model-to-operations__is-draft-tag padding-y-05 margin-right-2">
             <Icon.Science
@@ -1318,6 +1329,41 @@ const EditMilestoneForm = ({
               )}
 
               <Controller
+                name="assignedTo"
+                control={control}
+                render={({ field: { ref, ...field } }) => {
+                  return (
+                    <FormGroup className="margin-top-0 margin-bottom-2">
+                      <Label
+                        htmlFor={convertCamelCaseToKebabCase('assignedTo')}
+                      >
+                        {assignedToConfig.label}
+                      </Label>
+                      <HelpText className="margin-top-1">
+                        {assignedToConfig.sublabel}
+                      </HelpText>
+
+                      <ComboBox
+                        {...field}
+                        id={convertCamelCaseToKebabCase(field.name)}
+                        name="assignedTo"
+                        onChange={value => {
+                          field.onChange(value || '');
+                        }}
+                        defaultValue={milestone.assignedTo || ''}
+                        options={modelCollaboratorsOptions}
+                      />
+                    </FormGroup>
+                  );
+                }}
+              />
+              {watch('assignedTo') && (
+                <Alert type="info" slim className="margin-y-3">
+                  {modelToOperationsMiscT('modal.editMilestone.assignedToInfo')}
+                </Alert>
+              )}
+
+              <Controller
                 name="needBy"
                 control={control}
                 rules={{
@@ -1392,10 +1438,10 @@ const EditMilestoneForm = ({
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || ''}
                     >
-                      {getKeys(stausConfig.options).map(option => {
+                      {getKeys(statusConfig.options).map(option => {
                         return (
                           <option key={option} value={option}>
-                            {stausConfig.options[option]}
+                            {statusConfig.options[option]}
                           </option>
                         );
                       })}

@@ -6,43 +6,43 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
     class="margin-top-8"
   >
     <div
-      class="save-tag"
-    >
-      <div
-        class="bg-warning-lighter padding-y-05 padding-x-1"
-      >
-        <svg
-          aria-label="warning"
-          class="usa-icon margin-right-1 top-2px text-warning"
-          focusable="false"
-          height="1em"
-          role="img"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
-          />
-        </svg>
-        <p
-          class="margin-0 display-inline margin-right-1"
-        >
-          1 unsaved change
-        </p>
-        -
-        <button
-          class="usa-button usa-button--unstyled margin-x-1"
-          data-testid="button"
-          type="button"
-        >
-          Save
-        </button>
-      </div>
-    </div>
-    <div
       class="padding-8 maxw-tablet"
     >
+      <div
+        class="save-tag"
+      >
+        <div
+          class="bg-warning-lighter padding-y-05 padding-x-1"
+        >
+          <svg
+            aria-label="warning"
+            class="usa-icon margin-right-1 top-2px text-warning"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+            />
+          </svg>
+          <p
+            class="margin-0 display-inline margin-right-1"
+          >
+            1 unsaved change
+          </p>
+          -
+          <button
+            class="usa-button usa-button--unstyled margin-x-1"
+            data-testid="button"
+            type="button"
+          >
+            Save
+          </button>
+        </div>
+      </div>
       <form
         class="usa-form maxw-none"
         data-testid="form"
@@ -392,6 +392,112 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
             </div>
           </div>
           <div
+            class="usa-form-group margin-top-0 margin-bottom-2"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="assigned-to"
+            >
+              Assigned to
+            </label>
+            <div
+              class="mint-help-text margin-top-1"
+            >
+              Assign the person who is responsible for ensuring the work for this milestone is completed. This field searches CMS’ EUA database but is limited to individuals added to this model in MINT.
+            </div>
+            <div
+              class="usa-combo-box"
+              data-enhanced="true"
+              data-testid="combo-box"
+            >
+              <select
+                aria-hidden="true"
+                class="usa-select usa-sr-only usa-combo-box__select"
+                data-testid="combo-box-select"
+                name="assignedTo"
+                tabindex="-1"
+              />
+              <input
+                aria-activedescendant=""
+                aria-autocomplete="list"
+                aria-controls="assigned-to--list"
+                aria-describedby="assigned-to--assistiveHint"
+                aria-expanded="false"
+                aria-owns="assigned-to--list"
+                autocapitalize="off"
+                autocomplete="off"
+                class="usa-combo-box__input"
+                data-testid="combo-box-input"
+                id="assigned-to"
+                role="combobox"
+                type="text"
+                value=""
+              />
+              <span
+                class="usa-combo-box__clear-input__wrapper"
+                tabindex="-1"
+              >
+                <button
+                  aria-label="Clear the select contents"
+                  class="usa-combo-box__clear-input"
+                  data-testid="combo-box-clear-button"
+                  hidden=""
+                  type="button"
+                >
+                   
+                </button>
+              </span>
+              <span
+                class="usa-combo-box__input-button-separator"
+              >
+                 
+              </span>
+              <span
+                class="usa-combo-box__toggle-list__wrapper"
+                tabindex="-1"
+              >
+                <button
+                  aria-label="Toggle the dropdown list"
+                  class="usa-combo-box__toggle-list"
+                  data-testid="combo-box-toggle"
+                  tabindex="-1"
+                  type="button"
+                >
+                   
+                </button>
+              </span>
+              <ul
+                class="usa-combo-box__list"
+                data-testid="combo-box-option-list"
+                hidden=""
+                id="assigned-to--list"
+                role="listbox"
+                tabindex="-1"
+              >
+                <li
+                  class="usa-combo-box__list-option--no-results"
+                >
+                  No results found
+                </li>
+              </ul>
+              <div
+                class="usa-combo-box__status usa-sr-only"
+                role="status"
+              />
+              <span
+                class="usa-sr-only"
+                data-testid="combo-box-assistive-hint"
+                id="assigned-to--assistiveHint"
+              >
+                When autocomplete results are available use up and down arrows to review
+           and enter to select. Touch device users, explore by touch or with swipe
+           gestures.
+              </span>
+            </div>
+          </div>
+          <div
             class="usa-form-group margin-0 margin-bottom-3"
             data-testid="formGroup"
           >
@@ -467,7 +573,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-«r0»"
+                    aria-describedby="tooltip-_r_0_"
                     class="usa-tooltip__trigger"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -492,7 +598,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-«r0»"
+                    id="tooltip-_r_0_"
                     role="tooltip"
                     title="You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate."
                   >
@@ -873,7 +979,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                         data-testid="tooltipWrapper"
                       >
                         <div
-                          aria-describedby="tooltip-«r1»"
+                          aria-describedby="tooltip-_r_1_"
                           class="usa-tooltip__trigger"
                           data-testid="triggerElement"
                           tabindex="0"
@@ -897,7 +1003,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                           aria-hidden="true"
                           class="usa-tooltip__body"
                           data-testid="tooltipBody"
-                          id="tooltip-«r1»"
+                          id="tooltip-_r_1_"
                           role="tooltip"
                           title="Significantly at risk"
                         >

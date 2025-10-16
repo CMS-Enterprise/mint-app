@@ -349,13 +349,18 @@ export const downloadMTOMilestoneSummary = (
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
           )
           .join(', '),
-        'Assigned to': milestone.assignedToUserAccount
-          ? `${milestone.assignedToUserAccount.commonName} (${milestone.assignedToUserAccount.email})`
+        'Assigned to': milestone.assignedToPlanCollaborator?.userAccount
+          ? `${milestone.assignedToPlanCollaborator.userAccount.commonName} (${milestone.assignedToPlanCollaborator.userAccount.email})`
           : '',
         'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
-        Notes: milestone.notes.map(note => note.content).join(', '),
+        Notes: milestone.notes
+          .map(
+            note =>
+              `${formatDateUtc(note.createdDts, 'MM/dd/yyyy')}: ${note.content}`
+          )
+          .join('\n'),
         ...quarterObject
       });
 
@@ -378,10 +383,8 @@ export const downloadMTOMilestoneSummary = (
     sheet['!rows'] = [];
   }
 
-  // Set row height for all rows (including header)
-  for (let row = 0; row <= range.e.r; row += 1) {
-    sheet['!rows'][row] = { hpt: 20 }; // 20 points height (default is ~15)
-  }
+  // Set row height for header
+  sheet['!rows'][0] = { hpt: 20 }; // Header row
 
   // Add borders to all cells in the sheet
   const concernsColumnIndex = 8; // Column I (0-indexed)
@@ -406,6 +409,9 @@ export const downloadMTOMilestoneSummary = (
 
       // Ensure border is always applied with black color
       sheet[cellAddress].s.border = borderStyle;
+
+      // Enable text wrapping for Notes column
+      sheet[cellAddress].s.alignment = { wrapText: true, vertical: 'top' };
     }
   }
 
@@ -454,7 +460,7 @@ export const downloadMTOMilestoneSummary = (
       }
       cell.s.fill = { fgColor: { rgb: backgroundColor } };
       cell.s.font = { color: { rgb: textColor }, bold: true };
-      cell.s.alignment = { horizontal: 'center' };
+      cell.s.alignment = { horizontal: 'center', vertical: 'center' };
       // Ensure black borders are preserved
       cell.s.border = borderStyle;
     }

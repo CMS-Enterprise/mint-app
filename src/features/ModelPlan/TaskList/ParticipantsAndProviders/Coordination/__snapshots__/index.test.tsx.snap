@@ -147,7 +147,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
                 data-testid="tooltipWrapper"
               >
                 <div
-                  aria-describedby="tooltip-«r1»"
+                  aria-describedby="tooltip-_r_1_"
                   class="usa-tooltip__trigger mint-no-print margin-left-1"
                   data-testid="triggerElement"
                   tabindex="0"
@@ -172,7 +172,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
                   aria-hidden="true"
                   class="usa-tooltip__body"
                   data-testid="tooltipBody"
-                  id="tooltip-«r1»"
+                  id="tooltip-_r_1_"
                   role="tooltip"
                   title="Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations."
                 >

@@ -21,14 +21,18 @@ export default gql(/* GraphQL */ `
           responsibleComponent
           facilitatedBy
           facilitatedByOther
-          assignedToUserAccount {
+          assignedToPlanCollaborator {
             id
-            commonName
-            email
+            userAccount {
+              id
+              commonName
+              email
+            }
           }
           notes {
             id
             content
+            createdDts
           }
         }
       }
