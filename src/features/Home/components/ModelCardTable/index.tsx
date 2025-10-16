@@ -85,6 +85,10 @@ const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
     }
   }, [selectedStatus, models, query, basicsConfig]);
 
+  useEffect(() => {
+    setQuery('');
+  }, [filterKey]);
+
   return (
     <div id="models-by-solution-table">
       <ModelsBanner
