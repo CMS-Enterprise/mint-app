@@ -640,3 +640,9 @@ func ModelPlanMostRecentTranslatedAudit(
 ) (*models.TranslatedAudit, error) {
 	return TranslatedAuditGetMostRecentByModelPlanIDAndTableNames(ctx, logger, modelPlanID, ModelPlanRecentEditTables, ModelPlanRecentEditsExcludedFields)
 }
+
+// ModelPlanGetRecentlyCreatedByIDLOADER returns a model plan if it was created within the last 6 months
+// using a dataloader for efficient batching
+func ModelPlanGetRecentlyCreatedByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
+	return loaders.ModelPlanRecentlyCreated.ByModelPlanID.Load(ctx, id)
+}

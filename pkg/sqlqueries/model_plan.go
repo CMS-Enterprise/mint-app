@@ -47,6 +47,9 @@ var modelPlanCollectionWhereFavoritedByUserID string
 //go:embed SQL/model_plan/get_task_list_status.sql
 var modelPlanGetTaskListStatus string
 
+//go:embed SQL/model_plan/collection_get_recently_created_LOADER.sql
+var modelPlanCollectionGetRecentlyCreatedLoaderSQL string
+
 type modelPlanScripts struct {
 	Create                                 string
 	Update                                 string
@@ -63,6 +66,7 @@ type modelPlanScripts struct {
 	GetByMTOSolutionKey                    string
 	CollectionWhereFavoritedByUserID       string
 	GetTaskListStatus                      string
+	CollectionGetRecentlyCreatedLoader     string
 }
 
 // ModelPlan houses all the sql for getting data for model plan from the database
@@ -82,4 +86,5 @@ var ModelPlan = modelPlanScripts{
 	GetByMTOSolutionKey:                    modelPlanGetByMTOCommonSolutionKeySQL,
 	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
 	GetTaskListStatus:                      modelPlanGetTaskListStatus,
+	CollectionGetRecentlyCreatedLoader:     modelPlanCollectionGetRecentlyCreatedLoaderSQL,
 }

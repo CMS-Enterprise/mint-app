@@ -382,6 +382,35 @@ func (s *Store) ModelPlanCollectionFavorited(
 	return modelPlans, nil
 }
 
+// ModelPlanCollectionGetRecentlyCreatedLOADER returns all model plans created within the last 6 months
+func (s *Store) ModelPlanCollectionGetRecentlyCreatedLOADER(logger *zap.Logger) ([]*models.ModelPlan, error) {
+
+	var modelPlanSlice []*models.ModelPlan
+
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionGetRecentlyCreatedLoader)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{}
+
+	err = stmt.Select(&modelPlanSlice, arg)
+	if err != nil {
+		logger.Error(
+			"failed to fetch recently created model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlanSlice, nil
+}
+
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
 	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.DeleteByID)
