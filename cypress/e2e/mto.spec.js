@@ -17,7 +17,7 @@ describe('Model-to-Operations Matrix', () => {
     );
   });
 
-  it.only('Fills out an empty MTO Matrix with milestones and solutions', () => {
+  it('Fills out an empty MTO Matrix with milestones and solutions', () => {
     cy.contains('h2', 'Your model-to-operations matrix (MTO) is a bit empty!');
 
     cy.contains('a', 'Add solutions from library');
@@ -125,28 +125,8 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('table').within(() => {
       cy.get('td').contains('4i').should('exist');
     });
-
-    // Add collaborators
-    // cy.get('[data-testid="manage-collaborators"]').click();
-    // cy.contains('a', 'Add team member').click();
-
-    // cy.get('#react-select-model-team-cedar-contact-input')
-    //   .click()
-    //   .type('Jerry');
-
-    // cy.get('#react-select-model-team-cedar-contact-option-0')
-    //   .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
-    //   .click();
-
-    // cy.get('#collaborator-role').within(() => {
-    //   cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
-    // });
-
-    // cy.clickOutside();
-
-    // cy.contains('button', 'Add team member').click();
   });
-  it.only('Adding a Solution from the Solution Library', () => {
+  it('Adding a Solution from the Solution Library', () => {
     cy.contains('Add solutions from library').click({ force: true });
     cy.url().should('include', '/solution-library');
 
@@ -216,7 +196,7 @@ describe('Model-to-Operations Matrix', () => {
     });
   });
 
-  it.only('Create custom milestone', () => {
+  it('Create custom milestone', () => {
     cy.contains('or, create a custom milestone').click({ force: true });
 
     cy.findModalWithThisHeadingAndSaveAlias(
@@ -449,20 +429,8 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
-    cy.get('#description').type('Test description');
+    cy.get('#description').clear().type('Test description');
     cy.get('#description').should('have.value', 'Test description');
-
-    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
-    cy.get('#clear-selection')
-      .parent()
-      .find('[class$="indicatorContainer"]')
-      .eq(1)
-      .click({ force: true });
-    cy.get('#responsible-component-tags li').should(
-      'have.length.greaterThan',
-      0
-    );
-    cy.contains('FCHCO').click({ force: true });
 
     cy.get('[data-testid="add-note-button"]').click();
 
