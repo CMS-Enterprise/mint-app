@@ -270,7 +270,7 @@ describe('Model-to-Operations Matrix', () => {
     ).should('not.exist');
 
     cy.get('#assigned-to').click({ force: true });
-    cy.get('[data-testid="combo-box-input"').type('min{enter}', {
+    cy.get('[data-testid="combo-box-input"]').type('min{enter}', {
       force: true
     });
     cy.get('[data-testid="combo-box-option-list"] li')
