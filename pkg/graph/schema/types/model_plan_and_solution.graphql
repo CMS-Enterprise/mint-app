@@ -1,4 +1,4 @@
-enum ModelBySolutionStatus {
+enum GeneralStatus {
   PLANNED
   ACTIVE
   ENDED
@@ -6,7 +6,7 @@ enum ModelBySolutionStatus {
 }
 
 extend type ModelPlan {
-  modelBySolutionStatus: ModelBySolutionStatus!
+  generalStatus: GeneralStatus!
 }
 
 type ModelPlanAndMTOCommonSolution {

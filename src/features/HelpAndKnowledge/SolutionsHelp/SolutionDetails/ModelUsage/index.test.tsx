@@ -3,10 +3,10 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import {
+  GeneralStatus,
   GetModelsByMtoSolutionDocument,
   GetModelsByMtoSolutionQuery,
   GetModelsByMtoSolutionQueryVariables,
-  ModelBySolutionStatus,
   ModelStatus,
   MtoCommonSolutionKey
 } from 'gql/generated/graphql';
@@ -39,7 +39,7 @@ const modelUsageMock: MockedResponse<
               modelName: 'Test Model 1',
               abbreviation: 'TM1',
               status: ModelStatus.ACTIVE,
-              modelBySolutionStatus: ModelBySolutionStatus.ACTIVE,
+              generalStatus: GeneralStatus.ACTIVE,
               basics: {
                 __typename: 'PlanBasics',
                 id: 'basicsid'

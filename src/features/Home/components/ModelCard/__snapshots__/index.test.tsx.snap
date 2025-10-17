@@ -1,0 +1,233 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ModelSolutionCard > matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card model-solution-card margin-bottom-0"
+    data-testid="Test Model Plan"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <div
+        class="height-full display-flex flex-column"
+      >
+        <div
+          class="grid-row"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <h3
+              class="margin-top-0"
+            >
+              <a
+                class="usa-link"
+                data-discover="true"
+                href="/models/test-model-id-123/read-view"
+              >
+                Test Model Plan (TMP)
+              </a>
+            </h3>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="display-flex margin-bottom-1"
+            >
+              <p
+                class="text-bold margin-top-0 margin-right-1 margin-bottom-0"
+              >
+                Status
+              </p>
+              <span
+                class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1"
+                data-testid="tag"
+              >
+                Active
+              </span>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <p
+              class="text-bold margin-y-0 margin-right-1"
+            >
+              Category
+            </p>
+            Accountable Care
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="grid-row grid-gap"
+              data-testid="grid"
+            >
+              <div
+                class="mobile:grid-col-6 desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-bold margin-bottom-0 margin-right-1"
+                >
+                  Start date
+                </p>
+                <p
+                  class="margin-top-0 margin-bottom-0"
+                >
+                  01/15/2024
+                </p>
+              </div>
+              <div
+                class="mobile:grid-col-6 desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-bold margin-bottom-0 margin-right-1"
+                >
+                  End date
+                </p>
+                <p
+                  class="margin-top-0 margin-bottom-0"
+                >
+                  12/31/2025
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`ModelSolutionCard > matches snapshot with minimal data 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card model-solution-card margin-bottom-0"
+    data-testid="Minimal Model Plan"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <div
+        class="height-full display-flex flex-column"
+      >
+        <div
+          class="grid-row"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <h3
+              class="margin-top-0"
+            >
+              <a
+                class="usa-link"
+                data-discover="true"
+                href="/models/test-model-id-456/read-view"
+              >
+                Minimal Model Plan
+              </a>
+            </h3>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="display-flex margin-bottom-1"
+            >
+              <p
+                class="text-bold margin-top-0 margin-right-1 margin-bottom-0"
+              >
+                Status
+              </p>
+              <span
+                class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1"
+                data-testid="tag"
+              >
+                Draft Model Plan
+              </span>
+            </div>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <p
+              class="text-bold margin-y-0 margin-right-1"
+            >
+              Category
+            </p>
+            <i
+              class="text-base"
+            >
+              To be determined
+            </i>
+          </div>
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="grid-row grid-gap"
+              data-testid="grid"
+            >
+              <div
+                class="mobile:grid-col-6 desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-bold margin-bottom-0 margin-right-1"
+                >
+                  Start date
+                </p>
+                <p
+                  class="margin-top-0 margin-bottom-0"
+                >
+                  <i
+                    class="text-base"
+                  >
+                    To be determined
+                  </i>
+                </p>
+              </div>
+              <div
+                class="mobile:grid-col-6 desktop:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-bold margin-bottom-0 margin-right-1"
+                >
+                  End date
+                </p>
+                <p
+                  class="margin-top-0 margin-bottom-0"
+                >
+                  <i
+                    class="text-base"
+                  >
+                    To be determined
+                  </i>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

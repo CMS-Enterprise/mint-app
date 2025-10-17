@@ -11,9 +11,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// ModelBySolutionStatus is the resolver for the modelBySolutionStatus field.
-func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
-	return ModelBySolutionStatus(obj.Status), nil
+// GeneralStatus is the resolver for the generalStatus field.
+func (r *modelPlanResolver) GeneralStatus(ctx context.Context, obj *models.ModelPlan) (models.GeneralStatus, error) {
+	return GeneralStatus(obj.Status), nil
 }
 
 // MtoCommonSolution is the resolver for the mtoCommonSolution field.

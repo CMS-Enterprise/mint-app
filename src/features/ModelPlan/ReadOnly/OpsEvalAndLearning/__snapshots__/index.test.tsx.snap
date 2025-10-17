@@ -249,7 +249,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-_r_3_"
+                        aria-describedby="tooltip-«r3»"
                         class="usa-tooltip__trigger mint-no-print"
                         data-testid="triggerElement"
                         tabindex="0"
@@ -274,7 +274,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-_r_3_"
+                        id="tooltip-«r3»"
                         role="tooltip"
                         title="(implementation, data analysis, quality, etc.)"
                       >
@@ -908,7 +908,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-_r_4_"
+                    aria-describedby="tooltip-«r4»"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -933,7 +933,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-_r_4_"
+                    id="tooltip-«r4»"
                     role="tooltip"
                     title="This means we would use these files for Participating and Preferred Providers."
                   >
@@ -2544,7 +2544,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-_r_5_"
+                    aria-describedby="tooltip-«r5»"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -2569,7 +2569,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-_r_5_"
+                    id="tooltip-«r5»"
                     role="tooltip"
                     title="Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability."
                   >

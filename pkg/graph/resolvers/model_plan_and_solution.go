@@ -26,8 +26,8 @@ func ModelPlansByMTOSolutionKey(
 	return loaders.ModelPlan.ByMTOSolutionKey.Load(ctx, solutionKey)
 }
 
-// ModelBySolutionStatus converts a Model status to a ModelBySolutionStatus
-func ModelBySolutionStatus(modelPlanStatus models.ModelStatus) models.ModelBySolutionStatus {
+// GeneralStatus converts a Model status to a GeneralStatus
+func GeneralStatus(modelPlanStatus models.ModelStatus) models.GeneralStatus {
 	switch modelPlanStatus {
 	case models.ModelStatusActive:
 		return models.MbSSActive

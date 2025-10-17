@@ -12,13 +12,13 @@ type ModelPlanAndPossibleOperationalSolution struct {
 	ModelPlanID                   uuid.UUID              `json:"modelPlanId" db:"model_plan_id"`
 }
 
-type ModelBySolutionStatus string
+type GeneralStatus string
 
 const (
-	MbSSPlanned ModelBySolutionStatus = "PLANNED"
-	MbSSActive  ModelBySolutionStatus = "ACTIVE"
-	MbSSEnded   ModelBySolutionStatus = "ENDED"
-	MbSSOther   ModelBySolutionStatus = "OTHER"
+	MbSSPlanned GeneralStatus = "PLANNED"
+	MbSSActive  GeneralStatus = "ACTIVE"
+	MbSSEnded   GeneralStatus = "ENDED"
+	MbSSOther   GeneralStatus = "OTHER"
 )
 
 type ModelPlanAndMTOCommonSolution struct {

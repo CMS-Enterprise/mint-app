@@ -83,7 +83,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
               data-testid="tooltipWrapper"
             >
               <button
-                aria-describedby="tooltip-_r_2_"
+                aria-describedby="tooltip-«r2»"
                 class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
                 data-testid="triggerElement"
                 style="gap: 0.25rem;"
@@ -115,7 +115,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-_r_2_"
+                id="tooltip-«r2»"
                 role="tooltip"
                 title="This point of contact will receive an email notification when a model adds this solution to their model-to-operations matrix (MTO)."
               >
@@ -206,7 +206,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
               data-testid="tooltipWrapper"
             >
               <button
-                aria-describedby="tooltip-_r_3_"
+                aria-describedby="tooltip-«r3»"
                 class="usa-button usa-tooltip__trigger bg-white padding-0 text-base-dark"
                 data-testid="triggerElement"
                 style="gap: 0.25rem;"
@@ -238,7 +238,7 @@ exports[`MailboxAndTeamMembers Component > matches snapshot 1`] = `
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-_r_3_"
+                id="tooltip-«r3»"
                 role="tooltip"
                 title="This point of contact will not receive an email notification when a model adds this solution to their model-to-operations matrix (MTO)."
               >
