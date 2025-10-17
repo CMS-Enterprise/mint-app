@@ -5,6 +5,8 @@ export type HomepageSettingsType = Record<
   Record<string, string>
 >;
 
+// TODO: Init Newly created feature commit
+
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
