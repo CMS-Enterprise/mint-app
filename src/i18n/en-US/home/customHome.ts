@@ -50,6 +50,12 @@ const settings: HomepageSettingsType = {
     noResultsHeading:
       'It looks like you forgot to select at least one solution.',
     noResultsDescription: 'Select solutions'
+  },
+  [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
+    heading: 'Newly created model plans',
+    description: 'This section displays the newly created model plans.',
+    noResultsHeading: 'There are no newly created model plans yet.',
+    noResultsDescription: 'Once a model plan is created, it will appear here.'
   }
 };
 

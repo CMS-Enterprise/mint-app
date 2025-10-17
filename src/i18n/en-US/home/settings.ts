@@ -35,6 +35,10 @@ const settings: HomepageSettingsType = {
     heading: 'Models using specific solutions',
     description:
       'This tabbed section displays the models using the solutions and IT systems you care about.'
+  },
+  [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
+    heading: 'Newly created model plans',
+    description: 'This section displays the newly created model plans.'
   }
 };
 
