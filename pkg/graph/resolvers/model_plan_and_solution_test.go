@@ -210,13 +210,13 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.EqualValues(solTypeB, modelPlanAndOpSols[0].Key)
 }
 
-func TestModelBySolutionStatus(t *testing.T) {
+func TestModelByGeneralStatus(t *testing.T) {
 	assert := assert.New(t)
 
 	testCases := []struct {
 		testName             string
 		inputStatus          models.ModelStatus
-		expectedOutputStatus models.ModelBySolutionStatus
+		expectedOutputStatus models.GeneralStatus
 	}{
 		{
 			testName:             "Active_To_Active",
@@ -289,7 +289,7 @@ func TestModelBySolutionStatus(t *testing.T) {
 
 	for _, test := range testCases {
 		t.Run(test.testName, func(t *testing.T) {
-			outputStatus := ModelBySolutionStatus(test.inputStatus)
+			outputStatus := GeneralStatus(test.inputStatus)
 			assert.EqualValues(test.expectedOutputStatus, outputStatus, "Expected status did not match")
 		})
 

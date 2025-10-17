@@ -8,33 +8,35 @@ import ModelStatusTag from 'components/ModelStatusTag';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 
-import { ModelsBySolutionType } from './table';
+import { ModelType } from '../ModelCardTable';
 
-import './index.scss';
+import '../ModelsBySolution/index.scss';
 
-type ModelSolutionCardProps = {
+type ModelCardProps = {
   className?: string;
-  modelPlan: ModelsBySolutionType[0]['modelPlan'];
+  modelPlan: ModelType;
 };
 
-const ModelSolutionCard = ({
-  className,
-  modelPlan
-}: ModelSolutionCardProps) => {
+const ModelCard = ({ className, modelPlan }: ModelCardProps) => {
   const { t: customHomeT } = useTranslation('customHome');
   const basicsConfig = usePlanTranslation('basics');
 
-  const { id, basics, timeline, modelName, abbreviation, status } = modelPlan;
+  const { id, basics, timeline, modelName, abbreviation, status } =
+    modelPlan || {};
 
   return (
     <Card
       data-testid={modelName}
-      className={classNames('model-solution-card', className)}
+      className={classNames(
+        'model-solution-card',
+        className,
+        'margin-bottom-0'
+      )}
     >
-      <div>
+      <div className="height-full display-flex flex-column">
         <Grid row>
           <Grid desktop={{ col: 12 }}>
-            <h3 className="model-solution-card__title margin-top-0">
+            <h3 className="margin-top-0">
               <UswdsReactLink to={`/models/${id}/read-view`}>
                 {modelName}
                 {abbreviation ? ` (${abbreviation})` : ''}
@@ -55,7 +57,7 @@ const ModelSolutionCard = ({
             <p className="text-bold margin-y-0 margin-right-1">
               {customHomeT('solutionCard.category')}
             </p>
-            {basics.modelCategory ? (
+            {basics?.modelCategory ? (
               basicsConfig.modelCategory.options[basics.modelCategory]
             ) : (
               <i className="text-base">{customHomeT('solutionCard.tbd')}</i>
@@ -69,7 +71,7 @@ const ModelSolutionCard = ({
                   {customHomeT('solutionCard.startDate')}
                 </p>
                 <p className="margin-top-0 margin-bottom-0">
-                  {timeline.performancePeriodStarts ? (
+                  {timeline?.performancePeriodStarts ? (
                     formatDateUtc(
                       timeline.performancePeriodStarts,
                       'MM/dd/yyyy'
@@ -87,7 +89,7 @@ const ModelSolutionCard = ({
                   {customHomeT('solutionCard.endDate')}
                 </p>
                 <p className="margin-top-0 margin-bottom-0">
-                  {timeline.performancePeriodEnds ? (
+                  {timeline?.performancePeriodEnds ? (
                     formatDateUtc(timeline.performancePeriodEnds, 'MM/dd/yyyy')
                   ) : (
                     <i className="text-base">
@@ -104,4 +106,4 @@ const ModelSolutionCard = ({
   );
 };
 
-export default ModelSolutionCard;
+export default ModelCard;

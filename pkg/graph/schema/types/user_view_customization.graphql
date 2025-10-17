@@ -5,7 +5,21 @@ enum ViewCustomizationType {
   MODELS_WITH_CR_TDL
   MODELS_BY_SOLUTION
   MODELS_APPROACHING_CLEARANCE
+  MODELS_BY_GROUP
   NEWLY_CREATED_MODEL_PLANS
+}
+
+enum ComponentGroup {
+  CCMI_PCMG
+  CCMI_PPG
+  CCMI_SCMG
+  CCMI_SPHG
+  CCMI_TBD
+  CCSQ
+  CMCS
+  CM
+  FCHCO
+  CPI
 }
 
 type UserViewCustomization {
@@ -14,6 +28,7 @@ type UserViewCustomization {
   userAccount: UserAccount!
   viewCustomization: [ViewCustomizationType!]!
   solutions: [MTOCommonSolutionKey!]!
+  componentGroups: [ComponentGroup!]!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -25,6 +40,7 @@ type UserViewCustomization {
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
   viewCustomization: [ViewCustomizationType!]
   solutions: [MTOCommonSolutionKey!]
+  componentGroups: [ComponentGroup!]
 }
 
 extend type Query {
