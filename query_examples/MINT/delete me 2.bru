@@ -1,0 +1,68 @@
+meta {
+  name: delete me 2
+  type: graphql
+  seq: 22
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetMTOTemplates($keys: [MTOTemplateKey!]) {
+    mtoTemplates(keys: $keys) {
+      id
+      name
+      key
+      isAdded
+      description
+      categoryCount
+      milestoneCount
+      solutionCount
+      primaryCategoryCount
+      categories {
+        id
+        templateID
+        name
+        order
+        subCategories {
+          id
+          templateID
+          name
+          order
+          milestones {
+            id
+            templateID
+            name
+            solutions {
+              id
+              templateID
+              name
+              __typename
+            }
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "keys": [
+      "STANDARD_CATEGORIES",
+      "ACO_AND_KIDNEY_MODELS",
+      "EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

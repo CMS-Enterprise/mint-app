@@ -75,7 +75,13 @@ const usePagination = <T extends any[]>({
   useEffect(() => {
     if (!loading) {
       setCurrentPageNum(defaultPage);
-      setPageCount(Math.ceil(itemsLength / itemsPerPage));
+
+      // Set the page count to one if the items length is less than the items per page / search and no results
+      let pageCountCalc = Math.ceil(itemsLength / itemsPerPage);
+      if (pageCountCalc === 0) {
+        pageCountCalc = 1;
+      }
+      setPageCount(pageCountCalc);
     }
   }, [
     loading,
@@ -96,7 +102,11 @@ const usePagination = <T extends any[]>({
             (currentPageNum - 1) * itemsPerPage + itemsPerPage
           )
     );
-    setPageCount(Math.ceil(itemsLength / itemsPerPage));
+    let pageCountCalc = Math.ceil(itemsLength / itemsPerPage);
+    if (pageCountCalc === 0) {
+      pageCountCalc = 1;
+    }
+    setPageCount(pageCountCalc);
   }, [items, currentPageNum, setPageCount, itemsPerPage, sliceFn, itemsLength]);
 
   const handleNext = () => {

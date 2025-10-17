@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import {
   useGetMtoCommonSolutionsQuery,
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import { MTOModalContext } from 'contexts/MTOModalContext';
 import useMessage from 'hooks/useMessage';
 
@@ -15,7 +16,6 @@ import './index.scss';
 const MTOTableActions = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
-  const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { clearMessage } = useMessage();
@@ -107,21 +107,14 @@ const MTOTableActions = () => {
                   })}
                 </p>
 
-                <Button
-                  type="button"
-                  className="display-block margin-bottom-1"
-                  outline
-                  onClick={() => {
-                    navigate(
-                      `/models/${modelID}/collaboration-area/model-to-operations/milestone-library`,
-                      {
-                        state: { scroll: true }
-                      }
-                    );
-                  }}
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library`}
+                  className="display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+                  state={{ scroll: true }}
                 >
                   {t('table.tableActions.browseMilestoneLibrary')}
-                </Button>
+                </UswdsReactLink>
+
                 <Button
                   type="button"
                   className="display-block"
@@ -168,21 +161,14 @@ const MTOTableActions = () => {
                   })}
                 </p>
 
-                <Button
-                  type="button"
-                  className="display-block margin-bottom-1"
-                  outline
-                  onClick={() => {
-                    navigate(
-                      `/models/${modelID}/collaboration-area/model-to-operations/solution-library`,
-                      {
-                        state: { scroll: true }
-                      }
-                    );
-                  }}
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/model-to-operations/solution-library`}
+                  state={{ scroll: true }}
+                  className="display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
                 >
                   {t('table.tableActions.browseSolutionLibrary')}
-                </Button>
+                </UswdsReactLink>
+
                 <Button
                   type="button"
                   className="display-block"
@@ -222,27 +208,14 @@ const MTOTableActions = () => {
               <p className="margin-top-0">
                 {t('table.tableActions.availableTemplates')}
               </p>
-              <div
-                className="display-flex flex-justify bg-base-lightest border border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
-                style={{ gap: '24px' }}
+
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area/model-to-operations/template-library`}
+                className="display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+                state={{ scroll: true }}
               >
-                <span className="text-bold">
-                  {t('table.tableActions.standardCategories')}
-                </span>
-                <Button
-                  type="button"
-                  className="display-block"
-                  unstyled
-                  onClick={() => {
-                    setMTOModalState({
-                      modalType: 'addTemplate'
-                    });
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t('table.tableActions.addThisTemplate')}
-                </Button>
-              </div>
+                {t('table.tableActions.addTemplateFromLibrary')}
+              </UswdsReactLink>
 
               <Button
                 type="button"

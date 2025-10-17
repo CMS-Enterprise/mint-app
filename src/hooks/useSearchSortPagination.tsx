@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // Sort options type for the select dropdown
@@ -50,7 +50,10 @@ const useSearchSortPagination = <T, K extends string>({
 
   // Query parameters
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const pageParam = params.get('page') || '1';
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps<K>['value'];
@@ -100,15 +103,21 @@ const useSearchSortPagination = <T, K extends string>({
     }
 
     // Update the URL's query parameters
+    // Always update URL parameters to reflect current state
     if (query.trim()) {
       params.set('query', query);
+      // Reset to page 1 when performing a new search
       params.set('page', '1');
-    } else {
-      // Delete the 'query' parameter
+    } else if (params.has('query')) {
+      // Only delete query parameter if it's actually empty
       params.delete('query');
     }
 
-    navigate({ search: params.toString() });
+    // Navigate with updated parameters
+    const newSearch = params.toString();
+    if (location.search !== `?${newSearch}`) {
+      navigate({ search: newSearch });
+    }
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
@@ -129,7 +138,7 @@ const useSearchSortPagination = <T, K extends string>({
 
     // Set the page offset based on the page parameter
     setCurrentPage(pageParam ? Number(pageParam) : 1);
-    setPageCount(Math.ceil(searchAndSortedItems.length / itemsPerPage));
+    setPageCount(Math.ceil(items.length / itemsPerPage));
   }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the current items when the page offset changes.
@@ -145,12 +154,13 @@ const useSearchSortPagination = <T, K extends string>({
 
   // Reset pagination if itemsPerPage changes and the current page is greater than the new page count or if items per page is set to "show all"
   useEffect(() => {
-    if (currentItems.length === 0 || itemsPerPage === 100000) {
+    // Only reset page if we're not already on page 1
+    if (currentPage !== 1) {
       params.set('page', '1');
       navigate({ search: params.toString() });
       setCurrentPage(1);
     }
-  }, [currentItems, itemsPerPage]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [itemsPerPage, currentPage, params, navigate]);
 
   // Sort the changes when the sort option changes.
   useEffect(() => {

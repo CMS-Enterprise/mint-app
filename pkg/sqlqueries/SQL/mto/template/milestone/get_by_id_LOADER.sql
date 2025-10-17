@@ -1,0 +1,14 @@
+SELECT 
+    tm.id,
+    tm.template_id,
+    tm.mto_common_milestone_key AS key,
+    mcm.name,
+    tm.mto_template_category_id,
+    tm.created_by,
+    tm.created_dts,
+    tm.modified_by,
+    tm.modified_dts
+FROM mto_template_milestone tm
+LEFT JOIN mto_common_milestone mcm ON tm.mto_common_milestone_key = mcm.key
+WHERE tm.id = ANY(:ids)
+ORDER BY tm.created_dts;
