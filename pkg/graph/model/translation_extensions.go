@@ -281,3 +281,13 @@ func (t *MTOMilestoneNoteTranslation) TableName() models.TableName {
 func (t *MTOMilestoneNoteTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*t)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (t *ModelPlanMTOTemplateLinkTranslation) TableName() models.TableName {
+	return models.TNModelPlanMTOTemplateLink
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *ModelPlanMTOTemplateLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}

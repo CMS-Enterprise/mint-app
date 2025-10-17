@@ -161,6 +161,13 @@ type MTOSolutionTranslation struct {
 	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
+// Represents Model Plan MTO Template Link translation data
+type ModelPlanMTOTemplateLinkTranslation struct {
+	ModelPlanID models.TranslationField `json:"modelPlanID" db:"model_plan_id"`
+	TemplateID  models.TranslationField `json:"templateID" db:"template_id"`
+	AppliedDate models.TranslationField `json:"appliedDate" db:"applied_date"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`

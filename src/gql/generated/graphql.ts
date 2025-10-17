@@ -1628,6 +1628,14 @@ export enum ModelPlanFilter {
   WITH_CR_TDLS = 'WITH_CR_TDLS'
 }
 
+/** Represents Model Plan MTO Template Link translation data */
+export type ModelPlanMtoTemplateLinkTranslation = {
+  __typename: 'ModelPlanMTOTemplateLinkTranslation';
+  appliedDate: TranslationField;
+  modelPlanID: TranslationField;
+  templateID: TranslationField;
+};
+
 export type ModelPlanSharedActivityMeta = {
   __typename: 'ModelPlanSharedActivityMeta';
   modelPlan: ModelPlan;
@@ -4714,6 +4722,7 @@ export enum TableName {
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
   MODEL_PLAN = 'model_plan',
+  MODEL_PLAN_MTO_TEMPLATE_LINK = 'model_plan_mto_template_link',
   MTO_CATEGORY = 'mto_category',
   MTO_COMMON_MILESTONE = 'mto_common_milestone',
   MTO_COMMON_SOLUTION = 'mto_common_solution',
@@ -4723,6 +4732,11 @@ export enum TableName {
   MTO_MILESTONE_NOTE = 'mto_milestone_note',
   MTO_MILESTONE_SOLUTION_LINK = 'mto_milestone_solution_link',
   MTO_SOLUTION = 'mto_solution',
+  MTO_TEMPLATE = 'mto_template',
+  MTO_TEMPLATE_CATEGORY = 'mto_template_category',
+  MTO_TEMPLATE_MILESTONE = 'mto_template_milestone',
+  MTO_TEMPLATE_MILESTONE_SOLUTION_LINK = 'mto_template_milestone_solution_link',
+  MTO_TEMPLATE_SOLUTION = 'mto_template_solution',
   NDA_AGREEMENT = 'nda_agreement',
   OPERATIONAL_NEED = 'operational_need',
   OPERATIONAL_SOLUTION = 'operational_solution',
