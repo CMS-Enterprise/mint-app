@@ -11,8 +11,8 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Formik, FormikProps } from 'formik';
 import {
+  ComponentGroup,
   GetHomepageSettingsQuery,
-  useGetGlobalMtoCommonSolutionsQuery,
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
@@ -25,16 +25,18 @@ import MINTForm from 'components/MINTForm';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import { useErrorMessage } from 'contexts/ErrorContext';
+import { getKeys } from 'types/translation';
+import { tObject } from 'utils/translation';
 
-import { HomepageSettingsLocationType } from './settings';
+import { HomepageSettingsLocationType } from '../Settings';
 
-import './index.scss';
+import '../index.scss';
 
 type SettingsFormType = {
-  solutions: GetHomepageSettingsQuery['userViewCustomization']['solutions'];
+  componentGroups: GetHomepageSettingsQuery['userViewCustomization']['componentGroups'];
 };
 
-const SelectSolutionSettings = () => {
+const SelectComponentGroupsSettings = () => {
   const { t: homepageSettingsT } = useTranslation('homepageSettings');
 
   const formikRef = useRef<FormikProps<SettingsFormType>>(null);
@@ -44,23 +46,6 @@ const SelectSolutionSettings = () => {
   const { state } = useLocation();
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
-
-  const { data: solutionData, loading: solutionLoading } =
-    useGetGlobalMtoCommonSolutionsQuery();
-
-  // Sorts, filters, and formats the possible operational solutions for multiselect component
-  const solutionOptions = useMemo(() => {
-    const solutions = solutionData?.mtoCommonSolutions || [];
-
-    return [...solutions]
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map(solution => {
-        return {
-          label: solution.name,
-          value: solution.key
-        };
-      });
-  }, [solutionData?.mtoCommonSolutions]);
 
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
@@ -91,18 +76,18 @@ const SelectSolutionSettings = () => {
       // Create updated settings with the new state
       let updatedSettings = selectedSettings;
 
-      // Checks if MODELS_BY_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
+      // Checks if MODELS_BY_GROUP is in the selected settings and adds it if not and there are component groups selected
       if (
-        formikRef.current?.values?.solutions &&
-        formikRef.current?.values?.solutions.length > 0 &&
+        formikRef.current?.values?.componentGroups &&
+        formikRef.current?.values?.componentGroups.length > 0 &&
         !selectedSettings?.viewCustomization.includes(
-          ViewCustomizationType.MODELS_BY_SOLUTION
+          ViewCustomizationType.MODELS_BY_GROUP
         )
       ) {
         updatedSettings = {
           viewCustomization: [
             ...(selectedSettings?.viewCustomization || []),
-            ViewCustomizationType.MODELS_BY_SOLUTION
+            ViewCustomizationType.MODELS_BY_GROUP
           ]
         };
         setSelectedSettings(updatedSettings);
@@ -118,8 +103,24 @@ const SelectSolutionSettings = () => {
   };
 
   const initialValues: SettingsFormType = {
-    solutions: data?.userViewCustomization.solutions || []
+    componentGroups: data?.userViewCustomization.componentGroups || []
   };
+
+  const componentGroupTrans = tObject<keyof ComponentGroup, any>(
+    'homepageSettings:componentGroups'
+  );
+
+  const componentGroupAcronymTrans = tObject<keyof ComponentGroup, any>(
+    'homepageSettings:componentGroupAcronyms'
+  );
+
+  const componentGroupOptions = useMemo(() => {
+    return getKeys(ComponentGroup).map(group => ({
+      label: componentGroupTrans[group as keyof ComponentGroup],
+      readonlyLabel: componentGroupAcronymTrans[group as keyof ComponentGroup],
+      value: group
+    }));
+  }, [componentGroupTrans, componentGroupAcronymTrans]);
 
   return (
     <MainContent>
@@ -130,18 +131,18 @@ const SelectSolutionSettings = () => {
               BreadcrumbItemOptions.HOME,
               BreadcrumbItemOptions.HOME_SETTINGS
             ]}
-            customItem={homepageSettingsT('solutionsHeading')}
+            customItem={homepageSettingsT('componentGroupsHeading')}
           />
 
           <h1 className="margin-bottom-2">
-            {homepageSettingsT('solutionsHeading')}
+            {homepageSettingsT('componentGroupsHeading')}
           </h1>
 
           <p className="font-body-lg margin-top-0 margin-bottom-4">
-            {homepageSettingsT('solutionDescription')}
+            {homepageSettingsT('componentGroupDescription')}
           </p>
 
-          {loading || solutionLoading ? (
+          {loading ? (
             <div className="margin-top-8">
               <PageLoading />
             </div>
@@ -165,43 +166,39 @@ const SelectSolutionSettings = () => {
                   return (
                     <>
                       <MINTForm
-                        data-testid="it-solutions-add-solution"
+                        data-testid="component-groups-add-component-group"
                         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                           handleSubmit(e);
                         }}
                       >
-                        <Fieldset
-                          disabled={!!error || loading || solutionLoading}
-                        >
-                          <Label htmlFor="possible-operational-solutions">
-                            {homepageSettingsT('operationalSolutions')}
+                        <Fieldset disabled={!!error || loading}>
+                          <Label htmlFor="component-groups">
+                            {homepageSettingsT('componentsAndGroups')}
                           </Label>
 
-                          <p className="text-base margin-y-1 line-height-body-4">
-                            {homepageSettingsT('startTyping')}
+                          <p className="text-base margin-bottom-1 margin-top-0 line-height-body-4">
+                            {homepageSettingsT('startTypingComponentGroup')}
                           </p>
 
                           <Field
                             as={MultiSelect}
-                            id="possible-operational-solutions"
-                            ariaLabel={homepageSettingsT(
-                              'operationalSolutions'
-                            )}
-                            name="solutions"
-                            options={solutionOptions}
+                            id="component-groups"
+                            ariaLabel={homepageSettingsT('componentGroups')}
+                            name="componentGroups"
+                            options={componentGroupOptions}
                             selectedLabel={homepageSettingsT(
-                              'multiselectLabel'
+                              'multiselectLabelGroups'
                             )}
                             onChange={(value: string[] | []) => {
-                              setFieldValue('solutions', value);
+                              setFieldValue('componentGroups', value);
                             }}
-                            initialValues={initialValues.solutions}
+                            initialValues={initialValues.componentGroups}
                           />
 
                           <div className="margin-y-4">
                             <Button
                               type="submit"
-                              data-testid="save-solution-settings"
+                              data-testid="save-component-group-settings"
                             >
                               {homepageSettingsT('save')}
                             </Button>
@@ -221,7 +218,7 @@ const SelectSolutionSettings = () => {
               className="display-flex flex-align-center"
             >
               <Icon.ArrowBack className="margin-right-2" aria-label="back" />
-              {homepageSettingsT('dontSelect')}
+              {homepageSettingsT('dontSelectComponentGroups')}
             </UswdsReactLink>
           </div>
         </Grid>
@@ -230,4 +227,4 @@ const SelectSolutionSettings = () => {
   );
 };
 
-export default SelectSolutionSettings;
+export default SelectComponentGroupsSettings;
