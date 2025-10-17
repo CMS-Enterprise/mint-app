@@ -23,6 +23,7 @@ body:graphql {
           userId
           viewCustomization
           solutions
+          componentGroups
           createdBy
           createdByUserAccount {
               username
@@ -41,7 +42,8 @@ body:graphql:vars {
   {
       "changes": {
           "viewCustomization": ["FOLLOWED_MODELS","MY_MODEL_PLANS"],
-          "solutions": ["ACO_OS"]
+          "solutions": ["ACO_OS"],
+          "componentGroups": ["CCMI_PCMG"]
       }
   }
 }

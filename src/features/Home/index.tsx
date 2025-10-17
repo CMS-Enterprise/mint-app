@@ -31,7 +31,8 @@ import useMessage from 'hooks/useMessage';
 import { isAssessment, isMAC } from 'utils/user';
 
 import ModelsApproachingClearance from './components/ModelsApproachingClearance';
-import ModelsBySolutions from './components/ModelsBySolutions';
+import ModelsByGroup from './components/ModelsByGroup';
+import ModelsBySolutions from './components/ModelsBySolution';
 
 import './index.scss';
 
@@ -50,6 +51,8 @@ const Home = () => {
   const { data, loading } = useGetHomepageSettingsQuery();
 
   const solutionKeys = data?.userViewCustomization.solutions || [];
+
+  const componentGroupKeys = data?.userViewCustomization.componentGroups || [];
 
   const {
     data: favoritesData,
@@ -206,6 +209,23 @@ const Home = () => {
         )}
 
         <ModelsBySolutions solutionKeys={solutionKeys} />
+      </>
+    ),
+    [ViewCustomizationType.MODELS_BY_GROUP]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_BY_GROUP}.heading`)}
+        </h2>
+
+        {componentGroupKeys.length > 0 && (
+          <p>
+            {t(`settings.${ViewCustomizationType.MODELS_BY_GROUP}.description`)}
+          </p>
+        )}
+
+        <ModelsByGroup componentGroupKeys={componentGroupKeys} />
       </>
     )
   };

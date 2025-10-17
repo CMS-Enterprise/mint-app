@@ -7,14 +7,22 @@ import {
   helpSolutions,
   helpSolutionsArray
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import ModelsBySolutionTable from 'features/Home/components/ModelsBySolutions/table';
-import { MtoCommonSolutionKey } from 'gql/generated/graphql';
+import ModelsCardTable from 'features/Home/components/ModelCardTable';
+import {
+  GetModelsByMtoSolutionQuery,
+  MtoCommonSolutionKey,
+  useGetModelsByMtoSolutionQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
+import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import './index.scss';
+
+type ModelsBySolutionQueryType =
+  GetModelsByMtoSolutionQuery['modelPlansByMTOSolutionKey'];
 
 const ModelsBySolutions = ({
   solutionKeys
@@ -43,6 +51,24 @@ const ModelsBySolutions = ({
     }
     return solution.name;
   };
+
+  const { data, loading } = useGetModelsByMtoSolutionQuery({
+    variables: {
+      solutionKey: isCurrentSolution
+    },
+    skip: !isCurrentSolution
+  });
+
+  const modelsBySolution = useMemo(() => {
+    const models = (data?.modelPlansByMTOSolutionKey ||
+      []) as unknown as ModelsBySolutionQueryType;
+    return (
+      [...models]
+        .map(model => model.modelPlan)
+        .sort((a, b) => a.modelName.localeCompare(b.modelName)) ||
+      ([] as ModelsBySolutionQueryType)
+    );
+  }, [data]);
 
   const solutionNavs = orderedsolutionKeys.map(solutionKey => (
     <button
@@ -75,6 +101,14 @@ const ModelsBySolutions = ({
           <Icon.ArrowForward aria-label="forward" />
         </UswdsReactLink>
       </Alert>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="padding-left-4 padding-top-3">
+        <Spinner />
+      </div>
     );
   }
 
@@ -120,7 +154,11 @@ const ModelsBySolutions = ({
         </div>
       )}
 
-      <ModelsBySolutionTable solutionKey={isCurrentSolution} />
+      <ModelsCardTable
+        models={modelsBySolution}
+        filterKey={isCurrentSolution}
+        type="solution"
+      />
     </div>
   );
 };
