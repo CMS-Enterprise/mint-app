@@ -4,4 +4,5 @@ SELECT
 FROM
     mto_solution AS sol 
 WHERE
-    sol.mto_common_solution_key = :mto_common_solution_key
+    sol.mto_common_solution_key = ANY(:mto_common_solution_keys)
+ORDER BY sol.model_plan_id;

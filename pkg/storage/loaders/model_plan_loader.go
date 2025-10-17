@@ -15,12 +15,14 @@ import (
 // modelPlanLoaders is a struct that holds LoaderWrappers related to Model Plans
 type modelPlanLoaders struct {
 	// GetByID returns a model plan record associated with a uuid
-	GetByID LoaderWrapper[uuid.UUID, *models.ModelPlan]
+	GetByID          LoaderWrapper[uuid.UUID, *models.ModelPlan]
+	ByMTOSolutionKey LoaderWrapper[models.MTOCommonSolutionKey, []*models.ModelPlanAndMTOCommonSolution]
 }
 
 // ModelPlan is the singleton instance of all LoaderWrappers related to Model Plans
 var ModelPlan = &modelPlanLoaders{
-	GetByID: NewLoaderWrapper(batchModelPlanByModelPlanID),
+	GetByID:          NewLoaderWrapper(batchModelPlanByModelPlanID),
+	ByMTOSolutionKey: NewLoaderWrapper(batchModelPlanGetByMTOSolutionKey),
 }
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
@@ -39,4 +41,24 @@ func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) 
 	}
 
 	return oneToOneDataLoader(modelPlanIDs, data, getKeyFunc)
+}
+
+// Add the batch function
+func batchModelPlanGetByMTOSolutionKey(ctx context.Context, keys []models.MTOCommonSolutionKey) []*dataloader.Result[[]*models.ModelPlanAndMTOCommonSolution] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[models.MTOCommonSolutionKey, []*models.ModelPlanAndMTOCommonSolution](keys, err)
+	}
+
+	data, err := storage.ModelPlanGetByMTOSolutionKeyLOADER(loaders.DataReader.Store, logger, keys)
+	if err != nil {
+		return errorPerEachKey[models.MTOCommonSolutionKey, []*models.ModelPlanAndMTOCommonSolution](keys, err)
+	}
+
+	getKeyFunc := func(data *models.ModelPlanAndMTOCommonSolution) models.MTOCommonSolutionKey {
+		return data.Key
+	}
+
+	return oneToManyDataLoader(keys, data, getKeyFunc)
 }

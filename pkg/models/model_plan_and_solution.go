@@ -23,5 +23,8 @@ const (
 
 type ModelPlanAndMTOCommonSolution struct {
 	ModelPlanID uuid.UUID            `json:"modelPlanId" db:"model_plan_id"`
+	ModelName   string               `json:"modelName" db:"model_name"`
+	ModelStatus ModelStatus          `json:"modelStatus" db:"model_status"`
+	ModelID     *string              `json:"modelId" db:"model_id"`
 	Key         MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
 }

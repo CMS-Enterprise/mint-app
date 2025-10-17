@@ -1,0 +1,94 @@
+import React from 'react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { render, waitFor } from '@testing-library/react';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  GeneralStatus,
+  GetModelsByMtoSolutionDocument,
+  GetModelsByMtoSolutionQuery,
+  GetModelsByMtoSolutionQueryVariables,
+  ModelStatus,
+  MtoCommonSolutionKey
+} from 'gql/generated/graphql';
+
+import GenericModelUsage from '.';
+
+const modelUsageMock: MockedResponse<
+  GetModelsByMtoSolutionQuery,
+  GetModelsByMtoSolutionQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelsByMtoSolutionDocument,
+      variables: {
+        solutionKey: MtoCommonSolutionKey.AMS
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlansByMTOSolutionKey: [
+          {
+            __typename: 'ModelPlanAndMTOCommonSolution',
+            modelPlanID: 'notrealid',
+            modelPlan: {
+              __typename: 'ModelPlan',
+              id: 'notrealid',
+              modelName: 'Test Model 1',
+              abbreviation: 'TM1',
+              status: ModelStatus.ACTIVE,
+              generalStatus: GeneralStatus.ACTIVE,
+              basics: {
+                __typename: 'PlanBasics',
+                id: 'basicsid'
+              },
+              timeline: {
+                __typename: 'PlanTimeline',
+                id: 'timelineid'
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+];
+
+describe('Operational Solutions Model Usage Components', () => {
+  it('should render correctly', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/operational-solutions',
+          element: (
+            <MockedProvider mocks={modelUsageMock} addTypename={false}>
+              <GenericModelUsage solution={helpSolutions.AMS} />
+            </MockedProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          `/help-and-knowledge/operational-solutions?solution-key=${helpSolutions.AMS.key}&section=model-usage`
+        ]
+      }
+    );
+
+    const { getByText, asFragment } = render(
+      <RouterProvider router={router} />
+    );
+
+    await waitFor(() => {
+      expect(
+        getByText(
+          'The models below use or plan to use CMMI Analysis and Management System to implement and run their model. Click on each model to learn more about the model and its solutions and IT systems.'
+        )
+      ).toBeInTheDocument();
+      expect(getByText('Showing 1 of 1 models')).toBeInTheDocument();
+      expect(getByText('Test Model 1 (TM1)')).toBeInTheDocument();
+      expect(getByText('Active')).toBeInTheDocument();
+      expect(asFragment()).toMatchSnapshot();
+    });
+  });
+});
