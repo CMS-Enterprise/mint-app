@@ -620,8 +620,8 @@ const highLevelProjectPlans = {
               route: 'innovation-payment-contract'
             },
             {
-              copy: '<ml>MDM-NCBP</ml>',
-              route: 'master-data-management-for-ncbp'
+              copy: '<ml>AMS</ml>',
+              route: 'cmmi-analysis-and-management-system'
             }
           ]
         },
