@@ -1,0 +1,44 @@
+{{template "shared_header.html"}}
+{{template "shared_non_mint_mailbox_header.html" .}}
+
+<hr/>
+
+<p>
+  You’ve been assigned a milestone in the model-to-operations matrix (MTO) for <strong>{{.ModelName}}</strong>. 
+  This means you are responsible for ensuring the work for this milestone is completed, 
+  even if you do not complete all the work yourself.
+</p>
+
+<br/>
+
+<h2>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area/model-to-operations">
+    Go to the MTO
+  </a>
+</h2>
+
+<br/>
+
+<h3>Milestone summary</h3>
+<p><strong>Milestone title:</strong> {{.MilestoneTitle}}</p>
+<p><strong>Status:</strong> {{.MilestoneStatus}}</p>
+<p><strong>Need by:</strong> {{.NeedByDate}}</p>
+<p><strong>Risk:</strong> {{.RiskIndicator}}</p>
+<p><strong>Solution(s):</strong> {{.SolutionsList}}</p>
+
+<br/>
+
+<p>
+  If you believe you have been assigned in error, you may visit this model’s MTO 
+  and unassign yourself from this milestone.
+</p>
+
+<p>
+  If you have any questions or have issues signing in to MINT, please contact the 
+  MINT Team at <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.
+</p>
+
+<hr/>
+
+
+{{template "shared_access_banner.html" .}}

@@ -6,10 +6,12 @@ import {
   MtoCommonSolutionKey,
   MtoFacilitator,
   MtoMilestoneStatus,
-  MtoRiskIndicator
+  MtoRiskIndicator,
+  PlanCollaborator
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
 import { MTOMilestonePanelContext } from 'contexts/MTOMilestonePanelContext';
 import { MTOModalState } from 'contexts/MTOModalContext';
@@ -43,6 +45,9 @@ export type MilestoneType = {
   name: string;
   facilitatedBy: MtoFacilitator[] | null;
   facilitatedByOther?: string | null;
+  assignedToPlanCollaborator?: {
+    userAccount: Pick<PlanCollaborator['userAccount'], 'commonName'>;
+  } | null;
   solutions: MtoSolutionType[];
   needBy: string | null;
   status: MtoMilestoneStatus;
@@ -64,6 +69,9 @@ export type SubCategoryType = {
   name: string;
   facilitatedBy: undefined;
   facilitatedByOther?: undefined;
+  assignedToPlanCollaborator?: {
+    userAccount: Pick<PlanCollaborator['userAccount'], 'commonName'>;
+  } | null;
   solutions: string[];
   needBy: undefined;
   status: undefined;
@@ -82,6 +90,9 @@ export type CategoryType = {
   name: string;
   facilitatedBy: undefined;
   facilitatedByOther?: undefined;
+  assignedToPlanCollaborator?: {
+    userAccount: Pick<PlanCollaborator['userAccount'], 'commonName'>;
+  } | null;
   solutions: string[];
   needBy: undefined;
   status: undefined;
@@ -284,18 +295,33 @@ export const columns: ColumnType[] = [
     Cell: ({ row, rowType, expanded }: RowProps) => {
       if (rowType !== 'milestone') return <></>;
 
-      if (!row.facilitatedBy || row.facilitatedBy.length === 0)
-        return <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>;
-      return (
-        <>
-          {row.facilitatedBy
-            .map(
-              facilitator =>
-                `${i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)}${facilitator === 'OTHER' ? ` (${row.facilitatedByOther})` : ''}`
-            )
-            .join(', ')}
-        </>
-      );
+      if ('assignedToPlanCollaborator' in row) {
+        return (
+          <div>
+            {row.facilitatedBy ? (
+              row.facilitatedBy
+                .map(
+                  facilitator =>
+                    `${i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)}${facilitator === 'OTHER' ? ` (${row.facilitatedByOther})` : ''}`
+                )
+                .join(', ')
+            ) : (
+              <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>
+            )}
+
+            {row.assignedToPlanCollaborator?.userAccount.commonName && (
+              <p className="margin-top-1 margin-bottom-0">
+                {i18next.t('mtoMilestone:assignedTo.label')}
+                <Avatar
+                  user={row.assignedToPlanCollaborator.userAccount.commonName}
+                />
+              </p>
+            )}
+          </div>
+        );
+      }
+
+      return <em>{i18next.t('modelToOperationsMisc:table.noneAdded')}</em>;
     }
   },
   {

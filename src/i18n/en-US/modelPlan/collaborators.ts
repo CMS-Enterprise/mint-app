@@ -106,15 +106,15 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   modal: {
     heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:
-      '​​This team member will not be able to edit this Model Plan after they have been removed.',
+      'This action cannot be undone and this team member will not be able to edit this model after they are removed. If this team member is assigned to any model milestones in the model-to-operations matrix (MTO), they will be unassigned.',
     confirm: 'Remove team member',
-    no: 'Keep team member',
+    no: 'Go back',
     remove: 'Remove'
   },
   selfModal: {
     heading: 'Are you sure you want to remove yourself?',
     subheading:
-      'You will not be able to edit this Model Plan after you have been removed.',
+      'You will not be able to edit this model after you have been removed. You will also be unassigned from any model milestones in the model-to-operations matrix (MTO) for this model.',
     confirm: 'Remove yourself',
     no: 'Go back'
   },
