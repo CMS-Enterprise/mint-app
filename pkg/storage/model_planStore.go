@@ -417,7 +417,7 @@ func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key 
 func (s *Store) ModelPlanCollectionNewlyCreatedLOADER(logger *zap.Logger) ([]*models.ModelPlan, error) {
 
 	args := map[string]interface{}{}
-	res, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
+	res, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreatedLOADER, args)
 	if err != nil {
 		return nil, err
 	}
