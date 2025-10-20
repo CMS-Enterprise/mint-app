@@ -43,7 +43,8 @@ const settings: HomepageSettingsType = {
   },
   [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
     heading: 'Newly created model plans',
-    description: 'This section displays the newly created model plans.'
+    description:
+      'This simplified section displays the Model Plans created within the last six months.'
   }
 };
 

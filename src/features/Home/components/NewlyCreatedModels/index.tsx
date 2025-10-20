@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, Grid } from '@trussworks/react-uswds';
+import { Card, Grid, Icon } from '@trussworks/react-uswds';
 import {
   GetModelPlansQuery,
   ModelPlanFilter,
@@ -10,17 +10,18 @@ import {
 
 import Alert from 'components/Alert';
 import CalendarDate from 'components/CalendarDate';
+import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import usePagination from 'hooks/usePagination';
 
 import '../../index.scss';
 
-const ModelsApproachingClearance = () => {
+const NewlyCreatedModels = () => {
   const { t: customHomeT } = useTranslation('customHome');
 
   const { data, loading } = useGetModelPlansQuery({
     variables: {
-      filter: ModelPlanFilter.APPROACHING_CLEARANCE,
+      filter: ModelPlanFilter.NEWLY_CREATED,
       isMAC: false
     }
   });
@@ -42,13 +43,13 @@ const ModelsApproachingClearance = () => {
       <Grid desktop={{ col: 5 }} className="flex-align-self-center">
         <h2 className="margin-bottom-2">
           {customHomeT(
-            `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.heading`
+            `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.heading`
           )}
         </h2>
 
         <p className="line-height-body-5 font-body-md">
           {customHomeT(
-            `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.description`
+            `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.description`
           )}
         </p>
       </Grid>
@@ -66,24 +67,33 @@ const ModelsApproachingClearance = () => {
                   type="info"
                   className="margin-top-4"
                   heading={customHomeT(
-                    `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.noResultsHeading`
+                    `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.noResultsHeading`
                   )}
                 >
                   {customHomeT(
-                    `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.noResultsDescription`
+                    `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.noResultsDescription`
                   )}
                 </Alert>
               ) : (
                 <>
                   {currentItems.map(model => (
                     <Card key={model.id} className="home__card">
-                      <CalendarDate
-                        dateISO={model.timeline.clearanceStarts}
-                        link={`/models/${model.id}/read-view`}
-                        linkText={`${model.modelName}${
-                          model.abbreviation ? ` (${model.abbreviation})` : ''
-                        }`}
-                      />
+                      <div className="usa-collection__item border-0 padding-0 margin-0">
+                        <UswdsReactLink
+                          to={`/models/${model.id}/read-view`}
+                          aria-label={model.modelName}
+                        >
+                          <span>
+                            <h4 className="usa-collection__heading display-inline margin-right-1 font-body-md">
+                              {model.modelName}
+                            </h4>
+                            <Icon.ArrowForward
+                              className="top-3px"
+                              aria-label="forward"
+                            />
+                          </span>
+                        </UswdsReactLink>
+                      </div>
                     </Card>
                   ))}
 
@@ -98,4 +108,4 @@ const ModelsApproachingClearance = () => {
   );
 };
 
-export default ModelsApproachingClearance;
+export default NewlyCreatedModels;
