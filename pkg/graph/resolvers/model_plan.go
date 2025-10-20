@@ -422,7 +422,7 @@ func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, 
 	case model.ModelPlanFilterApproachingClearance:
 		modelPlans, err = storage.ModelPlanCollectionApproachingClearance(store, logger)
 	case model.ModelPlanFilterNewlyCreated:
-		modelPlans, err = store.ModelPlanCollectionWhereNewlyCreated(logger)
+		modelPlans, err = store.ModelPlanCollectionNewlyCreatedLOADER(logger)
 	default:
 		modelPlans = nil
 		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)

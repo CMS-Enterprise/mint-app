@@ -29,7 +29,7 @@ func batchCollectionWhereNewlyCreated(ctx context.Context, modelPlanIDs []uuid.U
 		return errorPerEachKey[uuid.UUID, []*models.ModelPlan]([]uuid.UUID{}, err)
 	}
 
-	data, err := loaders.DataReader.Store.ModelPlanCollectionWhereNewlyCreated(logger)
+	data, err := loaders.DataReader.Store.ModelPlanCollectionNewlyCreatedLOADER(logger)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.ModelPlan]([]uuid.UUID{}, err)
 	}

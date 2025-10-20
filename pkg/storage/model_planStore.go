@@ -414,7 +414,7 @@ func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key 
 }
 
 // ModelPlanCollectionNewlyCreated returns a list of all model plans created within the last 6 months
-func (s *Store) ModelPlanCollectionWhereNewlyCreated(logger *zap.Logger) ([]*models.ModelPlan, error) {
+func (s *Store) ModelPlanCollectionNewlyCreatedLOADER(logger *zap.Logger) ([]*models.ModelPlan, error) {
 
 	args := map[string]interface{}{}
 	res, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
