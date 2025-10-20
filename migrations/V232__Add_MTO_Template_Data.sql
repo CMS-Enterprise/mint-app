@@ -656,7 +656,7 @@ BEGIN
 
   app_support_con_milestone_uuid := gen_random_uuid();
   INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-  VALUES (app_support_con_milestone_uuid, template_uuid, 'APP_SUPPORT_CON', eval_uncat_subcat_uuid,
+  VALUES (app_support_con_milestone_uuid, template_uuid, 'ACQUIRE_AN_EVAL_CONT', eval_uncat_subcat_uuid,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Solutions
@@ -885,8 +885,8 @@ BEGIN
   payment_cat := gen_random_uuid();
   INSERT INTO mto_template_category VALUES (payment_cat, template_uuid, 'Payment', NULL, 9, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  claims_based_subcat := gen_random_uuid();
-  INSERT INTO mto_template_category VALUES (claims_based_subcat, template_uuid, 'Claims based', payment_cat, 10, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+--   claims_based_subcat := gen_random_uuid();
+--   INSERT INTO mto_template_category VALUES (claims_based_subcat, template_uuid, 'Claims based', payment_cat, 10, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   non_claims_based_subcat := gen_random_uuid();
   INSERT INTO mto_template_category VALUES (non_claims_based_subcat, template_uuid, 'Non-claims based', payment_cat, 11, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
@@ -1043,13 +1043,13 @@ DECLARE
     send_data_subcat_uuid UUID;
     tracking_align_subcat_uuid UUID;
     benchmarks_subcat_uuid UUID;
+    claims_based_subcat_uuid UUID;
     internal_funcs_subcat_uuid UUID;
     ffs_subcat_uuid UUID;
     monitoring_subcat_uuid UUID;
     agreements_subcat_uuid UUID;
     benefit_enh_subcat_uuid UUID;
     bene_engage_subcat_uuid UUID;
-    claims_based_subcat_uuid UUID;
     non_claims_based_subcat_uuid UUID;
 BEGIN
     SELECT id INTO template_uuid FROM mto_template WHERE key = 'STANDARD_CATEGORIES';
@@ -1093,63 +1093,67 @@ BEGIN
     INSERT INTO mto_template_category VALUES (benchmarks_subcat_uuid, template_uuid, 'Benchmarks', operations_cat_uuid, 8,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
+    internal_funcs_subcat_uuid := gen_random_uuid();
+    INSERT INTO mto_template_category VALUES (internal_funcs_subcat_uuid, template_uuid, 'Internal functions', operations_cat_uuid, 9,
+    '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
+
     ffs_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (ffs_subcat_uuid, template_uuid, 'Fee-for-service (FFS)', operations_cat_uuid, 9,
+    INSERT INTO mto_template_category VALUES (ffs_subcat_uuid, template_uuid, 'Fee-for-service (FFS)', operations_cat_uuid, 10,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     monitoring_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (monitoring_subcat_uuid, template_uuid, 'Monitoring', operations_cat_uuid, 10,
+    INSERT INTO mto_template_category VALUES (monitoring_subcat_uuid, template_uuid, 'Monitoring', operations_cat_uuid, 11,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     -- Legal
     legal_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (legal_cat_uuid, template_uuid, 'Legal', NULL, 11,
+    INSERT INTO mto_template_category VALUES (legal_cat_uuid, template_uuid, 'Legal', NULL, 12,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     agreements_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (agreements_subcat_uuid, template_uuid, 'Agreements', legal_cat_uuid, 12,
+    INSERT INTO mto_template_category VALUES (agreements_subcat_uuid, template_uuid, 'Agreements', legal_cat_uuid, 13,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     benefit_enh_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (benefit_enh_subcat_uuid, template_uuid, 'Benefit enhancements', legal_cat_uuid, 13,
+    INSERT INTO mto_template_category VALUES (benefit_enh_subcat_uuid, template_uuid, 'Benefit enhancements', legal_cat_uuid, 14,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     bene_engage_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (bene_engage_subcat_uuid, template_uuid, 'Beneficiary engagement and incentives', legal_cat_uuid, 14,
+    INSERT INTO mto_template_category VALUES (bene_engage_subcat_uuid, template_uuid, 'Beneficiary engagement and incentives', legal_cat_uuid, 15,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     -- Payment
     payment_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (payment_cat_uuid, template_uuid, 'Payment', NULL, 15,
+    INSERT INTO mto_template_category VALUES (payment_cat_uuid, template_uuid, 'Payment', NULL, 16,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     claims_based_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (claims_based_subcat_uuid, template_uuid, 'Claims based', payment_cat_uuid, 16,
+    INSERT INTO mto_template_category VALUES (claims_based_subcat_uuid, template_uuid, 'Claims-based', payment_cat_uuid, 17,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     non_claims_based_subcat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (non_claims_based_subcat_uuid, template_uuid, 'Non-claims based', payment_cat_uuid, 17,
+    INSERT INTO mto_template_category VALUES (non_claims_based_subcat_uuid, template_uuid, 'Non-claims based', payment_cat_uuid, 18,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     -- Remaining top-level categories
     payers_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (payers_cat_uuid, template_uuid, 'Payers', NULL, 18,
+    INSERT INTO mto_template_category VALUES (payers_cat_uuid, template_uuid, 'Payers', NULL, 19,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     quality_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (quality_cat_uuid, template_uuid, 'Quality', NULL, 19,
+    INSERT INTO mto_template_category VALUES (quality_cat_uuid, template_uuid, 'Quality', NULL, 20,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     learning_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (learning_cat_uuid, template_uuid, 'Learning', NULL, 20,
+    INSERT INTO mto_template_category VALUES (learning_cat_uuid, template_uuid, 'Learning', NULL, 21,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     evaluation_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (evaluation_cat_uuid, template_uuid, 'Evaluation', NULL, 21,
+    INSERT INTO mto_template_category VALUES (evaluation_cat_uuid, template_uuid, 'Evaluation', NULL, 22,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
     model_closeout_cat_uuid := gen_random_uuid();
-    INSERT INTO mto_template_category VALUES (model_closeout_cat_uuid, template_uuid, 'Model closeout or extension', NULL, 22,
+    INSERT INTO mto_template_category VALUES (model_closeout_cat_uuid, template_uuid, 'Model closeout or extension', NULL, 23,
         '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
 END $$;
