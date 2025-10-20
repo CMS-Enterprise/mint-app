@@ -4,6 +4,7 @@ enum ModelPlanFilter {
   WITH_CR_TDLS
   FAVORITED
   APPROACHING_CLEARANCE
+  NEWLY_CREATED
 }
 
 enum ModelStatus {

@@ -413,6 +413,17 @@ func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key 
 	return res, nil
 }
 
+// ModelPlanCollectionNewlyCreated returns a list of all model plans created within the last 6 months
+func (s *Store) ModelPlanCollectionWhereNewlyCreated(logger *zap.Logger) ([]*models.ModelPlan, error) {
+
+	args := map[string]interface{}{}
+	res, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 // ModelPlanGetByComponentGroupLoader returns model plans for multiple component group keys using a batched loader query
 func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
 	args := map[string]interface{}{
