@@ -13,6 +13,7 @@ import CalendarDate from 'components/CalendarDate';
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import usePagination from 'hooks/usePagination';
+import { formatDateLocal } from 'utils/date';
 
 import '../../index.scss';
 
@@ -93,6 +94,42 @@ const NewlyCreatedModels = () => {
                             />
                           </span>
                         </UswdsReactLink>
+                      </div>{' '}
+                      <div className="display-block">
+                        {customHomeT('created', {
+                          date: formatDateLocal(model.createdDts, 'MM/dd/yyyy')
+                        })}{' '}
+                        {model.modifiedDts ? (
+                          <>
+                            <span className="text-base-lighter margin-x-105">
+                              |
+                            </span>
+                            {customHomeT('updated', {
+                              date: formatDateLocal(
+                                model.modifiedDts,
+                                'MM/dd/yyyy'
+                              )
+                            })}
+                          </>
+                        ) : (
+                          ''
+                        )}
+                        {model.discussions.length > 0 ? (
+                          <>
+                            <span className="text-base-lighter margin-x-105">
+                              |
+                            </span>
+                            <Icon.Comment
+                              className="text-primary margin-right-05"
+                              aria-label="comment"
+                            />
+                            {customHomeT('discussions', {
+                              count: model.discussions.length
+                            })}
+                          </>
+                        ) : (
+                          ''
+                        )}
                       </div>
                     </Card>
                   ))}

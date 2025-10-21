@@ -155,7 +155,11 @@ const customHome = {
   noModelsDescription:
     'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
   generalStatus,
-  getNotified: 'Get notified when a Model Plan is added to MINT'
+  getNotified: 'Get notified when a Model Plan is added to MINT',
+  created: 'Created {{date}}',
+  updated: 'Updated {{date}}',
+  discussions: '{{count}} discussion',
+  discussions_other: '{{count}} discussions'
 };
 
 export default customHome;
