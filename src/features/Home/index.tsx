@@ -33,6 +33,7 @@ import { isAssessment, isMAC } from 'utils/user';
 import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsByGroup from './components/ModelsByGroup';
 import ModelsBySolutions from './components/ModelsBySolution';
+import NewlyCreatedModels from './components/NewlyCreatedModels';
 
 import './index.scss';
 
@@ -232,11 +233,7 @@ const Home = () => {
       <>
         <Divider className="margin-y-6" />
 
-        <h2 className="margin-top-0 margin-bottom-2">
-          {t(
-            `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.heading`
-          )}
-        </h2>
+        <NewlyCreatedModels />
       </>
     )
   };
@@ -266,7 +263,7 @@ const Home = () => {
                 </Grid>
 
                 <Grid desktop={{ col: 3 }}>
-                  <Card className="margin-y-0 home__card display-flex">
+                  <Card className="margin-y-0 row-reverse home__card display-flex">
                     <p className="text-bold margin-top-0">
                       {t('customizeHomepage')}
                     </p>

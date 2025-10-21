@@ -61,10 +61,11 @@ const settings: HomepageSettingsType = {
     noResultsDescription: 'Select groups'
   },
   [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
-    heading: 'Newly created model plans',
-    description: 'This section displays the newly created model plans.',
-    noResultsHeading: 'There are no newly created model plans yet.',
-    noResultsDescription: 'Once a model plan is created, it will appear here.'
+    heading: 'Newly created Model Plans',
+    description:
+      'Check out the Model Plans created within the last six months to stay up-to-date on what’s happening at CMMI.',
+    noResultsHeading: 'There are no new Model Plans.',
+    noResultsDescription: 'Check back later.'
   }
 };
 
@@ -153,7 +154,14 @@ const customHome = {
     '<h3>There is no record of any {{status}} models {{article}} this {{type}}.</h3>',
   noModelsDescription:
     'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
-  generalStatus
+  generalStatus,
+  getNotified: 'Get notified when a Model Plan is added to MINT',
+  created: 'Created {{date}}',
+  updated: 'Updated {{date}}',
+  discussions: '{{count}} discussion',
+  discussions_other: '{{count}} discussions',
+  error: 'There was an error fetching the newly created model plans.',
+  errorDescription: 'Please try again later.'
 };
 
 export default customHome;
