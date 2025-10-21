@@ -41,6 +41,9 @@ var modelPlanGetByOperationalSolutionKeySQL string
 //go:embed SQL/model_plan/get_by_mto_common_solution_key.sql
 var modelPlanGetByMTOCommonSolutionKeySQL string
 
+//go:embed SQL/model_plan/get_by_component_group_key_LOADER.sql
+var modelPlanGetByComponentGroupLoaderSQL string
+
 //go:embed SQL/model_plan/collection_where_favorited_by_user_id.sql
 var modelPlanCollectionWhereFavoritedByUserID string
 
@@ -60,7 +63,8 @@ type modelPlanScripts struct {
 	GetByIDLoader                          string
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
-	GetByMTOSolutionKey                    string
+	GetByMTOSolutionKeyLoader              string
+	GetByComponentGroupLoader              string
 	CollectionWhereFavoritedByUserID       string
 	GetTaskListStatus                      string
 }
@@ -79,7 +83,8 @@ var ModelPlan = modelPlanScripts{
 	GetByIDLoader:                          modelPlanGetByIDLoaderSQL,
 	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,
 	GetByOperationalSolutionKey:            modelPlanGetByOperationalSolutionKeySQL,
-	GetByMTOSolutionKey:                    modelPlanGetByMTOCommonSolutionKeySQL,
+	GetByMTOSolutionKeyLoader:              modelPlanGetByMTOCommonSolutionKeySQL,
+	GetByComponentGroupLoader:              modelPlanGetByComponentGroupLoaderSQL,
 	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
 	GetTaskListStatus:                      modelPlanGetTaskListStatus,
 }

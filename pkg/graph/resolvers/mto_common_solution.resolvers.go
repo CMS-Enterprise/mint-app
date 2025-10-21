@@ -31,6 +31,11 @@ func (r *mTOCommonSolutionResolver) ContactInformation(ctx context.Context, obj 
 	return MTOCommonSolutionContactInformationGetByKeyLOADER(ctx, obj.Key)
 }
 
+// ModelUsage is the resolver for the modelUsage field.
+func (r *mTOCommonSolutionResolver) ModelUsage(ctx context.Context, obj *models.MTOCommonSolution) ([]*models.ModelPlanAndMTOCommonSolution, error) {
+	return ModelPlansByMTOSolutionKey(ctx, obj.Key)
+}
+
 // MtoCommonSolutions is the resolver for the mtoCommonSolutions field.
 func (r *queryResolver) MtoCommonSolutions(ctx context.Context) ([]*models.MTOCommonSolution, error) {
 	return MTOCommonSolutionGetByModelPlanIDLOADER(ctx, nil)

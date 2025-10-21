@@ -7,14 +7,13 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// ModelBySolutionStatus is the resolver for the modelBySolutionStatus field.
-func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
-	return ModelBySolutionStatus(obj.Status), nil
+// GeneralStatus is the resolver for the generalStatus field.
+func (r *modelPlanResolver) GeneralStatus(ctx context.Context, obj *models.ModelPlan) (models.GeneralStatus, error) {
+	return GeneralStatus(obj.Status), nil
 }
 
 // MtoCommonSolution is the resolver for the mtoCommonSolution field.
@@ -29,10 +28,8 @@ func (r *modelPlanAndMTOCommonSolutionResolver) ModelPlan(ctx context.Context, o
 
 // ModelPlansByMTOSolutionKey is the resolver for the modelPlansByMTOSolutionKey field.
 func (r *queryResolver) ModelPlansByMTOSolutionKey(ctx context.Context, solutionKey models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
-	logger := appcontext.ZLogger(ctx)
 	return ModelPlansByMTOSolutionKey(
-		logger,
-		r.store,
+		ctx,
 		solutionKey,
 	)
 }

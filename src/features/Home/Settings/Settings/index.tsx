@@ -14,6 +14,7 @@ import { helpSolutionsArray } from 'features/HelpAndKnowledge/SolutionsHelp/solu
 import NotFound from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
+  ComponentGroup,
   GetHomepageSettingsQuery,
   MtoCommonSolutionKey,
   useGetHomepageSettingsQuery,
@@ -31,7 +32,7 @@ import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
 import { tObject } from 'utils/translation';
 
-import './index.scss';
+import '../index.scss';
 
 export type HomepageSettingsLocationType = {
   homepageSettings: HomepageSettingsFormType;
@@ -70,6 +71,17 @@ const SettingsForm = () => {
       )
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
+
+  const componentGroupTrans = tObject<keyof ComponentGroup, any>(
+    'homepageSettings:componentGroupAcronyms'
+  );
+
+  const selectedComponentGroups = useMemo(() => {
+    return (data?.userViewCustomization.componentGroups || []).map(
+      (componentGroup: ComponentGroup) =>
+        componentGroupTrans[componentGroup as unknown as keyof ComponentGroup]
+    );
+  }, [data?.userViewCustomization, componentGroupTrans]);
 
   // Get the settings options from the translation file
   const settingOptions = tObject<keyof HomepageSettingsType, any>(
@@ -145,6 +157,7 @@ const SettingsForm = () => {
                           tablet={{ col: 12 }}
                           mobile={{ col: 12 }}
                           key={settionOption}
+                          className="display-flex"
                         >
                           <Card
                             className={classNames(
@@ -154,7 +167,7 @@ const SettingsForm = () => {
                                     settionOption
                                   )
                               },
-                              'settings__card'
+                              'settings__card margin-bottom-2'
                             )}
                           >
                             <Field
@@ -176,54 +189,93 @@ const SettingsForm = () => {
 
                             {/* If MODELS_BY_SOLUTION and no selected solutions render out a link to add solutions  */}
                             {settionOption ===
-                              ViewCustomizationType.MODELS_BY_SOLUTION &&
-                              selectedSolutions.length === 0 && (
-                                <UswdsReactLink
-                                  to="/homepage-settings/solutions"
-                                  state={{
-                                    homepageSettings: values
-                                  }}
-                                  data-testid="add-solutions-settings"
-                                  className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
-                                >
-                                  {homepageSettingsT('selectSolutions')}
-
-                                  <Icon.ArrowForward
-                                    className="margin-left-1"
-                                    aria-label="forward"
-                                  />
-                                </UswdsReactLink>
-                              )}
-
-                            {/* If MODELS_BY_SOLUTION selected solutions, render solution and link to update  */}
-                            {settionOption ===
-                              ViewCustomizationType.MODELS_BY_SOLUTION &&
-                              selectedSolutions.length > 0 && (
-                                <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
-                                  <p
-                                    className="text-bold margin-0 margin-right-105"
-                                    data-testid="selected-solutions"
-                                  >
-                                    {selectedSolutions.join(', ')}
-                                  </p>
-                                  <span className="margin-right-105">|</span>
-
+                              ViewCustomizationType.MODELS_BY_SOLUTION && (
+                              <>
+                                {selectedSolutions.length === 0 ? (
                                   <UswdsReactLink
                                     to="/homepage-settings/solutions"
                                     state={{
                                       homepageSettings: values
                                     }}
-                                    className="text-bold display-flex flex-align-center settings__update"
+                                    data-testid="add-solutions-settings"
+                                    className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
                                   >
-                                    {homepageSettingsT('updateSolutions')}
+                                    {homepageSettingsT('selectSolutions')}
 
                                     <Icon.ArrowForward
                                       className="margin-left-1"
                                       aria-label="forward"
                                     />
                                   </UswdsReactLink>
-                                </div>
-                              )}
+                                ) : (
+                                  <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
+                                    {/* If MODELS_BY_SOLUTION selected solutions, render solution and link to update  */}
+                                    <p
+                                      className="text-bold margin-0 margin-right-105"
+                                      data-testid="selected-solutions"
+                                    >
+                                      {selectedSolutions.join(', ')}
+                                    </p>
+                                    <span className="margin-right-105">|</span>
+
+                                    <UswdsReactLink
+                                      to="/homepage-settings/solutions"
+                                      state={{
+                                        homepageSettings: values
+                                      }}
+                                      className="text-bold display-flex flex-align-center settings__update"
+                                    >
+                                      {homepageSettingsT('updateSolutions')}
+
+                                      <Icon.ArrowForward
+                                        className="margin-left-1"
+                                        aria-label="forward"
+                                      />
+                                    </UswdsReactLink>
+                                  </div>
+                                )}
+                              </>
+                            )}
+
+                            {settionOption ===
+                              ViewCustomizationType.MODELS_BY_GROUP && (
+                              <>
+                                {selectedComponentGroups.length === 0 ? (
+                                  <UswdsReactLink
+                                    to="/homepage-settings/component-groups"
+                                    state={{ homepageSettings: values }}
+                                    className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
+                                    data-testid="add-groups-settings"
+                                  >
+                                    {homepageSettingsT(
+                                      'componentGroupsHeading'
+                                    )}
+                                  </UswdsReactLink>
+                                ) : (
+                                  <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
+                                    <p className="text-bold margin-0 margin-right-105">
+                                      {selectedComponentGroups.join(', ')}
+                                    </p>
+                                    <span className="margin-right-105">|</span>
+
+                                    <UswdsReactLink
+                                      to="/homepage-settings/component-groups"
+                                      state={{
+                                        homepageSettings: values
+                                      }}
+                                      className="text-bold display-flex flex-align-center settings__update"
+                                    >
+                                      {homepageSettingsT('updateGroups')}
+
+                                      <Icon.ArrowForward
+                                        className="margin-left-1"
+                                        aria-label="forward"
+                                      />
+                                    </UswdsReactLink>
+                                  </div>
+                                )}
+                              </>
+                            )}
                           </Card>
                         </Grid>
                       );
