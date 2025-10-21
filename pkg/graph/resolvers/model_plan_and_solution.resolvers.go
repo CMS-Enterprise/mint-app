@@ -7,7 +7,6 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -29,10 +28,8 @@ func (r *modelPlanAndMTOCommonSolutionResolver) ModelPlan(ctx context.Context, o
 
 // ModelPlansByMTOSolutionKey is the resolver for the modelPlansByMTOSolutionKey field.
 func (r *queryResolver) ModelPlansByMTOSolutionKey(ctx context.Context, solutionKey models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
-	logger := appcontext.ZLogger(ctx)
 	return ModelPlansByMTOSolutionKey(
-		logger,
-		r.store,
+		ctx,
 		solutionKey,
 	)
 }
