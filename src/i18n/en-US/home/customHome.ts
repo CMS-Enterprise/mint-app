@@ -61,7 +61,7 @@ const settings: HomepageSettingsType = {
     noResultsDescription: 'Select groups'
   },
   [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
-    heading: 'Newly created model plans',
+    heading: 'Newly created Model Plans',
     description:
       'Check out the Model Plans created within the last six months to stay up-to-date on what’s happening at CMMI.',
     noResultsHeading: 'There are no new Model Plans.',
@@ -159,7 +159,9 @@ const customHome = {
   created: 'Created {{date}}',
   updated: 'Updated {{date}}',
   discussions: '{{count}} discussion',
-  discussions_other: '{{count}} discussions'
+  discussions_other: '{{count}} discussions',
+  error: 'There was an error fetching the newly created model plans.',
+  errorDescription: 'Please try again later.'
 };
 
 export default customHome;

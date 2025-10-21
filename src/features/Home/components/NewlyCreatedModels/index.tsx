@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
 import {
   GetModelPlansQuery,
-  ModelPlanFilter,
-  useGetModelPlansQuery,
+  useGetNewlyCreatedModelPlansQuery,
+  useGetNotificationSettingsQuery,
+  UserNotificationPreferenceFlag,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import CalendarDate from 'components/CalendarDate';
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import usePagination from 'hooks/usePagination';
@@ -20,12 +20,12 @@ import '../../index.scss';
 const NewlyCreatedModels = () => {
   const { t: customHomeT } = useTranslation('customHome');
 
-  const { data, loading } = useGetModelPlansQuery({
-    variables: {
-      filter: ModelPlanFilter.NEWLY_CREATED,
-      isMAC: false
-    }
-  });
+  const { data, loading, error } = useGetNewlyCreatedModelPlansQuery();
+
+  const {
+    data: notificationSettingsData,
+    loading: notificationSettingsLoading
+  } = useGetNotificationSettingsQuery();
 
   const models = useMemo(() => {
     return data?.modelPlanCollection || [];
@@ -53,10 +53,32 @@ const NewlyCreatedModels = () => {
             `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.description`
           )}
         </p>
+
+        {!notificationSettingsLoading &&
+          !notificationSettingsData?.currentUser?.notificationPreferences.newModelPlan.includes(
+            UserNotificationPreferenceFlag.IN_APP
+          ) && (
+            <UswdsReactLink
+              to="/notifications/settings"
+              className="margin-top-2"
+            >
+              {customHomeT('getNotified')}
+            </UswdsReactLink>
+          )}
       </Grid>
 
       <Grid desktop={{ col: 7 }}>
         <>
+          {error && !loading && (
+            <Alert
+              type="error"
+              className="margin-top-4"
+              heading={customHomeT('error')}
+            >
+              {customHomeT('errorDescription')}
+            </Alert>
+          )}
+
           {loading ? (
             <div className="display-flex flex-justify-center margin-top-4">
               <Spinner />
@@ -86,7 +108,10 @@ const NewlyCreatedModels = () => {
                         >
                           <span>
                             <h4 className="usa-collection__heading display-inline margin-right-1 font-body-md">
-                              {model.modelName}
+                              {model.modelName}{' '}
+                              {model.abbreviation
+                                ? `(${model.abbreviation})`
+                                : ''}
                             </h4>
                             <Icon.ArrowForward
                               className="top-3px"

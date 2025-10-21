@@ -42,7 +42,7 @@ const settings: HomepageSettingsType = {
       'This tabbed section displays the models owned by a specific CMS component or CMMI group.'
   },
   [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
-    heading: 'Newly created model plans',
+    heading: 'Newly created Model Plans',
     description:
       'This simplified section displays the Model Plans created within the last six months.'
   }
