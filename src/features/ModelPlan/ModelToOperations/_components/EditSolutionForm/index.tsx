@@ -264,11 +264,12 @@ const EditSolutionForm = ({
 
     // Counts amount of changes in facilitatedBy array
     let facilitatedByChangeCount: number = 0;
+
     if (facilitatedBy) {
-      facilitatedByChangeCount = Math.abs(
-        (values.facilitatedBy?.length || 0) -
-          (formValues.facilitatedBy.length || 0)
-      );
+      facilitatedByChangeCount = symmetricDifference(
+        values.facilitatedBy || [],
+        formValues.facilitatedBy
+      ).length;
     }
 
     const totalChanges = facilitatedByChangeCount + Object.keys(rest).length;
@@ -279,7 +280,7 @@ const EditSolutionForm = ({
     touchedFields.neededBy,
     values,
     formValues.neededBy,
-    formValues.facilitatedBy.length
+    formValues.facilitatedBy
   ]);
 
   // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
