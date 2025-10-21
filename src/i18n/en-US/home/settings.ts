@@ -5,7 +5,6 @@ export type HomepageSettingsType = Record<
   Record<'heading' | 'description', string>
 >;
 
-// TODO: Add translations for MODELS_BY_GROUP
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
@@ -41,6 +40,10 @@ const settings: HomepageSettingsType = {
     heading: 'Models by group',
     description:
       'This tabbed section displays the models owned by a specific CMS component or CMMI group.'
+  },
+  [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
+    heading: 'Newly created model plans',
+    description: 'This section displays the newly created model plans.'
   }
 };
 

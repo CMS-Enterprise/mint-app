@@ -59,6 +59,12 @@ const settings: HomepageSettingsType = {
       'This tabbed section displays the models owned by a specific CMS component or CMMI group.',
     noResultsHeading: 'It looks like you forgot to select at least one group.',
     noResultsDescription: 'Select groups'
+  },
+  [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
+    heading: 'Newly created model plans',
+    description: 'This section displays the newly created model plans.',
+    noResultsHeading: 'There are no newly created model plans yet.',
+    noResultsDescription: 'Once a model plan is created, it will appear here.'
   }
 };
 

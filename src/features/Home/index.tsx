@@ -227,6 +227,17 @@ const Home = () => {
 
         <ModelsByGroup componentGroupKeys={componentGroupKeys} />
       </>
+    ),
+    [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(
+            `settings.${ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS}.heading`
+          )}
+        </h2>
+      </>
     )
   };
 
