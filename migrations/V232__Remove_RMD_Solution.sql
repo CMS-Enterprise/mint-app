@@ -38,12 +38,10 @@ WHERE
 -- Remove RMD from user view customization solutions array
 UPDATE user_view_customization
 SET
-    solutions = ARRAY(
-        SELECT UNNEST(solutions)
-        EXCEPT
-        SELECT 'RMD'::MTO_COMMON_SOLUTION_KEY
-    )
-WHERE solutions @> ARRAY['RMD'::MTO_COMMON_SOLUTION_KEY];
+    solutions = ARRAY_REMOVE(solutions, 'RMD'),
+    modified_by = '00000001-0001-0001-0001-000000000001', -- System Account
+    modified_dts = CURRENT_TIMESTAMP
+WHERE 'RMD' = ANY(solutions);
 
 -- Create new enum without RMD
 CREATE TYPE MTO_COMMON_SOLUTION_NEW_KEY AS ENUM (
