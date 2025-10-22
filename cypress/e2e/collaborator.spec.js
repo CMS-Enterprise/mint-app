@@ -32,7 +32,7 @@ describe('The Collaborator/Team Member Form', () => {
       .type('Jerry', { delay: 1000 });
 
     cy.get('#react-select-model-team-cedar-contact-option-0')
-      .contains('Jerry Seinfeld, SF13')
+      .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
       .click();
 
     cy.contains('button', 'Add team member').should('be.disabled');

@@ -18,7 +18,7 @@ auth:apikey {
 
 body:graphql {
   query GetMTOMilestone {
-      mtoMilestone(id: "{{mtoMilestoneID}}") {
+    mtoMilestone(id: "{{mtoMilestoneID}}") {
       id
       name
       description
@@ -27,26 +27,42 @@ body:graphql {
       responsibleComponent
       facilitatedBy
       facilitatedByOther
+      assignedTo
+      assignedToPlanCollaborator {
+        userAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+      }
       needBy
       status
       riskIndicator
       # isDraftMilestone
       mtoCategoryID
       categories {
-          category{
-              name
-              position
-          }
-          subCategory{
-              name
-              position
-          }
-      }    
+        category {
+          name
+          position
+        }
+        subCategory {
+          name
+          position
+        }
+      }
   
       # commonMilestone
       # solutions
       # category
       # subCategory
-      }
+    }
   }
+  
 }

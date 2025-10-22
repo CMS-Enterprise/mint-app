@@ -43,7 +43,9 @@ describe('OktaUserSelect', () => {
     await user.type(input, 'Adeline');
 
     // Get mocked Okta result
-    const userOption = await findByText('Adeline Aarons, ABCD');
+    const userOption = await findByText(
+      'Adeline Aarons (adeline.aarons@local.fake)'
+    );
     expect(userOption).toBeInTheDocument();
 
     // Check that component matches snapshot with expanded dropdown
@@ -53,6 +55,6 @@ describe('OktaUserSelect', () => {
     await user.click(userOption);
 
     // Check that select field displays correct value
-    expect(input).toHaveValue('Adeline Aarons, ABCD');
+    expect(input).toHaveValue('Adeline Aarons (adeline.aarons@local.fake)');
   });
 });

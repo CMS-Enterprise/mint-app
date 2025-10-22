@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
+import { Button, Fieldset, Label } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Formik, FormikProps } from 'formik';
 import {
@@ -268,33 +268,30 @@ const Collaborators = () => {
                           {collaboratorsMiscT('startTyping')}
                         </Label>
 
-                        {collaboratorId ? (
-                          <Field
-                            as={TextInput}
-                            disabled
-                            error={!!flatErrors['userAccount.commonName']}
-                            className="margin-top-1"
-                            id="collaboration-full-name"
-                            name="userAccount.commonName"
-                          />
-                        ) : (
-                          <OktaUserSelect
-                            id="model-team-cedar-contact"
-                            name="model-team-cedar-contact"
-                            ariaLabelledBy="label-model-team-cedar-contact"
-                            ariaDescribedBy="hint-model-team-cedar-contact"
-                            onChange={oktaUser => {
-                              setFieldValue(
-                                'userAccount.commonName',
-                                oktaUser?.displayName
-                              );
-                              setFieldValue(
-                                'userAccount.username',
-                                oktaUser?.username
-                              );
-                            }}
-                          />
-                        )}
+                        <OktaUserSelect
+                          id="model-team-cedar-contact"
+                          name="model-team-cedar-contact"
+                          ariaLabelledBy="label-model-team-cedar-contact"
+                          ariaDescribedBy="hint-model-team-cedar-contact"
+                          value={{
+                            username: initialValues.userAccount?.username || '',
+                            displayName:
+                              initialValues.userAccount?.commonName || '',
+                            email: initialValues.userAccount?.email || ''
+                          }}
+                          onChange={oktaUser => {
+                            setFieldValue(
+                              'userAccount.commonName',
+                              oktaUser?.displayName
+                            );
+                            setFieldValue(
+                              'userAccount.username',
+                              oktaUser?.username
+                            );
+                            setFieldValue('userAccount.email', oktaUser?.email);
+                          }}
+                          disabled={collaboratorId !== undefined}
+                        />
                       </FieldGroup>
 
                       <FieldGroup
