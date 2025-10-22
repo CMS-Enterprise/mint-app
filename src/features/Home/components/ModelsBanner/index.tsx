@@ -3,50 +3,62 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonGroup, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { ModelsBySolutionType } from 'features/Home/components/ModelsBySolutions/table';
+import { ModelsType } from 'features/Home/components/ModelCardTable';
 import {
-  ModelBySolutionStatus,
+  ComponentGroup,
+  GeneralStatus,
   MtoCommonSolutionKey
 } from 'gql/generated/graphql';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
-import './index.scss';
+import '../ModelsBySolution/index.scss';
 
 export type StatusCategories =
   | 'total'
-  | ModelBySolutionStatus.PLANNED
-  | ModelBySolutionStatus.ACTIVE
-  | ModelBySolutionStatus.ENDED;
+  | GeneralStatus.PLANNED
+  | GeneralStatus.ACTIVE
+  | GeneralStatus.ENDED;
 
-const ModelsBySolutionsBanner = ({
-  solutionKey,
-  solutionModels,
+const ModelsBanner = ({
+  type,
+  filterKey,
+  models,
   selectedStatus,
   setSelectedStatus
 }: {
-  solutionKey: MtoCommonSolutionKey;
-  solutionModels: ModelsBySolutionType;
+  type: 'solution' | 'group';
+  filterKey: MtoCommonSolutionKey | ComponentGroup;
+  models: ModelsType;
   selectedStatus: StatusCategories;
   setSelectedStatus: (status: StatusCategories) => void;
 }) => {
   const { t: customHomeT } = useTranslation('customHome');
+  const { t: homepageSettingsT } = useTranslation('homepageSettings');
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const selectedSolution = helpSolutions[solutionKey];
+  const headerText = () => {
+    if (type === 'solution') {
+      const selectedSolution = helpSolutions[filterKey as MtoCommonSolutionKey];
+
+      return (
+        <>
+          {' '}
+          {selectedSolution?.name}{' '}
+          {selectedSolution?.acronym ? `(${selectedSolution?.acronym})` : ''}
+        </>
+      );
+    }
+    return homepageSettingsT(`componentGroupAcronyms.${filterKey}`);
+  };
 
   return (
     <div className="models-by-solutions">
       <div className="bg-primary-lighter radius-md padding-2">
         <Grid row className="flex-align-center">
           <Grid desktop={{ col: 7 }} tablet={{ col: 6 }}>
-            <h3 className="margin-y-1">
-              {selectedSolution?.name}{' '}
-              {selectedSolution?.acronym
-                ? `(${selectedSolution?.acronym})`
-                : ''}
-            </h3>
+            <h3 className="margin-y-1">{headerText()}</h3>
           </Grid>
 
           <Grid
@@ -64,62 +76,57 @@ const ModelsBySolutionsBanner = ({
                   'bg-primary-darker': selectedStatus === 'total'
                 })}
               >
-                <div>{customHomeT(`solutionStatus.total`)}</div>
-                <div data-testid="total-count">{solutionModels.length}</div>
+                <div>{customHomeT(`generalStatus.${GeneralStatus.OTHER}`)}</div>
+                <div data-testid="total-count">{models.length}</div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelBySolutionStatus.PLANNED)}
+                onClick={() => setSelectedStatus(GeneralStatus.PLANNED)}
                 className={classNames('padding-y-2', {
-                  'bg-primary-darker':
-                    selectedStatus === ModelBySolutionStatus.PLANNED
+                  'bg-primary-darker': selectedStatus === GeneralStatus.PLANNED
                 })}
               >
-                <div>{customHomeT(`solutionStatus.planned`)}</div>
+                <div>
+                  {customHomeT(`generalStatus.${GeneralStatus.PLANNED}`)}
+                </div>
                 <div data-testid="planned-count">
                   {
-                    solutionModels.filter(
-                      solution =>
-                        solution.modelPlan.modelBySolutionStatus ===
-                        ModelBySolutionStatus.PLANNED
+                    models.filter(
+                      model => model.generalStatus === GeneralStatus.PLANNED
                     ).length
                   }
                 </div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelBySolutionStatus.ACTIVE)}
+                onClick={() => setSelectedStatus(GeneralStatus.ACTIVE)}
                 className={classNames('padding-y-2', {
-                  'bg-primary-darker':
-                    selectedStatus === ModelBySolutionStatus.ACTIVE
+                  'bg-primary-darker': selectedStatus === GeneralStatus.ACTIVE
                 })}
               >
-                <div>{customHomeT(`solutionStatus.active`)}</div>
+                <div>
+                  {customHomeT(`generalStatus.${GeneralStatus.ACTIVE}`)}
+                </div>
                 <div data-testid="active-count">
                   {
-                    solutionModels.filter(
-                      solution =>
-                        solution.modelPlan.modelBySolutionStatus ===
-                        ModelBySolutionStatus.ACTIVE
+                    models.filter(
+                      model => model.generalStatus === GeneralStatus.ACTIVE
                     ).length
                   }
                 </div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelBySolutionStatus.ENDED)}
+                onClick={() => setSelectedStatus(GeneralStatus.ENDED)}
                 className={classNames('padding-y-2', {
-                  'bg-primary-darker':
-                    selectedStatus === ModelBySolutionStatus.ENDED
+                  'bg-primary-darker': selectedStatus === GeneralStatus.ENDED
                 })}
               >
-                <div>{customHomeT(`solutionStatus.ended`)}</div>
+                <div>{customHomeT(`generalStatus.${GeneralStatus.ENDED}`)}</div>
                 <div data-testid="ended-count">
                   {
-                    solutionModels.filter(
-                      solution =>
-                        solution.modelPlan.modelBySolutionStatus ===
-                        ModelBySolutionStatus.ENDED
+                    models.filter(
+                      model => model.generalStatus === GeneralStatus.ENDED
                     ).length
                   }
                 </div>
@@ -132,4 +139,4 @@ const ModelsBySolutionsBanner = ({
   );
 };
 
-export default ModelsBySolutionsBanner;
+export default ModelsBanner;

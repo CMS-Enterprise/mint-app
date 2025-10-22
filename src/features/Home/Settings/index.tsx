@@ -3,9 +3,10 @@ import { Outlet } from 'react-router-dom';
 
 import ProtectedRoute from 'components/ProtectedRoute';
 
-import SelectSolutionSettings from './selectSolutions';
-import SettingsForm from './settings';
-import SettingsOrder from './settingsOrder';
+import SelectComponentGroupsSettings from './SelectCompontGroups';
+import SelectSolutionSettings from './SelectSolutions';
+import SettingsForm from './Settings';
+import SettingsOrder from './SettingsOrder';
 
 export const HomePageSettings = () => {
   return <Outlet />;
@@ -30,6 +31,10 @@ export const homePageSettingsRoutes = {
     {
       path: 'solutions',
       element: <SelectSolutionSettings />
+    },
+    {
+      path: 'component-groups',
+      element: <SelectComponentGroupsSettings />
     }
   ]
 };

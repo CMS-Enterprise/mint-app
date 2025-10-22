@@ -402,11 +402,23 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	return sqlResult, nil
 
 }
-func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
+func ModelPlanGetByMTOSolutionKeyLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
 	args := map[string]interface{}{
-		"mto_common_solution_key": key,
+		"mto_common_solution_keys": pq.Array(keys),
 	}
-	res, err := sqlutils.SelectProcedure[models.ModelPlanAndMTOCommonSolution](np, sqlqueries.ModelPlan.GetByMTOSolutionKey, args)
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndMTOCommonSolution](np, sqlqueries.ModelPlan.GetByMTOSolutionKeyLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// ModelPlanGetByComponentGroupLoader returns model plans for multiple component group keys using a batched loader query
+func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
+	args := map[string]interface{}{
+		"component_group_keys": pq.Array(componentGroups),
+	}
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroupLoader, args)
 	if err != nil {
 		return nil, err
 	}
