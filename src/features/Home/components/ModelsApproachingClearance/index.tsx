@@ -13,7 +13,7 @@ import CalendarDate from 'components/CalendarDate';
 import Spinner from 'components/Spinner';
 import usePagination from 'hooks/usePagination';
 
-import './index.scss';
+import '../../index.scss';
 
 const ModelsApproachingClearance = () => {
   const { t: customHomeT } = useTranslation('customHome');
@@ -38,7 +38,7 @@ const ModelsApproachingClearance = () => {
   });
 
   return (
-    <Grid row gap={6} className="models-approaching-clearance">
+    <Grid row gap={6}>
       <Grid desktop={{ col: 5 }} className="flex-align-self-center">
         <h2 className="margin-bottom-2">
           {customHomeT(
@@ -76,7 +76,7 @@ const ModelsApproachingClearance = () => {
               ) : (
                 <>
                   {currentItems.map(model => (
-                    <Card key={model.id}>
+                    <Card key={model.id} className="home__card">
                       <CalendarDate
                         dateISO={model.timeline.clearanceStarts}
                         link={`/models/${model.id}/read-view`}

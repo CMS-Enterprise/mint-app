@@ -128,7 +128,7 @@ exports[`The home page > matches setting snapshot 1`] = `
             data-testid="grid"
           >
             <li
-              class="usa-card margin-y-0 home__card display-flex"
+              class="usa-card margin-y-0 row-reverse home__card display-flex"
               data-testid="Card"
             >
               <div
