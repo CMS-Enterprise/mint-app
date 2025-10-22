@@ -1991,9 +1991,9 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       data-discover="true"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-for-ncbp&section=about"
+                      href="/help-and-knowledge/high-level-project-plan?solution=cmmi-analysis-and-management-system&section=about"
                     >
-                      MDM-NCBP
+                      AMS
                     </a>
                   </td>
                 </tr>

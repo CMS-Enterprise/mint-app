@@ -122,7 +122,6 @@ enum OperationalSolutionKey {
   INTERNAL_STAFF
   LDG
   LV
-  MDM_NCBP
   MARX
   OTHER_NEW_PROCESS
   OUTLOOK_MAILBOX
