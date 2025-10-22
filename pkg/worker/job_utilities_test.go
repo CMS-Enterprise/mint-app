@@ -3,11 +3,16 @@ package worker
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 	"testing"
 
+	faktory "github.com/contribsys/faktory/client"
+	worker "github.com/contribsys/faktory_worker_go"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 )
@@ -113,4 +118,127 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 		}
 
 	})
+}
+
+// A tiny helper to decode the *last* JSON log line in the buffer.
+func lastLogLine(buf string, t *testing.T) map[string]interface{} {
+	t.Helper()
+	lines := strings.Split(strings.TrimSpace(buf), "\n")
+	require.NotEmpty(t, lines, "expected at least one log line")
+	var m map[string]interface{}
+	require.NoError(t, json.Unmarshal([]byte(lines[len(lines)-1]), &m))
+	return m
+}
+
+func TestRetryAwareLogging_WarnsWhenRetriesRemain(t *testing.T) {
+	ws, zl := createTestLogger()
+
+	// Wire middleware into a real Manager so HelperFor(ctx) is valid.
+	mgr := worker.NewManager()
+	mgr.Use(RetryAwareLogging(zl))
+
+	// Register a job that always fails.
+	mgr.Register("FailingJob", func(ctx context.Context, args ...interface{}) error {
+		return errors.New("boom")
+	})
+
+	// First failure: no Failure set yet -> fail_count_so_far = 0
+	job := faktory.NewJob("FailingJob")
+
+	// Execute inline (runs middleware + job)
+	err := mgr.InlineDispatch(job)
+	require.Error(t, err)
+
+	out := ws.GetBufferString()
+	ll := lastLogLine(out, t)
+
+	require.Equal(t, "warn", ll["level"])
+	require.Equal(t, "job failed; will retry", ll["msg"])
+	require.EqualValues(t, 0, ll["fail_count_so_far"])
+	require.EqualValues(t, defaultMaxRetries, ll["max_retries"])
+	require.NotEmpty(t, ll["jid"])
+	require.NotEmpty(t, ll["job_type"])
+}
+
+func TestRetryAwareLogging_ErrorsOnFinalAttempt_DefaultRetries(t *testing.T) {
+	ws, zl := createTestLogger()
+
+	mgr := worker.NewManager()
+	mgr.Use(RetryAwareLogging(zl))
+	mgr.Register("FailingJob", func(ctx context.Context, args ...interface{}) error {
+		return errors.New("boom")
+	})
+
+	// Simulate we already failed `defaultMaxRetries` times BEFORE this run.
+	job := faktory.NewJob("FailingJob")
+	job.Failure = &faktory.Failure{RetryCount: defaultMaxRetries}
+
+	err := mgr.InlineDispatch(job)
+	require.Error(t, err)
+
+	ll := lastLogLine(ws.GetBufferString(), t)
+	require.Equal(t, "error", ll["level"])
+	require.Equal(t, "job failed on final attempt; no retries remain", ll["msg"])
+	require.EqualValues(t, defaultMaxRetries, ll["fail_count_so_far"])
+	require.EqualValues(t, defaultMaxRetries, ll["max_retries"])
+}
+
+func TestRetryAwareLogging_RespectsPerJobRetryOverride(t *testing.T) {
+	ws, zl := createTestLogger()
+
+	mgr := worker.NewManager()
+	mgr.Use(RetryAwareLogging(zl))
+	mgr.Register("FailingJob", func(ctx context.Context, args ...interface{}) error {
+		return errors.New("boom")
+	})
+
+	// Per-job retry override: allow only 1 retry total.
+	one := 1
+	job := faktory.NewJob("FailingJob")
+	job.Retry = &one
+
+	// If we've already failed once BEFORE this run, this run is final.
+	job.Failure = &faktory.Failure{RetryCount: 1}
+
+	err := mgr.InlineDispatch(job)
+	require.Error(t, err)
+
+	ll := lastLogLine(ws.GetBufferString(), t)
+	require.Equal(t, "error", ll["level"])
+	require.Equal(t, "job failed on final attempt; no retries remain", ll["msg"])
+	require.EqualValues(t, 1, ll["fail_count_so_far"])
+	require.EqualValues(t, 1, ll["max_retries"])
+}
+
+func TestRetryAwareLogging_NoLogOnSuccess(t *testing.T) {
+	ws, zl := createTestLogger()
+	mgr := worker.NewManager()
+	mgr.Use(RetryAwareLogging(zl))
+	mgr.Register("Succeeds", func(ctx context.Context, args ...interface{}) error {
+		return nil
+	})
+
+	job := faktory.NewJob("Succeeds")
+	err := mgr.InlineDispatch(job)
+	require.NoError(t, err)
+
+	// Middleware should not emit warn/error on success.
+	require.Equal(t, "", strings.TrimSpace(ws.GetBufferString()))
+}
+
+// Optional: sanity check that helper fields are present in logs
+func TestRetryAwareLogging_EmitsHelperFields(t *testing.T) {
+	ws, zl := createTestLogger()
+	mgr := worker.NewManager()
+	mgr.Use(RetryAwareLogging(zl))
+	mgr.Register("FailingJob", func(ctx context.Context, args ...interface{}) error {
+		return errors.New("boom")
+	})
+
+	job := faktory.NewJob("FailingJob")
+	_ = mgr.InlineDispatch(job)
+
+	ll := lastLogLine(ws.GetBufferString(), t)
+	require.NotEmpty(t, ll["jid"])
+	require.NotEmpty(t, ll["job_type"])
 }
