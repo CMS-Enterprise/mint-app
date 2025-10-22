@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import PerformanceReadOnlySection from 'features/ModelPlan/TableViewReadOnlySection';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllOpsEvalAndLearningQuery,
@@ -71,8 +72,76 @@ const ReadOnlyOpsEvalAndLearning = ({
     modelLearningSystemsOther,
     modelLearningSystemsNote,
     anticipatedChallenges,
+    benchmarkForPerformance,
+    benchmarkForPerformanceNote,
+    computePerformanceScores,
+    computePerformanceScoresNote,
+    riskAdjustPerformance,
+    riskAdjustFeedback,
+    riskAdjustPayments,
+    riskAdjustOther,
+    riskAdjustNote,
+    appealPerformance,
+    appealFeedback,
+    appealPayments,
+    appealOther,
+    appealNote,
+    evaluationApproaches,
+    evaluationApproachOther,
+    evalutaionApproachNote,
+    ccmInvolvment,
+    ccmInvolvmentOther,
+    ccmInvolvmentNote,
+    dataNeededForMonitoring,
+    dataNeededForMonitoringOther,
+    dataNeededForMonitoringNote,
+    dataToSendParticicipants,
+    dataToSendParticicipantsOther,
+    dataToSendParticicipantsNote,
+    shareCclfData,
+    shareCclfDataNote,
     ...opsEvalAndLearningConfigOne
   } = opsEvalAndLearningConfig;
+
+  const performanceConfig = {
+    benchmarkForPerformance: opsEvalAndLearningConfig.benchmarkForPerformance,
+    benchmarkForPerformanceNote:
+      opsEvalAndLearningConfig.benchmarkForPerformanceNote,
+    computePerformanceScores: opsEvalAndLearningConfig.computePerformanceScores,
+    computePerformanceScoresNote:
+      opsEvalAndLearningConfig.computePerformanceScoresNote,
+    riskAdjustPerformance: opsEvalAndLearningConfig.riskAdjustPerformance,
+    riskAdjustFeedback: opsEvalAndLearningConfig.riskAdjustFeedback,
+    riskAdjustPayments: opsEvalAndLearningConfig.riskAdjustPayments,
+    riskAdjustOther: opsEvalAndLearningConfig.riskAdjustOther,
+    riskAdjustNote: opsEvalAndLearningConfig.riskAdjustNote,
+    appealPerformance: opsEvalAndLearningConfig.appealPerformance,
+    appealFeedback: opsEvalAndLearningConfig.appealFeedback,
+    appealPayments: opsEvalAndLearningConfig.appealPayments,
+    appealOther: opsEvalAndLearningConfig.appealOther,
+    appealNote: opsEvalAndLearningConfig.appealNote
+  };
+
+  const opsEvalAndLearningConfigTwo = {
+    evaluationApproaches: opsEvalAndLearningConfig.evaluationApproaches,
+    evaluationApproachOther: opsEvalAndLearningConfig.evaluationApproachOther,
+    evalutaionApproachNote: opsEvalAndLearningConfig.evalutaionApproachNote,
+    ccmInvolvment: opsEvalAndLearningConfig.ccmInvolvment,
+    ccmInvolvmentOther: opsEvalAndLearningConfig.ccmInvolvmentOther,
+    ccmInvolvmentNote: opsEvalAndLearningConfig.ccmInvolvmentNote,
+    dataNeededForMonitoring: opsEvalAndLearningConfig.dataNeededForMonitoring,
+    dataNeededForMonitoringOther:
+      opsEvalAndLearningConfig.dataNeededForMonitoringOther,
+    dataNeededForMonitoringNote:
+      opsEvalAndLearningConfig.dataNeededForMonitoringNote,
+    dataToSendParticicipants: opsEvalAndLearningConfig.dataToSendParticicipants,
+    dataToSendParticicipantsOther:
+      opsEvalAndLearningConfig.dataToSendParticicipantsOther,
+    dataToSendParticicipantsNote:
+      opsEvalAndLearningConfig.dataToSendParticicipantsNote,
+    shareCclfData: opsEvalAndLearningConfig.shareCclfData,
+    shareCclfDataNote: opsEvalAndLearningConfig.shareCclfDataNote
+  };
 
   const ccwConfig = {
     sendFilesBetweenCcw: opsEvalAndLearningConfig.sendFilesBetweenCcw,
@@ -134,34 +203,34 @@ const ReadOnlyOpsEvalAndLearning = ({
     produceBenefitEnhancementFiles,
     fileNamingConventions,
     dataMonitoringNote,
-    benchmarkForPerformance,
-    benchmarkForPerformanceNote,
-    computePerformanceScores,
-    computePerformanceScoresNote,
-    riskAdjustPerformance,
-    riskAdjustFeedback,
-    riskAdjustPayments,
-    riskAdjustOther,
-    riskAdjustNote,
-    appealPerformance,
-    appealFeedback,
-    appealPayments,
-    appealOther,
-    appealNote,
-    evaluationApproaches,
-    evaluationApproachOther,
-    evalutaionApproachNote,
-    ccmInvolvment,
-    ccmInvolvmentOther,
-    ccmInvolvmentNote,
-    dataNeededForMonitoring,
-    dataNeededForMonitoringOther,
-    dataNeededForMonitoringNote,
-    dataToSendParticicipants,
-    dataToSendParticicipantsOther,
-    dataToSendParticicipantsNote,
-    shareCclfData,
-    shareCclfDataNote,
+    benchmarkForPerformance: benchmarkForPerformanceRemoved,
+    benchmarkForPerformanceNote: benchmarkForPerformanceNoteRemoved,
+    computePerformanceScores: computePerformanceScoresRemoved,
+    computePerformanceScoresNote: computePerformanceScoresNoteRemoved,
+    riskAdjustPerformance: riskAdjustPerformanceRemoved,
+    riskAdjustFeedback: riskAdjustFeedbackRemoved,
+    riskAdjustPayments: riskAdjustPaymentsRemoved,
+    riskAdjustOther: riskAdjustOtherRemoved,
+    riskAdjustNote: riskAdjustNoteRemoved,
+    appealPerformance: appealPerformanceRemoved,
+    appealFeedback: appealFeedbackRemoved,
+    appealPayments: appealPaymentsRemoved,
+    appealOther: appealOtherRemoved,
+    appealNote: appealNoteRemoved,
+    evaluationApproaches: evaluationApproachesRemoved,
+    evaluationApproachOther: evaluationApproachOtherRemoved,
+    evalutaionApproachNote: evalutaionApproachNoteRemoved,
+    ccmInvolvment: ccmInvolvmentRemoved,
+    ccmInvolvmentOther: ccmInvolvmentOtherRemoved,
+    ccmInvolvmentNote: ccmInvolvmentNoteRemoved,
+    dataNeededForMonitoring: dataNeededForMonitoringRemoved,
+    dataNeededForMonitoringOther: dataNeededForMonitoringOtherRemoved,
+    dataNeededForMonitoringNote: dataNeededForMonitoringNoteRemoved,
+    dataToSendParticicipants: dataToSendParticicipantsRemoved,
+    dataToSendParticicipantsOther: dataToSendParticicipantsOtherRemoved,
+    dataToSendParticicipantsNote: dataToSendParticicipantsNoteRemoved,
+    shareCclfData: shareCclfDataRemoved,
+    shareCclfDataNote: shareCclfDataNoteRemoved,
     sendFilesBetweenCcw,
     sendFilesBetweenCcwNote,
     appToSendFilesToKnown,
@@ -176,7 +245,7 @@ const ReadOnlyOpsEvalAndLearning = ({
       qualityPerformanceImpactsPaymentOtherRemoved,
     qualityPerformanceImpactsPaymentNote:
       qualityPerformanceImpactsPaymentNoteRemoved,
-    ...opsEvalAndLearningConfigTwo
+    ...opsEvalAndLearningConfigThree
   } = opsEvalAndLearningConfig;
 
   const claimsFilterGroupFields = getFilterGroupInfo(ccwConfig, filteredView);
@@ -197,6 +266,17 @@ const ReadOnlyOpsEvalAndLearning = ({
             filteredView={filteredView}
           />
 
+          {/* Performance Section Start */}
+          <PerformanceReadOnlySection
+            config={performanceConfig}
+            data={allOpsEvalAndLearningData}
+          />
+          {/* leftover of Ops data that can be automated */}
+          <ReadOnlyBody
+            data={allOpsEvalAndLearningData}
+            config={opsEvalAndLearningConfigTwo}
+            filteredView={filteredView}
+          />
           {/* CCWAndQuality */}
           <div
             className={`${
@@ -260,7 +340,7 @@ const ReadOnlyOpsEvalAndLearning = ({
           {/* Last sections of Ops data that can be automated */}
           <ReadOnlyBody
             data={allOpsEvalAndLearningData}
-            config={opsEvalAndLearningConfigTwo}
+            config={opsEvalAndLearningConfigThree}
             filteredView={filteredView}
           />
         </>
