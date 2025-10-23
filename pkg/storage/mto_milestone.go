@@ -78,6 +78,21 @@ func MTOMilestoneCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *
 	return returned, nil
 }
 
+// MTOMilestoneCreateAllowConflicts creates a new MTOMilestone in the database, allowing conflicts
+// If a milestone with the same model_plan_id and mto_common_milestone_key already exists, it returns the existing one
+func MTOMilestoneCreateAllowConflicts(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestoneWithNewlyInsertedStatus, error) {
+	if MTOMilestone.ID == uuid.Nil {
+		MTOMilestone.ID = uuid.New()
+	}
+
+	returned, err := sqlutils.GetProcedure[models.MTOMilestoneWithNewlyInsertedStatus](np, sqlqueries.MTOMilestone.CreateAllowConflicts, MTOMilestone)
+	if err != nil {
+		return nil, fmt.Errorf("issue creating new MTOMilestone object: %w", err)
+	}
+
+	return returned, nil
+}
+
 // MTOMilestoneUpdate updates a new MTOMilestone in the database
 //
 // NOTE: This method is used for updating both Custom and Library-sourced (Common) milestones. It WILL return an error
