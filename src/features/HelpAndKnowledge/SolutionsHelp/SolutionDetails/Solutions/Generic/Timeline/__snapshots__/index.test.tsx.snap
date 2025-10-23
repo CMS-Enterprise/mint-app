@@ -1883,18 +1883,6 @@ exports[`Generic Timeline Components > matches the snapshot > Quality Vertical 1
 </DocumentFragment>
 `;
 
-exports[`Generic Timeline Components > matches the snapshot > Rapid Measure Development 1`] = `
-<DocumentFragment>
-  <div
-    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
-  >
-    <ol
-      class="usa-process-list padding-top-1"
-    />
-  </div>
-</DocumentFragment>
-`;
-
 exports[`Generic Timeline Components > matches the snapshot > ResDAC CMMI Model Data Sharing Model Participation Data Initiative 1`] = `
 <DocumentFragment>
   <div
