@@ -10,6 +10,8 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+
+	faktory "github.com/contribsys/faktory/client"
 )
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
@@ -67,4 +69,53 @@ func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType str
 		logfields.TraceField(trace.String()),
 	}, extraFields...)
 	return logger.With(fields...)
+}
+
+// RetryAwareLogging returns middleware that logs WARN if a failure will be retried,
+// and ERROR only on the final failing attempt (i.e., no retries remain).
+func RetryAwareLogging(logger *zap.Logger) faktory_worker.MiddlewareFunc {
+	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
+		help := faktory_worker.HelperFor(ctx)
+
+		// Call the actual job
+		err := next(ctx)
+		if err == nil {
+			return nil
+		}
+
+		// Determine max retries for this job:
+		// 1) job.Retry if set on the pushed job
+		// 2) default fallback
+		maxRetries := defaultMaxRetries
+		if job.Retry != nil {
+			maxRetries = *job.Retry
+		}
+
+		// How many failures have happened BEFORE this run?
+		// (On the 1st execution this is nil; after the first failure Faktory sets Failure).
+		failCount := 0
+		if job.Failure != nil {
+			failCount = job.Failure.RetryCount
+		}
+
+		// If we've already failed maxRetries times BEFORE this run,
+		// this execution is the final allowed attempt. A failure now means no retries remain
+		isFinalAttempt := failCount >= maxRetries
+
+		log := logger.With(
+			zap.String("jid", help.Jid()),
+			zap.String("job_type", help.JobType()),
+			zap.Int("fail_count_so_far", failCount),
+			zap.Int("max_retries", maxRetries),
+		)
+
+		if isFinalAttempt {
+			log.Error("job failed on final attempt; no retries remain", zap.Error(err))
+		} else {
+			log.Warn("job failed; will retry", zap.Error(err))
+		}
+
+		// Return the error so Faktory marks it failed and schedules retry (if any remain)
+		return err
+	}
 }
