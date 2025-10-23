@@ -1020,7 +1020,6 @@ export enum MtoCommonSolutionKey {
   RESDAC_CMDS = 'RESDAC_CMDS',
   RFA = 'RFA',
   RMADA = 'RMADA',
-  RMD = 'RMD',
   RREG = 'RREG',
   SHARED_SYSTEMS = 'SHARED_SYSTEMS',
   T_MISS = 'T_MISS'
