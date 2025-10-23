@@ -7,9 +7,7 @@ import { PlanOpsEvalAndLearning } from 'gql/generated/graphql';
 import Tooltip from 'components/Tooltip';
 import { TranslationOpsEvalAndLearning } from 'types/translation';
 
-import ReadOnlySection, {
-  NoAddtionalInfo
-} from '../ReadOnly/_components/ReadOnlySection';
+import ReadOnlySection, { NoAddtionalInfo } from '../ReadOnlySection';
 
 const READ_ONLY_FIELDS = [
   'benchmarkForPerformance',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import PerformanceReadOnlySection from 'features/ModelPlan/PerformanceReadOnlySection';
+import PerformanceReadOnlySection from 'features/ModelPlan/ReadOnly/_components/PerformanceReadOnlySection';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllOpsEvalAndLearningQuery,
