@@ -492,7 +492,6 @@ DECLARE
   cbosc_solution_uuid UUID;
   ipc_solution_uuid UUID;
   isp_solution_uuid UUID;
-  mdm_ncbp_solution_uuid UUID;
   model_space_solution_uuid UUID;
   overlaps_wg_solution_uuid UUID;
   salesforce_rfa_solution_uuid UUID;
@@ -702,12 +701,6 @@ BEGIN
           (SELECT id FROM mto_common_solution WHERE key = 'ISP'),
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
-  mdm_ncbp_solution_uuid := gen_random_uuid();
-  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (mdm_ncbp_solution_uuid, template_uuid,
-          (SELECT id FROM mto_common_solution WHERE key = 'MDM_NCBP'),
-          '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
-
   model_space_solution_uuid := gen_random_uuid();
   INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
   VALUES (model_space_solution_uuid, template_uuid,
@@ -786,8 +779,8 @@ BEGIN
 
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ipc_solution_uuid, make_non_claims_based_payments_milestone_uuid,
           '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, mdm_ncbp_solution_uuid, make_non_claims_based_payments_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams_solution_uuid, make_non_claims_based_payments_milestone_uuid,
+        '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   -- Evaluation: Acquire an evaluation contractor -> intentionally no solution link
 END $$;
@@ -847,7 +840,7 @@ DECLARE
   acquire_eval_contractor uuid;
 
   -- solutions
-  cbosc uuid; ams uuid; isp uuid; overlaps_wg uuid; ipc uuid; mdm_ncbp uuid; shared_systems uuid;
+  cbosc uuid; ams uuid; isp uuid; overlaps_wg uuid; ipc uuid; shared_systems uuid;
   ccw uuid; idr uuid; model_space uuid; connect uuid; rfa uuid;
 BEGIN
   SELECT id INTO template_uuid
@@ -953,9 +946,6 @@ BEGIN
   ipc := gen_random_uuid();
   INSERT INTO mto_template_solution VALUES (ipc, template_uuid, (SELECT id FROM mto_common_solution WHERE key='IPC'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  mdm_ncbp := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (mdm_ncbp, template_uuid, (SELECT id FROM mto_common_solution WHERE key='MDM_NCBP'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
   shared_systems := gen_random_uuid();
   INSERT INTO mto_template_solution VALUES (shared_systems, template_uuid, (SELECT id FROM mto_common_solution WHERE key='SHARED_SYSTEMS'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
@@ -995,7 +985,7 @@ BEGIN
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems, manage_ffs_excl_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ipc,       make_non_claims_based_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, mdm_ncbp,  make_non_claims_based_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams, make_non_claims_based_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   -- (CONNECT + ISP links pending specific milestone keys per your TODOs)
 END $$;
