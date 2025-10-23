@@ -603,7 +603,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'risk_adjust_performance',
     label: 'Performance Scores',
     readonlyLabel: 'Performance scores',
-    groupLabel: 'Will you make risk adjustments to any of the following?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.05,
@@ -674,7 +673,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealPerformance',
     dbField: 'appeal_performance',
     label: 'Performance Scores',
-    groupLabel: 'Will participants be able to appeal any of the following?',
     readonlyLabel: 'Performance scores',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -1588,6 +1586,10 @@ export const opsEvalAndLearningMisc = {
   qualityReportTiming: 'Quality reporting timing and frequency',
   dataReadonly: 'Data Sharing, Collection, and Reporting Timing and Frequency',
   testing: 'Testing',
+  riskGroupLabel: 'Will you make risk adjustments to any of the following?',
+  appealGroupLabel: 'Will participants be able to appeal any of the following?',
+  appealGroupLabelTooltip:
+    'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
   yesNo: 'Yes/No'
 };
 

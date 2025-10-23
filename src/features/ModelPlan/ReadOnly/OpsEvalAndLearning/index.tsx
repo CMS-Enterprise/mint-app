@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import PerformanceReadOnlySection from 'features/ModelPlan/TableViewReadOnlySection';
+import PerformanceReadOnlySection from 'features/ModelPlan/PerformanceReadOnlySection';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetAllOpsEvalAndLearningQuery,
@@ -271,12 +271,14 @@ const ReadOnlyOpsEvalAndLearning = ({
             config={performanceConfig}
             data={allOpsEvalAndLearningData}
           />
+
           {/* leftover of Ops data that can be automated */}
           <ReadOnlyBody
             data={allOpsEvalAndLearningData}
             config={opsEvalAndLearningConfigTwo}
             filteredView={filteredView}
           />
+
           {/* CCWAndQuality */}
           <div
             className={`${
@@ -346,6 +348,7 @@ const ReadOnlyOpsEvalAndLearning = ({
         </>
       );
     }
+
     return (
       <ReadOnlyBody
         data={allOpsEvalAndLearningData}
