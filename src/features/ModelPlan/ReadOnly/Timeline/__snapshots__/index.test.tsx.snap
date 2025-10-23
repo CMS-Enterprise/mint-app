@@ -81,7 +81,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               data-testid="tooltipWrapper"
             >
               <div
-                aria-describedby="tooltip-«r2»"
+                aria-describedby="tooltip-_r_2_"
                 class="usa-tooltip__trigger mint-no-print margin-left-05"
                 data-testid="triggerElement"
                 tabindex="0"
@@ -106,7 +106,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-«r2»"
+                id="tooltip-_r_2_"
                 role="tooltip"
                 title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
               >
@@ -229,7 +229,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
               data-testid="tooltipWrapper"
             >
               <div
-                aria-describedby="tooltip-«r3»"
+                aria-describedby="tooltip-_r_3_"
                 class="usa-tooltip__trigger mint-no-print margin-left-05"
                 data-testid="triggerElement"
                 tabindex="0"
@@ -254,7 +254,7 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
                 aria-hidden="true"
                 class="usa-tooltip__body"
                 data-testid="tooltipBody"
-                id="tooltip-«r3»"
+                id="tooltip-_r_3_"
                 role="tooltip"
                 title="When the model will be active beginning with the go-live date"
               >

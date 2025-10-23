@@ -38,6 +38,11 @@ func (r *userViewCustomizationResolver) Solutions(ctx context.Context, obj *mode
 	return models.ConvertEnums[models.MTOCommonSolutionKey](obj.Solutions), nil
 }
 
+// ComponentGroups is the resolver for the componentGroups field.
+func (r *userViewCustomizationResolver) ComponentGroups(ctx context.Context, obj *models.UserViewCustomization) ([]models.ComponentGroup, error) {
+	return models.ConvertEnums[models.ComponentGroup](obj.ComponentGroups), nil
+}
+
 // UserViewCustomization returns generated.UserViewCustomizationResolver implementation.
 func (r *Resolver) UserViewCustomization() generated.UserViewCustomizationResolver {
 	return &userViewCustomizationResolver{r}

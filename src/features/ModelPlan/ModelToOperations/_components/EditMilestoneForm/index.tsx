@@ -180,13 +180,10 @@ const EditMilestoneForm = ({
     }
   });
 
-  const sortedMilestoneNotes = useMemo(() => {
-    return [...(data?.mtoMilestone.notes || [])].sort((a, b) => {
-      return (
-        new Date(b.createdDts).getTime() - new Date(a.createdDts).getTime()
-      );
-    });
-  }, [data]);
+  const milestoneNoteData = useMemo(
+    () => [...(data?.mtoMilestone.notes || [])],
+    [data]
+  );
 
   const milestone = useMemo(() => {
     return data?.mtoMilestone;
@@ -342,13 +339,13 @@ const EditMilestoneForm = ({
     ]);
 
     // Sets the milestone notes from the milestone
-    setMilestoneNotes(sortedMilestoneNotes || []);
+    setMilestoneNotes(milestoneNoteData || []);
   }, [
     data,
     solutionIDs,
     commonSolutionKeys,
     formatSolutionForTable,
-    sortedMilestoneNotes
+    milestoneNoteData
   ]);
 
   // Determines which notes to add, remove, and update based on the original notes and the current notes
@@ -356,18 +353,18 @@ const EditMilestoneForm = ({
     setNotesToAdd(milestoneNotes.filter(note => note.id === '') || []);
 
     setNotesToRemove(
-      sortedMilestoneNotes?.filter(
+      milestoneNoteData?.filter(
         note => !milestoneNotes.find(n => n.id === note.id)
       ) || []
     );
 
     setNotesToUpdate(
       milestoneNotes.filter(note => {
-        const foundNote = sortedMilestoneNotes?.find(n => n.id === note.id);
+        const foundNote = milestoneNoteData?.find(n => n.id === note.id);
         return foundNote && foundNote.content !== note.content;
       }) || []
     );
-  }, [milestoneNotes, sortedMilestoneNotes]);
+  }, [milestoneNotes, milestoneNoteData]);
 
   // Set default values for form
   const formValues = useMemo(
@@ -439,19 +436,19 @@ const EditMilestoneForm = ({
     // Counts amount of changes in facilitatedBy array
     let facilitatedByChangeCount: number = 0;
     if (facilitatedBy) {
-      facilitatedByChangeCount = Math.abs(
-        (values.facilitatedBy?.length || 0) -
-          (formValues.facilitatedBy.length || 0)
-      );
+      facilitatedByChangeCount = symmetricDifference(
+        values.facilitatedBy || [],
+        formValues.facilitatedBy
+      ).length;
     }
 
     // Counts amount of changes in responsibleComponent array
     let responsibleComponentChangeCount: number = 0;
     if (responsibleComponent) {
-      responsibleComponentChangeCount = Math.abs(
-        (values.responsibleComponent?.length || 0) -
-          (formValues.responsibleComponent.length || 0)
-      );
+      responsibleComponentChangeCount = symmetricDifference(
+        values.responsibleComponent || [],
+        formValues.responsibleComponent
+      ).length;
     }
 
     // Counts amount of changes in notesToAdd array
@@ -476,9 +473,9 @@ const EditMilestoneForm = ({
     dirtyFields,
     touchedFields.needBy,
     values,
-    formValues.responsibleComponent.length,
+    formValues.facilitatedBy,
     formValues.needBy,
-    formValues.facilitatedBy.length,
+    formValues.responsibleComponent,
     notesToAdd.length,
     notesToRemove.length,
     notesToUpdate.length

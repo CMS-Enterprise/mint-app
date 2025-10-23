@@ -709,7 +709,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«r2»"
+                            aria-describedby="tooltip-_r_2_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -734,7 +734,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«r2»"
+                            id="tooltip-_r_2_"
                             role="tooltip"
                             title="i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)"
                           >
