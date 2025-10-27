@@ -1,6 +1,12 @@
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Header, PrimaryNav, Select } from '@trussworks/react-uswds';
+import {
+  Button,
+  Header,
+  Icon,
+  PrimaryNav,
+  Select
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import Alert from 'components/Alert';
@@ -116,21 +122,32 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
       </p>
 
       <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
-        <Button
-          type="button"
-          outline
-          className="margin-right-2"
-          data-testid="add-to-matrix-panel-button"
-          onClick={() => {
-            setMTOModalState({
-              modalType: 'addTemplate',
-              mtoTemplate: template
-            });
-            setMTOModalOpen(true);
-          }}
-        >
-          {t('templateLibrary.addToMatrix')}
-        </Button>
+        {!template.isAdded ? (
+          <Button
+            type="button"
+            outline
+            className="margin-right-2"
+            data-testid="add-to-matrix-panel-button"
+            onClick={() => {
+              setMTOModalState({
+                modalType: 'addTemplate',
+                mtoTemplate: template
+              });
+              setMTOModalOpen(true);
+            }}
+          >
+            {t('templateLibrary.addToMatrix')}
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            disabled
+            className="margin-right-2 model-to-operations__milestone-added text-normal"
+          >
+            <Icon.Check aria-label="check" />
+            {t('templateLibrary.added')}
+          </Button>
+        )}
       </div>
 
       <h3 className="margin-y-2">{t('templateLibrary.templateContents')}</h3>

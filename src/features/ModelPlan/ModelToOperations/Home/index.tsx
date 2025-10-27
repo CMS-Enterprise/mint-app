@@ -88,6 +88,8 @@ const MTOHome = () => {
       params.set('view', 'milestones');
       navigate({ search: params.toString() }, { replace: true });
     }
+
+    params.set('page', '1');
   }, [viewparam, navigate, params]);
 
   const isMatrixStarted: boolean =
