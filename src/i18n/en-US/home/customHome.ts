@@ -2,7 +2,7 @@ import { GeneralStatus, ViewCustomizationType } from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
-  Record<string, string>
+  Record<string, string | object>
 >;
 
 const settings: HomepageSettingsType = {
@@ -27,6 +27,36 @@ const settings: HomepageSettingsType = {
     noResultsDescription:
       'To follow a model, <link1>view all models</link1> and click the star icon (<star></star>) for any model to add it to this section.'
   },
+  [ViewCustomizationType.MODELS_BY_STATUS]: {
+    heading: 'Models by status',
+    description:
+      'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.',
+    status: {
+      'Pre-clearance': { noResultsHeading: 'There are no early-stage models.' },
+      'In clearance': {
+        noResultsHeading: 'There are no models currently in clearance.'
+      },
+      Cleared: {
+        noResultsHeading:
+          'There are no models that have cleared and are pending announcement.'
+      },
+      Announced: {
+        noResultsHeading: 'There are no models that have just been announced.'
+      },
+      Active: {
+        noResultsHeading: 'There are no active models.'
+      },
+      Ended: {
+        noResultsHeading: 'There are no models that have ended.'
+      },
+      Canceled: {
+        noResultsHeading: 'There are no canceled models.'
+      },
+      Paused: {
+        noResultsHeading: 'There are no paused models.'
+      }
+    }
+  },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
     description:
@@ -40,8 +70,7 @@ const settings: HomepageSettingsType = {
     heading: 'Models approaching clearance',
     description:
       'These models are scheduled for clearance within the next six months.',
-    noResultsHeading: 'There are no Models approaching clearance.',
-    noResultsDescription: 'Check back later.'
+    noResultsHeading: 'TODO://dynamic-There are no early-stage models.'
   },
   [ViewCustomizationType.MODELS_BY_SOLUTION]: {
     heading: 'Models using specific solutions',
@@ -66,6 +95,17 @@ export const generalStatus: Record<GeneralStatus, string> = {
   [GeneralStatus.ENDED]: 'Ended',
   [GeneralStatus.OTHER]: 'Total'
 };
+
+export enum ModelByStatusEnum {
+  PRE_CLEARANCE = 'Pre-clearance',
+  IN_CLEARANCE = 'In clearance',
+  CLEARED = 'Cleared',
+  ANNOUNCED = 'Announced',
+  ACTIVE = 'Active',
+  ENDED = 'Ended',
+  CANCELED = 'Canceled',
+  PAUSED = 'Paused'
+}
 
 const customHome = {
   title: 'Welcome to MINT',
@@ -118,6 +158,7 @@ const customHome = {
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
       startDate: 'Model start date',
+      endDate: 'Model end date',
       paymentDate: 'Payment start date',
       keyCharacteristics: 'Key characteristics',
       demoCode: 'Demo code',

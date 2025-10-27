@@ -33,6 +33,7 @@ import { isAssessment, isMAC } from 'utils/user';
 import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsByGroup from './components/ModelsByGroup';
 import ModelsBySolutions from './components/ModelsBySolution';
+import ModelsByStatus from './components/ModelsByStatus';
 
 import './index.scss';
 
@@ -162,6 +163,21 @@ const Home = () => {
             </Alert>
           )}
         </>
+      </>
+    ),
+    [ViewCustomizationType.MODELS_BY_STATUS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_BY_STATUS}.heading`)}
+        </h2>
+
+        <p>
+          {t(`settings.${ViewCustomizationType.MODELS_BY_STATUS}.description`)}
+        </p>
+
+        <ModelsByStatus />
       </>
     ),
     [ViewCustomizationType.MODELS_WITH_CR_TDL]: (

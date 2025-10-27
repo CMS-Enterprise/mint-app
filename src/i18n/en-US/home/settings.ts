@@ -22,6 +22,11 @@ const settings: HomepageSettingsType = {
     description:
       'This section shows only the models you’re following (like the one on the Models tab).'
   },
+  [ViewCustomizationType.MODELS_BY_STATUS]: {
+    heading: 'Models by status',
+    description:
+      'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.'
+  },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
     description:
