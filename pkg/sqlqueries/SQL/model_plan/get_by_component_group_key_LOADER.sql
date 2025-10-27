@@ -24,4 +24,5 @@ INNER JOIN plan_basics AS pb
         OR (cgm.component_group_key = 'FCHCO' AND coalesce(pb.cms_centers, cast(ARRAY[] AS CMS_CENTER[])) @> cast(ARRAY['FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'] AS CMS_CENTER[]))
     )
 INNER JOIN model_plan AS mp ON pb.model_plan_id = mp.id
+WHERE mp.archived = FALSE
 ORDER BY component_group, model_plan_id;    
