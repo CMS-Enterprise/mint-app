@@ -769,10 +769,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     order: 6.02,
     isOtherType: true
   },
-  evalutaionApproachNote: {
-    gqlField: 'evalutaionApproachNote',
-    goField: 'EvalutaionApproachNote',
-    dbField: 'evalutaion_approach_note',
+  evaluationApproachNote: {
+    gqlField: 'evaluationApproachNote',
+    goField: 'EvaluationApproachNote',
+    dbField: 'evaluation_approach_note',
     label: 'Notes',
     isNote: true,
     otherParentField: 'evaluationApproaches',

@@ -130,7 +130,7 @@ const generateAnswerCell = (
     return (
       <div className="display-flex flex-align-center">
         <Icon.Cancel
-          className="text-error  margin-right-1"
+          className="text-error margin-right-1"
           aria-label="no"
           size={3}
         />
