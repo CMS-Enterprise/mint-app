@@ -31,6 +31,8 @@ const (
 	ComponentGroupCpi      ComponentGroup = "CPI"
 )
 
+type ModelPlanStatus string
+
 // UserViewCustomization represents a user's choices to customize their homepage
 type UserViewCustomization struct {
 	baseStruct

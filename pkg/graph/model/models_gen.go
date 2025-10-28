@@ -151,6 +151,12 @@ type MTOSolutionTranslation struct {
 	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
+type ModelPlanByStatusGroup struct {
+	StatusGroup ModelPlanStatusGroup `json:"statusGroup"`
+	ModelPlanID uuid.UUID            `json:"modelPlanID"`
+	ModelPlan   models.ModelPlan     `json:"modelPlan"`
+}
+
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`
@@ -2153,60 +2159,60 @@ func (e ModelPlanFilter) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-type ModelPlanStatus string
+type ModelPlanStatusGroup string
 
 const (
-	ModelPlanStatusPreClearance ModelPlanStatus = "PRE_CLEARANCE"
-	ModelPlanStatusInClearance  ModelPlanStatus = "IN_CLEARANCE"
-	ModelPlanStatusCleared      ModelPlanStatus = "CLEARED"
-	ModelPlanStatusAnnounced    ModelPlanStatus = "ANNOUNCED"
-	ModelPlanStatusActive       ModelPlanStatus = "ACTIVE"
-	ModelPlanStatusEnded        ModelPlanStatus = "ENDED"
-	ModelPlanStatusCanceled     ModelPlanStatus = "CANCELED"
-	ModelPlanStatusPaused       ModelPlanStatus = "PAUSED"
+	ModelPlanStatusGroupPreClearance ModelPlanStatusGroup = "PRE_CLEARANCE"
+	ModelPlanStatusGroupInClearance  ModelPlanStatusGroup = "IN_CLEARANCE"
+	ModelPlanStatusGroupCleared      ModelPlanStatusGroup = "CLEARED"
+	ModelPlanStatusGroupAnnounced    ModelPlanStatusGroup = "ANNOUNCED"
+	ModelPlanStatusGroupActive       ModelPlanStatusGroup = "ACTIVE"
+	ModelPlanStatusGroupEnded        ModelPlanStatusGroup = "ENDED"
+	ModelPlanStatusGroupCanceled     ModelPlanStatusGroup = "CANCELED"
+	ModelPlanStatusGroupPaused       ModelPlanStatusGroup = "PAUSED"
 )
 
-var AllModelPlanStatus = []ModelPlanStatus{
-	ModelPlanStatusPreClearance,
-	ModelPlanStatusInClearance,
-	ModelPlanStatusCleared,
-	ModelPlanStatusAnnounced,
-	ModelPlanStatusActive,
-	ModelPlanStatusEnded,
-	ModelPlanStatusCanceled,
-	ModelPlanStatusPaused,
+var AllModelPlanStatusGroup = []ModelPlanStatusGroup{
+	ModelPlanStatusGroupPreClearance,
+	ModelPlanStatusGroupInClearance,
+	ModelPlanStatusGroupCleared,
+	ModelPlanStatusGroupAnnounced,
+	ModelPlanStatusGroupActive,
+	ModelPlanStatusGroupEnded,
+	ModelPlanStatusGroupCanceled,
+	ModelPlanStatusGroupPaused,
 }
 
-func (e ModelPlanStatus) IsValid() bool {
+func (e ModelPlanStatusGroup) IsValid() bool {
 	switch e {
-	case ModelPlanStatusPreClearance, ModelPlanStatusInClearance, ModelPlanStatusCleared, ModelPlanStatusAnnounced, ModelPlanStatusActive, ModelPlanStatusEnded, ModelPlanStatusCanceled, ModelPlanStatusPaused:
+	case ModelPlanStatusGroupPreClearance, ModelPlanStatusGroupInClearance, ModelPlanStatusGroupCleared, ModelPlanStatusGroupAnnounced, ModelPlanStatusGroupActive, ModelPlanStatusGroupEnded, ModelPlanStatusGroupCanceled, ModelPlanStatusGroupPaused:
 		return true
 	}
 	return false
 }
 
-func (e ModelPlanStatus) String() string {
+func (e ModelPlanStatusGroup) String() string {
 	return string(e)
 }
 
-func (e *ModelPlanStatus) UnmarshalGQL(v any) error {
+func (e *ModelPlanStatusGroup) UnmarshalGQL(v any) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = ModelPlanStatus(str)
+	*e = ModelPlanStatusGroup(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ModelPlanStatus", str)
+		return fmt.Errorf("%s is not a valid ModelPlanStatusGroup", str)
 	}
 	return nil
 }
 
-func (e ModelPlanStatus) MarshalGQL(w io.Writer) {
+func (e ModelPlanStatusGroup) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-func (e *ModelPlanStatus) UnmarshalJSON(b []byte) error {
+func (e *ModelPlanStatusGroup) UnmarshalJSON(b []byte) error {
 	s, err := strconv.Unquote(string(b))
 	if err != nil {
 		return err
@@ -2214,7 +2220,7 @@ func (e *ModelPlanStatus) UnmarshalJSON(b []byte) error {
 	return e.UnmarshalGQL(s)
 }
 
-func (e ModelPlanStatus) MarshalJSON() ([]byte, error) {
+func (e ModelPlanStatusGroup) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

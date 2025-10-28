@@ -22,7 +22,7 @@ enum ComponentGroup {
   CPI
 }
 
-enum ModelPlanStatus {
+enum ModelPlanStatusGroup {
   PRE_CLEARANCE
   IN_CLEARANCE
   CLEARED

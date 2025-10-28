@@ -27,7 +27,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-import { ModelPlansType } from '../ModelsByStatus';
+import { ModelPlansType } from '../ModelsByStatusGroup';
 
 import './index.scss';
 

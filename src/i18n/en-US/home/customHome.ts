@@ -96,7 +96,7 @@ export const generalStatus: Record<GeneralStatus, string> = {
   [GeneralStatus.OTHER]: 'Total'
 };
 
-export enum ModelByStatusEnum {
+export enum ModelByStatusGroupEnum {
   PRE_CLEARANCE = 'Pre-clearance',
   IN_CLEARANCE = 'In clearance',
   CLEARED = 'Cleared',
