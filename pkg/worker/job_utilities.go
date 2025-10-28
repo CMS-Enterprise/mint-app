@@ -77,45 +77,78 @@ func RetryAwareLogging(logger *zap.Logger) faktory_worker.MiddlewareFunc {
 	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
 		help := faktory_worker.HelperFor(ctx)
 
-		// Call the actual job
+		maxRetries := defaultMaxRetries
+		if job.Retry != nil {
+			maxRetries = *job.Retry
+		}
+		failCount := 0
+		if job.Failure != nil {
+			failCount = job.Failure.RetryCount
+		}
+		isFinal := failCount >= maxRetries
+
+		// Put the flag in context so jobs/downstream can decide how to log
+		ctx = withIsFinalAttempt(ctx, isFinal)
+
+		// Run the job
 		err := next(ctx)
 		if err == nil {
 			return nil
 		}
 
-		// Determine max retries for this job:
-		// 1) job.Retry if set on the pushed job
-		// 2) default fallback
-		maxRetries := defaultMaxRetries
-		if job.Retry != nil {
-			maxRetries = *job.Retry
-		}
-
-		// How many failures have happened BEFORE this run?
-		// (On the 1st execution this is nil; after the first failure Faktory sets Failure).
-		failCount := 0
-		if job.Failure != nil {
-			failCount = job.Failure.RetryCount
-		}
-
-		// If we've already failed maxRetries times BEFORE this run,
-		// this execution is the final allowed attempt. A failure now means no retries remain
-		isFinalAttempt := failCount >= maxRetries
-
-		log := logger.With(
-			zap.String("jid", help.Jid()),
-			zap.String("job_type", help.JobType()),
+		// Also emit your structured summary line
+		log := loggerWithFaktoryFieldsWithoutBatchID(
+			logger, help,
 			zap.Int("fail_count_so_far", failCount),
 			zap.Int("max_retries", maxRetries),
 		)
-
-		if isFinalAttempt {
+		if isFinal {
 			log.Error("job failed on final attempt; no retries remain", zap.Error(err))
 		} else {
 			log.Warn("job failed; will retry", zap.Error(err))
 		}
-
-		// Return the error so Faktory marks it failed and schedules retry (if any remain)
 		return err
 	}
+}
+
+// context key so jobs can know if this run is final
+type retryCtxKey struct{}
+
+func withIsFinalAttempt(ctx context.Context, isFinal bool) context.Context {
+	return context.WithValue(ctx, retryCtxKey{}, isFinal)
+}
+
+func isFinalAttempt(ctx context.Context) bool {
+	v := ctx.Value(retryCtxKey{})
+	if b, ok := v.(bool); ok {
+		return b
+	}
+	return false
+}
+
+// downgradeErrorsCore wraps a Core and, when enabled, converts ERROR logs to WARN.
+type downgradeErrorsCore struct {
+	zapcore.Core
+	downgrade bool
+}
+
+func (d *downgradeErrorsCore) With(fields []zapcore.Field) zapcore.Core {
+	return &downgradeErrorsCore{Core: d.Core.With(fields), downgrade: d.downgrade}
+}
+
+func (d *downgradeErrorsCore) Check(ent zapcore.Entry, ce *zapcore.CheckedEntry) *zapcore.CheckedEntry {
+	if d.downgrade && ent.Level == zapcore.ErrorLevel {
+		ent.Level = zapcore.WarnLevel
+	}
+	return d.Core.Check(ent, ce)
+}
+
+// RetryAwareLogger returns a logger that demotes Error->Warn if !final attempt.
+func RetryAwareLogger(ctx context.Context, base *zap.Logger) *zap.Logger {
+	if isFinalAttempt(ctx) {
+		return base // final run: keep ERRORs as ERROR
+	}
+	return base.WithOptions(zap.WrapCore(func(c zapcore.Core) zapcore.Core {
+		return &downgradeErrorsCore{Core: c, downgrade: true}
+	}))
 }

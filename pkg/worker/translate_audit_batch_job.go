@@ -32,7 +32,8 @@ const (
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
 	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	base := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Debug("queue entries to create jobs for fetched")
 
 	readyToQueueEntries, err := storage.TranslatedAuditQueueGetEntriesToQueue(w.Store)
@@ -113,7 +114,8 @@ func CreateTranslatedAuditBatch(w *Worker, logger *zap.Logger, cl *faktory.Clien
 // TranslateAuditBatchJobSuccess is the call back that gets called when the TranslatedAuditBatchJob Completes
 func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	base := loggerWithFaktoryFields(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Info("Digest Email Batch Job Succeeded")
 	//  Add notification here if wanted in the future
 	return nil

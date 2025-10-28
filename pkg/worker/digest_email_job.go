@@ -33,7 +33,8 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 	dateAnalyzed := args[0].(string)
 
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	base := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 
 	logger.Info("getting collection of unique userIds that have favorited a model")
 
@@ -74,7 +75,8 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	base := loggerWithFaktoryFields(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
 	return nil
@@ -95,7 +97,9 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
+	base := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
+
 	logger.Info("preparing to send daily digest email")
 
 	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
@@ -115,7 +119,8 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed))
+	base := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed))
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,

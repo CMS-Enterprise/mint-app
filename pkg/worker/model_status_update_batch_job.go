@@ -24,7 +24,8 @@ const (
 func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
 	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	base := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Info("Getting collection of model plans that require status checking")
 
 	// TODO: Implement the logic to return the models to check? Or do we check every model plan?
@@ -85,7 +86,8 @@ func CreateModelStatusJobInBatch(logger *zap.Logger, w *Worker, batch *faktory.B
 // ModelStatusUpdateBatchJobSuccess is called when the model status update job has completed.
 func (w *Worker) ModelStatusUpdateBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	base := loggerWithFaktoryFields(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Info("Model Status update job completed successfully")
 	return nil
 }

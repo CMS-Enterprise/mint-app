@@ -19,7 +19,9 @@ func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...interface{})
 	// Call TranslateAuditBatchJob
 	helper := faktory_worker.HelperFor(ctx)
 
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	base := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
+
 	logger.Debug("translate audit cron job called")
 
 	now := time.Now()
