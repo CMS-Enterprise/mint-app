@@ -1,0 +1,10 @@
+type ModelPlanByStatus {
+  status: ModelPlanStatus!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByStatus(status: ModelPlanStatus!): [ModelPlanByStatus!]!
+    @hasRole(role: MINT_USER)
+}

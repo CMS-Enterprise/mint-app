@@ -2153,6 +2153,73 @@ func (e ModelPlanFilter) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
+type ModelPlanStatus string
+
+const (
+	ModelPlanStatusPreClearance ModelPlanStatus = "PRE_CLEARANCE"
+	ModelPlanStatusInClearance  ModelPlanStatus = "IN_CLEARANCE"
+	ModelPlanStatusCleared      ModelPlanStatus = "CLEARED"
+	ModelPlanStatusAnnounced    ModelPlanStatus = "ANNOUNCED"
+	ModelPlanStatusActive       ModelPlanStatus = "ACTIVE"
+	ModelPlanStatusEnded        ModelPlanStatus = "ENDED"
+	ModelPlanStatusCanceled     ModelPlanStatus = "CANCELED"
+	ModelPlanStatusPaused       ModelPlanStatus = "PAUSED"
+)
+
+var AllModelPlanStatus = []ModelPlanStatus{
+	ModelPlanStatusPreClearance,
+	ModelPlanStatusInClearance,
+	ModelPlanStatusCleared,
+	ModelPlanStatusAnnounced,
+	ModelPlanStatusActive,
+	ModelPlanStatusEnded,
+	ModelPlanStatusCanceled,
+	ModelPlanStatusPaused,
+}
+
+func (e ModelPlanStatus) IsValid() bool {
+	switch e {
+	case ModelPlanStatusPreClearance, ModelPlanStatusInClearance, ModelPlanStatusCleared, ModelPlanStatusAnnounced, ModelPlanStatusActive, ModelPlanStatusEnded, ModelPlanStatusCanceled, ModelPlanStatusPaused:
+		return true
+	}
+	return false
+}
+
+func (e ModelPlanStatus) String() string {
+	return string(e)
+}
+
+func (e *ModelPlanStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelPlanStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelPlanStatus", str)
+	}
+	return nil
+}
+
+func (e ModelPlanStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *ModelPlanStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e ModelPlanStatus) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
 type MonitoringFileType string
 
 const (
