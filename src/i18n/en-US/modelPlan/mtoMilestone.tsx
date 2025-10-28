@@ -292,7 +292,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       QPP: 'Quality Payment Program',
       PAM: 'Patient Activation Measure',
       NCQA: 'National Committee for Quality Assurance',
-      RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
@@ -362,7 +361,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       QPP: 'Quality Payment Program',
       PAM: 'Patient Activation Measure',
       NCQA: 'National Committee for Quality Assurance',
-      RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
