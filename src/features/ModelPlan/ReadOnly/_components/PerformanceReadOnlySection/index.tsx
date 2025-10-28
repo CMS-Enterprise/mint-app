@@ -44,10 +44,12 @@ type TranslationPerformanceConfigType = Pick<
 
 const PerformanceReadOnlySection = ({
   config,
-  data
+  data,
+  filteredView = false
 }: {
   config: TranslationPerformanceConfigType;
   data: Partial<PlanOpsEvalAndLearning>;
+  filteredView?: boolean;
 }): React.ReactElement | null => {
   const { t: opsEvalAndLearningMiscT } = useTranslation(
     'opsEvalAndLearningMisc'
@@ -88,20 +90,28 @@ const PerformanceReadOnlySection = ({
         data={data}
       />
 
-      <ReadOnlySection
-        field="riskAdjustNote"
-        translations={config}
-        values={data}
-      />
+      {!filteredView && (
+        <div>
+          <ReadOnlySection
+            field="riskAdjustNote"
+            translations={config}
+            values={data}
+          />
 
-      <TableSection
-        headers={appealHeaders}
-        fields={APPEAL_FIELDS}
-        config={config}
-        data={data}
-      />
+          <TableSection
+            headers={appealHeaders}
+            fields={APPEAL_FIELDS}
+            config={config}
+            data={data}
+          />
 
-      <ReadOnlySection field="appealNote" translations={config} values={data} />
+          <ReadOnlySection
+            field="appealNote"
+            translations={config}
+            values={data}
+          />
+        </div>
+      )}
     </div>
   );
 };
@@ -154,7 +164,7 @@ const TableSection = ({
 }) => {
   return (
     <table
-      className="desktop:grid-col-12 margin-bottom-4"
+      className="desktop:grid-col-12 margin-bottom-4 margin-top-neg-1"
       style={{ borderCollapse: 'collapse' }}
     >
       <thead>

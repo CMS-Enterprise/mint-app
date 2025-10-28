@@ -556,8 +556,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       YES_NO_RECONCILE:
         'Yes, but we will not reconcile actual performance against it',
       NO: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   benchmarkForPerformanceNote: {
     gqlField: 'benchmarkForPerformanceNote',
@@ -568,8 +567,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'benchmarkForPerformance',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 5.02,
-    filterGroups: [ModelViewFilter.CMMI]
+    order: 5.02
   },
   computePerformanceScores: {
     gqlField: 'computePerformanceScores',
@@ -582,8 +580,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   computePerformanceScoresNote: {
     gqlField: 'computePerformanceScoresNote',
@@ -594,8 +591,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'computePerformanceScores',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 5.04,
-    filterGroups: [ModelViewFilter.CMMI]
+    order: 5.04
   },
   riskAdjustPerformance: {
     gqlField: 'riskAdjustPerformance',
@@ -609,8 +605,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustFeedback: {
     gqlField: 'riskAdjustFeedback',
@@ -624,8 +619,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustPayments: {
     gqlField: 'riskAdjustPayments',
@@ -639,8 +633,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustOther: {
     gqlField: 'riskAdjustOther',
@@ -654,8 +647,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustNote: {
     gqlField: 'riskAdjustNote',

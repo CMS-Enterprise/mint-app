@@ -349,6 +349,23 @@ const ReadOnlyOpsEvalAndLearning = ({
       );
     }
 
+    if (filteredView === 'cmmi') {
+      return (
+        <div>
+          <PerformanceReadOnlySection
+            config={performanceConfig}
+            data={allOpsEvalAndLearningData}
+            filteredView
+          />
+          <ReadOnlyBody
+            data={allOpsEvalAndLearningData}
+            config={opsEvalAndLearningConfig}
+            filteredView={filteredView}
+          />
+        </div>
+      );
+    }
+
     return (
       <ReadOnlyBody
         data={allOpsEvalAndLearningData}
