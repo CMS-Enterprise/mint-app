@@ -2100,6 +2100,7 @@ const (
 	ModelPlanFilterWithCrTdls           ModelPlanFilter = "WITH_CR_TDLS"
 	ModelPlanFilterFavorited            ModelPlanFilter = "FAVORITED"
 	ModelPlanFilterApproachingClearance ModelPlanFilter = "APPROACHING_CLEARANCE"
+	ModelPlanFilterNewlyCreated         ModelPlanFilter = "NEWLY_CREATED"
 )
 
 var AllModelPlanFilter = []ModelPlanFilter{
@@ -2108,11 +2109,12 @@ var AllModelPlanFilter = []ModelPlanFilter{
 	ModelPlanFilterWithCrTdls,
 	ModelPlanFilterFavorited,
 	ModelPlanFilterApproachingClearance,
+	ModelPlanFilterNewlyCreated,
 }
 
 func (e ModelPlanFilter) IsValid() bool {
 	switch e {
-	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance:
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance, ModelPlanFilterNewlyCreated:
 		return true
 	}
 	return false
