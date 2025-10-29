@@ -17,6 +17,8 @@ on:
     # This runs when PR enters the merge queue
     # Tests PR against the queue's temporary branch
     # Automatically prevents race conditions!
+    paths:
+      - 'migrations/V*__*.sql'
   
   # Also run on push to main/master to catch any issues that slip through
   push:
