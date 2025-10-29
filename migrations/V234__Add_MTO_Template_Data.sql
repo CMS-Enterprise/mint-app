@@ -565,21 +565,27 @@ BEGIN
   VALUES (payment_cat_uuid, template_uuid, 'Payment', NULL, 11,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
+  claims_based_subcat_uuid := gen_random_uuid();
+  INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
+  VALUES (claims_based_subcat_uuid, template_uuid, 'Claims-based',
+          payment_cat_uuid, 12,
+          '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
+
   non_claims_based_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (non_claims_based_subcat_uuid, template_uuid, 'Non-claims based',
-          payment_cat_uuid, 12,
+          payment_cat_uuid, 13,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   evaluation_cat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
-  VALUES (evaluation_cat_uuid, template_uuid, 'Evaluation', NULL, 13,
+  VALUES (evaluation_cat_uuid, template_uuid, 'Evaluation', NULL, 14,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   eval_uncat_subcat_uuid := gen_random_uuid();
   INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
   VALUES (eval_uncat_subcat_uuid, template_uuid, 'Uncategorized',
-          evaluation_cat_uuid, 14,
+          evaluation_cat_uuid, 15,
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Milestones
