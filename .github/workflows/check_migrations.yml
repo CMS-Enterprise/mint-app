@@ -17,8 +17,7 @@ on:
     # This runs when PR enters the merge queue
     # Tests PR against the queue's temporary branch
     # Automatically prevents race conditions!
-    paths:
-      - 'migrations/V*__*.sql'
+    # Note: merge_group doesn't support paths filter, so this runs for all PRs in the queue
   
   # Also run on push to main/master to catch any issues that slip through
   push:
@@ -50,8 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout all
+        uses: actions/checkout@v5
         with:
           # Fetch full history to compare with base branch
           fetch-depth: 0
