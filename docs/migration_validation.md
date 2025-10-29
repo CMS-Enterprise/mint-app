@@ -92,7 +92,7 @@ The CI validation runs automatically on:
 
 ### Workflow File
 
-**Location:** `.github/workflows/validate_migrations.yml`
+**Location:** `.github/workflows/check_migrations.yml`
 
 ### What Happens on PRs
 

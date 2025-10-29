@@ -1,4 +1,4 @@
-name: Validate Migration Versions
+name: Check Migrations
 
 # This workflow validates database migrations by:
 # 1. Checking for duplicate migration version numbers
@@ -41,11 +41,11 @@ on:
 # - For merges to main: Serialize to prevent race conditions
 concurrency:
   # Use different concurrency groups for PRs vs merges
-  group: ${{ github.event_name == 'push' && 'migration-merge-lock' || format('validate-migrations-{0}', github.ref) }}
+  group: ${{ github.event_name == 'push' && 'migration-merge-lock' || format('check-migrations-{0}', github.ref) }}
   cancel-in-progress: false
 
 jobs:
-  validate_migration_versions:
+  check_migrations:
     name: Check Migration Version Numbers
     runs-on: ubuntu-latest
     
