@@ -54,9 +54,6 @@ jobs:
           # Fetch full history to compare with base branch
           fetch-depth: 0
       
-      - name: Make validation script executable
-        run: chmod +x scripts/check_migration_versions.sh
-      
       - name: Run migration version validation
         run: |
           # Determine base branch for PRs and merge_group events
@@ -75,6 +72,4 @@ jobs:
         env:
           BASE_REF: ${{ github.base_ref }}
           HEAD_REF: ${{ github.head_ref }}
-        run: |
-          chmod +x scripts/check_migration_diff.sh
-          scripts/check_migration_diff.sh
+        run: scripts/check_migration_diff.sh
