@@ -1,5 +1,10 @@
 name: Validate Migration Versions
 
+# This workflow validates database migrations by:
+# 1. Checking for duplicate migration version numbers
+# 2. Ensuring new migrations are consecutive
+# 3. Preventing modification or deletion of existing migrations (PRs only)
+
 on:
   pull_request:
     # Run on PR events that modify migration files
@@ -65,19 +70,11 @@ jobs:
           # Call the validation script with event type and base branch
           scripts/check_migration_versions.sh "${{ github.event_name }}" "$BASE_BRANCH"
       
-      - name: Comment on PR (on failure)
-        if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '## ❌ Migration Validation Failed\n\n' +
-                    'Your PR contains migration version issues. Please check the workflow logs for details.\n\n' +
-                    '**Common issues:**\n' +
-                    '- 🔄 Duplicate version numbers (another PR may have been merged with the same version)\n' +
-                    '- 📊 Non-consecutive versions (please rebase and renumber to the next available version)\n\n' +
-                    'See [Migration Validation docs](../blob/main/docs/MIGRATION_VALIDATION.md) for more information.'
-            })
+      - name: Ensure migrations are only added (not modified or deleted)
+        if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          chmod +x scripts/check_migration_diff.sh
+          scripts/check_migration_diff.sh
