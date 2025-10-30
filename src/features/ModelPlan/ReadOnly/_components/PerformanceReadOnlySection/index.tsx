@@ -88,6 +88,7 @@ const PerformanceReadOnlySection = ({
         fields={RISK_FIELDS}
         config={config}
         data={data}
+        filteredView={filteredView}
       />
 
       {!filteredView && (
@@ -155,16 +156,21 @@ const TableSection = ({
   headers,
   fields,
   config,
-  data
+  data,
+  filteredView
 }: {
   headers: { label: string; toolTip?: string }[];
   fields: readonly PerformanceConfigWithOptionsType[];
   config: TranslationPerformanceConfigType;
   data: Partial<PlanOpsEvalAndLearning>;
+  filteredView?: boolean;
 }) => {
   return (
     <table
-      className="desktop:grid-col-12 margin-bottom-4 margin-top-neg-1"
+      className={classNames('margin-bottom-4 margin-top-neg-1', {
+        'desktop:grid-col-12': !filteredView,
+        'desktop:grid-col-6': filteredView
+      })}
       style={{ borderCollapse: 'collapse' }}
     >
       <thead>

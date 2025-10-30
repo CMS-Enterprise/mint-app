@@ -1121,7 +1121,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
         </div>
       </div>
       <table
-        class="desktop:grid-col-12 margin-bottom-4 margin-top-neg-1"
+        class="margin-bottom-4 margin-top-neg-1 desktop:grid-col-12"
         style="border-collapse: collapse;"
       >
         <thead>
@@ -1314,7 +1314,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           </div>
         </div>
         <table
-          class="desktop:grid-col-12 margin-bottom-4 margin-top-neg-1"
+          class="margin-bottom-4 margin-top-neg-1 desktop:grid-col-12"
           style="border-collapse: collapse;"
         >
           <thead>
