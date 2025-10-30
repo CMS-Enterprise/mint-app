@@ -32,7 +32,8 @@ const mockMTOModalContext = {
       solutionCount: 0,
       primaryCategoryCount: 9,
       isAdded: true,
-      categories: []
+      categories: [],
+      solutions: []
     } as MtoTemplateType,
     categoryID: '',
     categoryName: '',
@@ -57,6 +58,7 @@ describe('flattenTemplateData Function', () => {
     solutionCount: 1,
     primaryCategoryCount: 1,
     isAdded: true,
+    solutions: [],
     categories: [
       {
         __typename: 'MTOTemplateCategory',
@@ -161,7 +163,8 @@ describe('flattenTemplateData Function', () => {
       solutionCount: 0,
       primaryCategoryCount: 0,
       isAdded: true,
-      categories: []
+      categories: [],
+      solutions: []
     };
 
     const milestonesResult = flattenTemplateData(emptyTemplate, 'milestones');
@@ -184,7 +187,8 @@ describe('flattenTemplateData Function', () => {
           order: 1,
           subCategories: []
         }
-      ]
+      ],
+      solutions: []
     };
 
     const result = flattenTemplateData(templateNoSubCats, 'milestones');
@@ -214,7 +218,8 @@ describe('flattenTemplateData Function', () => {
             }
           ]
         }
-      ]
+      ],
+      solutions: []
     };
 
     const milestonesResult = flattenTemplateData(
@@ -521,7 +526,8 @@ describe('TemplatePanel Component', () => {
       solutionCount: 0,
       primaryCategoryCount: 0,
       isAdded: true,
-      categories: []
+      categories: [],
+      solutions: []
     };
 
     const router = createMemoryRouter(

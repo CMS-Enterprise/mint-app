@@ -10,6 +10,9 @@ type MTOTemplateMilestone struct {
 	Name                  string                `json:"name"                  db:"name"`
 	Key                   MTOCommonMilestoneKey `json:"key" db:"key"`
 	MTOTemplateCategoryID *uuid.UUID            `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
+
+	// Filled in by sql query when loading by solution ID
+	MTOSolutionID *uuid.UUID `json:"mtoSolutionID" db:"mto_solution_id"`
 }
 
 // NewMTOTemplateMilestone returns a new MTOTemplateMilestone object

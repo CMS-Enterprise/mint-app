@@ -810,6 +810,7 @@ export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
     solutionCount: 0,
     primaryCategoryCount: 9,
     isAdded: false,
+    solutions: [],
     categories: [
       {
         __typename: 'MTOTemplateCategory',
@@ -856,7 +857,8 @@ export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
     solutionCount: 10,
     primaryCategoryCount: 4,
     isAdded: true,
-    categories: []
+    categories: [],
+    solutions: []
   },
   {
     __typename: 'MTOTemplate',
@@ -870,7 +872,8 @@ export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
     solutionCount: 11,
     primaryCategoryCount: 4,
     isAdded: true,
-    categories: []
+    categories: [],
+    solutions: []
   },
   {
     __typename: 'MTOTemplate',
@@ -883,7 +886,8 @@ export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
     solutionCount: 0,
     primaryCategoryCount: 1,
     isAdded: true,
-    categories: []
+    categories: [],
+    solutions: []
   },
   {
     __typename: 'MTOTemplate',
@@ -896,7 +900,8 @@ export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
     solutionCount: 0,
     primaryCategoryCount: 0,
     isAdded: true,
-    categories: []
+    categories: [],
+    solutions: []
   }
 ];
 

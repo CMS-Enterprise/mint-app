@@ -16,7 +16,7 @@ import { MtoTemplateKey, useGetMtoTemplatesQuery } from 'gql/generated/graphql';
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
-import { MTOModalContext } from 'contexts/MTOModalContext';
+import { MTOModalContext, MtoTemplateType } from 'contexts/MTOModalContext';
 
 import { MTOOption, mtoOptions } from '../../Home';
 
@@ -245,7 +245,7 @@ const MTOOptionsPanel = () => {
                               onClick={() => {
                                 setMTOModalState({
                                   modalType: 'addTemplate',
-                                  mtoTemplate: template
+                                  mtoTemplate: template as MtoTemplateType
                                 });
                                 setIsModalOpen(true);
                               }}

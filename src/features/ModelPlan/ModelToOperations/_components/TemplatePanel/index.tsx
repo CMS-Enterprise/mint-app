@@ -52,12 +52,14 @@ export const flattenTemplateData = (
 
   if (type === 'solutions') {
     // Assign related milestones to the flattenedSolutions array
-    return template.solutions.map(solution => ({
-      ...solution,
-      relatedMilestones: solution.milestones
-        .map(milestone => milestone.name)
-        .join(', ')
-    }));
+    return [...(template.solutions || [])]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(solution => ({
+        ...solution,
+        relatedMilestones: solution.milestones
+          .map(milestone => milestone.name)
+          .join(', ')
+      }));
   }
 
   return flattenedItems;

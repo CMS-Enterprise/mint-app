@@ -45,7 +45,8 @@ const mockTemplate: MtoTemplateType = {
   solutionCount: 8,
   primaryCategoryCount: 9,
   isAdded: true,
-  categories: []
+  categories: [],
+  solutions: []
 };
 
 const createMockRouter = (

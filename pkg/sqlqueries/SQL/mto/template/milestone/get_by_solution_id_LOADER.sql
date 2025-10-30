@@ -7,7 +7,9 @@ SELECT
     tm.created_by,
     tm.created_dts,
     tm.modified_by,
-    tm.modified_dts
+    tm.modified_dts,
+    -- Add the solution ID to populate MTOSolutionID field
+    ts.id AS mto_solution_id
 FROM mto_template_milestone tm
 INNER JOIN mto_template_milestone_solution_link link 
     ON tm.id = link.mto_template_milestone

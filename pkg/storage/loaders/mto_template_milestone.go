@@ -102,7 +102,7 @@ func batchMTOTemplateMilestoneGetBySolutionID(ctx context.Context, solutionIDs [
 		return errorPerEachKey[uuid.UUID, []*models.MTOTemplateMilestone](solutionIDs, err)
 	}
 	getKeyFunc := func(data *models.MTOTemplateMilestone) uuid.UUID {
-		return *data.MTOTemplateCategoryID
+		return *data.MTOSolutionID
 	}
 
 	// implement one to many

@@ -33,7 +33,8 @@ const mockMTOModalContext = {
       solutionCount: 0,
       primaryCategoryCount: 9,
       isAdded: true,
-      categories: []
+      categories: [],
+      solutions: []
     } as MtoTemplateType,
     categoryID: '',
     categoryName: '',
@@ -58,7 +59,8 @@ describe('TemplateCard Component', () => {
     solutionCount: 0,
     primaryCategoryCount: 9,
     isAdded: false,
-    categories: []
+    categories: [],
+    solutions: []
   };
 
   beforeEach(() => {
