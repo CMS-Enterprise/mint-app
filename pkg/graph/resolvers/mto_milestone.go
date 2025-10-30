@@ -8,6 +8,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
@@ -153,6 +154,9 @@ func MTOMilestoneUpdate(
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
 
+	// SAVE the pre-update value (must clone so later mutation doesn’t affect it)
+	oldAssignedTo := helpers.CloneUUIDPointer(existing.AssignedTo)
+
 	// Since storage.MTOMilestoneGetByID will return a `Name` property when
 	// fetching milestones sourced from the common milestone library, we need to clear out that field
 	// or else storage.MTOMilestoneUpdate will attempt to update the name (which won't be allowed, since this is a Milestone sourced from the common milestone library
@@ -197,17 +201,8 @@ func MTOMilestoneUpdate(
 	}
 
 	// Check if assignedTo is being changed
-	var assignedToChanged = false
-	switch {
-	case existing.AssignedTo == nil && updatedMilestone.AssignedTo != nil:
-		assignedToChanged = true
-	case existing.AssignedTo != nil && updatedMilestone.AssignedTo == nil:
-		// There is no unassigned email at this time
-		assignedToChanged = false
-	case existing.AssignedTo != nil && updatedMilestone.AssignedTo != nil &&
-		*existing.AssignedTo != *updatedMilestone.AssignedTo:
-		assignedToChanged = true
-	}
+	// Detect change using the PRE-update value vs POST-update value
+	assignedToChanged := !helpers.UUIDPointerEqual(oldAssignedTo, updatedMilestone.AssignedTo)
 
 	// Send email notification if assignedTo changed and there's a new assignee
 	if assignedToChanged && updatedMilestone.AssignedTo != nil {
