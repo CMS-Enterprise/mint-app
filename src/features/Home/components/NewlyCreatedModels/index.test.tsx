@@ -251,12 +251,12 @@ describe('NewlyCreatedModels', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Newly created Model Plans')).toBeInTheDocument();
+      expect(screen.getByText('Newly created models')).toBeInTheDocument();
     });
 
     expect(
       screen.getByText(
-        /Check out the Model Plans created within the last six months/
+        /Check out the models created within the last six months/
       )
     ).toBeInTheDocument();
   });
@@ -299,9 +299,7 @@ describe('NewlyCreatedModels', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByText('There are no new Model Plans.')
-      ).toBeInTheDocument();
+      expect(screen.getByText('There are no new models.')).toBeInTheDocument();
       expect(screen.getByText('Check back later.')).toBeInTheDocument();
     });
   });
@@ -580,7 +578,7 @@ describe('NewlyCreatedModels', () => {
     });
 
     expect(
-      screen.queryByText(/Get notified when a Model Plan is added to MINT/)
+      screen.queryByText(/Get notified when a model is added to MINT/)
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole('link', { name: /Get notified/ })
@@ -625,7 +623,7 @@ describe('NewlyCreatedModels', () => {
 
     await waitFor(() => {
       const link = screen.getByRole('link', {
-        name: /Get notified when a Model Plan is added to MINT/
+        name: /Get notified when a model is added to MINT/
       });
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', '/notifications/settings');
@@ -648,7 +646,7 @@ describe('NewlyCreatedModels', () => {
 
     await waitFor(() => {
       const link = screen.getByRole('link', {
-        name: /Get notified when a Model Plan is added to MINT/
+        name: /Get notified when a model is added to MINT/
       });
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', '/notifications/settings');
@@ -689,7 +687,7 @@ describe('NewlyCreatedModels', () => {
 
     await waitFor(() => {
       const link = screen.getByRole('link', {
-        name: /Get notified when a Model Plan is added to MINT/
+        name: /Get notified when a model is added to MINT/
       });
       expect(link).toHaveAttribute('href', '/notifications/settings');
     });
@@ -721,9 +719,7 @@ describe('NewlyCreatedModels', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByText('There are no new Model Plans.')
-      ).toBeInTheDocument();
+      expect(screen.getByText('There are no new models.')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
