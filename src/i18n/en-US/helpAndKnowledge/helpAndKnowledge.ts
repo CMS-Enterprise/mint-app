@@ -2302,12 +2302,6 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  [MtoCommonSolutionKey.RMD]: {
-    about: {
-      description: '',
-      gatheringInfo: true
-    }
-  },
   [MtoCommonSolutionKey.MS_FORMS]: {
     about: {
       description: '',
