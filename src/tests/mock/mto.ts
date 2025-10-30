@@ -810,7 +810,21 @@ export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
     solutionCount: 0,
     primaryCategoryCount: 9,
     isAdded: false,
-    solutions: [],
+    solutions: [
+      {
+        __typename: 'MTOTemplateSolution',
+        id: '1',
+        name: 'Solution 1',
+        templateID: '1',
+        milestones: [
+          {
+            __typename: 'MTOTemplateMilestone',
+            id: '1',
+            name: 'Milestone 1'
+          }
+        ]
+      }
+    ],
     categories: [
       {
         __typename: 'MTOTemplateCategory',
