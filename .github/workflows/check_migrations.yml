@@ -7,9 +7,10 @@ name: Check Migrations
 
 on:
   pull_request:
-    # Run on PR events that modify migration files
+    # Run on PR events that modify any files in migrations folder
+    # We check ALL files to catch non-standard filenames
     paths:
-      - 'migrations/V*__*.sql'
+      - 'migrations/**'
   
   # Run on merge queue events - GitHub Enterprise feature
   merge_group:
@@ -24,7 +25,7 @@ on:
       - main
       - master
     paths:
-      - 'migrations/V*__*.sql'
+      - 'migrations/**'
 
 # CONFIGURATION OPTIONS:
 # 

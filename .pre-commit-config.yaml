@@ -115,7 +115,7 @@ repos:
         description: Ensures no duplicate migration versions exist and new migrations are consecutive
         entry: scripts/check_migration_versions.sh
         language: script
-        files: ^migrations/V[0-9]+__.*\.sql$
+        files: ^migrations/.*
         pass_filenames: false
 
   - repo: https://github.com/awslabs/git-secrets

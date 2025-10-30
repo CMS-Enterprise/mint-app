@@ -19,6 +19,18 @@ echo "🔍 Validating migration version numbers..."
 # Get the migrations directory
 MIGRATIONS_DIR="migrations"
 
+# Helper function to validate filename convention
+validate_filename() {
+    local file="$1"
+    local filename
+    filename=$(basename "$file")
+    # Check if filename matches the pattern V<number>__<description>.sql
+    if ! [[ $filename =~ ^V[0-9]+__[^/]+\.sql$ ]]; then
+        return 1
+    fi
+    return 0
+}
+
 # Get all migration files (committed + staged)
 ALL_MIGRATIONS=$(find "$MIGRATIONS_DIR" -name "V*__*.sql" -type f 2>/dev/null | sort -V)
 
@@ -76,13 +88,43 @@ fi
 # For local/pre-commit, check staged files
 
 if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
-    # Get migrations that were added in this PR (compare against base branch)
-    NEW_MIGRATIONS=$(git diff --name-only --diff-filter=A origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    # Get ALL files added in migrations directory (not just valid ones)
+    ALL_NEW_FILES=$(git diff --name-only --diff-filter=A origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
     
-    if [ -z "$NEW_MIGRATIONS" ]; then
+    if [ -z "$ALL_NEW_FILES" ]; then
         echo -e "${GREEN}✅ No new migrations added in this PR${NC}"
         exit 0
     fi
+    
+    # Check that all new files follow naming convention
+    echo ""
+    echo "Checking naming convention for new files..."
+    INVALID_NEW_FILES=""
+    while IFS= read -r file; do
+        if [ -n "$file" ]; then
+            if ! validate_filename "$file"; then
+                INVALID_NEW_FILES="${INVALID_NEW_FILES}${file}\n"
+            fi
+        fi
+    done <<< "$ALL_NEW_FILES"
+    
+    if [ -n "$INVALID_NEW_FILES" ]; then
+        echo -e "${RED}❌ ERROR: Invalid migration filenames found!${NC}"
+        echo -e "${RED}All migration files must follow the naming convention: V<number>__<description>.sql${NC}"
+        echo -e "\nInvalid files:"
+        echo -e "${INVALID_NEW_FILES}" | while IFS= read -r line; do
+            if [ -n "$line" ]; then
+                echo -e "   • $line"
+            fi
+        done
+        echo -e "\n${YELLOW}💡 Example valid filename: V001__create_users_table.sql${NC}"
+        exit 1
+    fi
+    
+    echo -e "${GREEN}✓ All new files follow naming convention${NC}"
+    
+    # Now get only the valid migration files
+    NEW_MIGRATIONS=$(echo "$ALL_NEW_FILES" | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
     
     echo ""
     echo "📋 New migrations in this PR:"
@@ -144,13 +186,45 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     fi
 else
     # Local/pre-commit mode: check staged files
-    STAGED_MIGRATIONS=$(git diff --cached --name-only --diff-filter=A 2>/dev/null | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    # Get ALL staged files in migrations directory (not just valid ones)
+    ALL_STAGED_FILES=$(git diff --cached --name-only --diff-filter=A 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
     
-    if [ -z "$STAGED_MIGRATIONS" ]; then
+    if [ -z "$ALL_STAGED_FILES" ]; then
         echo -e "${GREEN}✓ No new migrations to validate${NC}"
         exit 0
     fi
     
+    # Check that all staged files follow naming convention
+    echo ""
+    echo "Checking naming convention for staged files..."
+    INVALID_STAGED_FILES=""
+    while IFS= read -r file; do
+        if [ -n "$file" ]; then
+            if ! validate_filename "$file"; then
+                INVALID_STAGED_FILES="${INVALID_STAGED_FILES}${file}\n"
+            fi
+        fi
+    done <<< "$ALL_STAGED_FILES"
+    
+    if [ -n "$INVALID_STAGED_FILES" ]; then
+        echo -e "${RED}❌ ERROR: Invalid migration filenames found!${NC}"
+        echo -e "${RED}All migration files must follow the naming convention: V<number>__<description>.sql${NC}"
+        echo -e "\nInvalid files:"
+        echo -e "${INVALID_STAGED_FILES}" | while IFS= read -r line; do
+            if [ -n "$line" ]; then
+                echo -e "   • $line"
+            fi
+        done
+        echo -e "\n${YELLOW}💡 Example valid filename: V001__create_users_table.sql${NC}"
+        exit 1
+    fi
+    
+    echo -e "${GREEN}✓ All staged files follow naming convention${NC}"
+    
+    # Now get only the valid migration files
+    STAGED_MIGRATIONS=$(echo "$ALL_STAGED_FILES" | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    
+    echo ""
     echo "📋 New migrations being added:"
     while IFS= read -r line; do
         echo "   • $line"
