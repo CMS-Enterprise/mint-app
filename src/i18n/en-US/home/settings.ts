@@ -22,9 +22,9 @@ const settings: HomepageSettingsType = {
       'This section shows only the models you’re following (like the one on the Models tab).'
   },
   [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
-    heading: 'Newly created Model Plans',
+    heading: 'Newly created models',
     description:
-      'This simplified section displays the Model Plans created within the last six months.'
+      'This simplified section displays the models created within the last six months.'
   },
   [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
     heading: 'Models approaching clearance',
