@@ -41,6 +41,15 @@ export default gql(/* GraphQL */ `
               }
             }
           }
+          solutions {
+            id
+            templateID
+            name
+            milestones {
+              id
+              name
+            }
+          }
         }
       }
     }

@@ -25,10 +25,6 @@ export const flattenTemplateData = (
 ) => {
   const flattenedItems: any[] = [];
 
-  const flattenedSolutions: any[] = [];
-
-  const solutionMap: any = {};
-
   template.categories?.forEach(category => {
     flattenedItems.push({
       ...category,
@@ -50,30 +46,17 @@ export const flattenTemplateData = (
             .map(solution => solution.name)
             .join(', ')
         });
-
-        if (type === 'solutions') {
-          milestone.solutions.forEach(solution => {
-            if (!solutionMap[solution.name]) {
-              solutionMap[solution.name] = [];
-              // Only add solution to flattenedSolutions once
-              flattenedSolutions.push({
-                ...solution,
-                type: 'solution',
-                name: solution.name
-              });
-            }
-            solutionMap[solution.name].push(milestone.name);
-          });
-        }
       });
     });
   });
 
   if (type === 'solutions') {
     // Assign related milestones to the flattenedSolutions array
-    return flattenedSolutions.map(solution => ({
+    return template.solutions.map(solution => ({
       ...solution,
-      relatedMilestones: solutionMap[solution.name].join(', ')
+      relatedMilestones: solution.milestones
+        .map(milestone => milestone.name)
+        .join(', ')
     }));
   }
 

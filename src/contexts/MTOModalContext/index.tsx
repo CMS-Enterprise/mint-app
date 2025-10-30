@@ -1,9 +1,10 @@
 import React, { createContext, useState } from 'react';
 import { MTOModalType } from 'features/ModelPlan/ModelToOperations/_components/FormModal';
 import { MTORowType } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/columns';
-import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
+import { GetMtoModelPlanTemplatesQuery } from 'gql/generated/graphql';
 
-export type MtoTemplateType = GetMtoTemplatesQuery['mtoTemplates'][number];
+export type MtoTemplateType =
+  GetMtoModelPlanTemplatesQuery['modelPlan']['mtoMatrix']['templates'][number];
 
 export interface MTOModalState {
   categoryID: string;

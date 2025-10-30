@@ -10,13 +10,14 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetMtoTemplatesQuery } from 'gql/generated/graphql';
+import { GetMtoModelPlanTemplatesQuery } from 'gql/generated/graphql';
 
 import { MTOModalContext } from 'contexts/MTOModalContext';
 
 import '../../index.scss';
 
-export type TemplateCardType = GetMtoTemplatesQuery['mtoTemplates'][0];
+export type TemplateCardType =
+  GetMtoModelPlanTemplatesQuery['modelPlan']['mtoMatrix']['templates'][0];
 
 const TemplateCard = ({
   className,

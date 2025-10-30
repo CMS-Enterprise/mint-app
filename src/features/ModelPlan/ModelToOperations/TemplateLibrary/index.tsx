@@ -40,6 +40,8 @@ const TemplateLibrary = () => {
     }
   });
 
+  console.log(error);
+
   const dataAvalilable: boolean =
     !loading || !!data?.modelPlan?.mtoMatrix?.templates;
 
