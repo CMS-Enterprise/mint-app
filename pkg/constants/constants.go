@@ -39,6 +39,7 @@ const (
 	TNMTOMilestoneSolutionLink   = "mto_milestone_solution_link"
 	TNMTOInfo                    = "mto_info"
 	TNMTOMilestoneNote           = "mto_milestone_note"
+	ModelPlanMTOTemplateLink     = "model_plan_mto_template_link"
 )
 
 const (

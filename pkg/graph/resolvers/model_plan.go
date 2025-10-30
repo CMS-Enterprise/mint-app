@@ -54,6 +54,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	models.TNMTOSolution,
 	models.TNMTOMilestoneSolutionLink,
 	models.TNMTOInfo,
+	models.TNMTOTemplate,
 	//exclude suggestedMilestone
 
 	models.TNPlanTimeline,

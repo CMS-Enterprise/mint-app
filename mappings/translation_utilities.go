@@ -68,6 +68,8 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return PlanTimelineTranslation()
 	case models.TNMTOMilestoneNote:
 		return MTOMilestoneNoteTranslation()
+	case models.TNModelPlanMTOTemplateLink:
+		return ModelPlanMTOTemplateLinkTranslation()
 	default:
 
 		return nil, fmt.Errorf("no translation for table: %s ", tableName)

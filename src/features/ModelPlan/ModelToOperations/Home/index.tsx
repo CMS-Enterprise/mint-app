@@ -88,6 +88,8 @@ const MTOHome = () => {
       params.set('view', 'milestones');
       navigate({ search: params.toString() }, { replace: true });
     }
+
+    params.set('page', '1');
   }, [viewparam, navigate, params]);
 
   const isMatrixStarted: boolean =
@@ -213,9 +215,11 @@ const MTOHome = () => {
           </Header>
         </GridContainer>
       </div>
+
       {currentView === 'milestones' && (
         <SuggestedMilestoneBanner suggestedMilestones={suggestedMilestones} />
       )}
+
       <GridContainer>
         <div className="model-to-operations margin-y-6">
           {isTablet && (

@@ -1,46 +1,32 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Custom Catergory form > matches snapshot 1`] = `
+exports[`AddTemplateModal > matches snapshot 1`] = `
 <DocumentFragment>
-  <form
-    class="usa-form maxw-none"
-    data-testid="form"
+  <div
+    class="usa-alert usa-alert--error mint-alert-text flex"
+    data-testid="alert"
   >
-    <p
-      class="margin-bottom-0"
-    >
-      Adding this template to your MTO will add:
-    </p>
-    <ul
-      class="margin-y-1 margin-bottom-3"
-    >
-      <li>
-        24 categories (including 9 primary categories)
-      </li>
-    </ul>
-    <p
-      class="margin-bottom-8"
-    >
-      Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.
-    </p>
     <div
-      class="display-flex mint-modal__footer"
+      class="usa-alert__body"
     >
-      <button
-        class="usa-button margin-right-3 margin-top-0"
-        data-testid="button"
-        type="submit"
+      <p
+        class="usa-alert__text"
       >
-        Add template
-      </button>
-      <button
-        class="usa-button usa-button--unstyled margin-top-0"
-        data-testid="button"
-        type="button"
-      >
-        Don’t add template
-      </button>
+        <span>
+          Failed to fetch template
+        </span>
+        <button
+          aria-label="Close Button"
+          class="usa-button usa-button usa-button--unstyled text-no-underline text-black flex-align-start margin-top-05"
+          data-testid="button"
+          role="button"
+          tabindex="0"
+          type="button"
+        >
+          ✕
+        </button>
+      </p>
     </div>
-  </form>
+  </div>
 </DocumentFragment>
 `;

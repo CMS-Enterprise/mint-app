@@ -449,6 +449,11 @@ task :build do
   sh("go build -a -o bin/mint ./cmd/mint")
 end
 
+desc "Build the Go application using vendored dependencies"
+task "build:vendor" do
+  sh("go build -mod=vendor -a -o bin/mint ./cmd/mint")
+end
+
 task :default do
   puts "Please provide a task to run:\n\n"
   Rake::Task["list"].invoke

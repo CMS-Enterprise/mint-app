@@ -16,6 +16,7 @@ import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutio
 import existingModelLink from '../../src/i18n/en-US/modelPlan/existingModelLink';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
+import modelPlanMtoTemplateLink from '../../src/i18n/en-US/modelPlan/modelPlanMtoTemplateLink';
 import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
 import mtoCategory from '../../src/i18n/en-US/modelPlan/mtoCategory';
 import mtoCommonSolutionContact from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContact';
@@ -64,7 +65,8 @@ export const translationSections = {
   mto_common_solution_contact: mtoCommonSolutionContact,
   mto_common_solution_contractor: mtoCommonSolutionContractor,
   mto_category: mtoCategory,
-  mto_milestone_note: mtoMilestoneNote
+  mto_milestone_note: mtoMilestoneNote,
+  model_plan_mto_template_link: modelPlanMtoTemplateLink
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
