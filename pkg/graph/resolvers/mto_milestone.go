@@ -197,12 +197,13 @@ func MTOMilestoneUpdate(
 	}
 
 	// Check if assignedTo is being changed
-	var assignedToChanged bool
+	var assignedToChanged = false
 	switch {
 	case existing.AssignedTo == nil && updatedMilestone.AssignedTo != nil:
 		assignedToChanged = true
 	case existing.AssignedTo != nil && updatedMilestone.AssignedTo == nil:
-		assignedToChanged = true
+		// There is no unassigned email at this time
+		assignedToChanged = false
 	case existing.AssignedTo != nil && updatedMilestone.AssignedTo != nil &&
 		*existing.AssignedTo != *updatedMilestone.AssignedTo:
 		assignedToChanged = true
