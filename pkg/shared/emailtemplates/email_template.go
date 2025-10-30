@@ -31,7 +31,9 @@ func NewGenEmailTemplate[subjectType any, bodyType any](
 	embeddedTemplate *htmlTemplate.Template,
 ) (*GenEmailTemplate[subjectType, bodyType], error) {
 	var bodyTemplate = htmlTemplate.New(name + "_body")
+	bodyTemplate.Option("missingkey=error")
 	var subjectTemplate = textTemplate.New(name + "_subject")
+	subjectTemplate.Option("missingkey=error")
 	if embeddedTemplate != nil {
 		clonedEmbedded, err := embeddedTemplate.Clone()
 		if err != nil {
