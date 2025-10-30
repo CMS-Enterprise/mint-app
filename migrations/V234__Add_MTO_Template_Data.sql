@@ -261,163 +261,167 @@ BEGIN
     -- Insert solutions (10 total)
     -- =========================================================
     
-    -- Solution: Automated Plan Payment System (APPS)
-    apps_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Automated Plan Payment System (APPS)
+        apps_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         apps_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'APPS'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Chronic Conditions Warehouse (CCW)
-    ccw_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Chronic Conditions Warehouse (CCW)
+        ccw_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         ccw_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'CCW'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: CMMI Analysis and Management System (AMS)
-    ams_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: CMMI Analysis and Management System (AMS)
+        ams_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         ams_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'AMS'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Consolidated Business Operations Support Center (CBOSC)
-    cbosc_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Consolidated Business Operations Support Center (CBOSC)
+        cbosc_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         cbosc_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'CBOSC'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Drug Data Processing System (DDPS)
-    ddps_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Drug Data Processing System (DDPS)
+        ddps_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         ddps_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'DDPS'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Health Plan Management System (HPMS)
-    hpms_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Health Plan Management System (HPMS)
+        hpms_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         hpms_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'HPMS'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Integrated Data Repository (IDR)
-    idr_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Integrated Data Repository (IDR)
+        idr_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         idr_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'IDR'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Medicare Advantage Prescription Drug System (MARx)
-    marx_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Medicare Advantage Prescription Drug System (MARx)
+        marx_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         marx_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'MARX'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Model Space
-    model_space_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Model Space
+        model_space_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         model_space_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'MODEL_SPACE'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Solution: Risk Adjustment Suite of Systems (RASS)
-    rass_solution_uuid := gen_random_uuid();
-    INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-    VALUES (
+        -- Solution: Risk Adjustment Suite of Systems (RASS)
+        rass_solution_uuid := gen_random_uuid();
+        INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+        VALUES (
         rass_solution_uuid,
         template_uuid,
         (SELECT id FROM mto_common_solution WHERE key = 'RASS'),
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
+
 
     -- =========================================================
     -- Create milestone-solution links
     -- =========================================================
     
-    -- Link: Review and collect plan bids -> HPMS
-    INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-    VALUES (
-        gen_random_uuid(),
-        template_uuid,
-        hpms_solution_uuid,
-        rev_col_bids_milestone_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
-    -- Link: Establish a participant help desk -> CBOSC
-    INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-    VALUES (
+        -- CBOSC
+        -- Link: Establish a participant help desk -> CBOSC
+        INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+        VALUES (
         gen_random_uuid(),
         template_uuid,
         cbosc_solution_uuid,
         helpdesk_support_milestone_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Link: Manage Part C/D enrollment -> MARx
-    INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-    VALUES (
+        -- HPMS
+        -- Link: Review and collect plan bids -> HPMS
+        INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+        VALUES (
         gen_random_uuid(),
         template_uuid,
-        marx_solution_uuid,
-        manage_cd_milestone_uuid,
+        hpms_solution_uuid,
+        rev_col_bids_milestone_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
 
-    -- Link: Update the plan's contract -> HPMS
-    INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-    VALUES (
+        -- Link: Update the plan's contract -> HPMS
+        INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+        VALUES (
         gen_random_uuid(),
         template_uuid,
         hpms_solution_uuid,
         update_contract_milestone_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
-    );
+        );
+
+        -- MARx
+        -- Link: Manage Part C/D enrollment -> MARx
+        INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+        VALUES (
+        gen_random_uuid(),
+        template_uuid,
+        marx_solution_uuid,
+        manage_cd_milestone_uuid,
+        '00000001-0001-0001-0001-000000000001'::UUID,
+        CURRENT_TIMESTAMP
+        );
 
     -- Note: "Recruit participants" milestone has no specified solution, so no link is created
     -- Note: Solutions without specified milestones (APPS, CCW, AMS, DDPS, IDR, Model Space, RASS) have no links created
@@ -732,61 +736,67 @@ BEGIN
           '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
 
   -- Milestone ↔ Solution links
-  INSERT INTO mto_template_milestone_solution_link (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-  VALUES (gen_random_uuid(), template_uuid, salesforce_rfa_solution_uuid, recruit_participants_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001'::UUID, CURRENT_TIMESTAMP);
+    -- Milestone ↔ Solution links (alphabetical by solution)
 
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, cbosc_solution_uuid, helpdesk_support_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, iddoc_support_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  -- ACO-OS
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, aco_os_solution_uuid, iddoc_support_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp_solution_uuid, data_to_monitor_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, data_to_monitor_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp_solution_uuid, data_to_support_eval_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, data_to_support_eval_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp_solution_uuid, send_repdata_to_part_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, send_repdata_to_part_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, vet_prov_pi_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg_solution_uuid, manage_prov_overlap_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams_solution_uuid, manage_prov_overlap_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg_solution_uuid, manage_ben_overlap_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams_solution_uuid, manage_ben_overlap_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, model_space_solution_uuid, establish_bench_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, sign_participation_agreements_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems_solution_uuid, adjust_ffs_claims_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems_solution_uuid, manage_ffs_excl_payments_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ipc_solution_uuid, make_non_claims_based_payments_milestone_uuid,
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  -- AMS
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams_solution_uuid, make_non_claims_based_payments_milestone_uuid,
-        '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams_solution_uuid, manage_ben_overlap_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams_solution_uuid, manage_prov_overlap_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- CBOSC
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, cbosc_solution_uuid, helpdesk_support_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Four i (4innovation)
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, data_to_monitor_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, data_to_support_eval_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, iddoc_support_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, send_repdata_to_part_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, sign_participation_agreements_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, four_i_solution_uuid, vet_prov_pi_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- IPC
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ipc_solution_uuid, make_non_claims_based_payments_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- ISP
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp_solution_uuid, data_to_monitor_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp_solution_uuid, data_to_support_eval_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp_solution_uuid, send_repdata_to_part_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Model Space
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, model_space_solution_uuid, establish_bench_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Overlaps Operations Workgroup
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg_solution_uuid, manage_ben_overlap_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg_solution_uuid, manage_prov_overlap_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- RFA (Salesforce Request for Application)
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, salesforce_rfa_solution_uuid, recruit_participants_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Shared Systems
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems_solution_uuid, adjust_ffs_claims_milestone_uuid,
+      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   -- Evaluation: Acquire an evaluation contractor -> intentionally no solution link
 END $$;
@@ -847,7 +857,7 @@ DECLARE
 
   -- solutions
   cbosc uuid; ams uuid; isp uuid; overlaps_wg uuid; ipc uuid; shared_systems uuid;
-  ccw uuid; idr uuid; model_space uuid; connect uuid; rfa uuid;
+  ccw uuid; idr uuid; connect_solution uuid; model_space uuid; rfa uuid;
 BEGIN
   SELECT id INTO template_uuid
   FROM mto_template WHERE key='EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS';
@@ -884,8 +894,8 @@ BEGIN
   payment_cat := gen_random_uuid();
   INSERT INTO mto_template_category VALUES (payment_cat, template_uuid, 'Payment', NULL, 9, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
---   claims_based_subcat := gen_random_uuid();
---   INSERT INTO mto_template_category VALUES (claims_based_subcat, template_uuid, 'Claims based', payment_cat, 10, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  claims_based_subcat := gen_random_uuid();
+  INSERT INTO mto_template_category VALUES (claims_based_subcat, template_uuid, 'Claims based', payment_cat, 10, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   non_claims_based_subcat := gen_random_uuid();
   INSERT INTO mto_template_category VALUES (non_claims_based_subcat, template_uuid, 'Non-claims based', payment_cat, 11, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
@@ -937,61 +947,147 @@ BEGIN
   INSERT INTO mto_template_milestone VALUES (acquire_eval_contractor, template_uuid, 'ACQUIRE_AN_EVAL_CONT', eval_uncat_subcat, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   -- solutions
-  cbosc := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (cbosc, template_uuid, (SELECT id FROM mto_common_solution WHERE key='CBOSC'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  ams := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (ams, template_uuid, (SELECT id FROM mto_common_solution WHERE key='AMS'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  isp := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (isp, template_uuid, (SELECT id FROM mto_common_solution WHERE key='ISP'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  overlaps_wg := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (overlaps_wg, template_uuid, (SELECT id FROM mto_common_solution WHERE key='OVERLAPS_OPERATIONS_WORKGROUP'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  ipc := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (ipc, template_uuid, (SELECT id FROM mto_common_solution WHERE key='IPC'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  shared_systems := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (shared_systems, template_uuid, (SELECT id FROM mto_common_solution WHERE key='SHARED_SYSTEMS'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
+  -- Solution: Chronic Conditions Warehouse (CCW)
   ccw := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (ccw, template_uuid, (SELECT id FROM mto_common_solution WHERE key='CCW'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_solution VALUES (
+    ccw,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='CCW'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
+  -- Solution: CMMI Analysis and Management System (AMS)
+  ams := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    ams,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='AMS'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Consolidated Business Operations Support Center (CBOSC)
+  cbosc := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    cbosc,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='CBOSC'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Innovation Payment Contractor (IPC)
+  ipc := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    ipc,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='IPC'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Innovation Support Platform (ISP)
+  isp := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    isp,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='ISP'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: IDR
   idr := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (idr, template_uuid, (SELECT id FROM mto_common_solution WHERE key='IDR'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_solution VALUES (
+    idr,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='IDR'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
+  -- Solution: Model Space
   model_space := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (model_space, template_uuid, (SELECT id FROM mto_common_solution WHERE key='MODEL_SPACE'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_solution VALUES (
+    model_space,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='MODEL_SPACE'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
-  connect := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (connect, template_uuid, (SELECT id FROM mto_common_solution WHERE key='CONNECT'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  -- Solution: Overlaps Operations Workgroup
+  overlaps_wg := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    overlaps_wg,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='OVERLAPS_OPERATIONS_WORKGROUP'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
+  -- Solution: CONNECT
+  connect_solution := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    connect_solution,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='CONNECT'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Salesforce Request for Application (RFA)
   rfa := gen_random_uuid();
-  INSERT INTO mto_template_solution VALUES (rfa, template_uuid, (SELECT id FROM mto_common_solution WHERE key='RFA'), '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_solution VALUES (
+    rfa,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='RFA'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Shared Systems
+  shared_systems := gen_random_uuid();
+  INSERT INTO mto_template_solution VALUES (
+    shared_systems,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='SHARED_SYSTEMS'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
   -- links
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, rfa, recruit_participants, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, cbosc, helpdesk_support, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, connect, participant_collaboration, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp, collect_data_to_monitor, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp, collect_data_to_support_eval, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp, send_reports_to_part, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg, manage_prov_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  -- AMS
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams,      make_non_claims_based_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams,      manage_ben_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams,      manage_prov_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg, manage_ben_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams,      manage_ben_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  -- CBOSC
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, cbosc,    helpdesk_support, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems, adjust_ffs_claims, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems, manage_ffs_excl_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  -- CONNECT
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, connect_solution, participant_collaboration, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
+  -- IPC
   INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ipc,       make_non_claims_based_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, ams, make_non_claims_based_payments, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- ISP
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp,       collect_data_to_monitor,        '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp,       collect_data_to_support_eval,   '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, isp,       send_reports_to_part,           '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Overlaps Operations Workgroup
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg, manage_ben_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, overlaps_wg, manage_prov_overlap, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- RFA
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, rfa,       recruit_participants, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- Shared Systems
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems, adjust_ffs_claims,         '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link VALUES (gen_random_uuid(), template_uuid, shared_systems, manage_ffs_excl_payments,  '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
 
   -- (CONNECT + ISP links pending specific milestone keys per your TODOs)
 END $$;
@@ -1209,6 +1305,10 @@ DECLARE
   portal uuid;
   ccw uuid; 
   ipc uuid;
+  ams uuid;
+  model_space uuid;
+  idr uuid;
+        
 
 BEGIN
   SELECT id INTO template_uuid FROM mto_template WHERE key='STATE_AND_LOCAL_MODELS';
@@ -1350,108 +1450,162 @@ BEGIN
      Solutions
      ========= */
 
-  -- GrantSolutions (GS)
-  gs := gen_random_uuid();
-  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (gs, template_uuid,
-          (SELECT id FROM mto_common_solution WHERE key='GS'),
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Consolidated Business Operations Support Center (CBOSC)
-  cbosc := gen_random_uuid();
-  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (cbosc, template_uuid,
-          (SELECT id FROM mto_common_solution WHERE key='CBOSC'),
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Innovation Support Platform (ISP)
-  isp := gen_random_uuid();
-  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (isp, template_uuid,
-        (SELECT id FROM mto_common_solution WHERE key='ISP'),
-        '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Portal
-  portal := gen_random_uuid();
-  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (portal, template_uuid,
-          (SELECT id FROM mto_common_solution WHERE key='POST_PORTAL'),
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Chronic Conditions Warehouse (CCW) — (no specific milestone link provided)
+  -- Solution: Chronic Conditions Warehouse (CCW)
   ccw := gen_random_uuid();
   INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (ccw, template_uuid,
-          (SELECT id FROM mto_common_solution WHERE key='CCW'),
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  VALUES (
+    ccw,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='CCW'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
-  -- Innovation Payment Contractor (IPC) — (no specific milestone link provided)
+  -- Solution: CMMI Analysis and Management System (AMS)
+  ams := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    ams,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='AMS'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Consolidated Business Operations Support Center (CBOSC)
+  cbosc := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    cbosc,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='CBOSC'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: GrantSolutions (GS)
+  gs := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    gs,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='GS'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Innovation Payment Contractor (IPC)
   ipc := gen_random_uuid();
   INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
-  VALUES (ipc, template_uuid,
-          (SELECT id FROM mto_common_solution WHERE key='IPC'),
-          '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  VALUES (
+    ipc,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='IPC'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Innovation Support Platform (ISP)
+  isp := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    isp,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='ISP'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Integrated Data Repository (IDR)
+  idr := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    idr,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='IDR'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Model Space
+  model_space := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    model_space,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='MODEL_SPACE'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
+
+  -- Solution: Salesforce Project Officer Support Tool / Portal (POST/Portal)
+  portal := gen_random_uuid();
+  INSERT INTO mto_template_solution (id, template_id, mto_common_solution_id, created_by, created_dts)
+  VALUES (
+    portal,
+    template_uuid,
+    (SELECT id FROM mto_common_solution WHERE key='POST_PORTAL'),
+    '00000001-0001-0001-0001-000000000001',
+    CURRENT_TIMESTAMP
+  );
 
 
   /* ============================
      Milestone ↔ Solution Links
      ============================ */
 
-  -- Recruit participants → GrantSolutions (GS)
-  INSERT INTO mto_template_milestone_solution_link
-    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-  VALUES
-    (gen_random_uuid(), template_uuid, gs, recruit_participants,
-     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+    /* ============================
+     Milestone ↔ Solution Links (alphabetical by solution)
+     ============================ */
 
-  -- Review and score applications → GrantSolutions (GS)
-  INSERT INTO mto_template_milestone_solution_link
-    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-  VALUES
-    (gen_random_uuid(), template_uuid, gs, review_score_app,
-     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Establish a participant helpdesk → CBOSC
+  -- CBOSC
   INSERT INTO mto_template_milestone_solution_link
     (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
   VALUES
     (gen_random_uuid(), template_uuid, cbosc, helpdesk_support,
      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  -- Operations → Collect data - ISP
+  -- GS (GrantSolutions)
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, gs, review_score_app,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, gs, recruit_participants,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+
+  -- ISP
   INSERT INTO mto_template_milestone_solution_link
     (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
   VALUES
     (gen_random_uuid(), template_uuid, isp, collect_data_to_monitor,
      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Operations → Collect data - Portal
-  INSERT INTO mto_template_milestone_solution_link
-    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-  VALUES
-    (gen_random_uuid(), template_uuid, portal, collect_data_to_monitor,
-     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
-
-  -- Operations → Collect data - ISP
   INSERT INTO mto_template_milestone_solution_link
     (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
   VALUES
     (gen_random_uuid(), template_uuid, isp, collect_data_to_support_eval,
      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, isp, send_reports_to_part,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  -- Operations → Collect data - Portal
+  -- Portal (POST/Portal)
+  INSERT INTO mto_template_milestone_solution_link
+    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
+  VALUES
+    (gen_random_uuid(), template_uuid, portal, collect_data_to_monitor,
+     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
   INSERT INTO mto_template_milestone_solution_link
     (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
   VALUES
     (gen_random_uuid(), template_uuid, portal, collect_data_to_support_eval,
      '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
-  -- Operations → Send data to participants - ISP
-  INSERT INTO mto_template_milestone_solution_link
-    (id, template_id, mto_template_solution, mto_template_milestone, created_by, created_dts)
-  VALUES
-    (gen_random_uuid(), template_uuid, isp, send_reports_to_part,
-     '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
 
 
