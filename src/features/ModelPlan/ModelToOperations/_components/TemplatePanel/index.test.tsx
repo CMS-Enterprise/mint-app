@@ -58,7 +58,34 @@ describe('flattenTemplateData Function', () => {
     solutionCount: 1,
     primaryCategoryCount: 1,
     isAdded: true,
-    solutions: [],
+    solutions: [
+      {
+        __typename: 'MTOTemplateSolution',
+        id: 'sol-1',
+        name: 'Solution 1',
+        templateID: '1',
+        milestones: [
+          {
+            __typename: 'MTOTemplateMilestone',
+            id: 'mil-1',
+            name: 'Milestone 1'
+          }
+        ]
+      },
+      {
+        __typename: 'MTOTemplateSolution',
+        id: 'sol-2',
+        name: 'Solution 2',
+        templateID: '1',
+        milestones: [
+          {
+            __typename: 'MTOTemplateMilestone',
+            id: 'mil-2',
+            name: 'Milestone 1'
+          }
+        ]
+      }
+    ],
     categories: [
       {
         __typename: 'MTOTemplateCategory',
@@ -136,17 +163,17 @@ describe('flattenTemplateData Function', () => {
 
     // Check first solution
     expect(result[0]).toMatchObject({
-      type: 'solution',
-      name: 'Solution 1',
+      __typename: 'MTOTemplateSolution',
       id: 'sol-1',
+      name: 'Solution 1',
       relatedMilestones: 'Milestone 1'
     });
 
     // Check second solution
     expect(result[1]).toMatchObject({
-      type: 'solution',
-      name: 'Solution 2',
+      __typename: 'MTOTemplateSolution',
       id: 'sol-2',
+      name: 'Solution 2',
       relatedMilestones: 'Milestone 1'
     });
   });
@@ -239,6 +266,7 @@ describe('flattenTemplateData Function', () => {
     const templateNoSolutions: MtoTemplateType = {
       ...mockTemplate,
       isAdded: true,
+      solutions: [],
       categories: [
         {
           __typename: 'MTOTemplateCategory',

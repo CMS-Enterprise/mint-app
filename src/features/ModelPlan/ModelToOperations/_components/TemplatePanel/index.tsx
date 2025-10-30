@@ -242,7 +242,9 @@ const TemplatePanel = ({ template }: { template: MtoTemplateType }) => {
                       </p>
                       <p className="margin-0 text-base">
                         {t('templateLibrary.relatedMilestones')}:{' '}
-                        {item.relatedMilestones}
+                        {item.relatedMilestones?.length > 0
+                          ? item.relatedMilestones
+                          : t('templateLibrary.noneSpecified')}
                       </p>
                     </>
                   )}
