@@ -36,8 +36,6 @@ func batchModelPlansGetByStatusGroup(ctx context.Context, statusGroup []models.M
 		allStatuses = append(allStatuses, models.ModelPlanStatusGroupToModelStatus[group]...)
 	}
 
-	// var statuses = models.ModelPlanStatusGroupToModelStatus[statusGroup]
-
 	data, err := storage.ModelPlanGetByStatuses(loaders.DataReader.Store, logger, allStatuses)
 	if err != nil {
 		return errorPerEachKey[models.ModelPlanStatusGroup, []*models.ModelPlan](statusGroup, err)
@@ -47,14 +45,26 @@ func batchModelPlansGetByStatusGroup(ctx context.Context, statusGroup []models.M
 		return modelPlan.Status
 	}
 
-	getResFunc := func(key models.ModelPlanStatusGroup, resMap map[models.ModelPlanStatusGroup]*[]models.ModelStatus) (*models.ModelPlan, bool) {
-
-		res, ok := resMap[key]
-		if ok {
-			return res, ok
+	// This get res function uses two different keys,
+	// 1. to make a map of model plans by Model Status
+	// 2. to get model plans by Model Plan Status Group by looking up all relevant Model Statuses for that group
+	// Get res then combines the list and returns the results in the order requested by the dataloader
+	getResFunc := func(key models.ModelPlanStatusGroup, resMap map[models.ModelStatus][]*models.ModelPlan) ([]*models.ModelPlan, bool) {
+		// Get all the statuses for that status group
+		relevantStatuses := models.ModelPlanStatusGroupToModelStatus[key]
+		allRelevantModelPlans := []*models.ModelPlan{}
+		// for each status, check if there is a result
+		for _, status := range relevantStatuses {
+			res, ok := resMap[status]
+			// if there are models for that status append them to the overall result
+			if ok && res != nil && len(res) > 0 {
+				allRelevantModelPlans = append(allRelevantModelPlans, res...)
+			}
 		}
-		return nil, ok
+		// return the collection of model plans for all relevant statuses
+		return allRelevantModelPlans, len(allRelevantModelPlans) > 0
 	}
+
 	return oneToManyWithCustomKeyDataLoader(statusGroup, data, getKeyFunc, getResFunc)
 
 }
