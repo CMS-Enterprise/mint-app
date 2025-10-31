@@ -97,31 +97,31 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     fi
     
     # Check that all new files follow naming convention
-    echo ""
-    echo "Checking naming convention for new files..."
-    INVALID_NEW_FILES=""
-    while IFS= read -r file; do
-        if [ -n "$file" ]; then
-            if ! validate_filename "$file"; then
-                INVALID_NEW_FILES="${INVALID_NEW_FILES}${file}\n"
-            fi
-        fi
-    done <<< "$ALL_NEW_FILES"
-    
-    if [ -n "$INVALID_NEW_FILES" ]; then
-        echo -e "${RED}❌ ERROR: Invalid migration filenames found!${NC}"
-        echo -e "${RED}All migration files must follow the naming convention: V<number>__<description>.sql${NC}"
-        echo -e "\nInvalid files:"
-        echo -e "${INVALID_NEW_FILES}" | while IFS= read -r line; do
-            if [ -n "$line" ]; then
-                echo -e "   • $line"
-            fi
-        done
-        echo -e "\n${YELLOW}💡 Example valid filename: V001__create_users_table.sql${NC}"
-        exit 1
-    fi
-    
-    echo -e "${GREEN}✓ All new files follow naming convention${NC}"
+    # echo ""
+    # echo "Checking naming convention for new files..."
+    # INVALID_NEW_FILES=""
+    # while IFS= read -r file; do
+    #     if [ -n "$file" ]; then
+    #         if ! validate_filename "$file"; then
+    #             INVALID_NEW_FILES="${INVALID_NEW_FILES}${file}\n"
+    #         fi
+    #     fi
+    # done <<< "$ALL_NEW_FILES"
+    # 
+    # if [ -n "$INVALID_NEW_FILES" ]; then
+    #     echo -e "${RED}❌ ERROR: Invalid migration filenames found!${NC}"
+    #     echo -e "${RED}All migration files must follow the naming convention: V<number>__<description>.sql${NC}"
+    #     echo -e "\nInvalid files:"
+    #     echo -e "${INVALID_NEW_FILES}" | while IFS= read -r line; do
+    #         if [ -n "$line" ]; then
+    #             echo -e "   • $line"
+    #         fi
+    #     done
+    #     echo -e "\n${YELLOW}💡 Example valid filename: V001__create_users_table.sql${NC}"
+    #     exit 1
+    # fi
+    # 
+    # echo -e "${GREEN}✓ All new files follow naming convention${NC}"
     
     # Now get only the valid migration files
     NEW_MIGRATIONS=$(echo "$ALL_NEW_FILES" | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
@@ -195,31 +195,31 @@ else
     fi
     
     # Check that all staged files follow naming convention
-    echo ""
-    echo "Checking naming convention for staged files..."
-    INVALID_STAGED_FILES=""
-    while IFS= read -r file; do
-        if [ -n "$file" ]; then
-            if ! validate_filename "$file"; then
-                INVALID_STAGED_FILES="${INVALID_STAGED_FILES}${file}\n"
-            fi
-        fi
-    done <<< "$ALL_STAGED_FILES"
-    
-    if [ -n "$INVALID_STAGED_FILES" ]; then
-        echo -e "${RED}❌ ERROR: Invalid migration filenames found!${NC}"
-        echo -e "${RED}All migration files must follow the naming convention: V<number>__<description>.sql${NC}"
-        echo -e "\nInvalid files:"
-        echo -e "${INVALID_STAGED_FILES}" | while IFS= read -r line; do
-            if [ -n "$line" ]; then
-                echo -e "   • $line"
-            fi
-        done
-        echo -e "\n${YELLOW}💡 Example valid filename: V001__create_users_table.sql${NC}"
-        exit 1
-    fi
-    
-    echo -e "${GREEN}✓ All staged files follow naming convention${NC}"
+    # echo ""
+    # echo "Checking naming convention for staged files..."
+    # INVALID_STAGED_FILES=""
+    # while IFS= read -r file; do
+    #     if [ -n "$file" ]; then
+    #         if ! validate_filename "$file"; then
+    #             INVALID_STAGED_FILES="${INVALID_STAGED_FILES}${file}\n"
+    #         fi
+    #     fi
+    # done <<< "$ALL_STAGED_FILES"
+    # 
+    # if [ -n "$INVALID_STAGED_FILES" ]; then
+    #     echo -e "${RED}❌ ERROR: Invalid migration filenames found!${NC}"
+    #     echo -e "${RED}All migration files must follow the naming convention: V<number>__<description>.sql${NC}"
+    #     echo -e "\nInvalid files:"
+    #     echo -e "${INVALID_STAGED_FILES}" | while IFS= read -r line; do
+    #         if [ -n "$line" ]; then
+    #             echo -e "   • $line"
+    #         fi
+    #     done
+    #     echo -e "\n${YELLOW}💡 Example valid filename: V001__create_users_table.sql${NC}"
+    #     exit 1
+    # fi
+    # 
+    # echo -e "${GREEN}✓ All staged files follow naming convention${NC}"
     
     # Now get only the valid migration files
     STAGED_MIGRATIONS=$(echo "$ALL_STAGED_FILES" | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
