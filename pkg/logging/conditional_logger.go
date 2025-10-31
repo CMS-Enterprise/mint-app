@@ -30,3 +30,7 @@ func (l *ConditionalLogger) ErrorOrWarn(msg string, fields ...zap.Field) {
 		l.Warn(msg, fields...)
 	}
 }
+
+func (l *ConditionalLogger) Zap() *zap.Logger {
+	return &l.Logger
+}

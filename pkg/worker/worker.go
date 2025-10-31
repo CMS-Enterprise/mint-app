@@ -8,6 +8,7 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -24,6 +25,10 @@ type Worker struct {
 	Connections          int
 	ProcessJobs          bool
 	OktaAPIClient        oktaapi.Client
+}
+
+func (w *Worker) GetILogger() logging.ILogger {
+	return logging.NewZapLoggerPointer(w.Logger)
 }
 
 type JobWrapper struct {

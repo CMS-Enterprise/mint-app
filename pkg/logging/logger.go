@@ -44,6 +44,9 @@ func (l *ZapLogger) WithLazy(fields ...zap.Field) ILogger {
 	logger := l.Logger.WithLazy(fields...)
 	return &ZapLogger{*logger}
 }
+func (l *ZapLogger) Zap() *zap.Logger {
+	return &l.Logger
+}
 
 // ErrorOrWarn implemenets ILogger ErrorOrWarn by calling the Error method by default
 func (l *ZapLogger) ErrorOrWarn(msg string, fields ...zap.Field) {

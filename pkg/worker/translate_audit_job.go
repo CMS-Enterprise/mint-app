@@ -31,7 +31,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.GetILogger(), helper)
 
 	logger.Info("translating job reached")
 	if len(args) < 2 {
@@ -54,7 +54,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	ctxWithLoaders := loaders.CTXWithLoaders(ctx, loaders.NewDataLoaders(w.Store))
 
 	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
-	conditionalLogger := logging.NewConditionalLogger(logger)
+	conditionalLogger := logging.NewConditionalLogger(logger.Zap())
 
 	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, conditionalLogger, auditID, queueID)
 	if translationErr != nil {

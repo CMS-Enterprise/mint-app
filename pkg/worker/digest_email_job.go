@@ -33,7 +33,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 	dateAnalyzed := args[0].(string)
 
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.GetILogger(), helper)
 
 	logger.Info("getting collection of unique userIds that have favorited a model")
 
@@ -74,7 +74,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger := loggerWithFaktoryFields(w.GetILogger(), helper)
 	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
 	return nil
@@ -95,12 +95,12 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
+	logger := loggerWithFaktoryFields(w.GetILogger(), helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
 	logger.Info("preparing to send daily digest email")
 
 	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
 	// This is not needed currently.
-	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger.Zap(), dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	if sendErr != nil {
 		logger.Error("error sending daily digest notification", zap.Error(sendErr))
 	}
@@ -115,12 +115,12 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed))
+	logger := loggerWithFaktoryFields(w.GetILogger(), helper, logfields.Date(dateAnalyzed))
 	logger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
 		w.Store,
-		logger,
+		logger.Zap(),
 		w.EmailTemplateService,
 		w.EmailService,
 		w.AddressBook,

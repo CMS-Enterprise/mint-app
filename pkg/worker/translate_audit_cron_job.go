@@ -19,7 +19,7 @@ func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...interface{})
 	// Call TranslateAuditBatchJob
 	helper := faktory_worker.HelperFor(ctx)
 
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.GetILogger(), helper)
 	logger.Debug("translate audit cron job called")
 
 	now := time.Now()

@@ -24,6 +24,7 @@ type ILogger interface {
 	Sync() error
 	Core() zapcore.Core
 	Name() string
+	Zap() *zap.Logger
 }
 
 func Whatever() {

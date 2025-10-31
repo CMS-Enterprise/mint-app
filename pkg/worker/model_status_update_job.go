@@ -20,7 +20,7 @@ const (
 // args[0] model_plan_id (UUID)
 func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) (returnedError error) {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.GetILogger(), helper)
 	logger.Info("model status update job reached.")
 
 	if len(args) < 1 {
@@ -40,7 +40,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 	return resolvers.TryNotificationSendIncorrectModelStatus(
 		ctx,
 		w.Store,
-		logger,
+		logger.Zap(),
 		w.EmailService,
 		&w.EmailTemplateService,
 		w.AddressBook,

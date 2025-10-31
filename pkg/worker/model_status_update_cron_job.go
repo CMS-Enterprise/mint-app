@@ -20,7 +20,7 @@ func (w *Worker) ModelStatusUpdateCronJob(ctx context.Context, args ...interface
 
 	now := time.Now()
 
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.GetILogger(), helper)
 	logger.Info("creating Model Status Update Cron Job")
 
 	// Note, this function doesn't need a param, adding so it can be distinguished from another batch job call

@@ -5,11 +5,11 @@ import (
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 )
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
@@ -31,10 +31,10 @@ func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perfo
 // extraFields is a convenience param to add additional fields
 // the underlying method calls loggerWithFaktoryStandardFields
 func loggerWithFaktoryFieldsWithoutBatchID(
-	logger *zap.Logger,
+	logger logging.ILogger,
 	helper faktory_worker.Helper,
 	extraFields ...zapcore.Field,
-) *zap.Logger {
+) logging.ILogger {
 
 	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
 }
@@ -43,10 +43,10 @@ func loggerWithFaktoryFieldsWithoutBatchID(
 // extraFields is a convenience param to add additional fields
 // the underlying method calls loggerWithFaktoryStandardFields
 func loggerWithFaktoryFields(
-	logger *zap.Logger,
+	logger logging.ILogger,
 	helper faktory_worker.Helper,
 	extraFields ...zapcore.Field,
-) *zap.Logger {
+) logging.ILogger {
 
 	extraFields = append(extraFields, logfields.BID(helper.Bid()))
 	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
@@ -57,7 +57,7 @@ func loggerWithFaktoryFields(
 // additional fields can be decorated later by simply calling logger.With
 // jid is job id,
 // job type is the type of job that is being run
-func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType string, extraFields ...zapcore.Field) *zap.Logger {
+func loggerWithFaktoryStandardFields(logger logging.ILogger, jid string, jobType string, extraFields ...zapcore.Field) logging.ILogger {
 	//instantiate a traceID
 	trace := uuid.New()
 	fields := append([]zapcore.Field{
