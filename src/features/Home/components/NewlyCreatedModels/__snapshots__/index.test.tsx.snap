@@ -13,12 +13,12 @@ exports[`NewlyCreatedModels > matches snapshot while loading 1`] = `
       <h2
         class="margin-bottom-2"
       >
-        Newly created Model Plans
+        Newly created models
       </h2>
       <p
         class="line-height-body-5 font-body-md"
       >
-        Check out the Model Plans created within the last six months to stay up-to-date on what’s happening at CMMI.
+        Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.
       </p>
     </div>
     <div
@@ -53,19 +53,19 @@ exports[`NewlyCreatedModels > matches snapshot with models 1`] = `
       <h2
         class="margin-bottom-2"
       >
-        Newly created Model Plans
+        Newly created models
       </h2>
       <p
         class="line-height-body-5 font-body-md"
       >
-        Check out the Model Plans created within the last six months to stay up-to-date on what’s happening at CMMI.
+        Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.
       </p>
       <a
         class="usa-link margin-top-2"
         data-discover="true"
         href="/notifications/settings"
       >
-        Get notified when a Model Plan is added to MINT
+        Get notified when a model is added to MINT
       </a>
     </div>
     <div
@@ -351,19 +351,19 @@ exports[`NewlyCreatedModels > matches snapshot with no models 1`] = `
       <h2
         class="margin-bottom-2"
       >
-        Newly created Model Plans
+        Newly created models
       </h2>
       <p
         class="line-height-body-5 font-body-md"
       >
-        Check out the Model Plans created within the last six months to stay up-to-date on what’s happening at CMMI.
+        Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.
       </p>
       <a
         class="usa-link margin-top-2"
         data-discover="true"
         href="/notifications/settings"
       >
-        Get notified when a Model Plan is added to MINT
+        Get notified when a model is added to MINT
       </a>
     </div>
     <div
@@ -380,7 +380,7 @@ exports[`NewlyCreatedModels > matches snapshot with no models 1`] = `
           <h4
             class="usa-alert__heading"
           >
-            There are no new Model Plans.
+            There are no new models.
           </h4>
           <p
             class="usa-alert__text"
