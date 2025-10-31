@@ -1,11 +1,4 @@
-type ModelPlanByStatusGroup {
-  statusGroup: ModelPlanStatusGroup!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-}
-
 extend type Query {
-  modelPlansByStatusGroup(
-    statusGroup: ModelPlanStatusGroup!
-  ): [ModelPlanByStatusGroup!]! @hasRole(role: MINT_USER)
+  modelPlansByStatusGroup(statusGroup: ModelPlanStatusGroup!): [ModelPlan!]!
+    @hasRole(role: MINT_USER)
 }

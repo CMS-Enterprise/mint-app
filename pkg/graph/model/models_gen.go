@@ -151,12 +151,6 @@ type MTOSolutionTranslation struct {
 	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
 }
 
-type ModelPlanByStatusGroup struct {
-	StatusGroup ModelPlanStatusGroup `json:"statusGroup"`
-	ModelPlanID uuid.UUID            `json:"modelPlanID"`
-	ModelPlan   models.ModelPlan     `json:"modelPlan"`
-}
-
 // Represents model plan base translation data
 type ModelPlanTranslation struct {
 	ModelName    models.TranslationField            `json:"modelName" db:"model_name"`
@@ -2154,73 +2148,6 @@ func (e *ModelPlanFilter) UnmarshalJSON(b []byte) error {
 }
 
 func (e ModelPlanFilter) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
-type ModelPlanStatusGroup string
-
-const (
-	ModelPlanStatusGroupPreClearance ModelPlanStatusGroup = "PRE_CLEARANCE"
-	ModelPlanStatusGroupInClearance  ModelPlanStatusGroup = "IN_CLEARANCE"
-	ModelPlanStatusGroupCleared      ModelPlanStatusGroup = "CLEARED"
-	ModelPlanStatusGroupAnnounced    ModelPlanStatusGroup = "ANNOUNCED"
-	ModelPlanStatusGroupActive       ModelPlanStatusGroup = "ACTIVE"
-	ModelPlanStatusGroupEnded        ModelPlanStatusGroup = "ENDED"
-	ModelPlanStatusGroupCanceled     ModelPlanStatusGroup = "CANCELED"
-	ModelPlanStatusGroupPaused       ModelPlanStatusGroup = "PAUSED"
-)
-
-var AllModelPlanStatusGroup = []ModelPlanStatusGroup{
-	ModelPlanStatusGroupPreClearance,
-	ModelPlanStatusGroupInClearance,
-	ModelPlanStatusGroupCleared,
-	ModelPlanStatusGroupAnnounced,
-	ModelPlanStatusGroupActive,
-	ModelPlanStatusGroupEnded,
-	ModelPlanStatusGroupCanceled,
-	ModelPlanStatusGroupPaused,
-}
-
-func (e ModelPlanStatusGroup) IsValid() bool {
-	switch e {
-	case ModelPlanStatusGroupPreClearance, ModelPlanStatusGroupInClearance, ModelPlanStatusGroupCleared, ModelPlanStatusGroupAnnounced, ModelPlanStatusGroupActive, ModelPlanStatusGroupEnded, ModelPlanStatusGroupCanceled, ModelPlanStatusGroupPaused:
-		return true
-	}
-	return false
-}
-
-func (e ModelPlanStatusGroup) String() string {
-	return string(e)
-}
-
-func (e *ModelPlanStatusGroup) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = ModelPlanStatusGroup(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ModelPlanStatusGroup", str)
-	}
-	return nil
-}
-
-func (e ModelPlanStatusGroup) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *ModelPlanStatusGroup) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e ModelPlanStatusGroup) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

@@ -474,3 +474,20 @@ func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.
 
 	return *taskStatus, nil
 }
+
+func ModelPlanGetByStatuses(np sqlutils.NamedPreparer, logger *zap.Logger, statuses []models.ModelStatus) ([]*models.ModelPlan, error) {
+	arg := map[string]interface{}{
+		"statuses": pq.Array(statuses),
+	}
+
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByStatusGroup, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, err
+	}
+	return modelPlans, nil
+}
