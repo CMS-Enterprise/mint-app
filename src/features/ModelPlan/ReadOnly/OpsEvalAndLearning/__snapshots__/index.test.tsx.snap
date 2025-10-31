@@ -249,7 +249,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-_r_3_"
+                        aria-describedby="tooltip-_r_4_"
                         class="usa-tooltip__trigger mint-no-print"
                         data-testid="triggerElement"
                         tabindex="0"
@@ -274,7 +274,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-_r_3_"
+                        id="tooltip-_r_4_"
                         role="tooltip"
                         title="(implementation, data analysis, quality, etc.)"
                       >
@@ -908,7 +908,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-_r_4_"
+                    aria-describedby="tooltip-_r_5_"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -933,7 +933,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-_r_4_"
+                    id="tooltip-_r_5_"
                     role="tooltip"
                     title="This means we would use these files for Participating and Preferred Providers."
                   >
@@ -1006,435 +1006,544 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
       </div>
     </div>
     <div
-      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-you-establish-a-benchmark-to-capture-performance margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Will you establish a benchmark to capture performance?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes, and we will reconcile actual performance against it
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Note for benchmark
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-you-compute-performance-scores margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Will you compute performance scores?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Note for computing
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class=""
-    >
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-you-make-risk-adjustments-to-performance-scores margin-bottom-3"
-            >
-              <div
-                class="read-only-section--question"
-              >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will you make risk adjustments to performance scores?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-you-make-risk-adjustments-to-feedback-results margin-bottom-3"
-            >
-              <div
-                class="read-only-section--question"
-              >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will you make risk adjustments to feedback results?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     />
     <div
       class=""
-    >
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
-            >
-              <div
-                class="read-only-section--question"
-              >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will you make risk adjustments to payments?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-you-make-risk-adjustments-to-others margin-bottom-3"
-            >
-              <div
-                class="read-only-section--question"
-              >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will you make risk adjustments to others?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Notes
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Note for risk 
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class=""
-    >
-      <div
-        class="grid-row grid-gap"
-        data-testid="grid"
-      >
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-participants-be-able-to-appeal-performance-scores margin-bottom-3"
-            >
-              <div
-                class="read-only-section--question"
-              >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will participants be able to appeal performance scores?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="desktop:grid-col-6"
-          data-testid="grid"
-        >
-          <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
-          >
-            <div
-              class="read-only-section read-only-section--will-participants-be-able-to-appeal-feedback-results margin-bottom-3"
-            >
-              <div
-                class="read-only-section--question"
-              >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will participants be able to appeal feedback results?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class=""
     />
     <div
       class=""
-    >
+    />
+    <div>
       <div
-        class="grid-row grid-gap"
-        data-testid="grid"
+        class="margin-top-4 padding-top-4 border-top-1px border-base-light"
       >
         <div
-          class="desktop:grid-col-6"
+          class="desktop:grid-col-12"
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
+            class="read-only-section read-only-section--will-you-establish-a-benchmark-to-capture-performance margin-bottom-3"
           >
             <div
-              class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
+              class="read-only-section--question"
             >
-              <div
-                class="read-only-section--question"
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
               >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will participants be able to appeal payments?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-              >
-                Yes
-              </div>
+                Will you establish a benchmark to capture performance?
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Yes, and we will reconcile actual performance against it
             </div>
           </div>
         </div>
         <div
-          class="desktop:grid-col-6"
+          class="desktop:grid-col-12"
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-12"
-            data-testid="grid"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="read-only-section read-only-section--will-participants-be-able-to-appeal-others margin-bottom-3"
+              class="read-only-section--question"
             >
-              <div
-                class="read-only-section--question"
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
               >
-                <span
-                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-                >
-                  Will participants be able to appeal others?
-                </span>
-              </div>
-              <div
-                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                Notes
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Note for benchmark
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--will-you-compute-performance-scores margin-bottom-3"
+          >
+            <div
+              class="read-only-section--question"
+            >
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
               >
-                Yes
-              </div>
+                Will you compute performance scores?
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <div
+              class="read-only-section--question"
+            >
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Note for computing
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class=""
-    />
-    <div
-      class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
+      <table
+        class="margin-bottom-4 margin-top-neg-1 desktop:grid-col-12"
+        style="border-collapse: collapse;"
       >
+        <thead>
+          <tr
+            class="border-bottom-2px"
+          >
+            <th
+              class="padding-1 padding-left-0 text-left text-bold font-body-sm line-height-sans-4 margin-bottom-2 grid-col-8"
+              scope="col"
+            >
+              Will you make risk adjustments to any of the following?
+            </th>
+            <th
+              class="padding-1 padding-left-0 text-left text-bold font-body-sm line-height-sans-4 margin-bottom-2 grid-col-4"
+              scope="col"
+            >
+              Yes/No
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="border-bottom-1px"
+          >
+            <td
+              class="padding-y-2 padding-left-0 "
+            >
+              <p
+                class="margin-0"
+              >
+                Performance scores
+              </p>
+            </td>
+            <td
+              class="padding-y-2 padding-left-0"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                <svg
+                  aria-label="yes"
+                  class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                  />
+                </svg>
+                Yes
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="border-bottom-1px"
+          >
+            <td
+              class="padding-y-2 padding-left-0 "
+            >
+              <p
+                class="margin-0"
+              >
+                Feedback results
+              </p>
+            </td>
+            <td
+              class="padding-y-2 padding-left-0"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                <svg
+                  aria-label="yes"
+                  class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                  />
+                </svg>
+                Yes
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="border-bottom-1px"
+          >
+            <td
+              class="padding-y-2 padding-left-0 "
+            >
+              <p
+                class="margin-0"
+              >
+                Payments
+              </p>
+            </td>
+            <td
+              class="padding-y-2 padding-left-0"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                <svg
+                  aria-label="yes"
+                  class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                  />
+                </svg>
+                Yes
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="border-bottom-1px"
+          >
+            <td
+              class="padding-y-2 padding-left-0 "
+            >
+              <p
+                class="margin-0"
+              >
+                Others
+              </p>
+            </td>
+            <td
+              class="padding-y-2 padding-left-0"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                <svg
+                  aria-label="yes"
+                  class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                  />
+                </svg>
+                Yes
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
         <div
-          class="read-only-section read-only-section--notes margin-bottom-3"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
           <div
-            class="read-only-section--question"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            <div
+              class="read-only-section--question"
             >
-              Notes
-            </span>
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Note for risk 
+            </div>
           </div>
+        </div>
+        <table
+          class="margin-bottom-4 margin-top-neg-1 desktop:grid-col-12"
+          style="border-collapse: collapse;"
+        >
+          <thead>
+            <tr
+              class="border-bottom-2px"
+            >
+              <th
+                class="padding-1 padding-left-0 text-left text-bold font-body-sm line-height-sans-4 margin-bottom-2 grid-col-8"
+                scope="col"
+              >
+                Will participants be able to appeal any of the following?
+                <span
+                  class="top-2px position-relative text-normal"
+                >
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-_r_6_"
+                      class="usa-tooltip__trigger mint-no-print margin-left-05"
+                      data-testid="triggerElement"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        aria-label="info"
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-_r_6_"
+                      role="tooltip"
+                      title="If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames."
+                    >
+                      If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.
+                    </span>
+                  </span>
+                </span>
+              </th>
+              <th
+                class="padding-1 padding-left-0 text-left text-bold font-body-sm line-height-sans-4 margin-bottom-2 grid-col-4"
+                scope="col"
+              >
+                Yes/No
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="border-bottom-1px"
+            >
+              <td
+                class="padding-y-2 padding-left-0 "
+              >
+                <p
+                  class="margin-0"
+                >
+                  Performance scores
+                </p>
+              </td>
+              <td
+                class="padding-y-2 padding-left-0"
+              >
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <svg
+                    aria-label="yes"
+                    class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    />
+                  </svg>
+                  Yes
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="border-bottom-1px"
+            >
+              <td
+                class="padding-y-2 padding-left-0 "
+              >
+                <p
+                  class="margin-0"
+                >
+                  Feedback results
+                </p>
+              </td>
+              <td
+                class="padding-y-2 padding-left-0"
+              >
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <svg
+                    aria-label="yes"
+                    class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    />
+                  </svg>
+                  Yes
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="border-bottom-1px"
+            >
+              <td
+                class="padding-y-2 padding-left-0 "
+              >
+                <p
+                  class="margin-0"
+                >
+                  Payments
+                </p>
+              </td>
+              <td
+                class="padding-y-2 padding-left-0"
+              >
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <svg
+                    aria-label="yes"
+                    class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    />
+                  </svg>
+                  Yes
+                </div>
+              </td>
+            </tr>
+            <tr
+              class="border-bottom-1px"
+            >
+              <td
+                class="padding-y-2 padding-left-0 "
+              >
+                <p
+                  class="margin-0"
+                >
+                  Others
+                </p>
+              </td>
+              <td
+                class="padding-y-2 padding-left-0"
+              >
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <svg
+                    aria-label="yes"
+                    class="usa-icon usa-icon--size-3 text-success margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    />
+                  </svg>
+                  Yes
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
           <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            class="read-only-section read-only-section--notes margin-bottom-3"
           >
-            Note for appeal
+            <div
+              class="read-only-section--question"
+            >
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Note for appeal
+            </div>
           </div>
         </div>
       </div>
@@ -1801,24 +1910,6 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
         </div>
       </div>
     </div>
-    <div
-      class=""
-    />
-    <div
-      class=""
-    />
-    <div
-      class=""
-    />
-    <div
-      class=""
-    />
-    <div
-      class=""
-    />
-    <div
-      class=""
-    />
     <div
       class="margin-top-4 padding-top-4 border-top-1px border-base-light"
     >
@@ -2544,7 +2635,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-_r_5_"
+                    aria-describedby="tooltip-_r_7_"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -2569,7 +2660,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-_r_5_"
+                    id="tooltip-_r_7_"
                     role="tooltip"
                     title="Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability."
                   >

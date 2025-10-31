@@ -262,7 +262,7 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'opsEvalAndLearning.qualityReportingFrequencyOther',
   'opsEvalAndLearning.evaluationApproaches', // array
   'opsEvalAndLearning.evaluationApproachOther',
-  'opsEvalAndLearning.evalutaionApproachNote',
+  'opsEvalAndLearning.evaluationApproachNote',
   'opsEvalAndLearning.dataNeededForMonitoring', // array
   'opsEvalAndLearning.dataNeededForMonitoringOther',
   'opsEvalAndLearning.dataNeededForMonitoringNote',

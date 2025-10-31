@@ -20,7 +20,7 @@ const evaluationMockData: GetEvaluationType = {
   iddocSupport: true,
   evaluationApproaches: [EvaluationApproachType.COMPARISON_MATCH],
   evaluationApproachOther: '',
-  evalutaionApproachNote: '',
+  evaluationApproachNote: '',
   ccmInvolvmentOther: '',
   ccmInvolvmentNote: '',
   dataNeededForMonitoring: [],

@@ -51,7 +51,7 @@ SELECT
     appeal_note,
     evaluation_approaches,
     evaluation_approach_other,
-    evalutaion_approach_note,
+    evaluation_approach_note,
     ccm_involvment,
     ccm_involvment_other,
     ccm_involvment_note,

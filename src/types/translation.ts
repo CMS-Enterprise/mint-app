@@ -711,7 +711,7 @@ export type TranslationOpsEvalAndLearningForm = {
   // Evaluation
   evaluationApproaches: TranslationFieldPropertiesWithOptions<EvaluationApproachType>;
   evaluationApproachOther: TranslationFieldProperties;
-  evalutaionApproachNote: TranslationFieldProperties;
+  evaluationApproachNote: TranslationFieldProperties;
   ccmInvolvment: TranslationFieldPropertiesWithOptionsAndChildren<CcmInvolvmentType>;
   ccmInvolvmentOther: TranslationFieldProperties;
   ccmInvolvmentNote: TranslationFieldProperties;

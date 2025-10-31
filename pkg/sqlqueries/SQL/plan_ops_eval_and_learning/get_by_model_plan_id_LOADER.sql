@@ -59,7 +59,7 @@ SELECT
     oel.appeal_note,
     oel.evaluation_approaches,
     oel.evaluation_approach_other,
-    oel.evalutaion_approach_note,
+    oel.evaluation_approach_note,
     oel.ccm_involvment,
     oel.ccm_involvment_other,
     oel.ccm_involvment_note,

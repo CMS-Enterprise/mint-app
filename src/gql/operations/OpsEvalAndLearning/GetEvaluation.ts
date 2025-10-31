@@ -12,7 +12,7 @@ export default gql(/* GraphQL */ `
         iddocSupport
         evaluationApproaches
         evaluationApproachOther
-        evalutaionApproachNote
+        evaluationApproachNote
         ccmInvolvment
         ccmInvolvmentOther
         ccmInvolvmentNote

@@ -57,7 +57,7 @@ export default gql(/* GraphQL */ `
         appealNote
         evaluationApproaches
         evaluationApproachOther
-        evalutaionApproachNote
+        evaluationApproachNote
         ccmInvolvment
         ccmInvolvmentOther
         ccmInvolvmentNote
