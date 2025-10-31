@@ -4,12 +4,12 @@ import "go.uber.org/zap"
 
 type ConditionalLogger struct {
 	shouldError bool
-	zap.Logger
+	ZapLogger
 }
 
 func NewConditionalLogger(logger *zap.Logger) *ConditionalLogger {
 	return &ConditionalLogger{
-		Logger: NewZapLogger(logger),
+		ZapLogger: NewZapLogger(logger),
 	}
 }
 

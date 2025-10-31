@@ -8,7 +8,10 @@ type ZapLogger struct {
 	zap.Logger
 }
 
-func NewZapLogger(logger *zap.Logger) *ZapLogger {
+func NewZapLogger(logger *zap.Logger) ZapLogger {
+	return ZapLogger{*logger}
+}
+func NewZapLoggerPointer(logger *zap.Logger) *ZapLogger {
 	return &ZapLogger{*logger}
 }
 
@@ -40,4 +43,9 @@ func (l *ZapLogger) With(fields ...zap.Field) ILogger {
 func (l *ZapLogger) WithLazy(fields ...zap.Field) ILogger {
 	logger := l.Logger.WithLazy(fields...)
 	return &ZapLogger{*logger}
+}
+
+// ErrorOrWarn implemenets ILogger ErrorOrWarn by calling the Error method by default
+func (l *ZapLogger) ErrorOrWarn(msg string, fields ...zap.Field) {
+	l.Error(msg, fields...)
 }

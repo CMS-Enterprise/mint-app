@@ -27,7 +27,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger log
 	queueEntry.Attempts++
 	queueEntry.Status = models.TPSProcessing
 
-	queueEntry, err = TranslatedAuditQueueUpdate(store, logging.NewZapLogger(logger), queueEntry, constants.GetSystemAccountUUID())
+	queueEntry, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
 		logger.Error(unableToUpdateQueueMessage, zap.Error(err))
 		return nil, err

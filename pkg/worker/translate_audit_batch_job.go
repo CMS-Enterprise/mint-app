@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -56,7 +57,7 @@ func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
-		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj, constants.GetSystemAccountUUID())
+		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logging.NewConditionalLogger(w.Logger), queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
 			err := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s", queueObj.ChangeID, queueObj.ID)
 			logger.Error(err.Error(), zap.Error(err))
