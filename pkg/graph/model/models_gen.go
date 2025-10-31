@@ -128,6 +128,7 @@ type MTOMilestoneTranslation struct {
 	Status               models.TranslationFieldWithOptions `json:"status" db:"status"`
 	Key                  models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
 	MtoCategoryID        models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+	AssignedTo           models.TranslationField            `json:"assignedTo" db:"assigned_to"`
 	Notes                models.TranslationField            `json:"notes" db:"notes"`
 }
 

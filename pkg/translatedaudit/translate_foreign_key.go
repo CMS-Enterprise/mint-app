@@ -2,6 +2,7 @@ package translatedaudit
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"fmt"
 	"strconv"
@@ -46,6 +47,10 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 	case models.TNExistingModel:
 		{
 			return getExistingModelForeignKeyReference(ctx, store, value)
+		}
+	case models.TNPlanCollaborator:
+		{
+			return getPlanCollaboratorForeignKeyReference(ctx, store, value)
 		}
 	// MTO
 	case models.TNMTOCategory:
@@ -400,4 +405,34 @@ func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Sto
 	}
 
 	return existingModel.ModelName, nil
+}
+
+// getPlanCollaboratorForeignKeyReference returns the common name of the user associated with the plan collaborator
+func getPlanCollaboratorForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the plan collaborator reference. err %w", err)
+	}
+
+	// get the collaborator
+	collaborator, err := store.PlanCollaboratorGetByID(uuidKey)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return DataNotAvailableMessage, nil
+		}
+		return "", fmt.Errorf("there was an issue translating the plan collaborator foreign key reference. err %w", err)
+	}
+
+	if collaborator == nil {
+		return DataNotAvailableMessage, nil
+	}
+
+	// Get the user account to return the name
+	userAccount, err := storage.UserAccountGetByID(store, collaborator.UserID)
+	if err != nil {
+		return "", fmt.Errorf("there was an issue getting the user account for plan collaborator translation. err %w", err)
+	}
+
+	return userAccount.CommonName, nil
 }
