@@ -6,8 +6,8 @@ import (
 )
 
 type Logger interface {
-	Sugar() *Logger
-	Named(s string) *Logger
+	// Sugar() *Logger
+	// Named(s string) *Logger
 	WithOptions(opts ...zap.Option) *Logger
 	With(fields ...zap.Field) *Logger
 	WithLazy(fields ...zap.Field) *Logger
