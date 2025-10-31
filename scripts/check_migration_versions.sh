@@ -125,7 +125,7 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     # echo -e "${GREEN}✓ All new files follow naming convention${NC}"
     
     # Now get only the valid migration files
-    NEW_MIGRATIONS=$(echo "$ALL_NEW_FILES" | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    NEW_MIGRATIONS=$(echo "$ALL_NEW_FILES" | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
     echo ""
     echo "📋 New migrations in this PR:"
@@ -134,7 +134,7 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     done <<< "$NEW_MIGRATIONS"
     
     # Get the highest version in base branch
-    BASE_MIGRATIONS=$(git ls-tree -r --name-only origin/"$BASE_BRANCH" "$MIGRATIONS_DIR" 2>/dev/null | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    BASE_MIGRATIONS=$(git ls-tree -r --name-only origin/"$BASE_BRANCH" "$MIGRATIONS_DIR" 2>/dev/null | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
     max_version=0
     if [ -n "$BASE_MIGRATIONS" ]; then
@@ -223,7 +223,7 @@ else
     # echo -e "${GREEN}✓ All staged files follow naming convention${NC}"
     
     # Now get only the valid migration files
-    STAGED_MIGRATIONS=$(echo "$ALL_STAGED_FILES" | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    STAGED_MIGRATIONS=$(echo "$ALL_STAGED_FILES" | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
     echo ""
     echo "📋 New migrations being added:"
@@ -232,7 +232,7 @@ else
     done <<< "$STAGED_MIGRATIONS"
     
     # Get the highest existing version number (excluding staged files)
-    EXISTING_MIGRATIONS=$(git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null | grep "^${MIGRATIONS_DIR}/V[0-9]\+__.*\.sql$" || true)
+    EXISTING_MIGRATIONS=$(git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
     if [ -z "$EXISTING_MIGRATIONS" ]; then
         # This is the first migration
