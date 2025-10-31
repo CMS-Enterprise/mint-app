@@ -10,5 +10,5 @@ SELECT
     modified_by,
     modified_dts
 FROM model_plan
-WHERE model_plan.archived is FALSE AND status IN (:statuses);
+WHERE model_plan.archived IS FALSE AND status IN (:statuses);
             
