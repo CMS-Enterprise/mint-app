@@ -13,6 +13,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/mappings"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -43,7 +44,7 @@ func tableListContains(tableName models.TableName, tableNameList []models.TableN
 func TranslateAudit(
 	ctx context.Context,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger logging.ILogger,
 	auditID int) (*models.TranslatedAuditWithTranslatedFields, error) {
 	auditWithModelPlan, err := storage.AuditChangeWithModelPlanGetByID(store, logger, auditID)
 	if err != nil {

@@ -1,10 +1,16 @@
-package logger
+package logging
 
 import "go.uber.org/zap"
 
 type ConditionalLogger struct {
 	shouldError bool
 	zap.Logger
+}
+
+func NewConditionalLogger(logger *zap.Logger) *ConditionalLogger {
+	return &ConditionalLogger{
+		Logger: NewZapLogger(logger),
+	}
 }
 
 //TODO, determine if we want to keep both Error and ErrorOrWarn methods, perhaps add to the interface?

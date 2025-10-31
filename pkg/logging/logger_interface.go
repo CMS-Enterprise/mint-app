@@ -5,12 +5,12 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-type Logger interface {
-	// Sugar() *Logger
-	// Named(s string) *Logger
-	WithOptions(opts ...zap.Option) *Logger
-	With(fields ...zap.Field) *Logger
-	WithLazy(fields ...zap.Field) *Logger
+type ILogger interface {
+	// Sugar() ILogger
+	Named(s string) ILogger
+	WithOptions(opts ...zap.Option) ILogger
+	With(fields ...zap.Field) ILogger
+	WithLazy(fields ...zap.Field) ILogger
 	Level() zapcore.Level
 	Check(lvl zapcore.Level, msg string) *zapcore.CheckedEntry
 	Log(lvl zapcore.Level, msg string, fields ...zap.Field)

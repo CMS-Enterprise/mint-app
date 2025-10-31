@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
-	"github.com/cms-enterprise/mint-app/pkg/logger"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -16,7 +16,7 @@ import (
 
 const unableToUpdateQueueMessage = "unable to update audit queue entity"
 
-func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger logger.Logger, auditID int, queueID uuid.UUID) (*models.TranslatedAuditWithTranslatedFields, error) {
+func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger logging.ILogger, auditID int, queueID uuid.UUID) (*models.TranslatedAuditWithTranslatedFields, error) {
 
 	queueEntry, err := storage.TranslatedAuditQueueGetByID(store, queueID)
 	if err != nil {
@@ -27,7 +27,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger log
 	queueEntry.Attempts++
 	queueEntry.Status = models.TPSProcessing
 
-	queueEntry, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
+	queueEntry, err = TranslatedAuditQueueUpdate(store, logging.NewZapLogger(logger), queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
 		logger.Error(unableToUpdateQueueMessage, zap.Error(err))
 		return nil, err
@@ -65,7 +65,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger log
 // TranslatedAuditQueueUpdate handles the business logic of setting who modified a translated audit queue entry, and calling the appropriate store methods.
 func TranslatedAuditQueueUpdate(
 	np sqlutils.NamedPreparer,
-	logger *zap.Logger,
+	logger logging.ILogger,
 	translatedAuditQueue *models.TranslatedAuditQueue,
 	modifiedByAccountID uuid.UUID,
 ) (*models.TranslatedAuditQueue, error) {
