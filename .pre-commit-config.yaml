@@ -108,6 +108,16 @@ repos:
         files: "pkg/graph/.*\\.go|pkg/graph/.*\\.graphql|src/gql/operations.*\\.ts"
         pass_filenames: false
 
+  - repo: local
+    hooks:
+      - id: check_migration_versions
+        name: Validate migration version numbers
+        description: Ensures no duplicate migration versions exist and new migrations are consecutive
+        entry: scripts/check_migration_versions.sh
+        language: script
+        files: ^migrations/.*
+        pass_filenames: false
+
   - repo: https://github.com/awslabs/git-secrets
     rev: b9e96b3212fa06aea65964ff0d5cda84ce935f38
     hooks:
