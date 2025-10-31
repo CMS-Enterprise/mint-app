@@ -3,6 +3,8 @@ package loaders
 import (
 	"context"
 
+	"github.com/samber/lo"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -30,11 +32,12 @@ func batchModelPlansGetByStatusGroup(ctx context.Context, statusGroup []models.M
 		return errorPerEachKey[models.ModelPlanStatusGroup, []*models.ModelPlan](statusGroup, err)
 	}
 
-	var allStatuses []models.ModelStatus
-	// todo remove duplicates, consider using lo package
-	for _, group := range statusGroup {
-		allStatuses = append(allStatuses, models.ModelPlanStatusGroupToModelStatus[group]...)
-	}
+	// Get all relevant statuses for the requested status groups
+	// 1. flatten the list of statuses
+	// 2. get unique statuses only
+	allStatuses := lo.Uniq(lo.FlatMap(statusGroup, func(group models.ModelPlanStatusGroup, _ int) []models.ModelStatus {
+		return models.ModelPlanStatusGroupToModelStatus[group]
+	}))
 
 	data, err := storage.ModelPlanGetByStatuses(loaders.DataReader.Store, logger, allStatuses)
 	if err != nil {
