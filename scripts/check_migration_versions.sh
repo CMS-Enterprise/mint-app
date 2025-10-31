@@ -20,16 +20,17 @@ echo "🔍 Validating migration version numbers..."
 MIGRATIONS_DIR="migrations"
 
 # Helper function to validate filename convention
-validate_filename() {
-    local file="$1"
-    local filename
-    filename=$(basename "$file")
-    # Check if filename matches the pattern V<number>__<description>.sql
-    if ! [[ $filename =~ ^V[0-9]+__[^/]+\.sql$ ]]; then
-        return 1
-    fi
-    return 0
-}
+# Commented out - not currently in use
+# validate_filename() {
+#     local file="$1"
+#     local filename
+#     filename=$(basename "$file")
+#     # Check if filename matches the pattern V<number>__<description>.sql
+#     if ! [[ $filename =~ ^V[0-9]+__[^/]+\.sql$ ]]; then
+#         return 1
+#     fi
+#     return 0
+# }
 
 # Get all migration files (committed + staged)
 ALL_MIGRATIONS=$(find "$MIGRATIONS_DIR" -name "V*__*.sql" -type f 2>/dev/null | sort -V)
