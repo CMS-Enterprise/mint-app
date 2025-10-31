@@ -164,6 +164,11 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     expected_version=$((max_version + 1))
     consecutive_error=false
     
+    if [ -z "$staged_versions" ]; then
+        echo -e "${GREEN}✅ No new migrations to validate${NC}"
+        exit 0
+    fi
+    
     echo ""
     echo "Checking if new migrations are consecutive..."
     while IFS=: read -r version_num file; do
@@ -267,6 +272,11 @@ else
     # Validate each staged migration
     expected_version=$((max_version + 1))
     consecutive_error=false
+    
+    if [ -z "$staged_versions" ]; then
+        echo -e "${GREEN}✓ No migrations to validate${NC}"
+        exit 0
+    fi
     
     while IFS=: read -r version_num file; do
         if [ "$version_num" -ne "$expected_version" ]; then
