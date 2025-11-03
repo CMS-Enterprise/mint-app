@@ -12,5 +12,5 @@ import (
 
 // ModelPlansByStatusGroup is the resolver for the modelPlansByStatusGroup field.
 func (r *queryResolver) ModelPlansByStatusGroup(ctx context.Context, statusGroup models.ModelPlanStatusGroup) ([]*models.ModelPlan, error) {
-	return ModelPlansByStatusLOADER(ctx, statusGroup)
+	return ModelPlansByStatusGroupLOADER(ctx, statusGroup)
 }
