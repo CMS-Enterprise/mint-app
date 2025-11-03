@@ -12,6 +12,7 @@ SELECT
     m.responsible_component,
     m.facilitated_by,
     m.facilitated_by_other,
+    m.assigned_to,
     m.need_by,
     m.status,
     m.risk_indicator,

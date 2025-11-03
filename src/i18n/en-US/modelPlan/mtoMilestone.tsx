@@ -146,6 +146,19 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.045
   },
+  assignedTo: {
+    gqlField: 'assignedTo',
+    goField: 'AssignedTo',
+    dbField: 'assigned_to',
+    label: 'Assigned to',
+    exportLabel: 'Milestone assigned to',
+    sublabel:
+      'Assign the person who is responsible for ensuring the work for this milestone is completed. This field searches CMS’ EUA database but is limited to individuals added to this model in MINT.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.SELECT,
+    order: 1.05,
+    tableReference: TableName.PLAN_COLLABORATOR
+  },
   needBy: {
     gqlField: 'needBy',
     goField: 'NeedBy',
@@ -156,7 +169,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       'Choose the date when onboarding and implementation work for all solutions in this milestone should be complete. Format: mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
-    order: 1.05
+    order: 1.06
   },
   status: {
     gqlField: 'status',
@@ -185,7 +198,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1.06,
+    order: 1.07,
     options: {
       NOT_STARTED: 'Not started',
       IN_PROGRESS: 'In progress',
@@ -212,7 +225,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     ),
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1.07,
+    order: 1.08,
     options: {
       ON_TRACK: 'No risk (on track)',
       OFF_TRACK: 'Some risk (off track)',
@@ -279,7 +292,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       QPP: 'Quality Payment Program',
       PAM: 'Patient Activation Measure',
       NCQA: 'National Committee for Quality Assurance',
-      RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
@@ -349,7 +361,6 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       QPP: 'Quality Payment Program',
       PAM: 'Patient Activation Measure',
       NCQA: 'National Committee for Quality Assurance',
-      RMD: 'Rapid Measure Development',
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',

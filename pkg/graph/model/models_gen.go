@@ -128,6 +128,7 @@ type MTOMilestoneTranslation struct {
 	Status               models.TranslationFieldWithOptions `json:"status" db:"status"`
 	Key                  models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
 	MtoCategoryID        models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+	AssignedTo           models.TranslationField            `json:"assignedTo" db:"assigned_to"`
 	Notes                models.TranslationField            `json:"notes" db:"notes"`
 }
 
@@ -2100,6 +2101,7 @@ const (
 	ModelPlanFilterWithCrTdls           ModelPlanFilter = "WITH_CR_TDLS"
 	ModelPlanFilterFavorited            ModelPlanFilter = "FAVORITED"
 	ModelPlanFilterApproachingClearance ModelPlanFilter = "APPROACHING_CLEARANCE"
+	ModelPlanFilterNewlyCreated         ModelPlanFilter = "NEWLY_CREATED"
 )
 
 var AllModelPlanFilter = []ModelPlanFilter{
@@ -2108,11 +2110,12 @@ var AllModelPlanFilter = []ModelPlanFilter{
 	ModelPlanFilterWithCrTdls,
 	ModelPlanFilterFavorited,
 	ModelPlanFilterApproachingClearance,
+	ModelPlanFilterNewlyCreated,
 }
 
 func (e ModelPlanFilter) IsValid() bool {
 	switch e {
-	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance:
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance, ModelPlanFilterNewlyCreated:
 		return true
 	}
 	return false

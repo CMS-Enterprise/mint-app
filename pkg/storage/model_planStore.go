@@ -353,6 +353,29 @@ func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *
 
 }
 
+// ModelPlanCollectionNewlyCreated returns a list of all model plans created within the last 6 months
+func (s *Store) ModelPlanCollectionNewlyCreated(logger *zap.Logger) ([]*models.ModelPlan, error) {
+	logger.Info("fetching model plans created within the last 6 months")
+
+	args := map[string]interface{}{}
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		logger.Error(
+			"failed to fetch model plans created within the last 6 months",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+	return modelPlans, nil
+}
+
 // ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
 // Note: Externally, this is called "followed" but internally we call it "favorited"
 func (s *Store) ModelPlanCollectionFavorited(

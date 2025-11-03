@@ -9,6 +9,8 @@ export type HomepageSettingsType = Record<
   Record<string, string | object>
 >;
 
+// TODO: Init Newly created feature commit
+
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
@@ -101,6 +103,13 @@ const settings: HomepageSettingsType = {
       'This tabbed section displays the models owned by a specific CMS component or CMMI group.',
     noResultsHeading: 'It looks like you forgot to select at least one group.',
     noResultsDescription: 'Select groups'
+  },
+  [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
+    heading: 'Newly created models',
+    description:
+      'Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.',
+    noResultsHeading: 'There are no new models.',
+    noResultsDescription: 'Check back later.'
   }
 };
 
@@ -190,7 +199,14 @@ const customHome = {
     '<h3>There is no record of any {{status}} models {{article}} this {{type}}.</h3>',
   noModelsDescription:
     'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
-  generalStatus
+  generalStatus,
+  getNotified: 'Get notified when a model is added to MINT',
+  created: 'Created {{date}}',
+  updated: 'Updated {{date}}',
+  discussions: '{{count}} discussion',
+  discussions_other: '{{count}} discussions',
+  error: 'There was an error fetching the newly created models.',
+  errorDescription: 'Please try again later.'
 };
 
 export default customHome;

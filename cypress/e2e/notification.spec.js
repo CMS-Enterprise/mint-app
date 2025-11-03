@@ -180,7 +180,7 @@ describe('Notification Center', () => {
       .type('Jerry', { delay: 100 });
 
     cy.get('#react-select-model-team-cedar-contact-option-0')
-      .contains('Jerry Seinfeld, SF13')
+      .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
       .click();
 
     cy.get('#collaborator-role').within(() => {

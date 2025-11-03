@@ -14,6 +14,7 @@ const (
 	ViewCustomizationTypeModelsBySolution           ViewCustomizationType = "MODELS_BY_SOLUTION"
 	ViewCustomizationTypeModelsApproachingClearance ViewCustomizationType = "MODELS_APPROACHING_CLEARANCE"
 	ViewCustomizationTypeModelsByGroup              ViewCustomizationType = "MODELS_BY_GROUP"
+	ViewCustomizationTypeNewlyCreatedModelPlans     ViewCustomizationType = "NEWLY_CREATED_MODEL_PLANS"
 )
 
 type ComponentGroup string

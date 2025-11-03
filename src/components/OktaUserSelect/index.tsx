@@ -145,7 +145,7 @@ const IndicatorsContainer = (
 
 /** Returns formatted contact label */
 const formatLabel = (contact: OktaUserType) =>
-  `${contact.displayName}${contact?.username && `, ${contact.username}`}`;
+  `${contact.displayName}${contact?.email && ` (${contact.email})`}`;
 
 /**
  * Combobox to look up contact by name from Okta
@@ -312,20 +312,10 @@ export default function OktaUserSelect({
         NoOptionsMessage: disabled ? () => null : NoOptionsMessage
       }}
       options={contacts.map((contact: OktaUserType) => ({
-        label: `${contact.displayName}, ${contact.username}`,
+        label: formatLabel(contact),
         value: contact
       }))}
       styles={customStyles}
-      defaultValue={
-        value
-          ? {
-              value,
-              label: `${value?.displayName}${
-                value?.username && `, ${value?.username}`
-              }`
-            }
-          : undefined
-      }
       value={value ? { value, label: formatLabel(value) } : undefined}
       onChange={(
         newValue: SingleValue<{ value: OktaUserType; label: string }>

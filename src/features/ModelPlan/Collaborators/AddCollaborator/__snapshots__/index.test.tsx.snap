@@ -135,7 +135,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                   class="cedar-contact-select__control css-79rxjr-control"
                 >
                   <div
-                    class="cedar-contact-select__value-container css-1fdsijx-ValueContainer"
+                    class="cedar-contact-select__value-container cedar-contact-select__value-container--has-value css-1fdsijx-ValueContainer"
                   >
                     <div
                       class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
@@ -148,7 +148,6 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                       <input
                         aria-activedescendant=""
                         aria-autocomplete="list"
-                        aria-describedby="react-select-model-team-cedar-contact-placeholder"
                         aria-expanded="false"
                         aria-haspopup="true"
                         aria-labelledby="label-model-team-cedar-contact"
@@ -194,7 +193,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                 <input
                   name="model-team-cedar-contact"
                   type="hidden"
-                  value=""
+                  value="[object Object]"
                 />
               </div>
             </div>

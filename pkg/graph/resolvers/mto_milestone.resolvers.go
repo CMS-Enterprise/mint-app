@@ -28,6 +28,14 @@ func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MT
 	return *obj.FacilitatedBy, nil
 }
 
+// AssignedToPlanCollaborator is the resolver for the assignedToPlanCollaborator field.
+func (r *mTOMilestoneResolver) AssignedToPlanCollaborator(ctx context.Context, obj *models.MTOMilestone) (*models.PlanCollaborator, error) {
+	if obj.AssignedTo == nil {
+		return nil, nil
+	}
+	return PlanCollaboratorGetByID(ctx, *obj.AssignedTo)
+}
+
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
 	if obj.Key != nil {
