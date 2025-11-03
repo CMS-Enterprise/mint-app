@@ -146,23 +146,22 @@ const ModelDetailsTable = ({
           return value;
         }
       },
-      // TODO: End date column
-      // {
-      //   id: 'endDate',
-      //   Header: homeT('requestsTable.headers.endDate'),
-      //   accessor: ({ timeline: { performancePeriodEnds } }) => {
-      //     if (performancePeriodEnds) {
-      //       return formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy');
-      //     }
-      //     return null;
-      //   },
-      //   Cell: ({ value }: { value: string }) => {
-      //     if (!value) {
-      //       return <div>{homeT('requestsTable.tbd')}</div>;
-      //     }
-      //     return value;
-      //   }
-      // },
+      {
+        id: 'endDate',
+        Header: homeT('requestsTable.headers.endDate'),
+        accessor: ({ timeline: { performancePeriodEnds } }) => {
+          if (performancePeriodEnds) {
+            return formatDateUtc(performancePeriodEnds, 'MM/dd/yyyy');
+          }
+          return null;
+        },
+        Cell: ({ value }: { value: string }) => {
+          if (!value) {
+            return <div>{homeT('requestsTable.tbd')}</div>;
+          }
+          return value;
+        }
+      },
       {
         id: 'paymentDate',
         Header: homeT('requestsTable.headers.paymentDate'),

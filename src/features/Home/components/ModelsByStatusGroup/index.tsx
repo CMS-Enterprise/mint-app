@@ -3,71 +3,84 @@ import { useTranslation } from 'react-i18next';
 import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
-  GetModelPlansQuery,
-  ModelPlanFilter,
-  useGetModelPlansQuery,
+  GetModelPlansByStatusGroupQuery,
+  ModelPlanStatusGroup,
+  useGetModelPlansByStatusGroupQuery,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import { ModelByStatusGroupEnum } from 'i18n/en-US/home/customHome';
 
 import ModelDetailsTable from '../ModelDetailsTable';
 
-export type ModelPlansType = GetModelPlansQuery['modelPlanCollection'][number];
+export type ModelPlansType =
+  GetModelPlansByStatusGroupQuery['modelPlansByStatusGroup'][number];
 
 const HIDDEN_COLUMNS_BY_STATUS = {
-  [ModelByStatusGroupEnum.PRE_CLEARANCE]: ['paymentDate', 'endDate'],
-  [ModelByStatusGroupEnum.IN_CLEARANCE]: ['clearanceDate', 'endDate'],
-  [ModelByStatusGroupEnum.CLEARED]: ['status', 'paymentDate', 'endDate'],
-  [ModelByStatusGroupEnum.ANNOUNCED]: ['status', 'clearanceDate', 'endDate'],
-  [ModelByStatusGroupEnum.ACTIVE]: ['status', 'clearanceDate', 'paymentDate'],
-  [ModelByStatusGroupEnum.ENDED]: ['status', 'clearanceDate', 'paymentDate'],
-  [ModelByStatusGroupEnum.CANCELED]: ['status', 'paymentDate', 'endDate'],
-  [ModelByStatusGroupEnum.PAUSED]: ['status', 'paymentDate', 'endDate']
+  [ModelPlanStatusGroup.PRE_CLEARANCE]: ['paymentDate', 'endDate'],
+  [ModelPlanStatusGroup.IN_CLEARANCE]: ['clearanceDate', 'endDate'],
+  [ModelPlanStatusGroup.CLEARED]: ['status', 'clearanceDate', 'endDate'],
+  [ModelPlanStatusGroup.ANNOUNCED]: ['status', 'clearanceDate', 'endDate'],
+  [ModelPlanStatusGroup.ACTIVE]: ['status', 'clearanceDate', 'paymentDate'],
+  [ModelPlanStatusGroup.ENDED]: ['status', 'clearanceDate', 'paymentDate'],
+  [ModelPlanStatusGroup.CANCELED]: ['status', 'paymentDate', 'endDate'],
+  [ModelPlanStatusGroup.PAUSED]: ['status', 'paymentDate', 'endDate']
 };
 
 const ModelsByStatusGroup = () => {
   const { t: customHomeT } = useTranslation('customHome');
 
-  const isMobile = useCheckResponsiveScreen('mobile');
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const orderedModelPlanStatusKeys = useMemo(
-    () => Object.values(ModelByStatusGroupEnum),
+  const orderedModelPlanStatusGroups = useMemo(
+    () => [
+      ModelPlanStatusGroup.PRE_CLEARANCE,
+      ModelPlanStatusGroup.IN_CLEARANCE,
+      ModelPlanStatusGroup.CLEARED,
+      ModelPlanStatusGroup.ANNOUNCED,
+      ModelPlanStatusGroup.ACTIVE,
+      ModelPlanStatusGroup.ENDED,
+      ModelPlanStatusGroup.CANCELED,
+      ModelPlanStatusGroup.PAUSED
+    ],
     []
   );
 
   const [currentStatus, setCurrentStatus] = useState(
-    orderedModelPlanStatusKeys[0]
+    orderedModelPlanStatusGroups[0]
   );
 
   const {
-    data: modelPlans,
+    data: modelPlansByStatusGroup,
     loading,
     error
-  } = useGetModelPlansQuery({
+  } = useGetModelPlansByStatusGroupQuery({
     variables: {
-      filter: ModelPlanFilter.INCLUDE_ALL,
-      isMAC: false
+      statusGroup: currentStatus as ModelPlanStatusGroup
     }
   });
 
   const data = useMemo(() => {
-    return (modelPlans?.modelPlanCollection ?? []) as ModelPlansType[];
-  }, [modelPlans?.modelPlanCollection]);
+    return (modelPlansByStatusGroup?.modelPlansByStatusGroup ??
+      []) as ModelPlansType[];
+  }, [modelPlansByStatusGroup?.modelPlansByStatusGroup]);
 
-  const statusNavs = orderedModelPlanStatusKeys.map(statusKey => (
+  const statusNavs = orderedModelPlanStatusGroups.map(statusGroup => (
     <button
       type="button"
-      key={statusKey}
-      onClick={() => setCurrentStatus(statusKey)}
+      key={statusGroup}
+      onClick={() => setCurrentStatus(statusGroup)}
       className={classNames('usa-nav__link margin-left-neg-2 margin-right-2', {
-        'usa-current': currentStatus === statusKey
+        'usa-current': currentStatus === statusGroup
       })}
     >
-      <span>{statusKey}</span>
+      <span>
+        {customHomeT(
+          `settings.${ViewCustomizationType.MODELS_BY_STATUS}.status.${statusGroup}.label`
+        )}
+      </span>
     </button>
   ));
 
@@ -81,7 +94,7 @@ const ModelsByStatusGroup = () => {
 
   return (
     <div className="models-by-solutions">
-      {!isMobile && (
+      {!isTablet && (
         <Header
           basic
           extended={false}
@@ -97,21 +110,23 @@ const ModelsByStatusGroup = () => {
         </Header>
       )}
 
-      {isMobile && (
+      {isTablet && (
         <div className="maxw-mobile-lg">
           <Select
             id="solutionKey"
             name="solutionKey"
             value={currentStatus}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setCurrentStatus(e.currentTarget.value as ModelByStatusGroupEnum)
+              setCurrentStatus(e.currentTarget.value as ModelPlanStatusGroup)
             }
             className="margin-bottom-4 text-primary text-bold"
           >
-            {orderedModelPlanStatusKeys.map(statusKey => {
+            {orderedModelPlanStatusGroups.map(statusGroup => {
               return (
-                <option key={statusKey} value={statusKey}>
-                  {statusKey}
+                <option key={statusGroup} value={statusGroup}>
+                  {customHomeT(
+                    `settings.${ViewCustomizationType.MODELS_BY_STATUS}.status.${statusGroup}.label`
+                  )}
                 </option>
               );
             })}
@@ -119,19 +134,18 @@ const ModelsByStatusGroup = () => {
         </div>
       )}
 
-      {data.length === 0 && (
-        <Alert
-          type="info"
-          heading={customHomeT(
-            `settings.${ViewCustomizationType.MODELS_BY_STATUS}.noResultsHeading.${currentStatus}`
-          )}
-        />
-      )}
-
-      {data.length > 0 && (
+      {data.length > 0 ? (
         <ModelDetailsTable
           models={data}
           hiddenColumns={HIDDEN_COLUMNS_BY_STATUS[currentStatus]}
+          canSearch={data.length > 4}
+        />
+      ) : (
+        <Alert
+          type="info"
+          heading={customHomeT(
+            `settings.${ViewCustomizationType.MODELS_BY_STATUS}.status.${currentStatus}.noResultsHeading`
+          )}
         />
       )}
     </div>

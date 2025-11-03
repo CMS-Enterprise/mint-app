@@ -1,4 +1,8 @@
-import { GeneralStatus, ViewCustomizationType } from 'gql/generated/graphql';
+import {
+  GeneralStatus,
+  ModelPlanStatusGroup,
+  ViewCustomizationType
+} from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
@@ -32,27 +36,37 @@ const settings: HomepageSettingsType = {
     description:
       'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.',
     status: {
-      'Pre-clearance': { noResultsHeading: 'There are no early-stage models.' },
-      'In clearance': {
+      [ModelPlanStatusGroup.PRE_CLEARANCE]: {
+        label: 'Pre-clearance',
+        noResultsHeading: 'There are no early-stage models.'
+      },
+      [ModelPlanStatusGroup.IN_CLEARANCE]: {
+        label: 'In clearance',
         noResultsHeading: 'There are no models currently in clearance.'
       },
-      Cleared: {
+      [ModelPlanStatusGroup.CLEARED]: {
+        label: 'Cleared',
         noResultsHeading:
           'There are no models that have cleared and are pending announcement.'
       },
-      Announced: {
+      [ModelPlanStatusGroup.ANNOUNCED]: {
+        label: 'Announced',
         noResultsHeading: 'There are no models that have just been announced.'
       },
-      Active: {
+      [ModelPlanStatusGroup.ACTIVE]: {
+        label: 'Active',
         noResultsHeading: 'There are no active models.'
       },
-      Ended: {
+      [ModelPlanStatusGroup.ENDED]: {
+        label: 'Ended',
         noResultsHeading: 'There are no models that have ended.'
       },
-      Canceled: {
+      [ModelPlanStatusGroup.CANCELED]: {
+        label: 'Canceled',
         noResultsHeading: 'There are no canceled models.'
       },
-      Paused: {
+      [ModelPlanStatusGroup.PAUSED]: {
+        label: 'Paused',
         noResultsHeading: 'There are no paused models.'
       }
     }
@@ -70,7 +84,8 @@ const settings: HomepageSettingsType = {
     heading: 'Models approaching clearance',
     description:
       'These models are scheduled for clearance within the next six months.',
-    noResultsHeading: 'TODO://dynamic-There are no early-stage models.'
+    noResultsHeading: 'There are no Models approaching clearance.',
+    noResultsDescription: 'Check back later.'
   },
   [ViewCustomizationType.MODELS_BY_SOLUTION]: {
     heading: 'Models using specific solutions',
@@ -95,17 +110,6 @@ export const generalStatus: Record<GeneralStatus, string> = {
   [GeneralStatus.ENDED]: 'Ended',
   [GeneralStatus.OTHER]: 'Total'
 };
-
-export enum ModelByStatusGroupEnum {
-  PRE_CLEARANCE = 'Pre-clearance',
-  IN_CLEARANCE = 'In clearance',
-  CLEARED = 'Cleared',
-  ANNOUNCED = 'Announced',
-  ACTIVE = 'Active',
-  ENDED = 'Ended',
-  CANCELED = 'Canceled',
-  PAUSED = 'Paused'
-}
 
 const customHome = {
   title: 'Welcome to MINT',
