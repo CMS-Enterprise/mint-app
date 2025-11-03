@@ -165,16 +165,20 @@ const Home = () => {
         </>
       </>
     ),
-    [ViewCustomizationType.MODELS_BY_STATUS]: (
+    [ViewCustomizationType.MODELS_BY_STATUS_GROUP]: (
       <>
         <Divider className="margin-y-6" />
 
         <h2 className="margin-top-0 margin-bottom-2">
-          {t(`settings.${ViewCustomizationType.MODELS_BY_STATUS}.heading`)}
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.heading`
+          )}
         </h2>
 
         <p>
-          {t(`settings.${ViewCustomizationType.MODELS_BY_STATUS}.description`)}
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.description`
+          )}
         </p>
 
         <ModelsByStatusGroup />

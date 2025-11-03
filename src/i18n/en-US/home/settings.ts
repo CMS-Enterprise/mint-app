@@ -22,7 +22,7 @@ const settings: HomepageSettingsType = {
     description:
       'This section shows only the models you’re following (like the one on the Models tab).'
   },
-  [ViewCustomizationType.MODELS_BY_STATUS]: {
+  [ViewCustomizationType.MODELS_BY_STATUS_GROUP]: {
     heading: 'Models by status',
     description:
       'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.'

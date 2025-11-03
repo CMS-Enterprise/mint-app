@@ -31,7 +31,7 @@ const settings: HomepageSettingsType = {
     noResultsDescription:
       'To follow a model, <link1>view all models</link1> and click the star icon (<star></star>) for any model to add it to this section.'
   },
-  [ViewCustomizationType.MODELS_BY_STATUS]: {
+  [ViewCustomizationType.MODELS_BY_STATUS_GROUP]: {
     heading: 'Models by status',
     description:
       'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.',

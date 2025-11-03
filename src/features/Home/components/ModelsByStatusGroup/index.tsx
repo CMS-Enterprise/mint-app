@@ -78,7 +78,7 @@ const ModelsByStatusGroup = () => {
     >
       <span>
         {customHomeT(
-          `settings.${ViewCustomizationType.MODELS_BY_STATUS}.status.${statusGroup}.label`
+          `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.status.${statusGroup}.label`
         )}
       </span>
     </button>
@@ -125,7 +125,7 @@ const ModelsByStatusGroup = () => {
               return (
                 <option key={statusGroup} value={statusGroup}>
                   {customHomeT(
-                    `settings.${ViewCustomizationType.MODELS_BY_STATUS}.status.${statusGroup}.label`
+                    `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.status.${statusGroup}.label`
                   )}
                 </option>
               );
@@ -144,7 +144,7 @@ const ModelsByStatusGroup = () => {
         <Alert
           type="info"
           heading={customHomeT(
-            `settings.${ViewCustomizationType.MODELS_BY_STATUS}.status.${currentStatus}.noResultsHeading`
+            `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.status.${currentStatus}.noResultsHeading`
           )}
         />
       )}
