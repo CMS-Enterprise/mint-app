@@ -14,25 +14,3 @@ import (
 func (r *queryResolver) ModelPlansByStatusGroup(ctx context.Context, statusGroup models.ModelPlanStatusGroup) ([]*models.ModelPlan, error) {
 	return ModelPlansByStatusLOADER(ctx, statusGroup)
 }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-/*
-	func (r *modelPlanByStatusResolver) Status(ctx context.Context, obj *models.ModelPlanByStatus) (model.ModelPlanStatus, error) {
-	return model.ModelPlanStatus(obj.Status), nil
-}
-func (r *modelPlanByStatusResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanByStatus) (*models.ModelPlan, error) {
-	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
-}
-func (r *queryResolver) ModelPlansByStatus(ctx context.Context, status model.ModelPlanStatus) ([]*models.ModelPlanByStatus, error) {
-	panic(fmt.Errorf("not implemented: ModelPlansByStatus - modelPlansByStatus"))
-}
-func (r *Resolver) ModelPlanByStatus() generated.ModelPlanByStatusResolver {
-	return &modelPlanByStatusResolver{r}
-}
-type modelPlanByStatusResolver struct{ *Resolver }
-*/
