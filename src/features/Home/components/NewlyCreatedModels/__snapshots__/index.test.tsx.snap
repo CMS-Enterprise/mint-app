@@ -1,0 +1,397 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NewlyCreatedModels > matches snapshot while loading 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-row grid-gap-6"
+    data-testid="grid"
+  >
+    <div
+      class="desktop:grid-col-5 flex-align-self-center"
+      data-testid="grid"
+    >
+      <h2
+        class="margin-bottom-2"
+      >
+        Newly created models
+      </h2>
+      <p
+        class="line-height-body-5 font-body-md"
+      >
+        Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.
+      </p>
+    </div>
+    <div
+      class="desktop:grid-col-7"
+      data-testid="grid"
+    >
+      <div
+        class="display-flex flex-justify-center margin-top-4"
+      >
+        <span
+          aria-valuetext="Loading"
+          class="mint-spinner"
+          data-testid="spinner"
+          role="progressbar"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`NewlyCreatedModels > matches snapshot with models 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-row grid-gap-6"
+    data-testid="grid"
+  >
+    <div
+      class="desktop:grid-col-5 flex-align-self-center"
+      data-testid="grid"
+    >
+      <h2
+        class="margin-bottom-2"
+      >
+        Newly created models
+      </h2>
+      <p
+        class="line-height-body-5 font-body-md"
+      >
+        Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.
+      </p>
+      <a
+        class="usa-link margin-top-2"
+        data-discover="true"
+        href="/notifications/settings"
+      >
+        Get notified when a model is added to MINT
+      </a>
+    </div>
+    <div
+      class="desktop:grid-col-7"
+      data-testid="grid"
+    >
+      <li
+        class="usa-card home__card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container"
+        >
+          <div
+            class="usa-collection__item border-0 padding-0 margin-0"
+          >
+            <a
+              aria-label="Innovative Care Model"
+              class="usa-link"
+              data-discover="true"
+              href="/models/model-1/read-view"
+            >
+              <span>
+                <h4
+                  class="usa-collection__heading display-inline margin-right-1 font-body-md"
+                >
+                  Innovative Care Model 
+                </h4>
+                <svg
+                  aria-label="forward"
+                  class="usa-icon top-3px"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+           
+          <div
+            class="display-block"
+          >
+            Created 10/01/2024 
+            <span
+              class="text-base-lighter margin-x-105"
+            >
+              |
+            </span>
+            Updated 10/15/2024
+            <span
+              class="text-base-lighter margin-x-105"
+            >
+              |
+            </span>
+            <svg
+              aria-label="comment"
+              class="usa-icon text-primary margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+              />
+            </svg>
+            3 discussions
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card home__card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container"
+        >
+          <div
+            class="usa-collection__item border-0 padding-0 margin-0"
+          >
+            <a
+              aria-label="Value-Based Care Initiative"
+              class="usa-link"
+              data-discover="true"
+              href="/models/model-2/read-view"
+            >
+              <span>
+                <h4
+                  class="usa-collection__heading display-inline margin-right-1 font-body-md"
+                >
+                  Value-Based Care Initiative 
+                </h4>
+                <svg
+                  aria-label="forward"
+                  class="usa-icon top-3px"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+           
+          <div
+            class="display-block"
+          >
+            Created 09/15/2024 
+          </div>
+        </div>
+      </li>
+      <li
+        class="usa-card home__card"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container"
+        >
+          <div
+            class="usa-collection__item border-0 padding-0 margin-0"
+          >
+            <a
+              aria-label="Primary Care First"
+              class="usa-link"
+              data-discover="true"
+              href="/models/model-3/read-view"
+            >
+              <span>
+                <h4
+                  class="usa-collection__heading display-inline margin-right-1 font-body-md"
+                >
+                  Primary Care First 
+                </h4>
+                <svg
+                  aria-label="forward"
+                  class="usa-icon top-3px"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+           
+          <div
+            class="display-block"
+          >
+            Created 08/20/2024 
+            <span
+              class="text-base-lighter margin-x-105"
+            >
+              |
+            </span>
+            Updated 09/01/2024
+            <span
+              class="text-base-lighter margin-x-105"
+            >
+              |
+            </span>
+            <svg
+              aria-label="comment"
+              class="usa-icon text-primary margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+              />
+            </svg>
+            1 discussion
+          </div>
+        </div>
+      </li>
+      <div
+        class=""
+      >
+        <nav
+          aria-label="Pagination"
+          class="usa-pagination mint-pagination"
+        >
+          <ul
+            class="usa-pagination__list"
+          >
+            <li
+              class="usa-pagination__item usa-pagination__page-no"
+            >
+              <button
+                aria-current="page"
+                aria-label="Page 1"
+                class="usa-button usa-button--unstyled usa-pagination__button usa-current"
+                data-testid="pagination-page-number"
+                type="button"
+              >
+                1
+              </button>
+            </li>
+            <li
+              class="usa-pagination__item usa-pagination__page-no"
+            >
+              <button
+                aria-label="Page 2"
+                class="usa-button usa-button--unstyled usa-pagination__button"
+                data-testid="pagination-page-number"
+                type="button"
+              >
+                2
+              </button>
+            </li>
+            <li
+              class="usa-pagination__item usa-pagination__arrow"
+            >
+              <button
+                aria-label="Next page"
+                class="usa-button usa-button--unstyled usa-pagination__link usa-pagination__next-page"
+                data-testid="pagination-next"
+                type="button"
+              >
+                <span
+                  class="usa-pagination__link-text"
+                >
+                  Next
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`NewlyCreatedModels > matches snapshot with no models 1`] = `
+<DocumentFragment>
+  <div
+    class="grid-row grid-gap-6"
+    data-testid="grid"
+  >
+    <div
+      class="desktop:grid-col-5 flex-align-self-center"
+      data-testid="grid"
+    >
+      <h2
+        class="margin-bottom-2"
+      >
+        Newly created models
+      </h2>
+      <p
+        class="line-height-body-5 font-body-md"
+      >
+        Check out the models created within the last six months to stay up-to-date on what’s happening at CMMI.
+      </p>
+      <a
+        class="usa-link margin-top-2"
+        data-discover="true"
+        href="/notifications/settings"
+      >
+        Get notified when a model is added to MINT
+      </a>
+    </div>
+    <div
+      class="desktop:grid-col-7"
+      data-testid="grid"
+    >
+      <div
+        class="usa-alert usa-alert--info flex margin-top-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            There are no new models.
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              Check back later.
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
