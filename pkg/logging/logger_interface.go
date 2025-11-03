@@ -18,6 +18,8 @@ type ILogger interface {
 	Info(msg string, fields ...zap.Field)
 	Warn(msg string, fields ...zap.Field)
 	Error(msg string, fields ...zap.Field)
+	// ErrorOrWarn logs an error message at the Error level, or a warning message at the Warn level depending on the logger's configuration.
+	ErrorOrWarn(msg string, fields ...zap.Field)
 	DPanic(msg string, fields ...zap.Field)
 	Panic(msg string, fields ...zap.Field)
 	Fatal(msg string, fields ...zap.Field)

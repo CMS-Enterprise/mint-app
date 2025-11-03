@@ -29,7 +29,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger log
 
 	queueEntry, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
-		logger.Error(unableToUpdateQueueMessage, zap.Error(err))
+		logger.ErrorOrWarn(unableToUpdateQueueMessage, zap.Error(err))
 		return nil, err
 	}
 
