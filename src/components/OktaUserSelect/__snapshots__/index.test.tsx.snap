@@ -107,7 +107,7 @@ exports[`OktaUserSelect > selects contact from dropdown 1`] = `
           role="option"
           tabindex="-1"
         >
-          Adeline Aarons, ABCD
+          Adeline Aarons (adeline.aarons@local.fake)
         </div>
       </div>
     </div>
