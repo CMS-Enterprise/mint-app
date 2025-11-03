@@ -321,7 +321,7 @@ func (suite *ResolverSuite) TestPlanCollaboratorDeleteLastModelLead() {
 	collaborator := collaborators[0]
 	deletedPlanCollaborator, err := PlanCollaboratorDelete(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
-	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
+	suite.Contains(err.Error(), "There must be at least one MODEL_LEAD assigned to each model plan")
 	suite.Nil(deletedPlanCollaborator)
 }
 

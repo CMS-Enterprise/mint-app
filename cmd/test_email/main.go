@@ -66,6 +66,9 @@ func main() {
 	// Daily Digest Email
 	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
 	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
+
+	// MTO Milestone Assignment Email
+	sendMTOMilestoneAssignedTestEmail(emailService, templateService, addressBook)
 }
 
 func noErr(err error) {
