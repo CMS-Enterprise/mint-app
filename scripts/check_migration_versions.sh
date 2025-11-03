@@ -90,7 +90,8 @@ fi
 
 if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     # Get ALL files added in migrations directory (not just valid ones)
-    ALL_NEW_FILES=$(git diff --name-only --diff-filter=A origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
+    # Include: A=Added, C=Copied, R=Renamed (in case files were duplicated)
+    ALL_NEW_FILES=$(git diff --name-only --diff-filter=ACR origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
     
     if [ -z "$ALL_NEW_FILES" ]; then
         echo -e "${GREEN}✅ No new migrations added in this PR${NC}"
@@ -127,10 +128,25 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     # Now get only the valid migration files
     NEW_MIGRATIONS=$(echo "$ALL_NEW_FILES" | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
+    # Debug: Show what we found before filtering
+    if [ -n "$ALL_NEW_FILES" ] && [ -z "$NEW_MIGRATIONS" ]; then
+        echo ""
+        echo -e "${YELLOW}⚠️  Warning: Found new files in migrations/ but none match the expected pattern${NC}"
+        echo "Files found:"
+        while IFS= read -r line; do
+            if [ -n "$line" ]; then
+                echo "   • $line"
+            fi
+        done <<< "$ALL_NEW_FILES"
+        echo -e "${YELLOW}Expected pattern: ${MIGRATIONS_DIR}/V[0-9]+__*.sql${NC}"
+    fi
+    
     echo ""
     echo "📋 New migrations in this PR:"
     while IFS= read -r line; do
-        echo "   • $line"
+        if [ -n "$line" ]; then
+            echo "   • $line"
+        fi
     done <<< "$NEW_MIGRATIONS"
     
     # Get the highest version in base branch
@@ -193,7 +209,8 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
 else
     # Local/pre-commit mode: check staged files
     # Get ALL staged files in migrations directory (not just valid ones)
-    ALL_STAGED_FILES=$(git diff --cached --name-only --diff-filter=A 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
+    # Include: A=Added, C=Copied, R=Renamed (in case files were duplicated)
+    ALL_STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACR 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
     
     if [ -z "$ALL_STAGED_FILES" ]; then
         echo -e "${GREEN}✓ No new migrations to validate${NC}"
@@ -230,10 +247,25 @@ else
     # Now get only the valid migration files
     STAGED_MIGRATIONS=$(echo "$ALL_STAGED_FILES" | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
+    # Debug: Show what we found before filtering
+    if [ -n "$ALL_STAGED_FILES" ] && [ -z "$STAGED_MIGRATIONS" ]; then
+        echo ""
+        echo -e "${YELLOW}⚠️  Warning: Found staged files in migrations/ but none match the expected pattern${NC}"
+        echo "Files found:"
+        while IFS= read -r line; do
+            if [ -n "$line" ]; then
+                echo "   • $line"
+            fi
+        done <<< "$ALL_STAGED_FILES"
+        echo -e "${YELLOW}Expected pattern: ${MIGRATIONS_DIR}/V[0-9]+__*.sql${NC}"
+    fi
+    
     echo ""
     echo "📋 New migrations being added:"
     while IFS= read -r line; do
-        echo "   • $line"
+        if [ -n "$line" ]; then
+            echo "   • $line"
+        fi
     done <<< "$STAGED_MIGRATIONS"
     
     # Get the highest existing version number (excluding staged files)
