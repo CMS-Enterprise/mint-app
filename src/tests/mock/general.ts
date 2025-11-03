@@ -13,12 +13,16 @@ import {
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
+  GetModelPlansByStatusGroupDocument,
+  GetModelPlansByStatusGroupQuery,
+  GetModelPlansByStatusGroupQueryVariables,
   GetModelPlansDocument,
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
   ModelCategory,
   ModelPhase,
   ModelPlanFilter,
+  ModelPlanStatusGroup,
   ModelStatus,
   MtoStatus,
   TaskStatus
@@ -26,6 +30,9 @@ import {
 
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
 type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
+type GetModelPlansByStatusGroupType =
+  GetModelPlansByStatusGroupQuery['modelPlansByStatusGroup'];
+
 export type EchimpCrAndTdlsType =
   GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
@@ -343,6 +350,186 @@ export const favoritesPlanCollectionMock = (
     }
   ];
 };
+
+export const modelPlansByStatusGroupPreClearanceMockData: GetModelPlansByStatusGroupType =
+  [
+    {
+      id: 'notarealid-1',
+      modelName: 'Plan With draft',
+      status: ModelStatus.PLAN_DRAFT,
+      abbreviation: null,
+      nameHistory: ['Plan With echimp CRs and TDLs 2'],
+      createdDts: '2025-11-03T17:35:50.985086Z',
+      mostRecentEdit: {
+        id: '04eacb02-1211-493c-bdc4',
+        date: '2025-11-03T17:35:50.985086Z',
+        __typename: 'TranslatedAudit'
+      },
+      basics: {
+        id: 'ff887238-e644-475d-91e1',
+        amsModelID: null,
+        modelCategory: null,
+        additionalModelCategories: [],
+        __typename: 'PlanBasics'
+      },
+      timeline: {
+        id: 'f90f4a55-8473-432d-ae72',
+        clearanceStarts: null,
+        performancePeriodStarts: null,
+        performancePeriodEnds: null,
+        __typename: 'PlanTimeline'
+      },
+      discussions: [],
+      payments: {
+        id: '899c7bc7-1b1c-42db-b9bd',
+        paymentStartDate: null,
+        __typename: 'PlanPayments'
+      },
+      __typename: 'ModelPlan'
+    },
+    {
+      id: '98749f57-38c7-4da2-8be2-4edd1b24dd6d',
+      modelName: 'Plan with Data Complete',
+      status: ModelStatus.PLAN_COMPLETE,
+      abbreviation: null,
+      nameHistory: ['Plan with Data Exchange'],
+      createdDts: '2025-11-03T17:35:50.726429Z',
+      mostRecentEdit: {
+        id: 'aaa74ef3-e422-407e-ae8c-cf8a33d36dc9',
+        date: '2025-11-03T18:04:26.800639Z',
+        __typename: 'TranslatedAudit'
+      },
+      basics: {
+        id: '853de963-11ed-4614-8523-3b527f54dd35',
+        amsModelID: null,
+        modelCategory: null,
+        additionalModelCategories: [],
+        __typename: 'PlanBasics'
+      },
+      timeline: {
+        id: '7bada62e-7acb-420c-93e2-5e0fc18c6cc8',
+        clearanceStarts: null,
+        performancePeriodStarts: null,
+        performancePeriodEnds: null,
+        __typename: 'PlanTimeline'
+      },
+      discussions: [],
+      payments: {
+        id: 'c42fd1fc-2d00-4a4a-8c09-6b583bbf55b0',
+        paymentStartDate: null,
+        __typename: 'PlanPayments'
+      },
+      __typename: 'ModelPlan'
+    }
+  ];
+
+export const modelsByStatusGroupPreClearanceMock: MockedResponse<
+  GetModelPlansByStatusGroupQuery,
+  GetModelPlansByStatusGroupQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelPlansByStatusGroupDocument,
+      variables: { statusGroup: ModelPlanStatusGroup.PRE_CLEARANCE }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlansByStatusGroup: modelPlansByStatusGroupPreClearanceMockData
+      }
+    }
+  }
+];
+
+export const modelPlansByStatusGroupActiveMockData: GetModelPlansByStatusGroupType =
+  [
+    {
+      id: '23070d62-e1fe-4444-a9fd-59a0034c2a0d',
+      modelName: 'Test Plan with Basics',
+      status: ModelStatus.ACTIVE,
+      abbreviation: 'basics',
+      nameHistory: ['Plan with Basics'],
+      createdDts: '2025-11-03T17:35:50.490224Z',
+      mostRecentEdit: {
+        id: '67df518d-eaff-4b2c-b6d4-cc86b3f985c0',
+        date: '2025-11-03T17:35:50.593821Z',
+        __typename: 'TranslatedAudit'
+      },
+      basics: {
+        id: '0b80b5c3-9e4d-4907-a4af-ca328d451a3d',
+        amsModelID: null,
+        modelCategory: null,
+        additionalModelCategories: [],
+        __typename: 'PlanBasics'
+      },
+      timeline: {
+        id: '763e77af-3c7a-45ad-8efe-746f62372b0f',
+        clearanceStarts: null,
+        performancePeriodStarts: null,
+        performancePeriodEnds: null,
+        __typename: 'PlanTimeline'
+      },
+      discussions: [],
+      payments: {
+        id: 'b9888ae9-5d5c-4fce-854a-5c2da3908162',
+        paymentStartDate: null,
+        __typename: 'PlanPayments'
+      },
+      __typename: 'ModelPlan'
+    },
+    {
+      id: 'fakeid-4',
+      modelName: 'Test Plan with Timeline',
+      status: ModelStatus.ACTIVE,
+      abbreviation: null,
+      nameHistory: ['Plan with Data Exchange'],
+      createdDts: '2025-11-03T17:35:50.726429Z',
+      mostRecentEdit: {
+        id: 'aaa74ef3-e422-407e-ae8c-cf8a33d36dc9',
+        date: '2025-11-03T18:04:26.800639Z',
+        __typename: 'TranslatedAudit'
+      },
+      basics: {
+        id: '853de963-11ed-4614-8523-3b527f54dd35',
+        amsModelID: null,
+        modelCategory: null,
+        additionalModelCategories: [],
+        __typename: 'PlanBasics'
+      },
+      timeline: {
+        id: '7bada62e-7acb-420c-93e2-5e0fc18c6cc8',
+        clearanceStarts: null,
+        performancePeriodStarts: null,
+        performancePeriodEnds: null,
+        __typename: 'PlanTimeline'
+      },
+      discussions: [],
+      payments: {
+        id: 'c42fd1fc-2d00-4a4a-8c09-6b583bbf55b0',
+        paymentStartDate: null,
+        __typename: 'PlanPayments'
+      },
+      __typename: 'ModelPlan'
+    }
+  ];
+
+export const modelsByStatusGroupActiveMock: MockedResponse<
+  GetModelPlansByStatusGroupQuery,
+  GetModelPlansByStatusGroupQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelPlansByStatusGroupDocument,
+      variables: { statusGroup: ModelPlanStatusGroup.ACTIVE }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlansByStatusGroup: modelPlansByStatusGroupActiveMockData
+      }
+    }
+  }
+];
 
 const echimpCRandTDLMockData: EchimpCrAndTdlsType[] = [
   {
