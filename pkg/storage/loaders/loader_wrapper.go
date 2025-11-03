@@ -30,6 +30,16 @@ func (lw *LoaderWrapper[K, V]) Load(ctx context.Context, key K) (V, error) {
 	return lw.loader.Load(ctx, key)()
 }
 
+// LoadMany loads a dataloader with relevant keys to return results. It relies on the batch function to debounce and return the results
+// If the internal loader is not instantiated, it will return a ErrLoaderIsNotInstantiated error
+func (lw *LoaderWrapper[K, V]) LoadMany(ctx context.Context, keys []K) ([]V, []error) {
+	var empty []V
+	if lw.loader == nil {
+		return empty, []error{ErrLoaderIsNotInstantiated}
+	}
+	return lw.loader.LoadMany(ctx, keys)()
+}
+
 // NewLoaderWrapper creates a new LoaderWrapper with a batch function and returns it
 // The internal loader is instantiated with the `WithClearCacheOnBatch` cache option, so data is not cached between batches
 func NewLoaderWrapper[K comparable, V any](batchFn dataloader.BatchFunc[K, V]) LoaderWrapper[K, V] {

@@ -1031,7 +1031,6 @@ export enum MtoCommonSolutionKey {
   RESDAC_CMDS = 'RESDAC_CMDS',
   RFA = 'RFA',
   RMADA = 'RMADA',
-  RMD = 'RMD',
   RREG = 'RREG',
   SHARED_SYSTEMS = 'SHARED_SYSTEMS',
   T_MISS = 'T_MISS'
@@ -1645,6 +1644,7 @@ export enum ModelPlanFilter {
   COLLAB_ONLY = 'COLLAB_ONLY',
   FAVORITED = 'FAVORITED',
   INCLUDE_ALL = 'INCLUDE_ALL',
+  NEWLY_CREATED = 'NEWLY_CREATED',
   WITH_CR_TDLS = 'WITH_CR_TDLS'
 }
 
@@ -5426,7 +5426,8 @@ export enum ViewCustomizationType {
   MODELS_BY_GROUP = 'MODELS_BY_GROUP',
   MODELS_BY_SOLUTION = 'MODELS_BY_SOLUTION',
   MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
-  MY_MODEL_PLANS = 'MY_MODEL_PLANS'
+  MY_MODEL_PLANS = 'MY_MODEL_PLANS',
+  NEWLY_CREATED_MODEL_PLANS = 'NEWLY_CREATED_MODEL_PLANS'
 }
 
 export enum WaiverType {
@@ -5878,6 +5879,11 @@ export type GetModelPlansByComponentGroupQueryVariables = Exact<{
 
 
 export type GetModelPlansByComponentGroupQuery = { __typename: 'Query', modelPlansByComponentGroup: Array<{ __typename: 'ModelPlanAndGroup', key: ComponentGroup, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, status: ModelStatus, generalStatus: GeneralStatus, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null }, timeline: { __typename: 'PlanTimeline', id: UUID, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null } } }> };
+
+export type GetNewlyCreatedModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNewlyCreatedModelPlansQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, createdDts: Time, modifiedDts?: Time | null, discussions: Array<{ __typename: 'PlanDiscussion', id: UUID }> }> };
 
 export type GetUserInfoQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -11237,6 +11243,52 @@ export type GetModelPlansByComponentGroupQueryHookResult = ReturnType<typeof use
 export type GetModelPlansByComponentGroupLazyQueryHookResult = ReturnType<typeof useGetModelPlansByComponentGroupLazyQuery>;
 export type GetModelPlansByComponentGroupSuspenseQueryHookResult = ReturnType<typeof useGetModelPlansByComponentGroupSuspenseQuery>;
 export type GetModelPlansByComponentGroupQueryResult = Apollo.QueryResult<GetModelPlansByComponentGroupQuery, GetModelPlansByComponentGroupQueryVariables>;
+export const GetNewlyCreatedModelPlansDocument = gql`
+    query GetNewlyCreatedModelPlans {
+  modelPlanCollection(filter: NEWLY_CREATED) {
+    id
+    modelName
+    abbreviation
+    createdDts
+    modifiedDts
+    discussions {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNewlyCreatedModelPlansQuery__
+ *
+ * To run a query within a React component, call `useGetNewlyCreatedModelPlansQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNewlyCreatedModelPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNewlyCreatedModelPlansQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNewlyCreatedModelPlansQuery(baseOptions?: Apollo.QueryHookOptions<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>(GetNewlyCreatedModelPlansDocument, options);
+      }
+export function useGetNewlyCreatedModelPlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>(GetNewlyCreatedModelPlansDocument, options);
+        }
+export function useGetNewlyCreatedModelPlansSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>(GetNewlyCreatedModelPlansDocument, options);
+        }
+export type GetNewlyCreatedModelPlansQueryHookResult = ReturnType<typeof useGetNewlyCreatedModelPlansQuery>;
+export type GetNewlyCreatedModelPlansLazyQueryHookResult = ReturnType<typeof useGetNewlyCreatedModelPlansLazyQuery>;
+export type GetNewlyCreatedModelPlansSuspenseQueryHookResult = ReturnType<typeof useGetNewlyCreatedModelPlansSuspenseQuery>;
+export type GetNewlyCreatedModelPlansQueryResult = Apollo.QueryResult<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>;
 export const GetUserInfoDocument = gql`
     query GetUserInfo($username: String!) {
   userAccount(username: $username) {
@@ -16684,6 +16736,7 @@ export const TypedGetModelPlanDocument = {"kind":"Document","definitions":[{"kin
 export const TypedGetModelPlanBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
 export const TypedGetModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlans"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"mostRecentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeline"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlansQuery, GetModelPlansQueryVariables>;
 export const TypedGetModelPlansByComponentGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlansByComponentGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"key"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ComponentGroup"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlansByComponentGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"key"},"value":{"kind":"Variable","name":{"kind":"Name","value":"key"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"generalStatus"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeline"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlansByComponentGroupQuery, GetModelPlansByComponentGroupQueryVariables>;
+export const TypedGetNewlyCreatedModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNewlyCreatedModelPlans"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"EnumValue","value":"NEWLY_CREATED"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>;
 export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]} as unknown as DocumentNode<GetUserInfoQuery, GetUserInfoQueryVariables>;
 export const TypedSearchOktaUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchOktaUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchOktaUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
 export const TypedUpdateModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;

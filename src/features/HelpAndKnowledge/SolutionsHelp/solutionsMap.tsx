@@ -697,21 +697,6 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
-  [MtoCommonSolutionKey.RMD]: {
-    key: MtoCommonSolutionKey.RMD,
-    categories: [
-      MtoCommonSolutionSubject.QUALITY,
-      MtoCommonSolutionSubject.CONTRACT_VEHICLES
-    ],
-    name: 'Rapid Measure Development',
-    acronym: 'RMD',
-    type: MtoSolutionType.CONTRACTOR,
-    components: {
-      timeline: (props: SolutionDetailProps) => (
-        <GatheringInfoAlert {...props} />
-      )
-    }
-  },
   [MtoCommonSolutionKey.MS_FORMS]: {
     key: MtoCommonSolutionKey.MS_FORMS,
     categories: [

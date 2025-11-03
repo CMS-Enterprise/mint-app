@@ -5,7 +5,6 @@ export type HomepageSettingsType = Record<
   Record<'heading' | 'description', string>
 >;
 
-// TODO: Add translations for MODELS_BY_GROUP
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
@@ -22,15 +21,20 @@ const settings: HomepageSettingsType = {
     description:
       'This section shows only the models you’re following (like the one on the Models tab).'
   },
-  [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
-    heading: 'Models with FFS CRs or TDLs',
+  [ViewCustomizationType.NEWLY_CREATED_MODEL_PLANS]: {
+    heading: 'Newly created models',
     description:
-      'This searchable table displays models with Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).'
+      'This simplified section displays the models created within the last six months.'
   },
   [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
     heading: 'Models approaching clearance',
     description:
       'This simplified section displays the models within six months of clearance organized chronologically.'
+  },
+  [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
+    heading: 'Models with FFS CRs or TDLs',
+    description:
+      'This searchable table displays models with Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).'
   },
   [ViewCustomizationType.MODELS_BY_SOLUTION]: {
     heading: 'Models using specific solutions',
