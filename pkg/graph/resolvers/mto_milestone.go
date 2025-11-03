@@ -409,7 +409,16 @@ func sendMTOMilestoneAssignedEmail(
 	}
 
 	// Get the assigned user's information
-	assignedUser, err := storage.UserAccountGetByID(np, assignedToID)
+	assignedCollaborator, err := PlanCollaboratorGetByID(ctx, assignedToID)
+	if err != nil {
+		logger.Error("failed to get assigned collaborator for milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()),
+			zap.Error(err))
+		return err
+	}
+
+	assignedUser, err := storage.UserAccountGetByID(np, assignedCollaborator.UserID)
 	if err != nil {
 		logger.Error("failed to get assigned user for milestone assignment email",
 			zap.String("milestoneID", milestone.ID.String()),
