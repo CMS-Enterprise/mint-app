@@ -14,6 +14,20 @@ const (
 	MTMCompleted  MTOMilestoneStatus = "COMPLETED"
 )
 
+// mtoMilestoneHumanized maps MTO milestone Statuses to a human-readable string
+var mtoMilestoneHumanized = map[MTOMilestoneStatus]string{
+	MTMNotStarted: "Not Started",
+	MTMInProgress: "In Progress",
+	MTMCompleted:  "Completed",
+}
+
+// Humanize returns the human-readable string of a MTO milestone Status
+// if a value is not found for the provided status, an empty string is returned
+func (m MTOMilestoneStatus) Humanize() string {
+	//Future Enhancement, consider implementing the shared translation to make this work
+	return mtoMilestoneHumanized[m]
+}
+
 // MTOMilestoneWithSolutionID wraps an MTOMilestone with a solution id. It is useful for referring to milestones that are linked to specific solutions
 type MTOMilestoneWithSolutionID struct {
 	MTOMilestone

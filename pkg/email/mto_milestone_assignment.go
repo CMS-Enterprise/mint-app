@@ -32,8 +32,8 @@ func NewMilestoneAssignedBodyContent(
 	var milestoneStatus = "Not Set"
 	var milestoneRisk = "Not Set"
 	if milestone != nil {
-		milestoneStatus = string(milestone.Status)
-		milestoneRisk = string(milestone.RiskIndicator)
+		milestoneStatus = milestone.Status.Humanize()
+		milestoneRisk = milestone.RiskIndicator.Humanize()
 
 		if milestone.Name != nil {
 			milestoneTitle = *milestone.Name
