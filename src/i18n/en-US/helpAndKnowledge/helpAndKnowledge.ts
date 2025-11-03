@@ -1919,7 +1919,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         'The timing for using Shared Systems varies by model. It’s best to reach out during model design, so they know of upcoming work.',
       items: [
         {
-          header: 'Reach out to Donna Schmidt',
+          header: 'Reach out to the Shared Systems Team at CMMI',
           description:
             'Early in the process, contact the <link1>Shared Systems points of contact</link1> to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.',
           links: [
