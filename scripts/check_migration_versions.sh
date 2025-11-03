@@ -5,16 +5,33 @@ set -e
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Parse arguments
-# Usage: check_migration_versions.sh [EVENT_TYPE] [BASE_BRANCH]
+# Usage: check_migration_versions.sh [EVENT_TYPE] [BASE_BRANCH] [--debug]
 # EVENT_TYPE: pull_request, push, merge_group, or empty for local/pre-commit
 # BASE_BRANCH: base branch name (only used for pull_request)
+# --debug: enable debug mode
 EVENT_TYPE="${1:-local}"
 BASE_BRANCH="${2:-main}"
+DEBUG=false
+
+# Check for debug flag in any position
+for arg in "$@"; do
+    if [ "$arg" = "--debug" ]; then
+        DEBUG=true
+    fi
+done
+
+debug_log() {
+    if [ "$DEBUG" = true ]; then
+        echo -e "${BLUE}[debug] $1${NC}"
+    fi
+}
 
 echo "🔍 Validating migration version numbers..."
+debug_log "EVENT_TYPE=$EVENT_TYPE BASE_BRANCH=$BASE_BRANCH"
 
 # Get the migrations directory
 MIGRATIONS_DIR="migrations"
@@ -40,6 +57,8 @@ if [ -z "$ALL_MIGRATIONS" ]; then
     exit 0
 fi
 
+debug_log "Found $(echo "$ALL_MIGRATIONS" | wc -l | tr -d ' ') total migration files"
+
 # Check for duplicate version numbers
 echo "Checking for duplicate version numbers..."
 versions_list=$(echo "$ALL_MIGRATIONS" | while read -r file; do
@@ -48,6 +67,8 @@ versions_list=$(echo "$ALL_MIGRATIONS" | while read -r file; do
         echo "${BASH_REMATCH[1]}:$file"
     fi
 done | sort -t: -k1 -n)
+
+debug_log "Extracted versions from all migrations"
 
 # Check for duplicates
 duplicates_found=false
@@ -91,7 +112,9 @@ fi
 if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     # Get ALL files added in migrations directory (not just valid ones)
     # Include: A=Added, C=Copied, R=Renamed (in case files were duplicated)
-    ALL_NEW_FILES=$(git diff --name-only --diff-filter=ACR origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
+    ALL_NEW_FILES=$(git diff --name-only --diff-filter=ACR origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep --color=never "^${MIGRATIONS_DIR}/" || true)
+    
+    debug_log "Found $(echo "$ALL_NEW_FILES" | grep -c '^' || echo 0) new files in migrations/ directory"
     
     if [ -z "$ALL_NEW_FILES" ]; then
         echo -e "${GREEN}✅ No new migrations added in this PR${NC}"
@@ -208,12 +231,26 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     fi
 else
     # Local/pre-commit mode: check staged files
+    debug_log "Running in local/pre-commit mode - checking staged files"
+    
     # Get ALL staged files in migrations directory (not just valid ones)
     # Include: A=Added, C=Copied, R=Renamed (in case files were duplicated)
-    ALL_STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACR 2>/dev/null | grep "^${MIGRATIONS_DIR}/" || true)
+    # Note: --color=never on grep is CRITICAL to prevent ANSI color codes from breaking regex matching
+    ALL_STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACR --no-color 2>/dev/null | grep --color=never "^${MIGRATIONS_DIR}/" || true)
+    
+    debug_log "Found $(echo "$ALL_STAGED_FILES" | grep -c '^' || echo 0) staged files in migrations/ directory"
+    
+    if [ "$DEBUG" = true ]; then
+        echo ""
+        echo -e "${BLUE}[debug] Raw git output (with od -c):${NC}"
+        git diff --cached --name-only --diff-filter=ACR --no-color 2>/dev/null | grep --color=never "^${MIGRATIONS_DIR}/" | od -c | head -5
+    fi
     
     if [ -z "$ALL_STAGED_FILES" ]; then
         echo -e "${GREEN}✓ No new migrations to validate${NC}"
+        if [ "$DEBUG" = true ]; then
+            echo -e "${YELLOW}💡 Tip: Make sure to stage your migration file with 'git add' before committing${NC}"
+        fi
         exit 0
     fi
     
@@ -247,6 +284,27 @@ else
     # Now get only the valid migration files
     STAGED_MIGRATIONS=$(echo "$ALL_STAGED_FILES" | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
     
+    if [ "$DEBUG" = true ]; then
+        echo ""
+        echo -e "${BLUE}[debug] ALL_STAGED_FILES content:${NC}"
+        echo "$ALL_STAGED_FILES" | while IFS= read -r line; do
+            if [ -n "$line" ]; then
+                echo -e "${BLUE}  '$line'${NC}"
+            fi
+        done
+        echo -e "${BLUE}[debug] Testing regex pattern: ^${MIGRATIONS_DIR}/V[0-9]+__.*\\.sql\$${NC}"
+        echo -e "${BLUE}[debug] STAGED_MIGRATIONS after grep:${NC}"
+        if [ -z "$STAGED_MIGRATIONS" ]; then
+            echo -e "${BLUE}  (empty)${NC}"
+        else
+            echo "$STAGED_MIGRATIONS" | while IFS= read -r line; do
+                if [ -n "$line" ]; then
+                    echo -e "${BLUE}  '$line'${NC}"
+                fi
+            done
+        fi
+    fi
+    
     # Debug: Show what we found before filtering
     if [ -n "$ALL_STAGED_FILES" ] && [ -z "$STAGED_MIGRATIONS" ]; then
         echo ""
@@ -260,13 +318,19 @@ else
         echo -e "${YELLOW}Expected pattern: ${MIGRATIONS_DIR}/V[0-9]+__*.sql${NC}"
     fi
     
-    echo ""
-    echo "📋 New migrations being added:"
-    while IFS= read -r line; do
-        if [ -n "$line" ]; then
-            echo "   • $line"
+    if [ "$DEBUG" = true ]; then
+        echo ""
+        echo "📋 Staged migrations being added:"
+        if [ -z "$STAGED_MIGRATIONS" ]; then
+            echo "   (none)"
+        else
+            while IFS= read -r line; do
+                if [ -n "$line" ]; then
+                    echo "   • $line"
+                fi
+            done <<< "$STAGED_MIGRATIONS"
         fi
-    done <<< "$STAGED_MIGRATIONS"
+    fi
     
     # Get the highest existing version number (excluding staged files)
     EXISTING_MIGRATIONS=$(git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
