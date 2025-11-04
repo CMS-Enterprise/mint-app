@@ -614,3 +614,38 @@ func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 		verifyFunc,
 	)
 }
+
+// This test ensures that the assigned_to field can be set and retrieved correctly
+func (suite *ResolverSuite) TestMTOMilestoneAssignedTo() {
+	// Create model plan
+	plan := suite.createModelPlan("testing milestone assigned_to")
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", []models.TeamRole{models.TeamRoleLeadership})
+	suite.Nil(collaborator.ModifiedBy)
+	suite.Nil(collaborator.ModifiedDts)
+	assignedTo := collaborator.ID // Plan Collaborator ID
+
+	// Create a custom milestone with an assigned_to
+	description := "Description for Test Milestone"
+	milestone, err := MTOMilestoneCreateCustom(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, "Test Milestone", &description, plan.ID, nil)
+	suite.NoError(err)
+	suite.NotNil(milestone)
+	suite.Nil(milestone.AssignedTo)
+
+	changes := map[string]interface{}{
+		"assignedTo": assignedTo,
+	}
+	updatedMilestone, err := MTOMilestoneUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{}, milestone.ID, changes, nil)
+	suite.NoError(err)
+	suite.NotNil(updatedMilestone)
+	if suite.NotNil(updatedMilestone.AssignedTo) {
+		suite.Equal(assignedTo, *updatedMilestone.AssignedTo)
+	}
+	suite.Equal(assignedTo, *updatedMilestone.AssignedTo)
+
+	// Verify the milestone can be retrieved with the description
+	retrievedMilestone, err := MTOMilestoneGetByIDLOADER(suite.testConfigs.Context, milestone.ID)
+	suite.NoError(err)
+	suite.NotNil(retrievedMilestone)
+	suite.NotNil(retrievedMilestone.AssignedTo)
+	suite.Equal(assignedTo, *retrievedMilestone.AssignedTo)
+}
