@@ -895,7 +895,7 @@ BEGIN
   INSERT INTO mto_template_category VALUES (payment_cat, template_uuid, 'Payment', NULL, 9, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   claims_based_subcat := gen_random_uuid();
-  INSERT INTO mto_template_category VALUES (claims_based_subcat, template_uuid, 'Claims based', payment_cat, 10, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
+  INSERT INTO mto_template_category VALUES (claims_based_subcat, template_uuid, 'Claims-based', payment_cat, 10, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
 
   non_claims_based_subcat := gen_random_uuid();
   INSERT INTO mto_template_category VALUES (non_claims_based_subcat, template_uuid, 'Non-claims based', payment_cat, 11, '00000001-0001-0001-0001-000000000001', CURRENT_TIMESTAMP);
