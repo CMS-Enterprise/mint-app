@@ -2116,7 +2116,7 @@ exports[`Generic Timeline Components > matches the snapshot > Shared Systems 1`]
           class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
           data-testid="processListHeading"
         >
-          Reach out to Donna Schmidt
+          Reach out to the Shared Systems Team at CMMI
         </h3>
         Early in the process, contact the 
         <button
