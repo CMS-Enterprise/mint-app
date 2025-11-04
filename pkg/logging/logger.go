@@ -48,7 +48,7 @@ func (l *ZapLogger) Zap() *zap.Logger {
 	return &l.Logger
 }
 
-// ErrorOrWarn implemenets ILogger ErrorOrWarn by calling the Error method by default
+// ErrorOrWarn implements ILogger ErrorOrWarn by calling the Error method by default
 func (l *ZapLogger) ErrorOrWarn(msg string, fields ...zap.Field) {
 	l.Error(msg, fields...)
 }
