@@ -116,6 +116,7 @@ type MTOMilestoneSolutionLinkTranslation struct {
 // Represents MTO Custom Milestone translation data
 type MTOMilestoneTranslation struct {
 	Name                 models.TranslationField            `json:"name" db:"name"`
+	Description          models.TranslationField            `json:"description" db:"description"`
 	IsDraft              models.TranslationFieldWithOptions `json:"isDraft" db:"is_draft"`
 	ResponsibleComponent models.TranslationFieldWithOptions `json:"responsibleComponent" db:"responsible_component"`
 	FacilitatedBy        models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
@@ -127,6 +128,8 @@ type MTOMilestoneTranslation struct {
 	Status               models.TranslationFieldWithOptions `json:"status" db:"status"`
 	Key                  models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
 	MtoCategoryID        models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
+	AssignedTo           models.TranslationField            `json:"assignedTo" db:"assigned_to"`
+	Notes                models.TranslationField            `json:"notes" db:"notes"`
 }
 
 type MTOSolutionLinks struct {
@@ -2098,6 +2101,7 @@ const (
 	ModelPlanFilterWithCrTdls           ModelPlanFilter = "WITH_CR_TDLS"
 	ModelPlanFilterFavorited            ModelPlanFilter = "FAVORITED"
 	ModelPlanFilterApproachingClearance ModelPlanFilter = "APPROACHING_CLEARANCE"
+	ModelPlanFilterNewlyCreated         ModelPlanFilter = "NEWLY_CREATED"
 )
 
 var AllModelPlanFilter = []ModelPlanFilter{
@@ -2106,11 +2110,12 @@ var AllModelPlanFilter = []ModelPlanFilter{
 	ModelPlanFilterWithCrTdls,
 	ModelPlanFilterFavorited,
 	ModelPlanFilterApproachingClearance,
+	ModelPlanFilterNewlyCreated,
 }
 
 func (e ModelPlanFilter) IsValid() bool {
 	switch e {
-	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance:
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance, ModelPlanFilterNewlyCreated:
 		return true
 	}
 	return false

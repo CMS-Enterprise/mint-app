@@ -14,15 +14,25 @@ export default gql(/* GraphQL */ `
           id
           key
           name
+          description
           status
           riskIndicator
           needBy
           responsibleComponent
           facilitatedBy
           facilitatedByOther
+          assignedToPlanCollaborator {
+            id
+            userAccount {
+              id
+              commonName
+              email
+            }
+          }
           notes {
             id
             content
+            createdDts
           }
         }
       }

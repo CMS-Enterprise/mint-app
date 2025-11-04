@@ -52,6 +52,7 @@ type MTOMilestone {
   # DB Fields
   id: UUID!
   name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  description: String
   key: MTOCommonMilestoneKey
   """
   Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
@@ -65,6 +66,8 @@ type MTOMilestone {
   Note, this data will be cleared if other is removed as an option
   """
   facilitatedByOther: String
+  assignedTo: UUID
+  assignedToPlanCollaborator: PlanCollaborator
   needBy: Time
   status: MTOMilestoneStatus!
   riskIndicator: MTORiskIndicator!
@@ -91,6 +94,7 @@ type MTOMilestone {
 
 input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   name: String # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
+  description: String
   mtoCategoryID: UUID
   responsibleComponent: [MTOMilestoneResponsibleComponent!]
   facilitatedBy: [MTOFacilitator!]
@@ -99,6 +103,7 @@ input MTOMilestoneChanges @goModel(model: "map[string]interface{}") {
   status: MTOMilestoneStatus
   riskIndicator: MTORiskIndicator
   isDraft: Boolean
+  assignedTo: UUID
 }
 
 input MTOSolutionLinks {
@@ -110,6 +115,7 @@ extend type Mutation {
   createMTOMilestoneCustom(
     modelPlanID: UUID!
     name: String!
+    description: String
     mtoCategoryID: UUID
   ): MTOMilestone! @hasRole(role: MINT_USER)
   createMTOMilestoneCommon(

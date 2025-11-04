@@ -12,4 +12,5 @@ SELECT
     mto_milestone_note.modified_by,
     mto_milestone_note.modified_dts
 FROM mto_milestone_note
-INNER JOIN QUERIED_IDS AS qIDs ON mto_milestone_note.milestone_id = qIDs.milestone_id;
+INNER JOIN QUERIED_IDS AS qIDs ON mto_milestone_note.milestone_id = qIDs.milestone_id
+ORDER BY mto_milestone_note.milestone_id, mto_milestone_note.created_dts DESC;

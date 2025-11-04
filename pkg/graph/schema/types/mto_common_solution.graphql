@@ -31,7 +31,6 @@ enum MTOCommonSolutionKey {
   BCDA
   ISP
   MIDS
-  MDM_NCBP
   MODEL_SPACE
   CDAC
   RREG
@@ -48,7 +47,6 @@ enum MTOCommonSolutionKey {
   QPP
   PAM
   NCQA
-  RMD
   MS_FORMS
   RESDAC_CMDS
   OVERLAPS_OPERATIONS_WORKGROUP
@@ -91,6 +89,7 @@ type MTOCommonSolution {
   """
   isAdded: Boolean!
   contactInformation: MTOCommonSolutionContactInformation!
+  modelUsage: [ModelPlanAndMTOCommonSolution!]!
 }
 
 extend type Query {

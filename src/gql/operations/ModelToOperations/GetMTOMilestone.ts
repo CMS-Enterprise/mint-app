@@ -5,10 +5,20 @@ export default gql(/* GraphQL */ `
     mtoMilestone(id: $id) {
       id
       name
+      description
       key
       responsibleComponent
       facilitatedBy
       facilitatedByOther
+      assignedTo
+      assignedToPlanCollaborator {
+        id
+        userAccount {
+          id
+          commonName
+          email
+        }
+      }
       needBy
       status
       riskIndicator
@@ -16,6 +26,7 @@ export default gql(/* GraphQL */ `
       isDraft
       commonMilestone {
         key
+        description
         commonSolutions {
           key
         }

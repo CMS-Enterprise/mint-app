@@ -96,6 +96,20 @@ const (
 	MTORiskIndicatorAtRisk   MTORiskIndicator = "AT_RISK"
 )
 
+// mtoRiskIndicatorHumanized maps MTORiskIndicators to a human-readable string
+var mtoRiskIndicatorHumanized = map[MTORiskIndicator]string{
+	MTORiskIndicatorOnTrack:  "On Track",
+	MTORiskIndicatorOffTrack: "Off Track",
+	MTORiskIndicatorAtRisk:   "At Risk",
+}
+
+// Humanize returns the human-readable string of a MTO Risk Indicator
+// if a value is not found for the provided status, an empty string is returned
+func (m MTORiskIndicator) Humanize() string {
+	//Future Enhancement, consider implementing the shared translation to make this work
+	return mtoRiskIndicatorHumanized[m]
+}
+
 type MTOStatus string
 
 // These are the options for MTOStatus

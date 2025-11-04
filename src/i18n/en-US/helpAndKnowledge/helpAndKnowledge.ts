@@ -1367,80 +1367,6 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
       ]
     }
   },
-  [MtoCommonSolutionKey.MDM_NCBP]: {
-    about: {
-      description: `Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data.
-
-MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
-
-MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM-NCBP specifically provides:`,
-      items: ['A record of non-claims-based payments'],
-      components: [
-        {
-          header: 'Functions',
-          items: [
-            'A centralized source of program non-claims-based payment data',
-            'A reusable service to access data',
-            'Improved visibility and incremental improvements into data quality through data profiling and data analysis'
-          ]
-        }
-      ]
-    },
-    timeline: {
-      description:
-        'Coordination with MDM-NCBP can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard.',
-      items: [
-        {
-          header: 'CMMI/BSG will reach out',
-          description:
-            'When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email the <link1>CMMI/BSG point of contact</link1>.',
-          links: [
-            {
-              toPoC: true
-            }
-          ]
-        },
-        {
-          header: 'Discussion with the model team',
-          description:
-            'After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.'
-        },
-        {
-          header: 'Complete onboarding questionnaire',
-          description: `CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
-
-<link1>Go to Onboarding Request Form for MDM-NCBP</link1>`,
-
-          links: [
-            {
-              external: true,
-              link: 'https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx'
-            }
-          ]
-        },
-        {
-          header: 'Meet with MDM operations team',
-          description:
-            'CMMI/BSG meets with the MDM operations team to share the business requirements.'
-        },
-        {
-          header: 'Share ICD',
-          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. The <link1>CMMI/BSG team</link1> can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
-
-<link2>Go to ICD and Onboarding Mapping for MDM-NCBP</link2>`,
-          links: [
-            {
-              toPoC: true
-            },
-            {
-              external: true,
-              link: 'https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx'
-            }
-          ]
-        }
-      ]
-    }
-  },
   [MtoCommonSolutionKey.MIDS]: {
     about: {
       description:
@@ -1993,7 +1919,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         'The timing for using Shared Systems varies by model. It’s best to reach out during model design, so they know of upcoming work.',
       items: [
         {
-          header: 'Reach out to Donna Schmidt',
+          header: 'Reach out to the Shared Systems Team at CMMI',
           description:
             'Early in the process, contact the <link1>Shared Systems points of contact</link1> to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.',
           links: [
@@ -2376,12 +2302,6 @@ Model Space offers model teams and their contractors templates or Databricks not
       ]
     }
   },
-  [MtoCommonSolutionKey.RMD]: {
-    about: {
-      description: '',
-      gatheringInfo: true
-    }
-  },
   [MtoCommonSolutionKey.MS_FORMS]: {
     about: {
       description: '',
@@ -2595,7 +2515,8 @@ const helpAndKnowledge = {
   navigation: {
     about: 'About this solution',
     timeline: 'Timeline',
-    'points-of-contact': 'Points of contact'
+    'points-of-contact': 'Points of contact',
+    'model-usage': 'Model usage'
   },
   primaryPointOfContact: 'Primary point of contact',
   mailboxesAndTeamMembers: 'Mailboxes and team members',
@@ -2603,6 +2524,17 @@ const helpAndKnowledge = {
   addTeamMember: 'Add a team member',
   edit: 'Edit',
   removePointOfContact: 'Remove point of contact',
+  modelUsage: {
+    description:
+      'The models below use or plan to use {{-solutionTitle}} to implement and run their model. Click on each model to learn more about the model and its solutions and IT systems.',
+    info: 'This list shows solutions and IT systems identified for models in MINT. Older models, past models, or other models listed in MINT may not appear here. If you have any questions, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+    resultsInfo: 'Showing {{-resultsNum}} of {{-resultsMax}} models',
+    modelName: 'Model name',
+    status: 'Status',
+    noResults:
+      'There are not currently any models in MINT using {{-solutionTitle}}.',
+    suffix: 'rows'
+  },
   backToSolutions: 'Back to solutions',
   receivesNotifications: 'Receives notifications',
   receivesNotificationsTooltip:

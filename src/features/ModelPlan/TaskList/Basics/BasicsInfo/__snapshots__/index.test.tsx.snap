@@ -321,7 +321,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             data-testid="tooltipWrapper"
                           >
                             <div
-                              aria-describedby="tooltip-«ro»"
+                              aria-describedby="tooltip-_r_o_"
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
@@ -346,7 +346,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               aria-hidden="true"
                               class="usa-tooltip__body"
                               data-testid="tooltipBody"
-                              id="tooltip-«ro»"
+                              id="tooltip-_r_o_"
                               role="tooltip"
                               title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
                             >
@@ -382,7 +382,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             data-testid="tooltipWrapper"
                           >
                             <div
-                              aria-describedby="tooltip-«rp»"
+                              aria-describedby="tooltip-_r_p_"
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
@@ -407,7 +407,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               aria-hidden="true"
                               class="usa-tooltip__body"
                               data-testid="tooltipBody"
-                              id="tooltip-«rp»"
+                              id="tooltip-_r_p_"
                               role="tooltip"
                               title="Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode"
                             >
@@ -443,7 +443,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             data-testid="tooltipWrapper"
                           >
                             <div
-                              aria-describedby="tooltip-«rq»"
+                              aria-describedby="tooltip-_r_q_"
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
@@ -468,7 +468,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               aria-hidden="true"
                               class="usa-tooltip__body"
                               data-testid="tooltipBody"
-                              id="tooltip-«rq»"
+                              id="tooltip-_r_q_"
                               role="tooltip"
                               title="Models comprising Medicare Advantage plans"
                             >
@@ -504,7 +504,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             data-testid="tooltipWrapper"
                           >
                             <div
-                              aria-describedby="tooltip-«rr»"
+                              aria-describedby="tooltip-_r_r_"
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
@@ -529,7 +529,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               aria-hidden="true"
                               class="usa-tooltip__body"
                               data-testid="tooltipBody"
-                              id="tooltip-«rr»"
+                              id="tooltip-_r_r_"
                               role="tooltip"
                               title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                             >
@@ -565,7 +565,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             data-testid="tooltipWrapper"
                           >
                             <div
-                              aria-describedby="tooltip-«rs»"
+                              aria-describedby="tooltip-_r_s_"
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
@@ -590,7 +590,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               aria-hidden="true"
                               class="usa-tooltip__body"
                               data-testid="tooltipBody"
-                              id="tooltip-«rs»"
+                              id="tooltip-_r_s_"
                               role="tooltip"
                               title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                             >
@@ -626,7 +626,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             data-testid="tooltipWrapper"
                           >
                             <div
-                              aria-describedby="tooltip-«rt»"
+                              aria-describedby="tooltip-_r_t_"
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
@@ -651,7 +651,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               aria-hidden="true"
                               class="usa-tooltip__body"
                               data-testid="tooltipBody"
-                              id="tooltip-«rt»"
+                              id="tooltip-_r_t_"
                               role="tooltip"
                               title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                             >
@@ -727,7 +727,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«ru»"
+                            aria-describedby="tooltip-_r_u_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -752,7 +752,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«ru»"
+                            id="tooltip-_r_u_"
                             role="tooltip"
                             title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
                           >
@@ -790,7 +790,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«rv»"
+                            aria-describedby="tooltip-_r_v_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -815,7 +815,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«rv»"
+                            id="tooltip-_r_v_"
                             role="tooltip"
                             title="Models which aim to address deficits in care for a defined population with a specific shared disease or medical condition, procedure, or care episode"
                           >
@@ -853,7 +853,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«r10»"
+                            aria-describedby="tooltip-_r_10_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -878,7 +878,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«r10»"
+                            id="tooltip-_r_10_"
                             role="tooltip"
                             title="Models comprising Medicare Advantage plans"
                           >
@@ -916,7 +916,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«r11»"
+                            aria-describedby="tooltip-_r_11_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -941,7 +941,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«r11»"
+                            id="tooltip-_r_11_"
                             role="tooltip"
                             title="Models that seek to improve access to and/or the affordability of prescription drugs covered under Medicare (Part B and D) or Medicaid."
                           >
@@ -980,7 +980,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«r12»"
+                            aria-describedby="tooltip-_r_12_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -1005,7 +1005,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«r12»"
+                            id="tooltip-_r_12_"
                             role="tooltip"
                             title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
                           >
@@ -1043,7 +1043,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-«r13»"
+                            aria-describedby="tooltip-_r_13_"
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -1068,7 +1068,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-«r13»"
+                            id="tooltip-_r_13_"
                             role="tooltip"
                             title="Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services."
                           >

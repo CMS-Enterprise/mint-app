@@ -42,6 +42,7 @@ export type SolutionGenericType = {
   about: boolean;
   timeline: boolean;
   'points-of-contact': boolean;
+  'model-usage': boolean;
 };
 
 type SolutionComponentType = (props: SolutionDetailProps) => React.ReactNode;
@@ -50,6 +51,7 @@ export type ModalSolutionComponentType = {
   about?: SolutionComponentType;
   timeline?: SolutionComponentType;
   'points-of-contact'?: SolutionComponentType;
+  'model-usage'?: SolutionComponentType;
 };
 
 export interface HelpSolutionBaseType {
@@ -343,19 +345,6 @@ export const helpSolutions: HelpSolutionsType = {
     acronym: 'LV',
     type: MtoSolutionType.OTHER,
     name: 'Legal Vertical',
-    components: {
-      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
-    }
-  },
-  [MtoCommonSolutionKey.MDM_NCBP]: {
-    key: MtoCommonSolutionKey.MDM_NCBP,
-    categories: [
-      MtoCommonSolutionSubject.DATA,
-      MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS
-    ],
-    acronym: 'MDM-NCBP',
-    type: MtoSolutionType.IT_SYSTEM,
-    name: 'Master Data Management for Non-Claims Based Payments',
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
@@ -708,21 +697,6 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
-  [MtoCommonSolutionKey.RMD]: {
-    key: MtoCommonSolutionKey.RMD,
-    categories: [
-      MtoCommonSolutionSubject.QUALITY,
-      MtoCommonSolutionSubject.CONTRACT_VEHICLES
-    ],
-    name: 'Rapid Measure Development',
-    acronym: 'RMD',
-    type: MtoSolutionType.CONTRACTOR,
-    components: {
-      timeline: (props: SolutionDetailProps) => (
-        <GatheringInfoAlert {...props} />
-      )
-    }
-  },
   [MtoCommonSolutionKey.MS_FORMS]: {
     key: MtoCommonSolutionKey.MS_FORMS,
     categories: [
@@ -842,7 +816,6 @@ export const routeToEnumMap: Record<string, MtoCommonSolutionKey> = {
   'integrated-data-repository': MtoCommonSolutionKey.IDR,
   'learning-and-diffusion-group': MtoCommonSolutionKey.LDG,
   'legal-vertical': MtoCommonSolutionKey.LV,
-  'master-data-management-for-ncbp': MtoCommonSolutionKey.MDM_NCBP,
   'measure-and-instrument-development-and-support': MtoCommonSolutionKey.MIDS,
   'medicare-advantage-prescription-drug-system': MtoCommonSolutionKey.MARX,
   'model-space': MtoCommonSolutionKey.MODEL_SPACE,

@@ -17,7 +17,6 @@ import {
   columnHeaderTranslations,
   typenameTranslations
 } from 'i18n/en-US/analytics';
-import { milestoneMap } from 'i18n/en-US/modelPlan/modelToOperations';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
@@ -339,9 +338,7 @@ export const downloadMTOMilestoneSummary = (
       flattenedData.push({
         Model: !addedModelPlans.includes(item.id) ? item.modelName : '',
         Milestone: milestone.name,
-        Description: milestone.key
-          ? milestoneMap[milestone.key]?.description
-          : '',
+        Description: milestone.description || milestone.description || '',
         'Responsible Component': (milestone.responsibleComponent || [])
           ?.map(component =>
             i18next.t(`mtoMilestone:responsibleComponent.options.${component}`)
@@ -352,10 +349,18 @@ export const downloadMTOMilestoneSummary = (
             i18next.t(`mtoMilestone:facilitatedBy.options.${facilitator}`)
           )
           .join(', '),
+        'Assigned to': milestone.assignedToPlanCollaborator?.userAccount
+          ? `${milestone.assignedToPlanCollaborator.userAccount.commonName} (${milestone.assignedToPlanCollaborator.userAccount.email})`
+          : '',
         'Needed by': formatDateUtc(milestone.needBy, 'MM/dd/yyyy'),
         Status: i18next.t(`mtoMilestone:status.options.${milestone.status}`),
         Concerns: riskMap[milestone.riskIndicator],
-        Notes: milestone.notes.map(note => note.content).join(', '),
+        Notes: milestone.notes
+          .map(
+            note =>
+              `${formatDateUtc(note.createdDts, 'MM/dd/yyyy')}: ${note.content}`
+          )
+          .join('\n'),
         ...quarterObject
       });
 
@@ -378,13 +383,11 @@ export const downloadMTOMilestoneSummary = (
     sheet['!rows'] = [];
   }
 
-  // Set row height for all rows (including header)
-  for (let row = 0; row <= range.e.r; row += 1) {
-    sheet['!rows'][row] = { hpt: 20 }; // 20 points height (default is ~15)
-  }
+  // Set row height for header
+  sheet['!rows'][0] = { hpt: 20 }; // Header row
 
   // Add borders to all cells in the sheet
-  const concernsColumnIndex = 7; // Column H (0-indexed)
+  const concernsColumnIndex = 8; // Column I (0-indexed)
   const borderStyle = {
     top: { style: 'thin', color: { rgb: '000000' } },
     bottom: { style: 'thin', color: { rgb: '000000' } },
@@ -406,6 +409,9 @@ export const downloadMTOMilestoneSummary = (
 
       // Ensure border is always applied with black color
       sheet[cellAddress].s.border = borderStyle;
+
+      // Enable text wrapping for Notes column
+      sheet[cellAddress].s.alignment = { wrapText: true, vertical: 'top' };
     }
   }
 
@@ -454,7 +460,7 @@ export const downloadMTOMilestoneSummary = (
       }
       cell.s.fill = { fgColor: { rgb: backgroundColor } };
       cell.s.font = { color: { rgb: textColor }, bold: true };
-      cell.s.alignment = { horizontal: 'center' };
+      cell.s.alignment = { horizontal: 'center', vertical: 'center' };
       // Ensure black borders are preserved
       cell.s.border = borderStyle;
     }
@@ -462,7 +468,7 @@ export const downloadMTOMilestoneSummary = (
 
   // NOT NEEDED ANYMORE, may need for future
   // Style "Needed By" column - make 'Completed' text grey
-  const neededByColumnIndex = 5; // "Needed By" is the 4th column (0-indexed)
+  const neededByColumnIndex = 6; // "Needed By" is the 6th column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     const cellAddress = XLSX.utils.encode_cell({
       r: row,
@@ -480,7 +486,7 @@ export const downloadMTOMilestoneSummary = (
   }
 
   // Style quarter columns - add grey background for cells with 'X'
-  const quarterStartColumn = 7; // Quarters start after Concerns column (0-indexed)
+  const quarterStartColumn = 9; // Quarters start after Concerns column (0-indexed)
   for (let row = 1; row <= range.e.r; row += 1) {
     for (let col = quarterStartColumn; col <= range.e.c; col += 1) {
       const cellAddress = XLSX.utils.encode_cell({ r: row, c: col });

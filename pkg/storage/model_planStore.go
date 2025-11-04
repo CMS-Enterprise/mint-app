@@ -353,6 +353,29 @@ func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *
 
 }
 
+// ModelPlanCollectionNewlyCreated returns a list of all model plans created within the last 6 months
+func (s *Store) ModelPlanCollectionNewlyCreated(logger *zap.Logger) ([]*models.ModelPlan, error) {
+	logger.Info("fetching model plans created within the last 6 months")
+
+	args := map[string]interface{}{}
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		logger.Error(
+			"failed to fetch model plans created within the last 6 months",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+	return modelPlans, nil
+}
+
 // ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
 // Note: Externally, this is called "followed" but internally we call it "favorited"
 func (s *Store) ModelPlanCollectionFavorited(
@@ -402,11 +425,23 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	return sqlResult, nil
 
 }
-func ModelPlanGetByMTOSolutionKey(np sqlutils.NamedPreparer, _ *zap.Logger, key models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
+func ModelPlanGetByMTOSolutionKeyLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
 	args := map[string]interface{}{
-		"mto_common_solution_key": key,
+		"mto_common_solution_keys": pq.Array(keys),
 	}
-	res, err := sqlutils.SelectProcedure[models.ModelPlanAndMTOCommonSolution](np, sqlqueries.ModelPlan.GetByMTOSolutionKey, args)
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndMTOCommonSolution](np, sqlqueries.ModelPlan.GetByMTOSolutionKeyLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// ModelPlanGetByComponentGroupLoader returns model plans for multiple component group keys using a batched loader query
+func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
+	args := map[string]interface{}{
+		"component_group_keys": pq.Array(componentGroups),
+	}
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroupLoader, args)
 	if err != nil {
 		return nil, err
 	}

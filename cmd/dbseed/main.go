@@ -507,6 +507,7 @@ func (s *Seeder) SetDefaultUserViews() {
 	s.updateUserView(mintPrinc, map[string]interface{}{
 		"viewCustomization": []models.ViewCustomizationType{models.ViewCustomizationTypeModelsBySolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
 		"solutions":         []models.MTOCommonSolutionKey{models.MTOCSKInnovation, models.MTOCSKAcoOs},
+		"componentGroups":   []models.ComponentGroup{models.ComponentGroupCcmiPmg},
 	},
 	)
 }

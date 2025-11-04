@@ -210,13 +210,13 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.EqualValues(solTypeB, modelPlanAndOpSols[0].Key)
 }
 
-func TestModelBySolutionStatus(t *testing.T) {
+func TestModelByGeneralStatus(t *testing.T) {
 	assert := assert.New(t)
 
 	testCases := []struct {
 		testName             string
 		inputStatus          models.ModelStatus
-		expectedOutputStatus models.ModelBySolutionStatus
+		expectedOutputStatus models.GeneralStatus
 	}{
 		{
 			testName:             "Active_To_Active",
@@ -289,7 +289,7 @@ func TestModelBySolutionStatus(t *testing.T) {
 
 	for _, test := range testCases {
 		t.Run(test.testName, func(t *testing.T) {
-			outputStatus := ModelBySolutionStatus(test.inputStatus)
+			outputStatus := GeneralStatus(test.inputStatus)
 			assert.EqualValues(test.expectedOutputStatus, outputStatus, "Expected status did not match")
 		})
 
@@ -301,8 +301,7 @@ func (suite *ResolverSuite) TestModelPlansByMTOSolutionKey() {
 	plan1 := suite.createModelPlan("plan1")
 	plan2 := suite.createModelPlan("plan2")
 
-	// Check that no plans are using this solution
-	plans, err := ModelPlansByMTOSolutionKey(suite.testConfigs.Logger, suite.testConfigs.Store, models.MTOCSKInnovation)
+	plans, err := ModelPlansByMTOSolutionKey(suite.testConfigs.Context, models.MTOCSKInnovation)
 	suite.NoError(err)
 	suite.Len(plans, 0)
 
@@ -310,7 +309,7 @@ func (suite *ResolverSuite) TestModelPlansByMTOSolutionKey() {
 	suite.createMTOSolutionCommon(plan1.ID, models.MTOCSKInnovation, []uuid.UUID{})
 
 	// Check that no plans are using this solution
-	plans, err = ModelPlansByMTOSolutionKey(suite.testConfigs.Logger, suite.testConfigs.Store, models.MTOCSKInnovation)
+	plans, err = ModelPlansByMTOSolutionKey(suite.testConfigs.Context, models.MTOCSKInnovation)
 	suite.NoError(err)
 	if suite.Len(plans, 1) {
 		plans[0].ModelPlanID = plan1.ID
@@ -318,7 +317,7 @@ func (suite *ResolverSuite) TestModelPlansByMTOSolutionKey() {
 	// add solution to plan 2
 	suite.createMTOSolutionCommon(plan2.ID, models.MTOCSKInnovation, []uuid.UUID{})
 	// Check that no plans are using this solution
-	plans, err = ModelPlansByMTOSolutionKey(suite.testConfigs.Logger, suite.testConfigs.Store, models.MTOCSKInnovation)
+	plans, err = ModelPlansByMTOSolutionKey(suite.testConfigs.Context, models.MTOCSKInnovation)
 	suite.NoError(err)
 	suite.Len(plans, 2)
 

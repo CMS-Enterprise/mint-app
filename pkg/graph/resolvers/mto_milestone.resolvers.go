@@ -28,6 +28,14 @@ func (r *mTOMilestoneResolver) FacilitatedBy(ctx context.Context, obj *models.MT
 	return *obj.FacilitatedBy, nil
 }
 
+// AssignedToPlanCollaborator is the resolver for the assignedToPlanCollaborator field.
+func (r *mTOMilestoneResolver) AssignedToPlanCollaborator(ctx context.Context, obj *models.MTOMilestone) (*models.PlanCollaborator, error) {
+	if obj.AssignedTo == nil {
+		return nil, nil
+	}
+	return PlanCollaboratorGetByID(ctx, *obj.AssignedTo)
+}
+
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
 	if obj.Key != nil {
@@ -55,10 +63,10 @@ func (r *mTOMilestoneResolver) Categories(ctx context.Context, obj *models.MTOMi
 }
 
 // CreateMTOMilestoneCustom is the resolver for the createMTOMilestoneCustom field.
-func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPlanID uuid.UUID, name string, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPlanID uuid.UUID, name string, description *string, mtoCategoryID *uuid.UUID) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOMilestoneCreateCustom(ctx, logger, principal, r.store, name, modelPlanID, mtoCategoryID)
+	return MTOMilestoneCreateCustom(ctx, logger, principal, r.store, name, description, modelPlanID, mtoCategoryID)
 }
 
 // CreateMTOMilestoneCommon is the resolver for the createMTOMilestoneCommon field.
