@@ -1291,6 +1291,7 @@ export type TranslationMTOMilestoneCustomForm = {
   responsibleComponent: TranslationFieldPropertiesWithOptions<MtoMilestoneResponsibleComponent>;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
   facilitatedByOther: TranslationFieldProperties;
+  assignedTo: TranslationFieldProperties;
   needBy: TranslationFieldProperties;
   riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;

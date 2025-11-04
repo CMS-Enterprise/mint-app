@@ -8,6 +8,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
@@ -242,6 +243,10 @@ func MTOMilestoneUpdate(
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
+
+	// SAVE the pre-update value (must clone so later mutation doesn’t affect it)
+	oldAssignedTo := helpers.CloneUUIDPointer(existing.AssignedTo)
+
 	// Since storage.MTOMilestoneGetByID will return a `Name` property when
 	// fetching milestones sourced from the common milestone library, we need to clear out that field
 	// or else storage.MTOMilestoneUpdate will attempt to update the name (which won't be allowed, since this is a Milestone sourced from the common milestone library
@@ -255,7 +260,7 @@ func MTOMilestoneUpdate(
 		return nil, err
 	}
 
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+	updatedMilestone, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
 		if solutionLinks != nil {
 			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutionsWithTX(
 				ctx,
@@ -278,6 +283,50 @@ func MTOMilestoneUpdate(
 
 		return storage.MTOMilestoneUpdate(tx, logger, existing)
 	})
+
+	if err != nil {
+		logger.Error("error updating MTO Milestone",
+			zap.String("milestoneID", existing.ID.String()),
+			zap.Error(err))
+		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
+	}
+
+	// Check if assignedTo is being changed
+	// Detect change using the PRE-update value vs POST-update value
+	assignedToChanged := !helpers.UUIDPointerEqual(oldAssignedTo, updatedMilestone.AssignedTo)
+
+	// Send email notification if assignedTo changed and there's a new assignee
+	if assignedToChanged && updatedMilestone.AssignedTo != nil {
+		go func() {
+			modelPlan, modelPlanErr := loaders.ModelPlan.GetByID.Load(ctx, updatedMilestone.ModelPlanID)
+			if modelPlanErr != nil {
+				logger.Error("error loading model plan for milestone assigned email",
+					zap.String("milestoneID", updatedMilestone.ID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
+					zap.Error(modelPlanErr))
+				return
+			}
+
+			solutions, solutionsErr := MTOSolutionGetByMilestoneIDLOADER(ctx, updatedMilestone.ID)
+			if solutionsErr != nil {
+				logger.Error("error loading solutions for milestone assigned email",
+					zap.String("milestoneID", updatedMilestone.ID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
+					zap.Error(solutionsErr))
+				return
+			}
+
+			sendEmailErr := sendMTOMilestoneAssignedEmail(ctx, store, logger, emailService, emailTemplateService, addressBook, updatedMilestone, *updatedMilestone.AssignedTo, modelPlan, solutions)
+			if sendEmailErr != nil {
+				logger.Error("error sending milestone assigned email",
+					zap.String("milestoneID", updatedMilestone.ID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
+					zap.Error(sendEmailErr))
+			}
+		}()
+	}
+
+	return updatedMilestone, nil
 }
 
 // MTOMilestoneDelete deletes an MTOMilestone
@@ -433,4 +482,100 @@ func MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(
 	modelPlanID uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.ByModelPlanIDNoLinkedSolution.Load(ctx, modelPlanID)
+}
+
+// sendMTOMilestoneAssignedEmail sends an email notification when a milestone is assigned to a user
+func sendMTOMilestoneAssignedEmail(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	milestone *models.MTOMilestone,
+	assignedToID uuid.UUID,
+	modelPlan *models.ModelPlan,
+	solutions []*models.MTOSolution,
+) error {
+	if emailService == nil || emailTemplateService == nil || milestone == nil {
+		return nil
+	}
+
+	// Get the assigned user's information
+	assignedCollaborator, err := PlanCollaboratorGetByID(ctx, assignedToID)
+	if err != nil {
+		logger.Error("failed to get assigned collaborator for milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()),
+			zap.Error(err))
+		return err
+	}
+
+	assignedUser, err := storage.UserAccountGetByID(np, assignedCollaborator.UserID)
+	if err != nil {
+		logger.Error("failed to get assigned user for milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()),
+			zap.Error(err))
+		return err
+	}
+
+	if assignedUser.Email == "" {
+		logger.Warn("assigned user has no email address, skipping milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()))
+		return nil
+	}
+
+	// Get email template
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOMilestoneAssignedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	// Prepare subject content
+	subjectContent := email.MilestoneAssignedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+
+	// Prepare body content
+	solutionsNames := lo.Map(solutions, func(item *models.MTOSolution, _ int) string {
+		if item == nil || item.Name == nil {
+			return ""
+		}
+		return *item.Name
+	})
+	bodyContent := email.NewMilestoneAssignedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		modelPlan,
+		milestone,
+		solutionsNames,
+	)
+
+	// Execute subject template
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	// Execute body template
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	// Send email to assigned user
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{assignedUser.Email},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

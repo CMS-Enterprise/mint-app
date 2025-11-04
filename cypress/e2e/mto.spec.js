@@ -313,6 +313,35 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('#isDraft').should('be.not.disabled').click({ force: true });
 
+    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
+    cy.get('#clear-selection')
+      .parent()
+      .find('[class$="indicatorContainer"]')
+      .eq(1)
+      .click({ force: true });
+    cy.get('#responsible-component-tags li').should(
+      'have.length.greaterThan',
+      0
+    );
+    cy.contains('FCHCO').click({ force: true });
+
+    cy.contains(
+      'This individual will receive an email notification from MINT when you assign this milestone.'
+    ).should('not.exist');
+
+    cy.get('#assigned-to').click({ force: true });
+    cy.get('[data-testid="combo-box-input"]').type('min{enter}', {
+      force: true
+    });
+    cy.get('[data-testid="combo-box-option-list"] li')
+      .should('have.length.greaterThan', 0)
+      .contains('MINT Doe (MINT@local.cms.gov)')
+      .click({ force: true });
+
+    cy.contains(
+      'This individual will receive an email notification from MINT when you assign this milestone.'
+    ).should('exist');
+
     cy.contains('Save changes')
       .should('be.not.disabled')
       .click({ force: true });
@@ -450,20 +479,8 @@ describe('Model-to-Operations Matrix', () => {
         });
     });
 
-    cy.get('#description').type('Test description');
+    cy.get('#description').clear().type('Test description');
     cy.get('#description').should('have.value', 'Test description');
-
-    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
-    cy.get('#clear-selection')
-      .parent()
-      .find('[class$="indicatorContainer"]')
-      .eq(1)
-      .click({ force: true });
-    cy.get('#responsible-component-tags li').should(
-      'have.length.greaterThan',
-      0
-    );
-    cy.contains('FCHCO').click({ force: true });
 
     cy.get('[data-testid="add-note-button"]').click();
 
