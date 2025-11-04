@@ -556,8 +556,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       YES_NO_RECONCILE:
         'Yes, but we will not reconcile actual performance against it',
       NO: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   benchmarkForPerformanceNote: {
     gqlField: 'benchmarkForPerformanceNote',
@@ -568,8 +567,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'benchmarkForPerformance',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 5.02,
-    filterGroups: [ModelViewFilter.CMMI]
+    order: 5.02
   },
   computePerformanceScores: {
     gqlField: 'computePerformanceScores',
@@ -582,8 +580,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   computePerformanceScoresNote: {
     gqlField: 'computePerformanceScoresNote',
@@ -594,84 +591,63 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'computePerformanceScores',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 5.04,
-    filterGroups: [ModelViewFilter.CMMI]
+    order: 5.04
   },
   riskAdjustPerformance: {
     gqlField: 'riskAdjustPerformance',
     goField: 'RiskAdjustPerformance',
     dbField: 'risk_adjust_performance',
     label: 'Performance Scores',
-    readonlyLabel: 'Will you make risk adjustments to performance scores?',
+    readonlyLabel: 'Performance scores',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.05,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'left',
-      adjacentField: 'riskAdjustFeedback'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustFeedback: {
     gqlField: 'riskAdjustFeedback',
     goField: 'RiskAdjustFeedback',
     dbField: 'risk_adjust_feedback',
     label: 'Feedback Results',
-    readonlyLabel: 'Will you make risk adjustments to feedback results?',
+    readonlyLabel: 'Feedback results',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.06,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'right',
-      adjacentField: 'riskAdjustPerformance'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustPayments: {
     gqlField: 'riskAdjustPayments',
     goField: 'RiskAdjustPayments',
     dbField: 'risk_adjust_payments',
     label: 'Payments',
-    readonlyLabel: 'Will you make risk adjustments to payments?',
+    readonlyLabel: 'Payments',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.07,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'left',
-      adjacentField: 'riskAdjustOther'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustOther: {
     gqlField: 'riskAdjustOther',
     goField: 'RiskAdjustOther',
     dbField: 'risk_adjust_other',
     label: 'Others',
-    readonlyLabel: 'Will you make risk adjustments to others?',
+    readonlyLabel: 'Others',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.08,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'right',
-      adjacentField: 'riskAdjustPayments'
-    },
-    filterGroups: [ModelViewFilter.CMMI]
+    }
   },
   riskAdjustNote: {
     gqlField: 'riskAdjustNote',
@@ -689,17 +665,13 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealPerformance',
     dbField: 'appeal_performance',
     label: 'Performance Scores',
-    readonlyLabel: 'Will participants be able to appeal performance scores?',
+    readonlyLabel: 'Performance scores',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.1,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'left',
-      adjacentField: 'appealFeedback'
     }
   },
   appealFeedback: {
@@ -707,17 +679,13 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealFeedback',
     dbField: 'appeal_feedback',
     label: 'Feedback Results',
-    readonlyLabel: 'Will participants be able to appeal feedback results?',
+    readonlyLabel: 'Feedback results',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.11,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'right',
-      adjacentField: 'appealPerformance'
     }
   },
   appealPayments: {
@@ -725,17 +693,13 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealPayments',
     dbField: 'appeal_payments',
     label: 'Payments',
-    readonlyLabel: 'Will participants be able to appeal payments?',
+    readonlyLabel: 'Payments',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.12,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'left',
-      adjacentField: 'appealOther'
     }
   },
   appealOther: {
@@ -743,17 +707,13 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AppealOther',
     dbField: 'appeal_other',
     label: 'Others',
-    readonlyLabel: 'Will participants be able to appeal others?',
+    readonlyLabel: 'Others',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.13,
     options: {
       true: 'Yes',
       false: 'No'
-    },
-    adjacentPositioning: {
-      position: 'right',
-      adjacentField: 'appealPayments'
     }
   },
   appealNote: {
@@ -801,10 +761,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     order: 6.02,
     isOtherType: true
   },
-  evalutaionApproachNote: {
-    gqlField: 'evalutaionApproachNote',
-    goField: 'EvalutaionApproachNote',
-    dbField: 'evalutaion_approach_note',
+  evaluationApproachNote: {
+    gqlField: 'evaluationApproachNote',
+    goField: 'EvaluationApproachNote',
+    dbField: 'evaluation_approach_note',
     label: 'Notes',
     isNote: true,
     otherParentField: 'evaluationApproaches',
@@ -1617,7 +1577,12 @@ export const opsEvalAndLearningMisc = {
   dataCollectionTiming: 'Data collection timing and frequency',
   qualityReportTiming: 'Quality reporting timing and frequency',
   dataReadonly: 'Data Sharing, Collection, and Reporting Timing and Frequency',
-  testing: 'Testing'
+  testing: 'Testing',
+  riskGroupLabel: 'Will you make risk adjustments to any of the following?',
+  appealGroupLabel: 'Will participants be able to appeal any of the following?',
+  appealGroupLabelTooltip:
+    'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
+  yesNo: 'Yes/No'
 };
 
 export default opsEvalAndLearning;

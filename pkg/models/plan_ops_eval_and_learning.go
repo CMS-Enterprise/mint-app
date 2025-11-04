@@ -71,7 +71,7 @@ type PlanOpsEvalAndLearning struct {
 	//Page 6
 	EvaluationApproaches          pq.StringArray `json:"evaluationApproaches" db:"evaluation_approaches"`
 	EvaluationApproachOther       *string        `json:"evaluationApproachOther" db:"evaluation_approach_other"`
-	EvalutaionApproachNote        *string        `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
+	EvaluationApproachNote        *string        `json:"evaluationApproachNote" db:"evaluation_approach_note"`
 	CcmInvolvment                 pq.StringArray `json:"ccmInvolvment" db:"ccm_involvment"`
 	CcmInvolvmentOther            *string        `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
 	CcmInvolvmentNote             *string        `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`
