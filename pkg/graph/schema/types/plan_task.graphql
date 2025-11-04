@@ -1,0 +1,65 @@
+"""
+The type of task being represented. These are currently based on V1 tasks. More will be added as time goes by
+"""
+enum PlanTaskKey {
+  MODEL_PLAN
+  MTO
+  DATA_EXCHANGE
+}
+
+"""
+The state of the task within the plan
+"""
+enum PlanTaskState {
+  """
+  These are for tasks that are not needed based on answered questions
+  """
+  NOT_NEEDED
+  """
+  The default state of a task. This will be selected for tasks not in progress
+  """
+  UPCOMING
+  """
+  This represents current tasks that cannot have an action performed on it
+  """
+  CANNOT_START
+  """
+  A task that  can be worked on
+  """
+  TO_DO
+  """
+  A task that is in progress
+  """
+  IN_PROGRESS
+  """
+  A complete task
+  """
+  COMPLETE
+}
+
+"""
+A task that is part of a plan
+"""
+type PlanTask {
+  id: UUID!
+
+  state: PlanTaskState!
+  key: PlanTaskKey!
+
+  completedBy: UUID!
+  completedByUserAccount: UserAccount!
+  completedDts: Time!
+
+  # Metadata columns
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+# Mutations
+extend type Mutation {
+  planTaskToggleComplete(planTaskID: UUID!, isComplete: Boolean!): PlanTask!
+}

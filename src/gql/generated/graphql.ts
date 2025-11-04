@@ -1605,6 +1605,7 @@ export type ModelPlan = {
   status: ModelStatus;
   suggestedPhase?: Maybe<PhaseSuggestion>;
   taskListStatus: TaskStatus;
+  tasks: Array<PlanTask>;
   tdls: Array<PlanTdl>;
   timeline: PlanTimeline;
 };
@@ -1847,6 +1848,7 @@ export type Mutation = {
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
+  planTaskToggleComplete: PlanTask;
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
@@ -2149,6 +2151,13 @@ export type MutationMarkNotificationAsReadArgs = {
 export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
   id: Scalars['UUID']['input'];
   solutionLinks: MtoSolutionLinks;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationPlanTaskToggleCompleteArgs = {
+  isComplete: Scalars['Boolean']['input'];
+  planTaskID: Scalars['UUID']['input'];
 };
 
 
@@ -4254,6 +4263,46 @@ export type PlanTdlTranslation = {
   note: TranslationField;
   title: TranslationField;
 };
+
+/** A task that is part of a plan */
+export type PlanTask = {
+  __typename: 'PlanTask';
+  completedBy: Scalars['UUID']['output'];
+  completedByUserAccount: UserAccount;
+  completedDts: Scalars['Time']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  key: PlanTaskKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  state: PlanTaskState;
+};
+
+/** The type of task being represented. These are currently based on V1 tasks. More will be added as time goes by */
+export enum PlanTaskKey {
+  DATA_EXCHANGE = 'DATA_EXCHANGE',
+  MODEL_PLAN = 'MODEL_PLAN',
+  MTO = 'MTO'
+}
+
+/** The state of the task within the plan */
+export enum PlanTaskState {
+  /** This represents current tasks that cannot have an action performed on it */
+  CANNOT_START = 'CANNOT_START',
+  /** A complete task */
+  COMPLETE = 'COMPLETE',
+  /** A task that is in progress */
+  IN_PROGRESS = 'IN_PROGRESS',
+  /** These are for tasks that are not needed based on answered questions */
+  NOT_NEEDED = 'NOT_NEEDED',
+  /** A task that  can be worked on */
+  TO_DO = 'TO_DO',
+  /** The default state of a task. This will be selected for tasks not in progress */
+  UPCOMING = 'UPCOMING'
+}
 
 /** Represents PlanTimeline */
 export type PlanTimeline = {

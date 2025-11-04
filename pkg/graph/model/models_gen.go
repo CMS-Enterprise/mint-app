@@ -755,6 +755,22 @@ type PlanTDLTranslation struct {
 	Note          models.TranslationField `json:"note" db:"note"`
 }
 
+// A task that is part of a plan
+type PlanTask struct {
+	ID                     uuid.UUID                   `json:"id"`
+	State                  PlanTaskState               `json:"state"`
+	Key                    PlanTaskKey                 `json:"key"`
+	CompletedBy            uuid.UUID                   `json:"completedBy"`
+	CompletedByUserAccount authentication.UserAccount  `json:"completedByUserAccount"`
+	CompletedDts           time.Time                   `json:"completedDts"`
+	CreatedBy              uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount   authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts             time.Time                   `json:"createdDts"`
+	ModifiedBy             *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount  *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts            *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // Represents plan timeline translation data
 type PlanTimelineTranslation struct {
 	CompleteIcip            models.TranslationField            `json:"completeICIP" db:"complete_icip"`
@@ -2627,6 +2643,134 @@ func (e *ParticipantsType) UnmarshalJSON(b []byte) error {
 }
 
 func (e ParticipantsType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// The type of task being represented. These are currently based on V1 tasks. More will be added as time goes by
+type PlanTaskKey string
+
+const (
+	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto          PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
+)
+
+var AllPlanTaskKey = []PlanTaskKey{
+	PlanTaskKeyModelPlan,
+	PlanTaskKeyMto,
+	PlanTaskKeyDataExchange,
+}
+
+func (e PlanTaskKey) IsValid() bool {
+	switch e {
+	case PlanTaskKeyModelPlan, PlanTaskKeyMto, PlanTaskKeyDataExchange:
+		return true
+	}
+	return false
+}
+
+func (e PlanTaskKey) String() string {
+	return string(e)
+}
+
+func (e *PlanTaskKey) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PlanTaskKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PlanTaskKey", str)
+	}
+	return nil
+}
+
+func (e PlanTaskKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *PlanTaskKey) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e PlanTaskKey) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// The state of the task within the plan
+type PlanTaskState string
+
+const (
+	// These are for tasks that are not needed based on answered questions
+	PlanTaskStateNotNeeded PlanTaskState = "NOT_NEEDED"
+	// The default state of a task. This will be selected for tasks not in progress
+	PlanTaskStateUpcoming PlanTaskState = "UPCOMING"
+	// This represents current tasks that cannot have an action performed on it
+	PlanTaskStateCannotStart PlanTaskState = "CANNOT_START"
+	// A task that  can be worked on
+	PlanTaskStateToDo PlanTaskState = "TO_DO"
+	// A task that is in progress
+	PlanTaskStateInProgress PlanTaskState = "IN_PROGRESS"
+	// A complete task
+	PlanTaskStateComplete PlanTaskState = "COMPLETE"
+)
+
+var AllPlanTaskState = []PlanTaskState{
+	PlanTaskStateNotNeeded,
+	PlanTaskStateUpcoming,
+	PlanTaskStateCannotStart,
+	PlanTaskStateToDo,
+	PlanTaskStateInProgress,
+	PlanTaskStateComplete,
+}
+
+func (e PlanTaskState) IsValid() bool {
+	switch e {
+	case PlanTaskStateNotNeeded, PlanTaskStateUpcoming, PlanTaskStateCannotStart, PlanTaskStateToDo, PlanTaskStateInProgress, PlanTaskStateComplete:
+		return true
+	}
+	return false
+}
+
+func (e PlanTaskState) String() string {
+	return string(e)
+}
+
+func (e *PlanTaskState) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PlanTaskState(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PlanTaskState", str)
+	}
+	return nil
+}
+
+func (e PlanTaskState) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *PlanTaskState) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e PlanTaskState) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
