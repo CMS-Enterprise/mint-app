@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/99designs/gqlgen/graphql/handler/transport"
-	"github.com/go-openapi/swag"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
@@ -77,10 +77,10 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 
 	// Pull job codes from config
 	// NOTE: We only allow nonprod job codes here. This is reflected in src/views/AuthenticationWrapper/DevLogin.tsx only pulling nonprod job codes
-	jcUser := swag.ContainsStrings(config.JobCodes, "MINT_USER_NONPROD")
-	jcAssessment := swag.ContainsStrings(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
-	jcMAC := (swag.ContainsStrings(config.JobCodes, "MINT MAC Users") || swag.ContainsStrings(config.JobCodes, "MINT_CTR_FFS_NONPROD"))
-	jcNonCMS := swag.ContainsStrings(config.JobCodes, "MINT_NON_CMS_NONPROD")
+	jcUser := slices.Contains(config.JobCodes, "MINT_USER_NONPROD")
+	jcAssessment := slices.Contains(config.JobCodes, "MINT_ASSESSMENT_NONPROD")
+	jcMAC := slices.Contains(config.JobCodes, "MINT MAC Users") || slices.Contains(config.JobCodes, "MINT_CTR_FFS_NONPROD")
+	jcNonCMS := slices.Contains(config.JobCodes, "MINT_NON_CMS_NONPROD")
 
 	// Always set assessment users OR non CMS users to have base user permissions
 	if jcAssessment || jcNonCMS {
