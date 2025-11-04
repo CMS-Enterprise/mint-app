@@ -67,6 +67,24 @@ jobs:
       - name: Ensure migrations are only added (not modified or deleted)
         if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
         env:
-          BASE_REF: ${{ github.base_ref }}
-          HEAD_REF: ${{ github.head_ref }}
-        run: scripts/check_migration_diff.sh
+          BASE_REF: ${{ github.event_name == 'merge_group' && github.event.merge_group.base_sha || github.base_ref }}
+          HEAD_REF: ${{ github.event_name == 'merge_group' && github.event.merge_group.head_sha || github.head_ref }}
+        run: |
+          # For merge_group, we get SHAs instead of branch names
+          if [ "${{ github.event_name }}" = "merge_group" ]; then
+            # Use SHAs directly (no need for origin/ prefix)
+            diff=$(git diff --name-status "${BASE_REF}..${HEAD_REF}" -- ./migrations)
+          else
+            # For PR, use branch names with origin/ prefix
+            diff=$(git diff --name-status "origin/${BASE_REF}..origin/${HEAD_REF}" -- ./migrations)
+          fi
+          
+          printf 'Migration diff:\n%s\n' "${diff}"
+          
+          diffNonAdds=$(echo "${diff}" | grep -Ev '^A' || true)
+          printf 'Migration diff (non-adds):\n%s\n' "${diffNonAdds}"
+          
+          if [ -n "${diffNonAdds}" ]; then
+            echo "Migration files can only be added in migrations folder"
+            exit 1
+          fi

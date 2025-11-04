@@ -550,6 +550,7 @@ describe('ModelsBySolution', () => {
     });
   });
 
+  // TODO: Fix this test
   it.skip('displays models for single solution with pagination', async () => {
     render(
       <MemoryRouter>
