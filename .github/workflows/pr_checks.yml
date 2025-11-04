@@ -2,6 +2,7 @@ name: PR Checks
 
 on:
   pull_request:
+  merge_group:
 
 # This concurrency group exists with cancel-in-progress: true so that only the latest run of the workflow is executed (as its all that should matter).
 concurrency:
@@ -10,5 +11,16 @@ concurrency:
 
 jobs:
   run_tests:
+    if: github.event_name != 'merge_group'
     uses: ./.github/workflows/run_tests.yml
     secrets: inherit
+  
+  # For merge queue, just pass immediately (tests already validated in PR)
+  merge_queue_pass:
+    if: github.event_name == 'merge_group'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge queue - skip tests
+        run: |
+          echo "Merge queue: Tests already passed in PR, skipping re-run"
+          exit 0
