@@ -94,7 +94,7 @@ jobs:
       - name: Build Frontend Assets
         run: yarn build
       - name: Upload Frontend assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: e2e-frontend-assets
           path: build/
@@ -105,7 +105,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   server_test:
-    if: ${{ inputs.skip_tests == false }}
+    if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -214,7 +214,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   e2e_tests:
-    if: ${{ inputs.skip_tests == false }}
+    if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     continue-on-error: true
     needs: [build_docker_images, build_frontend_assets]
@@ -272,7 +272,7 @@ jobs:
           scripts/dev down
           scripts/dev up:backend
       - name: Download Frontend assets
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: e2e-frontend-assets
           path: build/
@@ -288,14 +288,14 @@ jobs:
           scripts/dev down
       - name: Upload cypress videos
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cypress-videos
           path: cypress/videos
           retention-days: 14
       - name: Upload cypress screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cypress-screenshots
           path: cypress/screenshots
@@ -307,7 +307,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   lint:
-    if: ${{ inputs.skip_tests == false }}
+    if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -345,7 +345,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   client_test:
-    if: ${{ inputs.skip_tests == false }}
+    if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     continue-on-error: ${{ inputs.continue_on_error }}
     steps:
@@ -368,7 +368,7 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   client_typecheck:
-    if: ${{ inputs.skip_tests == false }}
+    if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code

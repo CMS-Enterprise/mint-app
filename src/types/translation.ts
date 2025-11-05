@@ -711,7 +711,7 @@ export type TranslationOpsEvalAndLearningForm = {
   // Evaluation
   evaluationApproaches: TranslationFieldPropertiesWithOptions<EvaluationApproachType>;
   evaluationApproachOther: TranslationFieldProperties;
-  evalutaionApproachNote: TranslationFieldProperties;
+  evaluationApproachNote: TranslationFieldProperties;
   ccmInvolvment: TranslationFieldPropertiesWithOptionsAndChildren<CcmInvolvmentType>;
   ccmInvolvmentOther: TranslationFieldProperties;
   ccmInvolvmentNote: TranslationFieldProperties;
@@ -1290,6 +1290,7 @@ export type TranslationMTOMilestoneCustomForm = {
   responsibleComponent: TranslationFieldPropertiesWithOptions<MtoMilestoneResponsibleComponent>;
   facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
   facilitatedByOther: TranslationFieldProperties;
+  assignedTo: TranslationFieldProperties;
   needBy: TranslationFieldProperties;
   riskIndicator: TranslationFieldPropertiesWithOptions<MtoRiskIndicator>;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
