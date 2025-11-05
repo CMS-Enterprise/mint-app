@@ -162,7 +162,7 @@ type PlanOpsEvalAndLearning {
   #Page 6
   evaluationApproaches: [EvaluationApproachType!]!
   evaluationApproachOther: String
-  evalutaionApproachNote: String
+  evaluationApproachNote: String
   ccmInvolvment: [CcmInvolvmentType!]!
   ccmInvolvmentOther: String
   ccmInvolvmentNote: String
@@ -295,7 +295,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
   #Page 6
   evaluationApproaches: [EvaluationApproachType!]
   evaluationApproachOther: String
-  evalutaionApproachNote: String
+  evaluationApproachNote: String
   ccmInvolvment: [CcmInvolvmentType!]
   ccmInvolvmentOther: String
   ccmInvolvmentNote: String

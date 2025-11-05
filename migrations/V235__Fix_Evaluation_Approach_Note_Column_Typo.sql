@@ -1,0 +1,2 @@
+ALTER TABLE plan_ops_eval_and_learning
+RENAME COLUMN evalutaion_approach_note TO evaluation_approach_note;

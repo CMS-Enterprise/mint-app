@@ -526,7 +526,7 @@ type PlanOpsEvalAndLearningTranslation struct {
 	AppealNote                                   models.TranslationField                       `json:"appealNote" db:"appeal_note"`
 	EvaluationApproaches                         models.TranslationFieldWithOptions            `json:"evaluationApproaches" db:"evaluation_approaches"`
 	EvaluationApproachOther                      models.TranslationField                       `json:"evaluationApproachOther" db:"evaluation_approach_other"`
-	EvalutaionApproachNote                       models.TranslationField                       `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
+	EvaluationApproachNote                       models.TranslationField                       `json:"evaluationApproachNote" db:"evaluation_approach_note"`
 	CcmInvolvment                                models.TranslationFieldWithOptionsAndChildren `json:"ccmInvolvment" db:"ccm_involvment"`
 	CcmInvolvmentOther                           models.TranslationField                       `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
 	CcmInvolvmentNote                            models.TranslationField                       `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`
