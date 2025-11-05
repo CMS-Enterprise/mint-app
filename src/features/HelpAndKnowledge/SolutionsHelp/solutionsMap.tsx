@@ -489,7 +489,7 @@ export const helpSolutions: HelpSolutionsType = {
       MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
     ],
     subCategories: [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION],
-    acronym: 'POST / PORTAL',
+    acronym: 'POST / Portal',
     type: MtoSolutionType.IT_SYSTEM,
     name: 'Salesforce Project Officer Support Tool / Portal',
     components: {
