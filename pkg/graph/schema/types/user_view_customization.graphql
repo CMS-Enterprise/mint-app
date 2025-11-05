@@ -23,17 +23,6 @@ enum ComponentGroup {
   CPI
 }
 
-enum ModelPlanStatusGroup {
-  PRE_CLEARANCE
-  IN_CLEARANCE
-  CLEARED
-  ANNOUNCED
-  ACTIVE
-  ENDED
-  CANCELED
-  PAUSED
-}
-
 type UserViewCustomization {
   id: UUID!
   userId: UUID!

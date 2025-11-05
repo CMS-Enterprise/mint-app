@@ -27,7 +27,6 @@ var ModelPlanByStatusGroup = &modelPlanByStatusGroupLoaders{
 func batchModelPlansGetByStatusGroup(ctx context.Context, statusGroup []models.ModelPlanStatusGroup) []*dataloader.Result[[]*models.ModelPlan] {
 	logger := appcontext.ZLogger(ctx).With(logfields.DataLoaderAppSection)
 	loaders, err := Loaders(ctx)
-	_ = logger
 	if err != nil {
 		return errorPerEachKey[models.ModelPlanStatusGroup, []*models.ModelPlan](statusGroup, err)
 	}
