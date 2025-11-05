@@ -598,7 +598,7 @@ const EditMilestoneForm = ({
         isCategoryDirty = true;
       }
 
-      if (!formValues.facilitatedBy?.includes(MtoFacilitator.OTHER)) {
+      if (!formData.facilitatedBy?.includes(MtoFacilitator.OTHER)) {
         formChanges.facilitatedByOther = null;
       }
 
