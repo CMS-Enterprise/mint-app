@@ -317,7 +317,7 @@ const EditSolutionForm = ({
         ...formChanges
       } = dirtyInput(formValues, formData);
 
-      if (!facilitatedBy?.includes(MtoFacilitator.OTHER)) {
+      if (!formValues.facilitatedBy?.includes(MtoFacilitator.OTHER)) {
         formChanges.facilitatedByOther = null;
       }
 
