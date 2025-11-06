@@ -64,3 +64,10 @@ type MTOCommonMilestone {
   isSuggested: Boolean!
   commonSolutions: [MTOCommonSolution!]!
 }
+
+extend type Query {
+  """
+  Fetch all Common Milestones available in the library
+  """
+  mtoCommonMilestones: [MTOCommonMilestone!]!
+}
