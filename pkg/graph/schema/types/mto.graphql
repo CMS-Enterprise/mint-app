@@ -2,9 +2,21 @@
 # - There's purposefully no `Milestones` query right now, since there's currently no need to query milestones outside the scope of a Category
 type ModelsToOperationMatrix {
   categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
+  """
+  This returns all common milestones, regardless of whether they're linked to a category
+  """
   commonMilestones: [MTOCommonMilestone!]!
+  """
+  This returns all common solutions, regardless of whether they're linked to a category
+  to check if it is part of this MTO check the returned isAdded field
+  """
   commonSolutions: [MTOCommonSolution!]!
   milestones: [MTOMilestone!]!
+  """
+  This returns all mto templates, regardless of whether they're linked to a model plan
+  to check if it is part of this MTO check the returned isAdded field
+  """
+  templates: [MTOTemplate!]!
   """
   Solutions returns solutions that are linked to a Model Plan's MTO.
    -- filterView is used to return only solutions that are relevant to a specific ModelViewFilter

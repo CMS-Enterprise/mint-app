@@ -50,6 +50,15 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 
 		// Other dependent tables
 		string(models.TNExistingModelLink),
+		string(models.TNMTOCategory),
+		string(models.TNMTOSuggestedMilestone),
+		string(models.TNMTOMilestoneNote),
+		string(models.TNMTOMilestone),
+		string(models.TNMTOSolution),
+		string(models.TNMTOMilestoneSolutionLink),
+		string(models.TNMTOInfo),
+		string(models.TNModelPlanMTOTemplateLink),
+		string(models.TNModelPlan),
 		string(models.TNAnalyzedAudit),
 		string(models.TNTag),
 		string(models.TNNdaAgreement),

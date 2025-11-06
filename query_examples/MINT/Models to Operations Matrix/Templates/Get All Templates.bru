@@ -1,0 +1,50 @@
+meta {
+  name: Get All Templates
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetAllMtoTemplates {
+    mtoTemplates {
+      id
+      key
+      name
+      description
+      categoryCount
+      milestoneCount
+      solutionCount
+      categories{
+        id
+        name
+        order
+        subCategories{
+          id
+          name
+          order
+          parentID
+        }
+      }
+      solutions{
+        id
+        mtoCommonSolutionID
+        templateID
+      }
+      milestones {
+        id
+        templateID
+        key
+      }
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

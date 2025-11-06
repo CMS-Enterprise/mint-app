@@ -38,6 +38,18 @@ func (mto *MTOMilestoneWithSolutionID) ToMTOMilestone() *MTOMilestone {
 	return &mto.MTOMilestone
 }
 
+// MTOMilestoneWithNewlyInsertedStatus wraps MTOMilestone as well as a newly inserted status
+// it is useful for checking if a milestone was just added, so an email can be sent
+type MTOMilestoneWithNewlyInsertedStatus struct {
+	MTOMilestone
+	NewlyInserted bool `json:"newlyInserted" db:"newly_inserted"`
+}
+
+// ToMTOMilestone returns the MTOMilestone object from the MTOMilestoneWithNewlyInsertedStatus
+func (mto *MTOMilestoneWithNewlyInsertedStatus) ToMTOMilestone() *MTOMilestone {
+	return &mto.MTOMilestone
+}
+
 type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation
