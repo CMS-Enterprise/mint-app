@@ -23,8 +23,8 @@ Cypress.Commands.add('enterModelPlanTaskList', (planName, table, page) => {
 
   cy.get('[data-testid="page-loading"]').should('not.exist');
 
-  cy.get(`[data-testid="to-task-list"]`).click();
-  cy.url().should('include', '/collaboration-area/task-list');
+  cy.get(`[data-testid="to-model-plan"]`).click();
+  cy.url().should('include', '/collaboration-area/model-plan');
 
   cy.get('[data-testid="page-loading"]').should('not.exist');
 });
