@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classnames from 'classnames';
 import {
   DataExchangeApproachStatus,
   ModelStatus,
@@ -103,14 +102,8 @@ const TaskListItem = ({
 }: TaskListItemProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
-  const taskListItemClasses = classnames(
-    'model-plan-task-list__item',
-    'display-flex',
-    'padding-bottom-4'
-  );
-
   return (
-    <li className={taskListItemClasses} data-testid={testId}>
+    <li className="display-flex padding-bottom-4" data-testid={testId}>
       <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
