@@ -1,0 +1,33 @@
+{
+  "modelPlanID": {
+    "gqlField": "modelPlanID",
+    "goField": "ModelPlanID",
+    "dbField": "model_plan_id",
+    "label": "Model Plan",
+    "dataType": "UUID",
+    "formType": "SELECT",
+    "order": 1.01,
+    "tableReference": "model_plan"
+  },
+  "templateID": {
+    "gqlField": "templateID",
+    "goField": "TemplateID",
+    "dbField": "template_id",
+    "label": "MTO Template",
+    "sublabel": "The template that was applied to this model plan",
+    "dataType": "UUID",
+    "formType": "SELECT",
+    "order": 1.02,
+    "tableReference": "mto_template"
+  },
+  "appliedDate": {
+    "gqlField": "appliedDate",
+    "goField": "AppliedDate",
+    "dbField": "applied_date",
+    "label": "Applied Date",
+    "sublabel": "Date when this template was applied to the model plan",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 1.03
+  }
+}

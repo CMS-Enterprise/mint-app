@@ -77,6 +77,14 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getMTOMilestoneNoteForeignKeyReference(ctx, store, value)
 		}
+	case models.TNModelPlanMTOTemplateLink:
+		{
+			return getModelPlanMTOTemplateLinkForeignKeyReference(ctx, store, value)
+		}
+	case models.TNMTOTemplate:
+		{
+			return getMTOTemplateForeignKeyReference(ctx, store, value)
+		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
 	}
@@ -405,6 +413,78 @@ func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Sto
 	}
 
 	return existingModel.ModelName, nil
+}
+
+// getModelPlanMTOTemplateLinkForeignKeyReference returns a translation for a model plan MTO template link foreign key reference
+func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the model plan MTO template link reference. err %w", err)
+	}
+
+	logger := appcontext.ZLogger(ctx)
+
+	// get the template link using the loader function (pass single ID in a slice)
+	templateLinks, err := storage.ModelPlanMTOTemplateLinkGetByIDLoader(store, logger, []uuid.UUID{uuidKey})
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the model plan MTO template link foreign key reference. err %w", err)
+	}
+
+	// Check if any results were returned
+	if len(templateLinks) == 0 {
+		return DataNotAvailableMessage, nil
+	}
+
+	templateLink := templateLinks[0]
+	if templateLink == nil {
+		return DataNotAvailableMessage, nil
+	}
+
+	template, err := loaders.MTOTemplate.ByID.Load(ctx, templateLink.TemplateID)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return DataNotAvailableMessage, nil
+		}
+		return "", fmt.Errorf("there was an issue getting the MTO template for translation. err %w", err)
+	}
+
+	if template == nil {
+		return DataNotAvailableMessage, nil
+	}
+
+	// Get the model plan for context
+	modelPlan, err := store.ModelPlanGetByID(store, logger, templateLink.ModelPlanID)
+	if err != nil {
+		// If we can't get the model plan, just return the template name
+		return fmt.Sprintf("Template: %s", template.Name), nil
+	}
+
+	// Return a descriptive string showing the template applied to the model plan
+	return fmt.Sprintf("Template '%s' applied to '%s'", template.Name, modelPlan.ModelName), nil
+}
+
+func getMTOTemplateForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the mto  template reference. err %w", err)
+	}
+	// get the  template
+	template, err := loaders.MTOTemplate.ByID.Load(ctx, uuidKey)
+	if err != nil {
+		if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+			return "", fmt.Errorf("there was an issue getting the mto template for translation. err %w", err)
+		}
+	}
+
+	if template == nil { // expect that a nil template can be returned, since they can be deleted
+		return DataNotAvailableMessage, nil
+	}
+	if template.Name == "" {
+		return DataNotAvailableMessage, nil
+	}
+	return template.Name, nil
 }
 
 // getPlanCollaboratorForeignKeyReference returns the common name of the user associated with the plan collaborator

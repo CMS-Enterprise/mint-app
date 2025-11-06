@@ -255,6 +255,18 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
+  [MtoCommonSolutionKey.HETS]: {
+    key: MtoCommonSolutionKey.HETS,
+    categories: [MtoCommonSolutionSubject.DATA],
+    acronym: 'HETS',
+    type: MtoSolutionType.IT_SYSTEM,
+    name: 'HIPAA Eligibility Transaction System',
+    components: {
+      timeline: (props: SolutionDetailProps) => (
+        <GatheringInfoAlert {...props} />
+      )
+    }
+  },
   [MtoCommonSolutionKey.HIGLAS]: {
     key: MtoCommonSolutionKey.HIGLAS,
     categories: [MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS],

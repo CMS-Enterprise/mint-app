@@ -27,6 +27,13 @@ var unTranslatedTables = []models.TableName{
 	models.TNMTOCommonSolutionContractor,
 	models.TNMTOCommonSolutionContact,
 	models.TNMTOCommonSolutionSystemOwner,
+
+	// We don't translate MTO Template audit configuration tables
+	models.TNMTOTemplate,
+	models.TNMTOTemplateCategory,
+	models.TNMTOTemplateMilestone,
+	models.TNMTOTemplateMilestoneSolutionLink,
+	models.TNMTOTemplateSolution,
 }
 
 // Returns true in the table name is in the list of provided Table Names
