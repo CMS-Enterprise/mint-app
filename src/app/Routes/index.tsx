@@ -4,6 +4,7 @@ import {
   Navigate,
   Outlet,
   RouterProvider,
+  useLocation,
   useParams
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -93,6 +94,26 @@ const Redirect = ({ route }: { route: string }) => {
 const ReadOnlySubinfoRedirect = () => {
   const { modelID, subinfo } = useParams();
   return <Navigate to={`/models/${modelID}/read-view/${subinfo}`} replace />;
+};
+
+// Redirect old task-list paths to new model-plan paths
+const TaskListToModelPlanRedirect = () => {
+  const location = useLocation();
+
+  // Replace 'task-list' with 'model-plan' in the current path
+  const newPath = location.pathname.replace(
+    '/collaboration-area/task-list',
+    '/collaboration-area/model-plan'
+  );
+
+  // Preserve query params and hash
+  const newLocation = {
+    pathname: newPath,
+    search: location.search,
+    hash: location.hash
+  };
+
+  return <Navigate to={newLocation} replace />;
 };
 
 const ProtectedHome = () => {
@@ -287,9 +308,7 @@ const router = createBrowserRouter([
       // Timeline Routes
       {
         path: '/models/:modelID/collaboration-area/task-list/basics/milestones',
-        element: (
-          <Redirect route="collaboration-area/task-list/basics/milestones" />
-        )
+        element: <Redirect route="collaboration-area/model-timeline" />
       },
       {
         path: '/models/:modelID/collaboration-area/model-timeline',
@@ -308,13 +327,22 @@ const router = createBrowserRouter([
       // Model to Operations Routes
       modelToOperationsRoutes,
 
-      // Task List Routes
+      // Task List Routes - Redirect old task-list paths to model-plan
       {
         path: '/models/:modelID/task-list',
         element: <Redirect route="collaboration-area/model-timeline" />
       },
       {
         path: '/models/:modelID/collaboration-area/task-list',
+        element: <TaskListToModelPlanRedirect />
+      },
+      {
+        path: '/models/:modelID/collaboration-area/task-list/*',
+        element: <TaskListToModelPlanRedirect />
+      },
+      // Model Plan Routes (new path for task-list)
+      {
+        path: '/models/:modelID/collaboration-area/model-plan',
         element: (
           <ProtectedRoute>
             <TaskList />
