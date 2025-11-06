@@ -263,14 +263,7 @@ export const columns: ColumnType[] = [
               setMilestoneID(row.id);
             }}
           >
-            <span className="text-bold position-absolute">{row.name} </span>
-            {rowType !== 'milestone' && (
-              <span className="text-base-dark margin-left-2 mint-body-normal position-absolute">
-                {i18next.t('modelToOperationsMisc:table.milestonesCount', {
-                  count: numberOfMilestones
-                })}
-              </span>
-            )}
+            <span className="text-bold">{row.name} </span>
           </Button>
         );
       }

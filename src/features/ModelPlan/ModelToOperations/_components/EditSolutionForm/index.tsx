@@ -308,14 +308,10 @@ const EditSolutionForm = ({
 
   const onSubmit: SubmitHandler<FormValues> = useCallback(
     formData => {
-      const {
-        neededBy,
-        name,
-        type,
-        facilitatedBy,
-        facilitatedByOther,
-        ...formChanges
-      } = dirtyInput(formValues, formData);
+      const { neededBy, name, type, ...formChanges } = dirtyInput(
+        formValues,
+        formData
+      );
 
       if (!formData.facilitatedBy?.includes(MtoFacilitator.OTHER)) {
         formChanges.facilitatedByOther = null;
@@ -332,12 +328,6 @@ const EditSolutionForm = ({
           id: editSolutionID || '',
           changes: {
             ...formChanges,
-            ...(facilitatedBy && {
-              facilitatedBy
-            }),
-            ...(facilitatedByOther !== undefined && {
-              facilitatedByOther
-            }),
             ...(neededBy !== undefined && {
               neededBy: neededBy ? new Date(neededBy).toISOString() : null
             }),
