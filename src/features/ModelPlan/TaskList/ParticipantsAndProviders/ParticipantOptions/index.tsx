@@ -151,7 +151,7 @@ export const ParticipantOptions = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
+              `/models/${modelID}/collaboration-area/model-plan/participants-and-providers/communication`
             );
           }}
           enableReinitialize
@@ -376,7 +376,7 @@ export const ParticipantOptions = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
+                            `/models/${modelID}/collaboration-area/model-plan/participants-and-providers`
                           );
                         }}
                       >
@@ -393,7 +393,7 @@ export const ParticipantOptions = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

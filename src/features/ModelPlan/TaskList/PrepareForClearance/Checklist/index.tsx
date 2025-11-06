@@ -186,7 +186,7 @@ const PrepareForClearanceCheckList = () => {
       const errors = responses?.find(result => result?.errors);
 
       if (!errors) {
-        navigate(`/models/${modelID}/collaboration-area/task-list`);
+        navigate(`/models/${modelID}/collaboration-area/model-plan`);
       }
     });
   };
@@ -352,7 +352,7 @@ const PrepareForClearanceCheckList = () => {
                                 {/* Need to pass in section ID to update readyForClearance state on next route */}
                                 <UswdsReactLink
                                   data-testid={`clearance-${section}`}
-                                  to={`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
+                                  to={`/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
                                   className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                                 >
                                   {t('review', {
@@ -390,7 +390,7 @@ const PrepareForClearanceCheckList = () => {
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

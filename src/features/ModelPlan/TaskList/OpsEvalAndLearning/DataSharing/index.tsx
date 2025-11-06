@@ -113,11 +113,11 @@ const DataSharing = () => {
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
+        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
+        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/evaluation`
       );
     }
   };
@@ -193,7 +193,7 @@ const DataSharing = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/learning`
+              `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/learning`
             );
           }}
           enableReinitialize
@@ -465,7 +465,7 @@ const DataSharing = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

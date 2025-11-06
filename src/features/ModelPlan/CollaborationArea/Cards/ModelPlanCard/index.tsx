@@ -138,10 +138,10 @@ const ModelPlanCard = ({
         )}
         <CardFooter>
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/task-list`}
+            to={`/models/${modelID}/collaboration-area/model-plan`}
             className="usa-button margin-right-1"
             variant="unstyled"
-            data-testid="to-task-list"
+            data-testid="to-model-plan"
           >
             {collaborationAreaT('goToModelPlan')}
           </UswdsReactLink>
