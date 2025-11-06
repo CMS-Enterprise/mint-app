@@ -637,7 +637,7 @@ const ModelPlansTable = ({
   );
 };
 
-const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
+export const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
   const { t } = useTranslation('customHome');
   const [isShowingAllNames, setShowAllNames] = useState(false);
 

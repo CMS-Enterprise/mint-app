@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Column,
@@ -9,7 +9,8 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
+import { RenderFilteredNameHistory } from 'features/Home/Table';
 import { ModelCategory } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
@@ -412,38 +413,6 @@ const ModelDetailsTable = ({
         {currentTableSortDescription(headerGroups[0])}
       </div>
     </div>
-  );
-};
-
-const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
-  const { t } = useTranslation('customHome');
-  const [isShowingAllNames, setShowAllNames] = useState(false);
-
-  const firstThreeNames = names.slice(0, 3);
-
-  return (
-    <>
-      <p className="margin-y-0 font-body-xs line-height-sans-2">
-        {t('previously')}{' '}
-        {isShowingAllNames
-          ? `${names.join(', ')}`
-          : `${firstThreeNames.join(', ')}`}
-      </p>
-      {names.length > 3 && (
-        <Button
-          unstyled
-          type="button"
-          className="margin-top-1 font-body-xs"
-          onClick={() => {
-            setShowAllNames(!isShowingAllNames);
-          }}
-        >
-          {isShowingAllNames
-            ? t('viewLess')
-            : t('viewMore', { number: `${names.length - 3}` })}
-        </Button>
-      )}
-    </>
   );
 };
 
