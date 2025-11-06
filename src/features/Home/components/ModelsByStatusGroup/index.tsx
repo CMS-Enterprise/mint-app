@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
+import { Button, Header, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   GetModelPlansByStatusGroupQuery,
@@ -18,7 +18,7 @@ import ModelDetailsTable from '../ModelDetailsTable';
 export type ModelPlansType =
   GetModelPlansByStatusGroupQuery['modelPlansByStatusGroup'][number];
 
-const HIDDEN_COLUMNS_BY_STATUS = {
+const HIDDEN_COLUMNS_BY_STATUS_GROUP = {
   [ModelPlanStatusGroup.PRE_CLEARANCE]: ['paymentDate', 'endDate'],
   [ModelPlanStatusGroup.IN_CLEARANCE]: ['clearanceDate', 'endDate'],
   [ModelPlanStatusGroup.CLEARED]: ['status', 'clearanceDate', 'endDate'],
@@ -29,27 +29,24 @@ const HIDDEN_COLUMNS_BY_STATUS = {
   [ModelPlanStatusGroup.PAUSED]: ['status', 'paymentDate', 'endDate']
 };
 
+const ALL_COLUMNS_BY_STATUS_GROUP = [
+  ModelPlanStatusGroup.PRE_CLEARANCE,
+  ModelPlanStatusGroup.IN_CLEARANCE,
+  ModelPlanStatusGroup.CLEARED,
+  ModelPlanStatusGroup.ANNOUNCED,
+  ModelPlanStatusGroup.ACTIVE,
+  ModelPlanStatusGroup.ENDED,
+  ModelPlanStatusGroup.CANCELED,
+  ModelPlanStatusGroup.PAUSED
+];
+
 const ModelsByStatusGroup = () => {
   const { t: customHomeT } = useTranslation('customHome');
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const orderedModelPlanStatusGroups = useMemo(
-    () => [
-      ModelPlanStatusGroup.PRE_CLEARANCE,
-      ModelPlanStatusGroup.IN_CLEARANCE,
-      ModelPlanStatusGroup.CLEARED,
-      ModelPlanStatusGroup.ANNOUNCED,
-      ModelPlanStatusGroup.ACTIVE,
-      ModelPlanStatusGroup.ENDED,
-      ModelPlanStatusGroup.CANCELED,
-      ModelPlanStatusGroup.PAUSED
-    ],
-    []
-  );
-
   const [currentStatus, setCurrentStatus] = useState(
-    orderedModelPlanStatusGroups[0]
+    ALL_COLUMNS_BY_STATUS_GROUP[0]
   );
 
   const {
@@ -58,7 +55,7 @@ const ModelsByStatusGroup = () => {
     error
   } = useGetModelPlansByStatusGroupQuery({
     variables: {
-      statusGroup: currentStatus as ModelPlanStatusGroup
+      statusGroup: currentStatus
     }
   });
 
@@ -67,26 +64,23 @@ const ModelsByStatusGroup = () => {
       []) as ModelPlansType[];
   }, [modelPlansByStatusGroup?.modelPlansByStatusGroup]);
 
-  const statusNavs = orderedModelPlanStatusGroups.map(statusGroup => (
-    <button
+  const statusNavs = ALL_COLUMNS_BY_STATUS_GROUP.map(statusGroup => (
+    <Button
       type="button"
       key={statusGroup}
       onClick={() => setCurrentStatus(statusGroup)}
       className={classNames('usa-nav__link margin-left-neg-2 margin-right-2', {
         'usa-current': currentStatus === statusGroup
       })}
+      unstyled
     >
       <span>
         {customHomeT(
           `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.status.${statusGroup}.label`
         )}
       </span>
-    </button>
+    </Button>
   ));
-
-  if (loading) {
-    return <PageLoading testId="models-by-status" />;
-  }
 
   if (error) {
     return <Alert type="error">{customHomeT('fetchError')}</Alert>;
@@ -121,7 +115,7 @@ const ModelsByStatusGroup = () => {
             }
             className="margin-bottom-4 text-primary text-bold"
           >
-            {orderedModelPlanStatusGroups.map(statusGroup => {
+            {ALL_COLUMNS_BY_STATUS_GROUP.map(statusGroup => {
               return (
                 <option key={statusGroup} value={statusGroup}>
                   {customHomeT(
@@ -133,11 +127,12 @@ const ModelsByStatusGroup = () => {
           </Select>
         </div>
       )}
+      {loading && <PageLoading testId="models-by-status" />}
 
-      {data.length > 0 ? (
+      {!loading && data.length > 0 ? (
         <ModelDetailsTable
           models={data}
-          hiddenColumns={HIDDEN_COLUMNS_BY_STATUS[currentStatus]}
+          hiddenColumns={HIDDEN_COLUMNS_BY_STATUS_GROUP[currentStatus]}
           canSearch={data.length > 4}
         />
       ) : (

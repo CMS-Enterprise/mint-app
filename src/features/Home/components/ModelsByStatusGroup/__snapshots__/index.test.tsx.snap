@@ -43,7 +43,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -55,7 +56,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -67,7 +69,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -79,7 +82,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -91,7 +95,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -103,7 +108,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -115,7 +121,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
@@ -127,7 +134,8 @@ exports[`ModelsByStatusGroup > matches snapshot 1`] = `
               class="usa-nav__primary-item"
             >
               <button
-                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
                 type="button"
               >
                 <span>
