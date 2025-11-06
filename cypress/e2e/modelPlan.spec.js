@@ -1,3 +1,5 @@
+import miscellaneous from '../../src/i18n/en-US/modelPlan/miscellaneous';
+
 describe('The Model Plan Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
@@ -129,7 +131,7 @@ describe('The Model Plan Form', () => {
       .type('The interventions')
       .should('have.value', 'The interventions');
 
-    cy.contains('button', 'Save and return to model plan').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
