@@ -351,7 +351,8 @@
       "NCQA": "National Committee for Quality Assurance",
       "MS_FORMS": "Microsoft Forms",
       "RESDAC_CMDS": "ResDAC CMMI Model Data Sharing Model Participation Data Initiative",
-      "OVERLAPS_OPERATIONS_WORKGROUP": "Overlaps Operations Workgroup"
+      "OVERLAPS_OPERATIONS_WORKGROUP": "Overlaps Operations Workgroup",
+      "HETS": "HIPAA Eligibility Transaction System"
     },
     "readonlyOptions": {
       "INNOVATION": "4i"
@@ -419,7 +420,8 @@
       "NCQA": "National Committee for Quality Assurance",
       "MS_FORMS": "Microsoft Forms",
       "RESDAC_CMDS": "ResDAC CMMI Model Data Sharing Model Participation Data Initiative",
-      "OVERLAPS_OPERATIONS_WORKGROUP": "Overlaps Operations Workgroup"
+      "OVERLAPS_OPERATIONS_WORKGROUP": "Overlaps Operations Workgroup",
+      "HETS": "HIPAA Eligibility Transaction System"
     },
     "readonlyOptions": {
       "INNOVATION": "4i"

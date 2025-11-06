@@ -295,7 +295,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
-      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup'
+      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup',
+      HETS: 'HIPAA Eligibility Transaction System'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -364,7 +365,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       MS_FORMS: 'Microsoft Forms',
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
-      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup'
+      OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup',
+      HETS: 'HIPAA Eligibility Transaction System'
     },
     readonlyOptions: {
       INNOVATION: '4i'

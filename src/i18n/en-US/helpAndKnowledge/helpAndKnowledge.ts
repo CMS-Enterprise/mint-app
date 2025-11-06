@@ -797,6 +797,12 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
       ]
     }
   },
+  [MtoCommonSolutionKey.HETS]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
+  },
   [MtoCommonSolutionKey.HIGLAS]: {
     about: {
       description: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.

@@ -1005,6 +1005,7 @@ export enum MtoCommonSolutionKey {
   GOVDELIVERY = 'GOVDELIVERY',
   GS = 'GS',
   HDR = 'HDR',
+  HETS = 'HETS',
   HIGLAS = 'HIGLAS',
   HPMS = 'HPMS',
   IC_LANDING = 'IC_LANDING',
