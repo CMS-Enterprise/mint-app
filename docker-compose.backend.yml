@@ -1,5 +1,5 @@
----
 version: '3.7'
+
 services:
   db:
     ports:
@@ -25,6 +25,13 @@ services:
       - 'max_replication_slots=2'
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   db_migrate:
     volumes:
@@ -40,6 +47,13 @@ services:
       - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
     depends_on:
       - db
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   mint:
     build:
@@ -134,7 +148,14 @@ services:
 
     depends_on:
       db_migrate:
-        condition: service_completed_successfully # Only start if migrations completed successfully
+        condition: service_completed_successfully
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   minio:
     restart: always
@@ -145,6 +166,13 @@ services:
       - '9966:9966'
     volumes:
       - ./tmp/minio:/data
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   minio_mc:
     image: minio/mc:latest
@@ -161,12 +189,26 @@ services:
       /usr/bin/mc mb --quiet s3local/mint-app-echimp-uploads/;
       /usr/bin/mc policy set public s3local/mint-app-echimp-uploads;
       "
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   email:
     image: dockage/mailcatcher:0.8.2
     ports:
       - "1085:1080"
       - "1030:1025"
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   faktory:
     image: docker.contribsys.com/contribsys/faktory-ent:latest
@@ -179,6 +221,53 @@ services:
         source: ./.faktory/conf.d
         target: /root/.faktory/conf.d
     restart: always
+    labels:
+      - "logging=true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ======================
+  # Logging stack
+  # ======================
+
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail-config.yaml:/etc/promtail/config.yaml:ro
+    command: -config.file=/etc/promtail/config.yaml
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      # - GF_SECURITY_ADMIN_USER=admin
+      # - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+      - loki
 
 volumes:
   faktory:

@@ -40,14 +40,14 @@ func NewServer(config *viper.Viper) *Server {
 	}
 
 	var zapLogger *zap.Logger
-	if !environment.Deployed() {
-		// When not running in a deployed environment, we're not parsing logs into Splunk, so no need to log as JSON
-		// Instead, use zap.NewDevelopment() to create a logger that logs in a human-readable format
-		// This also causes logs at Debug level to be printed, which isn't the case for zap.NewProduction()
-		zapLogger, err = zap.NewDevelopment()
-	} else {
-		zapLogger, err = zap.NewProduction()
-	}
+	// if !environment.Deployed() {
+	// 	// When not running in a deployed environment, we're not parsing logs into Splunk, so no need to log as JSON
+	// 	// Instead, use zap.NewDevelopment() to create a logger that logs in a human-readable format
+	// 	// This also causes logs at Debug level to be printed, which isn't the case for zap.NewProduction()
+	// 	zapLogger, err = zap.NewDevelopment()
+	// } else {
+	zapLogger, err = zap.NewProduction()
+	// }
 	if err != nil {
 		log.Fatalf("Failed to initialize logger: %v", err)
 	}
