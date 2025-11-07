@@ -152,7 +152,7 @@ describe('The Collaborator/Team Member Form', () => {
       cy.visit(taskList);
       cy.location().should(loc => {
         expect(loc.pathname).to.match(
-          /\/models\/.{36}\/collaboration-area\/model-plan/
+          /\/models\/.{36}\/read-view\/model-basics/
         );
       });
     });
