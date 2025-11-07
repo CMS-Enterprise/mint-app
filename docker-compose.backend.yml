@@ -180,5 +180,21 @@ services:
         target: /root/.faktory/conf.d
     restart: always
 
+  # 👇 NEW SERVICE: Dozzle for live log viewing (JSON-aware)
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    ports:
+      - "8890:8080" # ✅ new unique port (doesn't conflict with your others)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # Filter syntax must be key=value; multiple filters separated by space
+      # This example includes containers whose names contain "mint" or "db"
+      # DOZZLE_FILTER: "name=mint name=db"
+      DOZZLE_LEVEL: info
+      # You can also add: DOZZLE_TAILSIZE=1000
+
 volumes:
   faktory:
