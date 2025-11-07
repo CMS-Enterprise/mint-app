@@ -60,7 +60,7 @@ describe('The Model Plan Form', () => {
       .type('Renamed Model Plan Name')
       .should('have.value', 'Renamed Model Plan Name');
 
-    cy.contains('button', 'Save and return to model plan').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
