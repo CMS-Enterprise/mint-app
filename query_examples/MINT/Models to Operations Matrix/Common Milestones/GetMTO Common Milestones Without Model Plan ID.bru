@@ -1,0 +1,35 @@
+meta {
+  name: GetMTO Common Milestones Without Model Plan ID
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query mtoCommonMilestones {
+    mtoCommonMilestones {
+      name
+      key
+      categoryName
+      subCategoryName
+      facilitatedByRole
+      section
+  
+      isAdded
+      # isSuggested
+      # commonSolutions:
+    }
+  }
+  
+}
