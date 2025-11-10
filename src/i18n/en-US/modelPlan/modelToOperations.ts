@@ -137,7 +137,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       label: 'Template',
       header: 'Standard categories',
       description: '24 categories, 0 milestones, 0 solutions',
-      buttonText: 'Add this template'
+      buttonText: 'Add this template',
+      templateCount:
+        '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions',
+      availableTemplates: '{{selected}} of {{available}} available templates',
+      viewTemplates: 'View all templates in the library',
+      errorFetchingTemplates: 'Failed to fetch templates'
     }
   },
   table: {
@@ -186,9 +191,9 @@ export const modelToOperationsMisc: Record<string, any> = {
       commonSolutions: '{{number}} common solutions and IT systems',
       browseSolutionLibrary: 'Add solutions from library',
       templateAndCategories: 'Templates and categories',
-      availableTemplates: '1 available template',
+      availableTemplates: '5 available templates',
       standardCategories: 'Standard categories',
-      addThisTemplate: 'Add this template',
+      addTemplateFromLibrary: 'Add templates from library',
       addCustomCategory: 'or, create a custom category'
     },
     alert: {
@@ -534,16 +539,20 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     addTemplate: {
       title: 'Are you sure you want to continue?',
+      selectedTemplate: '<bold>Selected template:</bold> {{template}}',
       description: 'Adding this template to your MTO will add:',
-      item: '24 categories (including 9 primary categories)',
+      categories:
+        '{{count}} categories (including {{primaryCount}} primary categories)',
+      milestones: '{{count}} milestones',
+      solutions: '{{count}} solutions',
       description2:
         'Adding this template will only add items that you have not yet added to your MTO. If you have already added this template, you may not see any new items appear.',
-      success:
-        'Your template <bold>(Standard categories)</bold> has been added.',
+      success: 'Your template <bold>({{category}})</bold> has been added.',
       error:
         'There was an error adding this template. Please try again. If the error persists, please try again another time.',
       addTemplate: 'Add template',
-      dontAdd: 'Don’t add template'
+      dontAdd: 'Don’t add template',
+      failedToFetch: 'Failed to fetch template'
     },
     addToExistingMilestone: {
       title: 'Add to existing milestone?',
@@ -568,6 +577,39 @@ export const modelToOperationsMisc: Record<string, any> = {
           'Your solution (<b>{{title}}</b>) has been added and will be visible on your MTO.'
       }
     }
+  },
+  templateLibrary: {
+    heading: 'Template library',
+    description:
+      'Browse the model-to-operations (MTO) matrix templates available in MINT. Templates contain a combination of categories, milestones, and/or solutions. They are starting points for certain model types and can be further customized once added. Add any templates that are relevant for your MTO.',
+    hideAdded: 'Hide added templates ({{count}})',
+    template: 'Template',
+    templateCount:
+      '{{categoryCount}} categories, {{milestoneCount}} milestones, {{solutionCount}} solutions',
+    addToMatrix: 'Add to matrix',
+    aboutThisTemplate: 'About this template',
+    templateDetails: 'Template details',
+    added: 'Added',
+    returnToMTO: 'Return to model-to-operations matrix',
+    alertHeading: 'There are no model templates that match your search.',
+    alertDescription:
+      'Please double-check your search and try again. If you’re searching for a milestone that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+    alertDescriptionWithFilter:
+      'Please double-check your search and filters and try again. If you’re searching for a template that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+    templateContents: 'Template contents',
+    contentDetails:
+      'The categories, milestones, and solutions listed below will be added to your model-to-operations (MTO) matrix if you choose to add this template.',
+    category: 'Category',
+    subCategory: 'Sub-category',
+    milestone: 'Milestone',
+    solution: 'Solution',
+    selectedSolutions: 'Selected solutions',
+    relatedMilestones: 'Related milestones',
+    noMilestones:
+      'There are no milestones or categories included in this template.',
+    noSolutions:
+      'There are no solutions or IT systems included in this template.',
+    noneSpecified: 'None specified'
   },
   milestoneLibrary: {
     heading: 'Milestone library',
