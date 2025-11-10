@@ -75,6 +75,8 @@ func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType str
 // and ERROR only on the final failing attempt (i.e., no retries remain).
 func RetryAwareLogging(logger *zap.Logger) faktory_worker.MiddlewareFunc {
 	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
+		logger = CapAtWarn(logger)
+
 		help := faktory_worker.HelperFor(ctx)
 
 		maxRetries := defaultMaxRetries
@@ -150,5 +152,23 @@ func RetryAwareLogger(ctx context.Context, base *zap.Logger) *zap.Logger {
 	}
 	return base.WithOptions(zap.WrapCore(func(c zapcore.Core) zapcore.Core {
 		return &downgradeErrorsCore{Core: c, downgrade: true}
+	}))
+}
+
+// Core wrapper that forces any level > Warn down to Warn.
+type warnCapCore struct{ zapcore.Core }
+
+func (c warnCapCore) Check(ent zapcore.Entry, ce *zapcore.CheckedEntry) *zapcore.CheckedEntry {
+	if ent.Level > zapcore.WarnLevel {
+		ent.Level = zapcore.WarnLevel
+	}
+	return c.Core.Check(ent, ce)
+}
+
+// CapAtWarn returns a copy of base that never logs above Warn.
+// (logger.Error(...) will be emitted as a warn entry.)
+func CapAtWarn(base *zap.Logger) *zap.Logger {
+	return base.WithOptions(zap.WrapCore(func(core zapcore.Core) zapcore.Core {
+		return warnCapCore{Core: core}
 	}))
 }
