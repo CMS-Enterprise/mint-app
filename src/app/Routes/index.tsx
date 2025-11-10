@@ -333,10 +333,6 @@ const router = createBrowserRouter([
         element: <Redirect route="collaboration-area/model-timeline" />
       },
       {
-        path: '/models/:modelID/collaboration-area/task-list',
-        element: <TaskListToModelPlanRedirect />
-      },
-      {
         path: '/models/:modelID/collaboration-area/task-list/*',
         element: <TaskListToModelPlanRedirect />
       },
