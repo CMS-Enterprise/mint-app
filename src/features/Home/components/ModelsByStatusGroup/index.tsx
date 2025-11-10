@@ -136,12 +136,11 @@ const ModelsByStatusGroup = () => {
           canSearch={data.length > 4}
         />
       ) : (
-        <Alert
-          type="info"
-          heading={customHomeT(
+        <Alert type="info" slim>
+          {customHomeT(
             `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.status.${currentStatus}.noResultsHeading`
           )}
-        />
+        </Alert>
       )}
     </div>
   );
