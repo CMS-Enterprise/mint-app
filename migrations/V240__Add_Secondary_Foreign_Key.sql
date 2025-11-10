@@ -118,11 +118,11 @@ BEGIN
         table_id, --table_id
         h_new -> pkey_f, --primary_key
         h_new -> fkey_f, --foreign_key
-        h_new -> fkey_f_secondary, --secondary_foreign_key
         substring(TG_OP,1,1), --action
         changeJSON, --fields
+        CURRENT_TIMESTAMP, --modified_dts
         modified_by_user_id, --modified_by
-        CURRENT_TIMESTAMP --modified_dts
+        h_new -> fkey_f_secondary --secondary_foreign_key
     );
     IF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
         BEGIN
@@ -135,8 +135,8 @@ BEGIN
         audit_row.foreign_key = h_old -> fkey_f;
         audit_row.secondary_foreign_key = h_old -> fkey_f_secondary;
     ELSIF (TG_OP = 'INSERT' AND TG_LEVEL = 'ROW') THEN
-        audit_row.modified_by = created_by_user_id;
         audit_row.modified_dts = NEW.created_dts;
+        audit_row.modified_by = created_by_user_id;
     END IF;
 
     INSERT INTO audit.change VALUES(audit_row.*);
@@ -161,7 +161,7 @@ SECURITY DEFINER --Run trigger as the creator of the trigger
 SET search_path = pg_catalog, public;
 
 -- Update the audit.audit_table() function to accept a secondary_fkey parameter
-DROP FUNCTION audit.audit_table;
+DROP FUNCTION IF EXISTS audit.audit_table(TEXT, TABLE_NAME, TEXT, TEXT, TEXT[], TEXT[]);
 
 CREATE OR REPLACE FUNCTION audit.audit_table(IN schema_name TEXT,IN table_name TABLE_NAME,IN primary_key TEXT,IN secondary_key TEXT,IN ignored_cols TEXT[],IN insert_cols TEXT[], IN secondary_fkey TEXT DEFAULT NULL)
 RETURNS VOID

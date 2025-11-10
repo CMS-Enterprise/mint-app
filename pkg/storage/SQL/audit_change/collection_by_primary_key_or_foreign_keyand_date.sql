@@ -3,7 +3,6 @@ SELECT
     audit.change.table_id,
     audit.change.primary_key,
     audit.change.foreign_key,
-    audit.change.secondary_foreign_key,
     audit.table_config.name AS table_name,
     audit.change.action,
     audit.change.fields,
