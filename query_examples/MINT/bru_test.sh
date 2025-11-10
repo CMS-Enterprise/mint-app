@@ -84,7 +84,7 @@ bru run "$DELETE_MILESTONE_BRU" --env-var "mtoMilestoneID=${MILESTONE_ID:-}" \
   --output "$OUT5" >/dev/null
 DUR5="$(duration_ms "$OUT5")"
 
-# ------- Aggregate summary across all four runs -------
+# ------- Aggregate summary across all five runs -------
 AGG_JSON="$TMP_DIR/agg.json"
 jq -s '.' "$OUT1" "$OUT2" "$OUT3" "$OUT4" "$OUT5" > "$AGG_JSON"
 
