@@ -54,6 +54,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	models.TNMTOSolution,
 	models.TNMTOMilestoneSolutionLink,
 	models.TNMTOInfo,
+	models.TNMTOTemplate,
 	//exclude suggestedMilestone
 
 	models.TNPlanTimeline,
@@ -421,6 +422,8 @@ func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, 
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterApproachingClearance:
 		modelPlans, err = storage.ModelPlanCollectionApproachingClearance(store, logger)
+	case model.ModelPlanFilterNewlyCreated:
+		modelPlans, err = store.ModelPlanCollectionNewlyCreated(logger)
 	default:
 		modelPlans = nil
 		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)

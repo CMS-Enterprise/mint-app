@@ -9,6 +9,7 @@ import MTOModal from './_components/FormModal';
 import MTOHome from './Home';
 import MilestoneLibrary from './MilestoneLibrary';
 import SolutionLibrary from './SolutionLibrary';
+import TemplateLibrary from './TemplateLibrary';
 
 import './index.scss';
 
@@ -52,6 +53,10 @@ export const modelToOperationsRoutes = {
     {
       path: '/models/:modelID/collaboration-area/model-to-operations/solution-library',
       element: <SolutionLibrary />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/model-to-operations/template-library',
+      element: <TemplateLibrary />
     },
     {
       path: '/models/:modelID/collaboration-area/model-to-operations',

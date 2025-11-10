@@ -69,7 +69,8 @@ const DraggableRow = ({
       style={{
         ...style,
         // TODO: This is a temporary style to highlight the row when dragging
-        backgroundColor: isOver ? 'lightblue' : style.backgroundColor
+        backgroundColor: isOver ? 'lightblue' : style.backgroundColor,
+        height: '2.75rem'
       }}
       onKeyPress={e => {
         if ((e.key === 'Enter' || e.key === ' ') && toggleRow) {

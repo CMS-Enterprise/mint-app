@@ -225,4 +225,11 @@ enum TableName {
   mto_common_solution
   mto_common_solution_contact
   mto_milestone_note
+
+  mto_template
+  mto_template_category
+  mto_template_milestone
+  mto_template_solution
+  mto_template_milestone_solution_link
+  model_plan_mto_template_link
 }

@@ -107,12 +107,12 @@ func MTOCategoryDelete(tx *sqlx.Tx, actorUserID uuid.UUID, id uuid.UUID) error {
 // MTOCategoryCreateAllowConflicts creates a new MTOCategory in the database, but in the case of a conflict, instead just
 // returns the conflicting row (and doesn't return an error)
 // In all other ways, it is effectively equivalent to MTOCategoryCreate
-func MTOCategoryCreateAllowConflicts(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *models.MTOCategory) (*models.MTOCategory, error) {
+func MTOCategoryCreateAllowConflicts(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *models.MTOCategory) (*models.MTOCategoryWithNewlyInsertedStatus, error) {
 	if MTOCategory.ID == uuid.Nil {
 		MTOCategory.ID = uuid.New()
 	}
 
-	returned, procErr := sqlutils.GetProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.CreateAllowConflicts, MTOCategory)
+	returned, procErr := sqlutils.GetProcedure[models.MTOCategoryWithNewlyInsertedStatus](np, sqlqueries.MTOCategory.CreateAllowConflicts, MTOCategory)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue creating new MTOCategory object (MTOCategoryCreateAllowConflicts): %w", procErr)
 	}

@@ -74,6 +74,7 @@ const (
 	MTOCSKMsForms                     MTOCommonSolutionKey = "MS_FORMS"
 	MTOCSKResdacCmds                  MTOCommonSolutionKey = "RESDAC_CMDS"
 	MTOCSKOverlapsOperationsWorkgroup MTOCommonSolutionKey = "OVERLAPS_OPERATIONS_WORKGROUP"
+	MTOCSKHETS                        MTOCommonSolutionKey = "HETS"
 )
 
 type MTOCommonSolutionSubject string

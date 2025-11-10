@@ -14,6 +14,20 @@ const (
 	MTMCompleted  MTOMilestoneStatus = "COMPLETED"
 )
 
+// mtoMilestoneHumanized maps MTO milestone Statuses to a human-readable string
+var mtoMilestoneHumanized = map[MTOMilestoneStatus]string{
+	MTMNotStarted: "Not Started",
+	MTMInProgress: "In Progress",
+	MTMCompleted:  "Completed",
+}
+
+// Humanize returns the human-readable string of a MTO milestone Status
+// if a value is not found for the provided status, an empty string is returned
+func (m MTOMilestoneStatus) Humanize() string {
+	//Future Enhancement, consider implementing the shared translation to make this work
+	return mtoMilestoneHumanized[m]
+}
+
 // MTOMilestoneWithSolutionID wraps an MTOMilestone with a solution id. It is useful for referring to milestones that are linked to specific solutions
 type MTOMilestoneWithSolutionID struct {
 	MTOMilestone
@@ -21,6 +35,18 @@ type MTOMilestoneWithSolutionID struct {
 }
 
 func (mto *MTOMilestoneWithSolutionID) ToMTOMilestone() *MTOMilestone {
+	return &mto.MTOMilestone
+}
+
+// MTOMilestoneWithNewlyInsertedStatus wraps MTOMilestone as well as a newly inserted status
+// it is useful for checking if a milestone was just added, so an email can be sent
+type MTOMilestoneWithNewlyInsertedStatus struct {
+	MTOMilestone
+	NewlyInserted bool `json:"newlyInserted" db:"newly_inserted"`
+}
+
+// ToMTOMilestone returns the MTOMilestone object from the MTOMilestoneWithNewlyInsertedStatus
+func (mto *MTOMilestoneWithNewlyInsertedStatus) ToMTOMilestone() *MTOMilestone {
 	return &mto.MTOMilestone
 }
 
@@ -36,6 +62,7 @@ type MTOMilestone struct {
 	ResponsibleComponent EnumArray[MTOMilestoneResponsibleComponent] `json:"responsibleComponent" db:"responsible_component"`
 	FacilitatedBy        *EnumArray[MTOFacilitator]                  `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther   *string                                     `json:"facilitatedByOther" db:"facilitated_by_other"`
+	AssignedTo           *uuid.UUID                                  `json:"assignedTo" db:"assigned_to"`
 	NeedBy               *time.Time                                  `json:"needBy" db:"need_by"`
 	Status               MTOMilestoneStatus                          `json:"status" db:"status"`
 	RiskIndicator        MTORiskIndicator                            `json:"riskIndicator" db:"risk_indicator"`

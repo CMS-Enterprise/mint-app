@@ -25,6 +25,9 @@ import {
   GetMtoMilestoneSummaryDocument,
   GetMtoMilestoneSummaryQuery,
   GetMtoMilestoneSummaryQueryVariables,
+  GetMtoModelPlanTemplatesDocument,
+  GetMtoModelPlanTemplatesQuery,
+  GetMtoModelPlanTemplatesQueryVariables,
   GetMtoSolutionContactsDocument,
   GetMtoSolutionContactsQuery,
   GetMtoSolutionDocument,
@@ -33,6 +36,9 @@ import {
   GetMtoSolutionsAndMilestonesDocument,
   GetMtoSolutionsAndMilestonesQuery,
   GetMtoSolutionsAndMilestonesQueryVariables,
+  GetMtoTemplatesDocument,
+  GetMtoTemplatesQuery,
+  GetMtoTemplatesQueryVariables,
   MtoCommonMilestoneKey,
   MtoCommonSolutionCmsComponent,
   MtoCommonSolutionKey,
@@ -43,8 +49,11 @@ import {
   MtoRiskIndicator,
   MtoSolutionStatus,
   MtoSolutionType,
-  MtoStatus
+  MtoStatus,
+  MtoTemplateKey
 } from 'gql/generated/graphql';
+
+import { MtoTemplateType } from 'contexts/MTOModalContext';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
@@ -789,6 +798,182 @@ export const solutionAndMilestoneMock: MockedResponse<
   }
 ];
 
+export const mtoModelPlanTemplateMockData: MtoTemplateType[] = [
+  {
+    __typename: 'MTOTemplate',
+    id: '1',
+    name: 'Standard categories',
+    description: 'These are the standard categories for MTOs.',
+    key: MtoTemplateKey.STANDARD_CATEGORIES,
+    categoryCount: 24,
+    milestoneCount: 0,
+    solutionCount: 0,
+    primaryCategoryCount: 9,
+    isAdded: false,
+    solutions: [
+      {
+        __typename: 'MTOTemplateSolution',
+        id: '1',
+        name: 'Solution 1',
+        templateID: '1',
+        milestones: [
+          {
+            __typename: 'MTOTemplateMilestone',
+            id: '1',
+            name: 'Milestone 1'
+          }
+        ]
+      }
+    ],
+    categories: [
+      {
+        __typename: 'MTOTemplateCategory',
+        id: '12',
+        name: 'Category 1',
+        templateID: '1',
+        order: 1,
+        subCategories: [
+          {
+            __typename: 'MTOTemplateSubCategory',
+            id: '123',
+            name: 'SubCategory 1',
+            templateID: '1',
+            order: 1,
+            milestones: [
+              {
+                __typename: 'MTOTemplateMilestone',
+                id: '1234',
+                templateID: '1',
+                name: 'Milestone 1',
+                solutions: [
+                  {
+                    __typename: 'MTOTemplateSolution',
+                    id: '12345',
+                    templateID: '1',
+                    name: 'Solution 1'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '2',
+    name: 'ACO and kidney models',
+    description: 'These are the ACO and Kidney models for MTOs.',
+    key: MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+    categoryCount: 13,
+    milestoneCount: 12,
+    solutionCount: 10,
+    primaryCategoryCount: 4,
+    isAdded: true,
+    categories: [],
+    solutions: []
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '3',
+    name: 'Episode primary care and non-ACO models',
+    description:
+      'These are the Episode Primary Care and Non-ACO models for MTOs.',
+    key: MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS,
+    categoryCount: 13,
+    milestoneCount: 13,
+    solutionCount: 11,
+    primaryCategoryCount: 4,
+    isAdded: true,
+    categories: [],
+    solutions: []
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '4',
+    name: 'Medicare advantage and drug models',
+    description: 'These are the Medicare Advantage and Drug models for MTOs.',
+    key: MtoTemplateKey.MEDICARE_ADVANTAGE_AND_DRUG_MODELS,
+    categoryCount: 3,
+    milestoneCount: 3,
+    solutionCount: 0,
+    primaryCategoryCount: 1,
+    isAdded: true,
+    categories: [],
+    solutions: []
+  },
+  {
+    __typename: 'MTOTemplate',
+    id: '5',
+    name: 'State and local models',
+    description: 'These are the State and Local models for MTOs.',
+    key: MtoTemplateKey.STATE_AND_LOCAL_MODELS,
+    categoryCount: 14,
+    milestoneCount: 0,
+    solutionCount: 0,
+    primaryCategoryCount: 0,
+    isAdded: true,
+    categories: [],
+    solutions: []
+  }
+];
+
+export const mtoModelPlanTemplateMock: MockedResponse<
+  GetMtoModelPlanTemplatesQuery,
+  GetMtoModelPlanTemplatesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoModelPlanTemplatesDocument,
+      variables: {
+        id: modelID
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            info: {
+              __typename: 'MTOInfo',
+              id: 'info-id-123'
+            },
+            templates: mtoModelPlanTemplateMockData
+          }
+        }
+      }
+    }
+  }
+];
+
+export const mtoTemplateMock: MockedResponse<
+  GetMtoTemplatesQuery,
+  GetMtoTemplatesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoTemplatesDocument,
+      variables: {
+        keys: [
+          MtoTemplateKey.STANDARD_CATEGORIES,
+          MtoTemplateKey.ACO_AND_KIDNEY_MODELS,
+          MtoTemplateKey.EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
+        ]
+      }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoTemplates: mtoModelPlanTemplateMockData.slice(0, 3)
+      }
+    }
+  }
+];
+
 export const mtoMilestoneSummaryMock: MockedResponse<
   GetMtoMilestoneSummaryQuery,
   GetMtoMilestoneSummaryQueryVariables
@@ -821,6 +1006,16 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
+                  assignedToPlanCollaborator: {
+                    __typename: 'PlanCollaborator',
+                    id: 'collab-123',
+                    userAccount: {
+                      __typename: 'UserAccount',
+                      id: 'user-123',
+                      commonName: 'John Doe',
+                      email: 'john.doe@example.com'
+                    }
+                  },
                   status: MtoMilestoneStatus.NOT_STARTED,
                   riskIndicator: MtoRiskIndicator.ON_TRACK,
                   notes: []
