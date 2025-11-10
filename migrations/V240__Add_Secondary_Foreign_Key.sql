@@ -75,6 +75,11 @@ BEGIN
             excluded_cols = array_append(excluded_cols, pkey_f);
             END IF;
 
+            -- Check if insert cols include secondary foreign key, if not, exclude
+            IF fkey_f_secondary IS NOT NULL AND NOT fkey_f_secondary = ANY(insert_cols) THEN
+            excluded_cols = array_append(excluded_cols, fkey_f_secondary);
+            END IF;
+
             h_changed = (h_new - h_old) - excluded_cols;  -- Removed unchanged (matching) values and columns configured as the primary or foreign key
         ELSE
         diff_keys = (akeys(h_new - insert_cols)); --These are the keys that have changed that are not configured to be shown on insert. They are used to subtract from all the keys on insert or delete to show only the configured columns
@@ -219,11 +224,28 @@ secondary_fkey = (optional) the column name of the column that holds a secondary
   This will track both milestone_id as the primary foreign key and solution_id as the secondary foreign key.
 ';
 
--- Re-configure mto_milestone_solution_link to track solution_id as secondary foreign key
-SELECT audit.AUDIT_TABLE('public', 'mto_milestone_solution_link', 'id', 'milestone_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*,milestone_id}'::TEXT[], 'solution_id');
+-- Update mto_milestone_solution_link to track solution_id as secondary foreign key
+UPDATE audit.table_config
+SET
+    fkey_field_secondary = 'solution_id',
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = CURRENT_TIMESTAMP
+WHERE schema = 'public' AND name = 'mto_milestone_solution_link';
 
--- Re-configure plan_document_solution_link to track document_id as secondary foreign key
-SELECT audit.AUDIT_TABLE('public', 'plan_document_solution_link', 'id', 'solution_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{document_id}'::TEXT[], 'document_id');
+-- Update plan_document_solution_link to track document_id as secondary foreign key
+-- Also update insert_cols to include both document_id and solution_id
+UPDATE audit.table_config
+SET
+    fkey_field_secondary = 'document_id',
+    insert_fields = '{document_id, solution_id}'::TEXT[],
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = CURRENT_TIMESTAMP
+WHERE schema = 'public' AND name = 'plan_document_solution_link';
 
--- Re-configure existing_model_link to track current_model_plan_id as secondary foreign key
-SELECT audit.AUDIT_TABLE('public', 'existing_model_link', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{existing_model_id, current_model_plan_id}'::TEXT[], 'current_model_plan_id');
+-- Update existing_model_link to track current_model_plan_id as secondary foreign key
+UPDATE audit.table_config
+SET
+    fkey_field_secondary = 'current_model_plan_id',
+    modified_by = '00000001-0001-0001-0001-000000000001',
+    modified_dts = CURRENT_TIMESTAMP
+WHERE schema = 'public' AND name = 'existing_model_link';

@@ -12,5 +12,5 @@ SELECT
 FROM audit.change
 INNER JOIN audit.table_config ON audit.table_config.id = audit.change.table_id
 WHERE
-    (audit.change.foreign_key = :foreign_key OR audit.change.primary_key = :primary_key OR audit.change.secondary_foreign_key = :foreign_key)
+    (audit.change.foreign_key = :foreign_key OR audit.change.primary_key = :primary_key)
     AND audit.change.modified_dts >= :start_date AND audit.change.modified_dts < :end_date
