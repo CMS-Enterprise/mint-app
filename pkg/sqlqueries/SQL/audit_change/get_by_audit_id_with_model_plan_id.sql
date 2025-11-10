@@ -3,12 +3,13 @@ SELECT
     audit.change.table_id,
     audit.change.primary_key,
     audit.change.foreign_key,
+    audit.change.secondary_foreign_key,
     audit.table_config.name AS table_name,
     audit.change.action,
     audit.change.fields,
     audit.change.modified_by,
     audit.change.modified_dts,
-    ( 
+    (
         CASE
             WHEN  audit.table_config.name = 'model_plan'
                 THEN audit.change.primary_key
@@ -31,7 +32,7 @@ SELECT
                         mto_milestone
                     WHERE mto_milestone.id = audit.change.foreign_key LIMIT 1
                 )
-            WHEN audit.table_config.fkey_field = 'milestone_id' 
+            WHEN audit.table_config.name = 'mto_milestone_solution_link'
                 THEN (
                     SELECT mto_milestone.model_plan_id FROM
                         mto_milestone
