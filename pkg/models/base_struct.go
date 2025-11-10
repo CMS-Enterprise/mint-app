@@ -18,7 +18,7 @@ type IBaseStruct interface {
 	MostRecentModification() (time.Time, uuid.UUID)
 }
 
-// baseStruct represents the shared data in common betwen all models
+// baseStruct represents the shared data in common between all models
 type baseStruct struct {
 	ID uuid.UUID `json:"id" db:"id"`
 	createdByRelation

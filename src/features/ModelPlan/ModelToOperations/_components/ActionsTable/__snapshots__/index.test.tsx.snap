@@ -85,13 +85,13 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
           >
             1 common milestones
           </p>
-          <button
-            class="usa-button usa-button--outline display-block margin-bottom-1"
-            data-testid="button"
-            type="button"
+          <a
+            class="usa-link display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+            data-discover="true"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library"
           >
             Add milestones from library
-          </button>
+          </a>
           <button
             class="usa-button usa-button--unstyled display-block"
             data-testid="button"
@@ -141,13 +141,13 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
           >
             2 common solutions and IT systems
           </p>
-          <button
-            class="usa-button usa-button--outline display-block margin-bottom-1"
-            data-testid="button"
-            type="button"
+          <a
+            class="usa-link display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+            data-discover="true"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library"
           >
             Add solutions from library
-          </button>
+          </a>
           <button
             class="usa-button usa-button--unstyled display-block"
             data-testid="button"
@@ -193,25 +193,15 @@ exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`
         <p
           class="margin-top-0"
         >
-          1 available template
+          5 available templates
         </p>
-        <div
-          class="display-flex flex-justify bg-base-lightest border border-gray-10 padding-x-2 padding-y-1 radius-md shadow-2 margin-bottom-1"
-          style="gap: 24px;"
+        <a
+          class="usa-link display-block margin-bottom-1 usa-button usa-button--outline width-fit-content text-decoration-none"
+          data-discover="true"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/template-library"
         >
-          <span
-            class="text-bold"
-          >
-            Standard categories
-          </span>
-          <button
-            class="usa-button usa-button--unstyled display-block"
-            data-testid="button"
-            type="button"
-          >
-            Add this template
-          </button>
-        </div>
+          Add templates from library
+        </a>
         <button
           class="usa-button usa-button--unstyled display-block"
           data-testid="button"

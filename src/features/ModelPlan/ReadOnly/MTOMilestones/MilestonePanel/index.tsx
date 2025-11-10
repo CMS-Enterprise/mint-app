@@ -32,6 +32,7 @@ import PageLoading from 'components/PageLoading';
 import TablePagination from 'components/TablePagination';
 import Tooltip from 'components/Tooltip';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateUtc } from 'utils/date';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
@@ -326,7 +327,11 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               />
               <DescriptionDefinition
                 className="font-body-md text-base-darkest"
-                definition={milestone.needBy || NoneSpecified}
+                definition={
+                  milestone.needBy
+                    ? formatDateUtc(milestone.needBy, 'MM/dd/yyyy')
+                    : NoneSpecified
+                }
               />
             </Grid>
           </Grid>

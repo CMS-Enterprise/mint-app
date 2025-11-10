@@ -113,6 +113,25 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   },
   [TableName.MTO_MILESTONE_NOTE]: {
     generalName: 'MTO milestone note'
+  },
+  [TableName.MTO_TEMPLATE]: {
+    generalName: 'MTO template'
+  },
+  [TableName.MTO_TEMPLATE_CATEGORY]: {
+    generalName: 'MTO template category'
+  },
+  [TableName.MTO_TEMPLATE_MILESTONE]: {
+    generalName: 'MTO template milestone'
+  },
+  [TableName.MTO_TEMPLATE_SOLUTION]: {
+    generalName: 'MTO template solution'
+  },
+  [TableName.MTO_TEMPLATE_MILESTONE_SOLUTION_LINK]: {
+    generalName: 'MTO template milestone solution link'
+  },
+  [TableName.MODEL_PLAN_MTO_TEMPLATE_LINK]: {
+    generalName: 'Model plan MTO template link',
+    groupedName: 'Model to Operations'
   }
 };
 
