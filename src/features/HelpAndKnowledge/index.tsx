@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import MilestoneLibrary from 'features/ModelPlan/ModelToOperations/MilestoneLibrary';
 
 import ProtectedRoute from 'components/ProtectedRoute';
 
@@ -43,6 +44,7 @@ export const helpAndKnowledgeRoutes = {
     { path: '', element: <HelpAndKnowledgeHome /> },
     { path: 'articles', element: <AllArticles /> },
     { path: 'model-plan-overview', element: <ModelPlanOverview /> },
+    { path: 'milestone-library', element: <MilestoneLibrary /> },
     { path: 'operational-solutions', element: <SolutionsHelp /> },
     { path: 'high-level-project-plan', element: <HighLevelProjectPlan /> },
     {
