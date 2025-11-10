@@ -70,4 +70,5 @@ extend type Query {
   Fetch all Common Milestones available in the library
   """
   mtoCommonMilestones: [MTOCommonMilestone!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
