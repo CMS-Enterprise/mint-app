@@ -113,11 +113,11 @@ BEGIN
         table_id, --table_id
         h_new -> pkey_f, --primary_key
         h_new -> fkey_f, --foreign_key
+        h_new -> fkey_f_secondary, --secondary_foreign_key
         substring(TG_OP,1,1), --action
         changeJSON, --fields
-        CURRENT_TIMESTAMP, --modified_dts
         modified_by_user_id, --modified_by
-        h_new -> fkey_f_secondary --secondary_foreign_key
+        CURRENT_TIMESTAMP --modified_dts
     );
     IF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
         BEGIN
