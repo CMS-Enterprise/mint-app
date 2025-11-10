@@ -1,5 +1,6 @@
 server:
   http_listen_port: 9080
+  grpc_listen_port: 0
 
 positions:
   filename: /tmp/positions.yaml
@@ -9,13 +10,40 @@ clients:
 
 scrape_configs:
   - job_name: docker
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: docker
-          # Only scrape containers with label "logging=true"
-          __meta_docker_container_label_logging: "true"
-          __path__: /var/lib/docker/containers/*/*.log
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          - name: label
+            values: ["logging=true"]
+    
+    relabel_configs:
+      # Use the container name as a label
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container'
+      
+      # Use the container ID as the log file path
+      - source_labels: ['__meta_docker_container_id']
+        target_label: '__path__'
+        replacement: '/var/lib/docker/containers/$1/*.log'
+      
+      # Add container labels as Loki labels
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: 'service'
+    
     pipeline_stages:
+      # Parse Docker JSON logs (extracts 'output' field from Docker log format)
       - docker: {}
+      
+      # Try to parse the log content as JSON - if it fails, extraction is skipped (no error)
+      - json:
+          expressions:
+            level: level
+            msg: msg
+            message: message
+            error: error
+      
+      # Extract log level as a label if it exists (only if present in JSON)
+      - labels:
+          level:

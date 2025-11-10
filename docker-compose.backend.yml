@@ -241,6 +241,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - loki-data:/loki
+    restart: unless-stopped
 
   promtail:
     image: grafana/promtail:2.9.0
@@ -252,6 +254,7 @@ services:
     command: -config.file=/etc/promtail/config.yaml
     depends_on:
       - loki
+    restart: unless-stopped
 
   grafana:
     image: grafana/grafana:10.4.0
@@ -266,8 +269,12 @@ services:
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - grafana-data:/var/lib/grafana
     depends_on:
       - loki
+    restart: unless-stopped
 
 volumes:
   faktory:
+  loki-data:
+  grafana-data:
