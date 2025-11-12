@@ -5,6 +5,9 @@ services:
     ports:
       - 5437:5432
     image: postgres:17.6
+    labels:
+      - "dev.dozzle.name=MINT DB"
+      - "dev.dozzle.group=MINT"
     command:
       - 'postgres'
       - '-c'
@@ -33,6 +36,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.db_migrations
+    labels:
+      - "dev.dozzle.name=Flyway"
+      - "dev.dozzle.group=MINT"
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
@@ -47,6 +53,9 @@ services:
       dockerfile: Dockerfile
       target: dev
     image: mint-backend:latest
+    labels:
+      - "dev.dozzle.name=Backend"
+      - "dev.dozzle.group=MINT"
     volumes:
     # Volume mounting the entire './' directory is dangerous, as it mounts OS-specific folders (and things like .git)
     # So instead, only volume mount things we need!
@@ -145,6 +154,9 @@ services:
       - '9966:9966'
     volumes:
       - ./tmp/minio:/data
+    labels:
+      - "dev.dozzle.name=MinIO"
+      - "dev.dozzle.group=MINT"
 
   minio_mc:
     image: minio/mc:latest
@@ -152,6 +164,9 @@ services:
       - ./minio_config.json:/root/.mc/config.json
     depends_on:
       - minio
+    labels:
+      - "dev.dozzle.name=MinIO Client Setup"
+      - "dev.dozzle.group=MINT"
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc rb --force s3local/mint-app-file-uploads/;
@@ -167,6 +182,9 @@ services:
     ports:
       - "1085:1080"
       - "1030:1025"
+    labels:
+      - "dev.dozzle.name=MailCatcher"
+      - "dev.dozzle.group=MINT"
 
   faktory:
     image: docker.contribsys.com/contribsys/faktory-ent:latest
@@ -179,22 +197,27 @@ services:
         source: ./.faktory/conf.d
         target: /root/.faktory/conf.d
     restart: always
+    labels:
+      - "dev.dozzle.name=Faktory"
+      - "dev.dozzle.group=MINT"
 
-  # 👇 NEW SERVICE: Dozzle for live log viewing (JSON-aware)
+  # Dozzle - Live log viewer with grouped containers
   dozzle:
     image: amir20/dozzle:latest
-    container_name: dozzle
     restart: unless-stopped
     ports:
-      - "8890:8080" # ✅ new unique port (doesn't conflict with your others)
+      - "8890:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      # Filter syntax must be key=value; multiple filters separated by space
-      # This example includes containers whose names contain "mint" or "db"
-      # DOZZLE_FILTER: "name=mint name=db"
       DOZZLE_LEVEL: info
-      # You can also add: DOZZLE_TAILSIZE=1000
+      DOZZLE_NO_ANALYTICS: TRUE #Don't send analytics
+      # Remove the filter to show all containers initially - you can filter in the UI
+      DOZZLE_FILTER: "label=dev.dozzle.name"
+      DOZZLE_ENABLE_ACTIONS: true
+    labels:
+      - "dev.dozzle.name=Dozzle"
+      - "dev.dozzle.group=MINT"
 
 volumes:
   faktory:
