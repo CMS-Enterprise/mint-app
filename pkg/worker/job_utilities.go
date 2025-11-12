@@ -10,6 +10,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
+
+	faktory "github.com/contribsys/faktory/client"
 )
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
@@ -67,4 +69,53 @@ func loggerWithFaktoryStandardFields(logger logging.ILogger, jid string, jobType
 		logfields.TraceField(trace.String()),
 	}, extraFields...)
 	return logger.With(fields...)
+}
+
+// RetryAwareLogger returns a logger that demotes Error->Warn if !final attempt.
+func RetryAwareLogger(ctx context.Context, conditionalLogger *logging.ConditionalLogger) *logging.ConditionalLogger {
+	if isFinalAttempt(ctx) {
+		return logging.NewConditionalLogger(conditionalLogger.Zap(), true)
+	}
+	return logging.NewConditionalLogger(conditionalLogger.Zap(), false)
+}
+
+func RetryAwareLogging() faktory_worker.MiddlewareFunc {
+	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
+
+		maxRetries := defaultMaxRetries
+		if job.Retry != nil {
+			maxRetries = *job.Retry
+		}
+		failCount := 0
+		if job.Failure != nil {
+			failCount = job.Failure.RetryCount
+		}
+		isFinal := failCount >= maxRetries
+
+		// Put the flag in context so jobs/downstream can decide how to log
+		ctx = withIsFinalAttempt(ctx, isFinal)
+
+		// Run the job
+		err := next(ctx)
+		if err == nil {
+			return nil
+		}
+
+		return err
+	}
+}
+
+// context key so jobs can know if this run is final
+type retryCtxKey struct{}
+
+func withIsFinalAttempt(ctx context.Context, isFinal bool) context.Context {
+	return context.WithValue(ctx, retryCtxKey{}, isFinal)
+}
+
+func isFinalAttempt(ctx context.Context) bool {
+	v := ctx.Value(retryCtxKey{})
+	if b, ok := v.(bool); ok {
+		return b
+	}
+	return false
 }

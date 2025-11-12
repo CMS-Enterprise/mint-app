@@ -15,6 +15,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
+// defaultMaxRetries only applies where job.Retry is nil (25 is Faktory's default as well)
+const defaultMaxRetries = 25
+
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
 	Store                *storage.Store
@@ -136,6 +139,7 @@ func (w *Worker) Work() {
 
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
+	mgr.Use(RetryAwareLogging())
 
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
