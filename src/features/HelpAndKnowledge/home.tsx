@@ -39,7 +39,10 @@ export const HelpAndKnowledgeHome = () => {
             <ScrollLink scrollTo={t('helpResourcesAndLinks')} hasIcon={false} />
 
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-            <ScrollLink scrollTo={t('milestoneLibraryLink')} hasIcon={false} />
+            <ScrollLink
+              scrollTo={t('milestoneLibrary.hkcJumpToLabel')}
+              hasIcon={false}
+            />
 
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
 

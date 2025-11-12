@@ -10,15 +10,15 @@ const MilestoneLibrarySection = () => {
 
   return (
     <div
-      id={convertToLowercaseAndDashes(t('milestoneLibraryLink'))}
+      id={convertToLowercaseAndDashes(t('milestoneLibrary.hkcJumpToLabel'))}
       className="padding-y-4 padding-bottom-6 bg-base-lightest"
       style={{ scrollMarginTop: '3.5rem' }}
     >
       <GridContainer>
-        <h2 className="margin-0">{t('milestoneLibrary')}</h2>
+        <h2 className="margin-0">{t('milestoneLibrary.hkcHeading')}</h2>
 
         <p className="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4">
-          {t('milestoneLibraryInfo')}
+          {t('milestoneLibrary.hkcDescription')}
         </p>
 
         <UswdsReactLink
@@ -26,7 +26,7 @@ const MilestoneLibrarySection = () => {
           variant="unstyled"
           className="usa-button text-white"
         >
-          {t('viewMilestoneLibrary')}
+          {t('milestoneLibrary.hkcViewCta')}
         </UswdsReactLink>
       </GridContainer>
     </div>

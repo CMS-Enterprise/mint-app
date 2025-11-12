@@ -42,6 +42,10 @@ export type MilestoneCardType =
 const MilestoneLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const location = useLocation();
+  const isHkcMilestoneLibrary =
+    location.pathname.includes('help-and-knowledge');
+
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const { data, loading, error } = useGetMtoMilestonesQuery({
@@ -59,18 +63,22 @@ const MilestoneLibrary = () => {
     [data?.modelPlan?.mtoMatrix?.commonMilestones]
   );
 
-  if (error) {
+  if (!isHkcMilestoneLibrary && error) {
     return <NotFound errorMessage={error.message} />;
   }
 
   return (
     <GridContainer>
       <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.MODEL_TO_OPERATIONS
-        ]}
+        items={
+          isHkcMilestoneLibrary
+            ? [BreadcrumbItemOptions.HELP_CENTER]
+            : [
+                BreadcrumbItemOptions.HOME,
+                BreadcrumbItemOptions.COLLABORATION_AREA,
+                BreadcrumbItemOptions.MODEL_TO_OPERATIONS
+              ]
+        }
         customItem={t('milestoneLibrary.heading')}
       />
 
