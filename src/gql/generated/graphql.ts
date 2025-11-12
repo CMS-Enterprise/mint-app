@@ -4409,6 +4409,8 @@ export type Query = {
   modelPlansByComponentGroup: Array<ModelPlanAndGroup>;
   modelPlansByMTOSolutionKey: Array<ModelPlanAndMtoCommonSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
+  /** Fetch all Common Milestones available in the library */
+  mtoCommonMilestones: Array<MtoCommonMilestone>;
   mtoCommonSolutionContact: MtoCommonSolutionContact;
   mtoCommonSolutionContractor: MtoCommonSolutionContractor;
   mtoCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
