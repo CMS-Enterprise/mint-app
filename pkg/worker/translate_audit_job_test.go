@@ -51,7 +51,7 @@ func (suite *WorkerSuite) TestTranslateAuditJob() {
 	suite.Run("A queue entry for a duplicate translated audit will not fail the translation queue job", func() {
 		//Update the queue to set it as NEW again.
 		entryToTest.Status = models.TPSNew
-		_, err = translatedaudit.TranslatedAuditQueueUpdate(suite.testConfigs.Store, logging.NewConditionalLogger(suite.testConfigs.Logger), entryToTest, suite.testConfigs.Principal.UserAccount.ID)
+		_, err = translatedaudit.TranslatedAuditQueueUpdate(suite.testConfigs.Store, logging.NewZapLogger(suite.testConfigs.Logger), entryToTest, suite.testConfigs.Principal.UserAccount.ID)
 		suite.NoError(err)
 
 		// We expect no error when there is a duplicate entry.

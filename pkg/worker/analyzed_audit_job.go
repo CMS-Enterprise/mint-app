@@ -39,7 +39,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
 	logger := loggerWithFaktoryFields(w.GetILogger(), helper, logfields.ModelPlanID(modelPlanID), logfields.Date(dayToAnalyze))
-	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, w.Logger, dayToAnalyze, modelPlanID)
+	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, logger.Zap(), dayToAnalyze, modelPlanID)
 
 	if err != nil {
 		logger.Error("issue executing analyzed audit job", zap.Error(err))

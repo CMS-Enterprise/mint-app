@@ -327,7 +327,7 @@ func (suite *ResolverSuite) dangerousTranslateAllQueuedTranslatedAudits() []*mod
 	translatedAudits := []*models.TranslatedAuditWithTranslatedFields{}
 
 	for _, queued := range queuedObjects {
-		audit, translationErr := translatedaudit.TranslateAuditJobByID(suite.testConfigs.Context, suite.testConfigs.Store, logging.NewZapLoggerPointer(suite.testConfigs.Logger), queued.ChangeID, queued.ID)
+		audit, translationErr := translatedaudit.TranslateAuditJobByID(suite.testConfigs.Context, suite.testConfigs.Store, logging.NewZapLogger(suite.testConfigs.Logger), queued.ChangeID, queued.ID)
 		suite.NoError(translationErr, "error getting queued objects to translate")
 		if translationErr == nil && audit != nil { // only return actual translated audits (preferences)
 			translatedAudits = append(translatedAudits, audit)

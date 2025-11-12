@@ -55,7 +55,8 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	ctxWithLoaders := loaders.CTXWithLoaders(ctx, loaders.NewDataLoaders(w.Store))
 
 	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
-	conditionalLogger := logging.NewConditionalLogger(logger.Zap())
+	//TODO: Set this up to conditionally log based on retry attempts
+	conditionalLogger := logging.NewConditionalLogger(logger.Zap(), true)
 
 	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, conditionalLogger, auditID, queueID)
 	if translationErr != nil {

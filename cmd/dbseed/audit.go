@@ -112,7 +112,7 @@ func (s *Seeder) translateAllQueuedTranslatedAudits() {
 	}
 
 	for _, queued := range queuedObjects {
-		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, logging.NewZapLoggerPointer(s.Config.Logger), queued.ChangeID, queued.ID)
+		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, logging.NewZapLogger(s.Config.Logger), queued.ChangeID, queued.ID)
 		if translationErr != nil {
 			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 		}

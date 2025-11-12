@@ -28,7 +28,7 @@ type Worker struct {
 }
 
 func (w *Worker) GetILogger() logging.ILogger {
-	return logging.NewZapLoggerPointer(w.Logger)
+	return logging.NewZapLogger(w.Logger)
 }
 
 type JobWrapper struct {

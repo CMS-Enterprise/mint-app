@@ -45,19 +45,19 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 	// Create batch of TranslateAuditJob jobs
 	return helper.With(func(cl *faktory.Client) error {
 		logger.Info("preparing to create Translated Audit Batch")
-		return CreateTranslatedAuditBatch(w, logger.Zap(), cl, readyToQueueEntries)
+		return CreateTranslatedAuditBatch(w, logger, cl, readyToQueueEntries)
 	})
 }
 
 // QueueTranslatedAuditJob takes a given queueObj and creates a job as part of the provided batch
-func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
+func QueueTranslatedAuditJob(w *Worker, logger logging.ILogger, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
 	// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
 	logger = logger.With(logfields.TranslatedAuditQueueID(queueObj.ID), logfields.AuditChangeID(queueObj.ChangeID), logfields.AuditQueueAttempts(queueObj.Attempts))
 	return sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
-		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logging.NewZapLoggerPointer(w.Logger), queueObj, constants.GetSystemAccountUUID())
+		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logging.NewZapLogger(w.Logger), queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
 			err := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s", queueObj.ChangeID, queueObj.ID)
 			logger.Error(err.Error(), zap.Error(err))
@@ -83,7 +83,7 @@ func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch
 
 // CreateTranslatedAuditBatch Creates a new batch job using the provided faktory client
 // it will create a translated audit job for each provided queueObject
-func CreateTranslatedAuditBatch(w *Worker, logger *zap.Logger, cl *faktory.Client, queueObjects []*models.TranslatedAuditQueue) error {
+func CreateTranslatedAuditBatch(w *Worker, logger logging.ILogger, cl *faktory.Client, queueObjects []*models.TranslatedAuditQueue) error {
 
 	batch := faktory.NewBatch(cl)
 	logger = logger.With(logfields.BID(batch.Bid))

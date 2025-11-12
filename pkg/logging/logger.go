@@ -2,53 +2,92 @@ package logging
 
 import (
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 type ZapLogger struct {
-	zap.Logger
+	logger *zap.Logger
 }
 
-func NewZapLogger(logger *zap.Logger) ZapLogger {
-	return ZapLogger{*logger}
+func NewZapLogger(logger *zap.Logger) *ZapLogger {
+	return &ZapLogger{logger}
 }
-func NewZapLoggerPointer(logger *zap.Logger) *ZapLogger {
-	return &ZapLogger{*logger}
-}
-
-// func NewZapSugaredLogger(slogger *zap.SugaredLogger ) *ZapLogger {
-// 	slogger.
-// 	return &ZapLogger{*logger}
-// }
-
-// func (l *ZapLogger) Sugar() ILogger {
-// 	logger :=  l.Logger.Sugar()
-// 	return &ZapLogger{logger}
-// }
 
 func (l *ZapLogger) Named(s string) ILogger {
-	logger := l.Logger.Named(s)
-	return &ZapLogger{*logger}
+	return &ZapLogger{l.logger.Named(s)}
 }
 
 func (l *ZapLogger) WithOptions(opts ...zap.Option) ILogger {
-	logger := l.Logger.WithOptions(opts...)
-	return &ZapLogger{*logger}
+	return &ZapLogger{l.logger.WithOptions(opts...)}
 }
 
 func (l *ZapLogger) With(fields ...zap.Field) ILogger {
-	logger := l.Logger.With(fields...)
-	return &ZapLogger{*logger}
+	return &ZapLogger{l.logger.With(fields...)}
 }
 
-func (l *ZapLogger) WithLazy(fields ...zap.Field) ILogger {
-	logger := l.Logger.WithLazy(fields...)
-	return &ZapLogger{*logger}
+func (l *ZapLogger) Level() zapcore.Level {
+	return l.logger.Level()
 }
+
+func (l *ZapLogger) Check(lvl zapcore.Level, msg string) *zapcore.CheckedEntry {
+	return l.logger.Check(lvl, msg)
+}
+
+func (l *ZapLogger) Log(lvl zapcore.Level, msg string, fields ...zap.Field) {
+	l.logger.Log(lvl, msg, fields...)
+}
+
+func (l *ZapLogger) Debug(msg string, fields ...zap.Field) {
+	l.logger.Debug(msg, fields...)
+}
+
+func (l *ZapLogger) Info(msg string, fields ...zap.Field) {
+	l.logger.Info(msg, fields...)
+}
+
+func (l *ZapLogger) Warn(msg string, fields ...zap.Field) {
+	l.logger.Warn(msg, fields...)
+}
+
+func (l *ZapLogger) Error(msg string, fields ...zap.Field) {
+	l.logger.Error(msg, fields...)
+}
+
+func (l *ZapLogger) DPanic(msg string, fields ...zap.Field) {
+	l.logger.DPanic(msg, fields...)
+}
+
+func (l *ZapLogger) Panic(msg string, fields ...zap.Field) {
+	l.logger.Panic(msg, fields...)
+}
+
+func (l *ZapLogger) Fatal(msg string, fields ...zap.Field) {
+	l.logger.Fatal(msg, fields...)
+}
+
+func (l *ZapLogger) Sync() error {
+	return l.logger.Sync()
+}
+
+func (l *ZapLogger) Core() zapcore.Core {
+	return l.logger.Core()
+}
+
+func (l *ZapLogger) Name() string {
+	return l.logger.Name()
+}
+func (l *ZapLogger) LoggerType() LoggerType {
+	return LoggerTypeZap
+}
+
+func (l *ZapLogger) Underlying() (any, LoggerType) {
+	return l.logger, l.LoggerType()
+}
+
 func (l *ZapLogger) Zap() *zap.Logger {
-	return &l.Logger
+	return l.logger
 }
 
-// ErrorOrWarn implements ILogger ErrorOrWarn by calling the Error method by default
 func (l *ZapLogger) ErrorOrWarn(msg string, fields ...zap.Field) {
-	l.Error(msg, fields...)
+	l.logger.Error(msg, fields...)
 }
