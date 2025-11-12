@@ -8,6 +8,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
@@ -67,7 +68,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 		// Next, attempt to insert a category with the same name as the configured category in the Common Milestone
 		// Here we use a special storage method that handles conflicts without returning an error
-		// to ensure that we create a cateogry if needed, otherwise we just return the existing one
+		// to ensure that we create a category if needed, otherwise we just return the existing one
 
 		// Note, the position for the category & subcategory (coded as `0` here) is not respected when inserted, but is a required parameter in the constructor
 		// It will be have a position equal to the max of all other positions
@@ -114,6 +115,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			principal,
 			logger,
 			tx,
+			store,
 			emailService,
 			emailTemplateService,
 			addressBook,
@@ -129,6 +131,95 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 		return createdMilestone, err
 	})
+}
+
+// MTOMilestoneCreateCommonWithTX uses the provided information to create a new Common MTO Milestone with an existing transaction
+func MTOMilestoneCreateCommonWithTXAllowConflicts(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	tx *sqlx.Tx,
+	store *storage.Store, // Still needed for emails
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	modelPlanID uuid.UUID,
+	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonSolutions []models.MTOCommonSolutionKey,
+) (*models.MTOMilestoneWithNewlyInsertedStatus, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// First, fetch the Common Milestone object from the DB
+	commonMilestone, err := MTOCommonMilestoneGetByKeyLOADER(ctx, commonMilestoneKey)
+	if err != nil {
+		logger.Error("failed to fetch common milestone when creating milestone from library", zap.Error(err))
+		return nil, err
+	}
+
+	// Next, attempt to insert a category with the same name as the configured category in the Common Milestone
+	// Here we use a special storage method that handles conflicts without returning an error
+	// to ensure that we create a category if needed, otherwise we just return the existing one
+
+	// Note, the position for the category & subcategory (coded as `0` here) is not respected when inserted, but is a required parameter in the constructor
+	// It will be have a position equal to the max of all other positions
+	parentCategoryToCreate := models.NewMTOCategory(principalAccount.ID, commonMilestone.CategoryName, modelPlanID, nil, 0)
+	parentCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, parentCategoryToCreate)
+	if err != nil {
+		logger.Error("failed to create parent category when creating milestone from library", zap.Error(err))
+		return nil, err
+	}
+	finalCategoryID := parentCategory.ID // track the eventual category ID that we will attach to the milestone
+	if commonMilestone.SubCategoryName != nil {
+		subCategoryToCreate := models.NewMTOCategory(principalAccount.ID, *commonMilestone.SubCategoryName, modelPlanID, &parentCategory.ID, 0)
+		subCategory, err := storage.MTOCategoryCreateAllowConflicts(tx, logger, subCategoryToCreate)
+		if err != nil {
+			logger.Error("failed to create subcategory when creating milestone from library", zap.Error(err))
+			return nil, err
+		}
+		finalCategoryID = subCategory.ID
+	}
+
+	// A common milestone never has a name (since it comes from the Common Milestone itself), so pass in `nil`
+	milestone := models.NewMTOMilestone(
+		principalAccount.ID,
+		nil,
+		&commonMilestone.Description,
+		&commonMilestoneKey,
+		modelPlanID,
+		&finalCategoryID,
+	)
+	milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
+
+	createdMilestone, err := storage.MTOMilestoneCreateAllowConflicts(tx, logger, milestone)
+	if err != nil {
+		logger.Error("failed to create mto milestone from common library", zap.Error(err))
+		return nil, err
+	}
+
+	// create common solutions and link them
+	_, err = MTOMilestoneUpdateLinkedSolutionsWithTX(
+		ctx,
+		principal,
+		logger,
+		tx,
+		store, // this is used for the emails being sent later
+		emailService,
+		emailTemplateService,
+		addressBook,
+		createdMilestone.ID,
+		createdMilestone.ModelPlanID,
+		[]uuid.UUID{},
+		commonSolutions,
+	)
+	if err != nil {
+		logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+		return nil, err
+	}
+
+	return createdMilestone, err
 }
 
 // MTOMilestoneUpdate updates the fields of an MTOMilestone
@@ -152,6 +243,10 @@ func MTOMilestoneUpdate(
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
 	}
+
+	// SAVE the pre-update value (must clone so later mutation doesn’t affect it)
+	oldAssignedTo := helpers.CloneUUIDPointer(existing.AssignedTo)
+
 	// Since storage.MTOMilestoneGetByID will return a `Name` property when
 	// fetching milestones sourced from the common milestone library, we need to clear out that field
 	// or else storage.MTOMilestoneUpdate will attempt to update the name (which won't be allowed, since this is a Milestone sourced from the common milestone library
@@ -165,13 +260,14 @@ func MTOMilestoneUpdate(
 		return nil, err
 	}
 
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+	updatedMilestone, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
 		if solutionLinks != nil {
 			_, updateLinksErr := MTOMilestoneUpdateLinkedSolutionsWithTX(
 				ctx,
 				principal,
 				logger,
 				tx,
+				store,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -187,6 +283,50 @@ func MTOMilestoneUpdate(
 
 		return storage.MTOMilestoneUpdate(tx, logger, existing)
 	})
+
+	if err != nil {
+		logger.Error("error updating MTO Milestone",
+			zap.String("milestoneID", existing.ID.String()),
+			zap.Error(err))
+		return nil, fmt.Errorf("unable to update MTO Milestone. Err %w", err)
+	}
+
+	// Check if assignedTo is being changed
+	// Detect change using the PRE-update value vs POST-update value
+	assignedToChanged := !helpers.UUIDPointerEqual(oldAssignedTo, updatedMilestone.AssignedTo)
+
+	// Send email notification if assignedTo changed and there's a new assignee
+	if assignedToChanged && updatedMilestone.AssignedTo != nil {
+		go func() {
+			modelPlan, modelPlanErr := loaders.ModelPlan.GetByID.Load(ctx, updatedMilestone.ModelPlanID)
+			if modelPlanErr != nil {
+				logger.Error("error loading model plan for milestone assigned email",
+					zap.String("milestoneID", updatedMilestone.ID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
+					zap.Error(modelPlanErr))
+				return
+			}
+
+			solutions, solutionsErr := MTOSolutionGetByMilestoneIDLOADER(ctx, updatedMilestone.ID)
+			if solutionsErr != nil {
+				logger.Error("error loading solutions for milestone assigned email",
+					zap.String("milestoneID", updatedMilestone.ID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
+					zap.Error(solutionsErr))
+				return
+			}
+
+			sendEmailErr := sendMTOMilestoneAssignedEmail(ctx, store, logger, emailService, emailTemplateService, addressBook, updatedMilestone, *updatedMilestone.AssignedTo, modelPlan, solutions)
+			if sendEmailErr != nil {
+				logger.Error("error sending milestone assigned email",
+					zap.String("milestoneID", updatedMilestone.ID.String()),
+					zap.String("assignedToID", updatedMilestone.AssignedTo.String()),
+					zap.Error(sendEmailErr))
+			}
+		}()
+	}
+
+	return updatedMilestone, nil
 }
 
 // MTOMilestoneDelete deletes an MTOMilestone
@@ -251,6 +391,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	principal authentication.Principal,
 	logger *zap.Logger,
 	tx *sqlx.Tx,
+	store *storage.Store,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -278,7 +419,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	})
 	if len(newlyInserted) > 0 {
 		for _, solution := range newlyInserted {
-			sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+			sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
 			if sendEmailErr != nil {
 				logger.Error("error sending solution selected emails",
 					zap.Any("solution", solution.Key),
@@ -316,6 +457,7 @@ func MTOMilestoneUpdateLinkedSolutions(
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 
 		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx,
+			store,
 			emailService,
 			emailTemplateService,
 			addressBook,
@@ -340,4 +482,100 @@ func MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(
 	modelPlanID uuid.UUID,
 ) ([]*models.MTOMilestone, error) {
 	return loaders.MTOMilestone.ByModelPlanIDNoLinkedSolution.Load(ctx, modelPlanID)
+}
+
+// sendMTOMilestoneAssignedEmail sends an email notification when a milestone is assigned to a user
+func sendMTOMilestoneAssignedEmail(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailTemplateService email.TemplateService,
+	addressBook email.AddressBook,
+	milestone *models.MTOMilestone,
+	assignedToID uuid.UUID,
+	modelPlan *models.ModelPlan,
+	solutions []*models.MTOSolution,
+) error {
+	if emailService == nil || emailTemplateService == nil || milestone == nil {
+		return nil
+	}
+
+	// Get the assigned user's information
+	assignedCollaborator, err := PlanCollaboratorGetByID(ctx, assignedToID)
+	if err != nil {
+		logger.Error("failed to get assigned collaborator for milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()),
+			zap.Error(err))
+		return err
+	}
+
+	assignedUser, err := storage.UserAccountGetByID(np, assignedCollaborator.UserID)
+	if err != nil {
+		logger.Error("failed to get assigned user for milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()),
+			zap.Error(err))
+		return err
+	}
+
+	if assignedUser.Email == "" {
+		logger.Warn("assigned user has no email address, skipping milestone assignment email",
+			zap.String("milestoneID", milestone.ID.String()),
+			zap.String("assignedToID", assignedToID.String()))
+		return nil
+	}
+
+	// Get email template
+	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOMilestoneAssignedTemplateName)
+	if err != nil {
+		return err
+	}
+
+	// Prepare subject content
+	subjectContent := email.MilestoneAssignedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+
+	// Prepare body content
+	solutionsNames := lo.Map(solutions, func(item *models.MTOSolution, _ int) string {
+		if item == nil || item.Name == nil {
+			return ""
+		}
+		return *item.Name
+	})
+	bodyContent := email.NewMilestoneAssignedBodyContent(
+		emailService.GetConfig().GetClientAddress(),
+		modelPlan,
+		milestone,
+		solutionsNames,
+	)
+
+	// Execute subject template
+	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
+	if err != nil {
+		return err
+	}
+
+	// Execute body template
+	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	if err != nil {
+		return err
+	}
+
+	// Send email to assigned user
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{assignedUser.Email},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

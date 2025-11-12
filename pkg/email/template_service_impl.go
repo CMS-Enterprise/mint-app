@@ -274,6 +274,15 @@ var systemOwnerRemovedSubjectTemplate string
 //go:embed templates/mto_common_solution_system_owner_removed_body.html
 var systemOwnerRemovedBodyTemplate string
 
+// MTOMilestoneAssignedTemplateName is the template name for the milestone assigned email
+const MTOMilestoneAssignedTemplateName string = "mto_milestone_assigned"
+
+//go:embed templates/mto_milestone_assigned_subject.html
+var mtoMilestoneAssignedSubjectTemplate string
+
+//go:embed templates/mto_milestone_assigned_body.html
+var mtoMilestoneAssignedBodyTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -414,6 +423,10 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	if err := t.loadEmailTemplate(SystemOwnerRemovedTemplateName, systemOwnerRemovedSubjectTemplate, systemOwnerRemovedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(MTOMilestoneAssignedTemplateName, mtoMilestoneAssignedSubjectTemplate, mtoMilestoneAssignedBodyTemplate); err != nil {
 		return err
 	}
 

@@ -82,7 +82,7 @@ const Evaluation = () => {
     iddocSupport,
     evaluationApproaches,
     evaluationApproachOther,
-    evalutaionApproachNote,
+    evaluationApproachNote,
     ccmInvolvment,
     ccmInvolvmentOther,
     ccmInvolvmentNote,
@@ -130,7 +130,7 @@ const Evaluation = () => {
     iddocSupport: iddocSupport ?? null,
     evaluationApproaches: evaluationApproaches ?? [],
     evaluationApproachOther: evaluationApproachOther ?? '',
-    evalutaionApproachNote: evalutaionApproachNote ?? '',
+    evaluationApproachNote: evaluationApproachNote ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
     ccmInvolvmentOther: ccmInvolvmentOther ?? '',
     ccmInvolvmentNote: ccmInvolvmentNote ?? '',
@@ -259,7 +259,7 @@ const Evaluation = () => {
                       })}
                       <AddNote
                         id="ops-eval-and-learning-evaluation-approach-note"
-                        field="evalutaionApproachNote"
+                        field="evaluationApproachNote"
                       />
                     </FieldGroup>
 

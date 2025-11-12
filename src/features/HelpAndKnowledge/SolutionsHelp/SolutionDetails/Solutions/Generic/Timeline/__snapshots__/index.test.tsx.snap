@@ -1009,6 +1009,18 @@ exports[`Generic Timeline Components > matches the snapshot > GrantSolutions 1`]
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > HIPAA Eligibility Transaction System 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > Health Data Reporting 1`] = `
 <DocumentFragment>
   <div
@@ -2116,7 +2128,7 @@ exports[`Generic Timeline Components > matches the snapshot > Shared Systems 1`]
           class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
           data-testid="processListHeading"
         >
-          Reach out to Donna Schmidt
+          Reach out to the Shared Systems Team at CMMI
         </h3>
         Early in the process, contact the 
         <button

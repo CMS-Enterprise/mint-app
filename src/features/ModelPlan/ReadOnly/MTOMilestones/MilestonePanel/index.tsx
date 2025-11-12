@@ -23,6 +23,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import { Avatar } from 'components/Avatar';
 import {
   DescriptionDefinition,
   DescriptionTerm
@@ -31,6 +32,7 @@ import PageLoading from 'components/PageLoading';
 import TablePagination from 'components/TablePagination';
 import Tooltip from 'components/Tooltip';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateUtc } from 'utils/date';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 export type SolutionType = GetMtoMilestoneQuery['mtoMilestone']['solutions'][0];
@@ -79,6 +81,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
         responsibleComponent: [],
         facilitatedBy: null,
         facilitatedByOther: null,
+        assignedToPlanCollaborator: null,
         riskIndicator: MtoRiskIndicator.ON_TRACK,
         addedFromMilestoneLibrary: false,
         solutions: [],
@@ -243,6 +246,35 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
             <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
               <DescriptionTerm
                 className="font-body-sm margin-bottom-0"
+                term={mtoMilestoneT('assignedTo.label')}
+              />
+              <DescriptionDefinition
+                className="font-body-md text-base-darkest"
+                definition={
+                  milestone.assignedToPlanCollaborator?.userAccount
+                    ?.commonName ? (
+                    <Avatar
+                      user={
+                        milestone.assignedToPlanCollaborator.userAccount
+                          .commonName
+                      }
+                    />
+                  ) : (
+                    <p className="margin-0 text-base-dark text-italic">
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.notAssigned'
+                      )}
+                    </p>
+                  )
+                }
+              />
+            </Grid>
+          </Grid>
+
+          <Grid row className="margin-bottom-2">
+            <Grid tablet={{ col: 12 }} mobile={{ col: 12 }}>
+              <DescriptionTerm
+                className="font-body-sm margin-bottom-0"
                 term={mtoMilestoneT('responsibleComponent.label')}
               />
               <DescriptionDefinition
@@ -295,7 +327,11 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
               />
               <DescriptionDefinition
                 className="font-body-md text-base-darkest"
-                definition={milestone.needBy || NoneSpecified}
+                definition={
+                  milestone.needBy
+                    ? formatDateUtc(milestone.needBy, 'MM/dd/yyyy')
+                    : NoneSpecified
+                }
               />
             </Grid>
           </Grid>

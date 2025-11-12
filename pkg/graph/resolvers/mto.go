@@ -133,3 +133,9 @@ func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal 
 	return storage.MTOInfoUpdate(store, logger, mtoInfo)
 
 }
+
+// MTOTemplateGetByModelPlanIDLOADER implements resolver logic to get all MTO templates by a model plan ID using a data loader
+func MTOTemplateGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.MTOTemplate, error) {
+	res, _ := loaders.MTOTemplate.ByModelPlanID.Load(ctx, modelPlanID)
+	return res, nil
+}

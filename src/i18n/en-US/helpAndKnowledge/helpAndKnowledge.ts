@@ -797,6 +797,12 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
       ]
     }
   },
+  [MtoCommonSolutionKey.HETS]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
+  },
   [MtoCommonSolutionKey.HIGLAS]: {
     about: {
       description: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.
@@ -1294,6 +1300,33 @@ The data in the IDR is leveraged by various components across the agency to faci
             'Complete health equity analyses',
             'Model-specific learning cost estimate',
             'Have an LDG member as part of the team'
+          ]
+        },
+        {
+          header: 'Additional resources',
+          items: [
+            '<link1>Introduction to Learning and Diffusion Group</link1>',
+            '<link2>Driver diagrams</link2>',
+            '<link3>Patient journey mapping</link3>',
+            '<link4>Model participant recruitment and engagement</link4>'
+          ],
+          links: [
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7bEBBC2361-8B3C-4E8B-8C77-1A5799DA9724%7d&file=Intro%20to%20LDG.pptx&action=default&CT=1759950081993&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7bBAB3A5FB-726E-4FEB-96AF-C87292A2F288%7d&file=Driver%20Diagrams%20%5bLDG%5d.pptx&action=default&CT=1759950444758&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7b0B11207B-D80B-42D7-8E07-BB5A679B0C9E%7d&file=Patient%20Journey%20Mapping%20%5bLDG%5d.pptx&action=default&CT=1759951113125&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7b23622076-C2E4-47C0-A930-0013AF2110AE%7d&file=Model%20Recruitment%20and%20Engagement%20%5bLDG%5d.pptx&action=default&CT=1759951027742&OR=DocLibClassicUI',
+              external: true
+            }
           ]
         }
       ]
@@ -1919,7 +1952,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         'The timing for using Shared Systems varies by model. It’s best to reach out during model design, so they know of upcoming work.',
       items: [
         {
-          header: 'Reach out to Donna Schmidt',
+          header: 'Reach out to the Shared Systems Team at CMMI',
           description:
             'Early in the process, contact the <link1>Shared Systems points of contact</link1> to learn more about using the Shared Systems for your model. You’ll get paired with a buddy to help finalize the operational aspects of the model.',
           links: [

@@ -548,7 +548,7 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
     EvaluationApproachType.OTHER
   ],
   evaluationApproachOther: 'Other eval approach',
-  evalutaionApproachNote: 'Note for approach',
+  evaluationApproachNote: 'Note for approach',
   ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION, CcmInvolvmentType.OTHER],
   ccmInvolvmentOther: 'CCM involvement other',
   ccmInvolvmentNote: 'Note for involvement',
