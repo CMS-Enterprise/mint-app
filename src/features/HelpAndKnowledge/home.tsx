@@ -7,6 +7,7 @@ import PageHeading from 'components/PageHeading';
 import ScrollLink from 'components/ScrollLink';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
+import MilestoneLibrarySection from './_components/MilestoneLibrarySection';
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
@@ -38,6 +39,12 @@ export const HelpAndKnowledgeHome = () => {
             <ScrollLink scrollTo={t('helpResourcesAndLinks')} hasIcon={false} />
 
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+            <ScrollLink
+              scrollTo={t('milestoneLibrary.hkcJumpToLabel')}
+              hasIcon={false}
+            />
+
+            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
 
             <ScrollLink
               scrollTo={t('operationalSolutionsAndITSystems')}
@@ -46,9 +53,10 @@ export const HelpAndKnowledgeHome = () => {
           </div>
         </GridContainer>
       </SummaryBox>
+
       <GridContainer
         id={convertToLowercaseAndDashes(t('helpResourcesAndLinks'))}
-        className="padding-bottom-4 padding-top-2"
+        className="padding-top-2"
         style={{ scrollMarginTop: '3.5rem' }}
       >
         <HelpCardGroup
@@ -60,6 +68,8 @@ export const HelpAndKnowledgeHome = () => {
 
         <ResourcesByCategory />
       </GridContainer>
+
+      <MilestoneLibrarySection />
 
       <SolutionCategories />
     </MainContent>

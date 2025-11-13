@@ -7,7 +7,7 @@ exports[`MilestoneCard Component > renders correctly and matches snapshot 1`] = 
     data-testid="Card"
   >
     <div
-      class="usa-card__container radius-md minh-mobile padding-0 margin-0"
+      class="usa-card__container radius-md padding-0 margin-0 minh-mobile"
     >
       <div
         class="usa-card__header padding-3 padding-bottom-0"

@@ -44,6 +44,7 @@ describe('MilestoneCard Component', () => {
               <MilestoneCard
                 milestone={mockMilestone}
                 setIsSidepanelOpen={() => null}
+                isHkcMilestoneLibrary={false}
               />
             </MessageProvider>
           )

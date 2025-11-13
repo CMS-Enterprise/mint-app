@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MilestoneLibrarySection > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-y-4 padding-bottom-6 bg-base-lightest"
+    id="milestone-library"
+    style="scroll-margin-top: 3.5rem;"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <h2
+        class="margin-0"
+      >
+        Milestone library
+      </h2>
+      <p
+        class="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4"
+      >
+        Model teams in MINT collaborate to complete the model-to-operations matrix (MTO) to identify which activities, milestones, and supporting operational solutions are needed to take the model from concept through implementation to active status. The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in their MTO. Browse those available milestones here.
+      </p>
+      <a
+        class="usa-button text-white"
+        data-discover="true"
+        href="/help-and-knowledge/milestone-library?page=1"
+      >
+        View milestone library
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

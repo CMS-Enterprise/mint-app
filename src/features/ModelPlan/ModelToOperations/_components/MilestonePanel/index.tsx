@@ -20,6 +20,9 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isHkcMilestoneLibrary =
+    location.pathname.includes('help-and-knowledge');
+
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]
@@ -70,30 +73,35 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
               })}
             </p>
 
-            <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
-              {!milestone.isAdded ? (
-                <Button
-                  type="button"
-                  outline
-                  className="margin-right-2"
-                  onClick={() => {
-                    params.set('add-milestone', milestone.key);
-                    navigate({ search: params.toString() }, { replace: true });
-                  }}
-                >
-                  {t('milestoneLibrary.addToMatrix')}
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  disabled
-                  className="margin-right-2 model-to-operations__milestone-added text-normal"
-                >
-                  <Icon.Check aria-label="check" />
-                  {t('milestoneLibrary.added')}
-                </Button>
-              )}
-            </div>
+            {!isHkcMilestoneLibrary && (
+              <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+                {!milestone.isAdded ? (
+                  <Button
+                    type="button"
+                    outline
+                    className="margin-right-2"
+                    onClick={() => {
+                      params.set('add-milestone', milestone.key);
+                      navigate(
+                        { search: params.toString() },
+                        { replace: true }
+                      );
+                    }}
+                  >
+                    {t('milestoneLibrary.addToMatrix')}
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    disabled
+                    className="margin-right-2 model-to-operations__milestone-added text-normal"
+                  >
+                    <Icon.Check aria-label="check" />
+                    {t('milestoneLibrary.added')}
+                  </Button>
+                )}
+              </div>
+            )}
 
             <h3 className="margin-y-2">
               {t('milestoneLibrary.commonSolutions')}

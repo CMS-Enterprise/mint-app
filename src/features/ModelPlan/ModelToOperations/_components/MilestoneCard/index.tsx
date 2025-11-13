@@ -23,13 +23,16 @@ import '../../index.scss';
 const MilestoneCard = ({
   className,
   milestone,
-  setIsSidepanelOpen
+  setIsSidepanelOpen,
+  isHkcMilestoneLibrary
 }: {
   className?: string;
   milestone: MilestoneCardType;
   setIsSidepanelOpen: (isOpen: boolean) => void;
+  isHkcMilestoneLibrary: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: hkcT } = useTranslation('helpAndKnowledge');
 
   const navigate = useNavigate();
 
@@ -78,7 +81,10 @@ const MilestoneCard = ({
 
       <Card
         containerProps={{
-          className: 'radius-md minh-mobile padding-0 margin-0'
+          className: classNames('radius-md padding-0 margin-0', {
+            'minh-mobile': !isHkcMilestoneLibrary
+          }),
+          style: isHkcMilestoneLibrary ? { minHeight: '260px' } : {}
         }}
         className={classNames(className, 'margin-bottom-2')}
       >
@@ -117,45 +123,68 @@ const MilestoneCard = ({
           )}
         </CardBody>
 
-        <CardFooter className="padding-3">
-          {!milestone.isAdded ? (
+        {isHkcMilestoneLibrary && (
+          <CardFooter className="padding-3">
             <Button
+              unstyled
               type="button"
-              outline
-              className="margin-right-2"
+              className="margin-right-1 deep-underline"
               onClick={() => {
-                params.delete('milestone');
-                params.set('add-milestone', milestone.key);
-                navigate({ search: params.toString() }, { replace: true });
-                setIsModalOpen(true);
+                setIsSidepanelOpen(true);
+                params.set('milestone', milestone.key);
+                navigate({ search: params.toString() });
               }}
             >
-              {t('milestoneLibrary.addToMatrix')}
+              {hkcT('milestoneLibrary.learnAboutThisMilestone')}
             </Button>
-          ) : (
-            <Button
-              type="button"
-              disabled
-              className="margin-right-2 model-to-operations__milestone-added text-normal"
-            >
-              <Icon.Check aria-label="check" />
-              {t('milestoneLibrary.added')}
-            </Button>
-          )}
+            <Icon.ArrowForward
+              className="top-3px text-primary"
+              aria-label="forward"
+            />
+          </CardFooter>
+        )}
 
-          <Button
-            unstyled
-            type="button"
-            className="margin-top-2"
-            onClick={() => {
-              setIsSidepanelOpen(true);
-              params.set('milestone', milestone.key);
-              navigate({ search: params.toString() });
-            }}
-          >
-            {t('milestoneLibrary.aboutThisMilestone')}
-          </Button>
-        </CardFooter>
+        {!isHkcMilestoneLibrary && (
+          <CardFooter className="padding-3">
+            {!milestone.isAdded ? (
+              <Button
+                type="button"
+                outline
+                className="margin-right-2"
+                onClick={() => {
+                  params.delete('milestone');
+                  params.set('add-milestone', milestone.key);
+                  navigate({ search: params.toString() }, { replace: true });
+                  setIsModalOpen(true);
+                }}
+              >
+                {t('milestoneLibrary.addToMatrix')}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                disabled
+                className="margin-right-2 model-to-operations__milestone-added text-normal"
+              >
+                <Icon.Check aria-label="check" />
+                {t('milestoneLibrary.added')}
+              </Button>
+            )}
+
+            <Button
+              unstyled
+              type="button"
+              className="margin-top-2"
+              onClick={() => {
+                setIsSidepanelOpen(true);
+                params.set('milestone', milestone.key);
+                navigate({ search: params.toString() });
+              }}
+            >
+              {t('milestoneLibrary.aboutThisMilestone')}
+            </Button>
+          </CardFooter>
+        )}
       </Card>
     </>
   );
