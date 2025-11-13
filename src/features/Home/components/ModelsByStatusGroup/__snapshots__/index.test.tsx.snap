@@ -1,0 +1,572 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ModelsByStatusGroup > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="models-by-solutions"
+  >
+    <header
+      class="usa-header usa-header--basic margin-bottom-4 models-by-solutions__nav-container"
+      data-testid="header"
+    >
+      <div
+        class="usa-nav-container padding-0"
+      >
+        <nav
+          class="usa-nav flex-justify-start margin-0 padding-0"
+        >
+          <button
+            aria-label="Close Navigation Menu"
+            class="usa-nav__close"
+            data-testid="navCloseButton"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+          <ul
+            class="usa-nav__primary usa-accordion"
+          >
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Pre-clearance
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  In clearance
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Cleared
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Announced
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Active
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Ended
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Canceled
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-button usa-button--unstyled usa-nav__link margin-left-neg-2 margin-right-2"
+                data-testid="button"
+                type="button"
+              >
+                <span>
+                  Paused
+                </span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div
+      class="model-plan-table"
+      data-testid="models-by-status-table-wrapper"
+    >
+      <div
+        class="mint-header__basic display-flex flex-justify flex-align-self-start"
+      >
+        <div />
+      </div>
+      <div>
+        <div
+          class="top-scroll-content"
+        >
+          <table
+            class="usa-table usa-table--borderless width-full"
+            data-testid="table"
+          >
+            <caption
+              class="usa-sr-only"
+            >
+              Below is a list of governance requests that are in draft or submitted.
+            </caption>
+            <thead>
+              <tr
+                role="row"
+              >
+                <th
+                  aria-sort="ascending"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 170px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Model name
+                    <svg
+                      aria-label="collapse"
+                      class="usa-icon margin-left-05 top-2px"
+                      data-testid="caret--up"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 110px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Short name
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 100px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    ID
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Category
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Status
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Anticipated clearance date
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Model start date
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Recent activity
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr
+                role="row"
+              >
+                <th
+                  role="cell"
+                  scope="row"
+                  style="padding-left: 0px;"
+                >
+                  <a
+                    class="usa-link"
+                    data-discover="true"
+                    href="/models/98749f57-38c7-4da2-8be2-4edd1b24dd6d/read-only/model-basics"
+                  >
+                    Plan with Data Complete
+                  </a>
+                </th>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  <div>
+                    To be determined
+                  </div>
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  Model Plan complete
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  <div>
+                    To be determined
+                  </div>
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  <div>
+                    To be determined
+                  </div>
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  Updated 11/03/2025
+                </td>
+              </tr>
+              <tr
+                role="row"
+              >
+                <th
+                  role="cell"
+                  scope="row"
+                  style="padding-left: 0px;"
+                >
+                  <a
+                    class="usa-link"
+                    data-discover="true"
+                    href="/models/notarealid-1/read-only/model-basics"
+                  >
+                    Plan With draft
+                  </a>
+                </th>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  <div>
+                    To be determined
+                  </div>
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  Draft Model Plan
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  <div>
+                    To be determined
+                  </div>
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  <div>
+                    To be determined
+                  </div>
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  Updated 11/03/2025
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        aria-live="polite"
+        class="usa-sr-only usa-table__announcement-region"
+      >
+        Requests table sorted by Model name ascending
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
