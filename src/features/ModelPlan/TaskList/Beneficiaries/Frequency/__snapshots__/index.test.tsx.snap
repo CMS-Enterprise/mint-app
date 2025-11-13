@@ -161,6 +161,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-selection-frequency-annually"
+                    style="width: fit-content;"
                   >
                     Annually
                   </label>
@@ -181,6 +182,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-selection-frequency-semiannually"
+                    style="width: fit-content;"
                   >
                     Semi-annually
                   </label>
@@ -201,6 +203,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-selection-frequency-quarterly"
+                    style="width: fit-content;"
                   >
                     Quarterly
                   </label>
@@ -221,6 +224,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-selection-frequency-monthly"
+                    style="width: fit-content;"
                   >
                     Monthly
                   </label>
@@ -241,6 +245,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-selection-frequency-continually"
+                    style="width: fit-content;"
                   >
                     Continually
                   </label>
@@ -261,6 +266,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-selection-frequency-other"
+                    style="width: fit-content;"
                   >
                     Other
                   </label>
@@ -337,6 +343,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-removal-frequency-annually"
+                    style="width: fit-content;"
                   >
                     Annually
                   </label>
@@ -357,6 +364,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-removal-frequency-semiannually"
+                    style="width: fit-content;"
                   >
                     Semi-annually
                   </label>
@@ -377,6 +385,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-removal-frequency-quarterly"
+                    style="width: fit-content;"
                   >
                     Quarterly
                   </label>
@@ -397,6 +406,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-removal-frequency-monthly"
+                    style="width: fit-content;"
                   >
                     Monthly
                   </label>
@@ -417,6 +427,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-removal-frequency-continually"
+                    style="width: fit-content;"
                   >
                     Continually
                   </label>
@@ -455,6 +466,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiary-removal-frequency-other"
+                    style="width: fit-content;"
                   >
                     Other
                   </label>
@@ -639,6 +651,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiaries-precedence-rules-YES"
+                    style="width: fit-content;"
                   >
                     Yes
                   </label>
@@ -675,6 +688,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="beneficiaries-precedence-rules-NO"
+                    style="width: fit-content;"
                   >
                     No
                   </label>
@@ -736,6 +750,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="beneficiaries-status"
+                        style="width: fit-content;"
                       >
                         This section of the Model Plan (Beneficiaries) is ready for review.
                       </label>

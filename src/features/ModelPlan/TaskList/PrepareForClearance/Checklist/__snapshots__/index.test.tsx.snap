@@ -114,6 +114,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-timeline"
+                  style="width: fit-content;"
                 >
                   Model timeline
                 </label>
@@ -164,6 +165,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-basics"
+                  style="width: fit-content;"
                 >
                   Model basics
                 </label>
@@ -213,6 +215,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-generalCharacteristics"
+                  style="width: fit-content;"
                 >
                   General characteristics
                 </label>
@@ -262,6 +265,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-participantsAndProviders"
+                  style="width: fit-content;"
                 >
                   Participants and providers
                 </label>
@@ -311,6 +315,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-beneficiaries"
+                  style="width: fit-content;"
                 >
                   Beneficiaries
                 </label>
@@ -360,6 +365,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-opsEvalAndLearning"
+                  style="width: fit-content;"
                 >
                   Operations, evaluation, and learning
                 </label>
@@ -409,6 +415,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="prepare-for-clearance-payments"
+                  style="width: fit-content;"
                 >
                   Payment
                 </label>

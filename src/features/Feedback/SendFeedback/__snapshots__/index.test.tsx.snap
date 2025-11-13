@@ -221,6 +221,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-VIEW_MODEL"
+                    style="width: fit-content;"
                   >
                     To view Model Plans
                   </label>
@@ -241,6 +242,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-EDIT_MODEL"
+                    style="width: fit-content;"
                   >
                     To edit Model Plans
                   </label>
@@ -261,6 +263,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-SHARE_MODEL"
+                    style="width: fit-content;"
                   >
                     To share or export Model Plan content
                   </label>
@@ -281,6 +284,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-TRACK_SOLUTIONS"
+                    style="width: fit-content;"
                   >
                     To track operational solutions
                   </label>
@@ -301,6 +305,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-CONTRIBUTE_DISCUSSIONS"
+                    style="width: fit-content;"
                   >
                     To contribute to Model Discussions
                   </label>
@@ -321,6 +326,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-VIEW_HELP"
+                    style="width: fit-content;"
                   >
                     To view the Help Center
                   </label>
@@ -341,6 +347,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="send-feedback-mint-used-for-OTHER"
+                    style="width: fit-content;"
                   >
                     Other (please specify)
                   </label>

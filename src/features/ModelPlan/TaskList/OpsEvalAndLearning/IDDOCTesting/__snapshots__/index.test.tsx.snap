@@ -258,6 +258,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+                style="width: fit-content;"
               >
                 Beneficiary
               </label>
@@ -278,6 +279,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+                style="width: fit-content;"
               >
                 Provider
               </label>
@@ -298,6 +300,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-PART_A"
+                style="width: fit-content;"
               >
                 Part A
               </label>
@@ -318,6 +321,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-PART_B"
+                style="width: fit-content;"
               >
                 Part B
               </label>
@@ -338,6 +342,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>

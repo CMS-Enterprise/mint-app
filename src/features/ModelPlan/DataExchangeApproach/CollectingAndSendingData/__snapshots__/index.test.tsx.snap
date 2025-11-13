@@ -66,19 +66,19 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
                   role="log"
                 />
                 <div
-                  class=" css-1vl89cy-control"
+                  class="css-1vl89cy-control"
                 >
                   <div
-                    class=" css-1fdsijx-ValueContainer"
+                    class="css-hlgwow"
                   >
                     <div
-                      class=" css-1jqq78o-placeholder"
+                      class="css-1jqq78o-placeholder"
                       id="react-select-2-placeholder"
                     >
                       2 selected
                     </div>
                     <div
-                      class=" css-qbdosj-Input"
+                      class="css-19bb58m"
                       data-value=""
                     >
                       <input
@@ -95,7 +95,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
                         id="data-to-collect-from-participants"
                         role="combobox"
                         spellcheck="false"
-                        style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                         tabindex="0"
                         type="text"
                         value=""
@@ -103,7 +103,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
                     </div>
                   </div>
                   <div
-                    class=" css-1hb7zxy-IndicatorsContainer"
+                    class="css-1wy0on6"
                   >
                     <button
                       aria-label="Clear selection"
@@ -114,7 +114,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
                     >
                       <div
                         aria-hidden="true"
-                        class=" css-1h8bgg-indicatorContainer"
+                        class="css-1h8bgg-indicatorContainer"
                       >
                         <svg
                           aria-hidden="true"
@@ -131,11 +131,11 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
                       </div>
                     </button>
                     <span
-                      class=" css-16b81-indicatorSeparator"
+                      class="css-16b81-indicatorSeparator"
                     />
                     <div
                       aria-hidden="true"
-                      class=" css-gjng1h-indicatorContainer"
+                      class="css-gjng1h-indicatorContainer"
                     >
                       <svg
                         aria-hidden="true"
@@ -182,6 +182,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
                   <label
                     class="usa-checkbox__label"
                     for="dataWillNotBeCollectedFromParticipants-true"
+                    style="width: fit-content;"
                   >
                     Data will not be collected from participants
                   </label>
@@ -351,6 +352,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="data-to-send-to-participants-DATA_FEEDBACK_DASHBOARD"
+                style="width: fit-content;"
               >
                 Data feedback dashboard
               </label>
@@ -371,6 +373,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="data-to-send-to-participants-NON_CLAIMS_BASED_PAYMENTS"
+                style="width: fit-content;"
               >
                 Non-claims based payments
               </label>
@@ -391,6 +394,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="data-to-send-to-participants-OPERATIONS_DATA"
+                style="width: fit-content;"
               >
                 Operations data
               </label>
@@ -411,6 +415,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="data-to-send-to-participants-PARTIALLY_ADJUSTED_CLAIMS_DATA"
+                style="width: fit-content;"
               >
                 Partially adjudicated claims data
               </label>
@@ -431,6 +436,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="data-to-send-to-participants-RAW_CLAIMS_DATA"
+                style="width: fit-content;"
               >
                 Raw claims data
               </label>
@@ -451,6 +457,7 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="data-to-send-to-participants-DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS"
+                style="width: fit-content;"
               >
                 Data will not be sent to participants
               </label>

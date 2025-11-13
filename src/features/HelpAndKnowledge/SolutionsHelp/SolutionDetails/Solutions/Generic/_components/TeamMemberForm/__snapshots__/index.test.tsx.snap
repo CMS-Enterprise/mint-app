@@ -53,10 +53,10 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
             class="cedar-contact-select__control cedar-contact-select__control--menu-is-open css-79rxjr-control"
           >
             <div
-              class="cedar-contact-select__value-container cedar-contact-select__value-container--has-value css-1fdsijx-ValueContainer"
+              class="cedar-contact-select__value-container cedar-contact-select__value-container--has-value css-hlgwow"
             >
               <div
-                class="cedar-contact-select__input-container css-166bipr-Input"
+                class="cedar-contact-select__input-container css-1cfo1cf"
                 data-value="Blue Bonnet (memberemail@email.com)"
               >
                 <input
@@ -73,7 +73,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
                   id="react-select-team-member-name-input"
                   role="combobox"
                   spellcheck="false"
-                  style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                  style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                   tabindex="0"
                   type="text"
                   value="Blue Bonnet (memberemail@email.com)"
@@ -81,7 +81,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="cedar-contact-select__indicators css-1hb7zxy-IndicatorsContainer"
+              class="cedar-contact-select__indicators css-1wy0on6"
             >
               <span
                 aria-valuetext="Loading"
@@ -141,12 +141,12 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
           >
             <div
               aria-multiselectable="false"
-              class="cedar-contact-select__menu-list css-bgzggo-MenuList"
+              class="cedar-contact-select__menu-list css-1t1p7p"
               id="react-select-team-member-name-listbox"
               role="listbox"
             >
               <div
-                class="cedar-contact-select__menu-notice cedar-contact-select__menu-notice--no-options css-14zharz-NoOptionsMessage"
+                class="cedar-contact-select__menu-notice cedar-contact-select__menu-notice--no-options css-1elr36m"
               >
                 <button
                   aria-label="No results found"
@@ -211,6 +211,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
           <label
             class="usa-checkbox__label"
             for="isPrimary"
+            style="width: fit-content;"
           >
             Primary point of contact
           </label>
@@ -224,7 +225,6 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
               data-testid="triggerElement"
               style="gap: 0.25rem;"
               tabindex="0"
-              title=""
               type="button"
             >
               <svg
@@ -277,6 +277,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
           <label
             class="usa-checkbox__label"
             for="receiveEmails"
+            style="width: fit-content;"
           >
             Receive emails?
           </label>

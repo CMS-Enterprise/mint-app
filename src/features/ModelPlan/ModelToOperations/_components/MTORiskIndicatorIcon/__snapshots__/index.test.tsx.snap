@@ -12,7 +12,6 @@ exports[`MTORiskIndicatorTag Component > renders correctly and matches snapshot 
         class="usa-tooltip__trigger"
         data-testid="triggerElement"
         tabindex="0"
-        title=""
       >
         <svg
           class="usa-icon usa-icon--size-3 text-error-dark top-05"
@@ -55,7 +54,6 @@ exports[`MTORiskIndicatorTag Component > renders correctly and matches snapshot 
         class="usa-tooltip__trigger"
         data-testid="triggerElement"
         tabindex="0"
-        title=""
       >
         <svg
           aria-label="warning"

@@ -87,6 +87,7 @@ exports[`Team mailbox point of contact form > should matches snapshot 1`] = `
           <label
             class="usa-checkbox__label"
             for="isPrimary"
+            style="width: fit-content;"
           >
             Primary point of contact
           </label>
@@ -100,7 +101,6 @@ exports[`Team mailbox point of contact form > should matches snapshot 1`] = `
               data-testid="triggerElement"
               style="gap: 0.25rem;"
               tabindex="0"
-              title=""
               type="button"
             >
               <svg
@@ -153,6 +153,7 @@ exports[`Team mailbox point of contact form > should matches snapshot 1`] = `
           <label
             class="usa-checkbox__label"
             for="receiveEmails"
+            style="width: fit-content;"
           >
             Receive emails?
           </label>

@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { AuthTransaction, OktaAuth } from '@okta/okta-auth-js';
+import {
+  AuthTransaction,
+  CustomUserClaims,
+  OktaAuth,
+  UserClaims
+} from '@okta/okta-auth-js';
 import { OktaContext } from '@okta/okta-react';
 
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -53,14 +58,18 @@ const DevSecurity = ({ children }: ParentComponentProps) => {
       return new Promise(() => {});
     };
 
-    mockAuth.getUser = () => {
+    mockAuth.getUser = async <
+      T extends CustomUserClaims = CustomUserClaims
+    >() => {
       const currentState = getStateFromLocalStorage();
-      return Promise.resolve({
+      const userClaims: UserClaims<CustomUserClaims> = {
         name: currentState.name,
         sub: '',
         euaId: currentState.euaId,
         groups: currentState.groups
-      });
+      };
+
+      return userClaims as UserClaims<T>;
     };
 
     mockAuth.tokenManager.off = () => {};

@@ -31,6 +31,7 @@ exports[`The ReadyForReview Component > matches snapshot 1`] = `
           <label
             class="usa-checkbox__label"
             for="readyForReview"
+            style="width: fit-content;"
           >
             This section of the Model Plan (Basics) is ready for review.
           </label>

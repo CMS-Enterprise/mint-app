@@ -106,6 +106,7 @@ exports[`CollectionAndAggregation > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="anticipated-multi-payer-data-availability-use-case-MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION"
+                style="width: fit-content;"
               >
                 More complete alert/discharge/transfer notification
               </label>
@@ -127,6 +128,7 @@ exports[`CollectionAndAggregation > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="anticipated-multi-payer-data-availability-use-case-SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING"
+                style="width: fit-content;"
               >
                 Supply multi-payer claims cost, utilization, and quality reporting
               </label>
@@ -148,6 +150,7 @@ exports[`CollectionAndAggregation > renders correctly and matches snapshot 1`] =
               <label
                 class="usa-checkbox__label"
                 for="anticipated-multi-payer-data-availability-use-case-FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS"
+                style="width: fit-content;"
               >
                 Fill gaps in care alerting and reports
               </label>
@@ -262,19 +265,19 @@ exports[`CollectionAndAggregation > renders correctly and matches snapshot 1`] =
                 />
                 <div
                   aria-disabled="true"
-                  class=" css-5f0fg1-control"
+                  class="css-5f0fg1-control"
                 >
                   <div
-                    class=" css-1fdsijx-ValueContainer"
+                    class="css-hlgwow"
                   >
                     <div
-                      class=" css-1jqq78o-placeholder"
+                      class="css-1jqq78o-placeholder"
                       id="react-select-2-placeholder"
                     >
                       1 selected
                     </div>
                     <div
-                      class=" css-1h01tm3-Input"
+                      class="css-1mkvw8y"
                       data-value=""
                     >
                       <input
@@ -292,7 +295,7 @@ exports[`CollectionAndAggregation > renders correctly and matches snapshot 1`] =
                         id="multi-source-data-to-collect"
                         role="combobox"
                         spellcheck="false"
-                        style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                         tabindex="0"
                         type="text"
                         value=""
@@ -300,14 +303,14 @@ exports[`CollectionAndAggregation > renders correctly and matches snapshot 1`] =
                     </div>
                   </div>
                   <div
-                    class=" css-1hb7zxy-IndicatorsContainer"
+                    class="css-1wy0on6"
                   >
                     <span
-                      class=" css-1ck7a90-indicatorSeparator"
+                      class="css-1ck7a90-indicatorSeparator"
                     />
                     <div
                       aria-hidden="true"
-                      class=" css-gjng1h-indicatorContainer"
+                      class="css-gjng1h-indicatorContainer"
                     >
                       <svg
                         aria-hidden="true"

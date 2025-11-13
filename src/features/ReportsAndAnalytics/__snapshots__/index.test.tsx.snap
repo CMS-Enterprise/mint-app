@@ -351,6 +351,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
           <label
             class="usa-checkbox__label"
             for="append-table-to-chart"
+            style="width: fit-content;"
           >
             Append table to chart export
           </label>
