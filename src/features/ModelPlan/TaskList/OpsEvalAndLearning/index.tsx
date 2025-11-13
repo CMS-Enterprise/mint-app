@@ -18,7 +18,7 @@ const OpsEvalAndLearning = () => {
 };
 
 const opsEvalAndLearningRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
+  path: '/models/:modelID/collaboration-area/model-plan/ops-eval-and-learning',
   element: (
     <ProtectedRoute>
       <OpsEvalAndLearning />

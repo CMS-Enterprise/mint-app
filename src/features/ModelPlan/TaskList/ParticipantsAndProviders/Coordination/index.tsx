@@ -171,7 +171,7 @@ export const Coordination = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/participants-and-providers/provider-options`
+              `/models/${modelID}/collaboration-area/model-plan/participants-and-providers/provider-options`
             );
           }}
           enableReinitialize
@@ -485,7 +485,7 @@ export const Coordination = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
+                            `/models/${modelID}/collaboration-area/model-plan/participants-and-providers/communication`
                           );
                         }}
                       >
@@ -502,7 +502,7 @@ export const Coordination = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

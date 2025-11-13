@@ -2,24 +2,6 @@
 @use "uswds-core" as *;
 
 .model-plan-task-list {
-  // Order numbers
-  &__item:before {
-    font-size: 1.38rem;
-    font-weight: bold;
-    white-space: pre;
-  }
-
-  &__task-list {
-    counter-reset: primaryList secondaryList 3;
-
-    &--primary {
-      .model-plan-task-list__item:before {
-        counter-increment: primaryList;
-        content: counter(primaryList) '. ';
-      }
-    }
-  }
-
   &__task-row {
     @media screen and (max-width: $mobile) {
       @include u-flex('column');

@@ -138,7 +138,7 @@ const PeopleImpact = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/beneficiaries/beneficiary-frequency`
+              `/models/${modelID}/collaboration-area/model-plan/beneficiaries/beneficiary-frequency`
             );
           }}
           enableReinitialize
@@ -314,7 +314,7 @@ const PeopleImpact = () => {
                               className="usa-button usa-button--outline margin-bottom-1"
                               onClick={() => {
                                 navigate(
-                                  `/models/${modelID}/collaboration-area/task-list/beneficiaries`
+                                  `/models/${modelID}/collaboration-area/model-plan/beneficiaries`
                                 );
                               }}
                             >
@@ -331,7 +331,7 @@ const PeopleImpact = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >
