@@ -294,7 +294,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
-                    title=""
                   >
                     <svg
                       aria-label="info"
@@ -402,7 +401,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
-                      title=""
                     >
                       <svg
                         aria-label="info"
@@ -559,7 +557,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
-                      title=""
                     >
                       <svg
                         aria-label="info"
@@ -743,7 +740,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
-                      title=""
                     >
                       <svg
                         aria-label="info"
@@ -838,7 +834,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
-                      title=""
                     >
                       <svg
                         aria-label="info"
@@ -933,7 +928,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
-                      title=""
                     >
                       <svg
                         aria-label="info"
@@ -1028,7 +1022,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                       class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       tabindex="0"
-                      title=""
                     >
                       <svg
                         aria-label="info"
@@ -1864,7 +1857,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
-                    title=""
                   >
                     <svg
                       aria-label="info"

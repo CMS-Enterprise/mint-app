@@ -178,6 +178,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
+                style="width: fit-content;"
               >
                 We plan to have a learning contractor (cross-model or individual)
               </label>
@@ -198,6 +199,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
+                style="width: fit-content;"
               >
                 We plan to use an IT platform (Connect)
               </label>
@@ -218,6 +220,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
+                style="width: fit-content;"
               >
                 We plan to enable participant-to-participant collaboration
               </label>
@@ -238,6 +241,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
+                style="width: fit-content;"
               >
                 We plan to educate beneficiaries
               </label>
@@ -258,6 +262,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-learning-systems-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -278,6 +283,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
+                style="width: fit-content;"
               >
                 No, we will not have a learning strategy
               </label>
@@ -366,6 +372,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="ops-eval-and-learning-learning-status"
+                    style="width: fit-content;"
                   >
                     This section of the Model Plan (Operations, evaluation, and learning) is ready for review.
                   </label>

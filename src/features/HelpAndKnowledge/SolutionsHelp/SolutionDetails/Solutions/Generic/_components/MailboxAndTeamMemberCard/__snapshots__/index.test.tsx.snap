@@ -32,7 +32,6 @@ exports[`MailboxAndTeamMemberCard Component > should matches snapshot 1`] = `
               data-testid="triggerElement"
               style="gap: 0.25rem;"
               tabindex="0"
-              title=""
               type="button"
             >
               <svg

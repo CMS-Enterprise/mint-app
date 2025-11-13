@@ -225,6 +225,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-sharing-frequency-annually"
+                style="width: fit-content;"
               >
                 Annually
               </label>
@@ -245,6 +246,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-sharing-frequency-semiannually"
+                style="width: fit-content;"
               >
                 Semi-annually
               </label>
@@ -265,6 +267,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-sharing-frequency-quarterly"
+                style="width: fit-content;"
               >
                 Quarterly
               </label>
@@ -285,6 +288,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-sharing-frequency-monthly"
+                style="width: fit-content;"
               >
                 Monthly
               </label>
@@ -305,6 +309,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-sharing-frequency-continually"
+                style="width: fit-content;"
               >
                 Continually
               </label>
@@ -325,6 +330,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-sharing-frequency-other"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -450,6 +456,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-collection-frequency-annually"
+                style="width: fit-content;"
               >
                 Annually
               </label>
@@ -470,6 +477,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-collection-frequency-semiannually"
+                style="width: fit-content;"
               >
                 Semi-annually
               </label>
@@ -490,6 +498,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-collection-frequency-quarterly"
+                style="width: fit-content;"
               >
                 Quarterly
               </label>
@@ -510,6 +519,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-collection-frequency-monthly"
+                style="width: fit-content;"
               >
                 Monthly
               </label>
@@ -530,6 +540,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-collection-frequency-continually"
+                style="width: fit-content;"
               >
                 Continually
               </label>
@@ -550,6 +561,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-collection-frequency-other"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -695,6 +707,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
                 <label
                   class="usa-checkbox__label"
                   for="ops-eval-and-learning-quality-reporting-frequency-annually"
+                  style="width: fit-content;"
                 >
                   Annually
                 </label>
@@ -715,6 +728,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
                 <label
                   class="usa-checkbox__label"
                   for="ops-eval-and-learning-quality-reporting-frequency-semiannually"
+                  style="width: fit-content;"
                 >
                   Semi-annually
                 </label>
@@ -735,6 +749,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
                 <label
                   class="usa-checkbox__label"
                   for="ops-eval-and-learning-quality-reporting-frequency-quarterly"
+                  style="width: fit-content;"
                 >
                   Quarterly
                 </label>
@@ -755,6 +770,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
                 <label
                   class="usa-checkbox__label"
                   for="ops-eval-and-learning-quality-reporting-frequency-monthly"
+                  style="width: fit-content;"
                 >
                   Monthly
                 </label>
@@ -775,6 +791,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
                 <label
                   class="usa-checkbox__label"
                   for="ops-eval-and-learning-quality-reporting-frequency-continually"
+                  style="width: fit-content;"
                 >
                   Continually
                 </label>
@@ -813,6 +830,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
                 <label
                   class="usa-checkbox__label"
                   for="ops-eval-and-learning-quality-reporting-frequency-other"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>

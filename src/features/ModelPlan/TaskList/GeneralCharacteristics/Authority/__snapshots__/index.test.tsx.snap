@@ -256,6 +256,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-authority-allowance-ACA"
+                style="width: fit-content;"
               >
                 3021 Affordable Care Act (ACA)
               </label>
@@ -276,6 +277,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
+                style="width: fit-content;"
               >
                 Congressionally Mandated Demonstration
               </label>
@@ -296,6 +298,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-authority-allowance-SSA_PART_B"
+                style="width: fit-content;"
               >
                 Section 1833(e) (Part B services) of the Social Security Act
               </label>
@@ -316,6 +319,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-authority-allowance-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -459,6 +463,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="characteristics-status"
+                    style="width: fit-content;"
                   >
                     This section of the Model Plan (General characteristics) is ready for review.
                   </label>

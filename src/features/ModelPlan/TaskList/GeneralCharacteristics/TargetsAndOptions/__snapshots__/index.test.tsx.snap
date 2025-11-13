@@ -205,6 +205,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-type-STATE"
+                  style="width: fit-content;"
                 >
                   States and territories
                 </label>
@@ -225,6 +226,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-type-REGION"
+                  style="width: fit-content;"
                 >
                   Region
                 </label>
@@ -246,6 +248,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-type-OTHER"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>
@@ -295,6 +298,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-BENEFICIARIES"
+                  style="width: fit-content;"
                 >
                   Beneficiaries
                 </label>
@@ -315,6 +319,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+                  style="width: fit-content;"
                 >
                   Participants
                 </label>
@@ -335,6 +340,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-PROVIDERS"
+                  style="width: fit-content;"
                 >
                   Providers
                 </label>
@@ -355,6 +361,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-OTHER"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>
@@ -524,6 +531,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-agreement-type-COOPERATIVE"
+                style="width: fit-content;"
               >
                 Co-Operative Agreement/Grant
               </label>
@@ -544,6 +552,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-agreement-type-PARTICIPATION"
+                style="width: fit-content;"
               >
                 Participation Agreement
               </label>
@@ -564,6 +573,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-agreement-type-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>

@@ -169,19 +169,19 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                         role="log"
                       />
                       <div
-                        class=" css-1vl89cy-control"
+                        class="css-1vl89cy-control"
                       >
                         <div
-                          class=" css-1fdsijx-ValueContainer"
+                          class="css-hlgwow"
                         >
                           <div
-                            class=" css-1jqq78o-placeholder"
+                            class="css-1jqq78o-placeholder"
                             id="react-select-3-placeholder"
                           >
                             2 selected
                           </div>
                           <div
-                            class=" css-qbdosj-Input"
+                            class="css-19bb58m"
                             data-value=""
                           >
                             <input
@@ -197,7 +197,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                               id="react-select-3-input"
                               role="combobox"
                               spellcheck="false"
-                              style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                              style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                               tabindex="0"
                               type="text"
                               value=""
@@ -205,7 +205,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class=" css-1hb7zxy-IndicatorsContainer"
+                          class="css-1wy0on6"
                         >
                           <button
                             aria-label="Clear selection"
@@ -216,7 +216,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                           >
                             <div
                               aria-hidden="true"
-                              class=" css-1h8bgg-indicatorContainer"
+                              class="css-1h8bgg-indicatorContainer"
                             >
                               <svg
                                 aria-hidden="true"
@@ -233,11 +233,11 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                             </div>
                           </button>
                           <span
-                            class=" css-16b81-indicatorSeparator"
+                            class="css-16b81-indicatorSeparator"
                           />
                           <div
                             aria-hidden="true"
-                            class=" css-gjng1h-indicatorContainer"
+                            class="css-gjng1h-indicatorContainer"
                           >
                             <svg
                               aria-hidden="true"
