@@ -1,0 +1,15 @@
+enum ModelPlanStatusGroup {
+  PRE_CLEARANCE
+  IN_CLEARANCE
+  CLEARED
+  ANNOUNCED
+  ACTIVE
+  ENDED
+  CANCELED
+  PAUSED
+}
+
+extend type Query {
+  modelPlansByStatusGroup(statusGroup: ModelPlanStatusGroup!): [ModelPlan!]!
+    @hasRole(role: MINT_USER)
+}

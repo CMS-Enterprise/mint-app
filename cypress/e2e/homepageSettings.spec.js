@@ -14,6 +14,9 @@ describe('Homepage Settings', () => {
     cy.get('#FOLLOWED_MODELS').should('be.visible').should('not.be.checked');
     cy.get('#MODELS_WITH_CR_TDL').should('be.visible').should('not.be.checked');
     cy.get('#MODELS_BY_SOLUTION').should('be.visible').should('not.be.checked');
+    cy.get('#MODELS_BY_STATUS_GROUP')
+      .should('be.visible')
+      .should('not.be.checked');
 
     // Add solutions
     cy.get('[data-testid="add-solutions-settings"]').click();
@@ -48,6 +51,12 @@ describe('Homepage Settings', () => {
       .check({ force: true })
       .should('be.checked');
 
+    cy.get('#MODELS_BY_STATUS_GROUP')
+      .should('be.visible')
+      .should('not.be.checked')
+      .check({ force: true })
+      .should('be.checked');
+
     // Go to next page to select order
     cy.get('[data-testid="next-settings"]').click();
 
@@ -60,7 +69,7 @@ describe('Homepage Settings', () => {
     );
 
     // Down button disabled on last card
-    cy.get('[data-testid="move-2-down"]').should(
+    cy.get('[data-testid="move-3-down"]').should(
       'have.class',
       'settings__icon__disabled'
     );
