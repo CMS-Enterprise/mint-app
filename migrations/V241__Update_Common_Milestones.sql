@@ -4,28 +4,36 @@ SET
     "order" = '24',
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
-WHERE name = 'Model closeout or extension';
+WHERE
+    name = 'Model closeout or extension'
+    AND template_id = (SELECT id FROM mto_template WHERE key = 'STANDARD_CATEGORIES');
 
 UPDATE mto_template_category
 SET
     "order" = '23',
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
-WHERE name = 'Evaluation';
+WHERE
+    name = 'Evaluation'
+    AND template_id = (SELECT id FROM mto_template WHERE key = 'STANDARD_CATEGORIES');
 
 UPDATE mto_template_category
 SET
     "order" = '22',
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
-WHERE name = 'Learning';
+WHERE
+    name = 'Learning'
+    AND template_id = (SELECT id FROM mto_template WHERE key = 'STANDARD_CATEGORIES');
 
 UPDATE mto_template_category
 SET
     "order" = '21',
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
-WHERE name = 'Quality';
+WHERE
+    name = 'Quality'
+    AND template_id = (SELECT id FROM mto_template WHERE key = 'STANDARD_CATEGORIES');
 
 -- Add new category 'Beneficiaries' to STANDARD_CATEGORIES template
 INSERT INTO mto_template_category (id, template_id, name, parent_id, "order", created_by, created_dts)
