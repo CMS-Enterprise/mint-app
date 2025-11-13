@@ -21,6 +21,11 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 	return MTOCommonSolutionGetByCommonMilestoneKeyLOADER(ctx, obj.Key)
 }
 
+// MtoCommonMilestones is the resolver for the mtoCommonMilestones field.
+func (r *queryResolver) MtoCommonMilestones(ctx context.Context) ([]*models.MTOCommonMilestone, error) {
+	return MTOCommonMilestoneGetByModelPlanIDLOADER(ctx, nil)
+}
+
 // MTOCommonMilestone returns generated.MTOCommonMilestoneResolver implementation.
 func (r *Resolver) MTOCommonMilestone() generated.MTOCommonMilestoneResolver {
 	return &mTOCommonMilestoneResolver{r}
