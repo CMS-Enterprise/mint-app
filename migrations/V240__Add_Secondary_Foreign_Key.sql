@@ -229,7 +229,8 @@ UPDATE audit.table_config
 SET
     fkey_field_secondary = 'solution_id',
     modified_by = '00000001-0001-0001-0001-000000000001',
-    modified_dts = CURRENT_TIMESTAMP
+    modified_dts = CURRENT_TIMESTAMP,
+    insert_fields = '{*,milestone_id, solution_id}'::TEXT[]
 WHERE schema = 'public' AND name = 'mto_milestone_solution_link';
 
 -- Update plan_document_solution_link to track document_id as secondary foreign key
@@ -237,7 +238,7 @@ WHERE schema = 'public' AND name = 'mto_milestone_solution_link';
 UPDATE audit.table_config
 SET
     fkey_field_secondary = 'document_id',
-    insert_fields = '{document_id, solution_id}'::TEXT[],
+    insert_fields = '{*,document_id, solution_id}'::TEXT[],
     modified_by = '00000001-0001-0001-0001-000000000001',
     modified_dts = CURRENT_TIMESTAMP
 WHERE schema = 'public' AND name = 'plan_document_solution_link';
@@ -247,5 +248,6 @@ UPDATE audit.table_config
 SET
     fkey_field_secondary = 'current_model_plan_id',
     modified_by = '00000001-0001-0001-0001-000000000001',
-    modified_dts = CURRENT_TIMESTAMP
+    modified_dts = CURRENT_TIMESTAMP,
+    insert_fields = '{*,current_model_plan_id}'::TEXT[]
 WHERE schema = 'public' AND name = 'existing_model_link';
