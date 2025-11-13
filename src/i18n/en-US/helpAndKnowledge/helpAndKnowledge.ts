@@ -1301,6 +1301,33 @@ The data in the IDR is leveraged by various components across the agency to faci
             'Model-specific learning cost estimate',
             'Have an LDG member as part of the team'
           ]
+        },
+        {
+          header: 'Additional resources',
+          items: [
+            '<link1>Introduction to Learning and Diffusion Group</link1>',
+            '<link2>Driver diagrams</link2>',
+            '<link3>Patient journey mapping</link3>',
+            '<link4>Model participant recruitment and engagement</link4>'
+          ],
+          links: [
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7bEBBC2361-8B3C-4E8B-8C77-1A5799DA9724%7d&file=Intro%20to%20LDG.pptx&action=default&CT=1759950081993&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7bBAB3A5FB-726E-4FEB-96AF-C87292A2F288%7d&file=Driver%20Diagrams%20%5bLDG%5d.pptx&action=default&CT=1759950444758&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7b0B11207B-D80B-42D7-8E07-BB5A679B0C9E%7d&file=Patient%20Journey%20Mapping%20%5bLDG%5d.pptx&action=default&CT=1759951113125&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7b23622076-C2E4-47C0-A930-0013AF2110AE%7d&file=Model%20Recruitment%20and%20Engagement%20%5bLDG%5d.pptx&action=default&CT=1759951027742&OR=DocLibClassicUI',
+              external: true
+            }
+          ]
         }
       ]
     },
