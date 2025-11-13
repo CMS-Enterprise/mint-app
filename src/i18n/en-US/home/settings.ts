@@ -31,6 +31,11 @@ const settings: HomepageSettingsType = {
     description:
       'This simplified section displays the models within six months of clearance organized chronologically.'
   },
+  [ViewCustomizationType.MODELS_BY_STATUS_GROUP]: {
+    heading: 'Models by status',
+    description:
+      'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.'
+  },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
     description:

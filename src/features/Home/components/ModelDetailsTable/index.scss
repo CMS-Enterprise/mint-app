@@ -1,0 +1,15 @@
+.model-plan-table {
+  th, td {
+    position: relative;
+    word-break: break-word;    
+  }
+
+  .usa-button {
+    line-height: inherit !important;
+    white-space: nowrap;
+  }
+
+  .usa-table-container--scrollable {
+    margin-top: 0 !important;
+  }
+}
