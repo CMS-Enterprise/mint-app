@@ -15,6 +15,8 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import ModelDetailsTable from '../ModelDetailsTable';
 
+import './index.scss';
+
 export type ModelPlansType =
   GetModelPlansByStatusGroupQuery['modelPlansByStatusGroup'][number];
 
