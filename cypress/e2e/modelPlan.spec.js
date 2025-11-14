@@ -1,3 +1,5 @@
+import miscellaneous from '../../src/i18n/en-US/modelPlan/miscellaneous';
+
 describe('The Model Plan Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
@@ -36,10 +38,10 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
 
-    cy.get(`[data-testid="to-task-list"]`).click();
-    cy.url().should('include', '/collaboration-area/task-list');
+    cy.get(`[data-testid="to-model-plan"]`).click();
+    cy.url().should('include', '/collaboration-area/model-plan');
 
-    cy.contains('h1', 'Model Plan task list');
+    cy.contains('h1', 'Model Plan');
 
     cy.contains('h3', 'Model basics');
 
@@ -47,7 +49,7 @@ describe('The Model Plan Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/basics/
+        /\/models\/.{36}\/collaboration-area\/model-plan\/basics/
       );
     });
 
@@ -58,11 +60,11 @@ describe('The Model Plan Form', () => {
       .type('Renamed Model Plan Name')
       .should('have.value', 'Renamed Model Plan Name');
 
-    cy.contains('button', 'Save and return to task list').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list/
+        /\/models\/.{36}\/collaboration-area\/model-plan/
       );
     });
 
@@ -103,7 +105,7 @@ describe('The Model Plan Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/basics\/overview/
+        /\/models\/.{36}\/collaboration-area\/model-plan\/basics\/overview/
       );
     });
 
@@ -129,11 +131,11 @@ describe('The Model Plan Form', () => {
       .type('The interventions')
       .should('have.value', 'The interventions');
 
-    cy.contains('button', 'Save and return to task list').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list/
+        /\/models\/.{36}\/collaboration-area\/model-plan/
       );
     });
 

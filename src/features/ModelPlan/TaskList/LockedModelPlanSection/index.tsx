@@ -35,7 +35,7 @@ const LockedModelPlanSection = () => {
           <UswdsReactLink
             className="usa-button margin-top-6"
             variant="unstyled"
-            to={`/models/${modelID}/collaboration-area/task-list`}
+            to={`/models/${modelID}/collaboration-area/model-plan`}
           >
             {t('returnToTaskList')}
           </UswdsReactLink>
@@ -50,7 +50,7 @@ const LockedModelPlanSection = () => {
           <UswdsReactLink
             className="usa-button margin-top-6"
             variant="unstyled"
-            to={`/models/${modelID}/collaboration-area/task-list`}
+            to={`/models/${modelID}/collaboration-area/model-plan`}
           >
             {t('returnToCollaboration')}
           </UswdsReactLink>

@@ -39,7 +39,7 @@ const taskListStatus: Record<
 };
 
 const modelPlanTaskList = {
-  heading: 'Model Plan task list',
+  heading: 'Model Plan',
   subheading: 'for {{modelName}}',
   status: 'Status:',
   update: 'Update',

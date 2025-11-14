@@ -169,7 +169,7 @@ const TargetsAndOptions = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/characteristics/authority`
+              `/models/${modelID}/collaboration-area/model-plan/characteristics/authority`
             );
           }}
           enableReinitialize
@@ -489,7 +489,7 @@ const TargetsAndOptions = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/characteristics/involvements`
+                            `/models/${modelID}/collaboration-area/model-plan/characteristics/involvements`
                           );
                         }}
                       >
@@ -504,7 +504,7 @@ const TargetsAndOptions = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

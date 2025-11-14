@@ -1,8 +1,12 @@
-import { GeneralStatus, ViewCustomizationType } from 'gql/generated/graphql';
+import {
+  GeneralStatus,
+  ModelPlanStatusGroup,
+  ViewCustomizationType
+} from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
-  Record<string, string>
+  Record<string, string | object>
 >;
 
 // TODO: Init Newly created feature commit
@@ -28,6 +32,46 @@ const settings: HomepageSettingsType = {
     noResultsHeading: 'You are not following any models yet.',
     noResultsDescription:
       'To follow a model, <link1>view all models</link1> and click the star icon (<star></star>) for any model to add it to this section.'
+  },
+  [ViewCustomizationType.MODELS_BY_STATUS_GROUP]: {
+    heading: 'Models by status',
+    description:
+      'This tabbed section displays models at each phase, starting with those that are pre-clearance through the model life cycle.',
+    status: {
+      [ModelPlanStatusGroup.PRE_CLEARANCE]: {
+        label: 'Pre-clearance',
+        noResultsHeading: 'There are no early-stage models.'
+      },
+      [ModelPlanStatusGroup.IN_CLEARANCE]: {
+        label: 'In clearance',
+        noResultsHeading: 'There are no models currently in clearance.'
+      },
+      [ModelPlanStatusGroup.CLEARED]: {
+        label: 'Cleared',
+        noResultsHeading:
+          'There are no models that have cleared and are pending announcement.'
+      },
+      [ModelPlanStatusGroup.ANNOUNCED]: {
+        label: 'Announced',
+        noResultsHeading: 'There are no models that have just been announced.'
+      },
+      [ModelPlanStatusGroup.ACTIVE]: {
+        label: 'Active',
+        noResultsHeading: 'There are no active models.'
+      },
+      [ModelPlanStatusGroup.ENDED]: {
+        label: 'Ended',
+        noResultsHeading: 'There are no models that have ended.'
+      },
+      [ModelPlanStatusGroup.CANCELED]: {
+        label: 'Canceled',
+        noResultsHeading: 'There are no canceled models.'
+      },
+      [ModelPlanStatusGroup.PAUSED]: {
+        label: 'Paused',
+        noResultsHeading: 'There are no paused models.'
+      }
+    }
   },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
@@ -127,6 +171,7 @@ const customHome = {
       modelPoc: 'Model lead(s)',
       clearanceDate: 'Anticipated clearance date',
       startDate: 'Model start date',
+      endDate: 'Model end date',
       paymentDate: 'Payment start date',
       keyCharacteristics: 'Key characteristics',
       demoCode: 'Demo code',

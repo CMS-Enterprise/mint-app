@@ -107,20 +107,20 @@ const Complexity = () => {
 
     if (hasNonClaimBasedPayment) {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
+        `/models/${modelID}/collaboration-area/model-plan/payment/non-claims-based-payment`
       );
     } else if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
         navigate(
-          `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
+          `/models/${modelID}/collaboration-area/model-plan/payment/beneficiary-cost-sharing`
         );
       } else {
         navigate(
-          `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
+          `/models/${modelID}/collaboration-area/model-plan/payment/anticipating-dependencies`
         );
       }
     } else {
-      navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
+      navigate(`/models/${modelID}/collaboration-area/model-plan/payment`);
     }
   };
 
@@ -192,7 +192,7 @@ const Complexity = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/payment/recover-payment`
+              `/models/${modelID}/collaboration-area/model-plan/payment/recover-payment`
             );
           }}
           enableReinitialize
@@ -387,7 +387,7 @@ const Complexity = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >

@@ -14,7 +14,7 @@ const GeneralCharacteristics = () => {
 };
 
 const generalCharacteristicsRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/characteristics',
+  path: '/models/:modelID/collaboration-area/model-plan/characteristics',
   element: (
     <ProtectedRoute>
       <GeneralCharacteristics />

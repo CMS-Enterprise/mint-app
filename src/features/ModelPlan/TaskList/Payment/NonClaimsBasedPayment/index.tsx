@@ -108,15 +108,15 @@ const NonClaimsBasedPayment = () => {
     if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
         navigate(
-          `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
+          `/models/${modelID}/collaboration-area/model-plan/payment/beneficiary-cost-sharing`
         );
       } else {
         navigate(
-          `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
+          `/models/${modelID}/collaboration-area/model-plan/payment/anticipating-dependencies`
         );
       }
     } else {
-      navigate(`/models/${modelID}/collaboration-area/task-list/payment`);
+      navigate(`/models/${modelID}/collaboration-area/model-plan/payment`);
     }
   };
 
@@ -184,7 +184,7 @@ const NonClaimsBasedPayment = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+              `/models/${modelID}/collaboration-area/model-plan/payment/complexity`
             );
           }}
           enableReinitialize
@@ -390,7 +390,7 @@ const NonClaimsBasedPayment = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >

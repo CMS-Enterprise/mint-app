@@ -135,7 +135,7 @@ export const ClearanceReview = () => {
   const formRoute =
     section === 'model-timeline'
       ? `/models/${modelID}/collaboration-area/${section}`
-      : `/models/${modelID}/collaboration-area/task-list/${section}`;
+      : `/models/${modelID}/collaboration-area/model-plan/${section}`;
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
@@ -197,7 +197,7 @@ export const ClearanceReview = () => {
     }).then(response => {
       if (!response?.errors) {
         navigate(
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+          `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
         );
       }
     });
@@ -227,8 +227,8 @@ export const ClearanceReview = () => {
           className="margin-right-2 usa-button text-white text-no-underline"
           to={
             !locked
-              ? `/models/${modelID}/collaboration-area/task-list/${section}`
-              : `/models/${modelID}/collaboration-area/task-list`
+              ? `/models/${modelID}/collaboration-area/model-plan/${section}`
+              : `/models/${modelID}/collaboration-area/model-plan`
           }
         >
           {!locked ? p('modal.update') : generalT('lockedModal.return')}
@@ -276,7 +276,7 @@ export const ClearanceReview = () => {
               className="usa-button usa-button--outline margin-bottom-1"
               onClick={() => {
                 navigate(
-                  `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+                  `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
                 );
               }}
             >
