@@ -135,6 +135,8 @@ type ModelPlan {
   # MTO Fields (START)
   mtoMatrix: ModelsToOperationMatrix!
   # MTO Fields (END)
+
+  tasks: [PlanTask!]!
 }
 
 """
