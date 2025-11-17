@@ -334,6 +334,12 @@ func TryNotificationSendIncorrectModelStatus(
 		return err
 	}
 
+	if phaseSuggestion == nil {
+		logger.Info("there is no suggested phase suggestion, not sending notification", zap.Any("modelPlanID", modelPlanID))
+		return nil
+
+	}
+
 	if emailService == nil || emailTemplateService == nil {
 		return nil
 	}
