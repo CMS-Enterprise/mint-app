@@ -68,7 +68,8 @@ func createS3Client() s3.S3Client {
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(config, ldClient)
-	emailTemplateService, _ := email.NewTemplateServiceImpl()
+	env, _ := appconfig.NewEnvironment("testing")
+	emailTemplateService, _ := email.NewTemplateServiceImpl(env)
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()
 	if oktaClientErr != nil {
 		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
