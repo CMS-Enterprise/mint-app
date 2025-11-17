@@ -14,12 +14,12 @@ import (
 )
 
 // CreateKeyContactMailbox is the resolver for the createKeyContactMailbox field.
-func (r *mutationResolver) CreateKeyContactMailbox(ctx context.Context, mailboxTitle string, mailboxAddress string, isTeam bool, subjectArea string, subjectCategory string) (*model.KeyContact, error) {
+func (r *mutationResolver) CreateKeyContactMailbox(ctx context.Context, mailboxTitle string, mailboxAddress string, isTeam bool, subjectArea string, subjectCategoryID uuid.UUID) (*model.KeyContact, error) {
 	panic(fmt.Errorf("not implemented: CreateKeyContactMailbox - createKeyContactMailbox"))
 }
 
 // CreateKeyContactUser is the resolver for the createKeyContactUser field.
-func (r *mutationResolver) CreateKeyContactUser(ctx context.Context, userName string, isTeam bool, subjectArea string, subjectCategory string) (*model.KeyContact, error) {
+func (r *mutationResolver) CreateKeyContactUser(ctx context.Context, userName string, isTeam bool, subjectArea string, subjectCategoryID uuid.UUID) (*model.KeyContact, error) {
 	panic(fmt.Errorf("not implemented: CreateKeyContactUser - createKeyContactUser"))
 }
 

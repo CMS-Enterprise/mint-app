@@ -55,7 +55,7 @@ type KeyContact struct {
 	IsTeam                bool                        `json:"isTeam"`
 	MailboxTitle          *string                     `json:"mailboxTitle,omitempty"`
 	MailboxAddress        *string                     `json:"mailboxAddress,omitempty"`
-	SubjectCategory       string                      `json:"subjectCategory"`
+	SubjectCategoryID     uuid.UUID                   `json:"subjectCategoryId"`
 	SubjectArea           string                      `json:"subjectArea"`
 	CreatedBy             uuid.UUID                   `json:"createdBy"`
 	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`

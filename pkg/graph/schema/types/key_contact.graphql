@@ -9,7 +9,7 @@ type KeyContact {
   mailboxTitle: String
   mailboxAddress: String
 
-  subjectCategory: String!
+  subjectCategoryId: UUID!
   subjectArea: String!
 
   # Metadata columns
@@ -26,7 +26,7 @@ Input for updating a key contact.
 Only subject category, subject area, and mailbox title can be changed.
 """
 input KeyContactUpdateChanges @goModel(model: "map[string]interface{}") {
-  subjectCategory: String
+  subjectCategoryId: UUID
   subjectArea: String
   mailboxTitle: String
 }
@@ -41,14 +41,14 @@ extend type Mutation {
     mailboxAddress: String!
     isTeam: Boolean!
     subjectArea: String!
-    subjectCategory: String!
+    subjectCategoryId: UUID!
   ): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 
   createKeyContactUser(
     userName: String!
     isTeam: Boolean!
     subjectArea: String!
-    subjectCategory: String!
+    subjectCategoryId: UUID!
   ): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 
   updateKeyContact(id: UUID!, changes: KeyContactUpdateChanges!): KeyContact!
