@@ -14,7 +14,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/characteristics/
+        /\/models\/.{36}\/collaboration-area\/model-plan\/characteristics/
       );
     });
 
@@ -282,7 +282,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/participants-and-providers$/
+        /\/models\/.{36}\/collaboration-area\/model-plan\/participants-and-providers$/
       );
     });
 

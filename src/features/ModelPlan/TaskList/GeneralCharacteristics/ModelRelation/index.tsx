@@ -245,7 +245,7 @@ export const ModelRelation = () => {
     }
 
     // Don't call mutation if attempting to access a locked section
-    if (nextLocation.pathname.includes('locked-task-list-section')) {
+    if (nextLocation.pathname.includes('locked-model-plan-section')) {
       navigate(nextLocation.pathname);
       return false;
     }
@@ -427,7 +427,7 @@ export const ModelRelation = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
+              `/models/${modelID}/collaboration-area/model-plan/characteristics/key-characteristics`
             );
           }}
           enableReinitialize
@@ -901,7 +901,7 @@ export const ModelRelation = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

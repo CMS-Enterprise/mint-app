@@ -12,7 +12,7 @@ const Beneficiaries = () => {
 };
 
 const beneficiariesRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
+  path: '/models/:modelID/collaboration-area/model-plan/beneficiaries',
   element: (
     <ProtectedRoute>
       <Beneficiaries />

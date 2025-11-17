@@ -9,6 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 )
@@ -25,6 +26,36 @@ func TestJobWithPanicProtection(t *testing.T) {
 		assert.Error(t, err)
 		expectedError := fmt.Sprintf("recovered from panic. Error: %s", panicMessage)
 		assert.EqualValues(t, expectedError, err.Error())
+	})
+	t.Run("Error is logged when a job panics", func(t *testing.T) {
+		// Create test logger to capture log output
+		writeSyncer, logger := createTestLogger()
+
+		// Create a context with the logger
+		ctx := appcontext.WithLogger(context.Background(), logger)
+
+		// Wrap with panic protection
+		protectedFunc := JobWithPanicProtection(panicFunc)
+
+		// Execute the protected function
+		err := protectedFunc(ctx, nil)
+
+		// Assert error was returned
+		assert.Error(t, err)
+		expectedError := fmt.Sprintf("recovered from panic. Error: %s", panicMessage)
+		assert.EqualValues(t, expectedError, err.Error())
+
+		// Get log output and verify error was logged
+		logOutput := writeSyncer.GetBufferString()
+		logMessage := map[string]interface{}{}
+		jsonErr := json.Unmarshal([]byte(logOutput), &logMessage)
+		assert.NoError(t, jsonErr)
+
+		// Verify the error log entry
+		assert.EqualValues(t, "error", logMessage["level"])
+		assert.EqualValues(t, "job panic recovered", logMessage["msg"])
+		assert.Contains(t, logMessage["error"], panicMessage)
+
 	})
 
 }

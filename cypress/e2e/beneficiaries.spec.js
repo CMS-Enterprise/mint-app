@@ -1,3 +1,5 @@
+import miscellaneous from '../../src/i18n/en-US/modelPlan/miscellaneous';
+
 describe('The Model Plan Beneficiaries Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
@@ -72,8 +74,8 @@ describe('The Model Plan Beneficiaries Form', () => {
       'Lorem, ipsum dolor'
     );
 
-    cy.contains('button', 'Save and return to task list').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
-    cy.url().should('include', '/collaboration-area/task-list');
+    cy.url().should('include', '/collaboration-area/model-plan');
   });
 });

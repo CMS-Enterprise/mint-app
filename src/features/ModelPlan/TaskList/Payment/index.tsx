@@ -43,7 +43,7 @@ const Payment = () => {
 };
 
 const paymentRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/payment',
+  path: '/models/:modelID/collaboration-area/model-plan/payment',
   element: (
     <ProtectedRoute>
       <Payment />

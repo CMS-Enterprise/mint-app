@@ -11,7 +11,7 @@ const Basics = () => {
 };
 
 const basicsRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/basics',
+  path: '/models/:modelID/collaboration-area/model-plan/basics',
   element: (
     <ProtectedRoute>
       <Basics />

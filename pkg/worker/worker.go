@@ -7,12 +7,14 @@ import (
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // defaultMaxRetries only applies where job.Retry is nil (25 is Faktory's default as well)
@@ -144,6 +146,9 @@ func (w *Worker) Work() {
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
 	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
+
+	userFunction := userhelpers.UserAccountGetByIDLOADER
+	ctx = appcontext.WithUserAccountService(ctx, userFunction)
 
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {

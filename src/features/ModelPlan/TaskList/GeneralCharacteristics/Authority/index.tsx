@@ -156,7 +156,7 @@ const Authority = () => {
           initialValues={initialValues}
           onSubmit={values => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
+              `/models/${modelID}/collaboration-area/model-plan/participants-and-providers`
             );
           }}
           enableReinitialize
@@ -345,7 +345,7 @@ const Authority = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/characteristics/targets-and-options`
+                            `/models/${modelID}/collaboration-area/model-plan/characteristics/targets-and-options`
                           );
                         }}
                       >
@@ -360,7 +360,7 @@ const Authority = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

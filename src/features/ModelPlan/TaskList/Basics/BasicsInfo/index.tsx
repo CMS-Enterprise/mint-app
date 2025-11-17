@@ -277,7 +277,7 @@ const BasicsInfo = () => {
           initialValues={initialValues}
           onSubmit={values => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/basics/overview`
+              `/models/${modelID}/collaboration-area/model-plan/basics/overview`
             );
           }}
           enableReinitialize
@@ -657,7 +657,7 @@ const BasicsInfo = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >

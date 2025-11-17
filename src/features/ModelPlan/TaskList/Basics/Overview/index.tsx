@@ -136,7 +136,7 @@ const Overview = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/characteristics`
+              `/models/${modelID}/collaboration-area/model-plan/characteristics`
             );
           }}
           enableReinitialize
@@ -251,7 +251,7 @@ const Overview = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() =>
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/basics`
+                            `/models/${modelID}/collaboration-area/model-plan/basics`
                           )
                         }
                       >
@@ -272,7 +272,7 @@ const Overview = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >
