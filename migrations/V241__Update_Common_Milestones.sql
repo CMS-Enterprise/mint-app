@@ -1,7 +1,7 @@
 -- reorder mto_template_category to make space for new 'Beneficiaries' category at order 20
 UPDATE mto_template_category
 SET
-    "order" = '24',
+    "order" = 24,
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -10,7 +10,7 @@ WHERE
 
 UPDATE mto_template_category
 SET
-    "order" = '23',
+    "order" = 23,
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -19,7 +19,7 @@ WHERE
 
 UPDATE mto_template_category
 SET
-    "order" = '22',
+    "order" = 22,
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -28,7 +28,7 @@ WHERE
 
 UPDATE mto_template_category
 SET
-    "order" = '21',
+    "order" = 21,
     modified_by = '00000001-0001-0001-0001-000000000001', -- system account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -56,8 +56,8 @@ WHERE key = 'MAKE_NON_CLAIMS_BASED_PAYMENTS';
 
 -- Add HPMS as common solution for COMM_W_PART milestone
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
-VALUES ('COMM_W_PART','HPMS');
+VALUES ('COMM_W_PART', 'HPMS');
 
 -- Add HPMS as common solution for RECRUIT_PARTICIPANTS milestone
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
-VALUES ('RECRUIT_PARTICIPANTS','HPMS');
+VALUES ('RECRUIT_PARTICIPANTS', 'HPMS');
