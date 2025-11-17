@@ -6,6 +6,7 @@ import (
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
