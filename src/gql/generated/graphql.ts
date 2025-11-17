@@ -4522,7 +4522,7 @@ export type Query = {
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
-  keyContactCategory: KeyContactCategory;
+  keyContactCategory: Array<KeyContactCategory>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
@@ -4576,6 +4576,12 @@ export type QueryAuditChangesArgs = {
 
 /** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactArgs = {
   id: Scalars['UUID']['input'];
 };
 

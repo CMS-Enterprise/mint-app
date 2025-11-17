@@ -34,6 +34,6 @@ func (r *mutationResolver) DeleteKeyContact(ctx context.Context, id uuid.UUID) (
 }
 
 // KeyContact is the resolver for the keyContact field.
-func (r *queryResolver) KeyContact(ctx context.Context) (*model.KeyContact, error) {
+func (r *queryResolver) KeyContact(ctx context.Context, id uuid.UUID) (*model.KeyContact, error) {
 	panic(fmt.Errorf("not implemented: KeyContact - keyContact"))
 }

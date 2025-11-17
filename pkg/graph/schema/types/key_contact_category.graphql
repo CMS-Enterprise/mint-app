@@ -24,7 +24,7 @@ input KeyContactCategoryUpdateChanges
 }
 
 extend type Query {
-  keyContactCategory: KeyContactCategory!
+  keyContactCategory: [KeyContactCategory!]!
 }
 
 extend type Mutation {

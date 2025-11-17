@@ -29,6 +29,6 @@ func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid
 }
 
 // KeyContactCategory is the resolver for the keyContactCategory field.
-func (r *queryResolver) KeyContactCategory(ctx context.Context) (*model.KeyContactCategory, error) {
+func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*model.KeyContactCategory, error) {
 	panic(fmt.Errorf("not implemented: KeyContactCategory - keyContactCategory"))
 }
