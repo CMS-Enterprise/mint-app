@@ -730,6 +730,55 @@ export enum KeyCharacteristic {
   SHARED_SAVINGS = 'SHARED_SAVINGS'
 }
 
+export type KeyContact = {
+  __typename: 'KeyContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  isTeam: Scalars['Boolean']['output'];
+  mailboxAddress?: Maybe<Scalars['String']['output']>;
+  mailboxTitle?: Maybe<Scalars['String']['output']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  subjectArea: Scalars['String']['output'];
+  subjectCategoryId: Scalars['UUID']['output'];
+  userAccount?: Maybe<UserAccount>;
+  userID?: Maybe<Scalars['UUID']['output']>;
+};
+
+export type KeyContactCategory = {
+  __typename: 'KeyContactCategory';
+  category: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  keyContacts: Array<KeyContact>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+/**
+ * Input for updating a key contact category.
+ * Only category can be changed.
+ */
+export type KeyContactCategoryUpdateChanges = {
+  category?: InputMaybe<Scalars['String']['input']>;
+};
+
+/**
+ * Input for updating a key contact.
+ * Only subject category, subject area, and mailbox title can be changed.
+ */
+export type KeyContactUpdateChanges = {
+  mailboxTitle?: InputMaybe<Scalars['String']['input']>;
+  subjectArea?: InputMaybe<Scalars['String']['input']>;
+  subjectCategoryId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
 /** The current user's Launch Darkly key */
 export type LaunchDarklySettings = {
   __typename: 'LaunchDarklySettings';
@@ -1809,6 +1858,9 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  createKeyContactCategory: KeyContactCategory;
+  createKeyContactMailbox: KeyContact;
+  createKeyContactUser: KeyContact;
   /**
    * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
    * Note, the parent must belong to the same model plan, or this will return an error
@@ -1834,6 +1886,8 @@ export type Mutation = {
    */
   createStandardCategories: Scalars['Boolean']['output'];
   createTemplateToMTO: ApplyTemplateResult;
+  deleteKeyContact: KeyContact;
+  deleteKeyContactCategory: KeyContactCategory;
   /**
    * Deletes an MTO category. If the category has subcategories, it will delete them as well.
    * If the target category is a subcategory, it will only delete the subcategory and redirect
@@ -1886,6 +1940,8 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  updateKeyContact: KeyContact;
+  updateKeyContactCategory: KeyContactCategory;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
@@ -1926,6 +1982,31 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactCategoryArgs = {
+  category: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactMailboxArgs = {
+  isTeam: Scalars['Boolean']['input'];
+  mailboxAddress: Scalars['String']['input'];
+  mailboxTitle: Scalars['String']['input'];
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryId: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactUserArgs = {
+  isTeam: Scalars['Boolean']['input'];
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryId: Scalars['UUID']['input'];
+  userName: Scalars['String']['input'];
 };
 
 
@@ -2056,6 +2137,18 @@ export type MutationCreateStandardCategoriesArgs = {
 export type MutationCreateTemplateToMtoArgs = {
   modelPlanID: Scalars['UUID']['input'];
   templateID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteKeyContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteKeyContactCategoryArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -2220,6 +2313,20 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateKeyContactArgs = {
+  changes: KeyContactUpdateChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateKeyContactCategoryArgs = {
+  changes: KeyContactCategoryUpdateChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -4414,6 +4521,8 @@ export type Query = {
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
+  keyContact: KeyContact;
+  keyContactCategory: Array<KeyContactCategory>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
@@ -4467,6 +4576,12 @@ export type QueryAuditChangesArgs = {
 
 /** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactArgs = {
   id: Scalars['UUID']['input'];
 };
 

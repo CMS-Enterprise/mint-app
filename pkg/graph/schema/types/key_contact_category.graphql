@@ -1,0 +1,41 @@
+type KeyContactCategory {
+  id: UUID!
+  category: String!
+
+  #Resolvers
+  keyContacts: [KeyContact!]!
+
+  # Metadata columns
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+Input for updating a key contact category.
+Only category can be changed.
+"""
+input KeyContactCategoryUpdateChanges
+  @goModel(model: "map[string]interface{}") {
+  category: String
+}
+
+extend type Query {
+  keyContactCategory: [KeyContactCategory!]!
+}
+
+extend type Mutation {
+  createKeyContactCategory(category: String!): KeyContactCategory!
+    @hasAnyRole(roles: [MINT_ASSESSMENT])
+
+  updateKeyContactCategory(
+    id: UUID!
+    changes: KeyContactCategoryUpdateChanges!
+  ): KeyContactCategory! @hasAnyRole(roles: [MINT_ASSESSMENT])
+
+  deleteKeyContactCategory(id: UUID!): KeyContactCategory!
+    @hasAnyRole(roles: [MINT_ASSESSMENT])
+}
