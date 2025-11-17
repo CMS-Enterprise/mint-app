@@ -109,7 +109,7 @@ exports[`SuggestedMilestoneBanner component > renders correctly and has no sugge
           <a
             class="usa-link"
             data-discover="true"
-            href="/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/task-list"
+            href="/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/model-plan"
           >
             Model Plan
           </a>

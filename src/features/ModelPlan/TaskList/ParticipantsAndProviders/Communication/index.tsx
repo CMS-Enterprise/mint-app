@@ -169,7 +169,7 @@ export const Communication = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/participants-and-providers/coordination`
+              `/models/${modelID}/collaboration-area/model-plan/participants-and-providers/coordination`
             );
           }}
           enableReinitialize
@@ -336,7 +336,7 @@ export const Communication = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/participants-options`
+                            `/models/${modelID}/collaboration-area/model-plan/participants-and-providers/participants-options`
                           );
                         }}
                       >
@@ -353,7 +353,7 @@ export const Communication = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

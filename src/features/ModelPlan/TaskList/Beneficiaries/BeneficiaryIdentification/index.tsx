@@ -151,7 +151,7 @@ const BeneficiaryIdentification = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/beneficiaries/people-impact`
+              `/models/${modelID}/collaboration-area/model-plan/beneficiaries/people-impact`
             );
           }}
           enableReinitialize
@@ -466,7 +466,7 @@ const BeneficiaryIdentification = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list/`
+                                `/models/${modelID}/collaboration-area/model-plan/`
                               )
                             }
                           >

@@ -184,7 +184,7 @@ const Recover = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={() => {
-            navigate(`/models/${modelID}/collaboration-area/task-list`);
+            navigate(`/models/${modelID}/collaboration-area/model-plan`);
           }}
           enableReinitialize
           innerRef={formikRef}
@@ -354,7 +354,7 @@ const Recover = () => {
                               className="usa-button usa-button--outline margin-bottom-1"
                               onClick={() => {
                                 navigate(
-                                  `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+                                  `/models/${modelID}/collaboration-area/model-plan/payment/complexity`
                                 );
                               }}
                             >
@@ -376,7 +376,7 @@ const Recover = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >

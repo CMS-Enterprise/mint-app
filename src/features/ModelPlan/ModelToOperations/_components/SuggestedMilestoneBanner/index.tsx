@@ -56,7 +56,7 @@ const SuggestedMilestoneBanner = ({
                 components={{
                   s: (
                     <UswdsReactLink
-                      to={`/models/${modelID}/collaboration-area/task-list`}
+                      to={`/models/${modelID}/collaboration-area/model-plan`}
                     />
                   )
                 }}

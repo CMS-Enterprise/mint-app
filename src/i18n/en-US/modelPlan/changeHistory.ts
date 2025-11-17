@@ -25,7 +25,7 @@ const filterSections: Record<TypeChangeFilter, string> = {
 const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
-  back: 'Back to the model collaboration area',
+  back: 'Back to the Model Plan',
   backToReadView: 'Back to model information',
   thisModelPlan: 'this Model Plan',
   change:
