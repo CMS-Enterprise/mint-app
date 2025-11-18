@@ -104,10 +104,6 @@ func FaktoryLoggerMiddleware() faktory_worker.MiddlewareFunc {
 			FaktoryQueue:   job.Queue,
 		}
 
-		faktoryLogger.RetryCount = failCount
-		faktoryLogger.MaxRetries = maxRetries
-		faktoryLogger.IsFinalAttempt = isFinal
-
 		faktoryLogger = faktoryLogger.DecorateWithJobInfo()
 
 		// Put the flag in context so jobs/downstream can decide how to log
