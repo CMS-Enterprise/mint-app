@@ -16,6 +16,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
+// defaultMaxRetries only applies where job.Retry is nil (25 is Faktory's default as well)
+const defaultMaxRetries = 25
+
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
 	Store                *storage.Store

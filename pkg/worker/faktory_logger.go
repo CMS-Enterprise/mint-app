@@ -1,0 +1,53 @@
+package worker
+
+import (
+	"go.uber.org/zap"
+
+	"github.com/cms-enterprise/mint-app/pkg/logging"
+)
+
+type FaktoryLogger struct {
+	logging.ZapLogger
+}
+
+func NewFaktoryLogger(logger *zap.Logger) *FaktoryLogger {
+	return &FaktoryLogger{
+		ZapLogger: *logging.NewZapLogger(logger),
+	}
+}
+func (l *FaktoryLogger) ShouldError() bool {
+	return true
+}
+
+func (l *FaktoryLogger) Named(s string) *FaktoryLogger {
+	l.Logger = l.Logger.Named(s)
+	return l
+}
+
+func (l *FaktoryLogger) WithOptions(opts ...zap.Option) *FaktoryLogger {
+	l.Logger = l.Logger.WithOptions(opts...)
+	return l
+}
+
+func (l *FaktoryLogger) With(fields ...zap.Field) *FaktoryLogger {
+	l.Logger = l.Logger.With(fields...)
+	return l
+}
+
+func (l *FaktoryLogger) ErrorOrWarn(msg string, fields ...zap.Field) {
+	if l.ShouldError() {
+		l.Error(msg, fields...)
+	} else {
+		l.Warn(msg, fields...)
+	}
+}
+
+func (l *FaktoryLogger) Zap() *zap.Logger {
+	return l.ZapLogger.Zap()
+}
+
+// Interface compliance checks
+var _ logging.ILogger = (*FaktoryLogger)(nil)
+var _ logging.ChainableLogger[*FaktoryLogger] = (*FaktoryLogger)(nil)
+var _ logging.ErrorOrWarnLogger = (*FaktoryLogger)(nil)
+var _ logging.ChainableErrorOrWarnLogger[*FaktoryLogger] = (*FaktoryLogger)(nil)
