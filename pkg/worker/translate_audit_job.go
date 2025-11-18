@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
@@ -54,7 +55,10 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 
 	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
 
-	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, logger, auditID, queueID)
+	// insert or get a conditional logger
+	zapLogger := logging.NewZapLogger(logger)
+
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, zapLogger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}

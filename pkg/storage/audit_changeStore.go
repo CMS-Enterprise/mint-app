@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	zap "go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -24,7 +25,7 @@ var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
 func (s *Store) AuditChangeCollectionByIDAndTable(
-	_ *zap.Logger,
+	_ logging.ILogger,
 	tableName models.TableName,
 	primaryKey uuid.UUID,
 ) ([]*models.AuditChange, error) {
@@ -56,7 +57,7 @@ func (s *Store) AuditChangeCollectionByIDAndTable(
 // and primary key from the database. It will only return record sets where the
 // given field was modified. It will return all changed fields anywyas
 func (s *Store) AuditChangeCollectionByIDAndTableAndField(
-	_ *zap.Logger,
+	_ logging.ILogger,
 	tableName string,
 	primaryKey uuid.UUID,
 	fieldName string,
@@ -95,7 +96,7 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(
 
 // AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns changes based on foreign key and date from the database.
 func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
-	_ *zap.Logger,
+	_ logging.ILogger,
 	primaryKey uuid.UUID,
 	foreignKey uuid.UUID,
 	dayToAnalyze time.Time,
@@ -162,7 +163,7 @@ func AuditChangeCollectionGetByModelPlanIDandTimeRange(
 
 func AuditChangeWithModelPlanGetByID(
 	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
+	_ logging.ILogger,
 	auditID int,
 ) (*models.AuditChangeWithModelPlanID, error) {
 

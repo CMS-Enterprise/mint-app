@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -109,9 +110,10 @@ func (s *Seeder) translateAllQueuedTranslatedAudits() {
 	if err != nil {
 		fmt.Printf("issue getting queued Objects to translate \r\n")
 	}
+	zapLogger := logging.NewZapLogger(s.Config.Logger)
 
 	for _, queued := range queuedObjects {
-		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
+		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, zapLogger, queued.ChangeID, queued.ID)
 		if translationErr != nil {
 			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 		}

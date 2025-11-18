@@ -9,6 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -324,9 +325,10 @@ func (suite *ResolverSuite) dangerousTranslateAllQueuedTranslatedAudits() []*mod
 		fmt.Printf("issue getting queued Objects to translate \r\n")
 	}
 	translatedAudits := []*models.TranslatedAuditWithTranslatedFields{}
+	zapLogger := logging.NewZapLogger(suite.testConfigs.Logger)
 
 	for _, queued := range queuedObjects {
-		audit, translationErr := translatedaudit.TranslateAuditJobByID(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, queued.ChangeID, queued.ID)
+		audit, translationErr := translatedaudit.TranslateAuditJobByID(suite.testConfigs.Context, suite.testConfigs.Store, zapLogger, queued.ChangeID, queued.ID)
 		suite.NoError(translationErr, "error getting queued objects to translate")
 		if translationErr == nil && audit != nil { // only return actual translated audits (preferences)
 			translatedAudits = append(translatedAudits, audit)
