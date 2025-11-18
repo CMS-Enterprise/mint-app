@@ -12,13 +12,20 @@ type FaktoryLogger struct {
 	jobInfo
 }
 type jobInfo struct {
-	JobID          string
-	JobType        string
-	BatchID        *string
-	RetryCount     int
-	MaxRetries     int
-	IsFinalAttempt bool
-	FaktoryQueue   string
+	JobID      string
+	JobType    string
+	BatchID    *string
+	RetryCount int
+	// The maximum number of retries allowed for this job
+	// it includes the first attempt, so if MaxRetries is 2, the job will be attempted 2 times total.
+	//  Retry Count starts at 0, so retry 1 means the job is on its final attempt
+	MaxRetries   int
+	FaktoryQueue string
+}
+
+func (l *FaktoryLogger) IsFinalAttempt() bool {
+	//
+	return l.RetryCount >= (l.MaxRetries - 1)
 }
 
 // DecorateWithJobInfo adds faktory job info fields to the logger
@@ -28,7 +35,7 @@ func (l *FaktoryLogger) DecorateWithJobInfo() *FaktoryLogger {
 	fields := faktoryFields(l.JobID, l.JobType, l.BatchID,
 		logfields.RetryCount(l.RetryCount),
 		logfields.MaxRetries(l.MaxRetries),
-		logfields.IsFinalAttempt(l.IsFinalAttempt),
+		logfields.IsFinalAttempt(l.IsFinalAttempt()),
 		logfields.FaktoryQueue(l.FaktoryQueue),
 	)
 	l.Logger = l.Logger.With(fields...)
@@ -45,7 +52,7 @@ func NewFaktoryLogger(logger *zap.Logger) *FaktoryLogger {
 // ShouldError returns true if the job is on its final attempt
 // if not, it returns false
 func (l *FaktoryLogger) ShouldError() bool {
-	return l.IsFinalAttempt
+	return l.IsFinalAttempt()
 }
 
 func (l *FaktoryLogger) Named(s string) *FaktoryLogger {

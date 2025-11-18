@@ -84,7 +84,6 @@ func FaktoryLoggerMiddleware() faktory_worker.MiddlewareFunc {
 		if job.Failure != nil {
 			failCount = job.Failure.RetryCount
 		}
-		isFinal := failCount >= maxRetries
 
 		// Get batch id if present
 		var batchID *string
@@ -95,19 +94,15 @@ func FaktoryLoggerMiddleware() faktory_worker.MiddlewareFunc {
 		}
 
 		faktoryLogger.jobInfo = jobInfo{
-			JobID:          job.Jid,
-			JobType:        job.Type,
-			BatchID:        batchID,
-			RetryCount:     failCount,
-			MaxRetries:     maxRetries,
-			IsFinalAttempt: isFinal,
-			FaktoryQueue:   job.Queue,
+			JobID:        job.Jid,
+			JobType:      job.Type,
+			BatchID:      batchID,
+			RetryCount:   failCount,
+			MaxRetries:   maxRetries,
+			FaktoryQueue: job.Queue,
 		}
 
 		faktoryLogger = faktoryLogger.DecorateWithJobInfo()
-
-		// Put the flag in context so jobs/downstream can decide how to log
-		ctx = withIsFinalAttempt(ctx, isFinal)
 
 		// Decorate the ctx with the faktory logger
 		ctx = withFaktoryLogger(ctx, faktoryLogger)
@@ -122,23 +117,8 @@ func FaktoryLoggerMiddleware() faktory_worker.MiddlewareFunc {
 	}
 }
 
-// context key so jobs can know if this run is final
-type retryCtxKey struct{}
-
 // context key to store faktory logger in context
 type faktoryLoggerCtxKey struct{}
-
-func withIsFinalAttempt(ctx context.Context, isFinal bool) context.Context {
-	return context.WithValue(ctx, retryCtxKey{}, isFinal)
-}
-
-func IsFinalAttempt(ctx context.Context) bool {
-	v := ctx.Value(retryCtxKey{})
-	if b, ok := v.(bool); ok {
-		return b
-	}
-	return false
-}
 
 // withFaktoryLogger stores the FaktoryLogger in the context
 func withFaktoryLogger(ctx context.Context, faktoryLogger *FaktoryLogger) context.Context {
