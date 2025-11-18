@@ -155,6 +155,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 <label
                   class="usa-checkbox__label"
                   for="ModelType-VOLUNTARY"
+                  style="width: fit-content;"
                 >
                   Voluntary
                 </label>
@@ -175,6 +176,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 <label
                   class="usa-checkbox__label"
                   for="ModelType-MANDATORY_NATIONAL"
+                  style="width: fit-content;"
                 >
                   Mandatory national
                 </label>
@@ -195,6 +197,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 <label
                   class="usa-checkbox__label"
                   for="ModelType-MANDATORY_REGIONAL_OR_STATE"
+                  style="width: fit-content;"
                 >
                   Mandatory regional or state
                 </label>
@@ -215,6 +218,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 <label
                   class="usa-checkbox__label"
                   for="ModelType-OTHER"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>
@@ -341,6 +345,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                   <label
                     class="usa-checkbox__label"
                     for="milestones-status"
+                    style="width: fit-content;"
                   >
                     This section of the Model Plan (Model basics) is ready for review.
                   </label>

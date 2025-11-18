@@ -977,6 +977,7 @@ exports[`Model Timeline page > renders without errors and matches snapshot 1`] =
                         <label
                           class="usa-checkbox__label"
                           for="timeline-status"
+                          style="width: fit-content;"
                         >
                           The model timeline is ready for review.
                         </label>
