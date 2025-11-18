@@ -69,18 +69,8 @@ func faktoryFields(jid string, jobType string, batchID *string, extraFields ...z
 	return fields
 }
 
-// // RetryAwareLogger returns a logger that demotes Error->Warn if !final attempt.
-// func RetryAwareLogger(ctx context.Context) *FaktoryLogger {
-// 	// return FaktoryLoggerFromContext(ctx)
-// 	// TODO implement this to get the logger from context
-// 	return NewFaktoryLogger(zap.NewExample())
-// 	// if isFinalAttempt(ctx) {
-// 	// 	return logging.NewConditionalLogger(faktoryLogger.Zap(), true)
-// 	// }
-// 	// return logging.NewConditionalLogger(faktoryLogger.Zap(), false)
-// }
-
-func RetryAwareLogging() faktory_worker.MiddlewareFunc {
+// FaktoryLoggerMiddleware is a Faktory middleware that adds a FaktoryLogger to the context with standard Faktory fields
+func FaktoryLoggerMiddleware() faktory_worker.MiddlewareFunc {
 	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
 
 		zLogger := appcontext.ZLogger(ctx)
@@ -97,7 +87,6 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 		isFinal := failCount >= maxRetries
 
 		// Get batch id if present
-		// VERIFY THIS IS present
 		var batchID *string
 		if bid, ok := job.Custom["bid"].(string); ok {
 			if bid != "" {
@@ -105,16 +94,21 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 			}
 		}
 
-		//TODO, can we use the job.RetryRemaining instead of getting maxRetries?
+		faktoryLogger.jobInfo = jobInfo{
+			JobID:          job.Jid,
+			JobType:        job.Type,
+			BatchID:        batchID,
+			RetryCount:     failCount,
+			MaxRetries:     maxRetries,
+			IsFinalAttempt: isFinal,
+			FaktoryQueue:   job.Queue,
+		}
 
-		// we don't know the batch ID yet
-		faktoryLogger = loggerWithFaktoryStandardFields(faktoryLogger, job.Jid, job.Type, batchID,
-			zap.Int("retry_count", failCount),
-			zap.Int("max_retries", maxRetries),
-			zap.Bool("is_final_attempt", isFinal),
-			// zap.Int("retry_remaining", job.Failure.RetryRemaining),
-			zap.String("faktory_queue", job.Queue),
-		)
+		faktoryLogger.RetryCount = failCount
+		faktoryLogger.MaxRetries = maxRetries
+		faktoryLogger.IsFinalAttempt = isFinal
+
+		faktoryLogger = faktoryLogger.DecorateWithJobInfo()
 
 		// Put the flag in context so jobs/downstream can decide how to log
 		ctx = withIsFinalAttempt(ctx, isFinal)

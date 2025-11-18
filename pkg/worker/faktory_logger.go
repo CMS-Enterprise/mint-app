@@ -3,20 +3,49 @@ package worker
 import (
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 )
 
 type FaktoryLogger struct {
 	logging.ZapLogger
+	jobInfo
+}
+type jobInfo struct {
+	JobID          string
+	JobType        string
+	BatchID        *string
+	RetryCount     int
+	MaxRetries     int
+	IsFinalAttempt bool
+	FaktoryQueue   string
 }
 
+// DecorateWithJobInfo adds faktory job info fields to the logger
+// Its intended to be used in the initial wrapper stage
+func (l *FaktoryLogger) DecorateWithJobInfo() *FaktoryLogger {
+
+	fields := faktoryFields(l.JobID, l.JobType, l.BatchID,
+		logfields.RetryCount(l.RetryCount),
+		logfields.MaxRetries(l.MaxRetries),
+		logfields.IsFinalAttempt(l.IsFinalAttempt),
+		logfields.FaktoryQueue(l.FaktoryQueue),
+	)
+	l.Logger = l.Logger.With(fields...)
+	return l
+}
+
+// NewFaktoryLogger creates a new FaktoryLogger from a zap.Logger
 func NewFaktoryLogger(logger *zap.Logger) *FaktoryLogger {
 	return &FaktoryLogger{
 		ZapLogger: *logging.NewZapLogger(logger),
 	}
 }
+
+// ShouldError returns true if the job is on its final attempt
+// if not, it returns false
 func (l *FaktoryLogger) ShouldError() bool {
-	return true
+	return l.IsFinalAttempt
 }
 
 func (l *FaktoryLogger) Named(s string) *FaktoryLogger {
@@ -40,10 +69,6 @@ func (l *FaktoryLogger) ErrorOrWarn(msg string, fields ...zap.Field) {
 	} else {
 		l.Warn(msg, fields...)
 	}
-}
-
-func (l *FaktoryLogger) Zap() *zap.Logger {
-	return l.ZapLogger.Zap()
 }
 
 // Interface compliance checks
