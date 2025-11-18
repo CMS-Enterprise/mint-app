@@ -21,7 +21,7 @@ export const PrepareForClearance = () => {
 };
 
 export const prepareForClearanceRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
+  path: '/models/:modelID/collaboration-area/model-plan/prepare-for-clearance',
   element: (
     <ProtectedRoute>
       <PrepareForClearance />

@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -93,7 +94,9 @@ func initializeOddMailService() oddmail.EmailService {
 }
 
 func initializeEmailTemplateService() email.TemplateService {
-	emailTemplateService, err := email.NewTemplateServiceImpl()
+	// Use local environment for test emails
+	env, _ := appconfig.NewEnvironment("local")
+	emailTemplateService, err := email.NewTemplateServiceImpl(env)
 	noErr(err)
 	return emailTemplateService
 }

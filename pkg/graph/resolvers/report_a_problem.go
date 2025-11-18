@@ -64,7 +64,7 @@ func humanizeSection(section *model.ReportAProblemSection, sectionOther *string)
 	case model.ReportAProblemSectionReadView:
 		return "Model Plan Read View"
 	case model.ReportAProblemSectionTaskList:
-		return "Model Plan Task List"
+		return "Model Plan"
 	case model.ReportAProblemSectionItSolutions:
 		return "IT solution and implementation status tracker"
 	case model.ReportAProblemSectionHelpCenter:

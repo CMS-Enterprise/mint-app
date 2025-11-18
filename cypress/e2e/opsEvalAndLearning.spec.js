@@ -1,3 +1,4 @@
+import miscellaneous from '../../src/i18n/en-US/modelPlan/miscellaneous';
 import { aliasQuery } from '../support/graphql-test-utils';
 
 describe('The Model Plan Ops Eval and Learning Form', () => {
@@ -367,7 +368,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
         'We might not have complete staffing for this. We might need to use more contractors than previously anticipated.'
       );
 
-    cy.contains('button', 'Save and return to task list').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
@@ -376,7 +377,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list/
+        /\/models\/.{36}\/collaboration-area\/model-plan/
       );
     });
   });

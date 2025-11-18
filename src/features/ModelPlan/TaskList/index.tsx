@@ -296,7 +296,7 @@ const TaskList = () => {
 
               <ol
                 data-testid="task-list"
-                className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
+                className="margin-top-6 margin-bottom-0 padding-left-0"
               >
                 {Object.keys(taskListSections).map((key: string) => {
                   return (

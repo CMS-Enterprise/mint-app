@@ -14,7 +14,7 @@ const ParticipantsAndProviders = () => {
 };
 
 const participantsAndProvidersRoutes = {
-  path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
+  path: '/models/:modelID/collaboration-area/model-plan/participants-and-providers',
   element: (
     <ProtectedRoute>
       <ParticipantsAndProviders />

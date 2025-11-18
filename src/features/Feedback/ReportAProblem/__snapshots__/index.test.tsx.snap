@@ -225,7 +225,7 @@ exports[`Report a problem form > matches snapshot 1`] = `
                     class="usa-radio__label"
                     for="report-a-problem-section-TASK_LIST"
                   >
-                    Model Plan Task List
+                    Model Plan
                   </label>
                 </div>
                 <div

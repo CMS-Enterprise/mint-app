@@ -32,7 +32,7 @@ describe('Web Socket Connections', () => {
         modelPlanID,
         section: TaskListSection.PAYMENT
       });
-      cy.visit(`/models/${modelPlanID}/collaboration-area/task-list/payment`);
+      cy.visit(`/models/${modelPlanID}/collaboration-area/model-plan/payment`);
     });
 
     cy.get('[data-testid="page-locked"]').contains(
