@@ -317,6 +317,7 @@ func (s *Server) routes(
 	// Setup faktory worker
 	s.Worker = &worker.Worker{
 		Store:                store,
+		Environment:          s.environment,
 		Logger:               s.logger,
 		EmailService:         emailService,
 		EmailTemplateService: *emailTemplateService,

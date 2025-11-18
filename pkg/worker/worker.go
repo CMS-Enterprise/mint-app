@@ -7,6 +7,7 @@ import (
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
@@ -23,6 +24,7 @@ const defaultMaxRetries = 25
 type Worker struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
+	Environment          appconfig.Environment
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl //TODO: this should probably be the interface
 	AddressBook          email.AddressBook
