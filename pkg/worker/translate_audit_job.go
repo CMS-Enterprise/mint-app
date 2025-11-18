@@ -5,12 +5,9 @@ import (
 	"fmt"
 	"strconv"
 
-	faktory_worker "github.com/contribsys/faktory_worker_go"
-
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
-	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
@@ -30,9 +27,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	*/
 
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
-
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("translating job reached")
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")
@@ -55,10 +50,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 
 	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
 
-	// insert or get a conditional logger
-	zapLogger := logging.NewZapLogger(logger)
-
-	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, zapLogger, auditID, queueID)
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctxWithLoaders, w.Store, logger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}

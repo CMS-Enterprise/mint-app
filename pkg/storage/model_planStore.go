@@ -8,6 +8,7 @@ import (
 
 	"github.com/lib/pq"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -136,7 +137,7 @@ func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, p
 }
 
 // ModelPlanUpdate updates a model plan
-func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanUpdate(logger logging.ILogger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.Update)
 	if err != nil {
@@ -167,7 +168,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
-func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
 	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.GetByID)
