@@ -43,32 +43,6 @@ func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perfo
 
 }
 
-// loggerWithFaktoryFieldsWithoutBatchID decorates a faktory logger with standard fields using a faktory worker helper to provide the JID, and JobType.
-// it specifically excludes a batch id so it can be decorated separately later
-// extraFields is a convenience param to add additional fields
-// the underlying method calls loggerWithFaktoryStandardFields
-func loggerWithFaktoryFieldsWithoutBatchID[T logging.ChainableLogger[T]](
-	logger T,
-	helper faktory_worker.Helper,
-	extraFields ...zapcore.Field,
-) T {
-
-	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), nil, extraFields...)
-}
-
-// loggerWithFaktoryFields decorates a faktory logger with standard fields using a faktory worker helper to provide the JID, JobType, and BatchID
-// extraFields is a convenience param to add additional fields
-// the underlying method calls loggerWithFaktoryStandardFields
-func loggerWithFaktoryFields[T logging.ChainableLogger[T]](
-	logger T,
-	helper faktory_worker.Helper,
-	extraFields ...zapcore.Field,
-) T {
-
-	batchID := helper.Bid()
-	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), &batchID, extraFields...)
-}
-
 // loggerWithFaktoryStandardFields will decorate a logger in faktory with standard fields. This should be called at the highest entry point and passed to child methods
 // extraFields is a convenience param to add additional fields
 // additional fields can be decorated later by simply calling logger.With
@@ -122,10 +96,17 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 		}
 		isFinal := failCount >= maxRetries
 
+		// Get batch id if present
+		// VERIFY THIS IS present
+		var batchID *string
+		if bid, ok := job.Custom["bid"].(string); ok {
+			batchID = &bid
+		}
+
 		//TODO, can we use the job.RetryRemaining instead of getting maxRetries?
 
 		// we don't know the batch ID yet
-		faktoryLogger = loggerWithFaktoryStandardFields(faktoryLogger, job.Jid, job.Type, nil,
+		faktoryLogger = loggerWithFaktoryStandardFields(faktoryLogger, job.Jid, job.Type, batchID,
 			zap.Int("retry_count", failCount),
 			zap.Int("max_retries", maxRetries),
 			zap.Bool("is_final_attempt", isFinal),

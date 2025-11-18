@@ -318,7 +318,6 @@ func (s *Server) routes(
 	s.Worker = &worker.Worker{
 		Store:                store,
 		Environment:          s.environment,
-		Logger:               s.logger,
 		EmailService:         emailService,
 		EmailTemplateService: *emailTemplateService,
 		AddressBook:          addressBook,

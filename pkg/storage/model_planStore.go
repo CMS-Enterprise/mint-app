@@ -234,7 +234,7 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 }
 
 // ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
-func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
+func (s *Store) ModelPlanCollection(logger logging.ILogger, archived bool) ([]*models.ModelPlan, error) {
 
 	var modelPlans []*models.ModelPlan
 

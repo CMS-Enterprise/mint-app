@@ -23,7 +23,6 @@ const defaultMaxRetries = 25
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
 	Store                *storage.Store
-	Logger               *zap.Logger
 	Environment          appconfig.Environment
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl //TODO: this should probably be the interface
@@ -138,7 +137,9 @@ func (w *Worker) Work() {
 
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
-	ctx := appcontext.WithLogger(context.Background(), w.Logger)
+
+	zapLogger := appconfig.MustInitializeLogger(w.Environment)
+	ctx := appcontext.WithLogger(context.Background(), zapLogger)
 
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
@@ -149,7 +150,7 @@ func (w *Worker) Work() {
 
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {
-		w.Logger.Info("registering job", zap.String("job_name", job.Name))
+		zapLogger.Info("registering job", zap.String("job_name", job.Name))
 		mgr.Register(job.Name, JobWithPanicProtection(job.Job))
 	}
 

@@ -18,7 +18,8 @@ func (w *Worker) DigestCronJob(ctx context.Context, args ...interface{}) error {
 
 	// Call AnalyzedAuditBatchJob
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	// TODO verify if the BID is available
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("creating Daily Analyzed Audit Cron Job")
 
 	return helper.With(func(cl *faktory.Client) error {

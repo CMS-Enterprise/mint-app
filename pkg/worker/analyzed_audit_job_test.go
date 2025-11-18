@@ -29,8 +29,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	addressBook := email.AddressBook{MINTTeamEmail: "mint.team@local.test"}
 
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 	// Create plan
 	plan := suite.createModelPlan("Test Plan")
@@ -103,27 +102,27 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	}
 	_, basicsErr := resolvers.UpdatePlanBasics(
 		suite.testConfigs.Context,
-		worker.Logger,
+		suite.testConfigs.Logger,
 		basics.ID,
 		clearanceChanges,
 		suite.testConfigs.Principal,
 		worker.Store,
 	)
 	suite.NoError(basicsErr)
-	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(worker.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
+	_, charErr := resolvers.UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, genChar.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(charErr)
-	_, partErr := resolvers.PlanParticipantsAndProvidersUpdate(worker.Logger, participant.ID, clearanceChanges, suite.testConfigs.Principal, worker.Store)
+	_, partErr := resolvers.PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, participant.ID, clearanceChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(partErr)
 
 	// Update sections for ReadyForReview
 	reviewChanges := map[string]interface{}{
 		"status": "READY_FOR_REVIEW",
 	}
-	_, benErr := resolvers.PlanBeneficiariesUpdate(worker.Logger, beneficiary.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
+	_, benErr := resolvers.PlanBeneficiariesUpdate(suite.testConfigs.Logger, beneficiary.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(benErr)
-	_, opsErr := resolvers.PlanOpsEvalAndLearningUpdate(worker.Logger, ops.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
+	_, opsErr := resolvers.PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, ops.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
 	suite.NoError(opsErr)
-	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
+	_, paymentErr := resolvers.PlanPaymentsUpdate(suite.testConfigs.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
 	mockEmailTemplateService.
@@ -178,7 +177,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(jobErr)
 
 	// Get Stored audit
-	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now().UTC())
+	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Logger, plan.ID, time.Now().UTC())
 	suite.NoError(err)
 
 	suite.NotNil(analyzedAudit)
@@ -244,15 +243,14 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	jobErr2 := perf2.Execute(job2, worker.AnalyzedAuditJob)
 	suite.NoError(jobErr2)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC())
+	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Logger, noChangeMp.ID, time.Now().UTC())
 	suite.Error(err)
 }
 
 // Faktory integration tests
 func (suite *WorkerSuite) TestAnalyzedAuditBatchJobIntegration() {
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 
 	date := time.Now().UTC().Format("2006-01-02")
@@ -336,8 +334,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditBatchJobIntegration() {
 
 func (suite *WorkerSuite) TestAnalyzedAuditJobIntegration() {
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 
 	date := time.Now().UTC().Format("2006-01-02")
