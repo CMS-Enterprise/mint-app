@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 
 	faktory "github.com/contribsys/faktory/client"
 )
@@ -46,11 +47,11 @@ func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perfo
 // it specifically excludes a batch id so it can be decorated separately later
 // extraFields is a convenience param to add additional fields
 // the underlying method calls loggerWithFaktoryStandardFields
-func loggerWithFaktoryFieldsWithoutBatchID(
-	logger *zap.Logger,
+func loggerWithFaktoryFieldsWithoutBatchID[T logging.ChainableLogger[T]](
+	logger T,
 	helper faktory_worker.Helper,
 	extraFields ...zapcore.Field,
-) *zap.Logger {
+) T {
 
 	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
 }
@@ -58,11 +59,11 @@ func loggerWithFaktoryFieldsWithoutBatchID(
 // loggerWithFaktoryFields decorates a faktory logger with standard fields using a faktory worker helper to provide the JID, JobType, and BatchID
 // extraFields is a convenience param to add additional fields
 // the underlying method calls loggerWithFaktoryStandardFields
-func loggerWithFaktoryFields(
-	logger *zap.Logger,
+func loggerWithFaktoryFields[T logging.ChainableLogger[T]](
+	logger T,
 	helper faktory_worker.Helper,
 	extraFields ...zapcore.Field,
-) *zap.Logger {
+) T {
 
 	extraFields = append(extraFields, logfields.BID(helper.Bid()))
 	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
@@ -73,7 +74,7 @@ func loggerWithFaktoryFields(
 // additional fields can be decorated later by simply calling logger.With
 // jid is job id,
 // job type is the type of job that is being run
-func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType string, extraFields ...zapcore.Field) *zap.Logger {
+func loggerWithFaktoryStandardFields[T logging.ChainableLogger[T]](logger T, jid string, jobType string, extraFields ...zapcore.Field) T {
 	//instantiate a traceID
 	trace := uuid.New()
 	fields := append([]zapcore.Field{
