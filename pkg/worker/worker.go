@@ -137,6 +137,7 @@ func (w *Worker) Work() {
 
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
+	mgr.Use(RetryAwareLogging())
 
 	zapLogger := appconfig.MustInitializeLogger(w.Environment)
 	ctx := appcontext.WithLogger(context.Background(), zapLogger)

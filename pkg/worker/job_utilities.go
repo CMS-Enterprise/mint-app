@@ -100,7 +100,9 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 		// VERIFY THIS IS present
 		var batchID *string
 		if bid, ok := job.Custom["bid"].(string); ok {
-			batchID = &bid
+			if bid != "" {
+				batchID = &bid
+			}
 		}
 
 		//TODO, can we use the job.RetryRemaining instead of getting maxRetries?
@@ -110,7 +112,7 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 			zap.Int("retry_count", failCount),
 			zap.Int("max_retries", maxRetries),
 			zap.Bool("is_final_attempt", isFinal),
-			zap.Int("retry_remaining", job.Failure.RetryRemaining),
+			// zap.Int("retry_remaining", job.Failure.RetryRemaining),
 			zap.String("faktory_queue", job.Queue),
 		)
 

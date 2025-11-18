@@ -10,7 +10,7 @@ type ZapLogger struct {
 }
 
 func NewZapLogger(logger *zap.Logger) *ZapLogger {
-	return &ZapLogger{logger}
+	return &ZapLogger{logger.WithOptions(zap.AddCallerSkip(1))}
 }
 
 func (l *ZapLogger) Named(s string) *ZapLogger {
