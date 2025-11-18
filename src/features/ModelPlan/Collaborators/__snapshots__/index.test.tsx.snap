@@ -100,7 +100,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                         colspan="1"
                         role="columnheader"
                         scope="col"
-                        style="padding-bottom: .5rem; width: 25%;"
+                        style="padding-bottom: 0.5rem; width: 25%;"
                       >
                         <button
                           class="usa-button usa-button--unstyled position-relative"
@@ -132,7 +132,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                         colspan="1"
                         role="columnheader"
                         scope="col"
-                        style="padding-bottom: .5rem; width: 45%;"
+                        style="padding-bottom: 0.5rem; width: 45%;"
                       >
                         <button
                           class="usa-button usa-button--unstyled position-relative"
@@ -164,7 +164,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                         colspan="1"
                         role="columnheader"
                         scope="col"
-                        style="padding-bottom: .5rem; width: auto;"
+                        style="padding-bottom: 0.5rem; width: auto;"
                       >
                         <button
                           class="usa-button usa-button--unstyled position-relative"
@@ -196,7 +196,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                         colspan="1"
                         role="columnheader"
                         scope="col"
-                        style="padding-bottom: .5rem; width: auto;"
+                        style="padding-bottom: 0.5rem; width: auto;"
                       >
                         <button
                           class="usa-button usa-button--unstyled position-relative"

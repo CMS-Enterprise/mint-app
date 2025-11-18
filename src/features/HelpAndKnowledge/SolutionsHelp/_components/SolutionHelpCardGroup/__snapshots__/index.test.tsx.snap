@@ -989,7 +989,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
               <button
                 aria-current="page"
                 aria-label="Page 1"
-                class="usa-button usa-button--unstyled usa-pagination__button usa-current"
+                class="usa-pagination__button usa-current bg-transparent cursor-pointer"
                 data-testid="pagination-page-number"
                 type="button"
               >
@@ -1001,7 +1001,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
             >
               <button
                 aria-label="Page 2"
-                class="usa-button usa-button--unstyled usa-pagination__button"
+                class="usa-pagination__button bg-transparent cursor-pointer"
                 data-testid="pagination-page-number"
                 type="button"
               >
@@ -1013,7 +1013,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
             >
               <button
                 aria-label="Page 3"
-                class="usa-button usa-button--unstyled usa-pagination__button"
+                class="usa-pagination__button bg-transparent cursor-pointer"
                 data-testid="pagination-page-number"
                 type="button"
               >
@@ -1025,7 +1025,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
             >
               <button
                 aria-label="Page 4"
-                class="usa-button usa-button--unstyled usa-pagination__button"
+                class="usa-pagination__button bg-transparent cursor-pointer"
                 data-testid="pagination-page-number"
                 type="button"
               >
@@ -1037,7 +1037,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
             >
               <button
                 aria-label="Page 5"
-                class="usa-button usa-button--unstyled usa-pagination__button"
+                class="usa-pagination__button bg-transparent cursor-pointer"
                 data-testid="pagination-page-number"
                 type="button"
               >
@@ -1049,7 +1049,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
             >
               <button
                 aria-label="Page 6"
-                class="usa-button usa-button--unstyled usa-pagination__button"
+                class="usa-pagination__button bg-transparent cursor-pointer"
                 data-testid="pagination-page-number"
                 type="button"
               >
@@ -1061,7 +1061,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
             >
               <button
                 aria-label="Next page"
-                class="usa-button usa-button--unstyled usa-pagination__link usa-pagination__next-page"
+                class="usa-pagination__link usa-pagination__next-page border-0 padding-0 bg-transparent cursor-pointer"
                 data-testid="pagination-next"
                 type="button"
               >
