@@ -449,13 +449,12 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	bodyEmailTemplateName := emailTemplateName + "_body"
 
 	// Add environment prefix to subject if in dev, or impl
-	modifiedSubjectTemplate := subjectTemplate
 	if t.environment.Dev() || t.environment.Impl() {
 		envName := strings.ToUpper(t.environment.String())
-		modifiedSubjectTemplate = fmt.Sprintf("[%s] %s", envName, subjectTemplate)
+		subjectTemplate = fmt.Sprintf("[%s] %s", envName, subjectTemplate)
 	}
 
-	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, modifiedSubjectTemplate)
+	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
 	if err != nil {
 		return err
 	}
