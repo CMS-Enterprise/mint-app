@@ -57,12 +57,15 @@ const MilestoneLibrary = () => {
   const { data, loading, error } = useGetMtoMilestonesQuery({
     variables: {
       id: modelID
-    }
+    },
+    skip: isHkcMilestoneLibrary
   });
 
-  const { data: allCommonMilestones } = useGetMtoAllCommonMilestonesQuery();
+  const { data: allCommonMilestones } = useGetMtoAllCommonMilestonesQuery({
+    skip: !isHkcMilestoneLibrary
+  });
 
-  const dataAvalilable: boolean =
+  const dataAvailable: boolean =
     !loading ||
     !!data?.modelPlan?.mtoMatrix ||
     !!allCommonMilestones?.mtoCommonMilestones;
@@ -123,7 +126,7 @@ const MilestoneLibrary = () => {
         </UswdsReactLink>
       </div>
 
-      {!dataAvalilable ? (
+      {!dataAvailable ? (
         <PageLoading />
       ) : (
         <MilstoneCardGroup
