@@ -53,7 +53,7 @@ func loggerWithFaktoryFieldsWithoutBatchID[T logging.ChainableLogger[T]](
 	extraFields ...zapcore.Field,
 ) T {
 
-	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
+	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), nil, extraFields...)
 }
 
 // loggerWithFaktoryFields decorates a faktory logger with standard fields using a faktory worker helper to provide the JID, JobType, and BatchID
@@ -65,8 +65,8 @@ func loggerWithFaktoryFields[T logging.ChainableLogger[T]](
 	extraFields ...zapcore.Field,
 ) T {
 
-	extraFields = append(extraFields, logfields.BID(helper.Bid()))
-	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
+	batchID := helper.Bid()
+	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), &batchID, extraFields...)
 }
 
 // loggerWithFaktoryStandardFields will decorate a logger in faktory with standard fields. This should be called at the highest entry point and passed to child methods
@@ -74,7 +74,12 @@ func loggerWithFaktoryFields[T logging.ChainableLogger[T]](
 // additional fields can be decorated later by simply calling logger.With
 // jid is job id,
 // job type is the type of job that is being run
-func loggerWithFaktoryStandardFields[T logging.ChainableLogger[T]](logger T, jid string, jobType string, extraFields ...zapcore.Field) T {
+func loggerWithFaktoryStandardFields[T logging.ChainableLogger[T]](logger T, jid string, jobType string, batchID *string, extraFields ...zapcore.Field) T {
+	return logger.With(faktoryFields(jid, jobType, batchID, extraFields...)...)
+}
+
+// faktoryFields returns standard faktory fields for use in logging
+func faktoryFields(jid string, jobType string, batchID *string, extraFields ...zapcore.Field) []zapcore.Field {
 	//instantiate a traceID
 	trace := uuid.New()
 	fields := append([]zapcore.Field{
@@ -83,22 +88,29 @@ func loggerWithFaktoryStandardFields[T logging.ChainableLogger[T]](logger T, jid
 		logfields.JobType(jobType),
 		logfields.TraceField(trace.String()),
 	}, extraFields...)
-	return logger.With(fields...)
+
+	if batchID != nil {
+		fields = append(fields, logfields.BID(*batchID))
+	}
+	return fields
 }
 
-// RetryAwareLogger returns a logger that demotes Error->Warn if !final attempt.
-func RetryAwareLogger(ctx context.Context) *FaktoryLogger {
-	// return FaktoryLoggerFromContext(ctx)
-	// TODO implement this to get the logger from context
-	return NewFaktoryLogger(zap.NewExample())
-	// if isFinalAttempt(ctx) {
-	// 	return logging.NewConditionalLogger(faktoryLogger.Zap(), true)
-	// }
-	// return logging.NewConditionalLogger(faktoryLogger.Zap(), false)
-}
+// // RetryAwareLogger returns a logger that demotes Error->Warn if !final attempt.
+// func RetryAwareLogger(ctx context.Context) *FaktoryLogger {
+// 	// return FaktoryLoggerFromContext(ctx)
+// 	// TODO implement this to get the logger from context
+// 	return NewFaktoryLogger(zap.NewExample())
+// 	// if isFinalAttempt(ctx) {
+// 	// 	return logging.NewConditionalLogger(faktoryLogger.Zap(), true)
+// 	// }
+// 	// return logging.NewConditionalLogger(faktoryLogger.Zap(), false)
+// }
 
 func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
+
+		zLogger := appcontext.ZLogger(ctx)
+		faktoryLogger := NewFaktoryLogger(zLogger)
 
 		maxRetries := defaultMaxRetries
 		if job.Retry != nil {
@@ -110,8 +122,22 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 		}
 		isFinal := failCount >= maxRetries
 
+		//TODO, can we use the job.RetryRemaining instead of getting maxRetries?
+
+		// we don't know the batch ID yet
+		faktoryLogger = loggerWithFaktoryStandardFields(faktoryLogger, job.Jid, job.Type, nil,
+			zap.Int("retry_count", failCount),
+			zap.Int("max_retries", maxRetries),
+			zap.Bool("is_final_attempt", isFinal),
+			zap.Int("retry_remaining", job.Failure.RetryRemaining),
+			zap.String("faktory_queue", job.Queue),
+		)
+
 		// Put the flag in context so jobs/downstream can decide how to log
 		ctx = withIsFinalAttempt(ctx, isFinal)
+
+		// Decorate the ctx with the faktory logger
+		ctx = withFaktoryLogger(ctx, faktoryLogger)
 
 		// Run the job
 		err := next(ctx)
@@ -126,6 +152,9 @@ func RetryAwareLogging() faktory_worker.MiddlewareFunc {
 // context key so jobs can know if this run is final
 type retryCtxKey struct{}
 
+// context key to store faktory logger in context
+type faktoryLoggerCtxKey struct{}
+
 func withIsFinalAttempt(ctx context.Context, isFinal bool) context.Context {
 	return context.WithValue(ctx, retryCtxKey{}, isFinal)
 }
@@ -136,4 +165,21 @@ func IsFinalAttempt(ctx context.Context) bool {
 		return b
 	}
 	return false
+}
+
+// withFaktoryLogger stores the FaktoryLogger in the context
+func withFaktoryLogger(ctx context.Context, faktoryLogger *FaktoryLogger) context.Context {
+	return context.WithValue(ctx, faktoryLoggerCtxKey{}, faktoryLogger)
+}
+
+// FaktoryLoggerFromContext retrieves the FaktoryLogger from the context, or creates a new one if not present
+func FaktoryLoggerFromContext(ctx context.Context) *FaktoryLogger {
+	v := ctx.Value(faktoryLoggerCtxKey{})
+	if b, ok := v.(*FaktoryLogger); ok {
+		return b
+	}
+	// If the logger isn't on the context, create a new one
+	zlogger := appcontext.ZLogger(ctx)
+	return NewFaktoryLogger(zlogger)
+
 }

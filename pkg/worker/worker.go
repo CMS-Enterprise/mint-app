@@ -136,10 +136,11 @@ func (w *Worker) Work() {
 
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
+	ctx := appcontext.WithLogger(context.Background(), w.Logger)
 
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
-	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
 
 	userFunction := userhelpers.UserAccountGetByIDLOADER
 	ctx = appcontext.WithUserAccountService(ctx, userFunction)
