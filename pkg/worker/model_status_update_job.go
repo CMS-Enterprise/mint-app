@@ -20,7 +20,8 @@ const (
 // args[0] model_plan_id (UUID)
 func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) (returnedError error) {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	base := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := RetryAwareLogger(ctx, base) // demotes Error->Warn unless final attempt
 	logger.Info("model status update job reached.")
 
 	if len(args) < 1 {
@@ -30,7 +31,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 	arg1String := fmt.Sprint(args[0])
 	modelPlanID, err := uuid.Parse(arg1String)
 	if err != nil {
-		err = fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
+		err = fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[0], err)
 		logger.Error(err.Error(), zap.Error(err))
 	}
 	logger = logger.With(logfields.ModelPlanID(modelPlanID))
