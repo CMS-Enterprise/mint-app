@@ -150,7 +150,7 @@ const IDDOC = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
+              `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/iddoc-testing`
             );
           }}
           enableReinitialize
@@ -312,7 +312,7 @@ const IDDOC = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+                            `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning`
                           );
                         }}
                       >
@@ -329,7 +329,7 @@ const IDDOC = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

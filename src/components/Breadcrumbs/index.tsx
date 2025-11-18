@@ -61,7 +61,7 @@ export const commonBreadCrumbs = (
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',
-    url: `/models/${modelID}/collaboration-area/task-list`
+    url: `/models/${modelID}/collaboration-area/model-plan`
   },
   COLLABORATION_AREA: {
     text: 'collaborationArea:heading',
@@ -89,31 +89,31 @@ export const commonBreadCrumbs = (
   },
   BASICS: {
     text: 'basicsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/basics`
+    url: `/models/${modelID}/collaboration-area/model-plan/basics`
   },
   GENERAL_CHARACTERISTICS: {
     text: 'generalCharacteristicsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/characteristics`
+    url: `/models/${modelID}/collaboration-area/model-plan/characteristics`
   },
   PARTICIPANTS_AND_PROVIDERS: {
     text: 'participantsAndProvidersMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
+    url: `/models/${modelID}/collaboration-area/model-plan/participants-and-providers`
   },
   BENEFICIARIES: {
     text: 'beneficiariesMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/beneficiaries`
+    url: `/models/${modelID}/collaboration-area/model-plan/beneficiaries`
   },
   OPS_EVAL_AND_LEARNING: {
     text: 'opsEvalAndLearningMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+    url: `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning`
   },
   PAYMENTS: {
     text: 'paymentsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/payments`
+    url: `/models/${modelID}/collaboration-area/model-plan/payments`
   },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',
-    url: `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+    url: `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
   },
   COLLABORATORS: {
     text: 'collaboratorsMisc:manageModelTeam',

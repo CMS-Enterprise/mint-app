@@ -129,18 +129,20 @@ const ModelsByStatusGroup = () => {
       )}
       {loading && <PageLoading testId="models-by-status" />}
 
-      {!loading && data.length > 0 ? (
-        <ModelDetailsTable
-          models={data}
-          hiddenColumns={HIDDEN_COLUMNS_BY_STATUS_GROUP[currentStatus]}
-          canSearch={data.length > 4}
-        />
-      ) : (
+      {!loading && data.length === 0 && (
         <Alert type="info" slim>
           {customHomeT(
             `settings.${ViewCustomizationType.MODELS_BY_STATUS_GROUP}.status.${currentStatus}.noResultsHeading`
           )}
         </Alert>
+      )}
+
+      {!loading && data.length > 0 && (
+        <ModelDetailsTable
+          models={data}
+          hiddenColumns={HIDDEN_COLUMNS_BY_STATUS_GROUP[currentStatus]}
+          canSearch={data.length > 4}
+        />
       )}
     </div>
   );

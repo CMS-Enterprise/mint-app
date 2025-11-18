@@ -98,15 +98,15 @@ const AnticipateDependencies = () => {
 
     if (hasReductionToCostSharing) {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
+        `/models/${modelID}/collaboration-area/model-plan/payment/beneficiary-cost-sharing`
       );
     } else if (hasNonClaimBasedPayment) {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
+        `/models/${modelID}/collaboration-area/model-plan/payment/non-claims-based-payment`
       );
     } else {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+        `/models/${modelID}/collaboration-area/model-plan/payment/complexity`
       );
     }
   };
@@ -338,7 +338,7 @@ const AnticipateDependencies = () => {
                               className="usa-button usa-button--outline margin-bottom-1"
                               onClick={() => {
                                 navigate(
-                                  `/models/${modelID}/collaboration-area/task-list/payment/claims-based-payment`
+                                  `/models/${modelID}/collaboration-area/model-plan/payment/claims-based-payment`
                                 );
                               }}
                             >
@@ -355,7 +355,7 @@ const AnticipateDependencies = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >

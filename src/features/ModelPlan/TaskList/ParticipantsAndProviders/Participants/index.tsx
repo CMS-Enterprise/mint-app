@@ -159,7 +159,7 @@ export const Participants = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/participants-and-providers/participants-options`
+              `/models/${modelID}/collaboration-area/model-plan/participants-and-providers/participants-options`
             );
           }}
           enableReinitialize
@@ -391,7 +391,7 @@ export const Participants = () => {
                             className="usa-button usa-button--unstyled"
                             onClick={() =>
                               navigate(
-                                `/models/${modelID}/collaboration-area/task-list`
+                                `/models/${modelID}/collaboration-area/model-plan`
                               )
                             }
                           >

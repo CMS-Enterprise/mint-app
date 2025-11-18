@@ -1,3 +1,5 @@
+import miscellaneous from '../../src/i18n/en-US/modelPlan/miscellaneous';
+
 describe('The Model Plan Participants and providers Form', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
@@ -14,7 +16,7 @@ describe('The Model Plan Participants and providers Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list\/participants-and-providers/
+        /\/models\/.{36}\/collaboration-area\/model-plan\/participants-and-providers/
       );
     });
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
@@ -66,7 +68,7 @@ describe('The Model Plan Participants and providers Form', () => {
       .type('c92.00 and c92.01')
       .should('have.value', 'c92.00 and c92.01');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', miscellaneous.next).click();
 
     // Page - /participants-and-providers/participant-options
 
@@ -105,7 +107,7 @@ describe('The Model Plan Participants and providers Form', () => {
       .type('The other participants are cool')
       .should('have.value', 'The other participants are cool');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', miscellaneous.next).click();
 
     // Page - /participants-and-providers/communication
 
@@ -163,7 +165,7 @@ describe('The Model Plan Participants and providers Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', miscellaneous.next).click();
 
     // Page - /participants-and-providers/coordination
 
@@ -210,7 +212,7 @@ describe('The Model Plan Participants and providers Form', () => {
       .type('Candy Kingdom Operations Number')
       .should('have.value', 'Candy Kingdom Operations Number');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', miscellaneous.next).click();
 
     // Page - /participants-and-providers/provider-options
 
@@ -264,11 +266,11 @@ describe('The Model Plan Participants and providers Form', () => {
         'When overlap occurs, this model will be a secondary model'
       );
 
-    cy.contains('button', 'Save and return to task list').click();
+    cy.contains('button', miscellaneous.saveAndReturn).click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list/
+        /\/models\/.{36}\/collaboration-area\/model-plan/
       );
     });
   });

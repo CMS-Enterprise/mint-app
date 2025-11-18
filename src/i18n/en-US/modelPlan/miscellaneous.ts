@@ -2,7 +2,7 @@ import { FrequencyType } from 'gql/generated/graphql';
 
 export const miscellaneous: Record<string, Record<string, string> | string> = {
   mandatoryFields: 'All fields are mandatory',
-  saveAndReturn: 'Save and return to task list',
+  saveAndReturn: 'Save and return to Model Plan',
   saveAndReturnToCollaborationArea:
     'Save and return to model collaboration area',
   for: 'for',
