@@ -1,9 +1,11 @@
 ALTER TYPE TABLE_NAME ADD VALUE 'key_contact_category';
+
 -- Create table for key contact category
 CREATE TABLE IF NOT EXISTS  key_contact_category (
     id UUID PRIMARY KEY NOT NULL,
     category ZERO_STRING NOT NULL
 );
+
 COMMENT ON TABLE key_contact_category IS
 'Table for storing key contact categories related to subject matter experts.';
 
@@ -40,7 +42,3 @@ WHERE user_id IS NOT NULL;
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_mailbox_address_per_category
 ON key_contact (subject_category_id, mailbox_address)
 WHERE mailbox_address IS NOT NULL;
-
--- Add key_contact as a foreign key (nullable)
-ALTER TABLE key_contact_category
-ADD COLUMN key_contact UUID REFERENCES key_contact(id) ON DELETE CASCADE;
