@@ -36,8 +36,7 @@ export const modelSectionRouteKey: string[] = [
   'discussions',
   'documents',
   'crs-and-tdl',
-  'data-exchange-approach',
-  'sample-model-plan'
+  'data-exchange-approach'
 ];
 
 export type ModelSubSectionRouteKey = (typeof modelSectionRouteKey)[number];

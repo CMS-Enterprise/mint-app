@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import NotFound from 'features/NotFound';
@@ -242,7 +242,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const filteredViewParam = params.get('filter-view');
 
   const pathSegments = location.pathname.split('/');
-  const subinfo = pathSegments[pathSegments.length - 1];
+  const subinfo =
+    pathSegments[pathSegments.length - 1] === 'sample-model-plan'
+      ? 'model-basics'
+      : pathSegments[pathSegments.length - 1];
 
   const filteredView = getValidFilterViewParam(filteredViewParam);
 
@@ -540,7 +543,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                               subinfo !== 'solutions-and-it-systems'
                           })}
                         >
-                          <Outlet />
+                          {subComponents[subinfo]?.component}
                         </Grid>
                         {/* Contact info sidebar */}
                         {subinfo !== 'documents' &&
