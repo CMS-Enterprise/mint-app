@@ -338,7 +338,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 data-testid="tooltipWrapper"
               >
                 <div
-                  aria-describedby="tooltip-_r_1_"
+                  aria-describedby="tooltip-_r_4_"
                   class="usa-tooltip__trigger mint-no-print"
                   data-testid="triggerElement"
                   tabindex="0"
@@ -362,7 +362,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   aria-hidden="true"
                   class="usa-tooltip__body"
                   data-testid="tooltipBody"
-                  id="tooltip-_r_1_"
+                  id="tooltip-_r_4_"
                   role="tooltip"
                   title="Filter to view the content specific groups at CMS care about."
                 >
@@ -701,7 +701,570 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   <div
                     class="desktop:grid-col-8 padding-x-05"
                     data-testid="grid"
-                  />
+                  >
+                    <div
+                      class="read-only-model-plan--model-basics"
+                      data-testid="read-only-model-plan--model-basics"
+                    >
+                      <div>
+                        <div
+                          class="display-flex margin-bottom-2 "
+                        >
+                          <h2
+                            class="margin-y-0 margin-right-2"
+                          >
+                            Model basics
+                          </h2>
+                        </div>
+                        <div
+                          class="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4"
+                        >
+                          <p
+                            class="margin-y-0 text-bold margin-right-1"
+                          >
+                            Status:
+                          </p>
+                          <div
+                            class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning width-fit-content margin-right-1"
+                            data-testid="tasklist-tag"
+                          >
+                            <span>
+                              In progress
+                            </span>
+                          </div>
+                          <div
+                            class="display-flex flex-align-center flex-wrap margin-right-1"
+                          >
+                            <p
+                              class="margin-y-0 text-normal margin-right-1 text-base-dark"
+                            >
+                              Last updated 06/03/2022
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="desktop:grid-col-12"
+                        data-testid="grid"
+                      >
+                        <div
+                          class="read-only-section read-only-section--previous-names margin-bottom-3"
+                        >
+                          <div
+                            class="read-only-section--question"
+                          >
+                            <span
+                              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                            >
+                              Previous names
+                            </span>
+                          </div>
+                          <ul
+                            class="margin-y-0 padding-left-3"
+                          >
+                            <li
+                              class="mint-body-normal"
+                            >
+                              First Name
+                            </li>
+                            <ul />
+                            <li
+                              class="mint-body-normal"
+                            >
+                              Second Name
+                            </li>
+                            <ul />
+                          </ul>
+                        </div>
+                      </div>
+                      <div
+                        class="bg-base-lightest padding-2 margin-top-4 margin-bottom-4"
+                      >
+                        <p
+                          class="margin-top-0 text-bold"
+                        >
+                          Other identifiers
+                        </p>
+                        <p
+                          class="line-height-mono-4"
+                        >
+                          These are created in 
+                          <span
+                            class="mint-no-print"
+                          >
+                            <a
+                              aria-label="Open AMS in a new tab"
+                              class="usa-link usa-link--external"
+                              href="https://ams.cmmi.cms.gov"
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              CMMI Analysis & Management System (AMS).
+                            </a>
+                          </span>
+                          <span
+                            class="mint-only-print-inline"
+                          >
+                            CMMI Analysis & Management System (AMS).
+                          </span>
+                           Skip these fields until your model has been added to AMS. Not all models will have demo codes.
+                        </p>
+                        <div
+                          class="grid-row grid-gap"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="grid-col-6"
+                            data-testid="grid"
+                          >
+                            <p
+                              class="text-bold margin-top-0 margin-bottom-1"
+                            >
+                              Model ID
+                            </p>
+                            43532323
+                          </div>
+                          <div
+                            class="grid-col-6"
+                            data-testid="grid"
+                          >
+                            <p
+                              class="text-bold margin-top-0 margin-bottom-1"
+                            >
+                              Demo code(s)
+                            </p>
+                            1234
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="grid-row grid-gap"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="desktop:grid-col-6"
+                            data-testid="grid"
+                          >
+                            <div
+                              class="desktop:grid-col-12"
+                              data-testid="grid"
+                            >
+                              <div
+                                class="read-only-section read-only-section--primary-model-category margin-bottom-3"
+                              >
+                                <div
+                                  class="read-only-section--question"
+                                >
+                                  <span
+                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                                  >
+                                    Primary model category
+                                  </span>
+                                </div>
+                                <div
+                                  class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                                >
+                                  State & Community-Based
+                                  <span
+                                    class="top-2px position-relative"
+                                  >
+                                    <span
+                                      class="usa-tooltip"
+                                      data-testid="tooltipWrapper"
+                                    >
+                                      <div
+                                        aria-describedby="tooltip-_r_5_"
+                                        class="usa-tooltip__trigger mint-no-print margin-left-05"
+                                        data-testid="triggerElement"
+                                        tabindex="0"
+                                      >
+                                        <svg
+                                          aria-label="info"
+                                          class="usa-icon text-base-light"
+                                          focusable="false"
+                                          height="1em"
+                                          role="img"
+                                          viewBox="0 0 24 24"
+                                          width="1em"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                          />
+                                        </svg>
+                                      </div>
+                                      <span
+                                        aria-hidden="true"
+                                        class="usa-tooltip__body"
+                                        data-testid="tooltipBody"
+                                        id="tooltip-_r_5_"
+                                        role="tooltip"
+                                        title="Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries."
+                                      >
+                                        Models in which a state or community-based organization serves as the main contractual participant, including managed care organizations serving Medicaid beneficiaries.
+                                      </span>
+                                    </span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="desktop:grid-col-6"
+                            data-testid="grid"
+                          >
+                            <div
+                              class="desktop:grid-col-12"
+                              data-testid="grid"
+                            >
+                              <div
+                                class="read-only-section read-only-section--additional-model-categories margin-bottom-3"
+                              >
+                                <div
+                                  class="read-only-section--question"
+                                >
+                                  <span
+                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                                  >
+                                    Additional model categories
+                                  </span>
+                                </div>
+                                <ul
+                                  class="margin-y-0 padding-left-3"
+                                >
+                                  <li
+                                    class="mint-body-normal"
+                                  >
+                                    Accountable Care
+                                    <span
+                                      class="top-2px position-relative"
+                                    >
+                                      <span
+                                        class="usa-tooltip"
+                                        data-testid="tooltipWrapper"
+                                      >
+                                        <div
+                                          aria-describedby="tooltip-_r_6_"
+                                          class="usa-tooltip__trigger mint-no-print margin-left-05"
+                                          data-testid="triggerElement"
+                                          tabindex="0"
+                                        >
+                                          <svg
+                                            aria-label="info"
+                                            class="usa-icon text-base-light"
+                                            focusable="false"
+                                            height="1em"
+                                            role="img"
+                                            viewBox="0 0 24 24"
+                                            width="1em"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                            />
+                                          </svg>
+                                        </div>
+                                        <span
+                                          aria-hidden="true"
+                                          class="usa-tooltip__body"
+                                          data-testid="tooltipBody"
+                                          id="tooltip-_r_6_"
+                                          role="tooltip"
+                                          title="Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system"
+                                        >
+                                          Models in which a doctor, group of health care providers or hospital takes financial responsibility for improving quality of care, including advanced primary care services, care coordination and health outcomes for a defined group of patients, thereby reducing care fragmentation and unnecessary costs for patients and the health system
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </li>
+                                  <ul />
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      />
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="grid-row grid-gap"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="desktop:grid-col-6"
+                            data-testid="grid"
+                          >
+                            <div
+                              class="desktop:grid-col-12"
+                              data-testid="grid"
+                            >
+                              <div
+                                class="read-only-section read-only-section--cms-component margin-bottom-3"
+                              >
+                                <div
+                                  class="read-only-section--question"
+                                >
+                                  <span
+                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                                  >
+                                    CMS component
+                                  </span>
+                                </div>
+                                <ul
+                                  class="margin-y-0 padding-left-3"
+                                >
+                                  <li
+                                    class="mint-body-normal"
+                                  >
+                                    Center for Medicaid and CHIP Services (CMCS)
+                                  </li>
+                                  <ul />
+                                  <li
+                                    class="mint-body-normal"
+                                  >
+                                    Center for Medicare (CM)
+                                  </li>
+                                  <ul />
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="desktop:grid-col-6"
+                            data-testid="grid"
+                          >
+                            <div
+                              class="desktop:grid-col-12"
+                              data-testid="grid"
+                            >
+                              <div
+                                class="read-only-section read-only-section--cmmi-group margin-bottom-3"
+                              >
+                                <div
+                                  class="read-only-section--question"
+                                >
+                                  <span
+                                    class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                                  >
+                                    CMMI Group
+                                  </span>
+                                </div>
+                                <ul
+                                  class="margin-y-0 padding-left-3"
+                                >
+                                  <li
+                                    class="mint-body-normal"
+                                  >
+                                    Policy and Programs Group (PPG)
+                                  </li>
+                                  <ul />
+                                  <li
+                                    class="mint-body-normal"
+                                  >
+                                    State and Population Health Group (SPHG)
+                                  </li>
+                                  <ul />
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      />
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="desktop:grid-col-12"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="read-only-section read-only-section--model-type margin-bottom-3"
+                          >
+                            <div
+                              class="read-only-section--question"
+                            >
+                              <span
+                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                              >
+                                Model Type
+                              </span>
+                            </div>
+                            <ul
+                              class="margin-y-0 padding-left-3"
+                            >
+                              <li
+                                class="mint-body-normal"
+                              >
+                                Mandatory national
+                              </li>
+                              <ul />
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      />
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="desktop:grid-col-12"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="read-only-section read-only-section--problem-statement margin-bottom-3"
+                          >
+                            <div
+                              class="read-only-section--question"
+                            >
+                              <span
+                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                              >
+                                Problem statement
+                              </span>
+                            </div>
+                            <div
+                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                            >
+                              There is not enough candy
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="desktop:grid-col-12"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="read-only-section read-only-section--goal margin-bottom-3"
+                          >
+                            <div
+                              class="read-only-section--question"
+                            >
+                              <span
+                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                              >
+                                Goal
+                                <span
+                                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                                >
+                                  <span
+                                    class="usa-tooltip top-2px"
+                                    data-testid="tooltipWrapper"
+                                  >
+                                    <div
+                                      aria-describedby="tooltip-_r_7_"
+                                      class="usa-tooltip__trigger mint-no-print"
+                                      data-testid="triggerElement"
+                                      tabindex="0"
+                                    >
+                                      <svg
+                                        aria-label="info"
+                                        class="usa-icon text-base-light"
+                                        focusable="false"
+                                        height="1em"
+                                        role="img"
+                                        viewBox="0 0 24 24"
+                                        width="1em"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                        />
+                                      </svg>
+                                    </div>
+                                    <span
+                                      aria-hidden="true"
+                                      class="usa-tooltip__body"
+                                      data-testid="tooltipBody"
+                                      id="tooltip-_r_7_"
+                                      role="tooltip"
+                                      title="The high level goal of the program and a description of the project."
+                                    >
+                                      The high level goal of the program and a description of the project.
+                                    </span>
+                                  </span>
+                                </span>
+                              </span>
+                            </div>
+                            <div
+                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                            >
+                              To get more candy
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="desktop:grid-col-12"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="read-only-section read-only-section--test-interventions margin-bottom-3"
+                          >
+                            <div
+                              class="read-only-section--question"
+                            >
+                              <span
+                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                              >
+                                Test Interventions
+                              </span>
+                            </div>
+                            <div
+                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                            >
+                              The great candy machine
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class=""
+                      >
+                        <div
+                          class="desktop:grid-col-12"
+                          data-testid="grid"
+                        >
+                          <div
+                            class="read-only-section read-only-section--notes margin-bottom-3"
+                          >
+                            <div
+                              class="read-only-section--question"
+                            >
+                              <span
+                                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                              >
+                                Notes
+                              </span>
+                            </div>
+                            <div
+                              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                            >
+                              The machine doesn't work yet
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div
                     class="desktop:grid-col-4 sticky-nav"
                     data-testid="grid"

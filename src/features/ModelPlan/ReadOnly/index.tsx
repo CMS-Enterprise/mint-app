@@ -242,10 +242,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const filteredViewParam = params.get('filter-view');
 
   const pathSegments = location.pathname.split('/');
+  const pathLastSegment = pathSegments[pathSegments.length - 1];
   const subinfo =
-    pathSegments[pathSegments.length - 1] === 'sample-model-plan'
-      ? 'model-basics'
-      : pathSegments[pathSegments.length - 1];
+    pathLastSegment === 'sample-model-plan' ? 'model-basics' : pathLastSegment;
 
   const filteredView = getValidFilterViewParam(filteredViewParam);
 
