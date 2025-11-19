@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -155,6 +156,11 @@ func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan
 	return &models.ModelsToOperationMatrix{
 		ModelPlan: obj, // pass a reference of the Model Plan to the MTO Matrix object so we can fetch stuff based on it!
 	}, nil
+}
+
+// Tasks is the resolver for the tasks field.
+func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*model.PlanTask, error) {
+	panic(fmt.Errorf("not implemented: Tasks - tasks"))
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
