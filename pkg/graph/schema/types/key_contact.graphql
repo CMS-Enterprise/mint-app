@@ -4,6 +4,8 @@ type KeyContact {
   # Note that this is dependent on if team or not a team
   userID: UUID
   userAccount: UserAccount
+  name: String
+  email: String
 
   isTeam: Boolean!
   mailboxTitle: String
