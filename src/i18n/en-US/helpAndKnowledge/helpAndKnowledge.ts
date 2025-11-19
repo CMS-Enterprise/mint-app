@@ -2524,6 +2524,17 @@ const helpAndKnowledge = {
     'Below are some additional help resources that you may find useful.',
   addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help resources',
+  milestoneLibrary: {
+    hkcHeading: 'Milestone library',
+    hkcDescription:
+      'Model teams in MINT collaborate to complete the model-to-operations matrix (MTO) to identify which activities, milestones, and supporting operational solutions are needed to take the model from concept through implementation to active status. The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in their MTO. Browse those available milestones here.',
+    hkcJumpToLabel: 'Milestone library',
+    hkcViewCta: 'View milestone library',
+    description:
+      'The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in the model-to-operations matrix (MTO) for their model. Each common milestone has a common category, description, list of roles often responsible for completing the work, and a set of solutions and/or IT systems often used to implement the work for the milestone.',
+    returnToHkc: 'Return to Help and Knowledge Center',
+    learnAboutThisMilestone: 'Learn about this milestone'
+  },
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
     'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.',
