@@ -735,6 +735,7 @@ export type KeyContact = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   isTeam: Scalars['Boolean']['output'];
   mailboxAddress?: Maybe<Scalars['String']['output']>;
@@ -742,6 +743,7 @@ export type KeyContact = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
   subjectArea: Scalars['String']['output'];
   subjectCategoryId: Scalars['UUID']['output'];
   userAccount?: Maybe<UserAccount>;

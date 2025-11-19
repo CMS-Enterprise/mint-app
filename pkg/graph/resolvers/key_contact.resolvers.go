@@ -6,18 +6,19 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 	"github.com/google/uuid"
 )
 
 // CreateKeyContactMailbox is the resolver for the createKeyContactMailbox field.
-func (r *mutationResolver) CreateKeyContactMailbox(ctx context.Context, mailboxTitle string, mailboxAddress string, isTeam bool, subjectArea string, subjectCategoryId uuid.UUID) (*model.KeyContact, error) {
-	panic(fmt.Errorf("not implemented: CreateKeyContactMailbox - createKeyContactMailbox"))
+func (r *mutationResolver) CreateKeyContactMailbox(ctx context.Context, mailboxTitle string, mailboxAddress string, isTeam bool, subjectArea string, subjectCategoryId uuid.UUID) (*models.KeyContact, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CreateKeyContactMailbox(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, mailboxTitle, mailboxAddress, isTeam, subjectArea, subjectCategoryId)
 }
 
 func (r *mutationResolver) CreateKeyContactUser(ctx context.Context, userName string, isTeam bool, subjectArea string, subjectCategoryId uuid.UUID) (*models.KeyContact, error) {
@@ -29,31 +30,25 @@ func (r *mutationResolver) CreateKeyContactUser(ctx context.Context, userName st
 }
 
 // UpdateKeyContact is the resolver for the updateKeyContact field.
-func (r *mutationResolver) UpdateKeyContact(ctx context.Context, id uuid.UUID, changes map[string]any) (*model.KeyContact, error) {
-	panic(fmt.Errorf("not implemented: UpdateKeyContact - updateKeyContact"))
-}
-
-// DeleteKeyContact is the resolver for the deleteKeyContact field.
-func (r *mutationResolver) DeleteKeyContact(ctx context.Context, id uuid.UUID) (*model.KeyContact, error) {
-	panic(fmt.Errorf("not implemented: DeleteKeyContact - deleteKeyContact"))
-}
-
-// KeyContact is the resolver for the keyContact field.
-func (r *queryResolver) KeyContact(ctx context.Context, id uuid.UUID) (*model.KeyContact, error) {
-	panic(fmt.Errorf("not implemented: KeyContact - keyContact"))
-}
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-/*
-	func (r *mutationResolver) CreateKeyContactUserContact(ctx context.Context, userName string, isTeam bool, subjectArea string, subjectCategoryId uuid.UUID) (*model.KeyContact, error) {
+func (r *mutationResolver) UpdateKeyContact(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.KeyContact, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateKeyContactUser(ctx, logger, principal, r.store, userName, isTeam, subjectArea, subjectCategoryId)
+	return UpdateKeyContact(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, changes)
 }
-*/
+
+// DeleteKeyContact is the resolver for the deleteKeyContact field.
+func (r *mutationResolver) DeleteKeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return DeleteKeyContact(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id)
+}
+
+// KeyContact is the resolver for the keyContact field.
+func (r *queryResolver) KeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return GetKeyContact(ctx, logger, principal, r.store, id)
+}

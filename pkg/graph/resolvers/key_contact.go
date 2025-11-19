@@ -14,10 +14,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
-// CreateKeyContactUser creates a new user contact for a key contact.
+// CreateKeyContactUser creates a new user contact for a subject matter expert.
 // It looks up the user account by username and inserts a new contact record associated with that user.
 // ctx, logger, principal, r.store, userName, isTeam, subjectArea, subjectCategoryId
 func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
@@ -91,6 +92,183 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 	}
 
 	return newContact, nil
+}
+
+// CreateKeyContactMailbox creates a new team mailbox contact for a subject matter expert.
+// It inserts a new contact record with the provided mailbox title and address, not linked to a user account.
+func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	mailboxTitle string,
+	mailboxAddress string,
+	isTeam bool,
+	subjectArea string,
+	subjectCategoryId uuid.UUID,
+) (*models.KeyContact, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	mailboxContact := models.NewKeyContact(
+		principalAccount.ID,
+		&mailboxTitle,
+		&mailboxAddress,
+		nil,
+		true,
+		subjectArea,
+		subjectCategoryId.String(),
+	)
+
+	err := BaseStructPreCreate(logger, mailboxContact, principal, store, false)
+	if err != nil {
+		return nil, err
+	}
+
+	newContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
+		newContact, err := storage.KeyContactCreateContact(
+			tx,
+			logger,
+			mailboxContact,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+
+		return newContact, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if emailService != nil && emailTemplateService != nil {
+		go func() {
+			sendEmailErr := sendKeyContactWelcomeEmail(
+				emailService,
+				emailTemplateService,
+				addressBook,
+				newContact,
+			)
+			if sendEmailErr != nil {
+				logger.Error(
+					"failed to send key contact welcome email for create by mailbox",
+					zap.String("mailboxAddress", mailboxAddress),
+					zap.Error(sendEmailErr),
+				)
+			}
+		}()
+	}
+
+	return newContact, nil
+}
+
+// UpdateKeyContact updates an existing user or mailbox contact for a subject matter expert.
+// Only subjectCategoryId, subjectArea, and mailboxTitle fields can be changed. Returns the updated contact.
+func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	id uuid.UUID,
+	changes map[string]interface{},
+) (*models.KeyContact, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	existingContact, err := loaders.KeyContact.ByID.Load(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
+	}
+	if existingContact == nil {
+		return nil, fmt.Errorf("contact with id %s not found", id)
+	}
+
+	err = BaseStructPreUpdate(logger, existingContact, changes, principal, store, true, false)
+	if err != nil {
+		return nil, err
+	}
+
+	updatedContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
+		updatedContact, err := storage.KeyContactUpdateContact(tx, logger, existingContact)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update contact with id %s: %w", id, err)
+		}
+
+		return updatedContact, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return updatedContact, nil
+}
+
+// DeleteKeyContact deletes a subject matter expert by its ID.
+// Returns the deleted contact or an error.
+func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	id uuid.UUID,
+) (*models.KeyContact, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// Use a transaction for delete (for audit triggers, etc.)
+	returnedContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
+		// Fetch the existing contact to check permissions and return after delete
+		existing, err := loaders.KeyContact.ByID.Load(ctx, id)
+		if err != nil {
+			logger.Warn("Failed to get contact with id", zap.Any("contactId", id), zap.Error(err))
+			return nil, nil
+		}
+
+		if existing == nil {
+			return nil, fmt.Errorf("contact with id %s not found", id)
+		}
+
+		// Check permissions
+		err = BaseStructPreDelete(logger, existing, principal, store, false)
+		if err != nil {
+			return nil, fmt.Errorf("error deleting contact. user doesn't have permissions. %s", err)
+		}
+
+		// Finally, delete the contact
+		returnedContact, err := storage.KeyContactDeleteContactByID(tx, principalAccount.ID, logger, id)
+
+		if err != nil {
+			return nil, fmt.Errorf("unable to delete contact. Err %w", err)
+		}
+		return returnedContact, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return returnedContact, nil
+}
+
+// GetKeyContact retrieves  a subject matter expert by its ID.
+// Returns the contact if found, or an error if not found or on failure.
+func GetKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	id uuid.UUID,
+) (*models.KeyContact, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	contact, err := loaders.KeyContact.ByID.Load(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
+	}
+
+	if contact == nil {
+		return nil, fmt.Errorf("contact with id %s not found", id)
+	}
+
+	return contact, nil
 }
 
 func sendKeyContactWelcomeEmail(
