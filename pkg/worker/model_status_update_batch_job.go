@@ -9,6 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -24,7 +25,7 @@ const (
 func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
 	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Getting collection of model plans that require status checking")
 
 	// TODO: Implement the logic to return the models to check? Or do we check every model plan?
@@ -38,7 +39,7 @@ func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interfac
 	})
 }
 
-func CreateModelStatusUpdateBatch(logger *zap.Logger, w *Worker, cl *faktory.Client, modelPlans []*models.ModelPlan) error {
+func CreateModelStatusUpdateBatch[T logging.ChainableErrorOrWarnLogger[T]](logger T, w *Worker, cl *faktory.Client, modelPlans []*models.ModelPlan) error {
 	batch := faktory.NewBatch(cl)
 	// decorate the logger with the BID
 	logger = logger.With(logfields.BID(batch.Bid))
@@ -65,7 +66,7 @@ func CreateModelStatusUpdateBatch(logger *zap.Logger, w *Worker, cl *faktory.Cli
 
 }
 
-func CreateModelStatusJobInBatch(logger *zap.Logger, w *Worker, batch *faktory.Batch, plan *models.ModelPlan) error {
+func CreateModelStatusJobInBatch[T logging.ChainableErrorOrWarnLogger[T]](logger T, w *Worker, batch *faktory.Batch, plan *models.ModelPlan) error {
 	// decorate the logger with the model plan id
 	logger = logger.With(logfields.ModelPlanID(plan.ID))
 	logger.Info("creating job for model status update.")
@@ -84,8 +85,8 @@ func CreateModelStatusJobInBatch(logger *zap.Logger, w *Worker, batch *faktory.B
 
 // ModelStatusUpdateBatchJobSuccess is called when the model status update job has completed.
 func (w *Worker) ModelStatusUpdateBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	//TODO: verify if the BID is available
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Model Status update job completed successfully")
 	return nil
 }

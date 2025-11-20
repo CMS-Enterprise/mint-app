@@ -3,6 +3,7 @@ package storage
 import (
 	"fmt"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
@@ -139,7 +140,7 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 // PlanFavoriteGetCollectionByUserID returns plan favorites by userID
 func PlanFavoriteGetCollectionByUserID(
 	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
+	_ logging.ILogger,
 	userAccountID uuid.UUID,
 ) ([]*models.PlanFavorite, error) {
 

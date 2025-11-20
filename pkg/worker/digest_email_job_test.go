@@ -18,8 +18,7 @@ import (
 // Faktory integration tests
 func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 
 	date := time.Now().UTC().Format("2006-01-02")
@@ -141,7 +140,6 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 
 	worker := &Worker{
 		Store:                suite.testConfigs.Store,
-		Logger:               suite.testConfigs.Logger,
 		EmailService:         mockEmailService,
 		EmailTemplateService: suite.testConfigs.EmailTemplateService,
 		AddressBook:          addressBook,

@@ -7,6 +7,7 @@ import (
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
@@ -16,10 +17,13 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
+// defaultMaxRetries only applies where job.Retry is nil (25 is Faktory's default as well)
+const defaultMaxRetries = 25
+
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
 	Store                *storage.Store
-	Logger               *zap.Logger
+	Environment          appconfig.Environment
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateServiceImpl //TODO: this should probably be the interface
 	AddressBook          email.AddressBook
@@ -133,17 +137,21 @@ func (w *Worker) Work() {
 
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
+	mgr.Use(FaktoryLoggerMiddleware())
+
+	zapLogger := appconfig.MustInitializeLogger(w.Environment)
+	ctx := appcontext.WithLogger(context.Background(), zapLogger)
 
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
-	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
+	ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
 
 	userFunction := userhelpers.UserAccountGetByIDLOADER
 	ctx = appcontext.WithUserAccountService(ctx, userFunction)
 
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {
-		w.Logger.Info("registering job", zap.String("job_name", job.Name))
+		zapLogger.Info("registering job", zap.String("job_name", job.Name))
 		mgr.Register(job.Name, JobWithPanicProtection(job.Job))
 	}
 

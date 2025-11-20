@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -47,7 +47,7 @@ func TranslatedAuditQueueGetQueued(np sqlutils.NamedPreparer) ([]*models.Transla
 // TranslatedAuditQueueUpdate updates a TranslatedAuditQueue record in the database
 func TranslatedAuditQueueUpdate(
 	np sqlutils.NamedPreparer,
-	logger *zap.Logger,
+	logger logging.ILogger,
 	translatedAuditQueue *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
 	retTranslatedAuditQueue, procErr := sqlutils.GetProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.Update, translatedAuditQueue)
 
