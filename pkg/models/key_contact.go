@@ -13,9 +13,9 @@ type KeyContact struct {
 	Email string `db:"email" json:"email"`
 	// -----------------------------------------------------------------------------------------------------
 	userIDRelationPtr
-	IsTeam          bool   `db:"is_team" json:"isTeam"`
-	SubjectArea     string `db:"subject_area" json:"subjectArea"`
-	SubjectCategory string `db:"category" json:"category"`
+	IsTeam            bool      `db:"is_team" json:"isTeam"`
+	SubjectArea       string    `db:"subject_area" json:"subjectArea"`
+	SubjectCategoryID uuid.UUID `db:"subject_category_id" json:"subjectCategoryId"`
 }
 
 // NewKeyContact returns a new KeyContact object
@@ -26,7 +26,7 @@ func NewKeyContact(
 	userID *uuid.UUID,
 	isTeam bool,
 	subjectArea string,
-	subjectCategory string,
+	subjectCategoryID uuid.UUID,
 ) *KeyContact {
 	return &KeyContact{
 		baseStruct:        NewBaseStruct(createdBy),
@@ -35,6 +35,6 @@ func NewKeyContact(
 		userIDRelationPtr: NewUserIDRelationPtr(userID),
 		IsTeam:            isTeam,
 		SubjectArea:       subjectArea,
-		SubjectCategory:   subjectCategory,
+		SubjectCategoryID: subjectCategoryID,
 	}
 }

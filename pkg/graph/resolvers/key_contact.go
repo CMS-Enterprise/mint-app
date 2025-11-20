@@ -20,13 +20,13 @@ import (
 
 // CreateKeyContactUser creates a new user contact for a subject matter expert.
 // It looks up the user account by username and inserts a new contact record associated with that user.
-// ctx, logger, principal, r.store, userName, isTeam, subjectArea, subjectCategoryId
+// ctx, logger, principal, r.store, userName, isTeam, subjectArea, subjectCategoryID
 func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	userName string,
 	isTeam bool,
 	subjectArea string,
-	subjectCategoryId uuid.UUID,
+	subjectCategoryID uuid.UUID,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.KeyContact, error) {
 	principalAccount := principal.Account()
@@ -46,7 +46,7 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		&userAccount.ID,
 		false,
 		subjectArea,
-		subjectCategoryId.String(),
+		subjectCategoryID,
 	)
 
 	err = BaseStructPreCreate(logger, userContact, principal, store, false)
@@ -102,7 +102,7 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 	mailboxAddress string,
 	isTeam bool,
 	subjectArea string,
-	subjectCategoryId uuid.UUID,
+	subjectCategoryID uuid.UUID,
 ) (*models.KeyContact, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -116,7 +116,7 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		nil,
 		true,
 		subjectArea,
-		subjectCategoryId.String(),
+		subjectCategoryID,
 	)
 
 	err := BaseStructPreCreate(logger, mailboxContact, principal, store, false)
@@ -164,7 +164,7 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 }
 
 // UpdateKeyContact updates an existing user or mailbox contact for a subject matter expert.
-// Only subjectCategoryId, subjectArea, and mailboxTitle fields can be changed. Returns the updated contact.
+// Only subjectCategoryID, subjectArea, and mailboxTitle fields can be changed. Returns the updated contact.
 func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	id uuid.UUID,

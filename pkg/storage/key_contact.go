@@ -27,7 +27,7 @@ func KeyContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uu
 // KeyContactCreateContact creates a new KeyContact in the database.
 func KeyContactCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, KeyContact *models.KeyContact) (*models.KeyContact, error) {
 	if KeyContact == nil {
-		return nil, fmt.Errorf("Key Contact cannot be nil")
+		return nil, fmt.Errorf("key contact cannot be nil")
 	}
 	if KeyContact.ID == uuid.Nil {
 		KeyContact.ID = uuid.New()

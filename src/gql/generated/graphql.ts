@@ -745,7 +745,7 @@ export type KeyContact = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   subjectArea: Scalars['String']['output'];
-  subjectCategoryId: Scalars['UUID']['output'];
+  subjectCategoryID: Scalars['UUID']['output'];
   userAccount?: Maybe<UserAccount>;
   userID?: Maybe<Scalars['UUID']['output']>;
 };
@@ -778,7 +778,7 @@ export type KeyContactCategoryUpdateChanges = {
 export type KeyContactUpdateChanges = {
   mailboxTitle?: InputMaybe<Scalars['String']['input']>;
   subjectArea?: InputMaybe<Scalars['String']['input']>;
-  subjectCategoryId?: InputMaybe<Scalars['UUID']['input']>;
+  subjectCategoryID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 /** The current user's Launch Darkly key */
@@ -1999,7 +1999,7 @@ export type MutationCreateKeyContactMailboxArgs = {
   mailboxAddress: Scalars['String']['input'];
   mailboxTitle: Scalars['String']['input'];
   subjectArea: Scalars['String']['input'];
-  subjectCategoryId: Scalars['UUID']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
 };
 
 
@@ -2007,7 +2007,7 @@ export type MutationCreateKeyContactMailboxArgs = {
 export type MutationCreateKeyContactUserArgs = {
   isTeam: Scalars['Boolean']['input'];
   subjectArea: Scalars['String']['input'];
-  subjectCategoryId: Scalars['UUID']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
   userName: Scalars['String']['input'];
 };
 
