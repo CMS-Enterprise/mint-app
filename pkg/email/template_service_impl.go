@@ -286,10 +286,10 @@ var mtoMilestoneAssignedBodyTemplate string
 // KeyContactWelcomeTemplateName is the template name for the subject matter experts welcome email
 const KeyContactWelcomeTemplateName = "key_contact_welcome"
 
-// go:embed templates/key_contact_welcome_body.html
+//go:embed templates/key_contact_welcome_body.html
 var KeyContactWelcomeBodyTemplate string
 
-// go:embed templates/key_contact_welcome_subject.html
+//go:embed templates/key_contact_welcome_subject.html
 var KeyContactWelcomeSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
@@ -436,6 +436,10 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	if err := t.loadEmailTemplate(MTOMilestoneAssignedTemplateName, mtoMilestoneAssignedSubjectTemplate, mtoMilestoneAssignedBodyTemplate); err != nil {
+		return err
+	}
+
+	if err := t.loadEmailTemplate(KeyContactWelcomeTemplateName, KeyContactWelcomeSubjectTemplate, KeyContactWelcomeBodyTemplate); err != nil {
 		return err
 	}
 

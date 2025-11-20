@@ -271,6 +271,21 @@ func GetKeyContact(ctx context.Context, logger *zap.Logger, principal authentica
 	return contact, nil
 }
 
+// GetKeyContacts retrieves  all subject matter experts.
+// Returns the contacts if found, or an error if failure.
+func GetAllKeyContacts(ctx context.Context, logger *zap.Logger, store *storage.Store) ([]*models.KeyContact, error) {
+	contacts, err := loaders.KeyContact.GetAll.Load(ctx, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get all key contacts: %w", err)
+	}
+
+	if contacts == nil {
+		return nil, fmt.Errorf("no key contacts found")
+	}
+
+	return contacts, nil
+}
+
 func sendKeyContactWelcomeEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,

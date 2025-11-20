@@ -34,6 +34,10 @@ input KeyContactUpdateChanges @goModel(model: "map[string]interface{}") {
 }
 
 extend type Query {
+  # List all key contacts
+  keyContacts: [KeyContact!]!
+
+  # Get a single key contact by id
   keyContact(id: UUID!): KeyContact!
 }
 

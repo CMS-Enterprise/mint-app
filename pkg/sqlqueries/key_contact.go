@@ -2,8 +2,8 @@ package sqlqueries
 
 import _ "embed"
 
-//go:embed SQL/key_contact_directory/key_contact/get_by_category.sql
-var KeyContactGetByKeyContactCategory string
+//go:embed SQL/key_contact_directory/key_contact/get_all.sql
+var KeyContactGetAll string
 
 //go:embed SQL/key_contact_directory/key_contact/get_by_id.sql
 var KeyContactGetByID string
@@ -21,20 +21,20 @@ var KeyContactUpdate string
 var KeyContactDeleteByID string
 
 type KeyContactScripts struct {
-	GetByKeyContactCategory string
-	GetByID                 string
-	GetByIDs                string
-	Create                  string
-	Update                  string
-	DeleteByID              string
+	GetAll     string
+	GetByID    string
+	GetByIDs   string
+	Create     string
+	Update     string
+	DeleteByID string
 }
 
 // KeyContact houses all the sql for getting data for key contact from the database
 var KeyContact = KeyContactScripts{
-	GetByKeyContactCategory: KeyContactGetByKeyContactCategory,
-	GetByID:                 KeyContactGetByID,
-	GetByIDs:                KeyContactGetByIDs,
-	Create:                  KeyContactCreate,
-	Update:                  KeyContactUpdate,
-	DeleteByID:              KeyContactDeleteByID,
+	GetAll:     KeyContactGetAll,
+	GetByID:    KeyContactGetByID,
+	GetByIDs:   KeyContactGetByIDs,
+	Create:     KeyContactCreate,
+	Update:     KeyContactUpdate,
+	DeleteByID: KeyContactDeleteByID,
 }

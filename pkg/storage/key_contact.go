@@ -62,3 +62,12 @@ func KeyContactDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logg
 	}
 	return returnedContact, nil
 }
+
+// KeyContactGetAllLoader returns all key contacts
+func KeyContactGetAllLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.KeyContact, error) {
+	returned, err := sqlutils.SelectProcedure[models.KeyContact](np, sqlqueries.KeyContact.GetAll, map[string]any{})
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}

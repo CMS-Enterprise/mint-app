@@ -4525,6 +4525,7 @@ export type Query = {
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
   keyContactCategory: Array<KeyContactCategory>;
+  keyContacts: Array<KeyContact>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
