@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
 import {
@@ -12,6 +12,7 @@ import {
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
+import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
 import { formatDateLocal } from 'utils/date';
 
@@ -31,11 +32,13 @@ const NewlyCreatedModels = () => {
     return data?.modelPlanCollection || [];
   }, [data?.modelPlanCollection]);
 
+  const [pageSize, setPageSize] = useState<'all' | number>(3);
+
   const { currentItems, Pagination } = usePagination<
     GetModelPlansQuery['modelPlanCollection']
   >({
     items: models,
-    itemsPerPage: 3,
+    itemsPerPage: pageSize === 'all' ? models.length : pageSize,
     loading
   });
 
@@ -159,7 +162,17 @@ const NewlyCreatedModels = () => {
                     </Card>
                   ))}
 
-                  {Pagination}
+                  <div className="display-flex flex-align-baseline">
+                    {Pagination}
+
+                    <TablePageSize
+                      className="margin-left-auto desktop:grid-col-auto"
+                      pageSize={pageSize}
+                      setPageSize={setPageSize}
+                      valueArray={[3, 6, 9, 'all']}
+                      suffix={customHomeT('requestsTable.suffixCard')}
+                    />
+                  </div>
                 </>
               )}
             </>

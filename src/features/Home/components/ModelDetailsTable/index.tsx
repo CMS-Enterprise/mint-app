@@ -16,6 +16,7 @@ import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import GlobalClientFilter from 'components/TableFilter';
+import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import TopScrollContainer from 'components/TopScrollContainer';
@@ -253,7 +254,8 @@ const ModelDetailsTable = ({
       autoResetPage: !skipPageResetRef.current,
       initialState: {
         sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
-        pageIndex: 0
+        pageIndex: 0,
+        pageSize: 5
       }
     },
     useFilters,
@@ -390,20 +392,29 @@ const ModelDetailsTable = ({
         </UswdsTable>
       </TopScrollContainer>
 
-      {canSearch && models.length > 10 && (
-        <TablePagination
-          gotoPage={gotoPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canNextPage={canNextPage}
-          pageIndex={state.pageIndex}
-          pageOptions={pageOptions}
-          canPreviousPage={canPreviousPage}
-          pageCount={pageCount}
-          pageSize={state.pageSize}
-          setPageSize={setPageSize}
-          page={[]}
-        />
+      {models.length > 4 && (
+        <div className="display-flex flex-align-baseline">
+          <TablePagination
+            gotoPage={gotoPage}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            canNextPage={canNextPage}
+            pageIndex={state.pageIndex}
+            pageOptions={pageOptions}
+            canPreviousPage={canPreviousPage}
+            pageCount={pageCount}
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+            page={[]}
+          />
+          <TablePageSize
+            className="margin-left-auto desktop:grid-col-auto"
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+            valueArray={[5, 10, 15, 20, 'all']}
+            suffix={homeT('requestsTable.suffixRow')}
+          />
+        </div>
       )}
 
       <div

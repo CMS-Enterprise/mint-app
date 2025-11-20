@@ -183,7 +183,9 @@ const customHome = {
     tbd: 'To be determined',
     updated: 'Updated',
     unansweredQuestion: 'unanswered question',
-    answeredQuestion: 'answered question'
+    answeredQuestion: 'answered question',
+    suffixRow: 'rows',
+    suffixCard: 'cards'
   },
   emptyHome: 'Your homepage looks a little empty.',
   editHomepage: 'Edit homepage settings',
