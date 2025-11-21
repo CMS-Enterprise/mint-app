@@ -20,16 +20,24 @@
 <p><strong>Subject area:</strong> {{.SubjectArea}}</p>
 
 <br/>
+
 <h2>
   <a href="{{.ClientAddress}}/help-and-knowledge">
     View the MINT contact directory
   </a>
 </h2>
 
-<p>
-  If you believe this information to be incorrect or if you do not wish to be included in the MINT Help and Knowledge Center contact directory, please contact the MINT Team at <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.
-</p>
+<br/>
+<br/>
 
+{{if .IsTeam}} 
+  <p>If you believe this information to be incorrect or if you do not wish this mailbox to be included in the MINT Help and Knowledge Center contact directory, please contact the MINT Team at <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.</p>
+{{else}}
+  <p>If you believe this information to be incorrect or if you do not wish to be included in the MINT Help and Knowledge Center contact directory, please contact the MINT Team at <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.</p>
+{{end}}
+
+<br/>
 <hr/>
+<br/>
 
 {{template "shared_access_banner.html" .}}

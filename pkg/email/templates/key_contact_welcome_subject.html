@@ -1,1 +1,5 @@
-{{ .IsTeam ? "This mailbox" : "You"}} has been added to the MINT contact directory
+{{if .IsTeam}}
+This mailbox has been added to the MINT contact directory
+{{else}}
+You have been added to the MINT contact directory
+{{end}}

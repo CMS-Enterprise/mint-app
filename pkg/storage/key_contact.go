@@ -56,7 +56,7 @@ func KeyContactDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logg
 	}
 
 	arg := map[string]interface{}{"id": id}
-	returnedContact, err := sqlutils.GetProcedure[models.KeyContact](tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
+	returnedContact, err := sqlutils.GetProcedure[models.KeyContact](tx, sqlqueries.KeyContact.DeleteByID, arg)
 	if err != nil {
 		return nil, err
 	}
