@@ -24,7 +24,7 @@ func NewKeyContactAddedBodyContent(
 	return KeyContactAddedBodyContent{
 		ClientAddress:     clientAddress,
 		ContactName:       contact.Name,
-		IsTeam:            contact.IsTeam,
+		IsTeam:            contact.MailboxAddress != nil,
 		SubjectArea:       string(contact.SubjectArea),
 		SubjectCategoryID: contact.SubjectCategoryID.String(),
 	}

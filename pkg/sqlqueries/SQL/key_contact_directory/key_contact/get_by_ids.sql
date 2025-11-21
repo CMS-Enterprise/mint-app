@@ -8,7 +8,6 @@ SELECT
     key_contact.mailbox_title,
     key_contact.mailbox_address,
     key_contact.user_id,
-    key_contact.is_team,
     key_contact.subject_area,
     key_contact.subject_category_id,
     key_contact.created_by,

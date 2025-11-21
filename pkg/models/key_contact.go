@@ -13,7 +13,6 @@ type KeyContact struct {
 	Email string `db:"email" json:"email"`
 	// -----------------------------------------------------------------------------------------------------
 	userIDRelationPtr
-	IsTeam            bool      `db:"is_team" json:"isTeam"`
 	SubjectArea       string    `db:"subject_area" json:"subjectArea"`
 	SubjectCategoryID uuid.UUID `db:"subject_category_id" json:"subjectCategoryId"`
 }
@@ -24,7 +23,6 @@ func NewKeyContact(
 	mailboxTitle *string,
 	mailboxAddress *string,
 	userID *uuid.UUID,
-	isTeam bool,
 	subjectArea string,
 	subjectCategoryID uuid.UUID,
 ) *KeyContact {
@@ -33,7 +31,6 @@ func NewKeyContact(
 		MailboxTitle:      mailboxTitle,
 		MailboxAddress:    mailboxAddress,
 		userIDRelationPtr: NewUserIDRelationPtr(userID),
-		IsTeam:            isTeam,
 		SubjectArea:       subjectArea,
 		SubjectCategoryID: subjectCategoryID,
 	}

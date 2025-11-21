@@ -20,11 +20,10 @@ import (
 
 // CreateKeyContactUser creates a new user contact for a subject matter expert.
 // It looks up the user account by username and inserts a new contact record associated with that user.
-// ctx, logger, principal, r.store, userName, isTeam, subjectArea, subjectCategoryID
+// ctx, logger, principal, r.store, userName, subjectArea, subjectCategoryID
 func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	userName string,
-	isTeam bool,
 	subjectArea string,
 	subjectCategoryID uuid.UUID,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
@@ -44,7 +43,6 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		nil,
 		nil,
 		&userAccount.ID,
-		false,
 		subjectArea,
 		subjectCategoryID,
 	)
@@ -100,7 +98,6 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	mailboxTitle string,
 	mailboxAddress string,
-	isTeam bool,
 	subjectArea string,
 	subjectCategoryID uuid.UUID,
 ) (*models.KeyContact, error) {
@@ -114,7 +111,6 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		&mailboxTitle,
 		&mailboxAddress,
 		nil,
-		true,
 		subjectArea,
 		subjectCategoryID,
 	)

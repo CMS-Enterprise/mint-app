@@ -6,20 +6,27 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
+
+// IsTeam is the resolver for the isTeam field.
+func (r *keyContactResolver) IsTeam(ctx context.Context, obj *models.KeyContact) (bool, error) {
+	panic(fmt.Errorf("not implemented: IsTeam - isTeam"))
+}
 
 // CreateKeyContactMailbox is the resolver for the createKeyContactMailbox field.
 func (r *mutationResolver) CreateKeyContactMailbox(ctx context.Context, mailboxTitle string, mailboxAddress string, isTeam bool, subjectArea string, subjectCategoryID uuid.UUID) (*models.KeyContact, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateKeyContactMailbox(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, mailboxTitle, mailboxAddress, isTeam, subjectArea, subjectCategoryID)
+	return CreateKeyContactMailbox(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, mailboxTitle, mailboxAddress, subjectArea, subjectCategoryID)
 }
 
 // CreateKeyContactUser is the resolver for the createKeyContactUser field.
@@ -27,7 +34,7 @@ func (r *mutationResolver) CreateKeyContactUser(ctx context.Context, userName st
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateKeyContactUser(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, userName, isTeam, subjectArea, subjectCategoryID, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
+	return CreateKeyContactUser(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, userName, subjectArea, subjectCategoryID, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // UpdateKeyContact is the resolver for the updateKeyContact field.
@@ -59,3 +66,8 @@ func (r *queryResolver) KeyContact(ctx context.Context, id uuid.UUID) (*models.K
 
 	return GetKeyContact(ctx, logger, principal, r.store, id)
 }
+
+// KeyContact returns generated.KeyContactResolver implementation.
+func (r *Resolver) KeyContact() generated.KeyContactResolver { return &keyContactResolver{r} }
+
+type keyContactResolver struct{ *Resolver }
