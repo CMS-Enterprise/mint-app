@@ -7,7 +7,6 @@ type KeyContact {
   name: String
   email: String
 
-  isTeam: Boolean!
   mailboxTitle: String
   mailboxAddress: String
 
@@ -45,14 +44,12 @@ extend type Mutation {
   createKeyContactMailbox(
     mailboxTitle: String!
     mailboxAddress: String!
-    isTeam: Boolean!
     subjectArea: String!
     subjectCategoryID: UUID!
   ): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 
   createKeyContactUser(
     userName: String!
-    isTeam: Boolean!
     subjectArea: String!
     subjectCategoryID: UUID!
   ): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])

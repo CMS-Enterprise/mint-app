@@ -737,7 +737,6 @@ export type KeyContact = {
   createdDts: Scalars['Time']['output'];
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
-  isTeam: Scalars['Boolean']['output'];
   mailboxAddress?: Maybe<Scalars['String']['output']>;
   mailboxTitle?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -1995,7 +1994,6 @@ export type MutationCreateKeyContactCategoryArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateKeyContactMailboxArgs = {
-  isTeam: Scalars['Boolean']['input'];
   mailboxAddress: Scalars['String']['input'];
   mailboxTitle: Scalars['String']['input'];
   subjectArea: Scalars['String']['input'];
@@ -2005,7 +2003,6 @@ export type MutationCreateKeyContactMailboxArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateKeyContactUserArgs = {
-  isTeam: Scalars['Boolean']['input'];
   subjectArea: Scalars['String']['input'];
   subjectCategoryID: Scalars['UUID']['input'];
   userName: Scalars['String']['input'];

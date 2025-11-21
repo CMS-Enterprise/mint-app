@@ -293,7 +293,7 @@ func sendKeyContactWelcomeEmail(
 		return err
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.KeyContactAddedSubjectContent{})
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.NewKeyContactAddedSubjectContent(*contact))
 	if err != nil {
 		return err
 	}

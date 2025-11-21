@@ -7,6 +7,15 @@ type KeyContactAddedSubjectContent struct {
 	IsTeam bool
 }
 
+// NewKeyContactAddedSubjectContent constructs an email subject content struct from an KeyContact.
+func NewKeyContactAddedSubjectContent(
+	contact models.KeyContact,
+) KeyContactAddedSubjectContent {
+	return KeyContactAddedSubjectContent{
+		IsTeam: contact.MailboxAddress != nil,
+	}
+}
+
 // KeyContactAddedBodyContent defines the parameters necessary for the email body.
 type KeyContactAddedBodyContent struct {
 	ClientAddress     string
