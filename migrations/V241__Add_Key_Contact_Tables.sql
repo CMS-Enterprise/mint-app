@@ -3,7 +3,13 @@ ALTER TYPE TABLE_NAME ADD VALUE 'key_contact_category';
 -- Create table for key contact category
 CREATE TABLE IF NOT EXISTS  key_contact_category (
     id UUID PRIMARY KEY NOT NULL,
-    category ZERO_STRING NOT NULL
+    category ZERO_STRING NOT NULL,
+    
+    --META DATA
+    created_by UUID NOT NULL REFERENCES user_account(id),
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES user_account(id),
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 COMMENT ON TABLE key_contact_category IS
