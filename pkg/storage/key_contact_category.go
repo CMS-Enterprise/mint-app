@@ -42,6 +42,9 @@ func KeyContactCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 	if keyContactCategory == nil {
 		return nil, fmt.Errorf("keyContactCategory cannot be nil")
 	}
+	if keyContactCategory.ID == uuid.Nil {
+		return nil, fmt.Errorf("keyContactCategory.ID cannot be nil")
+	}
 
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Update, keyContactCategory)
 	if err != nil {

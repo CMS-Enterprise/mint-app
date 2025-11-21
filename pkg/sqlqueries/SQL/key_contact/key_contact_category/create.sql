@@ -7,7 +7,6 @@ INSERT INTO key_contact_category (
     :id,
     :category,
     :created_by,
-    :created_dts,
     CURRENT_TIMESTAMP
 )
 RETURNING

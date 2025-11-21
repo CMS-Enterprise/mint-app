@@ -17,6 +17,7 @@ type keyContactCategoryScripts struct {
 	Update string
 }
 
+// KeyContactCategory houses all the sql for getting data for key contact category from the database
 var KeyContactCategory = keyContactCategoryScripts{
 	Create: keyContactCategoryCreateSQL,
 	Delete: keyContactCategoryDeleteSQL,
