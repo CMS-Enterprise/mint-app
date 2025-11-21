@@ -4,7 +4,7 @@ ALTER TYPE TABLE_NAME ADD VALUE 'key_contact_category';
 CREATE TABLE IF NOT EXISTS  key_contact_category (
     id UUID PRIMARY KEY NOT NULL,
     category ZERO_STRING NOT NULL,
-    
+
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -23,11 +23,26 @@ CREATE TABLE IF NOT EXISTS  key_contact (
     user_id UUID REFERENCES user_account(id) ON DELETE CASCADE,
     
     subject_area ZERO_STRING NOT NULL,
-    subject_category_id UUID NOT NULL REFERENCES key_contact_category(id),
+    subject_category_id UUID NOT NULL REFERENCES key_contact_category(id) ON DELETE CASCADE,
 
     is_team BOOLEAN NOT NULL DEFAULT FALSE,
     mailbox_title ZERO_STRING NULL,
     mailbox_address ZERO_STRING NULL,
+
+    -- Enforce that either user_id is set (individual contact) or both mailbox fields are set (team contact), but not both or neither
+    CONSTRAINT contact_mailbox_or_user_account CHECK (
+        (
+            user_id IS NOT NULL
+            AND mailbox_title IS NULL
+            AND mailbox_address IS NULL
+        )
+        OR
+        (
+            user_id IS NULL
+            AND mailbox_title IS NOT NULL
+            AND mailbox_address IS NOT NULL
+        )
+    ),
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),
