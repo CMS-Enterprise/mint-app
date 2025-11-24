@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ import (
 // KeyContactCategoryCreate creates a new key contact category
 func KeyContactCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, keyContactCategory *model.KeyContactCategory) (*model.KeyContactCategory, error) {
 	if keyContactCategory == nil {
-		return nil, fmt.Errorf("keyContactCategory cannot be nil")
+		return nil, errors.New("keyContactCategory cannot be nil")
 	}
 	if keyContactCategory.ID == uuid.Nil {
 		keyContactCategory.ID = uuid.New()
@@ -22,7 +22,7 @@ func KeyContactCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Create, keyContactCategory)
 	if err != nil {
-		return nil, fmt.Errorf("issue creating new KeyContactCategory object: %w", err)
+		return nil, errors.New("issue creating new KeyContactCategory object: %w")
 	}
 	return returned, nil
 }
@@ -32,7 +32,7 @@ func KeyContactCategoryDelete(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.
 	arg := map[string]interface{}{"id": id}
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Delete, arg)
 	if err != nil {
-		return nil, fmt.Errorf("issue deleting KeyContactCategory object: %w", err)
+		return nil, errors.New("issue deleting KeyContactCategory object: %w")
 	}
 	return returned, nil
 }
@@ -40,15 +40,15 @@ func KeyContactCategoryDelete(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.
 // KeyContactCategoryUpdate updates a key contact category
 func KeyContactCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, keyContactCategory *model.KeyContactCategory) (*model.KeyContactCategory, error) {
 	if keyContactCategory == nil {
-		return nil, fmt.Errorf("keyContactCategory cannot be nil")
+		return nil, errors.New("keyContactCategory cannot be nil")
 	}
 	if keyContactCategory.ID == uuid.Nil {
-		return nil, fmt.Errorf("keyContactCategory.ID cannot be nil")
+		return nil, errors.New("keyContactCategory.ID cannot be nil")
 	}
 
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Update, keyContactCategory)
 	if err != nil {
-		return nil, fmt.Errorf("issue updating KeyContactCategory object: %w", err)
+		return nil, errors.New("issue updating KeyContactCategory object: %w")
 	}
 	return returned, nil
 }
