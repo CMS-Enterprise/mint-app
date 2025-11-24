@@ -2,6 +2,7 @@ package storage
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -22,7 +23,7 @@ func KeyContactCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Create, keyContactCategory)
 	if err != nil {
-		return nil, errors.New("issue creating new KeyContactCategory object: %w")
+		return nil, fmt.Errorf("issue creating new KeyContactCategory object: %w", err)
 	}
 	return returned, nil
 }
@@ -32,7 +33,7 @@ func KeyContactCategoryDelete(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.
 	arg := map[string]interface{}{"id": id}
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Delete, arg)
 	if err != nil {
-		return nil, errors.New("issue deleting KeyContactCategory object: %w")
+		return nil, fmt.Errorf("issue deleting KeyContactCategory object: %w", err)
 	}
 	return returned, nil
 }
@@ -48,7 +49,7 @@ func KeyContactCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 
 	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.Update, keyContactCategory)
 	if err != nil {
-		return nil, errors.New("issue updating KeyContactCategory object: %w")
+		return nil, fmt.Errorf("issue updating KeyContactCategory object: %w", err)
 	}
 	return returned, nil
 }
