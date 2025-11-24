@@ -45,7 +45,7 @@ jobs:
           - db_migrate
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up node
         uses: actions/setup-node@v6
         with:
@@ -147,7 +147,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Migrate Database
         uses: docker://flyway/flyway:10.15-alpine
@@ -220,7 +220,7 @@ jobs:
     needs: [build_docker_images, build_frontend_assets]
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up node
         uses: actions/setup-node@v6
         with:
@@ -311,7 +311,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up node
         uses: actions/setup-node@v6
         with:
@@ -350,7 +350,7 @@ jobs:
     continue-on-error: ${{ inputs.continue_on_error }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up node
         uses: actions/setup-node@v6
         with:
@@ -372,7 +372,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Set up node
         uses: actions/setup-node@v6
         with:
