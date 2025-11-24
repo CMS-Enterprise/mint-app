@@ -86,7 +86,6 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
                     class="usa-tooltip__trigger mint-no-print margin-left-05"
                     data-testid="triggerElement"
                     tabindex="0"
-                    title=""
                   >
                     <svg
                       aria-label="info"
@@ -218,7 +217,6 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
                     class="usa-tooltip__trigger mint-no-print margin-left-05"
                     data-testid="triggerElement"
                     tabindex="0"
-                    title=""
                   >
                     <svg
                       aria-label="info"
@@ -527,7 +525,6 @@ exports[`Read view - Data exchange approach > matches snapshot 1`] = `
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
-                    title=""
                   >
                     <svg
                       aria-label="info"

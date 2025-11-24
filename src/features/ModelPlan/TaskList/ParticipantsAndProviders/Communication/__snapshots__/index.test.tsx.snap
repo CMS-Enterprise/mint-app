@@ -153,6 +153,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-added-frequency-annually"
+                style="width: fit-content;"
               >
                 Annually
               </label>
@@ -173,6 +174,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-added-frequency-semiannually"
+                style="width: fit-content;"
               >
                 Semi-annually
               </label>
@@ -193,6 +195,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-added-frequency-quarterly"
+                style="width: fit-content;"
               >
                 Quarterly
               </label>
@@ -213,6 +216,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-added-frequency-monthly"
+                style="width: fit-content;"
               >
                 Monthly
               </label>
@@ -233,6 +237,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-added-frequency-continually"
+                style="width: fit-content;"
               >
                 Continually
               </label>
@@ -271,6 +276,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-added-frequency-other"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -327,6 +333,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-removed-frequency-annually"
+                style="width: fit-content;"
               >
                 Annually
               </label>
@@ -347,6 +354,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-removed-frequency-semiannually"
+                style="width: fit-content;"
               >
                 Semi-annually
               </label>
@@ -367,6 +375,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-removed-frequency-quarterly"
+                style="width: fit-content;"
               >
                 Quarterly
               </label>
@@ -387,6 +396,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-removed-frequency-monthly"
+                style="width: fit-content;"
               >
                 Monthly
               </label>
@@ -407,6 +417,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-removed-frequency-continually"
+                style="width: fit-content;"
               >
                 Continually
               </label>
@@ -427,6 +438,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participant-removed-frequency-other"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -526,6 +538,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participants-and-providers-communication-method-IT_TOOL"
+                style="width: fit-content;"
               >
                 Manage ongoing communications with participants using an IT tool
               </label>
@@ -546,6 +559,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participants-and-providers-communication-method-MASS_EMAIL"
+                style="width: fit-content;"
               >
                 Send mass emails to new participants
               </label>
@@ -566,6 +580,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participants-and-providers-communication-method-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -586,6 +601,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="participants-and-providers-communication-method-NO_COMMUNICATION"
+                style="width: fit-content;"
               >
                 We are not planning to communicate
               </label>
@@ -647,6 +663,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="participants-and-providers-risk-type-TWO_SIDED"
+                  style="width: fit-content;"
                 >
                   Two-sided
                 </label>
@@ -667,6 +684,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="participants-and-providers-risk-type-ONE_SIDED"
+                  style="width: fit-content;"
                 >
                   One-sided
                 </label>
@@ -687,6 +705,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="participants-and-providers-risk-type-CAPITATION"
+                  style="width: fit-content;"
                 >
                   Capitation
                 </label>
@@ -707,6 +726,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="participants-and-providers-risk-type-NOT_RISK_BASED"
+                  style="width: fit-content;"
                 >
                   Not risk-based
                 </label>
@@ -727,6 +747,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="participants-and-providers-risk-type-OTHER"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>

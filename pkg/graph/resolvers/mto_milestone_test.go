@@ -1,15 +1,17 @@
 package resolvers
 
 import (
+	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
 )
 
 // This test ensures that we can properly create a Custom milestone with preset category information
@@ -648,4 +650,64 @@ func (suite *ResolverSuite) TestMTOMilestoneAssignedTo() {
 	suite.NotNil(retrievedMilestone)
 	suite.NotNil(retrievedMilestone.AssignedTo)
 	suite.Equal(assignedTo, *retrievedMilestone.AssignedTo)
+}
+
+// This test ensures that creating a common milestone with solutions works correctly when email services are configured
+func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithSolutionsAndEmailService() {
+	mockController := gomock.NewController(suite.T())
+	defer mockController.Finish()
+
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
+
+	planName := "Plan for testing solution email"
+	plan := suite.createModelPlan(planName)
+
+	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
+		ClientAddress:         "http://localhost:3005",
+		TaggedPOCEmailEnabled: false,
+	}
+	mockEmailService.EXPECT().GetConfig().Return(emailServiceConfig).AnyTimes()
+
+	testTemplate, _, _ := emailtestconfigs.CreateTemplateCacheHelper(planName, plan)
+	mockEmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.MTOSolutionSelectedTemplateName)).
+		Return(testTemplate, nil).
+		AnyTimes()
+
+	mockEmailService.
+		EXPECT().
+		Send(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		Return(nil).
+		AnyTimes()
+
+	addressBook := email.AddressBook{
+		DefaultSender: "test@mint.dev.cms.gov",
+		DevTeamEmail:  "test.dev.team@mint.dev.cms.gov",
+	}
+
+	// Create a common milestone with solutions - this will trigger email sending
+	milestone, err := MTOMilestoneCreateCommon(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		mockEmailService,
+		mockEmailTemplateService,
+		addressBook,
+		plan.ID,
+		models.MTOCommonMilestoneKeyAppSupportCon,
+		[]models.MTOCommonSolutionKey{models.MTOCSKCcw},
+	)
+	suite.NoError(err)
+	suite.NotNil(milestone)
+
+	// Verify the solution was created and linked
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Len(solutions, 1)
+	if suite.NotNil(solutions[0].Key) {
+		suite.Equal(models.MTOCSKCcw, *solutions[0].Key)
+	}
 }

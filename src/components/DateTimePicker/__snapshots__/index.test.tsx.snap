@@ -33,7 +33,6 @@ exports[`DateTimePicker Component > matches snapshot 1`] = `
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
-            title=""
             type="button"
           >
             <svg
@@ -138,7 +137,6 @@ exports[`DateTimePicker Component > matches snapshot with alertText disabled 1`]
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
-            title=""
             type="button"
           >
             <svg
@@ -227,7 +225,6 @@ exports[`DateTimePicker Component > matches snapshot with custom className 1`] =
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
-            title=""
             type="button"
           >
             <svg
@@ -333,7 +330,6 @@ exports[`DateTimePicker Component > matches snapshot with disabled state 1`] = `
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
-            title=""
             type="button"
           >
             <svg
@@ -439,7 +435,6 @@ exports[`DateTimePicker Component > matches snapshot with past date warning 1`] 
             class="usa-button usa-tooltip__trigger padding-0 margin-0 margin-top-1 bg-transparent outline-0"
             data-testid="triggerElement"
             tabindex="0"
-            title=""
             type="button"
           >
             <svg

@@ -197,8 +197,16 @@ describe('DateTimePicker Component', () => {
     });
     expect(warningIcon).toBeInTheDocument();
 
-    // The tooltip should be present in the DOM
-    expect(warningIcon.closest('[title]')).toBeInTheDocument();
+    const tooltipTrigger = warningIcon.closest('button');
+    expect(tooltipTrigger).not.toBeNull();
+    expect(tooltipTrigger).toHaveAttribute('aria-describedby');
+
+    const tooltip = screen.getByRole('tooltip', { hidden: true });
+    expect(tooltip).toBeInTheDocument();
+    expect(tooltip).toHaveTextContent(i18next.t('general:dateWarning'));
+
+    const describedBy = tooltipTrigger?.getAttribute('aria-describedby') ?? '';
+    expect(describedBy.split(' ').filter(Boolean)).toContain(tooltip.id);
   });
 
   it('renders calendar icon correctly', () => {

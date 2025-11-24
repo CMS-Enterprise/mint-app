@@ -226,6 +226,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
               <label
                 class="usa-checkbox__label"
                 for="hide-added-solutions"
+                style="width: fit-content;"
               >
                 Hide added solutions (0)
               </label>
@@ -424,7 +425,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 <button
                   aria-current="page"
                   aria-label="Page 1"
-                  class="usa-button usa-button--unstyled usa-pagination__button usa-current"
+                  class="usa-pagination__button usa-current bg-transparent cursor-pointer"
                   data-testid="pagination-page-number"
                   type="button"
                 >
