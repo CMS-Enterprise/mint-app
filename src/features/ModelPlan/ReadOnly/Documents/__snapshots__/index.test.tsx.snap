@@ -45,7 +45,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                    style="min-width: 138px; padding-left: 0px; padding-bottom: 0.5rem; position: relative;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -77,7 +77,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                    style="min-width: 138px; padding-left: 0px; padding-bottom: 0.5rem; position: relative;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -109,7 +109,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                    style="min-width: 138px; padding-left: 0px; padding-bottom: 0.5rem; position: relative;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -141,7 +141,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                    style="min-width: 138px; padding-left: 0px; padding-bottom: 0.5rem; position: relative;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -173,7 +173,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                    style="min-width: 138px; padding-left: 0px; padding-bottom: 0.5rem; position: relative;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -205,7 +205,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                    style="min-width: 138px; padding-left: 0px; padding-bottom: 0.5rem; position: relative;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"

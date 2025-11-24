@@ -112,7 +112,9 @@ exports[`settings snapshots > matches order snapshot 1`] = `
             Save customizations
           </button>
         </div>
-        <div>
+        <div
+          style="width: fit-content;"
+        >
           <a
             class="usa-link display-flex flex-align-center"
             data-discover="true"
@@ -237,7 +239,9 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
             </h1>
           </div>
         </div>
-        <div>
+        <div
+          style="width: fit-content;"
+        >
           <a
             class="usa-link display-flex flex-align-center"
             data-discover="true"

@@ -203,7 +203,7 @@ const MilestonePanel = ({ closeModal }: EditMilestoneFormProps) => {
 
         <h2 className="line-height-large margin-y-1">{milestone.name}</h2>
 
-        {milestone.description && !milestone.addedFromMilestoneLibrary && (
+        {milestone.description && (
           <p className="margin-0 mint-body-normal text-base-dark text-pre-line">
             {milestone.description}
           </p>
