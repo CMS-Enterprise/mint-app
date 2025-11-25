@@ -21,7 +21,7 @@ ALTER TYPE TABLE_NAME ADD VALUE 'key_contact';
 CREATE TABLE IF NOT EXISTS  key_contact (
     id UUID PRIMARY KEY NOT NULL,
     user_id UUID REFERENCES user_account(id) ON DELETE CASCADE,
-    
+
     subject_area ZERO_STRING NOT NULL,
     subject_category_id UUID NOT NULL REFERENCES key_contact_category(id) ON DELETE CASCADE,
 
