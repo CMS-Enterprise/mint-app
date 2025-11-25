@@ -48,6 +48,35 @@ type ExistingModelLinkTranslation struct {
 	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
+type KeyContact struct {
+	ID                    uuid.UUID                   `json:"id"`
+	UserID                *uuid.UUID                  `json:"userID,omitempty"`
+	UserAccount           *authentication.UserAccount `json:"userAccount,omitempty"`
+	IsTeam                bool                        `json:"isTeam"`
+	MailboxTitle          *string                     `json:"mailboxTitle,omitempty"`
+	MailboxAddress        *string                     `json:"mailboxAddress,omitempty"`
+	SubjectCategoryID     uuid.UUID                   `json:"subjectCategoryId"`
+	SubjectArea           string                      `json:"subjectArea"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
+type KeyContactCategory struct {
+	ID                    uuid.UUID                   `json:"id"`
+	Category              string                      `json:"category"`
+	KeyContacts           []*KeyContact               `json:"keyContacts"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
