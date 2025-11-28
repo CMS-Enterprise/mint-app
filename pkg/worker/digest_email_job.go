@@ -73,7 +73,6 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // DigestEmailBatchJobSuccess is the callback function forDigestEmailBatchJob
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	//TODO: verify if the BID is available
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
