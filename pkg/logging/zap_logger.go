@@ -101,3 +101,7 @@ var _ ILogger = (*ZapLogger)(nil)
 var _ ChainableLogger[*ZapLogger] = (*ZapLogger)(nil)
 var _ ErrorOrWarnLogger = (*ZapLogger)(nil)
 var _ ChainableErrorOrWarnLogger[*ZapLogger] = (*ZapLogger)(nil)
+
+// Interface compliance checks for zap.Logger
+var _ ILogger = (*zap.Logger)(nil)
+var _ ChainableLogger[*zap.Logger] = (*zap.Logger)(nil)
