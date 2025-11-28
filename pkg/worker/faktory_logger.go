@@ -24,7 +24,7 @@ type jobInfo struct {
 }
 
 func (l *FaktoryLogger) IsFinalAttempt() bool {
-	//
+	// Max retries includes the first attempt, so we subtract 1 to get the number of retries after the first attempt
 	return l.RetryCount >= (l.MaxRetries - 1)
 }
 
