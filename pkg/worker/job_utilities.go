@@ -11,6 +11,9 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
+
+	faktory "github.com/contribsys/faktory/client"
 )
 
 func RecoverFaktoryJobPanicAndLogError(ctx context.Context, returnedError *error) {
@@ -40,38 +43,17 @@ func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perfo
 
 }
 
-// loggerWithFaktoryFieldsWithoutBatchID decorates a faktory logger with standard fields using a faktory worker helper to provide the JID, and JobType.
-// it specifically excludes a batch id so it can be decorated separately later
-// extraFields is a convenience param to add additional fields
-// the underlying method calls loggerWithFaktoryStandardFields
-func loggerWithFaktoryFieldsWithoutBatchID(
-	logger *zap.Logger,
-	helper faktory_worker.Helper,
-	extraFields ...zapcore.Field,
-) *zap.Logger {
-
-	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
-}
-
-// loggerWithFaktoryFields decorates a faktory logger with standard fields using a faktory worker helper to provide the JID, JobType, and BatchID
-// extraFields is a convenience param to add additional fields
-// the underlying method calls loggerWithFaktoryStandardFields
-func loggerWithFaktoryFields(
-	logger *zap.Logger,
-	helper faktory_worker.Helper,
-	extraFields ...zapcore.Field,
-) *zap.Logger {
-
-	extraFields = append(extraFields, logfields.BID(helper.Bid()))
-	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
-}
-
 // loggerWithFaktoryStandardFields will decorate a logger in faktory with standard fields. This should be called at the highest entry point and passed to child methods
 // extraFields is a convenience param to add additional fields
 // additional fields can be decorated later by simply calling logger.With
 // jid is job id,
 // job type is the type of job that is being run
-func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType string, extraFields ...zapcore.Field) *zap.Logger {
+func loggerWithFaktoryStandardFields[T logging.ChainableLogger[T]](logger T, jid string, jobType string, batchID *string, extraFields ...zapcore.Field) T {
+	return logger.With(faktoryFields(jid, jobType, batchID, extraFields...)...)
+}
+
+// faktoryFields returns standard faktory fields for use in logging
+func faktoryFields(jid string, jobType string, batchID *string, extraFields ...zapcore.Field) []zapcore.Field {
 	//instantiate a traceID
 	trace := uuid.New()
 	fields := append([]zapcore.Field{
@@ -80,5 +62,77 @@ func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType str
 		logfields.JobType(jobType),
 		logfields.TraceField(trace.String()),
 	}, extraFields...)
-	return logger.With(fields...)
+
+	if batchID != nil {
+		fields = append(fields, logfields.BID(*batchID))
+	}
+	return fields
+}
+
+// FaktoryLoggerMiddleware is a Faktory middleware that adds a FaktoryLogger to the context with standard Faktory fields
+func FaktoryLoggerMiddleware() faktory_worker.MiddlewareFunc {
+	return func(ctx context.Context, job *faktory.Job, next func(ctx context.Context) error) error {
+
+		zLogger := appcontext.ZLogger(ctx)
+		faktoryLogger := NewFaktoryLogger(zLogger)
+
+		maxRetries := defaultMaxRetries
+		if job.Retry != nil {
+			maxRetries = *job.Retry
+		}
+		failCount := 0
+		if job.Failure != nil {
+			failCount = job.Failure.RetryCount
+		}
+
+		// Get batch id if present
+		var batchID *string
+		if bid, ok := job.Custom["bid"].(string); ok {
+			if bid != "" {
+				batchID = &bid
+			}
+		}
+
+		faktoryLogger.jobInfo = jobInfo{
+			JobID:        job.Jid,
+			JobType:      job.Type,
+			BatchID:      batchID,
+			RetryCount:   failCount,
+			MaxRetries:   maxRetries,
+			FaktoryQueue: job.Queue,
+		}
+
+		faktoryLogger = faktoryLogger.DecorateWithJobInfo()
+
+		// Decorate the ctx with the faktory logger
+		ctx = withFaktoryLogger(ctx, faktoryLogger)
+
+		// Run the job
+		err := next(ctx)
+		if err == nil {
+			return nil
+		}
+
+		return err
+	}
+}
+
+// context key to store faktory logger in context
+type faktoryLoggerCtxKey struct{}
+
+// withFaktoryLogger stores the FaktoryLogger in the context
+func withFaktoryLogger(ctx context.Context, faktoryLogger *FaktoryLogger) context.Context {
+	return context.WithValue(ctx, faktoryLoggerCtxKey{}, faktoryLogger)
+}
+
+// FaktoryLoggerFromContext retrieves the FaktoryLogger from the context, or creates a new one if not present
+func FaktoryLoggerFromContext(ctx context.Context) *FaktoryLogger {
+	v := ctx.Value(faktoryLoggerCtxKey{})
+	if b, ok := v.(*FaktoryLogger); ok {
+		return b
+	}
+	// If the logger isn't on the context, create a new one
+	zlogger := appcontext.ZLogger(ctx)
+	return NewFaktoryLogger(zlogger)
+
 }

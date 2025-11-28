@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -15,12 +16,12 @@ import (
 
 const unableToUpdateQueueMessage = "unable to update audit queue entity"
 
-func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *zap.Logger, auditID int, queueID uuid.UUID) (*models.TranslatedAuditWithTranslatedFields, error) {
+func TranslateAuditJobByID[T any](ctx context.Context, store *storage.Store, logger logging.ChainableErrorOrWarnLogger[T], auditID int, queueID uuid.UUID) (*models.TranslatedAuditWithTranslatedFields, error) {
 
 	queueEntry, err := storage.TranslatedAuditQueueGetByID(store, queueID)
 	if err != nil {
 		// We only warn here because there could be inconsistencies caused by timing, and not something that needs alerting
-		logger.Warn("unable to get audit queue entity", zap.Error(err))
+		logger.ErrorOrWarn("unable to get audit queue entity", zap.Error(err))
 		return nil, err
 	}
 	queueEntry.Attempts++
@@ -28,7 +29,8 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 
 	queueEntry, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
-		logger.Error(unableToUpdateQueueMessage, zap.Error(err))
+		// // Use error or warn so notification only comes if retries fail
+		logger.ErrorOrWarn(unableToUpdateQueueMessage, zap.Error(err))
 		return nil, err
 	}
 
@@ -54,7 +56,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 	queueEntry.Status = models.TPSProcessed
 	_, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
-		logger.Error("unable to return final translatedAuditQueue entry", zap.Error(err))
+		logger.ErrorOrWarn("unable to return final translatedAuditQueue entry", zap.Error(err))
 		return nil, err
 	}
 	return translatedAuditAndFields, nil
@@ -64,7 +66,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 // TranslatedAuditQueueUpdate handles the business logic of setting who modified a translated audit queue entry, and calling the appropriate store methods.
 func TranslatedAuditQueueUpdate(
 	np sqlutils.NamedPreparer,
-	logger *zap.Logger,
+	logger logging.ILogger,
 	translatedAuditQueue *models.TranslatedAuditQueue,
 	modifiedByAccountID uuid.UUID,
 ) (*models.TranslatedAuditQueue, error) {

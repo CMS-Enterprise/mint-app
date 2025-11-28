@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"strconv"
 
-	faktory_worker "github.com/contribsys/faktory_worker_go"
-
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
@@ -29,9 +27,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	*/
 
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
-
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("translating job reached")
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")

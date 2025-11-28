@@ -16,8 +16,7 @@ import (
 func (suite *WorkerSuite) TestTranslateAuditJob() {
 
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 	// Create plan
 	plan := suite.createModelPlan("Test Plan")

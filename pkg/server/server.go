@@ -39,20 +39,7 @@ func NewServer(config *viper.Viper) *Server {
 		log.Fatalf("Unable to set environment: %v", err)
 	}
 
-	var zapLogger *zap.Logger
-	if !environment.Deployed() {
-		// For local development: use JSON format like production but with debug level logging
-		config := zap.NewProductionConfig()
-		// Setting this at Development adds more stack trace info
-		config.Development = true
-		config.Level = zap.NewAtomicLevelAt(zap.DebugLevel)
-		zapLogger, err = config.Build()
-	} else {
-		zapLogger, err = zap.NewProduction()
-	}
-	if err != nil {
-		log.Fatalf("Failed to initialize logger: %v", err)
-	}
+	zapLogger := appconfig.MustInitializeLogger(environment)
 
 	// Set the router
 	r := mux.NewRouter()

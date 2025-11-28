@@ -10,6 +10,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/local"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -56,6 +57,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 	seederConfig := SeederConfig{
 		Store:                store,
 		Logger:               logger,
+		ZapLogger:            logging.NewZapLogger(logger),
 		S3Client:             s3Client,
 		EChimpClient:         echimpS3Client,
 		Context:              ctx,
@@ -73,6 +75,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 type SeederConfig struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
+	ZapLogger            *logging.ZapLogger
 	S3Client             *s3.S3Client
 	EChimpClient         *s3.S3Client
 	Context              context.Context

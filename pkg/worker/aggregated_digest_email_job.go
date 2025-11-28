@@ -3,9 +3,8 @@ package worker
 import (
 	"time"
 
-	"go.uber.org/zap"
-
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -14,10 +13,10 @@ import (
 // AggregatedDigestEmailJob is the handler for the AggregatedDigestEmailJob which
 // sends a daily digest email containing all analyzed audits from the audit
 // period
-func AggregatedDigestEmailJob(
+func AggregatedDigestEmailJob[T logging.ChainableErrorOrWarnLogger[T]](
 	dateAnalyzed time.Time,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger T,
 	emailTemplateService email.TemplateServiceImpl,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
@@ -58,7 +57,7 @@ func AggregatedDigestEmailJob(
 func getUserAgnosticDigestAnalyzedAudits(
 	date time.Time,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger logging.ILogger,
 ) ([]*models.AnalyzedAudit, error) {
 
 	analyzedAudits, err := store.AnalyzedAuditGetByDate(logger, date)

@@ -11,16 +11,17 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // AnalyzeModelPlanForAnalyzedAudit analyzes a model plan based on a specific day.
 // it analyzes all desired sections and stores the result to the database
-func AnalyzeModelPlanForAnalyzedAudit(
+func AnalyzeModelPlanForAnalyzedAudit[T logging.ChainableErrorOrWarnLogger[T]](
 	ctx context.Context,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger T,
 	dayToAnalyze time.Time,
 	modelPlanID uuid.UUID,
 ) (*models.AnalyzedAudit, error) {

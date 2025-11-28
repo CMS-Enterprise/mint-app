@@ -12,8 +12,7 @@ import (
 // It will batch all child jobs, and when complete it will fire a callback
 func (suite *WorkerSuite) TestModelStatusUpdateBatchJob() {
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 	pool, err := faktory.NewPool(10)
 	suite.NoError(err)
