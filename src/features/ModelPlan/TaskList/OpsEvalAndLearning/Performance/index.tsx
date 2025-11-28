@@ -115,11 +115,11 @@ const Performance = () => {
   const backPage = () => {
     if (iddocSupport) {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring`
+        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/iddoc-monitoring`
       );
     } else {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning`
       );
     }
   };
@@ -189,7 +189,7 @@ const Performance = () => {
           initialValues={initialValues}
           onSubmit={() => {
             navigate(
-              `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
+              `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/evaluation`
             );
           }}
           enableReinitialize
@@ -437,7 +437,7 @@ const Performance = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

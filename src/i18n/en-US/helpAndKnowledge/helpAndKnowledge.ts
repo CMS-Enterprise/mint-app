@@ -797,6 +797,12 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
       ]
     }
   },
+  [MtoCommonSolutionKey.HETS]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
+  },
   [MtoCommonSolutionKey.HIGLAS]: {
     about: {
       description: `Healthcare Integrated General Ledger Accounting System (HIGLAS) is the single source of truth that centralizes and standardizes the federal financial accounting functions for all of CMS’s programs. All Medicare Fee For Service (FFS), Health Care Exchanges, Medicaid/CHIP/Grants, and Program Budget’s payments are accounted for and reported in HIGLAS.
@@ -1294,6 +1300,33 @@ The data in the IDR is leveraged by various components across the agency to faci
             'Complete health equity analyses',
             'Model-specific learning cost estimate',
             'Have an LDG member as part of the team'
+          ]
+        },
+        {
+          header: 'Additional resources',
+          items: [
+            '<link1>Introduction to Learning and Diffusion Group</link1>',
+            '<link2>Driver diagrams</link2>',
+            '<link3>Patient journey mapping</link3>',
+            '<link4>Model participant recruitment and engagement</link4>'
+          ],
+          links: [
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7bEBBC2361-8B3C-4E8B-8C77-1A5799DA9724%7d&file=Intro%20to%20LDG.pptx&action=default&CT=1759950081993&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7bBAB3A5FB-726E-4FEB-96AF-C87292A2F288%7d&file=Driver%20Diagrams%20%5bLDG%5d.pptx&action=default&CT=1759950444758&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7b0B11207B-D80B-42D7-8E07-BB5A679B0C9E%7d&file=Patient%20Journey%20Mapping%20%5bLDG%5d.pptx&action=default&CT=1759951113125&OR=DocLibClassicUI',
+              external: true
+            },
+            {
+              link: 'https://share.cms.gov/center/CMMI-LDG/_layouts/15/WopiFrame.aspx?sourcedoc=%7b23622076-C2E4-47C0-A930-0013AF2110AE%7d&file=Model%20Recruitment%20and%20Engagement%20%5bLDG%5d.pptx&action=default&CT=1759951027742&OR=DocLibClassicUI',
+              external: true
+            }
           ]
         }
       ]
@@ -2491,6 +2524,17 @@ const helpAndKnowledge = {
     'Below are some additional help resources that you may find useful.',
   addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help resources',
+  milestoneLibrary: {
+    hkcHeading: 'Milestone library',
+    hkcDescription:
+      'Model teams in MINT collaborate to complete the model-to-operations matrix (MTO) to identify which activities, milestones, and supporting operational solutions are needed to take the model from concept through implementation to active status. The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in their MTO. Browse those available milestones here.',
+    hkcJumpToLabel: 'Milestone library',
+    hkcViewCta: 'View milestone library',
+    description:
+      'The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in the model-to-operations matrix (MTO) for their model. Each common milestone has a common category, description, list of roles often responsible for completing the work, and a set of solutions and/or IT systems often used to implement the work for the milestone.',
+    returnToHkc: 'Return to Help and Knowledge Center',
+    learnAboutThisMilestone: 'Learn about this milestone'
+  },
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:
     'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.',

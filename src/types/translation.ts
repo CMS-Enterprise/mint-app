@@ -40,6 +40,7 @@ import {
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
+  ModelPlanMtoTemplateLinkTranslation,
   ModelStatus,
   ModelType,
   ModelViewFilter,
@@ -711,7 +712,7 @@ export type TranslationOpsEvalAndLearningForm = {
   // Evaluation
   evaluationApproaches: TranslationFieldPropertiesWithOptions<EvaluationApproachType>;
   evaluationApproachOther: TranslationFieldProperties;
-  evalutaionApproachNote: TranslationFieldProperties;
+  evaluationApproachNote: TranslationFieldProperties;
   ccmInvolvment: TranslationFieldPropertiesWithOptionsAndChildren<CcmInvolvmentType>;
   ccmInvolvmentOther: TranslationFieldProperties;
   ccmInvolvmentNote: TranslationFieldProperties;
@@ -1504,3 +1505,19 @@ export enum PlanSection {
   MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
   MTO_MILESTONE_NOTE = 'mtoMilestoneNote'
 }
+
+// Model Plan MTO Template Link - Change History purposes only
+export type TranslationModelPlanMTOTemplateLinkCustomForm = {
+  modelPlanID: TranslationFieldProperties;
+  templateID: TranslationFieldProperties;
+  appliedDate: TranslationFieldProperties;
+};
+
+type TranslationModelPlanMTOTemplateLinkCustomGQL = Omit<
+  ModelPlanMtoTemplateLinkTranslation,
+  '__typename'
+>;
+
+export type TranslationModelPlanMTOTemplateLinkCustom = {
+  [K in keyof TranslationModelPlanMTOTemplateLinkCustomGQL]: TranslationModelPlanMTOTemplateLinkCustomForm[K]; // FE form type
+};

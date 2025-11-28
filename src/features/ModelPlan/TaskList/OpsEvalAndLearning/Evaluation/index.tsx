@@ -82,7 +82,7 @@ const Evaluation = () => {
     iddocSupport,
     evaluationApproaches,
     evaluationApproachOther,
-    evalutaionApproachNote,
+    evaluationApproachNote,
     ccmInvolvment,
     ccmInvolvmentOther,
     ccmInvolvmentNote,
@@ -115,11 +115,11 @@ const Evaluation = () => {
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
+        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
       navigate(
-        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
+        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/data-sharing`
       );
     }
   };
@@ -130,7 +130,7 @@ const Evaluation = () => {
     iddocSupport: iddocSupport ?? null,
     evaluationApproaches: evaluationApproaches ?? [],
     evaluationApproachOther: evaluationApproachOther ?? '',
-    evalutaionApproachNote: evalutaionApproachNote ?? '',
+    evaluationApproachNote: evaluationApproachNote ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
     ccmInvolvmentOther: ccmInvolvmentOther ?? '',
     ccmInvolvmentNote: ccmInvolvmentNote ?? '',
@@ -259,7 +259,7 @@ const Evaluation = () => {
                       })}
                       <AddNote
                         id="ops-eval-and-learning-evaluation-approach-note"
-                        field="evalutaionApproachNote"
+                        field="evaluationApproachNote"
                       />
                     </FieldGroup>
 
@@ -470,7 +470,7 @@ const Evaluation = () => {
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
                           navigate(
-                            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
+                            `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/performance`
                           );
                         }}
                       >
@@ -487,7 +487,7 @@ const Evaluation = () => {
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
                         navigate(
-                          `/models/${modelID}/collaboration-area/task-list`
+                          `/models/${modelID}/collaboration-area/model-plan`
                         )
                       }
                     >

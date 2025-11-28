@@ -52,10 +52,10 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             <a
               class="usa-link usa-breadcrumb__link"
               data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
             >
               <span>
-                Model Plan task list
+                Model Plan
               </span>
             </a>
           </li>
@@ -205,6 +205,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-type-STATE"
+                  style="width: fit-content;"
                 >
                   States and territories
                 </label>
@@ -225,6 +226,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-type-REGION"
+                  style="width: fit-content;"
                 >
                   Region
                 </label>
@@ -246,6 +248,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-type-OTHER"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>
@@ -295,6 +298,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-BENEFICIARIES"
+                  style="width: fit-content;"
                 >
                   Beneficiaries
                 </label>
@@ -315,6 +319,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-PARTICIPANTS"
+                  style="width: fit-content;"
                 >
                   Participants
                 </label>
@@ -335,6 +340,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-PROVIDERS"
+                  style="width: fit-content;"
                 >
                   Providers
                 </label>
@@ -355,6 +361,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 <label
                   class="usa-checkbox__label"
                   for="plan-characteristics-geographies-applied-to-OTHER"
+                  style="width: fit-content;"
                 >
                   Other
                 </label>
@@ -524,6 +531,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-agreement-type-COOPERATIVE"
+                style="width: fit-content;"
               >
                 Co-Operative Agreement/Grant
               </label>
@@ -544,6 +552,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-agreement-type-PARTICIPATION"
+                style="width: fit-content;"
               >
                 Participation Agreement
               </label>
@@ -564,6 +573,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="plan-characteristics-agreement-type-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -636,7 +646,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
               />
             </svg>
-            Save and return to task list
+            Save and return to Model Plan
           </button>
         </fieldset>
       </form>

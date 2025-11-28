@@ -1,0 +1,193 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TemplatePanel Component > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-4 padding-x-8 mint-body-normal"
+    style="max-width: 575px;"
+  >
+    <h2
+      class="margin-y-2 line-height-large"
+    >
+      Standard categories
+    </h2>
+    <div
+      class="text-base-dark"
+    >
+      24 categories, 0 milestones, 0 solutions
+    </div>
+    <p
+      class="margin-y-4"
+      style="white-space: pre-line;"
+    >
+      These are the standard categories for MTOs.
+    </p>
+    <div
+      class="padding-bottom-6 margin-bottom-4 border-bottom border-base-light"
+    >
+      <button
+        class="usa-button usa-button--outline margin-right-2"
+        data-testid="add-to-matrix-panel-button"
+        type="button"
+      >
+        Add to matrix
+      </button>
+    </div>
+    <h3
+      class="margin-y-2"
+    >
+      Template contents
+    </h3>
+    <p
+      class="margin-y-2"
+      style="white-space: pre-line;"
+    >
+      The categories, milestones, and solutions listed below will be added to your model-to-operations (MTO) matrix if you choose to add this template.
+    </p>
+    <header
+      class="usa-header usa-header--basic model-to-operations__nav-container border-bottom border-base-lighter"
+      data-testid="header"
+    >
+      <div
+        class="usa-nav-container padding-0"
+      >
+        <nav
+          class="usa-nav flex-justify-start margin-0 padding-0"
+        >
+          <button
+            aria-label="Close Navigation Menu"
+            class="usa-nav__close"
+            data-testid="navCloseButton"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+          <ul
+            class="usa-nav__primary usa-accordion"
+          >
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                type="button"
+              >
+                <span
+                  class="text-primary"
+                >
+                  Milestones
+                </span>
+              </button>
+            </li>
+            <li
+              class="usa-nav__primary-item"
+            >
+              <button
+                class="usa-nav__link margin-left-neg-2 margin-right-2"
+                type="button"
+              >
+                <span
+                  class=""
+                >
+                  Solutions and IT systems
+                </span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div
+      class="margin-y-4"
+    >
+      <div
+        class="border-top border-bottom"
+      >
+        <div
+          class="padding-105 border-bottom bg-accent-cool-lighter"
+        >
+          <div
+            class="text-bold"
+          >
+            <p
+              class="margin-0"
+            >
+              Category: Category 1
+            </p>
+          </div>
+        </div>
+        <div
+          class="padding-105 border-bottom bg-base-lightest"
+        >
+          <div
+            class="text-bold"
+          >
+            <p
+              class="margin-0"
+            >
+              Sub-category: SubCategory 1
+            </p>
+          </div>
+        </div>
+        <div
+          class="padding-105"
+        >
+          <div
+            class="text-normal"
+          >
+            <p
+              class="margin-0"
+            >
+              Milestone: Milestone 1
+            </p>
+            <p
+              class="margin-0 text-base"
+            >
+              Selected solutions: Solution 1
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <nav
+          aria-label="Pagination"
+          class="usa-pagination mint-pagination"
+        >
+          <ul
+            class="usa-pagination__list"
+          >
+            <li
+              class="usa-pagination__item usa-pagination__page-no"
+            >
+              <button
+                aria-current="page"
+                aria-label="Page 1"
+                class="usa-pagination__button usa-current bg-transparent cursor-pointer"
+                data-testid="pagination-page-number"
+                type="button"
+              >
+                1
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

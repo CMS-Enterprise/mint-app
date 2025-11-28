@@ -52,10 +52,10 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <a
               class="usa-link usa-breadcrumb__link"
               data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
             >
               <span>
-                Model Plan task list
+                Model Plan
               </span>
             </a>
           </li>
@@ -325,7 +325,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
-                              title=""
                             >
                               <svg
                                 aria-label="info"
@@ -386,7 +385,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
-                              title=""
                             >
                               <svg
                                 aria-label="info"
@@ -447,7 +445,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
-                              title=""
                             >
                               <svg
                                 aria-label="info"
@@ -508,7 +505,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
-                              title=""
                             >
                               <svg
                                 aria-label="info"
@@ -569,7 +565,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
-                              title=""
                             >
                               <svg
                                 aria-label="info"
@@ -630,7 +625,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                               class="usa-tooltip__trigger mint-no-print"
                               data-testid="triggerElement"
                               tabindex="0"
-                              title=""
                             >
                               <svg
                                 aria-label="info"
@@ -716,6 +710,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="plan-basics-model-additional-category-ACCOUNTABLE_CARE"
+                      style="width: fit-content;"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -731,7 +726,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -779,6 +773,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="plan-basics-model-additional-category-DISEASE_SPECIFIC_AND_EPISODIC"
+                      style="width: fit-content;"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -794,7 +789,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -842,6 +836,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="plan-basics-model-additional-category-HEALTH_PLAN"
+                      style="width: fit-content;"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -857,7 +852,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -905,6 +899,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="plan-basics-model-additional-category-PRESCRIPTION_DRUG"
+                      style="width: fit-content;"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -920,7 +915,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -969,6 +963,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="plan-basics-model-additional-category-STATE_BASED"
+                      style="width: fit-content;"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -984,7 +979,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -1032,6 +1026,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="plan-basics-model-additional-category-STATUTORY"
+                      style="width: fit-content;"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -1047,7 +1042,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -1112,6 +1106,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmsCenters-CMMI"
+                      style="width: fit-content;"
                     >
                       Center for Medicare and Medicaid Innovation (CMMI)
                     </label>
@@ -1132,6 +1127,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+                      style="width: fit-content;"
                     >
                       Center for Clinical Standards and Quality (CCSQ)
                     </label>
@@ -1152,6 +1148,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmsCenters-CENTER_FOR_MEDICAID_AND_CHIP_SERVICES"
+                      style="width: fit-content;"
                     >
                       Center for Medicaid and CHIP Services (CMCS)
                     </label>
@@ -1172,6 +1169,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                      style="width: fit-content;"
                     >
                       Center for Medicare (CM)
                     </label>
@@ -1192,6 +1190,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                      style="width: fit-content;"
                     >
                       Federal Coordinated Health Care Office (FCHCO)
                     </label>
@@ -1212,6 +1211,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
+                      style="width: fit-content;"
                     >
                       Center for Program Integrity (CPI)
                     </label>
@@ -1250,6 +1250,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmmiGroup-PATIENT_CARE_MODELS_GROUP"
+                      style="width: fit-content;"
                     >
                       Patient Care Models Group (PCMG)
                     </label>
@@ -1271,6 +1272,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmmiGroup-POLICY_AND_PROGRAMS_GROUP"
+                      style="width: fit-content;"
                     >
                       Policy and Programs Group (PPG)
                     </label>
@@ -1292,6 +1294,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmmiGroup-SEAMLESS_CARE_MODELS_GROUP"
+                      style="width: fit-content;"
                     >
                       Seamless Care Models Group (SCMG)
                     </label>
@@ -1313,6 +1316,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmmiGroup-STATE_AND_POPULATION_HEALTH_GROUP"
+                      style="width: fit-content;"
                     >
                       State and Population Health Group (SPHG)
                     </label>
@@ -1334,6 +1338,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="new-plan-cmmiGroup-TBD"
+                      style="width: fit-content;"
                     >
                       To be determined
                     </label>
@@ -1373,7 +1378,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                     />
                   </svg>
-                  Save and return to task list
+                  Save and return to Model Plan
                 </button>
               </fieldset>
             </form>

@@ -52,10 +52,10 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
             <a
               class="usa-link usa-breadcrumb__link"
               data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
             >
               <span>
-                Model Plan task list
+                Model Plan
               </span>
             </a>
           </li>
@@ -173,6 +173,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                            style="width: fit-content;"
                           >
                             Patient Protection Affordable Care Act (Sec 3021)
                           </label>
@@ -200,6 +201,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
+                            style="width: fit-content;"
                           >
                             Medicare Part A (HI) Trust Fund
                           </label>
@@ -216,7 +218,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -264,6 +265,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
+                            style="width: fit-content;"
                           >
                             Medicare Part B (SMI) Trust Fund
                           </label>
@@ -280,7 +282,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -347,6 +348,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSource-OTHER"
+                            style="width: fit-content;"
                           >
                             Other
                           </label>
@@ -417,6 +419,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                            style="width: fit-content;"
                           >
                             Patient Protection Affordable Care Act (Sec 3021)
                           </label>
@@ -444,6 +447,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                            style="width: fit-content;"
                           >
                             Medicare Part A (HI) Trust Fund
                           </label>
@@ -460,7 +464,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -508,6 +511,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                            style="width: fit-content;"
                           >
                             Medicare Part B (SMI) Trust Fund
                           </label>
@@ -524,7 +528,6 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"
@@ -572,6 +575,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           <label
                             class="usa-checkbox__label"
                             for="payment-funding-source-fundingSourceR-OTHER"
+                            style="width: fit-content;"
                           >
                             Other
                           </label>
@@ -636,6 +640,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-PROVIDERS"
+                        style="width: fit-content;"
                       >
                         Providers
                       </label>
@@ -656,6 +661,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-BENEFICIARIES"
+                        style="width: fit-content;"
                       >
                         Beneficiaries
                       </label>
@@ -676,6 +682,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-PARTICIPANTS"
+                        style="width: fit-content;"
                       >
                         Participants
                       </label>
@@ -696,6 +703,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-STATES"
+                        style="width: fit-content;"
                       >
                         States
                       </label>
@@ -716,6 +724,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-OTHER"
+                        style="width: fit-content;"
                       >
                         Other
                       </label>
@@ -809,6 +818,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-CLAIMS_BASED_PAYMENTS"
+                        style="width: fit-content;"
                       >
                         Claims-Based Payments
                       </label>
@@ -829,6 +839,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS"
+                        style="width: fit-content;"
                       >
                         Non-Claims-Based Payments
                       </label>
@@ -849,6 +860,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="payment-pay-recipients-GRANTS"
+                        style="width: fit-content;"
                       >
                         Grants
                       </label>
@@ -915,7 +927,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                       d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                     />
                   </svg>
-                  Save and return to task list
+                  Save and return to Model Plan
                 </button>
               </fieldset>
             </form>

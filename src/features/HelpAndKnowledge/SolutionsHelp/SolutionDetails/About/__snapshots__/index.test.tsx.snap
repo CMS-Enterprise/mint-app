@@ -1906,6 +1906,73 @@ CMS also utilizes the GrantSolutions Recipient Insight (RI) tool which applies a
 </DocumentFragment>
 `;
 
+exports[`Operational Solutions About Components > matches the snapshot > HIPAA Eligibility Transaction System 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  HETS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Operational Solutions About Components > matches the snapshot > Health Data Reporting 1`] = `
 <DocumentFragment>
   <div>
@@ -3169,6 +3236,127 @@ exports[`Operational Solutions About Components > matches the snapshot > Learnin
             class="list-item"
           >
             Have an LDG member as part of the team
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Additional resources
+        </h3>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                Introduction to Learning and Diffusion Group
+                <svg
+                  aria-label="launch"
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </li>
+          <li
+            class="list-item"
+          >
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                Driver diagrams
+                <svg
+                  aria-label="launch"
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </li>
+          <li
+            class="list-item"
+          >
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                Patient journey mapping
+                <svg
+                  aria-label="launch"
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </li>
+          <li
+            class="list-item"
+          >
+            <span
+              class="usa-link pointer"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                Model participant recruitment and engagement
+                <svg
+                  aria-label="launch"
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </span>
           </li>
         </ul>
       </div>

@@ -52,10 +52,10 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             <a
               class="usa-link usa-breadcrumb__link"
               data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
             >
               <span>
-                Model Plan task list
+                Model Plan
               </span>
             </a>
           </li>
@@ -157,19 +157,19 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
                   role="log"
                 />
                 <div
-                  class=" css-1vl89cy-control"
+                  class="css-1vl89cy-control"
                 >
                   <div
-                    class=" css-1fdsijx-ValueContainer"
+                    class="css-hlgwow"
                   >
                     <div
-                      class=" css-1jqq78o-placeholder"
+                      class="css-1jqq78o-placeholder"
                       id="react-select-3-placeholder"
                     >
                       0 selected
                     </div>
                     <div
-                      class=" css-qbdosj-Input"
+                      class="css-19bb58m"
                       data-value=""
                     >
                       <input
@@ -186,7 +186,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
                         id="react-select-3-input"
                         role="combobox"
                         spellcheck="false"
-                        style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                         tabindex="0"
                         type="text"
                         value=""
@@ -194,14 +194,14 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class=" css-1hb7zxy-IndicatorsContainer"
+                    class="css-1wy0on6"
                   >
                     <span
-                      class=" css-16b81-indicatorSeparator"
+                      class="css-16b81-indicatorSeparator"
                     />
                     <div
                       aria-hidden="true"
-                      class=" css-gjng1h-indicatorContainer"
+                      class="css-gjng1h-indicatorContainer"
                     >
                       <svg
                         aria-hidden="true"
@@ -384,6 +384,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-contractor-support-ONE"
+                style="width: fit-content;"
               >
                 One contractor to support implementation
               </label>
@@ -404,6 +405,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-contractor-support-MULTIPLE"
+                style="width: fit-content;"
               >
                 May have separate contractors for different implementation functions
               </label>
@@ -424,6 +426,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-contractor-support-NONE"
+                style="width: fit-content;"
               >
                 Do not plan to use an implemenation contractor
               </label>
@@ -444,6 +447,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-contractor-support-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -650,7 +654,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
               />
             </svg>
-            Save and return to task list
+            Save and return to Model Plan
           </button>
         </fieldset>
       </form>

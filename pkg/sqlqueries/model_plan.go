@@ -53,6 +53,9 @@ var modelPlanCollectionWhereFavoritedByUserID string
 //go:embed SQL/model_plan/get_task_list_status.sql
 var modelPlanGetTaskListStatus string
 
+//go:embed SQL/model_plan/get_by_status_group.sql
+var modelPlanGetByStatusGroupSQL string
+
 type modelPlanScripts struct {
 	Create                                 string
 	Update                                 string
@@ -71,6 +74,7 @@ type modelPlanScripts struct {
 	GetByComponentGroupLoader              string
 	CollectionWhereFavoritedByUserID       string
 	GetTaskListStatus                      string
+	GetByStatusGroup                       string
 }
 
 // ModelPlan houses all the sql for getting data for model plan from the database
@@ -92,4 +96,5 @@ var ModelPlan = modelPlanScripts{
 	GetByComponentGroupLoader:              modelPlanGetByComponentGroupLoaderSQL,
 	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
 	GetTaskListStatus:                      modelPlanGetTaskListStatus,
+	GetByStatusGroup:                       modelPlanGetByStatusGroupSQL,
 }

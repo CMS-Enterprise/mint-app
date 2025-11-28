@@ -146,5 +146,24 @@
   },
   "mto_milestone_note": {
     "generalName": "MTO milestone note"
+  },
+  "mto_template": {
+    "generalName": "MTO template"
+  },
+  "mto_template_category": {
+    "generalName": "MTO template category"
+  },
+  "mto_template_milestone": {
+    "generalName": "MTO template milestone"
+  },
+  "mto_template_solution": {
+    "generalName": "MTO template solution"
+  },
+  "mto_template_milestone_solution_link": {
+    "generalName": "MTO template milestone solution link"
+  },
+  "model_plan_mto_template_link": {
+    "generalName": "Model plan MTO template link",
+    "groupedName": "Model to Operations"
   }
 }

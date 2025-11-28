@@ -56,10 +56,10 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <a
                 class="usa-link usa-breadcrumb__link"
                 data-discover="true"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
               >
                 <span>
-                  Model Plan task list
+                  Model Plan
                 </span>
               </a>
             </li>
@@ -69,7 +69,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               <a
                 class="usa-link usa-breadcrumb__link"
                 data-discover="true"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/prepare-for-clearance"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan/prepare-for-clearance"
               >
                 <span>
                   Prepare for clearance
@@ -713,7 +713,6 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                             class="usa-tooltip__trigger mint-no-print"
                             data-testid="triggerElement"
                             tabindex="0"
-                            title=""
                           >
                             <svg
                               aria-label="info"

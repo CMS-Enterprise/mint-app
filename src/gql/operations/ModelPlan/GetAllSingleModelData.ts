@@ -260,7 +260,7 @@ export default gql(/* GraphQL */ `
         qualityReportingFrequencyOther
         evaluationApproaches
         evaluationApproachOther
-        evalutaionApproachNote
+        evaluationApproachNote
         dataNeededForMonitoring
         dataNeededForMonitoringOther
         dataNeededForMonitoringNote

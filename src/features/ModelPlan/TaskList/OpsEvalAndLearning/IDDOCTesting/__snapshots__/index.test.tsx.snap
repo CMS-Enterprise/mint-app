@@ -52,10 +52,10 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             <a
               class="usa-link usa-breadcrumb__link"
               data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
             >
               <span>
-                Model Plan task list
+                Model Plan
               </span>
             </a>
           </li>
@@ -258,6 +258,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+                style="width: fit-content;"
               >
                 Beneficiary
               </label>
@@ -278,6 +279,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+                style="width: fit-content;"
               >
                 Provider
               </label>
@@ -298,6 +300,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-PART_A"
+                style="width: fit-content;"
               >
                 Part A
               </label>
@@ -318,6 +321,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-PART_B"
+                style="width: fit-content;"
               >
                 Part B
               </label>
@@ -338,6 +342,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               <label
                 class="usa-checkbox__label"
                 for="ops-eval-and-learning-data-monitoring-file-OTHER"
+                style="width: fit-content;"
               >
                 Other
               </label>
@@ -422,7 +427,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
               />
             </svg>
-            Save and return to task list
+            Save and return to Model Plan
           </button>
         </fieldset>
       </form>

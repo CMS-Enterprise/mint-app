@@ -3,7 +3,9 @@ package email
 import (
 	_ "embed"
 	"fmt"
+	"strings"
 
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
 
@@ -245,11 +247,15 @@ var mtoMilestoneAssignedBodyTemplate string
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
 	emailTemplates map[string]*emailtemplates.EmailTemplate
+	environment    appconfig.Environment
 }
 
 // NewTemplateServiceImpl is a constructor for TemplateServiceImpl
-func NewTemplateServiceImpl() (*TemplateServiceImpl, error) {
-	service := &TemplateServiceImpl{templateCache: emailtemplates.NewTemplateCache()}
+func NewTemplateServiceImpl(environment appconfig.Environment) (*TemplateServiceImpl, error) {
+	service := &TemplateServiceImpl{
+		templateCache: emailtemplates.NewTemplateCache(),
+		environment:   environment,
+	}
 
 	err := service.Load()
 	if err != nil {
@@ -399,6 +405,12 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 
 	subjectEmailTemplateName := emailTemplateName + "_subject"
 	bodyEmailTemplateName := emailTemplateName + "_body"
+
+	// Add environment prefix to subject if in dev, or impl
+	if t.environment.Dev() || t.environment.Impl() {
+		envName := strings.ToUpper(t.environment.String())
+		subjectTemplate = fmt.Sprintf("[%s] %s", envName, subjectTemplate)
+	}
 
 	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
 	if err != nil {

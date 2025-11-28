@@ -52,10 +52,10 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
             <a
               class="usa-link usa-breadcrumb__link"
               data-discover="true"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
             >
               <span>
-                Model Plan task list
+                Model Plan
               </span>
             </a>
           </li>
@@ -347,6 +347,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-reconciliation-frequency-annually"
+                      style="width: fit-content;"
                     >
                       Annually
                     </label>
@@ -367,6 +368,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-reconciliation-frequency-semiannually"
+                      style="width: fit-content;"
                     >
                       Semi-annually
                     </label>
@@ -387,6 +389,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-reconciliation-frequency-quarterly"
+                      style="width: fit-content;"
                     >
                       Quarterly
                     </label>
@@ -407,6 +410,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-reconciliation-frequency-monthly"
+                      style="width: fit-content;"
                     >
                       Monthly
                     </label>
@@ -427,6 +431,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-reconciliation-frequency-continually"
+                      style="width: fit-content;"
                     >
                       Continually
                     </label>
@@ -465,6 +470,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-reconciliation-frequency-other"
+                      style="width: fit-content;"
                     >
                       Other
                     </label>
@@ -521,6 +527,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-demand-recoupment-frequency-annually"
+                      style="width: fit-content;"
                     >
                       Annually
                     </label>
@@ -541,6 +548,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-demand-recoupment-frequency-semiannually"
+                      style="width: fit-content;"
                     >
                       Semi-annually
                     </label>
@@ -561,6 +569,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-demand-recoupment-frequency-quarterly"
+                      style="width: fit-content;"
                     >
                       Quarterly
                     </label>
@@ -581,6 +590,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-demand-recoupment-frequency-monthly"
+                      style="width: fit-content;"
                     >
                       Monthly
                     </label>
@@ -601,6 +611,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-demand-recoupment-frequency-continually"
+                      style="width: fit-content;"
                     >
                       Continually
                     </label>
@@ -639,6 +650,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="payment-demand-recoupment-frequency-other"
+                      style="width: fit-content;"
                     >
                       Other
                     </label>
@@ -805,6 +817,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                         <label
                           class="usa-checkbox__label"
                           for="payment-status"
+                          style="width: fit-content;"
                         >
                           This section of the Model Plan (Payment) is ready for review.
                         </label>
@@ -853,7 +866,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                       d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
                     />
                   </svg>
-                  Save and return to task list
+                  Save and return to Model Plan
                 </button>
               </fieldset>
             </form>

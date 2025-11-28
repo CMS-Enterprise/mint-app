@@ -101,3 +101,15 @@ func (m MTOCategory) IsUncategorized() bool {
 func (m MTOSubcategory) IsUncategorized() bool {
 	return m.ID == uuid.Nil
 }
+
+// MTOCategoryWithNewlyInsertedStatus wraps MTOCategory as well as a newly inserted status
+// it is useful for checking if a category was just added, so an email can be sent
+type MTOCategoryWithNewlyInsertedStatus struct {
+	MTOCategory
+	NewlyInserted bool `json:"newlyInserted" db:"newly_inserted"`
+}
+
+// ToMTOCategory returns the MTOCategory object from the MTOCategoryWithNewlyInsertedStatus
+func (mto *MTOCategoryWithNewlyInsertedStatus) ToMTOCategory() *MTOCategory {
+	return &mto.MTOCategory
+}

@@ -2,20 +2,34 @@ package worker
 
 import (
 	"context"
+	"fmt"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/cms-enterprise/mint-app/pkg/apperrors"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 )
+
+func RecoverFaktoryJobPanicAndLogError(ctx context.Context, returnedError *error) {
+	if r := recover(); r != nil {
+		*returnedError = fmt.Errorf("recovered from panic. Error: %v", r)
+
+		//Future Improvement: Use logging middleware to automatically add faktory fields to the logger
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		logger := appcontext.ZLogger(ctx)
+		logger.Error("job panic recovered", zap.Error(*returnedError))
+	}
+}
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
 func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perform {
 	return func(ctx context.Context, args ...interface{}) (returnedError error) {
-		defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
+		defer RecoverFaktoryJobPanicAndLogError(ctx, &returnedError)
 		jobErr := jobFunc(ctx, args...)
 		if jobErr != nil {
 			return jobErr

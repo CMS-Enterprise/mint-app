@@ -15,6 +15,16 @@ import (
 	"github.com/google/uuid"
 )
 
+type ApplyTemplateResult struct {
+	ID              uuid.UUID `json:"id"`
+	ModelPlanID     uuid.UUID `json:"modelPlanID"`
+	TemplateID      uuid.UUID `json:"templateID"`
+	CategoriesAdded int       `json:"categoriesAdded"`
+	MilestonesAdded int       `json:"milestonesAdded"`
+	SolutionsAdded  int       `json:"solutionsAdded"`
+	Warnings        []string  `json:"warnings,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -150,6 +160,13 @@ type MTOSolutionTranslation struct {
 	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
 	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
+}
+
+// Represents Model Plan MTO Template Link translation data
+type ModelPlanMTOTemplateLinkTranslation struct {
+	ModelPlanID models.TranslationField `json:"modelPlanID" db:"model_plan_id"`
+	TemplateID  models.TranslationField `json:"templateID" db:"template_id"`
+	AppliedDate models.TranslationField `json:"appliedDate" db:"applied_date"`
 }
 
 // Represents model plan base translation data
@@ -509,7 +526,7 @@ type PlanOpsEvalAndLearningTranslation struct {
 	AppealNote                                   models.TranslationField                       `json:"appealNote" db:"appeal_note"`
 	EvaluationApproaches                         models.TranslationFieldWithOptions            `json:"evaluationApproaches" db:"evaluation_approaches"`
 	EvaluationApproachOther                      models.TranslationField                       `json:"evaluationApproachOther" db:"evaluation_approach_other"`
-	EvalutaionApproachNote                       models.TranslationField                       `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
+	EvaluationApproachNote                       models.TranslationField                       `json:"evaluationApproachNote" db:"evaluation_approach_note"`
 	CcmInvolvment                                models.TranslationFieldWithOptionsAndChildren `json:"ccmInvolvment" db:"ccm_involvment"`
 	CcmInvolvmentOther                           models.TranslationField                       `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
 	CcmInvolvmentNote                            models.TranslationField                       `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`

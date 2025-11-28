@@ -106,8 +106,8 @@ type PlanOpsEvalAndLearningTranslation {
     @goTag(key: "db", value: "evaluation_approaches")
   evaluationApproachOther: TranslationField!
     @goTag(key: "db", value: "evaluation_approach_other")
-  evalutaionApproachNote: TranslationField!
-    @goTag(key: "db", value: "evalutaion_approach_note")
+  evaluationApproachNote: TranslationField!
+    @goTag(key: "db", value: "evaluation_approach_note")
   ccmInvolvment: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "ccm_involvment")
   ccmInvolvmentOther: TranslationField!

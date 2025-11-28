@@ -52,7 +52,7 @@ const TaskListButton = ({
           data-testid={path}
           className="usa-button margin-bottom-2 width-auto"
           onClick={() =>
-            navigate(`/models/${modelID}/collaboration-area/task-list/${path}`)
+            navigate(`/models/${modelID}/collaboration-area/model-plan/${path}`)
           }
           aria-label={`${ctaCopy()} ${ariaLabel?.toLowerCase()}`}
         >

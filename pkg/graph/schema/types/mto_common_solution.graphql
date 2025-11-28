@@ -50,6 +50,7 @@ enum MTOCommonSolutionKey {
   MS_FORMS
   RESDAC_CMDS
   OVERLAPS_OPERATIONS_WORKGROUP
+  HETS
 }
 
 enum MTOSolutionType {

@@ -25,7 +25,7 @@ const feedback = {
     label: 'Which part of MINT were you using when you encountered an issue?',
     options: {
       READ_VIEW: 'Model Plan Read View',
-      TASK_LIST: 'Model Plan Task List',
+      TASK_LIST: 'Model Plan',
       IT_SOLUTIONS: 'IT solution and implementation status tracker',
       HELP_CENTER: 'Help Center',
       OTHER: 'Other (please specify)'
