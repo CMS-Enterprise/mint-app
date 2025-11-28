@@ -9,15 +9,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
 
-// AddedAsCollaboratorTemplateName is the template name definition for the corresponding email template
-const AddedAsCollaboratorTemplateName string = "added_as_collaborator"
-
-//go:embed templates/added_as_collaborator_subject.html
-var addedAsCollaboratorSubjectTemplate string
-
-//go:embed templates/added_as_collaborator_body.html
-var addedAsCollaboratorBodyTemplate string
-
 // DailyDigestTemplateName is the template name definition for the corresponding email template
 const DailyDigestTemplateName string = "daily_digest"
 
@@ -98,39 +89,6 @@ var modelPlanShareSubjectTemplate string
 
 //go:embed templates/model_plan_share_body.html
 var modelPlanShareBodyTemplate string
-
-//go:embed templates/shared_style.html
-var sharedStyleTemplate string
-
-//go:embed templates/shared_header.html
-var sharedHeaderTemplate string
-
-//go:embed templates/shared_access_banner.html
-var sharedAccessBannerTemplate string
-
-//go:embed templates/shared_footer.html
-var sharedFooterTemplate string
-
-//go:embed templates/shared_solution_poc_footer.html
-var sharedSolutionPOCFooterTemplate string
-
-//go:embed templates/shared_mto_common_solution_header.html
-var sharedMTOCommonSolutionHeaderTemplate string
-
-//go:embed templates/shared_mint_mailbox_header.html
-var sharedMintMailboxHeader string
-
-//go:embed templates/shared_mint_mailbox_footer.html
-var sharedMintMailboxFooter string
-
-//go:embed templates/shared_non_mint_mailbox_header.html
-var sharedNonMintMailboxHeader string
-
-//go:embed templates/shared_non_mint_mailbox_short_header.html
-var sharedNonMintMailboxShortHeader string
-
-//go:embed templates/shared_subscribed_footer.html
-var sharedSubscribedFooterTemplate string
 
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
@@ -457,20 +415,6 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
 	if err != nil {
 		return err
-	}
-
-	predefinedTemplates := map[string]string{
-		"shared_style.html":                         sharedStyleTemplate,
-		"shared_header.html":                        sharedHeaderTemplate,
-		"shared_footer.html":                        sharedFooterTemplate,
-		"shared_access_banner.html":                 sharedAccessBannerTemplate,
-		"shared_solution_poc_footer.html":           sharedSolutionPOCFooterTemplate,
-		"shared_mto_common_solution_header.html":    sharedMTOCommonSolutionHeaderTemplate,
-		"shared_mint_mailbox_header.html":           sharedMintMailboxHeader,
-		"shared_mint_mailbox_footer.html":           sharedMintMailboxFooter,
-		"shared_non_mint_mailbox_header.html":       sharedNonMintMailboxHeader,
-		"shared_non_mint_mailbox_short_header.html": sharedNonMintMailboxShortHeader,
-		"shared_subscribed_footer.html":             sharedSubscribedFooterTemplate,
 	}
 
 	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
