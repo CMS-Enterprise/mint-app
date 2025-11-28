@@ -33,7 +33,6 @@ const (
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
-	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
 	logger.Debug("queue entries to create jobs for fetched")
 
 	readyToQueueEntries, err := storage.TranslatedAuditQueueGetEntriesToQueue(w.Store)
@@ -113,10 +112,8 @@ func CreateTranslatedAuditBatch[T logging.ChainableErrorOrWarnLogger[T]](w *Work
 
 // TranslateAuditBatchJobSuccess is the call back that gets called when the TranslatedAuditBatchJob Completes
 func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
-	logger = logger.With(logfields.BID(helper.Bid()))
-	logger.Info("Digest Email Batch Job Succeeded")
+	logger.Info("Translate Audit Batch Job Succeeded")
 	//  Add notification here if wanted in the future
 	return nil
 }

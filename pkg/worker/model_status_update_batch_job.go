@@ -24,7 +24,6 @@ const (
 // It will batch all child jobs, and when complete it will fire a callback
 func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Getting collection of model plans that require status checking")
 
