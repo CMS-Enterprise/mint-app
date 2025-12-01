@@ -36,7 +36,7 @@ body:graphql:vars {
 }
 
 script:post-response {
-  let responseData = res.getBody().data.createKeyContactUser
+  let responseData = res.getBody().data.createKeyContactMailbox
   
   let contactId = responseData.id
   

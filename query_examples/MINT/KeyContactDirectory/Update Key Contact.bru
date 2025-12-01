@@ -28,7 +28,6 @@ body:graphql:vars {
   {
     "id": "{{keyContactId}}",
     "changes": {
-      "userName": "mint",
       "subjectArea": "cello",
       "subjectCategoryID": "{{subjectCategoryID}}"
     }
@@ -36,7 +35,7 @@ body:graphql:vars {
 }
 
 script:post-response {
-  let responseData = res.getBody().data.createKeyContactUser
+  let responseData = res.getBody().data.updateKeyContact
   
   let contactId = responseData.id
   
