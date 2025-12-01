@@ -4,8 +4,30 @@ import (
 	"bytes"
 	"fmt"
 	htmlTemplate "html/template"
+	"strings"
 	textTemplate "text/template"
 )
+
+const maxSubjectLength = 255
+
+// sanitizeSubject removes newlines and carriage returns from email subjects
+// and caps the length to prevent header injection attacks
+func sanitizeSubject(subject string) string {
+	// Replace carriage returns and newlines with spaces to prevent header injection
+	subject = strings.ReplaceAll(subject, "\r\n", " ")
+	subject = strings.ReplaceAll(subject, "\r", " ")
+	subject = strings.ReplaceAll(subject, "\n", " ")
+
+	// Trim whitespace
+	subject = strings.TrimSpace(subject)
+
+	// Cap length at 255 characters
+	if len(subject) > maxSubjectLength {
+		subject = subject[:maxSubjectLength]
+	}
+
+	return subject
+}
 
 // EmailTemplate is a struct to define an email template and generate emails from it
 type EmailTemplate struct {
@@ -94,7 +116,7 @@ func (e *GenEmailTemplate[subjectType, bodyType]) GetSubject(subject subjectType
 		return "", err
 	}
 
-	return buffer.String(), nil
+	return sanitizeSubject(buffer.String()), nil
 }
 
 // GetBody gets the body portion of an email template executed with the data provided
@@ -148,7 +170,12 @@ func (e *EmailTemplate) GetExecutedSubject(data interface{}) (string, error) {
 		return "", err
 	}
 
-	return e.executeTextTemplate(subjectTemplate, data)
+	subject, err := e.executeTextTemplate(subjectTemplate, data)
+	if err != nil {
+		return "", err
+	}
+
+	return sanitizeSubject(subject), nil
 }
 
 // GetExecutedBody gets the body portion of an email template executed with the data provided
