@@ -463,6 +463,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="anticipated-payment-frequency-annually"
+                      style="width: fit-content;"
                     >
                       Annually
                     </label>
@@ -483,6 +484,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="anticipated-payment-frequency-semiannually"
+                      style="width: fit-content;"
                     >
                       Semi-annually
                     </label>
@@ -503,6 +505,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="anticipated-payment-frequency-quarterly"
+                      style="width: fit-content;"
                     >
                       Quarterly
                     </label>
@@ -523,6 +526,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="anticipated-payment-frequency-monthly"
+                      style="width: fit-content;"
                     >
                       Monthly
                     </label>
@@ -543,6 +547,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="anticipated-payment-frequency-continually"
+                      style="width: fit-content;"
                     >
                       Continually
                     </label>
@@ -563,6 +568,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                     <label
                       class="usa-checkbox__label"
                       for="anticipated-payment-frequency-other"
+                      style="width: fit-content;"
                     >
                       Other
                     </label>

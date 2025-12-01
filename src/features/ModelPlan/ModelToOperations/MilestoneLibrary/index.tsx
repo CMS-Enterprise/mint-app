@@ -13,6 +13,7 @@ import {
 import NotFound from 'features/NotFound';
 import {
   GetMtoMilestonesQuery,
+  useGetMtoAllCommonMilestonesQuery,
   useGetMtoMilestonesQuery
 } from 'gql/generated/graphql';
 
@@ -40,67 +41,98 @@ export type MilestoneCardType =
   GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0];
 
 const MilestoneLibrary = () => {
-  const { t } = useTranslation('modelToOperationsMisc');
+  const { t: hkcT } = useTranslation('helpAndKnowledge');
+  const { t: mtoMiscT } = useTranslation('modelToOperationsMisc');
+
+  const location = useLocation();
+  const isHkcMilestoneLibrary =
+    location.pathname.includes('help-and-knowledge');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const returnedToUrl = isHkcMilestoneLibrary
+    ? '/help-and-knowledge'
+    : `/models/${modelID}/collaboration-area/model-to-operations/matrix`;
 
   const { data, loading, error } = useGetMtoMilestonesQuery({
     variables: {
       id: modelID
-    }
+    },
+    skip: isHkcMilestoneLibrary
   });
 
-  const dataAvalilable: boolean = !loading || !!data?.modelPlan?.mtoMatrix;
+  const { data: allCommonMilestones } = useGetMtoAllCommonMilestonesQuery({
+    skip: !isHkcMilestoneLibrary
+  });
+
+  const dataAvailable: boolean =
+    !loading ||
+    !!data?.modelPlan?.mtoMatrix ||
+    !!allCommonMilestones?.mtoCommonMilestones;
 
   const milestones = useMemo(
     () =>
-      data?.modelPlan?.mtoMatrix?.commonMilestones ||
+      (isHkcMilestoneLibrary
+        ? allCommonMilestones?.mtoCommonMilestones
+        : data?.modelPlan?.mtoMatrix?.commonMilestones) ||
       ([] as MilestoneCardType[]),
-    [data?.modelPlan?.mtoMatrix?.commonMilestones]
+    [
+      allCommonMilestones?.mtoCommonMilestones,
+      data?.modelPlan?.mtoMatrix?.commonMilestones,
+      isHkcMilestoneLibrary
+    ]
   );
 
-  if (error) {
+  if (!isHkcMilestoneLibrary && error) {
     return <NotFound errorMessage={error.message} />;
   }
 
   return (
     <GridContainer>
       <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.MODEL_TO_OPERATIONS
-        ]}
-        customItem={t('milestoneLibrary.heading')}
+        items={
+          isHkcMilestoneLibrary
+            ? [BreadcrumbItemOptions.HELP_CENTER]
+            : [
+                BreadcrumbItemOptions.HOME,
+                BreadcrumbItemOptions.COLLABORATION_AREA,
+                BreadcrumbItemOptions.MODEL_TO_OPERATIONS
+              ]
+        }
+        customItem={mtoMiscT('milestoneLibrary.heading')}
       />
 
       <h1 className="margin-bottom-2 margin-top-5 line-height-large">
-        {t('milestoneLibrary.heading')}
+        {mtoMiscT('milestoneLibrary.heading')}
       </h1>
 
       <p className="mint-body-large margin-bottom-2 margin-top-05">
-        {t('milestoneLibrary.description')}
+        {isHkcMilestoneLibrary
+          ? hkcT('milestoneLibrary.description')
+          : mtoMiscT('milestoneLibrary.description')}
       </p>
 
       <div className="margin-bottom-6">
-        <UswdsReactLink
-          to={`/models/${modelID}/collaboration-area/model-to-operations/matrix`}
-          data-testid="return-to-mto"
-        >
+        <UswdsReactLink to={returnedToUrl} data-testid="return-to-mto">
           <span>
             <Icon.ArrowBack
               className="top-3px margin-right-1"
               aria-label="back"
             />
-            {t('returnToMTO')}
+            {isHkcMilestoneLibrary
+              ? hkcT('milestoneLibrary.returnToHkc')
+              : mtoMiscT('returnToMTO')}
           </span>
         </UswdsReactLink>
       </div>
 
-      {!dataAvalilable ? (
+      {!dataAvailable ? (
         <PageLoading />
       ) : (
-        <MilstoneCardGroup milestones={milestones} />
+        <MilstoneCardGroup
+          milestones={milestones}
+          isHkcMilestoneLibrary={isHkcMilestoneLibrary}
+        />
       )}
     </GridContainer>
   );
@@ -121,9 +153,11 @@ const searchMilestones = (
 type MilestoneViewType = 'suggested' | 'all';
 
 const MilstoneCardGroup = ({
-  milestones
+  milestones,
+  isHkcMilestoneLibrary
 }: {
   milestones: MilestoneCardType[];
+  isHkcMilestoneLibrary: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
@@ -145,7 +179,9 @@ const MilstoneCardGroup = ({
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
   const milestoneParam: string = params.get('milestone') || '';
 
-  let viewParam: MilestoneViewType = 'suggested';
+  let viewParam: MilestoneViewType = isHkcMilestoneLibrary
+    ? 'all'
+    : 'suggested';
 
   const [, setIsSidepanelOpen] = useState(false);
 
@@ -294,114 +330,124 @@ const MilstoneCardGroup = ({
               </Grid>
             )}
 
-            <Grid
-              desktop={{ col: 12 }}
-              className="display-flex flex-wrap margin-bottom-2"
-            >
-              <ButtonGroup type="segmented" className="margin-right-3">
-                <Button
-                  type="button"
-                  outline={viewParam !== 'suggested'}
-                  onClick={() => {
-                    params.set('page', '1');
-                    params.set('view', 'suggested');
-                    navigate({ search: params.toString() }, { replace: true });
-                  }}
-                >
-                  {t('milestoneLibrary.suggestedMilestones', {
-                    count: query
-                      ? currentSuggestedMilestones.length
-                      : suggestedMilestones.length
+            {!isHkcMilestoneLibrary && (
+              <Grid
+                desktop={{ col: 12 }}
+                className="display-flex flex-wrap margin-bottom-2"
+              >
+                <ButtonGroup type="segmented" className="margin-right-3">
+                  <Button
+                    type="button"
+                    outline={viewParam !== 'suggested'}
+                    onClick={() => {
+                      params.set('page', '1');
+                      params.set('view', 'suggested');
+                      navigate(
+                        { search: params.toString() },
+                        { replace: true }
+                      );
+                    }}
+                  >
+                    {t('milestoneLibrary.suggestedMilestones', {
+                      count: query
+                        ? currentSuggestedMilestones.length
+                        : suggestedMilestones.length
+                    })}
+                  </Button>
+                  <Button
+                    type="button"
+                    outline={viewParam !== 'all'}
+                    onClick={() => {
+                      params.set('page', '1');
+                      params.set('view', 'all');
+                      navigate(
+                        { search: params.toString() },
+                        { replace: true }
+                      );
+                    }}
+                  >
+                    {t('milestoneLibrary.allMilestones', {
+                      count: query
+                        ? currentNotAddedMilestones.length
+                        : milestonesNotAdded.length
+                    })}
+                  </Button>
+                </ButtonGroup>
+
+                <CheckboxField
+                  id="hide-added-milestones"
+                  name="hide-added-milestones"
+                  label={t('milestoneLibrary.hideAdded', {
+                    count: addedMilestones.length
                   })}
-                </Button>
-                <Button
-                  type="button"
-                  outline={viewParam !== 'all'}
-                  onClick={() => {
-                    params.set('page', '1');
-                    params.set('view', 'all');
+                  value="true"
+                  checked={addedMilestonesHidden}
+                  onBlur={() => null}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    params.set(
+                      'hide-added-milestones',
+                      addedMilestonesHidden ? 'false' : 'true'
+                    );
                     navigate({ search: params.toString() }, { replace: true });
-                  }}
-                >
-                  {t('milestoneLibrary.allMilestones', {
-                    count: query
-                      ? currentNotAddedMilestones.length
-                      : milestonesNotAdded.length
-                  })}
-                </Button>
-              </ButtonGroup>
-
-              <CheckboxField
-                id="hide-added-milestones"
-                name="hide-added-milestones"
-                label={t('milestoneLibrary.hideAdded', {
-                  count: addedMilestones.length
-                })}
-                value="true"
-                checked={addedMilestonesHidden}
-                onBlur={() => null}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  params.set(
-                    'hide-added-milestones',
-                    addedMilestonesHidden ? 'false' : 'true'
-                  );
-                  navigate({ search: params.toString() }, { replace: true });
-                }}
-              />
-            </Grid>
-
-            <Grid
-              desktop={{ col: 12 }}
-              className="display-flex flex-wrap bg-primary-lighter padding-x-2 padding-y-1"
-            >
-              <span className="text-bold margin-x-05">
-                {t('milestoneLibrary.dontSeeMilestone')}
-              </span>
-
-              {viewParam === 'suggested' ? (
-                <Trans
-                  t={t}
-                  i18nKey="milestoneLibrary.checkMilestones"
-                  components={{
-                    link1: (
-                      <UswdsReactLink
-                        to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
-                        className="margin-x-05"
-                      >
-                        {' '}
-                      </UswdsReactLink>
-                    ),
-                    button1: (
-                      <Button
-                        unstyled
-                        type="button"
-                        className="margin-x-05"
-                        onClick={() => {
-                          clearMessage();
-                          setMTOModalState({ modalType: 'milestone' });
-                          setIsModalOpen(true);
-                        }}
-                      >
-                        {' '}
-                      </Button>
-                    )
                   }}
                 />
-              ) : (
-                <Button
-                  unstyled
-                  type="button"
-                  className="margin-x-05"
-                  onClick={() => {
-                    clearMessage();
-                    setMTOModalState({ modalType: 'milestone' });
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t('milestoneLibrary.addCustomMilestone')}{' '}
-                </Button>
-              )}
-            </Grid>
+              </Grid>
+            )}
+
+            {!isHkcMilestoneLibrary && (
+              <Grid
+                desktop={{ col: 12 }}
+                className="display-flex flex-wrap bg-primary-lighter padding-x-2 padding-y-1"
+              >
+                <span className="text-bold margin-x-05">
+                  {t('milestoneLibrary.dontSeeMilestone')}
+                </span>
+
+                {viewParam === 'suggested' ? (
+                  <Trans
+                    t={t}
+                    i18nKey="milestoneLibrary.checkMilestones"
+                    components={{
+                      link1: (
+                        <UswdsReactLink
+                          to={`/models/${modelID}/collaboration-area/model-to-operations/milestone-library?view=all`}
+                          className="margin-x-05"
+                        >
+                          {' '}
+                        </UswdsReactLink>
+                      ),
+                      button1: (
+                        <Button
+                          unstyled
+                          type="button"
+                          className="margin-x-05"
+                          onClick={() => {
+                            clearMessage();
+                            setMTOModalState({ modalType: 'milestone' });
+                            setIsModalOpen(true);
+                          }}
+                        >
+                          {' '}
+                        </Button>
+                      )
+                    }}
+                  />
+                ) : (
+                  <Button
+                    unstyled
+                    type="button"
+                    className="margin-x-05"
+                    onClick={() => {
+                      clearMessage();
+                      setMTOModalState({ modalType: 'milestone' });
+                      setIsModalOpen(true);
+                    }}
+                  >
+                    {t('milestoneLibrary.addCustomMilestone')}{' '}
+                  </Button>
+                )}
+              </Grid>
+            )}
           </Grid>
         </div>
 
@@ -443,6 +489,7 @@ const MilstoneCardGroup = ({
                       <MilestoneCard
                         milestone={milestone}
                         setIsSidepanelOpen={setIsSidepanelOpen}
+                        isHkcMilestoneLibrary={isHkcMilestoneLibrary}
                       />
                     </Grid>
                   ))}

@@ -77,19 +77,19 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
             />
             <div
               aria-disabled="true"
-              class=" css-5f0fg1-control"
+              class="css-5f0fg1-control"
             >
               <div
-                class=" css-1fdsijx-ValueContainer"
+                class="css-hlgwow"
               >
                 <div
-                  class=" css-1jqq78o-placeholder"
+                  class="css-1jqq78o-placeholder"
                   id="react-select-3-placeholder"
                 >
                   0 selected
                 </div>
                 <div
-                  class=" css-1h01tm3-Input"
+                  class="css-1mkvw8y"
                   data-value=""
                 >
                   <input
@@ -108,7 +108,7 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
                     id="react-select-3-input"
                     role="combobox"
                     spellcheck="false"
-                    style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                    style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
                     tabindex="0"
                     type="text"
                     value=""
@@ -116,14 +116,14 @@ exports[`Custom Catergory form > shows warning message when zero milestones and 
                 </div>
               </div>
               <div
-                class=" css-1hb7zxy-IndicatorsContainer"
+                class="css-1wy0on6"
               >
                 <span
-                  class=" css-1ck7a90-indicatorSeparator"
+                  class="css-1ck7a90-indicatorSeparator"
                 />
                 <div
                   aria-hidden="true"
-                  class=" css-gjng1h-indicatorContainer"
+                  class="css-gjng1h-indicatorContainer"
                 >
                   <svg
                     aria-hidden="true"
