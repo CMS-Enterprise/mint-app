@@ -37,7 +37,7 @@ extend type Query {
   keyContacts: [KeyContact!]!
 
   # Get a single key contact by id
-  keyContact(id: UUID!): KeyContact!
+  keyContact(id: UUID!): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 }
 
 extend type Mutation {

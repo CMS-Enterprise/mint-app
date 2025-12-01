@@ -21,7 +21,7 @@ type keyContactLoaders struct {
 	GetAll LoaderWrapper[*uuid.UUID, []*models.KeyContact]
 }
 
-// KeyContact is the singleton instance of all LoaderWrappers related to MTO Common Solutions
+// KeyContact is the singleton instance of all LoaderWrappers related to Key Contact
 var KeyContact = &keyContactLoaders{
 	ByID:   NewLoaderWrapper(batchKeyContactGetByID),
 	GetAll: NewLoaderWrapper(batchKeyContactGetAll),

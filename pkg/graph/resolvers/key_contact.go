@@ -20,7 +20,6 @@ import (
 
 // CreateKeyContactUser creates a new user contact for a subject matter expert.
 // It looks up the user account by username and inserts a new contact record associated with that user.
-// ctx, logger, principal, r.store, userName, subjectArea, subjectCategoryID
 func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	userName string,
@@ -245,7 +244,7 @@ func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 	return returnedContact, nil
 }
 
-// GetKeyContact retrieves  a subject matter expert by its ID.
+// GetKeyContact retrieves a subject matter expert by its ID.
 // Returns the contact if found, or an error if not found or on failure.
 func GetKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
@@ -267,7 +266,7 @@ func GetKeyContact(ctx context.Context, logger *zap.Logger, principal authentica
 	return contact, nil
 }
 
-// GetKeyContacts retrieves  all subject matter experts.
+// GetKeyContacts retrieves all subject matter experts.
 // Returns the contacts if found, or an error if failure.
 func GetAllKeyContacts(ctx context.Context, logger *zap.Logger, store *storage.Store) ([]*models.KeyContact, error) {
 	contacts, err := loaders.KeyContact.GetAll.Load(ctx, nil)
@@ -276,7 +275,7 @@ func GetAllKeyContacts(ctx context.Context, logger *zap.Logger, store *storage.S
 	}
 
 	if contacts == nil {
-		return nil, fmt.Errorf("no key contacts found")
+		contacts = []*models.KeyContact{}
 	}
 
 	return contacts, nil
