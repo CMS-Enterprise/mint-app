@@ -6,29 +6,36 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
 // CreateKeyContactCategory is the resolver for the createKeyContactCategory field.
 func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, category string) (*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: CreateKeyContactCategory - createKeyContactCategory"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return CreateKeyContactCategory(ctx, logger, principal, r.store, category)
 }
 
 // UpdateKeyContactCategory is the resolver for the updateKeyContactCategory field.
 func (r *mutationResolver) UpdateKeyContactCategory(ctx context.Context, id uuid.UUID, changes map[string]any) (*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: UpdateKeyContactCategory - updateKeyContactCategory"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return UpdateKeyContactCategory(ctx, logger, principal, r.store, id, changes)
 }
 
 // DeleteKeyContactCategory is the resolver for the deleteKeyContactCategory field.
 func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid.UUID) (*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: DeleteKeyContactCategory - deleteKeyContactCategory"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return DeleteKeyContactCategory(ctx, logger, principal, r.store, id)
 }
 
 // KeyContactCategory is the resolver for the keyContactCategory field.
 func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: KeyContactCategory - keyContactCategory"))
+	logger := appcontext.ZLogger(ctx)
+	return GetAllKeyContactCategories(ctx, logger, r.store)
 }
