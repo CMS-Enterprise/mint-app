@@ -25,8 +25,8 @@ func CreateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 	}
 
 	keyContactCategory := &model.KeyContactCategory{
-		ID:       uuid.New(),
-		Category: category,
+		ID:        uuid.New(),
+		Category:  category,
 		CreatedBy: principalAccount.ID,
 	}
 

@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -66,6 +67,28 @@ func KeyContactCategoryGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid
 
 // KeyContactCategoryGetAll gets all key contact categories
 func KeyContactCategoryGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*model.KeyContactCategory, error) {
+	returned, err := sqlutils.SelectProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]interface{}{})
+	if err != nil {
+		return nil, fmt.Errorf("issue getting all KeyContactCategory objects: %w", err)
+	}
+	return returned, nil
+}
+
+// KeyContactCategoryGetByIDsLoader returns key contact categories by IDs
+func KeyContactCategoryGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*model.KeyContactCategory, error) {
+	args := map[string]interface{}{
+		"ids": pq.Array(ids),
+	}
+
+	returned, err := sqlutils.SelectProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetByIDs, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue getting KeyContactCategory objects by IDs: %w", err)
+	}
+	return returned, nil
+}
+
+// KeyContactCategoryGetAllLoader returns all key contact categories
+func KeyContactCategoryGetAllLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*model.KeyContactCategory, error) {
 	returned, err := sqlutils.SelectProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]interface{}{})
 	if err != nil {
 		return nil, fmt.Errorf("issue getting all KeyContactCategory objects: %w", err)
