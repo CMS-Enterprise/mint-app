@@ -53,3 +53,22 @@ func KeyContactCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 	}
 	return returned, nil
 }
+
+// KeyContactCategoryGetByID gets a key contact category by ID
+func KeyContactCategoryGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*model.KeyContactCategory, error) {
+	arg := map[string]interface{}{"id": id}
+	returned, err := sqlutils.GetProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetByID, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue getting KeyContactCategory object by ID: %w", err)
+	}
+	return returned, nil
+}
+
+// KeyContactCategoryGetAll gets all key contact categories
+func KeyContactCategoryGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*model.KeyContactCategory, error) {
+	returned, err := sqlutils.SelectProcedure[model.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]interface{}{})
+	if err != nil {
+		return nil, fmt.Errorf("issue getting all KeyContactCategory objects: %w", err)
+	}
+	return returned, nil
+}
