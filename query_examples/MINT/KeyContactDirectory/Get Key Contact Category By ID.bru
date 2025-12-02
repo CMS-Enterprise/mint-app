@@ -1,0 +1,63 @@
+meta {
+  name: Get Key Contact Category By ID
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query getKeyContactCategoryById($id: UUID!) {
+    keyContactCategoryById(id: $id) {
+      id
+      category
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        email
+        commonName
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        username
+        email
+        commonName
+      }
+      modifiedDts
+      keyContacts {
+        id
+        subjectArea
+        isTeam
+        mailboxTitle
+        mailboxAddress
+        userID
+        userAccount {
+          id
+          username
+          email
+          commonName
+        }
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{keyContactCategoryID}}"
+  }
+}
+
