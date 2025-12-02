@@ -105,9 +105,13 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	// The actual code uses email.Collaborator.Added template, not the mock template service
-	// So we expect the real subject and body from the actual template
-	expectedSubject := "You've been added as a team member for Plan For Milestones"
+	// The actual code uses email.Collaborator.Added template, so generate the expected subject
+	// using the same template to ensure we match the real behavior
+	subjectContent := email.AddedAsCollaboratorSubjectContent{
+		ModelName: planName,
+	}
+	expectedSubject, err := email.Collaborator.Added.GetSubject(subjectContent)
+	suite.NoError(err)
 
 	addressBook := email.AddressBook{
 		DefaultSender: "unit-test-execution@mint.cms.gov",
