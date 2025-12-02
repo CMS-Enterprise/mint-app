@@ -2625,7 +2625,29 @@ const helpAndKnowledge = {
   sortAsc: 'By title (A-Z)',
   sortDesc: 'By title (Z-A)',
   lastUpdated: 'Last updated {{date}}',
-  solutionType
+  solutionType,
+  keyContactDirectory: {
+    jumpToLabel: 'Contact directory',
+    header: 'Contact directory',
+    descriptionForGeneral:
+      'Find subject matter experts (SMEs) for a variety of key model design and development subject areas. If you feel a topic or SME is missing, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+    descriptionForAssessment:
+      'Find subject matter experts (SMEs) for a variety of key model design and development subject areas.',
+    subjectArea: 'Subject area',
+    sme: 'Subject matter expert (SME)',
+    addSubjectCategory: 'Add a subject category',
+    addSme: 'Add SME',
+    addSmeToCategory: 'Add SME to this category',
+    remaneCategory: 'Rename category',
+    removeCategory: 'Remove category',
+    noSmesInCategory: 'There are no SMEs listed in this subject category',
+    emptyDirectoryHeading:
+      'There are not currently any SMEs in the MINT contact directory',
+    emptyDirectoryInfoForGeneral:
+      'Please check back at a later date. Or, if you’re looking for a contact or topic that you believe should be a part of the MINT contact directory, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+    emptyDirectoryInfoForAssessment:
+      'Use the buttons above to add subject matter categories and SMEs or contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email> for help.'
+  }
 };
 
 export default helpAndKnowledge;

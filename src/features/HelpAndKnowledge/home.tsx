@@ -7,6 +7,7 @@ import PageHeading from 'components/PageHeading';
 import ScrollLink from 'components/ScrollLink';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
+import KeyContactDirectory from './_components/KeyContactDirectory';
 import MilestoneLibrarySection from './_components/MilestoneLibrarySection';
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
@@ -72,6 +73,8 @@ export const HelpAndKnowledgeHome = () => {
       <MilestoneLibrarySection />
 
       <SolutionCategories />
+
+      <KeyContactDirectory />
     </MainContent>
   );
 };
