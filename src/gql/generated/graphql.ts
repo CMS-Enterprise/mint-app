@@ -735,14 +735,14 @@ export type KeyContact = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  email?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   mailboxAddress?: Maybe<Scalars['String']['output']>;
   mailboxTitle?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
   subjectArea: Scalars['String']['output'];
   subjectCategoryID: Scalars['UUID']['output'];
   userAccount?: Maybe<UserAccount>;
@@ -5918,7 +5918,7 @@ export type UpdateHomepageSettingsMutation = { __typename: 'Mutation', updateUse
 export type GetAllKeyContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllKeyContactsQuery = { __typename: 'Query', keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name?: string | null, email?: string | null, subjectArea: string, subjectCategoryID: UUID }> };
+export type GetAllKeyContactsQuery = { __typename: 'Query', keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, subjectArea: string, subjectCategoryID: UUID }> };
 
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 

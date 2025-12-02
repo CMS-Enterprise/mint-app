@@ -1,30 +1,36 @@
 import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { GridContainer, Link } from '@trussworks/react-uswds';
-import { useGetAllKeyContactsQuery } from 'gql/generated/graphql';
+import { Accordion, GridContainer, Link } from '@trussworks/react-uswds';
+import {
+  GetAllKeyContactsQuery,
+  useGetAllKeyContactsQuery
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
+import PageLoading from 'components/PageLoading';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
+import KeyContactTable from './KeyContactTable';
+
 const Categories = [
   {
+    __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
     category: 'Healthcare'
-  }
-];
-const Directory = [
+  },
   {
-    email: 'pstm@local.cms.gov',
-    id: '49bf1cbb-a994-4394-948a-1dd7ef842fde',
-    name: 'pstm Doe',
-    subjectArea: 'violin',
-    subjectCategoryID: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350'
+    __typename: 'KeyContactCategory',
+    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
+    category: 'CMS Programs'
   }
 ];
+
+export type SmeType = GetAllKeyContactsQuery['keyContacts'][number];
+// type ColumnType = keyof SmeType | 'actions';
 
 const KeyContactDirectory = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -36,10 +42,27 @@ const KeyContactDirectory = () => {
   const isAssessmentTeam = isAssessment(groups, flags);
 
   const categories = Categories; // Replace with actual data fetching logic
-  //   const smes = Directory; // Replace with actual data fetching logic
 
   const { data: smeData, loading: loadingSmes } = useGetAllKeyContactsQuery();
-  const smes = useMemo(() => smeData?.keyContacts || [], [smeData]);
+
+  const smes: Record<string, SmeType[]> = useMemo(() => {
+    const reformattedSmes = smeData?.keyContacts.reduce(
+      (allSmes, sme) => {
+        return {
+          ...allSmes,
+          [sme.subjectCategoryID]: allSmes[sme.subjectCategoryID]
+            ? [...allSmes[sme.subjectCategoryID], sme]
+            : [sme]
+        };
+      },
+      {} as { [key: string]: SmeType[] }
+    );
+    return reformattedSmes || {};
+  }, [smeData]);
+
+  if (loadingSmes) {
+    return <PageLoading testId="key-contact-directory" />;
+  }
 
   return (
     <div
@@ -83,7 +106,24 @@ const KeyContactDirectory = () => {
           </Alert>
         )}
 
-        {categories.length > 0 && <table className="usa-table">hello</table>}
+        {categories.length > 0 &&
+          categories.map(category => (
+            <Accordion
+              key={category.id}
+              className="margin-bottom-3"
+              bordered={false}
+              multiselectable
+              items={[
+                {
+                  title: category.category,
+                  content: <KeyContactTable smes={smes[category.id] || []} />,
+                  expanded: true,
+                  id: category.id,
+                  headingLevel: 'h4'
+                }
+              ]}
+            />
+          ))}
       </GridContainer>
     </div>
   );
