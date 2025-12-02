@@ -22,8 +22,11 @@ func TestJobWithPanicProtection(t *testing.T) {
 	}
 
 	t.Run("Error is returned when a job panics", func(t *testing.T) {
+		_, logger := createTestLogger()
+		ctx := appcontext.WithLogger(context.Background(), logger)
+
 		funcToTest := JobWithPanicProtection(panicFunc)
-		err := funcToTest(nil, nil)
+		err := funcToTest(ctx, nil)
 		assert.Error(t, err)
 		expectedError := fmt.Sprintf("recovered from panic. Error: %s", panicMessage)
 		assert.EqualValues(t, expectedError, err.Error())

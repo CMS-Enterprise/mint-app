@@ -1,6 +1,7 @@
 package services
 
 import (
+	"context"
 	"fmt"
 	"testing"
 
@@ -11,14 +12,16 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 )
 
 type ServicesTestSuite struct {
 	suite.Suite
-	logger *zap.Logger
-	store  *storage.Store
+	Context context.Context
+	logger  *zap.Logger
+	store   *storage.Store
 }
 
 func TestServicesTestSuite(t *testing.T) {
@@ -44,9 +47,10 @@ func TestServicesTestSuite(t *testing.T) {
 		return
 	}
 	servicesTestSuite := &ServicesTestSuite{
-		Suite:  suite.Suite{},
-		logger: logger,
-		store:  store,
+		Suite:   suite.Suite{},
+		Context: appcontext.WithLogger(context.Background(), logger),
+		logger:  logger,
+		store:   store,
 	}
 	suite.Run(t, servicesTestSuite)
 }
