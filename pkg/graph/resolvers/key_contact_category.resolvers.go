@@ -6,11 +6,11 @@ package resolvers
 
 import (
 	"context"
-
-	"github.com/google/uuid"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/google/uuid"
 )
 
 // CreateKeyContactCategory is the resolver for the createKeyContactCategory field.
@@ -38,4 +38,14 @@ func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid
 func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*model.KeyContactCategory, error) {
 	logger := appcontext.ZLogger(ctx)
 	return GetAllKeyContactCategories(ctx, logger, r.store)
+}
+
+// KeyContactCategoryByID is the resolver for the keyContactCategoryById field.
+func (r *queryResolver) KeyContactCategoryByID(ctx context.Context, id uuid.UUID) (*model.KeyContactCategory, error) {
+	panic(fmt.Errorf("not implemented: KeyContactCategoryByID - keyContactCategoryById"))
+}
+
+// KeyContactCategoriesByIds is the resolver for the keyContactCategoriesByIds field.
+func (r *queryResolver) KeyContactCategoriesByIds(ctx context.Context, ids []uuid.UUID) ([]*model.KeyContactCategory, error) {
+	panic(fmt.Errorf("not implemented: KeyContactCategoriesByIds - keyContactCategoriesByIds"))
 }
