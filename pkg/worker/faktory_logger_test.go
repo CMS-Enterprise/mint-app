@@ -131,14 +131,14 @@ func TestFaktoryLogger_DecorateWithJobInfo(t *testing.T) {
 	entry := logs.All()[0]
 	contextMap := entry.ContextMap()
 
-	if contextMap["job_id"] != "job-456" {
-		t.Errorf("expected job_id 'job-456', got %v", contextMap["job_id"])
+	if contextMap["JID"] != "job-456" {
+		t.Errorf("expected JID 'job-456', got %v", contextMap["JID"])
 	}
 	if contextMap["job_type"] != "email_job" {
 		t.Errorf("expected job_type 'email_job', got %v", contextMap["job_type"])
 	}
-	if contextMap["batch_id"] != "batch-123" {
-		t.Errorf("expected batch_id 'batch-123', got %v", contextMap["batch_id"])
+	if contextMap["BID"] != "batch-123" {
+		t.Errorf("expected BID 'batch-123', got %v", contextMap["BID"])
 	}
 	if contextMap["retry_count"] != int64(1) {
 		t.Errorf("expected retry_count 1, got %v", contextMap["retry_count"])
