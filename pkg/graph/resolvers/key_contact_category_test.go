@@ -234,3 +234,4 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories_Empty() {
 	suite.NotNil(allCategories)
 	suite.Len(allCategories, 0)
 }
+
