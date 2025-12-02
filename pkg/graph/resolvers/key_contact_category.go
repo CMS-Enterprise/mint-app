@@ -1,0 +1,165 @@
+package resolvers
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
+
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+)
+
+// CreateKeyContactCategory creates a new key contact category.
+// It inserts a new category record with the provided category name.
+func CreateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	category string,
+) (*model.KeyContactCategory, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	keyContactCategory := &model.KeyContactCategory{
+		ID:       uuid.New(),
+		Category: category,
+		CreatedBy: principalAccount.ID,
+	}
+
+	newCategory, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*model.KeyContactCategory, error) {
+		newCategory, err := storage.KeyContactCategoryCreate(tx, logger, keyContactCategory)
+		if err != nil {
+			return nil, fmt.Errorf("failed to create key contact category: %w", err)
+		}
+		return newCategory, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return newCategory, nil
+}
+
+// UpdateKeyContactCategory updates an existing key contact category.
+// Only category field can be changed. Returns the updated category.
+func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	id uuid.UUID,
+	changes map[string]interface{},
+) (*model.KeyContactCategory, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	existingCategory, err := storage.KeyContactCategoryGetByID(store, logger, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get category with id %s: %w", id, err)
+	}
+
+	if existingCategory == nil {
+		return nil, fmt.Errorf("category with id %s not found", id)
+	}
+
+	// Apply changes
+	if category, ok := changes["category"].(string); ok {
+		existingCategory.Category = category
+	}
+
+	// Set modified by
+	existingCategory.ModifiedBy = &principalAccount.ID
+
+	updatedCategory, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*model.KeyContactCategory, error) {
+		updatedCategory, err := storage.KeyContactCategoryUpdate(tx, logger, existingCategory)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update category with id %s: %w", id, err)
+		}
+		return updatedCategory, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return updatedCategory, nil
+}
+
+// DeleteKeyContactCategory deletes a key contact category by its ID.
+// Returns the deleted category or an error.
+func DeleteKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	id uuid.UUID,
+) (*model.KeyContactCategory, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	// Use a transaction for delete (for audit triggers, etc.)
+	returnedCategory, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*model.KeyContactCategory, error) {
+		// Fetch the existing category to check permissions and return after delete
+		existing, err := storage.KeyContactCategoryGetByID(tx, logger, id)
+		if err != nil {
+			logger.Warn("Failed to get category with id", zap.Any("categoryId", id), zap.Error(err))
+			return nil, nil
+		}
+
+		if existing == nil {
+			return nil, fmt.Errorf("category with id %s not found", id)
+		}
+
+		// Finally, delete the category
+		returnedCategory, err := storage.KeyContactCategoryDelete(tx, logger, id)
+		if err != nil {
+			return nil, fmt.Errorf("unable to delete category. Err %w", err)
+		}
+
+		return returnedCategory, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return returnedCategory, nil
+}
+
+// GetKeyContactCategory retrieves a key contact category by its ID.
+// Returns the category if found, or an error if not found or on failure.
+func GetKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+	id uuid.UUID,
+) (*model.KeyContactCategory, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	category, err := storage.KeyContactCategoryGetByID(store, logger, id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get category with id %s: %w", id, err)
+	}
+
+	if category == nil {
+		return nil, fmt.Errorf("category with id %s not found", id)
+	}
+
+	return category, nil
+}
+
+// GetAllKeyContactCategories retrieves all key contact categories.
+// Returns the categories if found, or an error if failure.
+func GetAllKeyContactCategories(ctx context.Context, logger *zap.Logger, store *storage.Store) ([]*model.KeyContactCategory, error) {
+	categories, err := storage.KeyContactCategoryGetAll(store, logger)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get all key contact categories: %w", err)
+	}
+
+	if categories == nil {
+		categories = []*model.KeyContactCategory{}
+	}
+
+	return categories, nil
+}
