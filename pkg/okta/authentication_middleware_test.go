@@ -31,6 +31,7 @@ import (
 type AuthenticationMiddlewareTestSuite struct {
 	suite.Suite
 	logger        *zap.Logger
+	Context       context.Context
 	config        *viper.Viper
 	store         *storage.Store
 	FetchUserInfo func(context.Context, string) (*models.UserInfo, error)
@@ -51,6 +52,7 @@ func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
 	testSuite := &AuthenticationMiddlewareTestSuite{
 		Suite:         suite.Suite{},
 		logger:        logger,
+		Context:       appcontext.WithLogger(context.Background(), logger),
 		config:        config,
 		store:         store,
 		FetchUserInfo: oktaClient.FetchUserInfo,
@@ -109,7 +111,7 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 
 func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 	userhelpers.GetUserInfoAccountInfoWrapperFunc(s.FetchUserInfo)
-	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), s.store, s.store, "EASI", true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.FetchUserInfo))
+	_, err := userhelpers.GetOrCreateUserAccount(s.Context, s.store, s.store, "EASI", true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.FetchUserInfo))
 
 	s.NoError(err)
 
@@ -119,7 +121,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 			return validJwt(), nil
 		})
 
-		req := httptest.NewRequest("GET", "/systems/", nil)
+		req := httptest.NewRequest("GET", "/systems/", nil).WithContext(s.Context)
 		req.Header.Set("AUTHORIZATION", "Bearer abcdefg")
 		rr := httptest.NewRecorder()
 
@@ -142,7 +144,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 			return nil, errors.New("invalid token")
 		})
 
-		req := httptest.NewRequest("GET", "/systems/", nil)
+		req := httptest.NewRequest("GET", "/systems/", nil).WithContext(s.Context)
 		req.Header.Set("AUTHORIZATION", "Bearer isNotABear")
 		rr := httptest.NewRecorder()
 
@@ -159,7 +161,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 			return nil, nil
 		})
 
-		req := httptest.NewRequest("GET", "/systems/", nil)
+		req := httptest.NewRequest("GET", "/systems/", nil).WithContext(s.Context)
 		rr := httptest.NewRecorder()
 
 		handlerRun := false

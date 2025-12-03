@@ -8,6 +8,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -82,9 +83,9 @@ func ShouldSendEmailForPhaseSuggestion(
 }
 
 // TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
-func TrySendEmailForPhaseSuggestion(
+func TrySendEmailForPhaseSuggestion[T logging.ChainableErrorOrWarnLogger[T]](
 	ctx context.Context,
-	logger *zap.Logger,
+	logger T,
 	store *storage.Store,
 	emailRecipients []string,
 	emailService oddmail.EmailService,
@@ -144,9 +145,9 @@ func TrySendEmailForPhaseSuggestion(
 }
 
 // GetEmailsForModelStatusAlert returns the email addresses of the model leads and collaborators with notifications on for a given model plan
-func GetEmailsForModelStatusAlert(
+func GetEmailsForModelStatusAlert[T logging.ChainableErrorOrWarnLogger[T]](
 	ctx context.Context,
-	logger *zap.Logger,
+	logger T,
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 ) ([]string, error) {
@@ -195,7 +196,7 @@ func GetEmailsForModelStatusAlert(
 // GetCollaboratorUUIDsForModelStatusAlert returns the UUIDs of all collaborators for a given model plan
 func GetCollaboratorUUIDsForModelStatusAlert(
 	ctx context.Context,
-	logger *zap.Logger,
+	logger logging.ILogger,
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 ) ([]uuid.UUID, error) {
@@ -213,10 +214,10 @@ func GetCollaboratorUUIDsForModelStatusAlert(
 	return uuids, nil
 }
 
-func sendInAppNotificationForPhaseSuggestion(
+func sendInAppNotificationForPhaseSuggestion[T logging.ChainableErrorOrWarnLogger[T]](
 	ctx context.Context,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger T,
 	receiverIDs []uuid.UUID,
 	modelPlanID uuid.UUID,
 	phaseSuggestion *models.PhaseSuggestion,
@@ -250,8 +251,8 @@ func sendInAppNotificationForPhaseSuggestion(
 	return nil
 }
 
-func ConstructPhaseSuggestionEmailTemplates(
-	logger *zap.Logger,
+func ConstructPhaseSuggestionEmailTemplates[T logging.ChainableErrorOrWarnLogger[T]](
+	logger T,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	modelPlan *models.ModelPlan,
@@ -305,10 +306,10 @@ func ConstructPhaseSuggestionEmailTemplates(
 	return emailSubject, emailBody, nil
 }
 
-func TryNotificationSendIncorrectModelStatus(
+func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogger[T]](
 	ctx context.Context,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger T,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,

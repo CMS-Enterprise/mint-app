@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -180,7 +181,7 @@ func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) 
 
 // PlanCollaboratorGetByModelPlanID returns a slice of plan collaborators corresponding with a model plan id
 func (s *Store) PlanCollaboratorGetByModelPlanID(
-	_ *zap.Logger,
+	_ logging.ILogger,
 	modelPlanID uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)

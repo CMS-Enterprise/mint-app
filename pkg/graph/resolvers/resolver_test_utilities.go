@@ -8,6 +8,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/local"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -31,6 +32,7 @@ type TestConfigs struct {
 	DBConfig       storage.DBConfig
 	LDClient       *ld.LDClient
 	Logger         *zap.Logger
+	ZapLogger      *logging.ZapLogger
 	UserInfo       *models.UserInfo
 	Store          *storage.Store
 	S3Client       *s3.S3Client
@@ -78,6 +80,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
+	tc.ZapLogger = logging.NewZapLogger(logger)
 	tc.UserInfo = userInfo
 	tc.Store = store
 	tc.S3Client = &s3Client
