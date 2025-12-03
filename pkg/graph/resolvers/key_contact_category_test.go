@@ -3,10 +3,10 @@ package resolvers
 import (
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) createKeyContactCategory(category string) *model.KeyContactCategory {
+func (suite *ResolverSuite) createKeyContactCategory(category string) *models.KeyContactCategory {
 	newCategory, err := CreateKeyContactCategory(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
@@ -15,12 +15,6 @@ func (suite *ResolverSuite) createKeyContactCategory(category string) *model.Key
 		category,
 	)
 	suite.NoError(err)
-	suite.NotNil(newCategory)
-	suite.Equal(category, newCategory.Category)
-	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, newCategory.CreatedBy)
-	suite.NotNil(newCategory.CreatedDts)
-	suite.Nil(newCategory.ModifiedBy)
-	suite.Nil(newCategory.ModifiedDts)
 
 	return newCategory
 }

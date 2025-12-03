@@ -15,4 +15,3 @@ func NewKeyContactCategory(createdBy uuid.UUID, category string) *KeyContactCate
 		Category:   category,
 	}
 }
-
