@@ -88,18 +88,6 @@ func DeleteKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 
 	// Use a transaction for delete (for audit triggers, etc.)
 	returnedCategory, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContactCategory, error) {
-		// Fetch the existing category to check permissions and return after delete
-		existing, err := storage.KeyContactCategoryGetByID(tx, logger, id)
-		if err != nil {
-			logger.Warn("Failed to get category with id", zap.Any("categoryId", id), zap.Error(err))
-			return nil, nil
-		}
-
-		if existing == nil {
-			return nil, fmt.Errorf("category with id %s not found", id)
-		}
-
-		// Finally, delete the category
 		returnedCategory, err := storage.KeyContactCategoryDelete(tx, logger, id)
 		if err != nil {
 			return nil, fmt.Errorf("unable to delete category. Err %w", err)
@@ -143,10 +131,6 @@ func GetAllKeyContactCategories(ctx context.Context, logger *zap.Logger, store *
 	categories, err := storage.KeyContactCategoryGetAll(store, logger)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get all key contact categories: %w", err)
-	}
-
-	if categories == nil {
-		return nil, fmt.Errorf("no key contact categories found")
 	}
 
 	return categories, nil

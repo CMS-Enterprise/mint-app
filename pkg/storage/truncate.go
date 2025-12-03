@@ -68,6 +68,8 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNTranslatedAuditField),
 		string(models.TNTranslatedAuditQueue),
 		string(models.TNTranslatedAudit),
+		string(models.TNKeyContact),
+		string(models.TNKeyContactCategory),
 
 		// Core tables
 		string(models.TNModelPlan),

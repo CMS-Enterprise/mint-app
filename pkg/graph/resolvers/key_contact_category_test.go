@@ -90,7 +90,7 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "not found")
+	suite.Contains(err.Error(), "no rows in result set")
 }
 
 // TestDeleteKeyContactCategory tests deleting a key contact category.
@@ -131,7 +131,7 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory() {
 		category.ID,
 	)
 	suite.Error(err)
-	suite.Contains(err.Error(), "not found")
+	suite.Contains(err.Error(), "sql: no rows in result set")
 }
 
 // TestDeleteKeyContactCategory_NotFound tests deleting a non-existent category.
@@ -147,7 +147,7 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "not found")
+	suite.Contains(err.Error(), "sql: no rows in result set")
 }
 
 // TestGetKeyContactCategory tests retrieving a key contact category by ID.
@@ -183,7 +183,7 @@ func (suite *ResolverSuite) TestGetKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "not found")
+	suite.Contains(err.Error(), "sql: no rows in result set")
 }
 
 // TestGetAllKeyContactCategories tests retrieving all key contact categories.
@@ -225,6 +225,15 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories_Empty() {
 	)
 
 	suite.NoError(err)
-	suite.NotNil(allCategories)
 	suite.Len(allCategories, 0)
+
+	category := suite.createKeyContactCategory("Category To Retrieve")
+	newAllCategories, err := GetAllKeyContactCategories(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+	suite.Len(newAllCategories, 1)
+	suite.Equal(category.ID, newAllCategories[0].ID)
 }
