@@ -1,0 +1,23 @@
+meta {
+  name: Get All Key Contacts
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetAllKeyContacts {
+    keyContacts {
+      id
+      name
+      email
+      subjectArea
+      subjectCategoryID
+    }
+  }
+}

@@ -735,15 +735,16 @@ export type KeyContact = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
-  isTeam: Scalars['Boolean']['output'];
   mailboxAddress?: Maybe<Scalars['String']['output']>;
   mailboxTitle?: Maybe<Scalars['String']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
   subjectArea: Scalars['String']['output'];
-  subjectCategoryId: Scalars['UUID']['output'];
+  subjectCategoryID: Scalars['UUID']['output'];
   userAccount?: Maybe<UserAccount>;
   userID?: Maybe<Scalars['UUID']['output']>;
 };
@@ -776,7 +777,7 @@ export type KeyContactCategoryUpdateChanges = {
 export type KeyContactUpdateChanges = {
   mailboxTitle?: InputMaybe<Scalars['String']['input']>;
   subjectArea?: InputMaybe<Scalars['String']['input']>;
-  subjectCategoryId?: InputMaybe<Scalars['UUID']['input']>;
+  subjectCategoryID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 /** The current user's Launch Darkly key */
@@ -1993,19 +1994,17 @@ export type MutationCreateKeyContactCategoryArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateKeyContactMailboxArgs = {
-  isTeam: Scalars['Boolean']['input'];
   mailboxAddress: Scalars['String']['input'];
   mailboxTitle: Scalars['String']['input'];
   subjectArea: Scalars['String']['input'];
-  subjectCategoryId: Scalars['UUID']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
 };
 
 
 /** Mutations definition for the schema */
 export type MutationCreateKeyContactUserArgs = {
-  isTeam: Scalars['Boolean']['input'];
   subjectArea: Scalars['String']['input'];
-  subjectCategoryId: Scalars['UUID']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
   userName: Scalars['String']['input'];
 };
 
@@ -4523,6 +4522,7 @@ export type Query = {
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
   keyContactCategory: Array<KeyContactCategory>;
+  keyContacts: Array<KeyContact>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;

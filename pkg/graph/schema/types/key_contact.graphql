@@ -4,12 +4,13 @@ type KeyContact {
   # Note that this is dependent on if team or not a team
   userID: UUID
   userAccount: UserAccount
+  name: String
+  email: String
 
-  isTeam: Boolean!
   mailboxTitle: String
   mailboxAddress: String
 
-  subjectCategoryId: UUID!
+  subjectCategoryID: UUID!
   subjectArea: String!
 
   # Metadata columns
@@ -26,29 +27,31 @@ Input for updating a key contact.
 Only subject category, subject area, and mailbox title can be changed.
 """
 input KeyContactUpdateChanges @goModel(model: "map[string]interface{}") {
-  subjectCategoryId: UUID
+  subjectCategoryID: UUID
   subjectArea: String
   mailboxTitle: String
 }
 
 extend type Query {
-  keyContact(id: UUID!): KeyContact!
+  # List all key contacts
+  keyContacts: [KeyContact!]!
+
+  # Get a single key contact by id
+  keyContact(id: UUID!): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 }
 
 extend type Mutation {
   createKeyContactMailbox(
     mailboxTitle: String!
     mailboxAddress: String!
-    isTeam: Boolean!
     subjectArea: String!
-    subjectCategoryId: UUID!
+    subjectCategoryID: UUID!
   ): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 
   createKeyContactUser(
     userName: String!
-    isTeam: Boolean!
     subjectArea: String!
-    subjectCategoryId: UUID!
+    subjectCategoryID: UUID!
   ): KeyContact! @hasAnyRole(roles: [MINT_ASSESSMENT])
 
   updateKeyContact(id: UUID!, changes: KeyContactUpdateChanges!): KeyContact!
