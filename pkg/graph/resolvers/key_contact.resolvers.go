@@ -35,7 +35,7 @@ func (r *mutationResolver) UpdateKeyContact(ctx context.Context, id uuid.UUID, c
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdateKeyContact(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, changes)
+	return UpdateKeyContact(ctx, logger, principal, r.store, id, changes)
 }
 
 // DeleteKeyContact is the resolver for the deleteKeyContact field.
@@ -43,19 +43,17 @@ func (r *mutationResolver) DeleteKeyContact(ctx context.Context, id uuid.UUID) (
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeleteKeyContact(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id)
+	return DeleteKeyContact(ctx, logger, principal, r.store, id)
 }
 
 // KeyContacts is the resolver for the keyContacts field.
 func (r *queryResolver) KeyContacts(ctx context.Context) ([]*models.KeyContact, error) {
-	logger := appcontext.ZLogger(ctx)
-	return GetAllKeyContacts(ctx, logger, r.store)
+	return GetAllKeyContacts(ctx)
 }
 
 // KeyContact is the resolver for the keyContact field.
 func (r *queryResolver) KeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error) {
 	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
 
-	return GetKeyContact(ctx, logger, principal, r.store, id)
+	return GetKeyContact(ctx, principal, id)
 }

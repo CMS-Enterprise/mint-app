@@ -51,24 +51,6 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		return nil, err
 	}
 
-	newContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
-		newContact, err := storage.KeyContactCreateContact(
-			tx,
-			logger,
-			userContact,
-		)
-
-		if err != nil {
-			return nil, fmt.Errorf("failed to create contact for user %s: %w", userName, err)
-		}
-
-		return newContact, nil
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
 	if emailService != nil && emailTemplateService != nil {
 		// Send welcome email to new key contact
 		go func() {
@@ -76,7 +58,7 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 				emailService,
 				emailTemplateService,
 				addressBook,
-				newContact,
+				userContact,
 			)
 			if sendEmailErr != nil {
 				logger.Error(
@@ -88,7 +70,7 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		}()
 	}
 
-	return newContact, nil
+	return userContact, nil
 }
 
 // CreateKeyContactMailbox creates a new team mailbox contact for a subject matter expert.
@@ -119,31 +101,13 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		return nil, err
 	}
 
-	newContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
-		newContact, err := storage.KeyContactCreateContact(
-			tx,
-			logger,
-			mailboxContact,
-		)
-
-		if err != nil {
-			return nil, err
-		}
-
-		return newContact, nil
-	})
-
-	if err != nil {
-		return nil, err
-	}
-
 	if emailService != nil && emailTemplateService != nil {
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
 				emailService,
 				emailTemplateService,
 				addressBook,
-				newContact,
+				mailboxContact,
 			)
 			if sendEmailErr != nil {
 				logger.Error(
@@ -155,13 +119,12 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		}()
 	}
 
-	return newContact, nil
+	return mailboxContact, nil
 }
 
 // UpdateKeyContact updates an existing user or mailbox contact for a subject matter expert.
 // Only subjectCategoryID, subjectArea, and mailboxTitle fields can be changed. Returns the updated contact.
 func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.KeyContact, error) {
@@ -201,7 +164,6 @@ func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 // DeleteKeyContact deletes a subject matter expert by its ID.
 // Returns the deleted contact or an error.
 func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
 	id uuid.UUID,
 ) (*models.KeyContact, error) {
 	principalAccount := principal.Account()
@@ -246,7 +208,7 @@ func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 
 // GetKeyContact retrieves a subject matter expert by its ID.
 // Returns the contact if found, or an error if not found or on failure.
-func GetKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func GetKeyContact(ctx context.Context, principal authentication.Principal,
 	id uuid.UUID,
 ) (*models.KeyContact, error) {
 	principalAccount := principal.Account()
@@ -268,7 +230,7 @@ func GetKeyContact(ctx context.Context, logger *zap.Logger, principal authentica
 
 // GetKeyContacts retrieves all subject matter experts.
 // Returns the contacts if found, or an error if failure.
-func GetAllKeyContacts(ctx context.Context, logger *zap.Logger, store *storage.Store) ([]*models.KeyContact, error) {
+func GetAllKeyContacts(ctx context.Context) ([]*models.KeyContact, error) {
 	contacts, err := loaders.KeyContact.GetAll.Load(ctx, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get all key contacts: %w", err)
@@ -307,7 +269,7 @@ func sendKeyContactWelcomeEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{contact.Email},
+		[]string{*contact.Email},
 		nil,
 		emailSubject,
 		"text/html",
