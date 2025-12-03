@@ -25,13 +25,12 @@ func CreateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 	}
 
 	newCategory := models.NewKeyContactCategory(principalAccount.ID, categoryStr)
-	newCategory, err := storage.KeyContactCategoryCreate(store, logger, newCategory)
-
+	createdCategory, err := storage.KeyContactCategoryCreate(store, logger, newCategory)
 	if err != nil {
 		return nil, err
 	}
 
-	return newCategory, nil
+	return createdCategory, nil
 }
 
 // UpdateKeyContactCategory updates an existing key contact category.
