@@ -51,14 +51,24 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	newContact, err := storage.KeyContactCreateContact(
+		store,
+		logger,
+		userContact,
+	)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to create contact for user %s: %w", userName, err)
+	}
+
+	if emailService != nil && emailTemplateService != nil && newContact.Email != nil {
 		// Send welcome email to new key contact
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
 				emailService,
 				emailTemplateService,
 				addressBook,
-				userContact,
+				newContact,
 			)
 			if sendEmailErr != nil {
 				logger.Error(
@@ -70,7 +80,7 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		}()
 	}
 
-	return userContact, nil
+	return newContact, nil
 }
 
 // CreateKeyContactMailbox creates a new team mailbox contact for a subject matter expert.
@@ -101,13 +111,23 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	newContact, err := storage.KeyContactCreateContact(
+		store,
+		logger,
+		mailboxContact,
+	)
+
+	if err != nil {
+		return nil, fmt.Errorf("failed to create contact for mailbox %s: %w", mailboxAddress, err)
+	}
+
+	if emailService != nil && emailTemplateService != nil && newContact.Email != nil {
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
 				emailService,
 				emailTemplateService,
 				addressBook,
-				mailboxContact,
+				newContact,
 			)
 			if sendEmailErr != nil {
 				logger.Error(
@@ -119,7 +139,7 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		}()
 	}
 
-	return mailboxContact, nil
+	return newContact, nil
 }
 
 // UpdateKeyContact updates an existing user or mailbox contact for a subject matter expert.
@@ -146,16 +166,9 @@ func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 		return nil, err
 	}
 
-	updatedContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
-		updatedContact, err := storage.KeyContactUpdateContact(tx, logger, existingContact)
-		if err != nil {
-			return nil, fmt.Errorf("failed to update contact with id %s: %w", id, err)
-		}
-
-		return updatedContact, nil
-	})
+	updatedContact, err := storage.KeyContactUpdateContact(store, logger, existingContact)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to update contact with id %s: %w", id, err)
 	}
 
 	return updatedContact, nil
@@ -267,16 +280,19 @@ func sendKeyContactWelcomeEmail(
 		return err
 	}
 
-	err = emailService.Send(
-		addressBook.DefaultSender,
-		[]string{*contact.Email},
-		nil,
-		emailSubject,
-		"text/html",
-		emailBody,
-	)
-	if err != nil {
-		return err
+	if contact.Email != nil {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{*contact.Email},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		if err != nil {
+			return err
+		}
 	}
+
 	return nil
 }
