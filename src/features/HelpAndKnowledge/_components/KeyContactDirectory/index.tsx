@@ -7,6 +7,7 @@ import {
   GridContainer,
   Link
 } from '@trussworks/react-uswds';
+import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 import {
   GetAllKeyContactsQuery,
   useGetAllKeyContactsQuery
@@ -65,6 +66,51 @@ const KeyContactDirectory = () => {
     );
     return reformattedSmes || {};
   }, [smeData]);
+
+  const accordionItems: AccordionItemProps[] = categories.map(category => ({
+    title: category.category,
+    content: (
+      <>
+        {isAssessmentTeam && (
+          <div className="margin-top-2">
+            <Button
+              type="button"
+              unstyled
+              onClick={() => {}}
+              className="line-height-sans-4 deep-underline"
+            >
+              {t('keyContactDirectory.addSmeToCategory')}
+            </Button>
+            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+            <Button
+              type="button"
+              unstyled
+              onClick={() => {}}
+              className="line-height-sans-4 deep-underline"
+            >
+              {t('keyContactDirectory.renameCategory')}
+            </Button>
+            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+            <Button
+              type="button"
+              unstyled
+              onClick={() => {}}
+              className="line-height-sans-4 text-error deep-underline"
+            >
+              {t('keyContactDirectory.removeCategory')}
+            </Button>
+          </div>
+        )}
+        <KeyContactTable
+          smes={smes[category.id] || []}
+          isAssessmentTeam={isAssessmentTeam}
+        />
+      </>
+    ),
+    expanded: true,
+    id: category.id,
+    headingLevel: 'h4'
+  }));
 
   if (loadingSmes) {
     return <PageLoading testId="key-contact-directory" />;
@@ -134,29 +180,14 @@ const KeyContactDirectory = () => {
           </Alert>
         )}
 
-        {categories.length > 0 &&
-          categories.map(category => (
-            <Accordion
-              key={category.id}
-              className="margin-bottom-3 key-contact-accordion"
-              bordered={false}
-              multiselectable
-              items={[
-                {
-                  title: category.category,
-                  content: (
-                    <KeyContactTable
-                      smes={smes[category.id] || []}
-                      isAssessmentTeam={isAssessmentTeam}
-                    />
-                  ),
-                  expanded: true,
-                  id: category.id,
-                  headingLevel: 'h4'
-                }
-              ]}
-            />
-          ))}
+        {categories.length > 0 && (
+          <Accordion
+            className="margin-bottom-3 key-contact-accordion"
+            bordered={false}
+            multiselectable
+            items={accordionItems}
+          />
+        )}
       </GridContainer>
     </div>
   );

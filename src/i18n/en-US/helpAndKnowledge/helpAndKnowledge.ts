@@ -2641,7 +2641,7 @@ const helpAndKnowledge = {
     addSubjectCategory: 'Add a subject category',
     addSme: 'Add SME',
     addSmeToCategory: 'Add SME to this category',
-    remaneCategory: 'Rename category',
+    renameCategory: 'Rename category',
     removeCategory: 'Remove category',
     noSmesInCategory: 'There are no SMEs listed in this subject category',
     emptyDirectoryHeading:

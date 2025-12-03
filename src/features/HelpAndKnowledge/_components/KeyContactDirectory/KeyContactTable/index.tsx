@@ -46,7 +46,7 @@ const KeyContactTable = ({
             <div>
               <Button
                 type="button"
-                className="margin-right-2"
+                className="margin-right-2 deep-underline"
                 unstyled
                 onClick={() => {}}
               >
@@ -54,7 +54,7 @@ const KeyContactTable = ({
               </Button>
               <Button
                 type="button"
-                className="text-error"
+                className="text-error deep-underline"
                 unstyled
                 onClick={() => {}}
               >
@@ -94,7 +94,7 @@ const KeyContactTable = ({
     <UswdsTable
       bordered={false}
       {...getTableProps()}
-      className="margin-y-0"
+      className="margin-top-0 margin-bottom-3"
       fullWidth
     >
       <thead className="margin-x-2">
@@ -148,7 +148,7 @@ const KeyContactTable = ({
                 className="margin-right-1 top-2px text-warning"
                 aria-label="warning"
               /> */}
-              <p className="margin-top-1 text-italic w-full">
+              <p className="margin-y-1 text-italic w-full">
                 {t('keyContactDirectory.noSmesInCategory')}
               </p>
             </td>
