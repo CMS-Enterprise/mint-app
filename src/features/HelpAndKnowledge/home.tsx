@@ -15,6 +15,13 @@ import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 import { homeArticles } from './Articles';
 
+const JUMP_TO_LINKS_I18NKEYS = [
+  'helpResourcesAndLinks',
+  'milestoneLibrary.hkcJumpToLabel',
+  'operationalSolutionsAndITSystems',
+  'keyContactDirectory.jumpToLabel'
+];
+
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -37,20 +44,14 @@ export const HelpAndKnowledgeHome = () => {
             <p className="display-inline text-bold margin-right-2">
               {t('jumpTo')}:
             </p>
-            <ScrollLink scrollTo={t('helpResourcesAndLinks')} hasIcon={false} />
-
-            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-            <ScrollLink
-              scrollTo={t('milestoneLibrary.hkcJumpToLabel')}
-              hasIcon={false}
-            />
-
-            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-
-            <ScrollLink
-              scrollTo={t('operationalSolutionsAndITSystems')}
-              hasIcon={false}
-            />
+            {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
+              <div className="display-inline" key={linkI18nkey}>
+                <ScrollLink scrollTo={t(linkI18nkey)} hasIcon={false} />
+                {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
+                  <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+                )}
+              </div>
+            ))}
           </div>
         </GridContainer>
       </SummaryBox>

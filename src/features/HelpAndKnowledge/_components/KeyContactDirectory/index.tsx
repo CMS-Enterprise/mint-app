@@ -1,7 +1,12 @@
 import React, { useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Accordion, GridContainer, Link } from '@trussworks/react-uswds';
+import {
+  Accordion,
+  Button,
+  GridContainer,
+  Link
+} from '@trussworks/react-uswds';
 import {
   GetAllKeyContactsQuery,
   useGetAllKeyContactsQuery
@@ -15,6 +20,8 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
 import KeyContactTable from './KeyContactTable';
+
+import './index.scss';
 
 const Categories = [
   {
@@ -73,7 +80,7 @@ const KeyContactDirectory = () => {
         <div>
           <h2 className="margin-0">{t('keyContactDirectory.header')}</h2>
 
-          <p className="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4">
+          <p className="margin-top-1 margin-bottom-2 font-body-md line-height-sans-4">
             {isAssessmentTeam ? (
               t('keyContactDirectory.descriptionForAssessment')
             ) : (
@@ -85,6 +92,28 @@ const KeyContactDirectory = () => {
               />
             )}
           </p>
+
+          {isAssessmentTeam && (
+            <div className="margin-bottom-4">
+              <Button
+                type="button"
+                unstyled
+                onClick={() => {}}
+                className="line-height-sans-4"
+              >
+                {t('keyContactDirectory.addSubjectCategory')}
+              </Button>
+              <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+              <Button
+                type="button"
+                unstyled
+                onClick={() => {}}
+                className="line-height-sans-4"
+              >
+                {t('keyContactDirectory.addSme')}
+              </Button>
+            </div>
+          )}
         </div>
 
         {categories.length === 0 && (
@@ -109,7 +138,7 @@ const KeyContactDirectory = () => {
           categories.map(category => (
             <Accordion
               key={category.id}
-              className="margin-bottom-3"
+              className="margin-bottom-3 key-contact-accordion"
               bordered={false}
               multiselectable
               items={[
