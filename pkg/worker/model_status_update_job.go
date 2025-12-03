@@ -7,7 +7,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 
-	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
@@ -19,8 +18,7 @@ const (
 // ModelStatusUpdateJob is the job to check if a model should be updated, and if so, it will send an email
 // args[0] model_plan_id (UUID)
 func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) (returnedError error) {
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("model status update job reached.")
 
 	if len(args) < 1 {

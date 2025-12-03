@@ -9,6 +9,7 @@ import (
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -16,7 +17,7 @@ import (
 
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
 func (s *Store) AnalyzedAuditCreate(
-	logger *zap.Logger,
+	logger logging.ILogger,
 	AnalyzedAudit *models.AnalyzedAudit,
 ) (*models.AnalyzedAudit, error) {
 
@@ -79,7 +80,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(
 // AnalyzedAuditGetByModelPlanIDsAndDate gets and returns all AnalyzedAudits by modelPlanIDs and date
 func AnalyzedAuditGetByModelPlanIDsAndDate(
 	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
+	_ logging.ILogger,
 	modelPlanIDs []uuid.UUID,
 	date time.Time,
 ) ([]*models.AnalyzedAudit, error) {
@@ -106,7 +107,7 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 }
 
 // AnalyzedAuditGetByDate gets and returns all AnalyzedAudits by date
-func (s *Store) AnalyzedAuditGetByDate(_ *zap.Logger, date time.Time) ([]*models.AnalyzedAudit, error) {
+func (s *Store) AnalyzedAuditGetByDate(_ logging.ILogger, date time.Time) ([]*models.AnalyzedAudit, error) {
 
 	var analyzedAudits []*models.AnalyzedAudit
 

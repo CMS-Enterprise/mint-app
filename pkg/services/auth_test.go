@@ -18,15 +18,15 @@ func (s *ServicesTestSuite) TestHasRole() {
 		allowed bool
 	}{
 		"anonymous": {
-			ctx:     context.Background(),
+			ctx:     s.Context,
 			allowed: false,
 		},
 		"non admin": {
-			ctx:     appcontext.WithPrincipal(context.Background(), &userPrincipal),
+			ctx:     appcontext.WithPrincipal(s.Context, &userPrincipal),
 			allowed: false,
 		},
 		"has admin": {
-			ctx:     appcontext.WithPrincipal(context.Background(), &assessmentPrincipal),
+			ctx:     appcontext.WithPrincipal(s.Context, &assessmentPrincipal),
 			allowed: true,
 		},
 	}

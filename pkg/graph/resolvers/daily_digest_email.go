@@ -7,10 +7,10 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/samber/lo"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -24,10 +24,10 @@ import (
 
 // DailyDigestNotificationSend sends a single email for a user for a given day based on their favorited models
 // It will also call the notification package for Daily Digest Complete Activity
-func DailyDigestNotificationSend(
+func DailyDigestNotificationSend[T logging.ChainableErrorOrWarnLogger[T]](
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
-	logger *zap.Logger,
+	logger T,
 
 	dateAnalyzed time.Time,
 	userID uuid.UUID,
@@ -111,7 +111,7 @@ func getDigestAnalyzedAudits(
 	np sqlutils.NamedPreparer,
 	userID uuid.UUID,
 	date time.Time,
-	logger *zap.Logger,
+	logger logging.ILogger,
 ) ([]*models.AnalyzedAudit, []uuid.UUID, error) {
 
 	planFavorites, err := storage.PlanFavoriteGetCollectionByUserID(np, logger, userID)

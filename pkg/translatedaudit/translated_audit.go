@@ -13,6 +13,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/mappings"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -47,10 +48,10 @@ func tableListContains(tableName models.TableName, tableNameList []models.TableN
 }
 
 // TranslateAudit translates a single audit to a translated audit and stores it in the translated audit table in the database.
-func TranslateAudit(
+func TranslateAudit[T any](
 	ctx context.Context,
 	store *storage.Store,
-	logger *zap.Logger,
+	logger logging.ChainableErrorOrWarnLogger[T],
 	auditID int) (*models.TranslatedAuditWithTranslatedFields, error) {
 	auditWithModelPlan, err := storage.AuditChangeWithModelPlanGetByID(store, logger, auditID)
 	if err != nil {
@@ -64,13 +65,15 @@ func TranslateAudit(
 	logger.Info("translating audit")
 	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, auditWithModelPlan)
 	if err != nil {
-		logger.Error("issue translating audit.", zap.Error(err))
+		// Use error or warn so notification only comes if retries fail
+		logger.ErrorOrWarn("issue translating audit.", zap.Error(err))
 		return nil, err
 	}
 
 	retTranslatedChanges, err := saveTranslatedAuditAndFields(store, translatedAuditWithFields)
 	if err != nil {
-		logger.Error("issue saving translated audit.", zap.Error(err))
+		// Use error or warn so notification only comes if retries fail
+		logger.ErrorOrWarn("issue saving translated audit.", zap.Error(err))
 		return nil, err
 	}
 

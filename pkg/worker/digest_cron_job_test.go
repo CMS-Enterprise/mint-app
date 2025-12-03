@@ -7,8 +7,7 @@ import (
 
 func (suite *WorkerSuite) TestDigestCronJobIntegration() {
 	worker := &Worker{
-		Store:  suite.testConfigs.Store,
-		Logger: suite.testConfigs.Logger,
+		Store: suite.testConfigs.Store,
 	}
 
 	pool, err := faktory.NewPool(5)
