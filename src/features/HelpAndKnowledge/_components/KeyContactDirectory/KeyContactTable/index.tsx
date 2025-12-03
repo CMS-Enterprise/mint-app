@@ -7,17 +7,26 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import globalFilterCellText from 'utils/globalFilterCellText';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
 import { SmeType } from '..';
 
-const KeyContactTable = ({ smes }: { smes: SmeType[] }) => {
+type ColumnType = SmeType & { actions: unknown };
+
+const KeyContactTable = ({
+  smes,
+  isAssessmentTeam
+}: {
+  smes: SmeType[];
+  isAssessmentTeam: boolean;
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const columns: Column<SmeType>[] = useMemo(
+  const columns: Column<ColumnType>[] = useMemo(
     () => [
       {
         id: 'subjectArea',
@@ -28,12 +37,34 @@ const KeyContactTable = ({ smes }: { smes: SmeType[] }) => {
         id: 'name',
         Header: t('keyContactDirectory.sme'),
         accessor: ({ name, email }) => `${name} (${email})`
+      },
+      {
+        id: 'actions',
+        Header: t('keyContactDirectory.actions'),
+        accessor: 'actions',
+        Cell: () => {
+          return (
+            <div>
+              <Button
+                type="button"
+                className="margin-right-2"
+                unstyled
+                onClick={() => {}}
+              >
+                {t('keyContactDirectory.editAction')}
+              </Button>
+              <Button
+                type="button"
+                className="text-error"
+                unstyled
+                onClick={() => {}}
+              >
+                {t('keyContactDirectory.removeAction')}
+              </Button>
+            </div>
+          );
+        }
       }
-      // {
-      //  id: 'actions',
-      //   Header: t('keyContactDirectory.actions'),
-      //   accessor: 'actions'
-      // }
     ],
     [t]
   );
@@ -78,7 +109,12 @@ const KeyContactTable = ({ smes }: { smes: SmeType[] }) => {
                 {...column.getHeaderProps()}
                 scope="col"
                 key={column.id}
-                className="padding-left-0 padding-bottom-1"
+                className={classNames(
+                  'padding-left-0 padding-bottom-1 width-auto',
+                  {
+                    'width-50': !isAssessmentTeam
+                  }
+                )}
                 colSpan={1}
               >
                 {column.id === 'actions' ? (

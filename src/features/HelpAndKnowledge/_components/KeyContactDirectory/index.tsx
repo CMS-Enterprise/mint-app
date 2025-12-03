@@ -30,7 +30,6 @@ const Categories = [
 ];
 
 export type SmeType = GetAllKeyContactsQuery['keyContacts'][number];
-// type ColumnType = keyof SmeType | 'actions';
 
 const KeyContactDirectory = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -116,7 +115,12 @@ const KeyContactDirectory = () => {
               items={[
                 {
                   title: category.category,
-                  content: <KeyContactTable smes={smes[category.id] || []} />,
+                  content: (
+                    <KeyContactTable
+                      smes={smes[category.id] || []}
+                      isAssessmentTeam={isAssessmentTeam}
+                    />
+                  ),
                   expanded: true,
                   id: category.id,
                   headingLevel: 'h4'
