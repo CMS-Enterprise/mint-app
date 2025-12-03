@@ -46,11 +46,6 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		subjectCategoryID,
 	)
 
-	err = BaseStructPreCreate(logger, userContact, principal, store, false)
-	if err != nil {
-		return nil, err
-	}
-
 	newContact, err := storage.KeyContactCreateContact(
 		store,
 		logger,
@@ -105,11 +100,6 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		subjectArea,
 		subjectCategoryID,
 	)
-
-	err := BaseStructPreCreate(logger, mailboxContact, principal, store, false)
-	if err != nil {
-		return nil, err
-	}
 
 	newContact, err := storage.KeyContactCreateContact(
 		store,
