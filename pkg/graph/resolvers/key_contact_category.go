@@ -17,16 +17,15 @@ import (
 // CreateKeyContactCategory creates a new key contact category.
 // It inserts a new category record with the provided category name.
 func CreateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	category string,
+	categoryStr string,
 ) (*models.KeyContactCategory, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	newCategory := models.NewKeyContactCategory(principalAccount.ID, category)
-
-	err := BaseStructPreCreate(logger, newCategory, principal, store, true)
+	newCategory := models.NewKeyContactCategory(principalAccount.ID, categoryStr)
+	newCategory, err := storage.KeyContactCategoryCreate(store, logger, newCategory)
 
 	if err != nil {
 		return nil, err
