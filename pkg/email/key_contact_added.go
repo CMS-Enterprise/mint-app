@@ -19,7 +19,7 @@ func NewKeyContactAddedSubjectContent(
 // KeyContactAddedBodyContent defines the parameters necessary for the email body.
 type KeyContactAddedBodyContent struct {
 	ClientAddress     string
-	ContactName       string
+	ContactName       *string
 	IsTeam            bool
 	SubjectCategoryID string
 	SubjectArea       string

@@ -2,8 +2,6 @@ WITH updated AS (
     UPDATE key_contact
     SET
         mailbox_title = COALESCE(:mailbox_title, mailbox_title),
-        mailbox_address = COALESCE(:mailbox_address, mailbox_address),
-        user_id = COALESCE(:user_id, user_id),
         subject_area = COALESCE(:subject_area, subject_area),
         subject_category_id = COALESCE(:subject_category_id, subject_category_id),
         modified_by = :modified_by,
