@@ -73,8 +73,8 @@ const (
 	TNMTOTemplateSolution                TableName = "mto_template_solution"
 	TNModelPlanMTOTemplateLink           TableName = "model_plan_mto_template_link"
 	TNMTOMilestoneNote                   TableName = "mto_milestone_note"
-	TNKeyContactCategory                 TableName = "key_contact_category"
 	TNKeyContact                         TableName = "key_contact"
+	TNKeyContactCategory                 TableName = "key_contact_category"
 )
 
 // MTOTables is a list of all tables that are related to the MTO section

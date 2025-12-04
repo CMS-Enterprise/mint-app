@@ -12,13 +12,12 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // KeyContacts is the resolver for the keyContacts field.
-func (r *keyContactCategoryResolver) KeyContacts(ctx context.Context, obj *models.KeyContactCategory) ([]*model.KeyContact, error) {
+func (r *keyContactCategoryResolver) KeyContacts(ctx context.Context, obj *models.KeyContactCategory) ([]*models.KeyContact, error) {
 	panic(fmt.Errorf("not implemented: KeyContacts - keyContacts"))
 }
 
