@@ -3,7 +3,7 @@
 exports[`Solution Help Categories > matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="padding-y-4 padding-bottom-6 bg-primary-darker text-white margin-bottom-neg-7"
+    class="padding-y-4 padding-bottom-6 bg-primary-darker text-white"
     id="operational-solutions-and-it-systems"
     style="scroll-margin-top: 3.5rem;"
   >
