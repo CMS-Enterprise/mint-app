@@ -81,8 +81,6 @@ const KeyContactTable = ({
       useSortBy
     );
 
-  rows.map(row => prepareRow(row));
-
   return (
     <UswdsTable
       bordered={false}
