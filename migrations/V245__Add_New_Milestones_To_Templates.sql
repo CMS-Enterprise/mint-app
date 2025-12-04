@@ -212,17 +212,6 @@ BEGIN
         CURRENT_TIMESTAMP
     );
 
-    acquire_data_agg_cont_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        acquire_data_agg_cont_milestone_uuid,
-        template_uuid,
-        'ACQUIRE_A_DATA_AGG_CONT',
-        internal_funcs_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
     -- Add data sharing milestones under existing "Send data to participants"
     send_dashboards_milestone_uuid := gen_random_uuid();
     INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
@@ -315,17 +304,6 @@ BEGIN
         acquire_pre_imp_cont_milestone_uuid,
         template_uuid,
         'ACQUIRE_A_PRE_IMP_CONT',
-        internal_funcs_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
-    acquire_data_agg_cont_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        acquire_data_agg_cont_milestone_uuid,
-        template_uuid,
-        'ACQUIRE_A_DATA_AGG_CONT',
         internal_funcs_subcat_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
@@ -435,17 +413,6 @@ BEGIN
         acquire_pre_imp_cont_milestone_uuid,
         template_uuid,
         'ACQUIRE_A_PRE_IMP_CONT',
-        internal_funcs_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
-    acquire_data_agg_cont_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        acquire_data_agg_cont_milestone_uuid,
-        template_uuid,
-        'ACQUIRE_A_DATA_AGG_CONT',
         internal_funcs_subcat_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
