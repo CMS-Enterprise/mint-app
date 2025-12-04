@@ -14,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // KeyContacts is the resolver for the keyContacts field.
@@ -50,12 +51,15 @@ func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*models.KeyCo
 
 // KeyContactCategoryByID is the resolver for the keyContactCategoryById field.
 func (r *queryResolver) KeyContactCategoryByID(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: KeyContactCategoryByID - keyContactCategoryById"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return GetKeyContactCategory(ctx, logger, principal, r.store, id)
 }
 
 // KeyContactCategoriesByIds is the resolver for the keyContactCategoriesByIds field.
 func (r *queryResolver) KeyContactCategoriesByIds(ctx context.Context, ids []uuid.UUID) ([]*models.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: KeyContactCategoriesByIds - keyContactCategoriesByIds"))
+	logger := appcontext.ZLogger(ctx)
+	return storage.KeyContactCategoryGetByIDsLoader(r.store, logger, ids)
 }
 
 // KeyContactCategory returns generated.KeyContactCategoryResolver implementation.
