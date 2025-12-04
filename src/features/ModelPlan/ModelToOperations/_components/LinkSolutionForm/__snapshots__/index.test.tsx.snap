@@ -89,7 +89,7 @@ exports[`LinkSolutionForm > renders and matches snapshot 1`] = `
                 Beneficiary Claims Data API
               </h3>
               <p
-                class="margin-top-0 margin-bottom-0"
+                class="margin-0"
               >
                 BCDA
               </p>

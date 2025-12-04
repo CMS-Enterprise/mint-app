@@ -24,12 +24,12 @@ exports[`MTO SolutionCard Component > renders correctly and matches snapshot 1`]
           4innovation
         </h3>
         <p
-          class="margin-top-0"
+          class="margin-0"
         >
           4i
         </p>
         <div
-          class="border-top border-base-light padding-top-2"
+          class="border-top border-base-light padding-top-2 margin-top-2"
         >
           <button
             class="usa-button usa-button--unstyled"
