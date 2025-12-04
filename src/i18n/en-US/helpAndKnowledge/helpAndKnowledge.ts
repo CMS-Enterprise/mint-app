@@ -2644,6 +2644,10 @@ const helpAndKnowledge = {
     renameCategory: 'Rename category',
     removeCategory: 'Remove category',
     noSmesInCategory: 'There are no SMEs listed in this subject category',
+    resultsFor: '{{count}} result for "{{query}}"',
+    resultsFor_other: '{{count}} results for "{{query}}"',
+    noSearchResults:
+      'There are no contacts in this category that match your search.',
     emptyDirectoryHeading:
       'There are not currently any SMEs in the MINT contact directory',
     emptyDirectoryInfoForGeneral:

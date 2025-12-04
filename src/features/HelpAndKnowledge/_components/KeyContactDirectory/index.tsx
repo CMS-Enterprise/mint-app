@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
   Accordion,
   Button,
+  Grid,
   GridContainer,
   Link
 } from '@trussworks/react-uswds';
@@ -17,6 +18,7 @@ import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
+import GlobalClientFilter from 'components/TableFilter';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
@@ -46,26 +48,49 @@ const KeyContactDirectory = () => {
   const { groups } = useSelector((state: AppState) => state.auth);
   const flags = useFlags();
 
+  const [query, setQuery] = useState('');
+
   const isAssessmentTeam = isAssessment(groups, flags);
 
   const categories = Categories; // Replace with actual data fetching logic
 
   const { data: smeData, loading: loadingSmes } = useGetAllKeyContactsQuery();
 
-  const smes: Record<string, SmeType[]> = useMemo(() => {
-    const reformattedSmes = smeData?.keyContacts.reduce(
-      (allSmes, sme) => {
-        return {
-          ...allSmes,
-          [sme.subjectCategoryID]: allSmes[sme.subjectCategoryID]
-            ? [...allSmes[sme.subjectCategoryID], sme]
-            : [sme]
-        };
-      },
-      {} as { [key: string]: SmeType[] }
-    );
-    return reformattedSmes || {};
-  }, [smeData]);
+  const filteredSmes = useMemo(() => {
+    if (!smeData) {
+      return [];
+    }
+    const trimmedQuery = query.toLowerCase().trim();
+    let smeContacts = smeData.keyContacts;
+
+    if (trimmedQuery !== '') {
+      const filteredCategoryIds = Categories.filter(category =>
+        category.category.toLowerCase().includes(trimmedQuery)
+      ).map(cat => cat.id);
+
+      smeContacts = smeData.keyContacts.filter(sme => {
+        return (
+          filteredCategoryIds.includes(sme.subjectCategoryID) ||
+          sme.name.toLowerCase().includes(trimmedQuery) ||
+          sme.email.toLowerCase().includes(trimmedQuery) ||
+          sme.subjectArea.toLowerCase().includes(trimmedQuery)
+        );
+      });
+    }
+
+    return smeContacts;
+  }, [query, smeData]);
+
+  const reformattedSmes = useMemo(() => {
+    return filteredSmes.reduce<Record<string, SmeType[]>>((allSmes, sme) => {
+      return {
+        ...allSmes,
+        [sme.subjectCategoryID]: allSmes[sme.subjectCategoryID]
+          ? [...allSmes[sme.subjectCategoryID], sme]
+          : [sme]
+      };
+    }, {});
+  }, [filteredSmes]);
 
   const accordionItems: AccordionItemProps[] = categories.map(category => ({
     title: category.category,
@@ -102,8 +127,9 @@ const KeyContactDirectory = () => {
           </div>
         )}
         <KeyContactTable
-          smes={smes[category.id] || []}
+          smes={reformattedSmes[category.id] || []}
           isAssessmentTeam={isAssessmentTeam}
+          isSearching={query.trim() !== ''}
         />
       </>
     ),
@@ -161,6 +187,27 @@ const KeyContactDirectory = () => {
             </div>
           )}
         </div>
+
+        <Grid tablet={{ col: 6 }}>
+          {/* Search bar and results info */}
+          <GlobalClientFilter
+            globalFilter={query}
+            setGlobalFilter={setQuery}
+            resetPageOnEmptyFilter={false}
+            tableID="key-contact-directory-table"
+            tableName="key-contact-directory"
+            className="margin-y-4 maxw-none tablet:width-mobile-lg"
+          />
+
+          {query.trim() !== '' && (
+            <div role="status" aria-live="polite" className="margin-bottom-2">
+              {t('keyContactDirectory.resultsFor', {
+                count: filteredSmes.length,
+                query
+              })}
+            </div>
+          )}
+        </Grid>
 
         {categories.length === 0 && (
           <Alert

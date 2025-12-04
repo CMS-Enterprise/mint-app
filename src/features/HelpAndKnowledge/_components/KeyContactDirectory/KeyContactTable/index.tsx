@@ -1,15 +1,9 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Column,
-  useFilters,
-  useGlobalFilter,
-  useSortBy,
-  useTable
-} from 'react-table';
+import { Column, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 
-import globalFilterCellText from 'utils/globalFilterCellText';
+import { Alert } from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
 import { SmeType } from '..';
@@ -18,10 +12,12 @@ type ColumnType = SmeType & { actions: unknown };
 
 const KeyContactTable = ({
   smes,
-  isAssessmentTeam
+  isAssessmentTeam,
+  isSearching
 }: {
   smes: SmeType[];
   isAssessmentTeam: boolean;
+  isSearching: boolean;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -80,11 +76,8 @@ const KeyContactTable = ({
               rowTwo.values[columnName]
             );
           }
-        },
-        globalFilter: useMemo(() => globalFilterCellText, [])
+        }
       },
-      useFilters,
-      useGlobalFilter,
       useSortBy
     );
 
@@ -141,19 +134,22 @@ const KeyContactTable = ({
         {rows.length === 0 && (
           <tr>
             <td
-              className="border-0 padding-y-0 padding-left-2"
+              className="border-0 padding-0"
               colSpan={headerGroups[0].headers.length}
             >
-              {/* <Icon.Warning
-                className="margin-right-1 top-2px text-warning"
-                aria-label="warning"
-              /> */}
-              <p className="margin-y-1 text-italic w-full">
-                {t('keyContactDirectory.noSmesInCategory')}
-              </p>
+              {isSearching ? (
+                <Alert type="warning" slim className="margin-top-2">
+                  {t('keyContactDirectory.noSearchResults')}
+                </Alert>
+              ) : (
+                <p className="margin-y-1 margin-left-2 text-italic w-full">
+                  {t('keyContactDirectory.noSmesInCategory')}
+                </p>
+              )}
             </td>
           </tr>
         )}
+
         {rows.map((row, i) => {
           prepareRow(row);
           const { getRowProps, cells, id } = { ...row };
