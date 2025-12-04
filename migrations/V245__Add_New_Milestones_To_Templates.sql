@@ -13,8 +13,8 @@ VALUES ('ACQUIRE_AN_IMP_CONT', 'RMADA');
 -- ACQUIRE_A_PRE_IMP_CONT -> ARDS and FFRDC
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
 VALUES
-    ('ACQUIRE_A_PRE_IMP_CONT', 'ARDS'),
-    ('ACQUIRE_A_PRE_IMP_CONT', 'FFRDC');
+('ACQUIRE_A_PRE_IMP_CONT', 'ARDS'),
+('ACQUIRE_A_PRE_IMP_CONT', 'FFRDC');
 
 -- ACQUIRE_A_DATA_AGG_CONT -> CDAC
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
@@ -27,14 +27,14 @@ VALUES ('SEND_DASHBOARDS_REPORTS_TO_PART', 'ISP');
 -- SEND_DATA_VIA_API_TO_PART -> BCDA and ISP
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
 VALUES
-    ('SEND_DATA_VIA_API_TO_PART', 'BCDA'),
-    ('SEND_DATA_VIA_API_TO_PART', 'ISP');
+('SEND_DATA_VIA_API_TO_PART', 'BCDA'),
+('SEND_DATA_VIA_API_TO_PART', 'ISP');
 
 -- SEND_RAW_FILES_TO_PART -> INNOVATION (4i) and ISP
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
 VALUES
-    ('SEND_RAW_FILES_TO_PART', 'INNOVATION'),
-    ('SEND_RAW_FILES_TO_PART', 'ISP');
+('SEND_RAW_FILES_TO_PART', 'INNOVATION'),
+('SEND_RAW_FILES_TO_PART', 'ISP');
 
 -- SIGN_COOPERATIVE_AGREEMENTS -> GS (GrantSolutions)
 INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
@@ -115,17 +115,6 @@ BEGIN
         CURRENT_TIMESTAMP
     );
 
-    acquire_data_agg_cont_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        acquire_data_agg_cont_milestone_uuid,
-        template_uuid,
-        'ACQUIRE_A_DATA_AGG_CONT',
-        internal_funcs_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
     -- Add data sharing milestones under "Send data to participants"
     send_dashboards_milestone_uuid := gen_random_uuid();
     INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
@@ -144,17 +133,6 @@ BEGIN
         send_api_milestone_uuid,
         template_uuid,
         'SEND_DATA_VIA_API_TO_PART',
-        send_data_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
-    send_raw_files_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        send_raw_files_milestone_uuid,
-        template_uuid,
-        'SEND_RAW_FILES_TO_PART',
         send_data_subcat_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
@@ -267,17 +245,6 @@ BEGIN
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
     );
-
-    send_raw_files_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        send_raw_files_milestone_uuid,
-        template_uuid,
-        'SEND_RAW_FILES_TO_PART',
-        send_data_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
 END $$;
 
 -- =========================================================
@@ -382,17 +349,6 @@ BEGIN
         send_api_milestone_uuid,
         template_uuid,
         'SEND_DATA_VIA_API_TO_PART',
-        send_data_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
-    send_raw_files_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        send_raw_files_milestone_uuid,
-        template_uuid,
-        'SEND_RAW_FILES_TO_PART',
         send_data_subcat_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
@@ -513,17 +469,6 @@ BEGIN
         send_api_milestone_uuid,
         template_uuid,
         'SEND_DATA_VIA_API_TO_PART',
-        send_data_subcat_uuid,
-        '00000001-0001-0001-0001-000000000001'::UUID,
-        CURRENT_TIMESTAMP
-    );
-
-    send_raw_files_milestone_uuid := gen_random_uuid();
-    INSERT INTO mto_template_milestone (id, template_id, mto_common_milestone_key, mto_template_category_id, created_by, created_dts)
-    VALUES (
-        send_raw_files_milestone_uuid,
-        template_uuid,
-        'SEND_RAW_FILES_TO_PART',
         send_data_subcat_uuid,
         '00000001-0001-0001-0001-000000000001'::UUID,
         CURRENT_TIMESTAMP
