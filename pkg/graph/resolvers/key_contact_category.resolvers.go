@@ -44,8 +44,7 @@ func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid
 
 // KeyContactCategory is the resolver for the keyContactCategory field.
 func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*models.KeyContactCategory, error) {
-	logger := appcontext.ZLogger(ctx)
-	return GetAllKeyContactCategories(logger, r.store)
+	return GetAllKeyContactCategories(ctx)
 }
 
 // KeyContactCategoryByID is the resolver for the keyContactCategoryById field.

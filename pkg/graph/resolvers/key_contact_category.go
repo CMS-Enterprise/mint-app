@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -11,6 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // CreateKeyContactCategory creates a new key contact category.
@@ -46,10 +48,6 @@ func UpdateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 	existingCategory, err := storage.KeyContactCategoryGetByID(store, logger, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get category with id %s: %w", id, err)
-	}
-
-	if existingCategory == nil {
-		return nil, fmt.Errorf("category with id %s not found", id)
 	}
 
 	// Apply changes
@@ -124,12 +122,16 @@ func GetKeyContactCategory(logger *zap.Logger, principal authentication.Principa
 	return category, nil
 }
 
-// GetAllKeyContactCategories retrieves all key contact categories.
+// GetAllKeyContactCategories retrieves all key contact categories using a data loader.
 // Returns the categories if found, or an error if failure.
-func GetAllKeyContactCategories(logger *zap.Logger, store *storage.Store) ([]*models.KeyContactCategory, error) {
-	categories, err := storage.KeyContactCategoryGetAll(store, logger)
+func GetAllKeyContactCategories(ctx context.Context) ([]*models.KeyContactCategory, error) {
+	categories, err := loaders.KeyContactCategory.GetAll.Load(ctx, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get all key contact categories: %w", err)
+	}
+
+	if categories == nil {
+		categories = []*models.KeyContactCategory{}
 	}
 
 	return categories, nil

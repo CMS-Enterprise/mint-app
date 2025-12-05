@@ -184,10 +184,7 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories() {
 	category3 := suite.createKeyContactCategory("Category 3")
 
 	// Retrieve all categories
-	allCategories, err := GetAllKeyContactCategories(
-		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
-	)
+	allCategories, err := GetAllKeyContactCategories(suite.testConfigs.Context)
 
 	suite.NoError(err)
 	suite.NotNil(allCategories)
@@ -207,19 +204,13 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories() {
 // TestGetAllKeyContactCategories_Empty tests retrieving all categories when none exist.
 func (suite *ResolverSuite) TestGetAllKeyContactCategories_Empty() {
 	// Retrieve all categories (should be empty since SetupTest truncates tables)
-	allCategories, err := GetAllKeyContactCategories(
-		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
-	)
+	allCategories, err := GetAllKeyContactCategories(suite.testConfigs.Context)
 
 	suite.NoError(err)
 	suite.Len(allCategories, 0)
 
 	category := suite.createKeyContactCategory("Category To Retrieve")
-	newAllCategories, err := GetAllKeyContactCategories(
-		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
-	)
+	newAllCategories, err := GetAllKeyContactCategories(suite.testConfigs.Context)
 	suite.NoError(err)
 	suite.Len(newAllCategories, 1)
 	suite.Equal(category.ID, newAllCategories[0].ID)
