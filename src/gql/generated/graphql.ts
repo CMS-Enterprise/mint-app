@@ -770,6 +770,17 @@ export type KeyContactCategoryUpdateChanges = {
   category?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents key contact base translation data */
+export type KeyContactTranslation = {
+  __typename: 'KeyContactTranslation';
+  mailboxAddress: TranslationField;
+  mailboxTitle: TranslationField;
+  name: TranslationField;
+  subjectArea: TranslationField;
+  subjectCategory: TranslationFieldWithOptions;
+  userId: TranslationField;
+};
+
 /**
  * Input for updating a key contact.
  * Only subject category, subject area, and mailbox title can be changed.
@@ -4887,6 +4898,8 @@ export enum TableName {
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
+  KEY_CONTACT = 'key_contact',
+  KEY_CONTACT_CATEGORY = 'key_contact_category',
   MODEL_PLAN = 'model_plan',
   MODEL_PLAN_MTO_TEMPLATE_LINK = 'model_plan_mto_template_link',
   MTO_CATEGORY = 'mto_category',

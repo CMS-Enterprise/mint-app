@@ -1,0 +1,12 @@
+"""
+Represents key contact base translation data
+"""
+type KeyContactTranslation {
+  subjectCategory: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "category")
+  name: TranslationField! @goTag(key: "db", value: "name")
+  mailboxTitle: TranslationField! @goTag(key: "db", value: "mailbox_title")
+  mailboxAddress: TranslationField! @goTag(key: "db", value: "mailbox_address")
+  userId: TranslationField! @goTag(key: "db", value: "user_id")
+  subjectArea: TranslationField! @goTag(key: "db", value: "subject_area")
+}

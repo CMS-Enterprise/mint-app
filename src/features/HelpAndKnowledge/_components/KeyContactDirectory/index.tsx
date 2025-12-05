@@ -102,7 +102,7 @@ const KeyContactDirectory = () => {
               type="button"
               unstyled
               onClick={() => {}}
-              className="line-height-sans-4 deep-underline"
+              className="line-height-sans-4 deep-underline padding-0"
             >
               {t('keyContactDirectory.addSmeToCategory')}
             </Button>

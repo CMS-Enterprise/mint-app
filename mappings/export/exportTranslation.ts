@@ -5,6 +5,7 @@
 */
 import * as fs from 'fs';
 
+import keyContact from '../../src/i18n/en-US/helpAndKnowledge/keyContact';
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
@@ -39,6 +40,7 @@ import { getKeys } from '../../src/types/translation';
 import { processDataMapping } from './util';
 
 export const translationSections = {
+  key_contact: keyContact,
   model_plan: modelPlan,
   plan_basics: basics,
   plan_general_characteristics: generalCharacteristics,

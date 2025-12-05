@@ -1,0 +1,60 @@
+{
+  "subjectCategory": {
+    "gqlField": "category",
+    "goField": "Category",
+    "dbField": "category",
+    "label": "Subject category",
+    "dataType": "STRING",
+    "formType": "SELECT",
+    "tableReference": "key_contact_category",
+    "order": 1
+  },
+  "mailboxAddress": {
+    "gqlField": "mailboxAddress",
+    "goField": "MailboxAddress",
+    "dbField": "mailbox_address",
+    "label": "Mailbox address",
+    "sublabel": "Add cms.hhs.gov team mailboxes.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.1
+  },
+  "mailboxTitle": {
+    "gqlField": "mailboxTitle",
+    "goField": "MailboxTitle",
+    "dbField": "mailbox_title",
+    "label": "Mailbox title",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.2
+  },
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "SME name",
+    "sublabel": "This field searches CMS’ EUA database.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.3
+  },
+  "userId": {
+    "gqlField": "userId",
+    "goField": "UserId",
+    "dbField": "user_id",
+    "label": "User ID",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 1.4
+  },
+  "subjectArea": {
+    "gqlField": "subjectArea",
+    "goField": "SubjectArea",
+    "dbField": "subject_area",
+    "label": "SME subject area",
+    "sublabel": "Comma-separate multiple areas of subject matter expertise.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.5
+  }
+}

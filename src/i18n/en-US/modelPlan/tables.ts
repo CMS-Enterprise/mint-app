@@ -12,6 +12,8 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
     generalName: 'Existing model links',
     groupedName: 'General characteristics'
   },
+  [TableName.KEY_CONTACT]: { generalName: 'Key contact' },
+  [TableName.KEY_CONTACT_CATEGORY]: { generalName: 'Key contact category' },
   [TableName.MODEL_PLAN]: { generalName: 'Model plan' },
   [TableName.NDA_AGREEMENT]: { generalName: 'NDA agreements' },
   [TableName.OPERATIONAL_NEED]: {
