@@ -1,7 +1,6 @@
 package resolvers
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -16,7 +15,7 @@ import (
 
 // CreateKeyContactCategory creates a new key contact category.
 // It inserts a new category record with the provided category name.
-func CreateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func CreateKeyContactCategory(logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	categoryStr string,
 ) (*models.KeyContactCategory, error) {
 	principalAccount := principal.Account()
@@ -35,7 +34,7 @@ func CreateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 
 // UpdateKeyContactCategory updates an existing key contact category.
 // Only category field can be changed. Returns the updated category.
-func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func UpdateKeyContactCategory(logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.KeyContactCategory, error) {
@@ -78,7 +77,7 @@ func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 
 // DeleteKeyContactCategory deletes a key contact category by its ID.
 // Returns the deleted category or an error.
-func DeleteKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func DeleteKeyContactCategory(logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 ) (*models.KeyContactCategory, error) {
 	principalAccount := principal.Account()
@@ -105,7 +104,7 @@ func DeleteKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 
 // GetKeyContactCategory retrieves a key contact category by its ID.
 // Returns the category if found, or an error if not found or on failure.
-func GetKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func GetKeyContactCategory(logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 ) (*models.KeyContactCategory, error) {
 	principalAccount := principal.Account()
@@ -127,7 +126,7 @@ func GetKeyContactCategory(ctx context.Context, logger *zap.Logger, principal au
 
 // GetAllKeyContactCategories retrieves all key contact categories.
 // Returns the categories if found, or an error if failure.
-func GetAllKeyContactCategories(ctx context.Context, logger *zap.Logger, store *storage.Store) ([]*models.KeyContactCategory, error) {
+func GetAllKeyContactCategories(logger *zap.Logger, store *storage.Store) ([]*models.KeyContactCategory, error) {
 	categories, err := storage.KeyContactCategoryGetAll(store, logger)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get all key contact categories: %w", err)

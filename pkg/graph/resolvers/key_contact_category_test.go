@@ -8,7 +8,6 @@ import (
 
 func (suite *ResolverSuite) createKeyContactCategory(category string) *models.KeyContactCategory {
 	newCategory, err := CreateKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -24,7 +23,6 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory() {
 	categoryName := "Test Category"
 
 	newCategory, err := CreateKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -55,7 +53,6 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory() {
 	}
 
 	updatedCategory, err := UpdateKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -81,7 +78,6 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory_NotFound() {
 	}
 
 	_, err := UpdateKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -99,7 +95,6 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory() {
 
 	// Verify category exists before deletion
 	retrievedCategory, err := GetKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -111,7 +106,6 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory() {
 
 	// Delete the category
 	deletedCategory, err := DeleteKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -124,7 +118,6 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory() {
 
 	// Verify category no longer exists
 	_, err = GetKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -139,7 +132,6 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory_NotFound() {
 	nonExistentID := uuid.New()
 
 	_, err := DeleteKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -156,7 +148,6 @@ func (suite *ResolverSuite) TestGetKeyContactCategory() {
 	category := suite.createKeyContactCategory(categoryName)
 
 	retrievedCategory, err := GetKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -175,7 +166,6 @@ func (suite *ResolverSuite) TestGetKeyContactCategory_NotFound() {
 	nonExistentID := uuid.New()
 
 	_, err := GetKeyContactCategory(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -195,7 +185,6 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories() {
 
 	// Retrieve all categories
 	allCategories, err := GetAllKeyContactCategories(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 	)
@@ -219,7 +208,6 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories() {
 func (suite *ResolverSuite) TestGetAllKeyContactCategories_Empty() {
 	// Retrieve all categories (should be empty since SetupTest truncates tables)
 	allCategories, err := GetAllKeyContactCategories(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 	)
@@ -229,7 +217,6 @@ func (suite *ResolverSuite) TestGetAllKeyContactCategories_Empty() {
 
 	category := suite.createKeyContactCategory("Category To Retrieve")
 	newAllCategories, err := GetAllKeyContactCategories(
-		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 	)

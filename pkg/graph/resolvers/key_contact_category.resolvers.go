@@ -25,34 +25,34 @@ func (r *keyContactCategoryResolver) KeyContacts(ctx context.Context, obj *model
 func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, category string) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return CreateKeyContactCategory(ctx, logger, principal, r.store, category)
+	return CreateKeyContactCategory(logger, principal, r.store, category)
 }
 
 // UpdateKeyContactCategory is the resolver for the updateKeyContactCategory field.
 func (r *mutationResolver) UpdateKeyContactCategory(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return UpdateKeyContactCategory(ctx, logger, principal, r.store, id, changes)
+	return UpdateKeyContactCategory(logger, principal, r.store, id, changes)
 }
 
 // DeleteKeyContactCategory is the resolver for the deleteKeyContactCategory field.
 func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return DeleteKeyContactCategory(ctx, logger, principal, r.store, id)
+	return DeleteKeyContactCategory(logger, principal, r.store, id)
 }
 
 // KeyContactCategory is the resolver for the keyContactCategory field.
 func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*models.KeyContactCategory, error) {
 	logger := appcontext.ZLogger(ctx)
-	return GetAllKeyContactCategories(ctx, logger, r.store)
+	return GetAllKeyContactCategories(logger, r.store)
 }
 
 // KeyContactCategoryByID is the resolver for the keyContactCategoryById field.
 func (r *queryResolver) KeyContactCategoryByID(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return GetKeyContactCategory(ctx, logger, principal, r.store, id)
+	return GetKeyContactCategory(logger, principal, r.store, id)
 }
 
 // KeyContactCategoriesByIds is the resolver for the keyContactCategoriesByIds field.
