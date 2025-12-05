@@ -25,6 +25,8 @@ input KeyContactCategoryUpdateChanges
 
 extend type Query {
   keyContactCategory: [KeyContactCategory!]!
+  keyContactCategoryById(id: UUID!): KeyContactCategory!
+  keyContactCategoriesByIds(ids: [UUID!]!): [KeyContactCategory!]!
 }
 
 extend type Mutation {

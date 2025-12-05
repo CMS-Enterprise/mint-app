@@ -10,25 +10,59 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
+// KeyContacts is the resolver for the keyContacts field.
+func (r *keyContactCategoryResolver) KeyContacts(ctx context.Context, obj *models.KeyContactCategory) ([]*models.KeyContact, error) {
+	panic(fmt.Errorf("not implemented: KeyContacts - keyContacts"))
+}
+
 // CreateKeyContactCategory is the resolver for the createKeyContactCategory field.
-func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, category string) (*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: CreateKeyContactCategory - createKeyContactCategory"))
+func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, category string) (*models.KeyContactCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return CreateKeyContactCategory(logger, principal, r.store, category)
 }
 
 // UpdateKeyContactCategory is the resolver for the updateKeyContactCategory field.
-func (r *mutationResolver) UpdateKeyContactCategory(ctx context.Context, id uuid.UUID, changes map[string]any) (*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: UpdateKeyContactCategory - updateKeyContactCategory"))
+func (r *mutationResolver) UpdateKeyContactCategory(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.KeyContactCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return UpdateKeyContactCategory(logger, principal, r.store, id, changes)
 }
 
 // DeleteKeyContactCategory is the resolver for the deleteKeyContactCategory field.
-func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid.UUID) (*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: DeleteKeyContactCategory - deleteKeyContactCategory"))
+func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return DeleteKeyContactCategory(logger, principal, r.store, id)
 }
 
 // KeyContactCategory is the resolver for the keyContactCategory field.
-func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*model.KeyContactCategory, error) {
-	panic(fmt.Errorf("not implemented: KeyContactCategory - keyContactCategory"))
+func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*models.KeyContactCategory, error) {
+	return GetAllKeyContactCategories(ctx)
 }
+
+// KeyContactCategoryByID is the resolver for the keyContactCategoryById field.
+func (r *queryResolver) KeyContactCategoryByID(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return GetKeyContactCategory(logger, principal, r.store, id)
+}
+
+// KeyContactCategoriesByIds is the resolver for the keyContactCategoriesByIds field.
+func (r *queryResolver) KeyContactCategoriesByIds(ctx context.Context, ids []uuid.UUID) ([]*models.KeyContactCategory, error) {
+	logger := appcontext.ZLogger(ctx)
+	return storage.KeyContactCategoryGetByIDsLoader(r.store, logger, ids)
+}
+
+// KeyContactCategory returns generated.KeyContactCategoryResolver implementation.
+func (r *Resolver) KeyContactCategory() generated.KeyContactCategoryResolver {
+	return &keyContactCategoryResolver{r}
+}
+
+type keyContactCategoryResolver struct{ *Resolver }
