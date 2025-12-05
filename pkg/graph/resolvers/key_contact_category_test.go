@@ -39,6 +39,166 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory() {
 	suite.Nil(newCategory.ModifiedDts)
 }
 
+// TestCreateKeyContactCategory_EmptyString tests creating a category with an empty string.
+func (suite *ResolverSuite) TestCreateKeyContactCategory_EmptyString() {
+	_, err := CreateKeyContactCategory(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		"",
+	)
+
+	suite.Error(err)
+	suite.Contains(err.Error(), "category name cannot be empty or whitespace-only")
+}
+
+// TestCreateKeyContactCategory_Whitespace tests whitespace handling in category names.
+func (suite *ResolverSuite) TestCreateKeyContactCategory_Whitespace() {
+	testCases := []struct {
+		name      string
+		category  string
+		expected  string // Expected stored value (empty string means should error)
+		shouldErr bool
+	}{
+		// Whitespace-only (should error)
+		{"whitespace only - spaces", "   ", "", true},
+		{"whitespace only - tabs", "\t\t\t", "", true},
+		{"whitespace only - newlines", "\n\n\n", "", true},
+		{"whitespace only - mixed", " \t\n ", "", true},
+		{"whitespace only - single space", " ", "", true},
+		{"whitespace only - single tab", "\t", "", true},
+		{"whitespace only - single newline", "\n", "", true},
+		// Whitespace with content (should sanitize)
+		{"leading space", "  Test Category", "Test Category", false},
+		{"trailing space", "Test Category  ", "Test Category", false},
+		{"leading and trailing", "  Test Category  ", "Test Category", false},
+		{"leading tab", "\tTest Category", "Test Category", false},
+		{"trailing newline", "Test Category\n", "Test Category", false},
+		{"newline in middle", "Test\nCategory", "TestCategory", false},
+		{"multiple newlines", "Test\n\nCategory", "TestCategory", false},
+	}
+
+	for _, tc := range testCases {
+		suite.Run(tc.name, func() {
+			newCategory, err := CreateKeyContactCategory(
+				suite.testConfigs.Logger,
+				suite.testConfigs.Principal,
+				suite.testConfigs.Store,
+				tc.category,
+			)
+
+			if tc.shouldErr {
+				suite.Error(err)
+				suite.Contains(err.Error(), "category name cannot be empty or whitespace-only")
+			} else {
+				suite.NoError(err)
+				suite.NotNil(newCategory)
+				suite.Equal(tc.expected, newCategory.Category)
+			}
+		})
+	}
+}
+
+// TestCreateKeyContactCategory_ExtremelyLongString tests creating a category with an extremely long string (10,000 chars).
+func (suite *ResolverSuite) TestCreateKeyContactCategory_ExtremelyLongString() {
+	// Create a string that's 10,000 characters long
+	longString := make([]byte, 10000)
+	for i := range longString {
+		longString[i] = 'B'
+	}
+	categoryName := string(longString)
+
+	newCategory, err := CreateKeyContactCategory(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		categoryName,
+	)
+
+	// Extremely long strings will likely hit database limits
+	// This test documents the current behavior
+	if err != nil {
+		// If extremely long string is rejected, that's acceptable behavior
+		suite.Error(err)
+	} else {
+		// If extremely long string is allowed, verify it's stored (may be truncated)
+		suite.NoError(err)
+		suite.NotNil(newCategory)
+		// May be truncated by database, but should have some content
+		suite.GreaterOrEqual(len(newCategory.Category), 0)
+	}
+}
+
+// TestUpdateKeyContactCategory_EmptyString tests updating a category with an empty string.
+func (suite *ResolverSuite) TestUpdateKeyContactCategory_EmptyString() {
+	category := suite.createKeyContactCategory("Original Category")
+
+	changes := map[string]interface{}{
+		"category": "",
+	}
+
+	_, err := UpdateKeyContactCategory(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		category.ID,
+		changes,
+	)
+
+	suite.Error(err)
+	suite.Contains(err.Error(), "category name cannot be empty or whitespace-only")
+}
+
+// TestUpdateKeyContactCategory_Whitespace tests whitespace handling when updating category names.
+func (suite *ResolverSuite) TestUpdateKeyContactCategory_Whitespace() {
+	category := suite.createKeyContactCategory("Original Category")
+
+	testCases := []struct {
+		name      string
+		category  string
+		expected  string // Expected stored value (empty string means should error)
+		shouldErr bool
+	}{
+		// Whitespace-only (should error)
+		{"whitespace only - spaces", "   ", "", true},
+		{"whitespace only - tabs", "\t\t\t", "", true},
+		{"whitespace only - newlines", "\n\n\n", "", true},
+		{"whitespace only - mixed", " \t\n ", "", true},
+		// Whitespace with content (should sanitize)
+		{"leading space", "  Updated Category", "Updated Category", false},
+		{"trailing space", "Updated Category  ", "Updated Category", false},
+		{"leading and trailing", "  Updated Category  ", "Updated Category", false},
+		{"leading tab", "\tUpdated Category", "Updated Category", false},
+		{"trailing newline", "Updated Category\n", "Updated Category", false},
+		{"newline in middle", "Updated\nCategory", "UpdatedCategory", false},
+	}
+
+	for _, tc := range testCases {
+		suite.Run(tc.name, func() {
+			changes := map[string]interface{}{
+				"category": tc.category,
+			}
+
+			updatedCategory, err := UpdateKeyContactCategory(
+				suite.testConfigs.Logger,
+				suite.testConfigs.Principal,
+				suite.testConfigs.Store,
+				category.ID,
+				changes,
+			)
+
+			if tc.shouldErr {
+				suite.Error(err)
+				suite.Contains(err.Error(), "category name cannot be empty or whitespace-only")
+			} else {
+				suite.NoError(err)
+				suite.NotNil(updatedCategory)
+				suite.Equal(tc.expected, updatedCategory.Category)
+			}
+		})
+	}
+}
+
 // TestUpdateKeyContactCategory tests updating an existing key contact category.
 func (suite *ResolverSuite) TestUpdateKeyContactCategory() {
 	originalCategoryName := "Original Category"

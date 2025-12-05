@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sanitization"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -25,7 +26,13 @@ func CreateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	newCategory := models.NewKeyContactCategory(principalAccount.ID, categoryStr)
+	// Sanitize and validate category name
+	sanitizedCategory := sanitization.SanitizeString(categoryStr)
+	if sanitizedCategory == "" {
+		return nil, fmt.Errorf("category name cannot be empty or whitespace-only")
+	}
+
+	newCategory := models.NewKeyContactCategory(principalAccount.ID, sanitizedCategory)
 	createdCategory, err := storage.KeyContactCategoryCreate(store, logger, newCategory)
 	if err != nil {
 		return nil, err
@@ -52,7 +59,12 @@ func UpdateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 
 	// Apply changes
 	if category, ok := changes["category"].(string); ok {
-		existingCategory.Category = category
+		// Sanitize and validate category name
+		sanitizedCategory := sanitization.SanitizeString(category)
+		if sanitizedCategory == "" {
+			return nil, fmt.Errorf("category name cannot be empty or whitespace-only")
+		}
+		existingCategory.Category = sanitizedCategory
 	}
 
 	// Set modified by
