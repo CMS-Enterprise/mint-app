@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 	"strings"
 	"time"
@@ -132,7 +133,9 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 	var oldNameAuditField string
 
 	if len(nameChangeAudits) > 0 && nameChangeAudits[0].Fields["model_name"].Old != nil {
-		oldNameAuditField = nameChangeAudits[0].Fields["model_name"].Old.(string)
+		if oldName, ok := nameChangeAudits[0].Fields["model_name"].Old.(string); ok {
+			oldNameAuditField = oldName
+		}
 	}
 
 	statuses := []string{
@@ -148,9 +151,9 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 
 	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") {
-			status := m.Fields["status"].New.(string)
-			if lo.Contains(statuses, status) {
+		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
+			status, ok := m.Fields["status"].New.(string)
+			if ok && lo.Contains(statuses, status) {
 				return status, true
 			}
 		}
@@ -194,18 +197,23 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 		keys := lo.Keys(m.Fields)
 
 		teamRolesRaw, ok := m.Fields["team_roles"].New.(string)
-		teamRolesRaw = strings.TrimPrefix(teamRolesRaw, "{")
-		teamRolesRaw = strings.TrimSuffix(teamRolesRaw, "}")
-
-		teamRoles := strings.Split(teamRolesRaw, ",")
-
 		if !ok {
 			log.Printf("Warning: team_roles is not of type string in audit entry number %d. It is of type %T", index, m.Fields["team_roles"].New)
 			return models.AnalyzedModelLeadInfo{}, false
 		}
 
+		teamRolesRaw = strings.TrimPrefix(teamRolesRaw, "{")
+		teamRolesRaw = strings.TrimSuffix(teamRolesRaw, "}")
+
+		teamRoles := strings.Split(teamRolesRaw, ",")
+
 		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_roles") && lo.Contains(teamRoles, "MODEL_LEAD") {
-			idString := m.Fields["user_id"].New.(string)
+			idString, ok := m.Fields["user_id"].New.(string)
+			if !ok {
+				log.Printf("Warning: user_id is not of type string in audit entry number %d. It is of type %T", index, m.Fields["user_id"].New)
+				return models.AnalyzedModelLeadInfo{}, false
+			}
+
 			var id uuid.UUID
 			id, parseError = uuid.Parse(idString)
 			if parseError != nil {
@@ -213,11 +221,19 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 				return models.AnalyzedModelLeadInfo{}, false
 			}
 
-			account, _ := storage.UserAccountGetByID(store, id) //TODO should we handle the error? I think null is ok if can't get the account
+			account, err := storage.UserAccountGetByID(store, id)
+			if err != nil {
+				log.Printf("Warning: Failed to get user account for ID %s in audit entry number %d with error: %v", id, index, err)
+			}
+
+			var commonName string
+			if account != nil {
+				commonName = account.CommonName
+			}
 
 			return models.AnalyzedModelLeadInfo{
 				ID:         id,
-				CommonName: account.CommonName,
+				CommonName: commonName,
 			}, true
 		}
 		return models.AnalyzedModelLeadInfo{}, false
@@ -267,6 +283,10 @@ func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocum
 
 // analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
 func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
+	if audits == nil {
+		return nil, errors.New("no audits provided to analyzeSectionsAudits")
+	}
+
 	sections := []models.TableName{
 		models.TNPlanBasics,
 		models.TNPlanGeneralCharacteristics,
@@ -289,9 +309,14 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 	}))
 
 	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
+		if m == nil || m.Fields == nil {
+			log.Printf("Warning: m or m.Fields is nil in audit entry number %d", index)
+			return "", false
+		}
+
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") {
-			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
+		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
+			if statusStr, ok := m.Fields["status"].New.(string); ok && statusStr == "READY_FOR_REVIEW" {
 				return m.TableName, true
 			}
 		}
@@ -300,8 +325,8 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 
 	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") {
-			if m.Fields["status"].New.(string) == "READY_FOR_CLEARANCE" {
+		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
+			if statusStr, ok := m.Fields["status"].New.(string); ok && statusStr == "READY_FOR_CLEARANCE" {
 				return m.TableName, true
 			}
 		}
@@ -310,8 +335,8 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 
 	dataExchangeApproachMarkedComplete := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") {
-			if m.Fields["status"].New.(string) == string(models.DataExchangeApproachStatusComplete) {
+		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
+			if statusStr, ok := m.Fields["status"].New.(string); ok && statusStr == string(models.DataExchangeApproachStatusComplete) {
 				return m.TableName, true
 			}
 		}
