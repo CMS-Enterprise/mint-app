@@ -233,6 +233,55 @@ const milestoneMap: Record<MtoCommonMilestoneKey | string, MilestoneFieldType> =
       parentField: 'payments',
       question: 'payments:willRecoverPayments.label',
       section: 'paymentsMisc'
+    },
+    ACQUIRE_AN_IMP_CONT: {
+      route: 'ops-eval-and-learning',
+      fieldName: 'contractorSupport',
+      parentField: 'opsEvalAndLearning',
+      question: 'opsEvalAndLearning:contractorSupport.label',
+      section: 'opsEvalAndLearningMisc'
+    },
+    ACQUIRE_A_PRE_IMP_CONT: {
+      route: 'ops-eval-and-learning',
+      fieldName: 'contractorSupport',
+      parentField: 'opsEvalAndLearning',
+      question: 'opsEvalAndLearning:contractorSupport.label',
+      section: 'opsEvalAndLearningMisc'
+    },
+    ACQUIRE_A_DATA_AGG_CONT: {
+      route: 'ops-eval-and-learning',
+      fieldName: 'contractorSupport',
+      parentField: 'opsEvalAndLearning',
+      question: 'opsEvalAndLearning:contractorSupport.label',
+      section: 'opsEvalAndLearningMisc'
+    },
+    SEND_DASHBOARDS_REPORTS_TO_PART: {
+      route: 'ops-eval-and-learning/evaluation',
+      fieldName: 'dataToSendParticicipants',
+      parentField: 'opsEvalAndLearning',
+      question: 'opsEvalAndLearning:dataToSendParticicipants.label',
+      section: 'opsEvalAndLearningMisc'
+    },
+    SEND_DATA_VIA_API_TO_PART: {
+      route: 'ops-eval-and-learning/evaluation',
+      fieldName: 'dataToSendParticicipants',
+      parentField: 'opsEvalAndLearning',
+      question: 'opsEvalAndLearning:dataToSendParticicipants.label',
+      section: 'opsEvalAndLearningMisc'
+    },
+    SEND_RAW_FILES_TO_PART: {
+      route: 'ops-eval-and-learning/evaluation',
+      fieldName: 'dataToSendParticicipants',
+      parentField: 'opsEvalAndLearning',
+      question: 'opsEvalAndLearning:dataToSendParticicipants.label',
+      section: 'opsEvalAndLearningMisc'
+    },
+    SIGN_COOPERATIVE_AGREEMENTS: {
+      route: 'characteristics/targets-and-options',
+      fieldName: 'agreementTypes',
+      parentField: 'generalCharacteristics',
+      question: 'generalCharacteristics:agreementTypes.label',
+      section: 'generalCharacteristicsMisc'
     }
   };
 

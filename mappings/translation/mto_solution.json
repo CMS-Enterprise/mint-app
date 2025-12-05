@@ -308,7 +308,14 @@
       "SIGN_PARTICIPATION_AGREEMENTS": "Sign Participation Agreements",
       "VET_PROVIDERS_FOR_PROGRAM_INTEGRITY": "Vet providers for program integrity",
       "UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR": "Utilize quality measures development contractor",
-      "IT_PLATFORM_FOR_LEARNING": "IT platform for learning"
+      "IT_PLATFORM_FOR_LEARNING": "IT platform for learning",
+      "ACQUIRE_AN_IMP_CONT": "Acquire an implementation contractor",
+      "ACQUIRE_A_PRE_IMP_CONT": "Acquire support from a pre-implementation contractor",
+      "ACQUIRE_A_DATA_AGG_CONT": "Acquire support from a data aggregation contractor",
+      "SEND_DASHBOARDS_REPORTS_TO_PART": "Send dashboards and/or reports to participants",
+      "SEND_DATA_VIA_API_TO_PART": "Send data via API to participants",
+      "SEND_RAW_FILES_TO_PART": "Send raw files to participants",
+      "SIGN_COOPERATIVE_AGREEMENTS": "Sign Cooperative Agreements"
     }
   }
 }

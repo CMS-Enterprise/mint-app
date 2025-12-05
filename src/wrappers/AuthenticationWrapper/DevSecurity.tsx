@@ -1,10 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  AuthTransaction,
-  CustomUserClaims,
-  OktaAuth,
-  UserClaims
-} from '@okta/okta-auth-js';
+import { AuthTransaction, OktaAuth, UserClaims } from '@okta/okta-auth-js';
 import { OktaContext } from '@okta/okta-react';
 
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -59,10 +54,10 @@ const DevSecurity = ({ children }: ParentComponentProps) => {
     };
 
     mockAuth.getUser = async <
-      T extends CustomUserClaims = CustomUserClaims
+      T extends Record<string, any> = Record<string, any>
     >() => {
       const currentState = getStateFromLocalStorage();
-      const userClaims: UserClaims<CustomUserClaims> = {
+      const userClaims: UserClaims<Record<string, any>> = {
         name: currentState.name,
         sub: '',
         euaId: currentState.euaId,
