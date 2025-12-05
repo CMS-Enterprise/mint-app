@@ -6,7 +6,7 @@ import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { Alert } from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
-import { SmeType } from '..';
+import { SmeType } from '../..';
 
 type ColumnType = SmeType & { actions: unknown };
 

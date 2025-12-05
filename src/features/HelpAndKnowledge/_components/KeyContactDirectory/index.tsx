@@ -22,7 +22,7 @@ import GlobalClientFilter from 'components/TableFilter';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
-import KeyContactTable from './KeyContactTable';
+import KeyContactTable from './_components/KeyContactTable';
 
 import './index.scss';
 
