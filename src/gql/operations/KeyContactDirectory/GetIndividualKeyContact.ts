@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetAllKeyContacts {
-    keyContacts {
+  query GetIndividualKeyContact($id: UUID!) {
+    keyContact(id: $id) {
       id
       name
       email
