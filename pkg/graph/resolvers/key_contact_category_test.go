@@ -52,6 +52,59 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory_EmptyString() {
 	suite.Contains(err.Error(), "category name cannot be empty or whitespace-only")
 }
 
+// TestCreateKeyContactCategory_DuplicateName tests creating a category with a duplicate name.
+func (suite *ResolverSuite) TestCreateKeyContactCategory_DuplicateName() {
+	categoryName := "Test Category"
+
+	// Create first category
+	firstCategory := suite.createKeyContactCategory(categoryName)
+	suite.NotNil(firstCategory)
+
+	// Try to create a duplicate (exact match)
+	_, err := CreateKeyContactCategory(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		categoryName,
+	)
+
+	suite.Error(err)
+	suite.Contains(err.Error(), "already exists")
+}
+
+// TestCreateKeyContactCategory_DuplicateNameCaseInsensitive tests that duplicate check is case-insensitive.
+func (suite *ResolverSuite) TestCreateKeyContactCategory_DuplicateNameCaseInsensitive() {
+	categoryName := "Test Category"
+
+	// Create first category
+	firstCategory := suite.createKeyContactCategory(categoryName)
+	suite.NotNil(firstCategory)
+
+	// Try to create a duplicate with different case
+	testCases := []struct {
+		name      string
+		duplicate string
+	}{
+		{"uppercase", "TEST CATEGORY"},
+		{"lowercase", "test category"},
+		{"mixed case", "TeSt CaTeGoRy"},
+	}
+
+	for _, tc := range testCases {
+		suite.Run(tc.name, func() {
+			_, err := CreateKeyContactCategory(
+				suite.testConfigs.Logger,
+				suite.testConfigs.Principal,
+				suite.testConfigs.Store,
+				tc.duplicate,
+			)
+
+			suite.Error(err)
+			suite.Contains(err.Error(), "already exists")
+		})
+	}
+}
+
 // TestCreateKeyContactCategory_Whitespace tests whitespace handling in category names.
 func (suite *ResolverSuite) TestCreateKeyContactCategory_Whitespace() {
 	testCases := []struct {
