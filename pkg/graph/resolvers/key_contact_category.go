@@ -58,7 +58,23 @@ func UpdateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 	}
 
 	// Apply changes
-	if category, ok := changes["category"].(string); ok {
+	if categoryValue, exists := changes["category"]; exists && categoryValue != nil {
+		var category string
+		var ok bool
+
+		// Handle both string and *string types (GraphQL may pass either)
+		if str, isString := categoryValue.(string); isString {
+			category = str
+			ok = true
+		} else if strPtr, isStringPtr := categoryValue.(*string); isStringPtr && strPtr != nil {
+			category = *strPtr
+			ok = true
+		}
+
+		if !ok {
+			return nil, fmt.Errorf("category must be a string, got type %T", categoryValue)
+		}
+
 		// Sanitize and validate category name
 		sanitizedCategory := sanitization.SanitizeString(category)
 		if sanitizedCategory == "" {
