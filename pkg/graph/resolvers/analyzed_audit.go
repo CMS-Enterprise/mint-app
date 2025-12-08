@@ -121,12 +121,12 @@ func generateChanges[T logging.ChainableErrorOrWarnLogger[T]](audits []*models.A
 // analyzeModelPlanAudits analyzes all the model plan name changes and status changes
 func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModelPlan, error) {
 
-	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "model_plan"
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, index int) bool {
+		return audit.TableName == "model_plan"
 	})
 
-	nameChangeAudits := lo.Filter(filteredAudits, func(m *models.AuditChange, index int) bool {
-		keys := lo.Keys(m.Fields)
+	nameChangeAudits := lo.Filter(filteredAudits, func(audit *models.AuditChange, index int) bool {
+		keys := lo.Keys(audit.Fields)
 		return lo.Contains(keys, "model_name")
 	})
 
@@ -151,10 +151,10 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 		string(models.ModelStatusAnnounced),
 	}
 
-	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
-		keys := lo.Keys(m.Fields)
+	statusChangeAudits := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (string, bool) {
+		keys := lo.Keys(audit.Fields)
 		if lo.Contains(keys, "status") {
-			statusField, hasStatus := m.Fields["status"]
+			statusField, hasStatus := audit.Fields["status"]
 			if hasStatus && statusField.New != nil {
 				status, ok := statusField.New.(string)
 				if ok && lo.Contains(statuses, status) {
@@ -179,8 +179,8 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 
 // analyzeCrTdlAudits analyzes if there were any CrTdl changes
 func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, error) {
-	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_tdl" || m.TableName == "plan_cr"
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, index int) bool {
+		return audit.TableName == "plan_tdl" || audit.TableName == "plan_cr"
 	})
 
 	if len(filteredAudits) > 0 {
@@ -193,15 +193,15 @@ func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 
 // analyzeModelLeads analyzes new collaborators to a model plan
 func analyzeModelLeads[T logging.ChainableErrorOrWarnLogger[T]](audits []*models.AuditChange, store *storage.Store, logger T) (*models.AnalyzedModelLeads, error) {
-	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_collaborator"
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, index int) bool {
+		return audit.TableName == "plan_collaborator"
 	})
 	var parseError error
 
-	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
-		keys := lo.Keys(m.Fields)
+	addedCollaborators := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
+		keys := lo.Keys(audit.Fields)
 
-		teamRolesField, hasTeamRoles := m.Fields["team_roles"]
+		teamRolesField, hasTeamRoles := audit.Fields["team_roles"]
 		if !hasTeamRoles || teamRolesField.New == nil {
 			logger.Warn("team_roles field is missing or nil in audit entry", zap.Int("index", index))
 			return models.AnalyzedModelLeadInfo{}, false
@@ -219,7 +219,7 @@ func analyzeModelLeads[T logging.ChainableErrorOrWarnLogger[T]](audits []*models
 		teamRoles := strings.Split(teamRolesRaw, ",")
 
 		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_roles") && lo.Contains(teamRoles, "MODEL_LEAD") {
-			userIDField, hasUserID := m.Fields["user_id"]
+			userIDField, hasUserID := audit.Fields["user_id"]
 			if !hasUserID || userIDField.New == nil {
 				logger.Warn("user_id field is missing or nil in audit entry", zap.Int("index", index))
 				return models.AnalyzedModelLeadInfo{}, false
@@ -270,8 +270,8 @@ func analyzeModelLeads[T logging.ChainableErrorOrWarnLogger[T]](audits []*models
 
 // analyzeDiscussionAudits analyzes if there was discussion activity on a model plan
 func analyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlanDiscussions, error) {
-	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_discussion"
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, index int) bool {
+		return audit.TableName == "plan_discussion"
 	})
 
 	if len(filteredAudits) > 0 {
@@ -285,8 +285,8 @@ func analyzeDiscussionAudits(audits []*models.AuditChange) (*models.AnalyzedPlan
 
 // analyzeDocumentsAudits analyzes how many documents had activity
 func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocuments, error) {
-	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return m.TableName == "plan_document"
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, index int) bool {
+		return audit.TableName == "plan_document"
 	})
 
 	if len(filteredAudits) > 0 {
@@ -317,26 +317,26 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 
 	sections = append(sections, models.MTOTables...)
 
-	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
-		return lo.Contains(sections, m.TableName)
+	filteredAudits := lo.Filter(audits, func(audit *models.AuditChange, index int) bool {
+		return lo.Contains(sections, audit.TableName)
 	})
 
-	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) models.TableName {
-		return m.TableName
+	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(audit *models.AuditChange, index int) models.TableName {
+		return audit.TableName
 	}))
 
-	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
-		if m == nil || m.Fields == nil {
-			logger.Warn("m or m.Fields is nil in audit entry", zap.Int("index", index))
+	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
+		if audit == nil || audit.Fields == nil {
+			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
 			return "", false
 		}
 
-		keys := lo.Keys(m.Fields)
+		keys := lo.Keys(audit.Fields)
 		if lo.Contains(keys, "status") {
-			statusField, hasStatus := m.Fields["status"]
+			statusField, hasStatus := audit.Fields["status"]
 			if hasStatus && statusField.New != nil {
 				if statusStr, ok := statusField.New.(string); ok && statusStr == "READY_FOR_REVIEW" {
-					return m.TableName, true
+					return audit.TableName, true
 				}
 			}
 		}
@@ -361,18 +361,18 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		return "", false
 	}))
 
-	dataExchangeApproachMarkedComplete := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
-		if m == nil || m.Fields == nil {
-			logger.Warn("m or m.Fields is nil in audit entry", zap.Int("index", index))
+	dataExchangeApproachMarkedComplete := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
+		if audit == nil || audit.Fields == nil {
+			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
 			return "", false
 		}
 
-		keys := lo.Keys(m.Fields)
+		keys := lo.Keys(audit.Fields)
 		if lo.Contains(keys, "status") {
-			statusField, hasStatus := m.Fields["status"]
+			statusField, hasStatus := audit.Fields["status"]
 			if hasStatus && statusField.New != nil {
 				if statusStr, ok := statusField.New.(string); ok && statusStr == string(models.DataExchangeApproachStatusComplete) {
-					return m.TableName, true
+					return audit.TableName, true
 				}
 			}
 		}
