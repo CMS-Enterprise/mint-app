@@ -3,7 +3,7 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
+	"fmt"
 	"strings"
 	"time"
 
@@ -40,7 +40,7 @@ func AnalyzeModelPlanForAnalyzedAudit[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 
 	logger.Info("generating changes from returned audits")
-	analyzedAuditChange, err := generateChanges(audits, store)
+	analyzedAuditChange, err := generateChanges(audits, store, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func AnalyzeModelPlanForAnalyzedAudit[T logging.ChainableErrorOrWarnLogger[T]](
 */
 
 // generateChanges gets all the audit changes for the specified tables
-func generateChanges(audits []*models.AuditChange, store *storage.Store) (*models.AnalyzedAuditChange, error) {
+func generateChanges[T logging.ChainableErrorOrWarnLogger[T]](audits []*models.AuditChange, store *storage.Store, logger T) (*models.AnalyzedAuditChange, error) {
 
 	modelPlanAudits, err := analyzeModelPlanAudits(audits)
 	if err != nil {
@@ -91,7 +91,7 @@ func generateChanges(audits []*models.AuditChange, store *storage.Store) (*model
 		return nil, err
 	}
 
-	modelLeadAudits, err := analyzeModelLeads(audits, store)
+	modelLeadAudits, err := analyzeModelLeads(audits, store, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func generateChanges(audits []*models.AuditChange, store *storage.Store) (*model
 		return nil, err
 	}
 
-	sectionsAudits, err := analyzeSectionsAudits(audits)
+	sectionsAudits, err := analyzeSectionsAudits(audits, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -132,9 +132,11 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 
 	var oldNameAuditField string
 
-	if len(nameChangeAudits) > 0 && nameChangeAudits[0].Fields["model_name"].Old != nil {
-		if oldName, ok := nameChangeAudits[0].Fields["model_name"].Old.(string); ok {
-			oldNameAuditField = oldName
+	if len(nameChangeAudits) > 0 {
+		if modelNameField, hasModelName := nameChangeAudits[0].Fields["model_name"]; hasModelName && modelNameField.Old != nil {
+			if oldName, ok := modelNameField.Old.(string); ok {
+				oldNameAuditField = oldName
+			}
 		}
 	}
 
@@ -151,10 +153,13 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 
 	statusChangeAudits := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
-			status, ok := m.Fields["status"].New.(string)
-			if ok && lo.Contains(statuses, status) {
-				return status, true
+		if lo.Contains(keys, "status") {
+			statusField, hasStatus := m.Fields["status"]
+			if hasStatus && statusField.New != nil {
+				status, ok := statusField.New.(string)
+				if ok && lo.Contains(statuses, status) {
+					return status, true
+				}
 			}
 		}
 		return "", false
@@ -187,7 +192,7 @@ func analyzeCrTdlAudits(audits []*models.AuditChange) (*models.AnalyzedCrTdls, e
 }
 
 // analyzeModelLeads analyzes new collaborators to a model plan
-func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*models.AnalyzedModelLeads, error) {
+func analyzeModelLeads[T logging.ChainableErrorOrWarnLogger[T]](audits []*models.AuditChange, store *storage.Store, logger T) (*models.AnalyzedModelLeads, error) {
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return m.TableName == "plan_collaborator"
 	})
@@ -196,9 +201,15 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 	addedCollaborators := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.AnalyzedModelLeadInfo, bool) {
 		keys := lo.Keys(m.Fields)
 
-		teamRolesRaw, ok := m.Fields["team_roles"].New.(string)
+		teamRolesField, hasTeamRoles := m.Fields["team_roles"]
+		if !hasTeamRoles || teamRolesField.New == nil {
+			logger.Warn("team_roles field is missing or nil in audit entry", zap.Int("index", index))
+			return models.AnalyzedModelLeadInfo{}, false
+		}
+
+		teamRolesRaw, ok := teamRolesField.New.(string)
 		if !ok {
-			log.Printf("Warning: team_roles is not of type string in audit entry number %d. It is of type %T", index, m.Fields["team_roles"].New)
+			logger.Warn("team_roles is not of type string in audit entry", zap.Int("index", index), zap.String("type", fmt.Sprintf("%T", teamRolesField.New)))
 			return models.AnalyzedModelLeadInfo{}, false
 		}
 
@@ -208,22 +219,28 @@ func analyzeModelLeads(audits []*models.AuditChange, store *storage.Store) (*mod
 		teamRoles := strings.Split(teamRolesRaw, ",")
 
 		if lo.Contains(keys, "user_id") && lo.Contains(keys, "team_roles") && lo.Contains(teamRoles, "MODEL_LEAD") {
-			idString, ok := m.Fields["user_id"].New.(string)
+			userIDField, hasUserID := m.Fields["user_id"]
+			if !hasUserID || userIDField.New == nil {
+				logger.Warn("user_id field is missing or nil in audit entry", zap.Int("index", index))
+				return models.AnalyzedModelLeadInfo{}, false
+			}
+
+			idString, ok := userIDField.New.(string)
 			if !ok {
-				log.Printf("Warning: user_id is not of type string in audit entry number %d. It is of type %T", index, m.Fields["user_id"].New)
+				logger.Warn("user_id is not of type string in audit entry", zap.Int("index", index), zap.String("type", fmt.Sprintf("%T", userIDField.New)))
 				return models.AnalyzedModelLeadInfo{}, false
 			}
 
 			var id uuid.UUID
 			id, parseError = uuid.Parse(idString)
 			if parseError != nil {
-				log.Printf("Error: Failed to parse UUID in audit entry number %d with error: %v", index, parseError)
+				logger.Error("Failed to parse UUID in audit entry", zap.Int("index", index), zap.Error(parseError))
 				return models.AnalyzedModelLeadInfo{}, false
 			}
 
 			account, err := storage.UserAccountGetByID(store, id)
 			if err != nil {
-				log.Printf("Warning: Failed to get user account for ID %s in audit entry number %d with error: %v", id, index, err)
+				logger.Warn("Failed to get user account", zap.String("userID", id.String()), zap.Int("index", index), zap.Error(err))
 			}
 
 			var commonName string
@@ -282,7 +299,7 @@ func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocum
 }
 
 // analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
-func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
+func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*models.AuditChange, logger T) (*models.AnalyzedPlanSections, error) {
 	if audits == nil {
 		return nil, errors.New("no audits provided to analyzeSectionsAudits")
 	}
@@ -310,34 +327,53 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 
 	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
 		if m == nil || m.Fields == nil {
-			log.Printf("Warning: m or m.Fields is nil in audit entry number %d", index)
+			logger.Warn("m or m.Fields is nil in audit entry", zap.Int("index", index))
 			return "", false
 		}
 
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
-			if statusStr, ok := m.Fields["status"].New.(string); ok && statusStr == "READY_FOR_REVIEW" {
-				return m.TableName, true
+		if lo.Contains(keys, "status") {
+			statusField, hasStatus := m.Fields["status"]
+			if hasStatus && statusField.New != nil {
+				if statusStr, ok := statusField.New.(string); ok && statusStr == "READY_FOR_REVIEW" {
+					return m.TableName, true
+				}
 			}
 		}
 		return "", false
 	}))
 
-	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
-		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
-			if statusStr, ok := m.Fields["status"].New.(string); ok && statusStr == "READY_FOR_CLEARANCE" {
-				return m.TableName, true
+	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(auditChange *models.AuditChange, index int) (models.TableName, bool) {
+		if auditChange == nil || auditChange.Fields == nil {
+			logger.Warn("auditChange or auditChange.Fields is nil in audit entry", zap.Int("index", index))
+			return "", false
+		}
+
+		keys := lo.Keys(auditChange.Fields)
+		if lo.Contains(keys, "status") {
+			statusField, hasStatus := auditChange.Fields["status"]
+			if hasStatus && statusField.New != nil {
+				if statusStr, ok := statusField.New.(string); ok && statusStr == "READY_FOR_CLEARANCE" {
+					return auditChange.TableName, true
+				}
 			}
 		}
 		return "", false
 	}))
 
 	dataExchangeApproachMarkedComplete := lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
+		if m == nil || m.Fields == nil {
+			logger.Warn("m or m.Fields is nil in audit entry", zap.Int("index", index))
+			return "", false
+		}
+
 		keys := lo.Keys(m.Fields)
-		if lo.Contains(keys, "status") && m.Fields["status"].New != nil {
-			if statusStr, ok := m.Fields["status"].New.(string); ok && statusStr == string(models.DataExchangeApproachStatusComplete) {
-				return m.TableName, true
+		if lo.Contains(keys, "status") {
+			statusField, hasStatus := m.Fields["status"]
+			if hasStatus && statusField.New != nil {
+				if statusStr, ok := statusField.New.(string); ok && statusStr == string(models.DataExchangeApproachStatusComplete) {
+					return m.TableName, true
+				}
 			}
 		}
 		return "", false
