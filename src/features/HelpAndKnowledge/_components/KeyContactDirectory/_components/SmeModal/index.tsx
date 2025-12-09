@@ -59,14 +59,16 @@ const SmeModal = ({
       />
 
       <div className="margin-top-2 display-flex mint-modal__footer">
-        <Button
-          form="sme-form"
-          type="submit"
-          disabled={disabledSubmitBtn}
-          className="margin-right-3 margin-top-0"
-        >
-          {keyContactMiscT(`${mode === 'edit' ? 'edit' : 'add'}.cta`)}
-        </Button>
+        {mode === 'edit' && (
+          <Button
+            form="sme-form"
+            type="submit"
+            disabled={disabledSubmitBtn}
+            className="margin-right-3 margin-top-0"
+          >
+            {keyContactMiscT('edit.cta')}
+          </Button>
+        )}
         <Button
           type="button"
           className="margin-top-0 deep-underline"

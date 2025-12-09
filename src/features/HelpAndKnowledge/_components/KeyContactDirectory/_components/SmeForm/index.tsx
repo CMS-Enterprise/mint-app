@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
+  Button,
   Fieldset,
   Form,
   FormGroup,
@@ -180,8 +181,7 @@ const SmeForm = ({
       key={navKey}
       disabled={disabledNavKey === navKey}
       onClick={() => {
-        // reset();
-        reset(methods.getValues());
+        reset();
         setCurrentNavKey(navKey);
       }}
       className={classNames('usa-nav__link margin-left-neg-2 margin-right-2', {
@@ -198,12 +198,7 @@ const SmeForm = ({
     </button>
   ));
 
-  // console.log('watching', watch('subjectArea'));
-
   const onSubmit = (formData: SmeFormValues) => {
-    // const latestValues = methods.getValues();
-    // console.log('Latest values from getValues():', latestValues);
-
     const { subjectArea, subjectCategoryID, mailboxTitle } = dirtyInput(
       sme,
       formData
@@ -344,6 +339,16 @@ const SmeForm = ({
           />
         ) : (
           <TeamMailboxSmeFieldset control={control} isEditMode={isEditMode} />
+        )}
+
+        {mode !== 'edit' && (
+          <Button
+            type="submit"
+            disabled={disabledSubmitBtn}
+            className="margin-right-3 margin-top-0"
+          >
+            {keyContactMiscT('add.cta')}
+          </Button>
         )}
       </Form>
     </FormProvider>
