@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
@@ -20,7 +20,7 @@ import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyConta
 
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import dirtyInput from 'utils/formUtil';
+// import dirtyInput from 'utils/formUtil';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
@@ -197,7 +197,7 @@ const SmeForm = ({
   ));
 
   const onSubmit = (formData: SmeFormValues) => {
-    const { subjectArea, subjectCategoryID } = dirtyInput(sme, formData);
+    // const { subjectArea, subjectCategoryID } = dirtyInput(sme, formData);
     setErrorMeta({
       overrideMessage: keyContactMiscT(`${mode}.error`)
     });
@@ -205,17 +205,17 @@ const SmeForm = ({
     const promise = isIndivitualMode
       ? createKeyContactUser({
           variables: {
-            subjectCategoryID: categoryId || subjectCategoryID,
+            subjectCategoryID: categoryId || formData.subjectCategoryID,
             userName: formData.userName,
-            subjectArea
+            subjectArea: formData.subjectArea
           }
         })
       : createKeyContactMailbox({
           variables: {
-            subjectCategoryID: categoryId || subjectCategoryID,
+            subjectCategoryID: categoryId || formData.subjectCategoryID,
             mailboxAddress: formData.mailboxAddress || '',
             mailboxTitle: formData.mailboxTitle || '',
-            subjectArea
+            subjectArea: formData.subjectArea
           }
         });
 
@@ -271,7 +271,7 @@ const SmeForm = ({
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-top-0 margin-bottom-2">
                   <Label
-                    htmlFor="sme-subject-category"
+                    htmlFor="sme-subject-category-select"
                     className="mint-body-normal maxw-none"
                     requiredMarker
                   >
@@ -285,9 +285,12 @@ const SmeForm = ({
 
                   <Select
                     {...field}
-                    id="subject-category-select"
+                    id="sme-subject-category-select"
                     value={field.value || ''}
                     defaultValue="default"
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                      setValue('subjectCategoryID', e.target.value);
+                    }}
                   >
                     <option value="default">
                       - {keyContactMiscT('selectDefault')} -
