@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   Fieldset,
   Form,
@@ -14,13 +14,13 @@ import {
 import classNames from 'classnames';
 import {
   useCreateKeyContactMailboxMutation,
-  useCreateKeyContactUserMutation
+  useCreateKeyContactUserMutation,
+  useUpdateKeyContactMutation
 } from 'gql/generated/graphql';
 import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyContacts';
 
-import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
-// import dirtyInput from 'utils/formUtil';
+import dirtyInput from 'utils/formUtil';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
@@ -140,13 +140,13 @@ const SmeForm = ({
     ]
   });
 
-  //   const [update] = useUpdateMtoCommonSolutionContactMutation({
-  //     refetchQueries: [
-  //       {
-  //         query: GetMTOSolutionContacts
-  //       }
-  //     ]
-  //   });
+  const [update] = useUpdateKeyContactMutation({
+    refetchQueries: [
+      {
+        query: GetAllKeyContacts
+      }
+    ]
+  });
 
   useEffect(() => {
     if (isEditMode) {
@@ -165,6 +165,7 @@ const SmeForm = ({
   const disabledSubmitBtn =
     (isIndivitualMode && disabledIndivitual) ||
     (!isIndivitualMode && disabledTeamMailbox) ||
+    watch('subjectCategoryID') === 'default' ||
     !watch('subjectArea') ||
     isSubmitting ||
     !isDirty;
@@ -179,7 +180,8 @@ const SmeForm = ({
       key={navKey}
       disabled={disabledNavKey === navKey}
       onClick={() => {
-        reset();
+        // reset();
+        reset(methods.getValues());
         setCurrentNavKey(navKey);
       }}
       className={classNames('usa-nav__link margin-left-neg-2 margin-right-2', {
@@ -196,53 +198,54 @@ const SmeForm = ({
     </button>
   ));
 
+  // console.log('watching', watch('subjectArea'));
+
   const onSubmit = (formData: SmeFormValues) => {
-    // const { subjectArea, subjectCategoryID } = dirtyInput(sme, formData);
+    // const latestValues = methods.getValues();
+    // console.log('Latest values from getValues():', latestValues);
+
+    const { subjectArea, subjectCategoryID, mailboxTitle } = dirtyInput(
+      sme,
+      formData
+    );
     setErrorMeta({
       overrideMessage: keyContactMiscT(`${mode}.error`)
     });
 
-    const promise = isIndivitualMode
-      ? createKeyContactUser({
-          variables: {
-            subjectCategoryID: categoryId || formData.subjectCategoryID,
-            userName: formData.userName,
-            subjectArea: formData.subjectArea
-          }
-        })
-      : createKeyContactMailbox({
-          variables: {
-            subjectCategoryID: categoryId || formData.subjectCategoryID,
-            mailboxAddress: formData.mailboxAddress || '',
-            mailboxTitle: formData.mailboxTitle || '',
-            subjectArea: formData.subjectArea
-          }
-        });
+    let promise;
 
-    //        update({
-    //           variables: {
-    //             id: sme.id,
-    //             input: {
-    //               subjectArea,
-    //               subjectCategoryID
-    //             }
-    //           }
-    //         });
+    if (isEditMode) {
+      promise = update({
+        variables: {
+          id: sme.id,
+          changes: {
+            subjectArea,
+            subjectCategoryID,
+            mailboxTitle
+          }
+        }
+      });
+    } else {
+      promise = isIndivitualMode
+        ? createKeyContactUser({
+            variables: {
+              subjectCategoryID: categoryId || formData.subjectCategoryID,
+              userName: formData.userName,
+              subjectArea: formData.subjectArea
+            }
+          })
+        : createKeyContactMailbox({
+            variables: {
+              subjectCategoryID: categoryId || formData.subjectCategoryID,
+              mailboxAddress: formData.mailboxAddress || '',
+              mailboxTitle: formData.mailboxTitle || '',
+              subjectArea: formData.subjectArea
+            }
+          });
+    }
 
     promise.then(response => {
       if (!response?.errors) {
-        toastSuccess(
-          <Trans
-            i18nKey={`keyContactMisc:${mode}.success`}
-            values={{
-              contact: formData.name
-            }}
-            components={{
-              bold: <span className="text-bold" />
-            }}
-          />
-        );
-
         closeModal();
       }
     });
@@ -268,6 +271,10 @@ const SmeForm = ({
             <Controller
               name="subjectCategoryID"
               control={control}
+              rules={{
+                required: true,
+                validate: value => value !== 'default'
+              }}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-top-0 margin-bottom-2">
                   <Label
@@ -289,7 +296,9 @@ const SmeForm = ({
                     value={field.value || ''}
                     defaultValue="default"
                     onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      setValue('subjectCategoryID', e.target.value);
+                      setValue('subjectCategoryID', e.target.value, {
+                        shouldDirty: true
+                      });
                     }}
                   >
                     <option value="default">
