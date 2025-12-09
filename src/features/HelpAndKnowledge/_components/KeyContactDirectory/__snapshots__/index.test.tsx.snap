@@ -1,0 +1,477 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`KeyContactDirectory > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="padding-y-4 padding-bottom-6 margin-bottom-neg-7"
+    id="contact-directory"
+    style="scroll-margin-top: 3.5rem;"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div>
+        <h2
+          class="margin-0"
+        >
+          Contact directory
+        </h2>
+        <p
+          class="margin-top-1 margin-bottom-2 font-body-md line-height-sans-4"
+        >
+          Find subject matter experts (SMEs) for a variety of key model design and development subject areas.
+        </p>
+        <div
+          class="margin-bottom-4"
+        >
+          <button
+            class="usa-button usa-button--unstyled line-height-sans-4"
+            data-testid="button"
+            type="button"
+          >
+            Add a subject category
+          </button>
+          <div
+            class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2"
+          />
+          <button
+            class="usa-button usa-button--unstyled line-height-sans-4"
+            data-testid="button"
+            type="button"
+          >
+            Add SME
+          </button>
+        </div>
+      </div>
+      <div
+        class="tablet:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          class="usa-form usa-search margin-y-4 maxw-none tablet:width-mobile-lg"
+          data-testid="table-client-filter"
+          role="search"
+        >
+          <label
+            class="usa-sr-only"
+            data-testid="label"
+            for="key-contact-directory-table-search"
+          >
+            Search Table
+          </label>
+          <input
+            class="usa-input"
+            data-testid="textInput"
+            id="key-contact-directory-table-search"
+            name="key-contact-directory Search"
+            role="searchbox"
+            type="search"
+            value=""
+          />
+          <button
+            class="usa-button"
+            data-testid="button"
+            type="submit"
+          >
+            <svg
+              aria-label="search"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div
+        class="usa-accordion margin-bottom-3 key-contact-accordion"
+        data-allow-multiple="true"
+        data-testid="accordion"
+      >
+        <h4
+          class="usa-accordion__heading"
+        >
+          <button
+            aria-controls="a95a1f98-fb7a-43f9-9e3c-abc52238e350"
+            aria-expanded="true"
+            class="usa-accordion__button"
+            data-testid="accordionButton_a95a1f98-fb7a-43f9-9e3c-abc52238e350"
+            type="button"
+          >
+            Healthcare
+          </button>
+        </h4>
+        <div
+          class="usa-accordion__content usa-prose"
+          data-testid="accordionItem_a95a1f98-fb7a-43f9-9e3c-abc52238e350"
+          id="a95a1f98-fb7a-43f9-9e3c-abc52238e350"
+        >
+          <div
+            class="margin-top-2"
+          >
+            <button
+              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline"
+              data-testid="button"
+              type="button"
+            >
+              Add SME to this category
+            </button>
+            <div
+              class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2"
+            />
+            <button
+              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline"
+              data-testid="button"
+              type="button"
+            >
+              Rename category
+            </button>
+            <div
+              class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2"
+            />
+            <button
+              class="usa-button usa-button--unstyled line-height-sans-4 text-error deep-underline"
+              data-testid="button"
+              type="button"
+            >
+              Remove category
+            </button>
+          </div>
+          <table
+            class="usa-table usa-table--borderless width-full margin-top-0 margin-bottom-3"
+            data-testid="table"
+          >
+            <thead
+              class="margin-x-2"
+            >
+              <tr
+                role="row"
+              >
+                <th
+                  class="padding-left-2 padding-bottom-1 padding-top-3"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="width: 30%;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled usa-button position-relative deep-underline"
+                    data-testid="button"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Subject area
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  class="padding-left-2 padding-bottom-1 padding-top-3"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="width: 30%;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled usa-button position-relative deep-underline"
+                    data-testid="button"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Subject matter expert (SME)
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  class="padding-left-2 padding-bottom-1 padding-top-3"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="width: 30%;"
+                >
+                  <p
+                    class="text-bold margin-0"
+                  >
+                    Actions
+                  </p>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr
+                role="row"
+              >
+                <td
+                  class="padding-left-2"
+                  role="cell"
+                >
+                  Insurance and Coverage
+                </td>
+                <td
+                  class="padding-left-2"
+                  role="cell"
+                >
+                  pstm team mailbox (pstm@example.com)
+                </td>
+                <td
+                  class="padding-left-2"
+                  role="cell"
+                >
+                  <div>
+                    <button
+                      class="usa-button usa-button--unstyled margin-right-2 deep-underline"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="usa-button usa-button--unstyled text-error deep-underline"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                role="row"
+              >
+                <td
+                  class="padding-left-2"
+                  role="cell"
+                >
+                  Paperwork Reduction Act
+                </td>
+                <td
+                  class="padding-left-2"
+                  role="cell"
+                >
+                  pstm team mailbox (pstm@example.com)
+                </td>
+                <td
+                  class="padding-left-2"
+                  role="cell"
+                >
+                  <div>
+                    <button
+                      class="usa-button usa-button--unstyled margin-right-2 deep-underline"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="usa-button usa-button--unstyled text-error deep-underline"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4
+          class="usa-accordion__heading"
+        >
+          <button
+            aria-controls="a95a1f98-fb7a-43f9-9e3c-abc52238e351"
+            aria-expanded="true"
+            class="usa-accordion__button"
+            data-testid="accordionButton_a95a1f98-fb7a-43f9-9e3c-abc52238e351"
+            type="button"
+          >
+            CMS Programs
+          </button>
+        </h4>
+        <div
+          class="usa-accordion__content usa-prose"
+          data-testid="accordionItem_a95a1f98-fb7a-43f9-9e3c-abc52238e351"
+          id="a95a1f98-fb7a-43f9-9e3c-abc52238e351"
+        >
+          <div
+            class="margin-top-2"
+          >
+            <button
+              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline"
+              data-testid="button"
+              type="button"
+            >
+              Add SME to this category
+            </button>
+            <div
+              class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2"
+            />
+            <button
+              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline"
+              data-testid="button"
+              type="button"
+            >
+              Rename category
+            </button>
+            <div
+              class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2"
+            />
+            <button
+              class="usa-button usa-button--unstyled line-height-sans-4 text-error deep-underline"
+              data-testid="button"
+              type="button"
+            >
+              Remove category
+            </button>
+          </div>
+          <table
+            class="usa-table usa-table--borderless width-full margin-top-0 margin-bottom-3"
+            data-testid="table"
+          >
+            <thead
+              class="margin-x-2"
+            >
+              <tr
+                role="row"
+              >
+                <th
+                  class="padding-left-2 padding-bottom-1 padding-top-3"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="width: 30%;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled usa-button position-relative deep-underline"
+                    data-testid="button"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Subject area
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  class="padding-left-2 padding-bottom-1 padding-top-3"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="width: 30%;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled usa-button position-relative deep-underline"
+                    data-testid="button"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Subject matter expert (SME)
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  class="padding-left-2 padding-bottom-1 padding-top-3"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="width: 30%;"
+                >
+                  <p
+                    class="text-bold margin-0"
+                  >
+                    Actions
+                  </p>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr>
+                <td
+                  class="border-0 padding-0"
+                  colspan="3"
+                >
+                  <p
+                    class="margin-y-1 margin-left-2 text-italic w-full"
+                  >
+                    There are no SMEs listed in this subject category
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
