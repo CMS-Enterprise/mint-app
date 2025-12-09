@@ -464,6 +464,35 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         </Modal>
 
         {Summary}
+        <div className="summary-heading-sticky bg-primary-lighter">
+          <GridContainer>
+            <div className="display-flex flex-justify">
+              <div>
+                <h3
+                  className="mint-h1 margin-0 padding-y-2"
+                  tabIndex={-1}
+                  aria-live="polite"
+                >
+                  {modelName}{' '}
+                  {abbreviation && (
+                    <span className="font-sans-sm text-normal">
+                      ({abbreviation})
+                    </span>
+                  )}
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >
+                <Icon.ArrowUpward size={3} aria-label="arrow up" />
+                {h('backToTop')}
+              </button>
+            </div>
+          </GridContainer>
+        </div>
 
         {!flags.hideGroupView && (
           <FilterViewBanner
