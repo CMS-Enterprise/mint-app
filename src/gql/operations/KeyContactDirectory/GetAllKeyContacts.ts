@@ -6,6 +6,8 @@ export default gql(/* GraphQL */ `
       id
       name
       email
+      mailboxTitle
+      mailboxAddress
       subjectArea
       subjectCategoryID
       userAccount {

@@ -12,6 +12,8 @@ const keyContact: TranslationKeyContactCustom = {
     goField: 'Category',
     dbField: 'category',
     label: 'Subject category',
+    sublabel:
+      "If you don't see the overall category you need, add a category before adding a SME.",
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.SELECT,
     tableReference: TableName.KEY_CONTACT_CATEGORY,
@@ -66,4 +68,14 @@ const keyContact: TranslationKeyContactCustom = {
     order: 1.5
   }
 };
+
+export const keyContactMisc = {
+  add: { heading: 'Add a subject matter expert (SME)', cta: 'Add SME' },
+  edit: { heading: 'Edit a subject matter expert (SME)', cta: 'Save changes' },
+  selectDefault: 'Select',
+  navs: ['Indivitual', 'Team mailbox'],
+  cancel: 'Cancel',
+  allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
+};
+
 export default keyContact;

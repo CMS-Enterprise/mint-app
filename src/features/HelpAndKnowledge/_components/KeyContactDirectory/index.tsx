@@ -23,6 +23,7 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
 import KeyContactTable from './_components/KeyContactTable';
+import SmeModal, { smeModeType } from './_components/SmeModal';
 
 import './index.scss';
 
@@ -49,6 +50,8 @@ const KeyContactDirectory = () => {
   const flags = useFlags();
 
   const [query, setQuery] = useState('');
+  const [isSmeModalOpen, setIsSmeModalOpen] = useState(false);
+  const [smeModalMode, setSmeModalMode] = useState<smeModeType | null>(null);
 
   const isAssessmentTeam = isAssessment(groups, flags);
 
@@ -96,12 +99,26 @@ const KeyContactDirectory = () => {
     title: category.category,
     content: (
       <>
+        {smeModalMode && (
+          <SmeModal
+            isOpen={isSmeModalOpen}
+            mode={smeModalMode}
+            closeModal={() => setIsSmeModalOpen(false)}
+            categoryId={
+              smeModalMode === 'addWithCategory' ? category.id : undefined
+            }
+          />
+        )}
+
         {isAssessmentTeam && (
           <div className="margin-top-2">
             <Button
               type="button"
               unstyled
-              onClick={() => {}}
+              onClick={() => {
+                setIsSmeModalOpen(true);
+                setSmeModalMode('addWithCategory');
+              }}
               className="line-height-sans-4 deep-underline padding-0"
             >
               {t('keyContactDirectory.addSmeToCategory')}
@@ -179,7 +196,10 @@ const KeyContactDirectory = () => {
               <Button
                 type="button"
                 unstyled
-                onClick={() => {}}
+                onClick={() => {
+                  setIsSmeModalOpen(true);
+                  setSmeModalMode('addWithoutCategory');
+                }}
                 className="line-height-sans-4"
               >
                 {t('keyContactDirectory.addSme')}

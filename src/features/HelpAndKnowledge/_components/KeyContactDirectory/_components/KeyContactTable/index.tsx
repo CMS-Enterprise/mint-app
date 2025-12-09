@@ -1,12 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Column, useSortBy, useTable } from 'react-table';
+import { Column, Row, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import { Alert } from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
 import { SmeType } from '../..';
+import SmeModal from '../SmeModal';
 
 type ColumnType = SmeType & { actions: unknown };
 
@@ -20,6 +21,7 @@ const KeyContactTable = ({
   isSearching: boolean;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const [selectedSme, setSelectedSme] = useState<SmeType | null>(null);
 
   const columns: Column<ColumnType>[] = useMemo(
     () => [
@@ -37,14 +39,25 @@ const KeyContactTable = ({
         id: 'actions',
         Header: t('keyContactDirectory.actions'),
         accessor: 'actions',
-        Cell: () => {
+        Cell: ({ row }: { row: Row<ColumnType> }) => {
           return (
             <div>
+              {selectedSme && (
+                <SmeModal
+                  isOpen={selectedSme === row.original}
+                  mode="edit"
+                  closeModal={() => setSelectedSme(null)}
+                  contact={selectedSme}
+                />
+              )}
+
               <Button
                 type="button"
                 className="margin-right-2 deep-underline"
                 unstyled
-                onClick={() => {}}
+                onClick={() => {
+                  setSelectedSme(row.original);
+                }}
               >
                 {t('keyContactDirectory.editAction')}
               </Button>
@@ -61,7 +74,7 @@ const KeyContactTable = ({
         }
       }
     ],
-    [t]
+    [t, selectedSme]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
