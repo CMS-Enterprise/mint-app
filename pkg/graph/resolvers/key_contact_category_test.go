@@ -121,14 +121,14 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory_Whitespace() {
 		{"whitespace only - single space", " ", "", true},
 		{"whitespace only - single tab", "\t", "", true},
 		{"whitespace only - single newline", "\n", "", true},
-		// Whitespace with content (should sanitize)
-		{"leading space", "  Test Category", "Test Category", false},
-		{"trailing space", "Test Category  ", "Test Category", false},
-		{"leading and trailing", "  Test Category  ", "Test Category", false},
-		{"leading tab", "\tTest Category", "Test Category", false},
-		{"trailing newline", "Test Category\n", "Test Category", false},
-		{"newline in middle", "Test\nCategory", "TestCategory", false},
-		{"multiple newlines", "Test\n\nCategory", "TestCategory", false},
+		// Whitespace with content (should sanitize) - using unique names to avoid duplicate errors
+		{"leading space", "  Whitespace Test 1", "Whitespace Test 1", false},
+		{"trailing space", "Whitespace Test 2  ", "Whitespace Test 2", false},
+		{"leading and trailing", "  Whitespace Test 3  ", "Whitespace Test 3", false},
+		{"leading tab", "\tWhitespace Test 4", "Whitespace Test 4", false},
+		{"trailing newline", "Whitespace Test 5\n", "Whitespace Test 5", false},
+		{"newline in middle", "Whitespace\nTest 6", "WhitespaceTest 6", false},
+		{"multiple newlines", "Whitespace\n\nTest 7", "WhitespaceTest 7", false},
 	}
 
 	for _, tc := range testCases {
