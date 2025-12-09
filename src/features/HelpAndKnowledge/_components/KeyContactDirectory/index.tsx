@@ -50,7 +50,6 @@ const KeyContactDirectory = () => {
   const flags = useFlags();
 
   const [query, setQuery] = useState('');
-  const [isSmeModalOpen, setIsSmeModalOpen] = useState(false);
   const [smeModalMode, setSmeModalMode] = useState<smeModeType | null>(null);
 
   const isAssessmentTeam = isAssessment(groups, flags);
@@ -101,9 +100,9 @@ const KeyContactDirectory = () => {
       <>
         {smeModalMode && (
           <SmeModal
-            isOpen={isSmeModalOpen}
+            isOpen={smeModalMode !== null}
             mode={smeModalMode}
-            closeModal={() => setIsSmeModalOpen(false)}
+            closeModal={() => setSmeModalMode(null)}
             categoryId={
               smeModalMode === 'addWithCategory' ? category.id : undefined
             }
@@ -116,7 +115,6 @@ const KeyContactDirectory = () => {
               type="button"
               unstyled
               onClick={() => {
-                setIsSmeModalOpen(true);
                 setSmeModalMode('addWithCategory');
               }}
               className="line-height-sans-4 deep-underline padding-0"
@@ -197,7 +195,6 @@ const KeyContactDirectory = () => {
                 type="button"
                 unstyled
                 onClick={() => {
-                  setIsSmeModalOpen(true);
                   setSmeModalMode('addWithoutCategory');
                 }}
                 className="line-height-sans-4"
