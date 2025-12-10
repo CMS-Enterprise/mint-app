@@ -255,7 +255,7 @@ const SmeForm = ({
           {categoryId ? (
             <p>
               <span className="text-bold">
-                {keyContactT('subjectCategory.label')}:
+                {keyContactT('subjectCategoryID.label')}:
               </span>{' '}
               {categoryId}
             </p>
@@ -274,11 +274,11 @@ const SmeForm = ({
                     className="mint-body-normal maxw-none"
                     requiredMarker
                   >
-                    {keyContactT('subjectCategory.label')}
+                    {keyContactT('subjectCategoryID.label')}
                   </Label>
                   {mode === 'addWithoutCategory' && (
                     <span className="text-base-dark">
-                      {keyContactT('subjectCategory.sublabel')}
+                      {keyContactT('subjectCategoryID.sublabel')}
                     </span>
                   )}
 

@@ -1525,8 +1525,9 @@ export type TranslationModelPlanMTOTemplateLinkCustom = {
 
 // Key Contact - Change History purposes only
 export type TranslationKeyContactCustomForm = {
-  subjectCategory: TranslationFieldProperties;
+  subjectCategoryID: TranslationFieldProperties;
   name: TranslationFieldProperties;
+  email: TranslationFieldProperties;
   mailboxAddress: TranslationFieldProperties;
   mailboxTitle: TranslationFieldProperties;
   userId: TranslationFieldProperties;

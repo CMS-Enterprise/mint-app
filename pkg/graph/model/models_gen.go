@@ -62,12 +62,13 @@ type KeyContactCategory struct {
 
 // Represents key contact base translation data
 type KeyContactTranslation struct {
-	SubjectCategory models.TranslationFieldWithOptions `json:"subjectCategory" db:"category"`
-	Name            models.TranslationField            `json:"name" db:"name"`
-	MailboxTitle    models.TranslationField            `json:"mailboxTitle" db:"mailbox_title"`
-	MailboxAddress  models.TranslationField            `json:"mailboxAddress" db:"mailbox_address"`
-	UserID          models.TranslationField            `json:"userId" db:"user_id"`
-	SubjectArea     models.TranslationField            `json:"subjectArea" db:"subject_area"`
+	SubjectCategoryID models.TranslationField `json:"subjectCategoryID" db:"subject_category_id"`
+	Name              models.TranslationField `json:"name" db:"name"`
+	Email             models.TranslationField `json:"email" db:"email"`
+	MailboxTitle      models.TranslationField `json:"mailboxTitle" db:"mailbox_title"`
+	MailboxAddress    models.TranslationField `json:"mailboxAddress" db:"mailbox_address"`
+	UserID            models.TranslationField `json:"userId" db:"user_id"`
+	SubjectArea       models.TranslationField `json:"subjectArea" db:"subject_area"`
 }
 
 // The current user's Launch Darkly key

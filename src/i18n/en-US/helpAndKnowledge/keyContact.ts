@@ -7,10 +7,10 @@ import {
 } from '../../../gql/generated/graphql';
 
 const keyContact: TranslationKeyContactCustom = {
-  subjectCategory: {
-    gqlField: 'category',
-    goField: 'Category',
-    dbField: 'category',
+  subjectCategoryID: {
+    gqlField: 'subjectCategoryID',
+    goField: 'SubjectCategoryID',
+    dbField: 'subject_category_id',
     label: 'Subject category',
     sublabel:
       "If you don't see the overall category you need, add a category before adding a SME.",
@@ -48,6 +48,15 @@ const keyContact: TranslationKeyContactCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.3
   },
+  email: {
+    gqlField: 'email',
+    goField: 'Email',
+    dbField: 'email',
+    label: 'SME email',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.4
+  },
   userId: {
     gqlField: 'userId',
     goField: 'UserId',
@@ -55,7 +64,7 @@ const keyContact: TranslationKeyContactCustom = {
     label: 'User ID',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
-    order: 1.4
+    order: 1.5
   },
   subjectArea: {
     gqlField: 'subjectArea',
@@ -65,7 +74,7 @@ const keyContact: TranslationKeyContactCustom = {
     sublabel: 'Comma-separate multiple areas of subject matter expertise.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.5
+    order: 1.6
   }
 };
 

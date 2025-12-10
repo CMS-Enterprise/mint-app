@@ -773,11 +773,12 @@ export type KeyContactCategoryUpdateChanges = {
 /** Represents key contact base translation data */
 export type KeyContactTranslation = {
   __typename: 'KeyContactTranslation';
+  email: TranslationField;
   mailboxAddress: TranslationField;
   mailboxTitle: TranslationField;
   name: TranslationField;
   subjectArea: TranslationField;
-  subjectCategory: TranslationFieldWithOptions;
+  subjectCategoryID: TranslationField;
   userId: TranslationField;
 };
 
