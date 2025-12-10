@@ -4,8 +4,8 @@ Represents key contact base translation data
 type KeyContactTranslation {
   subjectCategoryID: TranslationField!
     @goTag(key: "db", value: "subject_category_id")
-  name: TranslationField! @goTag(key: "db", value: "name")
-  email: TranslationField! @goTag(key: "db", value: "email")
+  name: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
+  email: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
   mailboxTitle: TranslationField! @goTag(key: "db", value: "mailbox_title")
   mailboxAddress: TranslationField! @goTag(key: "db", value: "mailbox_address")
   userId: TranslationField! @goTag(key: "db", value: "user_id")
