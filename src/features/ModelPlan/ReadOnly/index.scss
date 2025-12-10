@@ -64,7 +64,17 @@
       top: 55px;
     }
     z-index: 1000;
-    min-height: 58px;
+    max-height: 58px;
 
+    .show-when-sticky {
+      opacity: 0;
+      transition: opacity 100ms ease-in;
+    }
+
+    &--visible {
+      .show-when-sticky {
+        opacity: 1;
+      }
+    }
   }
 }
