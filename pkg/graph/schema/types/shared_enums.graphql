@@ -232,4 +232,7 @@ enum TableName {
   mto_template_solution
   mto_template_milestone_solution_link
   model_plan_mto_template_link
+
+  key_contact
+  key_contact_category
 }

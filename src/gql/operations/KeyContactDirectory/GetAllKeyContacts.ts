@@ -6,8 +6,16 @@ export default gql(/* GraphQL */ `
       id
       name
       email
+      mailboxTitle
+      mailboxAddress
       subjectArea
       subjectCategoryID
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
     }
   }
 `);

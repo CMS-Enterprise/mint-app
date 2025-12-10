@@ -36,7 +36,7 @@ exports[`KeyContactDirectory > matches snapshot 1`] = `
             class="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2"
           />
           <button
-            class="usa-button usa-button--unstyled line-height-sans-4"
+            class="usa-button usa-button--unstyled line-height-sans-4 deep-underline padding-0"
             data-testid="button"
             type="button"
           >
@@ -118,7 +118,7 @@ exports[`KeyContactDirectory > matches snapshot 1`] = `
             class="margin-top-2"
           >
             <button
-              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline"
+              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline padding-0"
               data-testid="button"
               type="button"
             >
@@ -336,7 +336,7 @@ exports[`KeyContactDirectory > matches snapshot 1`] = `
             class="margin-top-2"
           >
             <button
-              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline"
+              class="usa-button usa-button--unstyled line-height-sans-4 deep-underline padding-0"
               data-testid="button"
               type="button"
             >

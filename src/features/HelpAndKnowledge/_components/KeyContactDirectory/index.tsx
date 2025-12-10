@@ -22,7 +22,8 @@ import GlobalClientFilter from 'components/TableFilter';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
-import KeyContactTable from './KeyContactTable';
+import KeyContactTable from './_components/KeyContactTable';
+import SmeModal from './_components/SmeModal';
 
 import './index.scss';
 
@@ -38,6 +39,55 @@ const Categories = [
     category: 'CMS Programs'
   }
 ];
+
+const AddSmeWithoutCategoryButton = () => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <SmeModal
+        isOpen={isModalOpen}
+        mode="addWithoutCategory"
+        closeModal={() => setIsModalOpen(false)}
+      />
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="line-height-sans-4 deep-underline padding-0"
+      >
+        {t('keyContactDirectory.addSme')}
+      </Button>
+    </>
+  );
+};
+
+const AddSmeWithCategoryButton = ({ categoryId }: { categoryId: string }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <SmeModal
+        isOpen={isModalOpen}
+        mode="addWithCategory"
+        closeModal={() => setIsModalOpen(false)}
+        categoryId={categoryId}
+      />
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="line-height-sans-4 deep-underline padding-0"
+      >
+        {t('keyContactDirectory.addSmeToCategory')}
+      </Button>
+    </>
+  );
+};
 
 export type SmeType = GetAllKeyContactsQuery['keyContacts'][number];
 
@@ -98,14 +148,7 @@ const KeyContactDirectory = () => {
       <>
         {isAssessmentTeam && (
           <div className="margin-top-2">
-            <Button
-              type="button"
-              unstyled
-              onClick={() => {}}
-              className="line-height-sans-4 deep-underline"
-            >
-              {t('keyContactDirectory.addSmeToCategory')}
-            </Button>
+            <AddSmeWithCategoryButton categoryId={category.id} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
             <Button
               type="button"
@@ -176,14 +219,7 @@ const KeyContactDirectory = () => {
                 {t('keyContactDirectory.addSubjectCategory')}
               </Button>
               <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-              <Button
-                type="button"
-                unstyled
-                onClick={() => {}}
-                className="line-height-sans-4"
-              >
-                {t('keyContactDirectory.addSme')}
-              </Button>
+              <AddSmeWithoutCategoryButton />
             </div>
           )}
         </div>
