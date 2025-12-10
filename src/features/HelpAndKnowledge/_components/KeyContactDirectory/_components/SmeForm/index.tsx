@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
-  Button,
   Fieldset,
   Form,
   FormGroup,
@@ -10,7 +9,6 @@ import {
   Label,
   PrimaryNav,
   Select
-  // TextInput
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
@@ -96,9 +94,7 @@ const SmeForm = ({
 
   const [currentNavKey, setCurrentNavKey] = useState(navs[0]);
 
-  const [isIndivitualMode, setIsIndivitualMode] = useState(
-    isEditMode ? !!sme.userAccount : true
-  );
+  const isIndivitualMode = currentNavKey === 'Indivitual';
 
   const [disabledNavKey, setIsDisabledNavKey] = useState('');
 
@@ -153,10 +149,8 @@ const SmeForm = ({
     if (isEditMode) {
       setIsDisabledNavKey(sme.mailboxAddress ? 'Indivitual' : 'Team mailbox');
       setCurrentNavKey(sme.mailboxAddress ? 'Team mailbox' : 'Indivitual');
-    } else {
-      setIsIndivitualMode(currentNavKey === 'Indivitual');
     }
-  }, [sme.mailboxAddress, currentNavKey, isEditMode]);
+  }, [sme.mailboxAddress, isEditMode]);
 
   const disabledIndivitual = isIndivitualMode ? !watch('userName') : false;
   const disabledTeamMailbox = !isIndivitualMode
@@ -184,9 +178,12 @@ const SmeForm = ({
         reset();
         setCurrentNavKey(navKey);
       }}
-      className={classNames('usa-nav__link margin-left-neg-2 margin-right-2', {
-        'usa-current': currentNavKey === navKey
-      })}
+      className={classNames(
+        'text-no-underline usa-nav__link margin-left-neg-2 margin-right-2',
+        {
+          'usa-current': currentNavKey === navKey
+        }
+      )}
     >
       <span
         className={classNames({
@@ -339,16 +336,6 @@ const SmeForm = ({
           />
         ) : (
           <TeamMailboxSmeFieldset control={control} isEditMode={isEditMode} />
-        )}
-
-        {mode !== 'edit' && (
-          <Button
-            type="submit"
-            disabled={disabledSubmitBtn}
-            className="margin-right-3 margin-top-0"
-          >
-            {keyContactMiscT('add.cta')}
-          </Button>
         )}
       </Form>
     </FormProvider>

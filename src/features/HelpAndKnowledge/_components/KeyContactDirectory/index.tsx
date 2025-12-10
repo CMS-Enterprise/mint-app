@@ -40,6 +40,55 @@ const Categories = [
   }
 ];
 
+const AddSmeWithoutCategoryButton = () => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <SmeModal
+        isOpen={isModalOpen}
+        mode="addWithoutCategory"
+        closeModal={() => setIsModalOpen(false)}
+      />
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="line-height-sans-4 deep-underline padding-0"
+      >
+        {t('keyContactDirectory.addSmeToCategory')}
+      </Button>
+    </>
+  );
+};
+
+const AddSmeWithCategoryButton = ({ categoryId }: { categoryId: string }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <SmeModal
+        isOpen={isModalOpen}
+        mode="addWithCategory"
+        closeModal={() => setIsModalOpen(false)}
+        categoryId={categoryId}
+      />
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="line-height-sans-4 deep-underline padding-0"
+      >
+        {t('keyContactDirectory.addSmeToCategory')}
+      </Button>
+    </>
+  );
+};
+
 export type SmeType = GetAllKeyContactsQuery['keyContacts'][number];
 
 const KeyContactDirectory = () => {
@@ -100,27 +149,16 @@ const KeyContactDirectory = () => {
       <>
         {smeModalMode && (
           <SmeModal
-            isOpen={smeModalMode !== null}
+            isOpen={smeModalMode === 'addWithCategory'}
             mode={smeModalMode}
             closeModal={() => setSmeModalMode(null)}
-            categoryId={
-              smeModalMode === 'addWithCategory' ? category.id : undefined
-            }
+            categoryId={category.id}
           />
         )}
 
         {isAssessmentTeam && (
           <div className="margin-top-2">
-            <Button
-              type="button"
-              unstyled
-              onClick={() => {
-                setSmeModalMode('addWithCategory');
-              }}
-              className="line-height-sans-4 deep-underline padding-0"
-            >
-              {t('keyContactDirectory.addSmeToCategory')}
-            </Button>
+            <AddSmeWithCategoryButton categoryId={category.id} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
             <Button
               type="button"
@@ -191,16 +229,7 @@ const KeyContactDirectory = () => {
                 {t('keyContactDirectory.addSubjectCategory')}
               </Button>
               <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-              <Button
-                type="button"
-                unstyled
-                onClick={() => {
-                  setSmeModalMode('addWithoutCategory');
-                }}
-                className="line-height-sans-4"
-              >
-                {t('keyContactDirectory.addSme')}
-              </Button>
+              <AddSmeWithoutCategoryButton />
             </div>
           )}
         </div>
