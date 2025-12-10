@@ -9,7 +9,7 @@ import OktaUserSelect from 'components/OktaUserSelect';
 import { SmeFormValues } from '../SmeForm';
 import { KeyContactType } from '../SmeModal';
 
-const IndivitualSmeFieldset = ({
+const IndividualSmeFieldset = ({
   control,
   setValue,
   sme,
@@ -96,4 +96,4 @@ const IndivitualSmeFieldset = ({
     </Fieldset>
   );
 };
-export default IndivitualSmeFieldset;
+export default IndividualSmeFieldset;

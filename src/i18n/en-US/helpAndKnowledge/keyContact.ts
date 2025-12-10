@@ -73,7 +73,7 @@ export const keyContactMisc = {
   add: { heading: 'Add a subject matter expert (SME)', cta: 'Add SME' },
   edit: { heading: 'Edit a subject matter expert (SME)', cta: 'Save changes' },
   selectDefault: 'Select',
-  navs: ['Indivitual', 'Team mailbox'],
+  navs: ['Individual', 'Team mailbox'],
   cancel: 'Cancel',
   allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
 };

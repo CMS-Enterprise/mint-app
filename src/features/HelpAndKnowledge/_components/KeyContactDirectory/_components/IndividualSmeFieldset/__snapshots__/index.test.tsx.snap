@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`IndividualSmeFieldset form > should matches snapshot 1`] = `
+<DocumentFragment>
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
+  >
+    Cannot read properties of undefined (reading 'array')
+  </h3>
+  <pre
+    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
+  >
+    TypeError: Cannot read properties of undefined (reading 'array')
+    at useController (file:///Users/oddball/elle/mint/mint-app/node_modules/react-hook-form/src/useController.ts:64:58)
+    at Controller (file:///Users/oddball/elle/mint/mint-app/node_modules/react-hook-form/src/controller.tsx:53:16)
+    at Object.react_stack_bottom_frame (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:25904:20)
+    at renderWithHooks (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:7662:22)
+    at updateFunctionComponent (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:10166:19)
+    at beginWork (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)
+    at performUnitOfWork (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:17641:22)
+    at workLoopSync (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:17469:41)
+    at renderRootSync (/Users/oddball/elle/mint/mint-app/node_modules/react-dom/cjs/react-dom-client.development.js:17450:11)
+  </pre>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
+    >
+      ErrorBoundary
+    </code>
+     or 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
+    >
+      errorElement
+    </code>
+     prop on your route.
+  </p>
+</DocumentFragment>
+`;

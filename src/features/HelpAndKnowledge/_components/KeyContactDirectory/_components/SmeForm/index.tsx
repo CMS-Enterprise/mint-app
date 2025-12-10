@@ -23,7 +23,7 @@ import dirtyInput from 'utils/formUtil';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
-import IndivitualSmeFieldset from '../IndivitualSmeFieldset';
+import IndividualSmeFieldset from '../IndividualSmeFieldset';
 import { KeyContactType, smeModeType } from '../SmeModal';
 import TeamMailboxSmeFieldset from '../TeamMailboxSmeFieldset';
 
@@ -328,7 +328,7 @@ const SmeForm = ({
         </Header>
 
         {isIndivitualMode ? (
-          <IndivitualSmeFieldset
+          <IndividualSmeFieldset
             control={control}
             setValue={setValue}
             sme={sme}
