@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -27,6 +27,7 @@ import {
   modelSectionRouteKey,
   ModelSubSectionRouteKey
 } from 'components/ShareExport/util';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import PrintPDFWrapper from 'contexts/PrintPDFContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -501,7 +502,19 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         </Modal>
 
         {Summary}
-        <div
+        <StickyModelNameWrapper
+          stickyHeaderRef={stickyHeaderRef as RefObject<HTMLDivElement>}
+          isStickyHeaderVisible={!!isStickyHeaderVisible}
+        >
+          <h3 className="mint-h1 margin-0 padding-y-2">
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
+          </h3>
+        </StickyModelNameWrapper>
+
+        {/* <div
           ref={stickyHeaderRef}
           className={classnames('summary-heading-sticky bg-primary-lighter', {
             'summary-heading-sticky--visible': isStickyHeaderVisible
@@ -529,7 +542,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
               </button>
             </div>
           </GridContainer>
-        </div>
+        </div> */}
 
         {!flags.hideGroupView && (
           <FilterViewBanner

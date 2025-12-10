@@ -1,0 +1,23 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.sticky-header-wrapper {
+  position: sticky;
+  top: 48px;
+  @media screen and (min-width: $desktop) {
+    top: 55px;
+  }
+  z-index: 1000;
+  max-height: 58px;
+
+  .show-when-sticky {
+    opacity: 0;
+    transition: opacity 100ms ease-in;
+  }
+
+  &--visible {
+    .show-when-sticky {
+      opacity: 1;
+    }
+  }
+}
