@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -262,6 +262,39 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
+  const [isStickyHeaderVisible, setIsStickyHeaderVisible] =
+    useState<boolean>(false);
+
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const stickyHeaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!summaryRef.current || !stickyHeaderRef.current) return;
+
+      const summaryRect = summaryRef.current.getBoundingClientRect();
+      const stickyHeaderHeight = stickyHeaderRef.current.offsetHeight;
+
+      // Show sticky header when the bottom of the summary reaches
+      // the sticky header's height from the top of viewport
+      // This ensures smooth transition as the summary scrolls past
+      setIsStickyHeaderVisible(summaryRect.bottom <= stickyHeaderHeight);
+    };
+
+    // Check on initial load and after a short delay to ensure elements are rendered
+    handleScroll();
+    const timeoutId = setTimeout(handleScroll, 100);
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   const { data, loading, error, refetch } = useGetModelSummaryQuery({
     variables: {
       id: modelID
@@ -319,100 +352,106 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   }
 
   const Summary = (
-    <SummaryBox
-      className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
-      data-testid="read-only-model-summary"
-    >
-      <GridContainer
-        className={classnames({
-          'padding-x-0': isMobile,
-          'padding-x-2': isTablet
-        })}
+    <div ref={summaryRef}>
+      <SummaryBox
+        className="padding-top-6 padding-bottom-0 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
+        data-testid="read-only-model-summary"
       >
-        {statusMessage && (
-          <Alert
-            slim
-            type={statusMessage.status}
-            className="margin-bottom-4"
-            closeAlert={setStatusMessage}
-          >
-            {statusMessage.message}
-          </Alert>
-        )}
+        <GridContainer
+          className={classnames({
+            'padding-x-0': isMobile,
+            'padding-x-2': isTablet
+          })}
+        >
+          {statusMessage && (
+            <Alert
+              slim
+              type={statusMessage.status}
+              className="margin-bottom-4"
+              closeAlert={setStatusMessage}
+            >
+              {statusMessage.message}
+            </Alert>
+          )}
 
-        {!isHelpArticle && (
-          <div className="mint-no-print margin-bottom-3">
-            <div className="display-flex flex-justify">
-              <UswdsReactLink
-                to="/models"
-                className="display-flex flex-align-center"
-              >
-                <Icon.ArrowBack
-                  className="text-primary margin-right-1"
-                  aria-label="back"
+          {!isHelpArticle && (
+            <div className="mint-no-print margin-bottom-3">
+              <div className="display-flex flex-justify">
+                <UswdsReactLink
+                  to="/models"
+                  className="display-flex flex-align-center"
+                >
+                  <Icon.ArrowBack
+                    className="text-primary margin-right-1"
+                    aria-label="back"
+                  />
+                  {h('back')}
+                </UswdsReactLink>
+
+                <FavoriteIcon
+                  isFavorite={isFavorite}
+                  modelPlanID={id}
+                  updateFavorite={handleUpdateFavorite}
                 />
-                {h('back')}
-              </UswdsReactLink>
+              </div>
+            </div>
+          )}
 
-              <FavoriteIcon
-                isFavorite={isFavorite}
-                modelPlanID={id}
-                updateFavorite={handleUpdateFavorite}
+          {isHelpArticle ? (
+            <h2
+              className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+              tabIndex={-1}
+              aria-live="polite"
+            >
+              {modelName}{' '}
+              {abbreviation && (
+                <span className="font-sans-sm text-normal">
+                  ({abbreviation})
+                </span>
+              )}
+            </h2>
+          ) : (
+            <h1
+              className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+              tabIndex={-1}
+              aria-live="polite"
+            >
+              {modelName}{' '}
+              {abbreviation && (
+                <span className="font-sans-sm text-normal">
+                  ({abbreviation})
+                </span>
+              )}
+            </h1>
+          )}
+
+          <ReadViewStatusBanner
+            modelID={modelID}
+            status={status}
+            mostRecentEdit={mostRecentEdit?.date || createdDts}
+            hasEditAccess={hasEditAccess}
+          />
+
+          {!isViewingFilteredGroup && (
+            <div className="mint-no-print">
+              <ModelSummary
+                goal={basics?.goal ?? ''}
+                loading={loading}
+                modelName={modelName}
+                characteristics={generalCharacteristics}
+                performancePeriodStarts={
+                  timeline?.performancePeriodStarts ?? null
+                }
+                modelLeads={collaborators?.filter(c =>
+                  c.teamRoles.includes(TeamRole.MODEL_LEAD)
+                )}
+                crTdls={echimpCRsAndTDLs}
               />
             </div>
-          </div>
-        )}
-
-        {isHelpArticle ? (
-          <h2
-            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            tabIndex={-1}
-            aria-live="polite"
-          >
-            {modelName}{' '}
-            {abbreviation && (
-              <span className="font-sans-sm text-normal">({abbreviation})</span>
-            )}
-          </h2>
-        ) : (
-          <h1
-            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            tabIndex={-1}
-            aria-live="polite"
-          >
-            {modelName}{' '}
-            {abbreviation && (
-              <span className="font-sans-sm text-normal">({abbreviation})</span>
-            )}
-          </h1>
-        )}
-
-        <ReadViewStatusBanner
-          modelID={modelID}
-          status={status}
-          mostRecentEdit={mostRecentEdit?.date || createdDts}
-          hasEditAccess={hasEditAccess}
-        />
-
-        {!isViewingFilteredGroup && (
-          <div className="mint-no-print">
-            <ModelSummary
-              goal={basics?.goal ?? ''}
-              loading={loading}
-              modelName={modelName}
-              characteristics={generalCharacteristics}
-              performancePeriodStarts={
-                timeline?.performancePeriodStarts ?? null
-              }
-              modelLeads={collaborators?.filter(c =>
-                c.teamRoles.includes(TeamRole.MODEL_LEAD)
-              )}
-              crTdls={echimpCRsAndTDLs}
-            />
-          </div>
-        )}
-      </GridContainer>
-    </SummaryBox>
+          )}
+        </GridContainer>
+      </SummaryBox>
+    </div>
   );
 
   const ModelWarning = (
@@ -464,27 +503,30 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         </Modal>
 
         {Summary}
-        <div className="summary-heading-sticky bg-primary-lighter">
+        <div
+          ref={stickyHeaderRef}
+          className={classnames('summary-heading-sticky bg-primary-lighter', {
+            'summary-heading-sticky--visible': isStickyHeaderVisible
+          })}
+        >
           <GridContainer>
-            <div className="display-flex flex-justify">
-              <div>
-                <h3
-                  className="mint-h1 margin-0 padding-y-2"
-                  tabIndex={-1}
-                  aria-live="polite"
-                >
-                  {modelName}{' '}
-                  {abbreviation && (
-                    <span className="font-sans-sm text-normal">
-                      ({abbreviation})
-                    </span>
-                  )}
-                </h3>
-              </div>
+            <div className="display-flex flex-justify show-when-sticky">
+              <h3
+                className="mint-h1 margin-0 padding-y-2"
+                tabIndex={-1}
+                aria-live="polite"
+              >
+                {modelName}{' '}
+                {abbreviation && (
+                  <span className="font-sans-sm text-normal">
+                    ({abbreviation})
+                  </span>
+                )}
+              </h3>
 
               <button
                 type="button"
-                className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center"
+                className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               >
                 <Icon.ArrowUpward size={3} aria-label="arrow up" />
