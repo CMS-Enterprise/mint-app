@@ -58,7 +58,7 @@ const AddSmeWithoutCategoryButton = () => {
         }}
         className="line-height-sans-4 deep-underline padding-0"
       >
-        {t('keyContactDirectory.addSmeToCategory')}
+        {t('keyContactDirectory.addSme')}
       </Button>
     </>
   );
