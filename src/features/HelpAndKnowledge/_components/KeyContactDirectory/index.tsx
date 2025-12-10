@@ -23,7 +23,7 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
 import KeyContactTable from './_components/KeyContactTable';
-import SmeModal, { smeModeType } from './_components/SmeModal';
+import SmeModal from './_components/SmeModal';
 
 import './index.scss';
 
@@ -99,7 +99,6 @@ const KeyContactDirectory = () => {
   const flags = useFlags();
 
   const [query, setQuery] = useState('');
-  const [smeModalMode, setSmeModalMode] = useState<smeModeType | null>(null);
 
   const isAssessmentTeam = isAssessment(groups, flags);
 
@@ -147,15 +146,6 @@ const KeyContactDirectory = () => {
     title: category.category,
     content: (
       <>
-        {smeModalMode && (
-          <SmeModal
-            isOpen={smeModalMode === 'addWithCategory'}
-            mode={smeModalMode}
-            closeModal={() => setSmeModalMode(null)}
-            categoryId={category.id}
-          />
-        )}
-
         {isAssessmentTeam && (
           <div className="margin-top-2">
             <AddSmeWithCategoryButton categoryId={category.id} />
