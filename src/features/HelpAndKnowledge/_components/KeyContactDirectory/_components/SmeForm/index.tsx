@@ -94,7 +94,7 @@ const SmeForm = ({
 
   const [currentNavKey, setCurrentNavKey] = useState(navs[0]);
 
-  const isIndivitualMode = currentNavKey === 'Indivitual';
+  const isIndividualMode = currentNavKey === 'Individual';
 
   const [disabledNavKey, setIsDisabledNavKey] = useState('');
 
@@ -147,19 +147,19 @@ const SmeForm = ({
 
   useEffect(() => {
     if (isEditMode) {
-      setIsDisabledNavKey(sme.mailboxAddress ? 'Indivitual' : 'Team mailbox');
-      setCurrentNavKey(sme.mailboxAddress ? 'Team mailbox' : 'Indivitual');
+      setIsDisabledNavKey(sme.mailboxAddress ? 'Individual' : 'Team mailbox');
+      setCurrentNavKey(sme.mailboxAddress ? 'Team mailbox' : 'Individual');
     }
   }, [sme.mailboxAddress, isEditMode]);
 
-  const disabledIndivitual = isIndivitualMode ? !watch('userName') : false;
-  const disabledTeamMailbox = !isIndivitualMode
+  const disabledIndividual = isIndividualMode ? !watch('userName') : false;
+  const disabledTeamMailbox = !isIndividualMode
     ? !watch('mailboxAddress') || !watch('mailboxTitle')
     : false;
 
   const disabledSubmitBtn =
-    (isIndivitualMode && disabledIndivitual) ||
-    (!isIndivitualMode && disabledTeamMailbox) ||
+    (isIndividualMode && disabledIndividual) ||
+    (!isIndividualMode && disabledTeamMailbox) ||
     watch('subjectCategoryID') === 'default' ||
     !watch('subjectArea') ||
     isSubmitting ||
@@ -218,7 +218,7 @@ const SmeForm = ({
         }
       });
     } else {
-      promise = isIndivitualMode
+      promise = isIndividualMode
         ? createKeyContactUser({
             variables: {
               subjectCategoryID: categoryId || formData.subjectCategoryID,
@@ -327,7 +327,7 @@ const SmeForm = ({
           </div>
         </Header>
 
-        {isIndivitualMode ? (
+        {isIndividualMode ? (
           <IndividualSmeFieldset
             control={control}
             setValue={setValue}
