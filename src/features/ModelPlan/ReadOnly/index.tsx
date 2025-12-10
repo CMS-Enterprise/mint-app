@@ -400,7 +400,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           {isHelpArticle ? (
             <h2
               className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-              tabIndex={-1}
               aria-live="polite"
             >
               {modelName}{' '}
@@ -413,7 +412,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           ) : (
             <h1
               className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-              tabIndex={-1}
               aria-live="polite"
             >
               {modelName}{' '}
@@ -508,14 +506,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           className={classnames('summary-heading-sticky bg-primary-lighter', {
             'summary-heading-sticky--visible': isStickyHeaderVisible
           })}
+          aria-hidden="true"
         >
           <GridContainer>
             <div className="display-flex flex-justify show-when-sticky">
-              <h3
-                className="mint-h1 margin-0 padding-y-2"
-                tabIndex={-1}
-                aria-live="polite"
-              >
+              <h3 className="mint-h1 margin-0 padding-y-2">
                 {modelName}{' '}
                 {abbreviation && (
                   <span className="font-sans-sm text-normal">
