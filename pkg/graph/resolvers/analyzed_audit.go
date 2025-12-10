@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -301,7 +300,8 @@ func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocum
 // analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
 func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*models.AuditChange, logger T) (*models.AnalyzedPlanSections, error) {
 	if audits == nil {
-		return nil, errors.New("no audits provided to analyzeSectionsAudits")
+		// We expect that this can get called with nil audits, so we return nil to indicate no changes.
+		return nil, nil
 	}
 
 	sections := []models.TableName{
