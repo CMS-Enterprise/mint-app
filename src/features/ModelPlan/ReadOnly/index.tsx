@@ -504,7 +504,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         {Summary}
         <StickyModelNameWrapper
           stickyHeaderRef={stickyHeaderRef as RefObject<HTMLDivElement>}
-          isStickyHeaderVisible={!!isStickyHeaderVisible}
+          isStickyHeaderVisible={isStickyHeaderVisible}
         >
           <h3 className="mint-h1 margin-0 padding-y-2">
             {modelName}{' '}
@@ -513,36 +513,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             )}
           </h3>
         </StickyModelNameWrapper>
-
-        {/* <div
-          ref={stickyHeaderRef}
-          className={classnames('summary-heading-sticky bg-primary-lighter', {
-            'summary-heading-sticky--visible': isStickyHeaderVisible
-          })}
-          aria-hidden="true"
-        >
-          <GridContainer>
-            <div className="display-flex flex-justify show-when-sticky">
-              <h3 className="mint-h1 margin-0 padding-y-2">
-                {modelName}{' '}
-                {abbreviation && (
-                  <span className="font-sans-sm text-normal">
-                    ({abbreviation})
-                  </span>
-                )}
-              </h3>
-
-              <button
-                type="button"
-                className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              >
-                <Icon.ArrowUpward size={3} aria-label="arrow up" />
-                {h('backToTop')}
-              </button>
-            </div>
-          </GridContainer>
-        </div> */}
 
         {!flags.hideGroupView && (
           <FilterViewBanner
