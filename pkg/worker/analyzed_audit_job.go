@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	faktory "github.com/contribsys/faktory/client"
@@ -28,15 +29,36 @@ const (
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
 // args[0] date, args[1] modelPlanID
 func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
-	dayToAnalyze, err := time.Parse("2006-01-02", args[0].(string))
-	if err != nil {
-		return err
-	}
-	modelPlanID, err := uuid.Parse(args[1].(string))
-	if err != nil {
-		return err
-	}
 	logger := FaktoryLoggerFromContext(ctx)
+
+	if len(args) < 2 {
+		logger.Error("insufficient arguments for AnalyzedAuditJob", zap.Int("argCount", len(args)))
+		return fmt.Errorf("expected 2 arguments, got %d", len(args))
+	}
+
+	dateStr, ok := args[0].(string)
+	if !ok {
+		logger.Error("args[0] is not a string", zap.String("type", fmt.Sprintf("%T", args[0])))
+		return fmt.Errorf("args[0] must be a string, got %T", args[0])
+	}
+
+	dayToAnalyze, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		logger.Error("failed to parse date", zap.String("dateStr", dateStr), zap.Error(err))
+		return err
+	}
+
+	modelPlanIDStr, ok := args[1].(string)
+	if !ok {
+		logger.Error("args[1] is not a string", zap.String("type", fmt.Sprintf("%T", args[1])))
+		return fmt.Errorf("args[1] must be a string, got %T", args[1])
+	}
+
+	modelPlanID, err := uuid.Parse(modelPlanIDStr)
+	if err != nil {
+		logger.Error("failed to parse model plan ID", zap.String("modelPlanIDStr", modelPlanIDStr), zap.Error(err))
+		return err
+	}
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	// helper := faktory_worker.HelperFor(ctx)
 	//TODO, verify this has the BID already!
@@ -56,6 +78,11 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("starting analyzed audit batch job")
+
+	if len(args) < 1 {
+		logger.Error("insufficient arguments for AnalyzedAuditBatchJob", zap.Int("argCount", len(args)))
+		return fmt.Errorf("expected 1 argument, got %d", len(args))
+	}
 
 	dayToAnalyze := args[0]
 	modelPlans, err := w.Store.ModelPlanCollection(logger, false)
@@ -94,9 +121,15 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 // AnalyzedAuditBatchJobSuccess is the callback function for AnalyzedAuditBatchJob
 // args[0] date
 func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+	logger := FaktoryLoggerFromContext(ctx)
+
+	if len(args) < 1 {
+		logger.Error("insufficient arguments for AnalyzedAuditBatchJobSuccess", zap.Int("argCount", len(args)))
+		return fmt.Errorf("expected 1 argument, got %d", len(args))
+	}
+
 	dateAnalyzed := args[0]
 	help := faktory_worker.HelperFor(ctx)
-	logger := FaktoryLoggerFromContext(ctx)
 	// Kick off DigestEmailBatchJob
 	return help.With(func(cl *faktory.Client) error {
 		logger.Info("Analyzed Audit Batch Job was successful.")
