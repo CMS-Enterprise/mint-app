@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -7,16 +7,45 @@ import './index.scss';
 
 const StickyModelNameWrapper = ({
   children,
-  stickyHeaderRef,
-  isStickyHeaderVisible,
+  triggerRef,
   className
 }: {
   children: React.ReactNode;
-  stickyHeaderRef: React.RefObject<HTMLDivElement>;
-  isStickyHeaderVisible: boolean;
+  triggerRef: React.RefObject<HTMLElement | null>;
   className?: string;
 }) => {
   const { t: h } = useTranslation('generalReadOnly');
+  const stickyHeaderRef = useRef<HTMLDivElement>(null);
+  const [isStickyHeaderVisible, setIsStickyHeaderVisible] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!triggerRef.current || !stickyHeaderRef.current) return;
+
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const stickyHeaderHeight = stickyHeaderRef.current.offsetHeight;
+
+      // Show sticky header when the bottom of the trigger element reaches
+      // the sticky header's height from the top of viewport
+      // This ensures smooth transition as the trigger scrolls past
+      setIsStickyHeaderVisible(triggerRect.bottom <= stickyHeaderHeight);
+    };
+
+    // Check on initial load and after a short delay to ensure elements are rendered
+    handleScroll();
+    const timeoutId = setTimeout(handleScroll, 100);
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [triggerRef]);
+
   return (
     <div
       ref={stickyHeaderRef}

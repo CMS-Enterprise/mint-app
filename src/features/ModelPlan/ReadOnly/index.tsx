@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -263,38 +263,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
-  const [isStickyHeaderVisible, setIsStickyHeaderVisible] =
-    useState<boolean>(false);
-
   const summaryRef = useRef<HTMLDivElement>(null);
-  const stickyHeaderRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!summaryRef.current || !stickyHeaderRef.current) return;
-
-      const summaryRect = summaryRef.current.getBoundingClientRect();
-      const stickyHeaderHeight = stickyHeaderRef.current.offsetHeight;
-
-      // Show sticky header when the bottom of the summary reaches
-      // the sticky header's height from the top of viewport
-      // This ensures smooth transition as the summary scrolls past
-      setIsStickyHeaderVisible(summaryRect.bottom <= stickyHeaderHeight);
-    };
-
-    // Check on initial load and after a short delay to ensure elements are rendered
-    handleScroll();
-    const timeoutId = setTimeout(handleScroll, 100);
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
-
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
 
   const { data, loading, error, refetch } = useGetModelSummaryQuery({
     variables: {
@@ -503,8 +472,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
         {Summary}
         <StickyModelNameWrapper
-          stickyHeaderRef={stickyHeaderRef as RefObject<HTMLDivElement>}
-          isStickyHeaderVisible={isStickyHeaderVisible}
+          triggerRef={summaryRef}
           className="bg-primary-lighter"
         >
           <h3 className="mint-h1 margin-0 padding-y-2">
