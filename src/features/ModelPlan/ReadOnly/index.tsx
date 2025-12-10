@@ -505,6 +505,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         <StickyModelNameWrapper
           stickyHeaderRef={stickyHeaderRef as RefObject<HTMLDivElement>}
           isStickyHeaderVisible={isStickyHeaderVisible}
+          className="bg-primary-lighter"
         >
           <h3 className="mint-h1 margin-0 padding-y-2">
             {modelName}{' '}

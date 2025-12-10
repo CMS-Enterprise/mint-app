@@ -8,17 +8,19 @@ import './index.scss';
 const StickyModelNameWrapper = ({
   children,
   stickyHeaderRef,
-  isStickyHeaderVisible
+  isStickyHeaderVisible,
+  className
 }: {
   children: React.ReactNode;
   stickyHeaderRef: React.RefObject<HTMLDivElement>;
   isStickyHeaderVisible: boolean;
+  className?: string;
 }) => {
   const { t: h } = useTranslation('generalReadOnly');
   return (
     <div
       ref={stickyHeaderRef}
-      className={classNames('sticky-header-wrapper bg-primary-lighter', {
+      className={classNames('sticky-header-wrapper', className, {
         'sticky-header-wrapper--visible': isStickyHeaderVisible
       })}
       aria-hidden="true"

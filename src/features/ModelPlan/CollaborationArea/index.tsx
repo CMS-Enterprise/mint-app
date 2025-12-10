@@ -152,9 +152,10 @@ const CollaborationArea = () => {
             <PageLoading />
           </div>
         )}
-
-        {data && (
-          <Grid>
+      </GridContainer>
+      {data && (
+        <>
+          <GridContainer>
             <Grid row className="collaboration-area__header">
               <Grid desktop={{ col: 9 }}>
                 <PageHeading className="margin-top-4 margin-bottom-0">
@@ -186,7 +187,10 @@ const CollaborationArea = () => {
                 </div>
               </Grid>
             </Grid>
+          </GridContainer>
+          {/* I want the sticky header here */}
 
+          <GridContainer>
             <Grid desktop={{ col: 12 }}>
               <CollaborationStatusBanner
                 modelID={modelID}
@@ -223,9 +227,10 @@ const CollaborationArea = () => {
                 </CardGroup>
               </Grid>
             </Grid>
-          </Grid>
-        )}
-
+          </GridContainer>
+        </>
+      )}
+      <GridContainer>
         {!!modelPlan.suggestedPhase && !statusChecked && (
           <UpdateStatusModal
             modelID={modelID}
