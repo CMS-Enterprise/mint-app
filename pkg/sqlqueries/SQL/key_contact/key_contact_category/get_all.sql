@@ -1,0 +1,9 @@
+SELECT
+    id,
+    category,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts
+FROM key_contact_category
+ORDER BY category;
