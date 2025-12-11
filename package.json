@@ -177,7 +177,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "glob": "^10.3.10",
+    "glob": "^10.5.0",
     "graphql-schema-linter": "^3.0.1",
     "jest-launchdarkly-mock": "^2.1.0",
     "jsdom": "^25.0.1",
