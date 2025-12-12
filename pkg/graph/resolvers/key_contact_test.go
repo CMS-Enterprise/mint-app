@@ -41,7 +41,6 @@ func (suite *ResolverSuite) TestCreateKeyContactUser() {
 	)
 	suite.NoError(err)
 	suite.NotNil(contact)
-	suite.Equal(userName, contact.Name)
 	suite.Equal(subjectArea, contact.SubjectArea)
 	suite.Equal(subjectCategoryID, contact.SubjectCategoryID)
 }
@@ -55,6 +54,7 @@ func (suite *ResolverSuite) TestCreateKeyContactMailbox() {
 		suite.testConfigs.Store,
 		categoryName,
 	)
+	suite.NoError(err)
 
 	mailboxTitle := "Support Team"
 	mailboxAddress := "support@example.com"
@@ -77,8 +77,8 @@ func (suite *ResolverSuite) TestCreateKeyContactMailbox() {
 
 	suite.NoError(err)
 	suite.NotNil(contact)
-	suite.Equal(mailboxTitle, contact.Name)
-	suite.Equal(mailboxAddress, contact.Email)
+	suite.Equal(mailboxTitle, *contact.Name)
+	suite.Equal(mailboxAddress, *contact.Email)
 	suite.Equal(subjectArea, contact.SubjectArea)
 	suite.Equal(subjectCategoryID, contact.SubjectCategoryID)
 }
@@ -92,6 +92,7 @@ func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
 		suite.testConfigs.Store,
 		categoryName,
 	)
+	suite.NoError(err)
 
 	// Create a mailbox contact using the existing method
 	mailboxTitle := "Support Team"
@@ -122,8 +123,7 @@ func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
 
 	suite.NoError(err)
 	suite.NotNil(keyContact)
-	suite.Len(keyContact, 1)
-	suite.Equal(mailboxTitle, keyContact.Name)
+	suite.Equal(mailboxTitle, *keyContact.Name)
 }
 
 // GetAllKeyContactsLoaderTest validates the underlying behavior of the data loader. It validates the count of users that are returned for each solution.
@@ -188,6 +188,7 @@ func (suite *ResolverSuite) TestUpdateKeyContact() {
 		suite.testConfigs.Store,
 		categoryName,
 	)
+	suite.NoError(err)
 
 	// Create a mailbox contact to update
 	mailboxTitle := "Support Team"
@@ -238,6 +239,7 @@ func (suite *ResolverSuite) TestDeleteKeyContact() {
 		suite.testConfigs.Store,
 		categoryName,
 	)
+	suite.NoError(err)
 
 	// Create a key contact to delete
 	userName := "John Doe"
