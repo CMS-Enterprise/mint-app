@@ -1,6 +1,9 @@
 import { MockedResponse } from '@apollo/client/testing';
 import {
   DataExchangeApproachStatus,
+  GetAllKeyContactsDocument,
+  GetAllKeyContactsQuery,
+  GetAllKeyContactsQueryVariables,
   GetAnalyticsSummaryDocument,
   GetAnalyticsSummaryQuery,
   GetAnalyticsSummaryQueryVariables,
@@ -670,6 +673,57 @@ export const analyticsSummaryMock: MockedResponse<
     },
     result: {
       data: mockAnalyticsData
+    }
+  }
+];
+
+const keyContactCategoryData = [
+  {
+    __typename: 'KeyContactCategory',
+    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
+    category: 'Healthcare'
+  },
+  {
+    __typename: 'KeyContactCategory',
+    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
+    category: 'CMS Programs'
+  }
+];
+
+type KeyContactsType = GetAllKeyContactsQuery['keyContacts'];
+
+export const keyContactsMockData: KeyContactsType = [
+  {
+    email: 'pstm@example.com',
+    id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
+    name: 'pstm team mailbox',
+    subjectArea: 'Insurance and Coverage',
+    subjectCategoryID: keyContactCategoryData[0].id,
+    __typename: 'KeyContact'
+  },
+  {
+    email: 'pstm@example.com',
+    id: '54c12785-c0c1-47a9-a91d-4f69d82d45cc',
+    name: 'pstm team mailbox',
+    subjectArea: 'Paperwork Reduction Act',
+    subjectCategoryID: keyContactCategoryData[0].id,
+    __typename: 'KeyContact'
+  }
+];
+
+export const keyContactsMock: MockedResponse<
+  GetAllKeyContactsQuery,
+  GetAllKeyContactsQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllKeyContactsDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        keyContacts: keyContactsMockData
+      }
     }
   }
 ];

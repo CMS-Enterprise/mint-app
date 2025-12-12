@@ -19,6 +19,7 @@ type GlobalClientFilterProps = {
   tableID: string;
   tableName: string;
   height5?: boolean;
+  resetPageOnEmptyFilter?: boolean;
 };
 
 // Component for Global Filter for Client Side filtering
@@ -30,7 +31,8 @@ const GlobalClientFilter = ({
   skipPageResetRef,
   tableID,
   tableName,
-  height5
+  height5,
+  resetPageOnEmptyFilter = true
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
 
@@ -63,7 +65,10 @@ const GlobalClientFilter = ({
             skipPageResetRef.current = false;
           }
           // Currently only client-side filtering - updates search filter onChange
-          if (globalFilter === '' || e.target.value === '') {
+          if (
+            resetPageOnEmptyFilter &&
+            (globalFilter === '' || e.target.value === '')
+          ) {
             const paramsChange = new URLSearchParams(location.search);
             paramsChange.set('page', '1');
             navigate({ search: paramsChange.toString() });

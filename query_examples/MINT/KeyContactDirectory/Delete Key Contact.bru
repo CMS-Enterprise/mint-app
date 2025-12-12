@@ -1,0 +1,29 @@
+meta {
+  name: Delete Key Contact
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation deleteKeyContact($id: UUID!) {
+    deleteKeyContact(id: $id) {
+      id
+      name
+      email
+      subjectArea
+      subjectCategoryID
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{keyContactId}}"
+  }
+}

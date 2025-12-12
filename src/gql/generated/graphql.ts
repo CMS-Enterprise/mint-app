@@ -730,6 +730,56 @@ export enum KeyCharacteristic {
   SHARED_SAVINGS = 'SHARED_SAVINGS'
 }
 
+export type KeyContact = {
+  __typename: 'KeyContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  mailboxAddress?: Maybe<Scalars['String']['output']>;
+  mailboxTitle?: Maybe<Scalars['String']['output']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  subjectArea: Scalars['String']['output'];
+  subjectCategoryID: Scalars['UUID']['output'];
+  userAccount?: Maybe<UserAccount>;
+  userID?: Maybe<Scalars['UUID']['output']>;
+};
+
+export type KeyContactCategory = {
+  __typename: 'KeyContactCategory';
+  category: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  keyContacts: Array<KeyContact>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+/**
+ * Input for updating a key contact category.
+ * Only category can be changed.
+ */
+export type KeyContactCategoryUpdateChanges = {
+  category?: InputMaybe<Scalars['String']['input']>;
+};
+
+/**
+ * Input for updating a key contact.
+ * Only subject category, subject area, and mailbox title can be changed.
+ */
+export type KeyContactUpdateChanges = {
+  mailboxTitle?: InputMaybe<Scalars['String']['input']>;
+  subjectArea?: InputMaybe<Scalars['String']['input']>;
+  subjectCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
 /** The current user's Launch Darkly key */
 export type LaunchDarklySettings = {
   __typename: 'LaunchDarklySettings';
@@ -1816,6 +1866,9 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  createKeyContactCategory: KeyContactCategory;
+  createKeyContactMailbox: KeyContact;
+  createKeyContactUser: KeyContact;
   /**
    * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
    * Note, the parent must belong to the same model plan, or this will return an error
@@ -1841,6 +1894,8 @@ export type Mutation = {
    */
   createStandardCategories: Scalars['Boolean']['output'];
   createTemplateToMTO: ApplyTemplateResult;
+  deleteKeyContact: KeyContact;
+  deleteKeyContactCategory: KeyContactCategory;
   /**
    * Deletes an MTO category. If the category has subcategories, it will delete them as well.
    * If the target category is a subcategory, it will only delete the subcategory and redirect
@@ -1893,6 +1948,8 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  updateKeyContact: KeyContact;
+  updateKeyContactCategory: KeyContactCategory;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
@@ -1933,6 +1990,29 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactCategoryArgs = {
+  category: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactMailboxArgs = {
+  mailboxAddress: Scalars['String']['input'];
+  mailboxTitle: Scalars['String']['input'];
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactUserArgs = {
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
+  userName: Scalars['String']['input'];
 };
 
 
@@ -2063,6 +2143,18 @@ export type MutationCreateStandardCategoriesArgs = {
 export type MutationCreateTemplateToMtoArgs = {
   modelPlanID: Scalars['UUID']['input'];
   templateID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteKeyContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteKeyContactCategoryArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -2227,6 +2319,20 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateKeyContactArgs = {
+  changes: KeyContactUpdateChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateKeyContactCategoryArgs = {
+  changes: KeyContactCategoryUpdateChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -4428,6 +4534,11 @@ export type Query = {
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
+  keyContact: KeyContact;
+  keyContactCategoriesByIds: Array<KeyContactCategory>;
+  keyContactCategory: Array<KeyContactCategory>;
+  keyContactCategoryById: KeyContactCategory;
+  keyContacts: Array<KeyContact>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
@@ -4481,6 +4592,24 @@ export type QueryAuditChangesArgs = {
 
 /** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactCategoriesByIdsArgs = {
+  ids: Array<Scalars['UUID']['input']>;
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactCategoryByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -5813,6 +5942,11 @@ export type UpdateHomepageSettingsMutationVariables = Exact<{
 
 
 export type UpdateHomepageSettingsMutation = { __typename: 'Mutation', updateUserViewCustomization: { __typename: 'UserViewCustomization', id: UUID } };
+
+export type GetAllKeyContactsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllKeyContactsQuery = { __typename: 'Query', keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, subjectArea: string, subjectCategoryID: UUID }> };
 
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9114,6 +9248,49 @@ export function useUpdateHomepageSettingsMutation(baseOptions?: Apollo.MutationH
 export type UpdateHomepageSettingsMutationHookResult = ReturnType<typeof useUpdateHomepageSettingsMutation>;
 export type UpdateHomepageSettingsMutationResult = Apollo.MutationResult<UpdateHomepageSettingsMutation>;
 export type UpdateHomepageSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
+export const GetAllKeyContactsDocument = gql`
+    query GetAllKeyContacts {
+  keyContacts {
+    id
+    name
+    email
+    subjectArea
+    subjectCategoryID
+  }
+}
+    `;
+
+/**
+ * __useGetAllKeyContactsQuery__
+ *
+ * To run a query within a React component, call `useGetAllKeyContactsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllKeyContactsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllKeyContactsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllKeyContactsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>(GetAllKeyContactsDocument, options);
+      }
+export function useGetAllKeyContactsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>(GetAllKeyContactsDocument, options);
+        }
+export function useGetAllKeyContactsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>(GetAllKeyContactsDocument, options);
+        }
+export type GetAllKeyContactsQueryHookResult = ReturnType<typeof useGetAllKeyContactsQuery>;
+export type GetAllKeyContactsLazyQueryHookResult = ReturnType<typeof useGetAllKeyContactsLazyQuery>;
+export type GetAllKeyContactsSuspenseQueryHookResult = ReturnType<typeof useGetAllKeyContactsSuspenseQuery>;
+export type GetAllKeyContactsQueryResult = Apollo.QueryResult<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
@@ -16917,6 +17094,7 @@ export const TypedUpdateExistingModelLinksDocument = {"kind":"Document","definit
 export const TypedUpdatePlanGeneralCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanGeneralCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
 export const TypedGetHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomepageSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userViewCustomization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"viewCustomization"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"}},{"kind":"Field","name":{"kind":"Name","value":"componentGroups"}}]}}]}}]} as unknown as DocumentNode<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
 export const TypedUpdateHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomepageSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserViewCustomizationChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserViewCustomization"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
+export const TypedGetAllKeyContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllKeyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}}]}}]}}]} as unknown as DocumentNode<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>;
 export const TypedGetExistingModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExistingModelPlans"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"existingModelCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetExistingModelPlansQuery, GetExistingModelPlansQueryVariables>;
 export const TypedGetModelPlansBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlansBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetModelPlansBaseQuery, GetModelPlansBaseQueryVariables>;
 export const TypedGetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;
