@@ -60,6 +60,8 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		// Send welcome email to new key contact
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
+				store,
+				logger,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -114,6 +116,8 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 	if emailService != nil && emailTemplateService != nil && newContact.Email != nil {
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
+				store,
+				logger,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -247,11 +251,18 @@ func GetAllKeyContacts(ctx context.Context) ([]*models.KeyContact, error) {
 }
 
 func sendKeyContactWelcomeEmail(
+	store *storage.Store,
+	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.KeyContact,
 ) error {
+	category, err := storage.KeyContactCategoryGetByID(store, logger, contact.SubjectCategoryID)
+	if err != nil {
+		return err
+	}
+
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.KeyContactWelcomeTemplateName)
 	if err != nil {
 		return err
@@ -265,6 +276,7 @@ func sendKeyContactWelcomeEmail(
 	emailBody, err := emailTemplate.GetExecutedBody(email.NewKeyContactAddedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contact,
+		*category,
 	))
 	if err != nil {
 		return err
