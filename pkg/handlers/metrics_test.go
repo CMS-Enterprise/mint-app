@@ -31,6 +31,7 @@ func (s *HandlerTestSuite) TestMetricsHandler() {
 		}
 		rr := httptest.NewRecorder()
 		req, err := http.NewRequest("GET", u.String(), nil)
+		req = req.WithContext(s.Context)
 		s.NoError(err)
 
 		SystemIntakeMetricsHandler{
@@ -109,6 +110,7 @@ func (s *HandlerTestSuite) TestMetricsHandler() {
 			}
 			rr := httptest.NewRecorder()
 			req, err := http.NewRequest("GET", u.String(), nil)
+			req = req.WithContext(s.Context)
 			s.NoError(err)
 
 			SystemIntakeMetricsHandler{
@@ -138,6 +140,7 @@ func (s *HandlerTestSuite) TestMetricsHandler() {
 		}
 		rr := httptest.NewRecorder()
 		req, err := http.NewRequest("GET", u.String(), nil)
+		req = req.WithContext(s.Context)
 		s.NoError(err)
 
 		SystemIntakeMetricsHandler{
@@ -151,6 +154,7 @@ func (s *HandlerTestSuite) TestMetricsHandler() {
 	s.Run("Invalid method is not allowed", func() {
 		rr := httptest.NewRecorder()
 		req, err := http.NewRequest("POST", metricsURL.String(), nil)
+		req = req.WithContext(s.Context)
 		s.NoError(err)
 
 		SystemIntakeMetricsHandler{
@@ -179,6 +183,7 @@ func (s *HandlerTestSuite) TestAccessibilityMetricsHandler() {
 		}
 		rr := httptest.NewRecorder()
 		req, err := http.NewRequest("GET", u.String(), nil)
+		req = req.WithContext(s.Context)
 		s.NoError(err)
 
 		AccessibilityMetricsHandler{
@@ -200,6 +205,7 @@ func (s *HandlerTestSuite) TestAccessibilityMetricsHandler() {
 		}
 		rr := httptest.NewRecorder()
 		req, err := http.NewRequest("GET", u.String(), nil)
+		req = req.WithContext(s.Context)
 		s.NoError(err)
 
 		AccessibilityMetricsHandler{

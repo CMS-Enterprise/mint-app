@@ -155,12 +155,12 @@ const useSearchSortPagination = <T, K extends string>({
   // Reset pagination if itemsPerPage changes and the current page is greater than the new page count or if items per page is set to "show all"
   useEffect(() => {
     // Only reset page if we're not already on page 1
-    if (currentPage !== 1) {
+    if ((pageCount === 1 && currentPage !== 1) || currentPage > pageCount) {
       params.set('page', '1');
       navigate({ search: params.toString() });
       setCurrentPage(1);
     }
-  }, [itemsPerPage, currentPage, params, navigate]);
+  }, [pageCount, currentPage, params, navigate]);
 
   // Sort the changes when the sort option changes.
   useEffect(() => {
