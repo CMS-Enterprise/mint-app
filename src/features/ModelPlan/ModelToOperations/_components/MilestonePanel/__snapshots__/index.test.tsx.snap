@@ -100,12 +100,12 @@ exports[`MilestonePanel Component > renders correctly and matches snapshot 1`] =
                 Accountable Care Organization - Operational System
               </h3>
               <p
-                class="margin-top-0"
+                class="margin-0"
               >
                 ACO-OS
               </p>
               <div
-                class="border-top border-base-light padding-top-2"
+                class="border-top border-base-light padding-top-2 margin-top-2"
               >
                 <button
                   class="usa-button usa-button--unstyled"

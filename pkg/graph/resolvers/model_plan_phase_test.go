@@ -81,7 +81,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 
 	err = TrySendEmailForPhaseSuggestion(
 		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
+		suite.testConfigs.ZapLogger,
 		suite.testConfigs.Store,
 		emailRecipients,
 		mockEmailService,
@@ -111,7 +111,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.NotEmpty(collaborators)
 
 	// Fetch emails
-	emails, err := GetEmailsForModelStatusAlert(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	emails, err := GetEmailsForModelStatusAlert(suite.testConfigs.Context, suite.testConfigs.ZapLogger, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.Equal([]string{expectedEmail}, emails)
 
@@ -146,7 +146,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.NotEmpty(collaborators)
 
 	// Fetch emails again
-	emails, err = GetEmailsForModelStatusAlert(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	emails, err = GetEmailsForModelStatusAlert(suite.testConfigs.Context, suite.testConfigs.ZapLogger, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.ElementsMatch([]string{expectedEmail, expectedEmail2}, emails)
 }
