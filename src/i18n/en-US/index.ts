@@ -22,6 +22,9 @@ import usingTableActions from './helpAndKnowledge/Articles/usingTableActions';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
+import keyContactCategory, {
+  keyContactCategoryMisc
+} from './helpAndKnowledge/keyContactCategory';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
 import { basics, basicsMisc } from './modelPlan/basics';
@@ -174,6 +177,8 @@ const enUS = {
   feedback,
   keyContact,
   keyContactMisc,
+  keyContactCategory,
+  keyContactCategoryMisc,
   // Help and Knowledge Center Articles
   evaluatingDataExchangeApproach,
   getAccess,

@@ -17,10 +17,10 @@ const keyContactCategory: TranslationKeyContactCategoryCustom = {
   }
 };
 
-export const keyContactMisc = {
+export const keyContactCategoryMisc = {
   add: {
     heading: 'Add a subject category',
-    descriptoin:
+    description:
       'Add an overall category or topic for subject matter experts (e.g. “Quality” or “Medicare Advantage”).',
     cta: 'Add subject category'
   },

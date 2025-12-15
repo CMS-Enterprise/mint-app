@@ -11,6 +11,7 @@ import {
 import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 import {
   GetAllKeyContactsQuery,
+  useGetAllKeyContactCategoriesQuery,
   useGetAllKeyContactsQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -22,23 +23,62 @@ import GlobalClientFilter from 'components/TableFilter';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { isAssessment } from 'utils/user';
 
+import CategoryModal, {
+  KeyContactCategoryType
+} from './_components/CategoryModal';
 import KeyContactTable from './_components/KeyContactTable';
 import SmeModal from './_components/SmeModal';
 
 import './index.scss';
 
-const Categories = [
-  {
-    __typename: 'KeyContactCategory',
-    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
-    category: 'Healthcare'
-  },
-  {
-    __typename: 'KeyContactCategory',
-    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
-    category: 'CMS Programs'
-  }
-];
+const AddCategoryButton = () => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <CategoryModal
+        isOpen={isModalOpen}
+        mode="add"
+        closeModal={() => setIsModalOpen(false)}
+      />
+      <Button
+        type="button"
+        unstyled
+        onClick={() => setIsModalOpen(true)}
+        className="line-height-sans-4"
+      >
+        {t('keyContactDirectory.addSubjectCategory')}
+      </Button>
+    </>
+  );
+};
+
+const RenameCategoryButton = ({
+  category
+}: {
+  category: KeyContactCategoryType;
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <CategoryModal
+        isOpen={isModalOpen}
+        mode="edit"
+        closeModal={() => setIsModalOpen(false)}
+        category={category}
+      />
+      <Button
+        type="button"
+        unstyled
+        onClick={() => setIsModalOpen(true)}
+        className="line-height-sans-4 deep-underline"
+      >
+        {t('keyContactDirectory.renameCategory')}
+      </Button>
+    </>
+  );
+};
 
 const AddSmeWithoutCategoryButton = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -102,9 +142,20 @@ const KeyContactDirectory = () => {
 
   const isAssessmentTeam = isAssessment(groups, flags);
 
-  const categories = Categories; // Replace with actual data fetching logic
+  const { data: categoryData, loading: loadingCategories } =
+    useGetAllKeyContactCategoriesQuery();
 
   const { data: smeData, loading: loadingSmes } = useGetAllKeyContactsQuery();
+
+  const categories = useMemo(() => {
+    if (!categoryData) {
+      return [];
+    }
+
+    return [...categoryData.keyContactCategory].sort((a, b) =>
+      a.category.localeCompare(b.category)
+    );
+  }, [categoryData]);
 
   const filteredSmes = useMemo(() => {
     if (!smeData) {
@@ -114,9 +165,11 @@ const KeyContactDirectory = () => {
     let smeContacts = smeData.keyContacts;
 
     if (trimmedQuery !== '') {
-      const filteredCategoryIds = Categories.filter(category =>
-        category.category.toLowerCase().includes(trimmedQuery)
-      ).map(cat => cat.id);
+      const filteredCategoryIds = categories
+        .filter(category =>
+          category.category.toLowerCase().includes(trimmedQuery)
+        )
+        .map(cat => cat.id);
 
       smeContacts = smeData.keyContacts.filter(sme => {
         return (
@@ -129,7 +182,7 @@ const KeyContactDirectory = () => {
     }
 
     return smeContacts;
-  }, [query, smeData]);
+  }, [categories, query, smeData]);
 
   const reformattedSmes = useMemo(() => {
     return filteredSmes.reduce<Record<string, SmeType[]>>((allSmes, sme) => {
@@ -150,14 +203,7 @@ const KeyContactDirectory = () => {
           <div className="margin-top-2">
             <AddSmeWithCategoryButton categoryId={category.id} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-            <Button
-              type="button"
-              unstyled
-              onClick={() => {}}
-              className="line-height-sans-4 deep-underline"
-            >
-              {t('keyContactDirectory.renameCategory')}
-            </Button>
+            <RenameCategoryButton category={category} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
             <Button
               type="button"
@@ -169,11 +215,15 @@ const KeyContactDirectory = () => {
             </Button>
           </div>
         )}
-        <KeyContactTable
-          smes={reformattedSmes[category.id] || []}
-          isAssessmentTeam={isAssessmentTeam}
-          isSearching={query.trim() !== ''}
-        />
+        {loadingSmes ? (
+          <PageLoading testId="key-contact-table" />
+        ) : (
+          <KeyContactTable
+            smes={reformattedSmes[category.id] || []}
+            isAssessmentTeam={isAssessmentTeam}
+            isSearching={query.trim() !== ''}
+          />
+        )}
       </>
     ),
     expanded: true,
@@ -181,7 +231,7 @@ const KeyContactDirectory = () => {
     headingLevel: 'h4'
   }));
 
-  if (loadingSmes) {
+  if (loadingCategories) {
     return <PageLoading testId="key-contact-directory" />;
   }
 
@@ -210,14 +260,7 @@ const KeyContactDirectory = () => {
 
           {isAssessmentTeam && (
             <div className="margin-bottom-4">
-              <Button
-                type="button"
-                unstyled
-                onClick={() => {}}
-                className="line-height-sans-4"
-              >
-                {t('keyContactDirectory.addSubjectCategory')}
-              </Button>
+              <AddCategoryButton />
               <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
               <AddSmeWithoutCategoryButton />
             </div>
