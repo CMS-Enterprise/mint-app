@@ -1,0 +1,350 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SmeModal Component > matches snapshot 1`] = `
+<div
+  aria-modal="true"
+  class="ReactModal__Content mint-modal__content tablet:width-mobile-lg mint-body-normal overflow-y-visible"
+  data-testid="sme-modal"
+  role="dialog"
+  tabindex="-1"
+>
+  <div
+    class="mint-modal__top-section display-flex text-base mint-modal__fixed-top"
+  >
+    <button
+      aria-label="Close Modal"
+      class="mint-modal__x-button text-base"
+      type="button"
+    >
+      <svg
+        aria-label="close"
+        class="usa-icon usa-icon--size-4"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="mint-modal__body margin-top-6 mint-modal__height overflow-y-auto"
+  >
+    <div
+      class="margin-bottom-2"
+    >
+      <h3
+        aria-live="polite"
+        class="mint-h1 margin-y-0"
+        tabindex="-1"
+      >
+        Add a subject matter expert (SME)
+      </h3>
+      <p
+        class="text-base margin-y-1"
+      >
+        Fields marked with an asterisk ( 
+        <span
+          class="text-error"
+        >
+          *
+        </span>
+         ) are required.
+      </p>
+    </div>
+    <form
+      class="usa-form maxw-none padding-bottom-10"
+      data-testid="sme-form"
+      id="sme-form"
+    >
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+        style="min-width: 100%;"
+      >
+        <div
+          class="usa-form-group margin-top-0 margin-bottom-2"
+          data-testid="formGroup"
+        >
+          <label
+            class="usa-label mint-body-normal maxw-none"
+            data-testid="label"
+            for="sme-subject-category-select"
+          >
+            Subject category
+             
+            <abbr
+              class="usa-hint usa-hint--required"
+              title="required"
+            >
+              *
+            </abbr>
+          </label>
+          <span
+            class="text-base-dark"
+          >
+            If you don't see the overall category you need, add a category before adding a SME.
+          </span>
+          <select
+            class="usa-select"
+            data-testid="Select"
+            id="sme-subject-category-select"
+            name="subjectCategoryID"
+          >
+            <option
+              value="default"
+            >
+              - 
+              Select
+               -
+            </option>
+            <option
+              value="a95a1f98-fb7a-43f9-9e3c-abc52238e350"
+            >
+              Healthcare
+            </option>
+            <option
+              value="a95a1f98-fb7a-43f9-9e3c-abc52238e351"
+            >
+              CMS Programs
+            </option>
+          </select>
+        </div>
+      </fieldset>
+      <header
+        class="usa-header usa-header--basic model-to-operations__nav-container border-bottom border-base-lighter"
+        data-testid="header"
+      >
+        <div
+          class="usa-nav-container padding-0"
+        >
+          <nav
+            class="usa-nav flex-justify-start margin-0 padding-0"
+          >
+            <button
+              aria-label="Close Navigation Menu"
+              class="usa-nav__close"
+              data-testid="navCloseButton"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon usa-icon--size-3"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+            </button>
+            <ul
+              class="usa-nav__primary usa-accordion"
+            >
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="text-no-underline usa-nav__link margin-left-neg-2 margin-right-2 usa-current"
+                  type="button"
+                >
+                  <span
+                    class="text-primary"
+                  >
+                    Individual
+                  </span>
+                </button>
+              </li>
+              <li
+                class="usa-nav__primary-item"
+              >
+                <button
+                  class="text-no-underline usa-nav__link margin-left-neg-2 margin-right-2"
+                  type="button"
+                >
+                  <span
+                    class=""
+                  >
+                    Team mailbox
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+        style="min-width: 100%;"
+      >
+        <div
+          class="usa-form-group margin-bottom-2"
+          data-testid="formGroup"
+        >
+          <label
+            class="usa-label mint-body-normal maxw-none"
+            data-testid="label"
+            for="sme-subject-area"
+          >
+            SME subject area
+             
+            <abbr
+              class="usa-hint usa-hint--required"
+              title="required"
+            >
+              *
+            </abbr>
+          </label>
+          <span
+            class="text-base-dark"
+          >
+            Comma-separate multiple areas of subject matter expertise.
+          </span>
+          <input
+            class="usa-input"
+            data-testid="sme-subject-area"
+            id="sme-subject-area"
+            name="subjectArea"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="usa-form-group margin-top-0 margin-bottom-2"
+          data-testid="formGroup"
+        >
+          <label
+            class="usa-label mint-body-normal maxw-none"
+            data-testid="label"
+            for="sme-name"
+          >
+            SME name
+             
+            <abbr
+              class="usa-hint usa-hint--required"
+              title="required"
+            >
+              *
+            </abbr>
+          </label>
+          <span
+            class="text-base-dark"
+          >
+            This field searches CMS’ EUA database.
+          </span>
+          <div
+            class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
+            id="sme-name"
+          >
+            <span
+              class="css-1f43avz-a11yText-A11yText"
+              id="react-select-sme-name-live-region"
+            />
+            <span
+              aria-atomic="false"
+              aria-live="polite"
+              aria-relevant="additions text"
+              class="css-1f43avz-a11yText-A11yText"
+              role="log"
+            />
+            <div
+              class="cedar-contact-select__control css-79rxjr-control"
+            >
+              <div
+                class="cedar-contact-select__value-container cedar-contact-select__value-container--has-value css-hlgwow"
+              >
+                <div
+                  class="cedar-contact-select__placeholder css-1jqq78o-placeholder"
+                  id="react-select-sme-name-placeholder"
+                />
+                <div
+                  class="cedar-contact-select__input-container css-19bb58m"
+                  data-value=""
+                >
+                  <input
+                    aria-activedescendant=""
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    aria-labelledby="label-sme-name"
+                    autocapitalize="none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    class="cedar-contact-select__input"
+                    id="react-select-sme-name-input"
+                    role="combobox"
+                    spellcheck="false"
+                    style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                    tabindex="0"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="cedar-contact-select__indicators css-1wy0on6"
+              >
+                <span
+                  class="cedar-contact-select__indicator-separator css-1u9des2-indicatorSeparator"
+                />
+                <div
+                  aria-hidden="true"
+                  class="cedar-contact-select__indicator cedar-contact-select__dropdown-indicator css-1h8bgg-indicatorContainer"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="css-tj5bde-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <input
+              name="sme-name"
+              type="hidden"
+              value="[object Object]"
+            />
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <div
+      class="margin-top-2 display-flex mint-modal__footer"
+    >
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        form="sme-form"
+        type="submit"
+      >
+        Add SME
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-0 deep-underline"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+`;
