@@ -15,16 +15,18 @@ const StickyModelNameWrapper = ({
   className?: string;
 }) => {
   const { t: h } = useTranslation('generalReadOnly');
-  const stickyHeaderRef = useRef<HTMLDivElement>(null);
+  // Ref for measuring the height of the sticky header (hidden, off-screen)
+  const measurementRef = useRef<HTMLDivElement>(null);
   const [isStickyHeaderVisible, setIsStickyHeaderVisible] =
     useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!triggerRef.current || !stickyHeaderRef.current) return;
+      if (!triggerRef.current || !measurementRef.current) return;
 
       const triggerRect = triggerRef.current.getBoundingClientRect();
-      const stickyHeaderHeight = stickyHeaderRef.current.offsetHeight;
+      // Use the hidden measurement element to get the height
+      const stickyHeaderHeight = measurementRef.current.offsetHeight;
 
       // Show sticky header when the bottom of the trigger element reaches
       // the sticky header's height from the top of viewport
@@ -46,29 +48,56 @@ const StickyModelNameWrapper = ({
     };
   }, [triggerRef]);
 
-  return (
-    <div
-      ref={stickyHeaderRef}
-      className={classNames('sticky-header-wrapper', className, {
-        'sticky-header-wrapper--visible': isStickyHeaderVisible
-      })}
-      aria-hidden="true"
-    >
-      <GridContainer>
-        <div className="display-flex flex-justify show-when-sticky">
-          {children}
+  // Render the sticky header content once for reuse
+  const stickyContent = (
+    <GridContainer>
+      <div className="display-flex flex-justify show-when-sticky">
+        {children}
 
-          <button
-            type="button"
-            className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <Icon.ArrowUpward size={3} aria-label="arrow up" />
-            {h('backToTop')}
-          </button>
-        </div>
-      </GridContainer>
-    </div>
+        <button
+          type="button"
+          className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <Icon.ArrowUpward size={3} aria-label="arrow up" />
+          {h('backToTop')}
+        </button>
+      </div>
+    </GridContainer>
+  );
+
+  return (
+    <>
+      {/* Hidden measurement element - always rendered but off-screen for height calculation */}
+      <div
+        ref={measurementRef}
+        className={classNames('sticky-header-wrapper', className)}
+        style={{
+          position: 'absolute',
+          visibility: 'hidden',
+          top: '-9999px',
+          left: '-9999px',
+          width: '100%'
+        }}
+        aria-hidden="true"
+      >
+        {stickyContent}
+      </div>
+
+      {/* Sticky header - always rendered but faded in/out smoothly */}
+      <div
+        className={classNames(
+          'sticky-header-wrapper z-300 shadow-2',
+          className,
+          {
+            'sticky-header-wrapper--visible': isStickyHeaderVisible
+          }
+        )}
+        aria-hidden="true"
+      >
+        {stickyContent}
+      </div>
+    </>
   );
 };
 
