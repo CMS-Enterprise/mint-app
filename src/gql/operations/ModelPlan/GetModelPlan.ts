@@ -5,6 +5,7 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       modelName
+      abbreviation
       modifiedDts
       createdDts
       modifiedByUserAccount {
