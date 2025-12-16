@@ -35,6 +35,7 @@ const SmeModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
+      testId="sme-modal"
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">

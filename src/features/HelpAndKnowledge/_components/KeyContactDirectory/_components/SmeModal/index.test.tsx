@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { keyContactsMock } from 'tests/mock/general';
 
 import SmeModal, { KeyContactType } from '.';
@@ -87,26 +87,13 @@ describe('SmeModal Component', () => {
   });
 
   it('matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge',
-          element: (
-            <SmeModal isOpen closeModal={() => {}} mode="addWithoutCategory" />
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge']
-      }
-    );
-
-    const { asFragment } = render(
+    render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
+        <SmeModal isOpen closeModal={() => {}} mode="addWithoutCategory" />
       </MockedProvider>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    const modal = screen.getByTestId('sme-modal');
+    expect(modal).toMatchSnapshot();
   });
 });
