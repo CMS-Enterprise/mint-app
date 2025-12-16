@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -61,7 +62,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 
 	// Step 2. Iterate through all model plans, and generate analyzed audit data
 	for _, mp := range modelPlans {
-		_, err2 := resolvers.AnalyzeModelPlanForAnalyzedAudit(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, mp.ID)
+		_, err2 := resolvers.AnalyzeModelPlanForAnalyzedAudit(s.Config.Context, s.Config.Store, s.Config.ZapLogger, dayToAnalyze, mp.ID)
 		// Notice:  that this will create an error if you run this a second time, because there is already an analyzed audit record.
 		// For simplicity, we check if it is that error, and if so just continue.
 		if err2 != nil {
@@ -87,7 +88,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	}
 
 	for _, id := range userIDs {
-		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, id, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
+		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.ZapLogger, dayToAnalyze, id, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
 		if err != nil {
 			fmt.Printf("there was an issue sending digest emails for userID: %s", id)
 		}
@@ -109,9 +110,10 @@ func (s *Seeder) translateAllQueuedTranslatedAudits() {
 	if err != nil {
 		fmt.Printf("issue getting queued Objects to translate \r\n")
 	}
+	zapLogger := logging.NewZapLogger(s.Config.Logger)
 
 	for _, queued := range queuedObjects {
-		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
+		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, zapLogger, queued.ChangeID, queued.ID)
 		if translationErr != nil {
 			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 		}

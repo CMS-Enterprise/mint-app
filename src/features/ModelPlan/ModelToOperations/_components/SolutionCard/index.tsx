@@ -81,18 +81,10 @@ export const SolutionCard = ({
 
         <h3 className="margin-0">{solution?.name}</h3>
 
-        {solution?.acronym && (
-          <p
-            className={classNames('margin-top-0', {
-              'margin-bottom-0': setChecked
-            })}
-          >
-            {solution?.acronym}
-          </p>
-        )}
+        {solution?.acronym && <p className="margin-0">{solution?.acronym}</p>}
 
         {!setChecked && (
-          <div className="border-top border-base-light padding-top-2">
+          <div className="border-top border-base-light padding-top-2 margin-top-2">
             <Button
               type="button"
               unstyled

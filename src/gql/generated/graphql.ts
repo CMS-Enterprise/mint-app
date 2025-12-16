@@ -884,7 +884,10 @@ export type MtoCommonMilestone = {
 /** These are all the common milestone keys that we expect to for mto common milestones */
 export enum MtoCommonMilestoneKey {
   ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
+  ACQUIRE_AN_IMP_CONT = 'ACQUIRE_AN_IMP_CONT',
+  ACQUIRE_A_DATA_AGG_CONT = 'ACQUIRE_A_DATA_AGG_CONT',
   ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
+  ACQUIRE_A_PRE_IMP_CONT = 'ACQUIRE_A_PRE_IMP_CONT',
   ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
   APP_SUPPORT_CON = 'APP_SUPPORT_CON',
   CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
@@ -909,7 +912,11 @@ export enum MtoCommonMilestoneKey {
   RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
   REV_COL_BIDS = 'REV_COL_BIDS',
   REV_SCORE_APP = 'REV_SCORE_APP',
+  SEND_DASHBOARDS_REPORTS_TO_PART = 'SEND_DASHBOARDS_REPORTS_TO_PART',
+  SEND_DATA_VIA_API_TO_PART = 'SEND_DATA_VIA_API_TO_PART',
+  SEND_RAW_FILES_TO_PART = 'SEND_RAW_FILES_TO_PART',
   SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
+  SIGN_COOPERATIVE_AGREEMENTS = 'SIGN_COOPERATIVE_AGREEMENTS',
   SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
   UPDATE_CONTRACT = 'UPDATE_CONTRACT',
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
@@ -2556,7 +2563,10 @@ export enum OpSolutionStatus {
 
 export enum OperationalNeedKey {
   ACQUIRE_AN_EVAL_CONT = 'ACQUIRE_AN_EVAL_CONT',
+  ACQUIRE_AN_IMP_CONT = 'ACQUIRE_AN_IMP_CONT',
+  ACQUIRE_A_DATA_AGG_CONT = 'ACQUIRE_A_DATA_AGG_CONT',
   ACQUIRE_A_LEARN_CONT = 'ACQUIRE_A_LEARN_CONT',
+  ACQUIRE_A_PRE_IMP_CONT = 'ACQUIRE_A_PRE_IMP_CONT',
   ADJUST_FFS_CLAIMS = 'ADJUST_FFS_CLAIMS',
   APP_SUPPORT_CON = 'APP_SUPPORT_CON',
   CLAIMS_BASED_MEASURES = 'CLAIMS_BASED_MEASURES',
@@ -2581,7 +2591,11 @@ export enum OperationalNeedKey {
   RECRUIT_PARTICIPANTS = 'RECRUIT_PARTICIPANTS',
   REV_COL_BIDS = 'REV_COL_BIDS',
   REV_SCORE_APP = 'REV_SCORE_APP',
+  SEND_DASHBOARDS_REPORTS_TO_PART = 'SEND_DASHBOARDS_REPORTS_TO_PART',
+  SEND_DATA_VIA_API_TO_PART = 'SEND_DATA_VIA_API_TO_PART',
+  SEND_RAW_FILES_TO_PART = 'SEND_RAW_FILES_TO_PART',
   SEND_REPDATA_TO_PART = 'SEND_REPDATA_TO_PART',
+  SIGN_COOPERATIVE_AGREEMENTS = 'SIGN_COOPERATIVE_AGREEMENTS',
   SIGN_PARTICIPATION_AGREEMENTS = 'SIGN_PARTICIPATION_AGREEMENTS',
   UPDATE_CONTRACT = 'UPDATE_CONTRACT',
   UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR = 'UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR',
@@ -4533,7 +4547,9 @@ export type Query = {
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
+  keyContactCategoriesByIds: Array<KeyContactCategory>;
   keyContactCategory: Array<KeyContactCategory>;
+  keyContactCategoryById: KeyContactCategory;
   keyContacts: Array<KeyContact>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
@@ -4594,6 +4610,18 @@ export type QueryExistingModelLinkArgs = {
 
 /** Query definition for the schema */
 export type QueryKeyContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactCategoriesByIdsArgs = {
+  ids: Array<Scalars['UUID']['input']>;
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactCategoryByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 

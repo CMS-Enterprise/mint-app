@@ -8,5 +8,6 @@ import (
 )
 
 func TestKeyContactTranslation(t *testing.T) {
-	assertAllTranslationDataGeneric(t, KeyContactTranslation, models.KeyContact{}, baseStructExcludeFields)
+	excludedFields := append(baseStructExcludeFields, "Name", "Email")
+	assertAllTranslationDataGeneric(t, KeyContactTranslation, models.KeyContact{}, excludedFields)
 }

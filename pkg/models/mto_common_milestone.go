@@ -52,4 +52,11 @@ const (
 	MTOCommonMilestoneKeyMakeNonClaimsBasedPayments                  MTOCommonMilestoneKey = "MAKE_NON_CLAIMS_BASED_PAYMENTS"
 	MTOCommonMilestoneKeyComputeSharedSavingsPayment                 MTOCommonMilestoneKey = "COMPUTE_SHARED_SAVINGS_PAYMENT"
 	MTOCommonMilestoneKeyRecoverPayments                             MTOCommonMilestoneKey = "RECOVER_PAYMENTS"
+	MTOCommonMilestoneKeyAcquireAnImpCont                            MTOCommonMilestoneKey = "ACQUIRE_AN_IMP_CONT"
+	MTOCommonMilestoneKeyAcquireAPreImpCont                          MTOCommonMilestoneKey = "ACQUIRE_A_PRE_IMP_CONT"
+	MTOCommonMilestoneKeyAcquireADataAggCont                         MTOCommonMilestoneKey = "ACQUIRE_A_DATA_AGG_CONT"
+	MTOCommonMilestoneKeySendDashboardsReportsToPart                 MTOCommonMilestoneKey = "SEND_DASHBOARDS_REPORTS_TO_PART"
+	MTOCommonMilestoneKeySendDataViaAPIToPart                        MTOCommonMilestoneKey = "SEND_DATA_VIA_API_TO_PART"
+	MTOCommonMilestoneKeySendRawFilesToPart                          MTOCommonMilestoneKey = "SEND_RAW_FILES_TO_PART"
+	MTOCommonMilestoneKeySignCooperativeAgreements                   MTOCommonMilestoneKey = "SIGN_COOPERATIVE_AGREEMENTS"
 )
