@@ -235,7 +235,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const flags = useFlags();
 
@@ -322,91 +321,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
-  const Summary = (
-    <div
-      className="padding-y-6 padding-x-2 bg-primary-lighter"
-      data-testid="read-only-model-summary"
-      ref={summaryRef}
-    >
-      <GridContainer
-        className={classnames({
-          'padding-x-0': isMobile,
-          'padding-x-2': isTablet
-        })}
-      >
-        {statusMessage && (
-          <Alert
-            slim
-            type={statusMessage.status}
-            className="margin-bottom-4"
-            closeAlert={setStatusMessage}
-          >
-            {statusMessage.message}
-          </Alert>
-        )}
-
-        {!isHelpArticle && (
-          <div className="mint-no-print margin-bottom-3">
-            <div className="display-flex flex-justify">
-              <UswdsReactLink
-                to="/models"
-                className="display-flex flex-align-center"
-              >
-                <Icon.ArrowBack
-                  className="text-primary margin-right-1"
-                  aria-label="back"
-                />
-                {h('back')}
-              </UswdsReactLink>
-
-              <FavoriteIcon
-                isFavorite={isFavorite}
-                modelPlanID={id}
-                updateFavorite={handleUpdateFavorite}
-              />
-            </div>
-          </div>
-        )}
-
-        <PageHeading
-          className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-          headingLevel={isHelpArticle ? 'h2' : 'h1'}
-          aria-live="polite"
-        >
-          {modelName}{' '}
-          {abbreviation && (
-            <span className="font-sans-sm text-normal">({abbreviation})</span>
-          )}
-        </PageHeading>
-
-        <ReadViewStatusBanner
-          modelID={modelID}
-          status={status}
-          mostRecentEdit={mostRecentEdit?.date || createdDts}
-          hasEditAccess={hasEditAccess}
-        />
-
-        {!isViewingFilteredGroup && (
-          <div className="mint-no-print">
-            <ModelSummary
-              goal={basics?.goal ?? ''}
-              loading={loading}
-              modelName={modelName}
-              characteristics={generalCharacteristics}
-              performancePeriodStarts={
-                timeline?.performancePeriodStarts ?? null
-              }
-              modelLeads={collaborators?.filter(c =>
-                c.teamRoles.includes(TeamRole.MODEL_LEAD)
-              )}
-              crTdls={echimpCRsAndTDLs}
-            />
-          </div>
-        )}
-      </GridContainer>
-    </div>
-  );
-
   const ModelWarning = (
     <>
       {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
@@ -455,7 +369,63 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           />
         </Modal>
 
-        {Summary}
+        {/* {Summary} */}
+        <div className="bg-primary-lighter">
+          <GridContainer
+            className="padding-x-2 padding-top-6 padding-bottom-2"
+            ref={summaryRef}
+            data-testid="read-only-model-summary"
+          >
+            {statusMessage && (
+              <Alert
+                slim
+                type={statusMessage.status}
+                className="margin-bottom-4"
+                closeAlert={setStatusMessage}
+              >
+                {statusMessage.message}
+              </Alert>
+            )}
+
+            {!isHelpArticle && (
+              <div className="mint-no-print margin-bottom-3">
+                <div className="display-flex flex-justify">
+                  <UswdsReactLink
+                    to="/models"
+                    className="display-flex flex-align-center"
+                  >
+                    <Icon.ArrowBack
+                      className="text-primary margin-right-1"
+                      aria-label="back"
+                    />
+                    {h('back')}
+                  </UswdsReactLink>
+
+                  <FavoriteIcon
+                    isFavorite={isFavorite}
+                    modelPlanID={id}
+                    updateFavorite={handleUpdateFavorite}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* This ist he page heading */}
+            <PageHeading
+              className="margin-0 line-height-sans-2 minh-6"
+              headingLevel={isHelpArticle ? 'h2' : 'h1'}
+              aria-live="polite"
+            >
+              {modelName}{' '}
+              {abbreviation && (
+                <span className="font-sans-sm text-normal">
+                  ({abbreviation})
+                </span>
+              )}
+            </PageHeading>
+          </GridContainer>
+        </div>
+
         <StickyModelNameWrapper
           triggerRef={summaryRef}
           className="bg-primary-lighter"
@@ -467,6 +437,35 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
             )}
           </h3>
         </StickyModelNameWrapper>
+
+        <div className="bg-primary-lighter">
+          <GridContainer className="padding-bottom-6 padding-x-2">
+            <ReadViewStatusBanner
+              modelID={modelID}
+              status={status}
+              mostRecentEdit={mostRecentEdit?.date || createdDts}
+              hasEditAccess={hasEditAccess}
+            />
+
+            {!isViewingFilteredGroup && (
+              <div className="mint-no-print">
+                <ModelSummary
+                  goal={basics?.goal ?? ''}
+                  loading={loading}
+                  modelName={modelName}
+                  characteristics={generalCharacteristics}
+                  performancePeriodStarts={
+                    timeline?.performancePeriodStarts ?? null
+                  }
+                  modelLeads={collaborators?.filter(c =>
+                    c.teamRoles.includes(TeamRole.MODEL_LEAD)
+                  )}
+                  crTdls={echimpCRsAndTDLs}
+                />
+              </div>
+            )}
+          </GridContainer>
+        </div>
 
         {!flags.hideGroupView && (
           <FilterViewBanner
