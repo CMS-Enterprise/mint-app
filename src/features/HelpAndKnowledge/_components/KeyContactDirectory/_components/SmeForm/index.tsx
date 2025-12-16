@@ -62,9 +62,9 @@ const SmeForm = ({
     userAccount: {
       __typename: 'UserAccount',
       id: 'not a real userAccount id',
-      commonName: 'User Doe',
-      email: 'userdoe@test.com',
-      username: 'user'
+      commonName: '',
+      email: '',
+      username: ''
     }
   }
 }: {
@@ -97,7 +97,7 @@ const SmeForm = ({
       mailboxAddress: sme.mailboxAddress || '',
       mailboxTitle: sme.mailboxTitle || '',
       subjectArea: sme.subjectArea || '',
-      subjectCategoryID: sme.subjectCategoryID || ''
+      subjectCategoryID: category?.id || sme.subjectCategoryID
     },
     mode: 'onChange'
   });

@@ -715,9 +715,9 @@ type KeyContactsType = GetAllKeyContactsQuery['keyContacts'];
 
 export const keyContactsMockData: KeyContactsType = [
   {
-    email: 'pstm@example.com',
+    email: 'aliza.kim@cms.hhs.gov',
     id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
-    name: 'pstm team mailbox',
+    name: 'Aliza Kim',
     subjectArea: 'Insurance and Coverage',
     subjectCategoryID: keyContactCategoryMockData[0].id,
     __typename: 'KeyContact'

@@ -2,15 +2,17 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
 import {
-  KeyContactCategory,
+  useDeleteKeyContactCategoryMutation,
   useDeleteKeyContactMutation
 } from 'gql/generated/graphql';
+import GetAllKeyContactCategories from 'gql/operations/KeyContactDirectory/GetAllKeyContactCategories';
 import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyContacts';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
 import { SmeType } from '../..';
+import { KeyContactCategoryType } from '../CategoryModal';
 
 const RemoveModal = ({
   isModalOpen,
@@ -19,12 +21,39 @@ const RemoveModal = ({
 }: {
   isModalOpen: boolean;
   closeModal: () => void;
-  removedObject: SmeType | KeyContactCategory;
+  removedObject: SmeType | KeyContactCategoryType;
 }) => {
   const { t: keyContactT } = useTranslation('keyContactMisc');
-  const isKeyContact = removedObject.__typename === 'KeyContact';
+  const { t: keyContactCategoryT } = useTranslation('keyContactCategoryMisc');
 
-  const useMutation = useDeleteKeyContactMutation;
+  const getModalStrings = (
+    field: 'title' | 'actionWarning' | 'text' | 'cta'
+  ) => {
+    switch (removedObject.__typename) {
+      case 'KeyContact':
+        return {
+          i18nKey: `keyContactMisc:remove.${field}`,
+          text: keyContactT(`remove.${field}`)
+        };
+      case 'KeyContactCategory':
+        return {
+          i18nKey: `keyContactCategoryMisc:remove.${field}`,
+          text: keyContactCategoryT(`remove.${field}`)
+        };
+      default:
+        throw new Error(`remove object ${removedObject} is incorrect`);
+    }
+  };
+
+  const removeName =
+    removedObject.__typename === 'KeyContact'
+      ? removedObject.name
+      : removedObject.category;
+
+  const useMutation =
+    removedObject.__typename === 'KeyContact'
+      ? useDeleteKeyContactMutation
+      : useDeleteKeyContactCategoryMutation;
 
   const [deleteObject] = useMutation();
 
@@ -33,7 +62,11 @@ const RemoveModal = ({
       variables: {
         id
       },
-      refetchQueries: [GetAllKeyContacts]
+      refetchQueries: [
+        removedObject.__typename === 'KeyContact'
+          ? GetAllKeyContacts
+          : GetAllKeyContactCategories
+      ]
     }).then(response => {
       if (!response?.errors) {
         closeModal();
@@ -47,18 +80,21 @@ const RemoveModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
+      testId="remove-key-contact-directory-modal"
     >
       <div className="padding-bottom-8">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {keyContactT('removeSme.title')}
+          {getModalStrings('title').text}
         </PageHeading>
 
-        <p>{keyContactT('removeSme.actionWarning')}</p>
+        <p className="margin-top-2 margin-bottom-3">
+          {getModalStrings('actionWarning').text}
+        </p>
 
         <Trans
-          i18nKey={keyContactT('removeSme.text')}
+          i18nKey={getModalStrings('text').i18nKey}
           values={{
-            name: isKeyContact ? removedObject.name : removedObject.category
+            name: removeName
           }}
           components={{
             bold: <span className="text-bold" />
@@ -71,7 +107,7 @@ const RemoveModal = ({
             className="margin-right-3 margin-top-0 bg-error"
             onClick={() => removeObject(removedObject.id)}
           >
-            {keyContactT('removeSme.cta')}
+            {getModalStrings('cta').text}
           </Button>
 
           <Button

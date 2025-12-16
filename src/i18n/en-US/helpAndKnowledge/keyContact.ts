@@ -81,17 +81,16 @@ const keyContact: TranslationKeyContactCustom = {
 export const keyContactMisc = {
   add: { heading: 'Add a subject matter expert (SME)', cta: 'Add SME' },
   edit: { heading: 'Edit a subject matter expert (SME)', cta: 'Save changes' },
-  selectDefault: 'Select',
-  navs: ['Individual', 'Team mailbox'],
-  cancel: 'Cancel',
-  allFieldsRequired:
-    'Fields marked with an asterisk ( <s>*</s> ) are required.',
-  removeSme: {
+  remove: {
     title: 'Are you sure you want to remove this SME?',
     actionWarning: 'This action cannot be undone.',
     text: '<bold>SME to be removed:</bold> {{-name}}',
     cta: 'Remove SME'
-  }
+  },
+  selectDefault: 'Select',
+  navs: ['Individual', 'Team mailbox'],
+  cancel: 'Cancel',
+  allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
 };
 
 export default keyContact;

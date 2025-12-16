@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation DeleteKeyContact($id: UUID!) {
+  mutation deleteKeyContact($id: UUID!) {
     deleteKeyContact(id: $id) {
       id
       name

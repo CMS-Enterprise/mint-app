@@ -27,6 +27,7 @@ import CategoryModal, {
   KeyContactCategoryType
 } from './_components/CategoryModal';
 import KeyContactTable from './_components/KeyContactTable';
+import RemoveModal from './_components/RemoveModal';
 import SmeModal from './_components/SmeModal';
 
 import './index.scss';
@@ -79,6 +80,34 @@ const RenameCategoryButton = ({
         className="line-height-sans-4 deep-underline"
       >
         {t('keyContactDirectory.renameCategory')}
+      </Button>
+    </>
+  );
+};
+
+const RemoveCategoryButton = ({
+  category
+}: {
+  category: KeyContactCategoryType;
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      {isModalOpen && (
+        <RemoveModal
+          isModalOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          removedObject={category}
+        />
+      )}
+      <Button
+        type="button"
+        unstyled
+        onClick={() => setIsModalOpen(true)}
+        className="line-height-sans-4 text-error deep-underline"
+      >
+        {t('keyContactDirectory.removeCategory')}
       </Button>
     </>
   );
@@ -222,14 +251,7 @@ const KeyContactDirectory = () => {
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
             <RenameCategoryButton category={category} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-            <Button
-              type="button"
-              unstyled
-              onClick={() => {}}
-              className="line-height-sans-4 text-error deep-underline"
-            >
-              {t('keyContactDirectory.removeCategory')}
-            </Button>
+            <RemoveCategoryButton category={category} />
           </div>
         )}
         {loadingSmes ? (
