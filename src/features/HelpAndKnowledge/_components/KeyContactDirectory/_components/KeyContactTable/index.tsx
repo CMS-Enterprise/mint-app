@@ -7,16 +7,19 @@ import { Alert } from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
 import { SmeType } from '../..';
+import { KeyContactCategoryType } from '../CategoryModal';
 import SmeModal from '../SmeModal';
 
 type ColumnType = SmeType & { actions: unknown };
 
 const KeyContactTable = ({
   smes,
+  allCategories = [],
   isAssessmentTeam,
   isSearching
 }: {
   smes: SmeType[];
+  allCategories?: KeyContactCategoryType[];
   isAssessmentTeam: boolean;
   isSearching: boolean;
 }) => {
@@ -46,6 +49,7 @@ const KeyContactTable = ({
                 <SmeModal
                   isOpen={selectedSme === row.original}
                   mode="edit"
+                  allCategories={allCategories}
                   closeModal={() => setSelectedSme(null)}
                   contact={selectedSme}
                 />
@@ -74,7 +78,7 @@ const KeyContactTable = ({
         }
       }
     ],
-    [t, selectedSme]
+    [t, selectedSme, allCategories]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

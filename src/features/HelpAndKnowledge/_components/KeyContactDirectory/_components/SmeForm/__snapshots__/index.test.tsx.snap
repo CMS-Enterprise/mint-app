@@ -45,16 +45,6 @@ exports[`Sme form > should matches snapshot 1`] = `
           >
             - Select -
           </option>
-          <option
-            value="a95a1f98-fb7a-43f9-9e3c-abc52238e350"
-          >
-            Healthcare
-          </option>
-          <option
-            value="a95a1f98-fb7a-43f9-9e3c-abc52238e351"
-          >
-            CMS Programs
-          </option>
         </select>
       </div>
     </fieldset>

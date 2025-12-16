@@ -36,11 +36,13 @@ const AddCategoryButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <CategoryModal
-        isOpen={isModalOpen}
-        mode="add"
-        closeModal={() => setIsModalOpen(false)}
-      />
+      {isModalOpen && (
+        <CategoryModal
+          isOpen={isModalOpen}
+          mode="add"
+          closeModal={() => setIsModalOpen(false)}
+        />
+      )}
       <Button
         type="button"
         unstyled
@@ -62,12 +64,14 @@ const RenameCategoryButton = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <CategoryModal
-        isOpen={isModalOpen}
-        mode="edit"
-        closeModal={() => setIsModalOpen(false)}
-        category={category}
-      />
+      {isModalOpen && (
+        <CategoryModal
+          isOpen={isModalOpen}
+          mode="edit"
+          closeModal={() => setIsModalOpen(false)}
+          category={category}
+        />
+      )}
       <Button
         type="button"
         unstyled
@@ -80,16 +84,23 @@ const RenameCategoryButton = ({
   );
 };
 
-const AddSmeWithoutCategoryButton = () => {
+const AddSmeWithoutCategoryButton = ({
+  categories
+}: {
+  categories: KeyContactCategoryType[];
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <SmeModal
-        isOpen={isModalOpen}
-        mode="addWithoutCategory"
-        closeModal={() => setIsModalOpen(false)}
-      />
+      {isModalOpen && (
+        <SmeModal
+          isOpen={isModalOpen}
+          mode="addWithoutCategory"
+          allCategories={categories}
+          closeModal={() => setIsModalOpen(false)}
+        />
+      )}
       <Button
         type="button"
         unstyled
@@ -104,17 +115,23 @@ const AddSmeWithoutCategoryButton = () => {
   );
 };
 
-const AddSmeWithCategoryButton = ({ categoryId }: { categoryId: string }) => {
+const AddSmeWithCategoryButton = ({
+  category
+}: {
+  category: KeyContactCategoryType;
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <SmeModal
-        isOpen={isModalOpen}
-        mode="addWithCategory"
-        closeModal={() => setIsModalOpen(false)}
-        categoryId={categoryId}
-      />
+      {isModalOpen && (
+        <SmeModal
+          isOpen={isModalOpen}
+          mode="addWithCategory"
+          closeModal={() => setIsModalOpen(false)}
+          category={category}
+        />
+      )}
       <Button
         type="button"
         unstyled
@@ -201,7 +218,7 @@ const KeyContactDirectory = () => {
       <>
         {isAssessmentTeam && (
           <div className="margin-top-2">
-            <AddSmeWithCategoryButton categoryId={category.id} />
+            <AddSmeWithCategoryButton category={category} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
             <RenameCategoryButton category={category} />
             <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
@@ -220,6 +237,7 @@ const KeyContactDirectory = () => {
         ) : (
           <KeyContactTable
             smes={reformattedSmes[category.id] || []}
+            allCategories={categories}
             isAssessmentTeam={isAssessmentTeam}
             isSearching={query.trim() !== ''}
           />
@@ -262,7 +280,7 @@ const KeyContactDirectory = () => {
             <div className="margin-bottom-4">
               <AddCategoryButton />
               <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-              <AddSmeWithoutCategoryButton />
+              <AddSmeWithoutCategoryButton categories={categories} />
             </div>
           )}
         </div>
