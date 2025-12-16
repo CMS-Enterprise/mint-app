@@ -6,6 +6,7 @@ import { GetIndividualKeyContactQuery } from 'gql/generated/graphql';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
+import { KeyContactCategoryType } from '../CategoryModal';
 import SmeForm from '../SmeForm';
 
 export type smeModeType = 'addWithCategory' | 'addWithoutCategory' | 'edit';
@@ -17,13 +18,15 @@ const SmeModal = ({
   closeModal,
   mode,
   contact,
-  categoryId
+  category,
+  allCategories
 }: {
   isOpen: boolean;
   closeModal: () => void;
   mode: smeModeType;
   contact?: KeyContactType;
-  categoryId?: string;
+  category?: KeyContactCategoryType;
+  allCategories?: KeyContactCategoryType[];
 }) => {
   const { t: keyContactMiscT } = useTranslation('keyContactMisc');
 
@@ -55,7 +58,8 @@ const SmeModal = ({
         mode={mode}
         closeModal={closeModal}
         sme={contact}
-        categoryId={categoryId}
+        category={category}
+        allCategories={allCategories}
         setDisableButton={setDisableSubmitBtn}
       />
 

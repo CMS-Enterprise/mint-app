@@ -4,6 +4,7 @@
 */
 
 import keyContact from '../../src/i18n/en-US/helpAndKnowledge/keyContact';
+import keyContactCategory from '../../src/i18n/en-US/helpAndKnowledge/keyContactCategory';
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborator from '../../src/i18n/en-US/modelPlan/collaborators';
@@ -33,6 +34,7 @@ import {
 
 export const translationSections = {
   key_contact: keyContact,
+  key_contact_category: keyContactCategory,
   model_plan: modelPlan,
   plan_basics: basics,
   plan_general_characteristics: generalCharacteristics,

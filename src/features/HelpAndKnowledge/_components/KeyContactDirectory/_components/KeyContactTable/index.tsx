@@ -7,10 +7,17 @@ import { Alert } from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
 import { SmeType } from '../..';
+import { KeyContactCategoryType } from '../CategoryModal';
 import RemoveModal from '../RemoveModal';
 import SmeModal from '../SmeModal';
 
-const EditSmeButton = ({ sme }: { sme: SmeType }) => {
+const EditSmeButton = ({
+  sme,
+  allCategories
+}: {
+  sme: SmeType;
+  allCategories: KeyContactCategoryType[];
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
@@ -20,6 +27,7 @@ const EditSmeButton = ({ sme }: { sme: SmeType }) => {
         mode="edit"
         closeModal={() => setIsModalOpen(false)}
         contact={sme}
+        allCategories={allCategories}
       />
       <Button
         type="button"
@@ -63,10 +71,12 @@ type ColumnType = SmeType & { actions: unknown };
 
 const KeyContactTable = ({
   smes,
+  allCategories = [],
   isAssessmentTeam,
   isSearching
 }: {
   smes: SmeType[];
+  allCategories?: KeyContactCategoryType[];
   isAssessmentTeam: boolean;
   isSearching: boolean;
 }) => {
@@ -91,7 +101,7 @@ const KeyContactTable = ({
         Cell: ({ row }: { row: Row<ColumnType> }) => {
           return (
             <div>
-              <EditSmeButton sme={row.original} />
+              <EditSmeButton sme={row.original} allCategories={allCategories} />
 
               <RemoveSmeButton sme={row.original} />
             </div>
@@ -99,7 +109,7 @@ const KeyContactTable = ({
         }
       }
     ],
-    [t]
+    [t, allCategories]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =

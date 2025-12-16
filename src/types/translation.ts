@@ -38,6 +38,7 @@ import {
   GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
+  KeyContactCategoryTranslation,
   KeyContactTranslation,
   ModelCategory,
   ModelLearningSystemType,
@@ -1540,4 +1541,17 @@ type TranslationKeyContactCustomGQL = Omit<
 
 export type TranslationKeyContactCustom = {
   [K in keyof TranslationKeyContactCustomGQL]: TranslationKeyContactCustomForm[K]; // FE form type
+};
+
+// Key Contact Category - Change History purposes only
+export type TranslationKeyContactCategoryCustomForm = {
+  category: TranslationFieldProperties;
+};
+type TranslationKeyContactCategoryCustomGQL = Omit<
+  KeyContactCategoryTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationKeyContactCategoryCustom = {
+  [K in keyof TranslationKeyContactCategoryCustomGQL]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
 };

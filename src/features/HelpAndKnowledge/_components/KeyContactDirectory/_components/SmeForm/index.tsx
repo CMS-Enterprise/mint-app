@@ -23,22 +23,10 @@ import dirtyInput from 'utils/formUtil';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
+import { KeyContactCategoryType } from '../CategoryModal';
 import IndividualSmeFieldset from '../IndividualSmeFieldset';
 import { KeyContactType, smeModeType } from '../SmeModal';
 import TeamMailboxSmeFieldset from '../TeamMailboxSmeFieldset';
-
-const Categories = [
-  {
-    __typename: 'KeyContactCategory',
-    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
-    category: 'Healthcare'
-  },
-  {
-    __typename: 'KeyContactCategory',
-    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
-    category: 'CMS Programs'
-  }
-];
 
 type UnwrapNullable<
   T extends Record<P, unknown> | null | undefined,
@@ -60,7 +48,8 @@ const SmeForm = ({
   mode,
   closeModal,
   setDisableButton,
-  categoryId,
+  category,
+  allCategories = [],
   sme = {
     __typename: 'KeyContact',
     id: 'not a real id',
@@ -69,7 +58,7 @@ const SmeForm = ({
     mailboxAddress: '',
     mailboxTitle: '',
     subjectArea: '',
-    subjectCategoryID: '',
+    subjectCategoryID: 'default',
     userAccount: {
       __typename: 'UserAccount',
       id: 'not a real userAccount id',
@@ -82,7 +71,8 @@ const SmeForm = ({
   mode: smeModeType;
   closeModal: () => void;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
-  categoryId?: string;
+  category?: KeyContactCategoryType;
+  allCategories?: KeyContactCategoryType[];
   sme?: KeyContactType;
 }) => {
   const { t: keyContactT } = useTranslation('keyContact');
@@ -221,14 +211,14 @@ const SmeForm = ({
       promise = isIndividualMode
         ? createKeyContactUser({
             variables: {
-              subjectCategoryID: categoryId || formData.subjectCategoryID,
+              subjectCategoryID: category?.id || formData.subjectCategoryID,
               userName: formData.userName,
               subjectArea: formData.subjectArea
             }
           })
         : createKeyContactMailbox({
             variables: {
-              subjectCategoryID: categoryId || formData.subjectCategoryID,
+              subjectCategoryID: category?.id || formData.subjectCategoryID,
               mailboxAddress: formData.mailboxAddress || '',
               mailboxTitle: formData.mailboxTitle || '',
               subjectArea: formData.subjectArea
@@ -252,12 +242,12 @@ const SmeForm = ({
         onSubmit={handleSubmit(onSubmit)}
       >
         <Fieldset style={{ minWidth: '100%' }}>
-          {categoryId ? (
+          {category ? (
             <p>
               <span className="text-bold">
                 {keyContactT('subjectCategoryID.label')}:
               </span>{' '}
-              {categoryId}
+              {category.category}
             </p>
           ) : (
             <Controller
@@ -296,7 +286,7 @@ const SmeForm = ({
                     <option value="default">
                       - {keyContactMiscT('selectDefault')} -
                     </option>
-                    {Categories.map(option => {
+                    {allCategories.map(option => {
                       return (
                         <option
                           key={`select-${convertCamelCaseToKebabCase(option.category)}`}

@@ -1,6 +1,10 @@
 import { MockedResponse } from '@apollo/client/testing';
+import { KeyContactCategoryType } from 'features/HelpAndKnowledge/_components/KeyContactDirectory/_components/CategoryModal';
 import {
   DataExchangeApproachStatus,
+  GetAllKeyContactCategoriesDocument,
+  GetAllKeyContactCategoriesQuery,
+  GetAllKeyContactCategoriesQueryVariables,
   GetAllKeyContactsDocument,
   GetAllKeyContactsQuery,
   GetAllKeyContactsQueryVariables,
@@ -677,7 +681,7 @@ export const analyticsSummaryMock: MockedResponse<
   }
 ];
 
-const keyContactCategoryData = [
+export const keyContactCategoryMockData: KeyContactCategoryType[] = [
   {
     __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
@@ -690,6 +694,23 @@ const keyContactCategoryData = [
   }
 ];
 
+export const keyContactCategoriesMock: MockedResponse<
+  GetAllKeyContactCategoriesQuery,
+  GetAllKeyContactCategoriesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllKeyContactCategoriesDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        keyContactCategory: keyContactCategoryMockData
+      }
+    }
+  }
+];
+
 type KeyContactsType = GetAllKeyContactsQuery['keyContacts'];
 
 export const keyContactsMockData: KeyContactsType = [
@@ -698,7 +719,7 @@ export const keyContactsMockData: KeyContactsType = [
     id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
     name: 'pstm team mailbox',
     subjectArea: 'Insurance and Coverage',
-    subjectCategoryID: keyContactCategoryData[0].id,
+    subjectCategoryID: keyContactCategoryMockData[0].id,
     __typename: 'KeyContact'
   },
   {
@@ -706,7 +727,7 @@ export const keyContactsMockData: KeyContactsType = [
     id: '54c12785-c0c1-47a9-a91d-4f69d82d45cc',
     name: 'pstm team mailbox',
     subjectArea: 'Paperwork Reduction Act',
-    subjectCategoryID: keyContactCategoryData[0].id,
+    subjectCategoryID: keyContactCategoryMockData[0].id,
     __typename: 'KeyContact'
   }
 ];
