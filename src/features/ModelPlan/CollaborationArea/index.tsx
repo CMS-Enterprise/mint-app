@@ -62,6 +62,7 @@ const CollaborationArea = () => {
 
   const {
     modelName,
+    abbreviation,
     discussions,
     documents,
     dataExchangeApproach,
@@ -208,6 +209,7 @@ const CollaborationArea = () => {
                 {collaborationAreaT('modelPlan', {
                   modelName
                 })}
+                {abbreviation && ` (${abbreviation})`}
               </p>
             </div>
           </StickyModelNameWrapper>
