@@ -140,7 +140,6 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 	}
 
 	statuses := []string{
-		string(models.ModelStatusPlanDraft),
 		string(models.ModelStatusPlanComplete),
 		string(models.ModelStatusIcipComplete),
 		string(models.ModelStatusInternalCmmiClearance),
