@@ -140,6 +140,7 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 	}
 
 	statuses := []string{
+		string(models.ModelStatusPlanDraft),
 		string(models.ModelStatusPlanComplete),
 		string(models.ModelStatusIcipComplete),
 		string(models.ModelStatusInternalCmmiClearance),
@@ -148,6 +149,10 @@ func analyzeModelPlanAudits(audits []*models.AuditChange) (*models.AnalyzedModel
 		string(models.ModelStatusOmbAsrfClearance),
 		string(models.ModelStatusCleared),
 		string(models.ModelStatusAnnounced),
+		string(models.ModelStatusActive),
+		string(models.ModelStatusEnded),
+		string(models.ModelStatusPaused),
+		string(models.ModelStatusCanceled),
 	}
 
 	statusChangeAudits := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (string, bool) {
