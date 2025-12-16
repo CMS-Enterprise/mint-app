@@ -5,6 +5,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react';
 import ReactGA from 'react-ga4';
@@ -37,6 +38,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { formatDateLocal } from 'utils/date';
@@ -113,6 +115,8 @@ const TaskList = () => {
 
   const flags = useFlags();
 
+  const modelNameRef = useRef<HTMLDivElement>(null);
+
   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
@@ -136,6 +140,7 @@ const TaskList = () => {
 
   const {
     modelName,
+    abbreviation,
     basics,
     discussions,
     status,
@@ -250,113 +255,141 @@ const TaskList = () => {
             <PageLoading />
           </div>
         )}
+      </GridContainer>
 
-        {!loading && data && (
-          <Grid row gap>
-            <Grid desktop={{ col: 9 }}>
-              <PageHeading className="margin-top-4 margin-bottom-0">
-                {t('heading')}
-              </PageHeading>
+      {!loading && data && (
+        <>
+          <GridContainer>
+            <Grid row gap ref={modelNameRef}>
+              <Grid desktop={{ col: 9 }}>
+                <PageHeading className="margin-top-4 margin-bottom-0">
+                  {t('heading')}
+                </PageHeading>
+                <p
+                  className="margin-top-0 margin-bottom-2 font-body-lg"
+                  data-testid="model-plan-name"
+                >
+                  {h('for')} {modelName}
+                  {abbreviation && ` (${abbreviation})`}
+                </p>
+              </Grid>
+            </Grid>
+          </GridContainer>
+          <StickyModelNameWrapper
+            triggerRef={modelNameRef}
+            className="bg-white"
+          >
+            <div className="padding-y-2">
+              <h3 className="margin-y-0">{t('heading')}</h3>
               <p
-                className="margin-top-0 margin-bottom-2 font-body-lg"
+                className="margin-y-0 font-body-lg"
                 data-testid="model-plan-name"
               >
                 {h('for')} {modelName}
+                {abbreviation && ` (${abbreviation})`}
               </p>
-
-              {/* Discussion modal */}
-              {isDiscussionOpen && (
-                <DiscussionModalWrapper
-                  isOpen={isDiscussionOpen}
-                  closeModal={() => setIsDiscussionOpen(false)}
-                >
-                  <Discussions modelID={modelID} discussionID={discussionID} />
-                </DiscussionModalWrapper>
-              )}
-
-              <div className="padding-y-1">
-                <UswdsReactLink
-                  to={`/models/${modelID}/collaboration-area`}
-                  data-testid="return-to-collaboration"
-                >
-                  <span>
-                    <Icon.ArrowBack
-                      className="top-3px margin-right-1"
-                      aria-label="back"
+            </div>
+          </StickyModelNameWrapper>
+          <GridContainer>
+            <Grid row gap>
+              <Grid desktop={{ col: 9 }}>
+                {/* Discussion modal */}
+                {isDiscussionOpen && (
+                  <DiscussionModalWrapper
+                    isOpen={isDiscussionOpen}
+                    closeModal={() => setIsDiscussionOpen(false)}
+                  >
+                    <Discussions
+                      modelID={modelID}
+                      discussionID={discussionID}
                     />
-                    {t('returnToCollaboration')}
-                  </span>
-                </UswdsReactLink>
-              </div>
+                  </DiscussionModalWrapper>
+                )}
 
-              <DicussionBanner
-                discussions={discussions}
-                setIsDiscussionOpen={setIsDiscussionOpen}
-              />
+                <div className="padding-y-1">
+                  <UswdsReactLink
+                    to={`/models/${modelID}/collaboration-area`}
+                    data-testid="return-to-collaboration"
+                  >
+                    <span>
+                      <Icon.ArrowBack
+                        className="top-3px margin-right-1"
+                        aria-label="back"
+                      />
+                      {t('returnToCollaboration')}
+                    </span>
+                  </UswdsReactLink>
+                </div>
 
-              <ol
-                data-testid="task-list"
-                className="margin-top-6 margin-bottom-0 padding-left-0"
-              >
-                {Object.keys(taskListSections).map((key: string) => {
-                  return (
-                    <Fragment key={key}>
-                      <TaskListItem
-                        key={key}
-                        testId={`task-list-intake-form-${key}`}
-                        heading={t(`numberedList.${key}.heading`)}
-                        lastUpdated={
-                          taskListSections[key].modifiedDts &&
-                          formatDateLocal(
-                            taskListSections[key].modifiedDts!,
-                            'MM/dd/yyyy'
-                          )
-                        }
-                        status={taskListSections[key].status}
-                      >
-                        <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-                          <TaskListDescription>
-                            <p className="margin-top-0">
-                              {t(`numberedList.${key}.${userRole}`)}
-                            </p>
-                          </TaskListDescription>
-                        </div>
-                        <TaskListButton
-                          ariaLabel={t(`numberedList.${key}.heading`)}
-                          path={t(`numberedList.${key}.path`)}
-                          disabled={
-                            !!getTaskListLockedStatus(key) &&
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                              .username !== euaId
+                <DicussionBanner
+                  discussions={discussions}
+                  setIsDiscussionOpen={setIsDiscussionOpen}
+                />
+
+                <ol
+                  data-testid="task-list"
+                  className="margin-top-6 margin-bottom-0 padding-left-0"
+                >
+                  {Object.keys(taskListSections).map((key: string) => {
+                    return (
+                      <Fragment key={key}>
+                        <TaskListItem
+                          key={key}
+                          testId={`task-list-intake-form-${key}`}
+                          heading={t(`numberedList.${key}.heading`)}
+                          lastUpdated={
+                            taskListSections[key].modifiedDts &&
+                            formatDateLocal(
+                              taskListSections[key].modifiedDts!,
+                              'MM/dd/yyyy'
+                            )
                           }
                           status={taskListSections[key].status}
-                        />
+                        >
+                          <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
+                            <TaskListDescription>
+                              <p className="margin-top-0">
+                                {t(`numberedList.${key}.${userRole}`)}
+                              </p>
+                            </TaskListDescription>
+                          </div>
+                          <TaskListButton
+                            ariaLabel={t(`numberedList.${key}.heading`)}
+                            path={t(`numberedList.${key}.path`)}
+                            disabled={
+                              !!getTaskListLockedStatus(key) &&
+                              getTaskListLockedStatus(key)?.lockedByUserAccount
+                                .username !== euaId
+                            }
+                            status={taskListSections[key].status}
+                          />
 
-                        {taskListSectionMap[key] && (
-                          <SectionLock section={taskListSectionMap[key]} />
+                          {taskListSectionMap[key] && (
+                            <SectionLock section={taskListSectionMap[key]} />
+                          )}
+                        </TaskListItem>
+                        {key !== 'prepareForClearance' && (
+                          <Divider className="margin-bottom-4" />
                         )}
-                      </TaskListItem>
-                      {key !== 'prepareForClearance' && (
-                        <Divider className="margin-bottom-4" />
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </ol>
+                      </Fragment>
+                    );
+                  })}
+                </ol>
+              </Grid>
+              <Grid desktop={{ col: 3 }}>
+                <TaskListSideNav
+                  modelPlan={modelPlan}
+                  collaborators={collaborators}
+                  setStatusMessage={setStatusMessage}
+                />
+              </Grid>
             </Grid>
-            <Grid desktop={{ col: 3 }}>
-              <TaskListSideNav
-                modelPlan={modelPlan}
-                collaborators={collaborators}
-                setStatusMessage={setStatusMessage}
-              />
-            </Grid>
-          </Grid>
-        )}
+          </GridContainer>
+        </>
+      )}
 
-        {/* Render child routes */}
-        <Outlet />
-      </GridContainer>
+      {/* Render child routes */}
+      <Outlet />
     </MainContent>
   );
 };
