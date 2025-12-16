@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -31,8 +32,7 @@ const (
 // args are not currently being used.
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Debug("queue entries to create jobs for fetched")
 
 	readyToQueueEntries, err := storage.TranslatedAuditQueueGetEntriesToQueue(w.Store)
@@ -49,14 +49,14 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 }
 
 // QueueTranslatedAuditJob takes a given queueObj and creates a job as part of the provided batch
-func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
+func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker, logger T, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
 	// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
 	logger = logger.With(logfields.TranslatedAuditQueueID(queueObj.ID), logfields.AuditChangeID(queueObj.ChangeID), logfields.AuditQueueAttempts(queueObj.Attempts))
 	return sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
-		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj, constants.GetSystemAccountUUID())
+		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logger, queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
 			err := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s", queueObj.ChangeID, queueObj.ID)
 			logger.Error(err.Error(), zap.Error(err))
@@ -82,7 +82,7 @@ func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch
 
 // CreateTranslatedAuditBatch Creates a new batch job using the provided faktory client
 // it will create a translated audit job for each provided queueObject
-func CreateTranslatedAuditBatch(w *Worker, logger *zap.Logger, cl *faktory.Client, queueObjects []*models.TranslatedAuditQueue) error {
+func CreateTranslatedAuditBatch[T logging.ChainableErrorOrWarnLogger[T]](w *Worker, logger T, cl *faktory.Client, queueObjects []*models.TranslatedAuditQueue) error {
 
 	batch := faktory.NewBatch(cl)
 	logger = logger.With(logfields.BID(batch.Bid))
@@ -112,9 +112,8 @@ func CreateTranslatedAuditBatch(w *Worker, logger *zap.Logger, cl *faktory.Clien
 
 // TranslateAuditBatchJobSuccess is the call back that gets called when the TranslatedAuditBatchJob Completes
 func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
-	logger.Info("Digest Email Batch Job Succeeded")
+	logger := FaktoryLoggerFromContext(ctx)
+	logger.Info("Translate Audit Batch Job Succeeded")
 	//  Add notification here if wanted in the future
 	return nil
 }

@@ -19,13 +19,13 @@ func (suite *ResolverSuite) TestAnalyzedAuditLoader() {
 	mp2 := suite.createModelPlan("Second Test Plan")
 	mp3 := suite.createModelPlan("Third Test Plan")
 
-	_, err1 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, mp1.ID)
+	_, err1 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.ZapLogger, today, mp1.ID)
 	suite.NoError(err1)
 
-	_, err2 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, mp2.ID)
+	_, err2 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.ZapLogger, today, mp2.ID)
 	suite.NoError(err2)
 
-	_, err3 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, today, mp3.ID)
+	_, err3 := AnalyzeModelPlanForAnalyzedAudit(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.ZapLogger, today, mp3.ID)
 	suite.NoError(err3)
 
 	// Mock analyzed audit data for the date before

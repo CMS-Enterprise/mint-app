@@ -37,7 +37,6 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 
 	worker := &Worker{
 		Store:                suite.testConfigs.Store,
-		Logger:               suite.testConfigs.Logger,
 		EmailService:         mockEmailService,
 		EmailTemplateService: suite.testConfigs.EmailTemplateService,
 		AddressBook:          addressBook,
@@ -69,7 +68,7 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	analyzedAudit := suite.createAnalyzedAudit(mp, time.Now().UTC(), auditChange)
 
 	// Test getAggregatedDailyDigestAnalyzedAudits
-	analyzedAudits, err := getUserAgnosticDigestAnalyzedAudits(time.Now().UTC(), worker.Store, worker.Logger)
+	analyzedAudits, err := getUserAgnosticDigestAnalyzedAudits(time.Now().UTC(), worker.Store, suite.testConfigs.Logger)
 	suite.Equal(analyzedAudit.ID, analyzedAudits[0].ID)
 	suite.NoError(err)
 

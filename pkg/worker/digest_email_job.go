@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"go.uber.org/zap"
@@ -30,10 +31,20 @@ const (
 // DigestEmailBatchJob is the batch job for DigestEmailJobs
 // args[0] date
 func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) error {
-	dateAnalyzed := args[0].(string)
+	logger := FaktoryLoggerFromContext(ctx)
+
+	if len(args) < 1 {
+		logger.Error("insufficient arguments for DigestEmailBatchJob", zap.Int("argCount", len(args)))
+		return fmt.Errorf("expected 1 argument, got %d", len(args))
+	}
+
+	dateAnalyzed, ok := args[0].(string)
+	if !ok {
+		logger.Error("args[0] is not a string", zap.String("type", fmt.Sprintf("%T", args[0])))
+		return fmt.Errorf("args[0] must be a string, got %T", args[0])
+	}
 
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
 
 	logger.Info("getting collection of unique userIds that have favorited a model")
 
@@ -73,8 +84,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // DigestEmailBatchJobSuccess is the callback function forDigestEmailBatchJob
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
 	return nil
@@ -83,19 +93,37 @@ func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interfa
 // DigestEmailJob will generate and send an email based on a users favorited Models.
 // args[0] date, args[1] userID
 func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error {
+	logger := FaktoryLoggerFromContext(ctx)
 
-	dateAnalyzed, err := time.Parse("2006-01-02", args[0].(string))
+	if len(args) < 2 {
+		logger.Error("insufficient arguments for DigestEmailJob", zap.Int("argCount", len(args)))
+		return fmt.Errorf("expected 2 arguments, got %d", len(args))
+	}
+
+	dateStr, ok := args[0].(string)
+	if !ok {
+		logger.Error("args[0] is not a string", zap.String("type", fmt.Sprintf("%T", args[0])))
+		return fmt.Errorf("args[0] must be a string, got %T", args[0])
+	}
+
+	dateAnalyzed, err := time.Parse("2006-01-02", dateStr)
 	if err != nil {
+		logger.Error("failed to parse date", zap.String("dateStr", dateStr), zap.Error(err))
 		return err
 	}
 
-	userIDString := args[1].(string) // This is always returned as a string from faktory
+	userIDString, ok := args[1].(string)
+	if !ok {
+		logger.Error("args[1] is not a string", zap.String("type", fmt.Sprintf("%T", args[1])))
+		return fmt.Errorf("args[1] must be a string, got %T", args[1])
+	}
+
 	userID, err := uuid.Parse(userIDString)
 	if err != nil {
+		logger.Error("failed to parse user ID", zap.String("userIDString", userIDString), zap.Error(err))
 		return err
 	}
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
+	logger = logger.With(logfields.Date(dateAnalyzed), logfields.UserID(userID))
 	logger.Info("preparing to send daily digest email")
 
 	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
@@ -110,12 +138,25 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 
 // AggregatedDigestEmailJob will generate and send an email based on all models changed in the audit period
 func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface{}) error {
-	dateAnalyzed, err := time.Parse("2006-01-02", args[0].(string))
+	logger := FaktoryLoggerFromContext(ctx)
+
+	if len(args) < 1 {
+		logger.Error("insufficient arguments for AggregatedDigestEmailJob", zap.Int("argCount", len(args)))
+		return fmt.Errorf("expected 1 argument, got %d", len(args))
+	}
+
+	dateStr, ok := args[0].(string)
+	if !ok {
+		logger.Error("args[0] is not a string", zap.String("type", fmt.Sprintf("%T", args[0])))
+		return fmt.Errorf("args[0] must be a string, got %T", args[0])
+	}
+
+	dateAnalyzed, err := time.Parse("2006-01-02", dateStr)
 	if err != nil {
+		logger.Error("failed to parse date", zap.String("dateStr", dateStr), zap.Error(err))
 		return err
 	}
-	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed))
+	logger = logger.With(logfields.Date(dateAnalyzed))
 	logger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,

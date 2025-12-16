@@ -1,0 +1,31 @@
+meta {
+  name: Get All Key Contact Categories
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query getAllKeyContactCategories {
+    keyContactCategory {
+      id
+      category
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
