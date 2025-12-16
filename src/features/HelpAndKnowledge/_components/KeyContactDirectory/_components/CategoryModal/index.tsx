@@ -56,7 +56,7 @@ const CategoryModal = ({
     ]
   });
 
-  const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
+  const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
 
   const methods = useForm<{ category: string }>({
     defaultValues: {
@@ -68,14 +68,18 @@ const CategoryModal = ({
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting, isDirty }
+    formState: { isSubmitting, isDirty, isValid }
   } = methods;
 
   useEffect(() => {
-    setDisableSubmitBtn(!isDirty || isSubmitting);
-  }, [isDirty, isSubmitting]);
+    setDisableSubmitBtn(!isValid || !isDirty || isSubmitting);
+  }, [isDirty, isSubmitting, isValid]);
 
   const onSubmit = (formData: { category: string }) => {
+    if (mode === 'edit' && !category) {
+      return;
+    }
+
     const promise =
       mode === 'add'
         ? create({
@@ -181,7 +185,7 @@ const CategoryModal = ({
         <Button
           form="category-form"
           type="submit"
-          disabled={disabledSubmitBtn}
+          disabled={disableSubmitBtn}
           className="margin-right-3 margin-top-0"
         >
           {keyContactCategoryMiscT(`${mode === 'edit' ? 'edit' : 'add'}.cta`)}
