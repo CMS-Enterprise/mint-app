@@ -1,6 +1,6 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   keyContactCategoriesMock,
   keyContactCategoryMockData
@@ -46,12 +46,13 @@ describe('CategoryModal Component', () => {
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(
+    render(
       <MockedProvider mocks={keyContactCategoriesMock} addTypename={false}>
         <CategoryModal isOpen closeModal={() => {}} mode="add" />
       </MockedProvider>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    const modal = screen.getByTestId('sme-category-modal');
+    expect(modal).toMatchSnapshot();
   });
 });

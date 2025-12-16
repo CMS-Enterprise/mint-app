@@ -105,6 +105,7 @@ const CategoryModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
+      testId="sme-category-modal"
     >
       <div className="">
         <PageHeading headingLevel="h3" className="margin-y-0">
