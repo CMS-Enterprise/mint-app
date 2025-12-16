@@ -84,7 +84,14 @@ export const keyContactMisc = {
   selectDefault: 'Select',
   navs: ['Individual', 'Team mailbox'],
   cancel: 'Cancel',
-  allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
+  allFieldsRequired:
+    'Fields marked with an asterisk ( <s>*</s> ) are required.',
+  removeSme: {
+    title: 'Are you sure you want to remove this SME?',
+    actionWarning: 'This action cannot be undone.',
+    text: '<bold>SME to be removed:</bold> {{-name}}',
+    cta: 'Remove SME'
+  }
 };
 
 export default keyContact;
