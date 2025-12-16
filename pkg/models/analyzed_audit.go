@@ -152,9 +152,29 @@ const (
 	// sentence template of Cleared status change
 	AnalyzedModelHumanizedCleared = "This model has been cleared"
 
+	// AnalyzedModelHumanizedAnnounced is human readable
+	// sentence template of Announced status change
+	AnalyzedModelHumanizedAnnounced = "This model has been announced"
+
+	// AnalyzedModelHumanizedActive is human readable
+	// sentence template of Active status change
+	AnalyzedModelHumanizedActive = "This model is now active"
+
+	// AnalyzedModelHumanizedEnded is human readable
+	// sentence template of Ended status change
+	AnalyzedModelHumanizedEnded = "This model has ended"
+
+	// AnalyzedModelHumanizedPaused is human readable
+	// sentence template of Paused status change
+	AnalyzedModelHumanizedPaused = "This model has been paused"
+
+	// AnalyzedModelHumanizedCanceled is human readable
+	// sentence template of Canceled status change
+	AnalyzedModelHumanizedCanceled = "This model has been canceled"
+
 	// AnalyzedModelHumanizedPlanDraft is human readable
 	// sentence template of Draft status change
-	AnalyzedModelHumanizedPlanDraft = "This model has been announced"
+	AnalyzedModelHumanizedPlanDraft = "This model plan is in draft"
 )
 
 // Humanize returns AnalyzedModelPlan in human readable sentences
@@ -173,6 +193,8 @@ func (a *AnalyzedModelPlan) Humanize() []string {
 	if len(a.StatusChanges) > 0 {
 		humanizedStatusChanges = lo.Map(a.StatusChanges, func(status string, index int) string {
 			switch status {
+			case string(ModelStatusPlanDraft):
+				return AnalyzedModelHumanizedPlanDraft
 			case string(ModelStatusPlanComplete):
 				return AnalyzedModelHumanizedPlanComplete
 			case string(ModelStatusIcipComplete):
@@ -187,8 +209,16 @@ func (a *AnalyzedModelPlan) Humanize() []string {
 				return AnalyzedModelHumanizedOmbAsrfClearance
 			case string(ModelStatusCleared):
 				return AnalyzedModelHumanizedCleared
-			case string(ModelStatusPlanDraft):
-				return AnalyzedModelHumanizedPlanDraft
+			case string(ModelStatusAnnounced):
+				return AnalyzedModelHumanizedAnnounced
+			case string(ModelStatusActive):
+				return AnalyzedModelHumanizedActive
+			case string(ModelStatusEnded):
+				return AnalyzedModelHumanizedEnded
+			case string(ModelStatusPaused):
+				return AnalyzedModelHumanizedPaused
+			case string(ModelStatusCanceled):
+				return AnalyzedModelHumanizedCanceled
 			default:
 				return ""
 			}
