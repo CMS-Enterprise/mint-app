@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
@@ -19,6 +19,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 
@@ -89,6 +90,8 @@ const CollaborationArea = () => {
     !!suggestedPhase || false
   );
 
+  const collaborationAreaRef = useRef<HTMLDivElement>(null);
+
   // Updates state if session value changes
   useEffect(() => {
     setStatusChecked(statusCheckedStorage);
@@ -156,7 +159,11 @@ const CollaborationArea = () => {
       {data && (
         <>
           <GridContainer>
-            <Grid row className="collaboration-area__header">
+            <Grid
+              row
+              className="collaboration-area__header"
+              ref={collaborationAreaRef}
+            >
               <Grid desktop={{ col: 9 }}>
                 <PageHeading className="margin-top-4 margin-bottom-0">
                   {collaborationAreaT('heading')}
@@ -188,7 +195,22 @@ const CollaborationArea = () => {
               </Grid>
             </Grid>
           </GridContainer>
-          {/* I want the sticky header here */}
+          <StickyModelNameWrapper
+            triggerRef={collaborationAreaRef}
+            className="bg-white"
+          >
+            <div className="padding-y-2">
+              <h3 className="margin-y-0">{collaborationAreaT('heading')}</h3>
+              <p
+                className="margin-y-0 font-body-lg"
+                data-testid="model-plan-name"
+              >
+                {collaborationAreaT('modelPlan', {
+                  modelName
+                })}
+              </p>
+            </div>
+          </StickyModelNameWrapper>
 
           <GridContainer>
             <Grid desktop={{ col: 12 }}>
