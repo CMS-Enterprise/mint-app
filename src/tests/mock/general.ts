@@ -2,6 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/_components/KeyContactDirectory/_components/CategoryModal';
 import {
   DataExchangeApproachStatus,
+  GetAllKeyContactCategoriesDocument,
+  GetAllKeyContactCategoriesQuery,
+  GetAllKeyContactCategoriesQueryVariables,
   GetAllKeyContactsDocument,
   GetAllKeyContactsQuery,
   GetAllKeyContactsQueryVariables,
@@ -688,6 +691,23 @@ export const keyContactCategoryMockData: KeyContactCategoryType[] = [
     __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
     category: 'CMS Programs'
+  }
+];
+
+export const keyContactCategoriesMock: MockedResponse<
+  GetAllKeyContactCategoriesQuery,
+  GetAllKeyContactCategoriesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllKeyContactCategoriesDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        keyContactCategory: keyContactCategoryMockData
+      }
+    }
   }
 ];
 
