@@ -8,7 +8,64 @@ import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
 import { SmeType } from '../..';
 import { KeyContactCategoryType } from '../CategoryModal';
+import RemoveModal from '../RemoveModal';
 import SmeModal from '../SmeModal';
+
+const EditSmeButton = ({
+  sme,
+  allCategories
+}: {
+  sme: SmeType;
+  allCategories: KeyContactCategoryType[];
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <SmeModal
+        isOpen={isModalOpen}
+        mode="edit"
+        closeModal={() => setIsModalOpen(false)}
+        contact={sme}
+        allCategories={allCategories}
+      />
+      <Button
+        type="button"
+        className="margin-right-2 deep-underline"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        {t('keyContactDirectory.editAction')}
+      </Button>
+    </>
+  );
+};
+
+const RemoveSmeButton = ({ sme }: { sme: SmeType }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      <RemoveModal
+        isModalOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        removedObject={sme}
+      />
+      <Button
+        type="button"
+        className="text-error deep-underline"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        {t('keyContactDirectory.removeAction')}
+      </Button>
+    </>
+  );
+};
 
 type ColumnType = SmeType & { actions: unknown };
 
@@ -24,7 +81,6 @@ const KeyContactTable = ({
   isSearching: boolean;
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
-  const [selectedSme, setSelectedSme] = useState<SmeType | null>(null);
 
   const columns: Column<ColumnType>[] = useMemo(
     () => [
@@ -45,40 +101,15 @@ const KeyContactTable = ({
         Cell: ({ row }: { row: Row<ColumnType> }) => {
           return (
             <div>
-              {selectedSme && (
-                <SmeModal
-                  isOpen={selectedSme === row.original}
-                  mode="edit"
-                  allCategories={allCategories}
-                  closeModal={() => setSelectedSme(null)}
-                  contact={selectedSme}
-                />
-              )}
+              <EditSmeButton sme={row.original} allCategories={allCategories} />
 
-              <Button
-                type="button"
-                className="margin-right-2 deep-underline"
-                unstyled
-                onClick={() => {
-                  setSelectedSme(row.original);
-                }}
-              >
-                {t('keyContactDirectory.editAction')}
-              </Button>
-              <Button
-                type="button"
-                className="text-error deep-underline"
-                unstyled
-                onClick={() => {}}
-              >
-                {t('keyContactDirectory.removeAction')}
-              </Button>
+              <RemoveSmeButton sme={row.original} />
             </div>
           );
         }
       }
     ],
-    [t, selectedSme, allCategories]
+    [t, allCategories]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
