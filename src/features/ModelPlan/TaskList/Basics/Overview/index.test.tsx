@@ -13,6 +13,9 @@ import {
   ModelType,
   TaskStatus
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Overview from './index';
 
@@ -40,19 +43,20 @@ const mocks = [
   {
     request: {
       query: GetOverviewDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
           __typename: 'ModelPlan',
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           basics: overviewMockData
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Basics overview page', () => {
@@ -61,7 +65,11 @@ describe('Basics overview page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/overview',
-          element: <Overview />
+          element: (
+            <ModelInfoWrapper>
+              <Overview />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

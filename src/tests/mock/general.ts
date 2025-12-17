@@ -13,6 +13,9 @@ import {
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
+  GetModelPlanBaseDocument,
+  GetModelPlanBaseQuery,
+  GetModelPlanBaseQueryVariables,
   GetModelPlansByStatusGroupDocument,
   GetModelPlansByStatusGroupQuery,
   GetModelPlansByStatusGroupQueryVariables,
@@ -670,6 +673,40 @@ export const analyticsSummaryMock: MockedResponse<
     },
     result: {
       data: mockAnalyticsData
+    }
+  }
+];
+
+export const modelPlanBaseMock: MockedResponse<
+  GetModelPlanBaseQuery,
+  GetModelPlanBaseQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelPlanBaseDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'My excellent plan that I just initiated',
+          abbreviation: null,
+          modifiedDts: '2024-01-01T00:00:00Z',
+          createdDts: '2024-01-01T00:00:00Z',
+          status: ModelStatus.PLAN_DRAFT,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.READY,
+            info: {
+              __typename: 'MTOInfo',
+              id: 'mto-id'
+            }
+          }
+        }
+      }
     }
   }
 ];

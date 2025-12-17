@@ -6,6 +6,9 @@ import {
   GetParticipantOptionsDocument,
   GetParticipantOptionsQuery
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import ParticipantOptions from './index';
 
@@ -30,12 +33,12 @@ const participantOptionsMock = [
   {
     request: {
       query: GetParticipantOptionsDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: participantOptionsMockData,
           operationalNeeds: [
@@ -48,7 +51,8 @@ const participantOptionsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan ParticipantsOptions', () => {
@@ -57,7 +61,11 @@ describe('Model Plan ParticipantsOptions', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options',
-          element: <ParticipantOptions />
+          element: (
+            <ModelInfoWrapper>
+              <ParticipantOptions />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -91,7 +99,11 @@ describe('Model Plan ParticipantsOptions', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options',
-          element: <ParticipantOptions />
+          element: (
+            <ModelInfoWrapper>
+              <ParticipantOptions />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

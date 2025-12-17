@@ -7,11 +7,9 @@ import {
   CmsCenter,
   GetBasicsDocument,
   GetBasicsQuery,
-  GetModelPlanBaseDocument,
-  ModelCategory,
-  ModelStatus,
-  MtoStatus
+  ModelCategory
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
 
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
@@ -43,8 +41,6 @@ const basicMockData: GetModelPlanInfoType = {
   }
 };
 
-const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
-
 const mocks = [
   {
     request: {
@@ -57,33 +53,7 @@ const mocks = [
       }
     }
   },
-  {
-    request: {
-      query: GetModelPlanBaseDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          modelName: basicMockData.modelName,
-          abbreviation: basicMockData.abbreviation,
-          modifiedDts: '2024-01-01T00:00:00Z',
-          createdDts: '2024-01-01T00:00:00Z',
-          status: ModelStatus.PLAN_DRAFT,
-          mtoMatrix: {
-            __typename: 'ModelsToOperationMatrix',
-            status: MtoStatus.READY,
-            info: {
-              __typename: 'MTOInfo',
-              id: 'mto-id'
-            }
-          }
-        }
-      }
-    }
-  }
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Basics page', () => {
