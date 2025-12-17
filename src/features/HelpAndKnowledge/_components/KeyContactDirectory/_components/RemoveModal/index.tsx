@@ -41,7 +41,9 @@ const RemoveModal = ({
           text: keyContactCategoryT(`remove.${field}`)
         };
       default:
-        throw new Error(`remove object ${removedObject} is incorrect`);
+        throw new Error(
+          `remove object ${JSON.stringify(removedObject)}is incorrect`
+        );
     }
   };
 
@@ -62,11 +64,10 @@ const RemoveModal = ({
       variables: {
         id
       },
-      refetchQueries: [
+      refetchQueries:
         removedObject.__typename === 'KeyContact'
-          ? GetAllKeyContacts
-          : GetAllKeyContactCategories
-      ]
+          ? [GetAllKeyContacts]
+          : [GetAllKeyContactCategories, GetAllKeyContacts]
     }).then(response => {
       if (!response?.errors) {
         closeModal();
