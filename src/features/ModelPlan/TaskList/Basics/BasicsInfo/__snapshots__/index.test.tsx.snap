@@ -297,7 +297,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     id="plan-basics-abbreviation"
                     maxlength="50"
                     name="abbreviation"
-                    value=""
+                    value="MEP"
                   />
                 </div>
                 <div
