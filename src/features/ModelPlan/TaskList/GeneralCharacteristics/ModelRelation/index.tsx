@@ -1,6 +1,7 @@
 import React, {
   Fragment,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -48,8 +49,10 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import { useErrorMessage } from 'contexts/ErrorContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
@@ -87,6 +90,8 @@ export const ModelRelation = () => {
 
   const formikRef =
     useRef<FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>>(null);
+
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
 
@@ -178,9 +183,8 @@ export const ModelRelation = () => {
     data?.modelPlan?.generalCharacteristics ||
     ({} as GeneralCharacteristicsFormType);
 
+  const { modelName, abbreviation } = useContext(ModelInfoContext);
   const existingModel = currentModelPlanID || existingModelID;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   // Formats query data of existing links to feed into multiselect
   // Checks if Other field is selected, if so append Other to the list of existing models
@@ -406,7 +410,7 @@ export const ModelRelation = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {generalCharacteristicsMiscT('heading')}
         </PageHeading>
 
@@ -416,7 +420,21 @@ export const ModelRelation = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={headerRef} className="bg-white">
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {generalCharacteristicsMiscT('modelPlanHeading')}:{' '}
+            {generalCharacteristicsMiscT('heading')}
+          </h3>
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {miscellaneousT('for')} {modelName}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>
