@@ -5989,16 +5989,24 @@ export type CreateKeyContactUserMutationVariables = Exact<{
 
 export type CreateKeyContactUserMutation = { __typename: 'Mutation', createKeyContactUser: { __typename: 'KeyContact', id: UUID, name: string, email: string, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null } };
 
-export type GetAllKeyContactCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllKeyContactCategoriesQuery = { __typename: 'Query', keyContactCategory: Array<{ __typename: 'KeyContactCategory', id: UUID, category: string }> };
 export type DeleteKeyContactMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
 export type DeleteKeyContactMutation = { __typename: 'Mutation', deleteKeyContact: { __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null } };
+
+export type DeleteKeyContactCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteKeyContactCategoryMutation = { __typename: 'Mutation', deleteKeyContactCategory: { __typename: 'KeyContactCategory', id: UUID, category: string } };
+
+export type GetAllKeyContactCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllKeyContactCategoriesQuery = { __typename: 'Query', keyContactCategory: Array<{ __typename: 'KeyContactCategory', id: UUID, category: string }> };
 
 export type GetAllKeyContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9540,48 +9548,8 @@ export function useCreateKeyContactUserMutation(baseOptions?: Apollo.MutationHoo
 export type CreateKeyContactUserMutationHookResult = ReturnType<typeof useCreateKeyContactUserMutation>;
 export type CreateKeyContactUserMutationResult = Apollo.MutationResult<CreateKeyContactUserMutation>;
 export type CreateKeyContactUserMutationOptions = Apollo.BaseMutationOptions<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>;
-export const GetAllKeyContactCategoriesDocument = gql`
-    query GetAllKeyContactCategories {
-  keyContactCategory {
-    id
-    category
-  }
-}
-    `;
-
-/**
- * __useGetAllKeyContactCategoriesQuery__
- *
- * To run a query within a React component, call `useGetAllKeyContactCategoriesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllKeyContactCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAllKeyContactCategoriesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAllKeyContactCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
-      }
-export function useGetAllKeyContactCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
-        }
-export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
-        }
-export type GetAllKeyContactCategoriesQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesQuery>;
-export type GetAllKeyContactCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesLazyQuery>;
-export type GetAllKeyContactCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesSuspenseQuery>;
-export type GetAllKeyContactCategoriesQueryResult = Apollo.QueryResult<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
 export const DeleteKeyContactDocument = gql`
-    mutation DeleteKeyContact($id: UUID!) {
+    mutation deleteKeyContact($id: UUID!) {
   deleteKeyContact(id: $id) {
     id
     name
@@ -9625,6 +9593,83 @@ export function useDeleteKeyContactMutation(baseOptions?: Apollo.MutationHookOpt
 export type DeleteKeyContactMutationHookResult = ReturnType<typeof useDeleteKeyContactMutation>;
 export type DeleteKeyContactMutationResult = Apollo.MutationResult<DeleteKeyContactMutation>;
 export type DeleteKeyContactMutationOptions = Apollo.BaseMutationOptions<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>;
+export const DeleteKeyContactCategoryDocument = gql`
+    mutation deleteKeyContactCategory($id: UUID!) {
+  deleteKeyContactCategory(id: $id) {
+    id
+    category
+  }
+}
+    `;
+export type DeleteKeyContactCategoryMutationFn = Apollo.MutationFunction<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>;
+
+/**
+ * __useDeleteKeyContactCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteKeyContactCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteKeyContactCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteKeyContactCategoryMutation, { data, loading, error }] = useDeleteKeyContactCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteKeyContactCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>(DeleteKeyContactCategoryDocument, options);
+      }
+export type DeleteKeyContactCategoryMutationHookResult = ReturnType<typeof useDeleteKeyContactCategoryMutation>;
+export type DeleteKeyContactCategoryMutationResult = Apollo.MutationResult<DeleteKeyContactCategoryMutation>;
+export type DeleteKeyContactCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>;
+export const GetAllKeyContactCategoriesDocument = gql`
+    query GetAllKeyContactCategories {
+  keyContactCategory {
+    id
+    category
+  }
+}
+    `;
+
+/**
+ * __useGetAllKeyContactCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetAllKeyContactCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllKeyContactCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllKeyContactCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllKeyContactCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
+      }
+export function useGetAllKeyContactCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
+        }
+// @ts-ignore
+export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
+export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllKeyContactCategoriesQuery | undefined, GetAllKeyContactCategoriesQueryVariables>;
+export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
+        }
+export type GetAllKeyContactCategoriesQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesQuery>;
+export type GetAllKeyContactCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesLazyQuery>;
+export type GetAllKeyContactCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesSuspenseQuery>;
+export type GetAllKeyContactCategoriesQueryResult = Apollo.QueryResult<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
 export const GetAllKeyContactsDocument = gql`
     query GetAllKeyContacts {
   keyContacts {
@@ -17820,8 +17865,9 @@ export const TypedUpdateHomepageSettingsDocument = {"kind":"Document","definitio
 export const TypedcreateKeyContactCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createKeyContactCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createKeyContactCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]} as unknown as DocumentNode<CreateKeyContactCategoryMutation, CreateKeyContactCategoryMutationVariables>;
 export const TypedcreateKeyContactMailboxDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createKeyContactMailbox"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mailboxTitle"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mailboxAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createKeyContactMailbox"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mailboxTitle"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mailboxTitle"}}},{"kind":"Argument","name":{"kind":"Name","value":"mailboxAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mailboxAddress"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectArea"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectCategoryID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}}]}}]}}]} as unknown as DocumentNode<CreateKeyContactMailboxMutation, CreateKeyContactMailboxMutationVariables>;
 export const TypedcreateKeyContactUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createKeyContactUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createKeyContactUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userName"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectArea"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectCategoryID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>;
+export const TypeddeleteKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteKeyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>;
+export const TypeddeleteKeyContactCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteKeyContactCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteKeyContactCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]} as unknown as DocumentNode<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>;
 export const TypedGetAllKeyContactCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllKeyContactCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContactCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]} as unknown as DocumentNode<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
-export const TypedDeleteKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteKeyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>;
 export const TypedGetAllKeyContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllKeyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>;
 export const TypedGetIndividualKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIndividualKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>;
 export const TypedupdateKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"KeyContactUpdateChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateKeyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateKeyContactMutation, UpdateKeyContactMutationVariables>;

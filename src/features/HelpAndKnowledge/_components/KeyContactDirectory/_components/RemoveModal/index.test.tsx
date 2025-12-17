@@ -1,60 +1,25 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
-import { keyContactsMock } from 'tests/mock/general';
-
-import MessageProvider from 'contexts/MessageContext';
-
-import { KeyContactType } from '../SmeModal';
+import { render, screen } from '@testing-library/react';
+import {
+  keyContactCategoryMockData,
+  keyContactsMock,
+  keyContactsMockData
+} from 'tests/mock/general';
 
 import RemoveModal from '.';
-
-const sme: KeyContactType = {
-  __typename: 'KeyContact',
-  id: '123',
-  name: 'Aliza Kim',
-  email: 'aliza.kim@cms.hhs.gov',
-  mailboxTitle: '',
-  mailboxAddress: '',
-  subjectArea: 'Healthcare',
-  subjectCategoryID: '',
-  userAccount: {
-    __typename: 'UserAccount',
-    id: '123',
-    commonName: 'Aliza Kim',
-    email: 'aliza.kim@cms.hhs.gov',
-    username: 'AWER'
-  }
-};
 
 const mocks = [...keyContactsMock];
 
 describe('RemoveModal Component', () => {
   it('should render sme context when given key contact', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge',
-          element: (
-            <MessageProvider>
-              <RemoveModal
-                isModalOpen
-                closeModal={() => {}}
-                removedObject={sme}
-              />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge']
-      }
-    );
-
     const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
+        <RemoveModal
+          isModalOpen
+          closeModal={() => {}}
+          removedObject={keyContactsMockData[0]}
+        />
       </MockedProvider>
     );
     expect(
@@ -68,33 +33,40 @@ describe('RemoveModal Component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('matches snapshot', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/help-and-knowledge',
-          element: (
-            <MessageProvider>
-              <RemoveModal
-                isModalOpen
-                closeModal={() => {}}
-                removedObject={sme}
-              />
-            </MessageProvider>
-          )
-        }
-      ],
-      {
-        initialEntries: ['/help-and-knowledge']
-      }
-    );
-
-    const { asFragment } = render(
+  it('should render category context when given key contact category', () => {
+    const { getByText, queryByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={router} />
+        <RemoveModal
+          isModalOpen
+          closeModal={() => {}}
+          removedObject={keyContactCategoryMockData[0]}
+        />
+      </MockedProvider>
+    );
+    expect(
+      getByText('Are you sure you want to remove this subject category?')
+    ).toBeInTheDocument();
+    expect(getByText('Category to be removed:')).toBeInTheDocument();
+    expect(
+      queryByText('This action cannot be undone.')
+    ).not.toBeInTheDocument();
+    expect(
+      queryByText('Are you sure you want to remove this SME?')
+    ).not.toBeInTheDocument();
+  });
+
+  it('matches snapshot', () => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <RemoveModal
+          isModalOpen
+          closeModal={() => {}}
+          removedObject={keyContactsMockData[0]}
+        />
       </MockedProvider>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    const modal = screen.getByTestId('remove-key-contact-directory-modal');
+    expect(modal).toMatchSnapshot();
   });
 });
