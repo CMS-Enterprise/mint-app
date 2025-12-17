@@ -47,8 +47,8 @@ import StickyHeaderSection from 'components/StickyHeaderSection';
 import Tooltip from 'components/Tooltip';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import { useStickyHeader } from 'hooks/useStickyHeader';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { useStickyHeader } from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formUtil';
@@ -59,7 +59,6 @@ type ModelPlanInfoFormType = Omit<GetBasicsQuery['modelPlan'], 'nameHistory'>;
 
 const BasicsInfo = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
-  const { t: taskListT } = useTranslation('modelPlanTaskList');
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -78,7 +77,7 @@ const BasicsInfo = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const navigate = useNavigate();
-  const { headerRef: basicsInfoRef, modelName: contextModelName, abbreviation: contextAbbreviation } = useStickyHeader();
+  const { headerRef: basicsInfoRef } = useStickyHeader();
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -88,8 +87,12 @@ const BasicsInfo = () => {
 
   const { nameHistory } = data?.modelPlan || {};
 
-  const { id, modelName: queryModelName, abbreviation: queryAbbreviation, basics } = (data?.modelPlan ||
-    {}) as ModelPlanInfoFormType;
+  const {
+    id,
+    modelName: queryModelName,
+    abbreviation: queryAbbreviation,
+    basics
+  } = (data?.modelPlan || {}) as ModelPlanInfoFormType;
 
   const modelName = queryModelName;
   const abbreviation = queryAbbreviation;

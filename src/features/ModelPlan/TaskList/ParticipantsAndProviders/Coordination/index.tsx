@@ -37,8 +37,8 @@ import StickyHeaderSection from 'components/StickyHeaderSection';
 import Tooltip from 'components/Tooltip';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { useStickyHeader } from 'hooks/useStickyHeader';
 import useScrollElement from 'hooks/useScrollElement';
+import { useStickyHeader } from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 type CoordinationFormType =
@@ -68,7 +68,7 @@ export const Coordination = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef, modelName } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetCoordinationQuery({

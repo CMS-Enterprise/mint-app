@@ -36,8 +36,8 @@ import PageNumber from 'components/PageNumber';
 import StickyHeaderSection from 'components/StickyHeaderSection';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { useStickyHeader } from 'hooks/useStickyHeader';
 import useScrollElement from 'hooks/useScrollElement';
+import { useStickyHeader } from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 type CommunicationFormType =
@@ -63,7 +63,7 @@ export const Communication = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef, modelName } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetCommunicationQuery({

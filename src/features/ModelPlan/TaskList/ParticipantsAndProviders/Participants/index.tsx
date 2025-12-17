@@ -67,7 +67,7 @@ export const Participants = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantsAndProvidersFormType>>(null);
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef, modelName } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetParticipantsAndProvidersQuery({

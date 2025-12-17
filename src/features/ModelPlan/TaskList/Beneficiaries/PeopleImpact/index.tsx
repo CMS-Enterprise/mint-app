@@ -58,7 +58,7 @@ const PeopleImpact = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef, modelName } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetPeopleImpactedQuery({

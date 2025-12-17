@@ -60,7 +60,7 @@ const BeneficiaryIdentification = () => {
 
   const formikRef =
     useRef<FormikProps<BeneficiaryIdentificationFormType>>(null);
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef, modelName } = useStickyHeader();
 
   const navigate = useNavigate();
 

@@ -47,7 +47,6 @@ type InitialValueType = Omit<
 
 const Overview = () => {
   const { t: basicsT } = useTranslation('basics');
-  const { t: taskListT } = useTranslation('modelPlanTaskList');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -57,7 +56,7 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
-  const { headerRef: overviewRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef: overviewRef, modelName } = useStickyHeader();
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
       id: modelID
