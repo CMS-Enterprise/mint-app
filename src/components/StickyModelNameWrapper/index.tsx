@@ -32,6 +32,9 @@ const StickyModelNameWrapper = ({
     useState<boolean>(false);
 
   useEffect(() => {
+    let rafId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
     const handleScroll = () => {
       if (!triggerRef.current || !measurementRef.current) return;
 
@@ -45,16 +48,29 @@ const StickyModelNameWrapper = ({
       setIsStickyHeaderVisible(triggerRect.bottom <= stickyHeaderHeight);
     };
 
+    // Optimized scroll handler using requestAnimationFrame for smoother performance
+    const optimizedScrollHandler = () => {
+      if (rafId !== null) return; // Skip if already scheduled
+
+      rafId = requestAnimationFrame(() => {
+        handleScroll();
+        rafId = null;
+      });
+    };
+
     // Check on initial load and after a short delay to ensure elements are rendered
     handleScroll();
-    const timeoutId = setTimeout(handleScroll, 100);
+    timeoutId = setTimeout(handleScroll, 100);
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', optimizedScrollHandler, {
+      passive: true
+    });
     window.addEventListener('resize', handleScroll);
 
     return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('scroll', handleScroll);
+      if (timeoutId) clearTimeout(timeoutId);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', optimizedScrollHandler);
       window.removeEventListener('resize', handleScroll);
     };
   }, [triggerRef]);
@@ -69,8 +85,9 @@ const StickyModelNameWrapper = ({
           type="button"
           className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label={h('backToTop')}
         >
-          <Icon.ArrowUpward size={3} aria-label="arrow up" />
+          <Icon.ArrowUpward size={3} aria-hidden="true" />
           {h('backToTop')}
         </button>
       </div>
@@ -104,7 +121,8 @@ const StickyModelNameWrapper = ({
             'sticky-header-wrapper--visible': isStickyHeaderVisible
           }
         )}
-        aria-hidden="true"
+        aria-hidden={!isStickyHeaderVisible}
+        role="banner"
       >
         {stickyContent}
       </div>
