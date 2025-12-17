@@ -17,7 +17,7 @@ exports[`LinkMilestoneForm Component > matches snapshot 1`] = `
       <a
         class="usa-link"
         data-discover="true"
-        href="/models//collaboration-area/model-to-operations/milestone-library"
+        href="/models/collaboration-area/model-to-operations/milestone-library"
       >
         milestone library
       </a>
