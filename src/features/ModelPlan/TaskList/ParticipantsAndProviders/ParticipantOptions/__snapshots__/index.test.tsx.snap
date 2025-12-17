@@ -80,8 +80,110 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
         class="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        for My excellent plan that I just initiated
+        for 
       </p>
+    </div>
+    <div
+      aria-hidden="true"
+      class="sticky-header-wrapper"
+      style="position: absolute; visibility: hidden; top: -9999px; left: -9999px; width: 100%;"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <div
+            class="padding-y-2"
+          >
+            <h3
+              class="margin-y-0"
+            >
+              Model plan: Participants and providers
+            </h3>
+            <p
+              class="margin-y-0 font-body-lg"
+            >
+              for 
+            </p>
+          </div>
+          <button
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+            type="button"
+          >
+            <svg
+              aria-label="arrow up"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-hidden="true"
+      class="sticky-header-wrapper z-300 shadow-2 bg-white sticky-header-wrapper--visible"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <div
+            class="padding-y-2"
+          >
+            <h3
+              class="margin-y-0"
+            >
+              Model plan: Participants and providers
+            </h3>
+            <p
+              class="margin-y-0 font-body-lg"
+            >
+              for 
+            </p>
+          </div>
+          <button
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+            type="button"
+          >
+            <svg
+              aria-label="arrow up"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
       <p
         class="margin-bottom-2 font-body-md line-height-sans-4"
       >

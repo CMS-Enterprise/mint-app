@@ -281,15 +281,13 @@ const TaskList = () => {
           >
             <div className="padding-y-2">
               <h3 className="margin-y-0">{t('heading')}</h3>
-              <p
-                className="margin-y-0 font-body-lg"
-                data-testid="model-plan-name"
-              >
+              <p className="margin-y-0 font-body-lg">
                 {h('for')} {modelName}
                 {abbreviation && ` (${abbreviation})`}
               </p>
             </div>
           </StickyModelNameWrapper>
+
           <GridContainer>
             <Grid row gap>
               <Grid desktop={{ col: 9 }}>

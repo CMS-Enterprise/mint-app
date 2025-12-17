@@ -94,74 +94,94 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="usa-summary-box padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
-      data-testid="read-only-model-summary"
+      class="bg-primary-lighter"
     >
       <div
-        class="usa-summary-box__body"
+        class="grid-container padding-x-2 padding-top-6 padding-bottom-2"
+        data-testid="read-only-model-summary"
       >
         <div
-          class="grid-container"
-          data-testid="gridContainer"
+          class="mint-no-print margin-bottom-3"
         >
           <div
-            class="mint-no-print margin-bottom-3"
+            class="display-flex flex-justify"
           >
-            <div
-              class="display-flex flex-justify"
+            <a
+              class="usa-link display-flex flex-align-center"
+              data-discover="true"
+              href="/models"
             >
-              <a
-                class="usa-link display-flex flex-align-center"
-                data-discover="true"
-                href="/models"
+              <svg
+                aria-label="back"
+                class="usa-icon text-primary margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  aria-label="back"
-                  class="usa-icon text-primary margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                  />
-                </svg>
-                View all models
-              </a>
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              View all models
+            </a>
+            <span
+              class="usa-tag text-primary text-bold bookmark__tag padding-y-1 padding-x-2 bg-white pointer"
+              data-testid="tag"
+              tabindex="0"
+            >
+              <svg
+                aria-label="star outline"
+                class="usa-icon margin-right-1 bookmark__tag__icon"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                />
+              </svg>
               <span
-                class="usa-tag text-primary text-bold bookmark__tag padding-y-1 padding-x-2 bg-white pointer"
-                data-testid="tag"
-                tabindex="0"
+                class="bookmark__text"
               >
-                <svg
-                  aria-label="star outline"
-                  class="usa-icon margin-right-1 bookmark__tag__icon"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-                  />
-                </svg>
-                <span
-                  class="bookmark__text"
-                >
-                  Follow
-                </span>
+                Follow
               </span>
-            </div>
+            </span>
           </div>
-          <h1
-            aria-live="polite"
-            class="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            tabindex="-1"
+        </div>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-0 line-height-sans-2 minh-6"
+          tabindex="-1"
+        >
+          Testing Model Summary 
+          <span
+            class="font-sans-sm text-normal"
+          >
+            (TMS)
+          </span>
+        </h1>
+      </div>
+    </div>
+    <div
+      aria-hidden="true"
+      class="sticky-header-wrapper bg-primary-lighter"
+      style="position: absolute; visibility: hidden; top: -9999px; left: -9999px; width: 100%;"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <h3
+            class="mint-h1 margin-0 padding-y-2"
           >
             Testing Model Summary 
             <span
@@ -169,127 +189,200 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
             >
               (TMS)
             </span>
-          </h1>
-          <div
-            data-testid="task-list-status"
+          </h3>
+          <button
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+            type="button"
           >
+            <svg
+              aria-label="arrow up"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-hidden="true"
+      class="sticky-header-wrapper z-300 shadow-2 bg-white bg-primary-lighter sticky-header-wrapper--visible"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <h3
+            class="mint-h1 margin-0 padding-y-2"
+          >
+            Testing Model Summary 
+            <span
+              class="font-sans-sm text-normal"
+            >
+              (TMS)
+            </span>
+          </h3>
+          <button
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+            type="button"
+          >
+            <svg
+              aria-label="arrow up"
+              class="usa-icon usa-icon--size-3"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-bottom-6 padding-x-2"
+        data-testid="gridContainer"
+      >
+        <div
+          data-testid="task-list-status"
+        >
+          <div
+            class="grid-row desktop:grid-col-12 margin-bottom-2 flex-align-center flex-justify-start"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold margin-right-1"
+            >
+              Status:
+            </p>
+            <span
+              class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1 margin-right-2"
+              data-testid="tag"
+            >
+              Draft Model Plan
+            </span>
             <div
-              class="grid-row desktop:grid-col-12 margin-bottom-2 flex-align-center flex-justify-start"
+              class="grid-row"
               data-testid="grid"
             >
-              <p
-                class="margin-y-0 text-bold margin-right-1"
-              >
-                Status:
-              </p>
-              <span
-                class="usa-tag mint-tag bg-base text-white margin-right-1 padding-x-1 margin-right-2"
-                data-testid="tag"
-              >
-                Draft Model Plan
-              </span>
               <div
-                class="grid-row"
-                data-testid="grid"
+                class="status-banner__border border-base-light margin-05 margin-right-2 margin-left-1"
+              />
+              <div
+                class="display-flex flex-align-center flex-wrap"
               >
-                <div
-                  class="status-banner__border border-base-light margin-05 margin-right-2 margin-left-1"
-                />
-                <div
-                  class="display-flex flex-align-center flex-wrap"
+                <a
+                  class="usa-link display-flex flex-align-center padding-right-2"
+                  data-discover="true"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
                 >
-                  <a
-                    class="usa-link display-flex flex-align-center padding-right-2"
-                    data-discover="true"
-                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
+                  <svg
+                    aria-label="history"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <svg
-                      aria-label="history"
-                      class="usa-icon margin-right-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                      />
-                    </svg>
-                    View change history
-                  </a>
-                  <div
-                    class="display-flex flex-align-center flex-wrap margin-right-1"
-                  >
-                    <p
-                      class="margin-y-0 text-normal margin-right-1"
-                    >
-                      Last updated 08/23/2022
-                    </p>
-                  </div>
-                </div>
+                    <path
+                      d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                    />
+                  </svg>
+                  View change history
+                </a>
                 <div
-                  class="status-banner__border border-base-light margin-05 margin-right-2"
-                />
-                <div
-                  class="display-flex flex-align-center"
+                  class="display-flex flex-align-center flex-wrap margin-right-1"
                 >
-                  <a
-                    class="usa-link display-flex flex-align-center"
-                    data-discover="true"
-                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+                  <p
+                    class="margin-y-0 text-normal margin-right-1"
                   >
-                    <svg
-                      aria-label="edit"
-                      class="usa-icon margin-right-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                      />
-                    </svg>
-                    Edit model information
-                  </a>
+                    Last updated 08/23/2022
+                  </p>
                 </div>
+              </div>
+              <div
+                class="status-banner__border border-base-light margin-05 margin-right-2"
+              />
+              <div
+                class="display-flex flex-align-center"
+              >
+                <a
+                  class="usa-link display-flex flex-align-center"
+                  data-discover="true"
+                  href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+                >
+                  <svg
+                    aria-label="edit"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                    />
+                  </svg>
+                  Edit model information
+                </a>
               </div>
             </div>
           </div>
+        </div>
+        <div
+          class="mint-no-print"
+        >
           <div
-            class="mint-no-print"
+            class=""
           >
-            <div
-              class=""
+            <button
+              aria-controls="testing-model-summary--description"
+              aria-expanded="false"
+              class="usa-button usa-button--unstyled mint-no-print margin-top-3 padding-0"
+              data-testid="testing-model-summary--description"
+              type="button"
             >
-              <button
-                aria-controls="testing-model-summary--description"
-                aria-expanded="false"
-                class="usa-button usa-button--unstyled mint-no-print margin-top-3 padding-0"
-                data-testid="testing-model-summary--description"
-                type="button"
+              Show model summary
+              <svg
+                aria-label="expand"
+                class="usa-icon margin-right-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Show model summary
-                <svg
-                  aria-label="expand"
-                  class="usa-icon margin-right-05"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
