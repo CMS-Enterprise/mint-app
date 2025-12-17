@@ -5,6 +5,17 @@ import classNames from 'classnames';
 
 import './index.scss';
 
+/**
+ * StickyModelNameWrapper - A component that displays a sticky header when scrolling past a trigger element.
+ *
+ * How it works:
+ * - Monitors scroll position relative to a trigger element (typically a PageHeading)
+ * - Uses a hidden measurement element to calculate the sticky header's height
+ * - Shows the sticky header when the trigger element scrolls past the top of the viewport
+ * - The sticky header fades in/out smoothly using CSS transitions
+ * - Includes a "back to top" button for easy navigation
+ * - The header becomes visible when the bottom of the trigger element reaches the sticky header's height from the top
+ */
 const StickyModelNameWrapper = ({
   children,
   triggerRef,
