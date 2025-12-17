@@ -79,7 +79,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         class="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        for 
+        for My excellent plan that I just initiated
       </p>
     </div>
     <div
@@ -105,15 +105,16 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             <p
               class="margin-y-0 font-body-lg"
             >
-              for 
+              for My excellent plan that I just initiated
             </p>
           </div>
           <button
+            aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
             type="button"
           >
             <svg
-              aria-label="arrow up"
+              aria-hidden="true"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"
@@ -132,8 +133,9 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      aria-hidden="true"
+      aria-hidden="false"
       class="sticky-header-wrapper z-300 shadow-2 bg-white sticky-header-wrapper--visible"
+      role="banner"
     >
       <div
         class="grid-container"
@@ -153,15 +155,16 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             <p
               class="margin-y-0 font-body-lg"
             >
-              for 
+              for My excellent plan that I just initiated
             </p>
           </div>
           <button
+            aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
             type="button"
           >
             <svg
-              aria-label="arrow up"
+              aria-hidden="true"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"

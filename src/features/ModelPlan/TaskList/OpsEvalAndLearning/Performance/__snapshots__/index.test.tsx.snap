@@ -110,11 +110,12 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
             </p>
           </div>
           <button
+            aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
             type="button"
           >
             <svg
-              aria-label="arrow up"
+              aria-hidden="true"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"
@@ -133,8 +134,9 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      aria-hidden="true"
+      aria-hidden="false"
       class="sticky-header-wrapper z-300 shadow-2 bg-white sticky-header-wrapper--visible"
+      role="banner"
     >
       <div
         class="grid-container"
@@ -158,11 +160,12 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
             </p>
           </div>
           <button
+            aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
             type="button"
           >
             <svg
-              aria-label="arrow up"
+              aria-hidden="true"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"

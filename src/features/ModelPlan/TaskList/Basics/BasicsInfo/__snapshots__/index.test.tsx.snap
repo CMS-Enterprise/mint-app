@@ -100,7 +100,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <p
               class="margin-y-0 font-body-lg"
             >
-              for My excellent plan that I just initiated (MEP)
+              for My excellent plan that I just initiated
             </p>
           </div>
           <button
@@ -150,7 +150,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <p
               class="margin-y-0 font-body-lg"
             >
-              for My excellent plan that I just initiated (MEP)
+              for My excellent plan that I just initiated
             </p>
           </div>
           <button
@@ -297,7 +297,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     id="plan-basics-abbreviation"
                     maxlength="50"
                     name="abbreviation"
-                    value="MEP"
+                    value=""
                   />
                 </div>
                 <div
