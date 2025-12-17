@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -32,7 +32,9 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
@@ -61,6 +63,7 @@ const Frequency = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetFrequencyQuery({
@@ -91,7 +94,7 @@ const Frequency = () => {
     status
   } = (data?.modelPlan?.beneficiaries || {}) as FrequencyFormType;
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   useScrollElement(!loading);
 
@@ -148,7 +151,7 @@ const Frequency = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {beneficiariesMiscT('heading')}
         </PageHeading>
 
@@ -158,7 +161,22 @@ const Frequency = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={headerRef}>
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {miscellaneousT('modelPlanHeading', {
+              heading: beneficiariesMiscT('heading')
+            })}
+          </h3>
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {miscellaneousT('for')} {modelName}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>
