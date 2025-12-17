@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -10,11 +10,11 @@ import './index.scss';
  *
  * How it works:
  * - Monitors scroll position relative to a trigger element (typically a PageHeading)
- * - Shows the sticky header when the trigger element scrolls past the sticky positioning threshold
+ * - Uses a hidden measurement element to calculate the sticky header's height
+ * - Shows the sticky header when the trigger element scrolls past the top of the viewport
  * - The sticky header fades in/out smoothly using CSS transitions
  * - Includes a "back to top" button for easy navigation
- * - The header becomes visible when the bottom of the trigger element reaches the sticky threshold
- *   (48px on mobile, 55px on desktop) to prevent overlap and ensure smooth visual transition
+ * - The header becomes visible when the bottom of the trigger element reaches the sticky header's height from the top
  */
 const StickyModelNameWrapper = ({
   children,
@@ -26,24 +26,23 @@ const StickyModelNameWrapper = ({
   className?: string;
 }) => {
   const { t: h } = useTranslation('generalReadOnly');
+  // Ref for measuring the height of the sticky header (hidden, off-screen)
+  const measurementRef = useRef<HTMLDivElement>(null);
   const [isStickyHeaderVisible, setIsStickyHeaderVisible] =
     useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!triggerRef.current) return;
+      if (!triggerRef.current || !measurementRef.current) return;
 
       const triggerRect = triggerRef.current.getBoundingClientRect();
-
-      // Get the sticky positioning threshold from CSS
-      // Mobile: 48px, Desktop: 55px (matches index.scss)
-      const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-      const stickyThreshold = isDesktop ? 55 : 48;
+      // Use the hidden measurement element to get the height
+      const stickyHeaderHeight = measurementRef.current.offsetHeight;
 
       // Show sticky header when the bottom of the trigger element reaches
-      // the sticky positioning threshold from the top of viewport
-      // This ensures smooth transition without overlap
-      setIsStickyHeaderVisible(triggerRect.bottom <= stickyThreshold);
+      // the sticky header's height from the top of viewport
+      // This ensures smooth transition as the trigger scrolls past
+      setIsStickyHeaderVisible(triggerRect.bottom <= stickyHeaderHeight);
     };
 
     // Check on initial load and after a short delay to ensure elements are rendered
@@ -80,6 +79,22 @@ const StickyModelNameWrapper = ({
 
   return (
     <>
+      {/* Hidden measurement element - always rendered but off-screen for height calculation */}
+      <div
+        ref={measurementRef}
+        className={classNames('sticky-header-wrapper', className)}
+        style={{
+          position: 'absolute',
+          visibility: 'hidden',
+          top: '-9999px',
+          left: '-9999px',
+          width: '100%'
+        }}
+        aria-hidden="true"
+      >
+        {stickyContent}
+      </div>
+
       {/* Sticky header - always rendered but faded in/out smoothly */}
       <div
         className={classNames(
