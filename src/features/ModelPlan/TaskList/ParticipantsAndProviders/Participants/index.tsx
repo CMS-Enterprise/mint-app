@@ -37,7 +37,7 @@ import StickyHeaderSection from 'components/StickyHeaderSection';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { useStickyHeader } from 'hooks/useStickyHeader';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
 import ProviderAndSupplierSidepanel from '../_component/ProviderAndSupplierSidepanel';

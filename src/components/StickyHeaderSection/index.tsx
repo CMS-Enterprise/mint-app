@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
-import { useStickyHeader } from 'hooks/useStickyHeader';
+import useStickyHeader from 'hooks/useStickyHeader';
 
 interface StickyHeaderSectionProps {
   /**

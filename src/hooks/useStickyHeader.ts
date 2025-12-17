@@ -11,7 +11,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
  *   - modelName: Model name from ModelInfoContext
  *   - abbreviation: Model abbreviation from ModelInfoContext
  */
-export const useStickyHeader = () => {
+const useStickyHeader = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const { modelName, abbreviation } = useContext(ModelInfoContext);
 
@@ -21,3 +21,5 @@ export const useStickyHeader = () => {
     abbreviation
   };
 };
+
+export default useStickyHeader;

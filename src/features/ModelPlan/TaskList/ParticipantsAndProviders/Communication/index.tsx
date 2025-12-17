@@ -37,7 +37,7 @@ import StickyHeaderSection from 'components/StickyHeaderSection';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import { useStickyHeader } from 'hooks/useStickyHeader';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 type CommunicationFormType =

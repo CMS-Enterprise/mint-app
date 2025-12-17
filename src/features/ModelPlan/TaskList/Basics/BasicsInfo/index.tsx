@@ -48,7 +48,7 @@ import Tooltip from 'components/Tooltip';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { useStickyHeader } from 'hooks/useStickyHeader';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formUtil';

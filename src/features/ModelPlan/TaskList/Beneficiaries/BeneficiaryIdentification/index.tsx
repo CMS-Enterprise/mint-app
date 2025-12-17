@@ -37,7 +37,7 @@ import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { useStickyHeader } from 'hooks/useStickyHeader';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
 type BeneficiaryIdentificationFormType =

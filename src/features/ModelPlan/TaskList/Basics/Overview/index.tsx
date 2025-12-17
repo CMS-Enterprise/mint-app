@@ -34,7 +34,7 @@ import StickyHeaderSection from 'components/StickyHeaderSection';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { useStickyHeader } from 'hooks/useStickyHeader';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
