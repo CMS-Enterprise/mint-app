@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -29,7 +29,9 @@ import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -64,6 +66,7 @@ const DataSharing = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetDataSharingQuery({
@@ -97,7 +100,7 @@ const DataSharing = () => {
     qualityReportingFrequencyOther
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as GetDataSharingFormType;
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   const { mutationError } = useHandleMutation(
     TypedUpdatePlanOpsEvalAndLearningDocument,
@@ -172,7 +175,7 @@ const DataSharing = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {opsEvalAndLearningMiscT('heading')}
         </PageHeading>
 
@@ -182,7 +185,22 @@ const DataSharing = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={headerRef}>
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {miscellaneousT('modelPlanHeading', {
+              heading: opsEvalAndLearningMiscT('heading')
+            })}
+          </h3>
+          <p className="margin-y-0 font-body-lg">
+            {miscellaneousT('for')} {modelName}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>
