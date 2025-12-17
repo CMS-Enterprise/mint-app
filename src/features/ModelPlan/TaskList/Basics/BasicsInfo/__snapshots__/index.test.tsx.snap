@@ -79,7 +79,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
     </div>
     <div
       aria-hidden="true"
-      class="sticky-header-wrapper bg-white"
+      class="sticky-header-wrapper"
       style="position: absolute; visibility: hidden; top: -9999px; left: -9999px; width: 100%;"
     >
       <div
@@ -95,21 +95,21 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <h3
               class="margin-y-0"
             >
-              Model Plan: Model basics
+              Model plan: Model basics
             </h3>
             <p
               class="margin-y-0 font-body-lg"
-              data-testid="model-plan-name"
             >
               for My excellent plan that I just initiated (MEP)
             </p>
           </div>
           <button
+            aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
             type="button"
           >
             <svg
-              aria-label="arrow up"
+              aria-hidden="true"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"
@@ -128,8 +128,9 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      aria-hidden="true"
-      class="sticky-header-wrapper z-300 shadow-2 bg-white bg-white sticky-header-wrapper--visible"
+      aria-hidden="false"
+      class="sticky-header-wrapper z-300 shadow-2 bg-white sticky-header-wrapper--visible"
+      role="banner"
     >
       <div
         class="grid-container"
@@ -144,21 +145,21 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <h3
               class="margin-y-0"
             >
-              Model Plan: Model basics
+              Model plan: Model basics
             </h3>
             <p
               class="margin-y-0 font-body-lg"
-              data-testid="model-plan-name"
             >
               for My excellent plan that I just initiated (MEP)
             </p>
           </div>
           <button
+            aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
             type="button"
           >
             <svg
-              aria-label="arrow up"
+              aria-hidden="true"
               class="usa-icon usa-icon--size-3"
               focusable="false"
               height="1em"

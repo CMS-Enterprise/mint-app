@@ -7,8 +7,13 @@ import {
   CmsCenter,
   GetBasicsDocument,
   GetBasicsQuery,
-  ModelCategory
+  GetModelPlanBaseDocument,
+  ModelCategory,
+  ModelStatus,
+  MtoStatus
 } from 'gql/generated/graphql';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import BasicsInfo from './index';
 
@@ -38,15 +43,44 @@ const basicMockData: GetModelPlanInfoType = {
   }
 };
 
+const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
 const mocks = [
   {
     request: {
       query: GetBasicsDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: basicMockData
+      }
+    }
+  },
+  {
+    request: {
+      query: GetModelPlanBaseDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: basicMockData.modelName,
+          abbreviation: basicMockData.abbreviation,
+          modifiedDts: '2024-01-01T00:00:00Z',
+          createdDts: '2024-01-01T00:00:00Z',
+          status: ModelStatus.PLAN_DRAFT,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.READY,
+            info: {
+              __typename: 'MTOInfo',
+              id: 'mto-id'
+            }
+          }
+        }
       }
     }
   }
@@ -58,7 +92,11 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <BasicsInfo />
+          element: (
+            <ModelInfoWrapper>
+              <BasicsInfo />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -69,7 +107,7 @@ describe('Model Plan Basics page', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -87,7 +125,11 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <BasicsInfo />
+          element: (
+            <ModelInfoWrapper>
+              <BasicsInfo />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -98,7 +140,7 @@ describe('Model Plan Basics page', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -152,7 +194,11 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <BasicsInfo />
+          element: (
+            <ModelInfoWrapper>
+              <BasicsInfo />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -163,7 +209,7 @@ describe('Model Plan Basics page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
