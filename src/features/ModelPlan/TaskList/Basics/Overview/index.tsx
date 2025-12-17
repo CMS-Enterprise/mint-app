@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -30,11 +30,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
+import StickyHeaderSection from 'components/StickyHeaderSection';
 import TextAreaField from 'components/TextAreaField';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { useStickyHeader } from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
@@ -57,14 +57,12 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
-  const overviewRef = useRef<HTMLDivElement>(null);
+  const { headerRef: overviewRef, modelName, abbreviation } = useStickyHeader();
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
       id: modelID
     }
   });
-
-  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   const {
     id,
@@ -129,17 +127,10 @@ const Overview = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyModelNameWrapper triggerRef={overviewRef} className="bg-white">
-        <div className="padding-y-2">
-          <h3 className="margin-y-0">
-            {taskListT('heading')}: {basicsMiscT('heading')}
-          </h3>
-          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
-            {taskListT('subheading', { modelName })}
-            {abbreviation && ` (${abbreviation})`}
-          </p>
-        </div>
-      </StickyModelNameWrapper>
+      <StickyHeaderSection
+        headerRef={overviewRef}
+        sectionHeading={basicsMiscT('heading')}
+      />
 
       <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">

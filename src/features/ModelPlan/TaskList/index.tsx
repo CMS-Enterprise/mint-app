@@ -275,10 +275,7 @@ const TaskList = () => {
               </Grid>
             </Grid>
           </GridContainer>
-          <StickyModelNameWrapper
-            triggerRef={modelNameRef}
-            className="bg-white"
-          >
+          <StickyModelNameWrapper triggerRef={modelNameRef}>
             <div className="padding-y-2">
               <h3 className="margin-y-0">{t('heading')}</h3>
               <p className="margin-y-0 font-body-lg">

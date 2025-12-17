@@ -43,10 +43,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import RequiredAsterisk from 'components/RequiredAsterisk';
-import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
+import StickyHeaderSection from 'components/StickyHeaderSection';
 import Tooltip from 'components/Tooltip';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { useStickyHeader } from 'hooks/useStickyHeader';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -77,6 +78,7 @@ const BasicsInfo = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const navigate = useNavigate();
+  const { headerRef: basicsInfoRef, modelName: contextModelName, abbreviation: contextAbbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -86,8 +88,11 @@ const BasicsInfo = () => {
 
   const { nameHistory } = data?.modelPlan || {};
 
-  const { id, modelName, abbreviation, basics } = (data?.modelPlan ||
+  const { id, modelName: queryModelName, abbreviation: queryAbbreviation, basics } = (data?.modelPlan ||
     {}) as ModelPlanInfoFormType;
+
+  const modelName = queryModelName;
+  const abbreviation = queryAbbreviation;
 
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
@@ -109,7 +114,6 @@ const BasicsInfo = () => {
   const [pendingLocation, setPendingLocation] = useState<string | null>(null);
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
-  const basicsInfoRef = useRef<HTMLDivElement>(null);
 
   // Skip global error handling, this is handled by the mutation modal
   useErrorMessage('skip', true);
@@ -264,17 +268,10 @@ const BasicsInfo = () => {
           {basicsMiscT('heading')}
         </PageHeading>
       </GridContainer>
-      <StickyModelNameWrapper triggerRef={basicsInfoRef} className="bg-white">
-        <div className="padding-y-2">
-          <h3 className="margin-y-0">
-            {taskListT('heading')}: {basicsMiscT('heading')}
-          </h3>
-          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
-            {taskListT('subheading', { modelName })}
-            {abbreviation && ` (${abbreviation})`}
-          </p>
-        </div>
-      </StickyModelNameWrapper>
+      <StickyHeaderSection
+        headerRef={basicsInfoRef}
+        sectionHeading={basicsMiscT('heading')}
+      />
       <GridContainer>
         <p className="margin-top-1 margin-bottom-2 line-height-sans-3">
           {basicsMiscT('description')}

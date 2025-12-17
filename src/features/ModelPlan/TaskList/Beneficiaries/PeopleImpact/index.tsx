@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -32,11 +32,11 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
+import StickyHeaderSection from 'components/StickyHeaderSection';
 import TextField from 'components/TextField';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { useStickyHeader } from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
@@ -58,7 +58,7 @@ const PeopleImpact = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetPeopleImpactedQuery({
@@ -76,8 +76,6 @@ const PeopleImpact = () => {
     beneficiarySelectionNote,
     beneficiarySelectionOther
   } = (data?.modelPlan?.beneficiaries || {}) as PeopleImpactedFormType;
-
-  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   const { mutationError } = useHandleMutation(
     TypedUpdateModelPlanBeneficiariesDocument,
@@ -131,19 +129,10 @@ const PeopleImpact = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyModelNameWrapper triggerRef={headerRef}>
-        <div className="padding-y-2">
-          <h3 className="margin-y-0">
-            {miscellaneousT('modelPlanHeading', {
-              heading: beneficiariesMiscT('heading')
-            })}
-          </h3>
-          <p className="margin-y-0 font-body-lg">
-            {miscellaneousT('for')} {modelName}
-            {abbreviation && ` (${abbreviation})`}
-          </p>
-        </div>
-      </StickyModelNameWrapper>
+      <StickyHeaderSection
+        headerRef={headerRef}
+        sectionHeading={beneficiariesMiscT('heading')}
+      />
 
       <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
