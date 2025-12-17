@@ -171,7 +171,7 @@ export const Coordination = () => {
               heading: participantsAndProvidersMiscT('heading')
             })}
           </h3>
-          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+          <p className="margin-y-0 font-body-lg">
             {miscellaneousT('for')} {modelName}
             {abbreviation && ` (${abbreviation})`}
           </p>
