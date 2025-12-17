@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -33,7 +33,9 @@ import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import Tooltip from 'components/Tooltip';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
@@ -66,6 +68,7 @@ export const Coordination = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetCoordinationQuery({
@@ -92,7 +95,7 @@ export const Coordination = () => {
     participantsIDSNote
   } = (data?.modelPlan?.participantsAndProviders || {}) as CoordinationFormType;
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -150,7 +153,7 @@ export const Coordination = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {participantsAndProvidersMiscT('heading')}
         </PageHeading>
 
@@ -160,7 +163,21 @@ export const Coordination = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={headerRef}>
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {participantsAndProvidersMiscT('modelPlanHeading')}:{' '}
+            {participantsAndProvidersMiscT('heading')}
+          </h3>
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {miscellaneousT('for')} {modelName}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

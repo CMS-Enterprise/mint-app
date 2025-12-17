@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -33,7 +33,9 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
@@ -65,7 +67,7 @@ export const Participants = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantsAndProvidersFormType>>(null);
-
+  const headerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetParticipantsAndProvidersQuery({
@@ -88,7 +90,7 @@ export const Participants = () => {
   } = (data?.modelPlan?.participantsAndProviders ||
     {}) as ParticipantsAndProvidersFormType;
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   const { mutationError } = useHandleMutation(
     TypedUpdatePlanParticipantsAndProvidersDocument,
@@ -138,7 +140,7 @@ export const Participants = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {participantsAndProvidersMiscT('heading')}
         </PageHeading>
 
@@ -148,7 +150,21 @@ export const Participants = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={headerRef}>
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {participantsAndProvidersMiscT('modelPlanHeading')}:{' '}
+            {participantsAndProvidersMiscT('heading')}
+          </h3>
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {miscellaneousT('for')} {modelName}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>
