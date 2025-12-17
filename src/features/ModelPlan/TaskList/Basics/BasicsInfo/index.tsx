@@ -43,6 +43,7 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import RequiredAsterisk from 'components/RequiredAsterisk';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import Tooltip from 'components/Tooltip';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -57,6 +58,7 @@ type ModelPlanInfoFormType = Omit<GetBasicsQuery['modelPlan'], 'nameHistory'>;
 
 const BasicsInfo = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
+  const { t: taskListT } = useTranslation('modelPlanTaskList');
   const { t: basicsT } = useTranslation('basics');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -107,6 +109,7 @@ const BasicsInfo = () => {
   const [pendingLocation, setPendingLocation] = useState<string | null>(null);
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
+  const basicsInfoRef = useRef<HTMLDivElement>(null);
 
   // Skip global error handling, this is handled by the mutation modal
   useErrorMessage('skip', true);
@@ -257,10 +260,22 @@ const BasicsInfo = () => {
             BreadcrumbItemOptions.BASICS
           ]}
         />
-
-        <PageHeading className="margin-top-4">
+        <PageHeading className="margin-top-4" ref={basicsInfoRef}>
           {basicsMiscT('heading')}
         </PageHeading>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={basicsInfoRef} className="bg-white">
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {taskListT('heading')}: {basicsMiscT('heading')}
+          </h3>
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {taskListT('subheading', { modelName })}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
+      <GridContainer>
         <p className="margin-top-1 margin-bottom-2 line-height-sans-3">
           {basicsMiscT('description')}
         </p>

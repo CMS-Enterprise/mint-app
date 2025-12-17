@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -30,7 +30,9 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -45,6 +47,7 @@ type InitialValueType = Omit<
 
 const Overview = () => {
   const { t: basicsT } = useTranslation('basics');
+  const { t: taskListT } = useTranslation('modelPlanTaskList');
   const { t: basicsMiscT } = useTranslation('basicsMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -54,14 +57,14 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
-
+  const overviewRef = useRef<HTMLDivElement>(null);
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
       id: modelID
     }
   });
 
-  const { modelName } = data?.modelPlan || {};
+  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   const {
     id,
@@ -115,7 +118,7 @@ const Overview = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-1">
+        <PageHeading className="margin-top-4 margin-bottom-1" ref={overviewRef}>
           {basicsMiscT('heading')}
         </PageHeading>
 
@@ -125,7 +128,20 @@ const Overview = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper triggerRef={overviewRef} className="bg-white">
+        <div className="padding-y-2">
+          <h3 className="margin-y-0">
+            {taskListT('heading')}: {basicsMiscT('heading')}
+          </h3>
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {taskListT('subheading', { modelName })}
+            {abbreviation && ` (${abbreviation})`}
+          </p>
+        </div>
+      </StickyModelNameWrapper>
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>
