@@ -139,8 +139,9 @@ const Involvements = () => {
       <StickyModelNameWrapper triggerRef={headerRef}>
         <div className="padding-y-2">
           <h3 className="margin-y-0">
-            {generalCharacteristicsMiscT('modelPlanHeading')}:{' '}
-            {generalCharacteristicsMiscT('heading')}
+            {generalCharacteristicsMiscT('modelPlanHeading', {
+              heading: generalCharacteristicsMiscT('heading')
+            })}
           </h3>
           <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
             {miscellaneousT('for')} {modelName}
