@@ -227,7 +227,11 @@ const KeyContactDirectory = () => {
       });
     }
 
-    return smeContacts;
+    const sortedSmeContacts = [...smeContacts].sort((a, b) =>
+      a.subjectArea.localeCompare(b.subjectArea)
+    );
+
+    return sortedSmeContacts;
   }, [categories, query, smeData]);
 
   const reformattedSmes = useMemo(() => {
