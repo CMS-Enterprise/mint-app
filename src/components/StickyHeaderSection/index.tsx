@@ -8,7 +8,7 @@ interface StickyHeaderSectionProps {
   /**
    * Ref to the PageHeading element that triggers the sticky header
    */
-  headerRef: React.RefObject<HTMLDivElement>;
+  headerRef: React.RefObject<HTMLElement | null>;
   /**
    * Translation key for the section heading (e.g., 'participantsAndProvidersMisc.heading')
    * This will be passed to miscellaneousT('modelPlanHeading', { heading: sectionHeading })

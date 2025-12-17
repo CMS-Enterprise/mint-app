@@ -63,7 +63,7 @@ const Frequency = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
+  const { headerRef, modelName } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetFrequencyQuery({
@@ -93,8 +93,6 @@ const Frequency = () => {
     readyForReviewDts,
     status
   } = (data?.modelPlan?.beneficiaries || {}) as FrequencyFormType;
-
-  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   useScrollElement(!loading);
 
