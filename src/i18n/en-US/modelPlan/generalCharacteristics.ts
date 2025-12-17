@@ -1244,7 +1244,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
 
 export const generalCharacteristicsMisc: Record<string, string> = {
   heading: 'General characteristics',
-  modelPlanHeading: 'Model plan: {{-heading}}',
   clearanceHeading: 'Review general characteristics',
   breadcrumb: 'General characteristics',
   specificQuestions: 'Key characteristic specific questions'

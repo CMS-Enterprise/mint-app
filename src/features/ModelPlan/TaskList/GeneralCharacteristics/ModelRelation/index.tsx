@@ -424,7 +424,7 @@ export const ModelRelation = () => {
       <StickyModelNameWrapper triggerRef={headerRef}>
         <div className="padding-y-2">
           <h3 className="margin-y-0">
-            {generalCharacteristicsMiscT('modelPlanHeading', {
+            {miscellaneousT('modelPlanHeading', {
               heading: generalCharacteristicsMiscT('heading')
             })}
           </h3>
