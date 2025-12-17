@@ -166,7 +166,7 @@ const KeyCharacteristics = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyModelNameWrapper triggerRef={headerRef} className="bg-white">
+      <StickyModelNameWrapper triggerRef={headerRef}>
         <div className="padding-y-2">
           <h3 className="margin-y-0">
             {generalCharacteristicsMiscT('modelPlanHeading')}:{' '}

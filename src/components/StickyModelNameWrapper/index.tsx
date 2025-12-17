@@ -87,7 +87,7 @@ const StickyModelNameWrapper = ({
       {/* Sticky header - always rendered but faded in/out smoothly */}
       <div
         className={classNames(
-          'sticky-header-wrapper z-300 shadow-2',
+          'sticky-header-wrapper z-300 shadow-2 bg-white',
           className,
           {
             'sticky-header-wrapper--visible': isStickyHeaderVisible
