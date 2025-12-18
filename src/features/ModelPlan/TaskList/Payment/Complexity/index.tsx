@@ -33,8 +33,10 @@ import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -61,6 +63,7 @@ const Complexity = () => {
 
   const formikRef = useRef<FormikProps<ComplexityFormType>>(null);
   const navigate = useNavigate();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetComplexityQuery({
     variables: {
@@ -85,8 +88,6 @@ const Complexity = () => {
     anticipatedPaymentFrequencyOther,
     anticipatedPaymentFrequencyNote
   } = (data?.modelPlan?.payments || {}) as ComplexityFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
@@ -171,7 +172,7 @@ const Complexity = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {paymentsMiscT('heading')}
         </PageHeading>
 
@@ -181,7 +182,15 @@ const Complexity = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={paymentsMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

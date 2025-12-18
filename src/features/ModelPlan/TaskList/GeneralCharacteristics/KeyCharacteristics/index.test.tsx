@@ -7,6 +7,9 @@ import {
   GetKeyCharacteristicsQuery,
   KeyCharacteristic
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import KeyCharacteristics from './index';
 
@@ -56,7 +59,8 @@ const keyCharacteristicsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Characteristics', () => {
@@ -65,7 +69,11 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics',
-          element: <KeyCharacteristics />
+          element: (
+            <ModelInfoWrapper>
+              <KeyCharacteristics />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -103,7 +111,11 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics',
-          element: <KeyCharacteristics />
+          element: (
+            <ModelInfoWrapper>
+              <KeyCharacteristics />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

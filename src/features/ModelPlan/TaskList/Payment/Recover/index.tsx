@@ -35,9 +35,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
+import useStickyHeader from 'hooks/useStickyHeader';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
@@ -70,6 +72,7 @@ const Recover = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetRecoverQuery({
     variables: {
@@ -102,10 +105,6 @@ const Recover = () => {
     readyForReviewDts,
     status
   } = (data?.modelPlan?.payments || {}) as RecoverFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
-
-  useScrollElement(!loading);
 
   const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
     id,
@@ -164,7 +163,7 @@ const Recover = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {paymentsMiscT('heading')}
         </PageHeading>
 
@@ -174,7 +173,15 @@ const Recover = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={paymentsMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

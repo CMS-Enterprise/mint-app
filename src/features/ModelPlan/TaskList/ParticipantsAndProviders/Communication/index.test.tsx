@@ -13,6 +13,9 @@ import {
   GetCommunicationQuery,
   ParticipantRiskType
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Communication from './index';
 
@@ -44,12 +47,12 @@ const communicationMock = [
   {
     request: {
       query: GetCommunicationDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: communicationMockData,
           operationalNeeds: [
@@ -62,7 +65,8 @@ const communicationMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Communication', () => {
@@ -71,7 +75,11 @@ describe('Model Plan Communication', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/communication',
-          element: <Communication />
+          element: (
+            <ModelInfoWrapper>
+              <Communication />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -105,7 +113,11 @@ describe('Model Plan Communication', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/communication',
-          element: <Communication />
+          element: (
+            <ModelInfoWrapper>
+              <Communication />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

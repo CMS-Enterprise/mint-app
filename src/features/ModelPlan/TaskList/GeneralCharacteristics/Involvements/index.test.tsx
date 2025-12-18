@@ -6,6 +6,9 @@ import {
   GetInvolvementsDocument,
   GetInvolvementsQuery
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Involvements from './index';
 
@@ -41,7 +44,8 @@ const involvementsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Characteristics', () => {
@@ -50,7 +54,11 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics/involvements',
-          element: <Involvements />
+          element: (
+            <ModelInfoWrapper>
+              <Involvements />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -86,7 +94,11 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics/involvements',
-          element: <Involvements />
+          element: (
+            <ModelInfoWrapper>
+              <Involvements />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

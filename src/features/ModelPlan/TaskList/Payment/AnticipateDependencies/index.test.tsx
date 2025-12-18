@@ -8,6 +8,9 @@ import {
   GetAnticipateDependenciesQuery,
   PayType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import AnticipateDependencies from './index';
 
@@ -44,7 +47,8 @@ const paymentsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan -- Anticipate Dependencies', () => {
@@ -53,7 +57,11 @@ describe('Model Plan -- Anticipate Dependencies', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
-          element: <AnticipateDependencies />
+          element: (
+            <ModelInfoWrapper>
+              <AnticipateDependencies />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -87,7 +95,11 @@ describe('Model Plan -- Anticipate Dependencies', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
-          element: <AnticipateDependencies />
+          element: (
+            <ModelInfoWrapper>
+              <AnticipateDependencies />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

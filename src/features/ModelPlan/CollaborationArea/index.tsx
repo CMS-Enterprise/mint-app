@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
@@ -19,6 +19,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 
@@ -61,6 +62,7 @@ const CollaborationArea = () => {
 
   const {
     modelName,
+    abbreviation,
     discussions,
     documents,
     dataExchangeApproach,
@@ -88,6 +90,8 @@ const CollaborationArea = () => {
   const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
     !!suggestedPhase || false
   );
+
+  const collaborationAreaRef = useRef<HTMLDivElement>(null);
 
   // Updates state if session value changes
   useEffect(() => {
@@ -152,10 +156,15 @@ const CollaborationArea = () => {
             <PageLoading />
           </div>
         )}
-
-        {data && (
-          <Grid>
-            <Grid row className="collaboration-area__header">
+      </GridContainer>
+      {data && (
+        <>
+          <GridContainer>
+            <Grid
+              row
+              className="collaboration-area__header"
+              ref={collaborationAreaRef}
+            >
               <Grid desktop={{ col: 9 }}>
                 <PageHeading className="margin-top-4 margin-bottom-0">
                   {collaborationAreaT('heading')}
@@ -186,7 +195,23 @@ const CollaborationArea = () => {
                 </div>
               </Grid>
             </Grid>
+          </GridContainer>
+          <StickyModelNameWrapper triggerRef={collaborationAreaRef}>
+            <div className="padding-top-2 padding-bottom-1">
+              <h3 className="margin-y-0">{collaborationAreaT('heading')}</h3>
+              <p
+                className="margin-y-0 font-body-lg line-height-sans-5"
+                data-testid="model-plan-name"
+              >
+                {collaborationAreaT('modelPlan', {
+                  modelName
+                })}
+                {abbreviation && ` (${abbreviation})`}
+              </p>
+            </div>
+          </StickyModelNameWrapper>
 
+          <GridContainer>
             <Grid desktop={{ col: 12 }}>
               <CollaborationStatusBanner
                 modelID={modelID}
@@ -223,9 +248,10 @@ const CollaborationArea = () => {
                 </CardGroup>
               </Grid>
             </Grid>
-          </Grid>
-        )}
-
+          </GridContainer>
+        </>
+      )}
+      <GridContainer>
         {!!modelPlan.suggestedPhase && !statusChecked && (
           <UpdateStatusModal
             modelID={modelID}

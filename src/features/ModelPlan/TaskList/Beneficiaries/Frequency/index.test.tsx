@@ -15,12 +15,13 @@ import {
   TaskStatus,
   YesNoType
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Frequency from './index';
 
 type BeneficiaryFrequencyType = GetFrequencyQuery['modelPlan']['beneficiaries'];
-
-const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
@@ -63,7 +64,8 @@ const beneficiaryMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Beneficiaries', () => {
@@ -72,7 +74,11 @@ describe('Model Plan Beneficiaries', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
-          element: <Frequency />
+          element: (
+            <ModelInfoWrapper>
+              <Frequency />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -106,7 +112,11 @@ describe('Model Plan Beneficiaries', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency',
-          element: <Frequency />
+          element: (
+            <ModelInfoWrapper>
+              <Frequency />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

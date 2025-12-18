@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
@@ -19,6 +19,7 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ProtectedRoute from 'components/ProtectedRoute';
 import SectionWrapper from 'components/SectionContainer';
@@ -27,6 +28,7 @@ import {
   modelSectionRouteKey,
   ModelSubSectionRouteKey
 } from 'components/ShareExport/util';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import PrintPDFWrapper from 'contexts/PrintPDFContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -233,7 +235,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const flags = useFlags();
 
@@ -261,6 +262,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     useState<boolean>(false);
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+
+  const summaryRef = useRef<HTMLDivElement>(null);
 
   const { data, loading, error, refetch } = useGetModelSummaryQuery({
     variables: {
@@ -318,103 +321,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
-  const Summary = (
-    <SummaryBox
-      className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
-      data-testid="read-only-model-summary"
-    >
-      <GridContainer
-        className={classnames({
-          'padding-x-0': isMobile,
-          'padding-x-2': isTablet
-        })}
-      >
-        {statusMessage && (
-          <Alert
-            slim
-            type={statusMessage.status}
-            className="margin-bottom-4"
-            closeAlert={setStatusMessage}
-          >
-            {statusMessage.message}
-          </Alert>
-        )}
-
-        {!isHelpArticle && (
-          <div className="mint-no-print margin-bottom-3">
-            <div className="display-flex flex-justify">
-              <UswdsReactLink
-                to="/models"
-                className="display-flex flex-align-center"
-              >
-                <Icon.ArrowBack
-                  className="text-primary margin-right-1"
-                  aria-label="back"
-                />
-                {h('back')}
-              </UswdsReactLink>
-
-              <FavoriteIcon
-                isFavorite={isFavorite}
-                modelPlanID={id}
-                updateFavorite={handleUpdateFavorite}
-              />
-            </div>
-          </div>
-        )}
-
-        {isHelpArticle ? (
-          <h2
-            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            tabIndex={-1}
-            aria-live="polite"
-          >
-            {modelName}{' '}
-            {abbreviation && (
-              <span className="font-sans-sm text-normal">({abbreviation})</span>
-            )}
-          </h2>
-        ) : (
-          <h1
-            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-            tabIndex={-1}
-            aria-live="polite"
-          >
-            {modelName}{' '}
-            {abbreviation && (
-              <span className="font-sans-sm text-normal">({abbreviation})</span>
-            )}
-          </h1>
-        )}
-
-        <ReadViewStatusBanner
-          modelID={modelID}
-          status={status}
-          mostRecentEdit={mostRecentEdit?.date || createdDts}
-          hasEditAccess={hasEditAccess}
-        />
-
-        {!isViewingFilteredGroup && (
-          <div className="mint-no-print">
-            <ModelSummary
-              goal={basics?.goal ?? ''}
-              loading={loading}
-              modelName={modelName}
-              characteristics={generalCharacteristics}
-              performancePeriodStarts={
-                timeline?.performancePeriodStarts ?? null
-              }
-              modelLeads={collaborators?.filter(c =>
-                c.teamRoles.includes(TeamRole.MODEL_LEAD)
-              )}
-              crTdls={echimpCRsAndTDLs}
-            />
-          </div>
-        )}
-      </GridContainer>
-    </SummaryBox>
-  );
-
   const ModelWarning = (
     <>
       {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
@@ -463,7 +369,103 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           />
         </Modal>
 
-        {Summary}
+        {/* {Summary} */}
+        <div className="bg-primary-lighter">
+          <GridContainer
+            className="padding-x-2 padding-top-6 padding-bottom-2"
+            ref={summaryRef}
+            data-testid="read-only-model-summary"
+          >
+            {statusMessage && (
+              <Alert
+                slim
+                type={statusMessage.status}
+                className="margin-bottom-4"
+                closeAlert={setStatusMessage}
+              >
+                {statusMessage.message}
+              </Alert>
+            )}
+
+            {!isHelpArticle && (
+              <div className="mint-no-print margin-bottom-3">
+                <div className="display-flex flex-justify">
+                  <UswdsReactLink
+                    to="/models"
+                    className="display-flex flex-align-center"
+                  >
+                    <Icon.ArrowBack
+                      className="text-primary margin-right-1"
+                      aria-label="back"
+                    />
+                    {h('back')}
+                  </UswdsReactLink>
+
+                  <FavoriteIcon
+                    isFavorite={isFavorite}
+                    modelPlanID={id}
+                    updateFavorite={handleUpdateFavorite}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* This ist he page heading */}
+            <PageHeading
+              className="margin-0 line-height-sans-2 minh-6"
+              headingLevel={isHelpArticle ? 'h2' : 'h1'}
+              aria-live="polite"
+            >
+              {modelName}{' '}
+              {abbreviation && (
+                <span className="font-sans-sm text-normal">
+                  ({abbreviation})
+                </span>
+              )}
+            </PageHeading>
+          </GridContainer>
+        </div>
+
+        <StickyModelNameWrapper
+          triggerRef={summaryRef}
+          className="bg-primary-lighter"
+        >
+          <h3 className="mint-h1 margin-0 padding-y-2">
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
+          </h3>
+        </StickyModelNameWrapper>
+
+        <div className="bg-primary-lighter">
+          <GridContainer className="padding-bottom-6 padding-x-2">
+            <ReadViewStatusBanner
+              modelID={modelID}
+              status={status}
+              mostRecentEdit={mostRecentEdit?.date || createdDts}
+              hasEditAccess={hasEditAccess}
+            />
+
+            {!isViewingFilteredGroup && (
+              <div className="mint-no-print">
+                <ModelSummary
+                  goal={basics?.goal ?? ''}
+                  loading={loading}
+                  modelName={modelName}
+                  characteristics={generalCharacteristics}
+                  performancePeriodStarts={
+                    timeline?.performancePeriodStarts ?? null
+                  }
+                  modelLeads={collaborators?.filter(c =>
+                    c.teamRoles.includes(TeamRole.MODEL_LEAD)
+                  )}
+                  crTdls={echimpCRsAndTDLs}
+                />
+              </div>
+            )}
+          </GridContainer>
+        </div>
 
         {!flags.hideGroupView && (
           <FilterViewBanner

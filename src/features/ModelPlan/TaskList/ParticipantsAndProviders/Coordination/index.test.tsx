@@ -9,6 +9,9 @@ import {
   ParticipantRequireFinancialGuaranteeType,
   ParticipantsIdType
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Coordination from './index';
 
@@ -41,12 +44,12 @@ const coordinationMock = [
   {
     request: {
       query: GetCoordinationDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           operationalNeeds: [
             {
@@ -59,7 +62,8 @@ const coordinationMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Coordination', () => {
@@ -68,7 +72,11 @@ describe('Model Plan Coordination', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/coordination',
-          element: <Coordination />
+          element: (
+            <ModelInfoWrapper>
+              <Coordination />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -102,7 +110,11 @@ describe('Model Plan Coordination', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/coordination',
-          element: <Coordination />
+          element: (
+            <ModelInfoWrapper>
+              <Coordination />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

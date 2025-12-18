@@ -7,7 +7,10 @@ import {
   GetFundingQuery,
   PayType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
 import VerboseMockedProvider from 'tests/MockedProvider';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import FundingSource from './index';
 
@@ -61,7 +64,8 @@ const paymentMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Payment', () => {
@@ -70,7 +74,11 @@ describe('Model Plan Payment', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment',
-          element: <FundingSource />
+          element: (
+            <ModelInfoWrapper>
+              <FundingSource />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -105,7 +113,11 @@ describe('Model Plan Payment', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment',
-          element: <FundingSource />
+          element: (
+            <ModelInfoWrapper>
+              <FundingSource />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

@@ -1,18 +1,16 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import {
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   BeneficiariesType,
   GetBeneficiaryIdentificationDocument,
   GetBeneficiaryIdentificationQuery,
   TriStateAnswer
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import BeneficiaryIdentification from './index';
 
@@ -38,18 +36,19 @@ const beneficiaryMock = [
   {
     request: {
       query: GetBeneficiaryIdentificationDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           beneficiaries: mockData
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Beneficiaries', () => {
@@ -58,7 +57,11 @@ describe('Model Plan Beneficiaries', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-          element: <BeneficiaryIdentification />
+          element: (
+            <ModelInfoWrapper>
+              <BeneficiaryIdentification />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -90,7 +93,11 @@ describe('Model Plan Beneficiaries', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
-          element: <BeneficiaryIdentification />
+          element: (
+            <ModelInfoWrapper>
+              <BeneficiaryIdentification />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -104,10 +111,6 @@ describe('Model Plan Beneficiaries', () => {
       <MockedProvider mocks={beneficiaryMock} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
-    );
-
-    await waitForElementToBeRemoved(() =>
-      screen.getByTestId('beneficiaries-exclude-note-add-note-toggle')
     );
 
     await waitFor(() => {

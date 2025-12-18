@@ -8,6 +8,9 @@ import {
   GetEvaluationDocument,
   GetEvaluationQuery
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Evaluation from '.';
 
@@ -55,7 +58,8 @@ const evaluationMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning', () => {
@@ -64,7 +68,11 @@ describe('Model Plan Ops Eval and Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation',
-          element: <Evaluation />
+          element: (
+            <ModelInfoWrapper>
+              <Evaluation />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -98,7 +106,11 @@ describe('Model Plan Ops Eval and Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation',
-          element: <Evaluation />
+          element: (
+            <ModelInfoWrapper>
+              <Evaluation />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

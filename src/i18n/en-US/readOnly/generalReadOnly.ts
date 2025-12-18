@@ -2,6 +2,7 @@ import { ModelShareSection } from 'gql/generated/graphql';
 
 const generalReadOnly = {
   back: 'View all models',
+  backToTop: 'Back to top',
   description: {
     more: 'Read more',
     less: 'Read less'

@@ -82,6 +82,111 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
       >
         for My excellent plan that I just initiated
       </p>
+    </div>
+    <div
+      aria-hidden="true"
+      class="sticky-header-wrapper"
+      style="position: absolute; visibility: hidden; top: -9999px; left: -9999px; width: 100%;"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <div
+            class="padding-top-2 padding-bottom-1"
+          >
+            <h3
+              class="margin-y-0"
+            >
+              Model plan: Payment
+            </h3>
+            <p
+              class="margin-y-0 font-body-lg line-height-sans-3"
+            >
+              for My excellent plan that I just initiated
+            </p>
+          </div>
+          <button
+            aria-label="Back to top"
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-hidden="false"
+      class="sticky-header-wrapper z-300 shadow-2 bg-white sticky-header-wrapper--visible"
+      role="banner"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <div
+            class="padding-top-2 padding-bottom-1"
+          >
+            <h3
+              class="margin-y-0"
+            >
+              Model plan: Payment
+            </h3>
+            <p
+              class="margin-y-0 font-body-lg line-height-sans-3"
+            >
+              for My excellent plan that I just initiated
+            </p>
+          </div>
+          <button
+            aria-label="Back to top"
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
       <p
         class="margin-bottom-2 font-body-md line-height-sans-4"
       >
@@ -214,7 +319,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_k_"
+                            aria-describedby="tooltip-_r_s_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -238,7 +343,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_k_"
+                            id="tooltip-_r_s_"
                             role="tooltip"
                             title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                           >
@@ -255,6 +360,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           class="mint-checkbox usa-checkbox"
                         >
                           <input
+                            checked=""
                             class="usa-checkbox__input"
                             data-testid="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
                             id="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
@@ -278,7 +384,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_l_"
+                            aria-describedby="tooltip-_r_t_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -302,7 +408,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_l_"
+                            id="tooltip-_r_t_"
                             role="tooltip"
                             title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                           >
@@ -460,7 +566,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_m_"
+                            aria-describedby="tooltip-_r_u_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -484,7 +590,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_m_"
+                            id="tooltip-_r_u_"
                             role="tooltip"
                             title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                           >
@@ -524,7 +630,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_n_"
+                            aria-describedby="tooltip-_r_v_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -548,7 +654,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_n_"
+                            id="tooltip-_r_v_"
                             role="tooltip"
                             title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                           >

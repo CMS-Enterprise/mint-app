@@ -32,10 +32,12 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
 type BeneficiaryIdentificationFormType =
@@ -58,6 +60,7 @@ const BeneficiaryIdentification = () => {
 
   const formikRef =
     useRef<FormikProps<BeneficiaryIdentificationFormType>>(null);
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const navigate = useNavigate();
 
@@ -81,8 +84,6 @@ const BeneficiaryIdentification = () => {
     excludeCertainCharacteristicsNote
   } = (data?.modelPlan?.beneficiaries ||
     {}) as BeneficiaryIdentificationFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   const { mutationError } = useHandleMutation(
     TypedUpdateModelPlanBeneficiariesDocument,
@@ -130,7 +131,7 @@ const BeneficiaryIdentification = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {beneficiariesMiscT('heading')}
         </PageHeading>
 
@@ -140,7 +141,15 @@ const BeneficiaryIdentification = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={beneficiariesMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

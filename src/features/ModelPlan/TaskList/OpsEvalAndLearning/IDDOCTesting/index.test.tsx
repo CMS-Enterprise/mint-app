@@ -7,6 +7,9 @@ import {
   GetIddocTestingDocument,
   GetIddocTestingQuery
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import IDDOCTesting from './index';
 
@@ -44,7 +47,8 @@ const iddocTestingMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning IDDOC', () => {
@@ -53,7 +57,11 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing',
-          element: <IDDOCTesting />
+          element: (
+            <ModelInfoWrapper>
+              <IDDOCTesting />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -87,7 +95,11 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing',
-          element: <IDDOCTesting />
+          element: (
+            <ModelInfoWrapper>
+              <IDDOCTesting />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

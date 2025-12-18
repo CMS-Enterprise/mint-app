@@ -8,6 +8,9 @@ import {
   GetLearningQuery,
   TaskStatus
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Learning from '.';
 
@@ -54,7 +57,8 @@ const learningMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning - Learning', () => {
@@ -63,7 +67,11 @@ describe('Model Plan Ops Eval and Learning - Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning',
-          element: <Learning />
+          element: (
+            <ModelInfoWrapper>
+              <Learning />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -99,7 +107,11 @@ describe('Model Plan Ops Eval and Learning - Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning',
-          element: <Learning />
+          element: (
+            <ModelInfoWrapper>
+              <Learning />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

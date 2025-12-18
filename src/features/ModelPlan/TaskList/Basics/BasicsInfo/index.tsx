@@ -43,10 +43,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import RequiredAsterisk from 'components/RequiredAsterisk';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import Tooltip from 'components/Tooltip';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formUtil';
@@ -75,6 +77,11 @@ const BasicsInfo = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const navigate = useNavigate();
+  const {
+    headerRef: basicsInfoRef,
+    modelName: stickyModelName,
+    abbreviation: stickyAbbreviation
+  } = useStickyHeader();
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -84,8 +91,15 @@ const BasicsInfo = () => {
 
   const { nameHistory } = data?.modelPlan || {};
 
-  const { id, modelName, abbreviation, basics } = (data?.modelPlan ||
-    {}) as ModelPlanInfoFormType;
+  const {
+    id,
+    modelName: queryModelName,
+    abbreviation: queryAbbreviation,
+    basics
+  } = (data?.modelPlan || {}) as ModelPlanInfoFormType;
+
+  const modelName = queryModelName;
+  const abbreviation = queryAbbreviation;
 
   const filteredNameHistory = nameHistory?.filter(
     previousName => previousName !== modelName
@@ -257,10 +271,17 @@ const BasicsInfo = () => {
             BreadcrumbItemOptions.BASICS
           ]}
         />
-
-        <PageHeading className="margin-top-4">
+        <PageHeading className="margin-top-4" ref={basicsInfoRef}>
           {basicsMiscT('heading')}
         </PageHeading>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={basicsInfoRef}
+        sectionHeading={basicsMiscT('heading')}
+        modelName={stickyModelName}
+        abbreviation={stickyAbbreviation || undefined}
+      />
+      <GridContainer>
         <p className="margin-top-1 margin-bottom-2 line-height-sans-3">
           {basicsMiscT('description')}
         </p>

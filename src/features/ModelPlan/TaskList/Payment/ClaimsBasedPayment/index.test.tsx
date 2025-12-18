@@ -8,6 +8,9 @@ import {
   GetClaimsBasedPaymentQuery,
   PayType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import ClaimsBasedPayment from './index';
 
@@ -53,7 +56,8 @@ const paymentsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan -- Claims Based Payment', () => {
@@ -62,7 +66,11 @@ describe('Model Plan -- Claims Based Payment', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/claims-based-payment',
-          element: <ClaimsBasedPayment />
+          element: (
+            <ModelInfoWrapper>
+              <ClaimsBasedPayment />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -96,7 +104,11 @@ describe('Model Plan -- Claims Based Payment', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/claims-based-payment',
-          element: <ClaimsBasedPayment />
+          element: (
+            <ModelInfoWrapper>
+              <ClaimsBasedPayment />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
