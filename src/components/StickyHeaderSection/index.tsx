@@ -50,13 +50,13 @@ const StickyHeaderSection: React.FC<StickyHeaderSectionProps> = ({
 
   return (
     <StickyModelNameWrapper triggerRef={headerRef} className={className}>
-      <div className="padding-y-2">
+      <div className="padding-top-2 padding-bottom-1">
         <h3 className="margin-y-0">
           {miscellaneousT('modelPlanHeading', {
             heading: sectionHeading
           })}
         </h3>
-        <p className="margin-y-0 font-body-lg">
+        <p className="margin-y-0 font-body-lg line-height-sans-3">
           {miscellaneousT('for')} {modelName}
           {abbreviation && ` (${abbreviation})`}
         </p>
