@@ -108,6 +108,7 @@ const SmeForm = ({
     handleSubmit,
     formState: { isSubmitting, isDirty },
     watch,
+    getValues,
     setValue,
     reset
   } = methods;
@@ -160,15 +161,23 @@ const SmeForm = ({
     setDisableButton(disabledSubmitBtn);
   }, [setDisableButton, disabledSubmitBtn]);
 
+  const handleNavButtonClick = (navKey: string) => {
+    const currentFormValues = getValues();
+
+    reset({
+      subjectCategoryID: currentFormValues.subjectCategoryID,
+      subjectArea: currentFormValues.subjectArea
+    });
+
+    setCurrentNavKey(navKey);
+  };
+
   const formNavKeys = navs.map(navKey => (
     <button
       type="button"
       key={navKey}
       disabled={disabledNavKey === navKey}
-      onClick={() => {
-        reset();
-        setCurrentNavKey(navKey);
-      }}
+      onClick={() => handleNavButtonClick(navKey)}
       className={classNames(
         'text-no-underline usa-nav__link margin-left-neg-2 margin-right-2',
         {
