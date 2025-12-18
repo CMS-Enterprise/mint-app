@@ -10,6 +10,8 @@ import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyConta
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 import { SmeType } from '../..';
 import { KeyContactCategoryType } from '../CategoryModal';
@@ -26,8 +28,10 @@ const RemoveModal = ({
   const { t: keyContactT } = useTranslation('keyContactMisc');
   const { t: keyContactCategoryT } = useTranslation('keyContactCategoryMisc');
 
+  const { setErrorMeta } = useErrorMessage();
+
   const getModalStrings = (
-    field: 'title' | 'actionWarning' | 'text' | 'cta'
+    field: 'title' | 'actionWarning' | 'text' | 'cta' | 'success' | 'error'
   ) => {
     switch (removedObject.__typename) {
       case 'KeyContact':
@@ -60,6 +64,10 @@ const RemoveModal = ({
   const [deleteObject] = useMutation();
 
   const removeObject = (id: string) => {
+    setErrorMeta({
+      overrideMessage: getModalStrings('error').text
+    });
+
     deleteObject({
       variables: {
         id
@@ -70,6 +78,18 @@ const RemoveModal = ({
           : [GetAllKeyContactCategories, GetAllKeyContacts]
     }).then(response => {
       if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={getModalStrings('success').i18nKey}
+            values={{
+              name: removeName
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+
         closeModal();
       }
     });

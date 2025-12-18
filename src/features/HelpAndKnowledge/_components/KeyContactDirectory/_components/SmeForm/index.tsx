@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Fieldset,
   Form,
@@ -18,6 +18,7 @@ import {
 } from 'gql/generated/graphql';
 import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyContacts';
 
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import dirtyInput from 'utils/formUtil';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -107,6 +108,7 @@ const SmeForm = ({
     handleSubmit,
     formState: { isSubmitting, isDirty },
     watch,
+    getValues,
     setValue,
     reset
   } = methods;
@@ -159,15 +161,23 @@ const SmeForm = ({
     setDisableButton(disabledSubmitBtn);
   }, [setDisableButton, disabledSubmitBtn]);
 
+  const handleNavButtonClick = (navKey: string) => {
+    const currentFormValues = getValues();
+
+    reset({
+      subjectCategoryID: currentFormValues.subjectCategoryID,
+      subjectArea: currentFormValues.subjectArea
+    });
+
+    setCurrentNavKey(navKey);
+  };
+
   const formNavKeys = navs.map(navKey => (
     <button
       type="button"
       key={navKey}
       disabled={disabledNavKey === navKey}
-      onClick={() => {
-        reset();
-        setCurrentNavKey(navKey);
-      }}
+      onClick={() => handleNavButtonClick(navKey)}
       className={classNames(
         'text-no-underline usa-nav__link margin-left-neg-2 margin-right-2',
         {
@@ -190,6 +200,7 @@ const SmeForm = ({
       sme,
       formData
     );
+
     setErrorMeta({
       overrideMessage: keyContactMiscT(`${mode}.error`)
     });
@@ -228,6 +239,18 @@ const SmeForm = ({
 
     promise.then(response => {
       if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`keyContactMisc:${isEditMode ? 'edit' : 'add'}.success`}
+            values={{
+              sme: formData.name || formData.mailboxTitle
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+
         closeModal();
       }
     });

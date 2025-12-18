@@ -79,13 +79,26 @@ const keyContact: TranslationKeyContactCustom = {
 };
 
 export const keyContactMisc = {
-  add: { heading: 'Add a subject matter expert (SME)', cta: 'Add SME' },
-  edit: { heading: 'Edit a subject matter expert (SME)', cta: 'Save changes' },
+  add: {
+    heading: 'Add a subject matter expert (SME)',
+    cta: 'Add SME',
+    success: 'You added <bold>{{-sme}}</bold> as a subject matter expert.',
+    error: 'There was an issue adding this subject matter expert.'
+  },
+  edit: {
+    heading: 'Edit a subject matter expert (SME)',
+    cta: 'Save changes',
+    success:
+      'You updated subject matter expert information for <bold>{{-sme}}</bold>.',
+    error: 'There was an issue updating this subject matter expert.'
+  },
   remove: {
     title: 'Are you sure you want to remove this SME?',
     actionWarning: 'This action cannot be undone.',
     text: '<bold>SME to be removed:</bold> {{-name}}',
-    cta: 'Remove SME'
+    cta: 'Remove SME',
+    success: 'You removed <bold>{{-name}}</bold> as a subject matter expert.',
+    error: 'There was an issue removing this subject matter expert.'
   },
   selectDefault: 'Select',
   navs: ['Individual', 'Team mailbox'],

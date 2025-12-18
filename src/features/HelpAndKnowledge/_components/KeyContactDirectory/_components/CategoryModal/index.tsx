@@ -18,6 +18,8 @@ import GetAllKeyContactCategories from 'gql/operations/KeyContactDirectory/GetAl
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
 export type CategoryModeType = 'add' | 'edit';
 
@@ -39,6 +41,8 @@ const CategoryModal = ({
   const { t: keyContactCategoryMiscT } = useTranslation(
     'keyContactCategoryMisc'
   );
+
+  const { setErrorMeta } = useErrorMessage();
 
   const [create] = useCreateKeyContactCategoryMutation({
     refetchQueries: [
@@ -80,6 +84,10 @@ const CategoryModal = ({
       return;
     }
 
+    setErrorMeta({
+      overrideMessage: keyContactCategoryMiscT(`${mode}.error`)
+    });
+
     const promise =
       mode === 'add'
         ? create({
@@ -98,6 +106,18 @@ const CategoryModal = ({
 
     promise.then(response => {
       if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`keyContactCategoryMisc:${mode}.success`}
+            values={{
+              category: formData.category
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+
         closeModal();
       }
     });

@@ -1,7 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Column, Row, useSortBy, useTable } from 'react-table';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Button,
+  Icon,
+  Link,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 
 import { Alert } from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
@@ -92,7 +97,21 @@ const KeyContactTable = ({
       {
         id: 'name',
         Header: t('keyContactDirectory.sme'),
-        accessor: ({ name, email }) => `${name} (${email})`
+        accessor: 'name',
+        Cell: ({ row }: { row: Row<ColumnType> }) => {
+          const { name, email } = row.original;
+          return (
+            <Link
+              aria-label={email}
+              className="margin-0 line-height-body-5"
+              href={`mailto:${email}`}
+              target="_blank"
+            >
+              {name} ({email}
+              <Icon.MailOutline className="margin-left-05 text-tbottom" />)
+            </Link>
+          );
+        }
       },
       {
         id: 'actions',
