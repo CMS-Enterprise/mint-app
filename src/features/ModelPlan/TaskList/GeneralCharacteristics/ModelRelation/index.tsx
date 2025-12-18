@@ -1,7 +1,6 @@
 import React, {
   Fragment,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -52,8 +51,8 @@ import PageNumber from 'components/PageNumber';
 import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import { useErrorMessage } from 'contexts/ErrorContext';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formUtil';
 
@@ -90,9 +89,8 @@ export const ModelRelation = () => {
   const formikRef =
     useRef<FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>>(null);
 
-  const headerRef = useRef<HTMLDivElement>(null);
-
   const navigate = useNavigate();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const {
     data: modelData,
@@ -182,7 +180,6 @@ export const ModelRelation = () => {
     data?.modelPlan?.generalCharacteristics ||
     ({} as GeneralCharacteristicsFormType);
 
-  const { modelName, abbreviation } = useContext(ModelInfoContext);
   const existingModel = currentModelPlanID || existingModelID;
 
   // Formats query data of existing links to feed into multiselect
@@ -420,19 +417,12 @@ export const ModelRelation = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyModelNameWrapper triggerRef={headerRef}>
-        <div className="padding-y-2">
-          <h3 className="margin-y-0">
-            {miscellaneousT('modelPlanHeading', {
-              heading: generalCharacteristicsMiscT('heading')
-            })}
-          </h3>
-          <p className="margin-y-0 font-body-lg">
-            {miscellaneousT('for')} {modelName}
-            {abbreviation && ` (${abbreviation})`}
-          </p>
-        </div>
-      </StickyModelNameWrapper>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={generalCharacteristicsMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
       <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">

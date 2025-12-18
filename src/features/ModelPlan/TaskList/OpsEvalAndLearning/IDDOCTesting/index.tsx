@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -32,9 +32,9 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 import {
@@ -61,8 +61,8 @@ const IDDOCTesting = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetIddocTestingQuery({
     variables: {
@@ -84,8 +84,6 @@ const IDDOCTesting = () => {
     dataResponseType,
     dataResponseFileFrequency
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCTestingFormType;
-
-  const { modelName, abbreviation } = useContext(ModelInfoContext);
 
   const { mutationError } = useHandleMutation(
     TypedUpdatePlanOpsEvalAndLearningDocument,
@@ -144,19 +142,12 @@ const IDDOCTesting = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyModelNameWrapper triggerRef={headerRef}>
-        <div className="padding-y-2">
-          <h3 className="margin-y-0">
-            {miscellaneousT('modelPlanHeading', {
-              heading: opsEvalAndLearningMiscT('heading')
-            })}
-          </h3>
-          <p className="margin-y-0 font-body-lg">
-            {miscellaneousT('for')} {modelName}
-            {abbreviation && ` (${abbreviation})`}
-          </p>
-        </div>
-      </StickyModelNameWrapper>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={opsEvalAndLearningMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
       <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
