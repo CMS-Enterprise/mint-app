@@ -1,12 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import {
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   ConfidenceType,
   GetPeopleImpactedDocument,
@@ -122,9 +117,11 @@ describe('Model Plan Beneficiaries', () => {
       </MockedProvider>
     );
 
-    await waitForElementToBeRemoved(() =>
-      screen.getByTestId('beneficiaries-selection-note-add-note-toggle')
-    );
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('beneficiaries-people-impact-form')
+      ).toBeInTheDocument();
+    });
 
     expect(asFragment()).toMatchSnapshot();
   });
