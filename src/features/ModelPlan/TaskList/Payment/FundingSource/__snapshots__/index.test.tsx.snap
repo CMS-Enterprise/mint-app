@@ -80,7 +80,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
         class="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        for 
+        for My excellent plan that I just initiated
       </p>
     </div>
     <div
@@ -96,7 +96,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
           class="display-flex flex-justify show-when-sticky"
         >
           <div
-            class="padding-y-2"
+            class="padding-top-2 padding-bottom-1"
           >
             <h3
               class="margin-y-0"
@@ -104,19 +104,19 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               Model plan: Payment
             </h3>
             <p
-              class="margin-y-0 font-body-lg"
+              class="margin-y-0 font-body-lg line-height-sans-3"
             >
-              for 
+              for My excellent plan that I just initiated
             </p>
           </div>
           <button
             aria-label="Back to top"
-            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="usa-icon usa-icon--size-3"
+              class="usa-icon"
               focusable="false"
               height="1em"
               role="img"
@@ -146,7 +146,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
           class="display-flex flex-justify show-when-sticky"
         >
           <div
-            class="padding-y-2"
+            class="padding-top-2 padding-bottom-1"
           >
             <h3
               class="margin-y-0"
@@ -154,19 +154,19 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               Model plan: Payment
             </h3>
             <p
-              class="margin-y-0 font-body-lg"
+              class="margin-y-0 font-body-lg line-height-sans-3"
             >
-              for 
+              for My excellent plan that I just initiated
             </p>
           </div>
           <button
             aria-label="Back to top"
-            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
             type="button"
           >
             <svg
               aria-hidden="true"
-              class="usa-icon usa-icon--size-3"
+              class="usa-icon"
               focusable="false"
               height="1em"
               role="img"
@@ -319,7 +319,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_k_"
+                            aria-describedby="tooltip-_r_s_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -343,7 +343,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_k_"
+                            id="tooltip-_r_s_"
                             role="tooltip"
                             title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                           >
@@ -360,6 +360,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           class="mint-checkbox usa-checkbox"
                         >
                           <input
+                            checked=""
                             class="usa-checkbox__input"
                             data-testid="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
                             id="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
@@ -383,7 +384,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_l_"
+                            aria-describedby="tooltip-_r_t_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -407,7 +408,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_l_"
+                            id="tooltip-_r_t_"
                             role="tooltip"
                             title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                           >
@@ -565,7 +566,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_m_"
+                            aria-describedby="tooltip-_r_u_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -589,7 +590,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_m_"
+                            id="tooltip-_r_u_"
                             role="tooltip"
                             title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
                           >
@@ -629,7 +630,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                           data-testid="tooltipWrapper"
                         >
                           <div
-                            aria-describedby="tooltip-_r_n_"
+                            aria-describedby="tooltip-_r_v_"
                             class="usa-tooltip__trigger mint-no-print margin-left-05"
                             data-testid="triggerElement"
                             tabindex="0"
@@ -653,7 +654,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="usa-tooltip__body"
                             data-testid="tooltipBody"
-                            id="tooltip-_r_n_"
+                            id="tooltip-_r_v_"
                             role="tooltip"
                             title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
                           >
