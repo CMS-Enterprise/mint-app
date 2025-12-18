@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Fieldset,
   Form,
@@ -18,6 +18,7 @@ import {
 } from 'gql/generated/graphql';
 import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyContacts';
 
+import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import dirtyInput from 'utils/formUtil';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -190,6 +191,7 @@ const SmeForm = ({
       sme,
       formData
     );
+
     setErrorMeta({
       overrideMessage: keyContactMiscT(`${mode}.error`)
     });
@@ -228,6 +230,18 @@ const SmeForm = ({
 
     promise.then(response => {
       if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`keyContactMisc:${isEditMode ? 'edit' : 'add'}.success`}
+            values={{
+              sme: formData.name || formData.mailboxTitle
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+
         closeModal();
       }
     });

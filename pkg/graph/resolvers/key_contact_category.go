@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -31,18 +30,6 @@ func CreateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 	sanitizedCategory := sanitization.SanitizeString(categoryStr)
 	if sanitizedCategory == "" {
 		return nil, fmt.Errorf("category name cannot be empty or whitespace-only")
-	}
-
-	// Check for duplicate category name (case-insensitive)
-	allCategories, err := storage.KeyContactCategoryGetAll(store, logger)
-	if err != nil {
-		return nil, fmt.Errorf("failed to check for duplicate category name: %w", err)
-	}
-
-	for _, existingCategory := range allCategories {
-		if strings.EqualFold(existingCategory.Category, sanitizedCategory) {
-			return nil, fmt.Errorf("a category with the name '%s' already exists", sanitizedCategory)
-		}
 	}
 
 	newCategory := models.NewKeyContactCategory(principalAccount.ID, sanitizedCategory)

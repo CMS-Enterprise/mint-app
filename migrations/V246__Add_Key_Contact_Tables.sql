@@ -15,6 +15,10 @@ CREATE TABLE IF NOT EXISTS  key_contact_category (
 COMMENT ON TABLE key_contact_category IS
 'Table for storing key contact categories related to subject matter experts.';
 
+-- Ensure that each category has a unique name in key_contact_category
+ALTER TABLE key_contact_category
+ADD CONSTRAINT uniq_category UNIQUE(category);
+
 ALTER TYPE TABLE_NAME ADD VALUE 'key_contact';
 
 -- Create table for key contact
