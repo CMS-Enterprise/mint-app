@@ -32,7 +32,7 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import StickyHeaderSection from 'components/StickyHeaderSection';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
@@ -60,7 +60,7 @@ const BeneficiaryIdentification = () => {
 
   const formikRef =
     useRef<FormikProps<BeneficiaryIdentificationFormType>>(null);
-  const { headerRef, modelName } = useStickyHeader();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const navigate = useNavigate();
 
@@ -142,9 +142,11 @@ const BeneficiaryIdentification = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyHeaderSection
-        headerRef={headerRef}
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
         sectionHeading={beneficiariesMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
       />
 
       <GridContainer>

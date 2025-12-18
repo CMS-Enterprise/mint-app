@@ -30,7 +30,7 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import StickyHeaderSection from 'components/StickyHeaderSection';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -56,7 +56,7 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
-  const { headerRef: overviewRef, modelName } = useStickyHeader();
+  const { headerRef: overviewRef, modelName, abbreviation } = useStickyHeader();
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
       id: modelID
@@ -126,9 +126,11 @@ const Overview = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyHeaderSection
-        headerRef={overviewRef}
+      <StickyModelNameWrapper
+        triggerRef={overviewRef}
         sectionHeading={basicsMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
       />
 
       <GridContainer>

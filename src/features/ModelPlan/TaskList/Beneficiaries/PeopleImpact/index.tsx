@@ -32,7 +32,7 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import StickyHeaderSection from 'components/StickyHeaderSection';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextField from 'components/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -58,7 +58,7 @@ const PeopleImpact = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
-  const { headerRef, modelName } = useStickyHeader();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetPeopleImpactedQuery({
@@ -129,9 +129,11 @@ const PeopleImpact = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyHeaderSection
-        headerRef={headerRef}
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
         sectionHeading={beneficiariesMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
       />
 
       <GridContainer>

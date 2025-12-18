@@ -36,7 +36,7 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import StickyHeaderSection from 'components/StickyHeaderSection';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -74,7 +74,7 @@ export const ProviderOptions = () => {
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
-  const { headerRef, modelName } = useStickyHeader();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetProviderOptionsQuery({
@@ -176,9 +176,11 @@ export const ProviderOptions = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyHeaderSection
-        headerRef={headerRef}
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
         sectionHeading={participantsAndProvidersMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
       />
 
       <GridContainer>

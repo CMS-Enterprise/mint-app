@@ -33,7 +33,7 @@ import MTOWarning from 'components/MTOWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import StickyHeaderSection from 'components/StickyHeaderSection';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
@@ -63,7 +63,7 @@ export const Communication = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
-  const { headerRef, modelName } = useStickyHeader();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetCommunicationQuery({
@@ -160,9 +160,11 @@ export const Communication = () => {
           {miscellaneousT('for')} {modelName}
         </p>
       </GridContainer>
-      <StickyHeaderSection
-        headerRef={headerRef}
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
         sectionHeading={participantsAndProvidersMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
       />
 
       <GridContainer>

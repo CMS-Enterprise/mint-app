@@ -43,7 +43,7 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import RequiredAsterisk from 'components/RequiredAsterisk';
-import StickyHeaderSection from 'components/StickyHeaderSection';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import Tooltip from 'components/Tooltip';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -77,7 +77,11 @@ const BasicsInfo = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const navigate = useNavigate();
-  const { headerRef: basicsInfoRef } = useStickyHeader();
+  const {
+    headerRef: basicsInfoRef,
+    modelName: stickyModelName,
+    abbreviation: stickyAbbreviation
+  } = useStickyHeader();
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -271,9 +275,11 @@ const BasicsInfo = () => {
           {basicsMiscT('heading')}
         </PageHeading>
       </GridContainer>
-      <StickyHeaderSection
-        headerRef={basicsInfoRef}
+      <StickyModelNameWrapper
+        triggerRef={basicsInfoRef}
         sectionHeading={basicsMiscT('heading')}
+        modelName={stickyModelName}
+        abbreviation={stickyAbbreviation || undefined}
       />
       <GridContainer>
         <p className="margin-top-1 margin-bottom-2 line-height-sans-3">
