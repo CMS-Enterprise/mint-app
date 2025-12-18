@@ -10,8 +10,11 @@ import {
   GetComplexityQuery,
   PayType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
 
-import ClaimsBasedPayment from './index';
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
+
+import Complexity from './index';
 
 type GetComplexityType = GetComplexityQuery['modelPlan']['payments'];
 
@@ -49,7 +52,8 @@ const paymentsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan -- Complexity', () => {
@@ -58,7 +62,11 @@ describe('Model Plan -- Complexity', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/complexity',
-          element: <ClaimsBasedPayment />
+          element: (
+            <ModelInfoWrapper>
+              <Complexity />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -90,7 +98,11 @@ describe('Model Plan -- Complexity', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/complexity',
-          element: <ClaimsBasedPayment />
+          element: (
+            <ModelInfoWrapper>
+              <Complexity />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

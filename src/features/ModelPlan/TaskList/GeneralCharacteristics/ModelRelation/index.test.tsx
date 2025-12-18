@@ -10,6 +10,9 @@ import {
   ModelPlanFilter,
   YesNoOtherType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import ModelRelation, { separateLinksByType } from './index';
 
@@ -93,7 +96,8 @@ const generalCharacteristicsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Characteristics', () => {
@@ -102,7 +106,11 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics',
-          element: <ModelRelation />
+          element: (
+            <ModelInfoWrapper>
+              <ModelRelation />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -152,7 +160,11 @@ describe('Model Plan Characteristics', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics',
-          element: <ModelRelation />
+          element: (
+            <ModelInfoWrapper>
+              <ModelRelation />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

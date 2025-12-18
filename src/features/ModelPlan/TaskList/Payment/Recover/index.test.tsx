@@ -10,6 +10,9 @@ import {
   PayType,
   TaskStatus
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Recover from './index';
 
@@ -65,7 +68,8 @@ const paymentsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan -- Recover', () => {
@@ -74,7 +78,11 @@ describe('Model Plan -- Recover', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/recover-payment',
-          element: <Recover />
+          element: (
+            <ModelInfoWrapper>
+              <Recover />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -105,7 +113,11 @@ describe('Model Plan -- Recover', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/recover-payment',
-          element: <Recover />
+          element: (
+            <ModelInfoWrapper>
+              <Recover />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

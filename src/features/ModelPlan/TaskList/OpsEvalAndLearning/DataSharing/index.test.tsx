@@ -9,6 +9,9 @@ import {
   GetDataSharingDocument,
   GetDataSharingQuery
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import DataSharing from '.';
 
@@ -56,7 +59,8 @@ const dataSharingMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning Data Sharing', () => {
@@ -65,7 +69,11 @@ describe('Model Plan Ops Eval and Learning Data Sharing', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing',
-          element: <DataSharing />
+          element: (
+            <ModelInfoWrapper>
+              <DataSharing />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -99,7 +107,11 @@ describe('Model Plan Ops Eval and Learning Data Sharing', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing',
-          element: <DataSharing />
+          element: (
+            <ModelInfoWrapper>
+              <DataSharing />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
