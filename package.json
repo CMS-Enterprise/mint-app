@@ -92,7 +92,7 @@
     "redux-saga": "^1.4.2",
     "redux-saga-routines": "^3.2.2",
     "sass": "^1.96.0",
-    "storybook": "^7.6.16",
+    "storybook": "^7.6.21",
     "subscriptions-transport-ws": "^0.11.0",
     "tippy.js": "^6.3.7",
     "ts-node": "^10.9.2",
