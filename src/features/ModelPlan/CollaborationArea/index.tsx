@@ -196,14 +196,11 @@ const CollaborationArea = () => {
               </Grid>
             </Grid>
           </GridContainer>
-          <StickyModelNameWrapper
-            triggerRef={collaborationAreaRef}
-            className="bg-white"
-          >
-            <div className="padding-y-2">
+          <StickyModelNameWrapper triggerRef={collaborationAreaRef}>
+            <div className="padding-top-2 padding-bottom-1">
               <h3 className="margin-y-0">{collaborationAreaT('heading')}</h3>
               <p
-                className="margin-y-0 font-body-lg"
+                className="margin-y-0 font-body-lg line-height-sans-5"
                 data-testid="model-plan-name"
               >
                 {collaborationAreaT('modelPlan', {

@@ -83,11 +83,11 @@ const StickyModelNameWrapper = ({
 
         <button
           type="button"
-          className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky"
+          className="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           aria-label={h('backToTop')}
         >
-          <Icon.ArrowUpward size={3} aria-hidden="true" />
+          <Icon.ArrowUpward aria-hidden="true" />
           {h('backToTop')}
         </button>
       </div>

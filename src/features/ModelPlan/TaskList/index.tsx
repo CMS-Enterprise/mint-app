@@ -276,9 +276,9 @@ const TaskList = () => {
             </Grid>
           </GridContainer>
           <StickyModelNameWrapper triggerRef={modelNameRef}>
-            <div className="padding-y-2">
+            <div className="padding-top-2 padding-bottom-1">
               <h3 className="margin-y-0">{t('heading')}</h3>
-              <p className="margin-y-0 font-body-lg">
+              <p className="margin-y-0 font-body-lg line-height-sans-5">
                 {h('for')} {modelName}
                 {abbreviation && ` (${abbreviation})`}
               </p>
