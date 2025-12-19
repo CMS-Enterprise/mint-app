@@ -7,6 +7,9 @@ import {
   GetParticipantsAndProvidersQuery,
   ParticipantsType
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Participants from './index';
 
@@ -36,18 +39,19 @@ const participantsAndProvidersMock = [
   {
     request: {
       query: GetParticipantsAndProvidersDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: participantsAndProvidersMockData
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Participants and Providers', () => {
@@ -56,7 +60,11 @@ describe('Model Plan Participants and Providers', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
-          element: <Participants />
+          element: (
+            <ModelInfoWrapper>
+              <Participants />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -100,7 +108,11 @@ describe('Model Plan Participants and Providers', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers',
-          element: <Participants />
+          element: (
+            <ModelInfoWrapper>
+              <Participants />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

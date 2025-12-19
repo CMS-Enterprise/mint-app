@@ -1,0 +1,25 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.sticky-header-wrapper {
+  position: sticky;
+  top: 48px;
+  @media screen and (min-width: $desktop) {
+    top: 55px;
+  }
+
+  // Hidden by default - no opacity, no height, no pointer events
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  // Height transitions instantly (imperceptible), opacity fades smoothly
+  transition: opacity 200ms ease-in, max-height 10ms ease-in;
+
+  // Visible state - fade in smoothly
+  &--visible {
+    opacity: 1;
+    max-height: 100%;
+    pointer-events: auto;
+  }
+}

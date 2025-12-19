@@ -8,6 +8,9 @@ import {
   GetBeneficiaryCostSharingQuery,
   PayType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import BeneficiaryCostSharing from './index';
 
@@ -41,7 +44,8 @@ const paymentsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan -- BeneficiaryCostSharing', () => {
@@ -50,7 +54,11 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing',
-          element: <BeneficiaryCostSharing />
+          element: (
+            <ModelInfoWrapper>
+              <BeneficiaryCostSharing />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -90,7 +98,11 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing',
-          element: <BeneficiaryCostSharing />
+          element: (
+            <ModelInfoWrapper>
+              <BeneficiaryCostSharing />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

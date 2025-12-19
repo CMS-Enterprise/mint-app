@@ -30,9 +30,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
@@ -54,14 +56,12 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
-
+  const { headerRef: overviewRef, modelName, abbreviation } = useStickyHeader();
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
       id: modelID
     }
   });
-
-  const { modelName } = data?.modelPlan || {};
 
   const {
     id,
@@ -115,7 +115,7 @@ const Overview = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-1">
+        <PageHeading className="margin-top-4 margin-bottom-1" ref={overviewRef}>
           {basicsMiscT('heading')}
         </PageHeading>
 
@@ -125,7 +125,15 @@ const Overview = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={overviewRef}
+        sectionHeading={basicsMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

@@ -36,10 +36,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
@@ -72,6 +74,7 @@ export const ProviderOptions = () => {
   >;
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetProviderOptionsQuery({
@@ -104,8 +107,6 @@ export const ProviderOptions = () => {
     status
   } = (data?.modelPlan?.participantsAndProviders ||
     {}) as ProviderOptionsFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   useScrollElement(!loading);
 
@@ -164,7 +165,7 @@ export const ProviderOptions = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {participantsAndProvidersMiscT('heading')}
         </PageHeading>
 
@@ -174,7 +175,15 @@ export const ProviderOptions = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={participantsAndProvidersMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

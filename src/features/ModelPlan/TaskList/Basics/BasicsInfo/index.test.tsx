@@ -9,6 +9,9 @@ import {
   GetBasicsQuery,
   ModelCategory
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import BasicsInfo from './index';
 
@@ -42,14 +45,15 @@ const mocks = [
   {
     request: {
       query: GetBasicsDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: basicMockData
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Basics page', () => {
@@ -58,7 +62,11 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <BasicsInfo />
+          element: (
+            <ModelInfoWrapper>
+              <BasicsInfo />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -69,7 +77,7 @@ describe('Model Plan Basics page', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -87,7 +95,11 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <BasicsInfo />
+          element: (
+            <ModelInfoWrapper>
+              <BasicsInfo />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -98,7 +110,7 @@ describe('Model Plan Basics page', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -152,7 +164,11 @@ describe('Model Plan Basics page', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
-          element: <BasicsInfo />
+          element: (
+            <ModelInfoWrapper>
+              <BasicsInfo />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -163,7 +179,7 @@ describe('Model Plan Basics page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

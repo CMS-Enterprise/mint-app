@@ -14,6 +14,9 @@ import {
   ProviderAddType,
   TaskStatus
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import ProviderOptions from './index';
 
@@ -66,7 +69,8 @@ const providerOptionsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan ProviderOptions', () => {
@@ -75,7 +79,11 @@ describe('Model Plan ProviderOptions', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
-          element: <ProviderOptions />
+          element: (
+            <ModelInfoWrapper>
+              <ProviderOptions />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -111,7 +119,11 @@ describe('Model Plan ProviderOptions', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
-          element: <ProviderOptions />
+          element: (
+            <ModelInfoWrapper>
+              <ProviderOptions />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

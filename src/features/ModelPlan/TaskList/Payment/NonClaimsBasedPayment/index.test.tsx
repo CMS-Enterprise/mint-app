@@ -9,6 +9,9 @@ import {
   NonClaimsBasedPayType,
   PayType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import NonClaimsBasedPayment from './index';
 
@@ -54,7 +57,8 @@ const paymentsMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan -- NonClaimsBasedPayment', () => {
@@ -63,7 +67,11 @@ describe('Model Plan -- NonClaimsBasedPayment', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment',
-          element: <NonClaimsBasedPayment />
+          element: (
+            <ModelInfoWrapper>
+              <NonClaimsBasedPayment />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -91,7 +99,11 @@ describe('Model Plan -- NonClaimsBasedPayment', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment',
-          element: <NonClaimsBasedPayment />
+          element: (
+            <ModelInfoWrapper>
+              <NonClaimsBasedPayment />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

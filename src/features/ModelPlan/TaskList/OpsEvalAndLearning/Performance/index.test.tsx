@@ -7,6 +7,9 @@ import {
   GetPerformanceDocument,
   GetPerformanceQuery
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Performance from '.';
 
@@ -57,7 +60,8 @@ const performanceMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning Performance', () => {
@@ -66,7 +70,11 @@ describe('Model Plan Ops Eval and Learning Performance', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance',
-          element: <Performance />
+          element: (
+            <ModelInfoWrapper>
+              <Performance />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -100,7 +108,11 @@ describe('Model Plan Ops Eval and Learning Performance', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance',
-          element: <Performance />
+          element: (
+            <ModelInfoWrapper>
+              <Performance />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

@@ -82,6 +82,111 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
       >
         for My excellent plan that I just initiated
       </p>
+    </div>
+    <div
+      aria-hidden="true"
+      class="sticky-header-wrapper"
+      style="position: absolute; visibility: hidden; top: -9999px; left: -9999px; width: 100%;"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <div
+            class="padding-top-2 padding-bottom-1"
+          >
+            <h3
+              class="margin-y-0"
+            >
+              Model plan: Operations, evaluation, and learning
+            </h3>
+            <p
+              class="margin-y-0 font-body-lg line-height-sans-3"
+            >
+              for My excellent plan that I just initiated
+            </p>
+          </div>
+          <button
+            aria-label="Back to top"
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-hidden="false"
+      class="sticky-header-wrapper z-300 shadow-2 bg-white sticky-header-wrapper--visible"
+      role="banner"
+    >
+      <div
+        class="grid-container"
+        data-testid="gridContainer"
+      >
+        <div
+          class="display-flex flex-justify show-when-sticky"
+        >
+          <div
+            class="padding-top-2 padding-bottom-1"
+          >
+            <h3
+              class="margin-y-0"
+            >
+              Model plan: Operations, evaluation, and learning
+            </h3>
+            <p
+              class="margin-y-0 font-body-lg line-height-sans-3"
+            >
+              for My excellent plan that I just initiated
+            </p>
+          </div>
+          <button
+            aria-label="Back to top"
+            class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
       <p
         class="margin-bottom-2 font-body-md line-height-sans-4"
       >

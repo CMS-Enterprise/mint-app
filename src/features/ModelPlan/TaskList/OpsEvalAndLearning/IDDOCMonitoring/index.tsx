@@ -29,8 +29,10 @@ import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 import {
@@ -63,6 +65,7 @@ const IDDOCMonitoring = () => {
 
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const navigate = useNavigate();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetIddocMonitoringQuery({
     variables: {
@@ -83,8 +86,6 @@ const IDDOCMonitoring = () => {
     fileNamingConventions,
     dataMonitoringNote
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCMonitoringFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   const { mutationError } = useHandleMutation(
     TypedUpdatePlanOpsEvalAndLearningDocument,
@@ -131,7 +132,7 @@ const IDDOCMonitoring = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {opsEvalAndLearningMiscT('heading')}
         </PageHeading>
 
@@ -141,7 +142,15 @@ const IDDOCMonitoring = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={opsEvalAndLearningMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

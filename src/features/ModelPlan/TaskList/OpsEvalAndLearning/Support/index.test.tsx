@@ -7,6 +7,9 @@ import {
   GetOpsEvalAndLearningDocument,
   GetOpsEvalAndLearningQuery
 } from 'gql/generated/graphql';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import {
   isCCWInvolvement,
@@ -40,12 +43,12 @@ const opsEvalAndLearningMock = [
   {
     request: {
       query: GetOpsEvalAndLearningDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          id: modelID,
           modelName: 'My excellent plan that I just initiated',
           opsEvalAndLearning: opsEvalAndLearningMockData,
           operationalNeeds: [
@@ -58,7 +61,8 @@ const opsEvalAndLearningMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning', () => {
@@ -108,7 +112,11 @@ describe('Model Plan Ops Eval and Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
-          element: <Support />
+          element: (
+            <ModelInfoWrapper>
+              <Support />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -142,7 +150,11 @@ describe('Model Plan Ops Eval and Learning', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning',
-          element: <Support />
+          element: (
+            <ModelInfoWrapper>
+              <Support />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

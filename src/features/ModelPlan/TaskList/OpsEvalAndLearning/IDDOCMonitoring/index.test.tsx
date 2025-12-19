@@ -7,6 +7,9 @@ import {
   GetIddocMonitoringDocument,
   GetIddocMonitoringQuery
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import IDDOCMonitoring from './index';
 
@@ -43,7 +46,8 @@ const iddocMonitoringMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning IDDOC', () => {
@@ -52,7 +56,11 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring',
-          element: <IDDOCMonitoring />
+          element: (
+            <ModelInfoWrapper>
+              <IDDOCMonitoring />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -86,7 +94,11 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring',
-          element: <IDDOCMonitoring />
+          element: (
+            <ModelInfoWrapper>
+              <IDDOCMonitoring />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

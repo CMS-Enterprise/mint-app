@@ -9,6 +9,9 @@ import {
   GetCcwAndQualityQuery,
   YesNoOtherType
 } from 'gql/generated/graphql';
+import { modelPlanBaseMock } from 'tests/mock/general';
+
+import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import CCWAndQuality from '.';
 
@@ -59,7 +62,8 @@ const ccwAndQualityMock = [
         }
       }
     }
-  }
+  },
+  ...modelPlanBaseMock
 ];
 
 describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
@@ -68,7 +72,11 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality',
-          element: <CCWAndQuality />
+          element: (
+            <ModelInfoWrapper>
+              <CCWAndQuality />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {
@@ -102,7 +110,11 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality',
-          element: <CCWAndQuality />
+          element: (
+            <ModelInfoWrapper>
+              <CCWAndQuality />
+            </ModelInfoWrapper>
+          )
         }
       ],
       {

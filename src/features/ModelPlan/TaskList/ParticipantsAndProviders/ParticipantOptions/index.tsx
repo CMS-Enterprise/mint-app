@@ -32,10 +32,12 @@ import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
@@ -60,6 +62,7 @@ export const ParticipantOptions = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<ParticipantOptionsFormType>>(null);
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetParticipantOptionsQuery({
@@ -81,8 +84,6 @@ export const ParticipantOptions = () => {
     selectionNote
   } = (data?.modelPlan?.participantsAndProviders ||
     {}) as ParticipantOptionsFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
@@ -131,7 +132,7 @@ export const ParticipantOptions = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {participantsAndProvidersMiscT('heading')}
         </PageHeading>
 
@@ -141,6 +142,15 @@ export const ParticipantOptions = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={participantsAndProvidersMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
+
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>

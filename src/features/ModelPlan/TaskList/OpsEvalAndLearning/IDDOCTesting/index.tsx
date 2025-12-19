@@ -30,9 +30,11 @@ import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
 
 import {
@@ -60,6 +62,7 @@ const IDDOCTesting = () => {
 
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const navigate = useNavigate();
+  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetIddocTestingQuery({
     variables: {
@@ -81,8 +84,6 @@ const IDDOCTesting = () => {
     dataResponseType,
     dataResponseFileFrequency
   } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCTestingFormType;
-
-  const modelName = data?.modelPlan?.modelName || '';
 
   const { mutationError } = useHandleMutation(
     TypedUpdatePlanOpsEvalAndLearningDocument,
@@ -130,7 +131,7 @@ const IDDOCTesting = () => {
           ]}
         />
 
-        <PageHeading className="margin-top-4 margin-bottom-2">
+        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
           {opsEvalAndLearningMiscT('heading')}
         </PageHeading>
 
@@ -140,7 +141,15 @@ const IDDOCTesting = () => {
         >
           {miscellaneousT('for')} {modelName}
         </p>
+      </GridContainer>
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={opsEvalAndLearningMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <p className="margin-bottom-2 font-body-md line-height-sans-4">
           {miscellaneousT('helpText')}
         </p>
