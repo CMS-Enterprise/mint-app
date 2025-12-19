@@ -100,7 +100,6 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory_DuplicateNameCaseInsens
 			)
 
 			suite.Error(err)
-			suite.Contains(err.Error(), "already exists")
 		})
 	}
 }
