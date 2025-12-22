@@ -118,7 +118,6 @@ func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
 
 	// Fetch key contact using the loader
 	keyContact, err := GetKeyContact(suite.testConfigs.Context,
-		suite.testConfigs.Principal,
 		contact.ID)
 
 	suite.NoError(err)
@@ -277,7 +276,6 @@ func (suite *ResolverSuite) TestDeleteKeyContact() {
 	// Verify the key contact no longer exists
 	fetchedContact, err := GetKeyContact(
 		suite.testConfigs.Context,
-		suite.testConfigs.Principal,
 		contact.ID,
 	)
 	suite.Error(err)

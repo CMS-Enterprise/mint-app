@@ -3,7 +3,7 @@ ALTER TYPE TABLE_NAME ADD VALUE 'key_contact_category';
 -- Create table for key contact category
 CREATE TABLE IF NOT EXISTS  key_contact_category (
     id UUID PRIMARY KEY NOT NULL,
-    category ZERO_STRING NOT NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the category column,,
+    category ZERO_STRING NOT NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the category column,
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS  key_contact (
     subject_category_id UUID NOT NULL REFERENCES key_contact_category(id) ON DELETE CASCADE,
 
     mailbox_title ZERO_STRING NULL,
-    mailbox_address ZERO_STRING NULL,
+    mailbox_address ZERO_STRING NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the category column,
 
     -- Enforce that either user_id is set (individual contact) or both mailbox fields are set (team contact), but not both or neither
     CONSTRAINT contact_mailbox_or_user_account CHECK (

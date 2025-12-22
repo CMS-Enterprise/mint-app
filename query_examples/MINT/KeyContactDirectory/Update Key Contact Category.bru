@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation updateKeyContactCategory($id: UUID!, $changes: KeyContactCategoryUpdateChanges!) {
-    updateKeyContactCategory(id: $id, changes: $changes) {
+  mutation updateKeyContactCategory($id: UUID!, $name:String!) {
+    updateKeyContactCategory(id: $id, name: $name) {
       id
       category
     }
@@ -28,9 +28,7 @@ body:graphql {
 body:graphql:vars {
   {
     "id": "{{keyContactCategoryID}}",
-    "changes": {
-      "category": "Updated Technology & Innovation"
-    }
+    "name": "Updated Technology & Innovation"
   }
 }
 

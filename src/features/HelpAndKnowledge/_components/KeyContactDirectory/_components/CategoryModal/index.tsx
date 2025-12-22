@@ -98,9 +98,7 @@ const CategoryModal = ({
         : update({
             variables: {
               id: category?.id || '',
-              changes: {
-                category: formData.category
-              }
+              name: formData.category
             }
           });
 

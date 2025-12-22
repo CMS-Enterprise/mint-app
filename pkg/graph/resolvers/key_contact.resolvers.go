@@ -53,7 +53,5 @@ func (r *queryResolver) KeyContacts(ctx context.Context) ([]*models.KeyContact, 
 
 // KeyContact is the resolver for the keyContact field.
 func (r *queryResolver) KeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error) {
-	principal := appcontext.Principal(ctx)
-
-	return GetKeyContact(ctx, principal, id)
+	return GetKeyContact(ctx, id)
 }

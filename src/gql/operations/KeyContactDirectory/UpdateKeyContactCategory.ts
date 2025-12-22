@@ -1,11 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation updateKeyContactCategory(
-    $id: UUID!
-    $changes: KeyContactCategoryUpdateChanges!
-  ) {
-    updateKeyContactCategory(id: $id, changes: $changes) {
+  mutation updateKeyContactCategory($id: UUID!, $name: String!) {
+    updateKeyContactCategory(id: $id, name: $name) {
       id
       category
     }

@@ -1,6 +1,33 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
+)
+
+// KeyContactWelcomeTemplateName is the template name for the subject matter experts welcome email
+const KeyContactWelcomeTemplateName = "key_contact_welcome"
+
+//go:embed templates/key_contact_welcome_body.html
+var KeyContactWelcomeBodyTemplate string
+
+//go:embed templates/key_contact_welcome_subject.html
+var KeyContactWelcomeSubjectTemplate string
+
+type keyContactEmail struct {
+	// The email to be sent when a user or team email is added as subject matter expert
+	Added *emailtemplates.GenEmailTemplate[KeyContactAddedSubjectContent, KeyContactAddedBodyContent]
+}
+
+var KeyContact = keyContactEmail{
+	Added: NewEmailTemplate[KeyContactAddedSubjectContent, KeyContactAddedBodyContent](
+		KeyContactWelcomeTemplateName,
+		KeyContactWelcomeSubjectTemplate,
+		KeyContactWelcomeBodyTemplate,
+	),
+}
 
 // KeyContactAddedSubjectContent defines the parameters necessary for the email subject.
 type KeyContactAddedSubjectContent struct {

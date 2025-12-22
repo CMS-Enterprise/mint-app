@@ -6,10 +6,7 @@ WITH inserted AS (
         user_id,
         subject_area,
         subject_category_id,
-        created_by,
-        created_dts,
-        modified_by,
-        modified_dts
+        created_by
     ) VALUES (
         :id,
         :mailbox_title,
@@ -17,10 +14,7 @@ WITH inserted AS (
         :user_id,
         :subject_area,
         :subject_category_id,
-        :created_by,
-        :created_dts,
-        :modified_by,
-        :modified_dts
+        :created_by
     )
     RETURNING
         id,

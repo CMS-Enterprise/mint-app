@@ -60,8 +60,7 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		// Send welcome email to new key contact
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
-				store,
-				logger,
+				ctx,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -116,8 +115,7 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 	if emailService != nil && emailTemplateService != nil && newContact.Email != nil {
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
-				store,
-				logger,
+				ctx,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -147,7 +145,7 @@ func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	existingContact, err := loaders.KeyContact.ByID.Load(ctx, id)
+	existingContact, err := GetKeyContact(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
 	}
@@ -181,7 +179,7 @@ func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 	// Use a transaction for delete (for audit triggers, etc.)
 	returnedContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
 		// Fetch the existing contact to check permissions and return after delete
-		existing, err := loaders.KeyContact.ByID.Load(ctx, id)
+		existing, err := GetKeyContact(ctx, id)
 		if err != nil {
 			logger.Warn("Failed to get contact with id", zap.Any("contactId", id), zap.Error(err))
 			return nil, nil
@@ -215,14 +213,7 @@ func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 
 // GetKeyContact retrieves a subject matter expert by its ID.
 // Returns the contact if found, or an error if not found or on failure.
-func GetKeyContact(ctx context.Context, principal authentication.Principal,
-	id uuid.UUID,
-) (*models.KeyContact, error) {
-	principalAccount := principal.Account()
-	if principalAccount == nil {
-		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
-	}
-
+func GetKeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error) {
 	contact, err := loaders.KeyContact.ByID.Load(ctx, id)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get contact with id %s: %w", id, err)
@@ -251,14 +242,13 @@ func GetAllKeyContacts(ctx context.Context) ([]*models.KeyContact, error) {
 }
 
 func sendKeyContactWelcomeEmail(
-	store *storage.Store,
-	logger *zap.Logger,
+	ctx context.Context,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.KeyContact,
 ) error {
-	category, err := storage.KeyContactCategoryGetByID(store, logger, contact.SubjectCategoryID)
+	category, err := loaders.KeyContactCategory.ByID.Load(ctx, contact.SubjectCategoryID)
 	if err != nil {
 		return err
 	}

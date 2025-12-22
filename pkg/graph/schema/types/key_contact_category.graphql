@@ -14,15 +14,6 @@ type KeyContactCategory {
   modifiedDts: Time
 }
 
-"""
-Input for updating a key contact category.
-Only category can be changed.
-"""
-input KeyContactCategoryUpdateChanges
-  @goModel(model: "map[string]interface{}") {
-  category: String
-}
-
 extend type Query {
   keyContactCategory: [KeyContactCategory!]!
   keyContactCategoryById(id: UUID!): KeyContactCategory!
@@ -31,13 +22,11 @@ extend type Query {
 
 extend type Mutation {
   createKeyContactCategory(category: String!): KeyContactCategory!
-    @hasAnyRole(roles: [MINT_ASSESSMENT])
+    @hasRole(role: MINT_ASSESSMENT)
 
-  updateKeyContactCategory(
-    id: UUID!
-    changes: KeyContactCategoryUpdateChanges!
-  ): KeyContactCategory! @hasAnyRole(roles: [MINT_ASSESSMENT])
+  updateKeyContactCategory(id: UUID!, name: String!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
 
   deleteKeyContactCategory(id: UUID!): KeyContactCategory!
-    @hasAnyRole(roles: [MINT_ASSESSMENT])
+    @hasRole(role: MINT_ASSESSMENT)
 }

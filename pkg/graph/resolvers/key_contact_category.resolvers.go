@@ -29,17 +29,17 @@ func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, categor
 }
 
 // UpdateKeyContactCategory is the resolver for the updateKeyContactCategory field.
-func (r *mutationResolver) UpdateKeyContactCategory(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.KeyContactCategory, error) {
+func (r *mutationResolver) UpdateKeyContactCategory(ctx context.Context, id uuid.UUID, name string) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return UpdateKeyContactCategory(logger, principal, r.store, id, changes)
+	return UpdateKeyContactCategory(ctx, logger, principal, r.store, id, name)
 }
 
 // DeleteKeyContactCategory is the resolver for the deleteKeyContactCategory field.
 func (r *mutationResolver) DeleteKeyContactCategory(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return DeleteKeyContactCategory(logger, principal, r.store, id)
+	return DeleteKeyContactCategory(ctx, logger, principal, r.store, id)
 }
 
 // KeyContactCategory is the resolver for the keyContactCategory field.
@@ -49,9 +49,7 @@ func (r *queryResolver) KeyContactCategory(ctx context.Context) ([]*models.KeyCo
 
 // KeyContactCategoryByID is the resolver for the keyContactCategoryById field.
 func (r *queryResolver) KeyContactCategoryByID(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	return GetKeyContactCategory(logger, principal, r.store, id)
+	return GetKeyContactCategory(ctx, id)
 }
 
 // KeyContactCategoriesByIds is the resolver for the keyContactCategoriesByIds field.
