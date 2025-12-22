@@ -1,7 +1,7 @@
 meta {
   name: Get Key Contact Category By ID
   type: graphql
-  seq: 3
+  seq: 9
 }
 
 post {
@@ -20,7 +20,7 @@ body:graphql {
   query getKeyContactCategoryById($id: UUID!) {
     keyContactCategoryById(id: $id) {
       id
-      category
+      name
     }
   }
 }
@@ -30,4 +30,3 @@ body:graphql:vars {
     "id": "{{keyContactCategoryID}}"
   }
 }
-

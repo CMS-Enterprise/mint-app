@@ -1545,7 +1545,7 @@ export type TranslationKeyContactCustom = {
 
 // Key Contact Category - Change History purposes only
 export type TranslationKeyContactCategoryCustomForm = {
-  category: TranslationFieldProperties;
+  name: TranslationFieldProperties;
 };
 type TranslationKeyContactCategoryCustomGQL = Omit<
   KeyContactCategoryTranslation, // graphql gen type

@@ -4,7 +4,7 @@ export default gql(/* GraphQL */ `
   query GetAllKeyContactCategories {
     keyContactCategory {
       id
-      category
+      name
     }
   }
 `);

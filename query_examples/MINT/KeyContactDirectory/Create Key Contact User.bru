@@ -1,7 +1,7 @@
 meta {
   name: Create Key Contact User
   type: graphql
-  seq: 2
+  seq: 6
 }
 
 post {
@@ -29,7 +29,7 @@ body:graphql:vars {
   {
     "userName": "pstm",
     "subjectArea": "violin",
-    "subjectCategoryID": "{{subjectCategoryID}}"
+    "subjectCategoryID": "{{keyContactCategoryID}}"
   }
 }
 
@@ -39,4 +39,12 @@ script:post-response {
   let contactId = responseData.id
   
   bru.setVar("contactId", contactId);
+}
+
+tests {
+  let responseData = res.getBody().data.createKeyContactUser
+  
+  keyContactID = responseData.id
+  
+  bru.setVar("keyContactID", keyContactID);
 }

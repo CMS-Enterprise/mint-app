@@ -1,8 +1,8 @@
 {
-  "category": {
-    "gqlField": "category",
-    "goField": "Category",
-    "dbField": "category",
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
     "label": "Subject category title",
     "dataType": "STRING",
     "formType": "TEXT",

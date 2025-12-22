@@ -1,7 +1,7 @@
 meta {
   name: Update Key Contact Category
   type: graphql
-  seq: 5
+  seq: 2
 }
 
 post {
@@ -20,7 +20,7 @@ body:graphql {
   mutation updateKeyContactCategory($id: UUID!, $name:String!) {
     updateKeyContactCategory(id: $id, name: $name) {
       id
-      category
+      name
     }
   }
 }
@@ -31,4 +31,3 @@ body:graphql:vars {
     "name": "Updated Technology & Innovation"
   }
 }
-

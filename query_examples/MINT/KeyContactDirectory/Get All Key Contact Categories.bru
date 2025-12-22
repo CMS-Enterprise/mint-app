@@ -1,7 +1,7 @@
 meta {
   name: Get All Key Contact Categories
   type: graphql
-  seq: 2
+  seq: 4
 }
 
 post {
@@ -20,12 +20,12 @@ body:graphql {
   query getAllKeyContactCategories {
     keyContactCategory {
       id
-      category
+      name
     }
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
-

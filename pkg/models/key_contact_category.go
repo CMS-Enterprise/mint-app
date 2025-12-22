@@ -6,12 +6,12 @@ import (
 
 type KeyContactCategory struct {
 	baseStruct
-	Category string `json:"category" db:"category"`
+	Name string `json:"name" db:"name"`
 }
 
-func NewKeyContactCategory(createdBy uuid.UUID, category string) *KeyContactCategory {
+func NewKeyContactCategory(createdBy uuid.UUID, name string) *KeyContactCategory {
 	return &KeyContactCategory{
 		baseStruct: NewBaseStruct(createdBy),
-		Category:   category,
+		Name:       name,
 	}
 }

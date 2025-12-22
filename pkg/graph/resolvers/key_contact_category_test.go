@@ -6,12 +6,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) createKeyContactCategory(category string) *models.KeyContactCategory {
+func (suite *ResolverSuite) createKeyContactCategory(name string) *models.KeyContactCategory {
 	newCategory, err := CreateKeyContactCategory(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		category,
+		name,
 	)
 	suite.NoError(err)
 
@@ -32,7 +32,7 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory() {
 	suite.NoError(err)
 	suite.NotNil(newCategory)
 	suite.NotEqual(uuid.Nil, newCategory.ID)
-	suite.Equal(categoryName, newCategory.Category)
+	suite.Equal(categoryName, newCategory.Name)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, newCategory.CreatedBy)
 	suite.NotNil(newCategory.CreatedDts)
 	suite.Nil(newCategory.ModifiedBy)
@@ -145,7 +145,7 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory_Whitespace() {
 			} else {
 				suite.NoError(err)
 				suite.NotNil(newCategory)
-				suite.Equal(tc.expected, newCategory.Category)
+				suite.Equal(tc.expected, newCategory.Name)
 			}
 		})
 	}
@@ -177,7 +177,7 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory_ExtremelyLongString() {
 		suite.NoError(err)
 		suite.NotNil(newCategory)
 		// May be truncated by database, but should have some content
-		suite.GreaterOrEqual(len(newCategory.Category), 0)
+		suite.GreaterOrEqual(len(newCategory.Name), 0)
 	}
 }
 
@@ -243,7 +243,7 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory_Whitespace() {
 			} else {
 				suite.NoError(err)
 				suite.NotNil(updatedCategory)
-				suite.Equal(tc.expected, updatedCategory.Category)
+				suite.Equal(tc.expected, updatedCategory.Name)
 			}
 		})
 	}
@@ -272,7 +272,7 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory() {
 	suite.NoError(err)
 	suite.NotNil(updatedCategory)
 	suite.Equal(category.ID, updatedCategory.ID)
-	suite.Equal(updatedCategoryName, updatedCategory.Category)
+	suite.Equal(updatedCategoryName, updatedCategory.Name)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, updatedCategory.CreatedBy)
 	suite.NotNil(updatedCategory.ModifiedBy)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, *updatedCategory.ModifiedBy)
@@ -361,7 +361,7 @@ func (suite *ResolverSuite) TestGetKeyContactCategory() {
 	suite.NoError(err)
 	suite.NotNil(retrievedCategory)
 	suite.Equal(category.ID, retrievedCategory.ID)
-	suite.Equal(categoryName, retrievedCategory.Category)
+	suite.Equal(categoryName, retrievedCategory.Name)
 	suite.Equal(category.CreatedBy, retrievedCategory.CreatedBy)
 }
 

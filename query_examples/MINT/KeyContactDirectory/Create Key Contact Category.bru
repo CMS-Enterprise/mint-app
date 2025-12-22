@@ -18,17 +18,17 @@ auth:apikey {
 
 body:graphql {
   mutation createKeyContactCategory {
-    createKeyContactCategory(category: "Technology & Innovation") {
+    createKeyContactCategory(name: "Technology & Innovation") {
       id
-      category
+      name
     }
   }
 }
 
 tests {
   let responseData = res.getBody().data.createKeyContactCategory
-
+  
   keyContactCategoryID = responseData.id
-
+  
   bru.setVar("keyContactCategoryID", keyContactCategoryID);
 }

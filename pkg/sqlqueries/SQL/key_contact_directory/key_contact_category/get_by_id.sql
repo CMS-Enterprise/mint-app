@@ -1,6 +1,6 @@
 SELECT
     id,
-    category,
+    name,
     created_by,
     created_dts,
     modified_by,

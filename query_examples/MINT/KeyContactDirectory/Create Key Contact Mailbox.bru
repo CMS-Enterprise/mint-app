@@ -1,7 +1,7 @@
 meta {
   name: Create Key Contact Mailbox
   type: graphql
-  seq: 2
+  seq: 5
 }
 
 post {
@@ -18,6 +18,7 @@ body:graphql {
       subjectArea: $subjectArea,
       subjectCategoryID: $subjectCategoryID
     ) {
+      id
       name
       email
       subjectArea
@@ -31,7 +32,7 @@ body:graphql:vars {
     "mailboxTitle": "pstm team mailbox",
     "mailboxAddress": "pstm@example.com",
     "subjectArea": "violin",
-    "subjectCategoryID": "{{subjectCategoryID}}"
+    "subjectCategoryID": "{{keyContactCategoryID}}"
   }
 }
 
@@ -41,4 +42,12 @@ script:post-response {
   let contactId = responseData.id
   
   bru.setVar("contactId", contactId);
+}
+
+tests {
+  let responseData = res.getBody().data.createKeyContactMailbox
+  
+  keyContactID = responseData.id
+  
+  bru.setVar("keyContactID", keyContactID);
 }

@@ -4,7 +4,7 @@ export default gql(/* GraphQL */ `
   mutation deleteKeyContactCategory($id: UUID!) {
     deleteKeyContactCategory(id: $id) {
       id
-      category
+      name
     }
   }
 `);

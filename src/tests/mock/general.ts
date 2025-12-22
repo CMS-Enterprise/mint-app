@@ -722,12 +722,12 @@ export const keyContactCategoryMockData: KeyContactCategoryType[] = [
   {
     __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
-    category: 'Healthcare'
+    name: 'Healthcare'
   },
   {
     __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
-    category: 'CMS Programs'
+    name: 'CMS Programs'
   }
 ];
 

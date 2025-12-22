@@ -199,7 +199,7 @@ const KeyContactDirectory = () => {
     }
 
     return [...categoryData.keyContactCategory].sort((a, b) =>
-      a.category.localeCompare(b.category)
+      a.name.localeCompare(b.name)
     );
   }, [categoryData]);
 
@@ -212,9 +212,7 @@ const KeyContactDirectory = () => {
 
     if (trimmedQuery !== '') {
       const filteredCategoryIds = categories
-        .filter(category =>
-          category.category.toLowerCase().includes(trimmedQuery)
-        )
+        .filter(category => category.name.toLowerCase().includes(trimmedQuery))
         .map(cat => cat.id);
 
       smeContacts = smeData.keyContacts.filter(sme => {
@@ -246,7 +244,7 @@ const KeyContactDirectory = () => {
   }, [filteredSmes]);
 
   const accordionItems: AccordionItemProps[] = categories.map(category => ({
-    title: category.category,
+    title: category.name,
     content: (
       <>
         {isAssessmentTeam && (

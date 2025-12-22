@@ -3,7 +3,7 @@ ALTER TYPE TABLE_NAME ADD VALUE 'key_contact_category';
 -- Create table for key contact category
 CREATE TABLE IF NOT EXISTS  key_contact_category (
     id UUID PRIMARY KEY NOT NULL,
-    category ZERO_STRING NOT NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the category column,
+    name ZERO_STRING NOT NULL COLLATE "case_insensitive", -- Set case-insensitive collation for the name column,
 
     --META DATA
     created_by UUID NOT NULL REFERENCES user_account(id),
@@ -17,7 +17,7 @@ COMMENT ON TABLE key_contact_category IS
 
 -- Ensure that each category has a unique name in key_contact_category
 ALTER TABLE key_contact_category
-ADD CONSTRAINT uniq_category UNIQUE(category);
+ADD CONSTRAINT uniq_category UNIQUE(name);
 
 ALTER TYPE TABLE_NAME ADD VALUE 'key_contact';
 

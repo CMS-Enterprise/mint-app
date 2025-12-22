@@ -18,14 +18,14 @@ import (
 // CreateKeyContactCategory creates a new key contact category.
 // It inserts a new category record with the provided category name.
 func CreateKeyContactCategory(logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	categoryStr string,
+	name string,
 ) (*models.KeyContactCategory, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	newCategory := models.NewKeyContactCategory(principalAccount.ID, categoryStr)
+	newCategory := models.NewKeyContactCategory(principalAccount.ID, name)
 	createdCategory, err := storage.KeyContactCategoryCreate(store, logger, newCategory)
 	if err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func CreateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 }
 
 // UpdateKeyContactCategory updates an existing key contact category.
-// Only category field can be changed. Returns the updated category.
+// Only name field can be changed. Returns the updated category.
 func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
 	name string,
@@ -53,7 +53,7 @@ func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 		return nil, fmt.Errorf("category with id %s not found", id)
 	}
 
-	existingCategory.Category = name
+	existingCategory.Name = name
 
 	err = BaseStructPreUpdate(logger, existingCategory, map[string]interface{}{}, principal, store, true, false)
 	if err != nil {

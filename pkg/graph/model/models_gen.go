@@ -50,7 +50,7 @@ type ExistingModelLinkTranslation struct {
 
 // Represents key contact category base translation data
 type KeyContactCategoryTranslation struct {
-	Category models.TranslationField `json:"category" db:"category"`
+	Name models.TranslationField `json:"name" db:"name"`
 }
 
 // Represents key contact base translation data

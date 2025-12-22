@@ -62,9 +62,9 @@ const CategoryModal = ({
 
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(true);
 
-  const methods = useForm<{ category: string }>({
+  const methods = useForm<{ name: string }>({
     defaultValues: {
-      category: category?.category || ''
+      name: category?.name || ''
     },
     mode: 'onChange'
   });
@@ -79,7 +79,7 @@ const CategoryModal = ({
     setDisableSubmitBtn(!isValid || !isDirty || isSubmitting);
   }, [isDirty, isSubmitting, isValid]);
 
-  const onSubmit = (formData: { category: string }) => {
+  const onSubmit = (formData: { name: string }) => {
     if (mode === 'edit' && !category) {
       return;
     }
@@ -92,13 +92,13 @@ const CategoryModal = ({
       mode === 'add'
         ? create({
             variables: {
-              category: formData.category
+              name: formData.name
             }
           })
         : update({
             variables: {
               id: category?.id || '',
-              name: formData.category
+              name: formData.name
             }
           });
 
@@ -108,7 +108,7 @@ const CategoryModal = ({
           <Trans
             i18nKey={`keyContactCategoryMisc:${mode}.success`}
             values={{
-              category: formData.category
+              category: formData.name
             }}
             components={{
               bold: <span className="text-bold" />
@@ -154,7 +154,7 @@ const CategoryModal = ({
               components={{
                 bold: <span className="text-bold" />
               }}
-              values={{ category: category?.category || '' }}
+              values={{ category: category?.name || '' }}
             />
           </p>
         )}
@@ -169,7 +169,7 @@ const CategoryModal = ({
         >
           <Fieldset style={{ minWidth: '100%' }}>
             <Controller
-              name="category"
+              name="name"
               control={control}
               rules={{
                 required: true,

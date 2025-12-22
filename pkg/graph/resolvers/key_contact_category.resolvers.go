@@ -22,10 +22,10 @@ func (r *keyContactCategoryResolver) KeyContacts(ctx context.Context, obj *model
 }
 
 // CreateKeyContactCategory is the resolver for the createKeyContactCategory field.
-func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, category string) (*models.KeyContactCategory, error) {
+func (r *mutationResolver) CreateKeyContactCategory(ctx context.Context, name string) (*models.KeyContactCategory, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return CreateKeyContactCategory(logger, principal, r.store, category)
+	return CreateKeyContactCategory(logger, principal, r.store, name)
 }
 
 // UpdateKeyContactCategory is the resolver for the updateKeyContactCategory field.

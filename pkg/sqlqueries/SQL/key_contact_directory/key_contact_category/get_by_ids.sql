@@ -5,7 +5,7 @@ WITH QUERIED_IDS AS (
 
 SELECT
     category.id,
-    category.category,
+    category.name,
     category.created_by,
     category.created_dts,
     category.modified_by,

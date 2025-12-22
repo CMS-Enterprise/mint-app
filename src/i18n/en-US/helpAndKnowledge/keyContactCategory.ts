@@ -6,10 +6,10 @@ import {
 } from '../../../gql/generated/graphql';
 
 const keyContactCategory: TranslationKeyContactCategoryCustom = {
-  category: {
-    gqlField: 'category',
-    goField: 'Category',
-    dbField: 'category',
+  name: {
+    gqlField: 'name',
+    goField: 'Name',
+    dbField: 'name',
     label: 'Subject category title',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,

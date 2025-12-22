@@ -1,6 +1,6 @@
 type KeyContactCategory {
   id: UUID!
-  category: String!
+  name: String!
 
   #Resolvers
   keyContacts: [KeyContact!]!
@@ -21,7 +21,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createKeyContactCategory(category: String!): KeyContactCategory!
+  createKeyContactCategory(name: String!): KeyContactCategory!
     @hasRole(role: MINT_ASSESSMENT)
 
   updateKeyContactCategory(id: UUID!, name: String!): KeyContactCategory!

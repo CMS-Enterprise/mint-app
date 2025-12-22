@@ -1,15 +1,15 @@
 INSERT INTO key_contact_category (
     id,
-    category,
+    name,
     created_by
 ) VALUES (
     :id,
-    :category,
+    :name,
     :created_by
 )
 RETURNING
     id,
-    category,
+    name,
     created_by,
     created_dts,
     modified_by,

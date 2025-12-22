@@ -1,7 +1,7 @@
 meta {
   name: Delete Key Contact Category
   type: graphql
-  seq: 6
+  seq: 3
 }
 
 post {
@@ -20,7 +20,7 @@ body:graphql {
   mutation deleteKeyContactCategory($id: UUID!) {
     deleteKeyContactCategory(id: $id) {
       id
-      category
+      name
     }
   }
 }
@@ -30,4 +30,3 @@ body:graphql:vars {
     "id": "{{keyContactCategoryID}}"
   }
 }
-
