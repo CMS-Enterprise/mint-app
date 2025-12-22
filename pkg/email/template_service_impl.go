@@ -394,10 +394,6 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	if err := t.loadEmailTemplate(KeyContactWelcomeTemplateName, KeyContactWelcomeSubjectTemplate, KeyContactWelcomeBodyTemplate); err != nil {
-		return err
-	}
-
 	return nil
 }
 

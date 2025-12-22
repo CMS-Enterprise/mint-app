@@ -248,26 +248,25 @@ func sendKeyContactWelcomeEmail(
 	addressBook email.AddressBook,
 	contact *models.KeyContact,
 ) error {
-	category, err := loaders.KeyContactCategory.ByID.Load(ctx, contact.SubjectCategoryID)
+	category, err := GetKeyContactCategory(ctx, contact.SubjectCategoryID)
 	if err != nil {
 		return err
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.KeyContactWelcomeTemplateName)
-	if err != nil {
-		return err
+	subjectContent := email.KeyContactAddedSubjectContent{
+		IsTeam: contact.MailboxAddress != nil,
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.NewKeyContactAddedSubjectContent(*contact))
-	if err != nil {
-		return err
+	bodyContent := email.KeyContactAddedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ContactName:   contact.Name,
+		IsTeam:        contact.MailboxAddress != nil,
+		SubjectArea:   string(contact.SubjectArea),
+		CategoryName:  category.Name,
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewKeyContactAddedBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		*category,
-	))
+	emailSubject, emailBody, err := email.KeyContact.Added.GetContent(subjectContent, bodyContent)
+
 	if err != nil {
 		return err
 	}

@@ -94,7 +94,7 @@ exports[`CategoryModal Component > matches snapshot 1`] = `
             class="usa-input"
             data-testid="category-title"
             id="category-title"
-            name="category"
+            name="name"
             type="text"
             value=""
           />

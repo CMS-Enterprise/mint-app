@@ -39,8 +39,16 @@ func (suite *ResolverSuite) TestCreateKeyContactUser() {
 		subjectCategoryID,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
+
 	suite.NoError(err)
 	suite.NotNil(contact)
+	if suite.NotNil(contact.UserID) {
+		userAccount, err := userhelpers.UserAccountGetByIDLOADER(suite.testConfigs.Context, *contact.UserID)
+		suite.NoError(err)
+		if suite.NotNil(userAccount.Username) {
+			suite.Equal(userName, *userAccount.Username)
+		}
+	}
 	suite.Equal(subjectArea, contact.SubjectArea)
 	suite.Equal(subjectCategoryID, contact.SubjectCategoryID)
 }

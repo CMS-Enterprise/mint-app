@@ -41,7 +41,7 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory() {
 
 // TestCreateKeyContactCategory_EmptyString tests creating a category with an empty string.
 func (suite *ResolverSuite) TestCreateKeyContactCategory_EmptyString() {
-	_, err := CreateKeyContactCategory(
+	newCategory, err := CreateKeyContactCategory(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -50,6 +50,7 @@ func (suite *ResolverSuite) TestCreateKeyContactCategory_EmptyString() {
 
 	suite.Error(err)
 	suite.Contains(err.Error(), "category name cannot be empty or whitespace-only")
+	suite.Nil(newCategory)
 }
 
 // TestCreateKeyContactCategory_DuplicateName tests creating a category with a duplicate name.
@@ -294,7 +295,7 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "no rows in result set")
+	suite.Contains(err.Error(), "record not found for given key")
 }
 
 // TestDeleteKeyContactCategory tests deleting a key contact category.
@@ -329,14 +330,14 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory() {
 		category.ID,
 	)
 	suite.Error(err)
-	suite.Contains(err.Error(), "sql: no rows in result set")
+	suite.Contains(err.Error(), "record not found for given key")
 }
 
 // TestDeleteKeyContactCategory_NotFound tests deleting a non-existent category.
 func (suite *ResolverSuite) TestDeleteKeyContactCategory_NotFound() {
 	nonExistentID := uuid.New()
 
-	_, err := DeleteKeyContactCategory(
+	existingCategory, err := DeleteKeyContactCategory(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
@@ -344,8 +345,9 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory_NotFound() {
 		nonExistentID,
 	)
 
+	suite.Nil(existingCategory)
 	suite.Error(err)
-	suite.Contains(err.Error(), "sql: no rows in result set")
+	suite.Contains(err.Error(), "not found")
 }
 
 // TestGetKeyContactCategory tests retrieving a key contact category by ID.
@@ -375,7 +377,7 @@ func (suite *ResolverSuite) TestGetKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "sql: no rows in result set")
+	suite.Contains(err.Error(), "not found")
 }
 
 // TestGetAllKeyContactCategories tests retrieving all key contact categories.
