@@ -51,11 +51,6 @@ const RemoveModal = ({
     }
   };
 
-  const removeName =
-    removedObject.__typename === 'KeyContact'
-      ? removedObject.name
-      : removedObject.category;
-
   const useMutation =
     removedObject.__typename === 'KeyContact'
       ? useDeleteKeyContactMutation
@@ -82,7 +77,7 @@ const RemoveModal = ({
           <Trans
             i18nKey={getModalStrings('success').i18nKey}
             values={{
-              name: removeName
+              name: removedObject.name
             }}
             components={{
               bold: <span className="text-bold" />
@@ -115,7 +110,7 @@ const RemoveModal = ({
         <Trans
           i18nKey={getModalStrings('text').i18nKey}
           values={{
-            name: removeName
+            name: removedObject.name
           }}
           components={{
             bold: <span className="text-bold" />

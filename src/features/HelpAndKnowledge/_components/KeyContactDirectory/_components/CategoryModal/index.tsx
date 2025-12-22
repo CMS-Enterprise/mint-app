@@ -182,7 +182,7 @@ const CategoryModal = ({
                     className="mint-body-normal maxw-none"
                     requiredMarker
                   >
-                    {keyContactCategoryT('category.label')}
+                    {keyContactCategoryT('name.label')}
                   </Label>
 
                   <TextInput

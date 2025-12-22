@@ -270,7 +270,7 @@ const SmeForm = ({
               <span className="text-bold">
                 {keyContactT('subjectCategoryID.label')}:
               </span>{' '}
-              {category.category}
+              {category.name}
             </p>
           ) : (
             <Controller
@@ -309,13 +309,13 @@ const SmeForm = ({
                     <option value="default">
                       - {keyContactMiscT('selectDefault')} -
                     </option>
-                    {allCategories.map(option => {
+                    {allCategories.map(eachCategory => {
                       return (
                         <option
-                          key={`select-${convertCamelCaseToKebabCase(option.category)}`}
-                          value={option.id}
+                          key={`select-${convertCamelCaseToKebabCase(eachCategory.name)}`}
+                          value={eachCategory.id}
                         >
-                          {option.category}
+                          {eachCategory.name}
                         </option>
                       );
                     })}
