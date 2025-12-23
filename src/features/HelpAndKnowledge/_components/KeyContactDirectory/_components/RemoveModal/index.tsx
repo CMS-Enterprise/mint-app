@@ -6,7 +6,6 @@ import {
   useDeleteKeyContactMutation
 } from 'gql/generated/graphql';
 import GetAllKeyContactCategories from 'gql/operations/KeyContactDirectory/GetAllKeyContactCategories';
-import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyContacts';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -67,10 +66,7 @@ const RemoveModal = ({
       variables: {
         id
       },
-      refetchQueries:
-        removedObject.__typename === 'KeyContact'
-          ? [GetAllKeyContacts]
-          : [GetAllKeyContactCategories, GetAllKeyContacts]
+      refetchQueries: [GetAllKeyContactCategories]
     }).then(response => {
       if (!response?.errors) {
         toastSuccess(

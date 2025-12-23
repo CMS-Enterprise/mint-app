@@ -10,9 +10,8 @@ import {
 } from '@trussworks/react-uswds';
 import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 import {
-  GetAllKeyContactsQuery,
-  useGetAllKeyContactCategoriesQuery,
-  useGetAllKeyContactsQuery
+  GetAllKeyContactCategoriesQuery,
+  useGetAllKeyContactCategoriesQuery
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
@@ -175,7 +174,32 @@ const AddSmeWithCategoryButton = ({
   );
 };
 
-export type SmeType = GetAllKeyContactsQuery['keyContacts'][number];
+const filterCategories = (
+  allCategories: KeyContactCategoryType[],
+  query: string
+) => {
+  const trimmedQuery = query.toLowerCase().trim();
+  if (trimmedQuery === '') {
+    return allCategories;
+  }
+  return allCategories.map(category => {
+    if (category.name.toLowerCase().includes(trimmedQuery)) {
+      return category;
+    }
+    return {
+      ...category,
+      keyContacts: category.keyContacts.filter(
+        sme =>
+          sme.name.toLowerCase().includes(trimmedQuery) ||
+          sme.email.toLowerCase().includes(trimmedQuery) ||
+          sme.subjectArea.toLowerCase().includes(trimmedQuery)
+      )
+    };
+  });
+};
+
+export type SmeType =
+  GetAllKeyContactCategoriesQuery['keyContactCategory'][number]['keyContacts'][number];
 
 const KeyContactDirectory = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -191,57 +215,36 @@ const KeyContactDirectory = () => {
   const { data: categoryData, loading: loadingCategories } =
     useGetAllKeyContactCategoriesQuery();
 
-  const { data: smeData, loading: loadingSmes } = useGetAllKeyContactsQuery();
-
   const categories = useMemo(() => {
     if (!categoryData) {
       return [];
     }
 
-    return [...categoryData.keyContactCategory].sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
-  }, [categoryData]);
-
-  const filteredSmes = useMemo(() => {
-    if (!smeData) {
-      return [];
-    }
-    const trimmedQuery = query.toLowerCase().trim();
-    let smeContacts = smeData.keyContacts;
-
-    if (trimmedQuery !== '') {
-      const filteredCategoryIds = categories
-        .filter(category => category.name.toLowerCase().includes(trimmedQuery))
-        .map(cat => cat.id);
-
-      smeContacts = smeData.keyContacts.filter(sme => {
-        return (
-          filteredCategoryIds.includes(sme.subjectCategoryID) ||
-          sme.name.toLowerCase().includes(trimmedQuery) ||
-          sme.email.toLowerCase().includes(trimmedQuery) ||
-          sme.subjectArea.toLowerCase().includes(trimmedQuery)
-        );
-      });
-    }
-
-    const sortedSmeContacts = [...smeContacts].sort((a, b) =>
-      a.subjectArea.localeCompare(b.subjectArea)
+    const filteredCategories = filterCategories(
+      categoryData.keyContactCategory,
+      query
     );
 
-    return sortedSmeContacts;
-  }, [categories, query, smeData]);
+    const sortedCategories = filteredCategories
+      .map(category => ({
+        ...category,
+        keyContacts: [...category.keyContacts].sort((a, b) =>
+          a.subjectArea.localeCompare(b.subjectArea)
+        )
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
 
-  const reformattedSmes = useMemo(() => {
-    return filteredSmes.reduce<Record<string, SmeType[]>>((allSmes, sme) => {
-      return {
-        ...allSmes,
-        [sme.subjectCategoryID]: allSmes[sme.subjectCategoryID]
-          ? [...allSmes[sme.subjectCategoryID], sme]
-          : [sme]
-      };
-    }, {});
-  }, [filteredSmes]);
+    return sortedCategories;
+  }, [categoryData, query]);
+
+  const smeCount = useMemo(
+    () =>
+      categories.reduce(
+        (count, category) => count + category.keyContacts.length,
+        0
+      ),
+    [categories]
+  );
 
   const accordionItems: AccordionItemProps[] = categories.map(category => ({
     title: category.name,
@@ -256,16 +259,12 @@ const KeyContactDirectory = () => {
             <RemoveCategoryButton category={category} />
           </div>
         )}
-        {loadingSmes ? (
-          <PageLoading testId="key-contact-table" />
-        ) : (
-          <KeyContactTable
-            smes={reformattedSmes[category.id] || []}
-            allCategories={categories}
-            isAssessmentTeam={isAssessmentTeam}
-            isSearching={query.trim() !== ''}
-          />
-        )}
+        <KeyContactTable
+          smes={category.keyContacts}
+          allCategories={categories}
+          isAssessmentTeam={isAssessmentTeam}
+          isSearching={query.trim() !== ''}
+        />
       </>
     ),
     expanded: true,
@@ -323,7 +322,7 @@ const KeyContactDirectory = () => {
           {query.trim() !== '' && (
             <div role="status" aria-live="polite" className="margin-bottom-2">
               {t('keyContactDirectory.resultsFor', {
-                count: filteredSmes.length,
+                count: smeCount,
                 query
               })}
             </div>

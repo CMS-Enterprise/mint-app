@@ -16,7 +16,7 @@ import {
   useCreateKeyContactUserMutation,
   useUpdateKeyContactMutation
 } from 'gql/generated/graphql';
-import GetAllKeyContacts from 'gql/operations/KeyContactDirectory/GetAllKeyContacts';
+import GetAllKeyContactCategories from 'gql/operations/KeyContactDirectory/GetAllKeyContactCategories';
 
 import toastSuccess from 'components/ToastSuccess';
 import { useErrorMessage } from 'contexts/ErrorContext';
@@ -116,7 +116,7 @@ const SmeForm = ({
   const [createKeyContactUser] = useCreateKeyContactUserMutation({
     refetchQueries: [
       {
-        query: GetAllKeyContacts
+        query: GetAllKeyContactCategories
       }
     ]
   });
@@ -124,7 +124,7 @@ const SmeForm = ({
   const [createKeyContactMailbox] = useCreateKeyContactMailboxMutation({
     refetchQueries: [
       {
-        query: GetAllKeyContacts
+        query: GetAllKeyContactCategories
       }
     ]
   });
@@ -132,7 +132,7 @@ const SmeForm = ({
   const [update] = useUpdateKeyContactMutation({
     refetchQueries: [
       {
-        query: GetAllKeyContacts
+        query: GetAllKeyContactCategories
       }
     ]
   });

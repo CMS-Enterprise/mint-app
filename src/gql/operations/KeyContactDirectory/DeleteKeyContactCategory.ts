@@ -5,6 +5,21 @@ export default gql(/* GraphQL */ `
     deleteKeyContactCategory(id: $id) {
       id
       name
+      keyContacts {
+        id
+        name
+        email
+        mailboxTitle
+        mailboxAddress
+        subjectArea
+        subjectCategoryID
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
+      }
     }
   }
 `);

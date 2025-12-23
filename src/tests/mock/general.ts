@@ -722,12 +722,32 @@ export const keyContactCategoryMockData: KeyContactCategoryType[] = [
   {
     __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
-    name: 'Healthcare'
+    name: 'Healthcare',
+    keyContacts: [
+      {
+        __typename: 'KeyContact',
+        email: 'aliza.kim@cms.hhs.gov',
+        id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
+        name: 'Aliza Kim',
+        subjectArea: 'Insurance and Coverage',
+        subjectCategoryID: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350'
+      }
+    ]
   },
   {
     __typename: 'KeyContactCategory',
     id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
-    name: 'CMS Programs'
+    name: 'CMS Programs',
+    keyContacts: [
+      {
+        __typename: 'KeyContact',
+        email: 'aliza.kim@cms.hhs.gov',
+        id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
+        name: 'Aliza Kim',
+        subjectArea: 'Insurance and Coverage',
+        subjectCategoryID: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350'
+      }
+    ]
   }
 ];
 
@@ -748,7 +768,8 @@ export const keyContactCategoriesMock: MockedResponse<
   }
 ];
 
-type KeyContactsType = GetAllKeyContactsQuery['keyContacts'];
+type KeyContactsType =
+  GetAllKeyContactCategoriesQuery['keyContactCategory'][number]['keyContacts'];
 
 export const keyContactsMockData: KeyContactsType = [
   {

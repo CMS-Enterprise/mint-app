@@ -5,6 +5,21 @@ export default gql(/* GraphQL */ `
     createKeyContactCategory(name: $name) {
       id
       name
+      keyContacts {
+        id
+        name
+        email
+        mailboxTitle
+        mailboxAddress
+        subjectArea
+        subjectCategoryID
+        userAccount {
+          id
+          commonName
+          email
+          username
+        }
+      }
     }
   }
 `);
