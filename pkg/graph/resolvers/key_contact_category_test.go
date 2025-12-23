@@ -1,9 +1,12 @@
 package resolvers
 
 import (
+	"errors"
+
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) createKeyContactCategory(name string) *models.KeyContactCategory {
@@ -295,7 +298,7 @@ func (suite *ResolverSuite) TestUpdateKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "record not found for given key")
+	suite.True(errors.Is(err, loaders.ErrRecordNotFoundForKey))
 }
 
 // TestDeleteKeyContactCategory tests deleting a key contact category.
@@ -330,7 +333,7 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory() {
 		category.ID,
 	)
 	suite.Error(err)
-	suite.Contains(err.Error(), "record not found for given key")
+	suite.True(errors.Is(err, loaders.ErrRecordNotFoundForKey))
 }
 
 // TestDeleteKeyContactCategory_NotFound tests deleting a non-existent category.
@@ -347,7 +350,7 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory_NotFound() {
 
 	suite.Nil(existingCategory)
 	suite.Error(err)
-	suite.Contains(err.Error(), "not found")
+	suite.Contains(err.Error(), "no rows in result set")
 }
 
 // TestGetKeyContactCategory tests retrieving a key contact category by ID.
@@ -377,7 +380,7 @@ func (suite *ResolverSuite) TestGetKeyContactCategory_NotFound() {
 	)
 
 	suite.Error(err)
-	suite.Contains(err.Error(), "not found")
+	suite.True(errors.Is(err, loaders.ErrRecordNotFoundForKey))
 }
 
 // TestGetAllKeyContactCategories tests retrieving all key contact categories.

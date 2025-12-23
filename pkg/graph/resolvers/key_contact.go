@@ -178,24 +178,7 @@ func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 
 	// Use a transaction for delete (for audit triggers, etc.)
 	returnedContact, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContact, error) {
-		// Fetch the existing contact to check permissions and return after delete
-		existing, err := GetKeyContact(ctx, id)
-		if err != nil {
-			logger.Warn("Failed to get contact with id", zap.Any("contactId", id), zap.Error(err))
-			return nil, nil
-		}
-
-		if existing == nil {
-			return nil, fmt.Errorf("contact with id %s not found", id)
-		}
-
-		// Check permissions
-		err = BaseStructPreDelete(logger, existing, principal, store, false)
-		if err != nil {
-			return nil, fmt.Errorf("error deleting contact. user doesn't have permissions. %s", err)
-		}
-
-		// Finally, delete the contact
+		// Delete the contact
 		returnedContact, err := storage.KeyContactDeleteContactByID(tx, principalAccount.ID, logger, id)
 
 		if err != nil {

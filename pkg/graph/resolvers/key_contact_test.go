@@ -85,8 +85,12 @@ func (suite *ResolverSuite) TestCreateKeyContactMailbox() {
 
 	suite.NoError(err)
 	suite.NotNil(contact)
-	suite.Equal(mailboxTitle, *contact.Name)
-	suite.Equal(mailboxAddress, *contact.Email)
+	if suite.NotNil(contact.Name) {
+		suite.Equal(mailboxTitle, *contact.Name)
+	}
+	if suite.NotNil(contact.Email) {
+		suite.Equal(mailboxAddress, *contact.Email)
+	}
 	suite.Equal(subjectArea, contact.SubjectArea)
 	suite.Equal(subjectCategoryID, contact.SubjectCategoryID)
 }
@@ -102,35 +106,51 @@ func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
 	)
 	suite.NoError(err)
 
-	// Create a mailbox contact using the existing method
+	// Create multiple mailbox contacts using the existing method
 	mailboxTitle := "Support Team"
-	mailboxAddress := "support@example.com"
 	subjectArea := "Healthcare"
 	subjectCategoryID := newCategory.ID
+	var keyContact *models.KeyContact
 
-	contact, err := CreateKeyContactMailbox(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		nil,
-		nil,
-		email.AddressBook{},
-		mailboxTitle,
-		mailboxAddress,
-		subjectArea,
-		subjectCategoryID,
-	)
+	for i := 0; i < 4; i++ {
+		mailboxAddress := fmt.Sprintf("support%d@example.com", i) // Ensure unique mailboxAddress
+		keyContact, err = CreateKeyContactMailbox(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			nil,
+			email.AddressBook{},
+			mailboxTitle,
+			mailboxAddress,
+			subjectArea,
+			subjectCategoryID,
+		)
+		suite.NoError(err)
+		suite.NotNil(keyContact)
+		if suite.NotNil(keyContact.Name) {
+			suite.Equal(mailboxTitle, *keyContact.Name)
+		}
 
-	suite.NoError(err)
+		// Verify the loader can fetch the contact by ID
+		expectedResults := []loaders.KeyAndExpected[uuid.UUID, *models.KeyContact]{
+			{Key: keyContact.ID, Expected: keyContact},
+		}
 
-	// Fetch key contact using the loader
-	keyContact, err := GetKeyContact(suite.testConfigs.Context,
-		contact.ID)
+		verifyFunc := func(data *models.KeyContact, expected *models.KeyContact) bool {
+			return suite.Equal(expected.ID, data.ID)
+		}
 
-	suite.NoError(err)
-	suite.NotNil(keyContact)
-	suite.Equal(mailboxTitle, *keyContact.Name)
+		// Call the helper method to validate all results
+		loaders.VerifyLoaders[uuid.UUID, *models.KeyContact, *models.KeyContact](
+			suite.testConfigs.Context,
+			&suite.Suite,
+			loaders.KeyContact.ByID,
+			expectedResults,
+			verifyFunc,
+		)
+	}
 }
 
 // GetAllKeyContactsLoaderTest validates the underlying behavior of the data loader. It validates the count of users that are returned for each solution.

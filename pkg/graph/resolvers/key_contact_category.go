@@ -67,7 +67,7 @@ func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 
 	existingCategory.Name = sanitizedName
 
-	err = BaseStructPreUpdate(logger, existingCategory, map[string]interface{}{}, principal, store, true, false)
+	err = BaseStructPreUpdate(logger, existingCategory, map[string]any{}, principal, store, false, false)
 	if err != nil {
 		return nil, err
 	}
@@ -92,24 +92,7 @@ func DeleteKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 
 	// Use a transaction for delete (for audit triggers, etc.)
 	returnedCategory, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.KeyContactCategory, error) {
-		// Fetch the existing category to check permissions and return after delete
-		existingCategory, err := GetKeyContactCategory(ctx, id)
-		if err != nil {
-			logger.Warn("Failed to get category with id", zap.Any("categoryId", id), zap.Error(err))
-			return nil, err
-		}
-
-		if existingCategory == nil {
-			return nil, fmt.Errorf("category with id %s not found", id)
-		}
-
-		// Check permissions
-		err = BaseStructPreDelete(logger, existingCategory, principal, store, false)
-		if err != nil {
-			return nil, fmt.Errorf("error deleting category. user doesn't have permissions. %s", err)
-		}
-
-		// Finally, delete the category
+		// Delete the category
 		returnedCategory, err := storage.KeyContactCategoryDelete(tx, logger, id)
 		if err != nil {
 			return nil, fmt.Errorf("unable to delete category. Err %w", err)
