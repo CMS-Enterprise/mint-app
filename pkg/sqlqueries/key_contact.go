@@ -3,25 +3,25 @@ package sqlqueries
 import _ "embed"
 
 //go:embed SQL/key_contact_directory/key_contact/get_all.sql
-var KeyContactGetAll string
+var keyContactGetAll string
 
 //go:embed SQL/key_contact_directory/key_contact/get_by_id.sql
-var KeyContactGetByID string
+var keyContactGetByID string
 
 //go:embed SQL/key_contact_directory/key_contact/get_by_ids.sql
-var KeyContactGetByIDs string
+var keyContactGetByIDs string
 
 //go:embed SQL/key_contact_directory/key_contact/get_by_category_ids.sql
-var KeyContactGetByCategoryIDs string
+var keyContactGetByCategoryIDs string
 
 //go:embed SQL/key_contact_directory/key_contact/create.sql
-var KeyContactCreate string
+var keyContactCreate string
 
 //go:embed SQL/key_contact_directory/key_contact/update.sql
-var KeyContactUpdate string
+var keyContactUpdate string
 
 //go:embed SQL/key_contact_directory/key_contact/delete.sql
-var KeyContactDeleteByID string
+var keyContactDeleteByID string
 
 type KeyContactScripts struct {
 	GetAll           string
@@ -35,11 +35,11 @@ type KeyContactScripts struct {
 
 // KeyContact houses all the sql for getting data for key contact from the database
 var KeyContact = KeyContactScripts{
-	GetAll:           KeyContactGetAll,
-	GetByID:          KeyContactGetByID,
-	GetByIDs:         KeyContactGetByIDs,
-	GetByCategoryIDs: KeyContactGetByCategoryIDs,
-	Create:           KeyContactCreate,
-	Update:           KeyContactUpdate,
-	DeleteByID:       KeyContactDeleteByID,
+	GetAll:           keyContactGetAll,
+	GetByID:          keyContactGetByID,
+	GetByIDs:         keyContactGetByIDs,
+	GetByCategoryIDs: keyContactGetByCategoryIDs,
+	Create:           keyContactCreate,
+	Update:           keyContactUpdate,
+	DeleteByID:       keyContactDeleteByID,
 }
