@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -18,7 +17,7 @@ import (
 
 // KeyContacts is the resolver for the keyContacts field.
 func (r *keyContactCategoryResolver) KeyContacts(ctx context.Context, obj *models.KeyContactCategory) ([]*models.KeyContact, error) {
-	panic(fmt.Errorf("not implemented: KeyContacts - keyContacts"))
+	return KeyContactsGetByCategoryIDLOADER(ctx, obj.ID)
 }
 
 // CreateKeyContactCategory is the resolver for the createKeyContactCategory field.
