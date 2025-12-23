@@ -512,18 +512,9 @@ func ModelPlanShare(
 	// Get client address
 	clientAddress := emailService.GetConfig().GetClientAddress()
 
-	// Get email template
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
-	if err != nil {
-		return false, fmt.Errorf("failed to get email template: %w", err)
-	}
-
-	// Get email subject
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanShareSubjectContent{
+	// Get email subject and body
+	subjectContent := email.ModelPlanShareSubjectContent{
 		UserName: principal.Account().CommonName,
-	})
-	if err != nil {
-		return false, fmt.Errorf("failed to execute email subject: %w", err)
 	}
 
 	var modelPlanCategoriesHumanized []string
@@ -580,8 +571,7 @@ func ModelPlanShare(
 		shareSectionHumanized = helpers.PointerTo(models.ModelShareSectionHumanized[*shareSection])
 	}
 
-	// Get email body
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
+	bodyContent := email.ModelPlanShareBodyContent{
 		UserName:                   principal.Account().CommonName,
 		OptionalMessage:            optionalMessage,
 		ModelName:                  modelPlan.ModelName,
@@ -596,9 +586,11 @@ func ModelPlanShare(
 		HumanizedModelViewFilter:   humanizedViewFilter,
 		ClientAddress:              clientAddress,
 		ModelID:                    modelPlan.ID.String(),
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Shared.GetContent(subjectContent, bodyContent)
 	if err != nil {
-		return false, fmt.Errorf("failed to execute email body: %w", err)
+		return false, fmt.Errorf("failed to execute email: %w", err)
 	}
 
 	// Send email

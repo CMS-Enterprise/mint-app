@@ -63,24 +63,6 @@ var planDiscussionTaggedUserSubjectTemplate string
 //go:embed templates/plan_discussion_tagged_user_body.html
 var planDiscussionTaggedUserBodyTemplate string
 
-// ModelPlanDateChangedTemplateName is the template name definition for the corresponding email template
-const ModelPlanDateChangedTemplateName string = "model_plan_date_changed"
-
-//go:embed templates/model_plan_date_changed_subject.html
-var modelPlanDateChangedSubjectTemplate string
-
-//go:embed templates/model_plan_date_changed_body.html
-var modelPlanDateChangedBodyTemplate string
-
-// ModelPlanShareTemplateName is the template name definition for the corresponding email template
-const ModelPlanShareTemplateName string = "model_plan_share"
-
-//go:embed templates/model_plan_share_subject.html
-var modelPlanShareSubjectTemplate string
-
-//go:embed templates/model_plan_share_body.html
-var modelPlanShareBodyTemplate string
-
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -116,15 +98,6 @@ var operationalSolutionSelectedBodyTemplate string
 
 //go:embed templates/operational_solution_selected_subject.html
 var operationalSolutionSelectedSubjectTemplate string
-
-// ModelPlanSuggestedPhaseTemplateName is the template name for the model plan suggested phase email
-const ModelPlanSuggestedPhaseTemplateName string = "model_plan_suggested_phase"
-
-//go:embed templates/model_plan_suggested_phase_subject.html
-var modelPlanSuggestedPhaseSubjectTemplate string
-
-//go:embed templates/model_plan_suggested_phase_body.html
-var modelPlanSuggestedPhaseBodyTemplate string
 
 // DataExchangeApproachMarkedCompleteTemplateName is the template name for the data exchange approach completed email
 const DataExchangeApproachMarkedCompleteTemplateName string = "data_exchange_approach_marked_complete"
@@ -297,16 +270,6 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(ModelPlanDateChangedTemplateName, modelPlanDateChangedSubjectTemplate, modelPlanDateChangedBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(ModelPlanShareTemplateName, modelPlanShareSubjectTemplate, modelPlanShareBodyTemplate)
-	if err != nil {
-		return err
-	}
-
 	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAProblemSubjectTemplate, reportAProblemBodyTemplate)
 	if err != nil {
 		return err
@@ -322,11 +285,6 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 	err = t.loadEmailTemplate(MTOSolutionSelectedTemplateName, mtoSolutionSelectedSubjectTemplate, mtoSolutionSelectedBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(ModelPlanSuggestedPhaseTemplateName, modelPlanSuggestedPhaseSubjectTemplate, modelPlanSuggestedPhaseBodyTemplate)
 	if err != nil {
 		return err
 	}
