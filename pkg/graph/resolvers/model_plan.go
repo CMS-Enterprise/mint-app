@@ -280,29 +280,23 @@ func sendModelPlanCreatedEmail(
 	modelPlan *models.ModelPlan,
 	isGeneralUser bool,
 ) error {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanCreatedSubjectContent{
-		ModelName: modelPlan.ModelName,
-	})
-	if err != nil {
-		return err
-	}
 	createdByAccount, err := modelPlan.CreatedByUserAccount(ctx)
 	if err != nil {
 		return fmt.Errorf("unable to get the user account for the user who created the model. err %w", err)
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
+	subjectContent := email.ModelPlanCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.ModelPlanCreatedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		UserName:      createdByAccount.CommonName,
 		IsGeneralUser: isGeneralUser,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Created.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}

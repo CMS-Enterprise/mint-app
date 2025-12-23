@@ -225,21 +225,18 @@ func sendModelPlanCreatedEmailTest(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 ) {
-	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
-	noErr(err)
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanCreatedSubjectContent{
+	subjectContent := email.ModelPlanCreatedSubjectContent{
 		ModelName: "Test Model Plan",
-	})
-	noErr(err)
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
+	}
+	bodyContent := email.ModelPlanCreatedBodyContent{
 		ClientAddress: "localhost:3005",
 		ModelName:     "Test Model Plan",
 		ModelID:       "00",
 		UserName:      "Test User",
 		IsGeneralUser: true,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Created.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(

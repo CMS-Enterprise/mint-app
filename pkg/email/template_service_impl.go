@@ -27,15 +27,6 @@ var aggregatedDailyDigestSubjectTemplate string
 //go:embed templates/aggregated_daily_digest_body.html
 var aggregatedDailyDigestBodyTemplate string
 
-// ModelPlanCreatedTemplateName is the template name definition for the corresponding email template
-const ModelPlanCreatedTemplateName string = "model_plan_created"
-
-//go:embed templates/model_plan_created_subject.html
-var modelPlanCreatedSubjectTemplate string
-
-//go:embed templates/model_plan_created_body.html
-var modelPlanCreatedBodyTemplate string
-
 // PlanDiscussionCreatedTemplateName is the template name definition for the corresponding email template
 const PlanDiscussionCreatedTemplateName string = "plan_discussion_created"
 
@@ -282,11 +273,6 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(AggregatedDailyDigestTemplateName, aggregatedDailyDigestSubjectTemplate, aggregatedDailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(ModelPlanCreatedTemplateName, modelPlanCreatedSubjectTemplate, modelPlanCreatedBodyTemplate)
 	if err != nil {
 		return err
 	}
