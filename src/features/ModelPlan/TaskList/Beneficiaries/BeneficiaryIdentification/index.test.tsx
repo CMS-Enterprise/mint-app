@@ -114,7 +114,9 @@ describe('Model Plan Beneficiaries', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('beneficiaries-other')).toHaveValue('other');
+      expect(
+        screen.getByTestId('beneficiaries-note-add-note-toggle')
+      ).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
