@@ -194,6 +194,11 @@ func DeleteKeyContact(ctx context.Context, logger *zap.Logger, principal authent
 	return returnedContact, nil
 }
 
+// KeyContactsGetByCategoryIDLOADER retrieves subject matter experts by their category ID using the dataloader.
+func KeyContactsGetByCategoryIDLOADER(ctx context.Context, id uuid.UUID) ([]*models.KeyContact, error) {
+	return loaders.KeyContact.ByCategoryID.Load(ctx, id)
+}
+
 // GetKeyContact retrieves a subject matter expert by its ID.
 // Returns the contact if found, or an error if not found or on failure.
 func GetKeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error) {

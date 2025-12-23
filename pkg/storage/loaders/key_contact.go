@@ -17,16 +17,21 @@ type keyContactLoaders struct {
 	// ByID returns a single KeyContact by its ID
 	ByID LoaderWrapper[uuid.UUID, *models.KeyContact]
 
+	// ByCategoryID returns all KeyContacts by Subject Category ID
+	ByCategoryID LoaderWrapper[uuid.UUID, []*models.KeyContact]
+
 	// GetAll returns all KeyContacts
 	GetAll LoaderWrapper[*uuid.UUID, []*models.KeyContact]
 }
 
 // KeyContact is the singleton instance of all LoaderWrappers related to Key Contact
 var KeyContact = &keyContactLoaders{
-	ByID:   NewLoaderWrapper(batchKeyContactGetByID),
-	GetAll: NewLoaderWrapper(batchKeyContactGetAll),
+	ByID:         NewLoaderWrapper(batchKeyContactGetByID),
+	ByCategoryID: NewLoaderWrapper(batchKeyContactGetByCategoryID),
+	GetAll:       NewLoaderWrapper(batchKeyContactGetAll),
 }
 
+// batchKeyContactGetByID loads KeyContacts by their ID.
 func batchKeyContactGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.KeyContact] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
@@ -44,6 +49,24 @@ func batchKeyContactGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.
 	}
 
 	return oneToOneDataLoader(ids, data, getKeyFunc)
+}
+
+// batchKeyContactGetByCategoryID loads subject matter experts by their category ID.
+func batchKeyContactGetByCategoryID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[[]*models.KeyContact] {
+	loaders, err := Loaders(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.KeyContact](ids, err)
+	}
+	logger := appcontext.ZLogger(ctx)
+	data, err := storage.KeyContactGetByCategoryIDsLoader(loaders.DataReader.Store, logger, ids)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.KeyContact](ids, err)
+	}
+	getKeyFunc := func(contact *models.KeyContact) uuid.UUID {
+		return contact.SubjectCategoryID
+	}
+
+	return oneToManyDataLoader(ids, data, getKeyFunc)
 }
 
 // batchKeyContactGetAll loads all subject matter experts; the key is ignored but required by the dataloader interface

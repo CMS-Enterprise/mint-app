@@ -94,6 +94,84 @@ func (suite *ResolverSuite) TestCreateKeyContactMailbox() {
 	suite.Equal(subjectArea, contact.SubjectArea)
 	suite.Equal(subjectCategoryID, contact.SubjectCategoryID)
 }
+func (suite *ResolverSuite) TestKeyContactsGetByCategoryIDLOADER() {
+	categoryName1 := "Test Category1"
+	cat1 := suite.createKeyContactCategory(categoryName1)
+	contactCat1A := suite.createTestKeyContact("User A", "Area A", cat1.ID)
+	contactCat1B := suite.createTestKeyContact("User B", "Area B", cat1.ID)
+
+	categoryName2 := "Test Category2"
+	cat2 := suite.createKeyContactCategory(categoryName2)
+	contactCat2A := suite.createTestKeyContact("User C", "Area C", cat2.ID)
+	contactCat2B := suite.createTestKeyContact("User D", "Area D", cat2.ID)
+
+	categoryName3 := "Test Category3"
+	cat3 := suite.createKeyContactCategory(categoryName3)
+	contactCat3A := suite.createTestKeyContact("User E", "Area E", cat3.ID)
+	contactCat3B := suite.createTestKeyContact("User F", "Area F", cat3.ID)
+	contactCat3C := suite.createTestKeyContact("User G", "Area G", cat3.ID)
+
+	categoryName4 := "Test Category4"
+	cat4 := suite.createKeyContactCategory(categoryName4)
+	// No contacts for category 4
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, map[uuid.UUID]*models.KeyContact]{
+		{
+			Key:      cat1.ID,
+			Expected: map[uuid.UUID]*models.KeyContact{contactCat1A.ID: contactCat1A, contactCat1B.ID: contactCat1B},
+		},
+		{
+			Key:      cat2.ID,
+			Expected: map[uuid.UUID]*models.KeyContact{contactCat2A.ID: contactCat2A, contactCat2B.ID: contactCat2B},
+		},
+		{
+			Key:      cat3.ID,
+			Expected: map[uuid.UUID]*models.KeyContact{contactCat3A.ID: contactCat3A, contactCat3B.ID: contactCat3B, contactCat3C.ID: contactCat3C},
+		},
+		{
+			Key:      cat4.ID,
+			Expected: map[uuid.UUID]*models.KeyContact{},
+		},
+	}
+
+	verifyFunc := func(data []*models.KeyContact, expected map[uuid.UUID]*models.KeyContact) bool {
+		// 1. verify lengths match
+		if suite.Len(data, len(expected)) {
+
+			for _, contact := range data {
+				// 2. verify each contact matches expected
+				expectedContact, exists := expected[contact.ID]
+				if !exists {
+					return false
+				}
+				if !suite.Equal(expectedContact.Name, contact.Name) {
+					return false
+				}
+				if !suite.Equal(expectedContact.Email, contact.Email) {
+					return false
+				}
+				if !suite.Equal(expectedContact.SubjectArea, contact.SubjectArea) {
+					return false
+				}
+				if !suite.Equal(expectedContact.SubjectCategoryID, contact.SubjectCategoryID) {
+					return false
+				}
+			}
+
+			return true
+		}
+		return false
+	}
+
+	// Call the helper method to validate all results
+	loaders.VerifyLoaders[uuid.UUID, []*models.KeyContact, map[uuid.UUID]*models.KeyContact](
+		suite.testConfigs.Context,
+		&suite.Suite,
+		loaders.KeyContact.ByCategoryID,
+		expectedResults,
+		verifyFunc,
+	)
+}
 
 // TestGetKeyContactByIDLOADER validates fetching a key contact by its ID using the loader.
 func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
@@ -311,4 +389,26 @@ func (suite *ResolverSuite) TestDeleteKeyContact() {
 	)
 	suite.Error(err)
 	suite.Nil(fetchedContact)
+}
+
+// createTestKeyContact is a convenience helper function to simplify creating key contacts in tests.
+func (suite *ResolverSuite) createTestKeyContact(userName string, subjectArea string, categoryID uuid.UUID) *models.KeyContact {
+	contact, err := CreateKeyContactUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		nil,
+		email.AddressBook{},
+		userName,
+		subjectArea,
+		categoryID,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+	)
+
+	suite.NoError(err)
+	suite.NotNil(contact)
+	return contact
+
 }

@@ -63,6 +63,18 @@ func KeyContactDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logg
 	return returnedContact, nil
 }
 
+// KeyContactGetByCategoryIDsLoader returns all key contacts for the given subject category IDs
+func KeyContactGetByCategoryIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.KeyContact, error) {
+	args := map[string]interface{}{
+		"category_ids": pq.Array(ids),
+	}
+	returned, err := sqlutils.SelectProcedure[models.KeyContact](np, sqlqueries.KeyContact.GetByCategoryIDs, args)
+	if err != nil {
+		return nil, err
+	}
+	return returned, nil
+}
+
 // KeyContactGetAllLoader returns all key contacts
 func KeyContactGetAllLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.KeyContact, error) {
 	returned, err := sqlutils.SelectProcedure[models.KeyContact](np, sqlqueries.KeyContact.GetAll, map[string]any{})
