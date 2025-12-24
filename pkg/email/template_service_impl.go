@@ -234,11 +234,7 @@ func NewTemplateServiceImpl(environment appconfig.Environment) (*TemplateService
 // Load caches all email templates which will be used by the template service
 func (t *TemplateServiceImpl) Load() error {
 	t.emailTemplates = make(map[string]*emailtemplates.EmailTemplate)
-
-	err := t.loadEmailTemplate(AddedAsCollaboratorTemplateName, addedAsCollaboratorSubjectTemplate, addedAsCollaboratorBodyTemplate)
-	if err != nil {
-		return err
-	}
+	var err error
 
 	err = t.loadEmailTemplate(DailyDigestTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
 	if err != nil {
