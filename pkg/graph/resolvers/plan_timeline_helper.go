@@ -409,16 +409,8 @@ func sendPlanTimelineDateChangedEmails(
 	modelPlan *models.ModelPlan,
 	dateChanges map[string]email.DateChange,
 ) error {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanDateChangedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanDateChangedSubjectContent{
+	subjectContent := email.ModelPlanDateChangedSubjectContent{
 		ModelName: modelPlan.ModelName,
-	})
-	if err != nil {
-		return err
 	}
 
 	dateChangeSlice := make([]email.DateChange, 0, len(dateChanges))
@@ -438,13 +430,15 @@ func sendPlanTimelineDateChangedEmails(
 		dateChangeSlice = append(dateChangeSlice, dateChange)
 	}
 
-	defaultRecipientEmailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+	defaultRecipientBodyContent := email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		DateChanges:   dateChangeSlice,
 		ShowFooter:    false,
-	})
+	}
+
+	emailSubject, defaultRecipientEmailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, defaultRecipientBodyContent)
 	if err != nil {
 		return err
 	}
@@ -473,13 +467,15 @@ func sendPlanTimelineDateChangedEmails(
 
 	emailRecipientUserAccounts, inAppRecipientUserAccounts := models.FilterNotificationPreferences(recipientUserAccounts)
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+	recipientBodyContent := email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		DateChanges:   dateChangeSlice,
 		ShowFooter:    true,
-	})
+	}
+
+	_, emailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, recipientBodyContent)
 	if err != nil {
 		return err
 	}

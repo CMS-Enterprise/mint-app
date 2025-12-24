@@ -89,7 +89,6 @@ func TrySendEmailForPhaseSuggestion[T logging.ChainableErrorOrWarnLogger[T]](
 	store *storage.Store,
 	emailRecipients []string,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook *email.AddressBook,
 	currentPhaseSuggestion *models.PhaseSuggestion,
 	modelPlan *models.ModelPlan,
@@ -101,7 +100,6 @@ func TrySendEmailForPhaseSuggestion[T logging.ChainableErrorOrWarnLogger[T]](
 	emailSubject, emailBody, err := ConstructPhaseSuggestionEmailTemplates(
 		logger,
 		emailService,
-		emailTemplateService,
 		modelPlan,
 		currentPhaseSuggestion,
 	)
@@ -254,7 +252,6 @@ func sendInAppNotificationForPhaseSuggestion[T logging.ChainableErrorOrWarnLogge
 func ConstructPhaseSuggestionEmailTemplates[T logging.ChainableErrorOrWarnLogger[T]](
 	logger T,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	modelPlan *models.ModelPlan,
 	phaseSuggestion *models.PhaseSuggestion,
 ) (emailSubject string, emailBody string, err error) {
@@ -263,22 +260,9 @@ func ConstructPhaseSuggestionEmailTemplates[T logging.ChainableErrorOrWarnLogger
 		return "", "", fmt.Errorf("phase suggestion is nil")
 	}
 
-	// Get the email template for the model plan suggested phase
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
-	if err != nil {
-		err = fmt.Errorf("unable to get email template for model plan id %s. Err %w", modelPlan.ID, err)
-		logger.Error(err.Error(), zap.Error(err))
-		return "", "", err
-	}
-
 	// Construct the email subject and body
-	emailSubject, err = emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
+	subjectContent := email.ModelPlanSuggestedPhaseSubjectContent{
 		ModelName: modelPlan.ModelName,
-	})
-	if err != nil {
-		err = fmt.Errorf("unable to get email subject for model plan id %s. Err %w", modelPlan.ID, err)
-		logger.Error(err.Error(), zap.Error(err))
-		return "", "", err
 	}
 
 	suggestedStatusStringsRaw := make([]string, len(phaseSuggestion.SuggestedStatuses))
@@ -288,7 +272,7 @@ func ConstructPhaseSuggestionEmailTemplates[T logging.ChainableErrorOrWarnLogger
 		suggestedStatusStringsHumanized[i] = status.Humanize()
 	}
 
-	emailBody, err = emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
+	bodyContent := email.ModelPlanSuggestedPhaseBodyContent{
 		ClientAddress:              emailService.GetConfig().GetClientAddress(),
 		Phase:                      string(phaseSuggestion.Phase),
 		SuggestedStatusesRaw:       suggestedStatusStringsRaw,
@@ -296,9 +280,11 @@ func ConstructPhaseSuggestionEmailTemplates[T logging.ChainableErrorOrWarnLogger
 		CurrentStatusHumanized:     modelPlan.Status.Humanize(),
 		ModelPlanID:                modelPlan.GetModelPlanID().String(),
 		ModelPlanName:              modelPlan.ModelName,
-	})
+	}
+
+	emailSubject, emailBody, err = email.ModelPlan.SuggestedPhase.GetContent(subjectContent, bodyContent)
 	if err != nil {
-		err = fmt.Errorf("unable to get email body for model plan id %s. Err %w", modelPlan.ID, err)
+		err = fmt.Errorf("unable to get email for model plan id %s. Err %w", modelPlan.ID, err)
 		logger.Error(err.Error(), zap.Error(err))
 		return "", "", err
 	}
@@ -375,7 +361,6 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 		store,
 		emailRecipients,
 		emailService,
-		emailTemplateService,
 		&addressBook,
 		phaseSuggestion,
 		modelPlan,
