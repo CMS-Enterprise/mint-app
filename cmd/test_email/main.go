@@ -215,21 +215,18 @@ func sendModelPlanCreatedEmailTest(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 ) {
-	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
-	noErr(err)
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanCreatedSubjectContent{
+	subjectContent := email.ModelPlanCreatedSubjectContent{
 		ModelName: "Test Model Plan",
-	})
-	noErr(err)
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
+	}
+	bodyContent := email.ModelPlanCreatedBodyContent{
 		ClientAddress: "localhost:3005",
 		ModelName:     "Test Model Plan",
 		ModelID:       "00",
 		UserName:      "Test User",
 		IsGeneralUser: true,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Created.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(
@@ -262,17 +259,7 @@ func sendModelPlanShareTest(
 	// Get client address
 	clientAddress := emailService.GetConfig().GetClientAddress()
 
-	// Get email template
-	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
-	noErr(err)
-
 	username := "Bob Ross"
-
-	// Get email subject
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanShareSubjectContent{
-		UserName: username,
-	})
-	noErr(err)
 
 	// Mocking data for AdditionalModelCategories
 	modelPlanCategoriesHumanized := []string{
@@ -288,8 +275,10 @@ func sendModelPlanShareTest(
 	// Mocking data for modelLeads
 	modelLeads := []string{"Lead 1", "Lead 2"}
 
-	// Get email body
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
+	subjectContent := email.ModelPlanShareSubjectContent{
+		UserName: username,
+	}
+	bodyContent := email.ModelPlanShareBodyContent{
 		UserName:                 username,
 		OptionalMessage:          optionalMessage,
 		ModelName:                modelPlan.ModelName,
@@ -302,7 +291,9 @@ func sendModelPlanShareTest(
 		HumanizedModelViewFilter: humanizedViewFilter,
 		ClientAddress:            clientAddress,
 		ModelID:                  modelPlan.ID.String(),
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Shared.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	// Send email
@@ -362,20 +353,17 @@ func sendDateChangedEmailsTest(
 		},
 	}
 
-	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanDateChangedTemplateName)
-	noErr(err)
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanDateChangedSubjectContent{
+	subjectContent := email.ModelPlanDateChangedSubjectContent{
 		ModelName: modelPlan.ModelName,
-	})
-	noErr(err)
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+	}
+	bodyContent := email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		DateChanges:   dateChangeSlice,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(
@@ -511,15 +499,10 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
 		"Test Model Plan",
 	)
 
-	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
-	noErr(err)
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
+	subjectContent := email.ModelPlanSuggestedPhaseSubjectContent{
 		ModelName: modelPlan.ModelName,
-	})
-	noErr(err)
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
+	}
+	bodyContent := email.ModelPlanSuggestedPhaseBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		Phase:         string(models.ModelPhaseInClearance),
 		SuggestedStatusesRaw: []string{
@@ -537,7 +520,9 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
 		CurrentStatusHumanized: modelPlan.Status.Humanize(),
 		ModelPlanID:            modelPlan.GetModelPlanID().String(),
 		ModelPlanName:          modelPlan.ModelName,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.SuggestedPhase.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(
@@ -561,15 +546,10 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
 		"Test Model Plan",
 	)
 
-	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
-	noErr(err)
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
+	subjectContent := email.ModelPlanSuggestedPhaseSubjectContent{
 		ModelName: modelPlan.ModelName,
-	})
-	noErr(err)
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
+	}
+	bodyContent := email.ModelPlanSuggestedPhaseBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		Phase:         string(models.ModelPhaseIcipComplete),
 		SuggestedStatusesRaw: []string{
@@ -581,7 +561,9 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
 		CurrentStatusHumanized: modelPlan.Status.Humanize(),
 		ModelPlanID:            modelPlan.GetModelPlanID().String(),
 		ModelPlanName:          modelPlan.ModelName,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.SuggestedPhase.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(

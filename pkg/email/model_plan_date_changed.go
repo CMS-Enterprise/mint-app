@@ -1,6 +1,18 @@
 package email
 
-import "time"
+import (
+	_ "embed"
+	"time"
+)
+
+// ModelPlanDateChangedTemplateName is the template name definition for the corresponding email template
+const ModelPlanDateChangedTemplateName string = "model_plan_date_changed"
+
+//go:embed templates/model_plan_date_changed_subject.html
+var modelPlanDateChangedSubjectTemplate string
+
+//go:embed templates/model_plan_date_changed_body.html
+var modelPlanDateChangedBodyTemplate string
 
 // ModelPlanDateChangedSubjectContent defines the parameters necessary for the corresponding email subject
 type ModelPlanDateChangedSubjectContent struct {

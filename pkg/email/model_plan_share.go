@@ -1,8 +1,18 @@
 package email
 
 import (
+	_ "embed"
 	"time"
 )
+
+// ModelPlanShareTemplateName is the template name definition for the corresponding email template
+const ModelPlanShareTemplateName string = "model_plan_share"
+
+//go:embed templates/model_plan_share_subject.html
+var modelPlanShareSubjectTemplate string
+
+//go:embed templates/model_plan_share_body.html
+var modelPlanShareBodyTemplate string
 
 // ModelPlanShareSubjectContent defines the parameters necessary for the corresponding email subject
 type ModelPlanShareSubjectContent struct {
