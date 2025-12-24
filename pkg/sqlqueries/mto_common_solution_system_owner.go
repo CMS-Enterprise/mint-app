@@ -3,24 +3,24 @@ package sqlqueries
 import _ "embed"
 
 //go:embed SQL/mto/common_solution_system_owner/get_by_common_solution_key.sql
-var MTOCommonSolutionSystemOwnerGetByCommonSolutionKey string
+var mtoCommonSolutionSystemOwnerGetByCommonSolutionKey string
 
 //go:embed SQL/mto/common_solution_system_owner/get_by_id.sql
-var MTOCommonSolutionSystemOwnerGetByID string
+var mtoCommonSolutionSystemOwnerGetByID string
 
 //go:embed SQL/mto/common_solution_system_owner/get_by_ids.sql
-var MTOCommonSolutionSystemOwnerGetByIDs string
+var mtoCommonSolutionSystemOwnerGetByIDs string
 
 //go:embed SQL/mto/common_solution_system_owner/create.sql
-var MTOCommonSolutionSystemOwnerCreate string
+var mtoCommonSolutionSystemOwnerCreate string
 
 //go:embed SQL/mto/common_solution_system_owner/update.sql
-var MTOCommonSolutionSystemOwnerUpdate string
+var mtoCommonSolutionSystemOwnerUpdate string
 
 //go:embed SQL/mto/common_solution_system_owner/delete.sql
-var MTOCommonSolutionSystemOwnerDeleteByID string
+var mtoCommonSolutionSystemOwnerDeleteByID string
 
-type MTOCommonSolutionSystemOwnerScripts struct {
+type mtoCommonSolutionSystemOwnerScripts struct {
 	GetByCommonSolutionKey string
 	GetByID                string
 	GetByIDs               string
@@ -30,11 +30,11 @@ type MTOCommonSolutionSystemOwnerScripts struct {
 }
 
 // MTOCommonSolutionSystemOwner houses all the SQL for getting data for common solution system owner from the database
-var MTOCommonSolutionSystemOwner = MTOCommonSolutionSystemOwnerScripts{
-	GetByCommonSolutionKey: MTOCommonSolutionSystemOwnerGetByCommonSolutionKey,
-	GetByID:                MTOCommonSolutionSystemOwnerGetByID,
-	GetByIDs:               MTOCommonSolutionSystemOwnerGetByIDs,
-	Create:                 MTOCommonSolutionSystemOwnerCreate,
-	Update:                 MTOCommonSolutionSystemOwnerUpdate,
-	DeleteByID:             MTOCommonSolutionSystemOwnerDeleteByID,
+var MTOCommonSolutionSystemOwner = mtoCommonSolutionSystemOwnerScripts{
+	GetByCommonSolutionKey: mtoCommonSolutionSystemOwnerGetByCommonSolutionKey,
+	GetByID:                mtoCommonSolutionSystemOwnerGetByID,
+	GetByIDs:               mtoCommonSolutionSystemOwnerGetByIDs,
+	Create:                 mtoCommonSolutionSystemOwnerCreate,
+	Update:                 mtoCommonSolutionSystemOwnerUpdate,
+	DeleteByID:             mtoCommonSolutionSystemOwnerDeleteByID,
 }
