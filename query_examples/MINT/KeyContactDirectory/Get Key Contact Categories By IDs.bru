@@ -1,0 +1,32 @@
+meta {
+  name: Get Key Contact Categories By IDs
+  type: graphql
+  seq: 11
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query getKeyContactCategoriesByIds($ids: [UUID!]!) {
+    keyContactCategoriesByIds(ids: $ids) {
+      id
+      category
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "ids": ["{{keyContactCategoryID}}"]
+  }
+}

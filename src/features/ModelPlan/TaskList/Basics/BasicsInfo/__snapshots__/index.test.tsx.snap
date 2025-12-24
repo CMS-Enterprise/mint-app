@@ -100,7 +100,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <p
               class="margin-y-0 font-body-lg line-height-sans-3"
             >
-              for My excellent plan that I just initiated
+              for My excellent plan that I just initiated (MEP)
             </p>
           </div>
           <button
@@ -150,7 +150,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             <p
               class="margin-y-0 font-body-lg line-height-sans-3"
             >
-              for My excellent plan that I just initiated
+              for My excellent plan that I just initiated (MEP)
             </p>
           </div>
           <button

@@ -1,0 +1,32 @@
+type KeyContactCategory {
+  id: UUID!
+  name: String!
+
+  #Resolvers
+  keyContacts: [KeyContact!]!
+
+  # Metadata columns
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  keyContactCategory: [KeyContactCategory!]!
+  keyContactCategoryById(id: UUID!): KeyContactCategory!
+  keyContactCategoriesByIds(ids: [UUID!]!): [KeyContactCategory!]!
+}
+
+extend type Mutation {
+  createKeyContactCategory(name: String!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  updateKeyContactCategory(id: UUID!, name: String!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  deleteKeyContactCategory(id: UUID!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
+}

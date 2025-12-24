@@ -1,0 +1,32 @@
+meta {
+  name: Delete Key Contact Category
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation deleteKeyContactCategory($id: UUID!) {
+    deleteKeyContactCategory(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{keyContactCategoryID}}"
+  }
+}

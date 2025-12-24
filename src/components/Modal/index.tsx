@@ -19,6 +19,7 @@ type ModalProps = {
   noScrollable?: boolean;
   fixed?: boolean;
   zTop?: boolean;
+  testId?: string;
 };
 
 const Modal = ({
@@ -33,7 +34,8 @@ const Modal = ({
   closeModal,
   noScrollable = true,
   fixed = false,
-  zTop
+  zTop,
+  testId
 }: ModalProps) => {
   const handleOpenModal = () => {
     if (!scroll) noScroll.on();
@@ -65,6 +67,7 @@ const Modal = ({
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       appElement={document.getElementById('root')!}
+      testId={testId}
     >
       {!navigation ? (
         <>

@@ -7,9 +7,12 @@ import {
   CmsCenter,
   GetBasicsDocument,
   GetBasicsQuery,
-  ModelCategory
+  GetModelPlanBaseDocument,
+  ModelCategory,
+  ModelStatus,
+  MtoStatus
 } from 'gql/generated/graphql';
-import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+import { modelID } from 'tests/mock/general';
 
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
@@ -53,7 +56,34 @@ const mocks = [
       }
     }
   },
-  ...modelPlanBaseMock
+  {
+    request: {
+      query: GetModelPlanBaseDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'My excellent plan that I just initiated',
+          abbreviation: 'MEP',
+          modifiedDts: '2024-01-01T00:00:00Z',
+          createdDts: '2024-01-01T00:00:00Z',
+          status: ModelStatus.PLAN_DRAFT,
+          mtoMatrix: {
+            __typename: 'ModelsToOperationMatrix',
+            status: MtoStatus.READY,
+            info: {
+              __typename: 'MTOInfo',
+              id: 'mto-id'
+            }
+          }
+        }
+      }
+    }
+  }
 ];
 
 describe('Model Plan Basics page', () => {
@@ -189,6 +219,14 @@ describe('Model Plan Basics page', () => {
     ).not.toBeDisabled();
 
     expect(await screen.findByText('First Name')).toBeInTheDocument();
+
+    await waitFor(() => {
+      const abbreviationInput = document.getElementById(
+        'plan-basics-abbreviation'
+      ) as HTMLInputElement;
+      expect(abbreviationInput).toBeInTheDocument();
+      expect(abbreviationInput.value).toBe('MEP');
+    });
 
     expect(asFragment()).toMatchSnapshot();
   });

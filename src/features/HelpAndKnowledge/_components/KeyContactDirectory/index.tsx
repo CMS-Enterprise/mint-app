@@ -1,0 +1,363 @@
+import React, { useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import {
+  Accordion,
+  Button,
+  Grid,
+  GridContainer,
+  Link
+} from '@trussworks/react-uswds';
+import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
+import {
+  GetAllKeyContactCategoriesQuery,
+  useGetAllKeyContactCategoriesQuery
+} from 'gql/generated/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
+
+import Alert from 'components/Alert';
+import PageLoading from 'components/PageLoading';
+import GlobalClientFilter from 'components/TableFilter';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
+
+import CategoryModal, {
+  KeyContactCategoryType
+} from './_components/CategoryModal';
+import KeyContactTable from './_components/KeyContactTable';
+import RemoveModal from './_components/RemoveModal';
+import SmeModal from './_components/SmeModal';
+
+import './index.scss';
+
+const AddCategoryButton = () => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      {isModalOpen && (
+        <CategoryModal
+          isOpen={isModalOpen}
+          mode="add"
+          closeModal={() => setIsModalOpen(false)}
+        />
+      )}
+      <Button
+        type="button"
+        unstyled
+        onClick={() => setIsModalOpen(true)}
+        className="line-height-sans-4"
+      >
+        {t('keyContactDirectory.addSubjectCategory')}
+      </Button>
+    </>
+  );
+};
+
+const RenameCategoryButton = ({
+  category
+}: {
+  category: KeyContactCategoryType;
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      {isModalOpen && (
+        <CategoryModal
+          isOpen={isModalOpen}
+          mode="edit"
+          closeModal={() => setIsModalOpen(false)}
+          category={category}
+        />
+      )}
+      <Button
+        type="button"
+        unstyled
+        onClick={() => setIsModalOpen(true)}
+        className="line-height-sans-4 deep-underline"
+      >
+        {t('keyContactDirectory.renameCategory')}
+      </Button>
+    </>
+  );
+};
+
+const RemoveCategoryButton = ({
+  category
+}: {
+  category: KeyContactCategoryType;
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      {isModalOpen && (
+        <RemoveModal
+          isModalOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          removedObject={category}
+        />
+      )}
+      <Button
+        type="button"
+        unstyled
+        onClick={() => setIsModalOpen(true)}
+        className="line-height-sans-4 text-error deep-underline"
+      >
+        {t('keyContactDirectory.removeCategory')}
+      </Button>
+    </>
+  );
+};
+
+const AddSmeWithoutCategoryButton = ({
+  categories
+}: {
+  categories: KeyContactCategoryType[];
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      {isModalOpen && (
+        <SmeModal
+          isOpen={isModalOpen}
+          mode="addWithoutCategory"
+          allCategories={categories}
+          closeModal={() => setIsModalOpen(false)}
+        />
+      )}
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="line-height-sans-4 deep-underline padding-0"
+      >
+        {t('keyContactDirectory.addSme')}
+      </Button>
+    </>
+  );
+};
+
+const AddSmeWithCategoryButton = ({
+  category
+}: {
+  category: KeyContactCategoryType;
+}) => {
+  const { t } = useTranslation('helpAndKnowledge');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
+    <>
+      {isModalOpen && (
+        <SmeModal
+          isOpen={isModalOpen}
+          mode="addWithCategory"
+          closeModal={() => setIsModalOpen(false)}
+          category={category}
+        />
+      )}
+      <Button
+        type="button"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+        className="line-height-sans-4 deep-underline padding-0"
+      >
+        {t('keyContactDirectory.addSmeToCategory')}
+      </Button>
+    </>
+  );
+};
+
+const filterCategories = (
+  allCategories: KeyContactCategoryType[],
+  query: string
+) => {
+  const trimmedQuery = query.toLowerCase().trim();
+  if (trimmedQuery === '') {
+    return allCategories;
+  }
+  return allCategories.map(category => {
+    if (category.name.toLowerCase().includes(trimmedQuery)) {
+      return category;
+    }
+    return {
+      ...category,
+      keyContacts: category.keyContacts.filter(
+        sme =>
+          sme.name.toLowerCase().includes(trimmedQuery) ||
+          sme.email.toLowerCase().includes(trimmedQuery) ||
+          sme.subjectArea.toLowerCase().includes(trimmedQuery)
+      )
+    };
+  });
+};
+
+export type SmeType =
+  GetAllKeyContactCategoriesQuery['keyContactCategory'][number]['keyContacts'][number];
+
+const KeyContactDirectory = () => {
+  const { t } = useTranslation('helpAndKnowledge');
+
+  // Used to check if user is assessment for rendering different content and access
+  const { groups } = useSelector((state: AppState) => state.auth);
+  const flags = useFlags();
+
+  const [query, setQuery] = useState('');
+
+  const isAssessmentTeam = isAssessment(groups, flags);
+
+  const { data: categoryData, loading: loadingCategories } =
+    useGetAllKeyContactCategoriesQuery();
+
+  const categories = useMemo(() => {
+    if (!categoryData) {
+      return [];
+    }
+
+    const filteredCategories = filterCategories(
+      categoryData.keyContactCategory,
+      query
+    );
+
+    const sortedCategories = filteredCategories
+      .map(category => ({
+        ...category,
+        keyContacts: [...category.keyContacts].sort((a, b) =>
+          a.subjectArea.localeCompare(b.subjectArea)
+        )
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    return sortedCategories;
+  }, [categoryData, query]);
+
+  const smeCount = useMemo(
+    () =>
+      categories.reduce(
+        (count, category) => count + category.keyContacts.length,
+        0
+      ),
+    [categories]
+  );
+
+  const accordionItems: AccordionItemProps[] = categories.map(category => ({
+    title: category.name,
+    content: (
+      <>
+        {isAssessmentTeam && (
+          <div className="margin-top-2">
+            <AddSmeWithCategoryButton category={category} />
+            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+            <RenameCategoryButton category={category} />
+            <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+            <RemoveCategoryButton category={category} />
+          </div>
+        )}
+        <KeyContactTable
+          smes={category.keyContacts}
+          allCategories={categories}
+          isAssessmentTeam={isAssessmentTeam}
+          isSearching={query.trim() !== ''}
+        />
+      </>
+    ),
+    expanded: true,
+    id: category.id,
+    headingLevel: 'h4'
+  }));
+
+  if (loadingCategories) {
+    return <PageLoading testId="key-contact-directory" />;
+  }
+
+  return (
+    <div
+      id={convertToLowercaseAndDashes(t('keyContactDirectory.jumpToLabel'))}
+      className="padding-y-4 padding-bottom-6 margin-bottom-neg-7"
+      style={{ scrollMarginTop: '3.5rem' }}
+    >
+      <GridContainer>
+        <div>
+          <h2 className="margin-0">{t('keyContactDirectory.header')}</h2>
+
+          <p className="margin-top-1 margin-bottom-2 font-body-md line-height-sans-4">
+            {isAssessmentTeam ? (
+              t('keyContactDirectory.descriptionForAssessment')
+            ) : (
+              <Trans
+                i18nKey="helpAndKnowledge:keyContactDirectory.descriptionForGeneral"
+                components={{
+                  email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                }}
+              />
+            )}
+          </p>
+
+          {isAssessmentTeam && (
+            <div className="margin-bottom-4">
+              <AddCategoryButton />
+              <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+              <AddSmeWithoutCategoryButton categories={categories} />
+            </div>
+          )}
+        </div>
+
+        <Grid tablet={{ col: 6 }}>
+          {/* Search bar and results info */}
+          <GlobalClientFilter
+            globalFilter={query}
+            setGlobalFilter={setQuery}
+            resetPageOnEmptyFilter={false}
+            tableID="key-contact-directory-table"
+            tableName="key-contact-directory"
+            className="margin-y-4 maxw-none tablet:width-mobile-lg"
+          />
+
+          {query.trim() !== '' && (
+            <div role="status" aria-live="polite" className="margin-bottom-2">
+              {t('keyContactDirectory.resultsFor', {
+                count: smeCount,
+                query
+              })}
+            </div>
+          )}
+        </Grid>
+
+        {categories.length === 0 && (
+          <Alert
+            type="info"
+            heading={t('keyContactDirectory.emptyDirectoryHeading')}
+          >
+            <Trans
+              i18nKey={
+                isAssessmentTeam
+                  ? 'helpAndKnowledge:keyContactDirectory.emptyDirectoryInfoForAssessment'
+                  : 'helpAndKnowledge:keyContactDirectory.emptyDirectoryInfoForGeneral'
+              }
+              components={{
+                email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+              }}
+            />
+          </Alert>
+        )}
+
+        {categories.length > 0 && (
+          <Accordion
+            className="margin-bottom-3 key-contact-accordion"
+            bordered={false}
+            multiselectable
+            items={accordionItems}
+          />
+        )}
+      </GridContainer>
+    </div>
+  );
+};
+
+export default KeyContactDirectory;
