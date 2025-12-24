@@ -36,15 +36,6 @@ var modelPlanCreatedSubjectTemplate string
 //go:embed templates/model_plan_created_body.html
 var modelPlanCreatedBodyTemplate string
 
-// PlanDiscussionCreatedTemplateName is the template name definition for the corresponding email template
-const PlanDiscussionCreatedTemplateName string = "plan_discussion_created"
-
-//go:embed templates/plan_discussion_created_subject.html
-var planDiscussionCreatedSubjectTemplate string
-
-//go:embed templates/plan_discussion_created_body.html
-var planDiscussionCreatedBodyTemplate string
-
 // DiscussionReplyCreatedOriginatorTemplateName is the template name definition for the corresponding email template
 const DiscussionReplyCreatedOriginatorTemplateName string = "discussion_reply_created_originator"
 
@@ -53,24 +44,6 @@ var discussionReplyCreatedOriginatorSubjectTemplate string
 
 //go:embed templates/discussion_reply_created_originator_body.html
 var discussionReplyCreatedOriginatorBodyTemplate string
-
-// PlanDiscussionTaggedMTOCommonSolutionTemplateName is the template name definition for the corresponding email template
-const PlanDiscussionTaggedMTOCommonSolutionTemplateName string = "plan_discussion_tagged_solution"
-
-//go:embed templates/plan_discussion_tagged_solution_subject.html
-var planDiscussionTaggedPossibleSolutionSubjectTemplate string
-
-//go:embed templates/plan_discussion_tagged_solution_body.html
-var planDiscussionTaggedPossibleSolutionBodyTemplate string
-
-// PlanDiscussionTaggedUserTemplateName is the template name definition for the corresponding email template
-const PlanDiscussionTaggedUserTemplateName string = "plan_discussion_tagged_user"
-
-//go:embed templates/plan_discussion_tagged_user_subject.html
-var planDiscussionTaggedUserSubjectTemplate string
-
-//go:embed templates/plan_discussion_tagged_user_body.html
-var planDiscussionTaggedUserBodyTemplate string
 
 // ModelPlanDateChangedTemplateName is the template name definition for the corresponding email template
 const ModelPlanDateChangedTemplateName string = "model_plan_date_changed"
@@ -291,22 +264,7 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(PlanDiscussionCreatedTemplateName, planDiscussionCreatedSubjectTemplate, planDiscussionCreatedBodyTemplate)
-	if err != nil {
-		return err
-	}
-
 	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(PlanDiscussionTaggedUserTemplateName, planDiscussionTaggedUserSubjectTemplate, planDiscussionTaggedUserBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(PlanDiscussionTaggedMTOCommonSolutionTemplateName, planDiscussionTaggedPossibleSolutionSubjectTemplate, planDiscussionTaggedPossibleSolutionBodyTemplate)
 	if err != nil {
 		return err
 	}

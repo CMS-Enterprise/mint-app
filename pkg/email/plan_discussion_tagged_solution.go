@@ -1,6 +1,18 @@
 package email
 
-import "html/template"
+import (
+	_ "embed"
+	"html/template"
+)
+
+// PlanDiscussionTaggedMTOCommonSolutionTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedMTOCommonSolutionTemplateName string = "plan_discussion_tagged_solution"
+
+//go:embed templates/plan_discussion_tagged_solution_subject.html
+var planDiscussionTaggedPossibleSolutionSubjectTemplate string
+
+//go:embed templates/plan_discussion_tagged_solution_body.html
+var planDiscussionTaggedPossibleSolutionBodyTemplate string
 
 // PlanDiscussionTaggedSolutionSubjectContent defines the parameters necessary for the corresponding email subject
 type PlanDiscussionTaggedSolutionSubjectContent struct {

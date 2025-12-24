@@ -1,10 +1,20 @@
 package email
 
 import (
+	_ "embed"
 	"html/template"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// PlanDiscussionCreatedTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionCreatedTemplateName string = "plan_discussion_created"
+
+//go:embed templates/plan_discussion_created_subject.html
+var planDiscussionCreatedSubjectTemplate string
+
+//go:embed templates/plan_discussion_created_body.html
+var planDiscussionCreatedBodyTemplate string
 
 // PlanDiscussionCreatedSubjectContent defines the parameters necessary for the corresponding email subject
 type PlanDiscussionCreatedSubjectContent struct {
@@ -31,8 +41,8 @@ func NewPlanDiscussionCreatedBodyContent(
 	modelPlan *models.ModelPlan,
 	userName string,
 	role string,
-) *PlanDiscussionCreatedBodyContent {
-	return &PlanDiscussionCreatedBodyContent{
+) PlanDiscussionCreatedBodyContent {
+	return PlanDiscussionCreatedBodyContent{
 		ClientAddress:     clientAddress,
 		DiscussionID:      planDiscussion.ID.String(),
 		UserName:          userName,
