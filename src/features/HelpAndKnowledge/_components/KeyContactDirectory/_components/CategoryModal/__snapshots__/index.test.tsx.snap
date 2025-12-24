@@ -1,0 +1,126 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CategoryModal Component > matches snapshot 1`] = `
+<div
+  aria-modal="true"
+  class="ReactModal__Content mint-modal__content tablet:width-mobile-lg mint-body-normal overflow-y-visible"
+  data-testid="sme-category-modal"
+  role="dialog"
+  tabindex="-1"
+>
+  <div
+    class="mint-modal__top-section display-flex text-base mint-modal__fixed-top"
+  >
+    <button
+      aria-label="Close Modal"
+      class="mint-modal__x-button text-base"
+      type="button"
+    >
+      <svg
+        aria-label="close"
+        class="usa-icon usa-icon--size-4"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    class="mint-modal__body margin-top-6 mint-modal__height overflow-y-auto"
+  >
+    <div
+      class=""
+    >
+      <h3
+        aria-live="polite"
+        class="mint-h1 margin-y-0"
+        tabindex="-1"
+      >
+        Add a subject category
+      </h3>
+      <p
+        class="text-base margin-y-1"
+      >
+        Fields marked with an asterisk ( 
+        <span
+          class="text-error"
+        >
+          *
+        </span>
+         ) are required.
+      </p>
+      <p
+        class=""
+      >
+        Add an overall category or topic for subject matter experts (e.g. “Quality” or “Medicare Advantage”).
+      </p>
+    </div>
+    <form
+      class="usa-form maxw-none padding-bottom-8"
+      data-testid="category-form"
+      id="category-form"
+    >
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+        style="min-width: 100%;"
+      >
+        <div
+          class="usa-form-group margin-top-0 margin-bottom-2"
+          data-testid="formGroup"
+        >
+          <label
+            class="usa-label mint-body-normal maxw-none"
+            data-testid="label"
+            for="category-title"
+          >
+            Subject category title
+             
+            <abbr
+              class="usa-hint usa-hint--required"
+              title="required"
+            >
+              *
+            </abbr>
+          </label>
+          <input
+            class="usa-input"
+            data-testid="category-title"
+            id="category-title"
+            name="name"
+            type="text"
+            value=""
+          />
+        </div>
+      </fieldset>
+    </form>
+    <div
+      class="margin-top-2 display-flex mint-modal__footer"
+    >
+      <button
+        class="usa-button margin-right-3 margin-top-0"
+        data-testid="button"
+        disabled=""
+        form="category-form"
+        type="submit"
+      >
+        Add subject category
+      </button>
+      <button
+        class="usa-button usa-button--unstyled margin-top-0 deep-underline"
+        data-testid="button"
+        type="button"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+`;

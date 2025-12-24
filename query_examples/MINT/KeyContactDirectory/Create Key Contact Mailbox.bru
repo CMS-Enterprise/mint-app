@@ -1,0 +1,53 @@
+meta {
+  name: Create Key Contact Mailbox
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation createKeyContactMailbox( $mailboxTitle: String!, $mailboxAddress: String!, $subjectArea: String!, $subjectCategoryID: UUID!) {
+    createKeyContactMailbox(
+      mailboxTitle: $mailboxTitle,
+      mailboxAddress: $mailboxAddress,
+      subjectArea: $subjectArea,
+      subjectCategoryID: $subjectCategoryID
+    ) {
+      id
+      name
+      email
+      subjectArea
+      subjectCategoryID
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "mailboxTitle": "pstm team mailbox",
+    "mailboxAddress": "pstm@example.com",
+    "subjectArea": "violin",
+    "subjectCategoryID": "{{keyContactCategoryID}}"
+  }
+}
+
+script:post-response {
+  let responseData = res.getBody().data.createKeyContactMailbox
+  
+  let contactId = responseData.id
+  
+  bru.setVar("contactId", contactId);
+}
+
+tests {
+  let responseData = res.getBody().data.createKeyContactMailbox
+  
+  keyContactID = responseData.id
+  
+  bru.setVar("keyContactID", keyContactID);
+}

@@ -16,6 +16,12 @@
     "generalName": "Existing model links",
     "groupedName": "General characteristics"
   },
+  "key_contact": {
+    "generalName": "Key contact"
+  },
+  "key_contact_category": {
+    "generalName": "Key contact category"
+  },
   "model_plan": {
     "generalName": "Model plan"
   },

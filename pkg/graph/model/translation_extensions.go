@@ -291,3 +291,23 @@ func (t *ModelPlanMTOTemplateLinkTranslation) TableName() models.TableName {
 func (t *ModelPlanMTOTemplateLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*t)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (kct *KeyContactTranslation) TableName() models.TableName {
+	return models.TNKeyContactCategory
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (kct *KeyContactTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*kct)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (kct *KeyContactCategoryTranslation) TableName() models.TableName {
+	return models.TNKeyContactCategory
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (kct *KeyContactCategoryTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*kct)
+}

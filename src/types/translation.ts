@@ -38,6 +38,8 @@ import {
   GeographyRegionType,
   GeographyType,
   KeyCharacteristic,
+  KeyContactCategoryTranslation,
+  KeyContactTranslation,
   ModelCategory,
   ModelLearningSystemType,
   ModelPlanMtoTemplateLinkTranslation,
@@ -1520,4 +1522,36 @@ type TranslationModelPlanMTOTemplateLinkCustomGQL = Omit<
 
 export type TranslationModelPlanMTOTemplateLinkCustom = {
   [K in keyof TranslationModelPlanMTOTemplateLinkCustomGQL]: TranslationModelPlanMTOTemplateLinkCustomForm[K]; // FE form type
+};
+
+// Key Contact - Change History purposes only
+export type TranslationKeyContactCustomForm = {
+  subjectCategoryID: TranslationFieldProperties;
+  name: TranslationFieldProperties;
+  email: TranslationFieldProperties;
+  mailboxAddress: TranslationFieldProperties;
+  mailboxTitle: TranslationFieldProperties;
+  userId: TranslationFieldProperties;
+  subjectArea: TranslationFieldProperties;
+};
+type TranslationKeyContactCustomGQL = Omit<
+  KeyContactTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationKeyContactCustom = {
+  [K in keyof TranslationKeyContactCustomGQL]: TranslationKeyContactCustomForm[K]; // FE form type
+};
+
+// Key Contact Category - Change History purposes only
+export type TranslationKeyContactCategoryCustomForm = {
+  name: TranslationFieldProperties;
+};
+type TranslationKeyContactCategoryCustomGQL = Omit<
+  KeyContactCategoryTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationKeyContactCategoryCustom = {
+  [K in keyof TranslationKeyContactCategoryCustomGQL]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
 };

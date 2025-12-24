@@ -1,0 +1,43 @@
+{{template "shared_header.html"}}
+{{template "shared_non_mint_mailbox_header.html" .}}
+
+<hr/>
+
+<p>
+  The Help and Knowledge Center in the Model Innovation Tool (MINT) includes a contact directory of subject matter experts (SMEs), allowing model teams and other MINT users to reach out to knowledgeable individuals or team mailboxes if they have a question about a specific topic.
+</p>
+
+<br/>
+
+<br/>
+
+{{if .IsTeam}}
+  <p>The MINT Team has added this mailbox to the SME contact directory:</p>
+{{else}}
+ <p>The MINT Team has added you as a SME:</p>
+{{end}}
+<p><strong>Category:</strong> {{.CategoryName}}</p>
+<p><strong>Subject area:</strong> {{.SubjectArea}}</p>
+
+<br/>
+
+<h2>
+  <a href="{{.ClientAddress}}/help-and-knowledge">
+    View the MINT contact directory
+  </a>
+</h2>
+
+<br/>
+<br/>
+
+{{if .IsTeam}} 
+  <p>If you believe this information to be incorrect or if you do not wish this mailbox to be included in the MINT Help and Knowledge Center contact directory, please contact the MINT Team at <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.</p>
+{{else}}
+  <p>If you believe this information to be incorrect or if you do not wish to be included in the MINT Help and Knowledge Center contact directory, please contact the MINT Team at <a href="mailto:MINTTeam@cms.hhs.gov">MINTTeam@cms.hhs.gov</a>.</p>
+{{end}}
+
+<br/>
+<hr/>
+<br/>
+
+{{template "shared_access_banner.html" .}}
