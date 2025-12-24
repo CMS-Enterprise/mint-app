@@ -48,6 +48,22 @@ type ExistingModelLinkTranslation struct {
 	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
+// Represents key contact category base translation data
+type KeyContactCategoryTranslation struct {
+	Name models.TranslationField `json:"name" db:"name"`
+}
+
+// Represents key contact base translation data
+type KeyContactTranslation struct {
+	SubjectCategoryID models.TranslationField `json:"subjectCategoryID" db:"subject_category_id"`
+	Name              models.TranslationField `json:"name"`
+	Email             models.TranslationField `json:"email"`
+	MailboxTitle      models.TranslationField `json:"mailboxTitle" db:"mailbox_title"`
+	MailboxAddress    models.TranslationField `json:"mailboxAddress" db:"mailbox_address"`
+	UserID            models.TranslationField `json:"userId" db:"user_id"`
+	SubjectArea       models.TranslationField `json:"subjectArea" db:"subject_area"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`

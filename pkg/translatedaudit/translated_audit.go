@@ -35,6 +35,10 @@ var unTranslatedTables = []models.TableName{
 	models.TNMTOTemplateMilestone,
 	models.TNMTOTemplateMilestoneSolutionLink,
 	models.TNMTOTemplateSolution,
+
+	// We don't translate key contact audit configuration tables
+	models.TNKeyContact,
+	models.TNKeyContactCategory,
 }
 
 // Returns true in the table name is in the list of provided Table Names

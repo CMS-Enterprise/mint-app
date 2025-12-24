@@ -461,26 +461,28 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <div
                     class="margin-top-3 margin-bottom-6"
                   >
-                    <div
-                      class="usa-form-group"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="beneficiaries-note-add-note-toggle"
+                      type="button"
                     >
-                      <label
-                        class="usa-label"
-                        for="beneficiaries-note"
-                        id="label-beneficiaries-note"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="add"
+                        class="usa-icon margin-right-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Notes
-                      </label>
-                      <textarea
-                        aria-labelledby="label-beneficiaries-note hint-beneficiaries-note"
-                        class="usa-textarea"
-                        data-testid="beneficiaries-note"
-                        id="beneficiaries-note"
-                        name="beneficiariesNote"
-                      >
-                        note
-                      </textarea>
-                    </div>
+                        <path
+                          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                        />
+                      </svg>
+                      Add an additional note
+                    </button>
                   </div>
                 </div>
                 <div
@@ -576,26 +578,28 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <div
                     class="margin-top-3 margin-bottom-6"
                   >
-                    <div
-                      class="usa-form-group"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="beneficiaries-dual-eligibility-note-add-note-toggle"
+                      type="button"
                     >
-                      <label
-                        class="usa-label"
-                        for="beneficiaries-dual-eligibility-note"
-                        id="label-beneficiaries-dual-eligibility-note"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="add"
+                        class="usa-icon margin-right-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Notes
-                      </label>
-                      <textarea
-                        aria-labelledby="label-beneficiaries-dual-eligibility-note hint-beneficiaries-dual-eligibility-note"
-                        class="usa-textarea"
-                        data-testid="beneficiaries-dual-eligibility-note"
-                        id="beneficiaries-dual-eligibility-note"
-                        name="treatDualElligibleDifferentNote"
-                      >
-                        This is note
-                      </textarea>
-                    </div>
+                        <path
+                          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                        />
+                      </svg>
+                      Add an additional note
+                    </button>
                   </div>
                 </div>
                 <div
@@ -690,26 +694,28 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                   <div
                     class="margin-top-3 margin-bottom-6"
                   >
-                    <div
-                      class="usa-form-group"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="beneficiaries-exclude-note-add-note-toggle"
+                      type="button"
                     >
-                      <label
-                        class="usa-label"
-                        for="beneficiaries-exclude-note"
-                        id="label-beneficiaries-exclude-note"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="add"
+                        class="usa-icon margin-right-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Notes
-                      </label>
-                      <textarea
-                        aria-labelledby="label-beneficiaries-exclude-note hint-beneficiaries-exclude-note"
-                        class="usa-textarea"
-                        data-testid="beneficiaries-exclude-note"
-                        id="beneficiaries-exclude-note"
-                        name="excludeCertainCharacteristicsNote"
-                      >
-                        Note
-                      </textarea>
-                    </div>
+                        <path
+                          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                        />
+                      </svg>
+                      Add an additional note
+                    </button>
                   </div>
                 </div>
                 <div

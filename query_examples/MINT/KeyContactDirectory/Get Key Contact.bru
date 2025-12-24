@@ -1,0 +1,23 @@
+meta {
+  name: Get Key Contact
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetKeyContact{
+    keyContact(id: "{{keyContactId}}") {
+      id
+      name
+      email
+      subjectArea
+      subjectCategoryID
+    }
+  }
+}

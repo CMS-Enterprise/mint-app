@@ -1,6 +1,13 @@
 import { MockedResponse } from '@apollo/client/testing';
+import { KeyContactCategoryType } from 'features/HelpAndKnowledge/_components/KeyContactDirectory/_components/CategoryModal';
 import {
   DataExchangeApproachStatus,
+  GetAllKeyContactCategoriesDocument,
+  GetAllKeyContactCategoriesQuery,
+  GetAllKeyContactCategoriesQueryVariables,
+  GetAllKeyContactsDocument,
+  GetAllKeyContactsQuery,
+  GetAllKeyContactsQueryVariables,
   GetAnalyticsSummaryDocument,
   GetAnalyticsSummaryQuery,
   GetAnalyticsSummaryQueryVariables,
@@ -706,6 +713,95 @@ export const modelPlanBaseMock: MockedResponse<
             }
           }
         }
+      }
+    }
+  }
+];
+
+export const keyContactCategoryMockData: KeyContactCategoryType[] = [
+  {
+    __typename: 'KeyContactCategory',
+    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350',
+    name: 'Healthcare',
+    keyContacts: [
+      {
+        __typename: 'KeyContact',
+        email: 'aliza.kim@cms.hhs.gov',
+        id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
+        name: 'Aliza Kim',
+        subjectArea: 'Insurance and Coverage',
+        subjectCategoryID: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350'
+      }
+    ]
+  },
+  {
+    __typename: 'KeyContactCategory',
+    id: 'a95a1f98-fb7a-43f9-9e3c-abc52238e351',
+    name: 'CMS Programs',
+    keyContacts: [
+      {
+        __typename: 'KeyContact',
+        email: 'aliza.kim@cms.hhs.gov',
+        id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
+        name: 'Aliza Kim',
+        subjectArea: 'Insurance and Coverage',
+        subjectCategoryID: 'a95a1f98-fb7a-43f9-9e3c-abc52238e350'
+      }
+    ]
+  }
+];
+
+export const keyContactCategoriesMock: MockedResponse<
+  GetAllKeyContactCategoriesQuery,
+  GetAllKeyContactCategoriesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllKeyContactCategoriesDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        keyContactCategory: keyContactCategoryMockData
+      }
+    }
+  }
+];
+
+type KeyContactsType =
+  GetAllKeyContactCategoriesQuery['keyContactCategory'][number]['keyContacts'];
+
+export const keyContactsMockData: KeyContactsType = [
+  {
+    email: 'aliza.kim@cms.hhs.gov',
+    id: '53c12785-c0c1-47a9-a91d-4f69d82d45cc',
+    name: 'Aliza Kim',
+    subjectArea: 'Insurance and Coverage',
+    subjectCategoryID: keyContactCategoryMockData[0].id,
+    __typename: 'KeyContact'
+  },
+  {
+    email: 'pstm@example.com',
+    id: '54c12785-c0c1-47a9-a91d-4f69d82d45cc',
+    name: 'pstm team mailbox',
+    subjectArea: 'Paperwork Reduction Act',
+    subjectCategoryID: keyContactCategoryMockData[0].id,
+    __typename: 'KeyContact'
+  }
+];
+
+export const keyContactsMock: MockedResponse<
+  GetAllKeyContactsQuery,
+  GetAllKeyContactsQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllKeyContactsDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        keyContacts: keyContactsMockData
       }
     }
   }

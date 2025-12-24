@@ -730,6 +730,66 @@ export enum KeyCharacteristic {
   SHARED_SAVINGS = 'SHARED_SAVINGS'
 }
 
+export type KeyContact = {
+  __typename: 'KeyContact';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  mailboxAddress?: Maybe<Scalars['String']['output']>;
+  mailboxTitle?: Maybe<Scalars['String']['output']>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+  subjectArea: Scalars['String']['output'];
+  subjectCategoryID: Scalars['UUID']['output'];
+  userAccount?: Maybe<UserAccount>;
+  userID?: Maybe<Scalars['UUID']['output']>;
+};
+
+export type KeyContactCategory = {
+  __typename: 'KeyContactCategory';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  keyContacts: Array<KeyContact>;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  name: Scalars['String']['output'];
+};
+
+/** Represents key contact category base translation data */
+export type KeyContactCategoryTranslation = {
+  __typename: 'KeyContactCategoryTranslation';
+  name: TranslationField;
+};
+
+/** Represents key contact base translation data */
+export type KeyContactTranslation = {
+  __typename: 'KeyContactTranslation';
+  email: TranslationField;
+  mailboxAddress: TranslationField;
+  mailboxTitle: TranslationField;
+  name: TranslationField;
+  subjectArea: TranslationField;
+  subjectCategoryID: TranslationField;
+  userId: TranslationField;
+};
+
+/**
+ * Input for updating a key contact.
+ * Only subject category, subject area, and mailbox title can be changed.
+ */
+export type KeyContactUpdateChanges = {
+  mailboxTitle?: InputMaybe<Scalars['String']['input']>;
+  subjectArea?: InputMaybe<Scalars['String']['input']>;
+  subjectCategoryID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
 /** The current user's Launch Darkly key */
 export type LaunchDarklySettings = {
   __typename: 'LaunchDarklySettings';
@@ -1816,6 +1876,9 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   createDiscussionReply: DiscussionReply;
+  createKeyContactCategory: KeyContactCategory;
+  createKeyContactMailbox: KeyContact;
+  createKeyContactUser: KeyContact;
   /**
    * Allows you to create an MTOCategory or Subcategory if you provide a parent ID.
    * Note, the parent must belong to the same model plan, or this will return an error
@@ -1841,6 +1904,8 @@ export type Mutation = {
    */
   createStandardCategories: Scalars['Boolean']['output'];
   createTemplateToMTO: ApplyTemplateResult;
+  deleteKeyContact: KeyContact;
+  deleteKeyContactCategory: KeyContactCategory;
   /**
    * Deletes an MTO category. If the category has subcategories, it will delete them as well.
    * If the target category is a subcategory, it will only delete the subcategory and redirect
@@ -1893,6 +1958,8 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
+  updateKeyContact: KeyContact;
+  updateKeyContactCategory: KeyContactCategory;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
@@ -1933,6 +2000,29 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactCategoryArgs = {
+  name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactMailboxArgs = {
+  mailboxAddress: Scalars['String']['input'];
+  mailboxTitle: Scalars['String']['input'];
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateKeyContactUserArgs = {
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
+  userName: Scalars['String']['input'];
 };
 
 
@@ -2063,6 +2153,18 @@ export type MutationCreateStandardCategoriesArgs = {
 export type MutationCreateTemplateToMtoArgs = {
   modelPlanID: Scalars['UUID']['input'];
   templateID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteKeyContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationDeleteKeyContactCategoryArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -2227,6 +2329,20 @@ export type MutationUpdateExistingModelLinksArgs = {
   existingModelIDs?: InputMaybe<Array<Scalars['Int']['input']>>;
   fieldName: ExisitingModelLinkFieldType;
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateKeyContactArgs = {
+  changes: KeyContactUpdateChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateKeyContactCategoryArgs = {
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
 };
 
 
@@ -4428,6 +4544,11 @@ export type Query = {
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
+  keyContact: KeyContact;
+  keyContactCategoriesByIds: Array<KeyContactCategory>;
+  keyContactCategory: Array<KeyContactCategory>;
+  keyContactCategoryById: KeyContactCategory;
+  keyContacts: Array<KeyContact>;
   lockableSectionLocks: Array<LockableSectionLockStatus>;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
@@ -4481,6 +4602,24 @@ export type QueryAuditChangesArgs = {
 
 /** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactCategoriesByIdsArgs = {
+  ids: Array<Scalars['UUID']['input']>;
+};
+
+
+/** Query definition for the schema */
+export type QueryKeyContactCategoryByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
@@ -4786,6 +4925,8 @@ export enum TableName {
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
+  KEY_CONTACT = 'key_contact',
+  KEY_CONTACT_CATEGORY = 'key_contact_category',
   MODEL_PLAN = 'model_plan',
   MODEL_PLAN_MTO_TEMPLATE_LINK = 'model_plan_mto_template_link',
   MTO_CATEGORY = 'mto_category',
@@ -5813,6 +5954,79 @@ export type UpdateHomepageSettingsMutationVariables = Exact<{
 
 
 export type UpdateHomepageSettingsMutation = { __typename: 'Mutation', updateUserViewCustomization: { __typename: 'UserViewCustomization', id: UUID } };
+
+export type CreateKeyContactCategoryMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type CreateKeyContactCategoryMutation = { __typename: 'Mutation', createKeyContactCategory: { __typename: 'KeyContactCategory', id: UUID, name: string, keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null }> } };
+
+export type CreateKeyContactMailboxMutationVariables = Exact<{
+  mailboxTitle: Scalars['String']['input'];
+  mailboxAddress: Scalars['String']['input'];
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
+}>;
+
+
+export type CreateKeyContactMailboxMutation = { __typename: 'Mutation', createKeyContactMailbox: { __typename: 'KeyContact', id: UUID, name: string, email: string, subjectArea: string, subjectCategoryID: UUID } };
+
+export type CreateKeyContactUserMutationVariables = Exact<{
+  userName: Scalars['String']['input'];
+  subjectArea: Scalars['String']['input'];
+  subjectCategoryID: Scalars['UUID']['input'];
+}>;
+
+
+export type CreateKeyContactUserMutation = { __typename: 'Mutation', createKeyContactUser: { __typename: 'KeyContact', id: UUID, name: string, email: string, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null } };
+
+export type DeleteKeyContactMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteKeyContactMutation = { __typename: 'Mutation', deleteKeyContact: { __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null } };
+
+export type DeleteKeyContactCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteKeyContactCategoryMutation = { __typename: 'Mutation', deleteKeyContactCategory: { __typename: 'KeyContactCategory', id: UUID, name: string, keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null }> } };
+
+export type GetAllKeyContactCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllKeyContactCategoriesQuery = { __typename: 'Query', keyContactCategory: Array<{ __typename: 'KeyContactCategory', id: UUID, name: string, keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null }> }> };
+
+export type GetAllKeyContactsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllKeyContactsQuery = { __typename: 'Query', keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null }> };
+
+export type GetIndividualKeyContactQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetIndividualKeyContactQuery = { __typename: 'Query', keyContact: { __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null } };
+
+export type UpdateKeyContactMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: KeyContactUpdateChanges;
+}>;
+
+
+export type UpdateKeyContactMutation = { __typename: 'Mutation', updateKeyContact: { __typename: 'KeyContact', id: UUID, name: string, email: string, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null } };
+
+export type UpdateKeyContactCategoryMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+
+export type UpdateKeyContactCategoryMutation = { __typename: 'Mutation', updateKeyContactCategory: { __typename: 'KeyContactCategory', id: UUID, name: string, keyContacts: Array<{ __typename: 'KeyContact', id: UUID, name: string, email: string, mailboxTitle?: string | null, mailboxAddress?: string | null, subjectArea: string, subjectCategoryID: UUID, userAccount?: { __typename: 'UserAccount', id: UUID, commonName: string, email: string, username: string } | null }> } };
 
 export type GetExistingModelPlansQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9198,6 +9412,504 @@ export function useUpdateHomepageSettingsMutation(baseOptions?: Apollo.MutationH
 export type UpdateHomepageSettingsMutationHookResult = ReturnType<typeof useUpdateHomepageSettingsMutation>;
 export type UpdateHomepageSettingsMutationResult = Apollo.MutationResult<UpdateHomepageSettingsMutation>;
 export type UpdateHomepageSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
+export const CreateKeyContactCategoryDocument = gql`
+    mutation createKeyContactCategory($name: String!) {
+  createKeyContactCategory(name: $name) {
+    id
+    name
+    keyContacts {
+      id
+      name
+      email
+      mailboxTitle
+      mailboxAddress
+      subjectArea
+      subjectCategoryID
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+    }
+  }
+}
+    `;
+export type CreateKeyContactCategoryMutationFn = Apollo.MutationFunction<CreateKeyContactCategoryMutation, CreateKeyContactCategoryMutationVariables>;
+
+/**
+ * __useCreateKeyContactCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateKeyContactCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateKeyContactCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createKeyContactCategoryMutation, { data, loading, error }] = useCreateKeyContactCategoryMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useCreateKeyContactCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateKeyContactCategoryMutation, CreateKeyContactCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateKeyContactCategoryMutation, CreateKeyContactCategoryMutationVariables>(CreateKeyContactCategoryDocument, options);
+      }
+export type CreateKeyContactCategoryMutationHookResult = ReturnType<typeof useCreateKeyContactCategoryMutation>;
+export type CreateKeyContactCategoryMutationResult = Apollo.MutationResult<CreateKeyContactCategoryMutation>;
+export type CreateKeyContactCategoryMutationOptions = Apollo.BaseMutationOptions<CreateKeyContactCategoryMutation, CreateKeyContactCategoryMutationVariables>;
+export const CreateKeyContactMailboxDocument = gql`
+    mutation createKeyContactMailbox($mailboxTitle: String!, $mailboxAddress: String!, $subjectArea: String!, $subjectCategoryID: UUID!) {
+  createKeyContactMailbox(
+    mailboxTitle: $mailboxTitle
+    mailboxAddress: $mailboxAddress
+    subjectArea: $subjectArea
+    subjectCategoryID: $subjectCategoryID
+  ) {
+    id
+    name
+    email
+    subjectArea
+    subjectCategoryID
+  }
+}
+    `;
+export type CreateKeyContactMailboxMutationFn = Apollo.MutationFunction<CreateKeyContactMailboxMutation, CreateKeyContactMailboxMutationVariables>;
+
+/**
+ * __useCreateKeyContactMailboxMutation__
+ *
+ * To run a mutation, you first call `useCreateKeyContactMailboxMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateKeyContactMailboxMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createKeyContactMailboxMutation, { data, loading, error }] = useCreateKeyContactMailboxMutation({
+ *   variables: {
+ *      mailboxTitle: // value for 'mailboxTitle'
+ *      mailboxAddress: // value for 'mailboxAddress'
+ *      subjectArea: // value for 'subjectArea'
+ *      subjectCategoryID: // value for 'subjectCategoryID'
+ *   },
+ * });
+ */
+export function useCreateKeyContactMailboxMutation(baseOptions?: Apollo.MutationHookOptions<CreateKeyContactMailboxMutation, CreateKeyContactMailboxMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateKeyContactMailboxMutation, CreateKeyContactMailboxMutationVariables>(CreateKeyContactMailboxDocument, options);
+      }
+export type CreateKeyContactMailboxMutationHookResult = ReturnType<typeof useCreateKeyContactMailboxMutation>;
+export type CreateKeyContactMailboxMutationResult = Apollo.MutationResult<CreateKeyContactMailboxMutation>;
+export type CreateKeyContactMailboxMutationOptions = Apollo.BaseMutationOptions<CreateKeyContactMailboxMutation, CreateKeyContactMailboxMutationVariables>;
+export const CreateKeyContactUserDocument = gql`
+    mutation createKeyContactUser($userName: String!, $subjectArea: String!, $subjectCategoryID: UUID!) {
+  createKeyContactUser(
+    userName: $userName
+    subjectArea: $subjectArea
+    subjectCategoryID: $subjectCategoryID
+  ) {
+    id
+    name
+    email
+    subjectArea
+    subjectCategoryID
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+  }
+}
+    `;
+export type CreateKeyContactUserMutationFn = Apollo.MutationFunction<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>;
+
+/**
+ * __useCreateKeyContactUserMutation__
+ *
+ * To run a mutation, you first call `useCreateKeyContactUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateKeyContactUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createKeyContactUserMutation, { data, loading, error }] = useCreateKeyContactUserMutation({
+ *   variables: {
+ *      userName: // value for 'userName'
+ *      subjectArea: // value for 'subjectArea'
+ *      subjectCategoryID: // value for 'subjectCategoryID'
+ *   },
+ * });
+ */
+export function useCreateKeyContactUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>(CreateKeyContactUserDocument, options);
+      }
+export type CreateKeyContactUserMutationHookResult = ReturnType<typeof useCreateKeyContactUserMutation>;
+export type CreateKeyContactUserMutationResult = Apollo.MutationResult<CreateKeyContactUserMutation>;
+export type CreateKeyContactUserMutationOptions = Apollo.BaseMutationOptions<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>;
+export const DeleteKeyContactDocument = gql`
+    mutation deleteKeyContact($id: UUID!) {
+  deleteKeyContact(id: $id) {
+    id
+    name
+    email
+    mailboxTitle
+    mailboxAddress
+    subjectArea
+    subjectCategoryID
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+  }
+}
+    `;
+export type DeleteKeyContactMutationFn = Apollo.MutationFunction<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>;
+
+/**
+ * __useDeleteKeyContactMutation__
+ *
+ * To run a mutation, you first call `useDeleteKeyContactMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteKeyContactMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteKeyContactMutation, { data, loading, error }] = useDeleteKeyContactMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteKeyContactMutation(baseOptions?: Apollo.MutationHookOptions<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>(DeleteKeyContactDocument, options);
+      }
+export type DeleteKeyContactMutationHookResult = ReturnType<typeof useDeleteKeyContactMutation>;
+export type DeleteKeyContactMutationResult = Apollo.MutationResult<DeleteKeyContactMutation>;
+export type DeleteKeyContactMutationOptions = Apollo.BaseMutationOptions<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>;
+export const DeleteKeyContactCategoryDocument = gql`
+    mutation deleteKeyContactCategory($id: UUID!) {
+  deleteKeyContactCategory(id: $id) {
+    id
+    name
+    keyContacts {
+      id
+      name
+      email
+      mailboxTitle
+      mailboxAddress
+      subjectArea
+      subjectCategoryID
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+    }
+  }
+}
+    `;
+export type DeleteKeyContactCategoryMutationFn = Apollo.MutationFunction<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>;
+
+/**
+ * __useDeleteKeyContactCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteKeyContactCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteKeyContactCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteKeyContactCategoryMutation, { data, loading, error }] = useDeleteKeyContactCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteKeyContactCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>(DeleteKeyContactCategoryDocument, options);
+      }
+export type DeleteKeyContactCategoryMutationHookResult = ReturnType<typeof useDeleteKeyContactCategoryMutation>;
+export type DeleteKeyContactCategoryMutationResult = Apollo.MutationResult<DeleteKeyContactCategoryMutation>;
+export type DeleteKeyContactCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>;
+export const GetAllKeyContactCategoriesDocument = gql`
+    query GetAllKeyContactCategories {
+  keyContactCategory {
+    id
+    name
+    keyContacts {
+      id
+      name
+      email
+      mailboxTitle
+      mailboxAddress
+      subjectArea
+      subjectCategoryID
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllKeyContactCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetAllKeyContactCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllKeyContactCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllKeyContactCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllKeyContactCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
+      }
+export function useGetAllKeyContactCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
+        }
+// @ts-ignore
+export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
+export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllKeyContactCategoriesQuery | undefined, GetAllKeyContactCategoriesQueryVariables>;
+export function useGetAllKeyContactCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>(GetAllKeyContactCategoriesDocument, options);
+        }
+export type GetAllKeyContactCategoriesQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesQuery>;
+export type GetAllKeyContactCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesLazyQuery>;
+export type GetAllKeyContactCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetAllKeyContactCategoriesSuspenseQuery>;
+export type GetAllKeyContactCategoriesQueryResult = Apollo.QueryResult<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
+export const GetAllKeyContactsDocument = gql`
+    query GetAllKeyContacts {
+  keyContacts {
+    id
+    name
+    email
+    mailboxTitle
+    mailboxAddress
+    subjectArea
+    subjectCategoryID
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllKeyContactsQuery__
+ *
+ * To run a query within a React component, call `useGetAllKeyContactsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllKeyContactsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllKeyContactsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllKeyContactsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>(GetAllKeyContactsDocument, options);
+      }
+export function useGetAllKeyContactsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>(GetAllKeyContactsDocument, options);
+        }
+// @ts-ignore
+export function useGetAllKeyContactsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>;
+export function useGetAllKeyContactsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllKeyContactsQuery | undefined, GetAllKeyContactsQueryVariables>;
+export function useGetAllKeyContactsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>(GetAllKeyContactsDocument, options);
+        }
+export type GetAllKeyContactsQueryHookResult = ReturnType<typeof useGetAllKeyContactsQuery>;
+export type GetAllKeyContactsLazyQueryHookResult = ReturnType<typeof useGetAllKeyContactsLazyQuery>;
+export type GetAllKeyContactsSuspenseQueryHookResult = ReturnType<typeof useGetAllKeyContactsSuspenseQuery>;
+export type GetAllKeyContactsQueryResult = Apollo.QueryResult<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>;
+export const GetIndividualKeyContactDocument = gql`
+    query GetIndividualKeyContact($id: UUID!) {
+  keyContact(id: $id) {
+    id
+    name
+    email
+    mailboxTitle
+    mailboxAddress
+    subjectArea
+    subjectCategoryID
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetIndividualKeyContactQuery__
+ *
+ * To run a query within a React component, call `useGetIndividualKeyContactQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIndividualKeyContactQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIndividualKeyContactQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetIndividualKeyContactQuery(baseOptions: Apollo.QueryHookOptions<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables> & ({ variables: GetIndividualKeyContactQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>(GetIndividualKeyContactDocument, options);
+      }
+export function useGetIndividualKeyContactLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>(GetIndividualKeyContactDocument, options);
+        }
+// @ts-ignore
+export function useGetIndividualKeyContactSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>): Apollo.UseSuspenseQueryResult<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>;
+export function useGetIndividualKeyContactSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>): Apollo.UseSuspenseQueryResult<GetIndividualKeyContactQuery | undefined, GetIndividualKeyContactQueryVariables>;
+export function useGetIndividualKeyContactSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>(GetIndividualKeyContactDocument, options);
+        }
+export type GetIndividualKeyContactQueryHookResult = ReturnType<typeof useGetIndividualKeyContactQuery>;
+export type GetIndividualKeyContactLazyQueryHookResult = ReturnType<typeof useGetIndividualKeyContactLazyQuery>;
+export type GetIndividualKeyContactSuspenseQueryHookResult = ReturnType<typeof useGetIndividualKeyContactSuspenseQuery>;
+export type GetIndividualKeyContactQueryResult = Apollo.QueryResult<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>;
+export const UpdateKeyContactDocument = gql`
+    mutation updateKeyContact($id: UUID!, $changes: KeyContactUpdateChanges!) {
+  updateKeyContact(id: $id, changes: $changes) {
+    id
+    name
+    email
+    subjectArea
+    subjectCategoryID
+    userAccount {
+      id
+      commonName
+      email
+      username
+    }
+  }
+}
+    `;
+export type UpdateKeyContactMutationFn = Apollo.MutationFunction<UpdateKeyContactMutation, UpdateKeyContactMutationVariables>;
+
+/**
+ * __useUpdateKeyContactMutation__
+ *
+ * To run a mutation, you first call `useUpdateKeyContactMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateKeyContactMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateKeyContactMutation, { data, loading, error }] = useUpdateKeyContactMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateKeyContactMutation(baseOptions?: Apollo.MutationHookOptions<UpdateKeyContactMutation, UpdateKeyContactMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateKeyContactMutation, UpdateKeyContactMutationVariables>(UpdateKeyContactDocument, options);
+      }
+export type UpdateKeyContactMutationHookResult = ReturnType<typeof useUpdateKeyContactMutation>;
+export type UpdateKeyContactMutationResult = Apollo.MutationResult<UpdateKeyContactMutation>;
+export type UpdateKeyContactMutationOptions = Apollo.BaseMutationOptions<UpdateKeyContactMutation, UpdateKeyContactMutationVariables>;
+export const UpdateKeyContactCategoryDocument = gql`
+    mutation updateKeyContactCategory($id: UUID!, $name: String!) {
+  updateKeyContactCategory(id: $id, name: $name) {
+    id
+    name
+    keyContacts {
+      id
+      name
+      email
+      mailboxTitle
+      mailboxAddress
+      subjectArea
+      subjectCategoryID
+      userAccount {
+        id
+        commonName
+        email
+        username
+      }
+    }
+  }
+}
+    `;
+export type UpdateKeyContactCategoryMutationFn = Apollo.MutationFunction<UpdateKeyContactCategoryMutation, UpdateKeyContactCategoryMutationVariables>;
+
+/**
+ * __useUpdateKeyContactCategoryMutation__
+ *
+ * To run a mutation, you first call `useUpdateKeyContactCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateKeyContactCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateKeyContactCategoryMutation, { data, loading, error }] = useUpdateKeyContactCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useUpdateKeyContactCategoryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateKeyContactCategoryMutation, UpdateKeyContactCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateKeyContactCategoryMutation, UpdateKeyContactCategoryMutationVariables>(UpdateKeyContactCategoryDocument, options);
+      }
+export type UpdateKeyContactCategoryMutationHookResult = ReturnType<typeof useUpdateKeyContactCategoryMutation>;
+export type UpdateKeyContactCategoryMutationResult = Apollo.MutationResult<UpdateKeyContactCategoryMutation>;
+export type UpdateKeyContactCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateKeyContactCategoryMutation, UpdateKeyContactCategoryMutationVariables>;
 export const GetExistingModelPlansDocument = gql`
     query GetExistingModelPlans {
   existingModelCollection {
@@ -17205,6 +17917,16 @@ export const TypedUpdateExistingModelLinksDocument = {"kind":"Document","definit
 export const TypedUpdatePlanGeneralCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanGeneralCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
 export const TypedGetHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomepageSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userViewCustomization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"viewCustomization"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"}},{"kind":"Field","name":{"kind":"Name","value":"componentGroups"}}]}}]}}]} as unknown as DocumentNode<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
 export const TypedUpdateHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomepageSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserViewCustomizationChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserViewCustomization"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
+export const TypedcreateKeyContactCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createKeyContactCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createKeyContactCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CreateKeyContactCategoryMutation, CreateKeyContactCategoryMutationVariables>;
+export const TypedcreateKeyContactMailboxDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createKeyContactMailbox"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mailboxTitle"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mailboxAddress"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createKeyContactMailbox"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"mailboxTitle"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mailboxTitle"}}},{"kind":"Argument","name":{"kind":"Name","value":"mailboxAddress"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mailboxAddress"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectArea"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectCategoryID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}}]}}]}}]} as unknown as DocumentNode<CreateKeyContactMailboxMutation, CreateKeyContactMailboxMutationVariables>;
+export const TypedcreateKeyContactUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createKeyContactUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createKeyContactUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userName"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectArea"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectArea"}}},{"kind":"Argument","name":{"kind":"Name","value":"subjectCategoryID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectCategoryID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<CreateKeyContactUserMutation, CreateKeyContactUserMutationVariables>;
+export const TypeddeleteKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteKeyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteKeyContactMutation, DeleteKeyContactMutationVariables>;
+export const TypeddeleteKeyContactCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteKeyContactCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteKeyContactCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<DeleteKeyContactCategoryMutation, DeleteKeyContactCategoryMutationVariables>;
+export const TypedGetAllKeyContactCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllKeyContactCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContactCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllKeyContactCategoriesQuery, GetAllKeyContactCategoriesQueryVariables>;
+export const TypedGetAllKeyContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllKeyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllKeyContactsQuery, GetAllKeyContactsQueryVariables>;
+export const TypedGetIndividualKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIndividualKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"keyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<GetIndividualKeyContactQuery, GetIndividualKeyContactQueryVariables>;
+export const TypedupdateKeyContactDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateKeyContact"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"KeyContactUpdateChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateKeyContact"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateKeyContactMutation, UpdateKeyContactMutationVariables>;
+export const TypedupdateKeyContactCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateKeyContactCategory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateKeyContactCategory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"keyContacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxTitle"}},{"kind":"Field","name":{"kind":"Name","value":"mailboxAddress"}},{"kind":"Field","name":{"kind":"Name","value":"subjectArea"}},{"kind":"Field","name":{"kind":"Name","value":"subjectCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateKeyContactCategoryMutation, UpdateKeyContactCategoryMutationVariables>;
 export const TypedGetExistingModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExistingModelPlans"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"existingModelCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetExistingModelPlansQuery, GetExistingModelPlansQueryVariables>;
 export const TypedGetModelPlansBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlansBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetModelPlansBaseQuery, GetModelPlansBaseQueryVariables>;
 export const TypedGetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;
