@@ -24,9 +24,9 @@ func main() {
 	sendModelPlanCreatedEmailTest(emailService, templateService)
 
 	// Discussion emails
-	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
-	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
-	sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
+	sendPlanDiscussionCreatedTestEmail(emailService, addressBook)
+	sendPlanDiscussionTaggedUserTestEmail(emailService, addressBook)
+	sendPlanDiscussionTaggedSolutionTestEmail(emailService, addressBook)
 
 	//DiscussionReply email
 	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
@@ -116,7 +116,6 @@ func initializeAddressBook() email.AddressBook {
 
 func sendPlanDiscussionCreatedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	discussionUserRole := models.DiscussionRoleMintTeam
@@ -151,7 +150,6 @@ func sendPlanDiscussionCreatedTestEmail(
 
 	err = sendPlanDiscussionCreatedEmail(
 		emailService,
-		templateService,
 		addressBook,
 		addressBook.MINTTeamEmail,
 		planDiscussion,
@@ -162,19 +160,13 @@ func sendPlanDiscussionCreatedTestEmail(
 
 func sendPlanDiscussionCreatedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	receiverEmail string,
 	planDiscussion *models.PlanDiscussion,
 	modelPlanID uuid.UUID,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
-	}
-
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionCreatedTemplateName)
-	if err != nil {
-		return err
 	}
 	createdByUserName := "Test User"
 	modelName := "Test Model Plan Name"
@@ -185,22 +177,20 @@ func sendPlanDiscussionCreatedEmail(
 		Abbreviation: &modelAbbreviation,
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
+	subjectContent := email.PlanDiscussionCreatedSubjectContent{
 		UserName:          createdByUserName,
 		ModelName:         modelName,
 		ModelAbbreviation: modelAbbreviation,
-	})
-	if err != nil {
-		return err
 	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewPlanDiscussionCreatedBodyContent(
+	bodyContent := email.NewPlanDiscussionCreatedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		planDiscussion,
 		&modelPlan,
 		createdByUserName,
 		planDiscussion.UserRole.Humanize(models.ValueOrEmpty(planDiscussion.UserRoleDescription)),
-	))
+	)
+
+	emailSubject, emailBody, err := email.PlanDiscussion.Created.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
