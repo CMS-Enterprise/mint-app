@@ -22,7 +22,6 @@ func sendMTOCommonSolutionPOCWelcomeTestEmail(
 
 	err := sendSolutionContactWelcomeEmail(
 		emailService,
-		templateService,
 		addressBook,
 		contact,
 		"4innovation (4i)",
@@ -32,33 +31,25 @@ func sendMTOCommonSolutionPOCWelcomeTestEmail(
 
 func sendSolutionContactWelcomeEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCWelcomeTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.AddedAsPointOfContactSubjectContent{
-		SolutionAcronym: string(contact.Key),
-		SolutionName:    solutionName,
-	})
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewAddedAsPointOfContactBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		solutionName,
-	))
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Welcome.GetContent(
+		email.MTOCommonSolutionPOCWelcomeSubjectContent{
+			SolutionAcronym: string(contact.Key),
+			SolutionName:    solutionName,
+		},
+		email.NewMTOCommonSolutionPOCWelcomeBodyContent(
+			emailService.GetConfig().GetClientAddress(),
+			*contact,
+			solutionName,
+		),
+	)
 	if err != nil {
 		return err
 	}
@@ -85,42 +76,31 @@ func sendMTOCommonSolutionPOCAddedTestEmail(
 		Key:           "INNOVATION",
 	}
 
-	err := sendSolutionContactAddedEmail(emailService, templateService, addressBook, &contact, "4innovation (4i)")
+	err := sendSolutionContactAddedEmail(emailService, addressBook, &contact, "4innovation (4i)")
 	noErr(err)
 }
 
 func sendSolutionContactAddedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCAddedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.PointOfContactAddedSubjectContent{
+	subjectContent := email.MTOCommonSolutionPOCAddedSubjectContent{
 		SolutionAcronym: string(contact.Key),
 		SolutionName:    solutionName,
 	}
-	bodyContent := email.NewPointOfContactAddedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionPOCAddedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contact,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Added.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -154,42 +134,31 @@ func sendMTOCommonSolutionPOCEditedTestEmail(
 		Key:           "INNOVATION",
 	}
 
-	err := sendSolutionContactEditedEmail(emailService, templateService, addressBook, &contact, "4innovation (4i)")
+	err := sendSolutionContactEditedEmail(emailService, addressBook, &contact, "4innovation (4i)")
 	noErr(err)
 }
 
 func sendSolutionContactEditedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCEditedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.PointOfContactUpdatedSubjectContent{
+	subjectContent := email.MTOCommonSolutionPOCEditedSubjectContent{
 		SolutionAcronym: string(contact.Key),
 		SolutionName:    solutionName,
 	}
-	bodyContent := email.NewPointOfContactUpdatedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionPOCEditedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contact,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Edited.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -221,39 +190,31 @@ func sendMTOCommonSolutionPOCRemovedTestEmail(
 		Email:     "jane.doe@example.com",
 	}
 
-	err := sendSolutionContactRemovedEmail(emailService, templateService, addressBook, contact, "4innovation (4i)")
+	err := sendSolutionContactRemovedEmail(emailService, addressBook, contact, "4innovation (4i)")
 	noErr(err)
 }
 
 func sendSolutionContactRemovedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCRemovedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PointOfContactRemovedSubjectContent{
-		SolutionAcronym: string(contact.Key),
-		SolutionName:    solutionName,
-	})
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewPointOfContactRemovedBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		solutionName,
-	))
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Removed.GetContent(
+		email.MTOCommonSolutionPOCRemovedSubjectContent{
+			SolutionAcronym: string(contact.Key),
+			SolutionName:    solutionName,
+		},
+		email.NewMTOCommonSolutionPOCRemovedBodyContent(
+			emailService.GetConfig().GetClientAddress(),
+			*contact,
+			solutionName,
+		),
+	)
 	if err != nil {
 		return err
 	}
@@ -278,41 +239,30 @@ func sendMTOCommonSolutionContractorAddedTestEmail(
 	}
 	solutionName := "4innovation (4i)"
 
-	err := sendContractorAddedEmail(emailService, templateService, addressBook, &contractor, solutionName)
+	err := sendContractorAddedEmail(emailService, addressBook, &contractor, solutionName)
 	noErr(err)
 }
 
 func sendContractorAddedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorAddedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.ContractorAddedSubjectContent{
+	subjectContent := email.MTOCommonSolutionContractorAddedSubjectContent{
 		SolutionName: solutionName,
 	}
-	bodyContent := email.NewContractorAddedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionContractorAddedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contractor,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.Contractor.Added.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -343,41 +293,30 @@ func sendMTOCommonSolutionContractorEditedTestEmail(
 	}
 	solutionName := "4innovation (4i)"
 
-	err := sendContractorEditedEmail(emailService, templateService, addressBook, &contractor, solutionName)
+	err := sendContractorEditedEmail(emailService, addressBook, &contractor, solutionName)
 	noErr(err)
 }
 
 func sendContractorEditedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorEditedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.ContractorEditedSubjectContent{
+	subjectContent := email.MTOCommonSolutionContractorEditedSubjectContent{
 		SolutionName: solutionName,
 	}
-	bodyContent := email.NewContractorEditedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionContractorEditedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contractor,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.Contractor.Edited.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -409,41 +348,30 @@ func sendMTOCommonSolutionContractorRemovedTestEmail(
 	}
 	solutionName := "4innovation (4i)"
 
-	err := sendMTOCommonSolutionContractorRemovedEmail(emailService, templateService, addressBook, &contractor, solutionName)
+	err := sendMTOCommonSolutionContractorRemovedEmail(emailService, addressBook, &contractor, solutionName)
 	noErr(err)
 }
 
 func sendMTOCommonSolutionContractorRemovedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorRemovedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.ContractorRemovedSubjectContent{
+	subjectContent := email.MTOCommonSolutionContractorRemovedSubjectContent{
 		SolutionName: solutionName,
 	}
-	bodyContent := email.NewContractorRemovedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionContractorRemovedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contractor,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.Contractor.Removed.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}

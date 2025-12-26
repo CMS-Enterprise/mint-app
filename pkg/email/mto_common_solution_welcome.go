@@ -1,15 +1,28 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
 
-// AddedAsPointOfContactSubjectContent defines the parameters necessary for the email subject.
-type AddedAsPointOfContactSubjectContent struct {
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
+
+// MTOCommonSolutionPOCWelcomeTemplateName is the template name for the POC welcome email
+const MTOCommonSolutionPOCWelcomeTemplateName = "mto_common_solution_poc_welcome"
+
+//go:embed templates/mto_common_solution_poc_welcome_subject.html
+var MTOCommonSolutionPOCWelcomeSubjectTemplate string
+
+//go:embed templates/mto_common_solution_poc_welcome_body.html
+var MTOCommonSolutionPOCWelcomeBodyTemplate string
+
+// MTOCommonSolutionPOCWelcomeSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionPOCWelcomeSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
 }
 
-// AddedAsPointOfContactBodyContent defines the parameters necessary for the email body.
-type AddedAsPointOfContactBodyContent struct {
+// MTOCommonSolutionPOCWelcomeBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionPOCWelcomeBodyContent struct {
 	ClientAddress         string
 	Key                   string
 	SolutionAcronym       string
@@ -18,13 +31,13 @@ type AddedAsPointOfContactBodyContent struct {
 	ReceivesNotifications string // "Yes" or "No"
 }
 
-// NewAddedAsPointOfContactBodyContent constructs the email body content when a user is added as a point of contact.
-func NewAddedAsPointOfContactBodyContent(
+// NewMTOCommonSolutionPOCWelcomeBodyContent constructs the email body content when a user is added as a point of contact.
+func NewMTOCommonSolutionPOCWelcomeBodyContent(
 	clientAddress string,
 	contact models.MTOCommonSolutionContact,
 	solutionName string,
-) AddedAsPointOfContactBodyContent {
-	return AddedAsPointOfContactBodyContent{
+) MTOCommonSolutionPOCWelcomeBodyContent {
+	return MTOCommonSolutionPOCWelcomeBodyContent{
 		ClientAddress:         clientAddress,
 		Key:                   string(contact.Key),
 		SolutionAcronym:       string(contact.Key),

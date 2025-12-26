@@ -19,7 +19,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionMailboxContact(ctx context.Con
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionContactMailbox(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, mailboxTitle, mailboxAddress, isTeam, role, receiveEmails, isPrimary)
+	return CreateMTOCommonSolutionContactMailbox(ctx, logger, principal, r.store, r.emailService, r.addressBook, key, mailboxTitle, mailboxAddress, isTeam, role, receiveEmails, isPrimary)
 }
 
 // CreateMTOCommonSolutionUserContact is the resolver for the createMTOCommonSolutionUserContact field.
@@ -27,7 +27,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionUserContact(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionContactUser(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, userName, isTeam, role, receiveEmails, isPrimary, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
+	return CreateMTOCommonSolutionContactUser(ctx, logger, principal, r.store, r.emailService, r.addressBook, key, userName, isTeam, role, receiveEmails, isPrimary, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // UpdateMTOCommonSolutionContact is the resolver for the updateMTOCommonSolutionContact field.
@@ -35,7 +35,7 @@ func (r *mutationResolver) UpdateMTOCommonSolutionContact(ctx context.Context, i
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdateMTOCommonSolutionContact(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, input)
+	return UpdateMTOCommonSolutionContact(ctx, logger, principal, r.store, r.emailService, r.addressBook, id, input)
 }
 
 // DeleteMTOCommonSolutionContact is the resolver for the deleteMTOCommonSolutionContact field.
@@ -43,7 +43,7 @@ func (r *mutationResolver) DeleteMTOCommonSolutionContact(ctx context.Context, i
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeleteMTOCommonSolutionContact(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id)
+	return DeleteMTOCommonSolutionContact(ctx, logger, principal, r.store, r.emailService, r.addressBook, id)
 }
 
 // MtoCommonSolutionContact is the resolver for the mtoCommonSolutionContact field.
