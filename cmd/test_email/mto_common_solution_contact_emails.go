@@ -9,7 +9,6 @@ import (
 // sendMTOCommonSolutionPOCWelcomeTestEmail demonstrates sending a welcome email to a new POC.
 func sendMTOCommonSolutionPOCWelcomeTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	contact := &models.MTOCommonSolutionContact{
@@ -63,7 +62,6 @@ func sendSolutionContactWelcomeEmail(
 
 func sendMTOCommonSolutionPOCAddedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	role := "Team Lead"
@@ -121,7 +119,6 @@ func sendSolutionContactAddedEmail(
 
 func sendMTOCommonSolutionPOCEditedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	role := "Team Lead"
@@ -179,7 +176,6 @@ func sendSolutionContactEditedEmail(
 
 func sendMTOCommonSolutionPOCRemovedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	contact := &models.MTOCommonSolutionContact{
@@ -228,7 +224,6 @@ func sendSolutionContactRemovedEmail(
 
 func sendMTOCommonSolutionContractorAddedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	contractTitle := "Lead Leader"
@@ -283,7 +278,6 @@ func sendContractorAddedEmail(
 
 func sendMTOCommonSolutionContractorEditedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	contractor := models.MTOCommonSolutionContractor{
@@ -337,7 +331,6 @@ func sendContractorEditedEmail(
 
 func sendMTOCommonSolutionContractorRemovedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	contractTitle := "Secondary Lead Leader"
@@ -392,7 +385,6 @@ func sendMTOCommonSolutionContractorRemovedEmail(
 
 func sendMTOCommonSolutionSystemOwnerAddedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	systemOwner := models.MTOCommonSolutionSystemOwner{
@@ -447,7 +439,6 @@ func sendMTOCommonSolutionSystemOwnerAddedEmail(
 
 func sendMTOCommonSolutionSystemOwnerEditedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	systemOwner := models.MTOCommonSolutionSystemOwner{
@@ -505,7 +496,6 @@ func sendSystemOwnerEditedEmail(
 
 func sendMTOCommonSolutionSystemOwnerRemovedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	systemOwner := models.MTOCommonSolutionSystemOwner{
