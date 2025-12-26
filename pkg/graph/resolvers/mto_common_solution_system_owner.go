@@ -276,7 +276,7 @@ func sendMTOCommonSolutionSystemOwnerAddedEmail(
 		solutionName,
 	)
 
-	emailSubject, emailBody, err := email.MTOCommonSolutionSystemOwner.Added.GetContent(subjectContent, bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.SystemOwner.Added.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -318,7 +318,7 @@ func sendMTOCommonSolutionSystemOwnerEditedEmail(
 		cmsComponents,
 	)
 
-	emailSubject, emailBody, err := email.MTOCommonSolutionSystemOwner.Edited.GetContent(subjectContent, bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.SystemOwner.Edited.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -358,7 +358,7 @@ func sendMTOCommonSolutionSystemOwnerRemovedEmail(
 		solutionName,
 	)
 
-	emailSubject, emailBody, err := email.MTOCommonSolutionSystemOwner.Removed.GetContent(subjectContent, bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.SystemOwner.Removed.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}

@@ -11,8 +11,7 @@ type mtoCommonSolutionSystemOwnerEmails struct {
 	Removed *emailtemplates.GenEmailTemplate[MTOCommonSolutionSystemOwnerRemovedSubjectContent, MTOCommonSolutionSystemOwnerRemovedBodyContent]
 }
 
-// MTOCommonSolutionSystemOwner is the collection of all MTOCommonSolutionSystemOwner related email templates
-var MTOCommonSolutionSystemOwner = mtoCommonSolutionSystemOwnerEmails{
+var mtoCommonSolutionSystemOwner = mtoCommonSolutionSystemOwnerEmails{
 	Added: NewEmailTemplate[MTOCommonSolutionSystemOwnerAddedSubjectContent, MTOCommonSolutionSystemOwnerAddedBodyContent](
 		MTOCommonSolutionSystemOwnerAddedTemplateName,
 		mtoCommonSolutionSystemOwnerAddedSubjectTemplate,
