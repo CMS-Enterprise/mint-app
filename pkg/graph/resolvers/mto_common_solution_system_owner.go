@@ -77,9 +77,8 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		}
 
 		go func() {
-			sendEmailErr := sendSystemOwnerAddedEmail(
+			sendEmailErr := sendMTOCommonSolutionSystemOwnerAddedEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				returnedSystemOwner,
 				mtoSolution.Name,
@@ -148,9 +147,8 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 				cmsComponents = append(cmsComponents, systemOwner.CMSComponent)
 			}
 
-			sendEmailErr := sendSystemOwnerEditedEmail(
+			sendEmailErr := sendMTOCommonSolutionSystemOwnerEditedEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				updatedSystemOwner,
 				mtoSolution.Name,
@@ -219,9 +217,8 @@ func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 		}
 
 		go func() {
-			sendEmailErr := sendSystemOwnerRemovedEmail(
+			sendEmailErr := sendMTOCommonSolutionSystemOwnerRemovedEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				returnedSystemOwner,
 				mtoSolution.Name,
@@ -258,39 +255,28 @@ func GetMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, pr
 	return systemOwner, nil
 }
 
-// sendSystemOwnerAddedEmail sends an email when a system owner is added.
-func sendSystemOwnerAddedEmail(
+// sendMTOCommonSolutionSystemOwnerAddedEmail sends an email when an MTOCommonSolutionSystemOwner is added.
+func sendMTOCommonSolutionSystemOwnerAddedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	systemOwner *models.MTOCommonSolutionSystemOwner,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerAddedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.SystemOwnerAddedSubjectContent{
+	subjectContent := email.MTOCommonSolutionSystemOwnerAddedSubjectContent{
 		SolutionAcronym: string(systemOwner.Key),
 		SolutionName:    solutionName,
 	}
-	bodyContent := email.NewSystemOwnerAddedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionSystemOwnerAddedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*systemOwner,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTOCommonSolutionSystemOwner.Added.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -309,41 +295,30 @@ func sendSystemOwnerAddedEmail(
 	return nil
 }
 
-// sendSystemOwnerEditedEmail sends an email when a system owner is edited.
-func sendSystemOwnerEditedEmail(
+// sendMTOCommonSolutionSystemOwnerEditedEmail sends an email when an MTOCommonSolutionSystemOwner is edited.
+func sendMTOCommonSolutionSystemOwnerEditedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	systemOwner *models.MTOCommonSolutionSystemOwner,
 	solutionName string,
 	cmsComponents []models.MTOCommonSolutionCMSComponent,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerEditedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.SystemOwnerEditedSubjectContent{
+	subjectContent := email.MTOCommonSolutionSystemOwnerEditedSubjectContent{
 		SolutionAcronym: string(systemOwner.Key),
 		SolutionName:    solutionName,
 	}
-	bodyContent := email.NewSystemOwnerEditedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionSystemOwnerEditedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*systemOwner,
 		solutionName,
 		cmsComponents,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTOCommonSolutionSystemOwner.Edited.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -362,39 +337,28 @@ func sendSystemOwnerEditedEmail(
 	return nil
 }
 
-// sendSystemOwnerRemovedEmail sends an email when a system owner is removed.
-func sendSystemOwnerRemovedEmail(
+// sendMTOCommonSolutionSystemOwnerRemovedEmail sends an email when an MTOCommonSolutionSystemOwner is removed.
+func sendMTOCommonSolutionSystemOwnerRemovedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	systemOwner *models.MTOCommonSolutionSystemOwner,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SystemOwnerRemovedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.SystemOwnerRemovedSubjectContent{
+	subjectContent := email.MTOCommonSolutionSystemOwnerRemovedSubjectContent{
 		SolutionAcronym: string(systemOwner.Key),
 		SolutionName:    solutionName,
 	}
-	bodyContent := email.NewSystemOwnerRemovedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionSystemOwnerRemovedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*systemOwner,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTOCommonSolutionSystemOwner.Removed.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
