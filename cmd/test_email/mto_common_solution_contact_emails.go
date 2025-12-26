@@ -19,7 +19,7 @@ func sendMTOCommonSolutionPOCWelcomeTestEmail(
 		ReceiveEmails: true,
 	}
 
-	err := sendSolutionContactWelcomeEmail(
+	err := sendMTOCommonSolutionSolutionContactWelcomeEmail(
 		emailService,
 		addressBook,
 		contact,
@@ -28,7 +28,7 @@ func sendMTOCommonSolutionPOCWelcomeTestEmail(
 	noErr(err)
 }
 
-func sendSolutionContactWelcomeEmail(
+func sendMTOCommonSolutionSolutionContactWelcomeEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
@@ -74,11 +74,11 @@ func sendMTOCommonSolutionPOCAddedTestEmail(
 		Key:           "INNOVATION",
 	}
 
-	err := sendSolutionContactAddedEmail(emailService, addressBook, &contact, "4innovation (4i)")
+	err := sendMTOCommonSolutionSolutionContactAddedEmail(emailService, addressBook, &contact, "4innovation (4i)")
 	noErr(err)
 }
 
-func sendSolutionContactAddedEmail(
+func sendMTOCommonSolutionSolutionContactAddedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
@@ -131,11 +131,11 @@ func sendMTOCommonSolutionPOCEditedTestEmail(
 		Key:           "INNOVATION",
 	}
 
-	err := sendSolutionContactEditedEmail(emailService, addressBook, &contact, "4innovation (4i)")
+	err := sendMTOCommonSolutionSolutionContactEditedEmail(emailService, addressBook, &contact, "4innovation (4i)")
 	noErr(err)
 }
 
-func sendSolutionContactEditedEmail(
+func sendMTOCommonSolutionSolutionContactEditedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
@@ -186,11 +186,11 @@ func sendMTOCommonSolutionPOCRemovedTestEmail(
 		Email:     "jane.doe@example.com",
 	}
 
-	err := sendSolutionContactRemovedEmail(emailService, addressBook, contact, "4innovation (4i)")
+	err := sendMTOCommonSolutionSolutionContactRemovedEmail(emailService, addressBook, contact, "4innovation (4i)")
 	noErr(err)
 }
 
-func sendSolutionContactRemovedEmail(
+func sendMTOCommonSolutionSolutionContactRemovedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
@@ -234,11 +234,11 @@ func sendMTOCommonSolutionContractorAddedTestEmail(
 	}
 	solutionName := "4innovation (4i)"
 
-	err := sendContractorAddedEmail(emailService, addressBook, &contractor, solutionName)
+	err := sendMTOCommonSolutionContractorAddedEmail(emailService, addressBook, &contractor, solutionName)
 	noErr(err)
 }
 
-func sendContractorAddedEmail(
+func sendMTOCommonSolutionContractorAddedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
@@ -287,11 +287,11 @@ func sendMTOCommonSolutionContractorEditedTestEmail(
 	}
 	solutionName := "4innovation (4i)"
 
-	err := sendContractorEditedEmail(emailService, addressBook, &contractor, solutionName)
+	err := sendMTOCommonSolutionContractorEditedEmail(emailService, addressBook, &contractor, solutionName)
 	noErr(err)
 }
 
-func sendContractorEditedEmail(
+func sendMTOCommonSolutionContractorEditedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
@@ -449,11 +449,11 @@ func sendMTOCommonSolutionSystemOwnerEditedTestEmail(
 	solutionName := "4innovation (4i)"
 	cmsComponents := []models.MTOCommonSolutionCMSComponent{"OFFICE_OF_THE_ACTUARY_OACT", "CENTER_FOR_MEDICARE_CM"}
 
-	err := sendSystemOwnerEditedEmail(emailService, addressBook, &systemOwner, solutionName, cmsComponents)
+	err := sendMTOCommonSolutionSystemOwnerEditedEmail(emailService, addressBook, &systemOwner, solutionName, cmsComponents)
 	noErr(err)
 }
 
-func sendSystemOwnerEditedEmail(
+func sendMTOCommonSolutionSystemOwnerEditedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	systemOwner *models.MTOCommonSolutionSystemOwner,
@@ -505,11 +505,11 @@ func sendMTOCommonSolutionSystemOwnerRemovedTestEmail(
 	}
 	solutionName := "4innovation (4i)"
 
-	err := sendSystemOwnerRemovedEmail(emailService, addressBook, &systemOwner, solutionName)
+	err := sendMTOCommonSolutionSystemOwnerRemovedEmail(emailService, addressBook, &systemOwner, solutionName)
 	noErr(err)
 }
 
-func sendSystemOwnerRemovedEmail(
+func sendMTOCommonSolutionSystemOwnerRemovedEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	systemOwner *models.MTOCommonSolutionSystemOwner,
