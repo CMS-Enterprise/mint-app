@@ -1,17 +1,28 @@
 package email
 
 import (
+	_ "embed"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// PointOfContactUpdatedSubjectContent defines the parameters necessary for the email subject.
-type PointOfContactUpdatedSubjectContent struct {
+// MTOCommonSolutionPOCEditedTemplateName is the template name for the POC edited email
+const MTOCommonSolutionPOCEditedTemplateName = "mto_common_solution_poc_edited"
+
+//go:embed templates/mto_common_solution_poc_edited_subject.html
+var MTOCommonSolutionPOCEditedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_poc_edited_body.html
+var MTOCommonSolutionPOCEditedBodyTemplate string
+
+// MTOCommonSolutionPOCEditedSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionPOCEditedSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
 }
 
-// PointOfContactUpdatedBodyContent defines the parameters necessary for the email body.
-type PointOfContactUpdatedBodyContent struct {
+// MTOCommonSolutionPOCEditedBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionPOCEditedBodyContent struct {
 	ClientAddress         string
 	Key                   string
 	SolutionAcronym       string
@@ -23,13 +34,13 @@ type PointOfContactUpdatedBodyContent struct {
 	ReceivesNotifications string // "Yes" or "No"
 }
 
-// NewPointOfContactUpdatedBodyContent constructs the email body content for a point of contact update.
-func NewPointOfContactUpdatedBodyContent(
+// NewMTOCommonSolutionPOCEditedBodyContent constructs the email body content for a point of contact edit.
+func NewMTOCommonSolutionPOCEditedBodyContent(
 	clientAddress string,
 	contact models.MTOCommonSolutionContact,
 	solutionName string,
-) PointOfContactUpdatedBodyContent {
-	return PointOfContactUpdatedBodyContent{
+) MTOCommonSolutionPOCEditedBodyContent {
+	return MTOCommonSolutionPOCEditedBodyContent{
 		ClientAddress:         clientAddress,
 		Key:                   string(contact.Key),
 		SolutionAcronym:       string(contact.Key),

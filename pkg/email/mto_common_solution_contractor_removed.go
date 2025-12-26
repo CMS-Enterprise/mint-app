@@ -1,14 +1,27 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
 
-// ContractorAddedSubjectContent defines the parameters necessary for the email subject.
-type ContractorRemovedSubjectContent struct {
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
+
+// MTOCommonSolutionContractorRemovedTemplateName is the template name for the contractor removed email
+const MTOCommonSolutionContractorRemovedTemplateName = "mto_common_solution_contractor_removed"
+
+//go:embed templates/mto_common_solution_contractor_removed_subject.html
+var MTOCommonSolutionContractorRemovedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_contractor_removed_body.html
+var MTOCommonSolutionContractorRemovedBodyTemplate string
+
+// MTOCommonSolutionContractorRemovedSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionContractorRemovedSubjectContent struct {
 	SolutionName string
 }
 
-// ContractorRemovedBodyContent defines the parameters necessary for the email body.
-type ContractorRemovedBodyContent struct {
+// MTOCommonSolutionContractorRemovedBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionContractorRemovedBodyContent struct {
 	ClientAddress  string
 	Key            string
 	SolutionName   string
@@ -16,18 +29,18 @@ type ContractorRemovedBodyContent struct {
 	ContractTitle  string
 }
 
-// NewContractorRemovedBodyContent constructs the email body content when a contractor is removed.
-func NewContractorRemovedBodyContent(
+// NewMTOCommonSolutionContractorRemovedBodyContent constructs the email body content when a contractor is removed.
+func NewMTOCommonSolutionContractorRemovedBodyContent(
 	clientAddress string,
 	contractor models.MTOCommonSolutionContractor,
 	solutionName string,
-) ContractorRemovedBodyContent {
+) MTOCommonSolutionContractorRemovedBodyContent {
 	title := "Not Provided"
 
 	if contractor.ContractTitle != nil {
 		title = *contractor.ContractTitle
 	}
-	return ContractorRemovedBodyContent{
+	return MTOCommonSolutionContractorRemovedBodyContent{
 		ClientAddress:  clientAddress,
 		Key:            string(contractor.Key),
 		SolutionName:   solutionName,

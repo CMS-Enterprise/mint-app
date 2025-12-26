@@ -1,15 +1,28 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
 
-// SystemOwnerRemovedSubjectContent defines the parameters necessary for the email subject.
-type SystemOwnerRemovedSubjectContent struct {
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
+
+// MTOCommonSolutionSystemOwnerRemovedTemplateName is the template name for the MTOCommonSolutionSystemOwner removed email
+const MTOCommonSolutionSystemOwnerRemovedTemplateName string = "mto_common_solution_system_owner_removed"
+
+//go:embed templates/mto_common_solution_system_owner_removed_subject.html
+var mtoCommonSolutionSystemOwnerRemovedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_system_owner_removed_body.html
+var mtoCommonSolutionSystemOwnerRemovedBodyTemplate string
+
+// MTOCommonSolutionSystemOwnerRemovedSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionSystemOwnerRemovedSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
 }
 
-// SystemOwnerRemovedBodyContent defines the parameters necessary for the email body.
-type SystemOwnerRemovedBodyContent struct {
+// MTOCommonSolutionSystemOwnerRemovedBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionSystemOwnerRemovedBodyContent struct {
 	SolutionAcronym string
 	SolutionName    string
 	CmsComponent    string
@@ -18,13 +31,13 @@ type SystemOwnerRemovedBodyContent struct {
 	Key             string
 }
 
-// NewSystemOwnerRemovedBodyContent constructs an email body content struct from an MTOCommonSolutionSystemOwner.
-func NewSystemOwnerRemovedBodyContent(
+// NewMTOCommonSolutionSystemOwnerRemovedBodyContent constructs an email body content struct from an MTOCommonSolutionSystemOwner.
+func NewMTOCommonSolutionSystemOwnerRemovedBodyContent(
 	clientAddress string,
 	systemOwner models.MTOCommonSolutionSystemOwner,
 	solutionName string,
-) SystemOwnerRemovedBodyContent {
-	return SystemOwnerRemovedBodyContent{
+) MTOCommonSolutionSystemOwnerRemovedBodyContent {
+	return MTOCommonSolutionSystemOwnerRemovedBodyContent{
 		ClientAddress:   clientAddress,
 		SolutionAcronym: string(systemOwner.Key),
 		Key:             string(systemOwner.Key),

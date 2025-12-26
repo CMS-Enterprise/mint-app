@@ -1,15 +1,28 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
 
-// PointOfContactAddedSubjectContent defines the parameters necessary for the email subject.
-type PointOfContactAddedSubjectContent struct {
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
+
+// MTOCommonSolutionPOCAddedTemplateName is the template name for the POC added email
+const MTOCommonSolutionPOCAddedTemplateName = "mto_common_solution_poc_added"
+
+//go:embed templates/mto_common_solution_poc_added_subject.html
+var MTOCommonSolutionPOCAddedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_poc_added_body.html
+var MTOCommonSolutionPOCAddedBodyTemplate string
+
+// MTOCommonSolutionPOCAddedSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionPOCAddedSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
 }
 
-// PointOfContactAddedBodyContent defines the parameters necessary for the email body.
-type PointOfContactAddedBodyContent struct {
+// MTOCommonSolutionPOCAddedBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionPOCAddedBodyContent struct {
 	SolutionAcronym          string
 	SolutionName             string
 	ContactName              string
@@ -21,13 +34,13 @@ type PointOfContactAddedBodyContent struct {
 	Key                      string
 }
 
-// NewPointOfContactAddedBodyContent constructs an email body content struct from an MTOCommonSolutionContact.
-func NewPointOfContactAddedBodyContent(
+// NewMTOCommonSolutionPOCAddedBodyContent constructs an email body content struct from an MTOCommonSolutionContact.
+func NewMTOCommonSolutionPOCAddedBodyContent(
 	clientAddress string,
 	contact models.MTOCommonSolutionContact,
 	solutionName string,
-) PointOfContactAddedBodyContent {
-	return PointOfContactAddedBodyContent{
+) MTOCommonSolutionPOCAddedBodyContent {
+	return MTOCommonSolutionPOCAddedBodyContent{
 		ClientAddress:            clientAddress,
 		Key:                      string(contact.Key),
 		SolutionAcronym:          string(contact.Key),

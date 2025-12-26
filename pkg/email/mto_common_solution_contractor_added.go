@@ -1,14 +1,27 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
 
-// ContractorAddedSubjectContent defines the parameters necessary for the email subject.
-type ContractorAddedSubjectContent struct {
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
+
+// MTOCommonSolutionContractorAddedTemplateName is the template name for the contractor added email
+const MTOCommonSolutionContractorAddedTemplateName = "mto_common_solution_contractor_added"
+
+//go:embed templates/mto_common_solution_contractor_added_subject.html
+var MTOCommonSolutionContractorAddedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_contractor_added_body.html
+var MTOCommonSolutionContractorAddedBodyTemplate string
+
+// MTOCommonSolutionContractorAddedSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionContractorAddedSubjectContent struct {
 	SolutionName string
 }
 
-// ContractorAddedBodyContent defines the parameters necessary for the email body.
-type ContractorAddedBodyContent struct {
+// MTOCommonSolutionContractorAddedBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionContractorAddedBodyContent struct {
 	ClientAddress  string
 	Key            string
 	SolutionName   string
@@ -16,18 +29,18 @@ type ContractorAddedBodyContent struct {
 	ContractTitle  string
 }
 
-// NewContractorAddedBodyContent constructs the email body content when a contractor is added.
-func NewContractorAddedBodyContent(
+// NewMTOCommonSolutionContractorAddedBodyContent constructs the email body content when a contractor is added.
+func NewMTOCommonSolutionContractorAddedBodyContent(
 	clientAddress string,
 	contractor models.MTOCommonSolutionContractor,
 	solutionName string,
-) ContractorAddedBodyContent {
+) MTOCommonSolutionContractorAddedBodyContent {
 	title := "Not Provided"
 
 	if contractor.ContractTitle != nil {
 		title = *contractor.ContractTitle
 	}
-	return ContractorAddedBodyContent{
+	return MTOCommonSolutionContractorAddedBodyContent{
 		ClientAddress:  clientAddress,
 		Key:            string(contractor.Key),
 		SolutionName:   solutionName,

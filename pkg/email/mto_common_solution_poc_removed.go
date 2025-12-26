@@ -1,15 +1,28 @@
 package email
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	_ "embed"
 
-// PointOfContactRemovedSubjectContent defines the parameters necessary for the email subject.
-type PointOfContactRemovedSubjectContent struct {
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
+
+// MTOCommonSolutionPOCRemovedTemplateName is the template name for the POC removed email
+const MTOCommonSolutionPOCRemovedTemplateName = "mto_common_solution_poc_removed"
+
+//go:embed templates/mto_common_solution_poc_removed_subject.html
+var MTOCommonSolutionPOCRemovedSubjectTemplate string
+
+//go:embed templates/mto_common_solution_poc_removed_body.html
+var MTOCommonSolutionPOCRemovedBodyTemplate string
+
+// MTOCommonSolutionPOCRemovedSubjectContent defines the parameters necessary for the email subject.
+type MTOCommonSolutionPOCRemovedSubjectContent struct {
 	SolutionAcronym string
 	SolutionName    string
 }
 
-// PointOfContactRemovedBodyContent defines the parameters necessary for the email body.
-type PointOfContactRemovedBodyContent struct {
+// MTOCommonSolutionPOCRemovedBodyContent defines the parameters necessary for the email body.
+type MTOCommonSolutionPOCRemovedBodyContent struct {
 	ClientAddress      string
 	Key                string
 	SolutionAcronym    string
@@ -18,18 +31,18 @@ type PointOfContactRemovedBodyContent struct {
 	RemovedContactName string
 }
 
-// NewPointOfContactRemovedBodyContent constructs the email body content for a point of contact removal.
-func NewPointOfContactRemovedBodyContent(
+// NewMTOCommonSolutionPOCRemovedBodyContent constructs the email body content for a point of contact removal.
+func NewMTOCommonSolutionPOCRemovedBodyContent(
 	clientAddress string,
 	contact models.MTOCommonSolutionContact,
 	solutionName string,
-) PointOfContactRemovedBodyContent {
+) MTOCommonSolutionPOCRemovedBodyContent {
 	RemovedContactType := "Point of Contact"
 	if contact.IsTeam {
 		RemovedContactType = "Team Mailbox"
 	}
 
-	return PointOfContactRemovedBodyContent{
+	return MTOCommonSolutionPOCRemovedBodyContent{
 		ClientAddress:      clientAddress,
 		Key:                string(contact.Key),
 		SolutionAcronym:    string(contact.Key),

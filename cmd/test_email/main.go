@@ -45,20 +45,20 @@ func main() {
 	sendMTOSolutionSelectedTestEmail(emailService, templateService, addressBook)
 
 	// MTO Common Solution Contact emails for editable POC workflow
-	sendMTOCommonSolutionPOCWelcomeTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionPOCRemovedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionPOCAddedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionPOCEditedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionPOCWelcomeTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionPOCRemovedTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionPOCAddedTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionPOCEditedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution Contractor emails for editable POC workflow
-	sendMTOCommonSolutionContractorRemovedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionContractorAddedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionContractorEditedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionContractorRemovedTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionContractorAddedTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionContractorEditedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution System Owner emails for editable POC workflow
-	sendMTOCommonSolutionSystemOwnerAddedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionSystemOwnerEditedTestEmail(emailService, templateService, addressBook)
-	sendMTOCommonSolutionSystemOwnerRemovedTestEmail(emailService, templateService, addressBook)
+	sendMTOCommonSolutionSystemOwnerAddedTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionSystemOwnerEditedTestEmail(emailService, addressBook)
+	sendMTOCommonSolutionSystemOwnerRemovedTestEmail(emailService, addressBook)
 
 	// Model Plan Suggested Phase Emails
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, templateService, addressBook)

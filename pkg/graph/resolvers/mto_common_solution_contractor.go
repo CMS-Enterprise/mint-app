@@ -31,7 +31,7 @@ func MTOCommonSolutionContractorsGetByKeyLOADER(ctx context.Context, key models.
 // CreateMTOCommonSolutionContractor creates a new contractor for a common solution.
 // Accepts the solution key, optional contractor title, and contractor name. Returns the created contractor or an error.
 func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
 	contractTitle *string,
 	contractorName string,
@@ -57,7 +57,7 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedContractor.Key)
 		if err != nil {
@@ -68,7 +68,6 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		go func() {
 			sendEmailErr := sendContractorAddedEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				returnedContractor,
 				mtoSolution.Name,
@@ -90,7 +89,7 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 // UpdateMTOCommonSolutionContractor updates an existing contractor for a common solution.
 // Accepts the contractor ID and a map of changes. Returns the updated contractor or an error.
 func UpdateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.MTOCommonSolutionContractor, error) {
@@ -117,25 +116,24 @@ func UpdateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		return nil, fmt.Errorf("failed to update contractor with id %s: %w", id, err)
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, updatedContractor.Key)
 		if err != nil {
 			return nil, err
 		}
 
-		// Send welcome email to new POC
+		// Send email to MINT team
 		go func() {
 			sendEmailErr := sendContractorEditedEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				updatedContractor,
 				mtoSolution.Name,
 			)
 			if sendEmailErr != nil {
 				logger.Error(
-					"failed to send point of contact welcome email for create by user account",
+					"failed to send contractor edited email",
 					zap.String("key", string(updatedContractor.Key)),
 					zap.String("contractor name", updatedContractor.ContractorName),
 					zap.Error(sendEmailErr),
@@ -150,7 +148,7 @@ func UpdateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 // DeleteMTOCommonSolutionContractor deletes a contractor for a common solution by its ID.
 // Returns the deleted contractor or an error.
 func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionContractor, error) {
 	principalAccount := principal.Account()
@@ -187,25 +185,24 @@ func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedContractor.Key)
 		if err != nil {
 			return nil, err
 		}
 
-		// Send welcome email to new POC
+		// Send email to MINT team
 		go func() {
 			sendEmailErr := sendContractorRemovedEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				returnedContractor,
 				mtoSolution.Name,
 			)
 			if sendEmailErr != nil {
 				logger.Error(
-					"failed to send point of contact welcome email for create by user account",
+					"failed to send contractor removed email",
 					zap.String("key", string(returnedContractor.Key)),
 					zap.String("contractor name", returnedContractor.ContractorName),
 					zap.Error(sendEmailErr),
@@ -237,35 +234,24 @@ func GetMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, pri
 
 func sendContractorAddedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorAddedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.ContractorAddedSubjectContent{
+	subjectContent := email.MTOCommonSolutionContractorAddedSubjectContent{
 		SolutionName: solutionName,
 	}
-	bodyContent := email.NewContractorAddedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionContractorAddedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contractor,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.Contractor.Added.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -286,35 +272,24 @@ func sendContractorAddedEmail(
 
 func sendContractorEditedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorEditedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.ContractorEditedSubjectContent{
+	subjectContent := email.MTOCommonSolutionContractorEditedSubjectContent{
 		SolutionName: solutionName,
 	}
-	bodyContent := email.NewContractorEditedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionContractorEditedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contractor,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.Contractor.Edited.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -335,35 +310,24 @@ func sendContractorEditedEmail(
 
 func sendContractorRemovedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contractor *models.MTOCommonSolutionContractor,
 	solutionName string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionContractorRemovedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	subjectContent := email.ContractorRemovedSubjectContent{
+	subjectContent := email.MTOCommonSolutionContractorRemovedSubjectContent{
 		SolutionName: solutionName,
 	}
-	bodyContent := email.NewContractorRemovedBodyContent(
+	bodyContent := email.NewMTOCommonSolutionContractorRemovedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		*contractor,
 		solutionName,
 	)
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.CommonSolution.Contractor.Removed.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
