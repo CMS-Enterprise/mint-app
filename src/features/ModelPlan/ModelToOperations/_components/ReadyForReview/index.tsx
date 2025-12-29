@@ -49,6 +49,7 @@ const MTOReadyForReview = ({
       isOpen={isOpen}
       closeModal={closeModal}
       className="external-link-modal maxw-mobile-lg"
+      testId="mto-ready-for-review-modal"
     >
       <div className="margin-top-neg-3 padding-bottom-1">
         <PageHeading headingLevel="h3" className="margin-0">
