@@ -38,7 +38,7 @@ func MTOCommonSolutionContactInformationGetByKeyLOADER(ctx context.Context, key 
 // CreateMTOCommonSolutionContactUser creates a new user contact for a common solution.
 // It looks up the user account by username and inserts a new contact record associated with that user.
 func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
 	userName string,
 	isTeam bool,
@@ -105,7 +105,7 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, newContact.Key)
 		if err != nil {
@@ -116,7 +116,6 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 		go func() {
 			sendEmailErr := sendSolutionContactWelcomeEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				newContact,
 				mtoSolution.Name,
@@ -134,7 +133,6 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 		go func() {
 			sendEmailErr := sendSolutionContactMintMailboxPOCAdded(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				newContact,
 				mtoSolution.Name,
@@ -156,7 +154,7 @@ func CreateMTOCommonSolutionContactUser(ctx context.Context, logger *zap.Logger,
 // CreateMTOCommonSolutionContactMailbox creates a new team mailbox contact for a common solution.
 // It inserts a new contact record with the provided mailbox title and address, not linked to a user account.
 func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
 	mailboxTitle *string,
 	mailboxAddress string,
@@ -217,7 +215,7 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, newContact.Key)
 		if err != nil {
@@ -227,7 +225,6 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 		go func() {
 			sendEmailErr := sendSolutionContactWelcomeEmail(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				newContact,
 				mtoSolution.Name,
@@ -245,7 +242,6 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 		go func() {
 			sendEmailErr := sendSolutionContactMintMailboxPOCAdded(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				newContact,
 				mtoSolution.Name,
@@ -267,7 +263,7 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 // UpdateMTOCommonSolutionContact updates an existing user or mailbox contact for a common solution.
 // Only role, isPrimary, and receiveEmails fields can be changed. Returns the updated contact.
 func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.MTOCommonSolutionContact, error) {
@@ -310,7 +306,7 @@ func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, updatedContact.Key)
 		if err != nil {
@@ -320,7 +316,6 @@ func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		go func() {
 			sendEmailErr := sendSolutionContactMintMailboxPOCEdited(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				updatedContact,
 				mtoSolution.Name,
@@ -342,7 +337,7 @@ func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 // DeleteMTOCommonSolutionContact deletes a contact for a common solution by its ID.
 // Returns the deleted contact or an error.
 func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionContact, error) {
 	principalAccount := principal.Account()
@@ -381,7 +376,7 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedContact.Key)
 		if err != nil {
@@ -391,7 +386,6 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		go func() {
 			sendEmailErr := sendSolutionContactMintMailboxPOCRemoved(
 				emailService,
-				emailTemplateService,
 				addressBook,
 				returnedContact,
 				mtoSolution.Name,
@@ -434,29 +428,25 @@ func GetMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, princi
 
 func sendSolutionContactWelcomeEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCWelcomeTemplateName)
-	if err != nil {
-		return err
+	if emailService == nil {
+		return nil
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.AddedAsPointOfContactSubjectContent{
-		SolutionAcronym: string(contact.Key),
-		SolutionName:    solutionName,
-	})
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewAddedAsPointOfContactBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		solutionName,
-	))
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Welcome.GetContent(
+		email.MTOCommonSolutionPOCWelcomeSubjectContent{
+			SolutionAcronym: string(contact.Key),
+			SolutionName:    solutionName,
+		},
+		email.NewMTOCommonSolutionPOCWelcomeBodyContent(
+			emailService.GetConfig().GetClientAddress(),
+			*contact,
+			solutionName,
+		),
+	)
 	if err != nil {
 		return err
 	}
@@ -477,30 +467,26 @@ func sendSolutionContactWelcomeEmail(
 
 func sendSolutionContactMintMailboxPOCAdded(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCAddedTemplateName)
-	if err != nil {
-		return err
+	if emailService == nil {
+		return nil
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PointOfContactAddedSubjectContent{
-		SolutionAcronym: string(contact.Key),
-		SolutionName:    solutionName,
-	})
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewPointOfContactAddedBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		solutionName,
-	))
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Added.GetContent(
+		email.MTOCommonSolutionPOCAddedSubjectContent{
+			SolutionAcronym: string(contact.Key),
+			SolutionName:    solutionName,
+		},
+		email.NewMTOCommonSolutionPOCAddedBodyContent(
+			emailService.GetConfig().GetClientAddress(),
+			*contact,
+			solutionName,
+		),
+	)
 	if err != nil {
 		return err
 	}
@@ -521,31 +507,27 @@ func sendSolutionContactMintMailboxPOCAdded(
 
 func sendSolutionContactMintMailboxPOCEdited(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCEditedTemplateName)
-	if err != nil {
-		return err
+	if emailService == nil {
+		return nil
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PointOfContactUpdatedSubjectContent{
-		SolutionAcronym: string(contact.Key),
-		SolutionName:    solutionName,
-	})
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Edited.GetContent(
+		email.MTOCommonSolutionPOCEditedSubjectContent{
+			SolutionAcronym: string(contact.Key),
+			SolutionName:    solutionName,
+		},
+		email.NewMTOCommonSolutionPOCEditedBodyContent(
+			emailService.GetConfig().GetClientAddress(),
+			*contact,
+			solutionName,
+		),
+	)
 
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewPointOfContactUpdatedBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		solutionName,
-	))
 	if err != nil {
 		return err
 	}
@@ -566,29 +548,25 @@ func sendSolutionContactMintMailboxPOCEdited(
 
 func sendSolutionContactMintMailboxPOCRemoved(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.MTOCommonSolutionContact,
 	solutionName string,
 ) error {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOCommonSolutionPOCRemovedTemplateName)
-	if err != nil {
-		return err
+	if emailService == nil {
+		return nil
 	}
 
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PointOfContactRemovedSubjectContent{
-		SolutionAcronym: string(contact.Key),
-		SolutionName:    solutionName,
-	})
-	if err != nil {
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewPointOfContactRemovedBodyContent(
-		emailService.GetConfig().GetClientAddress(),
-		*contact,
-		solutionName,
-	))
+	emailSubject, emailBody, err := email.MTO.CommonSolution.POC.Removed.GetContent(
+		email.MTOCommonSolutionPOCRemovedSubjectContent{
+			SolutionAcronym: string(contact.Key),
+			SolutionName:    solutionName,
+		},
+		email.NewMTOCommonSolutionPOCRemovedBodyContent(
+			emailService.GetConfig().GetClientAddress(),
+			*contact,
+			solutionName,
+		),
+	)
 	if err != nil {
 		return err
 	}
