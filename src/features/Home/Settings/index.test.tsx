@@ -124,7 +124,7 @@ describe('moveItem function', () => {
 });
 
 describe('settings snapshots', () => {
-  it.only('matches setting snapshot', async () => {
+  it('matches setting snapshot', async () => {
     const router = createMemoryRouter(
       [
         {
