@@ -35,7 +35,7 @@ export const keyContactCategoryMisc = {
   remove: {
     title: 'Are you sure you want to remove this subject category?',
     actionWarning:
-      'This action cannot be undone. All SMEs in this category will also be removed. If you do not wish to remove the, edit the SMEs to change their category before removing this category.',
+      'This action cannot be undone. All SMEs in this category will also be removed. If you do not wish to remove them, edit the SMEs to change their category before removing this category.',
     text: '<bold>Category to be removed:</bold> {{-name}}',
     cta: 'Remove category',
     success: 'You removed <bold>{{-name}}</bold> as a subject category.',
