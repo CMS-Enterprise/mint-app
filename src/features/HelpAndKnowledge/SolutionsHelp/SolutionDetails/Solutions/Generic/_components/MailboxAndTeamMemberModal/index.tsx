@@ -42,6 +42,7 @@ const MailboxAndTeamMemberModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
+      testId="mailbox-and-team-member-modal"
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">

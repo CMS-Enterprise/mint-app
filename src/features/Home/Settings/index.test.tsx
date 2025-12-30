@@ -17,8 +17,8 @@ import {
 import MessageProvider from 'contexts/MessageContext';
 
 import SelectSolutionSettings from './SelectSolutions';
+import SettingsForm from './Settings';
 import SettingsOrder, { moveItem } from './SettingsOrder';
-import HomePageSettings from '.';
 
 const mocks: MockedResponse<
   GetHomepageSettingsQuery,
@@ -131,7 +131,7 @@ describe('settings snapshots', () => {
           path: '/homepage-settings/form',
           element: (
             <MessageProvider>
-              <HomePageSettings />
+              <SettingsForm />
             </MessageProvider>
           )
         }

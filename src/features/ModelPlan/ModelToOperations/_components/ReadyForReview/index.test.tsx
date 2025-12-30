@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MtoStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
@@ -119,12 +119,12 @@ describe('MTO Ready for review', () => {
       }
     );
 
-    const { asFragment } = render(
+    render(
       <MockedProvider>
         <RouterProvider router={router} />
       </MockedProvider>
     );
-
-    expect(asFragment()).toMatchSnapshot();
+    const modal = screen.getByTestId('mto-ready-for-review-modal');
+    expect(modal).toMatchSnapshot();
   });
 });

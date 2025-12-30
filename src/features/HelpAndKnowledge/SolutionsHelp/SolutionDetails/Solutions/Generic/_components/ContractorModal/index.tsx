@@ -33,6 +33,7 @@ const ContractorModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
+      testId="contractor-modal"
     >
       <div className="margin-bottom-2">
         <PageHeading headingLevel="h3" className="margin-y-0">
