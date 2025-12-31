@@ -31,8 +31,8 @@ describe('Key Contact Directory', () => {
     cy.contains('Cancel').click();
   });
 
-  it('Add an user sme to the new category', () => {
-    cy.contains('Add SME').click();
+  it('Add a user sme to the new category', () => {
+    cy.contains('button', 'Add SME').click();
 
     cy.get('button[form="sme-form"]').should('be.disabled');
 
@@ -64,17 +64,15 @@ describe('Key Contact Directory', () => {
 
     cy.get('[data-testid="table"]')
       .should('contain', 'Model Planning')
-      .and('contain', 'Jerry Seinfeld (Jerry.Seinfeld@local.fake');
+      .and('contain', 'Jerry Seinfeld (Jerry.Seinfeld@local.fake)');
   });
 
-  it('Add a team mailbox sme from the new category', () => {
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('CMS')
-        .parent()
-        .siblings()
-        .contains('Add SME to this category')
-        .click();
-    });
+  it('Add a team mailbox sme to the new category', () => {
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("CMS")')
+      .find('button')
+      .contains('Add SME to this category')
+      .click();
 
     cy.contains('Team mailbox').should('be.enabled').click();
 
@@ -102,18 +100,15 @@ describe('Key Contact Directory', () => {
   });
 
   it('Edit an existing SME', () => {
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('CMS')
-        .parent()
-        .siblings()
-        .get('[data-testid="table"]')
-        .within(() => {
-          cy.contains('td', 'Jerry Seinfeld')
-            .siblings()
-            .contains('button', 'Edit')
-            .click();
-        });
-    });
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("CMS")')
+      .get('[data-testid="table"]')
+      .within(() => {
+        cy.contains('td', 'Jerry Seinfeld')
+          .siblings()
+          .contains('button', 'Edit')
+          .click();
+      });
 
     cy.get('button[form="sme-form"]').should('be.disabled');
 
@@ -128,31 +123,25 @@ describe('Key Contact Directory', () => {
       'You updated subject matter expert information for Jerry Seinfeld.'
     );
 
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('CMS')
-        .parent()
-        .siblings()
-        .get('[data-testid="table"]')
-        .within(() => {
-          cy.contains('td', 'Healthcare').should('exist');
-          cy.contains('td', 'Model Planning').should('not.exist');
-        });
-    });
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("CMS")')
+      .get('[data-testid="table"]')
+      .within(() => {
+        cy.contains('td', 'Healthcare').should('exist');
+        cy.contains('td', 'Model Planning').should('not.exist');
+      });
   });
 
   it('Delete an existing SME', () => {
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('CMS')
-        .parent()
-        .siblings()
-        .get('[data-testid="table"]')
-        .within(() => {
-          cy.contains('td', 'Jerry Seinfeld')
-            .siblings()
-            .contains('button', 'Remove')
-            .click();
-        });
-    });
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("CMS")')
+      .get('[data-testid="table"]')
+      .within(() => {
+        cy.contains('td', 'Jerry Seinfeld')
+          .siblings()
+          .contains('button', 'Remove')
+          .click();
+      });
 
     cy.get('button[type="submit"]')
       .contains('Remove SME')
@@ -163,25 +152,20 @@ describe('Key Contact Directory', () => {
       'You removed Jerry Seinfeld as a subject matter expert.'
     );
 
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('CMS')
-        .parent()
-        .siblings()
-        .get('[data-testid="table"]')
-        .within(() => {
-          cy.contains('td', 'Jerry Seinfeld').should('not.exist');
-        });
-    });
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("CMS")')
+      .get('[data-testid="table"]')
+      .within(() => {
+        cy.contains('td', 'Jerry Seinfeld').should('not.exist');
+      });
   });
 
   it('Edit the created category', () => {
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('CMS')
-        .parent()
-        .siblings()
-        .contains('Rename category')
-        .click();
-    });
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("CMS")')
+      .find('button')
+      .contains('Rename category')
+      .click();
 
     cy.get('[data-testid="category-title"]').should('be.enabled').clear();
     cy.get('[data-testid="category-title"]').type(
@@ -203,13 +187,11 @@ describe('Key Contact Directory', () => {
   });
 
   it('Delete the created category', () => {
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('Centers for Medicare and Medicaid Services')
-        .parent()
-        .siblings()
-        .contains('Remove category')
-        .click();
-    });
+    cy.get('[data-testid="accordion"]')
+      .filter(':contains("Centers for Medicare and Medicaid Services")')
+      .find('button')
+      .contains('Remove category')
+      .click();
 
     cy.get('button[type="submit"]')
       .contains('Remove category')
