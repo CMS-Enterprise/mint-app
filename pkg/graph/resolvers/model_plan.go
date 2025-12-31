@@ -280,29 +280,23 @@ func sendModelPlanCreatedEmail(
 	modelPlan *models.ModelPlan,
 	isGeneralUser bool,
 ) error {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanCreatedSubjectContent{
-		ModelName: modelPlan.ModelName,
-	})
-	if err != nil {
-		return err
-	}
 	createdByAccount, err := modelPlan.CreatedByUserAccount(ctx)
 	if err != nil {
 		return fmt.Errorf("unable to get the user account for the user who created the model. err %w", err)
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
+	subjectContent := email.ModelPlanCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.ModelPlanCreatedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		UserName:      createdByAccount.CommonName,
 		IsGeneralUser: isGeneralUser,
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Created.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -518,18 +512,9 @@ func ModelPlanShare(
 	// Get client address
 	clientAddress := emailService.GetConfig().GetClientAddress()
 
-	// Get email template
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanShareTemplateName)
-	if err != nil {
-		return false, fmt.Errorf("failed to get email template: %w", err)
-	}
-
-	// Get email subject
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanShareSubjectContent{
+	// Get email subject and body
+	subjectContent := email.ModelPlanShareSubjectContent{
 		UserName: principal.Account().CommonName,
-	})
-	if err != nil {
-		return false, fmt.Errorf("failed to execute email subject: %w", err)
 	}
 
 	var modelPlanCategoriesHumanized []string
@@ -586,8 +571,7 @@ func ModelPlanShare(
 		shareSectionHumanized = helpers.PointerTo(models.ModelShareSectionHumanized[*shareSection])
 	}
 
-	// Get email body
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanShareBodyContent{
+	bodyContent := email.ModelPlanShareBodyContent{
 		UserName:                   principal.Account().CommonName,
 		OptionalMessage:            optionalMessage,
 		ModelName:                  modelPlan.ModelName,
@@ -602,9 +586,11 @@ func ModelPlanShare(
 		HumanizedModelViewFilter:   humanizedViewFilter,
 		ClientAddress:              clientAddress,
 		ModelID:                    modelPlan.ID.String(),
-	})
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.Shared.GetContent(subjectContent, bodyContent)
 	if err != nil {
-		return false, fmt.Errorf("failed to execute email body: %w", err)
+		return false, fmt.Errorf("failed to execute email: %w", err)
 	}
 
 	// Send email

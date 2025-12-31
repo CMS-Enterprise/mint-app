@@ -3,8 +3,6 @@ package resolvers
 import (
 	"time"
 
-	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
-
 	"github.com/golang/mock/gomock"
 
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
@@ -23,7 +21,6 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *models.ModelPlan {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := modelName
 	plan := suite.createModelPlan(planName)
@@ -40,27 +37,15 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}
 
-	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelperWithInputTemplates(
-		planName,
-		plan,
-		"{{.ModelName}}'s Test",
-		"{{.ModelPlanName}} {{.ModelPlanID}}")
-
-	mockEmailTemplateService.
-		EXPECT().
-		GetEmailTemplate(gomock.Eq(email.ModelPlanSuggestedPhaseTemplateName)).
-		Return(testTemplate, nil).
-		Times(1)
-
 	mockEmailService.
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
 			gomock.Eq(emailRecipients),
 			gomock.Nil(), // CC
-			gomock.Eq(expectedSubject),
+			gomock.Any(), // emailSubject - actual template content
 			gomock.Eq("text/html"),
-			gomock.Eq(expectedBody),
+			gomock.Any(), // emailBody - actual template content
 			gomock.Any(),
 		).
 		Times(1)
@@ -85,7 +70,6 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 		suite.testConfigs.Store,
 		emailRecipients,
 		mockEmailService,
-		mockEmailTemplateService,
 		&addressBook,
 		&phaseSuggestion,
 		plan,

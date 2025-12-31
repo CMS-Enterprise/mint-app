@@ -102,7 +102,6 @@ func CreatePlanDiscussion(
 				ctx,
 				logger,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				recipientEmails,
 				discussion,
@@ -211,7 +210,7 @@ func sendPlanDiscussionTagEmails(
 
 				continue
 			}
-			err = sendPlanDiscussionTaggedUserEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
+			err = sendPlanDiscussionTaggedUserEmail(emailService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -237,7 +236,7 @@ func sendPlanDiscussionTagEmails(
 				continue
 			}
 
-			err = sendPlanDiscussionTaggedSolutionEmail(emailService, emailTemplateService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
+			err = sendPlanDiscussionTaggedSolutionEmail(emailService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -255,7 +254,6 @@ func sendPlanDiscussionTagEmails(
 }
 func sendPlanDiscussionTaggedUserEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
@@ -265,24 +263,15 @@ func sendPlanDiscussionTaggedUserEmail(
 	createdByUserRole string,
 ) error {
 
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionTaggedUserTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionTaggedUserSubjectContent{
+	subjectContent := email.PlanDiscussionTaggedUserSubjectContent{
 		ModelName:         modelPlan.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
-	})
-	if err != nil {
-		return err
 	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionTaggedUserBodyContent{
+	bodyContent := email.PlanDiscussionTaggedUserBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
@@ -291,7 +280,9 @@ func sendPlanDiscussionTaggedUserEmail(
 		ModelName:         modelPlan.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
 		Role:              createdByUserRole,
-	})
+	}
+
+	emailSubject, emailBody, err := email.PlanDiscussion.TaggedUser.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -304,7 +295,6 @@ func sendPlanDiscussionTaggedUserEmail(
 }
 func sendPlanDiscussionTaggedSolutionEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
@@ -315,23 +305,16 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	pocEmailAddress []string,
 ) error {
 
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionTaggedMTOCommonSolutionTemplateName)
-	if err != nil {
-		return err
-	}
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionTaggedSolutionSubjectContent{
+	subjectContent := email.PlanDiscussionTaggedSolutionSubjectContent{
 		SolutionName:      solution.Name,
 		ModelName:         modelPlan.ModelName,
-		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation)})
-	if err != nil {
-		return err
+		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
 	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.PlanDiscussionTaggedSolutionBodyContent{
+	bodyContent := email.PlanDiscussionTaggedSolutionBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
@@ -340,7 +323,10 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		ModelName:         modelPlan.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
 		Role:              createdByUserRole,
-		SolutionName:      solution.Name})
+		SolutionName:      solution.Name,
+	}
+
+	emailSubject, emailBody, err := email.PlanDiscussion.TaggedSolution.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -356,7 +342,6 @@ func sendPlanDiscussionCreatedEmail(
 	ctx context.Context,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	receiverEmails []string,
 	planDiscussion *models.PlanDiscussion,
@@ -364,31 +349,24 @@ func sendPlanDiscussionCreatedEmail(
 	createdByUserName string,
 	createdByUserRole string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.PlanDiscussionCreatedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.PlanDiscussionCreatedSubjectContent{
+	subjectContent := email.PlanDiscussionCreatedSubjectContent{
 		ModelName:         modelPlan.ModelName,
 		ModelAbbreviation: models.ValueOrEmpty(modelPlan.Abbreviation),
 		UserName:          createdByUserName,
-	})
-	if err != nil {
-		return err
 	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.NewPlanDiscussionCreatedBodyContent(
+	bodyContent := email.NewPlanDiscussionCreatedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		planDiscussion,
 		modelPlan,
 		createdByUserName,
 		createdByUserRole,
-	))
+	)
+
+	emailSubject, emailBody, err := email.PlanDiscussion.Created.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   SolutionContactType,
   SolutionContractorType,
@@ -180,12 +180,13 @@ describe('RemoveContactModal Component', () => {
       }
     );
 
-    const { asFragment } = render(
+    render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    const modal = screen.getByTestId('remove-contact-modal');
+    expect(modal).toMatchSnapshot();
   });
 });

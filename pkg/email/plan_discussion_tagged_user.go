@@ -1,6 +1,18 @@
 package email
 
-import "html/template"
+import (
+	_ "embed"
+	"html/template"
+)
+
+// PlanDiscussionTaggedUserTemplateName is the template name definition for the corresponding email template
+const PlanDiscussionTaggedUserTemplateName string = "plan_discussion_tagged_user"
+
+//go:embed templates/plan_discussion_tagged_user_subject.html
+var planDiscussionTaggedUserSubjectTemplate string
+
+//go:embed templates/plan_discussion_tagged_user_body.html
+var planDiscussionTaggedUserBodyTemplate string
 
 // PlanDiscussionTaggedUserSubjectContent defines the parameters necessary for the corresponding email subject
 type PlanDiscussionTaggedUserSubjectContent struct {

@@ -3,18 +3,18 @@ package sqlqueries
 import _ "embed"
 
 //go:embed SQL/mto/template/model_plan_mto_template_link/get_by_id_LOADER.sql
-var ModelPlanMTOTemplateLinkGetByIDLoader string
+var modelPlanMTOTemplateLinkGetByIDLoader string
 
 //go:embed SQL/mto/template/model_plan_mto_template_link/get_by_model_plan_id_LOADER.sql
-var ModelPlanMTOTemplateLinkGetByModelPlanIDLoader string
+var modelPlanMTOTemplateLinkGetByModelPlanIDLoader string
 
 //go:embed SQL/mto/template/model_plan_mto_template_link/get_by_template_id_LOADER.sql
-var ModelPlanMTOTemplateLinkGetByTemplateIDLoader string
+var modelPlanMTOTemplateLinkGetByTemplateIDLoader string
 
 //go:embed SQL/mto/template/model_plan_mto_template_link/upsert.sql
-var ModelPlanMTOTemplateLinkUpsert string
+var modelPlanMTOTemplateLinkUpsert string
 
-type ModelPlanMTOTemplateLinkScripts struct {
+type modelPlanMTOTemplateLinkScripts struct {
 	GetByIDLoader          string
 	GetByModelPlanIDLoader string
 	GetByTemplateIDLoader  string
@@ -22,9 +22,9 @@ type ModelPlanMTOTemplateLinkScripts struct {
 }
 
 // ModelPlanMTOTemplateLink houses all the sql for getting data for model plan MTO template links from the database
-var ModelPlanMTOTemplateLink = ModelPlanMTOTemplateLinkScripts{
-	GetByIDLoader:          ModelPlanMTOTemplateLinkGetByIDLoader,
-	GetByModelPlanIDLoader: ModelPlanMTOTemplateLinkGetByModelPlanIDLoader,
-	GetByTemplateIDLoader:  ModelPlanMTOTemplateLinkGetByTemplateIDLoader,
-	Upsert:                 ModelPlanMTOTemplateLinkUpsert,
+var ModelPlanMTOTemplateLink = modelPlanMTOTemplateLinkScripts{
+	GetByIDLoader:          modelPlanMTOTemplateLinkGetByIDLoader,
+	GetByModelPlanIDLoader: modelPlanMTOTemplateLinkGetByModelPlanIDLoader,
+	GetByTemplateIDLoader:  modelPlanMTOTemplateLinkGetByTemplateIDLoader,
+	Upsert:                 modelPlanMTOTemplateLinkUpsert,
 }
