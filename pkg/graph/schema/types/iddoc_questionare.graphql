@@ -1,0 +1,70 @@
+"""
+IDDOCQuestionareStatus represents the status of an IDDOC questionnaire
+"""
+enum IDDOCQuestionareStatus {
+  """
+  The questionnaire is not needed for this model plan
+  """
+  NOT_NEEDED
+  """
+  The questionnaire has not been started yet
+  """
+  NOT_STARTED
+  """
+  The questionnaire is currently being filled out
+  """
+  IN_PROGRESS
+  """
+  The questionnaire has been completed
+  """
+  COMPLETED
+}
+
+"""
+IDDOCQuestionare represents the IDDOC questionnaire for a model plan
+"""
+type IDDOCQuestionare {
+  id: UUID!
+  modelPlanID: UUID!
+
+  """
+  Indicates whether the IDDOC questionnaire is needed for this model plan
+  """
+  needed: Boolean!
+
+  """
+  The user who completed the questionnaire
+  """
+  completedBy: UUID
+  completedByUserAccount: UserAccount
+  """
+  The timestamp when the questionnaire was completed
+  """
+  completedDts: Time
+  """
+  The current status of the questionnaire (computed based on completion state)
+  """
+  status: IDDOCQuestionareStatus!
+
+  # Metadata columns
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+IDDOCQuestionareChanges represents the possible changes you can make to an IDDOC questionnaire when updating it.
+"""
+input IDDOCQuestionareChanges {
+  needed: Boolean
+}
+
+extend type Mutation {
+  updateIDDOCQuestionare(
+    id: UUID!
+    changes: IDDOCQuestionareChanges!
+  ): IDDOCQuestionare! @hasRole(role: MINT_USER)
+}

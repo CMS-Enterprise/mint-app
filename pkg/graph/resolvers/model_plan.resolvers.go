@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -141,6 +142,11 @@ func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *
 // Timeline is the resolver for the timeline field.
 func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.PlanTimeline, error) {
 	return PlanTimelineGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// IddocQuestionare is the resolver for the iddocQuestionare field.
+func (r *modelPlanResolver) IddocQuestionare(ctx context.Context, obj *models.ModelPlan) (*models.IDDOCQuestionare, error) {
+	panic(fmt.Errorf("not implemented: IddocQuestionare - iddocQuestionare"))
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.

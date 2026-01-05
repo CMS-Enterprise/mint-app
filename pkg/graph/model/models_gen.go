@@ -48,6 +48,11 @@ type ExistingModelLinkTranslation struct {
 	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
+// IDDOCQuestionareChanges represents the possible changes you can make to an IDDOC questionnaire when updating it.
+type IDDOCQuestionareChanges struct {
+	Needed *bool `json:"needed,omitempty"`
+}
+
 // Represents key contact category base translation data
 type KeyContactCategoryTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`
@@ -1920,6 +1925,70 @@ func (e *GeographyType) UnmarshalJSON(b []byte) error {
 }
 
 func (e GeographyType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// IDDOCQuestionareStatus represents the status of an IDDOC questionnaire
+type IDDOCQuestionareStatus string
+
+const (
+	// The questionnaire is not needed for this model plan
+	IDDOCQuestionareStatusNotNeeded IDDOCQuestionareStatus = "NOT_NEEDED"
+	// The questionnaire has not been started yet
+	IDDOCQuestionareStatusNotStarted IDDOCQuestionareStatus = "NOT_STARTED"
+	// The questionnaire is currently being filled out
+	IDDOCQuestionareStatusInProgress IDDOCQuestionareStatus = "IN_PROGRESS"
+	// The questionnaire has been completed
+	IDDOCQuestionareStatusCompleted IDDOCQuestionareStatus = "COMPLETED"
+)
+
+var AllIDDOCQuestionareStatus = []IDDOCQuestionareStatus{
+	IDDOCQuestionareStatusNotNeeded,
+	IDDOCQuestionareStatusNotStarted,
+	IDDOCQuestionareStatusInProgress,
+	IDDOCQuestionareStatusCompleted,
+}
+
+func (e IDDOCQuestionareStatus) IsValid() bool {
+	switch e {
+	case IDDOCQuestionareStatusNotNeeded, IDDOCQuestionareStatusNotStarted, IDDOCQuestionareStatusInProgress, IDDOCQuestionareStatusCompleted:
+		return true
+	}
+	return false
+}
+
+func (e IDDOCQuestionareStatus) String() string {
+	return string(e)
+}
+
+func (e *IDDOCQuestionareStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = IDDOCQuestionareStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid IDDOCQuestionareStatus", str)
+	}
+	return nil
+}
+
+func (e IDDOCQuestionareStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *IDDOCQuestionareStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e IDDOCQuestionareStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
