@@ -44,7 +44,6 @@ func sendMTOMilestoneAssignedTestEmail(
 
 	err := sendMTOMilestoneAssignedTestEmailHelper(
 		emailService,
-		templateService,
 		addressBook,
 		milestone,
 		modelPlan,
@@ -55,43 +54,30 @@ func sendMTOMilestoneAssignedTestEmail(
 
 func sendMTOMilestoneAssignedTestEmailHelper(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	milestone *models.MTOMilestone,
 	modelPlan *models.ModelPlan,
 	solutionNames []string,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	// Get email template
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOMilestoneAssignedTemplateName)
-	if err != nil {
-		return err
-	}
-
 	// Prepare subject content
-	subjectContent := email.MilestoneAssignedSubjectContent{
+	subjectContent := email.MTOMilestoneAssignedSubjectContent{
 		ModelName: modelPlan.ModelName,
 	}
 
 	// Prepare body content
-	bodyContent := email.NewMilestoneAssignedBodyContent(
+	bodyContent := email.NewMTOMilestoneAssignedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		modelPlan,
 		milestone,
 		solutionNames,
 	)
 
-	// Execute subject template
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	// Execute body template
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	// Get email content
+	emailSubject, emailBody, err := email.MTO.Milestone.Assigned.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
