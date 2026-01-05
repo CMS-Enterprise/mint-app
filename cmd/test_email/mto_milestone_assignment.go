@@ -12,7 +12,6 @@ import (
 
 func sendMTOMilestoneAssignedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	// Create test milestone
