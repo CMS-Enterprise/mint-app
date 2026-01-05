@@ -13,7 +13,6 @@ import (
 
 func sendMTOSolutionSelectedTestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	solutionName := "CBOSC"
@@ -29,7 +28,6 @@ func sendMTOSolutionSelectedTestEmail(
 	filterView := "CBOSC"
 
 	err := sendMTOSolutionSelectedForUseByModelEmail(emailService,
-		templateService,
 		addressBook,
 		solutionName,
 		solutionStatus,
@@ -49,7 +47,6 @@ func sendMTOSolutionSelectedTestEmail(
 // sendMTOSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
 func sendMTOSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	solutionName string,
 	solutionStatus string,
@@ -65,25 +62,16 @@ func sendMTOSolutionSelectedForUseByModelEmail(
 	filterView string,
 ) error {
 
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOSolutionSelectedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.MTOSolutionSelectedSubjectContent{
-		ModelName:    modelPlanName,
-		SolutionName: solutionName,
-	})
-	if err != nil {
-		return err
-	}
 	modelLeadJoin := strings.Join(modelLeadNames, ", ")
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.MTOSolutionSelectedBodyContent{
+	emailSubject, emailBody, err := email.MTO.Solution.Selected.GetContent(email.MTOSolutionSelectedSubjectContent{
+		ModelName:    modelPlanName,
+		SolutionName: solutionName,
+	}, email.MTOSolutionSelectedBodyContent{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		FilterView:        filterView,
 		SolutionName:      solutionName,

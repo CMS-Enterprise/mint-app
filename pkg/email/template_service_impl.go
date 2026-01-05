@@ -54,15 +54,6 @@ var sendFeedbackBodyTemplate string
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
 
-// MTOSolutionSelectedTemplateName is the template name for the solution selected email that is sent to an MTO solution POCS
-const MTOSolutionSelectedTemplateName string = "mto_solution_selected"
-
-//go:embed templates/mto_solution_selected_body.html
-var mtoSolutionSelectedBodyTemplate string
-
-//go:embed templates/mto_solution_selected_subject.html
-var mtoSolutionSelectedSubjectTemplate string
-
 // OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
 const OperationalSolutionSelectedTemplateName string = "operational_solution_selected"
 
@@ -136,10 +127,6 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
-	if err != nil {
-		return err
-	}
-	err = t.loadEmailTemplate(MTOSolutionSelectedTemplateName, mtoSolutionSelectedSubjectTemplate, mtoSolutionSelectedBodyTemplate)
 	if err != nil {
 		return err
 	}
