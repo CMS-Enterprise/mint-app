@@ -75,6 +75,7 @@ const (
 	MTOCSKResdacCmds                  MTOCommonSolutionKey = "RESDAC_CMDS"
 	MTOCSKOverlapsOperationsWorkgroup MTOCommonSolutionKey = "OVERLAPS_OPERATIONS_WORKGROUP"
 	MTOCSKHETS                        MTOCommonSolutionKey = "HETS"
+	MTOCSKMCBS                        MTOCommonSolutionKey = "MCBS"
 )
 
 type MTOCommonSolutionSubject string
