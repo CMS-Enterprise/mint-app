@@ -1,7 +1,51 @@
+-- Disable the trigger to avoid cache lookup issues
+ALTER TABLE mto_common_solution_contact DISABLE TRIGGER trg_ensure_primary_contact_mto;
+
+-- Drop the trigger
+DROP TRIGGER IF EXISTS trg_ensure_primary_contact_mto ON mto_common_solution_contact;
+
+-- Drop the function
+DROP FUNCTION IF EXISTS ensure_primary_contact_mto;
+
 -- Add MCBS to the ENUM type
 ALTER TYPE MTO_COMMON_SOLUTION_KEY ADD VALUE 'MCBS';
 
 COMMIT;
+
+-- Recreate the function
+CREATE OR REPLACE FUNCTION ensure_primary_contact_mto()
+RETURNS TRIGGER AS $$
+DECLARE
+  sol_key MTO_COMMON_SOLUTION_KEY;
+BEGIN
+  -- Determine the appropriate key based on the trigger event
+  IF TG_OP = 'DELETE' THEN
+    sol_key := OLD.mto_common_solution_key;
+  ELSE
+    sol_key := NEW.mto_common_solution_key;
+  END IF;
+
+  -- Check if there is at least one primary contact for the solution
+  IF NOT EXISTS (
+    SELECT 1
+    FROM mto_common_solution_contact
+    WHERE mto_common_solution_key = sol_key
+      AND is_primary = TRUE
+  ) THEN
+    RAISE EXCEPTION 'At least one primary contact must be assigned for each mto common solution.';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Recreate the trigger
+CREATE TRIGGER trg_ensure_primary_contact_mto
+AFTER INSERT OR UPDATE OR DELETE ON mto_common_solution_contact
+FOR EACH ROW
+EXECUTE FUNCTION ensure_primary_contact_mto();
+
+-- Re-enable the trigger
+ALTER TABLE mto_common_solution_contact ENABLE TRIGGER trg_ensure_primary_contact_mto;
 
 -- Insert MCBS into the mto common solution table
 INSERT INTO mto_common_solution("id", "key", "name", "type", "subjects") VALUES
