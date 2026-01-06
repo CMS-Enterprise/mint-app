@@ -324,7 +324,6 @@ func sendMTOSolutionSelectedEmails(
 
 	err = sendMTOSolutionSelectedForUseByModelEmail(
 		emailService,
-		emailTemplateService,
 		addressBook,
 		solSelectedDB,
 		pocEmailAddress,
@@ -336,31 +335,21 @@ func sendMTOSolutionSelectedEmails(
 // sendMTOSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
 func sendMTOSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	solutionSelectedDB *email.MTOSolutionSelectedDB,
 	pocEmailAddress []string,
 ) error {
 
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOSolutionSelectedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
-		ModelName:    solutionSelectedDB.ModelName,
-		SolutionName: solutionSelectedDB.SolutionName,
-	})
-	if err != nil {
-		return err
-	}
 	bodyContent := solutionSelectedDB.ToSolutionSelectedBodyContent(emailService.GetConfig().GetClientAddress())
 
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.MTO.Solution.Selected.GetContent(email.MTOSolutionSelectedSubjectContent{
+		ModelName:    solutionSelectedDB.ModelName,
+		SolutionName: solutionSelectedDB.SolutionName,
+	}, bodyContent)
 	if err != nil {
 		return err
 	}

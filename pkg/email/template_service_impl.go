@@ -54,15 +54,6 @@ var sendFeedbackBodyTemplate string
 //go:embed templates/send_feedback_subject.html
 var sendFeedbackSubjectTemplate string
 
-// MTOSolutionSelectedTemplateName is the template name for the solution selected email that is sent to an MTO solution POCS
-const MTOSolutionSelectedTemplateName string = "mto_solution_selected"
-
-//go:embed templates/mto_solution_selected_body.html
-var mtoSolutionSelectedBodyTemplate string
-
-//go:embed templates/mto_solution_selected_subject.html
-var mtoSolutionSelectedSubjectTemplate string
-
 // OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
 const OperationalSolutionSelectedTemplateName string = "operational_solution_selected"
 
@@ -80,15 +71,6 @@ var dataExchangeApproachMarkedCompleteBodyTemplate string
 
 //go:embed templates/data_exchange_approach_marked_complete_subject.html
 var dataExchangeApproachMarkedCompleteSubjectTemplate string
-
-// MTOMilestoneAssignedTemplateName is the template name for the milestone assigned email
-const MTOMilestoneAssignedTemplateName string = "mto_milestone_assigned"
-
-//go:embed templates/mto_milestone_assigned_subject.html
-var mtoMilestoneAssignedSubjectTemplate string
-
-//go:embed templates/mto_milestone_assigned_body.html
-var mtoMilestoneAssignedBodyTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -148,17 +130,9 @@ func (t *TemplateServiceImpl) Load() error {
 	if err != nil {
 		return err
 	}
-	err = t.loadEmailTemplate(MTOSolutionSelectedTemplateName, mtoSolutionSelectedSubjectTemplate, mtoSolutionSelectedBodyTemplate)
-	if err != nil {
-		return err
-	}
 
 	err = t.loadEmailTemplate(DataExchangeApproachMarkedCompleteTemplateName, dataExchangeApproachMarkedCompleteSubjectTemplate, dataExchangeApproachMarkedCompleteBodyTemplate)
 	if err != nil {
-		return err
-	}
-
-	if err := t.loadEmailTemplate(MTOMilestoneAssignedTemplateName, mtoMilestoneAssignedSubjectTemplate, mtoMilestoneAssignedBodyTemplate); err != nil {
 		return err
 	}
 
