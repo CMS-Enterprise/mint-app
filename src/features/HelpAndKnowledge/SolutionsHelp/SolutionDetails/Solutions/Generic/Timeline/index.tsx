@@ -8,6 +8,7 @@ import {
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
+import GatheringInfoAlert from '../../../_components/GatheringInfoAlert';
 import { getTransLinkComponents, LinkType } from '../About';
 
 import '../../index.scss';
@@ -28,6 +29,7 @@ export type TimelineConfigType = {
   header2?: string;
   items2?: TimelineItemType[];
   links?: string[];
+  gatheringInfo?: boolean;
 };
 
 export const GenericTimeline = ({
@@ -39,6 +41,9 @@ export const GenericTimeline = ({
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
+      {timelineConfig.gatheringInfo && (
+        <GatheringInfoAlert solution={solution} className="margin-bottom-4" />
+      )}
       {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
       {timelineConfig.header && (

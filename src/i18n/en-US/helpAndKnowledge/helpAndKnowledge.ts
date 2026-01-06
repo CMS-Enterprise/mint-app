@@ -1494,10 +1494,19 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
   [MtoCommonSolutionKey.MCBS]: {
     about: {
       description:
-        'The Medicare Current Beneficiary Survey (MCBS), sponsored by the Centers for Medicare & Medicaid Services Office of Enterprise Data and Analytics (OEDA) through a contract with NORC at the University of Chicago, is the most comprehensive and complete survey available on the Medicare population. Since 1991, the MCBS has collected data on Medicare beneficiaries’ social and medical risk factors and the relationship between these factors, healthcare utilization, and health outcomes – at a point in time and over time – directly from beneficiaries. These data, linked with Medicare enrollment data and claims, provide information not otherwise available through administrative data on the Medicare program and can be used to evaluate effectiveness of health care policy and policy interventions.'
+        'The Medicare Current Beneficiary Survey (MCBS), sponsored by the Centers for Medicare & Medicaid Services Office of Enterprise Data and Analytics (OEDA) through a contract with NORC at the University of Chicago, is the most comprehensive and complete survey available on the Medicare population. Since 1991, the MCBS has collected data on Medicare beneficiaries’ social and medical risk factors and the relationship between these factors, healthcare utilization, and health outcomes – at a point in time and over time – directly from beneficiaries. These data, linked with Medicare enrollment data and claims, provide information not otherwise available through administrative data on the Medicare program and can be used to evaluate effectiveness of health care policy and policy interventions.',
+      descriptionFooter:
+        '<italic>Excerpt from the MCBS information page on CMS.gov.</italic><link1>Learn more about MCBS</link1>',
+      links: [
+        {
+          link: 'https://www.cms.gov/data-research/research/medicare-current-beneficiary-survey',
+          external: true
+        }
+      ]
     },
     timeline: {
-      description: 'asdfasdf',
+      description: undefined,
+      gatheringInfo: true,
       items: []
     }
   },
