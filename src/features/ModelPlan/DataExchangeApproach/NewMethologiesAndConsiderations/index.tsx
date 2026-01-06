@@ -183,7 +183,7 @@ const NewMethodologiesAndConsiderations = () => {
           id="new-methodologies-and-additional-considerations-form"
           onSubmit={handleSubmit(() => {
             navigate(
-              `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/new-methodologies-and-additional-considerations`
             );
           })}
           className="maxw-none"
@@ -338,7 +338,7 @@ const NewMethodologiesAndConsiderations = () => {
                 <FormFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
-                  backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`}
+                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation`}
                   nextPage={false}
                   disabled={isSubmitting}
                   id="new-methodologies-and-considerations-form"

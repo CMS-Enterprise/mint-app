@@ -48,13 +48,15 @@ const collaborationArea = {
     noCrtdls: 'No CRs or TDLs',
     andMore: ' + {{count}} more'
   },
-  dataExchangeApproachCard: {
-    heading: 'Data exchange approach',
-    body: 'After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you’ll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.',
-    lastModified: 'Most recent edit on {{-date}} by ',
-    startApproach: 'Start approach',
-    editApproach: 'Edit approach',
-    viewHelpArticle: 'View help article'
+  additionalQuestionnairesCard: {
+    heading: 'Additional questionnaires',
+    requiredQuestionnairesCount: '{{count}} required questionnaire',
+    requiredQuestionnairesCount_other: '{{count}} required questionnaires',
+    viewAllRequired: 'View all required questionnaires',
+    otherQuestionnairesCount: '{{count}} other questionnaires',
+    otherQuestionnairesCount_other: '{{count}} other questionnaires',
+    viewAllQuestionnaires: 'View all questionnaires',
+    goToQuestionnaires: 'Go to questionnaires'
   },
   mtoCard: {
     heading: 'Model-to-operations matrix (MTO)',

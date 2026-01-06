@@ -57,7 +57,7 @@ const DataEchangeApproach = () => {
 };
 
 export const dataExchangeApproachRoutes = {
-  path: '/models/:modelID/collaboration-area/data-exchange-approach',
+  path: '/models/:modelID/collaboration-area/additional-questionnaires',
   element: (
     <ProtectedRoute>
       <DataEchangeApproach />
@@ -65,19 +65,19 @@ export const dataExchangeApproachRoutes = {
   ),
   children: [
     {
-      path: '/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange',
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/about-completing-data-exchange',
       element: <AboutCompletingDataExchange />
     },
     {
-      path: '/models/:modelID/collaboration-area/data-exchange-approach/collecting-and-sending-data',
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/collecting-and-sending-data',
       element: <CollectingAndSendingData />
     },
     {
-      path: '/models/:modelID/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation',
       element: <CollectionAndAggregation />
     },
     {
-      path: '/models/:modelID/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations',
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/new-methodologies-and-additional-considerations',
       element: <NewMethodologiesAndConsiderations />
     }
   ]

@@ -140,7 +140,7 @@ const CollectingAndSendingData = () => {
           id="collect-and-send-data-form"
           onSubmit={handleSubmit(() => {
             navigate(
-              `/models/${modelID}/collaboration-area/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation`
             );
           })}
           className="maxw-none"
@@ -365,7 +365,7 @@ const CollectingAndSendingData = () => {
                 <FormFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
-                  backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`}
+                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/about-completing-data-exchange`}
                   nextPage
                   disabled={isSubmitting}
                   id="collect-and-send-data-form"

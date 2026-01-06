@@ -130,7 +130,7 @@ const AboutCompletingDataExchange = () => {
           type="button"
           onClick={() =>
             navigate(
-              `/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/collecting-and-sending-data`
             )
           }
         >

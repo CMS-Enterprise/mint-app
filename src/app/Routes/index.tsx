@@ -21,6 +21,7 @@ import Home from 'features/Home';
 import { homePageSettingsRoutes } from 'features/Home/Settings';
 import Landing from 'features/Landing';
 import Login from 'features/Login';
+import AdditionalQuestionnaires from 'features/ModelPlan/AdditionalQuestionnaires';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
@@ -104,6 +105,26 @@ const TaskListToModelPlanRedirect = () => {
   const newPath = location.pathname.replace(
     '/collaboration-area/task-list',
     '/collaboration-area/model-plan'
+  );
+
+  // Preserve query params and hash
+  const newLocation = {
+    pathname: newPath,
+    search: location.search,
+    hash: location.hash
+  };
+
+  return <Navigate to={newLocation} replace />;
+};
+
+// Redirect old data exchange-approach paths to new paths
+const DataExchangeApproachRedirect = () => {
+  const location = useLocation();
+
+  // Replace 'task-list' with 'model-plan' in the current path
+  const newPath = location.pathname.replace(
+    '/collaboration-area/data-exchange-approach',
+    '/collaboration-area/additional-questionnaires'
   );
 
   // Preserve query params and hash
@@ -318,11 +339,26 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Additional questionnaire Routes
+      {
+        path: '/models/:modelID/collaboration-area/additional-questionnaires',
+        element: (
+          <ProtectedRoute>
+            <AdditionalQuestionnaires />
+          </ProtectedRoute>
+        )
+      },
+
       // CR and TDL Routes
       crtdlRoutes,
 
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
+
+      {
+        path: '/models/:modelID/collaboration-area/data-exchange-approach/*',
+        element: <DataExchangeApproachRedirect />
+      },
 
       // Model to Operations Routes
       modelToOperationsRoutes,

@@ -145,7 +145,7 @@ const CollectionAndAggregation = () => {
           id="collection-and-aggregation-form"
           onSubmit={handleSubmit(() => {
             navigate(
-              `/models/${modelID}/collaboration-area/data-exchange-approach/new-methodologies-and-additional-considerations`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/new-methodologies-and-additional-considerations`
             );
           })}
           className="maxw-none"
@@ -386,7 +386,7 @@ const CollectionAndAggregation = () => {
                 <FormFooter
                   homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
                   homeRoute={`/models/${modelID}/collaboration-area`}
-                  backPage={`/models/${modelID}/collaboration-area/data-exchange-approach/collecting-and-sending-data`}
+                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/collecting-and-sending-data`}
                   id="collection-and-aggregation-form"
                   nextPage
                   disabled={isSubmitting}

@@ -15,13 +15,13 @@ describe('AboutCompletingDataExchange', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/data-exchange-approach/about-completing-data-exchange',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/about-completing-data-exchange',
           element: <AboutCompletingDataExchange />
         }
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/data-exchange-approach/about-completing-data-exchange'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/about-completing-data-exchange'
         ]
       }
     );

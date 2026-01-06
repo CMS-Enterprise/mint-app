@@ -25,8 +25,8 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
+import AdditionalQuestionnairesCard from './Cards/AdditionalQuestionnairesCard';
 import CRTDLCard from './Cards/CRTDLCard';
-import DataExchangeApproachCard from './Cards/DataExchangeApproachCard';
 import DiscussionsCard from './Cards/DiscussionsCard';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
@@ -68,6 +68,7 @@ const CollaborationArea = () => {
     questionnaires: { dataExchangeApproach },
     echimpCRsAndTDLs,
     timeline,
+    // iddocQuestionnaire,
     status,
     collaborators,
     isFavorite,
@@ -239,9 +240,10 @@ const CollaborationArea = () => {
                     setStatusMessage={setStatusMessage}
                   />
 
-                  <DataExchangeApproachCard
+                  <AdditionalQuestionnairesCard
                     modelID={modelID}
                     dataExhangeApproachData={dataExchangeApproach}
+                    // iddocQuestionnaireData={iddocQuestionnaire}
                   />
 
                   <MTOCard modelID={modelID} mtoMatrix={mtoMatrix} />

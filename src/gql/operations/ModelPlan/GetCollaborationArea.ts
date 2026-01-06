@@ -151,6 +151,15 @@ export default gql(/* GraphQL */ `
         }
         status
       }
+      # iddocQuestionnaire {
+      #   id
+      #   status
+      #   modifiedDts
+      #   modifiedByUserAccount {
+      #     id
+      #     commonName
+      #   }
+      # }
     }
   }
 `);
