@@ -498,7 +498,6 @@ func CreateDiscussionReply(
 					store,
 					logger,
 					emailService,
-					emailTemplateService,
 					addressBook,
 					discussion,
 					reply,

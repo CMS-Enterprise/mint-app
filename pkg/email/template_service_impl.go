@@ -27,15 +27,6 @@ var aggregatedDailyDigestSubjectTemplate string
 //go:embed templates/aggregated_daily_digest_body.html
 var aggregatedDailyDigestBodyTemplate string
 
-// DiscussionReplyCreatedOriginatorTemplateName is the template name definition for the corresponding email template
-const DiscussionReplyCreatedOriginatorTemplateName string = "discussion_reply_created_originator"
-
-//go:embed templates/discussion_reply_created_originator_subject.html
-var discussionReplyCreatedOriginatorSubjectTemplate string
-
-//go:embed templates/discussion_reply_created_originator_body.html
-var discussionReplyCreatedOriginatorBodyTemplate string
-
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -62,15 +53,6 @@ var operationalSolutionSelectedBodyTemplate string
 
 //go:embed templates/operational_solution_selected_subject.html
 var operationalSolutionSelectedSubjectTemplate string
-
-// DataExchangeApproachMarkedCompleteTemplateName is the template name for the data exchange approach completed email
-const DataExchangeApproachMarkedCompleteTemplateName string = "data_exchange_approach_marked_complete"
-
-//go:embed templates/data_exchange_approach_marked_complete_body.html
-var dataExchangeApproachMarkedCompleteBodyTemplate string
-
-//go:embed templates/data_exchange_approach_marked_complete_subject.html
-var dataExchangeApproachMarkedCompleteSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -111,11 +93,6 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
-	if err != nil {
-		return err
-	}
-
 	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAProblemSubjectTemplate, reportAProblemBodyTemplate)
 	if err != nil {
 		return err
@@ -127,11 +104,6 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(DataExchangeApproachMarkedCompleteTemplateName, dataExchangeApproachMarkedCompleteSubjectTemplate, dataExchangeApproachMarkedCompleteBodyTemplate)
 	if err != nil {
 		return err
 	}
