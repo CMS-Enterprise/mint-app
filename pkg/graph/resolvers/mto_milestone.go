@@ -316,7 +316,7 @@ func MTOMilestoneUpdate(
 				return
 			}
 
-			sendEmailErr := sendMTOMilestoneAssignedEmail(ctx, store, logger, emailService, emailTemplateService, addressBook, updatedMilestone, *updatedMilestone.AssignedTo, modelPlan, solutions)
+			sendEmailErr := sendMTOMilestoneAssignedEmail(ctx, store, logger, emailService, addressBook, updatedMilestone, *updatedMilestone.AssignedTo, modelPlan, solutions)
 			if sendEmailErr != nil {
 				logger.Error("error sending milestone assigned email",
 					zap.String("milestoneID", updatedMilestone.ID.String()),
@@ -490,14 +490,13 @@ func sendMTOMilestoneAssignedEmail(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	milestone *models.MTOMilestone,
 	assignedToID uuid.UUID,
 	modelPlan *models.ModelPlan,
 	solutions []*models.MTOSolution,
 ) error {
-	if emailService == nil || emailTemplateService == nil || milestone == nil {
+	if emailService == nil || milestone == nil {
 		return nil
 	}
 
@@ -527,14 +526,8 @@ func sendMTOMilestoneAssignedEmail(
 		return nil
 	}
 
-	// Get email template
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.MTOMilestoneAssignedTemplateName)
-	if err != nil {
-		return err
-	}
-
 	// Prepare subject content
-	subjectContent := email.MilestoneAssignedSubjectContent{
+	subjectContent := email.MTOMilestoneAssignedSubjectContent{
 		ModelName: modelPlan.ModelName,
 	}
 
@@ -545,21 +538,15 @@ func sendMTOMilestoneAssignedEmail(
 		}
 		return *item.Name
 	})
-	bodyContent := email.NewMilestoneAssignedBodyContent(
+	bodyContent := email.NewMTOMilestoneAssignedBodyContent(
 		emailService.GetConfig().GetClientAddress(),
 		modelPlan,
 		milestone,
 		solutionsNames,
 	)
 
-	// Execute subject template
-	emailSubject, err := emailTemplate.GetExecutedSubject(subjectContent)
-	if err != nil {
-		return err
-	}
-
-	// Execute body template
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	// Get email content
+	emailSubject, emailBody, err := email.MTO.Milestone.Assigned.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}

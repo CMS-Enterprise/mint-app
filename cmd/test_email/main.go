@@ -21,7 +21,7 @@ func main() {
 	addressBook := initializeAddressBook()
 
 	// Running all test functions
-	sendModelPlanCreatedEmailTest(emailService, templateService)
+	sendModelPlanCreatedEmailTest(emailService)
 
 	// Discussion emails
 	sendPlanDiscussionCreatedTestEmail(emailService, addressBook)
@@ -34,7 +34,7 @@ func main() {
 	// Model plan emails
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
-	sendCollaboratorAddedEmailTest(emailService, templateService, addressBook)
+	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, templateService, addressBook)
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
@@ -42,7 +42,7 @@ func main() {
 	// Solution emails
 	//TODO, we might want to remove these later. Leaving for comparison now
 	sendOperationalSolutionSelectedTestEmail(emailService, templateService, addressBook)
-	sendMTOSolutionSelectedTestEmail(emailService, templateService, addressBook)
+	sendMTOSolutionSelectedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution Contact emails for editable POC workflow
 	sendMTOCommonSolutionPOCWelcomeTestEmail(emailService, addressBook)
@@ -61,15 +61,15 @@ func main() {
 	sendMTOCommonSolutionSystemOwnerRemovedTestEmail(emailService, addressBook)
 
 	// Model Plan Suggested Phase Emails
-	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, templateService, addressBook)
-	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, templateService, addressBook)
+	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, addressBook)
+	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, addressBook)
 
 	// Daily Digest Email
 	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
 	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
 
 	// MTO Milestone Assignment Email
-	sendMTOMilestoneAssignedTestEmail(emailService, templateService, addressBook)
+	sendMTOMilestoneAssignedTestEmail(emailService, addressBook)
 }
 
 func noErr(err error) {
@@ -213,7 +213,6 @@ func sendPlanDiscussionCreatedEmail(
 
 func sendModelPlanCreatedEmailTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 ) {
 	subjectContent := email.ModelPlanCreatedSubjectContent{
 		ModelName: "Test Model Plan",
@@ -379,7 +378,6 @@ func sendDateChangedEmailsTest(
 
 func sendCollaboratorAddedEmailTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	receiverEmail := "test@example.com"
@@ -388,15 +386,9 @@ func sendCollaboratorAddedEmailTest(
 		"Test Model Plan",
 	)
 
-	emailTemplate, err := templateService.GetEmailTemplate(email.AddedAsCollaboratorTemplateName)
-	noErr(err)
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.AddedAsCollaboratorSubjectContent{
+	emailSubject, emailBody, err := email.Collaborator.Added.GetContent(email.AddedAsCollaboratorSubjectContent{
 		ModelName: modelPlan.ModelName,
-	})
-	noErr(err)
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.AddedAsCollaboratorBodyContent{
+	}, email.AddedAsCollaboratorBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
@@ -491,7 +483,6 @@ func reportAProblemEmail(
 
 func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	modelPlan := models.NewModelPlan(
@@ -538,7 +529,6 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
 
 func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	modelPlan := models.NewModelPlan(
