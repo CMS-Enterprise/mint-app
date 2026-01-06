@@ -29,7 +29,7 @@ func main() {
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, addressBook)
 
 	//DiscussionReply email
-	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
+	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
 
 	// Model plan emails
 	sendModelPlanShareTest(emailService, templateService, addressBook)

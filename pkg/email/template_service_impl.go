@@ -27,15 +27,6 @@ var aggregatedDailyDigestSubjectTemplate string
 //go:embed templates/aggregated_daily_digest_body.html
 var aggregatedDailyDigestBodyTemplate string
 
-// DiscussionReplyCreatedOriginatorTemplateName is the template name definition for the corresponding email template
-const DiscussionReplyCreatedOriginatorTemplateName string = "discussion_reply_created_originator"
-
-//go:embed templates/discussion_reply_created_originator_subject.html
-var discussionReplyCreatedOriginatorSubjectTemplate string
-
-//go:embed templates/discussion_reply_created_originator_body.html
-var discussionReplyCreatedOriginatorBodyTemplate string
-
 // ReportAProblemTemplateName is the template name definition for the corresponding email template
 const ReportAProblemTemplateName string = "report_a_problem"
 
@@ -107,11 +98,6 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(AggregatedDailyDigestTemplateName, aggregatedDailyDigestSubjectTemplate, aggregatedDailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(DiscussionReplyCreatedOriginatorTemplateName, discussionReplyCreatedOriginatorSubjectTemplate, discussionReplyCreatedOriginatorBodyTemplate)
 	if err != nil {
 		return err
 	}
