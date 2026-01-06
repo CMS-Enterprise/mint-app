@@ -3,8 +3,6 @@ package resolvers
 import (
 	"github.com/golang/mock/gomock"
 
-	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
-
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
@@ -12,7 +10,6 @@ import (
 func (suite *ResolverSuite) TestDataExchangeApproachMarkedCompleteEmail() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
@@ -22,12 +19,6 @@ func (suite *ResolverSuite) TestDataExchangeApproachMarkedCompleteEmail() {
 		MINTTeamEmail: "mint.team@local.fake",
 	}
 
-	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelper(planName, plan)
-	mockEmailTemplateService.
-		EXPECT().
-		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).
-		Return(testTemplate, nil).
-		AnyTimes()
 	expectedEmail := addressBook.MINTTeamEmail
 
 	mockEmailService.
@@ -36,9 +27,9 @@ func (suite *ResolverSuite) TestDataExchangeApproachMarkedCompleteEmail() {
 			gomock.Any(),
 			gomock.Eq([]string{expectedEmail}),
 			gomock.Any(),
-			gomock.Eq(expectedSubject),
 			gomock.Any(),
-			gomock.Eq(expectedBody),
+			gomock.Any(),
+			gomock.Any(),
 		).
 		Times(1)
 
@@ -54,7 +45,6 @@ func (suite *ResolverSuite) TestDataExchangeApproachMarkedCompleteEmail() {
 
 	err := SendDataExchangeApproachMarkedCompleteEmailNotification(
 		mockEmailService,
-		mockEmailTemplateService,
 		addressBook,
 		plan,
 		expectedEmail,
