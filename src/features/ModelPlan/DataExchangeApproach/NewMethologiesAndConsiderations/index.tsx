@@ -37,7 +37,7 @@ import { tArray } from 'utils/translation';
 import FormFooter from '../../../../components/FormFooter';
 
 type NewMethodologiesAndConsiderationsType =
-  GetNewMethodologiesAndConsiderationsQuery['modelPlan']['dataExchangeApproach'];
+  GetNewMethodologiesAndConsiderationsQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 const defaulFormValues: NewMethodologiesAndConsiderationsType = {
   __typename: 'PlanDataExchangeApproach',
@@ -85,7 +85,7 @@ const NewMethodologiesAndConsiderations = () => {
   );
 
   const formData = mapDefaultFormValues<NewMethodologiesAndConsiderationsType>(
-    data?.modelPlan?.dataExchangeApproach,
+    data?.modelPlan?.questionnaires?.dataExchangeApproach,
     defaulFormValues
   );
 
@@ -119,7 +119,7 @@ const NewMethodologiesAndConsiderations = () => {
   useEffect(() => {
     reset(
       mapDefaultFormValues<NewMethodologiesAndConsiderationsType>(
-        data?.modelPlan?.dataExchangeApproach,
+        data?.modelPlan?.questionnaires?.dataExchangeApproach,
         defaulFormValues
       )
     );

@@ -71,3 +71,6 @@ models:
   TaggedHTML:
     model:
       - github.com/cms-enterprise/mint-app/pkg/models.TaggedHTML
+  Questionnaires:
+    model:
+      - github.com/cms-enterprise/mint-app/pkg/models.Questionnaires

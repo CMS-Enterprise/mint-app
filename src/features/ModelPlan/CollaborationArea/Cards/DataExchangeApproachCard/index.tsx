@@ -22,7 +22,7 @@ import { formatDateLocal } from 'utils/date';
 import '../cards.scss';
 
 export type DataExchangeApproachType =
-  GetCollaborationAreaQuery['modelPlan']['dataExchangeApproach'];
+  GetCollaborationAreaQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 type DataExchangeApproachCardType = {
   modelID: string;

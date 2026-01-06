@@ -13,7 +13,7 @@ import i18next from 'i18next';
 import CollectionAndAggregation from '.';
 
 type CollectionAndAggregationType =
-  GetCollectionAndAggregationQuery['modelPlan']['dataExchangeApproach'];
+  GetCollectionAndAggregationQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 const dataExchangeApproachMock: CollectionAndAggregationType = {
   __typename: 'PlanDataExchangeApproach',
@@ -40,7 +40,9 @@ const mock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          dataExchangeApproach: dataExchangeApproachMock
+          questionnaires: {
+            dataExchangeApproach: dataExchangeApproachMock
+          }
         }
       }
     }

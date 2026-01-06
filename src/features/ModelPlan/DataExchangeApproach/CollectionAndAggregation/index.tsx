@@ -42,7 +42,7 @@ import {
 import FormFooter from '../../../../components/FormFooter';
 
 type CollectionAndAggregationType =
-  GetCollectionAndAggregationQuery['modelPlan']['dataExchangeApproach'];
+  GetCollectionAndAggregationQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 const defaulFormValues: CollectionAndAggregationType = {
   __typename: 'PlanDataExchangeApproach',
@@ -82,7 +82,7 @@ const CollectionAndAggregation = () => {
   });
 
   const formData = mapDefaultFormValues<CollectionAndAggregationType>(
-    data?.modelPlan?.dataExchangeApproach,
+    data?.modelPlan?.questionnaires?.dataExchangeApproach,
     defaulFormValues
   );
 
@@ -116,7 +116,7 @@ const CollectionAndAggregation = () => {
   useEffect(() => {
     reset(
       mapDefaultFormValues<CollectionAndAggregationType>(
-        data?.modelPlan?.dataExchangeApproach,
+        data?.modelPlan?.questionnaires?.dataExchangeApproach,
         defaulFormValues
       )
     );

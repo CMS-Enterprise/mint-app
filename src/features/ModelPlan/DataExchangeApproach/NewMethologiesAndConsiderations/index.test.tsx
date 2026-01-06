@@ -10,7 +10,7 @@ import {
 import NewMethologiesAndConsiderations from '.';
 
 type NewMethodologiesAndConsiderationsType =
-  GetNewMethodologiesAndConsiderationsQuery['modelPlan']['dataExchangeApproach'];
+  GetNewMethodologiesAndConsiderationsQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 const dataExchangeApproachMock: NewMethodologiesAndConsiderationsType = {
   __typename: 'PlanDataExchangeApproach',
@@ -39,7 +39,9 @@ const mock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          dataExchangeApproach: dataExchangeApproachMock
+          questionnaires: {
+            dataExchangeApproach: dataExchangeApproachMock
+          }
         }
       }
     }

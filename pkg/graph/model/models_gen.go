@@ -818,11 +818,6 @@ type PrepareForClearance struct {
 type Query struct {
 }
 
-// Questionnaires groups all questionnaire-related fields for a model plan
-type Questionnaires struct {
-	IddocQuestionnaire models.IDDOCQuestionnaire `json:"iddocQuestionnaire"`
-}
-
 type ReportAProblemInput struct {
 	IsAnonymousSubmission bool                    `json:"isAnonymousSubmission"`
 	AllowContact          *bool                   `json:"allowContact,omitempty"`

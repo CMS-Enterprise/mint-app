@@ -65,7 +65,7 @@ const CollaborationArea = () => {
     abbreviation,
     discussions,
     documents,
-    dataExchangeApproach,
+    questionnaires: { dataExchangeApproach },
     echimpCRsAndTDLs,
     timeline,
     status,

@@ -37,8 +37,9 @@ const ReadOnlyDataExchangeApproach = ({
     return <NotFoundPartial componentNotFound />;
   }
 
-  const allDataExchangeApproachData = (data?.modelPlan.dataExchangeApproach ||
-    {}) as GetAllDataExchangeApproachQuery['modelPlan']['dataExchangeApproach'];
+  const allDataExchangeApproachData = (data?.modelPlan.questionnaires
+    .dataExchangeApproach ||
+    {}) as GetAllDataExchangeApproachQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
   return (
     <div

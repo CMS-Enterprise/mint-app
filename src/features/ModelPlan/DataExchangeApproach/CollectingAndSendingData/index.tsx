@@ -39,7 +39,7 @@ import {
 } from 'utils/modelPlan';
 
 type CollectingAndSendingDataType =
-  GetCollectingAndSendingDataQuery['modelPlan']['dataExchangeApproach'];
+  GetCollectingAndSendingDataQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 const defaulFormValues: CollectingAndSendingDataType = {
   __typename: 'PlanDataExchangeApproach',
@@ -76,7 +76,7 @@ const CollectingAndSendingData = () => {
   });
 
   const formData = mapDefaultFormValues<CollectingAndSendingDataType>(
-    data?.modelPlan?.dataExchangeApproach,
+    data?.modelPlan?.questionnaires?.dataExchangeApproach,
     defaulFormValues
   );
 
@@ -111,7 +111,7 @@ const CollectingAndSendingData = () => {
   useEffect(() => {
     reset(
       mapDefaultFormValues<CollectingAndSendingDataType>(
-        data?.modelPlan?.dataExchangeApproach,
+        data?.modelPlan?.questionnaires?.dataExchangeApproach,
         defaulFormValues
       )
     );

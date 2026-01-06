@@ -4,18 +4,20 @@ export default gql(/* GraphQL */ `
   query GetNewMethodologiesAndConsiderations($id: UUID!) {
     modelPlan(id: $id) {
       id
-      dataExchangeApproach {
-        id
-        willImplementNewDataExchangeMethods
-        newDataExchangeMethodsDescription
-        newDataExchangeMethodsNote
-        additionalDataExchangeConsiderationsDescription
-        isDataExchangeApproachComplete
-        markedCompleteByUserAccount {
+      questionnaires {
+        dataExchangeApproach {
           id
-          commonName
+          willImplementNewDataExchangeMethods
+          newDataExchangeMethodsDescription
+          newDataExchangeMethodsNote
+          additionalDataExchangeConsiderationsDescription
+          isDataExchangeApproachComplete
+          markedCompleteByUserAccount {
+            id
+            commonName
+          }
+          markedCompleteDts
         }
-        markedCompleteDts
       }
     }
   }

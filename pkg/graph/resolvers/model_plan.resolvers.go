@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -66,11 +65,6 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 // Payments is the resolver for the payments field.
 func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error) {
 	return PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
-}
-
-// DataExchangeApproach is the resolver for the dataExchangeApproach field.
-func (r *modelPlanResolver) DataExchangeApproach(ctx context.Context, obj *models.ModelPlan) (*models.PlanDataExchangeApproach, error) {
-	panic(fmt.Errorf("not implemented: DataExchangeApproach - dataExchangeApproach"))
 }
 
 // TaskListStatus is the resolver for the taskListStatus field.
@@ -145,8 +139,10 @@ func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan)
 }
 
 // Questionnaires is the resolver for the questionnaires field.
-func (r *modelPlanResolver) Questionnaires(ctx context.Context, obj *models.ModelPlan) (*model.Questionnaires, error) {
-	panic(fmt.Errorf("not implemented: Questionnaires - questionnaires"))
+func (r *modelPlanResolver) Questionnaires(ctx context.Context, obj *models.ModelPlan) (*models.Questionnaires, error) {
+	return &models.Questionnaires{
+		ModelPlanID: obj.ID,
+	}, nil
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.
