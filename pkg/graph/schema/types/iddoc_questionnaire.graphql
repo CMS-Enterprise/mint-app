@@ -1,0 +1,122 @@
+"""
+IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
+"""
+enum IDDOCQuestionnaireStatus {
+  NOT_NEEDED
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+"""
+IDDOCFileType represents the types of files that can be exchanged
+"""
+enum IDDOCFileType {
+  BENEFICIARY
+  PROVIDER
+  PART_A_CLAIMS
+  PART_B_CLAIMS
+  OTHER
+}
+
+"""
+IDDOCLoadType represents how data will be loaded
+"""
+enum IDDOCLoadType {
+  INITIAL
+  ONGOING
+  BOTH
+}
+
+"""
+IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan
+"""
+type IDDOCQuestionnaire {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # IDDOCQuestionnaire fields
+  technicalContactsIdentified: Boolean
+  captureParticipantInformation: Boolean
+
+  icdOwner: String
+  draftIcdRequiredBy: Time
+
+  uatTestDataNeeds: String
+  stcTestDataNeeds: String
+  testingTimelines: String
+
+  fileTypes: [IDDOCFileType!]!
+  responseTypes: String
+  fileFrequency: String
+  loadType: IDDOCLoadType
+  eftConnectivitySetup: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+
+  # IDDOCQuestionnaire Metadata
+  """
+  Indicates whether the IDDOC questionnaire is needed for this model plan
+  """
+  needed: Boolean!
+
+  """
+  The user who completed the questionnaire
+  """
+  completedBy: UUID
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the questionnaire was completed
+  """
+  completedDts: Time
+
+  """
+  Computed status of the questionnaire
+  """
+  status: IDDOCQuestionnaireStatus!
+
+  # Model Metadata
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input IDDOCQuestionnaireChanges {
+  technicalContactsIdentified: Boolean
+  captureParticipantInformation: Boolean
+
+  icdOwner: String
+  draftIcdRequiredBy: Time
+
+  uatTestDataNeeds: String
+  stcTestDataNeeds: String
+  testingTimelines: String
+
+  fileTypes: [IDDOCFileType!]
+  responseTypes: String
+  fileFrequency: String
+  loadType: IDDOCLoadType
+  eftConnectivitySetup: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+}
+
+extend type Mutation {
+  # Admin / system-only
+  updateIDDOCQuestionnaire(
+    id: UUID!
+    changes: IDDOCQuestionnaireChanges!
+  ): IDDOCQuestionnaire! @hasRole(role: MINT_ASSESSMENT)
+
+  # User completion
+  completeIDDOCQuestionnaire(id: UUID!): IDDOCQuestionnaire!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

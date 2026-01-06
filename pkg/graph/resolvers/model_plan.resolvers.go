@@ -70,7 +70,7 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 
 // DataExchangeApproach is the resolver for the dataExchangeApproach field.
 func (r *modelPlanResolver) DataExchangeApproach(ctx context.Context, obj *models.ModelPlan) (*models.PlanDataExchangeApproach, error) {
-	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ID)
+	panic(fmt.Errorf("not implemented: DataExchangeApproach - dataExchangeApproach"))
 }
 
 // TaskListStatus is the resolver for the taskListStatus field.
@@ -144,9 +144,9 @@ func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan)
 	return PlanTimelineGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
-// IddocQuestionare is the resolver for the iddocQuestionare field.
-func (r *modelPlanResolver) IddocQuestionare(ctx context.Context, obj *models.ModelPlan) (*models.IDDOCQuestionare, error) {
-	panic(fmt.Errorf("not implemented: IddocQuestionare - iddocQuestionare"))
+// Questionnaires is the resolver for the questionnaires field.
+func (r *modelPlanResolver) Questionnaires(ctx context.Context, obj *models.ModelPlan) (*model.Questionnaires, error) {
+	panic(fmt.Errorf("not implemented: Questionnaires - questionnaires"))
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.

@@ -125,7 +125,7 @@ type ModelPlan {
   opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
   timeline: PlanTimeline!
-  iddocQuestionare: IDDOCQuestionare!
+  questionnaires: Questionnaires!
   """
   Most recent edit to the model plan.
   This returns the most recent edit, that doesn't require privileges to view.

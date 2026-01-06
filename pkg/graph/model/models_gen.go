@@ -48,9 +48,23 @@ type ExistingModelLinkTranslation struct {
 	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
-// IDDOCQuestionareChanges represents the possible changes you can make to an IDDOC questionnaire when updating it.
-type IDDOCQuestionareChanges struct {
-	Needed *bool `json:"needed,omitempty"`
+type IDDOCQuestionnaireChanges struct {
+	TechnicalContactsIdentified    *bool                  `json:"technicalContactsIdentified,omitempty"`
+	CaptureParticipantInformation  *bool                  `json:"captureParticipantInformation,omitempty"`
+	IcdOwner                       *string                `json:"icdOwner,omitempty"`
+	DraftIcdRequiredBy             *time.Time             `json:"draftIcdRequiredBy,omitempty"`
+	UatTestDataNeeds               *string                `json:"uatTestDataNeeds,omitempty"`
+	StcTestDataNeeds               *string                `json:"stcTestDataNeeds,omitempty"`
+	TestingTimelines               *string                `json:"testingTimelines,omitempty"`
+	FileTypes                      []models.IDDOCFileType `json:"fileTypes,omitempty"`
+	ResponseTypes                  *string                `json:"responseTypes,omitempty"`
+	FileFrequency                  *string                `json:"fileFrequency,omitempty"`
+	LoadType                       *models.IDDOCLoadType  `json:"loadType,omitempty"`
+	EftConnectivitySetup           *bool                  `json:"eftConnectivitySetup,omitempty"`
+	UnsolicitedAdjustmentsIncluded *bool                  `json:"unsolicitedAdjustmentsIncluded,omitempty"`
+	DataFlowDiagramsNeeded         *bool                  `json:"dataFlowDiagramsNeeded,omitempty"`
+	ProduceBenefitEnhancementFiles *bool                  `json:"produceBenefitEnhancementFiles,omitempty"`
+	FileNamingConventions          *string                `json:"fileNamingConventions,omitempty"`
 }
 
 // Represents key contact category base translation data
@@ -802,6 +816,11 @@ type PrepareForClearance struct {
 
 // Query definition for the schema
 type Query struct {
+}
+
+// Questionnaires groups all questionnaire-related fields for a model plan
+type Questionnaires struct {
+	IddocQuestionnaire models.IDDOCQuestionnaire `json:"iddocQuestionnaire"`
 }
 
 type ReportAProblemInput struct {
@@ -1930,57 +1949,53 @@ func (e GeographyType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// IDDOCQuestionareStatus represents the status of an IDDOC questionnaire
-type IDDOCQuestionareStatus string
+// IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
+type IDDOCQuestionnaireStatus string
 
 const (
-	// The questionnaire is not needed for this model plan
-	IDDOCQuestionareStatusNotNeeded IDDOCQuestionareStatus = "NOT_NEEDED"
-	// The questionnaire has not been started yet
-	IDDOCQuestionareStatusNotStarted IDDOCQuestionareStatus = "NOT_STARTED"
-	// The questionnaire is currently being filled out
-	IDDOCQuestionareStatusInProgress IDDOCQuestionareStatus = "IN_PROGRESS"
-	// The questionnaire has been completed
-	IDDOCQuestionareStatusCompleted IDDOCQuestionareStatus = "COMPLETED"
+	IDDOCQuestionnaireStatusNotNeeded  IDDOCQuestionnaireStatus = "NOT_NEEDED"
+	IDDOCQuestionnaireStatusNotStarted IDDOCQuestionnaireStatus = "NOT_STARTED"
+	IDDOCQuestionnaireStatusInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
+	IDDOCQuestionnaireStatusCompleted  IDDOCQuestionnaireStatus = "COMPLETED"
 )
 
-var AllIDDOCQuestionareStatus = []IDDOCQuestionareStatus{
-	IDDOCQuestionareStatusNotNeeded,
-	IDDOCQuestionareStatusNotStarted,
-	IDDOCQuestionareStatusInProgress,
-	IDDOCQuestionareStatusCompleted,
+var AllIDDOCQuestionnaireStatus = []IDDOCQuestionnaireStatus{
+	IDDOCQuestionnaireStatusNotNeeded,
+	IDDOCQuestionnaireStatusNotStarted,
+	IDDOCQuestionnaireStatusInProgress,
+	IDDOCQuestionnaireStatusCompleted,
 }
 
-func (e IDDOCQuestionareStatus) IsValid() bool {
+func (e IDDOCQuestionnaireStatus) IsValid() bool {
 	switch e {
-	case IDDOCQuestionareStatusNotNeeded, IDDOCQuestionareStatusNotStarted, IDDOCQuestionareStatusInProgress, IDDOCQuestionareStatusCompleted:
+	case IDDOCQuestionnaireStatusNotNeeded, IDDOCQuestionnaireStatusNotStarted, IDDOCQuestionnaireStatusInProgress, IDDOCQuestionnaireStatusCompleted:
 		return true
 	}
 	return false
 }
 
-func (e IDDOCQuestionareStatus) String() string {
+func (e IDDOCQuestionnaireStatus) String() string {
 	return string(e)
 }
 
-func (e *IDDOCQuestionareStatus) UnmarshalGQL(v any) error {
+func (e *IDDOCQuestionnaireStatus) UnmarshalGQL(v any) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = IDDOCQuestionareStatus(str)
+	*e = IDDOCQuestionnaireStatus(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCQuestionareStatus", str)
+		return fmt.Errorf("%s is not a valid IDDOCQuestionnaireStatus", str)
 	}
 	return nil
 }
 
-func (e IDDOCQuestionareStatus) MarshalGQL(w io.Writer) {
+func (e IDDOCQuestionnaireStatus) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-func (e *IDDOCQuestionareStatus) UnmarshalJSON(b []byte) error {
+func (e *IDDOCQuestionnaireStatus) UnmarshalJSON(b []byte) error {
 	s, err := strconv.Unquote(string(b))
 	if err != nil {
 		return err
@@ -1988,7 +2003,7 @@ func (e *IDDOCQuestionareStatus) UnmarshalJSON(b []byte) error {
 	return e.UnmarshalGQL(s)
 }
 
-func (e IDDOCQuestionareStatus) MarshalJSON() ([]byte, error) {
+func (e IDDOCQuestionnaireStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

@@ -705,9 +705,26 @@ export enum GeographyType {
   STATE = 'STATE'
 }
 
-/** IDDOCQuestionare represents the IDDOC questionnaire for a model plan */
-export type IddocQuestionare = {
-  __typename: 'IDDOCQuestionare';
+/** IDDOCFileType represents the types of files that can be exchanged */
+export enum IddocFileType {
+  BENEFICIARY = 'BENEFICIARY',
+  OTHER = 'OTHER',
+  PART_A_CLAIMS = 'PART_A_CLAIMS',
+  PART_B_CLAIMS = 'PART_B_CLAIMS',
+  PROVIDER = 'PROVIDER'
+}
+
+/** IDDOCLoadType represents how data will be loaded */
+export enum IddocLoadType {
+  BOTH = 'BOTH',
+  INITIAL = 'INITIAL',
+  ONGOING = 'ONGOING'
+}
+
+/** IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan */
+export type IddocQuestionnaire = {
+  __typename: 'IDDOCQuestionnaire';
+  captureParticipantInformation?: Maybe<Scalars['Boolean']['output']>;
   /** The user who completed the questionnaire */
   completedBy?: Maybe<Scalars['UUID']['output']>;
   completedByUserAccount?: Maybe<UserAccount>;
@@ -716,31 +733,56 @@ export type IddocQuestionare = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  dataFlowDiagramsNeeded?: Maybe<Scalars['Boolean']['output']>;
+  draftIcdRequiredBy?: Maybe<Scalars['Time']['output']>;
+  eftConnectivitySetup?: Maybe<Scalars['Boolean']['output']>;
+  fileFrequency?: Maybe<Scalars['String']['output']>;
+  fileNamingConventions?: Maybe<Scalars['String']['output']>;
+  fileTypes: Array<IddocFileType>;
+  icdOwner?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
+  loadType?: Maybe<IddocLoadType>;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   /** Indicates whether the IDDOC questionnaire is needed for this model plan */
   needed: Scalars['Boolean']['output'];
-  /** The current status of the questionnaire (computed based on completion state) */
-  status: IddocQuestionareStatus;
+  produceBenefitEnhancementFiles?: Maybe<Scalars['Boolean']['output']>;
+  responseTypes?: Maybe<Scalars['String']['output']>;
+  /** Computed status of the questionnaire */
+  status: IddocQuestionnaireStatus;
+  stcTestDataNeeds?: Maybe<Scalars['String']['output']>;
+  technicalContactsIdentified?: Maybe<Scalars['Boolean']['output']>;
+  testingTimelines?: Maybe<Scalars['String']['output']>;
+  uatTestDataNeeds?: Maybe<Scalars['String']['output']>;
+  unsolicitedAdjustmentsIncluded?: Maybe<Scalars['Boolean']['output']>;
 };
 
-/** IDDOCQuestionareChanges represents the possible changes you can make to an IDDOC questionnaire when updating it. */
-export type IddocQuestionareChanges = {
-  needed?: InputMaybe<Scalars['Boolean']['input']>;
+export type IddocQuestionnaireChanges = {
+  captureParticipantInformation?: InputMaybe<Scalars['Boolean']['input']>;
+  dataFlowDiagramsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
+  draftIcdRequiredBy?: InputMaybe<Scalars['Time']['input']>;
+  eftConnectivitySetup?: InputMaybe<Scalars['Boolean']['input']>;
+  fileFrequency?: InputMaybe<Scalars['String']['input']>;
+  fileNamingConventions?: InputMaybe<Scalars['String']['input']>;
+  fileTypes?: InputMaybe<Array<IddocFileType>>;
+  icdOwner?: InputMaybe<Scalars['String']['input']>;
+  loadType?: InputMaybe<IddocLoadType>;
+  produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']['input']>;
+  responseTypes?: InputMaybe<Scalars['String']['input']>;
+  stcTestDataNeeds?: InputMaybe<Scalars['String']['input']>;
+  technicalContactsIdentified?: InputMaybe<Scalars['Boolean']['input']>;
+  testingTimelines?: InputMaybe<Scalars['String']['input']>;
+  uatTestDataNeeds?: InputMaybe<Scalars['String']['input']>;
+  unsolicitedAdjustmentsIncluded?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** IDDOCQuestionareStatus represents the status of an IDDOC questionnaire */
-export enum IddocQuestionareStatus {
-  /** The questionnaire has been completed */
+/** IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire */
+export enum IddocQuestionnaireStatus {
   COMPLETED = 'COMPLETED',
-  /** The questionnaire is currently being filled out */
   IN_PROGRESS = 'IN_PROGRESS',
-  /** The questionnaire is not needed for this model plan */
   NOT_NEEDED = 'NOT_NEEDED',
-  /** The questionnaire has not been started yet */
   NOT_STARTED = 'NOT_STARTED'
 }
 
@@ -1689,7 +1731,6 @@ export type ModelPlan = {
   generalCharacteristics: PlanGeneralCharacteristics;
   generalStatus: GeneralStatus;
   id: Scalars['UUID']['output'];
-  iddocQuestionare: IddocQuestionare;
   isCollaborator: Scalars['Boolean']['output'];
   isFavorite: Scalars['Boolean']['output'];
   modelName: Scalars['String']['output'];
@@ -1710,6 +1751,7 @@ export type ModelPlan = {
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
   previousSuggestedPhase?: Maybe<ModelPhase>;
+  questionnaires: Questionnaires;
   status: ModelStatus;
   suggestedPhase?: Maybe<PhaseSuggestion>;
   taskListStatus: TaskStatus;
@@ -1915,6 +1957,7 @@ export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
+  completeIDDOCQuestionnaire: IddocQuestionnaire;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -1998,7 +2041,7 @@ export type Mutation = {
    * The fieldName allows it so you can create links for multiple sections of the model plan
    */
   updateExistingModelLinks: ExistingModelLinks;
-  updateIDDOCQuestionare: IddocQuestionare;
+  updateIDDOCQuestionnaire: IddocQuestionnaire;
   updateKeyContact: KeyContact;
   updateKeyContactCategory: KeyContactCategory;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
@@ -2035,6 +2078,12 @@ export type MutationAddPlanFavoriteArgs = {
 /** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCompleteIddocQuestionnaireArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -2374,8 +2423,8 @@ export type MutationUpdateExistingModelLinksArgs = {
 
 
 /** Mutations definition for the schema */
-export type MutationUpdateIddocQuestionareArgs = {
-  changes: IddocQuestionareChanges;
+export type MutationUpdateIddocQuestionnaireArgs = {
+  changes: IddocQuestionnaireChanges;
   id: Scalars['UUID']['input'];
 };
 
@@ -4798,6 +4847,12 @@ export type QueryTranslatedAuditCollectionArgs = {
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
+};
+
+/** Questionnaires groups all questionnaire-related fields for a model plan */
+export type Questionnaires = {
+  __typename: 'Questionnaires';
+  iddocQuestionnaire: IddocQuestionnaire;
 };
 
 export enum RecruitmentType {
