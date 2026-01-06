@@ -25,7 +25,6 @@ import (
 func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 	addressBook := email.AddressBook{MINTTeamEmail: "mint.team@local.test"}
 
 	worker := &Worker{
@@ -42,12 +41,6 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	}
 	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-
-	testTemplate, expectedSubject, expectedBody := emailtestconfigs.CreateTemplateCacheHelperWithInputTemplates(
-		newPlan.ModelName,
-		newPlan,
-		"{{.ModelName}}'s Test",
-		"{{.ModelPlanName}} {{.ModelPlanID}}")
 
 	// Add Documents
 	suite.createPlanDocument(plan)
@@ -125,12 +118,6 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(suite.testConfigs.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	mockEmailTemplateService.
-		EXPECT().
-		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachMarkedCompleteTemplateName)).
-		Return(testTemplate, nil).
-		AnyTimes()
-
 	mockEmailService.
 		EXPECT().
 		GetConfig().
@@ -143,9 +130,9 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 			gomock.Any(),
 			gomock.Any(),
 			gomock.Any(),
-			gomock.Eq(expectedSubject),
 			gomock.Any(),
-			gomock.Eq(expectedBody),
+			gomock.Any(),
+			gomock.Any(),
 			gomock.Any(),
 		).AnyTimes()
 
@@ -158,7 +145,6 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		mockEmailService,
-		mockEmailTemplateService,
 		addressBook,
 	)
 

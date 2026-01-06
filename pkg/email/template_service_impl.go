@@ -54,15 +54,6 @@ var operationalSolutionSelectedBodyTemplate string
 //go:embed templates/operational_solution_selected_subject.html
 var operationalSolutionSelectedSubjectTemplate string
 
-// DataExchangeApproachMarkedCompleteTemplateName is the template name for the data exchange approach completed email
-const DataExchangeApproachMarkedCompleteTemplateName string = "data_exchange_approach_marked_complete"
-
-//go:embed templates/data_exchange_approach_marked_complete_body.html
-var dataExchangeApproachMarkedCompleteBodyTemplate string
-
-//go:embed templates/data_exchange_approach_marked_complete_subject.html
-var dataExchangeApproachMarkedCompleteSubjectTemplate string
-
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -113,11 +104,6 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(DataExchangeApproachMarkedCompleteTemplateName, dataExchangeApproachMarkedCompleteSubjectTemplate, dataExchangeApproachMarkedCompleteBodyTemplate)
 	if err != nil {
 		return err
 	}

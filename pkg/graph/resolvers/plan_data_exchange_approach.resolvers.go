@@ -27,7 +27,6 @@ func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, i
 		principal,
 		r.store,
 		r.emailService,
-		r.emailTemplateService,
 		r.addressBook,
 	)
 }
