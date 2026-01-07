@@ -65,10 +65,9 @@ const CollaborationArea = () => {
     abbreviation,
     discussions,
     documents,
-    questionnaires: { dataExchangeApproach },
+    questionnaires,
     echimpCRsAndTDLs,
     timeline,
-    // iddocQuestionnaire,
     status,
     collaborators,
     isFavorite,
@@ -242,8 +241,7 @@ const CollaborationArea = () => {
 
                   <AdditionalQuestionnairesCard
                     modelID={modelID}
-                    dataExhangeApproachData={dataExchangeApproach}
-                    // iddocQuestionnaireData={iddocQuestionnaire}
+                    questionnairesData={questionnaires}
                   />
 
                   <MTOCard modelID={modelID} mtoMatrix={mtoMatrix} />

@@ -6,24 +6,26 @@ export default gql(/* GraphQL */ `
       id
       modelName
       abbreviation
-      dataExchangeApproach {
-        id
-        status
-        modifiedDts
-        modifiedByUserAccount {
+      questionnaires {
+        dataExchangeApproach {
           id
-          commonName
+          status
+          modifiedDts
+          modifiedByUserAccount {
+            id
+            commonName
+          }
         }
+        # iddocQuestionnaire {
+        #   id
+        #   status
+        #   modifiedDts
+        #   modifiedByUserAccount {
+        #     id
+        #     commonName
+        #   }
+        # }
       }
-      # iddocQuestionnaire {
-      #   id
-      #   status
-      #   modifiedDts
-      #   modifiedByUserAccount {
-      #     id
-      #     commonName
-      #   }
-      # }
     }
   }
 `);

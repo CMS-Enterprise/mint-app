@@ -24,19 +24,29 @@ const QuestionnaireListStatusTag = ({
   let tagCopy;
   switch (status) {
     case 'READY':
-      tagCopy = additionalQuestionnairesT('questionnaireStatus.NOT_STARTED');
+    case 'NOT_STARTED':
+      tagCopy = additionalQuestionnairesT(
+        'questionnaireStatus.dataExchangeApproach.READY'
+      );
       tagStyle = 'bg-info-light';
       break;
     case 'IN_PROGRESS':
-      tagCopy = additionalQuestionnairesT('questionnaireStatus.IN_PROGRESS');
+      tagCopy = additionalQuestionnairesT(
+        'questionnaireStatus.dataExchangeApproach.IN_PROGRESS'
+      );
       tagStyle = 'bg-warning';
       break;
     case 'NOT_NEEDED':
-      tagCopy = additionalQuestionnairesT('questionnaireStatus.NOT_NEEDED');
+      tagCopy = additionalQuestionnairesT(
+        'questionnaireStatus.iddocQuestionnaire.NOT_NEEDED'
+      );
       tagStyle = 'bg-white border-2px text-base';
       break;
     case 'COMPLETE':
-      tagCopy = additionalQuestionnairesT('questionnaireStatus.COMPLETE');
+    case 'COMPLETED':
+      tagCopy = additionalQuestionnairesT(
+        'questionnaireStatus.dataExchangeApproach.COMPLETE'
+      );
       tagStyle = 'bg-success-dark text-white';
       break;
     default:
@@ -46,7 +56,7 @@ const QuestionnaireListStatusTag = ({
 
   return (
     <div
-      data-testid="questionnairelist-tag"
+      data-testid="questionnaireList-tag"
       className={`additional-questionnaires-list__task-tag line-height-body-1 text-bold ${tagStyle} ${
         classname ?? ''
       }`}
@@ -73,17 +83,27 @@ export const QuestionnaireListButton = ({
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
 
-  const ctaCopy = () => {
-    if (status === DataExchangeApproachStatus.READY) {
+  const getCtaCopy = () => {
+    if (
+      status === DataExchangeApproachStatus.READY ||
+      status === IddocQuestionnaireStatus.NOT_STARTED
+    ) {
       return additionalQuestionnairesT('questionnaireButton.start');
     }
 
-    if (status === 'IN_PROGRESS') {
+    if (
+      status === DataExchangeApproachStatus.IN_PROGRESS ||
+      status === IddocQuestionnaireStatus.IN_PROGRESS
+    ) {
       return additionalQuestionnairesT('questionnaireButton.continue');
     }
 
     return '';
   };
+
+  if (status === IddocQuestionnaireStatus.NOT_NEEDED) {
+    return null;
+  }
 
   return (
     <>
@@ -97,9 +117,9 @@ export const QuestionnaireListButton = ({
             `/models/${modelID}/collaboration-area/additional-questionnaires/${path}`
           )
         }
-        aria-label={`${ctaCopy()} ${ariaLabel?.toLowerCase()}`}
+        aria-label={`${getCtaCopy()} ${ariaLabel?.toLowerCase()}`}
       >
-        {ctaCopy()}
+        {getCtaCopy()}
       </Button>
     </>
   );

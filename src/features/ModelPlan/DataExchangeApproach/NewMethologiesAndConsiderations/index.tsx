@@ -60,7 +60,9 @@ const NewMethodologiesAndConsiderations = () => {
   const { t: dataExchangeApproachMiscT } = useTranslation(
     'dataExchangeApproachMisc'
   );
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   const examplesInclude = tArray<Record<string, string>>(
     'dataExchangeApproachMisc:newMethodologiesAndConsiderations.additionalDetails.examples'
@@ -336,7 +338,9 @@ const NewMethodologiesAndConsiderations = () => {
                 />
 
                 <FormFooter
-                  homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
+                  homeArea={additionalQuestionnairesT(
+                    'saveAndReturnToQuestionnaires'
+                  )}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation`}
                   nextPage={false}

@@ -55,19 +55,4 @@
     padding: 0 24px;
     margin-block: 16px;
   }
-
-  &__status-not-started {
-    background-color: color('info-lighter') !important;
-    color: color('info-darker') !important;
-  }
-
-  &__status-in-progress {
-    background-color: color('warning-lighter') !important;
-    color: color('warning-darker') !important;
-  }
-
-  &__status-completed {
-    background-color: color('success-lighter') !important;
-    color: color('success-darker') !important;
-  }
 }

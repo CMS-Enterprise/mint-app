@@ -2,10 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { tArray } from 'utils/translation';
 
 const QuestionnairesSideNav = () => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
+  );
+  const contentArticlesList = tArray<{ copy: string; href: string }>(
+    'additionalQuestionnaires:sideNav.articles'
   );
 
   return (
@@ -17,25 +21,17 @@ const QuestionnairesSideNav = () => {
         <h4 className="margin-bottom-1">
           {additionalQuestionnairesT('sideNav.relatedContent')}
         </h4>
-        <div className="margin-bottom-1">
-          <UswdsReactLink
-            to="/help-and-knowledge/high-level-project-plan"
-            target="_blank"
-            className="line-height-body-5"
-          >
-            {additionalQuestionnairesT('sideNav.highLevelProject')}
-          </UswdsReactLink>
-        </div>
-
-        <div>
-          <UswdsReactLink
-            to="/help-and-knowledge/about-mto"
-            target="_blank"
-            className="line-height-body-5"
-          >
-            {additionalQuestionnairesT('sideNav.aboutMto')}
-          </UswdsReactLink>
-        </div>
+        {contentArticlesList.map((article: { copy: string; href: string }) => (
+          <div className="margin-bottom-1" key={article.copy}>
+            <UswdsReactLink
+              to={article.href}
+              target="_blank"
+              className="line-height-body-5"
+            >
+              {article.copy}
+            </UswdsReactLink>
+          </div>
+        ))}
       </div>
     </div>
   );

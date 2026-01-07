@@ -61,7 +61,9 @@ const CollectionAndAggregation = () => {
   const { t: dataExchangeApproachMiscT } = useTranslation(
     'dataExchangeApproachMisc'
   );
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   const {
     doesNeedToMakeMultiPayerDataAvailable:
@@ -384,7 +386,9 @@ const CollectionAndAggregation = () => {
                 />
 
                 <FormFooter
-                  homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
+                  homeArea={additionalQuestionnairesT(
+                    'saveAndReturnToQuestionnaires'
+                  )}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/collecting-and-sending-data`}
                   id="collection-and-aggregation-form"

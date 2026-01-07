@@ -3,17 +3,17 @@ import {
   IddocQuestionnaireStatus
 } from '../../../gql/generated/graphql';
 
-const questionnaireStatus: Record<
-  DataExchangeApproachStatus | IddocQuestionnaireStatus,
-  string
-> = {
+const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
   [DataExchangeApproachStatus.READY]: 'Ready to start',
   [DataExchangeApproachStatus.IN_PROGRESS]: 'In progress',
-  [DataExchangeApproachStatus.COMPLETE]: 'Complete',
+  [DataExchangeApproachStatus.COMPLETE]: 'Completed'
+};
+
+const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
   [IddocQuestionnaireStatus.NOT_STARTED]: 'Ready to start',
-  //   [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
+  [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
   [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not Needed',
-  [IddocQuestionnaireStatus.COMPLETED]: 'Complete'
+  [IddocQuestionnaireStatus.COMPLETED]: 'Completed'
 };
 
 const additionalQuestionnaires = {
@@ -21,10 +21,21 @@ const additionalQuestionnaires = {
   returnToCollaboration: 'Return to model collaboration area',
   sideNav: {
     relatedContent: 'Related content',
-    highLevelProject: 'High-level project plan (opens in a new tab)',
-    aboutMto: 'About the model-to-operations matrix (MTO)'
+    articles: [
+      {
+        copy: 'High-level project plan (opens in a new tab)',
+        href: '/help-and-knowledge/high-level-project-plan'
+      },
+      {
+        copy: 'creating-mto-matrixCreating your Model-to-operations matrix (MTO) in MINTCreating your model-to-operations matrix (MTO) in MINT (opens in a new tab)',
+        href: 'creating-mto-matrix'
+      }
+    ]
   },
-  questionnaireStatus,
+  questionnaireStatus: {
+    dataExchangeApproach: dataExchangeApproachStatus,
+    iddocQuestionnaire: iddocQuestionnaireStatus
+  },
   questionnairesList: {
     dataExchangeApproach: {
       heading: 'Data exchange approach',
@@ -43,7 +54,8 @@ const additionalQuestionnaires = {
     start: 'Start',
     continue: 'Continue'
   },
-  lastUpdated: 'Last updated'
+  lastUpdated: 'Last updated',
+  saveAndReturnToQuestionnaires: 'Save and return to questionnaires'
 };
 
 export default additionalQuestionnaires;

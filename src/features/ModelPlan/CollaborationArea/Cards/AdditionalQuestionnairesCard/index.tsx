@@ -10,28 +10,76 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
+import {
+  DataExchangeApproachStatus,
+  GetCollaborationAreaQuery,
+  IddocQuestionnaireStatus
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
 import '../cards.scss';
 
-export type DataExchangeApproachType =
-  GetCollaborationAreaQuery['modelPlan']['dataExchangeApproach'];
-
-// export type iddocQuestionnaireType =
-//   GetCollaborationAreaQuery['modelPlan']['iddocQuestionnaire'];
+export type QuestionnairesType =
+  GetCollaborationAreaQuery['modelPlan']['questionnaires'];
 
 export type AdditionalQuestionnairesCardType = {
   modelID: string;
-  dataExhangeApproachData: DataExchangeApproachType;
-  // iddocQuestionnaireData: iddocQuestionnaireType;
+  questionnairesData: QuestionnairesType;
+};
+
+const REQUIRED_QUESTIONNAIRES = ['dataExchangeApproach'];
+
+const QuestionnaireStatusPill = ({
+  status
+}: {
+  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+}) => {
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
+
+  let pillStyle;
+  let pillCopy;
+  switch (status) {
+    case 'READY':
+    case 'NOT_STARTED':
+      pillCopy = collaborationAreaT(
+        'additionalQuestionnairesCard.questionnaireStatus.dataExchangeApproach.READY'
+      );
+      pillStyle = 'bg-info-lighter text-info-darker';
+      break;
+    case 'IN_PROGRESS':
+      pillCopy = collaborationAreaT(
+        'additionalQuestionnairesCard.questionnaireStatus.dataExchangeApproach.IN_PROGRESS'
+      );
+      pillStyle = 'bg-warning-lighter text-warning-darker';
+      break;
+    case 'COMPLETE':
+    case 'COMPLETED':
+      pillCopy = collaborationAreaT(
+        'additionalQuestionnairesCard.questionnaireStatus.dataExchangeApproach.COMPLETE'
+      );
+      pillStyle = 'bg-success-lighter text-success-darker';
+      break;
+    default:
+      pillCopy = '';
+      pillStyle = 'bg-info-lighter text-info-darker';
+  }
+
+  return (
+    <div
+      className={classNames(
+        'padding-y-02 padding-x-105 radius-pill margin-right-2',
+        pillStyle
+      )}
+    >
+      {pillCopy}
+    </div>
+  );
 };
 
 const AdditionalQuestionnairesCard = ({
   modelID,
-  dataExhangeApproachData
-  // iddocQuestionnaireData
+  questionnairesData
 }: AdditionalQuestionnairesCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -39,6 +87,62 @@ const AdditionalQuestionnairesCard = ({
   );
 
   const navigate = useNavigate();
+
+  // const { dataExchangeApproach } = questionnairesData;
+  // const { iddocQuestionnaire } = questionnaires;
+  const { __typename, ...questionnaires } = questionnairesData;
+
+  const questionnaireNames = Object.keys(
+    questionnaires
+  ) as (keyof typeof questionnaires)[];
+
+  const allQuestionnaires = questionnaireNames.reduce<{
+    requiredQuestionnaires: (typeof questionnaires)[keyof typeof questionnaires][];
+    otherQuestionnaires: (typeof questionnaires)[keyof typeof questionnaires][];
+  }>(
+    (groupedQuestionnaires, name) => {
+      if (REQUIRED_QUESTIONNAIRES.includes(name)) {
+        groupedQuestionnaires.requiredQuestionnaires.push(questionnaires[name]);
+      } else {
+        groupedQuestionnaires.otherQuestionnaires.push(questionnaires[name]);
+      }
+      return groupedQuestionnaires;
+    },
+    {
+      requiredQuestionnaires: [],
+      otherQuestionnaires: []
+    }
+  );
+
+  // test data
+  // const allQuestionnaires = {
+  //   requiredQuestionnaires: [
+  //     dataExchangeApproach,
+  //     {
+  //       __typename: 'IddocQuestionnaire',
+  //       id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
+  //       modifiedDts: '2026-01-05T22:55:26.923527Z',
+  //       modifiedByUserAccount: null,
+  //       status: IddocQuestionnaireStatus.COMPLETED,
+  //       isNeeded: false
+  //     }
+  //   ],
+  //   otherQuestionnaires: [
+  //     {
+  //       __typename: 'IddocQuestionnaire',
+  //       id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
+  //       modifiedDts: '2026-01-05T22:55:26.923527Z',
+  //       modifiedByUserAccount: null,
+  //       status: IddocQuestionnaireStatus.COMPLETED,
+  //       isNeeded: false
+  //     }
+  //   ]
+  // };
+
+  const requiredQuestionnairesCount =
+    allQuestionnaires.requiredQuestionnaires.length;
+
+  const otherQuestionnairesCount = allQuestionnaires.otherQuestionnaires.length;
 
   return (
     <>
@@ -56,49 +160,31 @@ const AdditionalQuestionnairesCard = ({
           <h4 className="text-bold margin-top-0 margin-bottom-2 line-height-body-2">
             {collaborationAreaT(
               'additionalQuestionnairesCard.requiredQuestionnairesCount',
-              { count: 1 }
+              { count: requiredQuestionnairesCount }
             )}
           </h4>
 
           {/* questionnaires status */}
-          <div className="margin-bottom-1">
-            <div className="display-flex flex-align-center margin-bottom-1">
-              <div
-                className={classNames(
-                  'padding-y-02 padding-x-105 radius-pill margin-right-2',
-                  {
-                    'collaboration-area__status-complete':
-                      dataExhangeApproachData.status === 'COMPLETE',
-                    'collaboration-area__status-in-progress':
-                      dataExhangeApproachData.status === 'IN_PROGRESS',
-                    'collaboration-area__status-not-started':
-                      dataExhangeApproachData.status === 'READY'
-                  }
-                )}
-              >
-                {additionalQuestionnairesT(
-                  `questionnaireStatus.${dataExhangeApproachData.status}`
-                )}
-              </div>
-              <p className="margin-y-0">
-                {additionalQuestionnairesT(
-                  'questionnairesList.dataExchangeApproach.heading'
-                )}
-              </p>
-            </div>
-
-            <div className="display-flex flex-align-center margin-bottom-1">
-              <div className="collaboration-area__status-not-started padding-y-02 padding-x-105 radius-pill margin-right-2">
-                {additionalQuestionnairesT(
-                  `questionnaireStatus.${dataExhangeApproachData.status}`
-                )}
-              </div>
-              <p className="margin-y-0">
-                {additionalQuestionnairesT(
-                  'questionnairesList.iddocQuestionnaire.heading'
-                )}
-              </p>
-            </div>
+          <div className="margin-bottom-2">
+            {allQuestionnaires.requiredQuestionnaires.map(
+              requiredQuestionnaire => (
+                <div className="display-flex flex-align-center margin-bottom-1">
+                  <QuestionnaireStatusPill
+                    status={requiredQuestionnaire.status}
+                  />
+                  <p className="margin-y-0">
+                    {additionalQuestionnairesT(
+                      `questionnairesList.${
+                        requiredQuestionnaire.__typename ===
+                        'PlanDataExchangeApproach'
+                          ? 'dataExchangeApproach'
+                          : 'iddocQuestionnaire'
+                      }.heading`
+                    )}
+                  </p>
+                </div>
+              )
+            )}
           </div>
 
           <UswdsReactLink
@@ -113,27 +199,29 @@ const AdditionalQuestionnairesCard = ({
             />
           </UswdsReactLink>
 
-          <div>
-            <h4 className="display-inline-block text-bold margin-top-3 margin-bottom-2 margin-right-2 line-height-body-2">
+          <div className="margin-top-8">
+            <h4 className="display-inline-block text-bold margin-top-4 margin-bottom-0 margin-right-2 line-height-body-2">
               {collaborationAreaT(
                 'additionalQuestionnairesCard.otherQuestionnairesCount',
-                { count: 1 }
+                { count: otherQuestionnairesCount }
               )}
             </h4>
 
-            <UswdsReactLink
-              to={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-              data-testid="view-data-exchange-help-article"
-              className="deep-underline"
-            >
-              {collaborationAreaT(
-                'additionalQuestionnairesCard.viewAllQuestionnaires'
-              )}
-              <Icon.ArrowForward
-                className="top-3px margin-left-05"
-                aria-label="forward"
-              />
-            </UswdsReactLink>
+            {otherQuestionnairesCount > 0 && (
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+                data-testid="view-data-exchange-help-article"
+                className="deep-underline"
+              >
+                {collaborationAreaT(
+                  'additionalQuestionnairesCard.viewAllQuestionnaires'
+                )}
+                <Icon.ArrowForward
+                  className="top-3px margin-left-05"
+                  aria-label="forward"
+                />
+              </UswdsReactLink>
+            )}
           </div>
         </CardBody>
 

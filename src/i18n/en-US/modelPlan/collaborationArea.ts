@@ -1,3 +1,21 @@
+import {
+  DataExchangeApproachStatus,
+  IddocQuestionnaireStatus
+} from '../../../gql/generated/graphql';
+
+const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
+  [DataExchangeApproachStatus.READY]: 'Not started',
+  [DataExchangeApproachStatus.IN_PROGRESS]: 'In progress',
+  [DataExchangeApproachStatus.COMPLETE]: 'Completed'
+};
+
+const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
+  [IddocQuestionnaireStatus.NOT_STARTED]: 'Not started',
+  [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
+  [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not needed',
+  [IddocQuestionnaireStatus.COMPLETED]: 'Completed'
+};
+
 const collaborationArea = {
   home: 'Home',
   heading: 'Model collaboration area',
@@ -56,7 +74,11 @@ const collaborationArea = {
     otherQuestionnairesCount: '{{count}} other questionnaires',
     otherQuestionnairesCount_other: '{{count}} other questionnaires',
     viewAllQuestionnaires: 'View all questionnaires',
-    goToQuestionnaires: 'Go to questionnaires'
+    goToQuestionnaires: 'Go to questionnaires',
+    questionnaireStatus: {
+      dataExchangeApproach: dataExchangeApproachStatus,
+      iddocQuestionnaire: iddocQuestionnaireStatus
+    }
   },
   mtoCard: {
     heading: 'Model-to-operations matrix (MTO)',

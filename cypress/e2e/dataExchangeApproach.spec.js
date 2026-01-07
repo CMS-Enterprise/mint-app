@@ -198,11 +198,8 @@ describe('The data exchange approach Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    // Save and go back to collaboration area
-    cy.contains(
-      'button',
-      'Save and return to model collaboration area'
-    ).click();
+    // Save and go back to questionnaires area
+    cy.contains('button', 'Save and return to questionnaires').click();
 
     cy.get('[data-testid="tasklist-tag"]').contains('Complete');
   });

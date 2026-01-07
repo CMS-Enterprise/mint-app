@@ -15,7 +15,6 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import useSectionLock from 'hooks/useSectionLock';
-// import dataExchangeApproach from 'i18n/en-US/modelPlan/dataExchangeApproach';
 import { formatDateLocal } from 'utils/date';
 
 import QuestionnaireListItem, {
@@ -24,7 +23,7 @@ import QuestionnaireListItem, {
 import QuestionnairesSideNav from './_components/QuestionnairesSideNav';
 
 type DataExchangeApproachType =
-  GetAllQuestionnairesQuery['modelPlan']['dataExchangeApproach'];
+  GetAllQuestionnairesQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 type QuestionnaireSections = { [key: string]: DataExchangeApproachType };
 
@@ -49,14 +48,10 @@ const AdditionalQuestionnaires = () => {
     }
   });
 
-  const modelPlan =
-    data?.modelPlan ||
+  const questionnaires =
+    data?.modelPlan?.questionnaires ||
     ({
-      __typename: 'ModelPlan',
-      id: '00000000-0000-0000-0000-000000000005',
-      modelName: 'Test Model Plan for MTO testing',
-      abbreviation: 'TMTO',
-      createdDts: '2026-01-05T22:55:26.923527Z',
+      __typename: 'Questionnaires',
       dataExchangeApproach: {
         __typename: 'PlanDataExchangeApproach',
         id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
@@ -64,16 +59,13 @@ const AdditionalQuestionnaires = () => {
         modifiedByUserAccount: null,
         status: 'READY'
       }
-    } as GetAllQuestionnairesQuery['modelPlan']);
+    } as GetAllQuestionnairesQuery['modelPlan']['questionnaires']);
 
-  const { dataExchangeApproach } = modelPlan;
+  const { dataExchangeApproach } = questionnaires || {}; // iddocQuestionnaire
 
   const questionnaireSections: QuestionnaireSections = {
     dataExchangeApproach
   };
-
-  //   const { modifiedDts, modifiedByUserAccount, status } =
-  //     dataExhangeApproachData;
 
   if (loading) {
     return <PageLoading />;
@@ -92,20 +84,6 @@ const AdditionalQuestionnaires = () => {
             BreadcrumbItemOptions.ADDITIONAL_QUESTIONNAIRES
           ]}
         />
-
-        {/* {modifiedDts && modifiedByUserAccount && !isLocked && (
-        <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
-          <span className="text-base margin-right-1">
-            {collaborationAreaT('additionalQuestionnairesCard.lastModified', {
-              date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-            })}
-          </span>
-          <Avatar
-            className="text-base-darkest"
-            user={modifiedByUserAccount.commonName}
-          />
-        </div>
-      )} */}
 
         <Grid row gap>
           <Grid desktop={{ col: 9 }} tablet={{ col: 9 }}>

@@ -14,6 +14,9 @@ import { tArray } from 'utils/translation';
 const AboutCompletingDataExchange = () => {
   const { t } = useTranslation('dataExchangeApproachMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -149,7 +152,7 @@ const AboutCompletingDataExchange = () => {
           aria-label="back"
         />
 
-        {miscellaneousT('saveAndReturnToCollaborationArea')}
+        {additionalQuestionnairesT('saveAndReturnToQuestionnaires')}
       </Button>
 
       <PageNumber currentPage={1} totalPages={4} className="margin-y-6" />

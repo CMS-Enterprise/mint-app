@@ -552,13 +552,10 @@ describe('Notification Center', () => {
         force: true
       });
 
-    cy.contains(
-      'button',
-      'Save and return to model collaboration area'
-    ).click();
+    cy.contains('button', 'Save and return to questionnaires').click();
 
-    cy.url().should('include', '/collaboration-area');
-    cy.get('h1').contains('Model collaboration area');
+    cy.url().should('include', '/questionnaires');
+    cy.get('h1').contains('Additional questionnaires');
 
     cy.get('[data-testid="navmenu__notification"]').click();
     cy.url().should('include', '/notifications');

@@ -50,6 +50,15 @@ export default gql(/* GraphQL */ `
             commonName
           }
         }
+        # iddocQuestionnaire {
+        #   id
+        #   status
+        #   modifiedDts
+        #   modifiedByUserAccount {
+        #     id
+        #     commonName
+        #   }
+        # }
       }
       documents {
         id
@@ -151,15 +160,6 @@ export default gql(/* GraphQL */ `
         }
         status
       }
-      # iddocQuestionnaire {
-      #   id
-      #   status
-      #   modifiedDts
-      #   modifiedByUserAccount {
-      #     id
-      #     commonName
-      #   }
-      # }
     }
   }
 `);

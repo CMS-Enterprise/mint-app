@@ -58,7 +58,9 @@ const CollectingAndSendingData = () => {
   const { t: dataExchangeApproachMiscT } = useTranslation(
     'dataExchangeApproachMisc'
   );
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   const {
     dataToCollectFromParticipants: dataToCollectFromParticipantsConfig,
@@ -363,7 +365,9 @@ const CollectingAndSendingData = () => {
                 />
 
                 <FormFooter
-                  homeArea={miscellaneousT('saveAndReturnToCollaborationArea')}
+                  homeArea={additionalQuestionnairesT(
+                    'saveAndReturnToQuestionnaires'
+                  )}
                   homeRoute={`/models/${modelID}/collaboration-area`}
                   backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/about-completing-data-exchange`}
                   nextPage

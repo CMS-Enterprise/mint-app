@@ -8,9 +8,7 @@ import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 
-import AdditionalQuestionnairesCard, {
-  DataExchangeApproachType
-} from './index';
+import AdditionalQuestionnairesCard, { QuestionnairesType } from './index';
 
 const mockAuthReducer = {
   isUserSet: true,
@@ -21,12 +19,15 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-const dataExchangeApproachMock: DataExchangeApproachType = {
-  __typename: 'PlanDataExchangeApproach',
-  id: '123',
-  status: DataExchangeApproachStatus.IN_PROGRESS,
-  modifiedDts: null,
-  modifiedByUserAccount: null
+const questionnairesMock: QuestionnairesType = {
+  __typename: 'Questionnaires',
+  dataExchangeApproach: {
+    __typename: 'PlanDataExchangeApproach',
+    id: '123',
+    status: DataExchangeApproachStatus.IN_PROGRESS,
+    modifiedDts: null,
+    modifiedByUserAccount: null
+  }
 };
 
 describe('AdditionalQuestionnairesCard', () => {
@@ -38,7 +39,7 @@ describe('AdditionalQuestionnairesCard', () => {
           element: (
             <AdditionalQuestionnairesCard
               modelID="123"
-              dataExhangeApproachData={dataExchangeApproachMock}
+              questionnairesData={questionnairesMock}
             />
           )
         }
@@ -69,7 +70,7 @@ describe('AdditionalQuestionnairesCard', () => {
           element: (
             <AdditionalQuestionnairesCard
               modelID="123"
-              dataExhangeApproachData={dataExchangeApproachMock}
+              questionnairesData={questionnairesMock}
             />
           )
         }

@@ -83,7 +83,7 @@ describe('CollectingAndSendingData', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/additional-questionnaires/collecting-and-sending-data',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/collecting-and-sending-data',
           element: <CollectingAndSendingData />
         }
       ],
