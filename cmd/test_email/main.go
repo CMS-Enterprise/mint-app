@@ -41,7 +41,7 @@ func main() {
 
 	// Solution emails
 	//TODO, we might want to remove these later. Leaving for comparison now
-	sendOperationalSolutionSelectedTestEmail(emailService, templateService, addressBook)
+	sendOperationalSolutionSelectedTestEmail(emailService, addressBook)
 	sendMTOSolutionSelectedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution Contact emails for editable POC workflow

@@ -1,12 +1,23 @@
 package email
 
 import (
+	_ "embed"
 	"time"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
+
+// OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
+const OperationalSolutionSelectedTemplateName string = "operational_solution_selected"
+
+//go:embed templates/operational_solution_selected_body.html
+var operationalSolutionSelectedBodyTemplate string
+
+//go:embed templates/operational_solution_selected_subject.html
+var operationalSolutionSelectedSubjectTemplate string
 
 // OperationalSolutionSelectedSubjectContent defines the parameters necessary for the corresponding email subject
 type OperationalSolutionSelectedSubjectContent struct {
@@ -58,4 +69,17 @@ func (ssdb *OperationalSolutionSelectedDB) ToSolutionSelectedBodyContent(clientA
 		ModelStatus:       ssdb.ModelStatus.Humanize(),
 		ModelStartDate:    ssdb.ModelStartDate,
 	}
+}
+
+type operationalSolutionEmails struct {
+	// The email to be sent when an operational solution is selected for use
+	Selected *emailtemplates.GenEmailTemplate[OperationalSolutionSelectedSubjectContent, OperationalSolutionSelectedBodyContent]
+}
+
+var OperationalSolution = operationalSolutionEmails{
+	Selected: NewEmailTemplate[OperationalSolutionSelectedSubjectContent, OperationalSolutionSelectedBodyContent](
+		OperationalSolutionSelectedTemplateName,
+		operationalSolutionSelectedSubjectTemplate,
+		operationalSolutionSelectedBodyTemplate,
+	),
 }
