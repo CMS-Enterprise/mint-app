@@ -11,7 +11,6 @@ import (
 // sendTestDailyDigestEmail sends a test daily digest email including MTO, data exchange, and plan section updates.
 func sendTestDailyDigestEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	analyzedAudit := &models.AnalyzedAudit{
@@ -38,16 +37,13 @@ func sendTestDailyDigestEmail(
 		},
 	}
 
-	emailTemplate, err := templateService.GetEmailTemplate(email.DailyDigestTemplateName)
-	noErr(err)
-
-	subject, err := emailTemplate.GetExecutedSubject(email.DailyDigestSubjectContent{})
-	noErr(err)
-
-	body, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
-		AnalyzedAudits: []*models.AnalyzedAudit{analyzedAudit},
-		ClientAddress:  emailService.GetConfig().GetClientAddress(),
-	})
+	subject, body, err := email.DailyDigestEmails.DailyDigest.GetContent(
+		email.DailyDigestSubjectContent{},
+		email.DailyDigestBodyContent{
+			AnalyzedAudits: []*models.AnalyzedAudit{analyzedAudit},
+			ClientAddress:  emailService.GetConfig().GetClientAddress(),
+		},
+	)
 	noErr(err)
 
 	err = emailService.Send(
@@ -64,7 +60,6 @@ func sendTestDailyDigestEmail(
 // sendTestDailyDigestEmailAggregated sends a test daily digest email including MTO, data exchange, and plan section updates.
 func sendTestDailyDigestEmailAggregated(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	analyzedAudit := &models.AnalyzedAudit{
@@ -114,16 +109,13 @@ func sendTestDailyDigestEmailAggregated(
 		},
 	}
 
-	emailTemplate, err := templateService.GetEmailTemplate(email.AggregatedDailyDigestTemplateName)
-	noErr(err)
-
-	subject, err := emailTemplate.GetExecutedSubject(email.AggregatedDailyDigestSubjectContent{})
-	noErr(err)
-
-	body, err := emailTemplate.GetExecutedBody(email.AggregatedDailyDigestBodyContent{
-		AnalyzedAudits: []*models.AnalyzedAudit{analyzedAudit, analyzedAudit2},
-		ClientAddress:  emailService.GetConfig().GetClientAddress(),
-	})
+	subject, body, err := email.DailyDigestEmails.AggregatedDailyDigest.GetContent(
+		email.AggregatedDailyDigestSubjectContent{},
+		email.AggregatedDailyDigestBodyContent{
+			AnalyzedAudits: []*models.AnalyzedAudit{analyzedAudit, analyzedAudit2},
+			ClientAddress:  emailService.GetConfig().GetClientAddress(),
+		},
+	)
 	noErr(err)
 
 	// Send generated email

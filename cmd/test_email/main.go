@@ -65,8 +65,8 @@ func main() {
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, addressBook)
 
 	// Daily Digest Email
-	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
-	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
+	sendTestDailyDigestEmail(emailService, addressBook)           // daily digest email to user
+	sendTestDailyDigestEmailAggregated(emailService, addressBook) // daily digest email to mint team
 
 	// MTO Milestone Assignment Email
 	sendMTOMilestoneAssignedTestEmail(emailService, addressBook)

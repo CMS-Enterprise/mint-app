@@ -76,7 +76,6 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
 	emailSubject, emailBody, err := generateUserAgnosticDigestEmail(
 		analyzedAudits,
-		worker.EmailTemplateService,
 		mockEmailService,
 	)
 	suite.NoError(err)

@@ -88,7 +88,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	}
 
 	for _, id := range userIDs {
-		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.ZapLogger, dayToAnalyze, id, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
+		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.ZapLogger, dayToAnalyze, id, s.Config.EmailService, s.Config.AddressBook)
 		if err != nil {
 			fmt.Printf("there was an issue sending digest emails for userID: %s", id)
 		}
