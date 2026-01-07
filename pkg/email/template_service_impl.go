@@ -27,33 +27,6 @@ var aggregatedDailyDigestSubjectTemplate string
 //go:embed templates/aggregated_daily_digest_body.html
 var aggregatedDailyDigestBodyTemplate string
 
-// ReportAProblemTemplateName is the template name definition for the corresponding email template
-const ReportAProblemTemplateName string = "report_a_problem"
-
-//go:embed templates/report_a_problem_body.html
-var reportAProblemBodyTemplate string
-
-//go:embed templates/report_a_problem_subject.html
-var reportAProblemSubjectTemplate string
-
-// SendFeedbackTemplateName is the template name definition of the send feedback email template
-const SendFeedbackTemplateName string = "send_feedback"
-
-//go:embed templates/send_feedback_body.html
-var sendFeedbackBodyTemplate string
-
-//go:embed templates/send_feedback_subject.html
-var sendFeedbackSubjectTemplate string
-
-// OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
-const OperationalSolutionSelectedTemplateName string = "operational_solution_selected"
-
-//go:embed templates/operational_solution_selected_body.html
-var operationalSolutionSelectedBodyTemplate string
-
-//go:embed templates/operational_solution_selected_subject.html
-var operationalSolutionSelectedSubjectTemplate string
-
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -89,21 +62,6 @@ func (t *TemplateServiceImpl) Load() error {
 	}
 
 	err = t.loadEmailTemplate(AggregatedDailyDigestTemplateName, aggregatedDailyDigestSubjectTemplate, aggregatedDailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAProblemSubjectTemplate, reportAProblemBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(SendFeedbackTemplateName, sendFeedbackSubjectTemplate, sendFeedbackBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
 	if err != nil {
 		return err
 	}

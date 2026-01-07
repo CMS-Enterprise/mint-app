@@ -351,7 +351,6 @@ func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		need.ID,
 		&solType,
