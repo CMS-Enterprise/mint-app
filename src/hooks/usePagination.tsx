@@ -66,8 +66,8 @@ const usePagination = <T extends any[]>({
     sliceFn
       ? sliceFn(items, currentPageNum - 1, itemsPerPage)
       : items.slice(
-          currentPageNum * itemsPerPage,
-          currentPageNum * itemsPerPage + itemsPerPage
+          (currentPageNum - 1) * itemsPerPage,
+          (currentPageNum - 1) * itemsPerPage + itemsPerPage
         )
   );
 

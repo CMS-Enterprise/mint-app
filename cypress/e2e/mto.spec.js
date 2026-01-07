@@ -203,29 +203,28 @@ describe('Model-to-Operations Matrix', () => {
           });
         cy.contains('Add to matrix').should('exist');
         // Open up Solutions Sidepanel
-        // cy.contains('About this solution')
-        //   .should('exist')
-        //   .should('be.not.disabled')
-        //   .click({ force: true });
+        cy.contains('About this solution')
+          .should('exist')
+          .should('be.not.disabled');
+        cy.contains('About this solution').click();
       });
 
-    // FLAKY: TODO: Fix this
-    // // Wait for the modal to appear and be fully rendered
-    // cy.get('[data-testid="operational-solution-modal"]', { timeout: 10000 })
-    //   .should('be.visible')
-    //   .as('operationalSolutionModal');
+    cy.get('[data-testid="operational-solution-modal"]')
+      .should('have.css', 'display', 'block')
+      .and('not.have.css', 'visibility', 'hidden')
+      .as('operationalSolutionModal');
 
-    // cy.get('@operationalSolutionModal')
-    //   .scrollIntoView()
-    //   .within(() => {
-    //     cy.get('@solutionHeading').then(solutionHeading => {
-    //       cy.contains(solutionHeading).should('be.visible');
-    //     });
-    //   })
-    //   .as('sidePanel');
-    // cy.get('[aria-label="Close Modal"]').click({ force: true });
+    cy.get('@operationalSolutionModal')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('@solutionHeading').then(solutionHeading => {
+          cy.contains(solutionHeading).should('be.visible');
+        });
+      })
+      .as('sidePanel');
+    cy.get('[aria-label="Close Modal"]').click({ force: true });
 
-    // cy.get('@sidePanel').should('not.exist');
+    cy.get('@sidePanel').should('not.exist');
 
     cy.get('@secondCard').within(() => {
       cy.contains('Add to matrix').click();
