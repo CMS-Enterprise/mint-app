@@ -39,7 +39,7 @@ import TaskList from 'features/ModelPlan/TaskList';
 import basicsRoutes from 'features/ModelPlan/TaskList/Basics';
 import beneficiariesRoutes from 'features/ModelPlan/TaskList/Beneficiaries';
 import generalCharacteristicsRoutes from 'features/ModelPlan/TaskList/GeneralCharacteristics';
-import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
+import LockedModelPlanSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
 import opsEvalAndLearningRoutes from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
 import participantsAndProvidersRoutes from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
@@ -430,12 +430,12 @@ const router = createBrowserRouter([
         )
       },
 
-      // Locked Task List Section Routes
+      // Locked Model Plan Section Routes
       {
-        path: '/models/:modelID/locked-task-list-section',
+        path: '/models/:modelID/locked-model-plan-section',
         element: (
           <ProtectedRoute>
-            <LockedTaskListSection />
+            <LockedModelPlanSection />
           </ProtectedRoute>
         )
       },
