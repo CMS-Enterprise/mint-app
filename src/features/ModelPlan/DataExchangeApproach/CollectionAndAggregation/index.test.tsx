@@ -54,13 +54,13 @@ describe('CollectionAndAggregation', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
           element: <CollectionAndAggregation />
         }
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation'
         ]
       }
     );
@@ -82,13 +82,13 @@ describe('CollectionAndAggregation', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation',
           element: <CollectionAndAggregation />
         }
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation'
         ]
       }
     );

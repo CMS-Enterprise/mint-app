@@ -142,7 +142,7 @@ const CollectingAndSendingData = () => {
           id="collect-and-send-data-form"
           onSubmit={handleSubmit(() => {
             navigate(
-              `/models/${modelID}/collaboration-area/additional-questionnaires/multi-payer-data-multi-source-collection-aggregation`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/multi-payer-data-multi-source-collection-aggregation`
             );
           })}
           className="maxw-none"
@@ -368,7 +368,7 @@ const CollectingAndSendingData = () => {
                   homeArea={additionalQuestionnairesT(
                     'saveAndReturnToQuestionnaires'
                   )}
-                  homeRoute={`/models/${modelID}/collaboration-area`}
+                  homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
                   backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/about-completing-data-exchange`}
                   nextPage
                   disabled={isSubmitting}

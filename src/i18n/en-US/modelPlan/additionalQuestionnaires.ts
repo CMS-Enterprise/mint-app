@@ -47,7 +47,7 @@ const additionalQuestionnaires = {
       heading: '4i and ACO-OS',
       description:
         'As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.',
-      path: 'iddoc'
+      path: 'iddoc-questionnaire'
     }
   },
   questionnaireButton: {

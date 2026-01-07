@@ -31,7 +31,7 @@ type QuestionnaireSectionLockStatus =
 
 const questionnaireSectionMap: Partial<Record<string, LockableSection>> = {
   dataExchangeApproach: LockableSection.DATA_EXCHANGE_APPROACH,
-  IddocQuestionnaire: LockableSection.IDDOC_QUESTIONNAIRE
+  iddocQuestionnaire: LockableSection.IDDOC_QUESTIONNAIRE
 };
 
 const AdditionalQuestionnaires = () => {

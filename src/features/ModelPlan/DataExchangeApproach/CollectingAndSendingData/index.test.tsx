@@ -55,13 +55,13 @@ describe('CollectingAndSendingData', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/collecting-and-sending-data',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data',
           element: <CollectingAndSendingData />
         }
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/collecting-and-sending-data'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data'
         ]
       }
     );
@@ -83,13 +83,13 @@ describe('CollectingAndSendingData', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/collecting-and-sending-data',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data',
           element: <CollectingAndSendingData />
         }
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/collecting-and-sending-data'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data'
         ]
       }
     );

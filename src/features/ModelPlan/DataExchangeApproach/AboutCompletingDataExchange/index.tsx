@@ -133,7 +133,7 @@ const AboutCompletingDataExchange = () => {
           type="button"
           onClick={() =>
             navigate(
-              `/models/${modelID}/collaboration-area/additional-questionnaires/collecting-and-sending-data`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data`
             )
           }
         >
@@ -144,7 +144,11 @@ const AboutCompletingDataExchange = () => {
       <Button
         type="button"
         className="usa-button usa-button--unstyled"
-        onClick={() => navigate(`/models/${modelID}/collaboration-area`)}
+        onClick={() =>
+          navigate(
+            `/models/${modelID}/collaboration-area/additional-questionnaires`
+          )
+        }
       >
         <Icon.ArrowBack
           className="margin-right-1"

@@ -147,7 +147,7 @@ const CollectionAndAggregation = () => {
           id="collection-and-aggregation-form"
           onSubmit={handleSubmit(() => {
             navigate(
-              `/models/${modelID}/collaboration-area/additional-questionnaires/new-methodologies-and-additional-considerations`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/new-methodologies-and-additional-considerations`
             );
           })}
           className="maxw-none"
@@ -389,8 +389,8 @@ const CollectionAndAggregation = () => {
                   homeArea={additionalQuestionnairesT(
                     'saveAndReturnToQuestionnaires'
                   )}
-                  homeRoute={`/models/${modelID}/collaboration-area`}
-                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/collecting-and-sending-data`}
+                  homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data`}
                   id="collection-and-aggregation-form"
                   nextPage
                   disabled={isSubmitting}

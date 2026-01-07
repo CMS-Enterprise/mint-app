@@ -123,7 +123,7 @@ export const QuestionnaireListButton = ({
         className="usa-button margin-bottom-0 width-auto"
         onClick={() =>
           navigate(
-            `/models/${modelID}/collaboration-area/additional-questionnaires/${path}`
+            `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/${path}`
           )
         }
         aria-label={`${getCtaCopy()} ${ariaLabel?.toLowerCase()}`}

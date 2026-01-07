@@ -53,13 +53,13 @@ describe('TestComponent', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/new-methodologies-and-additional-consideration',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/data-exchange-approach/new-methodologies-and-additional-consideration',
           element: <NewMethologiesAndConsiderations />
         }
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/new-methodologies-and-additional-consideration'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/data-exchange-approach/new-methodologies-and-additional-consideration'
         ]
       }
     );

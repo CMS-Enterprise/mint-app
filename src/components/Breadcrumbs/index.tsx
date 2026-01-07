@@ -70,7 +70,7 @@ export const commonBreadCrumbs = (
   },
   DATA_EXCHANGE_APPROACH: {
     text: 'dataExchangeApproachMisc:heading',
-    url: `/models/${modelID}/collaboration-area/additional-questionnaires/about-data-exchange-approach`
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/about-data-exchange-approach`
   },
   MODEL_TO_OPERATIONS: {
     text: 'modelToOperationsMisc:heading',

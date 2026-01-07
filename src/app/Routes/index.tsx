@@ -121,10 +121,10 @@ const TaskListToModelPlanRedirect = () => {
 const DataExchangeApproachRedirect = () => {
   const location = useLocation();
 
-  // Replace 'task-list' with 'model-plan' in the current path
+  // Replace 'data-exchange-approach' with 'additional-questionnaires/data-exchange-approach' in the current path
   const newPath = location.pathname.replace(
     '/collaboration-area/data-exchange-approach',
-    '/collaboration-area/additional-questionnaires'
+    '/collaboration-area/additional-questionnaires/data-exchange-approach'
   );
 
   // Preserve query params and hash
