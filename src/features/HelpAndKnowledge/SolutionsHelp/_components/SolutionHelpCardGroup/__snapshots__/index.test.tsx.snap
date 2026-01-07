@@ -920,7 +920,7 @@ CCW data files may be requested for any predefined chronic condition cohorts, or
                     class="solution-card__body"
                   >
                     The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
-        
+
   CDAC could support a model/project if:
                   </p>
                   <div
