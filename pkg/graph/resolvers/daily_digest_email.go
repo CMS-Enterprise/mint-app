@@ -32,7 +32,6 @@ func DailyDigestNotificationSend[T logging.ChainableErrorOrWarnLogger[T]](
 	dateAnalyzed time.Time,
 	userID uuid.UUID,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 
 ) error {
@@ -67,7 +66,7 @@ func DailyDigestNotificationSend[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 
 	// Return nil if there is no email service, this follows similar
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
@@ -77,7 +76,7 @@ func DailyDigestNotificationSend[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 
 	// Generate email subject and body from template
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, emailService)
+	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailService)
 	if err != nil {
 		return err
 	}
@@ -143,23 +142,15 @@ func getDigestAnalyzedAudits(
 // generateDigestEmail will generate the daily digest email from template
 func generateDigestEmail(
 	analyzedAudits []*models.AnalyzedAudit,
-	emailTemplateService email.TemplateService,
 	emailService oddmail.EmailService,
 ) (string, string, error) {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DailyDigestTemplateName)
-	if err != nil {
-		return "", "", err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.DailyDigestSubjectContent{})
-	if err != nil {
-		return "", "", err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.DailyDigestBodyContent{
-		AnalyzedAudits: analyzedAudits,
-		ClientAddress:  emailService.GetConfig().GetClientAddress(),
-	})
+	emailSubject, emailBody, err := email.DailyDigestEmails.DailyDigest.GetContent(
+		email.DailyDigestSubjectContent{},
+		email.DailyDigestBodyContent{
+			AnalyzedAudits: analyzedAudits,
+			ClientAddress:  emailService.GetConfig().GetClientAddress(),
+		},
+	)
 	if err != nil {
 		return "", "", err
 	}

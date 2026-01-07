@@ -19,11 +19,6 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 
 	mockController := gomock.NewController(suite.T())
 
-	// If desired we can use a mock template service in the future
-	// mockTemplateService := email.NewMockTemplateService(mockController)
-	emailTemplateService, err := emailtestconfigs.InitializeEmailTemplateService()
-	suite.NoError(err)
-
 	mockEmailService := emailtestconfigs.InitializeMockEmailService(mockController)
 
 	mockEmailService.
@@ -56,7 +51,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 
 	// Test generateDailyDigestEmail email to check content
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
-	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, emailTemplateService, mockEmailService)
+	emailSubject, emailBody, err := generateDigestEmail(analyzedAudits, mockEmailService)
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
@@ -93,11 +88,6 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 	addressBook := emailtestconfigs.InitializeAddressBook()
 	today := time.Now()
 
-	// If desired we can use a mock template service in the future
-	// mockTemplateService := email.NewMockTemplateService(mockController)
-	emailTemplateService, err := emailtestconfigs.InitializeEmailTemplateService()
-	suite.NoError(err)
-
 	mockEmailService := emailtestconfigs.InitializeMockEmailService(mockController)
 
 	mockEmailService.
@@ -113,7 +103,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 	userAccount := suite.getTestPrincipal(suite.testConfigs.Store, userName)
 
 	// Create a favorite, as favorites determine what models users get a digest in regards to.
-	_, err = PlanFavoriteCreate(suite.testConfigs.Store, suite.testConfigs.Logger, userAccount, userAccount.Account().ID, suite.testConfigs.Store, mp.ID)
+	_, err := PlanFavoriteCreate(suite.testConfigs.Store, suite.testConfigs.Logger, userAccount, userAccount.Account().ID, suite.testConfigs.Store, mp.ID)
 	suite.NoError(err)
 
 	// Generate Audits for the model so the
@@ -131,7 +121,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 			gomock.Any(),
 		).MinTimes(1).MaxTimes(1)
 
-	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.ZapLogger, today, userAccount.Account().ID, mockEmailService, emailTemplateService, addressBook)
+	emailErr := DailyDigestNotificationSend(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.ZapLogger, today, userAccount.Account().ID, mockEmailService, addressBook)
 	suite.NoError(emailErr)
 
 	notificationCollection, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, userAccount)

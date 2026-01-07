@@ -9,24 +9,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
 
-// DailyDigestTemplateName is the template name definition for the corresponding email template
-const DailyDigestTemplateName string = "daily_digest"
-
-//go:embed templates/daily_digest_subject.html
-var dailyDigestSubjectTemplate string
-
-//go:embed templates/daily_digest_body.html
-var dailyDigestBodyTemplate string
-
-// AggregatedDailyDigestTemplateName is the template name definition for the corresponding email template
-const AggregatedDailyDigestTemplateName string = "aggregated_daily_digest"
-
-//go:embed templates/aggregated_daily_digest_subject.html
-var aggregatedDailyDigestSubjectTemplate string
-
-//go:embed templates/aggregated_daily_digest_body.html
-var aggregatedDailyDigestBodyTemplate string
-
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailtemplates.TemplateCache
@@ -54,17 +36,6 @@ func NewTemplateServiceImpl(environment appconfig.Environment) (*TemplateService
 // Load caches all email templates which will be used by the template service
 func (t *TemplateServiceImpl) Load() error {
 	t.emailTemplates = make(map[string]*emailtemplates.EmailTemplate)
-	var err error
-
-	err = t.loadEmailTemplate(DailyDigestTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(AggregatedDailyDigestTemplateName, aggregatedDailyDigestSubjectTemplate, aggregatedDailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
 
 	return nil
 }
