@@ -14,5 +14,5 @@ import (
 // SendFeedbackEmail is the resolver for the sendFeedbackEmail field.
 func (r *mutationResolver) SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error) {
 	principal := appcontext.Principal(ctx)
-	return SendFeedbackEmail(r.emailService, r.emailTemplateService, r.addressBook, principal, input)
+	return SendFeedbackEmail(r.emailService, r.addressBook, principal, input)
 }

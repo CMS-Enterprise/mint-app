@@ -79,7 +79,6 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		opNeeds[0].ID,
 		&solType,
