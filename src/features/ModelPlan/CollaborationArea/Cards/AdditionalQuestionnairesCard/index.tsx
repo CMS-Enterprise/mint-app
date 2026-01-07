@@ -28,12 +28,16 @@ export type AdditionalQuestionnairesCardType = {
   questionnairesData: QuestionnairesType;
 };
 
+export type QuestionnairesStatusType =
+  | DataExchangeApproachStatus
+  | IddocQuestionnaireStatus;
+
 const REQUIRED_QUESTIONNAIRES = ['dataExchangeApproach'];
 
 const QuestionnaireStatusPill = ({
   status
 }: {
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: QuestionnairesStatusType;
 }) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
@@ -68,7 +72,7 @@ const QuestionnaireStatusPill = ({
   return (
     <div
       className={classNames(
-        'padding-y-02 padding-x-105 radius-pill margin-right-2',
+        'padding-y-02 padding-x-105 radius-pill margin-right-1',
         pillStyle
       )}
     >
@@ -88,8 +92,6 @@ const AdditionalQuestionnairesCard = ({
 
   const navigate = useNavigate();
 
-  // const { dataExchangeApproach } = questionnairesData;
-  // const { iddocQuestionnaire } = questionnaires;
   const { __typename, ...questionnaires } = questionnairesData;
 
   const questionnaireNames = Object.keys(
@@ -101,10 +103,15 @@ const AdditionalQuestionnairesCard = ({
     otherQuestionnaires: (typeof questionnaires)[keyof typeof questionnaires][];
   }>(
     (groupedQuestionnaires, name) => {
-      if (REQUIRED_QUESTIONNAIRES.includes(name)) {
-        groupedQuestionnaires.requiredQuestionnaires.push(questionnaires[name]);
+      const questionnaire = questionnaires[name];
+
+      if (
+        REQUIRED_QUESTIONNAIRES.includes(name) ||
+        ('needed' in questionnaire && questionnaire.needed)
+      ) {
+        groupedQuestionnaires.requiredQuestionnaires.push(questionnaire);
       } else {
-        groupedQuestionnaires.otherQuestionnaires.push(questionnaires[name]);
+        groupedQuestionnaires.otherQuestionnaires.push(questionnaire);
       }
       return groupedQuestionnaires;
     },
@@ -113,31 +120,6 @@ const AdditionalQuestionnairesCard = ({
       otherQuestionnaires: []
     }
   );
-
-  // test data
-  // const allQuestionnaires = {
-  //   requiredQuestionnaires: [
-  //     dataExchangeApproach,
-  //     {
-  //       __typename: 'IddocQuestionnaire',
-  //       id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
-  //       modifiedDts: '2026-01-05T22:55:26.923527Z',
-  //       modifiedByUserAccount: null,
-  //       status: IddocQuestionnaireStatus.COMPLETED,
-  //       isNeeded: false
-  //     }
-  //   ],
-  //   otherQuestionnaires: [
-  //     {
-  //       __typename: 'IddocQuestionnaire',
-  //       id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
-  //       modifiedDts: '2026-01-05T22:55:26.923527Z',
-  //       modifiedByUserAccount: null,
-  //       status: IddocQuestionnaireStatus.COMPLETED,
-  //       isNeeded: false
-  //     }
-  //   ]
-  // };
 
   const requiredQuestionnairesCount =
     allQuestionnaires.requiredQuestionnaires.length;
@@ -198,31 +180,31 @@ const AdditionalQuestionnairesCard = ({
               aria-label="forward"
             />
           </UswdsReactLink>
+        </CardBody>
 
-          <div className="margin-top-8">
-            <h4 className="display-inline-block text-bold margin-top-4 margin-bottom-0 margin-right-2 line-height-body-2">
-              {collaborationAreaT(
-                'additionalQuestionnairesCard.otherQuestionnairesCount',
-                { count: otherQuestionnairesCount }
-              )}
-            </h4>
-
-            {otherQuestionnairesCount > 0 && (
-              <UswdsReactLink
-                to={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-                data-testid="view-data-exchange-help-article"
-                className="deep-underline"
-              >
-                {collaborationAreaT(
-                  'additionalQuestionnairesCard.viewAllQuestionnaires'
-                )}
-                <Icon.ArrowForward
-                  className="top-3px margin-left-05"
-                  aria-label="forward"
-                />
-              </UswdsReactLink>
+        <CardBody className="padding-y-3 flex-none">
+          <h4 className="display-inline-block text-bold margin-y-0 margin-right-2 line-height-body-2">
+            {collaborationAreaT(
+              'additionalQuestionnairesCard.otherQuestionnairesCount',
+              { count: otherQuestionnairesCount }
             )}
-          </div>
+          </h4>
+
+          {otherQuestionnairesCount > 0 && (
+            <UswdsReactLink
+              to={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+              data-testid="view-data-exchange-help-article"
+              className="deep-underline"
+            >
+              {collaborationAreaT(
+                'additionalQuestionnairesCard.viewAllQuestionnaires'
+              )}
+              <Icon.ArrowForward
+                className="top-3px margin-left-05"
+                aria-label="forward"
+              />
+            </UswdsReactLink>
+          )}
         </CardBody>
 
         <CardFooter>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
   IddocQuestionnaireStatus
@@ -22,6 +23,7 @@ const QuestionnaireListStatusTag = ({
 
   let tagStyle;
   let tagCopy;
+
   switch (status) {
     case 'READY':
     case 'NOT_STARTED':
@@ -98,7 +100,14 @@ export const QuestionnaireListButton = ({
       return additionalQuestionnairesT('questionnaireButton.continue');
     }
 
-    return '';
+    if (
+      status === DataExchangeApproachStatus.COMPLETE ||
+      status === IddocQuestionnaireStatus.COMPLETED
+    ) {
+      return additionalQuestionnairesT('questionnaireButton.edit');
+    }
+
+    return null;
   };
 
   if (status === IddocQuestionnaireStatus.NOT_NEEDED) {
@@ -111,7 +120,7 @@ export const QuestionnaireListButton = ({
         type="button"
         disabled={disabled}
         data-testid={path}
-        className="usa-button margin-bottom-2 width-auto"
+        className="usa-button margin-bottom-0 width-auto"
         onClick={() =>
           navigate(
             `/models/${modelID}/collaboration-area/additional-questionnaires/${path}`
@@ -165,7 +174,13 @@ const QuestionnaireListItem = ({
         </div>
 
         <div className="additional-questionnaires-list__task-description margin-right-auto line-height-body-5">
-          <p className="margin-top-0">{description}</p>
+          <p
+            className={classNames('margin-top-0', {
+              'text-base-dark': status === IddocQuestionnaireStatus.NOT_NEEDED
+            })}
+          >
+            {description}
+          </p>
         </div>
 
         {children}

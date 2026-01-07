@@ -16,15 +16,16 @@ export default gql(/* GraphQL */ `
             commonName
           }
         }
-        # iddocQuestionnaire {
-        #   id
-        #   status
-        #   modifiedDts
-        #   modifiedByUserAccount {
-        #     id
-        #     commonName
-        #   }
-        # }
+        iddocQuestionnaire {
+          id
+          status
+          needed
+          modifiedDts
+          modifiedByUserAccount {
+            id
+            commonName
+          }
+        }
       }
     }
   }

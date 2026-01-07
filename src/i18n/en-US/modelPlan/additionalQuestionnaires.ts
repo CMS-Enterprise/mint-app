@@ -27,8 +27,8 @@ const additionalQuestionnaires = {
         href: '/help-and-knowledge/high-level-project-plan'
       },
       {
-        copy: 'creating-mto-matrixCreating your Model-to-operations matrix (MTO) in MINTCreating your model-to-operations matrix (MTO) in MINT (opens in a new tab)',
-        href: 'creating-mto-matrix'
+        copy: 'Creating your model-to-operations matrix (MTO) in MINT (opens in a new tab)',
+        href: '/help-and-knowledge/creating-mto-matrix'
       }
     ]
   },
@@ -52,7 +52,8 @@ const additionalQuestionnaires = {
   },
   questionnaireButton: {
     start: 'Start',
-    continue: 'Continue'
+    continue: 'Continue',
+    edit: 'Edit'
   },
   lastUpdated: 'Last updated',
   saveAndReturnToQuestionnaires: 'Save and return to questionnaires'

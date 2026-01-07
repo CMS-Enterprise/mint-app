@@ -22,7 +22,9 @@ func (r *iDDOCQuestionnaireResolver) FileTypes(ctx context.Context, obj *models.
 
 // Status is the resolver for the status field.
 func (r *iDDOCQuestionnaireResolver) Status(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireStatus, error) {
-	panic(fmt.Errorf("not implemented: Status - status"))
+	return model.IDDOCQuestionnaireStatusNotStarted, nil
+	// TODO: Implement status mapping
+	// panic(fmt.Errorf("not implemented: Status - status"))
 }
 
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.

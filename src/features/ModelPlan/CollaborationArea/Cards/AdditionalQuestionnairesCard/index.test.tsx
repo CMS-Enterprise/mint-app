@@ -2,13 +2,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { DataExchangeApproachStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
+import { questionnairesMock } from 'tests/mock/general';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 
-import AdditionalQuestionnairesCard, { QuestionnairesType } from './index';
+import AdditionalQuestionnairesCard from './index';
 
 const mockAuthReducer = {
   isUserSet: true,
@@ -18,17 +18,6 @@ const mockAuthReducer = {
 
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
-
-const questionnairesMock: QuestionnairesType = {
-  __typename: 'Questionnaires',
-  dataExchangeApproach: {
-    __typename: 'PlanDataExchangeApproach',
-    id: '123',
-    status: DataExchangeApproachStatus.IN_PROGRESS,
-    modifiedDts: null,
-    modifiedByUserAccount: null
-  }
-};
 
 describe('AdditionalQuestionnairesCard', () => {
   it('renders without errors', () => {

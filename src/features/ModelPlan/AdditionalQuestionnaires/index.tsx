@@ -1,12 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import {
   GetAllQuestionnairesQuery,
+  GetLockedModelPlanSectionsQuery,
   LockableSection,
   useGetAllQuestionnairesQuery
 } from 'gql/generated/graphql';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Divider from 'components/Divider';
@@ -14,7 +17,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import useSectionLock from 'hooks/useSectionLock';
+import SectionLock from 'components/SectionLock';
+import { SubscriptionContext } from 'contexts/PageLockContext';
 import { formatDateLocal } from 'utils/date';
 
 import QuestionnaireListItem, {
@@ -22,13 +26,12 @@ import QuestionnaireListItem, {
 } from './_components/QuestionnaireListItem';
 import QuestionnairesSideNav from './_components/QuestionnairesSideNav';
 
-type DataExchangeApproachType =
-  GetAllQuestionnairesQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
-
-type QuestionnaireSections = { [key: string]: DataExchangeApproachType };
+type QuestionnaireSectionLockStatus =
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 const questionnaireSectionMap: Partial<Record<string, LockableSection>> = {
-  dataExchangeApproach: LockableSection.DATA_EXCHANGE_APPROACH
+  dataExchangeApproach: LockableSection.DATA_EXCHANGE_APPROACH,
+  IddocQuestionnaire: LockableSection.IDDOC_QUESTIONNAIRE
 };
 
 const AdditionalQuestionnaires = () => {
@@ -36,11 +39,12 @@ const AdditionalQuestionnaires = () => {
     'additionalQuestionnaires'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { SectionLock, isLocked } = useSectionLock({
-    section: LockableSection.DATA_EXCHANGE_APPROACH
-  });
+  const { euaId } = useSelector((state: AppState) => state.auth);
+
+  const { lockableSectionLocks } = useContext(SubscriptionContext);
 
   const { data, loading } = useGetAllQuestionnairesQuery({
     variables: {
@@ -48,23 +52,24 @@ const AdditionalQuestionnaires = () => {
     }
   });
 
-  const questionnaires =
-    data?.modelPlan?.questionnaires ||
-    ({
-      __typename: 'Questionnaires',
-      dataExchangeApproach: {
-        __typename: 'PlanDataExchangeApproach',
-        id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
-        modifiedDts: '2026-01-05T22:55:26.923527Z',
-        modifiedByUserAccount: null,
-        status: 'READY'
-      }
-    } as GetAllQuestionnairesQuery['modelPlan']['questionnaires']);
+  const questionnaireSections = useMemo(() => {
+    if (!data || !data.modelPlan) {
+      return {} as GetAllQuestionnairesQuery['modelPlan']['questionnaires'];
+    }
+    const { __typename, ...questionnaire } = data.modelPlan.questionnaires;
+    return questionnaire;
+  }, [data]);
 
-  const { dataExchangeApproach } = questionnaires || {}; // iddocQuestionnaire
+  const questionnaireNames = Object.keys(
+    questionnaireSections
+  ) as (keyof typeof questionnaireSections)[];
 
-  const questionnaireSections: QuestionnaireSections = {
-    dataExchangeApproach
+  const getQuestionnaireLockedStatus = (
+    section: string
+  ): QuestionnaireSectionLockStatus | undefined => {
+    return lockableSectionLocks.find(
+      sectionLock => sectionLock.section === questionnaireSectionMap[section]
+    );
   };
 
   if (loading) {
@@ -115,7 +120,9 @@ const AdditionalQuestionnaires = () => {
               data-testid="questionnaire-list"
               className="margin-top-6 margin-bottom-0 padding-left-0"
             >
-              {Object.keys(questionnaireSections).map((key: string) => {
+              {questionnaireNames.map((key, index) => {
+                const lockedStatus = getQuestionnaireLockedStatus(key);
+
                 return (
                   <Fragment key={key}>
                     <QuestionnaireListItem
@@ -143,13 +150,18 @@ const AdditionalQuestionnaires = () => {
                         path={additionalQuestionnairesT(
                           `questionnairesList.${key}.path`
                         )}
-                        disabled={isLocked}
+                        disabled={
+                          lockedStatus !== undefined &&
+                          lockedStatus.lockedByUserAccount.username !== euaId
+                        }
                         status={questionnaireSections[key].status}
                       />
 
-                      {questionnaireSectionMap[key] && <SectionLock />}
+                      {questionnaireSectionMap[key] && (
+                        <SectionLock section={questionnaireSectionMap[key]} />
+                      )}
                     </QuestionnaireListItem>
-                    {key !== 'prepareForClearance' && (
+                    {index < questionnaireNames.length - 1 && (
                       <Divider className="margin-bottom-4" />
                     )}
                   </Fragment>
