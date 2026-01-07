@@ -29,13 +29,13 @@ func main() {
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, addressBook)
 
 	//DiscussionReply email
-	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
+	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
 
 	// Model plan emails
 	sendModelPlanShareTest(emailService, templateService, addressBook)
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
-	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, templateService, addressBook)
+	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
 	sendFeedbackEmail(emailService, templateService, addressBook)
 	reportAProblemEmail(emailService, templateService, addressBook)
 
@@ -401,7 +401,6 @@ func sendCollaboratorAddedEmailTest(
 
 func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 
@@ -412,7 +411,6 @@ func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 
 	err := resolvers.SendDataExchangeApproachMarkedCompleteEmailNotification(
 		emailService,
-		templateService,
 		addressBook,
 		modelPlan,
 		"marty.mcfly@delorean.88",
