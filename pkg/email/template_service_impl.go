@@ -3,29 +3,10 @@ package email
 import (
 	_ "embed"
 	"fmt"
-	"strings"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
-
-// DailyDigestTemplateName is the template name definition for the corresponding email template
-const DailyDigestTemplateName string = "daily_digest"
-
-//go:embed templates/daily_digest_subject.html
-var dailyDigestSubjectTemplate string
-
-//go:embed templates/daily_digest_body.html
-var dailyDigestBodyTemplate string
-
-// AggregatedDailyDigestTemplateName is the template name definition for the corresponding email template
-const AggregatedDailyDigestTemplateName string = "aggregated_daily_digest"
-
-//go:embed templates/aggregated_daily_digest_subject.html
-var aggregatedDailyDigestSubjectTemplate string
-
-//go:embed templates/aggregated_daily_digest_body.html
-var aggregatedDailyDigestBodyTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -54,47 +35,6 @@ func NewTemplateServiceImpl(environment appconfig.Environment) (*TemplateService
 // Load caches all email templates which will be used by the template service
 func (t *TemplateServiceImpl) Load() error {
 	t.emailTemplates = make(map[string]*emailtemplates.EmailTemplate)
-	var err error
-
-	err = t.loadEmailTemplate(DailyDigestTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(AggregatedDailyDigestTemplateName, aggregatedDailyDigestSubjectTemplate, aggregatedDailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjectTemplate string, bodyTemplate string) error {
-	_, emailTemplateExists := t.emailTemplates[emailTemplateName]
-	if emailTemplateExists {
-		return fmt.Errorf("email template %s already exists", emailTemplateName)
-	}
-
-	subjectEmailTemplateName := emailTemplateName + "_subject"
-	bodyEmailTemplateName := emailTemplateName + "_body"
-
-	// Add environment prefix to subject if in dev, or impl
-	if t.environment.Dev() || t.environment.Impl() {
-		envName := strings.ToUpper(t.environment.String())
-		subjectTemplate = fmt.Sprintf("[%s] %s", envName, subjectTemplate)
-	}
-
-	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
-	if err != nil {
-		return err
-	}
-
-	t.emailTemplates[emailTemplateName] = emailtemplates.NewEmailTemplate(t.templateCache, subjectEmailTemplateName, bodyEmailTemplateName)
 
 	return nil
 }
