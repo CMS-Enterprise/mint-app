@@ -224,7 +224,8 @@ export const batchedTables: TableName[] = [
   TableName.MTO_SOLUTION,
   TableName.MTO_CATEGORY,
   TableName.MTO_MILESTONE_SOLUTION_LINK,
-  TableName.MTO_MILESTONE
+  TableName.MTO_MILESTONE,
+  TableName.MODEL_PLAN_MTO_TEMPLATE_LINK
 ];
 
 // Tables where audits are batch with a different table
