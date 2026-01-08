@@ -70,7 +70,6 @@ func ModelPlanCreate(
 	ctx context.Context,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelName string,
 	id *uuid.UUID,
@@ -183,7 +182,6 @@ func ModelPlanCreate(
 			store,
 			logger,
 			nil,
-			nil,
 			email.AddressBook{},
 			&model.PlanCollaboratorCreateInput{
 				ModelPlanID: createdPlan.ID,
@@ -223,12 +221,11 @@ func ModelPlanCreate(
 		return nil, err
 	}
 
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		go func() {
 			sendEmailErr := sendModelPlanCreatedEmail(
 				ctx,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				[]string{addressBook.MINTTeamEmail},
 				newPlan,
@@ -253,7 +250,6 @@ func ModelPlanCreate(
 			sendEmailErr := sendModelPlanCreatedEmail(
 				ctx,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				receiverEmails,
 				newPlan,
@@ -274,7 +270,6 @@ func ModelPlanCreate(
 func sendModelPlanCreatedEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	receiverEmails []string,
 	modelPlan *models.ModelPlan,
@@ -454,7 +449,6 @@ func ModelPlanShare(
 	store *storage.Store,
 	principal authentication.Principal,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	viewFilter *models.ModelViewFilter,

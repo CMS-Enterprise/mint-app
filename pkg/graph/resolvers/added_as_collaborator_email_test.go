@@ -13,7 +13,6 @@ import (
 func (suite *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
@@ -65,7 +64,6 @@ func (suite *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		mockEmailService,
-		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,

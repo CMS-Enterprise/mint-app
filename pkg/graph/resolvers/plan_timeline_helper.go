@@ -339,7 +339,6 @@ func processPlanTimelineChangedDates(
 	changes map[string]interface{},
 	existing *models.PlanTimeline,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 ) error {
@@ -356,7 +355,6 @@ func processPlanTimelineChangedDates(
 				store,
 				principal,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				modelPlan,
 				dateChanges,
@@ -404,7 +402,6 @@ func sendPlanTimelineDateChangedEmails(
 	store *storage.Store,
 	principal authentication.Principal,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 	dateChanges map[string]email.DateChange,

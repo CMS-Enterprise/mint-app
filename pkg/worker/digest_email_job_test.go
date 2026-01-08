@@ -139,10 +139,9 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 		AnyTimes()
 
 	worker := &Worker{
-		Store:                suite.testConfigs.Store,
-		EmailService:         mockEmailService,
-		EmailTemplateService: suite.testConfigs.EmailTemplateService,
-		AddressBook:          addressBook,
+		Store:        suite.testConfigs.Store,
+		EmailService: mockEmailService,
+		AddressBook:  addressBook,
 	}
 
 	date := time.Now().UTC().Format("2006-01-02")

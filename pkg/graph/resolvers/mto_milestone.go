@@ -47,7 +47,6 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
 func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
@@ -117,7 +116,6 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			tx,
 			store,
 			emailService,
-			emailTemplateService,
 			addressBook,
 			createdMilestone.ID,
 			createdMilestone.ModelPlanID,
@@ -141,7 +139,6 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	tx *sqlx.Tx,
 	store *storage.Store, // Still needed for emails
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	commonMilestoneKey models.MTOCommonMilestoneKey,
@@ -207,7 +204,6 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 		tx,
 		store, // this is used for the emails being sent later
 		emailService,
-		emailTemplateService,
 		addressBook,
 		createdMilestone.ID,
 		createdMilestone.ModelPlanID,
@@ -229,7 +225,6 @@ func MTOMilestoneUpdate(
 	principal authentication.Principal,
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	id uuid.UUID,
 	changes map[string]interface{},
@@ -269,7 +264,6 @@ func MTOMilestoneUpdate(
 				tx,
 				store,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				id,
 				existing.ModelPlanID,
@@ -393,7 +387,6 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	tx *sqlx.Tx,
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	milestoneID uuid.UUID,
 	modelPlanID uuid.UUID,
@@ -419,7 +412,7 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	})
 	if len(newlyInserted) > 0 {
 		for _, solution := range newlyInserted {
-			sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, emailTemplateService, addressBook, solution.ToMTOSolution())
+			sendEmailErr := sendMTOSolutionSelectedEmails(ctx, tx, logger, emailService, addressBook, solution.ToMTOSolution())
 			if sendEmailErr != nil {
 				logger.Error("error sending solution selected emails",
 					zap.Any("solution", solution.Key),
@@ -439,7 +432,6 @@ func MTOMilestoneUpdateLinkedSolutions(
 	logger *zap.Logger,
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	id uuid.UUID,
 	solutionIDs []uuid.UUID,
@@ -459,7 +451,6 @@ func MTOMilestoneUpdateLinkedSolutions(
 		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx,
 			store,
 			emailService,
-			emailTemplateService,
 			addressBook,
 			id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
 		if err != nil {

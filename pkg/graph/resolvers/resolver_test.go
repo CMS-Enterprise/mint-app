@@ -79,7 +79,6 @@ func (suite *ResolverSuite) createModelPlanWithID(planName string, id *uuid.UUID
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		planName,
 		id,
@@ -103,7 +102,6 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 	pd, err := CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		input,
@@ -132,7 +130,6 @@ func (suite *ResolverSuite) createDiscussionReply(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
@@ -152,7 +149,6 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	addressBook := email.AddressBook{
 		DefaultSender: "unit-test-execution@mint.cms.gov",
@@ -194,7 +190,6 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		mockEmailService,
-		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,
@@ -330,7 +325,7 @@ func (suite *ResolverSuite) createMilestoneCommon(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		nil, nil, email.AddressBook{},
+		nil, email.AddressBook{},
 		planID,
 		commonMilestoneKey,
 		commonSolutions,
@@ -349,7 +344,6 @@ func (suite *ResolverSuite) createMTOSolutionCommon(
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		nil,
 		nil,
 		email.AddressBook{},
 		planID,

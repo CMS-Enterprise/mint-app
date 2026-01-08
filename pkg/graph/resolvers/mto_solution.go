@@ -122,7 +122,6 @@ func MTOSolutionCreateCommon(
 	principal authentication.Principal,
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	commonSolutionKey models.MTOCommonSolutionKey,
@@ -171,7 +170,7 @@ func MTOSolutionCreateCommon(
 		return nil, fmt.Errorf("failed to create and link solutions: %w", err)
 	}
 	go func() {
-		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, retSol)
+		sendEmailErr := sendMTOSolutionSelectedEmails(ctx, store, logger, emailService, addressBook, retSol)
 		if sendEmailErr != nil {
 			logger.Error("error sending solution selected emails",
 				zap.Any("solution", retSol.Key),
@@ -285,12 +284,11 @@ func sendMTOSolutionSelectedEmails(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	solution *models.MTOSolution,
 
 ) error {
-	if emailService == nil || emailTemplateService == nil || solution == nil {
+	if emailService == nil || solution == nil {
 		return nil
 	}
 	if solution.Key == nil {

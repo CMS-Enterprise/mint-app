@@ -19,7 +19,7 @@ func (r *mutationResolver) CreateKeyContactMailbox(ctx context.Context, mailboxT
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateKeyContactMailbox(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, mailboxTitle, mailboxAddress, subjectArea, subjectCategoryID)
+	return CreateKeyContactMailbox(ctx, logger, principal, r.store, r.emailService, r.addressBook, mailboxTitle, mailboxAddress, subjectArea, subjectCategoryID)
 }
 
 // CreateKeyContactUser is the resolver for the createKeyContactUser field.
@@ -27,7 +27,7 @@ func (r *mutationResolver) CreateKeyContactUser(ctx context.Context, userName st
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateKeyContactUser(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, userName, subjectArea, subjectCategoryID, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
+	return CreateKeyContactUser(ctx, logger, principal, r.store, r.emailService, r.addressBook, userName, subjectArea, subjectCategoryID, userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo))
 }
 
 // UpdateKeyContact is the resolver for the updateKeyContact field.

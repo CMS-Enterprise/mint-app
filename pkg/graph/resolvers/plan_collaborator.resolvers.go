@@ -27,7 +27,6 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 		r.store,
 		logger,
 		r.emailService,
-		r.emailTemplateService,
 		r.addressBook,
 		&input,
 		principal,

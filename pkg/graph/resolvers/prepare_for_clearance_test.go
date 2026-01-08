@@ -52,7 +52,6 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		nil,
-		nil,
 		email.AddressBook{},
 	)
 	suite.NoError(err)
@@ -75,7 +74,6 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		nil,
-		nil,
 		email.AddressBook{},
 	)
 	suite.NoError(err)
@@ -97,7 +95,6 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		},
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
-		nil,
 		nil,
 		email.AddressBook{},
 	)
