@@ -289,7 +289,6 @@ func (s *Seeder) addOperationalSolution(
 		s.Config.Store,
 		s.Config.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		operationalNeedID,
 		&solType,

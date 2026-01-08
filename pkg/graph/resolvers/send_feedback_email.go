@@ -13,23 +13,17 @@ import (
 // SendFeedbackEmail sends a feedback email to the mint team
 func SendFeedbackEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	principal authentication.Principal,
 	input model.SendFeedbackEmailInput,
 ) (bool, error) {
-	if emailService != nil && emailTemplateService != nil {
-		emailTemplate, err := emailTemplateService.GetEmailTemplate(email.SendFeedbackTemplateName)
-		if err != nil {
-			return false, err
-		}
+	if emailService == nil {
+		return true, nil
+	}
 
-		emailSubject, err := emailTemplate.GetExecutedSubject(email.SendFeedbackSubjectContent{})
-		if err != nil {
-			return false, err
-		}
-
-		emailBody, err := emailTemplate.GetExecutedBody(email.SendFeedbackBodyContent{
+	emailSubject, emailBody, err := email.UtilityEmails.SendFeedback.GetContent(
+		email.SendFeedbackSubjectContent{},
+		email.SendFeedbackBodyContent{
 			ClientAddress:         emailService.GetConfig().GetClientAddress(),
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
@@ -40,17 +34,15 @@ func SendFeedbackEmail(
 			SystemEasyToUse:       humanizeFeedbackEasyToUse(input.SystemEasyToUse, input.SystemEasyToUseOther),
 			HowSatisfied:          humanizeFeedbackSatisfaction(input.HowSatisfied),
 			HowCanWeImprove:       models.ValueOrEmpty(input.HowCanWeImprove),
-		})
-		if err != nil {
-			return false, err
-		}
+		},
+	)
+	if err != nil {
+		return false, err
+	}
 
-		err = emailService.Send(addressBook.DefaultSender, []string{addressBook.DevTeamEmail}, nil, emailSubject, "text/html", emailBody)
-		if err != nil {
-			return false, err
-		}
-		return true, nil
-
+	err = emailService.Send(addressBook.DefaultSender, []string{addressBook.DevTeamEmail}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return false, err
 	}
 
 	return true, nil

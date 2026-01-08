@@ -297,7 +297,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
       OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup',
-      HETS: 'HIPAA Eligibility Transaction System'
+      HETS: 'HIPAA Eligibility Transaction System',
+      MCBS: 'Medicare Current Beneficiary Survey'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -368,7 +369,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
       OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup',
-      HETS: 'HIPAA Eligibility Transaction System'
+      HETS: 'HIPAA Eligibility Transaction System',
+      MCBS: 'Medicare Current Beneficiary Survey'
     },
     readonlyOptions: {
       INNOVATION: '4i'

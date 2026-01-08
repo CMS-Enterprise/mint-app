@@ -36,12 +36,12 @@ func main() {
 	sendDateChangedEmailsTest(emailService, templateService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
-	sendFeedbackEmail(emailService, templateService, addressBook)
-	reportAProblemEmail(emailService, templateService, addressBook)
+	sendFeedbackEmail(emailService, addressBook)
+	reportAProblemEmail(emailService, addressBook)
 
 	// Solution emails
 	//TODO, we might want to remove these later. Leaving for comparison now
-	sendOperationalSolutionSelectedTestEmail(emailService, templateService, addressBook)
+	sendOperationalSolutionSelectedTestEmail(emailService, addressBook)
 	sendMTOSolutionSelectedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution Contact emails for editable POC workflow
@@ -65,8 +65,8 @@ func main() {
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, addressBook)
 
 	// Daily Digest Email
-	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
-	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
+	sendTestDailyDigestEmail(emailService, addressBook)           // daily digest email to user
+	sendTestDailyDigestEmailAggregated(emailService, addressBook) // daily digest email to mint team
 
 	// MTO Milestone Assignment Email
 	sendMTOMilestoneAssignedTestEmail(emailService, addressBook)
@@ -423,7 +423,6 @@ func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 
 func sendFeedbackEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	princ := authentication.ApplicationPrincipal{
@@ -447,13 +446,12 @@ func sendFeedbackEmail(
 		HowCanWeImprove:       models.StringPointer("Please send me a pizza after every model I submit"),
 	}
 
-	_, err := resolvers.SendFeedbackEmail(emailService, templateService, addressBook, &princ, input)
+	_, err := resolvers.SendFeedbackEmail(emailService, addressBook, &princ, input)
 	noErr(err)
 }
 
 func reportAProblemEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	princ := authentication.ApplicationPrincipal{
@@ -475,7 +473,7 @@ func reportAProblemEmail(
 		SeverityOther:         models.StringPointer(" I couldn't log in for a week "),
 	}
 
-	_, err := resolvers.ReportAProblem(emailService, templateService, addressBook, &princ, input)
+	_, err := resolvers.ReportAProblem(emailService, addressBook, &princ, input)
 	noErr(err)
 }
 

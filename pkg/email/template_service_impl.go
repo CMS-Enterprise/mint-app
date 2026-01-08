@@ -3,56 +3,10 @@ package email
 import (
 	_ "embed"
 	"fmt"
-	"strings"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
-
-// DailyDigestTemplateName is the template name definition for the corresponding email template
-const DailyDigestTemplateName string = "daily_digest"
-
-//go:embed templates/daily_digest_subject.html
-var dailyDigestSubjectTemplate string
-
-//go:embed templates/daily_digest_body.html
-var dailyDigestBodyTemplate string
-
-// AggregatedDailyDigestTemplateName is the template name definition for the corresponding email template
-const AggregatedDailyDigestTemplateName string = "aggregated_daily_digest"
-
-//go:embed templates/aggregated_daily_digest_subject.html
-var aggregatedDailyDigestSubjectTemplate string
-
-//go:embed templates/aggregated_daily_digest_body.html
-var aggregatedDailyDigestBodyTemplate string
-
-// ReportAProblemTemplateName is the template name definition for the corresponding email template
-const ReportAProblemTemplateName string = "report_a_problem"
-
-//go:embed templates/report_a_problem_body.html
-var reportAProblemBodyTemplate string
-
-//go:embed templates/report_a_problem_subject.html
-var reportAProblemSubjectTemplate string
-
-// SendFeedbackTemplateName is the template name definition of the send feedback email template
-const SendFeedbackTemplateName string = "send_feedback"
-
-//go:embed templates/send_feedback_body.html
-var sendFeedbackBodyTemplate string
-
-//go:embed templates/send_feedback_subject.html
-var sendFeedbackSubjectTemplate string
-
-// OperationalSolutionSelectedTemplateName is the template name for the solution selected email that is sent to solution POCS
-const OperationalSolutionSelectedTemplateName string = "operational_solution_selected"
-
-//go:embed templates/operational_solution_selected_body.html
-var operationalSolutionSelectedBodyTemplate string
-
-//go:embed templates/operational_solution_selected_subject.html
-var operationalSolutionSelectedSubjectTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
@@ -81,62 +35,6 @@ func NewTemplateServiceImpl(environment appconfig.Environment) (*TemplateService
 // Load caches all email templates which will be used by the template service
 func (t *TemplateServiceImpl) Load() error {
 	t.emailTemplates = make(map[string]*emailtemplates.EmailTemplate)
-	var err error
-
-	err = t.loadEmailTemplate(DailyDigestTemplateName, dailyDigestSubjectTemplate, dailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(AggregatedDailyDigestTemplateName, aggregatedDailyDigestSubjectTemplate, aggregatedDailyDigestBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(ReportAProblemTemplateName, reportAProblemSubjectTemplate, reportAProblemBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(SendFeedbackTemplateName, sendFeedbackSubjectTemplate, sendFeedbackBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.loadEmailTemplate(OperationalSolutionSelectedTemplateName, operationalSolutionSelectedSubjectTemplate, operationalSolutionSelectedBodyTemplate)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjectTemplate string, bodyTemplate string) error {
-	_, emailTemplateExists := t.emailTemplates[emailTemplateName]
-	if emailTemplateExists {
-		return fmt.Errorf("email template %s already exists", emailTemplateName)
-	}
-
-	subjectEmailTemplateName := emailTemplateName + "_subject"
-	bodyEmailTemplateName := emailTemplateName + "_body"
-
-	// Add environment prefix to subject if in dev, or impl
-	if t.environment.Dev() || t.environment.Impl() {
-		envName := strings.ToUpper(t.environment.String())
-		subjectTemplate = fmt.Sprintf("[%s] %s", envName, subjectTemplate)
-	}
-
-	err := t.templateCache.LoadTextTemplateFromString(subjectEmailTemplateName, subjectTemplate)
-	if err != nil {
-		return err
-	}
-
-	err = t.templateCache.LoadHTMLTemplateFromString(bodyEmailTemplateName, bodyTemplate, predefinedTemplates)
-	if err != nil {
-		return err
-	}
-
-	t.emailTemplates[emailTemplateName] = emailtemplates.NewEmailTemplate(t.templateCache, subjectEmailTemplateName, bodyEmailTemplateName)
 
 	return nil
 }

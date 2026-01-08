@@ -410,6 +410,19 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
+  [MtoCommonSolutionKey.MCBS]: {
+    key: MtoCommonSolutionKey.MCBS,
+    categories: [
+      MtoCommonSolutionSubject.DATA,
+      MtoCommonSolutionSubject.QUALITY
+    ],
+    name: 'Medicare Current Beneficiary Survey',
+    acronym: 'MCBS',
+    type: MtoSolutionType.IT_SYSTEM,
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
   [MtoCommonSolutionKey.OUTLOOK_MAILBOX]: {
     key: MtoCommonSolutionKey.OUTLOOK_MAILBOX,
     categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],

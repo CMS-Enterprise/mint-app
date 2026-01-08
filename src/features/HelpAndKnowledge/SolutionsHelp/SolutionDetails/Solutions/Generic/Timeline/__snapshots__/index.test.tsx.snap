@@ -1611,6 +1611,66 @@ exports[`Generic Timeline Components > matches the snapshot > Medicare Advantage
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > Medicare Current Beneficiary Survey 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <div
+      class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <h4
+          class="usa-alert__heading"
+        >
+          We’re still gathering information about  MCBS
+        </h4>
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            In the meantime, contact the MINT Team at 
+            <button
+              class="usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <span
+                class="display-flex flex-align-center line-height-normal"
+                style="column-gap: 0.25rem;"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  aria-label="launch"
+                  class="usa-icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
+            .
+          </span>
+        </p>
+      </div>
+    </div>
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > Microsoft Forms 1`] = `
 <DocumentFragment>
   <div
