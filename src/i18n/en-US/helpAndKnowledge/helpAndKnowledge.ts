@@ -2366,11 +2366,64 @@ Model Space offers model teams and their contractors templates or Databricks not
       gatheringInfo: true
     }
   },
-  // TEMP
   [MtoCommonSolutionKey.CMS_QUALTRICS]: {
     about: {
-      description: '',
-      gatheringInfo: true
+      description:
+        'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.\n\n<link1>Learn more about how to get access to Qualtrics</link1>',
+      links: [
+        {
+          link: 'https://confluenceent.cms.gov/pages/viewpage.action?pageId=1035742284&spaceKey=CMCSMAC&title=Qualtrics',
+          external: true
+        }
+      ],
+      components: [
+        {
+          header: 'Capabilities',
+          level: 'h3',
+          items: [
+            'Customizable survey or application creation',
+            'Survey or application distribution'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+      items: [
+        {
+          header: 'Access CMS Qualtrics',
+          description:
+            'Log in to CMS Qualtrics using your CMS user name and password.\n<link1>Go to CMS Qualtrics</link1>',
+          links: [
+            {
+              link: 'https://surveys.cms.gov/',
+              external: true
+            }
+          ]
+        },
+        {
+          header: 'Request a Survey Creator role',
+          description:
+            'Access the Jira help desk to request a change in your Qualtrics user role from Standard User to Survey Creator.\n<link1>Learn more about requesting a role change</link1>',
+          links: [
+            {
+              link: 'https://confluenceent.cms.gov/pages/viewpage.action?pageId=1035742284&spaceKey=CMCSMAC&title=Qualtrics',
+              external: true
+            }
+          ]
+        },
+        {
+          header: 'Create a survey',
+          description:
+            'Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.'
+        },
+        {
+          header: 'Distribute your survey',
+          description:
+            'Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.'
+        }
+      ]
     }
   },
   [MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP]: {

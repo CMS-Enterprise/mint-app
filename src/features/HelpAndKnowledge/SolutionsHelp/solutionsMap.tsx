@@ -189,10 +189,7 @@ export const helpSolutions: HelpSolutionsType = {
     name: 'CMS Qualtrics',
     type: MtoSolutionType.IT_SYSTEM,
     components: {
-      timeline: (props: SolutionDetailProps) => (
-        <GatheringInfoAlert {...props} />
-        // <CMSQualtricsTimeline {...props} />
-      )
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
     }
   },
   [MtoCommonSolutionKey.CBOSC]: {
