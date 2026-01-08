@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   ProcessList,
   ProcessListHeading,
@@ -7,6 +7,8 @@ import {
 } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
+
+import ExternalLink from 'components/ExternalLink';
 
 import GatheringInfoAlert from '../../../_components/GatheringInfoAlert';
 import { getTransLinkComponents, LinkType } from '../About';
@@ -37,14 +39,31 @@ export const GenericTimeline = ({
 }: {
   solution: HelpSolutionType;
 }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+
   const timelineConfig = timelineTranslationUtil(solution.key);
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
-      {timelineConfig.gatheringInfo && (
-        <GatheringInfoAlert solution={solution} className="margin-bottom-4" />
-      )}
-      {timelineConfig.description && <p>{timelineConfig.description}</p>}
+      <div className="margin-bottom-4">
+        {timelineConfig.gatheringInfo && (
+          <GatheringInfoAlert solution={solution} className="margin-bottom-4" />
+        )}
+        {/* {timelineConfig.description && <p>{timelineConfig.description}</p>} */}
+        {timelineConfig.description && (
+          <Trans
+            i18nKey={`solutions.${solution.key}.timeline.description`}
+            t={t}
+            components={{
+              email: (
+                <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
+                  {' '}
+                </ExternalLink>
+              )
+            }}
+          />
+        )}
+      </div>
 
       {timelineConfig.header && (
         <h3 className="margin-bottom-0 text-bold">{timelineConfig.header}</h3>
