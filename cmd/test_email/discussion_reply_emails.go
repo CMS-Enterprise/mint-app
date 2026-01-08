@@ -10,7 +10,6 @@ import (
 
 func sendDiscussionReplyOriginatorEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	DiscussionContent models.TaggedHTML,
 	discussionID uuid.UUID,
@@ -23,28 +22,21 @@ func sendDiscussionReplyOriginatorEmail(
 	mostRecentReplyName string,
 	replies []email.DiscussionReplyEmailContent,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.DiscussionReplyCreatedOriginatorTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.DiscussionReplyCreatedOriginatorSubject{
-		ModelName:         modelPlanName,
-		ModelAbbreviation: modelPlanAbbreviation,
-	})
-	if err != nil {
-		return err
-	}
 	replyCount := len(replies)
 	if replyCount > 2 {
 		replies = replies[:2] // only retain the first two replies
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.DiscussionReplyCreatedOriginatorBody{
+	subjectContent := email.DiscussionReplyCreatedOriginatorSubject{
+		ModelName:         modelPlanName,
+		ModelAbbreviation: modelPlanAbbreviation,
+	}
+
+	bodyContent := email.DiscussionReplyCreatedOriginatorBody{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		DiscussionContent: DiscussionContent.RawContent.ToTemplate(),
@@ -55,7 +47,9 @@ func sendDiscussionReplyOriginatorEmail(
 		OriginatorRole:    originatorRole,
 		Replies:           replies,
 		ReplyCount:        replyCount,
-	})
+	}
+
+	emailSubject, emailBody, err := email.DiscussionReply.CreatedOriginator.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
@@ -70,7 +64,6 @@ func sendDiscussionReplyOriginatorEmail(
 
 func sendDiscussionReplyOriginatorTestEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook) {
 
 	tag1EUA := "SKZO"
@@ -123,7 +116,6 @@ func sendDiscussionReplyOriginatorTestEmail(
 
 	err = sendDiscussionReplyOriginatorEmail(
 		emailService,
-		emailTemplateService,
 		addressBook,
 		models.TaggedHTML(taggedContent),
 		uuid.New(),

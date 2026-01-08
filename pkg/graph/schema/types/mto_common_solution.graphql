@@ -51,6 +51,7 @@ enum MTOCommonSolutionKey {
   RESDAC_CMDS
   OVERLAPS_OPERATIONS_WORKGROUP
   HETS
+  MCBS
 }
 
 enum MTOSolutionType {

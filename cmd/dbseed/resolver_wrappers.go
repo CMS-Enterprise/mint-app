@@ -146,7 +146,6 @@ func (s *Seeder) updatePlanDataExchangeApproach(
 		s.Config.Store,
 		// Currently hard-coding email-related args to not send emails
 		nil,
-		nil,
 		email.AddressBook{},
 	)
 	if err != nil {
@@ -289,7 +288,6 @@ func (s *Seeder) addOperationalSolution(
 		s.Config.Context,
 		s.Config.Store,
 		s.Config.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		operationalNeedID,

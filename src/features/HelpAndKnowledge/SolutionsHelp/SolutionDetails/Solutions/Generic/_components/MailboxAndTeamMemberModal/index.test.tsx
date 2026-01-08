@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
@@ -194,12 +194,13 @@ describe('MailboxAndTeamMemberModal Component', () => {
       }
     );
 
-    const { asFragment } = render(
+    render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    const modal = screen.getByTestId('mailbox-and-team-member-modal');
+    expect(modal).toMatchSnapshot();
   });
 });

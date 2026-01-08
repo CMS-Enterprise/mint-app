@@ -20,7 +20,6 @@ func OperationalSolutionCreate(
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	operationNeedID uuid.UUID,
 	solutionType *models.OperationalSolutionKey,
@@ -41,7 +40,7 @@ func OperationalSolutionCreate(
 
 	// Send an email to the selected POCs
 	go func() {
-		sendEmailErr := sendOperationalSolutionSelectedEmails(ctx, store, logger, emailService, emailTemplateService, addressBook, sol)
+		sendEmailErr := sendOperationalSolutionSelectedEmails(ctx, store, logger, emailService, addressBook, sol)
 		if sendEmailErr != nil {
 			logger.Error("error sending solution selected emails",
 				zap.String("solutionID", sol.ID.String()),
@@ -93,12 +92,11 @@ func sendOperationalSolutionSelectedEmails(
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	operationalSolution *models.OperationalSolution,
 
 ) error {
-	if emailService == nil || emailTemplateService == nil || operationalSolution == nil {
+	if emailService == nil || operationalSolution == nil {
 		return nil
 	}
 	if operationalSolution.IsOther == nil || *operationalSolution.IsOther { // Don't send an email for treat as other solutions
@@ -126,7 +124,6 @@ func sendOperationalSolutionSelectedEmails(
 
 	err = sendOperationalSolutionSelectedForUseByModelEmail(
 		emailService,
-		emailTemplateService,
 		addressBook,
 		solSelectedDB,
 		pocEmailAddress,
@@ -138,31 +135,22 @@ func sendOperationalSolutionSelectedEmails(
 // sendOperationalSolutionSelectedForUseByModelEmail parses the provided data into content for an email, and sends the email.
 func sendOperationalSolutionSelectedForUseByModelEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	solutionSelectedDB *email.OperationalSolutionSelectedDB,
 	pocEmailAddress []string,
 ) error {
 
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.OperationalSolutionSelectedTemplateName)
-	if err != nil {
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.OperationalSolutionSelectedSubjectContent{
+	subjectContent := email.OperationalSolutionSelectedSubjectContent{
 		ModelName:    solutionSelectedDB.ModelName,
 		SolutionName: solutionSelectedDB.SolutionName,
-	})
-	if err != nil {
-		return err
 	}
 	bodyContent := solutionSelectedDB.ToSolutionSelectedBodyContent(emailService.GetConfig().GetClientAddress())
 
-	emailBody, err := emailTemplate.GetExecutedBody(bodyContent)
+	emailSubject, emailBody, err := email.OperationalSolution.Selected.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}

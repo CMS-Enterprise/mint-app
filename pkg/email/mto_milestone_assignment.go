@@ -6,11 +6,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-type MilestoneAssignedSubjectContent struct {
+type MTOMilestoneAssignedSubjectContent struct {
 	ModelName string
 }
 
-type MilestoneAssignedBodyContent struct {
+type MTOMilestoneAssignedBodyContent struct {
 	ModelName       string
 	ModelID         string
 	ClientAddress   string
@@ -21,12 +21,12 @@ type MilestoneAssignedBodyContent struct {
 	SolutionsList   string
 }
 
-func NewMilestoneAssignedBodyContent(
+func NewMTOMilestoneAssignedBodyContent(
 	clientAddress string,
 	modelPlan *models.ModelPlan,
 	milestone *models.MTOMilestone,
 	solutions []string,
-) MilestoneAssignedBodyContent {
+) MTOMilestoneAssignedBodyContent {
 	var milestoneTitle = "No Title Set"
 	var needByDate = "No Date Set"
 	var milestoneStatus = "Not Set"
@@ -44,7 +44,7 @@ func NewMilestoneAssignedBodyContent(
 		}
 	}
 
-	return MilestoneAssignedBodyContent{
+	return MTOMilestoneAssignedBodyContent{
 		ModelName:       modelPlan.ModelName,
 		ModelID:         modelPlan.ID.String(),
 		ClientAddress:   clientAddress,

@@ -17,7 +17,6 @@ func AggregatedDigestEmailJob[T logging.ChainableErrorOrWarnLogger[T]](
 	dateAnalyzed time.Time,
 	store *storage.Store,
 	logger T,
-	emailTemplateService email.TemplateServiceImpl,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
@@ -32,7 +31,7 @@ func AggregatedDigestEmailJob[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 
 	// Generate email subject and body from template
-	emailSubject, emailBody, err := generateUserAgnosticDigestEmail(analyzedAudits, emailTemplateService, emailService)
+	emailSubject, emailBody, err := generateUserAgnosticDigestEmail(analyzedAudits, emailService)
 	if err != nil {
 		return err
 	}
@@ -71,23 +70,15 @@ func getUserAgnosticDigestAnalyzedAudits(
 // generateUserAgnosticDigestEmail will generate the aggregated daily digest email from template
 func generateUserAgnosticDigestEmail(
 	analyzedAudits []*models.AnalyzedAudit,
-	emailTemplateService email.TemplateServiceImpl,
 	emailService oddmail.EmailService,
 ) (string, string, error) {
-	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.AggregatedDailyDigestTemplateName)
-	if err != nil {
-		return "", "", err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.AggregatedDailyDigestSubjectContent{})
-	if err != nil {
-		return "", "", err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.AggregatedDailyDigestBodyContent{
-		AnalyzedAudits: analyzedAudits,
-		ClientAddress:  emailService.GetConfig().GetClientAddress(),
-	})
+	emailSubject, emailBody, err := email.DailyDigestEmails.AggregatedDailyDigest.GetContent(
+		email.AggregatedDailyDigestSubjectContent{},
+		email.AggregatedDailyDigestBodyContent{
+			AnalyzedAudits: analyzedAudits,
+			ClientAddress:  emailService.GetConfig().GetClientAddress(),
+		},
+	)
 	if err != nil {
 		return "", "", err
 	}

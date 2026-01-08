@@ -243,7 +243,7 @@ func (suite *ResolverSuite) createOperationalSolution() (*models.OperationalSolu
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	operationalSolution, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
+	operationalSolution, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 	suite.NoError(err)
 	return operationalSolution, need, plan
 }

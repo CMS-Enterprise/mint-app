@@ -1084,6 +1084,7 @@ export enum MtoCommonSolutionKey {
   LOI = 'LOI',
   LV = 'LV',
   MARX = 'MARX',
+  MCBS = 'MCBS',
   MIDS = 'MIDS',
   MODEL_SPACE = 'MODEL_SPACE',
   MS_FORMS = 'MS_FORMS',
