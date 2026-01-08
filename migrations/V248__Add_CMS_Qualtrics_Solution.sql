@@ -84,10 +84,3 @@ SELECT
     current_timestamp AS created_dts
 FROM pocs
 INNER JOIN mto_common_solution ON cast(mto_common_solution.key AS TEXT) = pocs.SolutionKey;
-
--- -- Add MCBS to DATA_TO_MONITOR and DATA_TO_SUPPORT_EVAL milestones
--- INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
--- VALUES ('DATA_TO_MONITOR', 'MCBS');
-
--- INSERT INTO mto_common_milestone_solution_link (mto_common_milestone_key, mto_common_solution_key)
--- VALUES ('DATA_TO_SUPPORT_EVAL', 'MCBS');
