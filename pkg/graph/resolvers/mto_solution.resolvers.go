@@ -73,7 +73,6 @@ func (r *mutationResolver) CreateMTOSolutionCommon(ctx context.Context, modelPla
 		principal,
 		r.store,
 		r.emailService,
-		r.emailTemplateService,
 		r.addressBook,
 		modelPlanID,
 		key,

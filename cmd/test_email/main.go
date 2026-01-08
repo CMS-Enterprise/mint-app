@@ -6,7 +6,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -17,7 +16,6 @@ import (
 
 func main() {
 	emailService := initializeOddMailService()
-	templateService := initializeEmailTemplateService()
 	addressBook := initializeAddressBook()
 
 	// Running all test functions
@@ -32,8 +30,8 @@ func main() {
 	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
 
 	// Model plan emails
-	sendModelPlanShareTest(emailService, templateService, addressBook)
-	sendDateChangedEmailsTest(emailService, templateService, addressBook)
+	sendModelPlanShareTest(emailService, addressBook)
+	sendDateChangedEmailsTest(emailService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
 	sendFeedbackEmail(emailService, addressBook)
@@ -91,14 +89,6 @@ func initializeOddMailService() oddmail.EmailService {
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
 	noErr(err)
 	return emailService
-}
-
-func initializeEmailTemplateService() email.TemplateService {
-	// Use local environment for test emails
-	env, _ := appconfig.NewEnvironment("local")
-	emailTemplateService, err := email.NewTemplateServiceImpl(env)
-	noErr(err)
-	return emailTemplateService
 }
 
 func initializeAddressBook() email.AddressBook {
@@ -241,7 +231,6 @@ func sendModelPlanCreatedEmailTest(
 
 func sendModelPlanShareTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	// Mocked data
@@ -309,7 +298,6 @@ func sendModelPlanShareTest(
 
 func sendDateChangedEmailsTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	modelPlan := models.NewModelPlan(

@@ -297,7 +297,6 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 	store *storage.Store,
 	logger T,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 ) error {
@@ -327,7 +326,7 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 
 	}
 
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 

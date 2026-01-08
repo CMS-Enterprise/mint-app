@@ -34,7 +34,6 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		input,
 		suite.testConfigs.Principal,
@@ -70,7 +69,6 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		input,
 		regularUserPrincipal,
@@ -102,7 +100,6 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 	planDiscussion, err := CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		planDiscussionInput,
@@ -139,7 +136,6 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		planDiscussionInput,
 		suite.testConfigs.Principal,
@@ -166,7 +162,6 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 	_, err = CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		planDiscussionInput,
@@ -235,7 +230,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 		UserRoleDescription: models.StringPointer("this is a test"),
 	}
 
-	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, suite.testConfigs.Principal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, suite.testConfigs.Principal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
@@ -261,7 +256,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	regularUserPrincipal := suite.testConfigs.Principal
 	regularUserPrincipal.JobCodeASSESSMENT = false
 
-	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, regularUserPrincipal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, regularUserPrincipal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)

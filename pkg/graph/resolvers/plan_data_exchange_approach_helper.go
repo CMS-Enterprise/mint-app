@@ -117,7 +117,6 @@ func SendDataExchangeApproachMarkedCompleteEmailNotifications(
 func SendDataExchangeApproachMarkedCompleteNotification(
 	ctx context.Context,
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 	actorID uuid.UUID,
 	np sqlutils.NamedPreparer,

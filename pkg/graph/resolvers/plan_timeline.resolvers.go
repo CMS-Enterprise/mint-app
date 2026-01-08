@@ -28,7 +28,6 @@ func (r *mutationResolver) UpdatePlanTimeline(ctx context.Context, id uuid.UUID,
 		principal,
 		r.store,
 		r.emailService,
-		r.emailTemplateService,
 		r.addressBook,
 	)
 }
