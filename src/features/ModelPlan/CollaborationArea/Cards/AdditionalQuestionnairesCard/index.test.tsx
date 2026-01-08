@@ -4,7 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
-import { questionnairesMock } from 'tests/mock/general';
+import { modelID, questionnairesMockData } from 'tests/mock/general';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 
@@ -27,8 +27,8 @@ describe('AdditionalQuestionnairesCard', () => {
           path: '/',
           element: (
             <AdditionalQuestionnairesCard
-              modelID="123"
-              questionnairesData={questionnairesMock}
+              modelID={modelID}
+              questionnairesData={questionnairesMockData}
             />
           )
         }
@@ -49,6 +49,21 @@ describe('AdditionalQuestionnairesCard', () => {
         i18next.t('collaborationArea:additionalQuestionnairesCard.heading')
       )
     ).toBeInTheDocument();
+    expect(screen.getByText('1 required questionnaire')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        i18next.t(
+          'collaborationArea:additionalQuestionnairesCard.viewAllRequired'
+        )
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        i18next.t(
+          'collaborationArea:additionalQuestionnairesCard.goToQuestionnaires'
+        )
+      )
+    ).toBeInTheDocument();
   });
 
   it('renders the correct links', () => {
@@ -58,8 +73,8 @@ describe('AdditionalQuestionnairesCard', () => {
           path: '/',
           element: (
             <AdditionalQuestionnairesCard
-              modelID="123"
-              questionnairesData={questionnairesMock}
+              modelID={modelID}
+              questionnairesData={questionnairesMockData}
             />
           )
         }
@@ -79,7 +94,7 @@ describe('AdditionalQuestionnairesCard', () => {
       screen.getByTestId('view-all-required-questionnaires')
     ).toHaveAttribute(
       'href',
-      `/models/123/collaboration-area/additional-questionnaires`
+      `/models/${modelID}/collaboration-area/additional-questionnaires`
     );
   });
 });

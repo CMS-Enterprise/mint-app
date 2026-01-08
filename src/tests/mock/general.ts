@@ -9,6 +9,9 @@ import {
   GetAllKeyContactsDocument,
   GetAllKeyContactsQuery,
   GetAllKeyContactsQueryVariables,
+  GetAllQuestionnairesDocument,
+  GetAllQuestionnairesQuery,
+  GetAllQuestionnairesQueryVariables,
   GetAnalyticsSummaryDocument,
   GetAnalyticsSummaryQuery,
   GetAnalyticsSummaryQueryVariables,
@@ -108,7 +111,7 @@ const modelPlanData: GetModelPlansType = [
   }
 ];
 
-export const questionnairesMock: QuestionnairesType = {
+export const questionnairesMockData: QuestionnairesType = {
   __typename: 'Questionnaires',
   dataExchangeApproach: {
     __typename: 'PlanDataExchangeApproach',
@@ -126,6 +129,30 @@ export const questionnairesMock: QuestionnairesType = {
     needed: false
   }
 };
+
+export const questionnairesMock: MockedResponse<
+  GetAllQuestionnairesQuery,
+  GetAllQuestionnairesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllQuestionnairesDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'My plan',
+          abbreviation: 'MP',
+          questionnaires: questionnairesMockData
+        }
+      }
+    }
+  }
+];
 
 export const modelPlanCollectionMock = (
   filter: ModelPlanFilter,
@@ -237,7 +264,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     },
     milestones: []
   },
-  questionnaires: questionnairesMock,
+  questionnaires: questionnairesMockData,
   documents: [
     {
       __typename: 'PlanDocument',
