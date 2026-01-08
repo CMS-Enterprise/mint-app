@@ -22,6 +22,7 @@ const (
 	OpSKCdx                       OperationalSolutionKey = "CDX"
 	OpSKCcw                       OperationalSolutionKey = "CCW"
 	OpSKCmsBox                    OperationalSolutionKey = "CMS_BOX"
+	OpSKCmsQualtrics              OperationalSolutionKey = "CMS_QUALTRICS"
 	OpSKCbosc                     OperationalSolutionKey = "CBOSC"
 	OpSKContractor                OperationalSolutionKey = "CONTRACTOR"
 	OpSKCpiVetting                OperationalSolutionKey = "CPI_VETTING"

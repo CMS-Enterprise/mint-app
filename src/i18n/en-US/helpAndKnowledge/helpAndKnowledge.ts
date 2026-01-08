@@ -505,7 +505,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
   [MtoCommonSolutionKey.CDAC]: {
     about: {
       description: `The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
-        
+
   CDAC could support a model/project if:`,
       items: [
         'The model team would benefit from enhanced monitoring capabilities that include the integration of external data sources with internal CMS data sources for more comprehensive monitoring. <italic>For example, the Cell & Gene Therapy Access (CGT) Model Team leverages aggregated clinical and claims data insights alongside Medicaid claims for longitudinal patient tracking to monitor drug therapy outcomes as patients transition across care settings and health plans.</italic>',
@@ -531,7 +531,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Integrated data and insights for Model Teams',
           description: `Supporting model teams with integrating data from various data sources (e.g., clinical registry, commercial payer data), across time and at a patient and/or population level to support monitoring of patient or model outcomes.
-            
+
 Examples and impact:`,
           level: 'h4',
           items: [
@@ -543,7 +543,7 @@ Examples and impact:`,
         {
           header: 'Integrated data and insights to Model Participants',
           description: `Supporting model participants with timely, comprehensive, and actionable insights on their attributed patients supports improvement on model measures and reduces burden (when compared to reconciling multiple reports and portals). This is typically achieved by working in collaboration with aggregators such as Health Information Exchanges (HIEs) and EHR Vendors.
-            
+
 Examples and impact:`,
           level: 'h4',
           items: [
@@ -2342,6 +2342,13 @@ Model Space offers model teams and their contractors templates or Databricks not
     }
   },
   [MtoCommonSolutionKey.RESDAC_CMDS]: {
+    about: {
+      description: '',
+      gatheringInfo: true
+    }
+  },
+  // TEMP
+  [MtoCommonSolutionKey.CMS_QUALTRICS]: {
     about: {
       description: '',
       gatheringInfo: true
