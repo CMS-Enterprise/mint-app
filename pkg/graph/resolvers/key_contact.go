@@ -21,7 +21,7 @@ import (
 // CreateKeyContactUser creates a new user contact for a subject matter expert.
 // It looks up the user account by username and inserts a new contact record associated with that user.
 func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	userName string,
 	subjectArea string,
 	subjectCategoryID uuid.UUID,
@@ -56,13 +56,12 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 		return nil, fmt.Errorf("failed to create contact for user %s: %w", userName, err)
 	}
 
-	if emailService != nil && emailTemplateService != nil && newContact.Email != nil {
+	if emailService != nil && newContact.Email != nil {
 		// Send welcome email to new key contact
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
 				ctx,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				newContact,
 			)
@@ -82,7 +81,7 @@ func CreateKeyContactUser(ctx context.Context, logger *zap.Logger, principal aut
 // CreateKeyContactMailbox creates a new team mailbox contact for a subject matter expert.
 // It inserts a new contact record with the provided mailbox title and address, not linked to a user account.
 func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	mailboxTitle string,
 	mailboxAddress string,
 	subjectArea string,
@@ -112,12 +111,11 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 		return nil, fmt.Errorf("failed to create contact for mailbox %s: %w", mailboxAddress, err)
 	}
 
-	if emailService != nil && emailTemplateService != nil && newContact.Email != nil {
+	if emailService != nil && newContact.Email != nil {
 		go func() {
 			sendEmailErr := sendKeyContactWelcomeEmail(
 				ctx,
 				emailService,
-				emailTemplateService,
 				addressBook,
 				newContact,
 			)
@@ -232,7 +230,6 @@ func GetAllKeyContacts(ctx context.Context) ([]*models.KeyContact, error) {
 func sendKeyContactWelcomeEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	contact *models.KeyContact,
 ) error {

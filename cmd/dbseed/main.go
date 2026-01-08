@@ -204,7 +204,6 @@ func (s *Seeder) SeedData() {
 	s.updatePlanTimeline(
 		s.Config.Context,
 		nil,
-		nil,
 		email.AddressBook{},
 		planWithTimeline,
 		map[string]interface{}{
@@ -272,7 +271,6 @@ func (s *Seeder) SeedData() {
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT", nil)
 	s.addPlanCollaborator(
-		nil,
 		nil,
 		planWithCollaborators,
 		&model.PlanCollaboratorCreateInput{
@@ -395,7 +393,6 @@ func (s *Seeder) SeedData() {
 	_ = s.planDocumentCreate(sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
 	s.addPlanCollaborator(
 		s.Config.EmailService,
-		s.Config.EmailTemplateService,
 		sampleModelPlan,
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: sampleModelPlan.ID,
@@ -451,7 +448,6 @@ func (s *Seeder) SeedData() {
 	s.updatePlanTimeline(
 		s.Config.Context,
 		nil,
-		nil,
 		email.AddressBook{},
 		planApproachingClearance,
 		map[string]interface{}{
@@ -483,7 +479,6 @@ func (s *Seeder) SeedData() {
 	err = resolvers.SendDataExchangeApproachMarkedCompleteNotification(
 		s.Config.Context,
 		s.Config.EmailService,
-		s.Config.EmailTemplateService,
 		s.Config.AddressBook,
 		actorPrincipal.UserAccount.ID,
 		s.Config.Store,

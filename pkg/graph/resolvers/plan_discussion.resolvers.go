@@ -23,7 +23,6 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 		ctx,
 		logger,
 		r.emailService,
-		r.emailTemplateService,
 		r.addressBook,
 		&input,
 		principal,

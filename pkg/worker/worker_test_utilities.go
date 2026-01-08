@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/local"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -27,17 +26,16 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig             storage.DBConfig
-	LDClient             *ld.LDClient
-	Logger               *zap.Logger
-	UserInfo             *models.UserInfo
-	Store                *storage.Store
-	S3Client             *s3.S3Client
-	PubSub               *pubsub.ServicePubSub
-	Principal            *authentication.ApplicationPrincipal
-	EmailTemplateService email.TemplateServiceImpl
-	Context              context.Context
-	OktaClient           oktaapi.Client
+	DBConfig   storage.DBConfig
+	LDClient   *ld.LDClient
+	Logger     *zap.Logger
+	UserInfo   *models.UserInfo
+	Store      *storage.Store
+	S3Client   *s3.S3Client
+	PubSub     *pubsub.ServicePubSub
+	Principal  *authentication.ApplicationPrincipal
+	Context    context.Context
+	OktaClient oktaapi.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -68,8 +66,6 @@ func createS3Client() s3.S3Client {
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(config, ldClient)
-	env, _ := appconfig.NewEnvironment("testing")
-	emailTemplateService, _ := email.NewTemplateServiceImpl(env)
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()
 	if oktaClientErr != nil {
 		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
@@ -83,7 +79,6 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Store = store
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
-	tc.EmailTemplateService = *emailTemplateService
 	tc.OktaClient = oktaClient
 
 	dataLoaders := loaders.NewDataLoaders(tc.Store)

@@ -72,7 +72,7 @@ func (r *mTOTemplateSubCategoryResolver) Milestones(ctx context.Context, obj *mo
 func (r *mutationResolver) CreateTemplateToMto(ctx context.Context, modelPlanID uuid.UUID, templateID uuid.UUID) (*model.ApplyTemplateResult, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return ApplyTemplateToMTO(ctx, r.store, logger, principal, r.emailService, r.emailTemplateService, r.addressBook, modelPlanID, templateID)
+	return ApplyTemplateToMTO(ctx, r.store, logger, principal, r.emailService, r.addressBook, modelPlanID, templateID)
 }
 
 // MtoTemplates is the resolver for the mtoTemplates field.

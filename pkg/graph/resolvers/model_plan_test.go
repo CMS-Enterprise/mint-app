@@ -22,7 +22,6 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 		context.Background(),
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		planName,
 		nil,
@@ -142,7 +141,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			nil,
-			nil,
+
 			email.AddressBook{},
 		)
 		suite.NoError(err)
@@ -163,7 +162,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			nil,
-			nil,
+
 			email.AddressBook{},
 		)
 		suite.NoError(err)
@@ -184,7 +183,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			nil,
-			nil,
+
 			email.AddressBook{},
 		)
 		suite.NoError(err)
@@ -213,7 +212,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			nil,
-			nil,
+
 			email.AddressBook{},
 		)
 		suite.NoError(err)

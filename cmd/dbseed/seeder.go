@@ -43,10 +43,6 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 	if err != nil {
 		panic(fmt.Errorf("issue creating the email service"))
 	}
-	emailTemplateService, err := emailtestconfigs.InitializeEmailTemplateService()
-	if err != nil {
-		panic(fmt.Errorf("issue creating the email template service"))
-	}
 	addressBook := emailtestconfigs.InitializeAddressBook()
 
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()
@@ -55,17 +51,16 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 	}
 
 	seederConfig := SeederConfig{
-		Store:                store,
-		Logger:               logger,
-		ZapLogger:            logging.NewZapLogger(logger),
-		S3Client:             s3Client,
-		EChimpClient:         echimpS3Client,
-		Context:              ctx,
-		EmailService:         emailService,
-		EmailTemplateService: emailTemplateService,
-		AddressBook:          addressBook,
-		OktaClient:           oktaClient,
-		viperConfig:          viperConfig,
+		Store:        store,
+		Logger:       logger,
+		ZapLogger:    logging.NewZapLogger(logger),
+		S3Client:     s3Client,
+		EChimpClient: echimpS3Client,
+		Context:      ctx,
+		EmailService: emailService,
+		AddressBook:  addressBook,
+		OktaClient:   oktaClient,
+		viperConfig:  viperConfig,
 	}
 	return newSeeder(seederConfig)
 
@@ -73,15 +68,14 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 
 // SeederConfig represents configuration a Seeder uses to seed data in the db
 type SeederConfig struct {
-	Store                *storage.Store
-	Logger               *zap.Logger
-	ZapLogger            *logging.ZapLogger
-	S3Client             *s3.S3Client
-	EChimpClient         *s3.S3Client
-	Context              context.Context
-	EmailService         oddmail.EmailService
-	EmailTemplateService email.TemplateService
-	AddressBook          email.AddressBook
-	OktaClient           oktaapi.Client
-	viperConfig          *viper.Viper
+	Store        *storage.Store
+	Logger       *zap.Logger
+	ZapLogger    *logging.ZapLogger
+	S3Client     *s3.S3Client
+	EChimpClient *s3.S3Client
+	Context      context.Context
+	EmailService oddmail.EmailService
+	AddressBook  email.AddressBook
+	OktaClient   oktaapi.Client
+	viperConfig  *viper.Viper
 }
