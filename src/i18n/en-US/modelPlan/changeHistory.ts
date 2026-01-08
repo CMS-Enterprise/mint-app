@@ -124,6 +124,7 @@ const changeHistory = {
   category: 'Category',
   subCategory: 'Sub-category',
   milestone: 'Milestone',
+  template: 'Template',
   status: 'Status',
   readyForReview: 'Ready for review',
   inProgress: 'In progress',
