@@ -415,7 +415,6 @@ func CreateDiscussionReply(
 	ctx context.Context,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-
 	addressBook email.AddressBook,
 	input *model.DiscussionReplyCreateInput,
 	principal authentication.Principal,

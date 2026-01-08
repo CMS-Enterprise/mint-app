@@ -116,7 +116,6 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			tx,
 			store,
 			emailService,
-
 			addressBook,
 			createdMilestone.ID,
 			createdMilestone.ModelPlanID,
