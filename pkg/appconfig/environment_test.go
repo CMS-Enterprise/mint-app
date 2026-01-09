@@ -49,7 +49,7 @@ func TestSetEnvironment(t *testing.T) {
 	// You can't change the environment once it's set
 	SetEnvironment(prodEnv)
 	currentEnv = GetEnvironment()
-	// even though we
+	// even though we attempted to set to prod, it should still be dev
 	assert.Equal(devEnv, currentEnv)
 
 	// This is a utility test function, so we can reset the environment for other tests

@@ -70,12 +70,12 @@ func main() {
 	// MTO Milestone Assignment Email
 	sendMTOMilestoneAssignedTestEmail(emailService, addressBook)
 
-	// Model Plan Created Email in showing if it was in the dev environment
-	devEnv, err := appconfig.NewEnvironment("test")
+	// Model Plan Created Email showing if it was in the test environment
+	testEnv, err := appconfig.NewEnvironment("test")
 	if err != nil {
 		panic("unable to create test environment")
 	}
-	appconfig.ResetEnvironmentForTesting(devEnv)
+	appconfig.ResetEnvironmentForTesting(testEnv)
 	sendModelPlanCreatedEmailTest(emailService)
 }
 
