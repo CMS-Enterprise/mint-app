@@ -101,7 +101,7 @@ func (e Environment) Testing() bool {
 	return e == testingEnv
 }
 
-// Test returns true if the environment is local
+// Test returns true if the environment is test
 func (e Environment) Test() bool {
 	return e == testEnv
 }
@@ -111,12 +111,12 @@ func (e Environment) Dev() bool {
 	return e == devEnv
 }
 
-// Impl returns true if the environment is local
+// Impl returns true if the environment is impl
 func (e Environment) Impl() bool {
 	return e == implEnv
 }
 
-// Prod returns true if the environment is local
+// Prod returns true if the environment is prod
 func (e Environment) Prod() bool {
 	return e == prodEnv
 }
