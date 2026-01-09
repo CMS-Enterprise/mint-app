@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
@@ -68,6 +69,14 @@ func main() {
 
 	// MTO Milestone Assignment Email
 	sendMTOMilestoneAssignedTestEmail(emailService, addressBook)
+
+	// Model Plan Created Email in showing if it was in the dev environment
+	devEnv, err := appconfig.NewEnvironment("test")
+	if err != nil {
+		panic("unable to create test environment")
+	}
+	appconfig.ResetEnvironmentForTesting(devEnv)
+	sendModelPlanCreatedEmailTest(emailService)
 }
 
 func noErr(err error) {
