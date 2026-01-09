@@ -26,7 +26,7 @@ const FormFooter = ({
 
   return (
     <div id={id}>
-      <div className="margin-top-6 margin-bottom-2 display-flex">
+      <div className="margin-top-6 margin-bottom-3 display-flex">
         {backPage && (
           <Button
             type="button"

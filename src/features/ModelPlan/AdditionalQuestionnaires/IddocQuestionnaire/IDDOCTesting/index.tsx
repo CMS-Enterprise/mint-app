@@ -1,14 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Button,
-  Fieldset,
-  GridContainer,
-  Icon,
-  Label,
-  TextInput
-} from '@trussworks/react-uswds';
+import { Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
@@ -20,29 +13,17 @@ import {
 
 import AddNote from 'components/AddNote';
 import Alert from 'components/Alert';
-import AskAQuestion from 'components/AskAQuestion';
-import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
-import MainContent from 'components/MainContent';
+import FormFooter from 'components/FormFooter';
 import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
-import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import useStickyHeader from 'hooks/useStickyHeader';
 import { getKeys } from 'types/translation';
-
-import {
-  isCCWInvolvement,
-  isQualityMeasures,
-  renderCurrentPage,
-  renderTotalPages
-} from '../../../TaskList/OpsEvalAndLearning/Support';
 
 type IDDOCTestingFormType =
   GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
@@ -53,7 +34,9 @@ const IDDOCTesting = () => {
   const { t: opsEvalAndLearningMiscT } = useTranslation(
     'opsEvalAndLearningMisc'
   );
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   const { dataMonitoringFileTypes: dataMonitoringFileTypesConfig } =
     usePlanTranslation('opsEvalAndLearning');
@@ -62,7 +45,6 @@ const IDDOCTesting = () => {
 
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const navigate = useNavigate();
-  const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   const { data, loading, error } = useGetIddocTestingQuery({
     variables: {
@@ -114,268 +96,193 @@ const IDDOCTesting = () => {
   }
 
   return (
-    <MainContent data-testid="ops-eval-and-learning-iddoc-testing">
-      <GridContainer>
-        <MutationErrorModal
-          isOpen={mutationError.isModalOpen}
-          closeModal={mutationError.closeModal}
-          url={mutationError.destinationURL}
-        />
-
-        <Breadcrumbs
-          items={[
-            BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST,
-            BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
-          ]}
-        />
-
-        <PageHeading className="margin-top-4 margin-bottom-2" ref={headerRef}>
-          {opsEvalAndLearningMiscT('heading')}
-        </PageHeading>
-
-        <p
-          className="margin-top-0 margin-bottom-1 font-body-lg"
-          data-testid="model-plan-name"
-        >
-          {miscellaneousT('for')} {modelName}
-        </p>
-      </GridContainer>
-      <StickyModelNameWrapper
-        triggerRef={headerRef}
-        sectionHeading={opsEvalAndLearningMiscT('heading')}
-        modelName={modelName}
-        abbreviation={abbreviation || undefined}
+    <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={mutationError.closeModal}
+        url={mutationError.destinationURL}
       />
 
-      <GridContainer>
-        <p className="margin-bottom-2 font-body-md line-height-sans-4">
-          {miscellaneousT('helpText')}
-        </p>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          navigate(
+            `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring`
+          );
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+        data-testid="ops-eval-and-learning-iddoc-testing"
+      >
+        {(formikProps: FormikProps<IDDOCTestingFormType>) => {
+          const { handleSubmit, values } = formikProps;
 
-        <AskAQuestion modelID={modelID} />
+          return (
+            <>
+              <ConfirmLeave />
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {
-            navigate(
-              `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/iddoc-monitoring`
-            );
-          }}
-          enableReinitialize
-          innerRef={formikRef}
-        >
-          {(formikProps: FormikProps<IDDOCTestingFormType>) => {
-            const { handleSubmit, setErrors, values } = formikProps;
+              <MINTForm
+                className="desktop:grid-col-6 margin-top-0"
+                data-testid="ops-eval-and-learning-iddoc-testing-form"
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  handleSubmit(e);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
+                  <h3>{opsEvalAndLearningMiscT('testingQuestions')}</h3>
 
-            return (
-              <>
-                <ConfirmLeave />
+                  <Alert
+                    type="info"
+                    slim
+                    data-testid="mandatory-fields-alert"
+                    className="margin-bottom-4"
+                  >
+                    <span className="mandatory-fields-alert__text">
+                      {opsEvalAndLearningMiscT('ssmRequest')}
+                    </span>
+                  </Alert>
 
-                <MINTForm
-                  className="desktop:grid-col-6 margin-top-6"
-                  data-testid="ops-eval-and-learning-iddoc-testing-form"
-                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <Fieldset disabled={!!error || loading}>
-                    <h3>{opsEvalAndLearningMiscT('testingQuestions')}</h3>
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="ops-eval-and-learning-uat-needs">
+                      {opsEvalAndLearningT('uatNeeds.label')}
+                    </Label>
 
-                    <Alert
-                      type="info"
-                      slim
-                      data-testid="mandatory-fields-alert"
-                      className="margin-bottom-4"
-                    >
-                      <span className="mandatory-fields-alert__text">
-                        {opsEvalAndLearningMiscT('ssmRequest')}
-                      </span>
-                    </Alert>
-
-                    <FieldGroup className="margin-top-6">
-                      <Label htmlFor="ops-eval-and-learning-uat-needs">
-                        {opsEvalAndLearningT('uatNeeds.label')}
-                      </Label>
-
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ops-eval-and-learning-uat-needs"
-                        name="uatNeeds"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup className="margin-top-6">
-                      <Label htmlFor="ops-eval-and-learning-stc-needs">
-                        {opsEvalAndLearningT('stcNeeds.label')}
-                      </Label>
-
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ops-eval-and-learning-stc-needs"
-                        data-testid="ops-eval-and-learning-stc-needs"
-                        name="stcNeeds"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup className="margin-top-6">
-                      <Label htmlFor="ops-eval-and-learning-testing-timelines">
-                        {opsEvalAndLearningT('testingTimelines.label')}
-                      </Label>
-
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ops-eval-and-learning-testing-timelines"
-                        name="testingTimelines"
-                      />
-                    </FieldGroup>
-
-                    <AddNote
-                      id="ops-eval-and-learning-testing-note"
-                      field="testingNote"
+                    <Field
+                      as={TextAreaField}
+                      className="height-15"
+                      id="ops-eval-and-learning-uat-needs"
+                      name="uatNeeds"
                     />
+                  </FieldGroup>
 
-                    <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="ops-eval-and-learning-stc-needs">
+                      {opsEvalAndLearningT('stcNeeds.label')}
+                    </Label>
 
-                    <FieldGroup>
-                      <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
-                        {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
-                      </Label>
+                    <Field
+                      as={TextAreaField}
+                      className="height-15"
+                      id="ops-eval-and-learning-stc-needs"
+                      data-testid="ops-eval-and-learning-stc-needs"
+                      name="stcNeeds"
+                    />
+                  </FieldGroup>
 
-                      {getKeys(dataMonitoringFileTypesConfig.options).map(
-                        type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-data-monitoring-file-${type}`}
-                                name="dataMonitoringFileTypes"
-                                label={
-                                  dataMonitoringFileTypesConfig.options[type]
-                                }
-                                value={type}
-                                checked={values?.dataMonitoringFileTypes.includes(
-                                  type
-                                )}
-                              />
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="ops-eval-and-learning-testing-timelines">
+                      {opsEvalAndLearningT('testingTimelines.label')}
+                    </Label>
 
-                              {type === MonitoringFileType.OTHER &&
-                                values.dataMonitoringFileTypes.includes(
-                                  MonitoringFileType.OTHER
-                                ) && (
-                                  <div className="margin-left-4">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-data-monitoring-file-other"
-                                      className="text-normal"
-                                    >
-                                      {opsEvalAndLearningT(
-                                        'dataMonitoringFileOther.label'
-                                      )}
-                                    </Label>
+                    <Field
+                      as={TextAreaField}
+                      className="height-15"
+                      id="ops-eval-and-learning-testing-timelines"
+                      name="testingTimelines"
+                    />
+                  </FieldGroup>
 
-                                    <Field
-                                      as={TextInput}
-                                      id="ops-eval-and-learning-data-monitoring-file-other"
-                                      name="dataMonitoringFileOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        }
-                      )}
-                    </FieldGroup>
+                  <AddNote
+                    id="ops-eval-and-learning-testing-note"
+                    field="testingNote"
+                  />
 
-                    <FieldGroup className="margin-top-6">
-                      <Label htmlFor="ops-eval-and-learning-data-response-type">
-                        {opsEvalAndLearningT('dataResponseType.label')}
-                      </Label>
+                  <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
-                      <Field
-                        as={TextInput}
-                        id="ops-eval-and-learning-data-response-type"
-                        maxLength={50}
-                        name="dataResponseType"
-                      />
-                    </FieldGroup>
+                  <FieldGroup>
+                    <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
+                      {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
+                    </Label>
 
-                    <FieldGroup className="margin-top-6">
-                      <Label htmlFor="ops-eval-and-learning-data-file-frequency">
-                        {opsEvalAndLearningT('dataResponseFileFrequency.label')}
-                      </Label>
+                    {getKeys(dataMonitoringFileTypesConfig.options).map(
+                      type => {
+                        return (
+                          <Fragment key={type}>
+                            <Field
+                              as={CheckboxField}
+                              id={`ops-eval-and-learning-data-monitoring-file-${type}`}
+                              name="dataMonitoringFileTypes"
+                              label={
+                                dataMonitoringFileTypesConfig.options[type]
+                              }
+                              value={type}
+                              checked={values?.dataMonitoringFileTypes.includes(
+                                type
+                              )}
+                            />
 
-                      <Field
-                        as={TextInput}
-                        id="ops-eval-and-learning-data-file-frequency"
-                        maxLength={50}
-                        name="dataResponseFileFrequency"
-                      />
-                    </FieldGroup>
+                            {type === MonitoringFileType.OTHER &&
+                              values.dataMonitoringFileTypes.includes(
+                                MonitoringFileType.OTHER
+                              ) && (
+                                <div className="margin-left-4">
+                                  <Label
+                                    htmlFor="ops-eval-and-learning-data-monitoring-file-other"
+                                    className="text-normal"
+                                  >
+                                    {opsEvalAndLearningT(
+                                      'dataMonitoringFileOther.label'
+                                    )}
+                                  </Label>
 
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          navigate(
-                            `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/iddoc`
-                          );
-                        }}
-                      >
-                        {miscellaneousT('back')}
-                      </Button>
-
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {miscellaneousT('next')}
-                      </Button>
-                    </div>
-
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/model-plan`
-                        )
+                                  <Field
+                                    as={TextInput}
+                                    id="ops-eval-and-learning-data-monitoring-file-other"
+                                    name="dataMonitoringFileOther"
+                                  />
+                                </div>
+                              )}
+                          </Fragment>
+                        );
                       }
-                    >
-                      <Icon.ArrowBack
-                        className="margin-right-1"
-                        aria-hidden
-                        aria-label="back"
-                      />
+                    )}
+                  </FieldGroup>
 
-                      {miscellaneousT('saveAndReturn')}
-                    </Button>
-                  </Fieldset>
-                </MINTForm>
-              </>
-            );
-          }}
-        </Formik>
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="ops-eval-and-learning-data-response-type">
+                      {opsEvalAndLearningT('dataResponseType.label')}
+                    </Label>
 
-        {data && (
-          <PageNumber
-            currentPage={renderCurrentPage(
-              3,
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            totalPages={renderTotalPages(
-              iddocSupport,
-              isCCWInvolvement(ccmInvolvment) ||
-                isQualityMeasures(dataNeededForMonitoring)
-            )}
-            className="margin-y-6"
-          />
-        )}
-      </GridContainer>
-    </MainContent>
+                    <Field
+                      as={TextInput}
+                      id="ops-eval-and-learning-data-response-type"
+                      maxLength={50}
+                      name="dataResponseType"
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="ops-eval-and-learning-data-file-frequency">
+                      {opsEvalAndLearningT('dataResponseFileFrequency.label')}
+                    </Label>
+
+                    <Field
+                      as={TextInput}
+                      id="ops-eval-and-learning-data-file-frequency"
+                      maxLength={50}
+                      name="dataResponseFileFrequency"
+                    />
+                  </FieldGroup>
+
+                  <FormFooter
+                    homeArea={additionalQuestionnairesT(
+                      'saveAndReturnToQuestionnaires'
+                    )}
+                    homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+                    backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`}
+                    nextPage
+                    disabled={!!error || loading} // TODO: add or replace with issubmitting once refactored form
+                    id="iddoc-questionnaire-testing-form"
+                  />
+                </Fieldset>
+              </MINTForm>
+            </>
+          );
+        }}
+      </Formik>
+
+      <PageNumber currentPage={2} totalPages={3} className="margin-y-6" />
+    </>
   );
 };
 
