@@ -33,7 +33,6 @@ func PlanCollaboratorCreate(
 	store *storage.Store,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
@@ -85,8 +84,8 @@ func PlanCollaboratorCreate(
 
 	}
 
-	if emailService != nil && emailTemplateService != nil && pref.AddedAsCollaborator.SendEmail() {
-		err = sendCollaboratorAddedEmail(emailService, emailTemplateService, addressBook, collabAccount.Email, modelPlan)
+	if emailService != nil && pref.AddedAsCollaborator.SendEmail() {
+		err = sendCollaboratorAddedEmail(emailService, addressBook, collabAccount.Email, modelPlan)
 		if err != nil {
 			return retCollaborator, planFavorite, err
 		}
@@ -97,12 +96,11 @@ func PlanCollaboratorCreate(
 
 func sendCollaboratorAddedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 ) error {
-	if emailService == nil || emailTemplateService == nil {
+	if emailService == nil {
 		return nil
 	}
 	subjectContent := email.AddedAsCollaboratorSubjectContent{

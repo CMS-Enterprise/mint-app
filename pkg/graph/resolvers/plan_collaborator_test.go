@@ -23,7 +23,6 @@ import (
 func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
@@ -60,7 +59,6 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		mockEmailService,
-		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,
@@ -93,7 +91,6 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
@@ -145,7 +142,6 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		mockEmailService,
-		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
 		suite.testConfigs.Principal,

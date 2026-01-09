@@ -25,16 +25,15 @@ import (
 
 // Resolver is a resolver.
 type Resolver struct {
-	store                *storage.Store
-	service              ResolverService
-	fileUploadS3Client   *s3.S3Client
-	echimpS3Client       *s3.S3Client
-	emailService         oddmail.EmailService
-	emailTemplateService email.TemplateService
-	addressBook          email.AddressBook
-	ldClient             *ldclient.LDClient
-	pubsub               pubsub.PubSub
-	viperConfig          *viper.Viper
+	store              *storage.Store
+	service            ResolverService
+	fileUploadS3Client *s3.S3Client
+	echimpS3Client     *s3.S3Client
+	emailService       oddmail.EmailService
+	addressBook        email.AddressBook
+	ldClient           *ldclient.LDClient
+	pubsub             pubsub.PubSub
+	viperConfig        *viper.Viper
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -50,22 +49,20 @@ func NewResolver(
 	s3Client *s3.S3Client,
 	echimpS3Client *s3.S3Client,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
 	viperConfig *viper.Viper,
 ) *Resolver {
 	return &Resolver{
-		store:                store,
-		service:              service,
-		fileUploadS3Client:   s3Client,
-		echimpS3Client:       echimpS3Client,
-		emailService:         emailService,
-		emailTemplateService: emailTemplateService,
-		addressBook:          addressBook,
-		ldClient:             ldClient,
-		pubsub:               pubsub,
-		viperConfig:          viperConfig,
+		store:              store,
+		service:            service,
+		fileUploadS3Client: s3Client,
+		echimpS3Client:     echimpS3Client,
+		emailService:       emailService,
+		addressBook:        addressBook,
+		ldClient:           ldClient,
+		pubsub:             pubsub,
+		viperConfig:        viperConfig,
 	}
 }

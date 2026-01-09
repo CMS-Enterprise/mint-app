@@ -152,12 +152,6 @@ func (s *Server) routes(
 		s.logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
 	}
 
-	// set up Email Template Service
-	emailTemplateService, err := email.NewTemplateServiceImpl(s.environment)
-	if err != nil {
-		s.logger.Fatal("Failed to create an email template service", zap.Error(err))
-	}
-
 	// Set up Oddball email Service
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
 	emailServiceConfig.Enabled = s.Config.GetBool(appconfig.EmailEnabledKey)
@@ -239,7 +233,6 @@ func (s *Server) routes(
 		&s3Client,
 		&echimpS3Client,
 		emailService,
-		emailTemplateService,
 		addressBook,
 		ldClient,
 		s.pubsub,
@@ -316,14 +309,13 @@ func (s *Server) routes(
 
 	// Setup faktory worker
 	s.Worker = &worker.Worker{
-		Store:                store,
-		Environment:          s.environment,
-		EmailService:         emailService,
-		EmailTemplateService: *emailTemplateService,
-		AddressBook:          addressBook,
-		Connections:          s.Config.GetInt(appconfig.FaktoryConnections),
-		ProcessJobs:          s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
-		OktaAPIClient:        oktaClient,
+		Store:         store,
+		Environment:   s.environment,
+		EmailService:  emailService,
+		AddressBook:   addressBook,
+		Connections:   s.Config.GetInt(appconfig.FaktoryConnections),
+		ProcessJobs:   s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
+		OktaAPIClient: oktaClient,
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {

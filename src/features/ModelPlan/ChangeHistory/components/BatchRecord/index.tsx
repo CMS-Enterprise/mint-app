@@ -769,6 +769,27 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                     />
                   );
                 })()}
+
+              {/* MTO template link audits */}
+              {change.tableName === TableName.MODEL_PLAN_MTO_TEMPLATE_LINK &&
+                (() => {
+                  const templateName = getTranslatedFieldValue(
+                    change,
+                    'template_id'
+                  );
+
+                  return (
+                    <Trans
+                      shouldUnescape
+                      i18nKey="changeHistory:mtoUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        mtoType: properlyCapitalizeInitiator(t('template')),
+                        name: templateName || t('dataNotAvailable')
+                      }}
+                    />
+                  );
+                })()}
             </li>
           ))}
         </ul>

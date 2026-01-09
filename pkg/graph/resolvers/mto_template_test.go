@@ -19,7 +19,6 @@ func (suite *ResolverSuite) TestApplyTemplateToMTO() {
 	defer mockController.Finish()
 
 	emailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 	addressBook := email.AddressBook{}
 
 	// Test that the function signature works and handles errors gracefully
@@ -29,7 +28,6 @@ func (suite *ResolverSuite) TestApplyTemplateToMTO() {
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		emailService,
-		mockEmailTemplateService,
 		addressBook,
 		plan.ID,
 		templateID,
@@ -46,7 +44,6 @@ func (suite *ResolverSuite) TestApplyTemplateToMTO() {
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		emailService,
-		mockEmailTemplateService,
 		addressBook,
 		uuid.Nil, // Invalid model plan ID
 		templateID,
@@ -92,7 +89,6 @@ func (suite *ResolverSuite) TestApplyTemplateToMTO_MultipleApplications() {
 	defer mockController.Finish()
 
 	emailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 	addressBook := email.AddressBook{}
 
 	// Apply template first time - expect it to fail gracefully with non-existent template
@@ -102,7 +98,6 @@ func (suite *ResolverSuite) TestApplyTemplateToMTO_MultipleApplications() {
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		emailService,
-		mockEmailTemplateService,
 		addressBook,
 		plan.ID,
 		templateID,
@@ -115,7 +110,6 @@ func (suite *ResolverSuite) TestApplyTemplateToMTO_MultipleApplications() {
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		emailService,
-		mockEmailTemplateService,
 		addressBook,
 		plan.ID,
 		templateID,

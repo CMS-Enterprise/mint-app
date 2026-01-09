@@ -6,7 +6,6 @@ import (
 
 	"github.com/golang/mock/gomock"
 
-	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 
@@ -32,14 +31,6 @@ func InitializeOddMailService() (oddmail.EmailService, error) {
 // InitializeMockEmailService provides a shared entry to returning a MockEmailService. It utilized to TestEmailServiceConfig to generate the email service
 func InitializeMockEmailService(mockController *gomock.Controller) *oddmail.MockEmailService {
 	return oddmail.NewMockEmailService(mockController)
-}
-
-// InitializeEmailTemplateService provides a shared implementation for for an email template service to be used for testing
-func InitializeEmailTemplateService() (email.TemplateService, error) {
-	// Use testing environment for tests to avoid adding env prefix
-	env, _ := appconfig.NewEnvironment("testing")
-	return email.NewTemplateServiceImpl(env)
-
 }
 
 // InitializeAddressBook provides a shared implementation for an address book to be used for testing

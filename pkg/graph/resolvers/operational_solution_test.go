@@ -359,7 +359,6 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		nil,
-		nil,
 		email.AddressBook{},
 	)
 	suite.NoError(err)

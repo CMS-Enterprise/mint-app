@@ -64,7 +64,6 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 		context.Background(),
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		planName,
 		nil,
@@ -88,7 +87,6 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	pd, err := resolvers.CreatePlanDiscussion(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		input,
@@ -118,7 +116,6 @@ func (suite *WorkerSuite) createPlanCollaborator(
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		collaboratorInput,

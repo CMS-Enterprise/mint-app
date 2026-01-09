@@ -18,7 +18,7 @@ func (r *mutationResolver) CreateMTOCommonSolutionSystemOwner(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CreateMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, key, changes)
+	return CreateMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.addressBook, key, changes)
 }
 
 // UpdateMTOCommonSolutionSystemOwner is the resolver for the updateMTOCommonSolutionSystemOwner field.
@@ -26,7 +26,7 @@ func (r *mutationResolver) UpdateMTOCommonSolutionSystemOwner(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return UpdateMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id, changes)
+	return UpdateMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.addressBook, id, changes)
 }
 
 // DeleteMTOCommonSolutionSystemOwner is the resolver for the deleteMTOCommonSolutionSystemOwner field.
@@ -34,7 +34,7 @@ func (r *mutationResolver) DeleteMTOCommonSolutionSystemOwner(ctx context.Contex
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return DeleteMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.emailTemplateService, r.addressBook, id)
+	return DeleteMTOCommonSolutionSystemOwner(ctx, logger, principal, r.store, r.emailService, r.addressBook, id)
 }
 
 // MtoCommonSolutionSystemOwner is the resolver for the mtoCommonSolutionSystemOwner field.
