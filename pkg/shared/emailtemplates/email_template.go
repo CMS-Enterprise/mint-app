@@ -6,6 +6,8 @@ import (
 	htmlTemplate "html/template"
 	"strings"
 	textTemplate "text/template"
+
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 )
 
 const maxSubjectLength = 255
@@ -116,7 +118,17 @@ func (e *GenEmailTemplate[subjectType, bodyType]) GetSubject(subject subjectType
 		return "", err
 	}
 
-	return sanitizeSubject(buffer.String()), nil
+	subjectStr := buffer.String()
+
+	environment := appconfig.GetEnvironment()
+
+	// Add environment prefix to subject if in dev, impl, or test
+	if environment.IsLowerLevelEnvironment() {
+		envName := strings.ToUpper(environment.String())
+		subjectStr = fmt.Sprintf("[%s] %s", envName, subjectStr)
+	}
+
+	return sanitizeSubject(subjectStr), nil
 }
 
 // GetBody gets the body portion of an email template executed with the data provided

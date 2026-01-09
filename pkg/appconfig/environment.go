@@ -23,6 +23,13 @@ func GetEnvironment() Environment {
 	return appEnv
 }
 
+// ResetEnvironmentForTesting resets the environment to allow retesting.
+// This should only be called in tests.
+func ResetEnvironmentForTesting(env Environment) {
+	once = sync.Once{}
+	SetEnvironment(env)
+}
+
 // NewEnvironment returns an environment from a string
 func NewEnvironment(config string) (Environment, error) {
 	switch config {
@@ -112,6 +119,11 @@ func (e Environment) Impl() bool {
 // Prod returns true if the environment is local
 func (e Environment) Prod() bool {
 	return e == prodEnv
+}
+
+// IsLowerLevelEnvironment returns true if the environment is dev, impl, or test
+func (e Environment) IsLowerLevelEnvironment() bool {
+	return e == implEnv || e == testEnv || e == devEnv
 }
 
 // Deployed returns true if in a deployed environment
