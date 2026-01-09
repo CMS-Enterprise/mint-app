@@ -369,7 +369,7 @@ const CollectingAndSendingData = () => {
                     'saveAndReturnToQuestionnaires'
                   )}
                   homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/about-completing-data-exchange`}
+                  backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/about-completing-data-exchange`}
                   nextPage
                   disabled={isSubmitting}
                   id="collect-and-send-data-form"

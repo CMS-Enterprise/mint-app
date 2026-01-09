@@ -6,9 +6,12 @@ describe('The data exchange approach Form', () => {
 
   it('completes a the data exchange approach form', () => {
     cy.enterModelPlanCollaborationArea('Empty Plan');
+    cy.contains('button', 'Go to questionnaires').click();
 
     // Enter into DEA form
-    cy.get('[data-testid="to-data-exchange-approach"]').click();
+    cy.get('[data-testid="about-completing-data-exchange"]').within(() => {
+      cy.contains('Start').click();
+    });
 
     // Progress to the next page, just text on this page
     cy.contains('button', 'Next').click();
@@ -201,6 +204,6 @@ describe('The data exchange approach Form', () => {
     // Save and go back to questionnaires area
     cy.contains('button', 'Save and return to questionnaires').click();
 
-    cy.get('[data-testid="tasklist-tag"]').contains('Complete');
+    cy.get('[data-testid="questionnaireList-tag"]').contains('Complete');
   });
 });

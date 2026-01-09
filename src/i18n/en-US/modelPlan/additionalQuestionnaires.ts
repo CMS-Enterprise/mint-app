@@ -6,14 +6,14 @@ import {
 const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
   [DataExchangeApproachStatus.READY]: 'Ready to start',
   [DataExchangeApproachStatus.IN_PROGRESS]: 'In progress',
-  [DataExchangeApproachStatus.COMPLETE]: 'Completed'
+  [DataExchangeApproachStatus.COMPLETE]: 'Complete'
 };
 
 const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
   [IddocQuestionnaireStatus.NOT_STARTED]: 'Ready to start',
   [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
   [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not Needed',
-  [IddocQuestionnaireStatus.COMPLETED]: 'Completed'
+  [IddocQuestionnaireStatus.COMPLETED]: 'Complete'
 };
 
 const additionalQuestionnaires = {
