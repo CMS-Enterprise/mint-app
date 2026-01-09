@@ -24,6 +24,7 @@ import {
 import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import FormFooter from 'components/FormFooter';
 import FormHeader from 'components/FormHeader';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
@@ -38,8 +39,6 @@ import {
   composeMultiSelectOptions,
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
-
-import FormFooter from '../../../../components/FormFooter';
 
 type CollectionAndAggregationType =
   GetCollectionAndAggregationQuery['modelPlan']['questionnaires']['dataExchangeApproach'];

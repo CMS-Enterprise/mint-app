@@ -23,6 +23,7 @@ import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import ExternalLink from 'components/ExternalLink';
+import FormFooter from 'components/FormFooter';
 import FormHeader from 'components/FormHeader';
 import HelpText from 'components/HelpText';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -33,8 +34,6 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
-
-import FormFooter from '../../../../components/FormFooter';
 
 type NewMethodologiesAndConsiderationsType =
   GetNewMethodologiesAndConsiderationsQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
