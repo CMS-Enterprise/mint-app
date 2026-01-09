@@ -70,11 +70,13 @@ const QuestionnaireListStatusTag = ({
 
 export const QuestionnaireListButton = ({
   ariaLabel,
+  testId,
   path,
   disabled,
   status
 }: {
   ariaLabel?: string;
+  testId?: string;
   path: string;
   disabled?: boolean;
   status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
@@ -119,11 +121,11 @@ export const QuestionnaireListButton = ({
       <Button
         type="button"
         disabled={disabled}
-        data-testid={path}
+        data-testid={testId || path}
         className="usa-button margin-bottom-0 width-auto"
         onClick={() =>
           navigate(
-            `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/${path}`
+            `/models/${modelID}/collaboration-area/additional-questionnaires/${path}`
           )
         }
         aria-label={`${getCtaCopy()} ${ariaLabel?.toLowerCase()}`}

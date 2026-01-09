@@ -41,13 +41,13 @@ const additionalQuestionnaires = {
       heading: 'Data exchange approach',
       description:
         "After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you'll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.",
-      path: 'about-completing-data-exchange'
+      path: 'data-exchange-approach/about-completing-data-exchange'
     },
     iddocQuestionnaire: {
       heading: '4i and ACO-OS',
       description:
         'As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.',
-      path: 'iddoc-questionnaire'
+      path: 'iddoc-questionnaire/operations'
     }
   },
   questionnaireButton: {

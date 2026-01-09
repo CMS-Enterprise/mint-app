@@ -20,6 +20,7 @@ import PageLoading from 'components/PageLoading';
 import SectionLock from 'components/SectionLock';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { formatDateLocal } from 'utils/date';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import QuestionnaireListItem, {
   QuestionnaireListButton
@@ -147,6 +148,7 @@ const AdditionalQuestionnaires = () => {
                         ariaLabel={additionalQuestionnairesT(
                           `questionnairesList.${key}.heading`
                         )}
+                        testId={`${convertCamelCaseToKebabCase(key)}-button`}
                         path={additionalQuestionnairesT(
                           `questionnairesList.${key}.path`
                         )}

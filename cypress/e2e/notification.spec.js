@@ -532,7 +532,7 @@ describe('Notification Center', () => {
     cy.contains('button', 'Go to questionnaires').click();
 
     cy.url().should('include', '/additional-questionnaires');
-    cy.get('[data-testid="about-completing-data-exchange"]').within(() => {
+    cy.get('[data-testid="data-exchange-approach-button"]').within(() => {
       cy.contains('Start').click();
     });
 

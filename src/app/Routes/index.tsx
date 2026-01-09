@@ -117,26 +117,6 @@ const TaskListToModelPlanRedirect = () => {
   return <Navigate to={newLocation} replace />;
 };
 
-// Redirect old data exchange-approach paths to new paths
-const DataExchangeApproachRedirect = () => {
-  const location = useLocation();
-
-  // Replace 'data-exchange-approach' with 'additional-questionnaires/data-exchange-approach' in the current path
-  const newPath = location.pathname.replace(
-    '/collaboration-area/data-exchange-approach',
-    '/collaboration-area/additional-questionnaires/data-exchange-approach'
-  );
-
-  // Preserve query params and hash
-  const newLocation = {
-    pathname: newPath,
-    search: location.search,
-    hash: location.hash
-  };
-
-  return <Navigate to={newLocation} replace />;
-};
-
 const ProtectedHome = () => {
   const { authState } = useOktaAuth();
   return authState?.isAuthenticated ? (
@@ -354,11 +334,6 @@ const router = createBrowserRouter([
 
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
-
-      {
-        path: '/models/:modelID/collaboration-area/data-exchange-approach/*',
-        element: <DataExchangeApproachRedirect />
-      },
 
       // Model to Operations Routes
       modelToOperationsRoutes,

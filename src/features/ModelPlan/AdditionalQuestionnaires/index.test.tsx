@@ -54,7 +54,7 @@ describe('AdditionalQuestionnaires', () => {
     expect(screen.getByText('Data exchange approach')).toBeInTheDocument();
     expect(screen.getByText('4i and ACO-OS')).toBeInTheDocument();
     expect(
-      screen.getByTestId('about-completing-data-exchange')
+      screen.getByTestId('data-exchange-approach-button')
     ).toBeInTheDocument();
   });
 

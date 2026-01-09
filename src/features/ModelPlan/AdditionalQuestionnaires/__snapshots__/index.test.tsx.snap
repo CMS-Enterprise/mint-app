@@ -156,7 +156,7 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                 <button
                   aria-label="Continue data exchange approach"
                   class="usa-button usa-button margin-bottom-0 width-auto"
-                  data-testid="about-completing-data-exchange"
+                  data-testid="data-exchange-approach-button"
                   type="button"
                 >
                   Continue

@@ -9,7 +9,7 @@ describe('The data exchange approach Form', () => {
     cy.contains('button', 'Go to questionnaires').click();
 
     // Enter into DEA form
-    cy.get('[data-testid="about-completing-data-exchange"]').within(() => {
+    cy.get('[data-testid="data-exchange-approach-button"]').within(() => {
       cy.contains('Start').click();
     });
 
