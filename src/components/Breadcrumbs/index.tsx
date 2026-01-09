@@ -37,6 +37,7 @@ export enum BreadcrumbItemOptions {
   CR_TDLS = 'CR_TDLS',
   STATUS = 'STATUS',
   TIMELINE = 'TIMELINE',
+  ADDITIONAL_QUESTIONNAIRES = 'ADDITIONAL_QUESTIONNAIRES',
   ANALYTICS = 'ANALYTICS'
 }
 
@@ -69,7 +70,7 @@ export const commonBreadCrumbs = (
   },
   DATA_EXCHANGE_APPROACH: {
     text: 'dataExchangeApproachMisc:heading',
-    url: `/models/${modelID}/collaboration-area/data-exchange-approach`
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/about-data-exchange-approach`
   },
   MODEL_TO_OPERATIONS: {
     text: 'modelToOperationsMisc:heading',
@@ -134,6 +135,10 @@ export const commonBreadCrumbs = (
   TIMELINE: {
     text: 'timelineMisc:heading',
     url: `/models/${modelID}/collaboration-area/model-timeline`
+  },
+  ADDITIONAL_QUESTIONNAIRES: {
+    text: 'additionalQuestionnaires:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires`
   },
   ANALYTICS: {
     text: 'analytics:heading',

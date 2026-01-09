@@ -1,5 +1,6 @@
 import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/_components/KeyContactDirectory/_components/CategoryModal';
+import { QuestionnairesType } from 'features/ModelPlan/CollaborationArea/Cards/AdditionalQuestionnairesCard';
 import {
   DataExchangeApproachStatus,
   GetAllKeyContactCategoriesDocument,
@@ -8,6 +9,9 @@ import {
   GetAllKeyContactsDocument,
   GetAllKeyContactsQuery,
   GetAllKeyContactsQueryVariables,
+  GetAllQuestionnairesDocument,
+  GetAllQuestionnairesQuery,
+  GetAllQuestionnairesQueryVariables,
   GetAnalyticsSummaryDocument,
   GetAnalyticsSummaryQuery,
   GetAnalyticsSummaryQueryVariables,
@@ -29,6 +33,7 @@ import {
   GetModelPlansDocument,
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
+  IddocQuestionnaireStatus,
   ModelCategory,
   ModelPhase,
   ModelPlanFilter,
@@ -102,6 +107,49 @@ const modelPlanData: GetModelPlansType = [
       __typename: 'TranslatedAudit',
       id: '64252',
       date: '2022-08-23T04:00:00Z'
+    }
+  }
+];
+
+export const questionnairesMockData: QuestionnairesType = {
+  __typename: 'Questionnaires',
+  dataExchangeApproach: {
+    __typename: 'PlanDataExchangeApproach',
+    id: '123',
+    status: DataExchangeApproachStatus.IN_PROGRESS,
+    modifiedDts: null,
+    modifiedByUserAccount: null
+  },
+  iddocQuestionnaire: {
+    __typename: 'IDDOCQuestionnaire',
+    id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
+    modifiedDts: '2026-01-05T22:55:26.923527Z',
+    modifiedByUserAccount: null,
+    status: IddocQuestionnaireStatus.NOT_NEEDED,
+    needed: false
+  }
+};
+
+export const questionnairesMock: MockedResponse<
+  GetAllQuestionnairesQuery,
+  GetAllQuestionnairesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllQuestionnairesDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          modelName: 'My plan',
+          abbreviation: 'MP',
+          questionnaires: questionnairesMockData
+        }
+      }
     }
   }
 ];
@@ -216,20 +264,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     },
     milestones: []
   },
-  questionnaires: {
-    __typename: 'Questionnaires',
-    dataExchangeApproach: {
-      __typename: 'PlanDataExchangeApproach',
-      id: '123',
-      status: DataExchangeApproachStatus.IN_PROGRESS,
-      modifiedDts: '2022-05-12T15:01:39.190679Z',
-      modifiedByUserAccount: {
-        __typename: 'UserAccount',
-        id: '123',
-        commonName: 'John Doe'
-      }
-    }
-  },
+  questionnaires: questionnairesMockData,
   documents: [
     {
       __typename: 'PlanDocument',

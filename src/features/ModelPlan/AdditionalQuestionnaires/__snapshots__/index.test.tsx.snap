@@ -1,0 +1,271 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AdditionalQuestionnaires > match snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content additional-questionnaires-list"
+    data-testid="additional-questionnaires-list"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb usa-breadcrumb--wrap"
+      >
+        <ol
+          class="usa-breadcrumb__list"
+        >
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              class="usa-link usa-breadcrumb__link"
+              data-discover="true"
+              href="/"
+            >
+              <span>
+                Home
+              </span>
+            </a>
+          </li>
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              class="usa-link usa-breadcrumb__link"
+              data-discover="true"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+            >
+              <span>
+                Model collaboration area
+              </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current"
+          >
+            <span>
+              Additional questionnaires
+            </span>
+          </li>
+        </ol>
+      </nav>
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="tablet:grid-col-9 desktop:grid-col-9"
+          data-testid="grid"
+        >
+          <h1
+            aria-live="polite"
+            class="mint-h1 margin-top-4 margin-bottom-0"
+            tabindex="-1"
+          >
+            Additional questionnaires
+          </h1>
+          <p
+            class="margin-y-0 font-body-lg line-height-sans-5"
+            data-testid="model-plan-name"
+          >
+            for modelName (abbreviation)
+          </p>
+          <div
+            class="padding-y-1 "
+          >
+            <a
+              class="usa-link"
+              data-discover="true"
+              data-testid="return-to-collaboration"
+              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+            >
+              <span>
+                <svg
+                  aria-label="back"
+                  class="usa-icon top-3px margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                  />
+                </svg>
+                Return to model collaboration area
+              </span>
+            </a>
+          </div>
+          <ol
+            class="margin-top-6 margin-bottom-0 padding-left-0"
+            data-testid="questionnaire-list"
+          >
+            <li
+              class="display-flex padding-bottom-4"
+              data-testid="questionnaire-list-intake-form-dataExchangeApproach"
+            >
+              <div
+                class="width-full"
+              >
+                <div
+                  class="additional-questionnaires-list__task-row display-flex flex-justify flex-align-start"
+                >
+                  <h3
+                    class="margin-top-0 margin-bottom-1"
+                  >
+                    Data exchange approach
+                  </h3>
+                  <span
+                    class="display-flex flex-column flex-align-end"
+                  >
+                    <div
+                      class="additional-questionnaires-list__task-tag line-height-body-1 text-bold bg-warning "
+                      data-testid="questionnaireList-tag"
+                    >
+                      <span>
+                        In progress
+                      </span>
+                    </div>
+                    <div
+                      class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
+                    >
+                      <p
+                        class="margin-y-0"
+                      />
+                    </div>
+                  </span>
+                </div>
+                <div
+                  class="additional-questionnaires-list__task-description margin-right-auto line-height-body-5"
+                >
+                  <p
+                    class="margin-top-0"
+                  >
+                    After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you'll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.
+                  </p>
+                </div>
+                <button
+                  aria-label="Continue data exchange approach"
+                  class="usa-button usa-button margin-bottom-0 width-auto"
+                  data-testid="data-exchange-approach-button"
+                  type="button"
+                >
+                  Continue
+                </button>
+              </div>
+            </li>
+            <div
+              class="mint-divider margin-bottom-4"
+            />
+            <li
+              class="display-flex padding-bottom-4"
+              data-testid="questionnaire-list-intake-form-iddocQuestionnaire"
+            >
+              <div
+                class="width-full"
+              >
+                <div
+                  class="additional-questionnaires-list__task-row display-flex flex-justify flex-align-start"
+                >
+                  <h3
+                    class="margin-top-0 margin-bottom-1"
+                  >
+                    4i and ACO-OS
+                  </h3>
+                  <span
+                    class="display-flex flex-column flex-align-end"
+                  >
+                    <div
+                      class="additional-questionnaires-list__task-tag line-height-body-1 text-bold bg-white border-2px text-base "
+                      data-testid="questionnaireList-tag"
+                    >
+                      <span>
+                        Not Needed
+                      </span>
+                    </div>
+                    <div
+                      class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
+                    >
+                      <p
+                        class="margin-y-0"
+                      >
+                        Last updated
+                      </p>
+                      <p
+                        class="margin-y-0"
+                      >
+                        01/05/2026
+                      </p>
+                    </div>
+                  </span>
+                </div>
+                <div
+                  class="additional-questionnaires-list__task-description margin-right-auto line-height-body-5"
+                >
+                  <p
+                    class="margin-top-0 text-base-dark"
+                  >
+                    As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div
+          class="tablet:grid-col-3 desktop:grid-col-3"
+          data-testid="grid"
+        >
+          <div
+            class="border-top-05 border-primary-lighter padding-top-2 margin-top-2"
+            data-testid="sidenav"
+          >
+            <div
+              class="margin-top-4 margin-bottom-6"
+            >
+              <h4
+                class="margin-bottom-1"
+              >
+                Related content
+              </h4>
+              <div
+                class="margin-bottom-1"
+              >
+                <a
+                  class="usa-link line-height-body-5"
+                  data-discover="true"
+                  href="/help-and-knowledge/high-level-project-plan"
+                  target="_blank"
+                >
+                  High-level project plan (opens in a new tab)
+                </a>
+              </div>
+              <div
+                class="margin-bottom-1"
+              >
+                <a
+                  class="usa-link line-height-body-5"
+                  data-discover="true"
+                  href="/help-and-knowledge/creating-mto-matrix"
+                  target="_blank"
+                >
+                  Creating your model-to-operations matrix (MTO) in MINT (opens in a new tab)
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

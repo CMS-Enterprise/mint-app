@@ -27,6 +27,7 @@ import keyContactCategory, {
 } from './helpAndKnowledge/keyContactCategory';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
+import additionalQuestionnaires from './modelPlan/additionalQuestionnaires';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import changeHistory from './modelPlan/changeHistory';
@@ -157,6 +158,7 @@ const enUS = {
   solutions,
   timeline,
   timelineMisc,
+  additionalQuestionnaires,
   operationalSolutionSubtasks,
   opSolutionsMisc,
   documents,
