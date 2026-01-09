@@ -23,6 +23,7 @@ import Landing from 'features/Landing';
 import Login from 'features/Login';
 import AdditionalQuestionnaires from 'features/ModelPlan/AdditionalQuestionnaires';
 import { dataExchangeApproachRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/DataExchangeApproach';
+import { iddocQuestionnaireRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/IddocQuestionnaire';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
@@ -39,7 +40,7 @@ import TaskList from 'features/ModelPlan/TaskList';
 import basicsRoutes from 'features/ModelPlan/TaskList/Basics';
 import beneficiariesRoutes from 'features/ModelPlan/TaskList/Beneficiaries';
 import generalCharacteristicsRoutes from 'features/ModelPlan/TaskList/GeneralCharacteristics';
-import LockedModelPlanSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
+import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
 import opsEvalAndLearningRoutes from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
 import participantsAndProvidersRoutes from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
@@ -328,12 +329,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-
       // CR and TDL Routes
       crtdlRoutes,
 
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
+
+      // IDDOC Questionnaire Routes
+      iddocQuestionnaireRoutes,
 
       // Model to Operations Routes
       modelToOperationsRoutes,
@@ -430,12 +433,12 @@ const router = createBrowserRouter([
         )
       },
 
-      // Locked Model Plan Section Routes
+      // Locked Task List Section Routes
       {
-        path: '/models/:modelID/locked-model-plan-section',
+        path: '/models/:modelID/locked-task-list-section',
         element: (
           <ProtectedRoute>
-            <LockedModelPlanSection />
+            <LockedTaskListSection />
           </ProtectedRoute>
         )
       },
