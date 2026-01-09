@@ -106,7 +106,7 @@ func (e Environment) Test() bool {
 	return e == testEnv
 }
 
-// Dev returns true if the environment is local
+// Dev returns true if the environment is dev
 func (e Environment) Dev() bool {
 	return e == devEnv
 }
