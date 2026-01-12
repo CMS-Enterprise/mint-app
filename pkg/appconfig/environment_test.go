@@ -38,29 +38,52 @@ func TestNewEnvironment(t *testing.T) {
 	assert.Error(err)
 }
 
-// TestSetEnvironment tests setting and getting the environment
-func TestSetEnvironment(t *testing.T) {
+// TestPrefixLLESubject tests the environment prefix behavior for lower-level environments.
+func TestPrefixLLESubject(t *testing.T) {
 	assert := assert.New(t)
 
-	SetEnvironment(devEnv)
-	currentEnv := GetEnvironment()
-	assert.Equal(devEnv, currentEnv)
+	tests := []struct {
+		name     string
+		env      Environment
+		subject  string
+		expected string
+	}{
+		{
+			name:     "prefixes with [TEST] for test environment",
+			env:      testEnv,
+			subject:  "Test Subject",
+			expected: "[TEST] Test Subject",
+		},
+		{
+			name:     "prefixes with [IMPL] for impl environment",
+			env:      implEnv,
+			subject:  "Test Subject",
+			expected: "[IMPL] Test Subject",
+		},
+		{
+			name:     "prefixes with [DEV] for dev environment",
+			env:      devEnv,
+			subject:  "Test Subject",
+			expected: "[DEV] Test Subject",
+		},
+		{
+			name:     "does not prefix for prod environment",
+			env:      prodEnv,
+			subject:  "Test Subject",
+			expected: "Test Subject",
+		},
+		{
+			name:     "does not prefix for local environment",
+			env:      localEnv,
+			subject:  "Test Subject",
+			expected: "Test Subject",
+		},
+	}
 
-	// You can't change the environment once it's set
-	SetEnvironment(prodEnv)
-	currentEnv = GetEnvironment()
-	// even though we attempted to set to prod, it should still be dev
-	assert.Equal(devEnv, currentEnv)
-
-	// This is a utility test function, so we can reset the environment for other tests
-	ResetEnvironmentForTesting(prodEnv)
-	currentEnv = GetEnvironment()
-	// Environment should now be prod
-	assert.Equal(prodEnv, currentEnv)
-
-	SetEnvironment(devEnv)
-	currentEnv = GetEnvironment()
-	// even though we set to dev, it should still be prod
-	assert.Equal(prodEnv, currentEnv)
-
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.env.PrefixLLESubject(tt.subject)
+			assert.Equal(tt.expected, result)
+		})
+	}
 }

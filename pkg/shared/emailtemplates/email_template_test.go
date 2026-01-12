@@ -4,62 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
-	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 )
-
-func TestGetSubjectInIMPLEnvironment(t *testing.T) {
-	assert := assert.New(t)
-	tmpl, err := NewGenEmailTemplate[map[string]string, any](
-		"test",
-		"Test Subject",
-		"<html><body>test</body></html>",
-		nil,
-	)
-	assert.NoError(err)
-	environment, err := appconfig.NewEnvironment("impl")
-	assert.NoError(err)
-	appconfig.ResetEnvironmentForTesting(environment)
-	subject, err := tmpl.GetSubject(map[string]string{})
-	assert.NoError(err)
-	assert.Equal("[IMPL] Test Subject", subject)
-
-}
-func TestGetSubjectInTESTEnvironment(t *testing.T) {
-	assert := assert.New(t)
-	tmpl, err := NewGenEmailTemplate[map[string]string, any](
-		"test",
-		"Test Subject",
-		"<html><body>test</body></html>",
-		nil,
-	)
-	assert.NoError(err)
-	environment, err := appconfig.NewEnvironment("test")
-	assert.NoError(err)
-	appconfig.ResetEnvironmentForTesting(environment)
-	subject, err := tmpl.GetSubject(map[string]string{})
-	assert.NoError(err)
-	assert.Equal("[TEST] Test Subject", subject)
-
-}
-func TestGetSubjectInPRODEnvironment(t *testing.T) {
-	assert := assert.New(t)
-	tmpl, err := NewGenEmailTemplate[map[string]string, any](
-		"test",
-		"Test Subject",
-		"<html><body>test</body></html>",
-		nil,
-	)
-	assert.NoError(err)
-	environment, err := appconfig.NewEnvironment("prod")
-	assert.NoError(err)
-	appconfig.ResetEnvironmentForTesting(environment)
-	subject, err := tmpl.GetSubject(map[string]string{})
-	assert.NoError(err)
-	// We don't expect a prefix in prod
-	assert.Equal("Test Subject", subject)
-
-}
 
 func TestSanitizeSubject(t *testing.T) {
 	tests := []struct {

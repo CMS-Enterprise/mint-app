@@ -75,7 +75,7 @@ func main() {
 	if err != nil {
 		panic("unable to create test environment")
 	}
-	appconfig.ResetEnvironmentForTesting(testEnv)
+	appconfig.SetEnvironment(testEnv)
 	sendModelPlanCreatedEmailTest(emailService)
 }
 

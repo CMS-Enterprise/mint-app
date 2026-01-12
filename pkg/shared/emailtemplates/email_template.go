@@ -123,10 +123,7 @@ func (e *GenEmailTemplate[subjectType, bodyType]) GetSubject(subject subjectType
 	environment := appconfig.GetEnvironment()
 
 	// Add environment prefix to subject if in dev, impl, or test
-	if environment.IsLowerLevelEnvironment() {
-		envName := strings.ToUpper(environment.String())
-		subjectStr = fmt.Sprintf("[%s] %s", envName, subjectStr)
-	}
+	subjectStr = environment.PrefixLLESubject(subjectStr)
 
 	return sanitizeSubject(subjectStr), nil
 }

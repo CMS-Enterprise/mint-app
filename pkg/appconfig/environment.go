@@ -2,6 +2,7 @@ package appconfig
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 )
 
@@ -21,13 +22,6 @@ func SetEnvironment(env Environment) {
 // GetEnvironment returns the application environment.
 func GetEnvironment() Environment {
 	return appEnv
-}
-
-// ResetEnvironmentForTesting resets the environment to allow retesting.
-// This should only be called in tests.
-func ResetEnvironmentForTesting(env Environment) {
-	once = sync.Once{}
-	SetEnvironment(env)
 }
 
 // NewEnvironment returns an environment from a string
@@ -124,6 +118,15 @@ func (e Environment) Prod() bool {
 // IsLowerLevelEnvironment returns true if the environment is dev, impl, or test
 func (e Environment) IsLowerLevelEnvironment() bool {
 	return e == implEnv || e == testEnv || e == devEnv
+}
+
+// PrefixLLESubject prefixes the subject with the environment name if in a lower-level environment.
+func (e Environment) PrefixLLESubject(subject string) string {
+	if e.IsLowerLevelEnvironment() {
+		envName := strings.ToUpper(e.String())
+		subject = fmt.Sprintf("[%s] %s", envName, subject)
+	}
+	return subject
 }
 
 // Deployed returns true if in a deployed environment
