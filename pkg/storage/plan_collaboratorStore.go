@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/lib/pq"
+
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -19,8 +21,9 @@ import (
 // PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	_ *zap.Logger,
-	paramTableJSON string,
+	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
+	//TODO refactor top use sqlutils.SelectProcedure
 
 	var collabSlice []*models.PlanCollaborator
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader)
@@ -30,7 +33,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	defer stmt.Close()
 
 	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
+		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
 	err = stmt.Select(&collabSlice, arg) //this returns more than one
@@ -45,10 +48,10 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 // PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs stored in JSON array
 func PlanCollaboratorGetIDLOADER(
 	np sqlutils.NamedPreparer,
-	paramTableJSON string,
+	ids []uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
+	arg := map[string]any{
+		"ids": pq.Array(ids),
 	}
 
 	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](np, sqlqueries.PlanCollaborator.CollectionGetByIDLoader, arg)
