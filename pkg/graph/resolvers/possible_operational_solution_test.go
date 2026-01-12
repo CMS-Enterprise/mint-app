@@ -25,6 +25,7 @@ func (suite *ResolverSuite) TestPossibleOperationalSolutionCollectionGetByKey() 
 		models.OpSKCdx,
 		models.OpSKCcw,
 		models.OpSKCmsBox,
+		models.OpSKCmsQualtrics,
 		models.OpSKCbosc,
 		models.OpSKContractor,
 		models.OpSKCpiVetting,

@@ -98,7 +98,11 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
 
       if (link.external) {
         linkObj[`link${index + 1}`] = (
-          <ExternalLink href={link.link} inlineText>
+          <ExternalLink
+            href={link.link}
+            inlineText
+            className="margin-top-2 display-block"
+          >
             link
           </ExternalLink>
         );

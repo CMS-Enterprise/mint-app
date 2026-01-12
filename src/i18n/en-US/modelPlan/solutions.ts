@@ -116,6 +116,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
       CDX: 'Centralized Data Exchange',
       CCW: 'Chronic Conditions Warehouse',
       CMS_BOX: 'CMS Box',
+      CMS_QUALTRICS: 'CMS Qualtrics',
       CBOSC: 'Consolidated Business Operations Support Center',
       CONTRACTOR: 'Contractor',
       CPI_VETTING: 'CPI Vetting',
