@@ -8,14 +8,17 @@ import SolutionsHeader from './index';
 
 describe('Operation Solution Help Header', () => {
   it('rendered correct information without query', () => {
+    const resultsNum = 9;
+    const resultsMax = Object.keys(helpSolutions).length;
+
     const router = createMemoryRouter(
       [
         {
           path: '/help-and-knowledge/operational-solutions',
           element: (
             <SolutionsHeader
-              resultsNum={9}
-              resultsMax={Object.keys(helpSolutions).length}
+              resultsNum={resultsNum}
+              resultsMax={resultsMax}
               setQuery={(query: string) => null}
               query=""
             />
@@ -29,9 +32,9 @@ describe('Operation Solution Help Header', () => {
 
     const { getByText } = render(<RouterProvider router={router} />);
 
-    // Page results info
+    // Page results info - dynamically constructed based on props
     expect(
-      getByText('Showing 9 of 53 operational solutions')
+      getByText(`Showing ${resultsNum} of ${resultsMax} operational solutions`)
     ).toBeInTheDocument();
   });
 
