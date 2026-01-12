@@ -23,26 +23,18 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
-	//TODO refactor top use sqlutils.SelectProcedure
 
-	var collabSlice []*models.PlanCollaborator
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
-	err = stmt.Select(&collabSlice, arg) //this returns more than one
-
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader, arg)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("issue selecting plan collaborators by model plan id, %w", err)
 	}
 
-	return collabSlice, nil
+	return retCollaborators, nil
+
 }
 
 // PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs stored in JSON array
