@@ -169,7 +169,7 @@ exports[`Generic About Components > matches the snapshot > 4innovation 1`] = `
       </h4>
       <span>
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -366,7 +366,7 @@ exports[`Generic About Components > matches the snapshot > Accountable Care Orga
       </h4>
       <span>
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -720,7 +720,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Analysis and Man
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -747,7 +747,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Analysis and Man
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -816,7 +816,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
       class="line-height-normal"
     >
       <span
-        class="usa-link pointer"
+        class="margin-top-2 display-block usa-link pointer"
         role="button"
         tabindex="0"
       >
@@ -940,6 +940,68 @@ exports[`Generic About Components > matches the snapshot > CMS Box 1`] = `
     >
       CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. 
     </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic About Components > matches the snapshot > CMS Qualtrics 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md"
+  >
+    <p
+      class="margin-top-0 text-pre-wrap margin-bottom-0"
+    >
+      CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.
+
+
+      <span
+        class="margin-top-2 display-block usa-link pointer"
+        role="button"
+        tabindex="0"
+      >
+        <span>
+          Learn more about how to get access to Qualtrics
+          <svg
+            aria-label="launch"
+            class="usa-icon margin-left-05 top-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </span>
+    </p>
+    <div
+      class="margin-top-4"
+    >
+      <h3
+        class="margin-bottom-2"
+      >
+        Capabilities
+      </h3>
+      <ul
+        class="padding-left-4 margin-top-0"
+      >
+        <li
+          class="list-item"
+        >
+          Customizable survey or application creation
+        </li>
+        <li
+          class="list-item"
+        >
+          Survey or application distribution
+        </li>
+      </ul>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -2433,7 +2495,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Payment Co
       class="line-height-normal"
     >
       <span
-        class="usa-link pointer"
+        class="margin-top-2 display-block usa-link pointer"
         role="button"
         tabindex="0"
       >
@@ -2617,7 +2679,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         >
           API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a 
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -2700,7 +2762,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         class="text-pre-wrap "
       >
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -2744,7 +2806,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
           <span>
             Participant feedback dashboards that supply curated reports to participants based on CMS data (
             <span
-              class="usa-link pointer"
+              class="margin-top-2 display-block usa-link pointer"
               role="button"
               tabindex="0"
             >
@@ -3052,7 +3114,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3079,7 +3141,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3106,7 +3168,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3133,7 +3195,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3345,7 +3407,7 @@ exports[`Generic About Components > matches the snapshot > Medicare Current Bene
         Excerpt from the MCBS information page on CMS.gov.
       </p>
       <span
-        class="usa-link pointer"
+        class="margin-top-2 display-block usa-link pointer"
         role="button"
         tabindex="0"
       >
@@ -3495,7 +3557,7 @@ Model Space offers model teams and their contractors templates or Databricks not
         class="text-pre-wrap "
       >
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -3818,7 +3880,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3845,7 +3907,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3872,7 +3934,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4231,7 +4293,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Applicatio
           class=""
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4322,7 +4384,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4349,7 +4411,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4469,7 +4531,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Letter of 
           class=""
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4639,7 +4701,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4666,7 +4728,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4813,7 +4875,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
           class=""
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4856,7 +4918,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
       </h4>
       <span>
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -4916,7 +4978,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
           class="list-style-none"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
