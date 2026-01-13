@@ -1,0 +1,220 @@
+{
+  "technicalContactsIdentified": {
+    "gqlField": "technicalContactsIdentified",
+    "goField": "TechnicalContactsIdentified",
+    "dbField": "technical_contacts_identified",
+    "label": "Are technical contacts identified?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "captureParticipantInformation": {
+    "gqlField": "captureParticipantInformation",
+    "goField": "CaptureParticipantInformation",
+    "dbField": "capture_participant_information",
+    "label": "Will you collect participant information?",
+    "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.02,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "icdOwner": {
+    "gqlField": "icdOwner",
+    "goField": "IcdOwner",
+    "dbField": "icd_owner",
+    "label": "ICD owner",
+    "pageLabel": "Interface Control Document (ICD)",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 2.01
+  },
+  "draftIcdRequiredBy": {
+    "gqlField": "draftIcdRequiredBy",
+    "goField": "DraftIcdRequiredBy",
+    "dbField": "draft_icd_required_by",
+    "label": "Draft ICD required by",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 2.02
+  },
+  "uatTestDataNeeds": {
+    "gqlField": "uatTestDataNeeds",
+    "goField": "UatTestDataNeeds",
+    "dbField": "uat_test_data_needs",
+    "label": "User Acceptance Testing (UAT) – test data needs",
+    "pageLabel": "Testing",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.01
+  },
+  "stcTestDataNeeds": {
+    "gqlField": "stcTestDataNeeds",
+    "goField": "StcTestDataNeeds",
+    "dbField": "stc_test_data_needs",
+    "label": "STC – test data needs",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.02
+  },
+  "testingTimelines": {
+    "gqlField": "testingTimelines",
+    "goField": "TestingTimelines",
+    "dbField": "testing_timelines",
+    "label": "Define the testing timelines",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.03
+  },
+  "fileTypes": {
+    "gqlField": "fileTypes",
+    "goField": "FileTypes",
+    "dbField": "file_types",
+    "label": "What types of files? Select all that apply.",
+    "readonlyLabel": "What types of files?",
+    "pageLabel": "Data monitoring",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.04,
+    "options": {
+      "BENEFICIARY": "Beneficiary",
+      "PROVIDER": "Provider",
+      "PART_A_CLAIMS": "Part A Claims",
+      "PART_B_CLAIMS": "Part B Claims",
+      "OTHER": "Other"
+    }
+  },
+  "responseTypes": {
+    "gqlField": "responseTypes",
+    "goField": "ResponseTypes",
+    "dbField": "response_types",
+    "label": "What types of responses?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.05
+  },
+  "fileFrequency": {
+    "gqlField": "fileFrequency",
+    "goField": "FileFrequency",
+    "dbField": "file_frequency",
+    "label": "Frequency of files?",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.06
+  },
+  "loadType": {
+    "gqlField": "loadType",
+    "goField": "LoadType",
+    "dbField": "load_type",
+    "label": "Full time or incremental?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 4.01,
+    "options": {
+      "INITIAL": "Initial",
+      "ONGOING": "Ongoing",
+      "BOTH": "Both"
+    }
+  },
+  "eftConnectivitySetup": {
+    "gqlField": "eftConnectivitySetup",
+    "goField": "EftConnectivitySetup",
+    "dbField": "eft_connectivity_setup",
+    "label": "Are Electronic File Transfer (EFT) and connectivity set up?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.02,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "unsolicitedAdjustmentsIncluded": {
+    "gqlField": "unsolicitedAdjustmentsIncluded",
+    "goField": "UnsolicitedAdjustmentsIncluded",
+    "dbField": "unsolicited_adjustments_included",
+    "label": "Will unsolicited adjustments be included?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.03,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "dataFlowDiagramsNeeded": {
+    "gqlField": "dataFlowDiagramsNeeded",
+    "goField": "DataFlowDiagramsNeeded",
+    "dbField": "data_flow_diagrams_needed",
+    "label": "Are data flow diagrams needed?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.04,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "produceBenefitEnhancementFiles": {
+    "gqlField": "produceBenefitEnhancementFiles",
+    "goField": "ProduceBenefitEnhancementFiles",
+    "dbField": "produce_benefit_enhancement_files",
+    "label": "Will you produce Benefit Enhancement Files?",
+    "sublabel": "This means we would use these files for Participating and Preferred Providers.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.05,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "fileNamingConventions": {
+    "gqlField": "fileNamingConventions",
+    "goField": "FileNamingConventions",
+    "dbField": "file_naming_conventions",
+    "label": "File naming conventions",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.06
+  },
+  "needed": {
+    "gqlField": "needed",
+    "goField": "Needed",
+    "dbField": "needed",
+    "label": "Is the IDDOC questionnaire needed for this model plan?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 5.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "completedBy": {
+    "gqlField": "completedBy",
+    "goField": "CompletedBy",
+    "dbField": "completed_by",
+    "label": "Completed by",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 5.02,
+    "tableReference": "user_account"
+  },
+  "completedDts": {
+    "gqlField": "completedDts",
+    "goField": "CompletedDts",
+    "dbField": "completed_dts",
+    "label": "Completed date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 5.03
+  }
+}

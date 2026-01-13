@@ -67,6 +67,29 @@ type IDDOCQuestionnaireChanges struct {
 	FileNamingConventions          *string                `json:"fileNamingConventions,omitempty"`
 }
 
+// Represents IDDOC questionnaire translation data
+type IddocQuestionnaireTranslation struct {
+	TechnicalContactsIdentified    models.TranslationFieldWithOptions `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
+	CaptureParticipantInformation  models.TranslationFieldWithOptions `json:"captureParticipantInformation" db:"capture_participant_information"`
+	IcdOwner                       models.TranslationField            `json:"icdOwner" db:"icd_owner"`
+	DraftIcdRequiredBy             models.TranslationField            `json:"draftIcdRequiredBy" db:"draft_icd_required_by"`
+	UatTestDataNeeds               models.TranslationField            `json:"uatTestDataNeeds" db:"uat_test_data_needs"`
+	StcTestDataNeeds               models.TranslationField            `json:"stcTestDataNeeds" db:"stc_test_data_needs"`
+	TestingTimelines               models.TranslationField            `json:"testingTimelines" db:"testing_timelines"`
+	FileTypes                      models.TranslationFieldWithOptions `json:"fileTypes" db:"file_types"`
+	ResponseTypes                  models.TranslationField            `json:"responseTypes" db:"response_types"`
+	FileFrequency                  models.TranslationField            `json:"fileFrequency" db:"file_frequency"`
+	LoadType                       models.TranslationFieldWithOptions `json:"loadType" db:"load_type"`
+	EftConnectivitySetup           models.TranslationFieldWithOptions `json:"eftConnectivitySetup" db:"eft_connectivity_setup"`
+	UnsolicitedAdjustmentsIncluded models.TranslationFieldWithOptions `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded         models.TranslationFieldWithOptions `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles models.TranslationFieldWithOptions `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions          models.TranslationField            `json:"fileNamingConventions" db:"file_naming_conventions"`
+	Needed                         models.TranslationFieldWithOptions `json:"needed" db:"needed"`
+	CompletedBy                    models.TranslationField            `json:"completedBy" db:"completed_by"`
+	CompletedDts                   models.TranslationField            `json:"completedDts" db:"completed_dts"`
+}
+
 // Represents key contact category base translation data
 type KeyContactCategoryTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`

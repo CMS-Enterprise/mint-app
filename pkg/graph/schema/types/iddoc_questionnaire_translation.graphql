@@ -1,0 +1,43 @@
+"""
+Represents IDDOC questionnaire translation data
+"""
+type IddocQuestionnaireTranslation {
+  technicalContactsIdentified: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "technical_contacts_identified")
+  captureParticipantInformation: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "capture_participant_information")
+
+  # ICD fields
+  icdOwner: TranslationField! @goTag(key: "db", value: "icd_owner")
+  draftIcdRequiredBy: TranslationField!
+    @goTag(key: "db", value: "draft_icd_required_by")
+
+  # Testing fields
+  uatTestDataNeeds: TranslationField!
+    @goTag(key: "db", value: "uat_test_data_needs")
+  stcTestDataNeeds: TranslationField!
+    @goTag(key: "db", value: "stc_test_data_needs")
+  testingTimelines: TranslationField!
+    @goTag(key: "db", value: "testing_timelines")
+
+  # Data monitoring fields
+  fileTypes: TranslationFieldWithOptions! @goTag(key: "db", value: "file_types")
+  responseTypes: TranslationField! @goTag(key: "db", value: "response_types")
+  fileFrequency: TranslationField! @goTag(key: "db", value: "file_frequency")
+  loadType: TranslationFieldWithOptions! @goTag(key: "db", value: "load_type")
+  eftConnectivitySetup: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "eft_connectivity_setup")
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "unsolicited_adjustments_included")
+  dataFlowDiagramsNeeded: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "data_flow_diagrams_needed")
+  produceBenefitEnhancementFiles: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "produce_benefit_enhancement_files")
+  fileNamingConventions: TranslationField!
+    @goTag(key: "db", value: "file_naming_conventions")
+
+  # Metadata fields
+  needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
+  completedBy: TranslationField! @goTag(key: "db", value: "completed_by")
+  completedDts: TranslationField! @goTag(key: "db", value: "completed_dts")
+}
