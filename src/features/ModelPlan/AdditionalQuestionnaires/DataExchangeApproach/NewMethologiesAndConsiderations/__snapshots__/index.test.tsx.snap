@@ -190,7 +190,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
             id="new-methodologies-and-considerations-form"
           >
             <div
-              class="margin-top-6 margin-bottom-2 display-flex"
+              class="margin-top-6 margin-bottom-3 display-flex"
             >
               <button
                 class="usa-button usa-button usa-button--outline"

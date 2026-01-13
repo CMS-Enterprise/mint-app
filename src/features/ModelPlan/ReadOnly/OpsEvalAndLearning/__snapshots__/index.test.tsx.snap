@@ -249,7 +249,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                       data-testid="tooltipWrapper"
                     >
                       <div
-                        aria-describedby="tooltip-_r_4_"
+                        aria-describedby="tooltip-_r_3_"
                         class="usa-tooltip__trigger mint-no-print"
                         data-testid="triggerElement"
                         tabindex="0"
@@ -273,7 +273,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                         aria-hidden="true"
                         class="usa-tooltip__body"
                         data-testid="tooltipBody"
-                        id="tooltip-_r_4_"
+                        id="tooltip-_r_3_"
                         role="tooltip"
                         title="(implementation, data analysis, quality, etc.)"
                       >
@@ -387,36 +387,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
     </div>
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--are-technical-contacts-identified margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Are technical contacts identified?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-            <span
-              data-testid="other-entry"
-            >
-               - Detail of technical contacts
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     />
@@ -449,31 +420,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
     </div>
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Will you collect participant information?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     >
@@ -502,151 +449,23 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
       </div>
     </div>
     <div
-      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
-    >
-      <h3
-        class="margin-top-0"
-      >
-        Interface Control Document (ICD)
-      </h3>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--icd-owner margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              ICD owner
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            ICD owner
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--draft-icd-required-by margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Draft ICD required by
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          />
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     />
     <div
-      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
-    >
-      <h3
-        class="margin-top-0"
-      >
-        Testing
-      </h3>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--user-acceptance-testing--uat----test-data-needs margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              User Acceptance Testing (UAT) – test data needs
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            UAT needs
-          </div>
-        </div>
-      </div>
-    </div>
+      class=""
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--stc---test-data-needs margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              STC – test data needs
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            STC needs
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--define-the-testing-timelines margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Define the testing timelines
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Testing timelines
-          </div>
-        </div>
-      </div>
-    </div>
+    />
+    <div
+      class=""
+    />
     <div
       class=""
     >
@@ -675,307 +494,35 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
       </div>
     </div>
     <div
-      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
-    >
-      <h3
-        class="margin-top-0"
-      >
-        Data monitoring
-      </h3>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--what-types-of-files margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              What types of files?
-            </span>
-          </div>
-          <ul
-            class="margin-y-0 padding-left-3"
-          >
-            <li
-              class="mint-body-normal"
-            >
-              Part A
-            </li>
-            <ul />
-            <li
-              class="mint-body-normal"
-            >
-              Part B
-            </li>
-            <ul />
-          </ul>
-        </div>
-      </div>
-    </div>
+      class=""
+    />
     <div
       class=""
     />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--what-types-of-responses margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              What types of responses?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            File
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--frequency-of-files margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Frequency of files?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Every week
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--full-time-or-incremental margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Full time or incremental?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Full time
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--are-electronic-file-transfer--eft--and-connectivity-set-up margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Are Electronic File Transfer (EFT) and connectivity set up?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-unsolicited-adjustments-be-included margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Will unsolicited adjustments be included?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--are-data-flow-diagrams-needed margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Are data flow diagrams needed?
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--will-you-produce-benefit-enhancement-files margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              Will you produce Benefit Enhancement Files?
-              <span
-                class="text-normal line-height-sans-2 margin-left-1 position-relative"
-              >
-                <span
-                  class="usa-tooltip top-2px"
-                  data-testid="tooltipWrapper"
-                >
-                  <div
-                    aria-describedby="tooltip-_r_5_"
-                    class="usa-tooltip__trigger mint-no-print"
-                    data-testid="triggerElement"
-                    tabindex="0"
-                  >
-                    <svg
-                      aria-label="info"
-                      class="usa-icon text-base-light"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="usa-tooltip__body"
-                    data-testid="tooltipBody"
-                    id="tooltip-_r_5_"
-                    role="tooltip"
-                    title="This means we would use these files for Participating and Preferred Providers."
-                  >
-                    This means we would use these files for Participating and Preferred Providers.
-                  </span>
-                </span>
-              </span>
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            Yes
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
-    >
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
-          class="read-only-section read-only-section--file-naming-conventions margin-bottom-3"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              File naming conventions
-            </span>
-          </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          >
-            PDF
-          </div>
-        </div>
-      </div>
-    </div>
+    />
     <div
       class=""
     >
@@ -1332,7 +879,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                     data-testid="tooltipWrapper"
                   >
                     <div
-                      aria-describedby="tooltip-_r_6_"
+                      aria-describedby="tooltip-_r_4_"
                       class="usa-tooltip__trigger mint-no-print margin-left-05"
                       data-testid="triggerElement"
                       tabindex="0"
@@ -1356,7 +903,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                       aria-hidden="true"
                       class="usa-tooltip__body"
                       data-testid="tooltipBody"
-                      id="tooltip-_r_6_"
+                      id="tooltip-_r_4_"
                       role="tooltip"
                       title="If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames."
                     >
@@ -2632,7 +2179,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                   data-testid="tooltipWrapper"
                 >
                   <div
-                    aria-describedby="tooltip-_r_7_"
+                    aria-describedby="tooltip-_r_5_"
                     class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     tabindex="0"
@@ -2656,7 +2203,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                     aria-hidden="true"
                     class="usa-tooltip__body"
                     data-testid="tooltipBody"
-                    id="tooltip-_r_7_"
+                    id="tooltip-_r_5_"
                     role="tooltip"
                     title="Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability."
                   >
