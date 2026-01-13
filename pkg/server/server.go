@@ -38,6 +38,8 @@ func NewServer(config *viper.Viper) *Server {
 	if err != nil {
 		log.Fatalf("Unable to set environment: %v", err)
 	}
+	// globally set the environment
+	appconfig.SetEnvironment(environment)
 
 	zapLogger := appconfig.MustInitializeLogger(environment)
 
