@@ -18,7 +18,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 )
 
-// PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+// PlanCollaboratorGetByModelPlanIDLOADER returns the plan collaborators for a slice of model plan ids
 func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
@@ -37,7 +37,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 
 }
 
-// PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs stored in JSON array
+// PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs
 func PlanCollaboratorGetIDLOADER(
 	np sqlutils.NamedPreparer,
 	ids []uuid.UUID,
