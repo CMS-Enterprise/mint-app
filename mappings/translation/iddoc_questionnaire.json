@@ -1,0 +1,281 @@
+{
+  "technicalContactsIdentified": {
+    "gqlField": "technicalContactsIdentified",
+    "goField": "TechnicalContactsIdentified",
+    "dbField": "technical_contacts_identified",
+    "label": "Are technical contacts identified?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "technicalContactsIdentifiedDetail": {
+    "gqlField": "technicalContactsIdentifiedDetail",
+    "goField": "TechnicalContactsIdentifiedDetail",
+    "dbField": "technical_contacts_identified_detail",
+    "label": "Please specify",
+    "exportLabel": "Please specify yes",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.02,
+    "isOtherType": true,
+    "otherParentField": "technical_contacts_identified"
+  },
+  "technicalContactsIdentifiedNote": {
+    "gqlField": "technicalContactsIdentifiedNote",
+    "goField": "TechnicalContactsIdentifiedNote",
+    "dbField": "technical_contacts_identified_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "technical_contacts_identified",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.03
+  },
+  "captureParticipantInfo": {
+    "gqlField": "captureParticipantInfo",
+    "goField": "CaptureParticipantInfo",
+    "dbField": "capture_participant_info",
+    "label": "Will you capture participant information?",
+    "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.04,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "captureParticipantInfoNote": {
+    "gqlField": "captureParticipantInfoNote",
+    "goField": "CaptureParticipantInfoNote",
+    "dbField": "capture_participant_info_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "capture_participant_info",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.05
+  },
+  "icdOwner": {
+    "gqlField": "icdOwner",
+    "goField": "IcdOwner",
+    "dbField": "icd_owner",
+    "label": "ICD owner",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 2.06
+  },
+  "draftIcdDueDate": {
+    "gqlField": "draftIcdDueDate",
+    "goField": "DraftIcdDueDate",
+    "dbField": "draft_icd_due_date",
+    "label": "Draft ICD required by",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 2.07
+  },
+  "icdNote": {
+    "gqlField": "icdNote",
+    "goField": "IcdNote",
+    "dbField": "icd_note",
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Interface Control Document (ICD) questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.08
+  },
+  "uatNeeds": {
+    "gqlField": "uatNeeds",
+    "goField": "UatNeeds",
+    "dbField": "uat_needs",
+    "label": "User Acceptance Testing (UAT) – test data needs",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.01
+  },
+  "stcNeeds": {
+    "gqlField": "stcNeeds",
+    "goField": "StcNeeds",
+    "dbField": "stc_needs",
+    "label": "STC – test data needs",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.02
+  },
+  "testingTimelines": {
+    "gqlField": "testingTimelines",
+    "goField": "TestingTimelines",
+    "dbField": "testing_timelines",
+    "label": "Define the testing timelines",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.03
+  },
+  "testingNote": {
+    "gqlField": "testingNote",
+    "goField": "TestingNote",
+    "dbField": "testing_note",
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Testing questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.04
+  },
+  "dataMonitoringFileTypes": {
+    "gqlField": "dataMonitoringFileTypes",
+    "goField": "DataMonitoringFileTypes",
+    "dbField": "data_monitoring_file_types",
+    "label": "What types of files? Select all that apply.",
+    "readonlyLabel": "What types of files?",
+    "exportLabel": "What types of files?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.05,
+    "options": {
+      "BENEFICIARY": "Beneficiary",
+      "PROVIDER": "Provider",
+      "PART_A": "Part A",
+      "PART_B": "Part B",
+      "OTHER": "Other"
+    }
+  },
+  "dataMonitoringFileOther": {
+    "gqlField": "dataMonitoringFileOther",
+    "goField": "DataMonitoringFileOther",
+    "dbField": "data_monitoring_file_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.06,
+    "isOtherType": true,
+    "otherParentField": "data_monitoring_file_types"
+  },
+  "dataResponseType": {
+    "gqlField": "dataResponseType",
+    "goField": "DataResponseType",
+    "dbField": "data_response_type",
+    "label": "What types of responses?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.07
+  },
+  "dataResponseFileFrequency": {
+    "gqlField": "dataResponseFileFrequency",
+    "goField": "DataResponseFileFrequency",
+    "dbField": "data_response_file_frequency",
+    "label": "Frequency of files?",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.08
+  },
+  "dataFullTimeOrIncremental": {
+    "gqlField": "dataFullTimeOrIncremental",
+    "goField": "DataFullTimeOrIncremental",
+    "dbField": "data_full_time_or_incremental",
+    "label": "Full time or incremental?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.01,
+    "options": {
+      "FULL_TIME": "Full time",
+      "INCREMENTAL": "Incremental"
+    }
+  },
+  "eftSetUp": {
+    "gqlField": "eftSetUp",
+    "goField": "EftSetUp",
+    "dbField": "eft_set_up",
+    "label": "Are Electronic File Transfer (EFT) and connectivity set up?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.02,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "unsolicitedAdjustmentsIncluded": {
+    "gqlField": "unsolicitedAdjustmentsIncluded",
+    "goField": "UnsolicitedAdjustmentsIncluded",
+    "dbField": "unsolicited_adjustments_included",
+    "label": "Will unsolicited adjustments be included?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.03,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "dataFlowDiagramsNeeded": {
+    "gqlField": "dataFlowDiagramsNeeded",
+    "goField": "DataFlowDiagramsNeeded",
+    "dbField": "data_flow_diagrams_needed",
+    "label": "Are data flow diagrams needed?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.04,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "produceBenefitEnhancementFiles": {
+    "gqlField": "produceBenefitEnhancementFiles",
+    "goField": "ProduceBenefitEnhancementFiles",
+    "dbField": "produce_benefit_enhancement_files",
+    "label": "Will you produce Benefit Enhancement Files?",
+    "sublabel": "This means we would use these files for Participating and Preferred Providers.",
+    "questionTooltip": "This means we would use these files for Participating and Preferred Providers.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.05,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "fileNamingConventions": {
+    "gqlField": "fileNamingConventions",
+    "goField": "FileNamingConventions",
+    "dbField": "file_naming_conventions",
+    "label": "File naming conventions",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.06
+  },
+  "dataMonitoringNote": {
+    "gqlField": "dataMonitoringNote",
+    "goField": "DataMonitoringNote",
+    "dbField": "data_monitoring_note",
+    "label": "Notes",
+    "isNote": true,
+    "parentReferencesLabel": "Data monitoring questions",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.07
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Questionnaire status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 7.19,
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    },
+    "hideFromReadonly": true
+  }
+}

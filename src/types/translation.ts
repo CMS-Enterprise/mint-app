@@ -37,6 +37,7 @@ import {
   GeographyApplication,
   GeographyRegionType,
   GeographyType,
+  IddocQuestionnaireTranslation,
   KeyCharacteristic,
   KeyContactCategoryTranslation,
   KeyContactTranslation,
@@ -796,6 +797,50 @@ type TranslationOpsEvalAndLearningGQL = Omit<
 */
 export type TranslationOpsEvalAndLearning = {
   [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
+};
+
+// IDDOC Questionnaire
+export type TranslationIddocQuestionnaireForm = {
+  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+  // IDDOC Operations
+  technicalContactsIdentified: TranslationFieldPropertiesWithOptions<Bool>;
+  technicalContactsIdentifiedDetail: TranslationFieldProperties;
+  technicalContactsIdentifiedNote: TranslationFieldProperties;
+  captureParticipantInfo: TranslationFieldPropertiesWithOptions<Bool>;
+  captureParticipantInfoNote: TranslationFieldProperties;
+  icdOwner: TranslationFieldProperties;
+  draftIcdDueDate: TranslationFieldProperties;
+  icdNote: TranslationFieldProperties;
+  // IDDOC Testing
+  uatNeeds: TranslationFieldProperties;
+  stcNeeds: TranslationFieldProperties;
+  testingTimelines: TranslationFieldProperties;
+  testingNote: TranslationFieldProperties;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<MonitoringFileType>;
+  dataMonitoringFileOther: TranslationFieldProperties;
+  dataResponseType: TranslationFieldProperties;
+  dataResponseFileFrequency: TranslationFieldProperties;
+  // IDDOC Monitoring
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<DataFullTimeOrIncrementalType>;
+  eftSetUp: TranslationFieldPropertiesWithOptions<Bool>;
+  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptions<Bool>;
+  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
+  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptions<Bool>;
+  fileNamingConventions: TranslationFieldProperties;
+  dataMonitoringNote: TranslationFieldProperties;
+};
+
+type TranslationIddocQuestionnaireGQL = Omit<
+  IddocQuestionnaireTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationIddocQuestionnaire = {
+  [K in keyof TranslationIddocQuestionnaireGQL]: TranslationIddocQuestionnaireForm[K]; // FE form type
 };
 
 // Payments

@@ -26,7 +26,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 type IDDOCFormType = GetIddocQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCOperations = () => {
-  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+  const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
 
   const { t: iddocQuestionnaireMiscT } = useTranslation(
     'iddocQuestionnaireMisc'
@@ -128,7 +128,7 @@ const IDDOCOperations = () => {
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
             } catch (err) {
-              setFieldError(field, opsEvalAndLearningT('validDate'));
+              setFieldError(field, iddocQuestionnaireT('validDate'));
             }
           };
 
@@ -148,7 +148,7 @@ const IDDOCOperations = () => {
 
                   <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
-                      {opsEvalAndLearningT('technicalContactsIdentified.label')}
+                      {iddocQuestionnaireT('technicalContactsIdentified.label')}
                     </Label>
 
                     <BooleanRadio
@@ -165,7 +165,7 @@ const IDDOCOperations = () => {
                             htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
                             className="text-normal"
                           >
-                            {opsEvalAndLearningT(
+                            {iddocQuestionnaireT(
                               'technicalContactsIdentifiedDetail.label'
                             )}
                           </Label>
@@ -191,11 +191,11 @@ const IDDOCOperations = () => {
 
                   <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="ops-eval-and-learning-capture-participant-info">
-                      {opsEvalAndLearningT('captureParticipantInfo.label')}
+                      {iddocQuestionnaireT('captureParticipantInfo.label')}
                     </Label>
 
                     <p className="text-base margin-bottom-1 margin-top-1">
-                      {opsEvalAndLearningT('captureParticipantInfo.sublabel')}
+                      {iddocQuestionnaireT('captureParticipantInfo.sublabel')}
                     </p>
 
                     <BooleanRadio
@@ -220,7 +220,7 @@ const IDDOCOperations = () => {
 
                   <FieldGroup className="margin-top-4">
                     <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
-                      {opsEvalAndLearningT('icdOwner.label')}
+                      {iddocQuestionnaireT('icdOwner.label')}
                     </Label>
 
                     <Field
@@ -238,7 +238,7 @@ const IDDOCOperations = () => {
                         fieldName="draftIcdDueDate"
                         id="ops-eval-and-learning-icd-due-date"
                         className="margin-top-6"
-                        label={opsEvalAndLearningT('draftIcdDueDate.label')}
+                        label={iddocQuestionnaireT('draftIcdDueDate.label')}
                         placeHolder
                         handleOnBlur={handleOnBlur}
                         formikValue={values.draftIcdDueDate}

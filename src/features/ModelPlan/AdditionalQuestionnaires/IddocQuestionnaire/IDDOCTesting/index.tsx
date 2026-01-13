@@ -29,10 +29,10 @@ type IDDOCTestingFormType =
   GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCTesting = () => {
-  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+  const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
 
-  const { t: opsEvalAndLearningMiscT } = useTranslation(
-    'opsEvalAndLearningMisc'
+  const { t: iddocQuestionnaireMiscT } = useTranslation(
+    'iddocQuestionnaireMisc'
   );
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -129,7 +129,7 @@ const IDDOCTesting = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <h3>{opsEvalAndLearningMiscT('testingQuestions')}</h3>
+                  <h3>{iddocQuestionnaireMiscT('testingQuestions')}</h3>
 
                   <Alert
                     type="info"
@@ -138,13 +138,13 @@ const IDDOCTesting = () => {
                     className="margin-bottom-4"
                   >
                     <span className="mandatory-fields-alert__text">
-                      {opsEvalAndLearningMiscT('ssmRequest')}
+                      {iddocQuestionnaireMiscT('ssmRequest')}
                     </span>
                   </Alert>
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-uat-needs">
-                      {opsEvalAndLearningT('uatNeeds.label')}
+                      {iddocQuestionnaireT('uatNeeds.label')}
                     </Label>
 
                     <Field
@@ -157,7 +157,7 @@ const IDDOCTesting = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-stc-needs">
-                      {opsEvalAndLearningT('stcNeeds.label')}
+                      {iddocQuestionnaireT('stcNeeds.label')}
                     </Label>
 
                     <Field
@@ -171,7 +171,7 @@ const IDDOCTesting = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-testing-timelines">
-                      {opsEvalAndLearningT('testingTimelines.label')}
+                      {iddocQuestionnaireT('testingTimelines.label')}
                     </Label>
 
                     <Field
@@ -187,11 +187,11 @@ const IDDOCTesting = () => {
                     field="testingNote"
                   />
 
-                  <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
+                  <h3>{iddocQuestionnaireMiscT('dataMonitoring')}</h3>
 
                   <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
-                      {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
+                      {iddocQuestionnaireT('dataMonitoringFileTypes.label')}
                     </Label>
 
                     {getKeys(dataMonitoringFileTypesConfig.options).map(
@@ -220,7 +220,7 @@ const IDDOCTesting = () => {
                                     htmlFor="ops-eval-and-learning-data-monitoring-file-other"
                                     className="text-normal"
                                   >
-                                    {opsEvalAndLearningT(
+                                    {iddocQuestionnaireT(
                                       'dataMonitoringFileOther.label'
                                     )}
                                   </Label>
@@ -240,7 +240,7 @@ const IDDOCTesting = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-data-response-type">
-                      {opsEvalAndLearningT('dataResponseType.label')}
+                      {iddocQuestionnaireT('dataResponseType.label')}
                     </Label>
 
                     <Field
@@ -253,7 +253,7 @@ const IDDOCTesting = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-data-file-frequency">
-                      {opsEvalAndLearningT('dataResponseFileFrequency.label')}
+                      {iddocQuestionnaireT('dataResponseFileFrequency.label')}
                     </Label>
 
                     <Field

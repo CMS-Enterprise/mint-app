@@ -26,10 +26,10 @@ type IDDOCMonitoringFormType =
   GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCMonitoring = () => {
-  const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
+  const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
 
-  const { t: opsEvalAndLearningMiscT } = useTranslation(
-    'opsEvalAndLearningMisc'
+  const { t: iddocQuestionnaireMiscT } = useTranslation(
+    'iddocQuestionnaireMisc'
   );
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -129,11 +129,11 @@ const IDDOCMonitoring = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <h3>{opsEvalAndLearningMiscT('dataMonitoringContinued')}</h3>
+                  <h3>{iddocQuestionnaireMiscT('dataMonitoringContinued')}</h3>
 
                   <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
-                      {opsEvalAndLearningT('dataFullTimeOrIncremental.label')}
+                      {iddocQuestionnaireT('dataFullTimeOrIncremental.label')}
                     </Label>
 
                     <Fieldset>
@@ -158,7 +158,7 @@ const IDDOCMonitoring = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-eft-setup">
-                      {opsEvalAndLearningT('eftSetUp.label')}
+                      {iddocQuestionnaireT('eftSetUp.label')}
                     </Label>
 
                     <BooleanRadio
@@ -172,7 +172,7 @@ const IDDOCMonitoring = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
-                      {opsEvalAndLearningT(
+                      {iddocQuestionnaireT(
                         'unsolicitedAdjustmentsIncluded.label'
                       )}
                     </Label>
@@ -188,7 +188,7 @@ const IDDOCMonitoring = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-diagrams-needed">
-                      {opsEvalAndLearningT('dataFlowDiagramsNeeded.label')}
+                      {iddocQuestionnaireT('dataFlowDiagramsNeeded.label')}
                     </Label>
 
                     <BooleanRadio
@@ -202,13 +202,13 @@ const IDDOCMonitoring = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
-                      {opsEvalAndLearningT(
+                      {iddocQuestionnaireT(
                         'produceBenefitEnhancementFiles.label'
                       )}
                     </Label>
 
                     <p className="text-base margin-y-1">
-                      {opsEvalAndLearningT(
+                      {iddocQuestionnaireT(
                         'produceBenefitEnhancementFiles.sublabel'
                       )}
                     </p>
@@ -224,7 +224,7 @@ const IDDOCMonitoring = () => {
 
                   <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-file-naming-convention">
-                      {opsEvalAndLearningT('fileNamingConventions.label')}
+                      {iddocQuestionnaireT('fileNamingConventions.label')}
                     </Label>
 
                     <Field
