@@ -157,7 +157,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                     aria-label="Redirect to using table actions article"
                     class="usa-link display-block margin-y-05"
                     data-discover="true"
-                    href="/using-table-actions"
+                    href="/help-and-knowledge/using-table-actions"
                   >
                     Using the table actions area 
                     <svg
@@ -179,7 +179,7 @@ exports[`UsingMilestoneLibrary > matches the snapshot 1`] = `
                     aria-label="Redirect to starting mto for a new model article"
                     class="usa-link display-block margin-y-05"
                     data-discover="true"
-                    href="/starting-mto-matrix"
+                    href="/help-and-knowledge/starting-mto-matrix"
                   >
                     Starting an MTO for a new model 
                     <svg
