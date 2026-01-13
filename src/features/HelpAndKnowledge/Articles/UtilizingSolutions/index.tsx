@@ -175,7 +175,6 @@ export const UtilizingSolutions = () => {
                   i18nKey="utilizingSolutions:helpBox.description"
                   components={{
                     link1: (
-                      // @ts-ignore
                       <UswdsReactLink
                         to="/help-and-knowledge/operational-solutions?page=1"
                         className="margin-top-2 display-inline-block"
