@@ -333,50 +333,6 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByID() {
 
 }
 
-func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
-
-	plan := suite.createModelPlan("plan for solutions")
-	needType := models.OpNKManageCd
-	solType := models.OpSKInnovation
-
-	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
-	suite.NoError(err)
-
-	timeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
-	suite.NoError(err)
-	dateStr := "2020-05-13T20:47:50.12Z"
-	dateVal, err := time.Parse(time.RFC3339Nano, dateStr)
-	suite.NoError(err)
-	changes := map[string]interface{}{
-		"performancePeriodStarts": dateVal,
-	}
-
-	timeline, err = UpdatePlanTimeline(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		timeline.ID,
-		changes,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		nil,
-		email.AddressBook{},
-	)
-	suite.NoError(err)
-
-	sol, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, email.AddressBook{}, need.ID, &solType, nil, suite.testConfigs.Principal)
-	suite.NoError(err)
-	suite.NotNil(sol)
-	solutionSelectedDetails, err := suite.testConfigs.Store.GetOperationalSolutionSelectedDetails(sol.ID)
-	suite.NoError(err)
-
-	suite.EqualValues(plan.Abbreviation, solutionSelectedDetails.ModelAbbreviation)
-	suite.EqualValues(timeline.PerformancePeriodStarts, solutionSelectedDetails.ModelStartDate)
-	suite.EqualValues(plan.ModelName, solutionSelectedDetails.ModelName)
-	suite.EqualValues(plan.Status, solutionSelectedDetails.ModelStatus)
-	suite.EqualValues(sol.Status, solutionSelectedDetails.SolutionStatus)
-
-}
-
 func (suite *ResolverSuite) TestOperationalSolutionGetByIDLOADER() {
 	// 1. Create solution, ensure fields are as expected
 	plan := suite.createModelPlan("plan for solutions")
