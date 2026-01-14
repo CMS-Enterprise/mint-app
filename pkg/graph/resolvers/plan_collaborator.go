@@ -159,27 +159,12 @@ func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authenti
 
 // PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader
 func PlanCollaboratorGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	collabLoader := allLoaders.PlanCollaboratorByModelPlanLoader
-	key := loaders.NewKeyArgs()
-	key.Args["model_plan_id"] = modelPlanID
-
-	thunk := collabLoader.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
-
-	return result.([]*models.PlanCollaborator), nil
+	return loaders.PlanCollaborators.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
 // PlanCollaboratorGetByID implements resolver logic to fetch a plan collaborator by ID. It requires the ctx to have a DataLoader embedded.
 func PlanCollaboratorGetByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
-	return loaders.PlanCollaboratorByID(ctx, id)
+	return loaders.PlanCollaborators.ByID.Load(ctx, id)
 }
 
 // IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
