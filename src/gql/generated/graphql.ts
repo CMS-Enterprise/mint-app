@@ -786,30 +786,6 @@ export enum IddocQuestionnaireStatus {
   NOT_STARTED = 'NOT_STARTED'
 }
 
-/** Represents IDDOC questionnaire translation data */
-export type IddocQuestionnaireTranslation = {
-  __typename: 'IddocQuestionnaireTranslation';
-  captureParticipantInformation: TranslationFieldWithOptions;
-  completedBy: TranslationField;
-  completedDts: TranslationField;
-  dataFlowDiagramsNeeded: TranslationFieldWithOptions;
-  draftIcdRequiredBy: TranslationField;
-  eftConnectivitySetup: TranslationFieldWithOptions;
-  fileFrequency: TranslationField;
-  fileNamingConventions: TranslationField;
-  fileTypes: TranslationFieldWithOptions;
-  icdOwner: TranslationField;
-  loadType: TranslationFieldWithOptions;
-  needed: TranslationFieldWithOptions;
-  produceBenefitEnhancementFiles: TranslationFieldWithOptions;
-  responseTypes: TranslationField;
-  stcTestDataNeeds: TranslationField;
-  technicalContactsIdentified: TranslationFieldWithOptions;
-  testingTimelines: TranslationField;
-  uatTestDataNeeds: TranslationField;
-  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions;
-};
-
 export type IncorrectModelStatusActivityMeta = {
   __typename: 'IncorrectModelStatusActivityMeta';
   currentStatus: Scalars['String']['output'];

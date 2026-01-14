@@ -28,7 +28,6 @@ module.exports = {
       'TranslationFormType',
       'ModelPlanTranslation',
       'PlanDataExchangeApproachTranslation',
-      'IddocQuestionnaireTranslation',
       'PlanBasicsTranslation',
       'PlanGeneralCharacteristicsTranslation',
       'PlanParticipantsAndProvidersTranslation',

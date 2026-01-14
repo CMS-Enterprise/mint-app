@@ -49,8 +49,6 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return PlanDocumentSolutionLinkTranslation()
 	case models.TNPlanDataExchangeApproach:
 		return PlanDataExchangeApproachTranslation()
-	case models.TNIddocQuestionnaire:
-		return IddocQuestionnaireTranslation()
 	// MTO TABLES
 	case models.TNMTOCategory:
 		return MTOCategoryTranslation()
