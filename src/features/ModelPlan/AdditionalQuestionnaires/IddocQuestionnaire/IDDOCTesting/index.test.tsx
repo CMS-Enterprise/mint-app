@@ -56,7 +56,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing',
           element: (
             <ModelInfoWrapper>
               <IDDOCTesting />
@@ -66,7 +66,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing'
         ]
       }
     );
@@ -79,12 +79,12 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-iddoc-testing-form')
+        screen.getByTestId('iddoc-questionnaire-testing-form')
       ).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('ops-eval-and-learning-stc-needs')).toHaveValue(
+      expect(screen.getByTestId('iddoc-questionnaire-stc-needs')).toHaveValue(
         'Yes needs'
       );
     });
@@ -94,7 +94,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing',
           element: (
             <ModelInfoWrapper>
               <IDDOCTesting />
@@ -104,7 +104,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing'
         ]
       }
     );
@@ -116,7 +116,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('ops-eval-and-learning-stc-needs')).toHaveValue(
+      expect(screen.getByTestId('iddoc-questionnaire-stc-needs')).toHaveValue(
         'Yes needs'
       );
     });

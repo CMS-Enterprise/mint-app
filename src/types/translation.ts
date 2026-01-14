@@ -1508,6 +1508,7 @@ export type TranslationPlan = {
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
   dataExchangeApproach: TranslationDataExchangeApproach;
+  iddocQuestionnaire: TranslationIddocQuestionnaire;
   modelToOperations: TranslationMTOInfo;
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
@@ -1525,7 +1526,8 @@ export type TranslationPlanSection =
   | TranslationPlan['beneficiaries']
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments']
-  | TranslationPlan['dataExchangeApproach'];
+  | TranslationPlan['dataExchangeApproach']
+  | TranslationPlan['iddocQuestionnaire'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
@@ -1545,6 +1547,7 @@ export enum PlanSection {
   OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
   DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
+  IDDOC_QUESTIONNAIRE = 'iddocQuestionnaire',
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',

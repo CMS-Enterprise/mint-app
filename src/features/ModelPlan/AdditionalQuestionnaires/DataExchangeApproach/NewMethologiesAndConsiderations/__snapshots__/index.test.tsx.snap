@@ -176,7 +176,7 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                   for="isDataExchangeApproachComplete-true"
                   style="width: fit-content;"
                 >
-                  This data exchange approach is complete.
+                  This questionnaire (data exchange approach) is complete.
                 </label>
                 <p
                   class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
@@ -184,6 +184,11 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                   This will alert interested parties about your data exchange approach. You can still edit this after it’s marked complete.
                 </p>
               </div>
+              <p
+                class="margin-top-1 margin-bottom-0 margin-left-4 text-base"
+              >
+                Marked as complete by John Doe on 09/01/2021
+              </p>
             </div>
           </div>
           <div
@@ -198,6 +203,14 @@ exports[`TestComponent > renders correctly and matches snapshot 1`] = `
                 type="button"
               >
                 Back
+              </button>
+              <button
+                class="usa-button"
+                data-testid="button"
+                id="new-methodologies-and-considerations-form-save-button"
+                type="submit"
+              >
+                Save
               </button>
             </div>
             <button

@@ -5,7 +5,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
   <form
     action="#"
     class="desktop:grid-col-6 margin-top-0"
-    data-testid="ops-eval-and-learning-iddoc-monitoring-form"
+    data-testid="iddoc-questionnaire-monitoring-form"
   >
     <fieldset
       class="usa-fieldset"
@@ -20,7 +20,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-fulltime-or-incremental"
+          for="iddoc-questionnaire-fulltime-or-incremental"
         >
           Full time or incremental?
         </label>
@@ -34,14 +34,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-fulltime-or-incremental-FULL_TIME"
+              id="iddoc-questionnaire-fulltime-or-incremental-FULL_TIME"
               name="dataFullTimeOrIncremental"
               type="radio"
               value="FULL_TIME"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-fulltime-or-incremental-FULL_TIME"
+              for="iddoc-questionnaire-fulltime-or-incremental-FULL_TIME"
             >
               Full time
             </label>
@@ -52,14 +52,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              id="ops-eval-and-learning-fulltime-or-incremental-INCREMENTAL"
+              id="iddoc-questionnaire-fulltime-or-incremental-INCREMENTAL"
               name="dataFullTimeOrIncremental"
               type="radio"
               value="INCREMENTAL"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-fulltime-or-incremental-INCREMENTAL"
+              for="iddoc-questionnaire-fulltime-or-incremental-INCREMENTAL"
             >
               Incremental
             </label>
@@ -72,7 +72,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-eft-setup"
+          for="iddoc-questionnaire-eft-setup"
         >
           Are Electronic File Transfer (EFT) and connectivity set up?
         </label>
@@ -86,15 +86,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-eft-setup-true"
-              id="ops-eval-and-learning-eft-setup-true"
+              data-testid="iddoc-questionnaire-eft-setup-true"
+              id="iddoc-questionnaire-eft-setup-true"
               name="eftSetUp"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-eft-setup-true"
+              for="iddoc-questionnaire-eft-setup-true"
             >
               Yes
             </label>
@@ -105,15 +105,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-eft-setup-false"
-              id="ops-eval-and-learning-eft-setup-false"
+              data-testid="iddoc-questionnaire-eft-setup-false"
+              id="iddoc-questionnaire-eft-setup-false"
               name="eftSetUp"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-eft-setup-false"
+              for="iddoc-questionnaire-eft-setup-false"
             >
               No
             </label>
@@ -126,7 +126,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-unsolicted-adjustment-included"
+          for="iddoc-questionnaire-unsolicited-adjustment-included"
         >
           Will unsolicited adjustments be included?
         </label>
@@ -140,15 +140,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-unsolicted-adjustment-included-true"
-              id="ops-eval-and-learning-unsolicted-adjustment-included-true"
+              data-testid="iddoc-questionnaire-unsolicited-adjustment-included-true"
+              id="iddoc-questionnaire-unsolicited-adjustment-included-true"
               name="unsolicitedAdjustmentsIncluded"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-unsolicted-adjustment-included-true"
+              for="iddoc-questionnaire-unsolicited-adjustment-included-true"
             >
               Yes
             </label>
@@ -159,15 +159,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-unsolicted-adjustment-included-false"
-              id="ops-eval-and-learning-unsolicted-adjustment-included-false"
+              data-testid="iddoc-questionnaire-unsolicited-adjustment-included-false"
+              id="iddoc-questionnaire-unsolicited-adjustment-included-false"
               name="unsolicitedAdjustmentsIncluded"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-unsolicted-adjustment-included-false"
+              for="iddoc-questionnaire-unsolicited-adjustment-included-false"
             >
               No
             </label>
@@ -180,7 +180,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-diagrams-needed"
+          for="iddoc-questionnaire-diagrams-needed"
         >
           Are data flow diagrams needed?
         </label>
@@ -194,15 +194,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-diagrams-needed-true"
-              id="ops-eval-and-learning-diagrams-needed-true"
+              data-testid="iddoc-questionnaire-diagrams-needed-true"
+              id="iddoc-questionnaire-diagrams-needed-true"
               name="dataFlowDiagramsNeeded"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-diagrams-needed-true"
+              for="iddoc-questionnaire-diagrams-needed-true"
             >
               Yes
             </label>
@@ -213,15 +213,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-diagrams-needed-false"
-              id="ops-eval-and-learning-diagrams-needed-false"
+              data-testid="iddoc-questionnaire-diagrams-needed-false"
+              id="iddoc-questionnaire-diagrams-needed-false"
               name="dataFlowDiagramsNeeded"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-diagrams-needed-false"
+              for="iddoc-questionnaire-diagrams-needed-false"
             >
               No
             </label>
@@ -234,7 +234,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-produce-benefit-files"
+          for="iddoc-questionnaire-produce-benefit-files"
         >
           Will you produce Benefit Enhancement Files?
         </label>
@@ -253,15 +253,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-produce-benefit-files-true"
-              id="ops-eval-and-learning-produce-benefit-files-true"
+              data-testid="iddoc-questionnaire-produce-benefit-files-true"
+              id="iddoc-questionnaire-produce-benefit-files-true"
               name="produceBenefitEnhancementFiles"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-produce-benefit-files-true"
+              for="iddoc-questionnaire-produce-benefit-files-true"
             >
               Yes
             </label>
@@ -272,15 +272,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-produce-benefit-files-false"
-              id="ops-eval-and-learning-produce-benefit-files-false"
+              data-testid="iddoc-questionnaire-produce-benefit-files-false"
+              id="iddoc-questionnaire-produce-benefit-files-false"
               name="produceBenefitEnhancementFiles"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-produce-benefit-files-false"
+              for="iddoc-questionnaire-produce-benefit-files-false"
             >
               No
             </label>
@@ -293,14 +293,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-file-naming-convention"
+          for="iddoc-questionnaire-file-naming-convention"
         >
           File naming conventions
         </label>
         <input
           class="usa-input"
-          data-testid="ops-eval-and-learning-file-naming-convention"
-          id="ops-eval-and-learning-file-naming-convention"
+          data-testid="iddoc-questionnaire-file-naming-convention"
+          id="iddoc-questionnaire-file-naming-convention"
           maxlength="50"
           name="fileNamingConventions"
           value=".pdf"
@@ -311,7 +311,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="ops-eval-and-learning-data-monitoring-note-add-note-toggle"
+          data-testid="iddoc-questionnaire-data-monitoring-note-add-note-toggle"
           type="button"
         >
           <svg
@@ -333,6 +333,44 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         </button>
       </div>
       <div
+        class="usa-form-group border-2px border-base-light radius-md padding-2"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-is-complete"
+        >
+          Questionnaire status
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            checked=""
+            class="usa-checkbox__input"
+            id="iddoc-questionnaire-is-complete-true"
+            name="iddocQuestionnaireIsComplete"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="iddoc-questionnaire-is-complete-true"
+            style="width: fit-content;"
+          >
+            This questionnaire (4i and ACO-OS) is complete.
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <p
+          class="margin-top-1 margin-bottom-0 margin-left-4 text-base"
+        >
+          Marked as complete by wonderful trouble maker on the best day ever 01/14/2026
+        </p>
+      </div>
+      <div
         id="iddoc-questionnaire-monitoring-form"
       >
         <div
@@ -344,6 +382,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             type="button"
           >
             Back
+          </button>
+          <button
+            class="usa-button"
+            data-testid="button"
+            id="iddoc-questionnaire-monitoring-form-save-button"
+            type="submit"
+          >
+            Save
           </button>
         </div>
         <button

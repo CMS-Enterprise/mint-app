@@ -55,7 +55,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring',
           element: (
             <ModelInfoWrapper>
               <IDDOCMonitoring />
@@ -65,26 +65,26 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring'
         ]
       }
     );
 
     render(
-      <MockedProvider mocks={iddocMonitoringMock} addTypename={false}>
+      <MockedProvider mocks={iddocMonitoringMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-iddoc-monitoring-form')
+        screen.getByTestId('iddoc-questionnaire-monitoring-form')
       ).toBeInTheDocument();
     });
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-file-naming-convention')
+        screen.getByTestId('iddoc-questionnaire-file-naming-convention')
       ).toHaveValue('.pdf');
     });
   });
@@ -93,7 +93,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring',
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring',
           element: (
             <ModelInfoWrapper>
               <IDDOCMonitoring />
@@ -103,7 +103,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
       ],
       {
         initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring'
         ]
       }
     );
@@ -116,7 +116,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('ops-eval-and-learning-file-naming-convention')
+        screen.getByTestId('iddoc-questionnaire-file-naming-convention')
       ).toHaveValue('.pdf');
     });
     expect(asFragment()).toMatchSnapshot();

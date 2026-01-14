@@ -5,7 +5,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
   <form
     action="#"
     class="desktop:grid-col-6 margin-top-0"
-    data-testid="ops-eval-and-learning-iddoc-form"
+    data-testid="iddoc-questionnaire-operations-form"
   >
     <fieldset
       class="usa-fieldset"
@@ -20,7 +20,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-technical-contacts-identified-use"
+          for="iddoc-questionnaire-technical-contacts-identified-use"
         >
           Are technical contacts identified?
         </label>
@@ -34,15 +34,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-technical-contacts-identified-use-true"
-              id="ops-eval-and-learning-technical-contacts-identified-use-true"
+              data-testid="iddoc-questionnaire-technical-contacts-identified-use-true"
+              id="iddoc-questionnaire-technical-contacts-identified-use-true"
               name="technicalContactsIdentified"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-technical-contacts-identified-use-true"
+              for="iddoc-questionnaire-technical-contacts-identified-use-true"
             >
               Yes
             </label>
@@ -53,15 +53,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-technical-contacts-identified-use-false"
-              id="ops-eval-and-learning-technical-contacts-identified-use-false"
+              data-testid="iddoc-questionnaire-technical-contacts-identified-use-false"
+              id="iddoc-questionnaire-technical-contacts-identified-use-false"
               name="technicalContactsIdentified"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-technical-contacts-identified-use-false"
+              for="iddoc-questionnaire-technical-contacts-identified-use-false"
             >
               No
             </label>
@@ -72,7 +72,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="ops-eval-and-learning-technical-contacts-identified-use-note-add-note-toggle"
+            data-testid="iddoc-questionnaire-technical-contacts-identified-use-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -100,7 +100,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-capture-participant-info"
+          for="iddoc-questionnaire-capture-participant-info"
         >
           Will you capture participant information?
         </label>
@@ -119,15 +119,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-capture-participant-info-true"
-              id="ops-eval-and-learning-capture-participant-info-true"
+              data-testid="iddoc-questionnaire-capture-participant-info-true"
+              id="iddoc-questionnaire-capture-participant-info-true"
               name="captureParticipantInfo"
               type="radio"
               value="TRUE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-capture-participant-info-true"
+              for="iddoc-questionnaire-capture-participant-info-true"
             >
               Yes
             </label>
@@ -138,15 +138,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-radio__input"
-              data-testid="ops-eval-and-learning-capture-participant-info-false"
-              id="ops-eval-and-learning-capture-participant-info-false"
+              data-testid="iddoc-questionnaire-capture-participant-info-false"
+              id="iddoc-questionnaire-capture-participant-info-false"
               name="captureParticipantInfo"
               type="radio"
               value="FALSE"
             />
             <label
               class="usa-radio__label"
-              for="ops-eval-and-learning-capture-participant-info-false"
+              for="iddoc-questionnaire-capture-participant-info-false"
             >
               No
             </label>
@@ -157,7 +157,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="ops-eval-and-learning-capture-participant-info-note-add-note-toggle"
+            data-testid="iddoc-questionnaire-capture-participant-info-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -193,14 +193,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-capture-icd-owner"
+          for="iddoc-questionnaire-capture-icd-owner"
         >
           ICD owner
         </label>
         <input
           class="usa-input"
-          data-testid="ops-eval-and-learning-capture-icd-owner"
-          id="ops-eval-and-learning-capture-icd-owner"
+          data-testid="iddoc-questionnaire-capture-icd-owner"
+          id="iddoc-questionnaire-capture-icd-owner"
           maxlength="50"
           name="icdOwner"
           value="John Doe"
@@ -213,8 +213,8 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label usa-legend margin-top-0"
           data-testid="label"
-          for="ops-eval-and-learning-icd-due-date"
-          id="label-ops-eval-and-learning-icd-due-date"
+          for="iddoc-questionnaire-icd-due-date"
+          id="label-iddoc-questionnaire-icd-due-date"
         >
           Draft ICD required by
         </label>
@@ -233,7 +233,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               aria-hidden="true"
-              aria-labelledby="label-ops-eval-and-learning-icd-due-date appointment-date-hint"
+              aria-labelledby="label-iddoc-questionnaire-icd-due-date appointment-date-hint"
               class="usa-input usa-sr-only usa-date-picker__internal-input"
               data-testid="date-picker-internal-input"
               error="0"
@@ -249,11 +249,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
               tabindex="-1"
             >
               <input
-                aria-labelledby="label-ops-eval-and-learning-icd-due-date appointment-date-hint"
+                aria-labelledby="label-iddoc-questionnaire-icd-due-date appointment-date-hint"
                 class="usa-input usa-date-picker__external-input"
                 data-testid="date-picker-external-input"
                 error="0"
-                id="ops-eval-and-learning-icd-due-date"
+                id="iddoc-questionnaire-icd-due-date"
                 maxlength="50"
                 type="text"
                 value=""
@@ -287,7 +287,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="ops-eval-and-learning-icd-due-date-note-add-note-toggle"
+          data-testid="iddoc-questionnaire-icd-due-date-note-add-note-toggle"
           type="button"
         >
           <svg

@@ -12,6 +12,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import BooleanRadio from 'components/BooleanRadioForm';
+import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
 import FormFooter from 'components/FormFooter';
@@ -21,6 +22,7 @@ import PageNumber from 'components/PageNumber';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
+import { formatDateLocal } from 'utils/date';
 
 type IDDOCMonitoringFormType =
   GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
@@ -35,13 +37,15 @@ const IDDOCMonitoring = () => {
     'additionalQuestionnaires'
   );
 
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
   const {
     dataFullTimeOrIncremental: dataFullTimeOrIncrementalConfig,
     eftSetUp: eftSetUpConfig,
     unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncludedConfig,
     dataFlowDiagramsNeeded: dataFlowDiagramsNeededConfig,
     produceBenefitEnhancementFiles: produceBenefitEnhancementFilesConfig
-  } = usePlanTranslation('opsEvalAndLearning');
+  } = usePlanTranslation('iddocQuestionnaire');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -112,7 +116,7 @@ const IDDOCMonitoring = () => {
         }}
         enableReinitialize
         innerRef={formikRef}
-        data-testid="ops-eval-and-learning-iddoc-monitoring"
+        data-testid="iddoc-questionnaire-monitoring"
       >
         {(formikProps: FormikProps<IDDOCMonitoringFormType>) => {
           const { handleSubmit, values, setFieldValue } = formikProps;
@@ -123,7 +127,7 @@ const IDDOCMonitoring = () => {
 
               <MINTForm
                 className="desktop:grid-col-6 margin-top-0"
-                data-testid="ops-eval-and-learning-iddoc-monitoring-form"
+                data-testid="iddoc-questionnaire-monitoring-form"
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
@@ -132,7 +136,7 @@ const IDDOCMonitoring = () => {
                   <h3>{iddocQuestionnaireMiscT('dataMonitoringContinued')}</h3>
 
                   <FieldGroup>
-                    <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
+                    <Label htmlFor="iddoc-questionnaire-fulltime-or-incremental">
                       {iddocQuestionnaireT('dataFullTimeOrIncremental.label')}
                     </Label>
 
@@ -142,7 +146,7 @@ const IDDOCMonitoring = () => {
                           <Field
                             as={Radio}
                             key={key}
-                            id={`ops-eval-and-learning-fulltime-or-incremental-${key}`}
+                            id={`iddoc-questionnaire-fulltime-or-incremental-${key}`}
                             name="dataFullTimeOrIncremental"
                             label={dataFullTimeOrIncrementalConfig.options[key]}
                             value={key}
@@ -157,13 +161,13 @@ const IDDOCMonitoring = () => {
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-eft-setup">
+                    <Label htmlFor="iddoc-questionnaire-eft-setup">
                       {iddocQuestionnaireT('eftSetUp.label')}
                     </Label>
 
                     <BooleanRadio
                       field="eftSetUp"
-                      id="ops-eval-and-learning-eft-setup"
+                      id="iddoc-questionnaire-eft-setup"
                       value={values.eftSetUp}
                       setFieldValue={setFieldValue}
                       options={eftSetUpConfig.options}
@@ -171,7 +175,7 @@ const IDDOCMonitoring = () => {
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
+                    <Label htmlFor="iddoc-questionnaire-unsolicited-adjustment-included">
                       {iddocQuestionnaireT(
                         'unsolicitedAdjustmentsIncluded.label'
                       )}
@@ -179,7 +183,7 @@ const IDDOCMonitoring = () => {
 
                     <BooleanRadio
                       field="unsolicitedAdjustmentsIncluded"
-                      id="ops-eval-and-learning-unsolicted-adjustment-included"
+                      id="iddoc-questionnaire-unsolicited-adjustment-included"
                       value={values.unsolicitedAdjustmentsIncluded}
                       setFieldValue={setFieldValue}
                       options={unsolicitedAdjustmentsIncludedConfig.options}
@@ -187,13 +191,13 @@ const IDDOCMonitoring = () => {
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-diagrams-needed">
+                    <Label htmlFor="iddoc-questionnaire-diagrams-needed">
                       {iddocQuestionnaireT('dataFlowDiagramsNeeded.label')}
                     </Label>
 
                     <BooleanRadio
                       field="dataFlowDiagramsNeeded"
-                      id="ops-eval-and-learning-diagrams-needed"
+                      id="iddoc-questionnaire-diagrams-needed"
                       value={values.dataFlowDiagramsNeeded}
                       setFieldValue={setFieldValue}
                       options={dataFlowDiagramsNeededConfig.options}
@@ -201,7 +205,7 @@ const IDDOCMonitoring = () => {
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
+                    <Label htmlFor="iddoc-questionnaire-produce-benefit-files">
                       {iddocQuestionnaireT(
                         'produceBenefitEnhancementFiles.label'
                       )}
@@ -215,7 +219,7 @@ const IDDOCMonitoring = () => {
 
                     <BooleanRadio
                       field="produceBenefitEnhancementFiles"
-                      id="ops-eval-and-learning-produce-benefit-files"
+                      id="iddoc-questionnaire-produce-benefit-files"
                       value={values.produceBenefitEnhancementFiles}
                       setFieldValue={setFieldValue}
                       options={produceBenefitEnhancementFilesConfig.options}
@@ -223,23 +227,52 @@ const IDDOCMonitoring = () => {
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-file-naming-convention">
+                    <Label htmlFor="iddoc-questionnaire-file-naming-convention">
                       {iddocQuestionnaireT('fileNamingConventions.label')}
                     </Label>
 
                     <Field
                       as={TextInput}
-                      id="ops-eval-and-learning-file-naming-convention"
-                      data-testid="ops-eval-and-learning-file-naming-convention"
+                      id="iddoc-questionnaire-file-naming-convention"
+                      data-testid="iddoc-questionnaire-file-naming-convention"
                       maxLength={50}
                       name="fileNamingConventions"
                     />
                   </FieldGroup>
 
                   <AddNote
-                    id="ops-eval-and-learning-data-monitoring-note"
+                    id="iddoc-questionnaire-data-monitoring-note"
                     field="dataMonitoringNote"
                   />
+
+                  {/* TODO: update below hard coded value once query is ready */}
+                  <FieldGroup className="border-2px border-base-light radius-md padding-2">
+                    <Label htmlFor="iddoc-questionnaire-is-complete">
+                      Questionnaire status
+                    </Label>
+                    <CheckboxField
+                      name="iddocQuestionnaireIsComplete"
+                      id="iddoc-questionnaire-is-complete-true"
+                      checked
+                      value="true"
+                      label="This questionnaire (4i and ACO-OS) is complete."
+                      onChange={() => {}}
+                      onBlur={() => {}}
+                    />
+                    {/* {formData.markedCompleteByUserAccount?.id && 
+                    formData.markedCompleteDts && ( */}
+                    <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+                      {miscellaneousT('markedComplete', {
+                        user: 'wonderful trouble maker'
+                      })}
+                      the best day ever{' '}
+                      {formatDateLocal(
+                        '2026-01-14T18:33:18.149679Z',
+                        'MM/dd/yyyy'
+                      )}
+                    </p>
+                    {/* )} */}
+                  </FieldGroup>
 
                   <FormFooter
                     homeArea={additionalQuestionnairesT(

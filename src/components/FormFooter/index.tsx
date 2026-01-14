@@ -40,9 +40,13 @@ const FormFooter = ({
           </Button>
         )}
 
-        {nextPage && (
+        {nextPage ? (
           <Button type="submit" disabled={disabled} id={`${id}-next-button`}>
             {miscellaneousT('next')}
+          </Button>
+        ) : (
+          <Button type="submit" disabled={disabled} id={`${id}-save-button`}>
+            {miscellaneousT('save')}
           </Button>
         )}
       </div>

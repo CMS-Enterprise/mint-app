@@ -39,7 +39,7 @@ const IDDOCTesting = () => {
   );
 
   const { dataMonitoringFileTypes: dataMonitoringFileTypesConfig } =
-    usePlanTranslation('opsEvalAndLearning');
+    usePlanTranslation('iddocQuestionnaire');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -112,7 +112,7 @@ const IDDOCTesting = () => {
         }}
         enableReinitialize
         innerRef={formikRef}
-        data-testid="ops-eval-and-learning-iddoc-testing"
+        data-testid="iddoc-questionnaire-testing"
       >
         {(formikProps: FormikProps<IDDOCTestingFormType>) => {
           const { handleSubmit, values } = formikProps;
@@ -123,7 +123,7 @@ const IDDOCTesting = () => {
 
               <MINTForm
                 className="desktop:grid-col-6 margin-top-0"
-                data-testid="ops-eval-and-learning-iddoc-testing-form"
+                data-testid="iddoc-questionnaire-testing-form"
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
@@ -143,54 +143,54 @@ const IDDOCTesting = () => {
                   </Alert>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-uat-needs">
+                    <Label htmlFor="iddoc-questionnaire-uat-needs">
                       {iddocQuestionnaireT('uatNeeds.label')}
                     </Label>
 
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      id="ops-eval-and-learning-uat-needs"
+                      id="iddoc-questionnaire-uat-needs"
                       name="uatNeeds"
                     />
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-stc-needs">
+                    <Label htmlFor="iddoc-questionnaire-stc-needs">
                       {iddocQuestionnaireT('stcNeeds.label')}
                     </Label>
 
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      id="ops-eval-and-learning-stc-needs"
-                      data-testid="ops-eval-and-learning-stc-needs"
+                      id="iddoc-questionnaire-stc-needs"
+                      data-testid="iddoc-questionnaire-stc-needs"
                       name="stcNeeds"
                     />
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-testing-timelines">
+                    <Label htmlFor="iddoc-questionnaire-testing-timelines">
                       {iddocQuestionnaireT('testingTimelines.label')}
                     </Label>
 
                     <Field
                       as={TextAreaField}
                       className="height-15"
-                      id="ops-eval-and-learning-testing-timelines"
+                      id="iddoc-questionnaire-testing-timelines"
                       name="testingTimelines"
                     />
                   </FieldGroup>
 
                   <AddNote
-                    id="ops-eval-and-learning-testing-note"
+                    id="iddoc-questionnaire-testing-note"
                     field="testingNote"
                   />
 
                   <h3>{iddocQuestionnaireMiscT('dataMonitoring')}</h3>
 
                   <FieldGroup>
-                    <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
+                    <Label htmlFor="iddoc-questionnaire-data-monitoring-file">
                       {iddocQuestionnaireT('dataMonitoringFileTypes.label')}
                     </Label>
 
@@ -200,7 +200,7 @@ const IDDOCTesting = () => {
                           <Fragment key={type}>
                             <Field
                               as={CheckboxField}
-                              id={`ops-eval-and-learning-data-monitoring-file-${type}`}
+                              id={`iddoc-questionnaire-data-monitoring-file-${type}`}
                               name="dataMonitoringFileTypes"
                               label={
                                 dataMonitoringFileTypesConfig.options[type]
@@ -217,7 +217,7 @@ const IDDOCTesting = () => {
                               ) && (
                                 <div className="margin-left-4">
                                   <Label
-                                    htmlFor="ops-eval-and-learning-data-monitoring-file-other"
+                                    htmlFor="iddoc-questionnaire-data-monitoring-file-other"
                                     className="text-normal"
                                   >
                                     {iddocQuestionnaireT(
@@ -227,7 +227,7 @@ const IDDOCTesting = () => {
 
                                   <Field
                                     as={TextInput}
-                                    id="ops-eval-and-learning-data-monitoring-file-other"
+                                    id="iddoc-questionnaire-data-monitoring-file-other"
                                     name="dataMonitoringFileOther"
                                   />
                                 </div>
@@ -239,26 +239,26 @@ const IDDOCTesting = () => {
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-data-response-type">
+                    <Label htmlFor="iddoc-questionnaire-data-response-type">
                       {iddocQuestionnaireT('dataResponseType.label')}
                     </Label>
 
                     <Field
                       as={TextInput}
-                      id="ops-eval-and-learning-data-response-type"
+                      id="iddoc-questionnaire-data-response-type"
                       maxLength={50}
                       name="dataResponseType"
                     />
                   </FieldGroup>
 
                   <FieldGroup className="margin-top-6">
-                    <Label htmlFor="ops-eval-and-learning-data-file-frequency">
+                    <Label htmlFor="iddoc-questionnaire-data-file-frequency">
                       {iddocQuestionnaireT('dataResponseFileFrequency.label')}
                     </Label>
 
                     <Field
                       as={TextInput}
-                      id="ops-eval-and-learning-data-file-frequency"
+                      id="iddoc-questionnaire-data-file-frequency"
                       maxLength={50}
                       name="dataResponseFileFrequency"
                     />

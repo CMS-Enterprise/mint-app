@@ -31,6 +31,7 @@ import PageNumber from 'components/PageNumber';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateLocal } from 'utils/date';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
@@ -62,6 +63,8 @@ const NewMethodologiesAndConsiderations = () => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
   );
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const examplesInclude = tArray<Record<string, string>>(
     'dataExchangeApproachMisc:newMethodologiesAndConsiderations.additionalDetails.examples'
@@ -184,7 +187,7 @@ const NewMethodologiesAndConsiderations = () => {
           id="new-methodologies-and-additional-considerations-form"
           onSubmit={handleSubmit(() => {
             navigate(
-              `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/new-methodologies-and-additional-considerations`
+              `/models/${modelID}/collaboration-area/additional-questionnaires`
             );
           })}
           className="maxw-none"
@@ -313,7 +316,6 @@ const NewMethodologiesAndConsiderations = () => {
                       >
                         {isDataExchangeApproachCompleteConfig.label}
                       </Label>
-
                       <FormGroup className="margin-0">
                         <CheckboxField
                           {...field}
@@ -331,6 +333,20 @@ const NewMethodologiesAndConsiderations = () => {
                             isDataExchangeApproachCompleteConfig.sublabel || ''
                           }
                         />
+
+                        {formData.markedCompleteByUserAccount?.id &&
+                          formData.markedCompleteDts && (
+                            <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+                              {miscellaneousT('markedComplete', {
+                                user: formData.markedCompleteByUserAccount
+                                  .commonName
+                              })}
+                              {formatDateLocal(
+                                formData.markedCompleteDts,
+                                'MM/dd/yyyy'
+                              )}
+                            </p>
+                          )}
                       </FormGroup>
                     </FormGroup>
                   )}

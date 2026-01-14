@@ -5,7 +5,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
   <form
     action="#"
     class="desktop:grid-col-6 margin-top-0"
-    data-testid="ops-eval-and-learning-iddoc-testing-form"
+    data-testid="iddoc-questionnaire-testing-form"
   >
     <fieldset
       class="usa-fieldset"
@@ -40,14 +40,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-uat-needs"
+          for="iddoc-questionnaire-uat-needs"
         >
           User Acceptance Testing (UAT) – test data needs
         </label>
         <textarea
-          aria-labelledby="label-ops-eval-and-learning-uat-needs hint-ops-eval-and-learning-uat-needs"
+          aria-labelledby="label-iddoc-questionnaire-uat-needs hint-iddoc-questionnaire-uat-needs"
           class="height-15 usa-textarea"
-          id="ops-eval-and-learning-uat-needs"
+          id="iddoc-questionnaire-uat-needs"
           name="uatNeeds"
         />
       </div>
@@ -57,15 +57,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-stc-needs"
+          for="iddoc-questionnaire-stc-needs"
         >
           STC – test data needs
         </label>
         <textarea
-          aria-labelledby="label-ops-eval-and-learning-stc-needs hint-ops-eval-and-learning-stc-needs"
+          aria-labelledby="label-iddoc-questionnaire-stc-needs hint-iddoc-questionnaire-stc-needs"
           class="height-15 usa-textarea"
-          data-testid="ops-eval-and-learning-stc-needs"
-          id="ops-eval-and-learning-stc-needs"
+          data-testid="iddoc-questionnaire-stc-needs"
+          id="iddoc-questionnaire-stc-needs"
           name="stcNeeds"
         >
           Yes needs
@@ -77,14 +77,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-testing-timelines"
+          for="iddoc-questionnaire-testing-timelines"
         >
           Define the testing timelines
         </label>
         <textarea
-          aria-labelledby="label-ops-eval-and-learning-testing-timelines hint-ops-eval-and-learning-testing-timelines"
+          aria-labelledby="label-iddoc-questionnaire-testing-timelines hint-iddoc-questionnaire-testing-timelines"
           class="height-15 usa-textarea"
-          id="ops-eval-and-learning-testing-timelines"
+          id="iddoc-questionnaire-testing-timelines"
           name="testingTimelines"
         />
       </div>
@@ -93,7 +93,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="ops-eval-and-learning-testing-note-add-note-toggle"
+          data-testid="iddoc-questionnaire-testing-note-add-note-toggle"
           type="button"
         >
           <svg
@@ -123,7 +123,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-data-monitoring-file"
+          for="iddoc-questionnaire-data-monitoring-file"
         >
           What types of files? Select all that apply.
         </label>
@@ -132,14 +132,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+            id="iddoc-questionnaire-data-monitoring-file-BENEFICIARY"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="BENEFICIARY"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
+            for="iddoc-questionnaire-data-monitoring-file-BENEFICIARY"
             style="width: fit-content;"
           >
             Beneficiary
@@ -153,14 +153,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+            id="iddoc-questionnaire-data-monitoring-file-PROVIDER"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="PROVIDER"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-monitoring-file-PROVIDER"
+            for="iddoc-questionnaire-data-monitoring-file-PROVIDER"
             style="width: fit-content;"
           >
             Provider
@@ -174,14 +174,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-monitoring-file-PART_A"
+            id="iddoc-questionnaire-data-monitoring-file-PART_A"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="PART_A"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-monitoring-file-PART_A"
+            for="iddoc-questionnaire-data-monitoring-file-PART_A"
             style="width: fit-content;"
           >
             Part A
@@ -195,14 +195,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-monitoring-file-PART_B"
+            id="iddoc-questionnaire-data-monitoring-file-PART_B"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="PART_B"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-monitoring-file-PART_B"
+            for="iddoc-questionnaire-data-monitoring-file-PART_B"
             style="width: fit-content;"
           >
             Part B
@@ -216,14 +216,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="ops-eval-and-learning-data-monitoring-file-OTHER"
+            id="iddoc-questionnaire-data-monitoring-file-OTHER"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="OTHER"
           />
           <label
             class="usa-checkbox__label"
-            for="ops-eval-and-learning-data-monitoring-file-OTHER"
+            for="iddoc-questionnaire-data-monitoring-file-OTHER"
             style="width: fit-content;"
           >
             Other
@@ -239,14 +239,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-data-response-type"
+          for="iddoc-questionnaire-data-response-type"
         >
           What types of responses?
         </label>
         <input
           class="usa-input"
           data-testid="textInput"
-          id="ops-eval-and-learning-data-response-type"
+          id="iddoc-questionnaire-data-response-type"
           maxlength="50"
           name="dataResponseType"
           value=""
@@ -258,14 +258,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label"
           data-testid="label"
-          for="ops-eval-and-learning-data-file-frequency"
+          for="iddoc-questionnaire-data-file-frequency"
         >
           Frequency of files?
         </label>
         <input
           class="usa-input"
           data-testid="textInput"
-          id="ops-eval-and-learning-data-file-frequency"
+          id="iddoc-questionnaire-data-file-frequency"
           maxlength="50"
           name="dataResponseFileFrequency"
           value=""

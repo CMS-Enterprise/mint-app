@@ -38,7 +38,7 @@ const IDDOCOperations = () => {
   const {
     technicalContactsIdentified: technicalContactsIdentifiedConfig,
     captureParticipantInfo: captureParticipantInfoConfig
-  } = usePlanTranslation('opsEvalAndLearning');
+  } = usePlanTranslation('iddocQuestionnaire');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -111,7 +111,7 @@ const IDDOCOperations = () => {
         }}
         enableReinitialize
         innerRef={formikRef}
-        data-testid="ops-eval-and-learning-iddoc"
+        data-testid="iddoc-questionnaire-operations"
       >
         {(formikProps: FormikProps<IDDOCFormType>) => {
           const { handleSubmit, setFieldValue, values, setFieldError } =
@@ -138,7 +138,7 @@ const IDDOCOperations = () => {
 
               <MINTForm
                 className="desktop:grid-col-6 margin-top-0"
-                data-testid="ops-eval-and-learning-iddoc-form"
+                data-testid="iddoc-questionnaire-operations-form"
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                   handleSubmit(e);
                 }}
@@ -147,13 +147,13 @@ const IDDOCOperations = () => {
                   <h3>{iddocQuestionnaireMiscT('iddocHeading')}</h3>
 
                   <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
+                    <Label htmlFor="iddoc-questionnaire-technical-contacts-identified-use">
                       {iddocQuestionnaireT('technicalContactsIdentified.label')}
                     </Label>
 
                     <BooleanRadio
                       field="technicalContactsIdentified"
-                      id="ops-eval-and-learning-technical-contacts-identified-use"
+                      id="iddoc-questionnaire-technical-contacts-identified-use"
                       value={values.technicalContactsIdentified}
                       setFieldValue={setFieldValue}
                       options={technicalContactsIdentifiedConfig.options}
@@ -162,7 +162,7 @@ const IDDOCOperations = () => {
                       {values.technicalContactsIdentified === true ? (
                         <div className="margin-left-4 margin-top-1">
                           <Label
-                            htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
+                            htmlFor="iddoc-questionnaire-technical-contacts-identified-detail"
                             className="text-normal"
                           >
                             {iddocQuestionnaireT(
@@ -172,7 +172,7 @@ const IDDOCOperations = () => {
 
                           <Field
                             as={TextAreaField}
-                            id="ops-eval-and-learning-technical-contacts-identified-detail"
+                            id="iddoc-questionnaire-technical-contacts-identified-detail"
                             maxLength={5000}
                             className="mint-textarea"
                             name="technicalContactsIdentifiedDetail"
@@ -184,13 +184,13 @@ const IDDOCOperations = () => {
                     </BooleanRadio>
 
                     <AddNote
-                      id="ops-eval-and-learning-technical-contacts-identified-use-note"
+                      id="iddoc-questionnaire-technical-contacts-identified-use-note"
                       field="technicalContactsIdentifiedNote"
                     />
                   </FieldGroup>
 
                   <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="ops-eval-and-learning-capture-participant-info">
+                    <Label htmlFor="iddoc-questionnaire-capture-participant-info">
                       {iddocQuestionnaireT('captureParticipantInfo.label')}
                     </Label>
 
@@ -200,14 +200,14 @@ const IDDOCOperations = () => {
 
                     <BooleanRadio
                       field="captureParticipantInfo"
-                      id="ops-eval-and-learning-capture-participant-info"
+                      id="iddoc-questionnaire-capture-participant-info"
                       value={values.captureParticipantInfo}
                       setFieldValue={setFieldValue}
                       options={captureParticipantInfoConfig.options}
                     />
 
                     <AddNote
-                      id="ops-eval-and-learning-capture-participant-info-note"
+                      id="iddoc-questionnaire-capture-participant-info-note"
                       field="captureParticipantInfoNote"
                     />
                   </FieldGroup>
@@ -219,14 +219,14 @@ const IDDOCOperations = () => {
                   </p>
 
                   <FieldGroup className="margin-top-4">
-                    <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
+                    <Label htmlFor="iddoc-questionnaire-capture-icd-owner">
                       {iddocQuestionnaireT('icdOwner.label')}
                     </Label>
 
                     <Field
                       as={TextInput}
-                      id="ops-eval-and-learning-capture-icd-owner"
-                      data-testid="ops-eval-and-learning-capture-icd-owner"
+                      id="iddoc-questionnaire-capture-icd-owner"
+                      data-testid="iddoc-questionnaire-capture-icd-owner"
                       maxLength={50}
                       name="icdOwner"
                     />
@@ -236,7 +236,7 @@ const IDDOCOperations = () => {
                     <>
                       <MINTDatePicker
                         fieldName="draftIcdDueDate"
-                        id="ops-eval-and-learning-icd-due-date"
+                        id="iddoc-questionnaire-icd-due-date"
                         className="margin-top-6"
                         label={iddocQuestionnaireT('draftIcdDueDate.label')}
                         placeHolder
@@ -250,7 +250,7 @@ const IDDOCOperations = () => {
                       />
 
                       <AddNote
-                        id="ops-eval-and-learning-icd-due-date-note"
+                        id="iddoc-questionnaire-icd-due-date-note"
                         field="icdNote"
                       />
                     </>
