@@ -36,40 +36,6 @@ func (suite *TAuditSuite) createOperationalNeed(modelPlanID uuid.UUID, customNee
 	return retNeed
 }
 
-// createOperationalSolution creates an operational solution using the store. It is just for testing
-func (suite *TAuditSuite) createOperationalSolution(operationalNeedID uuid.UUID, customSolution string, preHooks ...func(*models.OperationalSolution)) *models.OperationalSolution {
-
-	solToCreate := models.NewOperationalSolution(suite.testConfigs.Principal.UserAccount.ID, operationalNeedID)
-	solToCreate.NameOther = &customSolution
-	for _, preHook := range preHooks {
-		preHook(solToCreate)
-
-	}
-
-	retSol, err := suite.testConfigs.Store.OperationalSolutionInsert(suite.testConfigs.Logger, solToCreate, nil)
-	suite.NoError(err)
-	return retSol
-}
-
-// createOperationalSolutionSubtask creates an operational solution subtask using the store. It is just for testing
-func (suite *TAuditSuite) createOperationalSolutionSubtask(solutionID uuid.UUID, subtaskName string, subtaskStatus *models.OperationalSolutionSubtaskStatus) *models.OperationalSolutionSubtask {
-
-	if subtaskStatus == nil {
-		status := models.OperationalSolutionSubtaskStatusTodo
-		subtaskStatus = &status
-	}
-
-	subtaskToCreate := models.NewOperationalSolutionSubtask(suite.testConfigs.Principal.UserAccount.ID, uuid.New(), solutionID, subtaskName, *subtaskStatus)
-
-	retSubTaskList, err := suite.testConfigs.Store.OperationalSolutionSubtasksCreate(suite.testConfigs.Logger, []*models.OperationalSolutionSubtask{subtaskToCreate})
-	suite.NoError(err)
-	if suite.Len(retSubTaskList, 1) {
-		return retSubTaskList[0]
-	}
-
-	return nil
-}
-
 // createPlanDocument creates a test plan document for testing
 func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName string) *models.PlanDocument {
 
@@ -139,20 +105,6 @@ func (suite *TAuditSuite) createDiscussionReply(discussionID uuid.UUID, content 
 
 }
 
-func (suite *TAuditSuite) createDocumentSolutionLink(documentID uuid.UUID, solutionID uuid.UUID) *models.PlanDocumentSolutionLink {
-
-	links := suite.createDocumentSolutionLinks([]uuid.UUID{documentID}, solutionID)
-	if suite.Len(links, 1) {
-		return links[0]
-	}
-	return nil
-}
-func (suite *TAuditSuite) createDocumentSolutionLinks(documentIDs []uuid.UUID, solutionID uuid.UUID) []*models.PlanDocumentSolutionLink {
-	links, err := suite.testConfigs.Store.PlanDocumentSolutionLinksCreate(suite.testConfigs.Logger, solutionID, documentIDs, suite.testConfigs.Principal)
-	suite.NoError(err)
-	return links
-
-}
 func (suite *TAuditSuite) createPlanCR(modelPlanID uuid.UUID, idNumber string, preHooks ...func(*models.PlanCR)) *models.PlanCR {
 	dateInitiated := time.Now().UTC()
 	dateImplemented := time.Now().Add(time.Hour * 48).UTC()
