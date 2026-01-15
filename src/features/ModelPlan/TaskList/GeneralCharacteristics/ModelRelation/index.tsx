@@ -59,11 +59,10 @@ import { dirtyInput } from 'utils/formUtil';
 type GeneralCharacteristicsFormType =
   GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
-interface GetGeneralCharacteristicsFormTypeWithLinks
-  extends Omit<
-    GeneralCharacteristicsFormType,
-    'currentModelPlanID' | 'existingModelID'
-  > {
+interface GetGeneralCharacteristicsFormTypeWithLinks extends Omit<
+  GeneralCharacteristicsFormType,
+  'currentModelPlanID' | 'existingModelID'
+> {
   resemblesExistingModelLinks: (string | number)[];
   participationInModelPreconditionLinks: (string | number)[];
   existingModel: string | number | null;
