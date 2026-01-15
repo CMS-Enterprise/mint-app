@@ -647,21 +647,7 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		if err != nil {
 			return true, err
 		}
-	case "operational_solution":
-		metaData, metaDataType, err := OperationalSolutionMetaDataGet(ctx, store, audit.PrimaryKey)
-		metaDataInterface = metaData
-		metaDataTypeGlobal = metaDataType
-		if err != nil {
-			return true, err
-		}
-	case "operational_solution_subtask":
-		metaData, err := OperationalSolutionSubtaskMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
-		metaDataType := models.TAMetaOperationalSolutionSubtask
-		metaDataInterface = metaData
-		metaDataTypeGlobal = &metaDataType
-		if err != nil {
-			return true, err
-		}
+
 	case "plan_document_solution_link":
 		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		metaDataInterface = metaData
