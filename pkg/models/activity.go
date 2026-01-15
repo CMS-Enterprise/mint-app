@@ -39,7 +39,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityNewDiscussionAdded:                 func() ActivityMetaData { return &NewDiscussionAddedActivityMeta{} },
 	ActivityDatesChanged:                       func() ActivityMetaData { return &DatesChangedActivityMeta{} },
 	ActivityDataExchangeApproachMarkedComplete: func() ActivityMetaData { return &PlanDataExchangeApproachMarkedCompleteActivityMeta{} },
-	ActivityIDDOCQuestionnaireCompleted:        func() ActivityMetaData { return &IDDOCQuestionnaireCompletedActivityMeta{} },
+	ActivityIDDOCQuestionnaireCompleted:        func() ActivityMetaData { return &IddocQuestionnaireCompletedActivityMeta{} },
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
 }
 
