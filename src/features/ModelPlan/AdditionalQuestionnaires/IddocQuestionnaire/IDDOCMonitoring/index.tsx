@@ -24,7 +24,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
 
-type IDDOCMonitoringFormType =
+export type IDDOCMonitoringFormType =
   GetIddocQuestionnaireMonitoringQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const IDDOCMonitoring = () => {

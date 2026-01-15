@@ -25,7 +25,7 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 
-type IDDOCTestingFormType =
+export type IDDOCTestingFormType =
   GetIddocQuestionnaireTestingQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const IDDOCTesting = () => {

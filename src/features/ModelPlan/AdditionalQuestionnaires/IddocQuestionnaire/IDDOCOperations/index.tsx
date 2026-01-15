@@ -23,7 +23,7 @@ import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
-type IDDOCOperationsFormType =
+export type IDDOCOperationsFormType =
   GetIddocQuestionnaireOperationsQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const IDDOCOperations = () => {
