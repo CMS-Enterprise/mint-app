@@ -5,9 +5,9 @@ import { Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
-  GetIddocQuery,
-  TypedUpdatePlanOpsEvalAndLearningDocument,
-  useGetIddocQuery
+  GetIddocQuestionnaireOperationsQuery,
+  TypedUpdateIddocQuestionnaireDocument,
+  useGetIddocQuestionnaireOperationsQuery
 } from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
@@ -23,7 +23,8 @@ import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
-type IDDOCFormType = GetIddocQuery['modelPlan']['opsEvalAndLearning'];
+type IDDOCOperationsFormType =
+  GetIddocQuestionnaireOperationsQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const IDDOCOperations = () => {
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
@@ -42,10 +43,10 @@ const IDDOCOperations = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
+  const formikRef = useRef<FormikProps<IDDOCOperationsFormType>>(null);
   const navigate = useNavigate();
 
-  const { data, loading, error } = useGetIddocQuery({
+  const { data, loading, error } = useGetIddocQuestionnaireOperationsQuery({
     variables: {
       id: modelID
     }
@@ -53,9 +54,6 @@ const IDDOCOperations = () => {
 
   const {
     id,
-    iddocSupport,
-    ccmInvolvment,
-    dataNeededForMonitoring,
     technicalContactsIdentified,
     technicalContactsIdentifiedDetail,
     technicalContactsIdentifiedNote,
@@ -64,22 +62,20 @@ const IDDOCOperations = () => {
     icdOwner,
     draftIcdDueDate,
     icdNote
-  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCFormType;
+  } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
+    {}) as IDDOCOperationsFormType;
 
   const { mutationError } = useHandleMutation(
-    TypedUpdatePlanOpsEvalAndLearningDocument,
+    TypedUpdateIddocQuestionnaireDocument,
     {
       id,
       formikRef: formikRef as any
     }
   );
 
-  const initialValues: IDDOCFormType = {
-    __typename: 'PlanOpsEvalAndLearning',
+  const initialValues: IDDOCOperationsFormType = {
+    __typename: 'IDDOCQuestionnaire',
     id: id ?? '',
-    ccmInvolvment: ccmInvolvment ?? [],
-    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
-    iddocSupport: iddocSupport ?? null,
     technicalContactsIdentified: technicalContactsIdentified ?? null,
     technicalContactsIdentifiedDetail: technicalContactsIdentifiedDetail ?? '',
     technicalContactsIdentifiedNote: technicalContactsIdentifiedNote ?? '',
@@ -113,7 +109,7 @@ const IDDOCOperations = () => {
         innerRef={formikRef}
         data-testid="iddoc-questionnaire-operations"
       >
-        {(formikProps: FormikProps<IDDOCFormType>) => {
+        {(formikProps: FormikProps<IDDOCOperationsFormType>) => {
           const { handleSubmit, setFieldValue, values, setFieldError } =
             formikProps;
 
