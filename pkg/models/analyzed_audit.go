@@ -290,6 +290,7 @@ type AnalyzedPlanSections struct {
 	ReadyForReview                     []TableName `json:"readyForReview,omitempty"`
 	ReadyForClearance                  []TableName `json:"readyForClearance,omitempty"`
 	DataExchangeApproachMarkedComplete bool        `json:"dataExchangeApproachMarkedComplete,omitempty"`
+	IDDOCQuestionnaireMarkedComplete   bool        `json:"iddocQuestionnaireMarkedComplete,omitempty"`
 }
 
 const (
@@ -313,14 +314,17 @@ const (
 	// sentence template of multiple AnalyzedPlanSections.ReadyForClearance
 	AnalyzedPlanSectionsHumanizedClearances = "%s are ready for clearance"
 
-	DataExchangeHumanizedMarkedComplete = "Data exchange approach is complete"
+	DataExchangeHumanizedMarkedComplete       = "Data exchange approach is complete"
+	IDDOCQuestionnaireHumanizedMarkedComplete = "IDDOC questionnaire is complete"
 )
 
 // IsEmpty returns if AnalyzedPlanSections fields are empty
 func (a AnalyzedPlanSections) IsEmpty() bool {
 	return len(a.ReadyForClearance) == 0 &&
 		len(a.ReadyForReview) == 0 &&
-		len(a.Updated) == 0
+		len(a.Updated) == 0 &&
+		!a.DataExchangeApproachMarkedComplete &&
+		!a.IDDOCQuestionnaireMarkedComplete
 }
 
 // Humanize returns AnalyzedPlanSections in human readable sentences
@@ -368,6 +372,11 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 	// Marked complete
 	if a.DataExchangeApproachMarkedComplete {
 		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, DataExchangeHumanizedMarkedComplete)
+	}
+
+	// IDDOC questionnaire marked complete
+	if a.IDDOCQuestionnaireMarkedComplete {
+		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, IDDOCQuestionnaireHumanizedMarkedComplete)
 	}
 
 	return humanizedAnalyzedPlanSections

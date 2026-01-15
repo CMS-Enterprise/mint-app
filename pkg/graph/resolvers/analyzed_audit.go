@@ -317,6 +317,7 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		models.TNPlanPayments,
 		models.TNPlanDataExchangeApproach,
 		models.TNPlanTimeline,
+		models.TNIddocQuestionnaire,
 	}
 
 	sections = append(sections, models.MTOTables...)
@@ -383,11 +384,35 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		return "", false
 	})
 
+	iddocQuestionnaireMarkedComplete := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
+		if audit == nil || audit.Fields == nil {
+			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
+			return "", false
+		}
+
+		// Check if this is an iddoc_questionnaire table audit
+		if audit.TableName != models.TNIddocQuestionnaire {
+			return "", false
+		}
+
+		keys := lo.Keys(audit.Fields)
+		// Check if completed_dts was set (indicating completion)
+		if lo.Contains(keys, "completed_dts") {
+			completedDtsField, hasCompletedDts := audit.Fields["completed_dts"]
+			if hasCompletedDts && completedDtsField.New != nil {
+				// If completed_dts was set (not null), the questionnaire was completed
+				return audit.TableName, true
+			}
+		}
+		return "", false
+	})
+
 	analyzedPlanSections := models.AnalyzedPlanSections{
 		Updated:                            updatedSections,
 		ReadyForReview:                     readyForReview,
 		ReadyForClearance:                  readyForClearance,
 		DataExchangeApproachMarkedComplete: len(dataExchangeApproachMarkedComplete) > 0,
+		IDDOCQuestionnaireMarkedComplete:   len(iddocQuestionnaireMarkedComplete) > 0,
 	}
 
 	if analyzedPlanSections.IsEmpty() {

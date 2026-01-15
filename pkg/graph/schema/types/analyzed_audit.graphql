@@ -45,6 +45,7 @@ type AnalyzedPlanSections {
   readyForReview: [TableName!]!
   readyForClearance: [TableName!]!
   dataExchangeApproachMarkedComplete: Boolean
+  iddocQuestionnaireMarkedComplete: Boolean
 }
 
 type AnalyzedModelLeads {

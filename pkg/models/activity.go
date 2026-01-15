@@ -23,6 +23,7 @@ const (
 	ActivityDataExchangeApproachMarkedComplete ActivityType = "DATA_EXCHANGE_APPROACH_MARKED_COMPLETE"
 	ActivityNewDiscussionAdded                 ActivityType = "NEW_DISCUSSION_ADDED"
 	ActivityIncorrectModelStatus               ActivityType = "INCORRECT_MODEL_STATUS"
+	ActivityIDDOCQuestionnaire                 ActivityType = "IDDOC_QUESTIONNAIRE"
 )
 
 // activityMetaDataTypeMap maps ActivityType to the corresponding ActivityMetaData struct type
@@ -39,6 +40,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityDatesChanged:                       func() ActivityMetaData { return &DatesChangedActivityMeta{} },
 	ActivityDataExchangeApproachMarkedComplete: func() ActivityMetaData { return &PlanDataExchangeApproachMarkedCompleteActivityMeta{} },
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
+	ActivityIDDOCQuestionnaire:                 func() ActivityMetaData { return &IDDOCQuestionnaireCompletedActivityMeta{} },
 }
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.

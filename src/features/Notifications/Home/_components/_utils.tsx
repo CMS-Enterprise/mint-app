@@ -8,6 +8,7 @@ import {
   AnalyzedCrTdls,
   DailyDigestCompleteActivityMeta,
   DatesChangedActivityMeta,
+  IddocQuestionnaireCompletedActivityMeta,
   IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionAddedActivityMeta,
@@ -99,6 +100,13 @@ export const isDataExchangeApproach = (
   );
 };
 
+export const isIDDOCQuestionnaireCompleted = (
+  data: ActivityMetaData
+): data is IddocQuestionnaireCompletedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'IDDOCQuestionnaireCompletedActivityMeta';
+};
+
 export const getNavUrl = (metaData: ActivityMetaData) => {
   switch (metaData.__typename) {
     case 'AddedAsCollaboratorMeta':
@@ -110,6 +118,9 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
 
     case 'PlanDataExchangeApproachMarkedCompleteActivityMeta':
       return `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`;
+
+    case 'IDDOCQuestionnaireCompletedActivityMeta':
+      return `/models/${metaData.modelPlan.id}/read-view/questionnaires`;
 
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':
@@ -161,7 +172,9 @@ const activityI18nKeybases = {
   NewModelPlanActivityMeta: 'notifications:index.activityType.NEW_MODEL_PLAN',
   DatesChangedActivityMeta: 'notifications:index.activityType.DATES_CHANGED',
   PlanDataExchangeApproachMarkedCompleteActivityMeta:
-    'notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
+    'notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE',
+  IDDOCQuestionnaireCompletedActivityMeta:
+    'notifications:index.activityType.IDDOC_QUESTIONNAIRE'
 };
 
 export const activityText = (data: ActivityMetaData) => {

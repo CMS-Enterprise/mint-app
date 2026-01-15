@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -37,6 +38,21 @@ func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Con
 // ModelPlan is the resolver for the modelPlan field.
 func (r *datesChangedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.DatesChangedActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// IddocQuestionnaire is the resolver for the iddocQuestionnaire field.
+func (r *iDDOCQuestionnaireCompletedActivityMetaResolver) IddocQuestionnaire(ctx context.Context, obj *models.IDDOCQuestionnaireCompletedActivityMeta) (*models.IDDOCQuestionnaire, error) {
+	panic(fmt.Errorf("not implemented: IddocQuestionnaire - iddocQuestionnaire"))
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *iDDOCQuestionnaireCompletedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.IDDOCQuestionnaireCompletedActivityMeta) (*models.ModelPlan, error) {
+	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+}
+
+// MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
+func (r *iDDOCQuestionnaireCompletedActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.IDDOCQuestionnaireCompletedActivityMeta) (*authentication.UserAccount, error) {
+	panic(fmt.Errorf("not implemented: MarkedCompleteByUserAccount - markedCompleteByUserAccount"))
 }
 
 // ModelPlan is the resolver for the modelPlan field.
@@ -132,6 +148,11 @@ func (r *Resolver) DatesChangedActivityMeta() generated.DatesChangedActivityMeta
 	return &datesChangedActivityMetaResolver{r}
 }
 
+// IDDOCQuestionnaireCompletedActivityMeta returns generated.IDDOCQuestionnaireCompletedActivityMetaResolver implementation.
+func (r *Resolver) IDDOCQuestionnaireCompletedActivityMeta() generated.IDDOCQuestionnaireCompletedActivityMetaResolver {
+	return &iDDOCQuestionnaireCompletedActivityMetaResolver{r}
+}
+
 // IncorrectModelStatusActivityMeta returns generated.IncorrectModelStatusActivityMetaResolver implementation.
 func (r *Resolver) IncorrectModelStatusActivityMeta() generated.IncorrectModelStatusActivityMetaResolver {
 	return &incorrectModelStatusActivityMetaResolver{r}
@@ -171,6 +192,7 @@ type activityResolver struct{ *Resolver }
 type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type datesChangedActivityMetaResolver struct{ *Resolver }
+type iDDOCQuestionnaireCompletedActivityMetaResolver struct{ *Resolver }
 type incorrectModelStatusActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }

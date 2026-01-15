@@ -12,6 +12,7 @@ enum ActivityType {
   DATES_CHANGED
   DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
   NEW_DISCUSSION_ADDED
+  IDDOC_QUESTIONNAIRE
   INCORRECT_MODEL_STATUS
 }
 
@@ -37,6 +38,7 @@ union ActivityMetaData =
   | NewModelPlanActivityMeta
   | DatesChangedActivityMeta
   | PlanDataExchangeApproachMarkedCompleteActivityMeta
+  | IDDOCQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
 
@@ -132,6 +134,16 @@ type PlanDataExchangeApproachMarkedCompleteActivityMeta {
   type: ActivityType!
   dataExchangeApproachID: UUID!
   dataExchangeApproach: PlanDataExchangeApproach!
+  modelPlan: ModelPlan!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
+}
+
+type IDDOCQuestionnaireCompletedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  iddocQuestionnaireID: UUID!
+  iddocQuestionnaire: IDDOCQuestionnaire!
   modelPlan: ModelPlan!
   markedCompleteBy: UUID!
   markedCompleteByUserAccount: UserAccount!
