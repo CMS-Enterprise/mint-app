@@ -28,6 +28,8 @@ type UserNotificationPreferences struct {
 	DatesChangedNotificationType                       *DatesChangedNotificationType                       `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
 	DataExchangeApproachMarkedComplete                 UserNotificationPreferenceFlags                     `json:"dataExchangeApproachMarkedComplete" db:"data_exchange_approach_marked_complete"`
 	DataExchangeApproachMarkedCompleteNotificationType *DataExchangeApproachMarkedCompleteNotificationType `json:"dataExchangeApproachMarkedCompleteNotificationType" db:"data_exchange_approach_marked_complete_notification_type"`
+	IddocQuestionnaire                                 UserNotificationPreferenceFlags                     `json:"iddocQuestionnaire" db:"iddoc_questionnaire"`
+	IddocQuestionnaireNotificationType                 *IDDOCQuestionnaireNotificationType                 `json:"iddocQuestionnaireNotificationType" db:"iddoc_questionnaire_notification_type"`
 	IncorrectModelStatus                               UserNotificationPreferenceFlags                     `json:"incorrectModelStatus" db:"incorrect_model_status"`
 	IncorrectModelStatusNotificationType               UserNotificationPreferenceFlags                     `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
 }
@@ -48,6 +50,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		NewDiscussionAdded:                 DefaultUserNotificationPreferencesFlags(),
 		DatesChanged:                       EmptyUserNotificationPreferencesFlags(),
 		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),
+		IddocQuestionnaire:                 EmptyUserNotificationPreferencesFlags(),
 		IncorrectModelStatus:               EmptyUserNotificationPreferencesFlags(),
 	}
 }
@@ -104,6 +107,16 @@ const (
 	NewDiscussionAddedNotificationTypeAllModels      NewDiscussionAddedNotificationType = "ALL_MODELS"
 	NewDiscussionAddedNotificationTypeFollowedModels NewDiscussionAddedNotificationType = "FOLLOWED_MODELS"
 	NewDiscussionAddedNotificationTypeMyModels       NewDiscussionAddedNotificationType = "MY_MODELS"
+)
+
+// IDDOCQuestionnaireNotificationType is an enum that represents the type of notification a user wants for when an IDDOC questionnaire is completed
+type IDDOCQuestionnaireNotificationType string
+
+// These constants represent the possible values of an IDDOCQuestionnaireNotificationType
+const (
+	IDDOCQuestionnaireNotificationTypeAllModels      IDDOCQuestionnaireNotificationType = "ALL_MODELS"
+	IDDOCQuestionnaireNotificationTypeFollowedModels IDDOCQuestionnaireNotificationType = "FOLLOWED_MODELS"
+	IDDOCQuestionnaireNotificationTypeMyModels       IDDOCQuestionnaireNotificationType = "MY_MODELS"
 )
 
 // InApp translates notification preferences to a bool. True means the user desires an in app notification for this notification type

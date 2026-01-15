@@ -791,6 +791,12 @@ export type IddocQuestionnaireCompletedActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
+export enum IddocQuestionnaireNotificationType {
+  ALL_MODELS = 'ALL_MODELS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MY_MODELS = 'MY_MODELS'
+}
+
 /** IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire */
 export enum IddocQuestionnaireStatus {
   COMPLETED = 'COMPLETED',
@@ -5654,6 +5660,8 @@ export type UserNotificationPreferences = {
   datesChanged: Array<UserNotificationPreferenceFlag>;
   datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
+  iddocQuestionnaire: Array<UserNotificationPreferenceFlag>;
+  iddocQuestionnaireNotificationType?: Maybe<IddocQuestionnaireNotificationType>;
   incorrectModelStatus: Array<UserNotificationPreferenceFlag>;
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -5676,6 +5684,8 @@ export type UserNotificationPreferencesChanges = {
   dataExchangeApproachMarkedCompleteNotificationType?: InputMaybe<DataExchangeApproachMarkedCompleteNotificationType>;
   datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
+  iddocQuestionnaire?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  iddocQuestionnaireNotificationType?: InputMaybe<IddocQuestionnaireNotificationType>;
   incorrectModelStatus?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionAdded?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
