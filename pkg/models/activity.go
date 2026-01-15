@@ -22,6 +22,7 @@ const (
 	ActivityDatesChanged                       ActivityType = "DATES_CHANGED"
 	ActivityDataExchangeApproachMarkedComplete ActivityType = "DATA_EXCHANGE_APPROACH_MARKED_COMPLETE"
 	ActivityNewDiscussionAdded                 ActivityType = "NEW_DISCUSSION_ADDED"
+	ActivityIDDOCQuestionnaireCompleted        ActivityType = "IDDOC_QUESTIONNAIRE_COMPLETED"
 	ActivityIncorrectModelStatus               ActivityType = "INCORRECT_MODEL_STATUS"
 )
 
@@ -38,6 +39,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityNewDiscussionAdded:                 func() ActivityMetaData { return &NewDiscussionAddedActivityMeta{} },
 	ActivityDatesChanged:                       func() ActivityMetaData { return &DatesChangedActivityMeta{} },
 	ActivityDataExchangeApproachMarkedComplete: func() ActivityMetaData { return &PlanDataExchangeApproachMarkedCompleteActivityMeta{} },
+	ActivityIDDOCQuestionnaireCompleted:        func() ActivityMetaData { return &IDDOCQuestionnaireCompletedActivityMeta{} },
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
 }
 
