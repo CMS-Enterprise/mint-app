@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -42,17 +41,23 @@ func (r *datesChangedActivityMetaResolver) ModelPlan(ctx context.Context, obj *m
 
 // IddocQuestionnaire is the resolver for the iddocQuestionnaire field.
 func (r *iDDOCQuestionnaireCompletedActivityMetaResolver) IddocQuestionnaire(ctx context.Context, obj *models.IDDOCQuestionnaireCompletedActivityMeta) (*models.IDDOCQuestionnaire, error) {
-	panic(fmt.Errorf("not implemented: IddocQuestionnaire - iddocQuestionnaire"))
+	// TODO: Implement IDDOC questionnaire fetching by ID
+	// For now, return a new instance with the ID and model plan ID
+	// This matches the pattern in questionnaires.resolvers.go
+	principal := appcontext.Principal(ctx)
+	questionnaire := models.NewIDDOCQuestionnaire(principal.Account().ID, obj.ModelPlanID)
+	questionnaire.ID = obj.IDDOCQuestionnaireID
+	return questionnaire, nil
 }
 
 // ModelPlan is the resolver for the modelPlan field.
 func (r *iDDOCQuestionnaireCompletedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.IDDOCQuestionnaireCompletedActivityMeta) (*models.ModelPlan, error) {
-	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
 func (r *iDDOCQuestionnaireCompletedActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.IDDOCQuestionnaireCompletedActivityMeta) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: MarkedCompleteByUserAccount - markedCompleteByUserAccount"))
+	return UserAccountGetByIDLOADER(ctx, obj.MarkedCompleteBy)
 }
 
 // ModelPlan is the resolver for the modelPlan field.
