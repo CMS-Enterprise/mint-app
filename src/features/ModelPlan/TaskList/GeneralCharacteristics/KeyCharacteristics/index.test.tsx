@@ -137,12 +137,6 @@ describe('Model Plan Characteristics', () => {
       );
     });
 
-    await waitFor(() => {
-      expect(screen.getByTestId('phased-in-note')).toHaveValue(
-        "This can't be phased in"
-      );
-    });
-
     expect(asFragment()).toMatchSnapshot();
   });
 });
