@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/lib/pq"
+
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -16,39 +18,32 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 )
 
-// PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
+// PlanCollaboratorGetByModelPlanIDLOADER returns the plan collaborators for a slice of model plan ids
 func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 	_ *zap.Logger,
-	paramTableJSON string,
+	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
 
-	var collabSlice []*models.PlanCollaborator
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader)
+	arg := map[string]any{
+		"model_plan_ids": pq.Array(modelPlanIDs),
+	}
+
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader, arg)
 	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
+		return nil, fmt.Errorf("issue selecting plan collaborators by model plan id, %w", err)
 	}
 
-	err = stmt.Select(&collabSlice, arg) //this returns more than one
+	return retCollaborators, nil
 
-	if err != nil {
-		return nil, err
-	}
-
-	return collabSlice, nil
 }
 
-// PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs stored in JSON array
+// PlanCollaboratorGetIDLOADER returns the plan collaborators corresponding to an array of plan collaborator IDs
 func PlanCollaboratorGetIDLOADER(
 	np sqlutils.NamedPreparer,
-	paramTableJSON string,
+	ids []uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
+	arg := map[string]any{
+		"ids": pq.Array(ids),
 	}
 
 	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](np, sqlqueries.PlanCollaborator.CollectionGetByIDLoader, arg)

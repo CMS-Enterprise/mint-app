@@ -104,7 +104,7 @@ const UsingTableActions = () => {
                   </p>
                   <UswdsReactLink
                     aria-label="Redirect to using the milestone library article"
-                    to="using-milestone-library"
+                    to="/help-and-knowledge/using-milestone-library"
                     className="display-block margin-y-05"
                   >
                     {t('milestones.addingMilestonesFromLibrary.link1')}{' '}
@@ -124,7 +124,7 @@ const UsingTableActions = () => {
                   </p>
                   <UswdsReactLink
                     aria-label="Redirect to how to add custom milestone article"
-                    to="add-custom-milestone"
+                    to="/help-and-knowledge/add-custom-milestone"
                     className="display-block margin-y-05"
                   >
                     {t('milestones.addingCustomMilestone.link1')}{' '}
@@ -254,7 +254,7 @@ const UsingTableActions = () => {
                         link1: (
                           <UswdsReactLink
                             aria-label="Redirect to operational solutions"
-                            to="operational-solutions?page=1"
+                            to="/help-and-knowledge/operational-solutions?page=1"
                           />
                         )
                       }}
@@ -273,7 +273,7 @@ const UsingTableActions = () => {
                   </p>
                   <UswdsReactLink
                     aria-label="Redirect to using the solution library articleb"
-                    to="using-solution-library"
+                    to="/help-and-knowledge/using-solution-library"
                     className="display-block margin-y-05"
                   >
                     {t('solutionsAndItSystems.browsingSolutionLibrary.link1')}{' '}
@@ -295,7 +295,7 @@ const UsingTableActions = () => {
                   </p>
                   <UswdsReactLink
                     aria-label="Redirect to how to add custom solution article"
-                    to="add-custom-solution"
+                    to="/help-and-knowledge/add-custom-solution"
                     className="display-block margin-y-05"
                   >
                     {t('solutionsAndItSystems.addingCustomSolution.link1')}{' '}

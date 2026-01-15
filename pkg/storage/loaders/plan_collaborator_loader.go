@@ -2,12 +2,9 @@ package loaders
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader"
-	"github.com/samber/lo"
-	"go.uber.org/zap"
+	"github.com/graph-gophers/dataloader/v7"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -19,108 +16,53 @@ const (
 	DLIDKey string = "id"
 )
 
+type planCollaboratorLoaders struct {
+	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.PlanCollaborator]
+	ByID          LoaderWrapper[uuid.UUID, *models.PlanCollaborator]
+}
+
+var PlanCollaborators = &planCollaboratorLoaders{
+	ByModelPlanID: NewLoaderWrapper(batchPlanCollaboratorGetByModelPlanID),
+	ByID:          NewLoaderWrapper(batchPlanCollaboratorGetByID),
+}
+
 // GetPlanCollaboratorByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Collaborator in one query
-func (loaders *DataLoaders) GetPlanCollaboratorByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func batchPlanCollaboratorGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.PlanCollaborator] {
+	loaders, err := Loaders(ctx)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.PlanCollaborator](modelPlanIDs, err)
+	}
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := ConvertToKeyArgsArray(keys)
-	if err != nil {
-		logger.Error("issue converting keys for data loader in Plan Collaborator", zap.Error(*err))
-	}
-	marshaledParams, err := arrayCK.ToJSONArray()
-	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Plan Collaborator", zap.Error(*err))
-	}
 
-	collabs, _ := dr.Store.PlanCollaboratorGetByModelPlanIDLOADER(logger, marshaledParams)
-	collabByID := map[string][]*models.PlanCollaborator{}
-	for _, collab := range collabs {
-		slice, ok := collabByID[string(collab.ModelPlanID.String())]
-		if ok {
-			slice = append(slice, collab) //Add to existing slice
-			collabByID[string(collab.ModelPlanID.String())] = slice
-			continue
-		}
-		collabByID[string(collab.ModelPlanID.String())] = []*models.PlanCollaborator{collab}
+	collabs, err := dr.Store.PlanCollaboratorGetByModelPlanIDLOADER(logger, modelPlanIDs)
+	if err != nil {
+		return errorPerEachKey[uuid.UUID, []*models.PlanCollaborator](modelPlanIDs, err)
 	}
-
-	// RETURN IN THE SAME ORDER REQUESTED
-	output := make([]*dataloader.Result, len(keys))
-	for index, key := range keys {
-		ck, ok := key.Raw().(KeyArgs)
-		if ok {
-			resKey := fmt.Sprint(ck.Args["model_plan_id"])
-			collab, ok := collabByID[resKey]
-			if ok {
-				output[index] = &dataloader.Result{Data: collab, Error: nil}
-			} else {
-				err := fmt.Errorf("plan Collaborator not found for model plan %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
-			}
-		} else {
-			err := fmt.Errorf("could not retrieve key from %s", key.String())
-			output[index] = &dataloader.Result{Data: nil, Error: err}
-		}
+	getKeyFunc := func(collab *models.PlanCollaborator) uuid.UUID {
+		return collab.ModelPlanID
 	}
-	return output
+	return oneToManyDataLoader(modelPlanIDs, collabs, getKeyFunc)
 
 }
 
-// getPlanCollaboratorByIDBatch uses a DataLoader to aggregate a SQL call and return all Plan Collaborators for a collection of IDS in one query
-func (loaders *DataLoaders) getPlanCollaboratorByIDBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
-	jsonParams, err := CovertToJSONArray(keys)
-	output := make([]*dataloader.Result, len(keys))
+// batchPlanCollaboratorGetByID uses a DataLoader to aggregate a SQL call and return all Plan Collaborators for a collection of IDS in one query
+func batchPlanCollaboratorGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.PlanCollaborator] {
+
+	loaders, err := Loaders(ctx)
 	if err != nil {
-		setEachOutputToError(fmt.Errorf("issue converting keys to json for PlanCollaboratorByIDLoader, %w", err), output)
-		return output
+		return errorPerEachKey[uuid.UUID, *models.PlanCollaborator](ids, err)
 	}
-	collaborators, err := storage.PlanCollaboratorGetIDLOADER(loaders.DataReader.Store, jsonParams)
+	dr := loaders.DataReader
+
+	collaborators, err := storage.PlanCollaboratorGetIDLOADER(dr.Store, ids)
 	if err != nil {
-		setEachOutputToError(err, output)
-		return output
+		return errorPerEachKey[uuid.UUID, *models.PlanCollaborator](ids, err)
+
 	}
-
-	collaboratorByID := lo.Associate(collaborators, func(collab *models.PlanCollaborator) (string, *models.PlanCollaborator) { //TRANSLATE TO MAP
-		return collab.ID.String(), collab
-	})
-	// RETURN IN THE SAME ORDER REQUESTED
-
-	for index, key := range keys {
-		ck, ok := key.Raw().(KeyArgs)
-		if ok {
-			resKey := fmt.Sprint(ck.Args[DLIDKey])
-			user, ok := collaboratorByID[resKey]
-			if ok {
-				output[index] = &dataloader.Result{Data: user, Error: nil}
-			} else {
-				err := fmt.Errorf("plan collaborator not found for id %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
-			}
-		} else {
-			err := fmt.Errorf("could not retrieve key from %s", key.String())
-			output[index] = &dataloader.Result{Data: nil, Error: err}
-		}
+	getKeyFunc := func(data *models.PlanCollaborator) uuid.UUID {
+		return data.ID
 	}
-	return output
-}
-
-// PlanCollaboratorByID returns the Plan Collaborator data loader, loads it, and returns the correct result
-func PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
-	allLoaders, err := Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	collabByIDLoader := allLoaders.PlanCollaboratorByIDLoader
-	key := NewKeyArgs()
-
-	key.Args[DLIDKey] = id
-	thunk := collabByIDLoader.Loader.Load(ctx, key)
-
-	result, err := thunk()
-	if err != nil {
-		return nil, err
-	}
-	return result.(*models.PlanCollaborator), nil
-
+	return oneToOneDataLoader(ids, collaborators, getKeyFunc)
 }

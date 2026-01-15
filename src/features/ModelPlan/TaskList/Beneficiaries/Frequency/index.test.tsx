@@ -1,21 +1,17 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
-import {
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   FrequencyType,
   GetFrequencyDocument,
   GetFrequencyQuery,
+  GetFrequencyQueryVariables,
   OverlapType,
   TaskStatus,
   YesNoType
 } from 'gql/generated/graphql';
-import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+import { modelID } from 'tests/mock/general';
 
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
@@ -49,7 +45,10 @@ const mockData: BeneficiaryFrequencyType = {
   status: TaskStatus.IN_PROGRESS
 };
 
-const beneficiaryMock = [
+const beneficiaryMock: MockedResponse<
+  GetFrequencyQuery,
+  GetFrequencyQueryVariables
+>[] = [
   {
     request: {
       query: GetFrequencyDocument,
@@ -57,15 +56,16 @@ const beneficiaryMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
           beneficiaries: mockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan Beneficiaries', () => {
@@ -132,10 +132,11 @@ describe('Model Plan Beneficiaries', () => {
       </MockedProvider>
     );
 
-    await waitForElementToBeRemoved(() =>
-      screen.getByTestId('beneficiaries-precedence-note-add-note-toggle')
-    );
-
+    await waitFor(() => {
+      expect(screen.getByTestId('beneficiaries-precedence-note')).toHaveValue(
+        'Precedent note'
+      );
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -13,9 +13,6 @@ type DataLoaders struct {
 	BeneficiariesLoader                   *WrappedDataLoader
 	OperationsEvaluationAndLearningLoader *WrappedDataLoader
 	PaymentLoader                         *WrappedDataLoader
-	PlanCollaboratorByModelPlanLoader     *WrappedDataLoader
-
-	PlanCollaboratorByIDLoader *WrappedDataLoader
 
 	DiscussionReplyLoader *WrappedDataLoader
 
@@ -54,9 +51,6 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.GetPlanBeneficiariesByModelPlanID)
 	loaders.OperationsEvaluationAndLearningLoader = newWrappedDataLoader(loaders.GetPlanOpsEvalAndLearningByModelPlanID)
 	loaders.PaymentLoader = newWrappedDataLoader(loaders.GetPlanPaymentsByModelPlanID)
-	loaders.PlanCollaboratorByModelPlanLoader = newWrappedDataLoader(loaders.GetPlanCollaboratorByModelPlanID)
-
-	loaders.PlanCollaboratorByIDLoader = newWrappedDataLoader(loaders.getPlanCollaboratorByIDBatch)
 
 	loaders.DiscussionReplyLoader = newWrappedDataLoader(loaders.GetDiscussionReplyByModelPlanID)
 

@@ -80,7 +80,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
         class="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        for My excellent plan that I just initiated
+        for 
       </p>
     </div>
     <div
@@ -95,20 +95,6 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
         <div
           class="display-flex flex-justify show-when-sticky"
         >
-          <div
-            class="padding-top-2 padding-bottom-1"
-          >
-            <h3
-              class="margin-y-0"
-            >
-              Model plan: Beneficiaries
-            </h3>
-            <p
-              class="margin-y-0 font-body-lg line-height-sans-3"
-            >
-              for My excellent plan that I just initiated
-            </p>
-          </div>
           <button
             aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
@@ -145,20 +131,6 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
         <div
           class="display-flex flex-justify show-when-sticky"
         >
-          <div
-            class="padding-top-2 padding-bottom-1"
-          >
-            <h3
-              class="margin-y-0"
-            >
-              Model plan: Beneficiaries
-            </h3>
-            <p
-              class="margin-y-0 font-body-lg line-height-sans-3"
-            >
-              for My excellent plan that I just initiated
-            </p>
-          </div>
           <button
             aria-label="Back to top"
             class="usa-button usa-button--unstyled font-sans-sm display-flex flex-align-center show-when-sticky deep-underline"
