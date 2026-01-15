@@ -1,0 +1,15 @@
+CREATE TYPE IDDOC_QUESTIONNAIRE_COMPLETED_NOTIFICATION_TYPE AS ENUM (
+    'ALL_MODELS',
+    'FOLLOWED_MODELS',
+    'MY_MODELS'
+);
+
+ALTER TYPE ACTIVITY_TYPE
+ADD VALUE 'IDDOC_QUESTIONNAIRE_COMPLETED' AFTER 'NEW_DISCUSSION_ADDED';
+
+ALTER TABLE user_notification_preferences
+ADD COLUMN iddoc_questionnaire_complete USER_NOTIFICATION_PREFERENCE_FLAG[] DEFAULT '{}'::USER_NOTIFICATION_PREFERENCE_FLAG[],
+ADD COLUMN iddoc_questionnaire_completed_notification_type IDDOC_QUESTIONNAIRE_COMPLETED_NOTIFICATION_TYPE DEFAULT NULL;
+
+COMMENT ON COLUMN user_notification_preferences.iddoc_questionnaire_complete
+IS 'Notification preference for when IDDOC questionnaire is marked complete.';
