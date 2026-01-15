@@ -8,13 +8,13 @@ export default gql(/* GraphQL */ `
       questionnaires {
         iddocQuestionnaire {
           id
-          # dataFullTimeOrIncremental
-          eftConnectivitySetup
+          dataFullTimeOrIncremental
+          eftSetUp
           unsolicitedAdjustmentsIncluded
           dataFlowDiagramsNeeded
           produceBenefitEnhancementFiles
           fileNamingConventions
-          # dataMonitoringNote
+          dataMonitoringNote
         }
       }
     }

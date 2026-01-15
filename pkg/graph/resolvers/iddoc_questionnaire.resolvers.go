@@ -7,6 +7,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -15,9 +16,84 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// FileTypes is the resolver for the fileTypes field.
-func (r *iDDOCQuestionnaireResolver) FileTypes(ctx context.Context, obj *models.IDDOCQuestionnaire) ([]models.IDDOCFileType, error) {
-	panic(fmt.Errorf("not implemented: FileTypes - fileTypes"))
+// TechnicalContactsIdentifiedDetail is the resolver for the technicalContactsIdentifiedDetail field.
+func (r *iDDOCQuestionnaireResolver) TechnicalContactsIdentifiedDetail(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: TechnicalContactsIdentifiedDetail - technicalContactsIdentifiedDetail"))
+}
+
+// TechnicalContactsIdentifiedNote is the resolver for the technicalContactsIdentifiedNote field.
+func (r *iDDOCQuestionnaireResolver) TechnicalContactsIdentifiedNote(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: TechnicalContactsIdentifiedNote - technicalContactsIdentifiedNote"))
+}
+
+// CaptureParticipantInfo is the resolver for the captureParticipantInfo field.
+func (r *iDDOCQuestionnaireResolver) CaptureParticipantInfo(ctx context.Context, obj *models.IDDOCQuestionnaire) (*bool, error) {
+	panic(fmt.Errorf("not implemented: CaptureParticipantInfo - captureParticipantInfo"))
+}
+
+// CaptureParticipantInfoNote is the resolver for the captureParticipantInfoNote field.
+func (r *iDDOCQuestionnaireResolver) CaptureParticipantInfoNote(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: CaptureParticipantInfoNote - captureParticipantInfoNote"))
+}
+
+// DraftIcdDueDate is the resolver for the draftIcdDueDate field.
+func (r *iDDOCQuestionnaireResolver) DraftIcdDueDate(ctx context.Context, obj *models.IDDOCQuestionnaire) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented: DraftIcdDueDate - draftIcdDueDate"))
+}
+
+// IcdNote is the resolver for the icdNote field.
+func (r *iDDOCQuestionnaireResolver) IcdNote(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: IcdNote - icdNote"))
+}
+
+// UatNeeds is the resolver for the uatNeeds field.
+func (r *iDDOCQuestionnaireResolver) UatNeeds(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: UatNeeds - uatNeeds"))
+}
+
+// StcNeeds is the resolver for the stcNeeds field.
+func (r *iDDOCQuestionnaireResolver) StcNeeds(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: StcNeeds - stcNeeds"))
+}
+
+// TestingNote is the resolver for the testingNote field.
+func (r *iDDOCQuestionnaireResolver) TestingNote(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: TestingNote - testingNote"))
+}
+
+// DataMonitoringFileTypes is the resolver for the dataMonitoringFileTypes field.
+func (r *iDDOCQuestionnaireResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.IDDOCQuestionnaire) ([]models.IDDOCFileType, error) {
+	panic(fmt.Errorf("not implemented: DataMonitoringFileTypes - dataMonitoringFileTypes"))
+}
+
+// DataMonitoringFileOther is the resolver for the dataMonitoringFileOther field.
+func (r *iDDOCQuestionnaireResolver) DataMonitoringFileOther(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: DataMonitoringFileOther - dataMonitoringFileOther"))
+}
+
+// DataResponseType is the resolver for the dataResponseType field.
+func (r *iDDOCQuestionnaireResolver) DataResponseType(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: DataResponseType - dataResponseType"))
+}
+
+// DataResponseFileFrequency is the resolver for the dataResponseFileFrequency field.
+func (r *iDDOCQuestionnaireResolver) DataResponseFileFrequency(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: DataResponseFileFrequency - dataResponseFileFrequency"))
+}
+
+// DataFullTimeOrIncremental is the resolver for the dataFullTimeOrIncremental field.
+func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Context, obj *models.IDDOCQuestionnaire) (*model.IDDOCFullTimeOrIncrementalType, error) {
+	panic(fmt.Errorf("not implemented: DataFullTimeOrIncremental - dataFullTimeOrIncremental"))
+}
+
+// EftSetUp is the resolver for the eftSetUp field.
+func (r *iDDOCQuestionnaireResolver) EftSetUp(ctx context.Context, obj *models.IDDOCQuestionnaire) (*bool, error) {
+	panic(fmt.Errorf("not implemented: EftSetUp - eftSetUp"))
+}
+
+// DataMonitoringNote is the resolver for the dataMonitoringNote field.
+func (r *iDDOCQuestionnaireResolver) DataMonitoringNote(ctx context.Context, obj *models.IDDOCQuestionnaire) (*string, error) {
+	panic(fmt.Errorf("not implemented: DataMonitoringNote - dataMonitoringNote"))
 }
 
 // Status is the resolver for the status field.

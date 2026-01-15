@@ -20,6 +20,14 @@ enum IDDOCFileType {
 }
 
 """
+IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
+"""
+enum IDDOCFullTimeOrIncrementalType {
+  FULL_TIME
+  INCREMENTAL
+}
+
+"""
 IDDOCLoadType represents how data will be loaded
 """
 enum IDDOCLoadType {
@@ -36,25 +44,36 @@ type IDDOCQuestionnaire {
   modelPlanID: UUID!
 
   # IDDOCQuestionnaire fields
+  #Page 1 Operations
   technicalContactsIdentified: Boolean
-  captureParticipantInformation: Boolean
-
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
   icdOwner: String
-  draftIcdRequiredBy: Time
+  draftIcdDueDate: Time
+  icdNote: String
 
-  uatTestDataNeeds: String
-  stcTestDataNeeds: String
+  #Page 2 Testing
+  uatNeeds: String
+  stcNeeds: String
   testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [IDDOCFileType!]!
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
 
-  fileTypes: [IDDOCFileType!]!
-  responseTypes: String
-  fileFrequency: String
-  loadType: IDDOCLoadType
-  eftConnectivitySetup: Boolean
+  #Page 3 Monitoring
+  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
+  eftSetUp: Boolean
   unsolicitedAdjustmentsIncluded: Boolean
   dataFlowDiagramsNeeded: Boolean
   produceBenefitEnhancementFiles: Boolean
   fileNamingConventions: String
+  dataMonitoringNote: String
+
+  loadType: IDDOCLoadType
 
   # IDDOCQuestionnaire Metadata
   """
@@ -88,25 +107,36 @@ type IDDOCQuestionnaire {
 }
 
 input IDDOCQuestionnaireChanges {
+  #Page 1 Operations
   technicalContactsIdentified: Boolean
-  captureParticipantInformation: Boolean
-
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
   icdOwner: String
-  draftIcdRequiredBy: Time
+  draftIcdDueDate: Time
+  icdNote: String
 
-  uatTestDataNeeds: String
-  stcTestDataNeeds: String
+  #Page 2 Testing
+  uatNeeds: String
+  stcNeeds: String
   testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [IDDOCFileType!]!
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
 
-  fileTypes: [IDDOCFileType!]
-  responseTypes: String
-  fileFrequency: String
-  loadType: IDDOCLoadType
-  eftConnectivitySetup: Boolean
+  #Page 3 Monitoring
+  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
+  eftSetUp: Boolean
   unsolicitedAdjustmentsIncluded: Boolean
   dataFlowDiagramsNeeded: Boolean
   produceBenefitEnhancementFiles: Boolean
   fileNamingConventions: String
+  dataMonitoringNote: String
+
+  loadType: IDDOCLoadType
 }
 
 extend type Mutation {

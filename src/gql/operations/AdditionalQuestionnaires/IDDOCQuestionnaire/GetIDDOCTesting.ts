@@ -8,14 +8,14 @@ export default gql(/* GraphQL */ `
       questionnaires {
         iddocQuestionnaire {
           id
-          uatTestDataNeeds
-          stcTestDataNeeds
+          uatNeeds
+          stcNeeds
           testingTimelines
-          # testingNote
-          fileTypes
-          # dataMonitoringFileOther
-          responseTypes
-          fileFrequency
+          testingNote
+          dataMonitoringFileTypes
+          dataMonitoringFileOther
+          dataResponseType
+          dataResponseFileFrequency
         }
       }
     }

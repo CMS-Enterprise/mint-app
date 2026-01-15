@@ -9,13 +9,13 @@ export default gql(/* GraphQL */ `
         iddocQuestionnaire {
           id
           technicalContactsIdentified
-          # technicalContactsIdentifiedDetail
-          # technicalContactsIdentifiedNote
-          captureParticipantInformation
-          # captureParticipantInfoNote
+          technicalContactsIdentifiedDetail
+          technicalContactsIdentifiedNote
+          captureParticipantInfo
+          captureParticipantInfoNote
           icdOwner
-          draftIcdRequiredBy
-          # icdNote
+          draftIcdDueDate
+          icdNote
         }
       }
     }
