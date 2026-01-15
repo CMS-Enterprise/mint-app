@@ -19,6 +19,7 @@ import {
   DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
+  IddocQuestionnaireCompletedNotificationType,
   NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -100,7 +101,11 @@ const NotificationSettings = () => {
             dataExchangeApproachMarkedCompleteNotificationType:
               data.currentUser.notificationPreferences
                 .dataExchangeApproachMarkedCompleteNotificationType ??
-              DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS
+              DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS,
+            iddocQuestionnaireCompletedNotificationType:
+              (data.currentUser.notificationPreferences as any)
+                .iddocQuestionnaireCompletedNotificationType ??
+              IddocQuestionnaireCompletedNotificationType.ALL_MODELS
           }
         : undefined,
     [data]
@@ -122,8 +127,13 @@ const NotificationSettings = () => {
     datesChanged,
     datesChangedNotificationType,
     dataExchangeApproachMarkedComplete,
-    dataExchangeApproachMarkedCompleteNotificationType
-  } = notificationPreferences;
+    dataExchangeApproachMarkedCompleteNotificationType,
+    iddocQuestionnaireComplete,
+    iddocQuestionnaireCompletedNotificationType
+  } = notificationPreferences as typeof notificationPreferences & {
+    iddocQuestionnaireComplete?: UserNotificationPreferenceFlag[];
+    iddocQuestionnaireCompletedNotificationType?: IddocQuestionnaireCompletedNotificationType;
+  };
 
   const methods = useForm<NotificationSettingsFormType>({
     defaultValues: {
@@ -140,7 +150,9 @@ const NotificationSettings = () => {
       datesChangedNotificationType,
       dataExchangeApproachMarkedComplete:
         dataExchangeApproachMarkedComplete ?? [],
-      dataExchangeApproachMarkedCompleteNotificationType
+      dataExchangeApproachMarkedCompleteNotificationType,
+      iddocQuestionnaireComplete: iddocQuestionnaireComplete ?? [],
+      iddocQuestionnaireCompletedNotificationType
     },
     values: reformedDefaultValues,
     mode: 'onChange'
