@@ -18,6 +18,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import SectionLock from 'components/SectionLock';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { formatDateLocal } from 'utils/date';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
@@ -46,6 +47,8 @@ const AdditionalQuestionnaires = () => {
   const { euaId } = useSelector((state: AppState) => state.auth);
 
   const { lockableSectionLocks } = useContext(SubscriptionContext);
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading } = useGetAllQuestionnairesQuery({
     variables: {
@@ -100,7 +103,7 @@ const AdditionalQuestionnaires = () => {
               className="margin-y-0 font-body-lg line-height-sans-5"
               data-testid="model-plan-name"
             >
-              {miscellaneousT('for')} modelName (abbreviation)
+              {miscellaneousT('for')} {modelName}
             </p>
 
             <div className="padding-y-1 ">

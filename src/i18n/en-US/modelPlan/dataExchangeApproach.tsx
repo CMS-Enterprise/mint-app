@@ -349,7 +349,7 @@ const dataExchangeApproach: TranslationDataExchangeApproach = {
     formType: TranslationFormType.CHECKBOX,
     order: 3.07,
     options: {
-      true: 'This data exchange approach is complete.',
+      true: 'This questionnaire (data exchange approach) is complete.',
       false: 'No'
     },
     hideFromReadonly: true

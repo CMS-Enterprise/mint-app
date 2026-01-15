@@ -67,6 +67,34 @@ type IDDOCQuestionnaireChanges struct {
 	FileNamingConventions          *string                `json:"fileNamingConventions,omitempty"`
 }
 
+// Represents IDDOC questionnaire translation data
+type IddocQuestionnaireTranslation struct {
+	Status                            models.TranslationFieldWithOptions `json:"status" db:"status"`
+	TechnicalContactsIdentified       models.TranslationFieldWithOptions `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
+	TechnicalContactsIdentifiedDetail models.TranslationField            `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
+	TechnicalContactsIdentifiedNote   models.TranslationField            `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
+	CaptureParticipantInfo            models.TranslationFieldWithOptions `json:"captureParticipantInfo" db:"capture_participant_info"`
+	CaptureParticipantInfoNote        models.TranslationField            `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
+	IcdOwner                          models.TranslationField            `json:"icdOwner" db:"icd_owner"`
+	DraftIcdDueDate                   models.TranslationField            `json:"draftIcdDueDate" db:"draft_icd_due_date"`
+	IcdNote                           models.TranslationField            `json:"icdNote" db:"icd_note"`
+	UatNeeds                          models.TranslationField            `json:"uatNeeds" db:"uat_needs"`
+	StcNeeds                          models.TranslationField            `json:"stcNeeds" db:"stc_needs"`
+	TestingTimelines                  models.TranslationField            `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote                       models.TranslationField            `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes           models.TranslationFieldWithOptions `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
+	DataMonitoringFileOther           models.TranslationField            `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType                  models.TranslationField            `json:"dataResponseType" db:"data_response_type"`
+	DataResponseFileFrequency         models.TranslationField            `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
+	DataFullTimeOrIncremental         models.TranslationFieldWithOptions `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                          models.TranslationFieldWithOptions `json:"eftSetUp" db:"eft_set_up"`
+	UnsolicitedAdjustmentsIncluded    models.TranslationFieldWithOptions `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded            models.TranslationFieldWithOptions `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptions `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions             models.TranslationField            `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote                models.TranslationField            `json:"dataMonitoringNote" db:"data_monitoring_note"`
+}
+
 // Represents key contact category base translation data
 type KeyContactCategoryTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`

@@ -23,6 +23,7 @@ import Landing from 'features/Landing';
 import Login from 'features/Login';
 import AdditionalQuestionnaires from 'features/ModelPlan/AdditionalQuestionnaires';
 import { dataExchangeApproachRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/DataExchangeApproach';
+import { iddocQuestionnaireRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/IddocQuestionnaire';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
@@ -328,12 +329,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-
       // CR and TDL Routes
       crtdlRoutes,
 
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
+
+      // IDDOC Questionnaire Routes
+      iddocQuestionnaireRoutes,
 
       // Model to Operations Routes
       modelToOperationsRoutes,

@@ -1,0 +1,362 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    action="#"
+    class="desktop:grid-col-6 margin-top-0"
+    data-testid="iddoc-questionnaire-operations-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <h3>
+        Operations questions
+      </h3>
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-technical-contacts-identified-use"
+        >
+          Are technical contacts identified?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="iddoc-questionnaire-technical-contacts-identified-use-true"
+              id="iddoc-questionnaire-technical-contacts-identified-use-true"
+              name="technicalContactsIdentified"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="iddoc-questionnaire-technical-contacts-identified-use-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="iddoc-questionnaire-technical-contacts-identified-use-false"
+              id="iddoc-questionnaire-technical-contacts-identified-use-false"
+              name="technicalContactsIdentified"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="iddoc-questionnaire-technical-contacts-identified-use-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="iddoc-questionnaire-technical-contacts-identified-use-note-add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              aria-label="add"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-capture-participant-info"
+        >
+          Will you capture participant information?
+        </label>
+        <p
+          class="text-base margin-bottom-1 margin-top-1"
+        >
+          This means the participant record for a model would be included in the ACO-OS Entity File.
+        </p>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="iddoc-questionnaire-capture-participant-info-true"
+              id="iddoc-questionnaire-capture-participant-info-true"
+              name="captureParticipantInfo"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="iddoc-questionnaire-capture-participant-info-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="iddoc-questionnaire-capture-participant-info-false"
+              id="iddoc-questionnaire-capture-participant-info-false"
+              name="captureParticipantInfo"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="iddoc-questionnaire-capture-participant-info-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="iddoc-questionnaire-capture-participant-info-note-add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              aria-label="add"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <h3>
+        Interface Control Document (ICD) questions
+      </h3>
+      <p
+        class="margin-y-1 margin-top-2 line-height-body-4"
+      >
+        An interface control document provides a record of all interface information generated for a project.
+      </p>
+      <div
+        class="usa-form-group margin-top-4"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-capture-icd-owner"
+        >
+          ICD owner
+        </label>
+        <input
+          class="usa-input"
+          data-testid="iddoc-questionnaire-capture-icd-owner"
+          id="iddoc-questionnaire-capture-icd-owner"
+          maxlength="50"
+          name="icdOwner"
+          value="John Doe"
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-6 margin-right-4"
+        data-scroll="draftIcdDueDate"
+      >
+        <label
+          class="usa-label usa-legend margin-top-0"
+          data-testid="label"
+          for="iddoc-questionnaire-icd-due-date"
+          id="label-iddoc-questionnaire-icd-due-date"
+        >
+          Draft ICD required by
+        </label>
+        <div
+          class="usa-hint"
+          id="appointment-date-hint"
+        >
+          mm/dd/yyyy
+        </div>
+        <div
+          class="position-relative"
+        >
+          <div
+            class="usa-date-picker usa-date-picker--initialized"
+            data-testid="date-picker"
+          >
+            <input
+              aria-hidden="true"
+              aria-labelledby="label-iddoc-questionnaire-icd-due-date appointment-date-hint"
+              class="usa-input usa-sr-only usa-date-picker__internal-input"
+              data-testid="date-picker-internal-input"
+              error="0"
+              maxlength="50"
+              name="draftIcdDueDate"
+              readonly=""
+              tabindex="-1"
+              type="text"
+              value=""
+            />
+            <div
+              class="usa-date-picker__wrapper"
+              tabindex="-1"
+            >
+              <input
+                aria-labelledby="label-iddoc-questionnaire-icd-due-date appointment-date-hint"
+                class="usa-input usa-date-picker__external-input"
+                data-testid="date-picker-external-input"
+                error="0"
+                id="iddoc-questionnaire-icd-due-date"
+                maxlength="50"
+                type="text"
+                value=""
+              />
+              <button
+                aria-haspopup="true"
+                aria-label="Toggle calendar"
+                class="usa-date-picker__button"
+                data-testid="date-picker-button"
+                type="button"
+              />
+              <div
+                class="usa-date-picker__calendar"
+                data-testid="date-picker-calendar"
+                hidden=""
+                role="application"
+                style="top: 0px;"
+              />
+              <div
+                aria-live="polite"
+                class="usa-sr-only usa-date-picker__status"
+                data-testid="date-picker-status"
+                role="status"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="iddoc-questionnaire-icd-due-date-note-add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="add"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        id="iddoc-questionnaire-operations-form"
+      >
+        <div
+          class="margin-top-6 margin-bottom-3 display-flex"
+        >
+          <button
+            class="usa-button"
+            data-testid="button"
+            id="iddoc-questionnaire-operations-form-next-button"
+            type="submit"
+          >
+            Next
+          </button>
+        </div>
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="back"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+            />
+          </svg>
+          Save and return to questionnaires
+        </button>
+      </div>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 1 of 3
+    </span>
+  </div>
+</DocumentFragment>
+`;

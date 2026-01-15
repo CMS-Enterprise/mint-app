@@ -44,6 +44,9 @@ import {
   generalCharacteristics,
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
+import iddocQuestionnaire, {
+  iddocQuestionnaireMisc
+} from './modelPlan/iddocQuestionnaire';
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
 import modelToOperations, {
@@ -133,6 +136,8 @@ const enUS = {
   dataExchangeApproachMisc,
   generalCharacteristics,
   generalCharacteristicsMisc,
+  iddocQuestionnaire,
+  iddocQuestionnaireMisc,
   participantsAndProviders,
   participantsAndProvidersMisc,
   beneficiaries,
