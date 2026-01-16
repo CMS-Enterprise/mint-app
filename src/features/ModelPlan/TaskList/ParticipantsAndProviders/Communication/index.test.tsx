@@ -1,16 +1,18 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   FrequencyType,
   GetCommunicationDocument,
   GetCommunicationQuery,
+  GetCommunicationQueryVariables,
+  ModelStatus,
   ParticipantRiskType
 } from 'gql/generated/graphql';
 import { modelID, modelPlanBaseMock } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import Communication from './index';
 
@@ -38,7 +40,10 @@ const communicationMockData: GetCommunicationType = {
   willRiskChangeNote: ''
 };
 
-const communicationMock = [
+const communicationMock: MockedResponse<
+  GetCommunicationQuery,
+  GetCommunicationQueryVariables
+>[] = [
   {
     request: {
       query: GetCommunicationDocument,
@@ -46,22 +51,17 @@ const communicationMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
+          ...modelPlanBaseMock,
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
-          participantsAndProviders: communicationMockData,
-          operationalNeeds: [
-            {
-              __typename: 'OperationalNeed',
-              id: '424213',
-              modifiedDts: null
-            }
-          ]
+          participantsAndProviders: communicationMockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan Communication', () => {
@@ -71,9 +71,20 @@ describe('Model Plan Communication', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/communication',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider
+              value={{
+                __typename: 'ModelPlan',
+                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                modelName: 'My excellent plan that I just initiated',
+                abbreviation: '',
+                modifiedDts: '',
+                createdDts: '2024-01-01T00:00:00Z',
+                status: ModelStatus.PLAN_DRAFT,
+                isMTOStarted: false
+              }}
+            >
               <Communication />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -109,9 +120,20 @@ describe('Model Plan Communication', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/communication',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider
+              value={{
+                __typename: 'ModelPlan',
+                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                modelName: 'My excellent plan that I just initiated',
+                abbreviation: '',
+                modifiedDts: '',
+                createdDts: '2024-01-01T00:00:00Z',
+                status: ModelStatus.PLAN_DRAFT,
+                isMTOStarted: false
+              }}
+            >
               <Communication />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -127,6 +149,12 @@ describe('Model Plan Communication', () => {
         <RouterProvider router={router} />
       </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('participant-removed-frequency-note')
+      ).toHaveValue('Second note');
+    });
 
     await waitFor(() => {
       expect(

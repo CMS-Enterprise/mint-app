@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   ClaimsBasedPayType,
@@ -8,11 +8,13 @@ import {
   FrequencyType,
   GetComplexityDocument,
   GetComplexityQuery,
+  GetComplexityQueryVariables,
+  ModelStatus,
   PayType
 } from 'gql/generated/graphql';
 import { modelPlanBaseMock } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import Complexity from './index';
 
@@ -37,7 +39,10 @@ const mockData: GetComplexityType = {
   anticipatedPaymentFrequencyNote: null
 };
 
-const paymentsMock = [
+const paymentsMock: MockedResponse<
+  GetComplexityQuery,
+  GetComplexityQueryVariables
+>[] = [
   {
     request: {
       query: GetComplexityDocument,
@@ -45,15 +50,17 @@ const paymentsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
+          ...modelPlanBaseMock,
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           payments: mockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan -- Complexity', () => {
@@ -63,9 +70,20 @@ describe('Model Plan -- Complexity', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/complexity',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider
+              value={{
+                __typename: 'ModelPlan',
+                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                modelName: 'My excellent plan that I just initiated',
+                abbreviation: '',
+                modifiedDts: '',
+                createdDts: '2024-01-01T00:00:00Z',
+                status: ModelStatus.PLAN_DRAFT,
+                isMTOStarted: false
+              }}
+            >
               <Complexity />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -99,9 +117,20 @@ describe('Model Plan -- Complexity', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/complexity',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider
+              value={{
+                __typename: 'ModelPlan',
+                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                modelName: 'My excellent plan that I just initiated',
+                abbreviation: '',
+                modifiedDts: '',
+                createdDts: '2024-01-01T00:00:00Z',
+                status: ModelStatus.PLAN_DRAFT,
+                isMTOStarted: false
+              }}
+            >
               <Complexity />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -117,6 +146,12 @@ describe('Model Plan -- Complexity', () => {
         <RouterProvider router={router} />
       </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-claims-processing-precendece-note')
+      ).toHaveValue('claim note');
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('payment-multiple-payments-how')).toHaveValue(
