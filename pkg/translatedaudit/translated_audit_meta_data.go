@@ -30,21 +30,6 @@ func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, discu
 
 }
 
-// OperationalNeedMetaDataGet uses the provided information to generate metadata needed for any operational need audits
-func OperationalNeedMetaDataGet(ctx context.Context, store *storage.Store, opNeedID uuid.UUID) (*models.TranslatedAuditMetaOperationalNeed, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	opNeed, err := store.OperationalNeedGetByID(logger, opNeedID)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get operational need for operational need audit metadata. err %w", err)
-	}
-
-	metaNeed := models.NewTranslatedAuditMetaOperationalNeed(0, opNeed.GetName(), opNeed.GetIsOther())
-
-	return &metaNeed, nil
-
-}
-
 func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName models.TableName, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
 	const idNumField = "id_number"
@@ -462,14 +447,6 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 	case "discussion_reply":
 		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
-		metaDataInterface = metaData
-		metaDataTypeGlobal = &metaDataType
-		if err != nil {
-			return true, err
-		}
-	case "operational_need":
-		metaData, err := OperationalNeedMetaDataGet(ctx, store, audit.PrimaryKey)
-		metaDataType := models.TAMetaOperationalNeed
 		metaDataInterface = metaData
 		metaDataTypeGlobal = &metaDataType
 		if err != nil {

@@ -285,18 +285,6 @@ func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 	return nil
 }
 
-func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoaderSimpleCreationDts() {
-	plan := suite.createModelPlan("Plan For Plan 1")
-	expectedDts := plan.CreatedDts
-
-	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-	g.Go(func() error {
-		return verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx, plan.ID, expectedDts)
-	})
-	err := g.Wait()
-	suite.NoError(err)
-}
-
 func (suite *ResolverSuite) TestModelPlansGetByFavorited() {
 	testPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "User B")
 	plan := suite.createModelPlan("My Favorite Plan")
@@ -402,21 +390,4 @@ func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithArchival() {
 	suite.NoError(err)
 	suite.Len(retPlans, 1)
 	suite.EqualValues(plan.ID, retPlans[0].ID)
-}
-
-func verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx context.Context, modelPlanID uuid.UUID, expectedDts time.Time) error {
-
-	dts, err := ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, modelPlanID)
-	if err != nil {
-		return err
-	}
-
-	if dts == nil {
-		return fmt.Errorf("model plan returned nil dts")
-	}
-
-	if !expectedDts.Equal(*dts) {
-		return fmt.Errorf("model plan returned last modified dts %s, expected %s", dts, expectedDts)
-	}
-	return nil
 }

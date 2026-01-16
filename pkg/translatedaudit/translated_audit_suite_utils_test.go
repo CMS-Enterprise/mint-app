@@ -26,16 +26,6 @@ func (suite *TAuditSuite) createModelPlan(planName string) *models.ModelPlan {
 	return retMP
 }
 
-// createOperationalNeed creates an operational need using the store. It is just for testing
-func (suite *TAuditSuite) createOperationalNeed(modelPlanID uuid.UUID, customNeedType string) *models.OperationalNeed {
-
-	needToCreate := models.NewOperationalNeed(suite.testConfigs.Principal.UserAccount.ID, modelPlanID)
-
-	retNeed, err := suite.testConfigs.Store.OperationalNeedInsertOrUpdateOther(suite.testConfigs.Logger, needToCreate, customNeedType)
-	suite.NoError(err)
-	return retNeed
-}
-
 // createPlanDocument creates a test plan document for testing
 func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName string) *models.PlanDocument {
 
