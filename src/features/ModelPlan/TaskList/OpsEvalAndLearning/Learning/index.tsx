@@ -79,7 +79,6 @@ const Learning = () => {
 
   const {
     id,
-    iddocSupport,
     ccmInvolvment,
     dataNeededForMonitoring,
     modelLearningSystems,
@@ -105,7 +104,6 @@ const Learning = () => {
   const initialValues: InitialValueType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
-    iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
     dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     modelLearningSystems: modelLearningSystems ?? [],
@@ -317,13 +315,11 @@ const Learning = () => {
         {data && (
           <PageNumber
             currentPage={renderCurrentPage(
-              9,
-              iddocSupport,
+              6,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}
             totalPages={renderTotalPages(
-              iddocSupport,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}

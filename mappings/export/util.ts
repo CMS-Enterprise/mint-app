@@ -15,6 +15,7 @@ import document from '../../src/i18n/en-US/modelPlan/documents';
 import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutionLink';
 import existingModelLink from '../../src/i18n/en-US/modelPlan/existingModelLink';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
+import iddocQuestionnaire from '../../src/i18n/en-US/modelPlan/iddocQuestionnaire';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
 import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
 import mtoMilestoneNote from '../../src/i18n/en-US/modelPlan/mtoMilestoneNote';
@@ -35,6 +36,7 @@ import {
 export const translationSections = {
   key_contact: keyContact,
   key_contact_category: keyContactCategory,
+  iddoc_questionnaire: iddocQuestionnaire,
   model_plan: modelPlan,
   plan_basics: basics,
   plan_general_characteristics: generalCharacteristics,

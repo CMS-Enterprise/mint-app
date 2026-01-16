@@ -1,0 +1,332 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    action="#"
+    class="desktop:grid-col-6 margin-top-0"
+    data-testid="iddoc-questionnaire-testing-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <h3>
+        Testing questions
+      </h3>
+      <div
+        class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
+        data-testid="mandatory-fields-alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              <span
+                class="mandatory-fields-alert__text"
+              >
+                SSM request to begin analysis at least 1 year before implementation
+              </span>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-uat-needs"
+        >
+          User Acceptance Testing (UAT) – test data needs
+        </label>
+        <textarea
+          aria-labelledby="label-iddoc-questionnaire-uat-needs hint-iddoc-questionnaire-uat-needs"
+          class="height-15 usa-textarea"
+          id="iddoc-questionnaire-uat-needs"
+          name="uatNeeds"
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-stc-needs"
+        >
+          STC – test data needs
+        </label>
+        <textarea
+          aria-labelledby="label-iddoc-questionnaire-stc-needs hint-iddoc-questionnaire-stc-needs"
+          class="height-15 usa-textarea"
+          data-testid="iddoc-questionnaire-stc-needs"
+          id="iddoc-questionnaire-stc-needs"
+          name="stcNeeds"
+        >
+          Yes needs
+        </textarea>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-testing-timelines"
+        >
+          Define the testing timelines
+        </label>
+        <textarea
+          aria-labelledby="label-iddoc-questionnaire-testing-timelines hint-iddoc-questionnaire-testing-timelines"
+          class="height-15 usa-textarea"
+          id="iddoc-questionnaire-testing-timelines"
+          name="testingTimelines"
+        />
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="iddoc-questionnaire-testing-note-add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="add"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <h3>
+        Data monitoring questions
+      </h3>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-data-monitoring-file"
+        >
+          What types of files? Select all that apply.
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="iddoc-questionnaire-data-monitoring-file-BENEFICIARY"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="BENEFICIARY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="iddoc-questionnaire-data-monitoring-file-BENEFICIARY"
+            style="width: fit-content;"
+          >
+            Beneficiary
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="iddoc-questionnaire-data-monitoring-file-PROVIDER"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="PROVIDER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="iddoc-questionnaire-data-monitoring-file-PROVIDER"
+            style="width: fit-content;"
+          >
+            Provider
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="iddoc-questionnaire-data-monitoring-file-PART_A"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="PART_A"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="iddoc-questionnaire-data-monitoring-file-PART_A"
+            style="width: fit-content;"
+          >
+            Part A
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="iddoc-questionnaire-data-monitoring-file-PART_B"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="PART_B"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="iddoc-questionnaire-data-monitoring-file-PART_B"
+            style="width: fit-content;"
+          >
+            Part B
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="iddoc-questionnaire-data-monitoring-file-OTHER"
+            name="dataMonitoringFileTypes"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="iddoc-questionnaire-data-monitoring-file-OTHER"
+            style="width: fit-content;"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-data-response-type"
+        >
+          What types of responses?
+        </label>
+        <input
+          class="usa-input"
+          data-testid="textInput"
+          id="iddoc-questionnaire-data-response-type"
+          maxlength="50"
+          name="dataResponseType"
+          value=""
+        />
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="iddoc-questionnaire-data-file-frequency"
+        >
+          Frequency of files?
+        </label>
+        <input
+          class="usa-input"
+          data-testid="textInput"
+          id="iddoc-questionnaire-data-file-frequency"
+          maxlength="50"
+          name="dataResponseFileFrequency"
+          value=""
+        />
+      </div>
+      <div
+        id="iddoc-questionnaire-testing-form"
+      >
+        <div
+          class="margin-top-6 margin-bottom-3 display-flex"
+        >
+          <button
+            class="usa-button usa-button usa-button--outline"
+            data-testid="button"
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            class="usa-button"
+            data-testid="button"
+            id="iddoc-questionnaire-testing-form-next-button"
+            type="submit"
+          >
+            Next
+          </button>
+        </div>
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="back"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+            />
+          </svg>
+          Save and return to questionnaires
+        </button>
+      </div>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 2 of 3
+    </span>
+  </div>
+</DocumentFragment>
+`;

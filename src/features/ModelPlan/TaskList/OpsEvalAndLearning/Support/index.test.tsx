@@ -67,36 +67,24 @@ const opsEvalAndLearningMock = [
 
 describe('Model Plan Ops Eval and Learning', () => {
   it('computes total pages', () => {
-    const totalPages9 = renderTotalPages(
-      true,
-      isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
-    );
-    expect(totalPages9).toEqual(9);
-
     const totalPages6 = renderTotalPages(
-      false,
       isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
     );
     expect(totalPages6).toEqual(6);
 
-    const totalPages8 = renderTotalPages(true, isCCWInvolvement([]));
-    expect(totalPages8).toEqual(8);
+    const totalPages5 = renderTotalPages(isCCWInvolvement([]));
+    expect(totalPages5).toEqual(5);
   });
 
   it('computes current pages', () => {
     const currentPage = renderCurrentPage(
       1,
-      true,
       isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
     );
     expect(currentPage).toEqual(1);
 
-    const currentPage2 = renderCurrentPage(
-      5,
-      false,
-      isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
-    );
-    expect(currentPage2).toEqual(2);
+    const currentPage4 = renderCurrentPage(5, isCCWInvolvement([]));
+    expect(currentPage4).toEqual(4);
   });
 
   it('computes cmmi involvement', () => {

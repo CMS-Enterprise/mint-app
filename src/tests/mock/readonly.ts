@@ -97,7 +97,7 @@ type GetModelCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 type GetAllDataExchangeApproachType =
-  GetAllDataExchangeApproachQuery['modelPlan']['dataExchangeApproach'];
+  GetAllDataExchangeApproachQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
@@ -780,7 +780,9 @@ export const dataExchangeApproachMocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          dataExchangeApproach: dataExchangeApproachData
+          questionnaires: {
+            dataExchangeApproach: dataExchangeApproachData
+          }
         }
       }
     }
