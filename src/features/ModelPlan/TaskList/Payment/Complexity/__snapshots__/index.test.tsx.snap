@@ -424,26 +424,28 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   <div
                     class="margin-top-3 margin-bottom-6"
                   >
-                    <div
-                      class="usa-form-group"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="payment-claims-processing-precendece-note-add-note-toggle"
+                      type="button"
                     >
-                      <label
-                        class="usa-label"
-                        for="payment-claims-processing-precendece-note"
-                        id="label-payment-claims-processing-precendece-note"
+                      <svg
+                        aria-hidden="true"
+                        aria-label="add"
+                        class="usa-icon margin-right-1"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Notes
-                      </label>
-                      <textarea
-                        aria-labelledby="label-payment-claims-processing-precendece-note hint-payment-claims-processing-precendece-note"
-                        class="usa-textarea"
-                        data-testid="payment-claims-processing-precendece-note"
-                        id="payment-claims-processing-precendece-note"
-                        name="claimsProcessingPrecedenceNote"
-                      >
-                        claim note
-                      </textarea>
-                    </div>
+                        <path
+                          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                        />
+                      </svg>
+                      Add an additional note
+                    </button>
                   </div>
                 </div>
                 <div
