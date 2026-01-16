@@ -120,7 +120,8 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
       return `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`;
 
     case 'IddocQuestionnaireCompletedActivityMeta':
-      return `/models/${metaData.modelPlanID}/read-view/iddoc-questionnaire`;
+      // TODO: Add the route for the iddoc questionnaire completed activity
+      return `/models/${metaData.modelPlanID}/read-view/WHATEVER-THE-ROUTE-IS`;
 
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':
