@@ -7,10 +7,10 @@ import {
   GetProviderOptionsDocument,
   GetProviderOptionsQuery,
   GetProviderOptionsQueryVariables,
-  ModelStatus,
   ProviderAddType,
   TaskStatus
 } from 'gql/generated/graphql';
+import { modelPlanBaseMockData } from 'tests/mock/general';
 
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
@@ -80,18 +80,7 @@ describe('Model Plan ProviderOptions', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
           element: (
-            <ModelInfoContext.Provider
-              value={{
-                __typename: 'ModelPlan',
-                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-                modelName: 'My excellent plan that I just initiated',
-                abbreviation: '',
-                modifiedDts: '',
-                createdDts: '2024-01-01T00:00:00Z',
-                status: ModelStatus.PLAN_DRAFT,
-                isMTOStarted: false
-              }}
-            >
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <ProviderOptions />
             </ModelInfoContext.Provider>
           )
@@ -131,18 +120,7 @@ describe('Model Plan ProviderOptions', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
           element: (
-            <ModelInfoContext.Provider
-              value={{
-                __typename: 'ModelPlan',
-                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-                modelName: 'My excellent plan that I just initiated',
-                abbreviation: '',
-                modifiedDts: '',
-                createdDts: '2024-01-01T00:00:00Z',
-                status: ModelStatus.PLAN_DRAFT,
-                isMTOStarted: false
-              }}
-            >
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <ProviderOptions />
             </ModelInfoContext.Provider>
           )
