@@ -5,9 +5,9 @@ import { Fieldset, Label, Radio, TextInput } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
-  GetIddocMonitoringQuery,
-  TypedUpdatePlanOpsEvalAndLearningDocument,
-  useGetIddocMonitoringQuery
+  GetIddocQuestionnaireMonitoringQuery,
+  TypedUpdateIddocQuestionnaireDocument,
+  useGetIddocQuestionnaireMonitoringQuery
 } from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
@@ -24,8 +24,8 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { formatDateLocal } from 'utils/date';
 
-type IDDOCMonitoringFormType =
-  GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
+export type IDDOCMonitoringFormType =
+  GetIddocQuestionnaireMonitoringQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const IDDOCMonitoring = () => {
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
@@ -52,7 +52,7 @@ const IDDOCMonitoring = () => {
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const navigate = useNavigate();
 
-  const { data, loading, error } = useGetIddocMonitoringQuery({
+  const { data, loading, error } = useGetIddocQuestionnaireMonitoringQuery({
     variables: {
       id: modelID
     }
@@ -60,9 +60,6 @@ const IDDOCMonitoring = () => {
 
   const {
     id,
-    iddocSupport,
-    ccmInvolvment,
-    dataNeededForMonitoring,
     dataFullTimeOrIncremental,
     eftSetUp,
     unsolicitedAdjustmentsIncluded,
@@ -70,10 +67,11 @@ const IDDOCMonitoring = () => {
     produceBenefitEnhancementFiles,
     fileNamingConventions,
     dataMonitoringNote
-  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCMonitoringFormType;
+  } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
+    {}) as IDDOCMonitoringFormType;
 
   const { mutationError } = useHandleMutation(
-    TypedUpdatePlanOpsEvalAndLearningDocument,
+    TypedUpdateIddocQuestionnaireDocument,
     {
       id,
       formikRef: formikRef as any
@@ -81,11 +79,8 @@ const IDDOCMonitoring = () => {
   );
 
   const initialValues: IDDOCMonitoringFormType = {
-    __typename: 'PlanOpsEvalAndLearning',
+    __typename: 'IDDOCQuestionnaire',
     id: id ?? '',
-    ccmInvolvment: ccmInvolvment ?? [],
-    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
-    iddocSupport: iddocSupport ?? null,
     dataFullTimeOrIncremental: dataFullTimeOrIncremental ?? null,
     eftSetUp: eftSetUp ?? null,
     unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncluded ?? null,

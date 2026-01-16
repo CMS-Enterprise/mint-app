@@ -2,26 +2,15 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import {
-  CcmInvolvmentType,
-  GetIddocMonitoringDocument,
-  GetIddocMonitoringQuery
-} from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
+import { GetIddocQuestionnaireMonitoringDocument } from 'gql/generated/graphql';
 
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
-import IDDOCMonitoring from './index';
+import IDDOCMonitoring, { IDDOCMonitoringFormType } from './index';
 
-type GetIDDOCMonitoringType =
-  GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
-
-const iddocMonitoringMockData: GetIDDOCMonitoringType = {
-  __typename: 'PlanOpsEvalAndLearning',
+const iddocMonitoringMockData: IDDOCMonitoringFormType = {
+  __typename: 'IDDOCQuestionnaire',
   id: '123',
-  ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
-  dataNeededForMonitoring: [],
-  iddocSupport: true,
   dataFullTimeOrIncremental: null,
   eftSetUp: null,
   unsolicitedAdjustmentsIncluded: null,
@@ -34,7 +23,7 @@ const iddocMonitoringMockData: GetIDDOCMonitoringType = {
 const iddocMonitoringMock = [
   {
     request: {
-      query: GetIddocMonitoringDocument,
+      query: GetIddocQuestionnaireMonitoringDocument,
       variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
     },
     result: {
@@ -42,12 +31,15 @@ const iddocMonitoringMock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          opsEvalAndLearning: iddocMonitoringMockData
+          questionnaires: {
+            __typename: 'Questionnaires',
+            id: '123',
+            iddocQuestionnaire: iddocMonitoringMockData
+          }
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan Ops Eval and Learning IDDOC', () => {
