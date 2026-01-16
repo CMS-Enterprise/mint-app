@@ -103,7 +103,7 @@ const NotificationSettings = () => {
                 .dataExchangeApproachMarkedCompleteNotificationType ??
               DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS,
             iddocQuestionnaireCompletedNotificationType:
-              (data.currentUser.notificationPreferences as any)
+              data.currentUser.notificationPreferences
                 .iddocQuestionnaireCompletedNotificationType ??
               IddocQuestionnaireCompletedNotificationType.ALL_MODELS
           }
@@ -130,10 +130,7 @@ const NotificationSettings = () => {
     dataExchangeApproachMarkedCompleteNotificationType,
     iddocQuestionnaireComplete,
     iddocQuestionnaireCompletedNotificationType
-  } = notificationPreferences as typeof notificationPreferences & {
-    iddocQuestionnaireComplete?: UserNotificationPreferenceFlag[];
-    iddocQuestionnaireCompletedNotificationType?: IddocQuestionnaireCompletedNotificationType;
-  };
+  } = notificationPreferences;
 
   const methods = useForm<NotificationSettingsFormType>({
     defaultValues: {
