@@ -1,18 +1,23 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetExistingModelPlansDocument,
+  GetExistingModelPlansQuery,
+  GetExistingModelPlansQueryVariables,
   GetGeneralCharacteristicsDocument,
   GetGeneralCharacteristicsQuery,
+  GetGeneralCharacteristicsQueryVariables,
   GetModelPlansBaseDocument,
+  GetModelPlansBaseQuery,
+  GetModelPlansBaseQueryVariables,
   ModelPlanFilter,
   YesNoOtherType
 } from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
+import { modelPlanBaseMockData } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import ModelRelation, { separateLinksByType } from './index';
 
@@ -53,7 +58,10 @@ const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan'
     participationInModelPreconditionWhich: null
   };
 
-const generalCharacteristicsMock = [
+const generalCharacteristicsMock: MockedResponse<
+  GetGeneralCharacteristicsQuery,
+  GetGeneralCharacteristicsQueryVariables
+>[] = [
   {
     request: {
       query: GetGeneralCharacteristicsDocument,
@@ -61,15 +69,22 @@ const generalCharacteristicsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          existingModelLinks: [],
           generalCharacteristics: generalCharacteristicsMockData
         }
       }
     }
-  },
+  }
+];
+
+const modelPlanCollectionMock: MockedResponse<
+  GetModelPlansBaseQuery,
+  GetModelPlansBaseQueryVariables
+>[] = [
   {
     request: {
       query: GetModelPlansBaseDocument,
@@ -77,27 +92,40 @@ const generalCharacteristicsMock = [
     },
     result: {
       data: {
-        modelPlanCollection: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-          modelName: 'My excellent plan that I just initiated'
-        }
+        __typename: 'Query',
+        modelPlanCollection: [
+          {
+            __typename: 'ModelPlan',
+            id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+            modelName: 'My excellent plan that I just initiated'
+          }
+        ]
       }
     }
-  },
+  }
+];
+
+const existingModelPlanMock: MockedResponse<
+  GetExistingModelPlansQuery,
+  GetExistingModelPlansQueryVariables
+>[] = [
   {
     request: {
       query: GetExistingModelPlansDocument
     },
     result: {
       data: {
-        existingModelCollection: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d29056',
-          modelName: 'My excellent plan that I just initiated 2'
-        }
+        __typename: 'Query',
+        existingModelCollection: [
+          {
+            __typename: 'ExistingModel',
+            id: 100066,
+            modelName: 'My excellent plan that I just initiated 2'
+          }
+        ]
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan Characteristics', () => {
@@ -107,9 +135,9 @@ describe('Model Plan Characteristics', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <ModelRelation />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -121,7 +149,14 @@ describe('Model Plan Characteristics', () => {
     );
 
     render(
-      <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
+      <MockedProvider
+        mocks={[
+          ...generalCharacteristicsMock,
+          ...modelPlanCollectionMock,
+          ...existingModelPlanMock
+        ]}
+        addTypename={false}
+      >
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -161,9 +196,9 @@ describe('Model Plan Characteristics', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <ModelRelation />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -175,10 +210,25 @@ describe('Model Plan Characteristics', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
+      <MockedProvider
+        mocks={[
+          ...generalCharacteristicsMock,
+          ...modelPlanCollectionMock,
+          ...existingModelPlanMock
+        ]}
+        addTypename={false}
+      >
         <RouterProvider router={router} />
       </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId(
+          'plan-characteristics-participation-model-precondition-note'
+        )
+      ).toHaveValue('Precondition note');
+    });
 
     await waitFor(() => {
       expect(

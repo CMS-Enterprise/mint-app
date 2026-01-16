@@ -18,7 +18,7 @@ type ModelInfoWrapperProps = {
   children: React.ReactNode;
 };
 
-type GetModelPlanBaseModelPlan = Omit<
+export type GetModelPlanBaseModelPlan = Omit<
   GetModelPlanBaseQuery['modelPlan'],
   'mtoMatrix'
 > & {
