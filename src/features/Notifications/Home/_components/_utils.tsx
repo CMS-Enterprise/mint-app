@@ -153,7 +153,7 @@ export const verifyEmailParams = (
   );
 };
 
-const activityI18nKeybases: Record<ActivityMetaData['__typename'], string> = {
+const activityI18nKeybases = {
   AddedAsCollaboratorMeta:
     'notifications:index.activityType.ADDED_AS_COLLABORATOR',
   TaggedInDiscussionReplyActivityMeta:
