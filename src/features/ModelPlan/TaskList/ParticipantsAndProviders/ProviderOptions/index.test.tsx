@@ -1,17 +1,18 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   FrequencyType,
   GetProviderOptionsDocument,
   GetProviderOptionsQuery,
+  GetProviderOptionsQueryVariables,
+  ModelStatus,
   ProviderAddType,
   TaskStatus
 } from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import ProviderOptions from './index';
 
@@ -49,7 +50,10 @@ const providerOptionsMockData: GetProviderOptionsType = {
   status: TaskStatus.IN_PROGRESS
 };
 
-const providerOptionsMock = [
+const providerOptionsMock: MockedResponse<
+  GetProviderOptionsQuery,
+  GetProviderOptionsQueryVariables
+>[] = [
   {
     request: {
       query: GetProviderOptionsDocument,
@@ -57,15 +61,16 @@ const providerOptionsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: providerOptionsMockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan ProviderOptions', () => {
@@ -75,9 +80,20 @@ describe('Model Plan ProviderOptions', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider
+              value={{
+                __typename: 'ModelPlan',
+                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                modelName: 'My excellent plan that I just initiated',
+                abbreviation: '',
+                modifiedDts: '',
+                createdDts: '2024-01-01T00:00:00Z',
+                status: ModelStatus.PLAN_DRAFT,
+                isMTOStarted: false
+              }}
+            >
               <ProviderOptions />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -115,9 +131,20 @@ describe('Model Plan ProviderOptions', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider
+              value={{
+                __typename: 'ModelPlan',
+                id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+                modelName: 'My excellent plan that I just initiated',
+                abbreviation: '',
+                modifiedDts: '',
+                createdDts: '2024-01-01T00:00:00Z',
+                status: ModelStatus.PLAN_DRAFT,
+                isMTOStarted: false
+              }}
+            >
               <ProviderOptions />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -136,8 +163,8 @@ describe('Model Plan ProviderOptions', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('participants-and-providers-providers-form')
-      ).toBeInTheDocument();
+        screen.getByTestId('participants-and-providers-removal-frequency-note')
+      ).toHaveValue('removal note');
     });
 
     await waitFor(() => {
