@@ -10,7 +10,7 @@ import {
   ModelStatus,
   ParticipantRiskType
 } from 'gql/generated/graphql';
-import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+import { modelID } from 'tests/mock/general';
 
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
@@ -54,7 +54,6 @@ const communicationMock: MockedResponse<
         __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
-          ...modelPlanBaseMock,
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
           participantsAndProviders: communicationMockData

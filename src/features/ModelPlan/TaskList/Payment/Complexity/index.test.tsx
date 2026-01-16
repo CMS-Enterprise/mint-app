@@ -12,7 +12,6 @@ import {
   ModelStatus,
   PayType
 } from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
 
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
@@ -53,7 +52,6 @@ const paymentsMock: MockedResponse<
         __typename: 'Query',
         modelPlan: {
           __typename: 'ModelPlan',
-          ...modelPlanBaseMock,
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           payments: mockData

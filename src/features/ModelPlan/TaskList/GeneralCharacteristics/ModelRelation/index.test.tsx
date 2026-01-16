@@ -81,7 +81,7 @@ const generalCharacteristicsMock: MockedResponse<
   }
 ];
 
-const modelPlanBaseMock: MockedResponse<
+const modelPlanCollectionMock: MockedResponse<
   GetModelPlansBaseQuery,
   GetModelPlansBaseQueryVariables
 >[] = [
@@ -163,7 +163,7 @@ describe('Model Plan Characteristics', () => {
       <MockedProvider
         mocks={[
           ...generalCharacteristicsMock,
-          ...modelPlanBaseMock,
+          ...modelPlanCollectionMock,
           ...existingModelPlanMock
         ]}
         addTypename={false}
@@ -235,7 +235,7 @@ describe('Model Plan Characteristics', () => {
       <MockedProvider
         mocks={[
           ...generalCharacteristicsMock,
-          ...modelPlanBaseMock,
+          ...modelPlanCollectionMock,
           ...existingModelPlanMock
         ]}
         addTypename={false}
@@ -243,6 +243,14 @@ describe('Model Plan Characteristics', () => {
         <RouterProvider router={router} />
       </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId(
+          'plan-characteristics-participation-model-precondition-note'
+        )
+      ).toHaveValue('Precondition note');
+    });
 
     await waitFor(() => {
       expect(
