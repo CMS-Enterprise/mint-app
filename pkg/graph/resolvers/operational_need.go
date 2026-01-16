@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -40,51 +39,6 @@ func OperationalNeedCollectionGetByModelPlanIDLOADER(ctx context.Context, modelP
 		return nil, err
 	}
 	return result.([]*models.OperationalNeed), nil
-
-}
-
-// OperationalNeedInsertOrUpdateCustom adds or updates a Custom Operational Need
-func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UUID, customNeedType string, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
-
-	existing, err := store.OperationalNeedGetByModelPlanIDAndOtherType(logger, modelPlanID, customNeedType)
-	if err != nil {
-		return nil, err
-	}
-	if existing == nil {
-		existing = models.NewOperationalNeed(principal.Account().ID, modelPlanID)
-	}
-	changes := map[string]interface{}{
-		"needed": needed,
-	}
-
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
-	if err != nil {
-		return nil, err
-	}
-
-	return store.OperationalNeedInsertOrUpdateOther(logger, existing, customNeedType)
-
-}
-
-// OperationalNeedCustomUpdateByID updates an Operational Need by it's ID. Note, we don't allow updating a need type, except customNeedTypes
-func OperationalNeedCustomUpdateByID(logger *zap.Logger, operationNeedID uuid.UUID, customNeedType *string, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
-
-	existing, err := store.OperationalNeedGetByID(logger, operationNeedID)
-	if err != nil {
-		return nil, err
-	}
-
-	changes := map[string]interface{}{
-		"needed":    needed,
-		"nameOther": customNeedType,
-	}
-
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
-	if err != nil {
-		return nil, err
-	}
-
-	return store.OperationalNeedUpdateByID(logger, existing)
 
 }
 

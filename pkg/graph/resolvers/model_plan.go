@@ -161,12 +161,6 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		//Create default Operational Needs
-		_, err = store.OperationalNeedInsertAllPossible(tx, logger, createdPlan.ID, principal.Account().ID)
-		if err != nil {
-			return nil, err
-		}
-
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 

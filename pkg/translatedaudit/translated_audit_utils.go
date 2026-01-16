@@ -1,9 +1,6 @@
 package translatedaudit
 
 import (
-	"fmt"
-
-	"github.com/cms-enterprise/mint-app/mappings"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -22,32 +19,6 @@ func GetDatabaseOperation(action string) (models.DatabaseOperation, bool) {
 		return models.DBOpTruncate, true
 	}
 	return models.DatabaseOperation(""), false
-
-}
-
-// getTranslationMapAndTranslateSingleValue is a utility function to translate a single field value to a translated value, assuming that the key for the translation, and the function to get the function is passed
-// it should be used in places where you need to get a single outlier translation (such as meta data) instead of normal operations where you can batch some of these data calls.
-func getTranslationMapAndTranslateSingleValue(tableName models.TableName, translationKey string, rawValue string) string {
-
-	translation, err := mappings.GetTranslation(tableName)
-	if err == nil {
-		translationMap, err := translation.ToMap()
-		if err == nil {
-
-			translationInterface, hasTranslation := translationMap[translationKey]
-			// translate if a translation is available
-			if hasTranslation {
-				options, hasOptions := translationInterface.GetOptions()
-				// if the translation has options, use the options to translate the value
-				if hasOptions {
-					translation := translateValueSingle(rawValue, options)
-					return fmt.Sprint(translation)
-				}
-			}
-		}
-	}
-	// if this could not be translated return the raw initial value instead
-	return rawValue
 
 }
 

@@ -7,9 +7,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
 )
@@ -151,99 +148,4 @@ func (s *Store) OperationalNeedGetByID(_ *zap.Logger, id uuid.UUID) (*models.Ope
 	}
 
 	return &need, nil
-}
-
-// OperationalNeedInsertOrUpdate either inserts or updates an operational need in the DB
-func (s *Store) OperationalNeedInsertOrUpdate(
-	logger *zap.Logger,
-	need *models.OperationalNeed,
-	needTypeKey models.OperationalNeedKey,
-) (*models.OperationalNeed, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.InsertOrUpdate)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
-	}
-	defer stmt.Close()
-
-	need.ID = utilityuuid.ValueOrNewUUID(need.ID)
-	need.Key = &needTypeKey // This will set the need type id IN the db
-
-	err = stmt.Get(need, need)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need) //this could be either update or insert..
-	}
-	return need, err
-}
-
-// OperationalNeedInsertOrUpdateOther either inserts or updates a custom operational need in the DB
-func (s *Store) OperationalNeedInsertOrUpdateOther(
-	logger *zap.Logger,
-	need *models.OperationalNeed,
-	customNeedType string,
-) (*models.OperationalNeed, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.InsertOrUpdateOther)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
-	}
-	defer stmt.Close()
-
-	need.ID = utilityuuid.ValueOrNewUUID(need.ID)
-	need.NameOther = &customNeedType // This will set the need type id IN the db
-
-	err = stmt.Get(need, need)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need) //this could be either update or insert..
-	}
-	return need, err
-
-}
-
-// OperationalNeedUpdateByID will update an operational need in the DB
-func (s *Store) OperationalNeedUpdateByID(
-	logger *zap.Logger,
-	need *models.OperationalNeed,
-) (*models.OperationalNeed, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.UpdateByID)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(need, need)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need) //this could be either update or insert..
-	}
-	return need, err
-}
-
-// OperationalNeedInsertAllPossible will insert all possible operational need in the DB for a specific model pland
-func (s *Store) OperationalNeedInsertAllPossible(
-	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	modelPlanID uuid.UUID,
-	createdBy uuid.UUID,
-) ([]*models.OperationalNeed, error) {
-
-	var needs []*models.OperationalNeed
-	stmt, err := np.PrepareNamed(sqlqueries.OperationalNeed.InsertAllPossible)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-
-		"model_plan_id": modelPlanID,
-		"created_by":    createdBy,
-	}
-
-	err = stmt.Select(&needs, arg)
-	if err != nil {
-		return nil, err
-	}
-
-	return needs, err
 }

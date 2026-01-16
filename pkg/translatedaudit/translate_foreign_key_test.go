@@ -18,18 +18,6 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 
 	})
 
-	suite.Run("operational_solution returns an OperationalSolution", func() {
-		plan := suite.createModelPlan("test plan")
-		need := suite.createOperationalNeed(plan.ID, "To test operational solution translations")
-		solName := "make a unit test"
-		sol := suite.createOperationalSolution(need.ID, solName)
-
-		translatedSolution, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String(), models.TNOperationalSolution)
-		suite.NoError(err)
-		suite.EqualValues(solName, translatedSolution)
-
-	})
-
 	suite.Run("existing model returns an existing model", func() {
 		existingID := 100001
 		existingName := "Advance Payment ACO Model"

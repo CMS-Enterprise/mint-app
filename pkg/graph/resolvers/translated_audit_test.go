@@ -1,11 +1,9 @@
 package resolvers
 
 import (
-	"bytes"
 	"fmt"
 	"time"
 
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
@@ -206,40 +204,6 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 
 	// Get the fields and make sure they have fields?
 	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
-
-}
-func (suite *ResolverSuite) TestTranslateAuditDocSolLinkWorksWhenDataIsUnreadable() {
-
-	//make an document solution link, delete the document and confirm it still works
-
-	solution, _, plan := suite.createOperationalSolution()
-	suite.TestPlanDocumentSolutionLinkCreateAndRemove()
-
-	reader := bytes.NewReader([]byte("Some test file contents"))
-	doc, err := suite.createTestPlanDocument(plan, reader)
-	suite.NoError(err)
-	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
-
-	suite.NotNil(retTranslatedAuditsWithFields)
-
-	_, err = PlanDocumentSolutionLinksCreate(
-		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
-		solution.ID, []uuid.UUID{doc.ID},
-
-		suite.testConfigs.Principal,
-	)
-	suite.NoError(err)
-
-	_, err = PlanDocumentDelete(suite.testConfigs.Logger, suite.testConfigs.S3Client, doc.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-
-	// translate fields now and assert it was ok
-	retTranslatedAuditsWithFields2 := suite.dangerousQueueAndTranslateAllAudits()
-	suite.NotNil(retTranslatedAuditsWithFields2)
-
-	// We expect two audits
-	suite.Equal(len(retTranslatedAuditsWithFields2), 3) // Make sure there are 2 audits for this
 
 }
 

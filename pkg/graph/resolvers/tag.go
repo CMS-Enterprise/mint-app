@@ -9,7 +9,6 @@ import (
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -61,12 +60,12 @@ func TaggedEntityGet(
 	EntityUUID *uuid.UUID,
 	EntityIntID *int,
 ) (models.TaggedEntity, error) {
-	logger := appcontext.ZLogger(ctx)
+
 	switch tagType {
 	case models.TagTypeUserAccount:
 		return UserAccountGetByIDLOADER(ctx, *EntityUUID)
 	case models.TagTypePossibleSolution:
-		return PossibleOperationalSolutionGetByID(logger, store, *EntityIntID)
+		return nil, nil
 	case models.TagTypeMTOCommonSolution:
 		return MTOCommonSolutionGetByIDLoader(ctx, EntityUUID)
 

@@ -65,7 +65,8 @@ module.exports = {
       'MTOMilestoneNoteTranslation',
       'ModelPlanMTOTemplateLinkTranslation',
       'KeyContactTranslation',
-      'KeyContactCategoryTranslation'
+      'KeyContactCategoryTranslation',
+      'OperationalSolutionKey' // This is needed for the translation of the OperationalSolutionTranslation
     ],
     'enum-values-all-caps': ['TableName']
   }

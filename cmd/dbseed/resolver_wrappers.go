@@ -268,60 +268,6 @@ func (s *Seeder) getOperationalNeedsByModelPlanID(modelPlanID uuid.UUID) []*mode
 	return operationalNeeds
 }
 
-// addOperationalSolution is a wrapper for resolvers.OperationalSolutionCreate
-// It will panic if an error occurs, rather than bubbling the error up
-func (s *Seeder) addOperationalSolution(
-
-	mp *models.ModelPlan,
-	operationalNeedID uuid.UUID,
-	changes map[string]interface{},
-) *models.OperationalSolution {
-	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
-	solType := models.OpSKInnovation
-
-	operationalSolution, err := resolvers.OperationalSolutionCreate(
-		s.Config.Context,
-		s.Config.Store,
-		s.Config.Logger,
-		nil,
-		email.AddressBook{},
-		operationalNeedID,
-		&solType,
-		changes,
-		principal,
-	)
-
-	if err != nil {
-		panic(err)
-	}
-	return operationalSolution
-}
-
-// addPlanDocumentSolutionLinks is a wrapper for resolvers.PlanDocumentSolutionLinksCreate
-// It will panic if an error occurs, rather than bubbling the error up
-func (s *Seeder) addPlanDocumentSolutionLinks(
-
-	mp *models.ModelPlan,
-	solutionID uuid.UUID,
-	documentIDs []uuid.UUID,
-) []*models.PlanDocumentSolutionLink {
-
-	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
-
-	planDocumentSolutionLinks, err := resolvers.PlanDocumentSolutionLinksCreate(
-		s.Config.Logger,
-		s.Config.Store,
-		solutionID,
-		documentIDs,
-		principal,
-	)
-
-	if err != nil {
-		panic(err)
-	}
-	return planDocumentSolutionLinks
-}
-
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
 	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.Config.OktaClient.FetchUserInfo))
