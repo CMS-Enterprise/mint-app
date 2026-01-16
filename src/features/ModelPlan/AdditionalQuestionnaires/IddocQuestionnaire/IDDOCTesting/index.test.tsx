@@ -33,7 +33,7 @@ const iddocTestingMock = [
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           questionnaires: {
-            __typename: 'IDDOCQuestionnaire',
+            __typename: 'Questionnaires',
             id: '123',
             iddocQuestionnaire: iddocTestingMockData
           }
