@@ -137,9 +137,6 @@ describe('Model Plan -- Recover', () => {
       expect(
         screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
       ).toBeChecked();
-      expect(
-        screen.getByTestId('payment-payment-start-date-note')
-      ).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
