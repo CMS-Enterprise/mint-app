@@ -49,22 +49,30 @@ type ExistingModelLinkTranslation struct {
 }
 
 type IDDOCQuestionnaireChanges struct {
-	TechnicalContactsIdentified    *bool                  `json:"technicalContactsIdentified,omitempty"`
-	CaptureParticipantInformation  *bool                  `json:"captureParticipantInformation,omitempty"`
-	IcdOwner                       *string                `json:"icdOwner,omitempty"`
-	DraftIcdRequiredBy             *time.Time             `json:"draftIcdRequiredBy,omitempty"`
-	UatTestDataNeeds               *string                `json:"uatTestDataNeeds,omitempty"`
-	StcTestDataNeeds               *string                `json:"stcTestDataNeeds,omitempty"`
-	TestingTimelines               *string                `json:"testingTimelines,omitempty"`
-	FileTypes                      []models.IDDOCFileType `json:"fileTypes,omitempty"`
-	ResponseTypes                  *string                `json:"responseTypes,omitempty"`
-	FileFrequency                  *string                `json:"fileFrequency,omitempty"`
-	LoadType                       *models.IDDOCLoadType  `json:"loadType,omitempty"`
-	EftConnectivitySetup           *bool                  `json:"eftConnectivitySetup,omitempty"`
-	UnsolicitedAdjustmentsIncluded *bool                  `json:"unsolicitedAdjustmentsIncluded,omitempty"`
-	DataFlowDiagramsNeeded         *bool                  `json:"dataFlowDiagramsNeeded,omitempty"`
-	ProduceBenefitEnhancementFiles *bool                  `json:"produceBenefitEnhancementFiles,omitempty"`
-	FileNamingConventions          *string                `json:"fileNamingConventions,omitempty"`
+	TechnicalContactsIdentified       *bool                           `json:"technicalContactsIdentified,omitempty"`
+	TechnicalContactsIdentifiedDetail *string                         `json:"technicalContactsIdentifiedDetail,omitempty"`
+	TechnicalContactsIdentifiedNote   *string                         `json:"technicalContactsIdentifiedNote,omitempty"`
+	CaptureParticipantInfo            *bool                           `json:"captureParticipantInfo,omitempty"`
+	CaptureParticipantInfoNote        *string                         `json:"captureParticipantInfoNote,omitempty"`
+	IcdOwner                          *string                         `json:"icdOwner,omitempty"`
+	DraftIcdDueDate                   *time.Time                      `json:"draftIcdDueDate,omitempty"`
+	IcdNote                           *string                         `json:"icdNote,omitempty"`
+	UatNeeds                          *string                         `json:"uatNeeds,omitempty"`
+	StcNeeds                          *string                         `json:"stcNeeds,omitempty"`
+	TestingTimelines                  *string                         `json:"testingTimelines,omitempty"`
+	TestingNote                       *string                         `json:"testingNote,omitempty"`
+	DataMonitoringFileTypes           []models.IDDOCFileType          `json:"dataMonitoringFileTypes"`
+	DataMonitoringFileOther           *string                         `json:"dataMonitoringFileOther,omitempty"`
+	DataResponseType                  *string                         `json:"dataResponseType,omitempty"`
+	DataResponseFileFrequency         *string                         `json:"dataResponseFileFrequency,omitempty"`
+	DataFullTimeOrIncremental         *IDDOCFullTimeOrIncrementalType `json:"dataFullTimeOrIncremental,omitempty"`
+	EftSetUp                          *bool                           `json:"eftSetUp,omitempty"`
+	UnsolicitedAdjustmentsIncluded    *bool                           `json:"unsolicitedAdjustmentsIncluded,omitempty"`
+	DataFlowDiagramsNeeded            *bool                           `json:"dataFlowDiagramsNeeded,omitempty"`
+	ProduceBenefitEnhancementFiles    *bool                           `json:"produceBenefitEnhancementFiles,omitempty"`
+	FileNamingConventions             *string                         `json:"fileNamingConventions,omitempty"`
+	DataMonitoringNote                *string                         `json:"dataMonitoringNote,omitempty"`
+	LoadType                          *models.IDDOCLoadType           `json:"loadType,omitempty"`
 }
 
 // Represents IDDOC questionnaire translation data
@@ -1967,6 +1975,62 @@ func (e *GeographyType) UnmarshalJSON(b []byte) error {
 }
 
 func (e GeographyType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
+type IDDOCFullTimeOrIncrementalType string
+
+const (
+	IDDOCFullTimeOrIncrementalTypeFullTime    IDDOCFullTimeOrIncrementalType = "FULL_TIME"
+	IDDOCFullTimeOrIncrementalTypeIncremental IDDOCFullTimeOrIncrementalType = "INCREMENTAL"
+)
+
+var AllIDDOCFullTimeOrIncrementalType = []IDDOCFullTimeOrIncrementalType{
+	IDDOCFullTimeOrIncrementalTypeFullTime,
+	IDDOCFullTimeOrIncrementalTypeIncremental,
+}
+
+func (e IDDOCFullTimeOrIncrementalType) IsValid() bool {
+	switch e {
+	case IDDOCFullTimeOrIncrementalTypeFullTime, IDDOCFullTimeOrIncrementalTypeIncremental:
+		return true
+	}
+	return false
+}
+
+func (e IDDOCFullTimeOrIncrementalType) String() string {
+	return string(e)
+}
+
+func (e *IDDOCFullTimeOrIncrementalType) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = IDDOCFullTimeOrIncrementalType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid IDDOCFullTimeOrIncrementalType", str)
+	}
+	return nil
+}
+
+func (e IDDOCFullTimeOrIncrementalType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *IDDOCFullTimeOrIncrementalType) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e IDDOCFullTimeOrIncrementalType) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
