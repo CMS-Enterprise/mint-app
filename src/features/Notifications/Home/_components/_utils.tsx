@@ -8,6 +8,7 @@ import {
   AnalyzedCrTdls,
   DailyDigestCompleteActivityMeta,
   DatesChangedActivityMeta,
+  IddocQuestionnaireCompletedActivityMeta,
   IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionAddedActivityMeta,
@@ -99,6 +100,13 @@ export const isDataExchangeApproach = (
   );
 };
 
+export const isIDDOCQuestionnaireCompleted = (
+  data: ActivityMetaData
+): data is IddocQuestionnaireCompletedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'IddocQuestionnaireCompletedActivityMeta';
+};
+
 export const getNavUrl = (metaData: ActivityMetaData) => {
   switch (metaData.__typename) {
     case 'AddedAsCollaboratorMeta':
@@ -110,6 +118,10 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
 
     case 'PlanDataExchangeApproachMarkedCompleteActivityMeta':
       return `/models/${metaData.modelPlan.id}/read-view/data-exchange-approach`;
+
+    case 'IddocQuestionnaireCompletedActivityMeta':
+      // TODO: Add the route for the iddoc questionnaire completed activity
+      return `/models/${metaData.modelPlanID}/read-view/WHATEVER-THE-ROUTE-IS`;
 
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':
@@ -125,6 +137,7 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
 export const UnsubscribableActivities = {
   DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: 'dataExchangeApproachMarkedComplete',
   DATES_CHANGED: 'datesChanged',
+  IDDOC_QUESTIONNAIRE_COMPLETED: 'iddocQuestionnaireComplete',
   INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
   NEW_MODEL_PLAN: 'newModelPlan'
@@ -161,7 +174,9 @@ const activityI18nKeybases = {
   NewModelPlanActivityMeta: 'notifications:index.activityType.NEW_MODEL_PLAN',
   DatesChangedActivityMeta: 'notifications:index.activityType.DATES_CHANGED',
   PlanDataExchangeApproachMarkedCompleteActivityMeta:
-    'notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
+    'notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE',
+  IddocQuestionnaireCompletedActivityMeta:
+    'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED'
 };
 
 export const activityText = (data: ActivityMetaData) => {

@@ -22,6 +22,8 @@ SELECT
     UNP.dates_changed_notification_type,
     UNP.data_exchange_approach_marked_complete,
     UNP.data_exchange_approach_marked_complete_notification_type,
+    UNP.iddoc_questionnaire_complete,
+    UNP.iddoc_questionnaire_completed_notification_type,
     UNP.incorrect_model_status,
     UNP.created_by,
     UNP.created_dts,

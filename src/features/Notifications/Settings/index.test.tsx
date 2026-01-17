@@ -56,7 +56,9 @@ const notificationPreferences: NotificationPerferenceType = {
   ],
   newDiscussionAddedNotificationType: null,
   dataExchangeApproachMarkedCompleteNotificationType: null,
-  incorrectModelStatus: [UserNotificationPreferenceFlag.EMAIL]
+  incorrectModelStatus: [UserNotificationPreferenceFlag.EMAIL],
+  iddocQuestionnaireComplete: [UserNotificationPreferenceFlag.EMAIL],
+  iddocQuestionnaireCompletedNotificationType: null
 };
 
 const notificationsSettingsMock = [
