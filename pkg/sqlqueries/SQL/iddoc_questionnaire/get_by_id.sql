@@ -1,0 +1,28 @@
+SELECT
+    id,
+    model_plan_id,
+    technical_contacts_identified,
+    capture_participant_information,
+    icd_owner,
+    draft_icd_required_by,
+    uat_test_data_needs,
+    stc_test_data_needs,
+    testing_timelines,
+    file_types,
+    response_types,
+    file_frequency,
+    load_type,
+    eft_connectivity_setup,
+    unsolicited_adjustments_included,
+    data_flow_diagrams_needed,
+    produce_benefit_enhancement_files,
+    file_naming_conventions,
+    needed,
+    completed_by,
+    completed_dts,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts
+FROM iddoc_questionnaire
+WHERE id = :id;
