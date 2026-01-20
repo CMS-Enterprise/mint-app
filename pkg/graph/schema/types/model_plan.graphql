@@ -122,7 +122,6 @@ type ModelPlan {
   echimpCRsAndTDLs: [EChimpCRAndTDLS!]!
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
-  opSolutionLastModifiedDts: Time!
   previousSuggestedPhase: ModelPhase
   timeline: PlanTimeline!
   """
