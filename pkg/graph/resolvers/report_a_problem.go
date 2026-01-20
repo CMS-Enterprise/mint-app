@@ -13,23 +13,17 @@ import (
 // ReportAProblem is the resolver to send an email with a problem report
 func ReportAProblem(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	principal authentication.Principal,
 	input model.ReportAProblemInput,
 ) (bool, error) {
-	if emailService != nil && emailTemplateService != nil {
-		emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ReportAProblemTemplateName)
-		if err != nil {
-			return false, err
-		}
+	if emailService == nil {
+		return true, nil
+	}
 
-		emailSubject, err := emailTemplate.GetExecutedSubject(email.ReportAProblemSubjectContent{})
-		if err != nil {
-			return false, err
-		}
-
-		emailBody, err := emailTemplate.GetExecutedBody(email.ReportAProblemBodyContent{
+	emailSubject, emailBody, err := email.UtilityEmails.ReportAProblem.GetContent(
+		email.ReportAProblemSubjectContent{},
+		email.ReportAProblemBodyContent{
 			ClientAddress:         emailService.GetConfig().GetClientAddress(),
 			IsAnonymousSubmission: input.IsAnonymousSubmission,
 			ReporterName:          principal.Account().CommonName,
@@ -39,17 +33,15 @@ func ReportAProblem(
 			WhatDoing:             models.ValueOrEmpty(input.WhatDoing),
 			WhatWentWrong:         models.ValueOrEmpty(input.WhatWentWrong),
 			Severity:              humanizeSeverity(input.Severity, input.SeverityOther),
-		})
-		if err != nil {
-			return false, err
-		}
+		},
+	)
+	if err != nil {
+		return false, err
+	}
 
-		err = emailService.Send(addressBook.DefaultSender, []string{addressBook.DevTeamEmail}, nil, emailSubject, "text/html", emailBody)
-		if err != nil {
-			return false, err
-		}
-		return true, nil
-
+	err = emailService.Send(addressBook.DefaultSender, []string{addressBook.DevTeamEmail}, nil, emailSubject, "text/html", emailBody)
+	if err != nil {
+		return false, err
 	}
 
 	return true, nil

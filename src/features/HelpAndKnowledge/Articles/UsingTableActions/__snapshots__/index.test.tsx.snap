@@ -110,7 +110,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Redirect to using the milestone library article"
                   class="usa-link display-block margin-y-05"
                   data-discover="true"
-                  href="/using-milestone-library"
+                  href="/help-and-knowledge/using-milestone-library"
                 >
                   Using the milestone library 
                   <svg
@@ -144,7 +144,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Redirect to how to add custom milestone article"
                   class="usa-link display-block margin-y-05"
                   data-discover="true"
-                  href="/add-custom-milestone"
+                  href="/help-and-knowledge/add-custom-milestone"
                 >
                   How to add a custom milestone 
                   <svg
@@ -346,7 +346,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                     aria-label="Redirect to operational solutions"
                     class="usa-link"
                     data-discover="true"
-                    href="/operational-solutions?page=1"
+                    href="/help-and-knowledge/operational-solutions?page=1"
                   >
                     Operational solutions area of the Help Center
                   </a>
@@ -370,7 +370,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Redirect to using the solution library articleb"
                   class="usa-link display-block margin-y-05"
                   data-discover="true"
-                  href="/using-solution-library"
+                  href="/help-and-knowledge/using-solution-library"
                 >
                   Using the solution library 
                   <svg
@@ -404,7 +404,7 @@ exports[`Using Milestone Table Article > matches the snapshot 1`] = `
                   aria-label="Redirect to how to add custom solution article"
                   class="usa-link display-block margin-y-05"
                   data-discover="true"
-                  href="/add-custom-solution"
+                  href="/help-and-knowledge/add-custom-solution"
                 >
                   How to add a custom solution 
                   <svg

@@ -65,7 +65,6 @@ func (suite *ResolverSuite) TestUpdatePlanTimeline() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		nil,
-		nil,
 		email.AddressBook{},
 	)
 

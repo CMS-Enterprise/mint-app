@@ -5,6 +5,7 @@ enum MTOCommonSolutionKey {
   CDX
   CCW
   CMS_BOX
+  CMS_QUALTRICS
   CBOSC
   CPI_VETTING
   EFT
@@ -51,6 +52,7 @@ enum MTOCommonSolutionKey {
   RESDAC_CMDS
   OVERLAPS_OPERATIONS_WORKGROUP
   HETS
+  MCBS
 }
 
 enum MTOSolutionType {

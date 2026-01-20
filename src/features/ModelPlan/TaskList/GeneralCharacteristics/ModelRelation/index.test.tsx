@@ -182,9 +182,10 @@ describe('Model Plan Characteristics', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('plan-characteristics-has-component-or-tracks-note')
-      ).toHaveValue('Component note');
+        screen.getByTestId('plan-characteristics-tracks-differ-how')
+      ).toHaveValue('Differ text');
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

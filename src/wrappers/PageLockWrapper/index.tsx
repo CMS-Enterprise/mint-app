@@ -2,7 +2,7 @@
   Subscription handler for checking lock statuses, adding locks, and removing locks
   Utilizes the SubscriptionContext to listen for updates made from locking/unlocking mutations
   Uses app location to identify the model plan and current task list section of the model plan
-  Redirects locked and errors states to /locked-task-list-section view
+  Redirects locked and errors states to /locked-model-plan-section view
  */
 
 import React, { useContext } from 'react';
@@ -105,7 +105,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
   const isReadView: boolean = to.split('/')[3] === 'read-view';
 
   const isLockable: boolean =
-    modelPlanRoute === 'task-list' ||
+    modelPlanRoute === 'model-plan' ||
     (modelPlanRoute === 'data-exchange-approach' && !isReadView) ||
     (modelPlanRoute === 'model-timeline' && !isReadView) ||
     (modelPlanRoute === 'model-to-operations' && !isReadView);
@@ -149,7 +149,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
   if (lockState === LockStatus.LOCKED) {
     return (
       <Navigate
-        to={`/models/${modelID}/locked-task-list-section`}
+        to={`/models/${modelID}/locked-model-plan-section`}
         state={{ route: taskListRoute }}
         replace
       />
@@ -171,7 +171,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         }));
       })
       .catch(() => {
-        navigate(`/models/${modelID}/locked-task-list-section`, {
+        navigate(`/models/${modelID}/locked-model-plan-section`, {
           // Passing error status to default error page
           state: { route: taskListRoute, error: true }
         });
@@ -186,7 +186,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
         section
       }
     }).catch(() => {
-      navigate(`/models/${modelID}/locked-task-list-section`, {
+      navigate(`/models/${modelID}/locked-model-plan-section`, {
         // Passing error status to default error page
         state: { route: taskListRoute, error: true }
       });

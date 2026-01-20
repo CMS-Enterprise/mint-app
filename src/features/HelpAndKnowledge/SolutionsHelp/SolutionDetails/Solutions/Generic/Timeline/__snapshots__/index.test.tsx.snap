@@ -5,9 +5,11 @@ exports[`Generic Timeline Components > matches the snapshot > 4innovation 1`] = 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Timelines can vary depending on model team’s use of 4i and ACO-OS features. Onboarding to the 4i platform can take 10-12 weeks depending on the features and prioritization by the model teams, provided there are no major changes or customizations. Additionally, any policy or legislation changes can potentially result in a delay to the application go-live dates.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -142,6 +144,9 @@ exports[`Generic Timeline Components > matches the snapshot > Accountable Care O
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -154,6 +159,9 @@ exports[`Generic Timeline Components > matches the snapshot > Actuarial Research
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -166,9 +174,11 @@ exports[`Generic Timeline Components > matches the snapshot > Automated Plan Pay
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Timing varies based on what the model needs, but it’s best to involve APPS early in the design process. System development for any new project lasts for 6 months to 1 year, depending on the complexity of the project.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -212,9 +222,11 @@ exports[`Generic Timeline Components > matches the snapshot > Beneficiary Claims
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       If a model is already using 4innovation (4i), it’s much quicker to onboard to BCDA (a few weeks versus several months). It’s best to involve BCDA during the development process, so they can help determine if it’s right for your model.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -266,6 +278,9 @@ exports[`Generic Timeline Components > matches the snapshot > CMMI Analysis and 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <h3
       class="margin-bottom-0 text-bold"
     >
@@ -416,9 +431,11 @@ exports[`Generic Timeline Components > matches the snapshot > CMMI Data Aggregat
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       The timeline for working with CDAC varies based on model requirements. Please reach out to the CDAC team to get started.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -451,9 +468,38 @@ exports[`Generic Timeline Components > matches the snapshot > CMS Box 1`] = `
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
-      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at &lt;email&gt;MINTTeam@cms.hhs.gov&lt;/email&gt;.
-    </p>
+    <div
+      class="margin-bottom-4"
+    >
+      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at 
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        <span
+          class="display-flex flex-align-center line-height-normal"
+          style="column-gap: 0.25rem;"
+        >
+          MINTTeam@cms.hhs.gov
+          <svg
+            aria-label="launch"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </button>
+      .
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -484,11 +530,151 @@ exports[`Generic Timeline Components > matches the snapshot > CMS Box 1`] = `
 </DocumentFragment>
 `;
 
+exports[`Generic Timeline Components > matches the snapshot > CMS Qualtrics 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <div
+      class="margin-bottom-4"
+    >
+      Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        <span
+          class="display-flex flex-align-center line-height-normal"
+          style="column-gap: 0.25rem;"
+        >
+          MINTTeam@cms.hhs.gov
+          <svg
+            aria-label="launch"
+            class="usa-icon"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </button>
+      .
+    </div>
+    <ol
+      class="usa-process-list padding-top-1"
+    >
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Access CMS Qualtrics
+        </h3>
+        Log in to CMS Qualtrics using your CMS user name and password.
+
+        <span
+          class="margin-top-2 display-block usa-link pointer"
+          role="button"
+          tabindex="0"
+        >
+          <span>
+            Go to CMS Qualtrics
+            <svg
+              aria-label="launch"
+              class="usa-icon margin-left-05 top-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
+          </span>
+        </span>
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Request a Survey Creator role
+        </h3>
+        Access the Jira help desk to request a change in your Qualtrics user role from Standard User to Survey Creator.
+
+        <span
+          class="margin-top-2 display-block usa-link pointer"
+          role="button"
+          tabindex="0"
+        >
+          <span>
+            Learn more about requesting a role change
+            <svg
+              aria-label="launch"
+              class="usa-icon margin-left-05 top-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
+          </span>
+        </span>
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Create a survey
+        </h3>
+        Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.
+      </li>
+      <li
+        class="usa-process-list__item operational-solution-details__timeline-item"
+      >
+        <h3
+          class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+          data-testid="processListHeading"
+        >
+          Distribute your survey
+        </h3>
+        Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.
+      </li>
+    </ol>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic Timeline Components > matches the snapshot > CPI Vetting 1`] = `
 <DocumentFragment>
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -501,6 +687,9 @@ exports[`Generic Timeline Components > matches the snapshot > Centralized Data E
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -566,9 +755,11 @@ exports[`Generic Timeline Components > matches the snapshot > Chronic Conditions
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       It takes a few weeks to get access to CCW. The steps below outline the process for contractors and CMS employees.
-    </p>
+    </div>
     <h3
       class="margin-bottom-0 text-bold"
     >
@@ -689,9 +880,11 @@ exports[`Generic Timeline Components > matches the snapshot > Consolidated Busin
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Generally, it takes 30 days for models to start using CBOSC. The steps below are not a complete list of everything involved but highlight some main activities.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -782,6 +975,9 @@ exports[`Generic Timeline Components > matches the snapshot > Division of Stakeh
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -794,6 +990,9 @@ exports[`Generic Timeline Components > matches the snapshot > Drug Data Processi
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -806,6 +1005,9 @@ exports[`Generic Timeline Components > matches the snapshot > Electronic File Tr
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -818,6 +1020,9 @@ exports[`Generic Timeline Components > matches the snapshot > Enterprise Privacy
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -830,9 +1035,11 @@ exports[`Generic Timeline Components > matches the snapshot > Expanded Data Feed
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Timelines vary by model but it generally takes 6-12 months.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -896,6 +1103,9 @@ exports[`Generic Timeline Components > matches the snapshot > Federal Funded Res
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -908,9 +1118,11 @@ exports[`Generic Timeline Components > matches the snapshot > GovDelivery 1`] = 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       The setup for GovDelivery is very quick and takes one business day in most cases.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -971,6 +1183,9 @@ exports[`Generic Timeline Components > matches the snapshot > GrantSolutions 1`]
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1014,6 +1229,9 @@ exports[`Generic Timeline Components > matches the snapshot > HIPAA Eligibility 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1026,9 +1244,11 @@ exports[`Generic Timeline Components > matches the snapshot > Health Data Report
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Generally, it takes about four to six weeks for models to start using HDR.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1109,9 +1329,11 @@ exports[`Generic Timeline Components > matches the snapshot > Health Plan Manage
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
        and they will help you connect with Center for Medicare (CM).
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1124,9 +1346,11 @@ exports[`Generic Timeline Components > matches the snapshot > Healthcare Integra
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact the &lt;link1&gt;HIGLAS&lt;/link1&gt;, &lt;link2&gt;IPC&lt;/link2&gt;, and/or &lt;link3&gt;Shared Systems&lt;/link3&gt; points of contact if you have questions.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1150,6 +1374,9 @@ exports[`Generic Timeline Components > matches the snapshot > Innovation Center 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1162,9 +1389,11 @@ exports[`Generic Timeline Components > matches the snapshot > Innovation Payment
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       It takes about 5 months for a new model to start using IPC.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1287,9 +1516,11 @@ exports[`Generic Timeline Components > matches the snapshot > Innovation Support
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       The ISP systems (CDX, HDR, eDFR, and Model Space) vary in functionality. Therefore, onboarding and implementation times for the three systems vary. However, the onboarding typically takes months rather than years depending on capacity.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1388,6 +1619,9 @@ exports[`Generic Timeline Components > matches the snapshot > Integrated Data Re
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1400,6 +1634,9 @@ exports[`Generic Timeline Components > matches the snapshot > Learning and Diffu
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1435,9 +1672,11 @@ exports[`Generic Timeline Components > matches the snapshot > Legal Vertical 1`]
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Timing varies based on the type of service or assistance needed. For example, Participation Agreements (PA) can take 9-12 months from start to finish.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1511,9 +1750,11 @@ exports[`Generic Timeline Components > matches the snapshot > Measure and Instru
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       The CMMI MIDS contract is currently in option year 3 of a base plus 4-year contract. Most of the quality measure work has already been identified and approved for the current year, however, you can still consider the CMMI MIDS contract for ad hoc analyses or reports to support the design of the quality strategy for model work. The CMMI MIDS contract has one more year remaining, option year 4, then the contract will be recompeted. The timeline for developing and supporting a new quality measure varies based on the complexity of the measure. The CMMI MIDS contractor will work with the model teams to develop and maintain their quality measures during the models’ lifecycle.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1601,9 +1842,75 @@ exports[`Generic Timeline Components > matches the snapshot > Medicare Advantage
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
        if your model will use MARx or if you have any questions. 
-    </p>
+    </div>
+    <ol
+      class="usa-process-list padding-top-1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic Timeline Components > matches the snapshot > Medicare Current Beneficiary Survey 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+  >
+    <div
+      class="margin-bottom-4"
+    >
+      <div
+        class="usa-alert usa-alert--info flex line-height-body-5 margin-bottom-4"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <h4
+            class="usa-alert__heading"
+          >
+            We’re still gathering information about  MCBS
+          </h4>
+          <p
+            class="usa-alert__text"
+          >
+            <span>
+              In the meantime, contact the MINT Team at 
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              .
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1616,6 +1923,9 @@ exports[`Generic Timeline Components > matches the snapshot > Microsoft Forms 1`
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1628,9 +1938,11 @@ exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       It typically takes two weeks set up a new workspace in Model Space.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1687,7 +1999,7 @@ exports[`Generic Timeline Components > matches the snapshot > Model Space 1`] = 
         Access your Model Space in Databricks.
 
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -1721,9 +2033,11 @@ exports[`Generic Timeline Components > matches the snapshot > National Committee
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Consultation with the COR and Project Lead will be required to verify that the quality measure under consideration is incorporated within the existing contract scope.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1756,6 +2070,9 @@ exports[`Generic Timeline Components > matches the snapshot > Office of the Actu
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1768,6 +2085,9 @@ exports[`Generic Timeline Components > matches the snapshot > Overlaps Operation
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1819,6 +2139,9 @@ exports[`Generic Timeline Components > matches the snapshot > Patient Activation
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1831,6 +2154,9 @@ exports[`Generic Timeline Components > matches the snapshot > Quality Payment Pr
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1843,9 +2169,11 @@ exports[`Generic Timeline Components > matches the snapshot > Quality Vertical 1
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Timing for working with the Quality Vertical varies based on the model’s needs though it is best to reach out as early as possible. 
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -1900,6 +2228,9 @@ exports[`Generic Timeline Components > matches the snapshot > ResDAC CMMI Model 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1912,6 +2243,9 @@ exports[`Generic Timeline Components > matches the snapshot > Research and Rapid
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1924,9 +2258,11 @@ exports[`Generic Timeline Components > matches the snapshot > Research, Measurem
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       Model teams should follow the &lt;link1&gt;Procurement Administrative Lead Time (PALT)&lt;/link1&gt; standards to determine when to begin working with RMADA.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1939,6 +2275,9 @@ exports[`Generic Timeline Components > matches the snapshot > Risk Adjustment Su
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -1951,9 +2290,11 @@ exports[`Generic Timeline Components > matches the snapshot > Salesforce Applica
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       It can take 3-5 months for a model to use Salesforce, but you should submit an onboarding request as soon as you know your model will utilize the tool. Below are the steps involved in the process.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -2067,6 +2408,9 @@ exports[`Generic Timeline Components > matches the snapshot > Salesforce CONNECT
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -2079,6 +2423,9 @@ exports[`Generic Timeline Components > matches the snapshot > Salesforce Letter 
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -2091,6 +2438,9 @@ exports[`Generic Timeline Components > matches the snapshot > Salesforce Project
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -2103,6 +2453,9 @@ exports[`Generic Timeline Components > matches the snapshot > Salesforce Request
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />
@@ -2115,9 +2468,11 @@ exports[`Generic Timeline Components > matches the snapshot > Shared Systems 1`]
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
-    <p>
+    <div
+      class="margin-bottom-4"
+    >
       The timing for using Shared Systems varies by model. It’s best to reach out during model design, so they know of upcoming work.
-    </p>
+    </div>
     <ol
       class="usa-process-list padding-top-1"
     >
@@ -2201,6 +2556,9 @@ exports[`Generic Timeline Components > matches the snapshot > Transformed Medica
   <div
     class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
   >
+    <div
+      class="margin-bottom-4"
+    />
     <ol
       class="usa-process-list padding-top-1"
     />

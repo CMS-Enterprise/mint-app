@@ -32,7 +32,6 @@ func (s *Seeder) createModelPlan(
 		s.Config.Context,
 		s.Config.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		modelName,
 		id,
@@ -64,7 +63,6 @@ func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interf
 func (s *Seeder) updatePlanTimeline(
 	ctx context.Context,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	mp *models.ModelPlan,
 	changes map[string]interface{},
@@ -84,7 +82,6 @@ func (s *Seeder) updatePlanTimeline(
 		princ,
 		s.Config.Store,
 		emailService,
-		emailTemplateService,
 		addressBook,
 	)
 	if err != nil {
@@ -146,7 +143,6 @@ func (s *Seeder) updatePlanDataExchangeApproach(
 		s.Config.Store,
 		// Currently hard-coding email-related args to not send emails
 		nil,
-		nil,
 		email.AddressBook{},
 	)
 	if err != nil {
@@ -160,7 +156,6 @@ func (s *Seeder) updatePlanDataExchangeApproach(
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
 func (s *Seeder) addPlanCollaborator(
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	mp *models.ModelPlan,
 	input *model.PlanCollaboratorCreateInput,
 ) *models.PlanCollaborator {
@@ -172,7 +167,6 @@ func (s *Seeder) addPlanCollaborator(
 		s.Config.Store,
 		s.Config.Logger,
 		emailService,
-		emailTemplateService,
 		s.Config.AddressBook,
 		input,
 		princ,
@@ -289,7 +283,6 @@ func (s *Seeder) addOperationalSolution(
 		s.Config.Context,
 		s.Config.Store,
 		s.Config.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		operationalNeedID,

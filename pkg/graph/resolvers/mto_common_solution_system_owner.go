@@ -31,7 +31,7 @@ func MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx context.Context, key models
 // CreateMTOCommonSolutionSystemOwner creates a new systemOwner for a common solution.
 // Accepts the solution key, system owner type, and cmsComponent. Returns the created system owner or an error.
 func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
 	changes map[string]interface{},
 ) (*models.MTOCommonSolutionSystemOwner, error) {
@@ -69,7 +69,7 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 	}
 
 	// Send email for system owner creation
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedSystemOwner.Key)
 		if err != nil {
@@ -100,7 +100,7 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 // UpdateMTOCommonSolutionSystemOwner updates an existing system owner for a common solution.
 // Accepts the system owner ID and a map of changes. Returns the updated system owner or an error.
 func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
 	changes map[string]interface{},
 ) (*models.MTOCommonSolutionSystemOwner, error) {
@@ -128,7 +128,7 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 	}
 
 	// Send email for system owner update
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, updatedSystemOwner.Key)
 		if err != nil {
@@ -171,7 +171,7 @@ func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 // DeleteMTOCommonSolutionSystemOwner deletes a system owner for a common solution by its ID.
 // Returns the deleted system owner or an error.
 func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
-	emailService oddmail.EmailService, emailTemplateService email.TemplateService, addressBook email.AddressBook,
+	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
 ) (*models.MTOCommonSolutionSystemOwner, error) {
 	principalAccount := principal.Account()
@@ -209,7 +209,7 @@ func DeleteMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 	}
 
 	// Send email for system owner deletion
-	if emailService != nil && emailTemplateService != nil {
+	if emailService != nil {
 		// Load the MTOCommonSolution to get its name for the email
 		mtoSolution, err := MTOCommonSolutionGetByKeyLOADER(ctx, returnedSystemOwner.Key)
 		if err != nil {

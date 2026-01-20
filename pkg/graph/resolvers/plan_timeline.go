@@ -27,7 +27,6 @@ func UpdatePlanTimeline(
 	principal authentication.Principal,
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 ) (*models.PlanTimeline, error) {
 	// Get existing planTimeline
@@ -73,7 +72,6 @@ func UpdatePlanTimeline(
 	}
 
 	if emailService != nil &&
-		emailTemplateService != nil &&
 		len(addressBook.ModelPlanDateChangedRecipients) > 0 {
 		err2 := processPlanTimelineChangedDates(
 			ctx,
@@ -83,7 +81,6 @@ func UpdatePlanTimeline(
 			changes,
 			existing,
 			emailService,
-			emailTemplateService,
 			addressBook,
 			modelPlan,
 		)

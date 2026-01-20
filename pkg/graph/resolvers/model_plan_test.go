@@ -22,7 +22,6 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 		context.Background(),
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		planName,
 		nil,
@@ -142,7 +141,6 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			nil,
-			nil,
 			email.AddressBook{},
 		)
 		suite.NoError(err)
@@ -163,7 +161,6 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			nil,
-			nil,
 			email.AddressBook{},
 		)
 		suite.NoError(err)
@@ -183,7 +180,6 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			changes,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
-			nil,
 			nil,
 			email.AddressBook{},
 		)
@@ -212,7 +208,6 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 			changes,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
-			nil,
 			nil,
 			email.AddressBook{},
 		)
@@ -350,7 +345,6 @@ func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		nil,
 		nil,
 		email.AddressBook{},
 		need.ID,

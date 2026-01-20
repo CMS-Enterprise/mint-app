@@ -114,7 +114,6 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		nil,
-		nil,
 		email.AddressBook{},
 		collaboratorInput,
 		suite.testConfigs.Principal,

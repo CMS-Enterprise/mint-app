@@ -1,9 +1,6 @@
 WITH QUERIED_IDS AS (
     /*Translate the input to a table */
-    SELECT id
-    FROM
-        JSON_TO_RECORDSET(:paramTableJSON)
-        AS x("id" UUID) --noqa
+    SELECT UNNEST(CAST(:ids AS UUID[]))  AS id
 )
 
 SELECT

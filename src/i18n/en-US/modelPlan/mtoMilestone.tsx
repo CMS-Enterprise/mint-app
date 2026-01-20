@@ -252,6 +252,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       CCW: 'Chronic Conditions Warehouse',
       CDAC: 'CMMI Data Aggregation Contract',
       CMS_BOX: 'CMS Box',
+      CMS_QUALTRICS: 'CMS Qualtrics',
       CBOSC: 'Consolidated Business Operations Support Center',
       CPI_VETTING: 'CPI Vetting',
       EFT: 'Electronic File Transfer',
@@ -296,7 +297,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
       OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup',
-      HETS: 'HIPAA Eligibility Transaction System'
+      HETS: 'HIPAA Eligibility Transaction System',
+      MCBS: 'Medicare Current Beneficiary Survey'
     },
     readonlyOptions: {
       INNOVATION: '4i'
@@ -322,6 +324,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       CCW: 'Chronic Conditions Warehouse',
       CDAC: 'CMMI Data Aggregation Contract',
       CMS_BOX: 'CMS Box',
+      CMS_QUALTRICS: 'CMS Qualtrics',
       CBOSC: 'Consolidated Business Operations Support Center',
       CPI_VETTING: 'CPI Vetting',
       EFT: 'Electronic File Transfer',
@@ -366,7 +369,8 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       RESDAC_CMDS:
         'ResDAC CMMI Model Data Sharing Model Participation Data Initiative',
       OVERLAPS_OPERATIONS_WORKGROUP: 'Overlaps Operations Workgroup',
-      HETS: 'HIPAA Eligibility Transaction System'
+      HETS: 'HIPAA Eligibility Transaction System',
+      MCBS: 'Medicare Current Beneficiary Survey'
     },
     readonlyOptions: {
       INNOVATION: '4i'

@@ -88,11 +88,10 @@ func MTOTemplateMilestoneGetBySolutionIDLOADER(ctx context.Context, solutionID u
 
 // --- types & deps ---
 type ApplyTemplateDeps struct {
-	Store                *storage.Store
-	Logger               *zap.Logger
-	EmailService         oddmail.EmailService
-	EmailTemplateService email.TemplateService
-	AddressBook          email.AddressBook
+	Store        *storage.Store
+	Logger       *zap.Logger
+	EmailService oddmail.EmailService
+	AddressBook  email.AddressBook
 }
 
 type ApplyTemplateArgs struct {
@@ -127,7 +126,6 @@ func ApplyTemplateToMTO(
 	logger *zap.Logger,
 	principal authentication.Principal,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 	templateID uuid.UUID,
@@ -139,11 +137,10 @@ func ApplyTemplateToMTO(
 	}
 
 	deps := ApplyTemplateDeps{
-		Store:                store,
-		Logger:               logger,
-		EmailService:         emailService,
-		EmailTemplateService: emailTemplateService,
-		AddressBook:          addressBook,
+		Store:        store,
+		Logger:       logger,
+		EmailService: emailService,
+		AddressBook:  addressBook,
 	}
 	args := ApplyTemplateArgs{
 		Ctx:         ctx,
@@ -330,7 +327,7 @@ func copyMilestones(
 
 		msWithStatus, err := MTOMilestoneCreateCommonWithTXAllowConflicts(
 			args.Ctx, deps.Logger, args.Principal, tx, deps.Store,
-			deps.EmailService, deps.EmailTemplateService, deps.AddressBook,
+			deps.EmailService, deps.AddressBook,
 			args.ModelPlanID, ms.Key, solutionKeys,
 		)
 		if err != nil {

@@ -88,7 +88,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 		"doesNeedToMakeMultiPayerDataAvailableNote": doesNeedToMakeMultiPayerDataAvailableNoteExpected,
 	}
 	// Update and verify the expected fields are updated
-	retApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{})
+	retApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(retApproach)
 	if suite.NotNil(retApproach.DoesNeedToMakeMultiPayerDataAvailable) {
@@ -125,7 +125,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 		"isDataExchangeApproachComplete": helpers.PointerTo(true),
 	}
 	// Update and verify that it gets set to completed
-	completeApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changesComplete, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{})
+	completeApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changesComplete, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(completeApproach)
 	if suite.NotNil(completeApproach.Status) {
@@ -138,7 +138,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	}
 
 	// Update, but don't specify the status with the original change set
-	neutralApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{})
+	neutralApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(neutralApproach)
 	if suite.NotNil(neutralApproach.Status) {
@@ -154,7 +154,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 		"isDataExchangeApproachComplete": helpers.PointerTo(false),
 	}
 
-	uncompletedApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changesUnComplete, suite.testConfigs.Principal, suite.testConfigs.Store, nil, nil, email.AddressBook{})
+	uncompletedApproach, err := PlanDataExchangeApproachUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, approach.ID, changesUnComplete, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(uncompletedApproach)
 	if suite.NotNil(uncompletedApproach.Status) {

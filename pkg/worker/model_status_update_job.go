@@ -40,7 +40,6 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 		w.Store,
 		logger,
 		w.EmailService,
-		&w.EmailTemplateService,
 		w.AddressBook,
 		modelPlanID,
 	)

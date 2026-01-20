@@ -175,7 +175,6 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		nil,
-		nil,
 		email.AddressBook{},
 		plan.ID,
 		commonSolutionKey,

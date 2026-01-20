@@ -128,7 +128,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 
 	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
 	// This is not needed currently.
-	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, w.EmailService, w.AddressBook)
 	if sendErr != nil {
 		logger.Error("error sending daily digest notification", zap.Error(sendErr))
 	}
@@ -162,7 +162,6 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		dateAnalyzed,
 		w.Store,
 		logger,
-		w.EmailTemplateService,
 		w.EmailService,
 		w.AddressBook,
 	)

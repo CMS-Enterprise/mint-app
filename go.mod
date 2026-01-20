@@ -21,7 +21,7 @@ require (
 	github.com/stretchr/testify v1.11.1
 	github.com/vektah/gqlparser/v2 v2.5.30
 	go.uber.org/zap v1.27.0
-	golang.org/x/sync v0.18.0
+	golang.org/x/sync v0.19.0
 )
 
 require github.com/gorilla/websocket v1.5.3
@@ -71,7 +71,7 @@ require (
 	github.com/charmbracelet/x/ansi v0.9.3 // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-	github.com/graph-gophers/dataloader/v7 v7.1.0
+	github.com/graph-gophers/dataloader/v7 v7.1.2
 	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
 )

@@ -29,7 +29,6 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 		ctx,
 		logger,
 		r.emailService,
-		r.emailTemplateService,
 		r.addressBook,
 		&input,
 		principal,

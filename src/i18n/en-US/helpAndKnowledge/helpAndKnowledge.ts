@@ -505,7 +505,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
   [MtoCommonSolutionKey.CDAC]: {
     about: {
       description: `The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
-        
+
   CDAC could support a model/project if:`,
       items: [
         'The model team would benefit from enhanced monitoring capabilities that include the integration of external data sources with internal CMS data sources for more comprehensive monitoring. <italic>For example, the Cell & Gene Therapy Access (CGT) Model Team leverages aggregated clinical and claims data insights alongside Medicaid claims for longitudinal patient tracking to monitor drug therapy outcomes as patients transition across care settings and health plans.</italic>',
@@ -531,7 +531,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Integrated data and insights for Model Teams',
           description: `Supporting model teams with integrating data from various data sources (e.g., clinical registry, commercial payer data), across time and at a patient and/or population level to support monitoring of patient or model outcomes.
-            
+
 Examples and impact:`,
           level: 'h4',
           items: [
@@ -543,7 +543,7 @@ Examples and impact:`,
         {
           header: 'Integrated data and insights to Model Participants',
           description: `Supporting model participants with timely, comprehensive, and actionable insights on their attributed patients supports improvement on model measures and reduces burden (when compared to reconciling multiple reports and portals). This is typically achieved by working in collaboration with aggregators such as Health Information Exchanges (HIEs) and EHR Vendors.
-            
+
 Examples and impact:`,
           level: 'h4',
           items: [
@@ -1491,6 +1491,25 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       items: []
     }
   },
+  [MtoCommonSolutionKey.MCBS]: {
+    about: {
+      description:
+        'The Medicare Current Beneficiary Survey (MCBS), sponsored by the Centers for Medicare & Medicaid Services Office of Enterprise Data and Analytics (OEDA) through a contract with NORC at the University of Chicago, is the most comprehensive and complete survey available on the Medicare population. Since 1991, the MCBS has collected data on Medicare beneficiaries’ social and medical risk factors and the relationship between these factors, healthcare utilization, and health outcomes – at a point in time and over time – directly from beneficiaries. These data, linked with Medicare enrollment data and claims, provide information not otherwise available through administrative data on the Medicare program and can be used to evaluate effectiveness of health care policy and policy interventions.',
+      descriptionFooter:
+        '<italic>Excerpt from the MCBS information page on CMS.gov.</italic><link1>Learn more about MCBS</link1>',
+      links: [
+        {
+          link: 'https://www.cms.gov/data-research/research/medicare-current-beneficiary-survey',
+          external: true
+        }
+      ]
+    },
+    timeline: {
+      description: undefined,
+      gatheringInfo: true,
+      items: []
+    }
+  },
   [MtoCommonSolutionKey.OUTLOOK_MAILBOX]: {
     about: {
       description:
@@ -2345,6 +2364,66 @@ Model Space offers model teams and their contractors templates or Databricks not
     about: {
       description: '',
       gatheringInfo: true
+    }
+  },
+  [MtoCommonSolutionKey.CMS_QUALTRICS]: {
+    about: {
+      description:
+        'CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.\n\n<link1>Learn more about how to get access to Qualtrics</link1>',
+      links: [
+        {
+          link: 'https://confluenceent.cms.gov/pages/viewpage.action?pageId=1035742284&spaceKey=CMCSMAC&title=Qualtrics',
+          external: true
+        }
+      ],
+      components: [
+        {
+          header: 'Capabilities',
+          level: 'h3',
+          items: [
+            'Customizable survey or application creation',
+            'Survey or application distribution'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+      items: [
+        {
+          header: 'Access CMS Qualtrics',
+          description:
+            'Log in to CMS Qualtrics using your CMS user name and password.\n<link1>Go to CMS Qualtrics</link1>',
+          links: [
+            {
+              link: 'https://surveys.cms.gov/',
+              external: true
+            }
+          ]
+        },
+        {
+          header: 'Request a Survey Creator role',
+          description:
+            'Access the Jira help desk to request a change in your Qualtrics user role from Standard User to Survey Creator.\n<link1>Learn more about requesting a role change</link1>',
+          links: [
+            {
+              link: 'https://confluenceent.cms.gov/pages/viewpage.action?pageId=1035742284&spaceKey=CMCSMAC&title=Qualtrics',
+              external: true
+            }
+          ]
+        },
+        {
+          header: 'Create a survey',
+          description:
+            'Decide what information you need to capture in your survey or application and start creating. CMS Qualtrics offers different question types so you can select the format that best suits the information you’re wanting to capture.'
+        },
+        {
+          header: 'Distribute your survey',
+          description:
+            'Choose the distribution method that makes the most sense for your model. CMS Qualtrics has several distribution options like emailing a list, generating a link that anyone can access, and more.'
+        }
+      ]
     }
   },
   [MtoCommonSolutionKey.OVERLAPS_OPERATIONS_WORKGROUP]: {

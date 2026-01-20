@@ -180,6 +180,18 @@ export const helpSolutions: HelpSolutionsType = {
       timeline: (props: SolutionDetailProps) => <CMSBoxTimeline {...props} />
     }
   },
+  [MtoCommonSolutionKey.CMS_QUALTRICS]: {
+    key: MtoCommonSolutionKey.CMS_QUALTRICS,
+    categories: [
+      MtoCommonSolutionSubject.APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+    ],
+    subCategories: [OperationalSolutionSubCategories.APPLICATIONS],
+    name: 'CMS Qualtrics',
+    type: MtoSolutionType.IT_SYSTEM,
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
   [MtoCommonSolutionKey.CBOSC]: {
     key: MtoCommonSolutionKey.CBOSC,
     categories: [MtoCommonSolutionSubject.COMMUNICATION_TOOLS_AND_HELP_DESK],
@@ -390,6 +402,19 @@ export const helpSolutions: HelpSolutionsType = {
     key: MtoCommonSolutionKey.MODEL_SPACE,
     categories: [MtoCommonSolutionSubject.DATA],
     name: 'Model Space',
+    type: MtoSolutionType.IT_SYSTEM,
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  [MtoCommonSolutionKey.MCBS]: {
+    key: MtoCommonSolutionKey.MCBS,
+    categories: [
+      MtoCommonSolutionSubject.DATA,
+      MtoCommonSolutionSubject.QUALITY
+    ],
+    name: 'Medicare Current Beneficiary Survey',
+    acronym: 'MCBS',
     type: MtoSolutionType.IT_SYSTEM,
     components: {
       timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />

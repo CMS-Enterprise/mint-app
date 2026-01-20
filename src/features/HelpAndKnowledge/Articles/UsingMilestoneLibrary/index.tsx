@@ -102,7 +102,7 @@ const UsingMilestoneLibrary = () => {
 
                     <UswdsReactLink
                       aria-label="Redirect to using table actions article"
-                      to="using-table-actions"
+                      to="/help-and-knowledge/using-table-actions"
                       className="display-block margin-y-05"
                     >
                       {t('addingMilestoneToMto.step1.link1')}{' '}
@@ -113,7 +113,7 @@ const UsingMilestoneLibrary = () => {
                     </UswdsReactLink>
                     <UswdsReactLink
                       aria-label="Redirect to starting mto for a new model article"
-                      to="starting-mto-matrix"
+                      to="/help-and-knowledge/starting-mto-matrix"
                       className="display-block margin-y-05"
                     >
                       {t('addingMilestoneToMto.step1.link2')}{' '}

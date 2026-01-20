@@ -169,7 +169,7 @@ exports[`Generic About Components > matches the snapshot > 4innovation 1`] = `
       </h4>
       <span>
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -366,7 +366,7 @@ exports[`Generic About Components > matches the snapshot > Accountable Care Orga
       </h4>
       <span>
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -720,7 +720,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Analysis and Man
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -747,7 +747,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Analysis and Man
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -785,7 +785,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
       class="margin-top-0 text-pre-wrap margin-bottom-0"
     >
       The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
-        
+
   CDAC could support a model/project if:
     </p>
     <ol
@@ -795,28 +795,28 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
         class="list-item"
       >
         The model team would benefit from enhanced monitoring capabilities that include the integration of external data sources with internal CMS data sources for more comprehensive monitoring. 
-        <span
-          class="text-italic text-base"
+        <p
+          class="text-italic margin-bottom-0"
         >
           For example, the Cell & Gene Therapy Access (CGT) Model Team leverages aggregated clinical and claims data insights alongside Medicaid claims for longitudinal patient tracking to monitor drug therapy outcomes as patients transition across care settings and health plans.
-        </span>
+        </p>
       </li>
       <li
         class="list-item"
       >
         The model participants or patients would benefit from more comprehensive, real-time clinical and claims data across care settings and providers (e.g., specialists, hospitals), as well as actionable insights to improve value-based care outcomes. 
-        <span
-          class="text-italic text-base"
+        <p
+          class="text-italic margin-bottom-0"
         >
           For example, participants in primary care models have received real-time hospital notifications on their attributed patients, contributing to a reduction in avoidable readmissions. They have also received multi-payer gaps in care reports to improve performance on quality measures.
-        </span>
+        </p>
       </li>
     </ol>
     <span
       class="line-height-normal"
     >
       <span
-        class="usa-link pointer"
+        class="margin-top-2 display-block usa-link pointer"
         role="button"
         tabindex="0"
       >
@@ -868,7 +868,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
         class="text-pre-wrap "
       >
         Supporting model teams with integrating data from various data sources (e.g., clinical registry, commercial payer data), across time and at a patient and/or population level to support monitoring of patient or model outcomes.
-            
+
 Examples and impact:
       </span>
       <ul
@@ -903,7 +903,7 @@ Examples and impact:
         class="text-pre-wrap "
       >
         Supporting model participants with timely, comprehensive, and actionable insights on their attributed patients supports improvement on model measures and reduces burden (when compared to reconciling multiple reports and portals). This is typically achieved by working in collaboration with aggregators such as Health Information Exchanges (HIEs) and EHR Vendors.
-            
+
 Examples and impact:
       </span>
       <ul
@@ -940,6 +940,68 @@ exports[`Generic About Components > matches the snapshot > CMS Box 1`] = `
     >
       CMS Box is a cloud content management tool that allows users to upload, download, edit, and share documents t​o one central place. Users can also ​access documents through the web or a mobile device without VPN and without compromising security. All CMS employees should have access by default. 
     </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Generic About Components > matches the snapshot > CMS Qualtrics 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md"
+  >
+    <p
+      class="margin-top-0 text-pre-wrap margin-bottom-0"
+    >
+      CMS Qualtrics is a self-service tool for model teams to capture information (like a survey or application). All CMS users should be able to sign into CMS Qualtrics using their CMS user name and password.
+
+
+      <span
+        class="margin-top-2 display-block usa-link pointer"
+        role="button"
+        tabindex="0"
+      >
+        <span>
+          Learn more about how to get access to Qualtrics
+          <svg
+            aria-label="launch"
+            class="usa-icon margin-left-05 top-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </span>
+    </p>
+    <div
+      class="margin-top-4"
+    >
+      <h3
+        class="margin-bottom-2"
+      >
+        Capabilities
+      </h3>
+      <ul
+        class="padding-left-4 margin-top-0"
+      >
+        <li
+          class="list-item"
+        >
+          Customizable survey or application creation
+        </li>
+        <li
+          class="list-item"
+        >
+          Survey or application distribution
+        </li>
+      </ul>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -2433,7 +2495,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Payment Co
       class="line-height-normal"
     >
       <span
-        class="usa-link pointer"
+        class="margin-top-2 display-block usa-link pointer"
         role="button"
         tabindex="0"
       >
@@ -2617,7 +2679,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         >
           API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a 
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -2700,7 +2762,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         class="text-pre-wrap "
       >
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -2744,7 +2806,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
           <span>
             Participant feedback dashboards that supply curated reports to participants based on CMS data (
             <span
-              class="usa-link pointer"
+              class="margin-top-2 display-block usa-link pointer"
               role="button"
               tabindex="0"
             >
@@ -3052,7 +3114,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3079,7 +3141,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3106,7 +3168,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3133,7 +3195,7 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3326,6 +3388,52 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
 </DocumentFragment>
 `;
 
+exports[`Generic About Components > matches the snapshot > Medicare Current Beneficiary Survey 1`] = `
+<DocumentFragment>
+  <div
+    class="operational-solution-details line-height-body-5 font-body-md"
+  >
+    <p
+      class="margin-top-0 text-pre-wrap margin-bottom-0"
+    >
+      The Medicare Current Beneficiary Survey (MCBS), sponsored by the Centers for Medicare & Medicaid Services Office of Enterprise Data and Analytics (OEDA) through a contract with NORC at the University of Chicago, is the most comprehensive and complete survey available on the Medicare population. Since 1991, the MCBS has collected data on Medicare beneficiaries’ social and medical risk factors and the relationship between these factors, healthcare utilization, and health outcomes – at a point in time and over time – directly from beneficiaries. These data, linked with Medicare enrollment data and claims, provide information not otherwise available through administrative data on the Medicare program and can be used to evaluate effectiveness of health care policy and policy interventions.
+    </p>
+    <span
+      class="line-height-normal"
+    >
+      <p
+        class="text-italic margin-bottom-0"
+      >
+        Excerpt from the MCBS information page on CMS.gov.
+      </p>
+      <span
+        class="margin-top-2 display-block usa-link pointer"
+        role="button"
+        tabindex="0"
+      >
+        <span>
+          Learn more about MCBS
+          <svg
+            aria-label="launch"
+            class="usa-icon margin-left-05 top-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </span>
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Generic About Components > matches the snapshot > Microsoft Forms 1`] = `
 <DocumentFragment>
   <div
@@ -3449,7 +3557,7 @@ Model Space offers model teams and their contractors templates or Databricks not
         class="text-pre-wrap "
       >
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -3772,7 +3880,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3799,7 +3907,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -3826,7 +3934,7 @@ exports[`Generic About Components > matches the snapshot > Quality Vertical 1`] 
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4185,7 +4293,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Applicatio
           class=""
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4276,7 +4384,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4303,7 +4411,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce CONNECT 1`
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4423,7 +4531,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Letter of 
           class=""
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4593,7 +4701,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4620,7 +4728,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Project Of
           class="list-item"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4767,7 +4875,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
           class=""
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >
@@ -4810,7 +4918,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
       </h4>
       <span>
         <span
-          class="usa-link pointer"
+          class="margin-top-2 display-block usa-link pointer"
           role="button"
           tabindex="0"
         >
@@ -4870,7 +4978,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
           class="list-style-none"
         >
           <span
-            class="usa-link pointer"
+            class="margin-top-2 display-block usa-link pointer"
             role="button"
             tabindex="0"
           >

@@ -17,7 +17,6 @@ import (
 
 func main() {
 	emailService := initializeOddMailService()
-	templateService := initializeEmailTemplateService()
 	addressBook := initializeAddressBook()
 
 	// Running all test functions
@@ -29,19 +28,19 @@ func main() {
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, addressBook)
 
 	//DiscussionReply email
-	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
+	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
 
 	// Model plan emails
-	sendModelPlanShareTest(emailService, templateService, addressBook)
-	sendDateChangedEmailsTest(emailService, templateService, addressBook)
+	sendModelPlanShareTest(emailService, addressBook)
+	sendDateChangedEmailsTest(emailService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
-	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, templateService, addressBook)
-	sendFeedbackEmail(emailService, templateService, addressBook)
-	reportAProblemEmail(emailService, templateService, addressBook)
+	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
+	sendFeedbackEmail(emailService, addressBook)
+	reportAProblemEmail(emailService, addressBook)
 
 	// Solution emails
 	//TODO, we might want to remove these later. Leaving for comparison now
-	sendOperationalSolutionSelectedTestEmail(emailService, templateService, addressBook)
+	sendOperationalSolutionSelectedTestEmail(emailService, addressBook)
 	sendMTOSolutionSelectedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution Contact emails for editable POC workflow
@@ -65,11 +64,19 @@ func main() {
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, addressBook)
 
 	// Daily Digest Email
-	sendTestDailyDigestEmail(emailService, templateService, addressBook)           // daily digest email to user
-	sendTestDailyDigestEmailAggregated(emailService, templateService, addressBook) // daily digest email to mint team
+	sendTestDailyDigestEmail(emailService, addressBook)           // daily digest email to user
+	sendTestDailyDigestEmailAggregated(emailService, addressBook) // daily digest email to mint team
 
 	// MTO Milestone Assignment Email
 	sendMTOMilestoneAssignedTestEmail(emailService, addressBook)
+
+	// Model Plan Created Email showing if it was in the test environment
+	testEnv, err := appconfig.NewEnvironment("test")
+	if err != nil {
+		panic("unable to create test environment")
+	}
+	appconfig.SetEnvironment(testEnv)
+	sendModelPlanCreatedEmailTest(emailService)
 }
 
 func noErr(err error) {
@@ -91,14 +98,6 @@ func initializeOddMailService() oddmail.EmailService {
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
 	noErr(err)
 	return emailService
-}
-
-func initializeEmailTemplateService() email.TemplateService {
-	// Use local environment for test emails
-	env, _ := appconfig.NewEnvironment("local")
-	emailTemplateService, err := email.NewTemplateServiceImpl(env)
-	noErr(err)
-	return emailTemplateService
 }
 
 func initializeAddressBook() email.AddressBook {
@@ -241,7 +240,6 @@ func sendModelPlanCreatedEmailTest(
 
 func sendModelPlanShareTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	// Mocked data
@@ -309,7 +307,6 @@ func sendModelPlanShareTest(
 
 func sendDateChangedEmailsTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	modelPlan := models.NewModelPlan(
@@ -401,7 +398,6 @@ func sendCollaboratorAddedEmailTest(
 
 func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 
@@ -412,7 +408,6 @@ func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 
 	err := resolvers.SendDataExchangeApproachMarkedCompleteEmailNotification(
 		emailService,
-		templateService,
 		addressBook,
 		modelPlan,
 		"marty.mcfly@delorean.88",
@@ -425,7 +420,6 @@ func sendDataExchangeApproachMarkedCompleteEmailNotificationTest(
 
 func sendFeedbackEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	princ := authentication.ApplicationPrincipal{
@@ -449,13 +443,12 @@ func sendFeedbackEmail(
 		HowCanWeImprove:       models.StringPointer("Please send me a pizza after every model I submit"),
 	}
 
-	_, err := resolvers.SendFeedbackEmail(emailService, templateService, addressBook, &princ, input)
+	_, err := resolvers.SendFeedbackEmail(emailService, addressBook, &princ, input)
 	noErr(err)
 }
 
 func reportAProblemEmail(
 	emailService oddmail.EmailService,
-	templateService email.TemplateService,
 	addressBook email.AddressBook,
 ) {
 	princ := authentication.ApplicationPrincipal{
@@ -477,7 +470,7 @@ func reportAProblemEmail(
 		SeverityOther:         models.StringPointer(" I couldn't log in for a week "),
 	}
 
-	_, err := resolvers.ReportAProblem(emailService, templateService, addressBook, &princ, input)
+	_, err := resolvers.ReportAProblem(emailService, addressBook, &princ, input)
 	noErr(err)
 }
 

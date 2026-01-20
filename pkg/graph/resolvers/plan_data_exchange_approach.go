@@ -36,7 +36,6 @@ func PlanDataExchangeApproachUpdate(
 	principal authentication.Principal,
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	emailAddressBook email.AddressBook,
 ) (*models.PlanDataExchangeApproach, error) {
 	updatedDataExchangeApproach, err := sqlutils.WithTransaction[models.PlanDataExchangeApproach](
@@ -101,7 +100,6 @@ func PlanDataExchangeApproachUpdate(
 					existing,
 					logger,
 					emailService,
-					emailTemplateService,
 					emailAddressBook,
 					principal,
 					tx,
@@ -124,7 +122,6 @@ func TrySendDataExchangeApproachNotifications(
 	existing *models.PlanDataExchangeApproach,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService email.TemplateService,
 	emailAddressBook email.AddressBook,
 	principal authentication.Principal,
 	np sqlutils.NamedPreparer,
@@ -159,15 +156,14 @@ func TrySendDataExchangeApproachNotifications(
 	}
 
 	go func() {
-		// Return nil if there is no email service, this follows similar
-		if emailService == nil || emailTemplateService == nil {
+		// Return nil if there is no email service
+		if emailService == nil {
 			return
 		}
 
 		// Send email to MINT Team Email (no footer)
 		notifErr = SendDataExchangeApproachMarkedCompleteEmailNotification(
 			emailService,
-			emailTemplateService,
 			emailAddressBook,
 			modelPlan,
 			emailAddressBook.MINTTeamEmail,
@@ -182,7 +178,6 @@ func TrySendDataExchangeApproachNotifications(
 		// Send email notifications (footer)
 		notifErr = SendDataExchangeApproachMarkedCompleteEmailNotifications(
 			emailService,
-			emailTemplateService,
 			emailAddressBook,
 			emailUANs,
 			modelPlan,

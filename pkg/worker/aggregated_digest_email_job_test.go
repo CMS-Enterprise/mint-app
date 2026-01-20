@@ -36,10 +36,9 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 		AnyTimes()
 
 	worker := &Worker{
-		Store:                suite.testConfigs.Store,
-		EmailService:         mockEmailService,
-		EmailTemplateService: suite.testConfigs.EmailTemplateService,
-		AddressBook:          addressBook,
+		Store:        suite.testConfigs.Store,
+		EmailService: mockEmailService,
+		AddressBook:  addressBook,
 	}
 
 	mp := suite.createModelPlan("Test Plan")
@@ -76,7 +75,6 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	humanized := analyzedAudits[0].Changes.HumanizedSubset(5)
 	emailSubject, emailBody, err := generateUserAgnosticDigestEmail(
 		analyzedAudits,
-		worker.EmailTemplateService,
 		mockEmailService,
 	)
 	suite.NoError(err)

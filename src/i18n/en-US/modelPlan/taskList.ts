@@ -171,7 +171,7 @@ const modelPlanTaskList = {
   lockedHeading:
     'Someone is currently editing the section you’re trying to access.',
   lockedSubheading: 'Please try again later.',
-  returnToTaskList: 'Return to the task list',
+  returnToTaskList: 'Return to the model plan',
   breadCrumbState: {
     basics: 'Model basics',
     beneficiaries: 'Beneficiaries',

@@ -34,13 +34,13 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	testPR3 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR3")
 	testPR4 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR4")
 
-	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
-	dr2, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR2, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	dr2, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR2, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
-	dr3, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR3, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	dr3, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR3, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
-	dr4, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR4, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	dr4, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR4, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 
 	/* Delete DRs async to simulate a race condition */

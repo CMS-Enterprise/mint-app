@@ -22,14 +22,13 @@ const defaultMaxRetries = 25
 
 // Worker is a struct that contains all the dependencies to run worker functions
 type Worker struct {
-	Store                *storage.Store
-	Environment          appconfig.Environment
-	EmailService         oddmail.EmailService
-	EmailTemplateService email.TemplateServiceImpl //TODO: this should probably be the interface
-	AddressBook          email.AddressBook
-	Connections          int
-	ProcessJobs          bool
-	OktaAPIClient        oktaapi.Client
+	Store         *storage.Store
+	Environment   appconfig.Environment
+	EmailService  oddmail.EmailService
+	AddressBook   email.AddressBook
+	Connections   int
+	ProcessJobs   bool
+	OktaAPIClient oktaapi.Client
 }
 
 type JobWrapper struct {
