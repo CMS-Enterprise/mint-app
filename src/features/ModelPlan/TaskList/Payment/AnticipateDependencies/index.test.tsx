@@ -1,16 +1,17 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   ClaimsBasedPayType,
   GetAnticipateDependenciesDocument,
   GetAnticipateDependenciesQuery,
+  GetAnticipateDependenciesQueryVariables,
   PayType
 } from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
+import { modelPlanBaseMockData } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import AnticipateDependencies from './index';
 
@@ -32,7 +33,10 @@ const mockData: GetAnticipateDependenciesType = {
   isContractorAwareTestDataRequirements: null
 };
 
-const paymentsMock = [
+const paymentsMock: MockedResponse<
+  GetAnticipateDependenciesQuery,
+  GetAnticipateDependenciesQueryVariables
+>[] = [
   {
     request: {
       query: GetAnticipateDependenciesDocument,
@@ -40,15 +44,16 @@ const paymentsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
           payments: mockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan -- Anticipate Dependencies', () => {
@@ -58,9 +63,9 @@ describe('Model Plan -- Anticipate Dependencies', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <AnticipateDependencies />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -96,9 +101,9 @@ describe('Model Plan -- Anticipate Dependencies', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <AnticipateDependencies />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -114,6 +119,12 @@ describe('Model Plan -- Anticipate Dependencies', () => {
         <RouterProvider router={router} />
       </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-will-be-payment-adjustments-note')
+      ).toHaveValue('Payment adjustments note');
+    });
 
     await waitFor(() => {
       expect(
