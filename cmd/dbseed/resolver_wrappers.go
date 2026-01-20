@@ -257,17 +257,6 @@ func (s *Seeder) planDocumentCreate(mp *models.ModelPlan, fileName string, fileP
 	return document
 }
 
-// getOperationalNeedsByModelPlanID is a wrapper for resolvers.PossibleOperationalNeedCollectionGet
-// It will panic if an error occurs, rather than bubbling the error up
-func (s *Seeder) getOperationalNeedsByModelPlanID(modelPlanID uuid.UUID) []*models.OperationalNeed {
-	operationalNeeds, err := resolvers.OperationalNeedCollectionGetByModelPlanID(s.Config.Logger, modelPlanID, s.Config.Store)
-	if err != nil {
-		panic(err)
-	}
-
-	return operationalNeeds
-}
-
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
 	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.Config.OktaClient.FetchUserInfo))

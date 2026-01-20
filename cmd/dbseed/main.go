@@ -164,11 +164,6 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusCanceled,
 	})
 
-	emptyPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(emptyPlan.ID)
-	if len(emptyPlanOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT", nil)
 	s.updatePlanBasics(
@@ -204,11 +199,6 @@ func (s *Seeder) SeedData() {
 		"abbreviation": "timeline",
 		"status":       models.ModelStatusActive,
 	})
-
-	planWithBasicsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithBasics.ID)
-	if len(planWithBasicsOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
 
 	// Seed a plan with Data Exchange filled out
 	planWithDataExchange := s.createModelPlan("Plan with Data Exchange", "MINT", nil)
@@ -292,11 +282,6 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusAnnounced,
 	})
 
-	planWithCrTDLsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCrTDLs.ID)
-	if len(planWithCrTDLsOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT", nil)
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
@@ -304,11 +289,6 @@ func (s *Seeder) SeedData() {
 		"abbreviation": "arch",
 		"status":       models.ModelStatusPaused,
 	})
-
-	archivedPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(archivedPlan.ID)
-	if len(archivedPlanOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
 
 	// Seed a plan with some documents
 	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT", nil)
@@ -348,11 +328,6 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 		},
 	)
-
-	operationalNeeds := s.getOperationalNeedsByModelPlanID(planWithDocuments.ID)
-	if len(operationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
 
 	// Seed a plan that is has a clearance start date 3 months from today
 	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT", nil)
