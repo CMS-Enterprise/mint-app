@@ -13,3 +13,5 @@ ADD COLUMN iddoc_questionnaire_completed_notification_type IDDOC_QUESTIONNAIRE_C
 
 COMMENT ON COLUMN user_notification_preferences.iddoc_questionnaire_complete
 IS 'Notification preference for when IDDOC questionnaire is marked complete.';
+COMMENT ON COLUMN user_notification_preferences.iddoc_questionnaire_completed_notification_type
+IS 'Notification preference type for when IDDOC questionnaire is marked complete.';

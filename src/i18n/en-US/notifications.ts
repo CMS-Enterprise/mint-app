@@ -99,6 +99,7 @@ const notifications = {
       crTdlsUpdate: 'Updates to FFS CRs/TDLs',
       discussionActivity: 'New activity in Discussions',
       dataExchangeApproachComplete: 'Data exchange approach is complete',
+      iddocQuestionnaireComplete: '4i and ACO-OS questionnaire is complete',
       readyForReview: '{{-taskSection}} is ready for review ',
       readyForClearance: '{{-taskSection}}  is ready for clearance',
       updatesTo: 'Updates to {{-taskSection}}',
