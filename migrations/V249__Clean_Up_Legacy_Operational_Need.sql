@@ -4,6 +4,10 @@ plan_document_solution_link
 DROP CONSTRAINT
 fk_doc_sol_doc;
 
+-- remove legacy foreign key from operational_need to plan
+ALTER TABLE operational_need
+DROP CONSTRAINT fk_operational_need_plan;
+
 
 COMMENT ON TABLE operational_need IS 'Deprecated table - operational needs are now managed via mto_milestone';
 COMMENT ON TABLE operational_solution IS 'Deprecated table - operational solutions are now managed via mto_solution';
