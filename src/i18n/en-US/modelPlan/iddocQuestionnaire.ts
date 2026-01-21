@@ -93,7 +93,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     gqlField: 'captureParticipantInfo',
     goField: 'CaptureParticipantInfo',
     dbField: 'capture_participant_info',
-    label: 'Will you collect participant information?',
+    label: 'Will you capture participant information?',
     sublabel:
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: TranslationDataType.BOOLEAN,

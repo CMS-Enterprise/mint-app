@@ -8,10 +8,9 @@
     "formType": "RADIO",
     "order": 1.1,
     "options": {
-      "true": "Yes",
-      "false": "No"
+      "true": "",
+      "false": ""
     },
-    "hideFromReadonly": true,
     "childRelation": {
       "true": [
         {
@@ -32,7 +31,7 @@
           "gqlField": "captureParticipantInfo",
           "goField": "CaptureParticipantInfo",
           "dbField": "capture_participant_info",
-          "label": "Will you collect participant information?",
+          "label": "Will you capture participant information?",
           "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
@@ -224,10 +223,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "technicalContactsIdentifiedDetail": {
@@ -257,7 +255,7 @@
     "gqlField": "captureParticipantInfo",
     "goField": "CaptureParticipantInfo",
     "dbField": "capture_participant_info",
-    "label": "Will you collect participant information?",
+    "label": "Will you capture participant information?",
     "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
@@ -275,10 +273,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "captureParticipantInfoNote": {
@@ -309,10 +306,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "draftIcdDueDate": {
@@ -332,10 +328,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "icdNote": {
@@ -357,10 +352,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "uatNeeds": {
@@ -380,10 +374,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "stcNeeds": {
@@ -403,10 +396,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "testingTimelines": {
@@ -426,10 +418,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "testingNote": {
@@ -469,10 +460,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "dataMonitoringFileOther": {
@@ -504,10 +494,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "dataResponseFileFrequency": {
@@ -527,10 +516,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "dataFullTimeOrIncremental": {
@@ -554,10 +542,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "eftSetUp": {
@@ -581,10 +568,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "unsolicitedAdjustmentsIncluded": {
@@ -608,10 +594,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "dataFlowDiagramsNeeded": {
@@ -635,10 +620,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "produceBenefitEnhancementFiles": {
@@ -664,10 +648,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "fileNamingConventions": {
@@ -687,10 +670,9 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
-      },
-      "hideFromReadonly": true
+        "true": "",
+        "false": ""
+      }
     }
   },
   "dataMonitoringNote": {
