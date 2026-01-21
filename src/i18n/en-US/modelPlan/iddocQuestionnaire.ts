@@ -19,7 +19,6 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: '',
       false: ''
     },
-    // hideFromReadonly: true,
     disconnectedLabel: `questionsNotApplicablePerMTO`,
     childRelation: {
       true: [
@@ -412,11 +411,6 @@ export const iddocQuestionnaireMisc = {
     'SSM request to begin analysis at least 1 year before implementation',
   dataMonitoringHeading: 'Data monitoring questions',
   dataMonitoringContinued: 'Data monitoring questions continued',
-  // // readview section heading
-  // iddocOperations: 'IDDOC Operations',
-  // icd: 'Interface Control Document (ICD)',
-  // testingQuestions: 'Testing',
-  // dataMonitoring: 'Data monitoring',
   iddocQuestionnaireIsRequired:
     'This questionnaire is required for this model due to specific answers in the Model Plan or model-to-operations matrix (MTO).',
   iddocQuestionnaireIsNotNeeded:

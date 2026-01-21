@@ -5,10 +5,6 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       modelName
-      # opsEvalAndLearning {
-      #   id
-      #   iddocSupport
-      # }
       questionnaires {
         iddocQuestionnaire {
           id
