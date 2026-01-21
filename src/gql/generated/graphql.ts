@@ -780,7 +780,7 @@ export type IddocQuestionnaireChanges = {
   dataFlowDiagramsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
   dataFullTimeOrIncremental?: InputMaybe<IddocFullTimeOrIncrementalType>;
   dataMonitoringFileOther?: InputMaybe<Scalars['String']['input']>;
-  dataMonitoringFileTypes: Array<IddocFileType>;
+  dataMonitoringFileTypes?: InputMaybe<Array<IddocFileType>>;
   dataMonitoringNote?: InputMaybe<Scalars['String']['input']>;
   dataResponseFileFrequency?: InputMaybe<Scalars['String']['input']>;
   dataResponseType?: InputMaybe<Scalars['String']['input']>;

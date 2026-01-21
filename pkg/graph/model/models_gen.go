@@ -61,7 +61,7 @@ type IDDOCQuestionnaireChanges struct {
 	StcNeeds                          *string                         `json:"stcNeeds,omitempty"`
 	TestingTimelines                  *string                         `json:"testingTimelines,omitempty"`
 	TestingNote                       *string                         `json:"testingNote,omitempty"`
-	DataMonitoringFileTypes           []models.IDDOCFileType          `json:"dataMonitoringFileTypes"`
+	DataMonitoringFileTypes           []models.IDDOCFileType          `json:"dataMonitoringFileTypes,omitempty"`
 	DataMonitoringFileOther           *string                         `json:"dataMonitoringFileOther,omitempty"`
 	DataResponseType                  *string                         `json:"dataResponseType,omitempty"`
 	DataResponseFileFrequency         *string                         `json:"dataResponseFileFrequency,omitempty"`
