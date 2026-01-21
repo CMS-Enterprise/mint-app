@@ -19,6 +19,7 @@ import {
   DataExchangeApproachMarkedCompleteNotificationType,
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
+  IddocQuestionnaireCompletedNotificationType,
   NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -100,7 +101,11 @@ const NotificationSettings = () => {
             dataExchangeApproachMarkedCompleteNotificationType:
               data.currentUser.notificationPreferences
                 .dataExchangeApproachMarkedCompleteNotificationType ??
-              DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS
+              DataExchangeApproachMarkedCompleteNotificationType.ALL_MODELS,
+            iddocQuestionnaireCompletedNotificationType:
+              data.currentUser.notificationPreferences
+                .iddocQuestionnaireCompletedNotificationType ??
+              IddocQuestionnaireCompletedNotificationType.ALL_MODELS
           }
         : undefined,
     [data]
@@ -122,7 +127,9 @@ const NotificationSettings = () => {
     datesChanged,
     datesChangedNotificationType,
     dataExchangeApproachMarkedComplete,
-    dataExchangeApproachMarkedCompleteNotificationType
+    dataExchangeApproachMarkedCompleteNotificationType,
+    iddocQuestionnaireComplete,
+    iddocQuestionnaireCompletedNotificationType
   } = notificationPreferences;
 
   const methods = useForm<NotificationSettingsFormType>({
@@ -140,7 +147,9 @@ const NotificationSettings = () => {
       datesChangedNotificationType,
       dataExchangeApproachMarkedComplete:
         dataExchangeApproachMarkedComplete ?? [],
-      dataExchangeApproachMarkedCompleteNotificationType
+      dataExchangeApproachMarkedCompleteNotificationType,
+      iddocQuestionnaireComplete: iddocQuestionnaireComplete ?? [],
+      iddocQuestionnaireCompletedNotificationType
     },
     values: reformedDefaultValues,
     mode: 'onChange'
