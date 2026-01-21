@@ -39,7 +39,7 @@ body:graphql {
                   modelPlanID
                   modelPlan{
                       modelName
-                  }      
+                  }
                   discussionID
                   content
               }
@@ -49,7 +49,7 @@ body:graphql {
                   modelPlanID
                   modelPlan{
                       modelName
-                  }                  
+                  }
                   discussionID
                   replyID
                   content
@@ -69,7 +69,7 @@ body:graphql {
                   discussionID
                   replyID
                   content
-              } 
+              }
               ... on DailyDigestCompleteActivityMeta{
                   version
                   type
@@ -110,9 +110,9 @@ body:graphql {
                                   activity
                               }
                           }
-  
+
                   }
-  
+
               }
               ... on NewModelPlanActivityMeta {
                   version
@@ -140,7 +140,7 @@ body:graphql {
                       newRangeStart
                       newRangeEnd
                   }
-              }   
+              }
               ... on PlanDataExchangeApproachMarkedCompleteActivityMeta {
                   version
                   type
@@ -154,6 +154,14 @@ body:graphql {
                   markedCompleteBy
                   markedCompleteByUserAccount {
                       id
+                  }
+              }
+              ... on IddocQuestionnaireCompletedActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan {
+                      modelName
                   }
               }
               ... on NewDiscussionAddedActivityMeta {
@@ -181,7 +189,7 @@ body:graphql {
       }
     }
   }
-  
+
 }
 
 tests {
@@ -190,8 +198,8 @@ tests {
       userNotificationID = notifications[0].id
       bru.setVar("userNotificationID", userNotificationID);
   }
-  
-  
+
+
   // for (let i =0; i< notifications.length; i++){
   //     subtaskID = notifications[i].id
   //     bru.setVar("operationalSolutionSubtaskID"+i, subtaskID);
