@@ -5,10 +5,10 @@ import { Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
-  GetIddocTestingQuery,
-  MonitoringFileType,
-  TypedUpdatePlanOpsEvalAndLearningDocument,
-  useGetIddocTestingQuery
+  GetIddocQuestionnaireTestingQuery,
+  IddocFileType,
+  TypedUpdateIddocQuestionnaireDocument,
+  useGetIddocQuestionnaireTestingQuery
 } from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
@@ -25,8 +25,8 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 
-type IDDOCTestingFormType =
-  GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
+export type IDDOCTestingFormType =
+  GetIddocQuestionnaireTestingQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const IDDOCTesting = () => {
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
@@ -46,7 +46,7 @@ const IDDOCTesting = () => {
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const navigate = useNavigate();
 
-  const { data, loading, error } = useGetIddocTestingQuery({
+  const { data, loading, error } = useGetIddocQuestionnaireTestingQuery({
     variables: {
       id: modelID
     }
@@ -54,9 +54,6 @@ const IDDOCTesting = () => {
 
   const {
     id,
-    iddocSupport,
-    ccmInvolvment,
-    dataNeededForMonitoring,
     uatNeeds,
     stcNeeds,
     testingTimelines,
@@ -65,10 +62,11 @@ const IDDOCTesting = () => {
     dataMonitoringFileOther,
     dataResponseType,
     dataResponseFileFrequency
-  } = (data?.modelPlan?.opsEvalAndLearning || {}) as IDDOCTestingFormType;
+  } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
+    {}) as IDDOCTestingFormType;
 
   const { mutationError } = useHandleMutation(
-    TypedUpdatePlanOpsEvalAndLearningDocument,
+    TypedUpdateIddocQuestionnaireDocument,
     {
       id,
       formikRef: formikRef as any
@@ -76,11 +74,8 @@ const IDDOCTesting = () => {
   );
 
   const initialValues: IDDOCTestingFormType = {
-    __typename: 'PlanOpsEvalAndLearning',
+    __typename: 'IDDOCQuestionnaire',
     id: id ?? '',
-    ccmInvolvment: ccmInvolvment ?? [],
-    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
-    iddocSupport: iddocSupport ?? null,
     uatNeeds: uatNeeds ?? '',
     stcNeeds: stcNeeds ?? '',
     testingTimelines: testingTimelines ?? '',
@@ -211,9 +206,9 @@ const IDDOCTesting = () => {
                               )}
                             />
 
-                            {type === MonitoringFileType.OTHER &&
+                            {type === IddocFileType.OTHER &&
                               values.dataMonitoringFileTypes.includes(
-                                MonitoringFileType.OTHER
+                                IddocFileType.OTHER
                               ) && (
                                 <div className="margin-left-4">
                                   <Label

@@ -66,7 +66,9 @@ const mockNotificationSettingsWithInApp: MockedResponse<
             datesChangedNotificationType: null,
             dataExchangeApproachMarkedComplete: [],
             dataExchangeApproachMarkedCompleteNotificationType: null,
-            incorrectModelStatus: []
+            incorrectModelStatus: [],
+            iddocQuestionnaireComplete: [],
+            iddocQuestionnaireCompletedNotificationType: null
           }
         }
       }
@@ -104,7 +106,9 @@ const mockNotificationSettingsWithoutInApp: MockedResponse<
             datesChangedNotificationType: null,
             dataExchangeApproachMarkedComplete: [],
             dataExchangeApproachMarkedCompleteNotificationType: null,
-            incorrectModelStatus: []
+            incorrectModelStatus: [],
+            iddocQuestionnaireComplete: [],
+            iddocQuestionnaireCompletedNotificationType: null
           }
         }
       }
@@ -142,7 +146,9 @@ const mockNotificationSettingsEmpty: MockedResponse<
             datesChangedNotificationType: null,
             dataExchangeApproachMarkedComplete: [],
             dataExchangeApproachMarkedCompleteNotificationType: null,
-            incorrectModelStatus: []
+            incorrectModelStatus: [],
+            iddocQuestionnaireComplete: [],
+            iddocQuestionnaireCompletedNotificationType: null
           }
         }
       }

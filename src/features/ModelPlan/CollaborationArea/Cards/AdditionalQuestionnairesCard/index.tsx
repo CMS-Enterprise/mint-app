@@ -150,7 +150,10 @@ const AdditionalQuestionnairesCard = ({
           <div className="margin-bottom-2">
             {allQuestionnaires.requiredQuestionnaires.map(
               requiredQuestionnaire => (
-                <div className="display-flex flex-align-center margin-bottom-1">
+                <div
+                  className="display-flex flex-align-center margin-bottom-1"
+                  key={requiredQuestionnaire.id}
+                >
                   <QuestionnaireStatusPill
                     status={requiredQuestionnaire.status}
                   />

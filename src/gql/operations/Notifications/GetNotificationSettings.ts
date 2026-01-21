@@ -18,6 +18,8 @@ export default gql(/* GraphQL */ `
         datesChangedNotificationType
         dataExchangeApproachMarkedComplete
         dataExchangeApproachMarkedCompleteNotificationType
+        iddocQuestionnaireComplete
+        iddocQuestionnaireCompletedNotificationType
         incorrectModelStatus
       }
       leadModelPlanCount

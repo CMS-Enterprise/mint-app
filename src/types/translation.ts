@@ -37,6 +37,8 @@ import {
   GeographyApplication,
   GeographyRegionType,
   GeographyType,
+  IddocFileType,
+  IddocFullTimeOrIncrementalType,
   IddocQuestionnaireTranslation,
   KeyCharacteristic,
   KeyContactCategoryTranslation,
@@ -816,12 +818,12 @@ export type TranslationIddocQuestionnaireForm = {
   stcNeeds: TranslationFieldProperties;
   testingTimelines: TranslationFieldProperties;
   testingNote: TranslationFieldProperties;
-  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<MonitoringFileType>;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<IddocFileType>;
   dataMonitoringFileOther: TranslationFieldProperties;
   dataResponseType: TranslationFieldProperties;
   dataResponseFileFrequency: TranslationFieldProperties;
   // IDDOC Monitoring
-  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<DataFullTimeOrIncrementalType>;
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<IddocFullTimeOrIncrementalType>;
   eftSetUp: TranslationFieldPropertiesWithOptions<Bool>;
   unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptions<Bool>;
   dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptions<Bool>;

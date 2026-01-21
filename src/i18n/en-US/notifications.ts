@@ -82,6 +82,10 @@ const notifications = {
       DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: {
         text: ' marked the data exchange approach complete for {{-modelName}}.',
         cta: 'View data exchange approach'
+      },
+      IDDOC_QUESTIONNAIRE_COMPLETED: {
+        text: ' marked the 4i/ACO-OS questionnaire complete for  {{-modelName}}.',
+        cta: 'View questionnaire'
       }
     },
     dailyDigest: {
@@ -95,6 +99,7 @@ const notifications = {
       crTdlsUpdate: 'Updates to FFS CRs/TDLs',
       discussionActivity: 'New activity in Discussions',
       dataExchangeApproachComplete: 'Data exchange approach is complete',
+      iddocQuestionnaireComplete: '4i and ACO-OS questionnaire is complete',
       readyForReview: '{{-taskSection}} is ready for review ',
       readyForClearance: '{{-taskSection}}  is ready for clearance',
       updatesTo: 'Updates to {{-taskSection}}',
@@ -228,6 +233,12 @@ const notifications = {
             modelSpecific: 'whichModelTypes',
             notificationType:
               'dataExchangeApproachMarkedCompleteNotificationType'
+          },
+          {
+            name: 'iddocQuestionnaireComplete',
+            copy: 'When a 4i/ACO-OS questionnaire is completed',
+            modelSpecific: 'whichModelTypes',
+            notificationType: 'iddocQuestionnaireCompletedNotificationType'
           }
         ]
       }
@@ -258,7 +269,9 @@ const notifications = {
         NEW_DISCUSSION_ADDED: 'when a new discussion is added',
         DATES_CHANGED: 'when model dates change',
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
-          'when a data exchange approach is completed'
+          'when a data exchange approach is completed',
+        IDDOC_QUESTIONNAIRE_COMPLETED:
+          'when a 4i/ACO-OS questionnaire is completed'
       }
     }
   }

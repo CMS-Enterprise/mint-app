@@ -29,6 +29,9 @@ var userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete stri
 //go:embed SQL/user_account/get_notification_preferences_discussion_added.sql
 var userAccountGetNotificationPreferencesDiscussionAdded string
 
+//go:embed SQL/user_account/get_notification_preferences_iddoc_questionnaire_completed.sql
+var userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted string
+
 //go:embed SQL/user_account/get_lead_model_plan_count.sql
 var userAccountGetLeadModelPlanCount string
 
@@ -42,6 +45,7 @@ type userAccountScripts struct {
 	GetNotificationRecipientsDatesChanged                        string
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete string
 	GetNotificationPreferencesDiscussionAdded                    string
+	GetNotificationPreferencesIDDOCQuestionnaireCompleted        string
 	GetLeadModelPlanCount                                        string
 }
 
@@ -56,5 +60,6 @@ var UserAccount = userAccountScripts{
 	GetNotificationRecipientsDatesChanged:  userAccountGetNotificationRecipientsDatesChanged,
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete: userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,
 	GetNotificationPreferencesDiscussionAdded:                    userAccountGetNotificationPreferencesDiscussionAdded,
+	GetNotificationPreferencesIDDOCQuestionnaireCompleted:        userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted,
 	GetLeadModelPlanCount:                                        userAccountGetLeadModelPlanCount,
 }

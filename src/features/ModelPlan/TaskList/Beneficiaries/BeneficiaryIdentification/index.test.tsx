@@ -1,16 +1,17 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   BeneficiariesType,
   GetBeneficiaryIdentificationDocument,
   GetBeneficiaryIdentificationQuery,
+  GetBeneficiaryIdentificationQueryVariables,
   TriStateAnswer
 } from 'gql/generated/graphql';
-import { modelID, modelPlanBaseMock } from 'tests/mock/general';
+import { modelID, modelPlanBaseMockData } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import BeneficiaryIdentification from './index';
 
@@ -32,7 +33,10 @@ const mockData: GetBeneficiaryIdentificationType = {
   excludeCertainCharacteristicsNote: 'Note'
 };
 
-const beneficiaryMock = [
+const beneficiaryMock: MockedResponse<
+  GetBeneficiaryIdentificationQuery,
+  GetBeneficiaryIdentificationQueryVariables
+>[] = [
   {
     request: {
       query: GetBeneficiaryIdentificationDocument,
@@ -40,15 +44,16 @@ const beneficiaryMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
           beneficiaries: mockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan Beneficiaries', () => {
@@ -58,9 +63,9 @@ describe('Model Plan Beneficiaries', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <BeneficiaryIdentification />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -94,9 +99,9 @@ describe('Model Plan Beneficiaries', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/beneficiaries',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <BeneficiaryIdentification />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -114,9 +119,19 @@ describe('Model Plan Beneficiaries', () => {
     );
 
     await waitFor(() => {
+      expect(screen.getByTestId('beneficiaries-note')).toHaveValue('note');
+    });
+
+    await waitFor(() => {
       expect(
-        screen.getByTestId('beneficiaries-note-add-note-toggle')
-      ).toBeInTheDocument();
+        screen.getByTestId('beneficiaries-dual-eligibility-note')
+      ).toHaveValue('This is note');
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('beneficiaries-exclude-note')).toHaveValue(
+        'Note'
+      );
     });
 
     expect(asFragment()).toMatchSnapshot();
