@@ -7,10 +7,7 @@ enum TagType {
 """
 TaggedEntity is the actual object represented by a tag in the data base.
 """
-union TaggedEntity =
-  | UserAccount
-  | PossibleOperationalSolution
-  | MTOCommonSolution
+union TaggedEntity = UserAccount | MTOCommonSolution
 
 """
 TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags

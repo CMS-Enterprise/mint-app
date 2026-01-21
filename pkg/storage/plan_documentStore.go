@@ -287,18 +287,7 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.DeleteByDocumentID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	_, err = stmt.Exec(utilitysql.CreateDocumentIDQueryMap(id))
-	if err != nil {
-		return nil, err
-	}
-
-	stmt, err = tx.PrepareNamed(sqlqueries.PlanDocument.DeleteByID)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocument.DeleteByID)
 	if err != nil {
 		return nil, err
 	}
