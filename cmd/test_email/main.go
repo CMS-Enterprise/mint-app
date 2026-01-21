@@ -35,6 +35,7 @@ func main() {
 	sendDateChangedEmailsTest(emailService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
+	sendTestIddocQuestionnaireMarkedCompleteEmail(emailService, addressBook)
 	sendFeedbackEmail(emailService, addressBook)
 	reportAProblemEmail(emailService, addressBook)
 
@@ -552,6 +553,40 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
 	err = emailService.Send(
 		addressBook.DefaultSender,
 		addressBook.ModelPlanDateChangedRecipients,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendTestIddocQuestionnaireMarkedCompleteEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	modelPlan := models.NewModelPlan(
+		uuid.Nil,
+		"Test Model Plan",
+	)
+
+	subjectContent := email.IDDOCQuestionnaireCompletedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.IDDOCQuestionnaireCompletedBodyContent{
+		ClientAddress:                   emailService.GetConfig().GetClientAddress(),
+		ModelName:                       modelPlan.ModelName,
+		ModelID:                         modelPlan.GetModelPlanID().String(),
+		MarkedCompletedByUserCommonName: "Test User",
+		ShowFooter:                      true,
+	}
+
+	emailSubject, emailBody, err := email.IDDOCQuestionnaire.Completed.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.MINTTeamEmail},
 		nil,
 		emailSubject,
 		"text/html",
