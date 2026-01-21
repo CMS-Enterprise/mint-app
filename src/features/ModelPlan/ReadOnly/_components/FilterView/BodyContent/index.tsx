@@ -6,6 +6,7 @@ import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyCRTDLs from 'features/ModelPlan/ReadOnly/CRTDLs';
 import ReadOnlyDataExchangeApproach from 'features/ModelPlan/ReadOnly/DataExchangeapproach';
 import ReadOnlyGeneralCharacteristics from 'features/ModelPlan/ReadOnly/GeneralCharacteristics';
+import ReadOnlyIddocQuestionnaire from 'features/ModelPlan/ReadOnly/IDDOCQuestionnaire';
 import ReadOnlyModelBasics from 'features/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyOpsEvalAndLearning from 'features/ModelPlan/ReadOnly/OpsEvalAndLearning';
 import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/ParticipantsAndProviders';
@@ -35,7 +36,8 @@ const components: Record<string, React.ElementType> = {
   beneficiaries: ReadOnlyBeneficiaries,
   opsEvalAndLearning: ReadOnlyOpsEvalAndLearning,
   payments: ReadOnlyPayments,
-  dataExchangeApproach: ReadOnlyDataExchangeApproach
+  dataExchangeApproach: ReadOnlyDataExchangeApproach,
+  iddocQuestionnaire: ReadOnlyIddocQuestionnaire
 };
 
 const FitleredViewSection = ({

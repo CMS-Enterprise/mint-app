@@ -7,11 +7,48 @@ import {
 } from '../../../gql/generated/graphql';
 
 export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
+  needed: {
+    gqlField: 'needed',
+    goField: 'Needed',
+    dbField: 'needed',
+    label: '',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 1.1,
+    options: {
+      true: '',
+      false: ''
+    },
+    // hideFromReadonly: true,
+    disconnectedLabel: `questionsNotApplicablePerMTO`,
+    childRelation: {
+      true: [
+        () => iddocQuestionnaire.technicalContactsIdentified,
+        () => iddocQuestionnaire.captureParticipantInfo,
+        () => iddocQuestionnaire.icdOwner,
+        () => iddocQuestionnaire.draftIcdDueDate,
+        () => iddocQuestionnaire.uatNeeds,
+        () => iddocQuestionnaire.stcNeeds,
+        () => iddocQuestionnaire.testingTimelines,
+        () => iddocQuestionnaire.dataMonitoringFileTypes,
+        () => iddocQuestionnaire.dataResponseType,
+        () => iddocQuestionnaire.dataResponseFileFrequency,
+        () => iddocQuestionnaire.dataFullTimeOrIncremental,
+        () => iddocQuestionnaire.eftSetUp,
+        () => iddocQuestionnaire.unsolicitedAdjustmentsIncluded,
+        () => iddocQuestionnaire.dataFlowDiagramsNeeded,
+        () => iddocQuestionnaire.produceBenefitEnhancementFiles,
+        () => iddocQuestionnaire.fileNamingConventions
+      ]
+    },
+    filterGroups: [ModelViewFilter.IDDOC]
+  },
   technicalContactsIdentified: {
     gqlField: 'technicalContactsIdentified',
     goField: 'TechnicalContactsIdentified',
     dbField: 'technical_contacts_identified',
     label: 'Are technical contacts identified?',
+    readonlyLabel: 'Are technical contacts identified? If so, please specify.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 2.01,
@@ -22,6 +59,9 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     optionsRelatedInfo: {
       true: 'technicalContactsIdentifiedDetail'
     },
+    readonlyHeader: 'IDDOC operations',
+    hideRelatedQuestionAlert: true,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   technicalContactsIdentifiedDetail: {
@@ -53,7 +93,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     gqlField: 'captureParticipantInfo',
     goField: 'CaptureParticipantInfo',
     dbField: 'capture_participant_info',
-    label: 'Will you capture participant information?',
+    label: 'Will you collect participant information?',
     sublabel:
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: TranslationDataType.BOOLEAN,
@@ -63,6 +103,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: 'Yes',
       false: 'No'
     },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   captureParticipantInfoNote: {
@@ -87,6 +128,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 2.06,
     isPageStart: true,
     readonlyHeader: 'Interface Control Document (ICD)',
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   draftIcdDueDate: {
@@ -97,6 +139,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
     order: 2.07,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   icdNote: {
@@ -109,6 +152,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.08,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   uatNeeds: {
@@ -121,6 +165,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 3.01,
     isPageStart: true,
     readonlyHeader: 'Testing',
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   stcNeeds: {
@@ -131,6 +176,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 3.02,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   testingTimelines: {
@@ -141,6 +187,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 3.03,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   testingNote: {
@@ -177,6 +224,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     optionsRelatedInfo: {
       OTHER: 'dataMonitoringFileOther'
     },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringFileOther: {
@@ -200,6 +248,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 3.07,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataResponseFileFrequency: {
@@ -210,6 +259,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 3.08,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataFullTimeOrIncremental: {
@@ -224,6 +274,11 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       FULL_TIME: 'Full time',
       INCREMENTAL: 'Incremental'
     },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'eftSetUp'
+    },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   eftSetUp: {
@@ -238,6 +293,11 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: 'Yes',
       false: 'No'
     },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'dataFullTimeOrIncremental'
+    },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   unsolicitedAdjustmentsIncluded: {
@@ -252,6 +312,11 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: 'Yes',
       false: 'No'
     },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'dataFlowDiagramsNeeded'
+    },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataFlowDiagramsNeeded: {
@@ -266,6 +331,11 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: 'Yes',
       false: 'No'
     },
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'unsolicitedAdjustmentsIncluded'
+    },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   produceBenefitEnhancementFiles: {
@@ -284,6 +354,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: 'Yes',
       false: 'No'
     },
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   fileNamingConventions: {
@@ -294,6 +365,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 4.06,
+    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringNote: {
@@ -332,17 +404,23 @@ export const iddocQuestionnaireMisc = {
   bannerText:
     'Your 4i and ACO-OS questionnaire can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
   iddocHeading: 'Operations questions',
-  iddocReadonlyHeading: 'IDDOC Operations',
   icdHeading: 'Interface Control Document (ICD) questions',
-  icdReadonlyHeading: 'Interface Control Document (ICD)',
   icdSubheading:
     'An interface control document provides a record of all interface information generated for a project.',
-  testingQuestions: 'Testing questions',
+  testingHeading: 'Testing questions',
   ssmRequest:
     'SSM request to begin analysis at least 1 year before implementation',
-  dataMonitoring: 'Data monitoring questions',
-  dataMonitoringHeading: 'Data Monitoring',
-  dataMonitoringContinued: 'Data monitoring questions continued'
+  dataMonitoringHeading: 'Data monitoring questions',
+  dataMonitoringContinued: 'Data monitoring questions continued',
+  // // readview section heading
+  // iddocOperations: 'IDDOC Operations',
+  // icd: 'Interface Control Document (ICD)',
+  // testingQuestions: 'Testing',
+  // dataMonitoring: 'Data monitoring',
+  iddocQuestionnaireIsRequired:
+    'This questionnaire is required for this model due to specific answers in the Model Plan or model-to-operations matrix (MTO).',
+  iddocQuestionnaireIsNotNeeded:
+    'This questionnaire is not needed for this model due to specific answers in the Model Plan or model-to-operations matrix (MTO).'
 };
 
 export default iddocQuestionnaire;

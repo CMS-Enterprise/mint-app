@@ -1,15 +1,233 @@
 {
+  "needed": {
+    "gqlField": "needed",
+    "goField": "Needed",
+    "dbField": "needed",
+    "label": "",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.1,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "hideFromReadonly": true,
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "technicalContactsIdentified",
+          "goField": "TechnicalContactsIdentified",
+          "dbField": "technical_contacts_identified",
+          "label": "Are technical contacts identified?",
+          "readonlyLabel": "Are technical contacts identified? If so, please specify.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.01,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "captureParticipantInfo",
+          "goField": "CaptureParticipantInfo",
+          "dbField": "capture_participant_info",
+          "label": "Will you collect participant information?",
+          "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.04,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "icdOwner",
+          "goField": "IcdOwner",
+          "dbField": "icd_owner",
+          "label": "ICD owner",
+          "dataType": "STRING",
+          "formType": "TEXT",
+          "order": 2.06
+        },
+        {
+          "gqlField": "draftIcdDueDate",
+          "goField": "DraftIcdDueDate",
+          "dbField": "draft_icd_due_date",
+          "label": "Draft ICD required by",
+          "dataType": "DATE",
+          "formType": "DATEPICKER",
+          "order": 2.07
+        },
+        {
+          "gqlField": "uatNeeds",
+          "goField": "UatNeeds",
+          "dbField": "uat_needs",
+          "label": "User Acceptance Testing (UAT) – test data needs",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.01
+        },
+        {
+          "gqlField": "stcNeeds",
+          "goField": "StcNeeds",
+          "dbField": "stc_needs",
+          "label": "STC – test data needs",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.02
+        },
+        {
+          "gqlField": "testingTimelines",
+          "goField": "TestingTimelines",
+          "dbField": "testing_timelines",
+          "label": "Define the testing timelines",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.03
+        },
+        {
+          "gqlField": "dataMonitoringFileTypes",
+          "goField": "DataMonitoringFileTypes",
+          "dbField": "data_monitoring_file_types",
+          "label": "What types of files? Select all that apply.",
+          "readonlyLabel": "What types of files?",
+          "exportLabel": "What types of files?",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
+          "order": 3.05,
+          "options": {
+            "BENEFICIARY": "Beneficiary",
+            "PROVIDER": "Provider",
+            "PART_A": "Part A",
+            "PART_B": "Part B",
+            "OTHER": "Other"
+          }
+        },
+        {
+          "gqlField": "dataResponseType",
+          "goField": "DataResponseType",
+          "dbField": "data_response_type",
+          "label": "What types of responses?",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.07
+        },
+        {
+          "gqlField": "dataResponseFileFrequency",
+          "goField": "DataResponseFileFrequency",
+          "dbField": "data_response_file_frequency",
+          "label": "Frequency of files?",
+          "dataType": "STRING",
+          "formType": "TEXT",
+          "order": 3.08
+        },
+        {
+          "gqlField": "dataFullTimeOrIncremental",
+          "goField": "DataFullTimeOrIncremental",
+          "dbField": "data_full_time_or_incremental",
+          "label": "Full time or incremental?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.01,
+          "options": {
+            "FULL_TIME": "Full time",
+            "INCREMENTAL": "Incremental"
+          }
+        },
+        {
+          "gqlField": "eftSetUp",
+          "goField": "EftSetUp",
+          "dbField": "eft_set_up",
+          "label": "Are Electronic File Transfer (EFT) and connectivity set up?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.02,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "unsolicitedAdjustmentsIncluded",
+          "goField": "UnsolicitedAdjustmentsIncluded",
+          "dbField": "unsolicited_adjustments_included",
+          "label": "Will unsolicited adjustments be included?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.03,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "dataFlowDiagramsNeeded",
+          "goField": "DataFlowDiagramsNeeded",
+          "dbField": "data_flow_diagrams_needed",
+          "label": "Are data flow diagrams needed?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.04,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "produceBenefitEnhancementFiles",
+          "goField": "ProduceBenefitEnhancementFiles",
+          "dbField": "produce_benefit_enhancement_files",
+          "label": "Will you produce Benefit Enhancement Files?",
+          "sublabel": "This means we would use these files for Participating and Preferred Providers.",
+          "questionTooltip": "This means we would use these files for Participating and Preferred Providers.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.05,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "fileNamingConventions",
+          "goField": "FileNamingConventions",
+          "dbField": "file_naming_conventions",
+          "label": "File naming conventions",
+          "dataType": "STRING",
+          "formType": "TEXT",
+          "order": 4.06
+        }
+      ]
+    }
+  },
   "technicalContactsIdentified": {
     "gqlField": "technicalContactsIdentified",
     "goField": "TechnicalContactsIdentified",
     "dbField": "technical_contacts_identified",
     "label": "Are technical contacts identified?",
+    "readonlyLabel": "Are technical contacts identified? If so, please specify.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 2.01,
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "technicalContactsIdentifiedDetail": {
@@ -39,7 +257,7 @@
     "gqlField": "captureParticipantInfo",
     "goField": "CaptureParticipantInfo",
     "dbField": "capture_participant_info",
-    "label": "Will you capture participant information?",
+    "label": "Will you collect participant information?",
     "sublabel": "This means the participant record for a model would be included in the ACO-OS Entity File.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
@@ -47,6 +265,20 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "captureParticipantInfoNote": {
@@ -67,7 +299,21 @@
     "label": "ICD owner",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 2.06
+    "order": 2.06,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "draftIcdDueDate": {
     "gqlField": "draftIcdDueDate",
@@ -76,7 +322,21 @@
     "label": "Draft ICD required by",
     "dataType": "DATE",
     "formType": "DATEPICKER",
-    "order": 2.07
+    "order": 2.07,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "icdNote": {
     "gqlField": "icdNote",
@@ -87,7 +347,21 @@
     "parentReferencesLabel": "Interface Control Document (ICD) questions",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "order": 2.08
+    "order": 2.08,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "uatNeeds": {
     "gqlField": "uatNeeds",
@@ -96,7 +370,21 @@
     "label": "User Acceptance Testing (UAT) – test data needs",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "order": 3.01
+    "order": 3.01,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "stcNeeds": {
     "gqlField": "stcNeeds",
@@ -105,7 +393,21 @@
     "label": "STC – test data needs",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "order": 3.02
+    "order": 3.02,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "testingTimelines": {
     "gqlField": "testingTimelines",
@@ -114,7 +416,21 @@
     "label": "Define the testing timelines",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "order": 3.03
+    "order": 3.03,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "testingNote": {
     "gqlField": "testingNote",
@@ -143,6 +459,20 @@
       "PART_A": "Part A",
       "PART_B": "Part B",
       "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "dataMonitoringFileOther": {
@@ -164,7 +494,21 @@
     "label": "What types of responses?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "order": 3.07
+    "order": 3.07,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "dataResponseFileFrequency": {
     "gqlField": "dataResponseFileFrequency",
@@ -173,7 +517,21 @@
     "label": "Frequency of files?",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 3.08
+    "order": 3.08,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "dataFullTimeOrIncremental": {
     "gqlField": "dataFullTimeOrIncremental",
@@ -186,6 +544,20 @@
     "options": {
       "FULL_TIME": "Full time",
       "INCREMENTAL": "Incremental"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "eftSetUp": {
@@ -199,6 +571,20 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "unsolicitedAdjustmentsIncluded": {
@@ -212,6 +598,20 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "dataFlowDiagramsNeeded": {
@@ -225,6 +625,20 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "produceBenefitEnhancementFiles": {
@@ -240,6 +654,20 @@
     "options": {
       "true": "Yes",
       "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
     }
   },
   "fileNamingConventions": {
@@ -249,7 +677,21 @@
     "label": "File naming conventions",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 4.06
+    "order": 4.06,
+    "parentRelation": {
+      "gqlField": "needed",
+      "goField": "Needed",
+      "dbField": "needed",
+      "label": "",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      },
+      "hideFromReadonly": true
+    }
   },
   "dataMonitoringNote": {
     "gqlField": "dataMonitoringNote",
