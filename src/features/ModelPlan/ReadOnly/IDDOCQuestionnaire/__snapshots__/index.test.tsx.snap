@@ -1,0 +1,714 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Read Only IDDOC Questionnaire > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="read-only-iddoc-questionnaire"
+    data-testid="read-only-iddoc-questionnaire"
+  >
+    <div>
+      <div
+        class="display-flex margin-bottom-2 "
+      >
+        <h2
+          class="margin-y-0 margin-right-2"
+        >
+          4i and ACO-OS
+        </h2>
+      </div>
+      <div
+        class="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4"
+      >
+        <p
+          class="margin-y-0 text-bold margin-right-1"
+        >
+          Status:
+        </p>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-info-light width-fit-content margin-right-1"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            Not started
+          </span>
+        </div>
+        <div
+          class="display-flex flex-align-center flex-wrap margin-right-1"
+        >
+          <p
+            class="margin-y-0 text-normal margin-right-1 text-base-dark"
+          >
+            Last updated 06/03/2022
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-3"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            This questionnaire is required for this model due to specific answers in the Model Plan or model-to-operations matrix (MTO).
+          </span>
+        </p>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section-- margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            />
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <h3
+        class="margin-top-0"
+      >
+        IDDOC operations
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-technical-contacts-identified--if-so--please-specify margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Are technical contacts identified? If so, please specify.
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - Detail of technical contacts
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Note for contacts
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will you collect participant information?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Note for participants
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Interface Control Document (ICD)
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--icd-owner margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              ICD owner
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            ICD owner
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--draft-icd-required-by margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Draft ICD required by
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Testing
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--user-acceptance-testing--uat----test-data-needs margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              User Acceptance Testing (UAT) – test data needs
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            UAT needs
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--stc---test-data-needs margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              STC – test data needs
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            STC needs
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--define-the-testing-timelines margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Define the testing timelines
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Testing timelines
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Note for testing
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Data monitoring
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-types-of-files margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              What types of files?
+            </span>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="mint-body-normal"
+            >
+              Part A
+            </li>
+            <ul />
+            <li
+              class="mint-body-normal"
+            >
+              Part B
+            </li>
+            <ul />
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-types-of-responses margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              What types of responses?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            File
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--frequency-of-files margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Frequency of files?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Every week
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--full-time-or-incremental margin-bottom-3"
+            >
+              <div
+                class="read-only-section--question"
+              >
+                <span
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                >
+                  Full time or incremental?
+                </span>
+              </div>
+              <div
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+              >
+                Full time
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--are-electronic-file-transfer--eft--and-connectivity-set-up margin-bottom-3"
+            >
+              <div
+                class="read-only-section--question"
+              >
+                <span
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                >
+                  Are Electronic File Transfer (EFT) and connectivity set up?
+                </span>
+              </div>
+              <div
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+              >
+                Yes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--will-unsolicited-adjustments-be-included margin-bottom-3"
+            >
+              <div
+                class="read-only-section--question"
+              >
+                <span
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                >
+                  Will unsolicited adjustments be included?
+                </span>
+              </div>
+              <div
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+              >
+                Yes
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--are-data-flow-diagrams-needed margin-bottom-3"
+            >
+              <div
+                class="read-only-section--question"
+              >
+                <span
+                  class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+                >
+                  Are data flow diagrams needed?
+                </span>
+              </div>
+              <div
+                class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+              >
+                Yes
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-you-produce-benefit-enhancement-files margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will you produce Benefit Enhancement Files?
+              <span
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
+              >
+                <span
+                  class="usa-tooltip top-2px"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-_r_1_"
+                    class="usa-tooltip__trigger mint-no-print"
+                    data-testid="triggerElement"
+                    tabindex="0"
+                  >
+                    <svg
+                      aria-label="info"
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-_r_1_"
+                    role="tooltip"
+                    title="This means we would use these files for Participating and Preferred Providers."
+                  >
+                    This means we would use these files for Participating and Preferred Providers.
+                  </span>
+                </span>
+              </span>
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--file-naming-conventions margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              File naming conventions
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            PDF
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+  </div>
+</DocumentFragment>
+`;

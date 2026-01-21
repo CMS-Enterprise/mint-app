@@ -42,7 +42,8 @@ const ReadOnlyIddocQuestionnaire = ({
     .iddocQuestionnaire ||
     {}) as GetAllIddocQuestionnaireQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
-  const testData = { ...allIddocQuestionnaireData, needed: false };
+  // TODO: Temporarily overriding needed to true
+  // const testData = { ...allIddocQuestionnaireData, needed: true};
 
   const isIddocNeeded = allIddocQuestionnaireData.needed;
 
@@ -60,6 +61,7 @@ const ReadOnlyIddocQuestionnaire = ({
         modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allIddocQuestionnaireData.modifiedDts
+          // TODO: Add createdDts back in when backend supports it
           // || allIddocQuestionnaireData.createdDts
         }
       />
@@ -83,80 +85,11 @@ const ReadOnlyIddocQuestionnaire = ({
           )}
 
           <ReadOnlyBody
-            data={testData}
+            data={allIddocQuestionnaireData} //TODO use {testData} here for needed state
             config={iddocQuestionnaireConfig}
             filteredView={filteredView}
           />
 
-          {/* IDDOC operations section */}
-          {/* {!isIddocNeeded && !filteredView && (
-            <div className="margin-top-4 padding-top-4 border-top-1px border-base-light">
-              <h3 className="margin-top-0">
-                {iddocQuestionnaireMiscT('iddocOperations')}
-              </h3>
-
-              <RelatedUnneededQuestions
-                id="iddoc-operations-questions"
-                config={iddocQuestionnaireConfig.technicalContactsIdentified}
-                value={allIddocQuestionnaireData.technicalContactsIdentified}
-                values={allIddocQuestionnaireData}
-                childrenToCheck={undefined}
-                hideAlert={false}
-              />
-            </div>
-          )} */}
-
-          {/* ICD section */}
-          {/* {!isIddocNeeded && !filteredView && (
-            <div className="margin-top-4 padding-top-4 border-top-1px border-base-light">
-              <h3 className="margin-top-0">{iddocQuestionnaireMiscT('icd')}</h3>
-
-              <RelatedUnneededQuestions
-                id="iddoc-icd-questions"
-                config={iddocQuestionnaireConfig.icdOwner}
-                value={allIddocQuestionnaireData.icdOwner}
-                values={allIddocQuestionnaireData}
-                childrenToCheck={undefined}
-                hideAlert={false}
-              />
-            </div>
-          )} */}
-
-          {/* Testing section */}
-          {/* {!isIddocNeeded && !filteredView && (
-            <div className="margin-top-4 padding-top-4 border-top-1px border-base-light">
-              <h3 className="margin-top-0">
-                {iddocQuestionnaireMiscT('testingQuestions')}
-              </h3>
-
-              <RelatedUnneededQuestions
-                id="iddoc-testing-questions"
-                config={iddocQuestionnaireConfig.uatNeeds}
-                value={allIddocQuestionnaireData.uatNeeds}
-                values={allIddocQuestionnaireData}
-                childrenToCheck={undefined}
-                hideAlert={false}
-              />
-            </div>
-          )} */}
-
-          {/* Data Monitoring section */}
-          {/* {!isIddocNeeded && !filteredView && (
-            <div className="margin-top-4 padding-top-4 border-top-1px border-base-light">
-              <h3 className="margin-top-0">
-                {iddocQuestionnaireMiscT('dataMonitoring')}
-              </h3>
-
-              <RelatedUnneededQuestions
-                id="iddoc-data-monitoring-questions"
-                config={iddocQuestionnaireConfig.dataMonitoringFileTypes}
-                value={allIddocQuestionnaireData.dataMonitoringFileTypes}
-                values={allIddocQuestionnaireData}
-                childrenToCheck={undefined}
-                hideAlert={false}
-              />
-            </div>
-          )} */}
         </>
       )}
     </div>
