@@ -68,23 +68,35 @@ type IDDOCQuestionnaire struct {
 	baseStruct
 	modelPlanRelation
 
-	// Questionnaire fields
-	TechnicalContactsIdentified    *bool              `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
-	CaptureParticipantInformation  *bool              `json:"captureParticipantInformation" db:"capture_participant_information"`
-	IcdOwner                       *string            `json:"icdOwner" db:"icd_owner"`
-	DraftIcdRequiredBy             *time.Time         `json:"draftIcdRequiredBy" db:"draft_icd_required_by"`
-	UatTestDataNeeds               *string            `json:"uatTestDataNeeds" db:"uat_test_data_needs"`
-	StcTestDataNeeds               *string            `json:"stcTestDataNeeds" db:"stc_test_data_needs"`
-	TestingTimelines               *string            `json:"testingTimelines" db:"testing_timelines"`
-	FileTypes                      IDDOCFileTypeArray `json:"fileTypes" db:"file_types"`
-	ResponseTypes                  *string            `json:"responseTypes" db:"response_types"`
-	FileFrequency                  *string            `json:"fileFrequency" db:"file_frequency"`
-	LoadType                       *IDDOCLoadType     `json:"loadType" db:"load_type"`
-	EftConnectivitySetup           *bool              `json:"eftConnectivitySetup" db:"eft_connectivity_setup"`
-	UnsolicitedAdjustmentsIncluded *bool              `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
-	DataFlowDiagramsNeeded         *bool              `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
-	ProduceBenefitEnhancementFiles *bool              `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
-	FileNamingConventions          *string            `json:"fileNamingConventions" db:"file_naming_conventions"`
+	// Questionnaire fields - Page 1 Operations
+	TechnicalContactsIdentified       *bool      `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
+	TechnicalContactsIdentifiedDetail *string    `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
+	TechnicalContactsIdentifiedNote   *string    `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
+	CaptureParticipantInfo            *bool      `json:"captureParticipantInfo" db:"capture_participant_information"`
+	CaptureParticipantInfoNote        *string    `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
+	IcdOwner                          *string    `json:"icdOwner" db:"icd_owner"`
+	DraftIcdDueDate                   *time.Time `json:"draftIcdDueDate" db:"draft_icd_required_by"`
+	IcdNote                           *string    `json:"icdNote" db:"icd_note"`
+
+	// Page 2 Testing
+	UatNeeds                  *string            `json:"uatNeeds" db:"uat_test_data_needs"`
+	StcNeeds                  *string            `json:"stcNeeds" db:"stc_test_data_needs"`
+	TestingTimelines          *string            `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote               *string            `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes   IDDOCFileTypeArray `json:"dataMonitoringFileTypes" db:"file_types"`
+	DataMonitoringFileOther   *string            `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType          *string            `json:"dataResponseType" db:"response_types"`
+	DataResponseFileFrequency *string            `json:"dataResponseFileFrequency" db:"file_frequency"`
+
+	// Page 3 Monitoring
+	DataFullTimeOrIncremental      *string        `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                       *bool          `json:"eftSetUp" db:"eft_connectivity_setup"`
+	UnsolicitedAdjustmentsIncluded *bool          `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded         *bool          `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles *bool          `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions          *string        `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote             *string        `json:"dataMonitoringNote" db:"data_monitoring_note"`
+	LoadType                       *IDDOCLoadType `json:"loadType" db:"load_type"`
 
 	// Metadata
 	Needed       bool       `json:"needed" db:"needed"`

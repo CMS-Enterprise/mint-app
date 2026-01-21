@@ -170,8 +170,8 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     options: {
       BENEFICIARY: 'Beneficiary',
       PROVIDER: 'Provider',
-      PART_A: 'Part A',
-      PART_B: 'Part B',
+      PART_A_CLAIMS: 'Part A Claims',
+      PART_B_CLAIMS: 'Part B Claims',
       OTHER: 'Other'
     },
     optionsRelatedInfo: {

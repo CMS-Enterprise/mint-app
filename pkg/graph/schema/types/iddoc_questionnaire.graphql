@@ -14,8 +14,8 @@ IDDOCFileType represents the types of files that can be exchanged
 enum IDDOCFileType {
   BENEFICIARY
   PROVIDER
-  PART_A
-  PART_B
+  PART_A_CLAIMS
+  PART_B_CLAIMS
   OTHER
 }
 
@@ -106,7 +106,7 @@ type IDDOCQuestionnaire {
   modifiedDts: Time
 }
 
-input IDDOCQuestionnaireChanges {
+input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
   #Page 1 Operations
   technicalContactsIdentified: Boolean
   technicalContactsIdentifiedDetail: String
