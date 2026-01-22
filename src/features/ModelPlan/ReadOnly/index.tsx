@@ -60,6 +60,7 @@ import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDataExchangeApproach from './DataExchangeapproach';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyIddocQuestionnaire from './IDDOCQuestionnaire';
 import ReadOnlyMTOMilestones from './MTOMilestones';
 import ReadOnlyMTOSolutions from './MTOSolutions';
 import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
@@ -145,6 +146,12 @@ export const ReadOnlyComponents = (
       route: `/models/${modelID}/read-view/data-exchange-approach`,
       helpRoute: '/help-and-knowledge/sample-model-plan/data-exchange-approach',
       component: <ReadOnlyDataExchangeApproach modelID={modelID} />,
+      group: 'model-design-activities'
+    },
+    'iddoc-questionnaire': {
+      route: `/models/${modelID}/read-view/iddoc-questionnaire`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/iddoc-questionnaire',
+      component: <ReadOnlyIddocQuestionnaire modelID={modelID} />,
       group: 'model-design-activities'
     },
     milestones: {
@@ -615,6 +622,10 @@ export const readViewRoutes = {
     {
       path: '/models/:modelID/read-view/data-exchange-approach',
       element: <ReadOnlyDataExchangeApproach />
+    },
+    {
+      path: '/models/:modelID/read-view/iddoc-questionnaire',
+      element: <ReadOnlyIddocQuestionnaire />
     },
     {
       path: '/models/:modelID/read-view/milestones',

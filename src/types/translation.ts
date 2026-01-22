@@ -804,31 +804,53 @@ export type TranslationOpsEvalAndLearning = {
 // IDDOC Questionnaire
 export type TranslationIddocQuestionnaireForm = {
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+  needed: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   // IDDOC Operations
-  technicalContactsIdentified: TranslationFieldPropertiesWithOptions<Bool>;
+  technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   technicalContactsIdentifiedDetail: TranslationFieldProperties;
   technicalContactsIdentifiedNote: TranslationFieldProperties;
-  captureParticipantInfo: TranslationFieldPropertiesWithOptions<Bool>;
+  captureParticipantInfo: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
   captureParticipantInfoNote: TranslationFieldProperties;
-  icdOwner: TranslationFieldProperties;
-  draftIcdDueDate: TranslationFieldProperties;
-  icdNote: TranslationFieldProperties;
+  icdOwner: TranslationFieldPropertiesWithParent<Bool>;
+  draftIcdDueDate: TranslationFieldPropertiesWithParent<Bool>;
+  icdNote: TranslationFieldPropertiesWithParent<Bool>;
   // IDDOC Testing
-  uatNeeds: TranslationFieldProperties;
-  stcNeeds: TranslationFieldProperties;
-  testingTimelines: TranslationFieldProperties;
+  uatNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  stcNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  testingTimelines: TranslationFieldPropertiesWithParent<Bool>;
   testingNote: TranslationFieldProperties;
-  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptions<IddocFileType>;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptionsAndParent<
+    IddocFileType,
+    Bool
+  >;
   dataMonitoringFileOther: TranslationFieldProperties;
-  dataResponseType: TranslationFieldProperties;
-  dataResponseFileFrequency: TranslationFieldProperties;
+  dataResponseType: TranslationFieldPropertiesWithParent<Bool>;
+  dataResponseFileFrequency: TranslationFieldPropertiesWithParent<Bool>;
   // IDDOC Monitoring
-  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptions<IddocFullTimeOrIncrementalType>;
-  eftSetUp: TranslationFieldPropertiesWithOptions<Bool>;
-  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptions<Bool>;
-  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptions<Bool>;
-  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptions<Bool>;
-  fileNamingConventions: TranslationFieldProperties;
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptionsAndParent<
+    IddocFullTimeOrIncrementalType,
+    Bool
+  >;
+  eftSetUp: TranslationFieldPropertiesWithOptionsAndParent<Bool, Bool>;
+  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
   dataMonitoringNote: TranslationFieldProperties;
 };
 

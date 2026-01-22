@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
   DataExchangeApproachStatus,
+  IddocQuestionnaireStatus,
   ModelStatus,
   MtoStatus,
   TaskStatus
@@ -21,7 +22,12 @@ type TitleAndStatusProps = {
   heading: string;
   subHeading?: string;
   isViewingFilteredView?: boolean;
-  status: ModelStatus | TaskStatus | DataExchangeApproachStatus | MtoStatus;
+  status:
+    | ModelStatus
+    | TaskStatus
+    | DataExchangeApproachStatus
+    | MtoStatus
+    | IddocQuestionnaireStatus;
   modifiedOrCreatedDts?: string | null;
   editDates?: boolean;
 };

@@ -826,30 +826,31 @@ export type IddocQuestionnaireCompletedActivityMeta = {
 /** Represents IDDOC questionnaire translation data */
 export type IddocQuestionnaireTranslation = {
   __typename: 'IddocQuestionnaireTranslation';
-  captureParticipantInfo: TranslationFieldWithOptions;
+  captureParticipantInfo: TranslationFieldWithOptionsAndParent;
   captureParticipantInfoNote: TranslationField;
-  dataFlowDiagramsNeeded: TranslationFieldWithOptions;
-  dataFullTimeOrIncremental: TranslationFieldWithOptions;
+  dataFlowDiagramsNeeded: TranslationFieldWithOptionsAndParent;
+  dataFullTimeOrIncremental: TranslationFieldWithOptionsAndParent;
   dataMonitoringFileOther: TranslationField;
-  dataMonitoringFileTypes: TranslationFieldWithOptions;
+  dataMonitoringFileTypes: TranslationFieldWithOptionsAndParent;
   dataMonitoringNote: TranslationField;
-  dataResponseFileFrequency: TranslationField;
-  dataResponseType: TranslationField;
-  draftIcdDueDate: TranslationField;
-  eftSetUp: TranslationFieldWithOptions;
-  fileNamingConventions: TranslationField;
-  icdNote: TranslationField;
-  icdOwner: TranslationField;
-  produceBenefitEnhancementFiles: TranslationFieldWithOptions;
+  dataResponseFileFrequency: TranslationFieldWithParent;
+  dataResponseType: TranslationFieldWithParent;
+  draftIcdDueDate: TranslationFieldWithParent;
+  eftSetUp: TranslationFieldWithOptionsAndParent;
+  fileNamingConventions: TranslationFieldWithParent;
+  icdNote: TranslationFieldWithParent;
+  icdOwner: TranslationFieldWithParent;
+  needed: TranslationFieldWithOptionsAndChildren;
+  produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent;
   status: TranslationFieldWithOptions;
-  stcNeeds: TranslationField;
-  technicalContactsIdentified: TranslationFieldWithOptions;
+  stcNeeds: TranslationFieldWithParent;
+  technicalContactsIdentified: TranslationFieldWithOptionsAndParent;
   technicalContactsIdentifiedDetail: TranslationField;
   technicalContactsIdentifiedNote: TranslationField;
   testingNote: TranslationField;
-  testingTimelines: TranslationField;
-  uatNeeds: TranslationField;
-  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptions;
+  testingTimelines: TranslationFieldWithParent;
+  uatNeeds: TranslationFieldWithParent;
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptionsAndParent;
 };
 
 export type IncorrectModelStatusActivityMeta = {
@@ -5848,6 +5849,13 @@ export type GetAllQuestionnairesQueryVariables = Exact<{
 
 export type GetAllQuestionnairesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, questionnaires: { __typename: 'Questionnaires', dataExchangeApproach: { __typename: 'PlanDataExchangeApproach', id: UUID, status: DataExchangeApproachStatus, modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null }, iddocQuestionnaire: { __typename: 'IDDOCQuestionnaire', id: UUID, status: IddocQuestionnaireStatus, needed: boolean, modifiedDts?: Time | null, modifiedByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } } };
 
+export type GetAllIddocQuestionnaireQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllIddocQuestionnaireQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, questionnaires: { __typename: 'Questionnaires', iddocQuestionnaire: { __typename: 'IDDOCQuestionnaire', id: UUID, technicalContactsIdentified?: boolean | null, technicalContactsIdentifiedDetail?: string | null, technicalContactsIdentifiedNote?: string | null, captureParticipantInfo?: boolean | null, captureParticipantInfoNote?: string | null, icdOwner?: string | null, draftIcdDueDate?: Time | null, icdNote?: string | null, uatNeeds?: string | null, stcNeeds?: string | null, testingTimelines?: string | null, testingNote?: string | null, dataMonitoringFileTypes: Array<IddocFileType>, dataMonitoringFileOther?: string | null, dataResponseType?: string | null, dataResponseFileFrequency?: string | null, dataFullTimeOrIncremental?: IddocFullTimeOrIncrementalType | null, eftSetUp?: boolean | null, unsolicitedAdjustmentsIncluded?: boolean | null, dataFlowDiagramsNeeded?: boolean | null, produceBenefitEnhancementFiles?: boolean | null, fileNamingConventions?: string | null, dataMonitoringNote?: string | null, needed: boolean, modifiedDts?: Time | null, status: IddocQuestionnaireStatus } } } };
+
 export type GetIddocQuestionnaireMonitoringQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -7485,6 +7493,81 @@ export type GetAllQuestionnairesQueryHookResult = ReturnType<typeof useGetAllQue
 export type GetAllQuestionnairesLazyQueryHookResult = ReturnType<typeof useGetAllQuestionnairesLazyQuery>;
 export type GetAllQuestionnairesSuspenseQueryHookResult = ReturnType<typeof useGetAllQuestionnairesSuspenseQuery>;
 export type GetAllQuestionnairesQueryResult = Apollo.QueryResult<GetAllQuestionnairesQuery, GetAllQuestionnairesQueryVariables>;
+export const GetAllIddocQuestionnaireDocument = gql`
+    query GetAllIddocQuestionnaire($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    modelName
+    questionnaires {
+      iddocQuestionnaire {
+        id
+        technicalContactsIdentified
+        technicalContactsIdentifiedDetail
+        technicalContactsIdentifiedNote
+        captureParticipantInfo
+        captureParticipantInfoNote
+        icdOwner
+        draftIcdDueDate
+        icdNote
+        uatNeeds
+        stcNeeds
+        testingTimelines
+        testingNote
+        dataMonitoringFileTypes
+        dataMonitoringFileOther
+        dataResponseType
+        dataResponseFileFrequency
+        dataFullTimeOrIncremental
+        eftSetUp
+        unsolicitedAdjustmentsIncluded
+        dataFlowDiagramsNeeded
+        produceBenefitEnhancementFiles
+        fileNamingConventions
+        dataMonitoringNote
+        needed
+        modifiedDts
+        status
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllIddocQuestionnaireQuery__
+ *
+ * To run a query within a React component, call `useGetAllIddocQuestionnaireQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllIddocQuestionnaireQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllIddocQuestionnaireQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllIddocQuestionnaireQuery(baseOptions: Apollo.QueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables> & ({ variables: GetAllIddocQuestionnaireQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>(GetAllIddocQuestionnaireDocument, options);
+      }
+export function useGetAllIddocQuestionnaireLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>(GetAllIddocQuestionnaireDocument, options);
+        }
+// @ts-ignore
+export function useGetAllIddocQuestionnaireSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>;
+export function useGetAllIddocQuestionnaireSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllIddocQuestionnaireQuery | undefined, GetAllIddocQuestionnaireQueryVariables>;
+export function useGetAllIddocQuestionnaireSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>(GetAllIddocQuestionnaireDocument, options);
+        }
+export type GetAllIddocQuestionnaireQueryHookResult = ReturnType<typeof useGetAllIddocQuestionnaireQuery>;
+export type GetAllIddocQuestionnaireLazyQueryHookResult = ReturnType<typeof useGetAllIddocQuestionnaireLazyQuery>;
+export type GetAllIddocQuestionnaireSuspenseQueryHookResult = ReturnType<typeof useGetAllIddocQuestionnaireSuspenseQuery>;
+export type GetAllIddocQuestionnaireQueryResult = Apollo.QueryResult<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>;
 export const GetIddocQuestionnaireMonitoringDocument = gql`
     query GetIDDOCQuestionnaireMonitoring($id: UUID!) {
   modelPlan(id: $id) {
@@ -18082,6 +18165,7 @@ export const TypedGetCollectionAndAggregationDocument = {"kind":"Document","defi
 export const TypedGetNewMethodologiesAndConsiderationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNewMethodologiesAndConsiderations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"willImplementNewDataExchangeMethods"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"newDataExchangeMethodsNote"}},{"kind":"Field","name":{"kind":"Name","value":"additionalDataExchangeConsiderationsDescription"}},{"kind":"Field","name":{"kind":"Name","value":"isDataExchangeApproachComplete"}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"markedCompleteDts"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetNewMethodologiesAndConsiderationsQuery, GetNewMethodologiesAndConsiderationsQueryVariables>;
 export const TypedUpdateDataExchangeApproachDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDataExchangeApproach"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDataExchangeApproachChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanDataExchangeApproach"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateDataExchangeApproachMutation, UpdateDataExchangeApproachMutationVariables>;
 export const TypedGetAllQuestionnairesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllQuestionnaires"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dataExchangeApproach"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllQuestionnairesQuery, GetAllQuestionnairesQueryVariables>;
+export const TypedGetAllIddocQuestionnaireDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllIddocQuestionnaire"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>;
 export const TypedGetIddocQuestionnaireMonitoringDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCQuestionnaireMonitoring"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuestionnaireMonitoringQuery, GetIddocQuestionnaireMonitoringQueryVariables>;
 export const TypedGetIddocQuestionnaireOperationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCQuestionnaireOperations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuestionnaireOperationsQuery, GetIddocQuestionnaireOperationsQueryVariables>;
 export const TypedGetIddocQuestionnaireTestingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCQuestionnaireTesting"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuestionnaireTestingQuery, GetIddocQuestionnaireTestingQueryVariables>;

@@ -123,6 +123,7 @@ const routes = {
     '/read-view/solutions-and-it-systems':
       'Read view - Solutions and IT systems',
     '/read-view/data-exchange-approach': 'Data exchange approach',
+    '/read-view/iddoc-questionnaire': '4i and ACO-OS',
     '/read-view/it-solutions':
       'Read view - Operational solutions and implementation status',
     '/read-view/team': 'Read view - Team',

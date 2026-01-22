@@ -124,7 +124,7 @@ const IDDOCTesting = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <h3>{iddocQuestionnaireMiscT('testingQuestions')}</h3>
+                  <h3>{iddocQuestionnaireMiscT('testingHeading')}</h3>
 
                   <Alert
                     type="info"
@@ -182,7 +182,7 @@ const IDDOCTesting = () => {
                     field="testingNote"
                   />
 
-                  <h3>{iddocQuestionnaireMiscT('dataMonitoring')}</h3>
+                  <h3>{iddocQuestionnaireMiscT('dataMonitoringHeading')}</h3>
 
                   <FieldGroup>
                     <Label htmlFor="iddoc-questionnaire-data-monitoring-file">
