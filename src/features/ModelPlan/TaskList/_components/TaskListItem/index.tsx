@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   DataExchangeApproachStatus,
+  IddocQuestionnaireStatus,
   ModelStatus,
   MtoMilestoneStatus,
   MtoStatus,
@@ -30,12 +31,16 @@ export const TaskListStatusTag = ({
     | PrepareForClearanceStatus
     | ModelStatus
     | DataExchangeApproachStatus
+    | IddocQuestionnaireStatus
     | MtoStatus
     | MtoMilestoneStatus
     | undefined;
   classname?: string;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   let tagStyle;
   let tagCopy;
@@ -62,6 +67,12 @@ export const TaskListStatusTag = ({
       break;
     case 'CANNOT_START':
       tagCopy = t('taskListStatus.CANNOT_START');
+      tagStyle = 'bg-white border-2px text-base';
+      break;
+    case 'NOT_NEEDED':
+      tagCopy = additionalQuestionnairesT(
+        'questionnaireStatus.iddocQuestionnaire.NOT_NEEDED'
+      );
       tagStyle = 'bg-white border-2px text-base';
       break;
     case 'COMPLETE':

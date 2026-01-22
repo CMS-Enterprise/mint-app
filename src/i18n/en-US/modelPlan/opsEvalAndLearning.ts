@@ -7,7 +7,6 @@ import {
   TranslationFormType
 } from '../../../gql/generated/graphql';
 
-import iddocQuestionnaire from './iddocQuestionnaire';
 import { frequencyOptions } from './miscellaneous';
 
 export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
@@ -189,22 +188,22 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     },
     childRelation: {
       true: [
-        () => iddocQuestionnaire.technicalContactsIdentified,
-        () => iddocQuestionnaire.captureParticipantInfo,
-        () => iddocQuestionnaire.icdOwner,
-        () => iddocQuestionnaire.draftIcdDueDate,
-        () => iddocQuestionnaire.uatNeeds,
-        () => iddocQuestionnaire.stcNeeds,
-        () => iddocQuestionnaire.testingTimelines,
-        () => iddocQuestionnaire.dataMonitoringFileTypes,
-        () => iddocQuestionnaire.dataResponseType,
-        () => iddocQuestionnaire.dataResponseFileFrequency,
-        () => iddocQuestionnaire.dataFullTimeOrIncremental,
-        () => iddocQuestionnaire.eftSetUp,
-        () => iddocQuestionnaire.unsolicitedAdjustmentsIncluded,
-        () => iddocQuestionnaire.dataFlowDiagramsNeeded,
-        () => iddocQuestionnaire.produceBenefitEnhancementFiles,
-        () => iddocQuestionnaire.fileNamingConventions
+        () => opsEvalAndLearning.technicalContactsIdentified,
+        () => opsEvalAndLearning.captureParticipantInfo,
+        () => opsEvalAndLearning.icdOwner,
+        () => opsEvalAndLearning.draftIcdDueDate,
+        () => opsEvalAndLearning.uatNeeds,
+        () => opsEvalAndLearning.stcNeeds,
+        () => opsEvalAndLearning.testingTimelines,
+        () => opsEvalAndLearning.dataMonitoringFileTypes,
+        () => opsEvalAndLearning.dataResponseType,
+        () => opsEvalAndLearning.dataResponseFileFrequency,
+        () => opsEvalAndLearning.dataFullTimeOrIncremental,
+        () => opsEvalAndLearning.eftSetUp,
+        () => opsEvalAndLearning.unsolicitedAdjustmentsIncluded,
+        () => opsEvalAndLearning.dataFlowDiagramsNeeded,
+        () => opsEvalAndLearning.produceBenefitEnhancementFiles,
+        () => opsEvalAndLearning.fileNamingConventions
       ]
     },
     filterGroups: [

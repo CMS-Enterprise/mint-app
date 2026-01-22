@@ -94,6 +94,14 @@ const generalReadOnly = {
   questionNotApplicableCCW_other: `There are {{count}} additional questions that are not applicable for this model based on the answer to "Is Chronic Conditions Warehouse(CCW) involved in the model?"`,
   questionNotApplicableQuality_one: `There is {{count}}  additional question that is not applicable for this model based on the answer to "What data do you need to monitor the model?"`,
   questionNotApplicableQuality_other: `There are {{count}} additional questions that are not applicable for this model based on the answer to "What data do you need to monitor the model?"`,
+  questionsNotApplicableIddoc_one:
+    'There is {{count}} question that is not applicable for this model.',
+  questionsNotApplicableIddoc_other:
+    'There are {{count}} questions that are not applicable for this model.',
+  questionsNotApplicablePerMTO_one:
+    'There is {{count}} question in this questionnaire that is not applicable to your model because of answers in this Model Plan or selections in this model’s model-to-operations matrix (MTO).',
+  questionsNotApplicablePerMTO_other:
+    'There are {{count}} questions in this questionnaire that are not applicable to your model because of answers in this Model Plan or selections in this model’s model-to-operations matrix (MTO).',
   showOtherQuestions_one: 'Show other question',
   showOtherQuestions_other: 'Show other questions',
   hideOtherQuestions_one: 'Hide other question',
