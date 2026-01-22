@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -18,24 +17,37 @@ import (
 
 // DataMonitoringFileTypes is the resolver for the dataMonitoringFileTypes field.
 func (r *iDDOCQuestionnaireResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.IDDOCQuestionnaire) ([]models.IDDOCFileType, error) {
-	// TODO: Implement DataMonitoringFileTypes mapping
-	return []models.IDDOCFileType{}, nil
-	// panic(fmt.Errorf("not implemented: DataMonitoringFileTypes - dataMonitoringFileTypes"))
+	return obj.DataMonitoringFileTypes, nil
 }
 
 // DataFullTimeOrIncremental is the resolver for the dataFullTimeOrIncremental field.
 func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Context, obj *models.IDDOCQuestionnaire) (*model.IDDOCFullTimeOrIncrementalType, error) {
-	value := model.IDDOCFullTimeOrIncrementalTypeFullTime
+	if obj.DataFullTimeOrIncremental == nil {
+		return nil, nil
+	}
+	value := model.IDDOCFullTimeOrIncrementalType(*obj.DataFullTimeOrIncremental)
 	return &value, nil
-	// TODO: Implement DataFullTimeOrIncremental mapping
-	// panic(fmt.Errorf("not implemented: DataFullTimeOrIncremental - dataFullTimeOrIncremental"))
 }
 
 // Status is the resolver for the status field.
 func (r *iDDOCQuestionnaireResolver) Status(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireStatus, error) {
+	// If not needed, return NOT_NEEDED
+	if !obj.Needed {
+		return model.IDDOCQuestionnaireStatusNotNeeded, nil
+	}
+
+	// If completed, return COMPLETED
+	if obj.CompletedDts != nil {
+		return model.IDDOCQuestionnaireStatusCompleted, nil
+	}
+
+	// If any field has been modified after creation (excluding metadata), return IN_PROGRESS
+	if obj.ModifiedDts != nil && !obj.ModifiedDts.Equal(obj.CreatedDts) {
+		return model.IDDOCQuestionnaireStatusInProgress, nil
+	}
+
+	// Otherwise, return NOT_STARTED
 	return model.IDDOCQuestionnaireStatusNotStarted, nil
-	// TODO: Implement status mapping
-	// panic(fmt.Errorf("not implemented: Status - status"))
 }
 
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.
@@ -57,7 +69,25 @@ func (r *mutationResolver) UpdateIDDOCQuestionnaire(ctx context.Context, id uuid
 
 // CompleteIDDOCQuestionnaire is the resolver for the completeIDDOCQuestionnaire field.
 func (r *mutationResolver) CompleteIDDOCQuestionnaire(ctx context.Context, id uuid.UUID) (*models.IDDOCQuestionnaire, error) {
-	panic(fmt.Errorf("not implemented: CompleteIDDOCQuestionnaire - completeIDDOCQuestionnaire"))
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	// Create changes map with the completion flag
+	isComplete := true
+	changes := map[string]any{
+		"isIDDOCQuestionnaireComplete": &isComplete,
+	}
+
+	return IDDOCQuestionnaireUpdate(
+		ctx,
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.addressBook,
+	)
 }
 
 // IDDOCQuestionnaire returns generated.IDDOCQuestionnaireResolver implementation.

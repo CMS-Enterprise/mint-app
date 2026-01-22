@@ -7557,9 +7557,6 @@ export function useGetAllIddocQuestionnaireLazyQuery(baseOptions?: Apollo.LazyQu
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>(GetAllIddocQuestionnaireDocument, options);
         }
-// @ts-ignore
-export function useGetAllIddocQuestionnaireSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>;
-export function useGetAllIddocQuestionnaireSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllIddocQuestionnaireQuery | undefined, GetAllIddocQuestionnaireQueryVariables>;
 export function useGetAllIddocQuestionnaireSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GetAllIddocQuestionnaireQuery, GetAllIddocQuestionnaireQueryVariables>(GetAllIddocQuestionnaireDocument, options);

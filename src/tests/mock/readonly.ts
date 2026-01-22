@@ -813,7 +813,10 @@ export const iddocQuestionnaireData: GetAllIDDOCQuestionnaireType = {
   stcNeeds: 'STC needs',
   testingTimelines: 'Testing timelines',
   testingNote: 'Note for testing',
-  dataMonitoringFileTypes: [IddocFileType.PART_A, IddocFileType.PART_B],
+  dataMonitoringFileTypes: [
+    IddocFileType.PART_A_CLAIMS,
+    IddocFileType.PART_B_CLAIMS
+  ],
   dataMonitoringFileOther: 'Other data monitoring',
   dataResponseType: 'File',
   dataResponseFileFrequency: 'Every week',
