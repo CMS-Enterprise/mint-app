@@ -32,6 +32,19 @@ func IDDOCQuestionnaireUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, que
 	return sqlutils.GetProcedure[models.IDDOCQuestionnaire](np, sqlqueries.IDDOCQuestionnaire.Update, questionnaire)
 }
 
+// IDDOCQuestionnaireGetByIDLoader returns the IDDOC questionnaires for a slice of ids
+func IDDOCQuestionnaireGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.IDDOCQuestionnaire, error) {
+	args := map[string]interface{}{
+		"ids": pq.Array(ids),
+	}
+
+	res, err := sqlutils.SelectProcedure[models.IDDOCQuestionnaire](np, sqlqueries.IDDOCQuestionnaire.GetByIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 // IDDOCQuestionnaireGetByModelPlanIDLoader returns the IDDOC questionnaire for a slice of model plan ids
 func IDDOCQuestionnaireGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.IDDOCQuestionnaire, error) {
 	args := map[string]interface{}{

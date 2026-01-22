@@ -125,6 +125,11 @@ func TrySendIDDOCQuestionnaireNotifications(
 	logger.Info("IDDOC questionnaire marked complete - notifications not yet implemented", zap.String("questionnaire_id", existing.ID.String()))
 }
 
+// IDDOCQuestionnaireGetByIDLoader calls a data loader to batch fetching an IDDOC questionnaire object by ID
+func IDDOCQuestionnaireGetByIDLoader(ctx context.Context, id uuid.UUID) (*models.IDDOCQuestionnaire, error) {
+	return loaders.IDDOCQuestionnaire.ByID.Load(ctx, id)
+}
+
 // IDDOCQuestionnaireGetByModelPlanIDLoader calls a data loader to batch fetching an IDDOC questionnaire object that corresponds to a model plan
 func IDDOCQuestionnaireGetByModelPlanIDLoader(ctx context.Context, modelPlanID uuid.UUID) (*models.IDDOCQuestionnaire, error) {
 	return loaders.IDDOCQuestionnaire.ByModelPlanID.Load(ctx, modelPlanID)
