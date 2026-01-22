@@ -48,33 +48,6 @@ type ExistingModelLinkTranslation struct {
 	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
-type IDDOCQuestionnaireChanges struct {
-	TechnicalContactsIdentified       *bool                           `json:"technicalContactsIdentified,omitempty"`
-	TechnicalContactsIdentifiedDetail *string                         `json:"technicalContactsIdentifiedDetail,omitempty"`
-	TechnicalContactsIdentifiedNote   *string                         `json:"technicalContactsIdentifiedNote,omitempty"`
-	CaptureParticipantInfo            *bool                           `json:"captureParticipantInfo,omitempty"`
-	CaptureParticipantInfoNote        *string                         `json:"captureParticipantInfoNote,omitempty"`
-	IcdOwner                          *string                         `json:"icdOwner,omitempty"`
-	DraftIcdDueDate                   *time.Time                      `json:"draftIcdDueDate,omitempty"`
-	IcdNote                           *string                         `json:"icdNote,omitempty"`
-	UatNeeds                          *string                         `json:"uatNeeds,omitempty"`
-	StcNeeds                          *string                         `json:"stcNeeds,omitempty"`
-	TestingTimelines                  *string                         `json:"testingTimelines,omitempty"`
-	TestingNote                       *string                         `json:"testingNote,omitempty"`
-	DataMonitoringFileTypes           []models.IDDOCFileType          `json:"dataMonitoringFileTypes"`
-	DataMonitoringFileOther           *string                         `json:"dataMonitoringFileOther,omitempty"`
-	DataResponseType                  *string                         `json:"dataResponseType,omitempty"`
-	DataResponseFileFrequency         *string                         `json:"dataResponseFileFrequency,omitempty"`
-	DataFullTimeOrIncremental         *IDDOCFullTimeOrIncrementalType `json:"dataFullTimeOrIncremental,omitempty"`
-	EftSetUp                          *bool                           `json:"eftSetUp,omitempty"`
-	UnsolicitedAdjustmentsIncluded    *bool                           `json:"unsolicitedAdjustmentsIncluded,omitempty"`
-	DataFlowDiagramsNeeded            *bool                           `json:"dataFlowDiagramsNeeded,omitempty"`
-	ProduceBenefitEnhancementFiles    *bool                           `json:"produceBenefitEnhancementFiles,omitempty"`
-	FileNamingConventions             *string                         `json:"fileNamingConventions,omitempty"`
-	DataMonitoringNote                *string                         `json:"dataMonitoringNote,omitempty"`
-	LoadType                          *models.IDDOCLoadType           `json:"loadType,omitempty"`
-}
-
 // Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation struct {
 	Status                            models.TranslationFieldWithOptions            `json:"status" db:"status"`

@@ -155,6 +155,15 @@ func ModelPlanCreate(
 		if err != nil {
 			return nil, err
 		}
+
+		// Create default IDDOC Questionnaire object
+		iddocQuestionnaire := models.NewIDDOCQuestionnaire(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+
+		_, err = storage.IDDOCQuestionnaireCreate(tx, logger, iddocQuestionnaire)
+		if err != nil {
+			return nil, err
+		}
+
 		mtoInfo := models.NewMTOInfo(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
 		_, err = storage.MTOInfoCreate(tx, logger, mtoInfo)
 		if err != nil {

@@ -7,17 +7,13 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // IddocQuestionnaire is the resolver for the iddocQuestionnaire field.
 func (r *questionnairesResolver) IddocQuestionnaire(ctx context.Context, obj *models.Questionnaires) (*models.IDDOCQuestionnaire, error) {
-	principal := appcontext.Principal(ctx)
-	// TODO: Implement IDDOC questionnaire fetching
-	return models.NewIDDOCQuestionnaire(principal.Account().ID, obj.ModelPlanID), nil
-	// panic(fmt.Errorf("not implemented: IddocQuestionnaire - iddocQuestionnaire"))
+	return IDDOCQuestionnaireGetByModelPlanIDLoader(ctx, obj.ModelPlanID)
 }
 
 // DataExchangeApproach is the resolver for the dataExchangeApproach field.
