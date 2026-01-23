@@ -82,6 +82,11 @@ type IDDOCQuestionnaire {
   needed: Boolean!
 
   """
+  The UUID of the user who completed the questionnaire
+  """
+  completedBy: UUID
+
+  """
   The user who completed the questionnaire
   """
   completedByUserAccount: UserAccount

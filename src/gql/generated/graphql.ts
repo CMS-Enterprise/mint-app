@@ -733,6 +733,8 @@ export type IddocQuestionnaire = {
   __typename: 'IDDOCQuestionnaire';
   captureParticipantInfo?: Maybe<Scalars['Boolean']['output']>;
   captureParticipantInfoNote?: Maybe<Scalars['String']['output']>;
+  /** The UUID of the user who completed the questionnaire */
+  completedBy?: Maybe<Scalars['UUID']['output']>;
   /** The user who completed the questionnaire */
   completedByUserAccount?: Maybe<UserAccount>;
   /** The timestamp when the questionnaire was completed */
