@@ -16,6 +16,7 @@ const filterSections: Record<TypeChangeFilter, string> = {
   [TypeOfChange.PAYMENTS]: 'Payment',
   [TypeOfChange.MODEL_TO_OPERATIONS]: 'Model-to-operations matrix',
   [TypeOfOtherChange.DATA_EXCHANGE_APPROACH]: 'Data exchange approach',
+  [TypeOfOtherChange.IDDOC_QUESTIONNAIRE]: '4i/ACO-OS questionnaire',
   [TypeOfOtherChange.DISCUSSIONS]: 'Discussions',
   [TypeOfOtherChange.DOCUMENTS]: 'Documents',
   [TypeOfOtherChange.OVERALL_STATUS]: 'Overall status',
@@ -40,6 +41,8 @@ const changeHistory = {
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   planStatusUpdate:
     'updated the status to {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  questionnaireStatusUpdate:
+    'marked the {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:
     '{{action}} {{collaborator}} as {{role}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
   teamUPDATED:
@@ -105,7 +108,8 @@ const changeHistory = {
       'Operational solutions and implementation status tracker',
     plan_document_solution_link:
       'Operational solutions and implementation status tracker',
-    plan_data_exchange_approach: 'Data exchange approach'
+    plan_data_exchange_approach: 'Data exchange approach',
+    iddoc_questionnaire: '4i/ACO-OS questionnaire'
   },
   self: 'self',
   showDetails: 'Show details',

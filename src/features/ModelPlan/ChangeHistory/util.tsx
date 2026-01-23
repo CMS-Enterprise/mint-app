@@ -40,6 +40,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'questionnaireStatusUpdate'
   | 'mtoStatusUpdate'
   | 'teamUpdate'
   | 'discussionUpdate'
@@ -66,6 +67,7 @@ export type TranslationTables =
   | TableName.PLAN_PAYMENTS
   | TableName.PLAN_COLLABORATOR
   | TableName.PLAN_DATA_EXCHANGE_APPROACH
+  | TableName.IDDOC_QUESTIONNAIRE
   | TableName.PLAN_DISCUSSION
   | TableName.DISCUSSION_REPLY
   | TableName.MTO_CATEGORY
@@ -811,13 +813,21 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
-  // If the change is an MTO ready for review update
+  // If the change is a questionnairestatus update, return 'Questionnaire status update'
+  if (
+    change.tableName === TableName.IDDOC_QUESTIONNAIRE &&
+    change.translatedFields.find(field => field.fieldName === 'status')
+  ) {
+    return 'questionnaireStatusUpdate';
+  }
+
   if (
     change.tableName === TableName.MTO_INFO &&
     change.translatedFields.find(
       field => field.fieldName === 'ready_for_review_by'
     )
   ) {
+    // If the change is an MTO ready for review update
     return 'mtoStatusUpdate';
   }
 
@@ -923,7 +933,7 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       break;
     case 'standardUpdate':
     case 'operationalNeedUpdate':
-      headerText = i18next.t('changeHistory:change');
+      headerText = 'changeHistory:change';
       break;
     case 'documentUpdate':
       headerText = i18next.t('changeHistory:documentUpdate');
