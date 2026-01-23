@@ -75,6 +75,7 @@ type IddocQuestionnaireTranslation struct {
 	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
 	FileNamingConventions             models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
 	DataMonitoringNote                models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
+	IsIDDOCQuestionnaireComplete      models.TranslationFieldWithOptions            `json:"isIDDOCQuestionnaireComplete"`
 }
 
 // Represents key contact category base translation data

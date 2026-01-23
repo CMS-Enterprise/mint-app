@@ -44,7 +44,8 @@ const IDDOCMonitoring = () => {
     eftSetUp: eftSetUpConfig,
     unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncludedConfig,
     dataFlowDiagramsNeeded: dataFlowDiagramsNeededConfig,
-    produceBenefitEnhancementFiles: produceBenefitEnhancementFilesConfig
+    produceBenefitEnhancementFiles: produceBenefitEnhancementFilesConfig,
+    isIDDOCQuestionnaireComplete: isIDDOCQuestionnaireCompleteConfig
   } = usePlanTranslation('iddocQuestionnaire');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
@@ -66,7 +67,10 @@ const IDDOCMonitoring = () => {
     dataFlowDiagramsNeeded,
     produceBenefitEnhancementFiles,
     fileNamingConventions,
-    dataMonitoringNote
+    dataMonitoringNote,
+    isIDDOCQuestionnaireComplete,
+    completedByUserAccount,
+    completedDts
   } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
     {}) as IDDOCMonitoringFormType;
 
@@ -87,7 +91,14 @@ const IDDOCMonitoring = () => {
     dataFlowDiagramsNeeded: dataFlowDiagramsNeeded ?? null,
     produceBenefitEnhancementFiles: produceBenefitEnhancementFiles ?? null,
     fileNamingConventions: fileNamingConventions ?? '',
-    dataMonitoringNote: dataMonitoringNote ?? ''
+    dataMonitoringNote: dataMonitoringNote ?? '',
+    isIDDOCQuestionnaireComplete: isIDDOCQuestionnaireComplete ?? false,
+    completedByUserAccount: completedByUserAccount ?? {
+      __typename: 'UserAccount',
+      id: '',
+      commonName: ''
+    },
+    completedDts: completedDts ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -240,33 +251,32 @@ const IDDOCMonitoring = () => {
                     field="dataMonitoringNote"
                   />
 
-                  {/* TODO: update below hard coded value once query is ready */}
                   <FieldGroup className="border-2px border-base-light radius-md padding-2">
                     <Label htmlFor="iddoc-questionnaire-is-complete">
-                      Questionnaire status
+                      {isIDDOCQuestionnaireCompleteConfig.label}
                     </Label>
                     <CheckboxField
                       name="iddocQuestionnaireIsComplete"
                       id="iddoc-questionnaire-is-complete-true"
-                      checked
-                      value="true"
-                      label="This questionnaire (4i and ACO-OS) is complete."
-                      onChange={() => {}}
-                      onBlur={() => {}}
+                      checked={values.isIDDOCQuestionnaireComplete}
+                      value={isIDDOCQuestionnaireComplete ? 'true' : 'false'}
+                      label={isIDDOCQuestionnaireCompleteConfig.options.true}
+                      onChange={e => {
+                        setFieldValue(
+                          'isIDDOCQuestionnaireComplete',
+                          e.target.checked
+                        );
+                      }}
+                      onBlur={() => null}
                     />
-                    {/* {formData.markedCompleteByUserAccount?.id && 
-                    formData.markedCompleteDts && ( */}
-                    <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
-                      {miscellaneousT('markedComplete', {
-                        user: 'wonderful trouble maker'
-                      })}
-                      the best day ever{' '}
-                      {formatDateLocal(
-                        '2026-01-14T18:33:18.149679Z',
-                        'MM/dd/yyyy'
-                      )}
-                    </p>
-                    {/* )} */}
+                    {completedByUserAccount?.commonName && completedDts && (
+                      <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+                        {miscellaneousT('markedComplete', {
+                          user: completedByUserAccount.commonName
+                        })}
+                        {formatDateLocal(completedDts, 'MM/dd/yyyy')}
+                      </p>
+                    )}
                   </FieldGroup>
 
                   <FormFooter

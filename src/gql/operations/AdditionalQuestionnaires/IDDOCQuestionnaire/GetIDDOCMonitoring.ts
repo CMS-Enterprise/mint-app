@@ -15,6 +15,12 @@ export default gql(/* GraphQL */ `
           produceBenefitEnhancementFiles
           fileNamingConventions
           dataMonitoringNote
+          isIDDOCQuestionnaireComplete
+          completedByUserAccount {
+            id
+            commonName
+          }
+          completedDts
         }
       }
     }

@@ -99,8 +99,8 @@
           "options": {
             "BENEFICIARY": "Beneficiary",
             "PROVIDER": "Provider",
-            "PART_A": "Part A",
-            "PART_B": "Part B",
+            "PART_A_CLAIMS": "Part A Claims",
+            "PART_B_CLAIMS": "Part B Claims",
             "OTHER": "Other"
           }
         },
@@ -685,6 +685,20 @@
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 4.07
+  },
+  "isIDDOCQuestionnaireComplete": {
+    "gqlField": "isIddocQuestionnaireComplete",
+    "goField": "IsIddocQuestionnaireComplete",
+    "dbField": "is_iddoc_questionnaire_complete",
+    "label": "Questionnaire status",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
+    "order": 4.08,
+    "options": {
+      "true": "This questionnaire (4i and ACO-OS) is complete.",
+      "false": "No"
+    },
+    "hideFromReadonly": true
   },
   "status": {
     "gqlField": "status",

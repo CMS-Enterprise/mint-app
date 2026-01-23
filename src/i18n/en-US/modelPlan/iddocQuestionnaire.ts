@@ -379,6 +379,20 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 4.07,
     filterGroups: [ModelViewFilter.IDDOC]
   },
+  isIDDOCQuestionnaireComplete: {
+    gqlField: 'isIddocQuestionnaireComplete',
+    goField: 'IsIddocQuestionnaireComplete',
+    dbField: 'is_iddoc_questionnaire_complete',
+    label: 'Questionnaire status',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 4.08,
+    options: {
+      true: 'This questionnaire (4i and ACO-OS) is complete.',
+      false: 'No'
+    },
+    hideFromReadonly: true
+  },
   status: {
     gqlField: 'status',
     goField: 'Status',
