@@ -11,29 +11,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/email"
 )
 
-// GetOperationalSolutionSelectedDetails queries the database to return information that is useful
-func (s *Store) GetOperationalSolutionSelectedDetails(solutionID uuid.UUID) (*email.OperationalSolutionSelectedDB, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.Email.OperationalSolutionSelectedDetailsGet)
-	if err != nil {
-
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"sol_id": solutionID,
-	}
-	solDetails := email.OperationalSolutionSelectedDB{}
-
-	err = stmt.Get(&solDetails, arg)
-	if err != nil {
-
-		return nil, err
-
-	}
-	return &solDetails, nil
-}
-
 // GetMTOSolutionSelectedDetails queries the database to return information that is useful
 func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UUID) (*email.MTOSolutionSelectedDB, error) {
 	args := map[string]interface{}{

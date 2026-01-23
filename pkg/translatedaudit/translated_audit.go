@@ -39,6 +39,16 @@ var unTranslatedTables = []models.TableName{
 	// We don't translate key contact audit configuration tables
 	models.TNKeyContact,
 	models.TNKeyContactCategory,
+
+	// legacy Operational Need/Solution tables that are no longer being translated ( though audited for historical purposes)
+	models.TNOperationalNeed,
+	models.TNOperationalSolution,
+	models.TNOperationalSolutionSubtask,
+	models.TNPlanDocumentSolutionLink,
+	models.TNPossibleNeedSolutionLink,
+	models.TNPossibleOperationalNeed,
+	models.TNPossibleOperationalSolution,
+	models.TNPossibleOperationalSolutionContact,
 }
 
 // Returns true in the table name is in the list of provided Table Names

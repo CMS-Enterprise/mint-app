@@ -39,8 +39,7 @@ func main() {
 	reportAProblemEmail(emailService, addressBook)
 
 	// Solution emails
-	//TODO, we might want to remove these later. Leaving for comparison now
-	sendOperationalSolutionSelectedTestEmail(emailService, addressBook)
+
 	sendMTOSolutionSelectedTestEmail(emailService, addressBook)
 
 	// MTO Common Solution Contact emails for editable POC workflow

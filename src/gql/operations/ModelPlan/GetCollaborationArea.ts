@@ -11,7 +11,6 @@ export default gql(/* GraphQL */ `
         id
         date
       }
-      opSolutionLastModifiedDts
       status
       taskListStatus
       isFavorite
