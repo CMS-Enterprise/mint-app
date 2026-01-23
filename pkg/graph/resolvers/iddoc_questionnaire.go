@@ -61,10 +61,16 @@ func IDDOCQuestionnaireUpdate(
 				// Check if completion timestamp has been set or is the default value
 				if existing.CompletedDts == nil && isSettingToComplete {
 					iddocChangedToComplete = true
-					existing.CompletedBy = &principal.Account().ID
+					// Only auto-set CompletedBy if it wasn't explicitly provided in changes
+					if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+						existing.CompletedBy = &principal.Account().ID
+					}
 					existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
 				} else if !isSettingToComplete {
-					existing.CompletedBy = nil
+					// When setting to incomplete, clear both fields unless explicitly set
+					if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+						existing.CompletedBy = nil
+					}
 					existing.CompletedDts = nil
 				}
 

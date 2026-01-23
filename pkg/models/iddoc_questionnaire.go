@@ -113,6 +113,11 @@ func NewIDDOCQuestionnaire(createdBy uuid.UUID, modelPlanID uuid.UUID) *IDDOCQue
 	}
 }
 
+// IsIDDOCQuestionnaireComplete returns whether the questionnaire has been marked as complete
+func (iddoc *IDDOCQuestionnaire) IsIDDOCQuestionnaireComplete() bool {
+	return iddoc.CompletedDts != nil
+}
+
 // CompletedByUserAccount returns the user account for the user who completed the questionnaire
 func (iddoc *IDDOCQuestionnaire) CompletedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
 	if iddoc.CompletedBy == nil {

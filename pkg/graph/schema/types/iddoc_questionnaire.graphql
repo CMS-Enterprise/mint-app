@@ -84,13 +84,17 @@ type IDDOCQuestionnaire {
   """
   The user who completed the questionnaire
   """
-  completedBy: UUID
   completedByUserAccount: UserAccount
 
   """
   The timestamp when the questionnaire was completed
   """
   completedDts: Time
+
+  """
+  Indicates whether the questionnaire has been marked as complete
+  """
+  isIDDOCQuestionnaireComplete: Boolean!
 
   """
   Computed status of the questionnaire
@@ -137,16 +141,15 @@ input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
   dataMonitoringNote: String
 
   loadType: IDDOCLoadType
+
+  # Completion metadata
+  completedBy: UUID
+  isIDDOCQuestionnaireComplete: Boolean
 }
 
 extend type Mutation {
-  # Admin / system-only
   updateIDDOCQuestionnaire(
     id: UUID!
     changes: IDDOCQuestionnaireChanges!
-  ): IDDOCQuestionnaire! @hasRole(role: MINT_ASSESSMENT)
-
-  # User completion
-  completeIDDOCQuestionnaire(id: UUID!): IDDOCQuestionnaire!
-    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+  ): IDDOCQuestionnaire! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }

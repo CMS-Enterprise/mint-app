@@ -734,7 +734,6 @@ export type IddocQuestionnaire = {
   captureParticipantInfo?: Maybe<Scalars['Boolean']['output']>;
   captureParticipantInfoNote?: Maybe<Scalars['String']['output']>;
   /** The user who completed the questionnaire */
-  completedBy?: Maybe<Scalars['UUID']['output']>;
   completedByUserAccount?: Maybe<UserAccount>;
   /** The timestamp when the questionnaire was completed */
   completedDts?: Maybe<Scalars['Time']['output']>;
@@ -754,6 +753,8 @@ export type IddocQuestionnaire = {
   icdNote?: Maybe<Scalars['String']['output']>;
   icdOwner?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
+  /** Indicates whether the questionnaire has been marked as complete */
+  isIDDOCQuestionnaireComplete: Scalars['Boolean']['output'];
   loadType?: Maybe<IddocLoadType>;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -777,6 +778,7 @@ export type IddocQuestionnaire = {
 export type IddocQuestionnaireChanges = {
   captureParticipantInfo?: InputMaybe<Scalars['Boolean']['input']>;
   captureParticipantInfoNote?: InputMaybe<Scalars['String']['input']>;
+  completedBy?: InputMaybe<Scalars['UUID']['input']>;
   dataFlowDiagramsNeeded?: InputMaybe<Scalars['Boolean']['input']>;
   dataFullTimeOrIncremental?: InputMaybe<IddocFullTimeOrIncrementalType>;
   dataMonitoringFileOther?: InputMaybe<Scalars['String']['input']>;
@@ -789,6 +791,7 @@ export type IddocQuestionnaireChanges = {
   fileNamingConventions?: InputMaybe<Scalars['String']['input']>;
   icdNote?: InputMaybe<Scalars['String']['input']>;
   icdOwner?: InputMaybe<Scalars['String']['input']>;
+  isIDDOCQuestionnaireComplete?: InputMaybe<Scalars['Boolean']['input']>;
   loadType?: InputMaybe<IddocLoadType>;
   produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']['input']>;
   stcNeeds?: InputMaybe<Scalars['String']['input']>;
@@ -2026,7 +2029,6 @@ export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
-  completeIDDOCQuestionnaire: IddocQuestionnaire;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2147,12 +2149,6 @@ export type MutationAddPlanFavoriteArgs = {
 /** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
-};
-
-
-/** Mutations definition for the schema */
-export type MutationCompleteIddocQuestionnaireArgs = {
-  id: Scalars['UUID']['input'];
 };
 
 

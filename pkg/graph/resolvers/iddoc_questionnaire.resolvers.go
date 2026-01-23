@@ -67,29 +67,6 @@ func (r *mutationResolver) UpdateIDDOCQuestionnaire(ctx context.Context, id uuid
 	)
 }
 
-// CompleteIDDOCQuestionnaire is the resolver for the completeIDDOCQuestionnaire field.
-func (r *mutationResolver) CompleteIDDOCQuestionnaire(ctx context.Context, id uuid.UUID) (*models.IDDOCQuestionnaire, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	// Create changes map with the completion flag
-	isComplete := true
-	changes := map[string]any{
-		"isIDDOCQuestionnaireComplete": &isComplete,
-	}
-
-	return IDDOCQuestionnaireUpdate(
-		ctx,
-		logger,
-		id,
-		changes,
-		principal,
-		r.store,
-		r.emailService,
-		r.addressBook,
-	)
-}
-
 // IDDOCQuestionnaire returns generated.IDDOCQuestionnaireResolver implementation.
 func (r *Resolver) IDDOCQuestionnaire() generated.IDDOCQuestionnaireResolver {
 	return &iDDOCQuestionnaireResolver{r}
