@@ -11,7 +11,7 @@ CREATE TABLE iddoc_questionnaire (
     capture_participant_info BOOLEAN,
     capture_participant_info_note TEXT,
     icd_owner TEXT,
-    draft_icd_required_by TIMESTAMP WITH TIME ZONE,
+    draft_icd_due_date TIMESTAMP WITH TIME ZONE, 
     icd_note TEXT,
 
     -- Page 2 Testing
@@ -19,7 +19,7 @@ CREATE TABLE iddoc_questionnaire (
     stc_needs TEXT,
     testing_timelines TEXT,
     testing_note TEXT,
-    file_types IDDOC_FILE_TYPE[],
+    data_monitoring_file_types IDDOC_FILE_TYPE[],
     data_monitoring_file_other TEXT,
     data_response_type TEXT,
     data_response_file_frequency TEXT,
@@ -59,13 +59,13 @@ COMMENT ON COLUMN iddoc_questionnaire.technical_contacts_identified_note IS 'Add
 COMMENT ON COLUMN iddoc_questionnaire.capture_participant_info IS 'Whether participant information will be captured.';
 COMMENT ON COLUMN iddoc_questionnaire.capture_participant_info_note IS 'Notes about capturing participant information.';
 COMMENT ON COLUMN iddoc_questionnaire.icd_owner IS 'The owner of the Interface Control Document (ICD).';
-COMMENT ON COLUMN iddoc_questionnaire.draft_icd_required_by IS 'The date by which a draft ICD is required.';
+COMMENT ON COLUMN iddoc_questionnaire.draft_icd_due_date IS 'The date by which a draft ICD is required.';
 COMMENT ON COLUMN iddoc_questionnaire.icd_note IS 'Additional notes about the Interface Control Document (ICD).';
 COMMENT ON COLUMN iddoc_questionnaire.uat_needs IS 'User Acceptance Testing (UAT) test data needs.';
 COMMENT ON COLUMN iddoc_questionnaire.stc_needs IS 'System Test and Certification (STC) test data needs.';
 COMMENT ON COLUMN iddoc_questionnaire.testing_timelines IS 'Timelines for testing activities.';
 COMMENT ON COLUMN iddoc_questionnaire.testing_note IS 'Additional notes about testing requirements.';
-COMMENT ON COLUMN iddoc_questionnaire.file_types IS 'Types of files that will be exchanged through IDDOC.';
+COMMENT ON COLUMN iddoc_questionnaire.data_monitoring_file_types IS 'Types of files that will be exchanged through IDDOC.';
 COMMENT ON COLUMN iddoc_questionnaire.data_monitoring_file_other IS 'Description of other file types not covered by the file_types enum.';
 COMMENT ON COLUMN iddoc_questionnaire.data_response_type IS 'Types of responses expected from IDDOC.';
 COMMENT ON COLUMN iddoc_questionnaire.data_response_file_frequency IS 'Frequency of file exchanges.';

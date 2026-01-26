@@ -72,7 +72,7 @@ type IDDOCQuestionnaire struct {
 	CaptureParticipantInfo            *bool      `json:"captureParticipantInfo" db:"capture_participant_info"`
 	CaptureParticipantInfoNote        *string    `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
 	IcdOwner                          *string    `json:"icdOwner" db:"icd_owner"`
-	DraftIcdDueDate                   *time.Time `json:"draftIcdDueDate" db:"draft_icd_required_by"`
+	DraftIcdDueDate                   *time.Time `json:"draftIcdDueDate" db:"draft_icd_due_date"`
 	IcdNote                           *string    `json:"icdNote" db:"icd_note"`
 
 	// Page 2 Testing
@@ -80,7 +80,7 @@ type IDDOCQuestionnaire struct {
 	StcNeeds                  *string            `json:"stcNeeds" db:"stc_needs"`
 	TestingTimelines          *string            `json:"testingTimelines" db:"testing_timelines"`
 	TestingNote               *string            `json:"testingNote" db:"testing_note"`
-	DataMonitoringFileTypes   IDDOCFileTypeArray `json:"dataMonitoringFileTypes" db:"file_types"`
+	DataMonitoringFileTypes   IDDOCFileTypeArray `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
 	DataMonitoringFileOther   *string            `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
 	DataResponseType          *string            `json:"dataResponseType" db:"data_response_type"`
 	DataResponseFileFrequency *string            `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
