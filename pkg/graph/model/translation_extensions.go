@@ -321,3 +321,13 @@ func (kct *KeyContactCategoryTranslation) TableName() models.TableName {
 func (kct *KeyContactCategoryTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*kct)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (iqt *IddocQuestionnaireTranslation) TableName() models.TableName {
+	return models.TNIddocQuestionnaire
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (iqt *IddocQuestionnaireTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*iqt)
+}
