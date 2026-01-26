@@ -8,8 +8,6 @@ import (
 )
 
 func TestIddocQuestionnaireTranslation(t *testing.T) {
-	// Needed is a metadata field that controls whether the questionnaire is needed, not a form field
-	// IsIDDOCQuestionnaireComplete, CompletedBy and CompletedDts are completion metadata filled automatically
-	excludedFields := append(taskListStructExcludeFields, "Needed", "IsIDDOCQuestionnaireComplete", "CompletedBy", "CompletedDts", "LoadType")
+	excludedFields := taskListStructExcludeFields
 	assertAllTranslationDataGeneric(t, IddocQuestionnaireTranslation, models.IDDOCQuestionnaire{}, excludedFields)
 }

@@ -3,13 +3,13 @@
     "gqlField": "needed",
     "goField": "Needed",
     "dbField": "needed",
-    "label": "",
+    "label": "Needed",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 1.1,
     "options": {
-      "true": "",
-      "false": ""
+      "true": "Yes",
+      "false": "No"
     },
     "childRelation": {
       "true": [
@@ -218,13 +218,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -268,13 +268,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -301,13 +301,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -323,13 +323,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -347,13 +347,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -369,13 +369,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -391,13 +391,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -413,13 +413,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -455,13 +455,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -489,13 +489,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -511,13 +511,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -537,13 +537,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -563,13 +563,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -589,13 +589,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -615,13 +615,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -643,13 +643,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -665,13 +665,13 @@
       "gqlField": "needed",
       "goField": "Needed",
       "dbField": "needed",
-      "label": "",
+      "label": "Needed",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "",
-        "false": ""
+        "true": "Yes",
+        "false": "No"
       }
     }
   },
@@ -730,10 +730,10 @@
     "formType": "CHECKBOX",
     "order": 7.19,
     "options": {
-      "READY": "Ready",
+      "NOT_NEEDED": "Not needed",
+      "NOT_STARTED": "Not started",
       "IN_PROGRESS": "In progress",
-      "READY_FOR_REVIEW": "Ready for review",
-      "READY_FOR_CLEARANCE": "Ready for clearance"
+      "COMPLETED": "Completed"
     },
     "hideFromReadonly": true
   }

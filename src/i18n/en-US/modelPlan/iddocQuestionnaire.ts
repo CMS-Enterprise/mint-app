@@ -12,13 +12,13 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     gqlField: 'needed',
     goField: 'Needed',
     dbField: 'needed',
-    label: '',
+    label: 'Needed',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.1,
     options: {
-      true: '',
-      false: ''
+      true: 'Yes',
+      false: 'No'
     },
     disconnectedLabel: `questionsNotApplicablePerMTO`,
     childRelation: {
@@ -424,10 +424,10 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     formType: TranslationFormType.CHECKBOX,
     order: 7.19,
     options: {
-      READY: 'Ready',
+      NOT_NEEDED: 'Not needed',
+      NOT_STARTED: 'Not started',
       IN_PROGRESS: 'In progress',
-      READY_FOR_REVIEW: 'Ready for review',
-      READY_FOR_CLEARANCE: 'Ready for clearance'
+      COMPLETED: 'Completed'
     },
     hideFromReadonly: true
   }
