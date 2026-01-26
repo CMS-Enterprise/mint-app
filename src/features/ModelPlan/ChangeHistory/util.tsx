@@ -196,6 +196,10 @@ const unneededFields: HiddenFieldTypes[] = [
     fields: ['marked_complete_by', 'marked_complete_dts']
   },
   {
+    table: TableName.IDDOC_QUESTIONNAIRE,
+    fields: ['is_iddoc_questionnaire_complete', 'completed_by', 'completed_dts']
+  },
+  {
     table: TableName.MTO_CATEGORY,
     fields: ['position']
   }
