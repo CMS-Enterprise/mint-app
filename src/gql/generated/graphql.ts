@@ -721,13 +721,6 @@ export enum IddocFullTimeOrIncrementalType {
   INCREMENTAL = 'INCREMENTAL'
 }
 
-/** IDDOCLoadType represents how data will be loaded */
-export enum IddocLoadType {
-  BOTH = 'BOTH',
-  INITIAL = 'INITIAL',
-  ONGOING = 'ONGOING'
-}
-
 /** IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan */
 export type IddocQuestionnaire = {
   __typename: 'IDDOCQuestionnaire';
@@ -757,7 +750,6 @@ export type IddocQuestionnaire = {
   id: Scalars['UUID']['output'];
   /** Indicates whether the questionnaire has been marked as complete */
   isIDDOCQuestionnaireComplete: Scalars['Boolean']['output'];
-  loadType?: Maybe<IddocLoadType>;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -794,7 +786,6 @@ export type IddocQuestionnaireChanges = {
   icdNote?: InputMaybe<Scalars['String']['input']>;
   icdOwner?: InputMaybe<Scalars['String']['input']>;
   isIDDOCQuestionnaireComplete?: InputMaybe<Scalars['Boolean']['input']>;
-  loadType?: InputMaybe<IddocLoadType>;
   produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']['input']>;
   stcNeeds?: InputMaybe<Scalars['String']['input']>;
   technicalContactsIdentified?: InputMaybe<Scalars['Boolean']['input']>;

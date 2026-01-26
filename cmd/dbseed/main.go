@@ -250,7 +250,6 @@ func (s *Seeder) SeedData() {
 			"dataMonitoringFileTypes":        []models.IDDOCFileType{models.IDDOCFileType("BENEFICIARY"), models.IDDOCFileType("PROVIDER"), models.IDDOCFileType("PART_A_CLAIMS")},
 			"dataResponseType":               "Acknowledgment files and detailed error reports",
 			"dataResponseFileFrequency":      "Daily for claims, weekly for beneficiary updates",
-			"loadType":                       models.IDDOCLoadType("BOTH"),
 			"eftSetUp":                       true,
 			"unsolicitedAdjustmentsIncluded": false,
 			"dataFlowDiagramsNeeded":         true,

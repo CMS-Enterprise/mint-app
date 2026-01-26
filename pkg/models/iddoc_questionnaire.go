@@ -17,9 +17,6 @@ import (
 // IDDOCFileType represents the types of files that can be exchanged
 type IDDOCFileType string
 
-// IDDOCLoadType represents how data will be loaded
-type IDDOCLoadType string
-
 // IDDOCFileTypeArray represents an array of IDDOCFileType
 type IDDOCFileTypeArray []IDDOCFileType
 
@@ -89,14 +86,13 @@ type IDDOCQuestionnaire struct {
 	DataResponseFileFrequency *string            `json:"dataResponseFileFrequency" db:"file_frequency"`
 
 	// Page 3 Monitoring
-	DataFullTimeOrIncremental      *string        `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
-	EftSetUp                       *bool          `json:"eftSetUp" db:"eft_connectivity_setup"`
-	UnsolicitedAdjustmentsIncluded *bool          `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
-	DataFlowDiagramsNeeded         *bool          `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
-	ProduceBenefitEnhancementFiles *bool          `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
-	FileNamingConventions          *string        `json:"fileNamingConventions" db:"file_naming_conventions"`
-	DataMonitoringNote             *string        `json:"dataMonitoringNote" db:"data_monitoring_note"`
-	LoadType                       *IDDOCLoadType `json:"loadType" db:"load_type"`
+	DataFullTimeOrIncremental      *string `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                       *bool   `json:"eftSetUp" db:"eft_connectivity_setup"`
+	UnsolicitedAdjustmentsIncluded *bool   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded         *bool   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles *bool   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions          *string `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote             *string `json:"dataMonitoringNote" db:"data_monitoring_note"`
 
 	// Metadata
 	Needed                       bool       `json:"needed" db:"needed"`

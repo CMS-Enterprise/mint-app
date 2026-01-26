@@ -28,15 +28,6 @@ enum IDDOCFullTimeOrIncrementalType {
 }
 
 """
-IDDOCLoadType represents how data will be loaded
-"""
-enum IDDOCLoadType {
-  INITIAL
-  ONGOING
-  BOTH
-}
-
-"""
 IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan
 """
 type IDDOCQuestionnaire {
@@ -72,8 +63,6 @@ type IDDOCQuestionnaire {
   produceBenefitEnhancementFiles: Boolean
   fileNamingConventions: String
   dataMonitoringNote: String
-
-  loadType: IDDOCLoadType
 
   # IDDOCQuestionnaire Metadata
   """
@@ -144,8 +133,6 @@ input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
   produceBenefitEnhancementFiles: Boolean
   fileNamingConventions: String
   dataMonitoringNote: String
-
-  loadType: IDDOCLoadType
 
   # Completion metadata
   completedBy: UUID
