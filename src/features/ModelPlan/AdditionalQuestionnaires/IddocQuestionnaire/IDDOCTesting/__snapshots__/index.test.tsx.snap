@@ -174,17 +174,17 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-PART_A"
+            id="iddoc-questionnaire-data-monitoring-file-PART_A_CLAIMS"
             name="dataMonitoringFileTypes"
             type="checkbox"
-            value="PART_A"
+            value="PART_A_CLAIMS"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-PART_A"
+            for="iddoc-questionnaire-data-monitoring-file-PART_A_CLAIMS"
             style="width: fit-content;"
           >
-            Part A
+            Part A Claims
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
@@ -195,17 +195,17 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-PART_B"
+            id="iddoc-questionnaire-data-monitoring-file-PART_B_CLAIMS"
             name="dataMonitoringFileTypes"
             type="checkbox"
-            value="PART_B"
+            value="PART_B_CLAIMS"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-PART_B"
+            for="iddoc-questionnaire-data-monitoring-file-PART_B_CLAIMS"
             style="width: fit-content;"
           >
-            Part B
+            Part B Claims
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
