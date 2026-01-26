@@ -194,13 +194,13 @@ func (pdt *PlanDataExchangeApproachTranslation) ToMap() (map[string]models.ITran
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pdt *IddocQuestionnaireTranslation) TableName() models.TableName {
+func (iqt *IddocQuestionnaireTranslation) TableName() models.TableName {
 	return models.TNIddocQuestionnaire
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (pdt *IddocQuestionnaireTranslation) ToMap() (map[string]models.ITranslationField, error) {
-	return models.StructToTranslationMap(*pdt)
+func (iqt *IddocQuestionnaireTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*iqt)
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface

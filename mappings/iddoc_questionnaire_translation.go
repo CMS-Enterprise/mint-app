@@ -9,12 +9,12 @@ import (
 )
 
 //go:embed translation/iddoc_questionnaire.json
-var IddocQuestionnaireTranslationJSON []byte
+var iddocQuestionnaireJSON []byte
 
-// IddocQuestionnaireTranslation reads the json embedded file and renders it as a useable translation file
+// IddocQuestionnaireTranslation provides the translation for IDDOC questionnaire
 func IddocQuestionnaireTranslation() (*model.IddocQuestionnaireTranslation, error) {
 	var translation model.IddocQuestionnaireTranslation
-	err := json.Unmarshal(IddocQuestionnaireTranslationJSON, &translation)
+	err := json.Unmarshal(iddocQuestionnaireJSON, &translation)
 	if err != nil {
 		fmt.Println("Error unmarshalling JSON:", err)
 		return nil, err

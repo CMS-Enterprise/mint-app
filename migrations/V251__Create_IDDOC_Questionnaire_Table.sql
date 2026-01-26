@@ -8,34 +8,34 @@ CREATE TABLE iddoc_questionnaire (
     technical_contacts_identified BOOLEAN,
     technical_contacts_identified_detail TEXT,
     technical_contacts_identified_note TEXT,
-    capture_participant_information BOOLEAN,
+    capture_participant_info BOOLEAN,
     capture_participant_info_note TEXT,
     icd_owner TEXT,
-    draft_icd_required_by TIMESTAMP WITH TIME ZONE,
+    draft_icd_due_date TIMESTAMP WITH TIME ZONE, 
     icd_note TEXT,
 
     -- Page 2 Testing
-    uat_test_data_needs TEXT,
-    stc_test_data_needs TEXT,
+    uat_needs TEXT,
+    stc_needs TEXT,
     testing_timelines TEXT,
     testing_note TEXT,
-    file_types IDDOC_FILE_TYPE[],
+    data_monitoring_file_types IDDOC_FILE_TYPE[],
     data_monitoring_file_other TEXT,
-    response_types TEXT,
-    file_frequency TEXT,
+    data_response_type TEXT,
+    data_response_file_frequency TEXT,
 
     -- Page 3 Monitoring
     data_full_time_or_incremental TEXT,
-    eft_connectivity_setup BOOLEAN,
+    eft_set_up BOOLEAN,
     unsolicited_adjustments_included BOOLEAN,
     data_flow_diagrams_needed BOOLEAN,
     produce_benefit_enhancement_files BOOLEAN,
     file_naming_conventions TEXT,
     data_monitoring_note TEXT,
-    load_type IDDOC_LOAD_TYPE,
 
     -- Metadata
     needed BOOLEAN NOT NULL DEFAULT FALSE,
+    is_iddoc_questionnaire_complete BOOLEAN NOT NULL DEFAULT FALSE,
     completed_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
     completed_dts TIMESTAMP WITH TIME ZONE,
 
@@ -56,27 +56,26 @@ COMMENT ON COLUMN iddoc_questionnaire.model_plan_id IS 'The model plan this IDDO
 COMMENT ON COLUMN iddoc_questionnaire.technical_contacts_identified IS 'Whether technical contacts have been identified for IDDOC setup.';
 COMMENT ON COLUMN iddoc_questionnaire.technical_contacts_identified_detail IS 'Details about the technical contacts that have been identified.';
 COMMENT ON COLUMN iddoc_questionnaire.technical_contacts_identified_note IS 'Additional notes about technical contacts identification.';
-COMMENT ON COLUMN iddoc_questionnaire.capture_participant_information IS 'Whether participant information will be captured.';
+COMMENT ON COLUMN iddoc_questionnaire.capture_participant_info IS 'Whether participant information will be captured.';
 COMMENT ON COLUMN iddoc_questionnaire.capture_participant_info_note IS 'Notes about capturing participant information.';
 COMMENT ON COLUMN iddoc_questionnaire.icd_owner IS 'The owner of the Interface Control Document (ICD).';
-COMMENT ON COLUMN iddoc_questionnaire.draft_icd_required_by IS 'The date by which a draft ICD is required.';
+COMMENT ON COLUMN iddoc_questionnaire.draft_icd_due_date IS 'The date by which a draft ICD is required.';
 COMMENT ON COLUMN iddoc_questionnaire.icd_note IS 'Additional notes about the Interface Control Document (ICD).';
-COMMENT ON COLUMN iddoc_questionnaire.uat_test_data_needs IS 'User Acceptance Testing (UAT) test data needs.';
-COMMENT ON COLUMN iddoc_questionnaire.stc_test_data_needs IS 'System Test and Certification (STC) test data needs.';
+COMMENT ON COLUMN iddoc_questionnaire.uat_needs IS 'User Acceptance Testing (UAT) test data needs.';
+COMMENT ON COLUMN iddoc_questionnaire.stc_needs IS 'System Test and Certification (STC) test data needs.';
 COMMENT ON COLUMN iddoc_questionnaire.testing_timelines IS 'Timelines for testing activities.';
 COMMENT ON COLUMN iddoc_questionnaire.testing_note IS 'Additional notes about testing requirements.';
-COMMENT ON COLUMN iddoc_questionnaire.file_types IS 'Types of files that will be exchanged through IDDOC.';
+COMMENT ON COLUMN iddoc_questionnaire.data_monitoring_file_types IS 'Types of files that will be exchanged through IDDOC.';
 COMMENT ON COLUMN iddoc_questionnaire.data_monitoring_file_other IS 'Description of other file types not covered by the file_types enum.';
-COMMENT ON COLUMN iddoc_questionnaire.response_types IS 'Types of responses expected from IDDOC.';
-COMMENT ON COLUMN iddoc_questionnaire.file_frequency IS 'Frequency of file exchanges.';
+COMMENT ON COLUMN iddoc_questionnaire.data_response_type IS 'Types of responses expected from IDDOC.';
+COMMENT ON COLUMN iddoc_questionnaire.data_response_file_frequency IS 'Frequency of file exchanges.';
 COMMENT ON COLUMN iddoc_questionnaire.data_full_time_or_incremental IS 'Whether data monitoring is full-time or incremental.';
-COMMENT ON COLUMN iddoc_questionnaire.eft_connectivity_setup IS 'Whether Electronic Funds Transfer (EFT) connectivity setup is needed.';
+COMMENT ON COLUMN iddoc_questionnaire.eft_set_up IS 'Whether Electronic Funds Transfer (EFT) connectivity setup is needed.';
 COMMENT ON COLUMN iddoc_questionnaire.unsolicited_adjustments_included IS 'Whether unsolicited adjustments are included.';
 COMMENT ON COLUMN iddoc_questionnaire.data_flow_diagrams_needed IS 'Whether data flow diagrams are needed.';
 COMMENT ON COLUMN iddoc_questionnaire.produce_benefit_enhancement_files IS 'Whether benefit enhancement files will be produced.';
 COMMENT ON COLUMN iddoc_questionnaire.file_naming_conventions IS 'File naming conventions to be used.';
 COMMENT ON COLUMN iddoc_questionnaire.data_monitoring_note IS 'Additional notes about data monitoring setup.';
-COMMENT ON COLUMN iddoc_questionnaire.load_type IS 'Type of data load (initial, ongoing, or both).';
 COMMENT ON COLUMN iddoc_questionnaire.needed IS 'Whether the IDDOC questionnaire is needed for this model plan.';
 COMMENT ON COLUMN iddoc_questionnaire.completed_by IS 'The user who completed the questionnaire.';
 COMMENT ON COLUMN iddoc_questionnaire.completed_dts IS 'The timestamp when the questionnaire was completed.';
@@ -84,6 +83,7 @@ COMMENT ON COLUMN iddoc_questionnaire.created_by IS 'The user who created this I
 COMMENT ON COLUMN iddoc_questionnaire.created_dts IS 'The timestamp when this record was created.';
 COMMENT ON COLUMN iddoc_questionnaire.modified_by IS 'The user who last modified this record.';
 COMMENT ON COLUMN iddoc_questionnaire.modified_dts IS 'The timestamp when this record was last modified.';
+COMMENT ON COLUMN iddoc_questionnaire.is_iddoc_questionnaire_complete IS 'Whether the IDDOC questionnaire has been marked as complete';
 
 -- Enable auditing on iddoc_questionnaire table
 SELECT audit.AUDIT_TABLE(

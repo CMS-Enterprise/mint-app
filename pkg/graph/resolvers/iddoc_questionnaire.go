@@ -74,9 +74,8 @@ func IDDOCQuestionnaireUpdate(
 					existing.CompletedDts = nil
 				}
 
-				// Remove isIDDOCQuestionnaireComplete from the changes map, since it's part of the
-				// input type but is NOT actually part of the model
-				delete(changes, "isIDDOCQuestionnaireComplete")
+				// isIDDOCQuestionnaireComplete is now a database field, so keep it in changes map
+				// to be persisted to the database
 			}
 
 			// Update the base task list section
