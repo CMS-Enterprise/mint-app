@@ -54,4 +54,8 @@ type IddocQuestionnaireTranslation {
   dataMonitoringNote: TranslationField!
     @goTag(key: "db", value: "data_monitoring_note")
   isIDDOCQuestionnaireComplete: TranslationFieldWithOptions!
+
+  # Metadata fields
+  completedBy: TranslationField! @goTag(key: "db", value: "completed_by")
+  completedDts: TranslationField! @goTag(key: "db", value: "completed_dts")
 }

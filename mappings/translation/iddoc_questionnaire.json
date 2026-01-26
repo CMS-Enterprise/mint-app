@@ -700,6 +700,27 @@
     },
     "hideFromReadonly": true
   },
+  "completedBy": {
+    "gqlField": "completedBy",
+    "goField": "CompletedBy",
+    "dbField": "completed_by",
+    "label": "Completed by",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 7.05,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "completedDts": {
+    "gqlField": "completedDts",
+    "goField": "CompletedDts",
+    "dbField": "completed_dts",
+    "label": "Completed at",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 7.06,
+    "hideFromReadonly": true
+  },
   "status": {
     "gqlField": "status",
     "goField": "Status",

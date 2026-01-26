@@ -8,6 +8,8 @@ import (
 )
 
 func TestIddocQuestionnaireTranslation(t *testing.T) {
-	excludedFields := taskListStructExcludeFields
+	var excludeNeeded []string = append(taskListStructExcludeFields, "Needed")
+	excludedFields := excludeNeeded
+
 	assertAllTranslationDataGeneric(t, IddocQuestionnaireTranslation, models.IDDOCQuestionnaire{}, excludedFields)
 }

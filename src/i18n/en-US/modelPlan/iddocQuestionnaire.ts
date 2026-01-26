@@ -2,6 +2,7 @@ import { TranslationIddocQuestionnaire } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -391,6 +392,27 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       true: 'This questionnaire (4i and ACO-OS) is complete.',
       false: 'No'
     },
+    hideFromReadonly: true
+  },
+  completedBy: {
+    gqlField: 'completedBy',
+    goField: 'CompletedBy',
+    dbField: 'completed_by',
+    label: 'Completed by',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 7.05,
+    tableReference: TableName.USER_ACCOUNT,
+    hideFromReadonly: true
+  },
+  completedDts: {
+    gqlField: 'completedDts',
+    goField: 'CompletedDts',
+    dbField: 'completed_dts',
+    label: 'Completed at',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 7.06,
     hideFromReadonly: true
   },
   status: {
