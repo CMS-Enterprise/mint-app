@@ -26,6 +26,7 @@ INSERT INTO iddoc_questionnaire (
     data_monitoring_note,
     load_type,
     needed,
+    is_iddoc_questionnaire_complete,
     created_by
 )
 VALUES (
@@ -56,6 +57,7 @@ VALUES (
     :data_monitoring_note,
     :load_type,
     :needed,
+    :is_iddoc_questionnaire_complete,
     :created_by
 )
 RETURNING
@@ -86,6 +88,7 @@ RETURNING
     data_monitoring_note,
     load_type,
     needed,
+    is_iddoc_questionnaire_complete,
     completed_by,
     completed_dts,
     created_by,

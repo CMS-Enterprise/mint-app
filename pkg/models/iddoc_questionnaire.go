@@ -99,9 +99,10 @@ type IDDOCQuestionnaire struct {
 	LoadType                       *IDDOCLoadType `json:"loadType" db:"load_type"`
 
 	// Metadata
-	Needed       bool       `json:"needed" db:"needed"`
-	CompletedBy  *uuid.UUID `json:"completedBy" db:"completed_by"`
-	CompletedDts *time.Time `json:"completedDts" db:"completed_dts"`
+	Needed                       bool       `json:"needed" db:"needed"`
+	IsIDDOCQuestionnaireComplete bool       `json:"isIDDOCQuestionnaireComplete" db:"is_iddoc_questionnaire_complete"`
+	CompletedBy                  *uuid.UUID `json:"completedBy" db:"completed_by"`
+	CompletedDts                 *time.Time `json:"completedDts" db:"completed_dts"`
 }
 
 // NewIDDOCQuestionnaire returns a new IDDOCQuestionnaire object
@@ -111,11 +112,6 @@ func NewIDDOCQuestionnaire(createdBy uuid.UUID, modelPlanID uuid.UUID) *IDDOCQue
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		Needed:            false, // Default to false
 	}
-}
-
-// IsIDDOCQuestionnaireComplete returns whether the questionnaire has been marked as complete
-func (iddoc *IDDOCQuestionnaire) IsIDDOCQuestionnaireComplete() bool {
-	return iddoc.CompletedDts != nil
 }
 
 // CompletedByUserAccount returns the user account for the user who completed the questionnaire

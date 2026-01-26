@@ -26,6 +26,7 @@ SELECT
     data_monitoring_note,
     load_type,
     needed,
+    is_iddoc_questionnaire_complete,
     completed_by,
     completed_dts,
     created_by,

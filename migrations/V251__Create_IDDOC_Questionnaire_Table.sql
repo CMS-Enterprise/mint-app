@@ -36,6 +36,7 @@ CREATE TABLE iddoc_questionnaire (
 
     -- Metadata
     needed BOOLEAN NOT NULL DEFAULT FALSE,
+    is_iddoc_questionnaire_complete BOOLEAN NOT NULL DEFAULT FALSE,
     completed_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
     completed_dts TIMESTAMP WITH TIME ZONE,
 
@@ -84,6 +85,7 @@ COMMENT ON COLUMN iddoc_questionnaire.created_by IS 'The user who created this I
 COMMENT ON COLUMN iddoc_questionnaire.created_dts IS 'The timestamp when this record was created.';
 COMMENT ON COLUMN iddoc_questionnaire.modified_by IS 'The user who last modified this record.';
 COMMENT ON COLUMN iddoc_questionnaire.modified_dts IS 'The timestamp when this record was last modified.';
+COMMENT ON COLUMN iddoc_questionnaire.is_iddoc_questionnaire_complete IS 'Whether the IDDOC questionnaire has been marked as complete';
 
 -- Enable auditing on iddoc_questionnaire table
 SELECT audit.AUDIT_TABLE(
