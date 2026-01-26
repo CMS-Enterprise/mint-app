@@ -83,6 +83,7 @@ const ReadOnlySection = <
     return null;
   }
 
+  const shouldHideHeading = config.hideLabelAndOptionsInReadonly;
   const heading = config.readonlyLabel || config.label;
 
   // Used for id's/classes/metadata
@@ -100,7 +101,7 @@ const ReadOnlySection = <
       >
         <div className="read-only-section--question">
           <span className="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line">
-            {heading}
+            {!shouldHideHeading && heading}
             {config.questionTooltip && (
               <span className="text-normal line-height-sans-2 margin-left-1 position-relative">
                 <Tooltip
@@ -164,6 +165,8 @@ const RenderReadonlyValue = <
 
   const id = formatID(config.readonlyLabel || config.label);
 
+  const shouldHideOptions = config.hideLabelAndOptionsInReadonly;
+
   // Renders a single select value
   if (
     isTranslationFieldPropertiesWithOptions(config) &&
@@ -197,7 +200,7 @@ const RenderReadonlyValue = <
     isTranslationFieldPropertiesWithOptions(config) &&
     config.formType === TranslationFormType.RADIO
   ) {
-    return (
+    return shouldHideOptions ? null : (
       <RadioValue field={field} values={values} translations={translations} />
     );
   }

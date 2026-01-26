@@ -11,6 +11,7 @@
       "true": "Yes",
       "false": "No"
     },
+    "hideLabelAndOptionsInReadonly": true,
     "childRelation": {
       "true": [
         {
@@ -225,7 +226,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "technicalContactsIdentifiedDetail": {
@@ -275,7 +277,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "captureParticipantInfoNote": {
@@ -308,7 +311,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "draftIcdDueDate": {
@@ -330,7 +334,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "icdNote": {
@@ -354,7 +359,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "uatNeeds": {
@@ -376,7 +382,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "stcNeeds": {
@@ -398,7 +405,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "testingTimelines": {
@@ -420,7 +428,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "testingNote": {
@@ -462,7 +471,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "dataMonitoringFileOther": {
@@ -496,7 +506,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "dataResponseFileFrequency": {
@@ -518,7 +529,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "dataFullTimeOrIncremental": {
@@ -544,7 +556,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "eftSetUp": {
@@ -570,7 +583,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "unsolicitedAdjustmentsIncluded": {
@@ -596,7 +610,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "dataFlowDiagramsNeeded": {
@@ -622,7 +637,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "produceBenefitEnhancementFiles": {
@@ -650,7 +666,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "fileNamingConventions": {
@@ -672,7 +689,8 @@
       "options": {
         "true": "Yes",
         "false": "No"
-      }
+      },
+      "hideLabelAndOptionsInReadonly": true
     }
   },
   "dataMonitoringNote": {

@@ -21,6 +21,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       false: 'No'
     },
     disconnectedLabel: `questionsNotApplicablePerMTO`,
+    hideLabelAndOptionsInReadonly: true,
     childRelation: {
       true: [
         () => iddocQuestionnaire.technicalContactsIdentified,
