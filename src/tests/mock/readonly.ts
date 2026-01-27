@@ -826,8 +826,8 @@ export const iddocQuestionnaireData: GetAllIDDOCQuestionnaireType = {
   dataFlowDiagramsNeeded: true,
   produceBenefitEnhancementFiles: true,
   fileNamingConventions: 'PDF',
-  modifiedDts: '2022-06-03T19:32:24.412662Z'
-  // createdDts: '2022-06-03T19:32:24.412662Z'
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z'
 };
 
 export const iddocQuestionnaireMocks = [

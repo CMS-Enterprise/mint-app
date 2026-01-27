@@ -2,6 +2,7 @@ import { TranslationIddocQuestionnaire } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -11,15 +12,16 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     gqlField: 'needed',
     goField: 'Needed',
     dbField: 'needed',
-    label: '',
+    label: 'Needed',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.1,
     options: {
-      true: '',
-      false: ''
+      true: 'Yes',
+      false: 'No'
     },
     disconnectedLabel: `questionsNotApplicablePerMTO`,
+    hideLabelAndOptionsInReadonly: true,
     childRelation: {
       true: [
         () => iddocQuestionnaire.technicalContactsIdentified,
@@ -379,6 +381,41 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 4.07,
     filterGroups: [ModelViewFilter.IDDOC]
   },
+  isIDDOCQuestionnaireComplete: {
+    gqlField: 'isIddocQuestionnaireComplete',
+    goField: 'IsIddocQuestionnaireComplete',
+    dbField: 'is_iddoc_questionnaire_complete',
+    label: 'Questionnaire status',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 4.08,
+    options: {
+      true: 'This questionnaire (4i and ACO-OS) is complete.',
+      false: 'No'
+    },
+    hideFromReadonly: true
+  },
+  completedBy: {
+    gqlField: 'completedBy',
+    goField: 'CompletedBy',
+    dbField: 'completed_by',
+    label: 'Completed by',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 7.05,
+    tableReference: TableName.USER_ACCOUNT,
+    hideFromReadonly: true
+  },
+  completedDts: {
+    gqlField: 'completedDts',
+    goField: 'CompletedDts',
+    dbField: 'completed_dts',
+    label: 'Completed at',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 7.06,
+    hideFromReadonly: true
+  },
   status: {
     gqlField: 'status',
     goField: 'Status',
@@ -388,10 +425,10 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     formType: TranslationFormType.CHECKBOX,
     order: 7.19,
     options: {
-      READY: 'Ready',
+      NOT_NEEDED: 'Not needed',
+      NOT_STARTED: 'Not started',
       IN_PROGRESS: 'In progress',
-      READY_FOR_REVIEW: 'Ready for review',
-      READY_FOR_CLEARANCE: 'Ready for clearance'
+      COMPLETED: 'Completed'
     },
     hideFromReadonly: true
   }

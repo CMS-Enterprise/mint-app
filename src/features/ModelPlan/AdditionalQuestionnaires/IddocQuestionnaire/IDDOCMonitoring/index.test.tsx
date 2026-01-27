@@ -17,7 +17,14 @@ const iddocMonitoringMockData: IDDOCMonitoringFormType = {
   dataFlowDiagramsNeeded: null,
   produceBenefitEnhancementFiles: null,
   fileNamingConventions: '.pdf',
-  dataMonitoringNote: ''
+  dataMonitoringNote: '',
+  isIDDOCQuestionnaireComplete: false,
+  completedDts: '2022-06-03T19:32:24.412662Z',
+  completedByUserAccount: {
+    __typename: 'UserAccount',
+    id: 'fake-user-id',
+    commonName: ''
+  }
 };
 
 const iddocMonitoringMock = [

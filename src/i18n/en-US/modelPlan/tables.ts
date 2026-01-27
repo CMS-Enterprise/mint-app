@@ -85,6 +85,9 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   },
   [TableName.PLAN_DATA_EXCHANGE_APPROACH]: {
     generalName: 'Data exchange approach'
+  },
+  [TableName.IDDOC_QUESTIONNAIRE]: {
+    generalName: '4i and ACO-OS'
   }, // TODO (mto) verify these names
   [TableName.MTO_CATEGORY]: {
     generalName: 'MTO category'

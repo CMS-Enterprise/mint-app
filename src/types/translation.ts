@@ -39,6 +39,7 @@ import {
   GeographyType,
   IddocFileType,
   IddocFullTimeOrIncrementalType,
+  IddocQuestionnaireStatus,
   IddocQuestionnaireTranslation,
   KeyCharacteristic,
   KeyContactCategoryTranslation,
@@ -152,6 +153,7 @@ export type TranslationFieldProperties = Omit<
   modalLink?: string; // Adds a modal link,
   hideIfFalsy?: boolean; // Hide question if the value is falsy - ex: dataWillNotBeCollectedFromParticipants
   flattenNestedData?: string; // Flatten nested data for export - ex: milestone.solutions = [{name:  "Solution 1"}] => milestone.solutions = ["Solution 1"]
+  hideLabelAndOptionsInReadonly?: boolean; // Need the question but hide labels and option labels in readonly view - ex:iddocQuestionnaire status.needed
 };
 
 /*
@@ -803,7 +805,7 @@ export type TranslationOpsEvalAndLearning = {
 
 // IDDOC Questionnaire
 export type TranslationIddocQuestionnaireForm = {
-  status: TranslationFieldPropertiesWithOptions<TaskStatus>;
+  status: TranslationFieldPropertiesWithOptions<IddocQuestionnaireStatus>;
   needed: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   // IDDOC Operations
   technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
@@ -852,6 +854,11 @@ export type TranslationIddocQuestionnaireForm = {
   >;
   fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
   dataMonitoringNote: TranslationFieldProperties;
+  isIDDOCQuestionnaireComplete: TranslationFieldPropertiesWithOptions<Bool>;
+
+  // Metadata
+  completedBy: TranslationFieldProperties;
+  completedDts: TranslationFieldProperties;
 };
 
 type TranslationIddocQuestionnaireGQL = Omit<

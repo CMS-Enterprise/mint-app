@@ -67,7 +67,7 @@ exports[`Read Only IDDOC Questionnaire > matches snapshot 1`] = `
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section-- margin-bottom-3"
+          class="read-only-section read-only-section--needed margin-bottom-3"
         >
           <div
             class="read-only-section--question"
@@ -76,9 +76,6 @@ exports[`Read Only IDDOC Questionnaire > matches snapshot 1`] = `
               class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             />
           </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
-          />
         </div>
       </div>
     </div>
@@ -406,13 +403,13 @@ exports[`Read Only IDDOC Questionnaire > matches snapshot 1`] = `
             <li
               class="mint-body-normal"
             >
-              Part A
+              Part A Claims
             </li>
             <ul />
             <li
               class="mint-body-normal"
             >
-              Part B
+              Part B Claims
             </li>
             <ul />
           </ul>

@@ -194,6 +194,16 @@ func (pdt *PlanDataExchangeApproachTranslation) ToMap() (map[string]models.ITran
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
+func (iqt *IddocQuestionnaireTranslation) TableName() models.TableName {
+	return models.TNIddocQuestionnaire
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (iqt *IddocQuestionnaireTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*iqt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
 func (t *MTOCategoryTranslation) TableName() models.TableName {
 	return models.TNMTOCategory
 }
@@ -310,14 +320,4 @@ func (kct *KeyContactCategoryTranslation) TableName() models.TableName {
 // ToMap translates this translation to a map, satisfying the Translation interface
 func (kct *KeyContactCategoryTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*kct)
-}
-
-// TableName returns the table name for this translation, satisfying the Translation interface
-func (iqt *IddocQuestionnaireTranslation) TableName() models.TableName {
-	return models.TNIddocQuestionnaire
-}
-
-// ToMap translates this translation to a map, satisfying the Translation interface
-func (iqt *IddocQuestionnaireTranslation) ToMap() (map[string]models.ITranslationField, error) {
-	return models.StructToTranslationMap(*iqt)
 }
