@@ -1,0 +1,147 @@
+"""
+IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
+"""
+enum IDDOCQuestionnaireStatus {
+  NOT_NEEDED
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+"""
+IDDOCFileType represents the types of files that can be exchanged
+"""
+enum IDDOCFileType {
+  BENEFICIARY
+  PROVIDER
+  PART_A_CLAIMS
+  PART_B_CLAIMS
+  OTHER
+}
+
+"""
+IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
+"""
+enum IDDOCFullTimeOrIncrementalType {
+  FULL_TIME
+  INCREMENTAL
+}
+
+"""
+IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan
+"""
+type IDDOCQuestionnaire {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # IDDOCQuestionnaire fields
+  #Page 1 Operations
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+
+  #Page 2 Testing
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [IDDOCFileType!]!
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+
+  #Page 3 Monitoring
+  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+
+  # IDDOCQuestionnaire Metadata
+  """
+  Indicates whether the IDDOC questionnaire is needed for this model plan
+  """
+  needed: Boolean!
+
+  """
+  The UUID of the user who completed the questionnaire
+  """
+  completedBy: UUID
+
+  """
+  The user who completed the questionnaire
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the questionnaire was completed
+  """
+  completedDts: Time
+
+  """
+  Indicates whether the questionnaire has been marked as complete
+  """
+  isIDDOCQuestionnaireComplete: Boolean!
+
+  """
+  Computed status of the questionnaire
+  """
+  status: IDDOCQuestionnaireStatus!
+
+  # Model Metadata
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
+  #Page 1 Operations
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+
+  #Page 2 Testing
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [IDDOCFileType!]
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+
+  #Page 3 Monitoring
+  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+
+  # Completion metadata
+  completedBy: UUID
+  isIDDOCQuestionnaireComplete: Boolean
+}
+
+extend type Mutation {
+  updateIDDOCQuestionnaire(
+    id: UUID!
+    changes: IDDOCQuestionnaireChanges!
+  ): IDDOCQuestionnaire! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

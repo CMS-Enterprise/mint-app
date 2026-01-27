@@ -82,7 +82,6 @@ const Evaluation = () => {
 
   const {
     id,
-    iddocSupport,
     evaluationApproaches,
     evaluationApproachOther,
     evaluationApproachNote,
@@ -128,7 +127,6 @@ const Evaluation = () => {
   const initialValues: EvaluationFormType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
-    iddocSupport: iddocSupport ?? null,
     evaluationApproaches: evaluationApproaches ?? [],
     evaluationApproachOther: evaluationApproachOther ?? '',
     evaluationApproachNote: evaluationApproachNote ?? '',
@@ -518,13 +516,11 @@ const Evaluation = () => {
         {data && (
           <PageNumber
             currentPage={renderCurrentPage(
-              6,
-              iddocSupport,
+              3,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}
             totalPages={renderTotalPages(
-              iddocSupport,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}

@@ -21,11 +21,13 @@ import Home from 'features/Home';
 import { homePageSettingsRoutes } from 'features/Home/Settings';
 import Landing from 'features/Landing';
 import Login from 'features/Login';
+import AdditionalQuestionnaires from 'features/ModelPlan/AdditionalQuestionnaires';
+import { dataExchangeApproachRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/DataExchangeApproach';
+import { iddocQuestionnaireRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/IddocQuestionnaire';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
 import { crtdlRoutes } from 'features/ModelPlan/CRTDL';
-import { dataExchangeApproachRoutes } from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
 import AddDocument from 'features/ModelPlan/Documents/AddDocument';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
@@ -318,11 +320,23 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      // Additional questionnaire Routes
+      {
+        path: '/models/:modelID/collaboration-area/additional-questionnaires',
+        element: (
+          <ProtectedRoute>
+            <AdditionalQuestionnaires />
+          </ProtectedRoute>
+        )
+      },
       // CR and TDL Routes
       crtdlRoutes,
 
       // Data Exchange Approach Routes
       dataExchangeApproachRoutes,
+
+      // IDDOC Questionnaire Routes
+      iddocQuestionnaireRoutes,
 
       // Model to Operations Routes
       modelToOperationsRoutes,

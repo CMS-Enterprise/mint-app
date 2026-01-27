@@ -70,6 +70,11 @@ func (r *userNotificationPreferencesResolver) NewDiscussionAdded(ctx context.Con
 	return obj.NewDiscussionAdded, nil
 }
 
+// IddocQuestionnaireComplete is the resolver for the iddocQuestionnaireComplete field.
+func (r *userNotificationPreferencesResolver) IddocQuestionnaireComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.IddocQuestionnaireComplete, nil
+}
+
 // IncorrectModelStatus is the resolver for the incorrectModelStatus field.
 func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.IncorrectModelStatus, nil

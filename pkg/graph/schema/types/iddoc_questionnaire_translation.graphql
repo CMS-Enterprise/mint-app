@@ -1,0 +1,62 @@
+"""
+Represents IDDOC questionnaire translation data
+"""
+type IddocQuestionnaireTranslation {
+  # General fields
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  needed: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "needed")
+
+  #Page 1
+  technicalContactsIdentified: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "technical_contacts_identified")
+  technicalContactsIdentifiedDetail: TranslationField!
+    @goTag(key: "db", value: "technical_contacts_identified_detail")
+  technicalContactsIdentifiedNote: TranslationField!
+    @goTag(key: "db", value: "technical_contacts_identified_note")
+  captureParticipantInfo: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "capture_participant_info")
+  captureParticipantInfoNote: TranslationField!
+    @goTag(key: "db", value: "capture_participant_info_note")
+  icdOwner: TranslationFieldWithParent! @goTag(key: "db", value: "icd_owner")
+  draftIcdDueDate: TranslationFieldWithParent!
+    @goTag(key: "db", value: "draft_icd_due_date")
+  icdNote: TranslationFieldWithParent! @goTag(key: "db", value: "icd_note")
+
+  #Page 2
+  uatNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "uat_needs")
+  stcNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "stc_needs")
+  testingTimelines: TranslationFieldWithParent!
+    @goTag(key: "db", value: "testing_timelines")
+  testingNote: TranslationField! @goTag(key: "db", value: "testing_note")
+  dataMonitoringFileTypes: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "data_monitoring_file_types")
+  dataMonitoringFileOther: TranslationField!
+    @goTag(key: "db", value: "data_monitoring_file_other")
+  dataResponseType: TranslationFieldWithParent!
+    @goTag(key: "db", value: "data_response_type")
+  dataResponseFileFrequency: TranslationFieldWithParent!
+    @goTag(key: "db", value: "data_response_file_frequency")
+
+  #Page 3
+  dataFullTimeOrIncremental: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "data_full_time_or_incremental")
+  eftSetUp: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "eft_set_up")
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "unsolicited_adjustments_included")
+  dataFlowDiagramsNeeded: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "data_flow_diagrams_needed")
+  produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "produce_benefit_enhancement_files")
+  fileNamingConventions: TranslationFieldWithParent!
+    @goTag(key: "db", value: "file_naming_conventions")
+  dataMonitoringNote: TranslationField!
+    @goTag(key: "db", value: "data_monitoring_note")
+  isIDDOCQuestionnaireComplete: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "is_iddoc_questionnaire_complete")
+
+  # Metadata fields
+  completedBy: TranslationField! @goTag(key: "db", value: "completed_by")
+  completedDts: TranslationField! @goTag(key: "db", value: "completed_dts")
+}

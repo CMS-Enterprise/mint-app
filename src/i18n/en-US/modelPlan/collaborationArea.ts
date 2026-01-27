@@ -1,3 +1,21 @@
+import {
+  DataExchangeApproachStatus,
+  IddocQuestionnaireStatus
+} from '../../../gql/generated/graphql';
+
+const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
+  [DataExchangeApproachStatus.READY]: 'Not started',
+  [DataExchangeApproachStatus.IN_PROGRESS]: 'In progress',
+  [DataExchangeApproachStatus.COMPLETE]: 'Completed'
+};
+
+const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
+  [IddocQuestionnaireStatus.NOT_STARTED]: 'Not started',
+  [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
+  [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not needed',
+  [IddocQuestionnaireStatus.COMPLETED]: 'Completed'
+};
+
 const collaborationArea = {
   home: 'Home',
   heading: 'Model collaboration area',
@@ -48,20 +66,27 @@ const collaborationArea = {
     noCrtdls: 'No CRs or TDLs',
     andMore: ' + {{count}} more'
   },
-  dataExchangeApproachCard: {
-    heading: 'Data exchange approach',
-    body: 'After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you’ll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.',
-    lastModified: 'Most recent edit on {{-date}} by ',
-    startApproach: 'Start approach',
-    editApproach: 'Edit approach',
-    viewHelpArticle: 'View help article'
+  additionalQuestionnairesCard: {
+    heading: 'Additional questionnaires',
+    requiredQuestionnairesCount: '{{count}} required questionnaire',
+    requiredQuestionnairesCount_other: '{{count}} required questionnaires',
+    viewAllRequired: 'View all required questionnaires',
+    otherQuestionnairesCount: '{{count}} other questionnaires',
+    otherQuestionnairesCount_other: '{{count}} other questionnaires',
+    viewAllQuestionnaires: 'View all questionnaires',
+    goToQuestionnaires: 'Go to questionnaires',
+    questionnaireStatus: {
+      dataExchangeApproach: dataExchangeApproachStatus,
+      iddocQuestionnaire: iddocQuestionnaireStatus
+    }
   },
   mtoCard: {
     heading: 'Model-to-operations matrix (MTO)',
     body: 'Work with your IT Lead to document key model milestones and determine which operational solutions or IT systems your model will use to accomplish those milestones. Some milestones are suggested based on responses to questions in the Model Plan.',
     modelMilestonesAdded: 'Model milestones added: {{count}}',
     goToMatrix: 'Go to matrix',
-    shareOrExport: 'Share or export matrix'
+    shareOrExport: 'Share or export matrix',
+    lastModified: 'Most recent edit on {{-date}} by '
   },
   timelineCard: {
     heading: 'Model timeline',

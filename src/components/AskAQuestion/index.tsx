@@ -11,6 +11,7 @@ export type RenderQuestionTextType =
   | 'solution'
   | 'status'
   | 'dataExchangeApproach'
+  | 'iddocQuestionnaire'
   | 'modelToOperations'
   | 'timeline';
 
@@ -30,6 +31,7 @@ const AskAQuestion = ({
   const { t: dataExchangeApproachT } = useTranslation(
     'dataExchangeApproachMisc'
   );
+  const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaireMisc');
   const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
 
@@ -47,6 +49,8 @@ const AskAQuestion = ({
         return modelToOperationsT('needHelpDiscussion');
       case 'timeline':
         return timelineMiscT('needHelpDiscussion');
+      case 'iddocQuestionnaire':
+        return iddocQuestionnaireT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');

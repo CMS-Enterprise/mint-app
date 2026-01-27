@@ -39,13 +39,25 @@ export default gql(/* GraphQL */ `
         modelPlanID
         createdDts
       }
-      dataExchangeApproach {
-        id
-        status
-        modifiedDts
-        modifiedByUserAccount {
+      questionnaires {
+        dataExchangeApproach {
           id
-          commonName
+          status
+          modifiedDts
+          modifiedByUserAccount {
+            id
+            commonName
+          }
+        }
+        iddocQuestionnaire {
+          id
+          status
+          needed
+          modifiedDts
+          modifiedByUserAccount {
+            id
+            commonName
+          }
         }
       }
       documents {

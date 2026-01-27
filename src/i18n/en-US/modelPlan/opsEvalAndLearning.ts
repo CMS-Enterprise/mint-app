@@ -176,7 +176,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'iddoc_support',
     label: 'Are you planning to use IDDOC support?',
     sublabel:
-      'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
+      'IDDOC is the contract that supports the <link1>ACO-OS (Accountable Care Organization Operating System)</link1> and <link2>4i (4innovation)</link2> systems. These systems can provide support for design, development, operations, and maintenance of a model. 4i and ACO-OS are most often used in the implementation and operations of ACO and kidney models.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.1,
@@ -1552,7 +1552,7 @@ export const opsEvalAndLearningMisc = {
     'Review operations, evaluation, and learning',
   breadcrumb: 'Operations, evaluation, and learning',
   additionalQuestionsInfo:
-    'If you select yes, there will be additional questions to answer.',
+    'If you select yes, you will be asked to complete an additional questionnaire about technical details needed for the 4i and ACO-OS.',
   iddocHeading: 'IDDOC operations questions',
   iddocReadonlyHeading: 'IDDOC Operations',
   icdHeading: 'Interface Control Document (ICD) questions',

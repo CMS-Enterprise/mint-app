@@ -26,7 +26,7 @@ const FormFooter = ({
 
   return (
     <div id={id}>
-      <div className="margin-top-6 margin-bottom-2 display-flex">
+      <div className="margin-top-6 margin-bottom-3 display-flex">
         {backPage && (
           <Button
             type="button"
@@ -40,9 +40,13 @@ const FormFooter = ({
           </Button>
         )}
 
-        {nextPage && (
+        {nextPage ? (
           <Button type="submit" disabled={disabled} id={`${id}-next-button`}>
             {miscellaneousT('next')}
+          </Button>
+        ) : (
+          <Button type="submit" disabled={disabled} id={`${id}-save-button`}>
+            {miscellaneousT('save')}
           </Button>
         )}
       </div>

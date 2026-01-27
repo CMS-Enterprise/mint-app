@@ -1,0 +1,7 @@
+"""
+Questionnaires groups all questionnaire-related fields for a model plan
+"""
+type Questionnaires {
+  iddocQuestionnaire: IDDOCQuestionnaire!
+  dataExchangeApproach: PlanDataExchangeApproach!
+}

@@ -234,6 +234,32 @@ func (s *Seeder) SeedData() {
 		},
 	)
 
+	// Seed a plan with IDDOC Questionnaire filled out
+	planWithIDDOC := s.createModelPlan("Plan with IDDOC", "MINT", nil)
+	s.updateIDDOCQuestionnaire(
+		s.Config.Context,
+		planWithIDDOC,
+		map[string]interface{}{
+			"technicalContactsIdentified":    true,
+			"captureParticipantInfo":         true,
+			"icdOwner":                       "John Smith from IDDOC team",
+			"draftIcdDueDate":                "2024-06-15T00:00:00Z",
+			"uatNeeds":                       "We need comprehensive test data for UAT including participant demographics and claims history",
+			"stcNeeds":                       "STC requires production-like data volumes with all edge cases covered",
+			"testingTimelines":               "UAT: Q2 2024, STC: Q3 2024, Production: Q4 2024",
+			"dataMonitoringFileTypes":        []models.IDDOCFileType{models.IDDOCFileType("BENEFICIARY"), models.IDDOCFileType("PROVIDER"), models.IDDOCFileType("PART_A_CLAIMS")},
+			"dataResponseType":               "Acknowledgment files and detailed error reports",
+			"dataResponseFileFrequency":      "Daily for claims, weekly for beneficiary updates",
+			"eftSetUp":                       true,
+			"unsolicitedAdjustmentsIncluded": false,
+			"dataFlowDiagramsNeeded":         true,
+			"produceBenefitEnhancementFiles": true,
+			"fileNamingConventions":          "MODELNAME_FILETYPE_YYYYMMDD_HHMMSS.txt",
+			"needed":                         true,
+			"isIDDOCQuestionnaireComplete":   helpers.PointerTo(true),
+		},
+	)
+
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT", nil)
 	s.addPlanCollaborator(

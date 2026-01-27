@@ -27,6 +27,7 @@ import keyContactCategory, {
 } from './helpAndKnowledge/keyContactCategory';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
+import additionalQuestionnaires from './modelPlan/additionalQuestionnaires';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import changeHistory from './modelPlan/changeHistory';
@@ -43,6 +44,9 @@ import {
   generalCharacteristics,
   generalCharacteristicsMisc
 } from './modelPlan/generalCharacteristics';
+import iddocQuestionnaire, {
+  iddocQuestionnaireMisc
+} from './modelPlan/iddocQuestionnaire';
 import miscellaneous from './modelPlan/miscellaneous';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
 import modelToOperations, {
@@ -132,6 +136,8 @@ const enUS = {
   dataExchangeApproachMisc,
   generalCharacteristics,
   generalCharacteristicsMisc,
+  iddocQuestionnaire,
+  iddocQuestionnaireMisc,
   participantsAndProviders,
   participantsAndProvidersMisc,
   beneficiaries,
@@ -157,6 +163,7 @@ const enUS = {
   solutions,
   timeline,
   timelineMisc,
+  additionalQuestionnaires,
   operationalSolutionSubtasks,
   opSolutionsMisc,
   documents,

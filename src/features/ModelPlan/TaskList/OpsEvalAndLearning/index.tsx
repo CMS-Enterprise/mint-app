@@ -6,9 +6,6 @@ import ProtectedRoute from 'components/ProtectedRoute';
 import CCWAndQuality from './CCWAndQuality';
 import DataSharing from './DataSharing';
 import Evaluation from './Evaluation';
-import IDDOC from './IDDOC';
-import IDDOCMonitoring from './IDDOCMonitoring';
-import IDDOCTesting from './IDDOCTesting';
 import Learning from './Learning';
 import Performance from './Performance';
 import Support from './Support';
@@ -28,18 +25,6 @@ const opsEvalAndLearningRoutes = {
     {
       path: '',
       element: <Support />
-    },
-    {
-      path: 'iddoc',
-      element: <IDDOC />
-    },
-    {
-      path: 'iddoc-testing',
-      element: <IDDOCTesting />
-    },
-    {
-      path: 'iddoc-monitoring',
-      element: <IDDOCMonitoring />
     },
     {
       path: 'performance',

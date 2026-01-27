@@ -47,6 +47,7 @@ const (
 	TNUserNotificationPreferences      TableName = "user_notification_preferences"
 	TNUserViewCustomization            TableName = "user_view_customization"
 	TNPlanDataExchangeApproach         TableName = "plan_data_exchange_approach"
+	TNIddocQuestionnaire               TableName = "iddoc_questionnaire"
 	TNMTOCategory                      TableName = "mto_category"
 	TNMTOMilestone                     TableName = "mto_milestone"
 	TNMTOSolution                      TableName = "mto_solution"

@@ -17,6 +17,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // createModelPlan is a wrapper for resolvers.ModelPlanCreate
@@ -138,6 +139,45 @@ func (s *Seeder) updatePlanDataExchangeApproach(
 		ctx,
 		s.Config.Logger,
 		dea.ID,
+		changes,
+		princ,
+		s.Config.Store,
+		// Currently hard-coding email-related args to not send emails
+		nil,
+		email.AddressBook{},
+	)
+	if err != nil {
+		panic(err)
+	}
+	return updated
+}
+
+// updateIDDOCQuestionnaire is a wrapper for resolvers.IDDOCQuestionnaireUpdate
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always update the IDDOC questionnaire object with the principal value of the Model Plan's "createdBy"
+// If the IDDOC questionnaire doesn't exist, it will create it first
+func (s *Seeder) updateIDDOCQuestionnaire(
+	ctx context.Context,
+	mp *models.ModelPlan,
+	changes map[string]interface{},
+) *models.IDDOCQuestionnaire {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	// Try to get existing IDDOC questionnaire, create if it doesn't exist
+	iddoc, err := resolvers.IDDOCQuestionnaireGetByModelPlanIDLoader(s.Config.Context, mp.ID)
+	if err != nil {
+		// Create a new IDDOC questionnaire if it doesn't exist
+		newIDDOC := models.NewIDDOCQuestionnaire(princ.Account().ID, mp.ID)
+		iddoc, err = storage.IDDOCQuestionnaireCreate(s.Config.Store, s.Config.Logger, newIDDOC)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	updated, err := resolvers.IDDOCQuestionnaireUpdate(
+		ctx,
+		s.Config.Logger,
+		iddoc.ID,
 		changes,
 		princ,
 		s.Config.Store,

@@ -87,10 +87,13 @@ describe('SubmittionFooter', () => {
       }
     );
 
-    const { queryByText } = render(<RouterProvider router={router} />);
+    const { getByText, queryByText } = render(
+      <RouterProvider router={router} />
+    );
 
     expect(
       queryByText(i18next.t('miscellaneous:next'))
     ).not.toBeInTheDocument();
+    expect(getByText(i18next.t('miscellaneous:save'))).toBeInTheDocument();
   });
 });

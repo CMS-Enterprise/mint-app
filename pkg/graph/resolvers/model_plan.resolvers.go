@@ -66,11 +66,6 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 	return PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
-// DataExchangeApproach is the resolver for the dataExchangeApproach field.
-func (r *modelPlanResolver) DataExchangeApproach(ctx context.Context, obj *models.ModelPlan) (*models.PlanDataExchangeApproach, error) {
-	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ID)
-}
-
 // TaskListStatus is the resolver for the taskListStatus field.
 func (r *modelPlanResolver) TaskListStatus(ctx context.Context, obj *models.ModelPlan) (models.TaskStatus, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -135,6 +130,13 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // Timeline is the resolver for the timeline field.
 func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.PlanTimeline, error) {
 	return PlanTimelineGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Questionnaires is the resolver for the questionnaires field.
+func (r *modelPlanResolver) Questionnaires(ctx context.Context, obj *models.ModelPlan) (*models.Questionnaires, error) {
+	return &models.Questionnaires{
+		ModelPlanID: obj.ID,
+	}, nil
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.

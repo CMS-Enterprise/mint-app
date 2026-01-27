@@ -1,0 +1,304 @@
+import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Fieldset, Label, Radio, TextInput } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
+import { Field, Formik, FormikProps } from 'formik';
+import {
+  GetIddocQuestionnaireMonitoringQuery,
+  TypedUpdateIddocQuestionnaireDocument,
+  useGetIddocQuestionnaireMonitoringQuery
+} from 'gql/generated/graphql';
+
+import AddNote from 'components/AddNote';
+import BooleanRadio from 'components/BooleanRadioForm';
+import CheckboxField from 'components/CheckboxField';
+import ConfirmLeave from 'components/ConfirmLeave';
+import FieldGroup from 'components/FieldGroup';
+import FormFooter from 'components/FormFooter';
+import MINTForm from 'components/MINTForm';
+import MutationErrorModal from 'components/MutationErrorModal';
+import PageNumber from 'components/PageNumber';
+import useHandleMutation from 'hooks/useHandleMutation';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { getKeys } from 'types/translation';
+import { formatDateLocal } from 'utils/date';
+
+export type IDDOCMonitoringFormType =
+  GetIddocQuestionnaireMonitoringQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
+
+const IDDOCMonitoring = () => {
+  const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
+
+  const { t: iddocQuestionnaireMiscT } = useTranslation(
+    'iddocQuestionnaireMisc'
+  );
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
+
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const {
+    dataFullTimeOrIncremental: dataFullTimeOrIncrementalConfig,
+    eftSetUp: eftSetUpConfig,
+    unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncludedConfig,
+    dataFlowDiagramsNeeded: dataFlowDiagramsNeededConfig,
+    produceBenefitEnhancementFiles: produceBenefitEnhancementFilesConfig,
+    isIDDOCQuestionnaireComplete: isIDDOCQuestionnaireCompleteConfig
+  } = usePlanTranslation('iddocQuestionnaire');
+
+  const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
+  const navigate = useNavigate();
+
+  const { data, loading, error } = useGetIddocQuestionnaireMonitoringQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const {
+    id,
+    dataFullTimeOrIncremental,
+    eftSetUp,
+    unsolicitedAdjustmentsIncluded,
+    dataFlowDiagramsNeeded,
+    produceBenefitEnhancementFiles,
+    fileNamingConventions,
+    dataMonitoringNote,
+    isIDDOCQuestionnaireComplete,
+    completedByUserAccount,
+    completedDts
+  } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
+    {}) as IDDOCMonitoringFormType;
+
+  const { mutationError } = useHandleMutation(
+    TypedUpdateIddocQuestionnaireDocument,
+    {
+      id,
+      formikRef: formikRef as any
+    }
+  );
+
+  const initialValues: IDDOCMonitoringFormType = {
+    __typename: 'IDDOCQuestionnaire',
+    id: id ?? '',
+    dataFullTimeOrIncremental: dataFullTimeOrIncremental ?? null,
+    eftSetUp: eftSetUp ?? null,
+    unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncluded ?? null,
+    dataFlowDiagramsNeeded: dataFlowDiagramsNeeded ?? null,
+    produceBenefitEnhancementFiles: produceBenefitEnhancementFiles ?? null,
+    fileNamingConventions: fileNamingConventions ?? '',
+    dataMonitoringNote: dataMonitoringNote ?? '',
+    isIDDOCQuestionnaireComplete: isIDDOCQuestionnaireComplete ?? false,
+    completedByUserAccount: completedByUserAccount ?? {
+      __typename: 'UserAccount',
+      id: '',
+      commonName: ''
+    },
+    completedDts: completedDts ?? ''
+  };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial errorMessage={error?.message} />;
+  }
+
+  return (
+    <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={mutationError.closeModal}
+        url={mutationError.destinationURL}
+      />
+
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {
+          navigate(
+            `/models/${modelID}/collaboration-area/additional-questionnaires`
+          );
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+        data-testid="iddoc-questionnaire-monitoring"
+      >
+        {(formikProps: FormikProps<IDDOCMonitoringFormType>) => {
+          const { handleSubmit, values, setFieldValue } = formikProps;
+
+          return (
+            <>
+              <ConfirmLeave />
+
+              <MINTForm
+                className="desktop:grid-col-6 margin-top-0"
+                data-testid="iddoc-questionnaire-monitoring-form"
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                  handleSubmit(e);
+                }}
+              >
+                <Fieldset disabled={!!error || loading}>
+                  <h3>{iddocQuestionnaireMiscT('dataMonitoringContinued')}</h3>
+
+                  <FieldGroup>
+                    <Label htmlFor="iddoc-questionnaire-fulltime-or-incremental">
+                      {iddocQuestionnaireT('dataFullTimeOrIncremental.label')}
+                    </Label>
+
+                    <Fieldset>
+                      {getKeys(dataFullTimeOrIncrementalConfig.options).map(
+                        key => (
+                          <Field
+                            as={Radio}
+                            key={key}
+                            id={`iddoc-questionnaire-fulltime-or-incremental-${key}`}
+                            name="dataFullTimeOrIncremental"
+                            label={dataFullTimeOrIncrementalConfig.options[key]}
+                            value={key}
+                            checked={values.dataFullTimeOrIncremental === key}
+                            onChange={() => {
+                              setFieldValue('dataFullTimeOrIncremental', key);
+                            }}
+                          />
+                        )
+                      )}
+                    </Fieldset>
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="iddoc-questionnaire-eft-setup">
+                      {iddocQuestionnaireT('eftSetUp.label')}
+                    </Label>
+
+                    <BooleanRadio
+                      field="eftSetUp"
+                      id="iddoc-questionnaire-eft-setup"
+                      value={values.eftSetUp}
+                      setFieldValue={setFieldValue}
+                      options={eftSetUpConfig.options}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="iddoc-questionnaire-unsolicited-adjustment-included">
+                      {iddocQuestionnaireT(
+                        'unsolicitedAdjustmentsIncluded.label'
+                      )}
+                    </Label>
+
+                    <BooleanRadio
+                      field="unsolicitedAdjustmentsIncluded"
+                      id="iddoc-questionnaire-unsolicited-adjustment-included"
+                      value={values.unsolicitedAdjustmentsIncluded}
+                      setFieldValue={setFieldValue}
+                      options={unsolicitedAdjustmentsIncludedConfig.options}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="iddoc-questionnaire-diagrams-needed">
+                      {iddocQuestionnaireT('dataFlowDiagramsNeeded.label')}
+                    </Label>
+
+                    <BooleanRadio
+                      field="dataFlowDiagramsNeeded"
+                      id="iddoc-questionnaire-diagrams-needed"
+                      value={values.dataFlowDiagramsNeeded}
+                      setFieldValue={setFieldValue}
+                      options={dataFlowDiagramsNeededConfig.options}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="iddoc-questionnaire-produce-benefit-files">
+                      {iddocQuestionnaireT(
+                        'produceBenefitEnhancementFiles.label'
+                      )}
+                    </Label>
+
+                    <p className="text-base margin-y-1">
+                      {iddocQuestionnaireT(
+                        'produceBenefitEnhancementFiles.sublabel'
+                      )}
+                    </p>
+
+                    <BooleanRadio
+                      field="produceBenefitEnhancementFiles"
+                      id="iddoc-questionnaire-produce-benefit-files"
+                      value={values.produceBenefitEnhancementFiles}
+                      setFieldValue={setFieldValue}
+                      options={produceBenefitEnhancementFilesConfig.options}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup className="margin-top-6">
+                    <Label htmlFor="iddoc-questionnaire-file-naming-convention">
+                      {iddocQuestionnaireT('fileNamingConventions.label')}
+                    </Label>
+
+                    <Field
+                      as={TextInput}
+                      id="iddoc-questionnaire-file-naming-convention"
+                      data-testid="iddoc-questionnaire-file-naming-convention"
+                      maxLength={50}
+                      name="fileNamingConventions"
+                    />
+                  </FieldGroup>
+
+                  <AddNote
+                    id="iddoc-questionnaire-data-monitoring-note"
+                    field="dataMonitoringNote"
+                  />
+
+                  <FieldGroup className="border-2px border-base-light radius-md padding-2">
+                    <Label htmlFor="iddoc-questionnaire-is-complete">
+                      {isIDDOCQuestionnaireCompleteConfig.label}
+                    </Label>
+                    <CheckboxField
+                      name="iddocQuestionnaireIsComplete"
+                      id="iddoc-questionnaire-is-complete-true"
+                      checked={values.isIDDOCQuestionnaireComplete}
+                      value={isIDDOCQuestionnaireComplete ? 'true' : 'false'}
+                      label={isIDDOCQuestionnaireCompleteConfig.options.true}
+                      onChange={e => {
+                        setFieldValue(
+                          'isIDDOCQuestionnaireComplete',
+                          e.target.checked
+                        );
+                      }}
+                      onBlur={() => null}
+                    />
+                    {completedByUserAccount?.commonName && completedDts && (
+                      <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+                        {miscellaneousT('markedComplete', {
+                          user: completedByUserAccount.commonName
+                        })}
+                        {formatDateLocal(completedDts, 'MM/dd/yyyy')}
+                      </p>
+                    )}
+                  </FieldGroup>
+
+                  <FormFooter
+                    homeArea={additionalQuestionnairesT(
+                      'saveAndReturnToQuestionnaires'
+                    )}
+                    homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+                    backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing`}
+                    nextPage={false}
+                    disabled={!!error || loading} // TODO: add or replace with issubmitting once refactored form
+                    id="iddoc-questionnaire-monitoring-form"
+                  />
+                </Fieldset>
+              </MINTForm>
+            </>
+          );
+        }}
+      </Formik>
+
+      <PageNumber currentPage={3} totalPages={3} className="margin-y-6" />
+    </>
+  );
+};
+
+export default IDDOCMonitoring;

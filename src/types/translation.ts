@@ -37,6 +37,10 @@ import {
   GeographyApplication,
   GeographyRegionType,
   GeographyType,
+  IddocFileType,
+  IddocFullTimeOrIncrementalType,
+  IddocQuestionnaireStatus,
+  IddocQuestionnaireTranslation,
   KeyCharacteristic,
   KeyContactCategoryTranslation,
   KeyContactTranslation,
@@ -149,6 +153,7 @@ export type TranslationFieldProperties = Omit<
   modalLink?: string; // Adds a modal link,
   hideIfFalsy?: boolean; // Hide question if the value is falsy - ex: dataWillNotBeCollectedFromParticipants
   flattenNestedData?: string; // Flatten nested data for export - ex: milestone.solutions = [{name:  "Solution 1"}] => milestone.solutions = ["Solution 1"]
+  hideLabelAndOptionsInReadonly?: boolean; // Need the question but hide labels and option labels in readonly view - ex:iddocQuestionnaire status.needed
 };
 
 /*
@@ -796,6 +801,77 @@ type TranslationOpsEvalAndLearningGQL = Omit<
 */
 export type TranslationOpsEvalAndLearning = {
   [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
+};
+
+// IDDOC Questionnaire
+export type TranslationIddocQuestionnaireForm = {
+  status: TranslationFieldPropertiesWithOptions<IddocQuestionnaireStatus>;
+  needed: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  // IDDOC Operations
+  technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  technicalContactsIdentifiedDetail: TranslationFieldProperties;
+  technicalContactsIdentifiedNote: TranslationFieldProperties;
+  captureParticipantInfo: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  captureParticipantInfoNote: TranslationFieldProperties;
+  icdOwner: TranslationFieldPropertiesWithParent<Bool>;
+  draftIcdDueDate: TranslationFieldPropertiesWithParent<Bool>;
+  icdNote: TranslationFieldPropertiesWithParent<Bool>;
+  // IDDOC Testing
+  uatNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  stcNeeds: TranslationFieldPropertiesWithParent<Bool>;
+  testingTimelines: TranslationFieldPropertiesWithParent<Bool>;
+  testingNote: TranslationFieldProperties;
+  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptionsAndParent<
+    IddocFileType,
+    Bool
+  >;
+  dataMonitoringFileOther: TranslationFieldProperties;
+  dataResponseType: TranslationFieldPropertiesWithParent<Bool>;
+  dataResponseFileFrequency: TranslationFieldPropertiesWithParent<Bool>;
+  // IDDOC Monitoring
+  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptionsAndParent<
+    IddocFullTimeOrIncrementalType,
+    Bool
+  >;
+  eftSetUp: TranslationFieldPropertiesWithOptionsAndParent<Bool, Bool>;
+  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    Bool
+  >;
+  fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
+  dataMonitoringNote: TranslationFieldProperties;
+  isIDDOCQuestionnaireComplete: TranslationFieldPropertiesWithOptions<Bool>;
+
+  // Metadata
+  completedBy: TranslationFieldProperties;
+  completedDts: TranslationFieldProperties;
+};
+
+type TranslationIddocQuestionnaireGQL = Omit<
+  IddocQuestionnaireTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationIddocQuestionnaire = {
+  [K in keyof TranslationIddocQuestionnaireGQL]: TranslationIddocQuestionnaireForm[K]; // FE form type
 };
 
 // Payments
@@ -1463,6 +1539,7 @@ export type TranslationPlan = {
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
   dataExchangeApproach: TranslationDataExchangeApproach;
+  iddocQuestionnaire: TranslationIddocQuestionnaire;
   modelToOperations: TranslationMTOInfo;
   mtoCategory: TranslationMTOCategory;
   mtoMilestone: TranslationMTOMilestoneCustom;
@@ -1480,7 +1557,8 @@ export type TranslationPlanSection =
   | TranslationPlan['beneficiaries']
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments']
-  | TranslationPlan['dataExchangeApproach'];
+  | TranslationPlan['dataExchangeApproach']
+  | TranslationPlan['iddocQuestionnaire'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
@@ -1500,6 +1578,7 @@ export enum PlanSection {
   OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
   DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
+  IDDOC_QUESTIONNAIRE = 'iddocQuestionnaire',
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',
   MTO_MILESTONE = 'mtoMilestone',
