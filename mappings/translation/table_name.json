@@ -123,6 +123,9 @@
   "plan_data_exchange_approach": {
     "generalName": "Data exchange approach"
   },
+  "iddoc_questionnaire": {
+    "generalName": "4i and ACO-OS"
+  },
   "mto_category": {
     "generalName": "MTO category"
   },
