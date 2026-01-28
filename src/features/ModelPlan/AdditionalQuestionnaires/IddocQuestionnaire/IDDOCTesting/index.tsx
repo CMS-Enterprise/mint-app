@@ -1,9 +1,16 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fieldset, Label, TextInput } from '@trussworks/react-uswds';
+import {
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+  Textarea,
+  TextInput
+} from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
 import {
   GetIddocQuestionnaireTestingQuery,
   IddocFileType,
@@ -11,22 +18,35 @@ import {
   useGetIddocQuestionnaireTestingQuery
 } from 'gql/generated/graphql';
 
-import AddNote from 'components/AddNote';
+import AddNoteRHF from 'components/AddNote/AddNoteRHF';
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
-import ConfirmLeave from 'components/ConfirmLeave';
-import FieldGroup from 'components/FieldGroup';
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import FormFooter from 'components/FormFooter';
-import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
-import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
+import { onChangeCheckboxHandler } from 'utils/formUtil';
+import mapDefaultFormValues from 'utils/mapDefaultFormValues';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 export type IDDOCTestingFormType =
   GetIddocQuestionnaireTestingQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
+
+const DEFAULT_FORM_VALUES: IDDOCTestingFormType = {
+  __typename: 'IDDOCQuestionnaire',
+  id: '',
+  uatNeeds: '',
+  stcNeeds: '',
+  testingTimelines: '',
+  testingNote: '',
+  dataMonitoringFileTypes: [],
+  dataMonitoringFileOther: '',
+  dataResponseType: '',
+  dataResponseFileFrequency: ''
+};
 
 const IDDOCTesting = () => {
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
@@ -43,48 +63,55 @@ const IDDOCTesting = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetIddocQuestionnaireTestingQuery({
     variables: {
       id: modelID
-    }
+    },
+    skip: !modelID
+  });
+
+  const formData = mapDefaultFormValues<IDDOCTestingFormType>(
+    data?.modelPlan?.questionnaires?.iddocQuestionnaire,
+    DEFAULT_FORM_VALUES
+  );
+
+  const { __typename, id, ...defaultValues } = formData;
+
+  const methods = useForm<IDDOCTestingFormType>({
+    defaultValues,
+    mode: 'onChange'
   });
 
   const {
-    id,
-    uatNeeds,
-    stcNeeds,
-    testingTimelines,
-    testingNote,
-    dataMonitoringFileTypes,
-    dataMonitoringFileOther,
-    dataResponseType,
-    dataResponseFileFrequency
-  } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
-    {}) as IDDOCTestingFormType;
+    control,
+    handleSubmit,
+    formState: { touchedFields },
+    watch,
+    setValue,
+    reset
+  } = methods;
 
   const { mutationError } = useHandleMutation(
     TypedUpdateIddocQuestionnaireDocument,
     {
       id,
-      formikRef: formikRef as any
+      rhfRef: {
+        initialValues: defaultValues,
+        values: watch()
+      }
     }
   );
 
-  const initialValues: IDDOCTestingFormType = {
-    __typename: 'IDDOCQuestionnaire',
-    id: id ?? '',
-    uatNeeds: uatNeeds ?? '',
-    stcNeeds: stcNeeds ?? '',
-    testingTimelines: testingTimelines ?? '',
-    testingNote: testingNote ?? '',
-    dataMonitoringFileTypes: dataMonitoringFileTypes ?? [],
-    dataMonitoringFileOther: dataMonitoringFileOther ?? '',
-    dataResponseType: dataResponseType ?? '',
-    dataResponseFileFrequency: dataResponseFileFrequency ?? ''
-  };
+  useEffect(() => {
+    reset(
+      mapDefaultFormValues<IDDOCTestingFormType>(
+        data?.modelPlan?.questionnaires?.iddocQuestionnaire,
+        DEFAULT_FORM_VALUES
+      )
+    );
+  }, [data, reset]);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial errorMessage={error?.message} />;
@@ -92,127 +119,159 @@ const IDDOCTesting = () => {
 
   return (
     <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={mutationError.closeModal}
-        url={mutationError.destinationURL}
-      />
+      <FormProvider {...methods}>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={mutationError.closeModal}
+          url={mutationError.destinationURL}
+        />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-        data-testid="iddoc-questionnaire-testing"
-      >
-        {(formikProps: FormikProps<IDDOCTestingFormType>) => {
-          const { handleSubmit, values } = formikProps;
+        <Form
+          className="maxw-none desktop:grid-col-6 margin-top-6"
+          id="iddoc-questionnaire-testing"
+          data-testid="iddoc-questionnaire-testing-form"
+          onSubmit={handleSubmit(() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/monitoring`
+            );
+          })}
+        >
+          <Fieldset disabled={!!error || loading}>
+            <ConfirmLeaveRHF />
 
-          return (
-            <>
-              <ConfirmLeave />
+            <h3>{iddocQuestionnaireMiscT('testingHeading')}</h3>
 
-              <MINTForm
-                className="desktop:grid-col-6 margin-top-0"
-                data-testid="iddoc-questionnaire-testing-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <h3>{iddocQuestionnaireMiscT('testingHeading')}</h3>
+            <Alert
+              type="info"
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-bottom-4"
+            >
+              <span className="mandatory-fields-alert__text">
+                {iddocQuestionnaireMiscT('ssmRequest')}
+              </span>
+            </Alert>
 
-                  <Alert
-                    type="info"
-                    slim
-                    data-testid="mandatory-fields-alert"
-                    className="margin-bottom-4"
-                  >
-                    <span className="mandatory-fields-alert__text">
-                      {iddocQuestionnaireMiscT('ssmRequest')}
-                    </span>
-                  </Alert>
+            <Controller
+              name="uatNeeds"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-6">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('uatNeeds.label')}
+                  </Label>
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="iddoc-questionnaire-uat-needs">
-                      {iddocQuestionnaireT('uatNeeds.label')}
-                    </Label>
-
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="iddoc-questionnaire-uat-needs"
-                      name="uatNeeds"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="iddoc-questionnaire-stc-needs">
-                      {iddocQuestionnaireT('stcNeeds.label')}
-                    </Label>
-
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="iddoc-questionnaire-stc-needs"
-                      data-testid="iddoc-questionnaire-stc-needs"
-                      name="stcNeeds"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="iddoc-questionnaire-testing-timelines">
-                      {iddocQuestionnaireT('testingTimelines.label')}
-                    </Label>
-
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="iddoc-questionnaire-testing-timelines"
-                      name="testingTimelines"
-                    />
-                  </FieldGroup>
-
-                  <AddNote
-                    id="iddoc-questionnaire-testing-note"
-                    field="testingNote"
+                  <Textarea
+                    {...field}
+                    className="height-15"
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    value={field.value || ''}
                   />
+                </FormGroup>
+              )}
+            />
 
-                  <h3>{iddocQuestionnaireMiscT('dataMonitoringHeading')}</h3>
+            <Controller
+              name="stcNeeds"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-6">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('stcNeeds.label')}
+                  </Label>
 
-                  <FieldGroup>
-                    <Label htmlFor="iddoc-questionnaire-data-monitoring-file">
-                      {iddocQuestionnaireT('dataMonitoringFileTypes.label')}
-                    </Label>
+                  <Textarea
+                    {...field}
+                    className="height-15"
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    value={field.value || ''}
+                  />
+                </FormGroup>
+              )}
+            />
 
-                    {getKeys(dataMonitoringFileTypesConfig.options).map(
-                      type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`iddoc-questionnaire-data-monitoring-file-${type}`}
-                              name="dataMonitoringFileTypes"
-                              label={
-                                dataMonitoringFileTypesConfig.options[type]
-                              }
-                              value={type}
-                              checked={values?.dataMonitoringFileTypes.includes(
-                                type
-                              )}
-                            />
+            <Controller
+              name="testingTimelines"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-6">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('testingTimelines.label')}
+                  </Label>
 
-                            {type === IddocFileType.OTHER &&
-                              values.dataMonitoringFileTypes.includes(
-                                IddocFileType.OTHER
-                              ) && (
+                  <Textarea
+                    {...field}
+                    className="height-15"
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    value={field.value || ''}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <AddNoteRHF
+              field="testingNote"
+              control={control}
+              touched={!!touchedFields?.testingNote}
+              className="margin-top-0"
+            />
+
+            <h3>{iddocQuestionnaireMiscT('dataMonitoringHeading')}</h3>
+
+            <Controller
+              name="dataMonitoringFileTypes"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup>
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('dataMonitoringFileTypes.label')}
+                  </Label>
+
+                  {getKeys(dataMonitoringFileTypesConfig.options).map(type => {
+                    return (
+                      <Fragment key={type}>
+                        <CheckboxField
+                          id={`${convertCamelCaseToKebabCase(
+                            field.name
+                          )}-${type}`}
+                          name={field.name}
+                          label={dataMonitoringFileTypesConfig.options[type]}
+                          value={type}
+                          checked={field.value.includes(type)}
+                          onBlur={field.onBlur}
+                          onChange={e => {
+                            if (
+                              type === IddocFileType.OTHER &&
+                              !e.target.checked
+                            ) {
+                              setValue('dataMonitoringFileOther', '', {
+                                shouldValidate: true,
+                                shouldDirty: true,
+                                shouldTouch: true
+                              });
+                            }
+                            onChangeCheckboxHandler<IddocFileType>(
+                              e.target.value as IddocFileType,
+                              field
+                            );
+                          }}
+                        />
+
+                        {watch('dataMonitoringFileTypes')?.includes(
+                          IddocFileType.OTHER
+                        ) &&
+                          type === IddocFileType.OTHER && (
+                            <Controller
+                              name="dataMonitoringFileOther"
+                              control={control}
+                              render={({
+                                field: { ref: ref2, ...fieldOther }
+                              }) => (
                                 <div className="margin-left-4">
                                   <Label
-                                    htmlFor="iddoc-questionnaire-data-monitoring-file-other"
+                                    htmlFor={`${convertCamelCaseToKebabCase(
+                                      fieldOther.name
+                                    )}-${type}`}
                                     className="text-normal"
                                   >
                                     {iddocQuestionnaireT(
@@ -220,61 +279,80 @@ const IDDOCTesting = () => {
                                     )}
                                   </Label>
 
-                                  <Field
-                                    as={TextInput}
-                                    id="iddoc-questionnaire-data-monitoring-file-other"
-                                    name="dataMonitoringFileOther"
+                                  <TextInput
+                                    {...fieldOther}
+                                    id={`${convertCamelCaseToKebabCase(
+                                      fieldOther.name
+                                    )}-${type}`}
+                                    type="text"
+                                    value={fieldOther.value || ''}
                                   />
                                 </div>
                               )}
-                          </Fragment>
-                        );
-                      }
-                    )}
-                  </FieldGroup>
+                            />
+                          )}
+                      </Fragment>
+                    );
+                  })}
+                </FormGroup>
+              )}
+            />
 
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="iddoc-questionnaire-data-response-type">
-                      {iddocQuestionnaireT('dataResponseType.label')}
-                    </Label>
+            <Controller
+              name="dataResponseType"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-6">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('dataResponseType.label')}
+                  </Label>
 
-                    <Field
-                      as={TextInput}
-                      id="iddoc-questionnaire-data-response-type"
-                      maxLength={50}
-                      name="dataResponseType"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-top-6">
-                    <Label htmlFor="iddoc-questionnaire-data-file-frequency">
-                      {iddocQuestionnaireT('dataResponseFileFrequency.label')}
-                    </Label>
-
-                    <Field
-                      as={TextInput}
-                      id="iddoc-questionnaire-data-file-frequency"
-                      maxLength={50}
-                      name="dataResponseFileFrequency"
-                    />
-                  </FieldGroup>
-
-                  <FormFooter
-                    homeArea={additionalQuestionnairesT(
-                      'saveAndReturnToQuestionnaires'
-                    )}
-                    homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-                    backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`}
-                    nextPage
-                    disabled={!!error || loading} // TODO: add or replace with issubmitting once refactored form
-                    id="iddoc-questionnaire-testing-form"
+                  <TextInput
+                    {...field}
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
+                    type="text"
+                    value={field.value || ''}
+                    maxLength={50}
                   />
-                </Fieldset>
-              </MINTForm>
-            </>
-          );
-        }}
-      </Formik>
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="dataResponseFileFrequency"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-6">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('dataResponseFileFrequency.label')}
+                  </Label>
+
+                  <TextInput
+                    {...field}
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
+                    type="text"
+                    value={field.value || ''}
+                    maxLength={50}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <FormFooter
+              homeArea={additionalQuestionnairesT(
+                'saveAndReturnToQuestionnaires'
+              )}
+              homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+              backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`}
+              nextPage
+              disabled={!!error || loading} // TODO: add or replace with issubmitting once refactored form
+              id="iddoc-questionnaire-testing-form"
+            />
+          </Fieldset>
+        </Form>
+      </FormProvider>
 
       <PageNumber currentPage={2} totalPages={3} className="margin-y-6" />
     </>
