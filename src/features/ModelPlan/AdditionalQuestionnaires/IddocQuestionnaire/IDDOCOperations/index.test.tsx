@@ -7,9 +7,9 @@ import { modelPlanBaseMock } from 'tests/mock/general';
 
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
-import IDDOC, { IDDOCOperationsFormType } from './index';
+import IDDOC, { IDDOCOperationsDataType } from './index';
 
-const iddocMockData: IDDOCOperationsFormType = {
+const iddocMockData: IDDOCOperationsDataType = {
   __typename: 'IDDOCQuestionnaire',
   id: '123',
   technicalContactsIdentified: null,

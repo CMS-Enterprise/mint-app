@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useParams } from 'react-router-dom';
+import { GridContainer } from '@trussworks/react-uswds';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -29,44 +30,46 @@ const IddocQuestionnaire = () => {
       className="grid-container mint-body-normal"
       data-testid="iddoc-questionnaire"
     >
-      <IDDOCBanner />
-      <Breadcrumbs
-        items={[
-          BreadcrumbItemOptions.HOME,
-          BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.ADDITIONAL_QUESTIONNAIRES,
-          BreadcrumbItemOptions.IDDOC_QUESTIONNAIRE
-        ]}
-      />
+      <GridContainer>
+        <IDDOCBanner />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.ADDITIONAL_QUESTIONNAIRES,
+            BreadcrumbItemOptions.IDDOC_QUESTIONNAIRE
+          ]}
+        />
 
-      <StickyModelNameWrapper
-        triggerRef={headerRef}
-        sectionHeading={iddocQuestionnaireMiscT('heading')}
-        modelName={modelName}
-        abbreviation={abbreviation || undefined}
-      />
+        <StickyModelNameWrapper
+          triggerRef={headerRef}
+          sectionHeading={iddocQuestionnaireMiscT('heading')}
+          modelName={modelName}
+          abbreviation={abbreviation || undefined}
+        />
 
-      <h1
-        className="margin-bottom-0 margin-top-4 line-height-large"
-        ref={headerRef}
-      >
-        {iddocQuestionnaireMiscT('heading')}
-      </h1>
+        <h1
+          className="margin-bottom-0 margin-top-4 line-height-large"
+          ref={headerRef}
+        >
+          {iddocQuestionnaireMiscT('heading')}
+        </h1>
 
-      <p
-        className="mint-body-large margin-bottom-0 margin-top-1"
-        data-testid="model-plan-name"
-      >
-        {miscellaneousT('for')} {modelName}
-      </p>
+        <p
+          className="mint-body-large margin-bottom-0 margin-top-1"
+          data-testid="model-plan-name"
+        >
+          {miscellaneousT('for')} {modelName}
+        </p>
 
-      <AskAQuestion
-        modelID={modelID}
-        className="margin-y-3"
-        renderTextFor="iddocQuestionnaire"
-      />
+        <AskAQuestion
+          modelID={modelID}
+          className="margin-y-3"
+          renderTextFor="iddocQuestionnaire"
+        />
 
-      <Outlet />
+        <Outlet />
+      </GridContainer>
     </MainContent>
   );
 };
