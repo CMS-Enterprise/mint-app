@@ -37,14 +37,16 @@ const IddocQuestionnaire = () => {
             BreadcrumbItemOptions.IDDOC_QUESTIONNAIRE
           ]}
         />
+      </GridContainer>
 
-        <StickyModelNameWrapper
-          triggerRef={headerRef}
-          sectionHeading={iddocQuestionnaireMiscT('heading')}
-          modelName={modelName}
-          abbreviation={abbreviation || undefined}
-        />
+      <StickyModelNameWrapper
+        triggerRef={headerRef}
+        sectionHeading={iddocQuestionnaireMiscT('heading')}
+        modelName={modelName}
+        abbreviation={abbreviation || undefined}
+      />
 
+      <GridContainer>
         <h1
           className="margin-bottom-0 margin-top-4 line-height-large"
           ref={headerRef}

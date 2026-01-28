@@ -93,7 +93,7 @@ const IDDOCTesting = () => {
     reset
   } = methods;
 
-  const { mutationError } = useHandleMutation(
+  const { mutationError, loading: isSubmitting } = useHandleMutation(
     TypedUpdateIddocQuestionnaireDocument,
     {
       id,
@@ -347,7 +347,7 @@ const IDDOCTesting = () => {
               homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
               backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`}
               nextPage
-              disabled={!!error || loading} // TODO: add or replace with issubmitting once refactored form
+              disabled={isSubmitting}
               id="iddoc-questionnaire-testing-form"
             />
           </Fieldset>

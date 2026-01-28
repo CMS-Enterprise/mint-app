@@ -149,7 +149,7 @@ const IDDOCOperations = () => {
               name="technicalContactsIdentified"
               control={control}
               render={({ field: { ref, ...field } }) => (
-                <FormGroup className="margin-y-4 margin-bottom-8">
+                <FormGroup className="margin-top-4">
                   <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
                     {iddocQuestionnaireT('technicalContactsIdentified.label')}
                   </Label>
@@ -195,22 +195,23 @@ const IDDOCOperations = () => {
                       />
                     )}
                   </BooleanRadioRHF>
-
-                  <AddNoteRHF
-                    field="technicalContactsIdentifiedNote"
-                    control={control}
-                    touched={!!touchedFields?.technicalContactsIdentifiedNote}
-                  />
                 </FormGroup>
               )}
+            />
+
+            <AddNoteRHF
+              className="margin-top-0"
+              field="technicalContactsIdentifiedNote"
+              control={control}
+              touched={!!touchedFields?.technicalContactsIdentifiedNote}
             />
 
             <Controller
               name="captureParticipantInfo"
               control={control}
               render={({ field: { ref, ...field } }) => (
-                <FormGroup className="margin-y-4 margin-bottom-8">
-                  <Label htmlFor="iddoc-questionnaire-capture-participant-info">
+                <FormGroup className="margin-top-4">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
                     {iddocQuestionnaireT('captureParticipantInfo.label')}
                   </Label>
 
@@ -219,25 +220,28 @@ const IDDOCOperations = () => {
                   </p>
 
                   <BooleanRadioRHF
-                    field="captureParticipantInfo"
+                    field={field.name}
                     control={control}
                     value={field.value}
                     options={captureParticipantInfoConfig.options}
                     className="margin-top-0 margin-right-1"
                   />
-
-                  <AddNoteRHF
-                    field="captureParticipantInfoNote"
-                    control={control}
-                    touched={!!touchedFields?.captureParticipantInfoNote}
-                  />
                 </FormGroup>
               )}
             />
 
-            <h3>{iddocQuestionnaireMiscT('icdHeading')}</h3>
+            <AddNoteRHF
+              className="margin-y-0"
+              field="captureParticipantInfoNote"
+              control={control}
+              touched={!!touchedFields?.captureParticipantInfoNote}
+            />
 
-            <p className="margin-y-1 margin-top-2 line-height-body-4">
+            <h3 className="margin-top-4 margin-bottom-2">
+              {iddocQuestionnaireMiscT('icdHeading')}
+            </h3>
+
+            <p className="margin-y-0 line-height-body-4">
               {iddocQuestionnaireMiscT('icdSubheading')}
             </p>
 
@@ -297,15 +301,15 @@ const IDDOCOperations = () => {
                       {generalT('dateWarning')}
                     </Alert>
                   )}
-
-                  <AddNoteRHF
-                    field="icdNote"
-                    control={control}
-                    touched={!!touchedFields?.icdNote}
-                    className="margin-top-0"
-                  />
                 </FormGroup>
               )}
+            />
+
+            <AddNoteRHF
+              field="icdNote"
+              control={control}
+              touched={!!touchedFields?.icdNote}
+              className="margin-top-0"
             />
 
             <FormFooter
