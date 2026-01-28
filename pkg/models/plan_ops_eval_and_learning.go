@@ -20,8 +20,10 @@ type PlanOpsEvalAndLearning struct {
 	ContractorSupportOther *string        `json:"contractorSupportOther" db:"contractor_support_other"`
 	ContractorSupportHow   *string        `json:"contractorSupportHow" db:"contractor_support_how"`
 	ContractorSupportNote  *string        `json:"contractorSupportNote" db:"contractor_support_note"`
-	IddocSupport           *bool          `json:"iddocSupport" db:"iddoc_support" statusWeight:"1"`
-	IddocSupportNote       *string        `json:"iddocSupportNote" db:"iddoc_support_note"`
+	// IddocSupport has a database trigger (sync_iddoc_on_oel_update) that automatically updates
+	// iddoc_questionnaire.needed when this field changes. See V254__Add_IDDOC_Triggers.sql
+	IddocSupport     *bool   `json:"iddocSupport" db:"iddoc_support" statusWeight:"1"`
+	IddocSupportNote *string `json:"iddocSupportNote" db:"iddoc_support_note"`
 
 	//Page 2 (optional based on IddocSupport = true)
 	TechnicalContactsIdentified       *bool      `json:"technicalContactsIdentified" db:"technical_contacts_identified"`

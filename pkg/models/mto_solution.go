@@ -51,10 +51,13 @@ type MTOSolution struct {
 	NeededBy           *time.Time                 `json:"neededBy" db:"needed_by"`
 	Status             MTOSolutionStatus          `json:"status" db:"status"`
 	RiskIndicator      MTORiskIndicator           `json:"riskIndicator" db:"risk_indicator"`
-	Key                *MTOCommonSolutionKey      `json:"key" db:"mto_common_solution_key"`
-	Type               *MTOSolutionType           `json:"type" db:"type"`
-	PocName            *string                    `json:"pocName" db:"poc_name"`
-	PocEmail           *string                    `json:"pocEmail" db:"poc_email"`
+	// Key has database triggers (sync_iddoc_on_solution_insert/update/delete) that automatically update
+	// iddoc_questionnaire.needed when INNOVATION or ACO_OS solutions are added, updated, or deleted.
+	// See V254__Add_IDDOC_Triggers.sql
+	Key      *MTOCommonSolutionKey `json:"key" db:"mto_common_solution_key"`
+	Type     *MTOSolutionType      `json:"type" db:"type"`
+	PocName  *string               `json:"pocName" db:"poc_name"`
+	PocEmail *string               `json:"pocEmail" db:"poc_email"`
 }
 
 // MTOSolutionStatus represents the status of an MTO Solution
