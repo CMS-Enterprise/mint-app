@@ -12,39 +12,38 @@ post {
 
 body:graphql {
   mutation updateIDDOCQuestionnaire {
-    updateIDDOCQuestionnaire(id: "{{iddocQuestionnaireID}}", changes: {
-      # Page 1 - Operations
-      technicalContactsIdentified: true
-      technicalContactsIdentifiedDetail: "John Doe (IT Lead), Jane Smith (Data Architect)"
-      technicalContactsIdentifiedNote: "Contacts confirmed via kickoff meeting"
-      captureParticipantInfo: true
-      captureParticipantInfoNote: "Will capture demographics, enrollment dates, and service utilization"
-      icdOwner: "Data Integration Team Lead"
-      draftIcdDueDate: "2024-12-31T00:00:00Z"
-      icdNote: "ICD draft scheduled for Q4 review"
-  
-      # Page 2 - Testing
-      uatNeeds: "Test environment with 1000 sample beneficiary records"
-      stcNeeds: "Staging environment with production-like data volume"
-      testingTimelines: "UAT: Q1 2024, STC: Q2 2024, Production: Q3 2024"
-      testingNote: "Coordinating with QA team for test data generation"
-      dataMonitoringFileTypes: [BENEFICIARY, PROVIDER, PART_A_CLAIMS]
-      dataMonitoringFileOther: "Custom claims adjudication data"
-      dataResponseType: "JSON and CSV formats"
-      dataResponseFileFrequency: "Daily incremental, weekly full refresh"
-  
-      # Page 3 - Monitoring
-      dataFullTimeOrIncremental: INCREMENTAL
-      eftSetUp: true
-      unsolicitedAdjustmentsIncluded: false
-      dataFlowDiagramsNeeded: true
-      produceBenefitEnhancementFiles: true
-      fileNamingConventions: "YYYYMMDD_ModelName_FileType_Version.ext"
-      dataMonitoringNote: "Automated monitoring dashboard in development"
-
-      
-      isIDDOCQuestionnaireComplete: true
-    }) {
+    updateIDDOCQuestionnaire(
+      id: "{{iddocQuestionnaireID}}"
+      changes: {
+        # Page 1 - Operations
+        technicalContactsIdentified: true
+        technicalContactsIdentifiedDetail: "John Doe (IT Lead), Jane Smith (Data Architect)"
+        technicalContactsIdentifiedNote: "Contacts confirmed via kickoff meeting"
+        captureParticipantInfo: true
+        captureParticipantInfoNote: "Will capture demographics, enrollment dates, and service utilization"
+        icdOwner: "Data Integration Team Lead"
+        draftIcdDueDate: "2024-12-31T00:00:00Z"
+        icdNote: "ICD draft scheduled for Q4 review"
+        # Page 2 - Testing
+        uatNeeds: "Test environment with 1000 sample beneficiary records"
+        stcNeeds: "Staging environment with production-like data volume"
+        testingTimelines: "UAT: Q1 2024, STC: Q2 2024, Production: Q3 2024"
+        testingNote: "Coordinating with QA team for test data generation"
+        dataMonitoringFileTypes: [BENEFICIARY, PROVIDER, PART_A_CLAIMS]
+        dataMonitoringFileOther: "Custom claims adjudication data"
+        dataResponseType: "JSON and CSV formats"
+        dataResponseFileFrequency: "Daily incremental, weekly full refresh"
+        # Page 3 - Monitoring
+        dataFullTimeOrIncremental: INCREMENTAL
+        eftSetUp: true
+        unsolicitedAdjustmentsIncluded: false
+        dataFlowDiagramsNeeded: true
+        produceBenefitEnhancementFiles: true
+        fileNamingConventions: "YYYYMMDD_ModelName_FileType_Version.ext"
+        dataMonitoringNote: "Automated monitoring dashboard in development"
+        isIDDOCQuestionnaireComplete: false
+      }
+    ) {
       id
       modelPlanID
       status
@@ -93,7 +92,7 @@ body:graphql {
       createdDts
       modifiedBy
       modifiedDts
-      
+  
       createdByUserAccount {
         commonName
       }

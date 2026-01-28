@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jmoiron/sqlx"
-
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
@@ -36,75 +34,65 @@ func IDDOCQuestionnaireUpdate(
 	emailService oddmail.EmailService,
 	emailAddressBook email.AddressBook,
 ) (*models.IDDOCQuestionnaire, error) {
-	updatedQuestionnaire, err := sqlutils.WithTransaction[models.IDDOCQuestionnaire](
-		store,
-		func(tx *sqlx.Tx) (*models.IDDOCQuestionnaire, error) {
-			// Get existing IDDOC questionnaire
-			existing, err := storage.IDDOCQuestionnaireGetByID(tx, logger, id)
-			if err != nil {
-				return nil, err
-			}
 
-			// Variable to track whether or not this update mutation caused the IDDOC questionnaire
-			// to go from some non-complete status to "Complete"
-			iddocChangedToComplete := false
-
-			// Check if the 'changes' map contains the 'isIDDOCQuestionnaireComplete' key and that the
-			// 'isIDDOCQuestionnaireComplete' is different from the existing value
-			if isIDDOCQuestionnaireComplete, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
-				isSettingToCompletePointer, ok := isIDDOCQuestionnaireComplete.(*bool)
-				if !ok || isSettingToCompletePointer == nil {
-					return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
-				}
-				isSettingToComplete := *isSettingToCompletePointer
-
-				// Check if completion timestamp has been set or is the default value
-				if existing.CompletedDts == nil && isSettingToComplete {
-					iddocChangedToComplete = true
-					// Only auto-set CompletedBy if it wasn't explicitly provided in changes
-					if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
-						existing.CompletedBy = &principal.Account().ID
-					}
-					existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
-				} else if !isSettingToComplete {
-					// When setting to incomplete, clear both fields unless explicitly set
-					if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
-						existing.CompletedBy = nil
-					}
-					existing.CompletedDts = nil
-				}
-
-				// isIDDOCQuestionnaireComplete is now a database field, so keep it in changes map
-				// to be persisted to the database
-			}
-
-			// Update the base task list section
-			err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
-			if err != nil {
-				return nil, err
-			}
-
-			// Update the IDDOC questionnaire
-			retQuestionnaire, err := storage.IDDOCQuestionnaireUpdate(tx, logger, existing)
-
-			if iddocChangedToComplete {
-				TrySendIDDOCQuestionnaireNotifications(
-					ctx,
-					existing,
-					logger,
-					emailService,
-					emailAddressBook,
-					principal,
-					tx,
-				)
-			}
-
-			return retQuestionnaire, err
-		},
-	)
-
+	// Get existing IDDOC questionnaire
+	existing, err := IDDOCQuestionnaireGetByIDLoader(ctx, id)
 	if err != nil {
 		return nil, err
+	}
+
+	// Variable to track whether or not this update mutation caused the IDDOC questionnaire
+	// to go from some non-complete status to "Complete"
+	iddocChangedToComplete := false
+
+	// Check if the 'changes' map contains the 'isIDDOCQuestionnaireComplete' key and that the
+	// 'isIDDOCQuestionnaireComplete' is different from the existing value
+	if isIDDOCQuestionnaireComplete, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
+		isSettingToCompletePointer, ok := isIDDOCQuestionnaireComplete.(*bool)
+		if !ok || isSettingToCompletePointer == nil {
+			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
+		}
+		isSettingToComplete := *isSettingToCompletePointer
+
+		// Check if completion timestamp has been set or is the default value
+		if existing.CompletedDts == nil && isSettingToComplete {
+			iddocChangedToComplete = true
+			// Only auto-set CompletedBy if it wasn't explicitly provided in changes
+			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+				existing.CompletedBy = &principal.Account().ID
+			}
+			existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
+		} else if !isSettingToComplete {
+			// When setting to incomplete, clear both fields unless explicitly set
+			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+				existing.CompletedBy = nil
+			}
+			existing.CompletedDts = nil
+		}
+	}
+
+	// Update the base task list section
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	// Update the IDDOC questionnaire
+	updatedQuestionnaire, err := storage.IDDOCQuestionnaireUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	if iddocChangedToComplete {
+		TrySendIDDOCQuestionnaireNotifications(
+			ctx,
+			existing,
+			logger,
+			emailService,
+			emailAddressBook,
+			principal,
+			store,
+		)
 	}
 
 	return updatedQuestionnaire, nil
