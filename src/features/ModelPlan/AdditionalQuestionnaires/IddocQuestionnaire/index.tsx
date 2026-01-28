@@ -26,10 +26,7 @@ const IddocQuestionnaire = () => {
   const { headerRef, modelName, abbreviation } = useStickyHeader();
 
   return (
-    <MainContent
-      className="grid-container mint-body-normal"
-      data-testid="iddoc-questionnaire"
-    >
+    <MainContent data-testid="iddoc-questionnaire">
       <GridContainer>
         <IDDOCBanner />
         <Breadcrumbs

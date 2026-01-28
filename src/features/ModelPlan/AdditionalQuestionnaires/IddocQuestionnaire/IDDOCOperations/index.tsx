@@ -11,7 +11,7 @@ import {
   Textarea,
   TextInput
 } from '@trussworks/react-uswds';
-import NotFound from 'features/NotFound';
+import { NotFoundPartial } from 'features/NotFound';
 import {
   GetIddocQuestionnaireOperationsQuery,
   TypedUpdateIddocQuestionnaireDocument,
@@ -117,8 +117,8 @@ const IDDOCOperations = () => {
     );
   }, [data, reset]);
 
-  if (error || (!loading && !data?.modelPlan)) {
-    return <NotFound />;
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial errorMessage={error?.message} />;
   }
 
   return (
@@ -148,67 +148,61 @@ const IDDOCOperations = () => {
             <Controller
               name="technicalContactsIdentified"
               control={control}
-              render={({ field: { ref, ...field } }) => {
-                return (
-                  <FormGroup className="margin-y-4 margin-bottom-8">
-                    <Label
-                      htmlFor={`${convertCamelCaseToKebabCase(field.name)}`}
-                    >
-                      {iddocQuestionnaireT('technicalContactsIdentified.label')}
-                    </Label>
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-y-4 margin-bottom-8">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('technicalContactsIdentified.label')}
+                  </Label>
 
-                    <BooleanRadioRHF
-                      field="technicalContactsIdentified"
-                      control={control}
-                      value={field.value}
-                      options={technicalContactsIdentifiedConfig.options}
-                      childName="technicalContactsIdentifiedDetail"
-                      setValue={setValue}
-                      className="margin-top-0 margin-right-1"
-                    >
-                      {String(watch('technicalContactsIdentified')) ===
-                        'true' && (
-                        <Controller
-                          name="technicalContactsIdentifiedDetail"
-                          control={control}
-                          render={({
-                            field: { ref: detailRef, ...detailField }
-                          }) => (
-                            <FormGroup className="margin-left-4 margin-top-1">
-                              <Label
-                                htmlFor={convertCamelCaseToKebabCase(
-                                  detailField.name
-                                )}
-                                className="text-normal"
-                              >
-                                {iddocQuestionnaireT(
-                                  'technicalContactsIdentifiedDetail.label'
-                                )}
-                              </Label>
+                  <BooleanRadioRHF
+                    field="technicalContactsIdentified"
+                    control={control}
+                    value={field.value}
+                    options={technicalContactsIdentifiedConfig.options}
+                    childName="technicalContactsIdentifiedDetail"
+                    setValue={setValue}
+                    className="margin-top-0 margin-right-1"
+                  >
+                    {String(watch('technicalContactsIdentified')) ===
+                      'true' && (
+                      <Controller
+                        name="technicalContactsIdentifiedDetail"
+                        control={control}
+                        render={({
+                          field: { ref: detailRef, ...detailField }
+                        }) => (
+                          <FormGroup className="margin-left-4 margin-top-1">
+                            <Label
+                              htmlFor={convertCamelCaseToKebabCase(
+                                detailField.name
+                              )}
+                              className="text-normal"
+                            >
+                              {iddocQuestionnaireT(
+                                'technicalContactsIdentifiedDetail.label'
+                              )}
+                            </Label>
 
-                              <Textarea
-                                {...detailField}
-                                id={convertCamelCaseToKebabCase(
-                                  detailField.name
-                                )}
-                                maxLength={5000}
-                                value={detailField.value || ''}
-                                className="mint-textarea"
-                              />
-                            </FormGroup>
-                          )}
-                        />
-                      )}
-                    </BooleanRadioRHF>
+                            <Textarea
+                              {...detailField}
+                              id={convertCamelCaseToKebabCase(detailField.name)}
+                              maxLength={5000}
+                              value={detailField.value || ''}
+                              className="mint-textarea"
+                            />
+                          </FormGroup>
+                        )}
+                      />
+                    )}
+                  </BooleanRadioRHF>
 
-                    <AddNoteRHF
-                      field="technicalContactsIdentifiedNote"
-                      control={control}
-                      touched={!!touchedFields?.technicalContactsIdentifiedNote}
-                    />
-                  </FormGroup>
-                );
-              }}
+                  <AddNoteRHF
+                    field="technicalContactsIdentifiedNote"
+                    control={control}
+                    touched={!!touchedFields?.technicalContactsIdentifiedNote}
+                  />
+                </FormGroup>
+              )}
             />
 
             <Controller
@@ -273,9 +267,7 @@ const IDDOCOperations = () => {
               control={control}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-top-6">
-                  <Label
-                    htmlFor={convertCamelCaseToKebabCase('draftIcdDueDate')}
-                  >
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
                     {iddocQuestionnaireT('draftIcdDueDate.label')}
                   </Label>
                   <HelpText className="usa-hint">
