@@ -164,23 +164,6 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusCanceled,
 	})
 
-	emptyPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(emptyPlan.ID)
-	if len(emptyPlanOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
-	_ = s.addOperationalSolution(
-		emptyPlan,
-		emptyPlanOperationalNeeds[0].ID,
-		map[string]interface{}{
-			"needed":        false,
-			"pocName":       "The Gump",
-			"pocEmail":      "shrimpKing@gump.com",
-			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
-			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
-		},
-	)
-
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT", nil)
 	s.updatePlanBasics(
@@ -216,23 +199,6 @@ func (s *Seeder) SeedData() {
 		"abbreviation": "timeline",
 		"status":       models.ModelStatusActive,
 	})
-
-	planWithBasicsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithBasics.ID)
-	if len(planWithBasicsOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
-	_ = s.addOperationalSolution(
-		planWithBasics,
-		planWithBasicsOperationalNeeds[0].ID,
-		map[string]interface{}{
-			"needed":        false,
-			"pocName":       "The Gump",
-			"pocEmail":      "shrimpKing@gump.com",
-			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
-			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
-		},
-	)
 
 	// Seed a plan with Data Exchange filled out
 	planWithDataExchange := s.createModelPlan("Plan with Data Exchange", "MINT", nil)
@@ -284,23 +250,6 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusEnded,
 	})
 
-	planWithCollaboratorsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCollaborators.ID)
-	if len(planWithBasicsOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
-	_ = s.addOperationalSolution(
-		planWithCollaborators,
-		planWithCollaboratorsOperationalNeeds[0].ID,
-		map[string]interface{}{
-			"needed":        false,
-			"pocName":       "The Gump",
-			"pocEmail":      "shrimpKing@gump.com",
-			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
-			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
-		},
-	)
-
 	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
 	// seed another model that is
@@ -333,23 +282,6 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusAnnounced,
 	})
 
-	planWithCrTDLsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCrTDLs.ID)
-	if len(planWithCrTDLsOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
-	_ = s.addOperationalSolution(
-		planWithCrTDLs,
-		planWithCrTDLsOperationalNeeds[0].ID,
-		map[string]interface{}{
-			"needed":        false,
-			"pocName":       "The Gump",
-			"pocEmail":      "shrimpKing@gump.com",
-			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
-			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
-		},
-	)
-
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT", nil)
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
@@ -358,28 +290,13 @@ func (s *Seeder) SeedData() {
 		"status":       models.ModelStatusPaused,
 	})
 
-	archivedPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(archivedPlan.ID)
-	if len(archivedPlanOperationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
-	_ = s.addOperationalSolution(
-		archivedPlan,
-		archivedPlanOperationalNeeds[0].ID,
-		map[string]interface{}{
-			"needed":        false,
-			"pocName":       "The Gump",
-			"pocEmail":      "shrimpKing@gump.com",
-			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
-			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
-		},
-	)
-
 	// Seed a plan with some documents
 	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT", nil)
 	restrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, true, nil, nil, false, false)
 	unrestrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
 	_ = s.planDocumentCreate(planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, false, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
+	_ = restrictedDocument
+	_ = unrestrictedDocument
 
 	sampleModelName := "Enhancing Oncology Model"
 	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT", nil)
@@ -409,32 +326,6 @@ func (s *Seeder) SeedData() {
 			"goal":       "Some goal",
 			"cmsCenters": []string{"CMMI"},
 			"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
-		},
-	)
-
-	operationalNeeds := s.getOperationalNeedsByModelPlanID(planWithDocuments.ID)
-	if len(operationalNeeds) < 1 {
-		panic("operational needs must be populated in order to create an operational solution")
-	}
-
-	operationalSolution := s.addOperationalSolution(
-		planWithDocuments,
-		operationalNeeds[0].ID,
-		map[string]interface{}{
-			"needed":        false,
-			"pocName":       "The Gump",
-			"pocEmail":      "shrimpKing@gump.com",
-			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
-			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
-		},
-	)
-
-	_ = s.addPlanDocumentSolutionLinks(
-		planWithDocuments,
-		operationalSolution.ID,
-		[]uuid.UUID{
-			restrictedDocument.ID,
-			unrestrictedDocument.ID,
 		},
 	)
 

@@ -17,28 +17,12 @@ var operationalNeedGetByModelPlanIDAndOtherTypeSQL string
 //go:embed SQL/operational_need/get_by_id.sql
 var operationalNeedGetByIDSQL string
 
-//go:embed SQL/operational_need/update_by_id.sql
-var operationalNeedUpdateByIDSQL string
-
-//go:embed SQL/operational_need/insert_or_update.sql
-var operationalNeedInsertOrUpdateSQL string
-
-//go:embed SQL/operational_need/insert_all_possible.sql
-var operationalNeedInsertAllPossibleSQL string
-
-//go:embed SQL/operational_need/insert_or_update_other.sql
-var operationalNeedInsertOrUpdateOtherSQL string
-
 type operationalNeedScripts struct {
 	CollectionByModelPlanID       string
 	CollectionByModelPlanIDLoader string
 	GetByModelPlanIDAndType       string
 	GetByModelPlanIDAndOtherType  string
 	GetByID                       string
-	UpdateByID                    string
-	InsertOrUpdate                string
-	InsertAllPossible             string
-	InsertOrUpdateOther           string
 }
 
 // OperationalNeed houses all the sql for getting data for operational need from the database
@@ -48,8 +32,4 @@ var OperationalNeed = operationalNeedScripts{
 	GetByModelPlanIDAndType:       operationalNeedGetByModelPlanIDAndTypeSQL,
 	GetByModelPlanIDAndOtherType:  operationalNeedGetByModelPlanIDAndOtherTypeSQL,
 	GetByID:                       operationalNeedGetByIDSQL,
-	UpdateByID:                    operationalNeedUpdateByIDSQL,
-	InsertOrUpdate:                operationalNeedInsertOrUpdateSQL,
-	InsertAllPossible:             operationalNeedInsertAllPossibleSQL,
-	InsertOrUpdateOther:           operationalNeedInsertOrUpdateOtherSQL,
 }

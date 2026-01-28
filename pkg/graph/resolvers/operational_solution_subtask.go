@@ -9,7 +9,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -46,30 +45,4 @@ func OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx context.Context, soluti
 	}
 
 	return result.([]*models.OperationalSolutionSubtask), nil
-}
-
-// OperationalSolutionSubtaskDelete implements resolver logic to delete an operational solution subtask
-func OperationalSolutionSubtaskDelete(
-	logger *zap.Logger,
-	store *storage.Store,
-	principal authentication.Principal,
-	id uuid.UUID,
-) (int, error) {
-	existingSubtask, err := store.OperationalSolutionSubtaskGetByID(logger, id)
-	if err != nil {
-		return 0, err
-	}
-
-	err = BaseStructPreDelete(logger, existingSubtask, principal, store, true)
-	if err != nil {
-		return 0, err
-	}
-
-	sqlResult, err := store.OperationalSolutionSubtaskDelete(logger, id, principal.Account().ID)
-	if err != nil {
-		return 0, err
-	}
-
-	rowsAffected, err := sqlResult.RowsAffected()
-	return int(rowsAffected), err
 }

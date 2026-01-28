@@ -1,15 +1,16 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetKeyCharacteristicsDocument,
   GetKeyCharacteristicsQuery,
+  GetKeyCharacteristicsQueryVariables,
   KeyCharacteristic
 } from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
+import { modelPlanBaseMockData } from 'tests/mock/general';
 
-import ModelInfoWrapper from 'contexts/ModelInfoContext';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import KeyCharacteristics from './index';
 
@@ -37,7 +38,10 @@ const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   planContractUpdatedNote: ''
 };
 
-const keyCharacteristicsMock = [
+const keyCharacteristicsMock: MockedResponse<
+  GetKeyCharacteristicsQuery,
+  GetKeyCharacteristicsQueryVariables
+>[] = [
   {
     request: {
       query: GetKeyCharacteristicsDocument,
@@ -45,22 +49,16 @@ const keyCharacteristicsMock = [
     },
     result: {
       data: {
+        __typename: 'Query',
         modelPlan: {
+          __typename: 'ModelPlan',
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          generalCharacteristics: keyCharacteristicsMockData,
-          operationalNeeds: [
-            {
-              __typename: 'OperationalNeed',
-              id: '424213',
-              modifiedDts: null
-            }
-          ]
+          generalCharacteristics: keyCharacteristicsMockData
         }
       }
     }
-  },
-  ...modelPlanBaseMock
+  }
 ];
 
 describe('Model Plan Characteristics', () => {
@@ -70,9 +68,9 @@ describe('Model Plan Characteristics', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <KeyCharacteristics />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -112,9 +110,9 @@ describe('Model Plan Characteristics', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics',
           element: (
-            <ModelInfoWrapper>
+            <ModelInfoContext.Provider value={modelPlanBaseMockData}>
               <KeyCharacteristics />
-            </ModelInfoWrapper>
+            </ModelInfoContext.Provider>
           )
         }
       ],
@@ -130,6 +128,12 @@ describe('Model Plan Characteristics', () => {
         <RouterProvider router={router} />
       </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('phased-in-note')).toHaveValue(
+        "This can't be phased in"
+      );
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('plan-characteristics-key-other')).toHaveValue(

@@ -15,7 +15,6 @@ export default gql(/* GraphQL */ `
         id
         date
       }
-      opSolutionLastModifiedDts
       archived
       status
       taskListStatus

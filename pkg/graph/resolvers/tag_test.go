@@ -54,16 +54,12 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, retPrinc.ID)
 
 	// Get Possible Operational Solution
-	sol, err := PossibleOperationalSolutionGetByID(suite.testConfigs.Logger, suite.testConfigs.Store, 1)
-	suite.NoError(err)
-	suite.NotNil(sol)
 
-	retSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypePossibleSolution, nil, &sol.ID)
-	suite.NoError(err)
-	retSol, ok := retSolEnt.(*models.PossibleOperationalSolution)
-	suite.True(ok, "Could not cast the Tagged Entity to Possible Operational Solution")
+	simulatedeSolID := 1
 
-	suite.EqualValues(sol.ID, retSol.ID)
+	retSolEnt, err := TaggedEntityGet(suite.testConfigs.Context, suite.testConfigs.Store, models.TagTypePossibleSolution, nil, &simulatedeSolID)
+	suite.NoError(err)
+	suite.Nil(retSolEnt, "possible solution is a deprecated tag type. We no longer return this entity")
 
 	// Get MTO Common Solution
 	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(models.MTOCSKConnect))

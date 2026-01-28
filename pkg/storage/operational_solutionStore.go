@@ -8,10 +8,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
 )
@@ -21,12 +19,6 @@ var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL string
 
 //go:embed SQL/operational_solution/get_by_id.sql
 var operationalSolutionGetByIDSQL string
-
-//go:embed SQL/operational_solution/update_by_id.sql
-var operationalSolutionUpdateByIDSQL string
-
-//go:embed SQL/operational_solution/insert.sql
-var operationalSolutionInsertSQL string
 
 // OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER returns
 // Operational Solutions that match the paramTable JSON
@@ -120,48 +112,4 @@ func OperationalSolutionGetByIDLOADER(np sqlutils.NamedPreparer, logger *zap.Log
 	}
 	return res, nil
 
-}
-
-// OperationalSolutionInsert inserts an operational solution if it already exists
-func (s *Store) OperationalSolutionInsert(
-	logger *zap.Logger,
-	solution *models.OperationalSolution,
-	solutionTypeKey *models.OperationalSolutionKey,
-) (*models.OperationalSolution, error) {
-
-	stmt, err := s.db.PrepareNamed(operationalSolutionInsertSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
-	}
-	defer stmt.Close()
-
-	solution.ID = utilityuuid.ValueOrNewUUID(solution.ID)
-	solution.Key = solutionTypeKey
-
-	err = stmt.Get(solution, solution)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, solution) //this could be either update or insert..
-	}
-
-	return solution, err
-}
-
-// OperationalSolutionUpdateByID updates an operational solution by its ID
-func (s *Store) OperationalSolutionUpdateByID(
-	logger *zap.Logger,
-	solution *models.OperationalSolution,
-) (*models.OperationalSolution, error) {
-
-	stmt, err := s.db.PrepareNamed(operationalSolutionUpdateByIDSQL)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(solution, solution)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..
-	}
-
-	return solution, err
 }

@@ -228,21 +228,6 @@ func (suite *ResolverSuite) createPlanTDL(mp *models.ModelPlan, idNumber string,
 	return tdl
 }
 
-func (suite *ResolverSuite) createOperationalSolution() (*models.OperationalSolution, *models.OperationalNeed, *models.ModelPlan) {
-	planName := "Plan For Milestones"
-	plan := suite.createModelPlan(planName)
-	needType := models.OpNKManageCd
-
-	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
-	suite.NoError(err)
-	changes := map[string]interface{}{
-		"nameOther": "AnotherSolution",
-	}
-	operationalSolution, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
-	suite.NoError(err)
-	return operationalSolution, need, plan
-}
-
 func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 	modelStatusChanges []string,
 	documentCount int,

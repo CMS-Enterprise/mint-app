@@ -38,6 +38,8 @@ import {
   TaskStatus
 } from 'gql/generated/graphql';
 
+import { GetModelPlanBaseModelPlan } from 'contexts/ModelInfoContext';
+
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
 type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
 type GetModelPlansByStatusGroupType =
@@ -133,7 +135,6 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   status: ModelStatus.PLAN_DRAFT,
   taskListStatus: TaskStatus.IN_PROGRESS,
   modelName: 'Test',
-  opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {
     __typename: 'TranslatedAudit',
@@ -683,6 +684,17 @@ export const analyticsSummaryMock: MockedResponse<
     }
   }
 ];
+
+export const modelPlanBaseMockData: GetModelPlanBaseModelPlan = {
+  __typename: 'ModelPlan',
+  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+  modelName: 'My excellent plan that I just initiated',
+  abbreviation: '',
+  modifiedDts: '',
+  createdDts: '2024-01-01T00:00:00Z',
+  status: ModelStatus.PLAN_DRAFT,
+  isMTOStarted: false
+};
 
 export const modelPlanBaseMock: MockedResponse<
   GetModelPlanBaseQuery,

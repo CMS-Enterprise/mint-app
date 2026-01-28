@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"time"
 
 	"github.com/google/uuid"
 
@@ -131,11 +130,6 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 	logger := appcontext.ZLogger(ctx)
 
 	return ModelPlanNameHistory(logger, obj.ID, sort, r.store)
-}
-
-// OpSolutionLastModifiedDts is the resolver for the opSolutionLastModifiedDts field.
-func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error) {
-	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
 }
 
 // Timeline is the resolver for the timeline field.

@@ -26,13 +26,13 @@ describe('Change History', () => {
     cy.get('[data-testid="shown-value"]').should('not.exist');
 
     // Open collapsed audit
-    cy.get('[data-testid="batch-record-0"]').click();
+    cy.get('[data-testid="change-record-0"]').click();
 
     // Check that audit is expanded and value is visible
     cy.get('[data-testid="shown-value"]').should('be.visible');
 
     // Close expanded audit
-    cy.get('[data-testid="batch-record-0"]').eq(1).click();
+    cy.get('[data-testid="change-record-0"]').eq(1).click();
 
     // Check that audit is collapsed again
     cy.get('[data-testid="shown-value"]').should('not.exist');
