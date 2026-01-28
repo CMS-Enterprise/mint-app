@@ -60,9 +60,8 @@ const ReadOnlyIddocQuestionnaire = ({
         status={allIddocQuestionnaireData.status}
         modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
-          allIddocQuestionnaireData.modifiedDts
-          // TODO: Add createdDts back in when backend supports it
-          // || allIddocQuestionnaireData.createdDts
+          allIddocQuestionnaireData.modifiedDts ||
+          allIddocQuestionnaireData.createdDts
         }
       />
 
@@ -85,11 +84,10 @@ const ReadOnlyIddocQuestionnaire = ({
           )}
 
           <ReadOnlyBody
-            data={allIddocQuestionnaireData} //TODO use {testData} here for needed state
+            data={allIddocQuestionnaireData} // TODO use {testData} here for needed state
             config={iddocQuestionnaireConfig}
             filteredView={filteredView}
           />
-
         </>
       )}
     </div>

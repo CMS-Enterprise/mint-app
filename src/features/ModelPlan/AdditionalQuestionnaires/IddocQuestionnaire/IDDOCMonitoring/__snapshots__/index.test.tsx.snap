@@ -346,12 +346,11 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           class="mint-checkbox usa-checkbox"
         >
           <input
-            checked=""
             class="usa-checkbox__input"
             id="iddoc-questionnaire-is-complete-true"
             name="iddocQuestionnaireIsComplete"
             type="checkbox"
-            value="true"
+            value="false"
           />
           <label
             class="usa-checkbox__label"
@@ -364,11 +363,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
-        <p
-          class="margin-top-1 margin-bottom-0 margin-left-4 text-base"
-        >
-          Marked as complete by wonderful trouble maker on the best day ever 01/14/2026
-        </p>
       </div>
       <div
         id="iddoc-questionnaire-monitoring-form"

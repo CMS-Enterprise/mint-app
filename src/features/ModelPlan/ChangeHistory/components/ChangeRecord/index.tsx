@@ -132,6 +132,29 @@ export const ChangeHeader = ({
     );
   }
 
+  // Questionnaire status audits
+  if (changeRecordType === 'questionnaireStatusUpdate') {
+    const status = changeRecord.translatedFields.find(
+      field => field.fieldName === 'status'
+    )?.newTranslated;
+
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          section: t(`sections.${changeRecord.tableName}`),
+          status,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
   // MTO status audits
   if (changeRecordType === 'mtoStatusUpdate') {
     const status = changeRecord.translatedFields.find(
