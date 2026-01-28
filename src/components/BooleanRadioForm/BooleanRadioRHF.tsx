@@ -1,6 +1,6 @@
 import React from 'react';
-import { Controller, UseFormSetValue } from 'react-hook-form';
-import { FormGroup, Radio } from '@trussworks/react-uswds';
+import { UseFormSetValue } from 'react-hook-form';
+import { Fieldset, Radio } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import { Bool } from 'types/translation';
@@ -8,70 +8,71 @@ import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 type BooleanRadioType = {
   field: string;
-  control: any;
   value: boolean | null | undefined;
   options: Record<Bool, string>;
+  setValue: UseFormSetValue<any>;
   disabled?: boolean;
   children?: React.ReactNode;
   childName?: string;
-  setValue?: UseFormSetValue<any>;
   className?: string;
 };
 
 const BooleanRadioRHF = ({
-  field: fieldName,
-  control,
+  field,
   value,
   options,
+  setValue,
   disabled = false,
   children,
   childName,
-  setValue,
   className
 }: BooleanRadioType) => {
   return (
-    <Controller
-      name={fieldName}
-      control={control}
-      render={({ field: { ref, ...formField }, fieldState: { error } }) => (
-        <FormGroup error={!!error} className={classNames(className)}>
-          <Radio
-            {...formField}
-            id={`${convertCamelCaseToKebabCase(formField.name)}-true`}
-            data-testid={`${convertCamelCaseToKebabCase(formField.name)}-true`}
-            label={options.true}
-            value="TRUE"
-            checked={value === true}
-            disabled={disabled}
-            onChange={() => {
-              formField.onChange(true);
-              if (childName && setValue) {
-                setValue(childName, '', {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                  shouldTouch: true
-                });
-              }
-            }}
-          />
+    <Fieldset className={classNames(className)}>
+      <Radio
+        id={`${convertCamelCaseToKebabCase(field)}-true`}
+        data-testid={`${convertCamelCaseToKebabCase(field)}-true`}
+        name={field}
+        label={options.true}
+        value="TRUE"
+        checked={value === true}
+        disabled={disabled}
+        onChange={() => {
+          setValue(field, true, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true
+          });
 
-          {children}
+          if (childName) {
+            setValue(childName, '', {
+              shouldValidate: true,
+              shouldDirty: true,
+              shouldTouch: true
+            });
+          }
+        }}
+      />
 
-          <Radio
-            {...formField}
-            id={`${convertCamelCaseToKebabCase(formField.name)}-false`}
-            data-testid={`${convertCamelCaseToKebabCase(formField.name)}-false`}
-            label={options.false}
-            value="FALSE"
-            checked={value === false}
-            disabled={disabled}
-            onChange={() => {
-              formField.onChange(false);
-            }}
-          />
-        </FormGroup>
-      )}
-    />
+      {children}
+
+      <Radio
+        id={`${convertCamelCaseToKebabCase(field)}-false`}
+        data-testid={`${convertCamelCaseToKebabCase(field)}-false`}
+        name={field}
+        label={options.false}
+        value="FALSE"
+        checked={value === false}
+        disabled={disabled}
+        onChange={() => {
+          setValue(field, false, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true
+          });
+        }}
+      />
+    </Fieldset>
   );
 };
 

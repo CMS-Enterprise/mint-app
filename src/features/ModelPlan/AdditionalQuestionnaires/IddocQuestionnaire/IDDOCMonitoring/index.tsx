@@ -102,6 +102,7 @@ const IDDOCMonitoring = () => {
     handleSubmit,
     formState: { touchedFields },
     watch,
+    setValue,
     reset
   } = methods;
 
@@ -166,6 +167,7 @@ const IDDOCMonitoring = () => {
                     <Radio
                       key={key}
                       id={`${convertCamelCaseToKebabCase(field.name)}-${key}`}
+                      data-testid={`${convertCamelCaseToKebabCase(field.name)}-${key}`}
                       name={field.name}
                       label={dataFullTimeOrIncrementalConfig.options[key]}
                       value={key}
@@ -190,9 +192,9 @@ const IDDOCMonitoring = () => {
 
                   <BooleanRadioRHF
                     field={field.name}
-                    control={control}
                     value={field.value}
                     options={eftSetUpConfig.options}
+                    setValue={setValue}
                     className="margin-top-0 margin-right-1"
                   />
                 </FormGroup>
@@ -212,9 +214,9 @@ const IDDOCMonitoring = () => {
 
                   <BooleanRadioRHF
                     field={field.name}
-                    control={control}
                     value={field.value}
                     options={unsolicitedAdjustmentsIncludedConfig.options}
+                    setValue={setValue}
                     className="margin-top-0 margin-right-1"
                   />
                 </FormGroup>
@@ -232,9 +234,9 @@ const IDDOCMonitoring = () => {
 
                   <BooleanRadioRHF
                     field={field.name}
-                    control={control}
                     value={field.value}
                     options={dataFlowDiagramsNeededConfig.options}
+                    setValue={setValue}
                     className="margin-top-0 margin-right-1"
                   />
                 </FormGroup>
@@ -260,9 +262,9 @@ const IDDOCMonitoring = () => {
 
                   <BooleanRadioRHF
                     field={field.name}
-                    control={control}
                     value={field.value}
                     options={produceBenefitEnhancementFilesConfig.options}
+                    setValue={setValue}
                     className="margin-top-0 margin-right-1"
                   />
                 </FormGroup>
@@ -281,6 +283,7 @@ const IDDOCMonitoring = () => {
                   <TextInput
                     {...field}
                     id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
                     maxLength={50}
                     type="text"
                     value={field.value || ''}
@@ -310,8 +313,9 @@ const IDDOCMonitoring = () => {
 
                   <FormGroup className="margin-0">
                     <CheckboxField
-                      name="iddocQuestionnaireIsComplete"
-                      id="iddoc-questionnaire-is-complete-true"
+                      name={field.name}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      data-testid={convertCamelCaseToKebabCase(field.name)}
                       checked={field.value === true}
                       value="true"
                       label={isIDDOCQuestionnaireCompleteConfig.options.true}

@@ -78,9 +78,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('iddoc-questionnaire-capture-icd-owner')
-      ).toHaveValue('John Doe');
+      expect(screen.getByTestId('icd-owner')).toHaveValue('John Doe');
     });
   });
 
@@ -110,9 +108,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('iddoc-questionnaire-capture-icd-owner')
-      ).toHaveValue('John Doe');
+      expect(screen.getByTestId('icd-owner')).toHaveValue('John Doe');
     });
     expect(asFragment()).toMatchSnapshot();
   });

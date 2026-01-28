@@ -165,6 +165,7 @@ const IDDOCTesting = () => {
                     {...field}
                     className="height-15"
                     id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
                     value={field.value || ''}
                   />
                 </FormGroup>
@@ -184,6 +185,7 @@ const IDDOCTesting = () => {
                     {...field}
                     className="height-15"
                     id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
                     value={field.value || ''}
                   />
                 </FormGroup>
@@ -203,6 +205,7 @@ const IDDOCTesting = () => {
                     {...field}
                     className="height-15"
                     id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
                     value={field.value || ''}
                   />
                 </FormGroup>

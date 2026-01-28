@@ -156,15 +156,13 @@ const IDDOCOperations = () => {
 
                   <BooleanRadioRHF
                     field="technicalContactsIdentified"
-                    control={control}
                     value={field.value}
                     options={technicalContactsIdentifiedConfig.options}
                     childName="technicalContactsIdentifiedDetail"
                     setValue={setValue}
                     className="margin-top-0 margin-right-1"
                   >
-                    {String(watch('technicalContactsIdentified')) ===
-                      'true' && (
+                    {watch('technicalContactsIdentified') === true && (
                       <Controller
                         name="technicalContactsIdentifiedDetail"
                         control={control}
@@ -186,6 +184,9 @@ const IDDOCOperations = () => {
                             <Textarea
                               {...detailField}
                               id={convertCamelCaseToKebabCase(detailField.name)}
+                              data-testid={convertCamelCaseToKebabCase(
+                                detailField.name
+                              )}
                               maxLength={5000}
                               value={detailField.value || ''}
                               className="mint-textarea"
@@ -221,9 +222,9 @@ const IDDOCOperations = () => {
 
                   <BooleanRadioRHF
                     field={field.name}
-                    control={control}
                     value={field.value}
                     options={captureParticipantInfoConfig.options}
+                    setValue={setValue}
                     className="margin-top-0 margin-right-1"
                   />
                 </FormGroup>
@@ -283,6 +284,7 @@ const IDDOCOperations = () => {
                       {...field}
                       aria-labelledby={convertCamelCaseToKebabCase(field.name)}
                       id={convertCamelCaseToKebabCase(field.name)}
+                      data-testid={convertCamelCaseToKebabCase(field.name)}
                       defaultValue={field.value || ''}
                       value={field.value || ''}
                       suppressMilliseconds
