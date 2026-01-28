@@ -7,7 +7,7 @@
 UPDATE iddoc_questionnaire iq
 SET
     needed = TRUE,
-    modified_by = iq.created_by,
+    modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
     needed = FALSE
@@ -42,7 +42,7 @@ WHERE
 UPDATE iddoc_questionnaire iq
 SET
     needed = FALSE,
-    modified_by = iq.created_by,
+    modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
     needed = TRUE

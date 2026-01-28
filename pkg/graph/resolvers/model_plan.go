@@ -162,6 +162,14 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create default IDDOC Questionnaire object
+		iddocQuestionnaire := models.NewIDDOCQuestionnaire(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+
+		_, err = storage.IDDOCQuestionnaireCreate(tx, logger, iddocQuestionnaire)
+		if err != nil {
+			return nil, err
+		}
+
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 
