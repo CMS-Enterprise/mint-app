@@ -3,20 +3,9 @@ package resolvers
 import (
 	"context"
 
-	"go.uber.org/zap"
-
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
-
-func ModelPlansByOperationalSolutionKey(
-	logger *zap.Logger,
-	store *storage.Store,
-	operationalSolutionKey models.OperationalSolutionKey,
-) ([]*models.ModelPlanAndPossibleOperationalSolution, error) {
-	return store.ModelPlanGetByOperationalSolutionKey(logger, operationalSolutionKey)
-}
 
 // ModelPlansByMTOSolutionKey returns a list of model plans which utilize an mto common solution
 func ModelPlansByMTOSolutionKey(

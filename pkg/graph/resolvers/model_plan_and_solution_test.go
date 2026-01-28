@@ -9,28 +9,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// TestModelPlanWithoutOperationalSolution checks if a model plan without a valid operational solution is not fetched
-func (suite *ResolverSuite) TestModelPlanWithoutOperationalSolution() {
-	plan := suite.createModelPlan("plan without solutions")
-	needType := models.OpNKManageCd
-	solType := models.OpSKMarx
-
-	// Creating a need without a solution
-	_, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(
-		suite.testConfigs.Logger,
-		plan.ID,
-		needType,
-	)
-	suite.NoError(err)
-
-	modelPlanAndOpSols, err := suite.testConfigs.Store.ModelPlanGetByOperationalSolutionKey(
-		suite.testConfigs.Logger,
-		solType,
-	)
-	suite.NoError(err)
-	suite.Empty(modelPlanAndOpSols)
-}
-
 func TestModelByGeneralStatus(t *testing.T) {
 	assert := assert.New(t)
 

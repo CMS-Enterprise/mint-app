@@ -67,14 +67,6 @@ func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.Plan
 	return url, nil
 }
 
-// NumLinkedSolutions is the resolver for the numLinkedSolutions field.
-func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *models.PlanDocument) (int, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return PlanDocumentNumLinkedSolutions(logger, principal, r.store, obj.ID)
-}
-
 // PlanDocument is the resolver for the planDocument field.
 func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)

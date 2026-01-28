@@ -54,17 +54,11 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.DiscussionReplyLoader = newWrappedDataLoader(loaders.GetDiscussionReplyByModelPlanID)
 
-	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
-	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 
 	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanIDAndFieldName)
 	loaders.ExistingModelLinkNameLoader = newWrappedDataLoader(loaders.GetExistingModelLinkNamesByModelPlanIDAndFieldName)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
-	loaders.ModelPlanOpSolutionLastModifiedDtsLoader = newWrappedDataLoader(loaders.GetModelPlanOpSolutionLastModifiedDtsByModelPlanID)
-
-	loaders.PossibleOperationSolutionByKeyLoader = newWrappedDataLoader(loaders.possibleOperationalSolutionByKeyBatch)
-	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 
 	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
 	loaders.UserNotificationPreferencesLoader = newWrappedDataLoader(loaders.userNotificationPreferencesGetByUserIDBatch)
