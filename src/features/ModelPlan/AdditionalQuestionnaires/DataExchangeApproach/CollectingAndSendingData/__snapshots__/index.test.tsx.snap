@@ -497,14 +497,14 @@ exports[`CollectingAndSendingData > renders correctly and matches snapshot 1`] =
               class="margin-top-6 margin-bottom-3 display-flex"
             >
               <button
-                class="usa-button usa-button usa-button--outline"
+                class="usa-button usa-button usa-button--outline margin-top-0"
                 data-testid="button"
                 type="button"
               >
                 Back
               </button>
               <button
-                class="usa-button"
+                class="usa-button margin-top-0"
                 data-testid="button"
                 id="collect-and-send-data-form-next-button"
                 type="submit"

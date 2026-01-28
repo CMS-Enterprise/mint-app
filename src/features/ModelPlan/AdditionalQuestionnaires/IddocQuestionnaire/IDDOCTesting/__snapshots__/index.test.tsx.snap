@@ -3,9 +3,9 @@
 exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
 <DocumentFragment>
   <form
-    action="#"
-    class="desktop:grid-col-6 margin-top-0"
+    class="usa-form maxw-none desktop:grid-col-6 margin-top-6"
     data-testid="iddoc-questionnaire-testing-form"
+    id="iddoc-questionnaire-testing"
   >
     <fieldset
       class="usa-fieldset"
@@ -36,36 +36,37 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-testid="formGroup"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="iddoc-questionnaire-uat-needs"
+          for="uat-needs"
         >
           User Acceptance Testing (UAT) – test data needs
         </label>
         <textarea
-          aria-labelledby="label-iddoc-questionnaire-uat-needs hint-iddoc-questionnaire-uat-needs"
-          class="height-15 usa-textarea"
-          id="iddoc-questionnaire-uat-needs"
+          class="usa-textarea height-15"
+          data-testid="uat-needs"
+          id="uat-needs"
           name="uatNeeds"
         />
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-testid="formGroup"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="iddoc-questionnaire-stc-needs"
+          for="stc-needs"
         >
           STC – test data needs
         </label>
         <textarea
-          aria-labelledby="label-iddoc-questionnaire-stc-needs hint-iddoc-questionnaire-stc-needs"
-          class="height-15 usa-textarea"
-          data-testid="iddoc-questionnaire-stc-needs"
-          id="iddoc-questionnaire-stc-needs"
+          class="usa-textarea height-15"
+          data-testid="stc-needs"
+          id="stc-needs"
           name="stcNeeds"
         >
           Yes needs
@@ -73,27 +74,28 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-testid="formGroup"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="iddoc-questionnaire-testing-timelines"
+          for="testing-timelines"
         >
           Define the testing timelines
         </label>
         <textarea
-          aria-labelledby="label-iddoc-questionnaire-testing-timelines hint-iddoc-questionnaire-testing-timelines"
-          class="height-15 usa-textarea"
-          id="iddoc-questionnaire-testing-timelines"
+          class="usa-textarea height-15"
+          data-testid="testing-timelines"
+          id="testing-timelines"
           name="testingTimelines"
         />
       </div>
       <div
-        class="margin-top-3 margin-bottom-6"
+        class="margin-top-3 margin-bottom-6 margin-top-0"
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="iddoc-questionnaire-testing-note-add-note-toggle"
+          data-testid="testingNote-add-note-toggle"
           type="button"
         >
           <svg
@@ -119,11 +121,12 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </h3>
       <div
         class="usa-form-group"
+        data-testid="formGroup"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="iddoc-questionnaire-data-monitoring-file"
+          for="data-monitoring-file-types"
         >
           What types of files? Select all that apply.
         </label>
@@ -132,14 +135,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-BENEFICIARY"
+            id="data-monitoring-file-types-BENEFICIARY"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="BENEFICIARY"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-BENEFICIARY"
+            for="data-monitoring-file-types-BENEFICIARY"
             style="width: fit-content;"
           >
             Beneficiary
@@ -153,14 +156,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-PROVIDER"
+            id="data-monitoring-file-types-PROVIDER"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="PROVIDER"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-PROVIDER"
+            for="data-monitoring-file-types-PROVIDER"
             style="width: fit-content;"
           >
             Provider
@@ -174,14 +177,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-PART_A_CLAIMS"
+            id="data-monitoring-file-types-PART_A_CLAIMS"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="PART_A_CLAIMS"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-PART_A_CLAIMS"
+            for="data-monitoring-file-types-PART_A_CLAIMS"
             style="width: fit-content;"
           >
             Part A Claims
@@ -195,14 +198,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-PART_B_CLAIMS"
+            id="data-monitoring-file-types-PART_B_CLAIMS"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="PART_B_CLAIMS"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-PART_B_CLAIMS"
+            for="data-monitoring-file-types-PART_B_CLAIMS"
             style="width: fit-content;"
           >
             Part B Claims
@@ -216,14 +219,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="iddoc-questionnaire-data-monitoring-file-OTHER"
+            id="data-monitoring-file-types-OTHER"
             name="dataMonitoringFileTypes"
             type="checkbox"
             value="OTHER"
           />
           <label
             class="usa-checkbox__label"
-            for="iddoc-questionnaire-data-monitoring-file-OTHER"
+            for="data-monitoring-file-types-OTHER"
             style="width: fit-content;"
           >
             Other
@@ -235,39 +238,43 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-testid="formGroup"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="iddoc-questionnaire-data-response-type"
+          for="data-response-type"
         >
           What types of responses?
         </label>
         <input
           class="usa-input"
-          data-testid="textInput"
-          id="iddoc-questionnaire-data-response-type"
+          data-testid="data-response-type"
+          id="data-response-type"
           maxlength="50"
           name="dataResponseType"
+          type="text"
           value=""
         />
       </div>
       <div
         class="usa-form-group margin-top-6"
+        data-testid="formGroup"
       >
         <label
           class="usa-label"
           data-testid="label"
-          for="iddoc-questionnaire-data-file-frequency"
+          for="data-response-file-frequency"
         >
           Frequency of files?
         </label>
         <input
           class="usa-input"
-          data-testid="textInput"
-          id="iddoc-questionnaire-data-file-frequency"
+          data-testid="data-response-file-frequency"
+          id="data-response-file-frequency"
           maxlength="50"
           name="dataResponseFileFrequency"
+          type="text"
           value=""
         />
       </div>
@@ -278,14 +285,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           class="margin-top-6 margin-bottom-3 display-flex"
         >
           <button
-            class="usa-button usa-button usa-button--outline"
+            class="usa-button usa-button usa-button--outline margin-top-0"
             data-testid="button"
             type="button"
           >
             Back
           </button>
           <button
-            class="usa-button"
+            class="usa-button margin-top-0"
             data-testid="button"
             id="iddoc-questionnaire-testing-form-next-button"
             type="submit"

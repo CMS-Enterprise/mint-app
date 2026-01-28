@@ -82,9 +82,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('iddoc-questionnaire-file-naming-convention')
-      ).toHaveValue('.pdf');
+      expect(screen.getByTestId('file-naming-conventions')).toHaveValue('.pdf');
     });
   });
 
@@ -114,9 +112,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('iddoc-questionnaire-file-naming-convention')
-      ).toHaveValue('.pdf');
+      expect(screen.getByTestId('file-naming-conventions')).toHaveValue('.pdf');
     });
     expect(asFragment()).toMatchSnapshot();
   });
