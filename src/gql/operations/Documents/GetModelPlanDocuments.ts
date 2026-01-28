@@ -17,7 +17,6 @@ export default gql(/* GraphQL */ `
         createdDts
         optionalNotes
         otherType
-        numLinkedSolutions
         isLink
         url
       }

@@ -2321,6 +2321,63 @@ func (e NonClaimsBasedPayType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
+type OperationalSolutionSubtaskStatus string
+
+const (
+	OperationalSolutionSubtaskStatusTodo       OperationalSolutionSubtaskStatus = "TODO"
+	OperationalSolutionSubtaskStatusInProgress OperationalSolutionSubtaskStatus = "IN_PROGRESS"
+	OperationalSolutionSubtaskStatusDone       OperationalSolutionSubtaskStatus = "DONE"
+)
+
+var AllOperationalSolutionSubtaskStatus = []OperationalSolutionSubtaskStatus{
+	OperationalSolutionSubtaskStatusTodo,
+	OperationalSolutionSubtaskStatusInProgress,
+	OperationalSolutionSubtaskStatusDone,
+}
+
+func (e OperationalSolutionSubtaskStatus) IsValid() bool {
+	switch e {
+	case OperationalSolutionSubtaskStatusTodo, OperationalSolutionSubtaskStatusInProgress, OperationalSolutionSubtaskStatusDone:
+		return true
+	}
+	return false
+}
+
+func (e OperationalSolutionSubtaskStatus) String() string {
+	return string(e)
+}
+
+func (e *OperationalSolutionSubtaskStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OperationalSolutionSubtaskStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OperationalSolutionSubtaskStatus", str)
+	}
+	return nil
+}
+
+func (e OperationalSolutionSubtaskStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *OperationalSolutionSubtaskStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e OperationalSolutionSubtaskStatus) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
 type ParticipantCommunicationType string
 
 const (
