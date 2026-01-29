@@ -16,17 +16,11 @@ type DataLoaders struct {
 
 	DiscussionReplyLoader *WrappedDataLoader
 
-	OperationalNeedLoader                    *WrappedDataLoader
-	OperationSolutionSubtaskLoader           *WrappedDataLoader
-	UserAccountLoader                        *WrappedDataLoader
-	DataReader                               *dataReader
-	ExistingModelLinkLoader                  *WrappedDataLoader
-	ExistingModelLinkNameLoader              *WrappedDataLoader
-	ExistingModelLoader                      *WrappedDataLoader
-	ModelPlanOpSolutionLastModifiedDtsLoader *WrappedDataLoader
-
-	PossibleOperationSolutionByKeyLoader   *WrappedDataLoader
-	PossibleOperationSolutionContactLoader *WrappedDataLoader
+	UserAccountLoader           *WrappedDataLoader
+	DataReader                  *dataReader
+	ExistingModelLinkLoader     *WrappedDataLoader
+	ExistingModelLinkNameLoader *WrappedDataLoader
+	ExistingModelLoader         *WrappedDataLoader
 
 	ActivityLoader                    *WrappedDataLoader
 	UserNotificationPreferencesLoader *WrappedDataLoader

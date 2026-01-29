@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/samber/lo"
 	"github.com/spf13/viper"
@@ -339,32 +338,6 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 // ModelPlanGetByIDLOADER implements resolver logic to get Model Plan by a model plan ID using a data loader
 func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	return loaders.ModelPlan.GetByID.Load(ctx, id)
-}
-
-// ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER implements resolver logic to get Model Plan
-// Operational Solution Last Modified Dts by a model plan ID using a data loader
-func ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	planTrackingDateLoader := allLoaders.ModelPlanOpSolutionLastModifiedDtsLoader
-	key := loaders.NewKeyArgs()
-	key.Args["id"] = id
-
-	thunk := planTrackingDateLoader.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
-
-	convertedTime, timeConvertedOk := result.(*time.Time)
-	if !timeConvertedOk {
-		return nil, fmt.Errorf("failed to convert time from loader")
-	}
-
-	return convertedTime, nil
 }
 
 // ModelPlanGetSampleModel returns the sample model plan
