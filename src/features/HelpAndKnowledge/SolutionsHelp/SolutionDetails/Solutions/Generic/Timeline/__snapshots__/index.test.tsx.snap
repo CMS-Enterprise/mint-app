@@ -434,7 +434,7 @@ exports[`Generic Timeline Components > matches the snapshot > CMMI Data Aggregat
     <div
       class="margin-bottom-4"
     >
-      The onboarding process and data aggregation process will be tailored to your model's needs, but typically follows these key steps:
+      The onboarding process and data aggregation process will be tailored to your model's specific needs, but typically follows these key steps:
     </div>
     <ol
       class="usa-process-list padding-top-1"
@@ -456,7 +456,7 @@ exports[`Generic Timeline Components > matches the snapshot > CMMI Data Aggregat
           class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
           data-testid="processListHeading"
         >
-          Stategy Session to define data aggregation strategy to meet model-needs
+          Strategy Session to define data aggregation strategy to meet model-needs
         </h3>
       </li>
       <li
