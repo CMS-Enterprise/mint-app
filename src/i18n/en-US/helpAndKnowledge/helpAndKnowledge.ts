@@ -570,14 +570,14 @@ Examples and Impact:`,
     },
     timeline: {
       description:
-        "The onboarding process and data aggregation process will be tailored to your model's needs, but typically follows these key steps:",
+        "The onboarding process and data aggregation process will be tailored to your model's specific needs, but typically follows these key steps:",
       items: [
         {
           header: 'Introductory Discussion and CDAC overview'
         },
         {
           header:
-            'Stategy Session to define data aggregation strategy to meet model-needs'
+            'Strategy Session to define data aggregation strategy to meet model-needs'
         },
         {
           header: 'Finalize Use Cases and timelines'
