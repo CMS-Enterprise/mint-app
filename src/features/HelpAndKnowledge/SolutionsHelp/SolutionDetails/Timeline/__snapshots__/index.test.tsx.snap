@@ -759,7 +759,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMMI
       <div
         class="margin-bottom-4"
       >
-        The timeline for working with CDAC varies based on model requirements. Please reach out to the CDAC team to get started.
+        The onboarding process and data aggregation process will be tailored to your model's needs, but typically follows these key steps:
       </div>
       <ol
         class="usa-process-list padding-top-1"
@@ -771,19 +771,46 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMMI
             class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
-            Reach out to CDAC team
+            Introductory Discussion and CDAC overview
           </h3>
-          If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to the 
-          <button
-            class="usa-button usa-button--unstyled line-height-body-5"
-            data-testid="button"
-            type="button"
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
           >
-            CDAC points of contact
-          </button>
-           to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. 
+            Stategy Session to define data aggregation strategy to meet model-needs
+          </h3>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Finalize Use Cases and timelines
+          </h3>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Data Aggregation Official Launch for model.
+          </h3>
+          Please reach out to the CDAC points-of-contact to get started.
         </li>
       </ol>
+      <p
+        class="margin-y-0"
+      >
+        We recommend engaging the CDAC team as early as possible in the model lifecycle, so we can help ensure the most successful data aggregation use cases, such as early integrated insights to model teams for monitoring, or optimizing adoption and use of aggregated data to model participants for improving outcomes.
+      </p>
     </div>
   </div>
 </DocumentFragment>

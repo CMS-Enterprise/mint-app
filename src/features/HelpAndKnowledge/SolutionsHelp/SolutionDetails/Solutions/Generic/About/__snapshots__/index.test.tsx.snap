@@ -784,7 +784,7 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
     <p
       class="margin-top-0 text-pre-wrap margin-bottom-0"
     >
-      The CMMI Data Aggregation Contract (CDAC) supports CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to support model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) and partners with aggregators—such as Health Information Exchanges (HIEs), All-Payer Claims Databases (APCDs), and clinical registries—to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
+      The CMMI Data Aggregation Contract (CDAC) helps CMMI models by providing comprehensive, multi-source, near real-time insights to model teams and participants to monitor and improve model outcomes. CDAC integrates external data sources (e.g., clinical data, multi-payer claims data) with existing CMS data (e.g., Medicare and Medicaid claims) to provide meaningful and actionable information to CMS and model participants. CDAC is committed to designing and implementing data aggregation strategies that prioritize and address the needs of both model teams and model participants.
 
   CDAC could support a model/project if:
     </p>
@@ -794,22 +794,31 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
       <li
         class="list-item"
       >
-        The model team would benefit from enhanced monitoring capabilities that include the integration of external data sources with internal CMS data sources for more comprehensive monitoring. 
+        The model team would benefit from enhanced monitoring capabilities that include the integration of external data sources with internal CMS data sources for more comprehensive monitoring. CDAC has reusable, integrated datasets to get insights to models earlier in the lifecycle for more proactive monitoring and improvement. 
         <p
-          class="text-italic margin-bottom-0"
+          class="text-italic margin-y-0 text-base-dark text-pre-wrap"
         >
-          For example, the Cell & Gene Therapy Access (CGT) Model Team leverages aggregated clinical and claims data insights alongside Medicaid claims for longitudinal patient tracking to monitor drug therapy outcomes as patients transition across care settings and health plans.
+          For example, CDAC is working with the Cell & Gene Therapy Access (CGT) Model Team to leverage aggregated clinical and claims data (Medicaid, Medicare, and commercial) for tracking longitudinal patient outcomes after a drug therapy – including following patients as they leave Medicaid and transition across care settings and health plans.
         </p>
       </li>
       <li
         class="list-item"
       >
-        The model participants or patients would benefit from more comprehensive, real-time clinical and claims data across care settings and providers (e.g., specialists, hospitals), as well as actionable insights to improve value-based care outcomes. 
+        The model participants would benefit from more comprehensive, real-time clinical and claims data insights across care settings and providers (e.g., specialists, hospitals), to improve model outcomes.
+
+        
         <p
-          class="text-italic margin-bottom-0"
+          class="text-italic margin-y-0 text-base-dark text-pre-wrap"
         >
-          For example, participants in primary care models have received real-time hospital notifications on their attributed patients, contributing to a reduction in avoidable readmissions. They have also received multi-payer gaps in care reports to improve performance on quality measures.
+          a. For example, CDAC has enabled participants in primary care models to receive real-time hospital alerts on their patients, allowing prompt and informed care coordination and reducing avoidable readmissions.
         </p>
+         
+        <p
+          class="text-italic margin-y-0 text-base-dark text-pre-wrap"
+        >
+          b. CDAC has also facilitated delivery of multi-payer gaps in care reports to model participants to improve performance on quality measures.
+        </p>
+         
       </li>
     </ol>
     <span
@@ -867,9 +876,9 @@ exports[`Generic About Components > matches the snapshot > CMMI Data Aggregation
       <span
         class="text-pre-wrap "
       >
-        Supporting model teams with integrating data from various data sources (e.g., clinical registry, commercial payer data), across time and at a patient and/or population level to support monitoring of patient or model outcomes.
+        Integrating patient data across time and from various data sources (e.g., clinical registry, commercial payer data), allowing model teams to more timely and comprehensively monitor and improve outcomes.
 
-Examples and impact:
+Examples and Impact:
       </span>
       <ul
         class="padding-left-4 margin-top-0"
@@ -877,17 +886,17 @@ Examples and impact:
         <li
           class=""
         >
-          Integrated Datasets for Longitudinal Patient Tracking: Acquiring and integrating data from clinical data registries, Medicaid, states (e.g., prior authorization), and commercial payers supports the CGT Model Team in monitoring longitudinal patient outcomes for 10 years after a therapy is administered. These aggregated patient data span across time and sources to provide insights that substantiate outcomes-based payment arrangements with drug manufacturers.
+          Longitudinal Patient Tracking: By integrating data from clinical registries, Medicaid, state programs, and commercial insurers, the model teams can monitor patient outcomes over the lifecycle of the model (e.g. for informing outcomes-based payment arrangements with model participants, or validating participant-submitted outcomes with independent clinical data)
         </li>
         <li
           class=""
         >
-          Clinical Data Integration: Accessing and integrating clinical data from the Center for International Blood and Marrow Transplant Research (CIBMTR) registry supports the CGT Model Team in tracking adverse events (e.g., RBC transfusion, vaso-occlusive crisis) by using and integrating data not otherwise available in CMS claims.
+          Expanded Clinical Data Access: Incorporating clinical data from the HIEs, registries, and other third-party sources allows model teams to track granular clinical outcomes that are not captured in standard CMS claims.
         </li>
         <li
           class=""
         >
-          Comprehensive Chronic Condition Control: Acquiring granular patient data such as patient lab results (e.g., HbA1c results) supports the Model Team in monitoring chronic condition management across patient populations to understand model impact and further targeted opportunities for disease management. 
+          Enhanced Chronic Disease Monitoring: Collecting detailed patient data, such as lab results, enables more effective tracking and management of chronic conditions across patient groups, helping to assess and improve the model’s impact on disease management.
         </li>
       </ul>
     </div>
@@ -902,9 +911,9 @@ Examples and impact:
       <span
         class="text-pre-wrap "
       >
-        Supporting model participants with timely, comprehensive, and actionable insights on their attributed patients supports improvement on model measures and reduces burden (when compared to reconciling multiple reports and portals). This is typically achieved by working in collaboration with aggregators such as Health Information Exchanges (HIEs) and EHR Vendors.
+        Delivering timely, comprehensive, and actionable multi-source insights to model participants drives improvement on model measures and reduces burden.
 
-Examples and impact:
+Examples and Impact:
       </span>
       <ul
         class="padding-left-4 margin-top-0"
@@ -912,17 +921,42 @@ Examples and impact:
         <li
           class=""
         >
-          Encounter Notification Services: Practices participating in the Comprehensive Primary Care Plus (CPC+) and Primary Care First (PCF) Models received real-time emergency department (ED) and hospital alerts on their Medicare FFS beneficiaries, enabling timely follow up to promote the reduction in avoidable readmissions and length of stay. Alerts prompted providers to collaborate with inpatient teams, redirect care to the outpatient settings, and coordinate post-discharge follow-up, improving care transitions and patient outcomes. As part of the PCF Model, the ENS use case enabled a single practice to avoid $114,372 in hospital spending; this amount, when projected over the whole model, would be over $2.3M in savings.
+          Encounter Notification Services: Providers receive real-time alerts about hospital and ambulatory visits on their patients, enabling prompt follow-up and improved care coordination. In PCF, this initiative reduced avoidable readmissions and stays. One practice who received these reports noted they were able to avert 12+ hospital admissions in a single quarter.
         </li>
         <li
           class=""
         >
-          Gaps in Care Reports: Practices participating in the CPC+ and PCF Models received integrated reports combining claims and clinical data to create a comprehensive view of gaps in preventative or chronic disease management. Reports supported providers in conducting targeted outreach and intervention to close care gaps.
+          Focused Clinical Reports: Practices get lab results reports, such as HbA1c, for their patients. In PCF, over 70% of providers receiving these reports discovered results they did not know about, leading to earlier interventions, less unnecessary testing, and better patient outcomes.
         </li>
         <li
           class=""
         >
-          Focused Clinical Reports: Practices participating in the PCF Model received reports including the HbA1c results for their attributed patients to establish a comprehensive view of patient lab results. Over 70% of practices reported receiving results that they were previously unaware of (e.g., from specialists, hospitals). Reports supported timely intervention to improve outcomes and reduced avoidable utilization and duplicative testing.
+          Gaps in Care Reports: Practices receive integrated reports highlighting missing preventative or chronic disease care using data across payers and care settings, allowing providers to target outreach and effectively close care gaps.
+        </li>
+      </ul>
+    </div>
+    <div
+      class="margin-top-4"
+    >
+      <h4
+        class="margin-bottom-2 margin-bottom-0 font-body-md"
+      >
+        Comprehensive Data Strategy
+      </h4>
+      <span
+        class="text-pre-wrap "
+      >
+        Develop an efficient approach to identifying, acquiring, integrating, and using data sources for actionable analytics across the model lifecycle.
+
+Examples and Impact:
+      </span>
+      <ul
+        class="padding-left-4"
+      >
+        <li
+          class=""
+        >
+          Plan to save time and effort on data acquisition and integration: CDAC can identify ways to most efficiently use existing CDAC solutions and source additional datasets unique to your model needs. Our proven market assessment and capability readiness frameworks help model teams select the best data sources for use by CMS teams and by model participants. Planning a comprehensive data strategy early on helps avoid scrambling for information down the line, and takes the burden of data acquisition and management off the model team.
         </li>
       </ul>
     </div>
@@ -1919,7 +1953,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
         Functions
       </h3>
       <ul
-        class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
+        class="padding-left-4"
       >
         <li
           class=""
@@ -1977,7 +2011,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
         Health data submissions via UI
       </h4>
       <ul
-        class="padding-left-4 list-style-none padding-left-0 "
+        class="padding-left-4"
       >
         <li
           class=""
@@ -2038,7 +2072,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
         Quality measure results
       </h4>
       <ul
-        class="padding-left-4 list-style-none padding-left-0 "
+        class="padding-left-4"
       >
         <li
           class=""
@@ -4287,7 +4321,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Applicatio
         class="margin-bottom-2"
       />
       <ul
-        class="padding-left-4 list-style-none padding-left-0 "
+        class="padding-left-4"
       >
         <li
           class=""
@@ -4525,7 +4559,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Letter of 
         class="margin-bottom-2"
       />
       <ul
-        class="padding-left-4 list-style-none padding-left-0 "
+        class="padding-left-4"
       >
         <li
           class=""
@@ -4869,7 +4903,7 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
         class="margin-bottom-2"
       />
       <ul
-        class="padding-left-4 list-style-none padding-left-0 "
+        class="padding-left-4"
       >
         <li
           class=""
