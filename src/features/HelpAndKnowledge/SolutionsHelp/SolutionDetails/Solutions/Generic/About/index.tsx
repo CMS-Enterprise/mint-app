@@ -188,7 +188,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                 components={{
                   ...getTransLinkComponents(aboutConfig.links),
                   bold: <strong />,
-                  italic: <p className="text-italic margin-bottom-0" />
+                  italic: (
+                    <p className="text-italic margin-y-0 text-base-dark text-pre-wrap" />
+                  )
                 }}
               />
             </li>
@@ -250,12 +252,17 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               <ComponentListType
                 className={classNames('padding-left-4', {
                   'list-style-none padding-left-0 ':
-                    component.items.length === 1 &&
-                    (component.level === 'h4' || !component.header),
+                    component.noList === true ||
+                    (component.items.length === 1 &&
+                      (component.level === 'h4' || !component.header) &&
+                      component.noList !== false &&
+                      component.noList !== undefined),
                   'list-style-none padding-left-0 margin-top-neg-2':
                     component.items.length === 1 &&
                     component.level !== 'h4' &&
-                    component.header,
+                    component.header &&
+                    component.noList !== false &&
+                    component.noList !== undefined,
                   'margin-top-0': component.items.length > 1
                 })}
               >
@@ -322,7 +329,7 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                               ...getTransLinkComponents(component.links),
                               bold: <strong />,
                               italic: (
-                                <p className="text-italic margin-bottom-0" />
+                                <p className="text-italic margin-bottom-0 text-pre-wrap" />
                               )
                             }}
                           />
