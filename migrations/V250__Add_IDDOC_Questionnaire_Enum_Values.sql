@@ -2,8 +2,8 @@
 CREATE TYPE iddoc_file_type AS ENUM (
     'BENEFICIARY',
     'PROVIDER',
-    'PART_A_CLAIMS',
-    'PART_B_CLAIMS',
+    'PART_A',
+    'PART_B',
     'OTHER'
 );
 

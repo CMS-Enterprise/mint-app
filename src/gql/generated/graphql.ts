@@ -710,8 +710,8 @@ export enum GeographyType {
 export enum IddocFileType {
   BENEFICIARY = 'BENEFICIARY',
   OTHER = 'OTHER',
-  PART_A_CLAIMS = 'PART_A_CLAIMS',
-  PART_B_CLAIMS = 'PART_B_CLAIMS',
+  PART_A = 'PART_A',
+  PART_B = 'PART_B',
   PROVIDER = 'PROVIDER'
 }
 

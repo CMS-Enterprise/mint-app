@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -17,7 +18,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // createModelPlan is a wrapper for resolvers.ModelPlanCreate
@@ -163,15 +163,10 @@ func (s *Seeder) updateIDDOCQuestionnaire(
 ) *models.IDDOCQuestionnaire {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
-	// Try to get existing IDDOC questionnaire, create if it doesn't exist
+	// Get existing IDDOC questionnaire, should always exist due to database triggers
 	iddoc, err := resolvers.IDDOCQuestionnaireGetByModelPlanIDLoader(s.Config.Context, mp.ID)
 	if err != nil {
-		// Create a new IDDOC questionnaire if it doesn't exist
-		newIDDOC := models.NewIDDOCQuestionnaire(princ.Account().ID, mp.ID)
-		iddoc, err = storage.IDDOCQuestionnaireCreate(s.Config.Store, s.Config.Logger, newIDDOC)
-		if err != nil {
-			panic(err)
-		}
+		panic(fmt.Sprintf("IDDOC questionnaire not found for model plan %s - database triggers may not be working: %v", mp.ID, err))
 	}
 
 	updated, err := resolvers.IDDOCQuestionnaireUpdate(

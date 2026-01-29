@@ -247,7 +247,7 @@ func (s *Seeder) SeedData() {
 			"uatNeeds":                       "We need comprehensive test data for UAT including participant demographics and claims history",
 			"stcNeeds":                       "STC requires production-like data volumes with all edge cases covered",
 			"testingTimelines":               "UAT: Q2 2024, STC: Q3 2024, Production: Q4 2024",
-			"dataMonitoringFileTypes":        []models.IDDOCFileType{models.IDDOCFileType("BENEFICIARY"), models.IDDOCFileType("PROVIDER"), models.IDDOCFileType("PART_A_CLAIMS")},
+			"dataMonitoringFileTypes":        []models.IDDOCFileType{models.IDDOCFileType("BENEFICIARY"), models.IDDOCFileType("PROVIDER"), models.IDDOCFileType("PART_A")},
 			"dataResponseType":               "Acknowledgment files and detailed error reports",
 			"dataResponseFileFrequency":      "Daily for claims, weekly for beneficiary updates",
 			"eftSetUp":                       true,

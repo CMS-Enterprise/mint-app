@@ -94,3 +94,22 @@ SELECT audit.AUDIT_TABLE(
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
     '{*,id,model_plan_id}'::TEXT[]
 );
+
+-- Insert IDDOC questionnaire records for all existing model plans
+INSERT INTO iddoc_questionnaire (
+    id,
+    model_plan_id,
+    needed,
+    created_by
+)
+SELECT
+    GEN_RANDOM_UUID() AS id,
+    mp.id AS model_plan_id,
+    FALSE AS needed,
+    '00000001-0001-0001-0001-000000000001'::UUID AS created_by -- MINT System Account
+FROM model_plan mp
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM iddoc_questionnaire iq
+    WHERE iq.model_plan_id = mp.id
+);

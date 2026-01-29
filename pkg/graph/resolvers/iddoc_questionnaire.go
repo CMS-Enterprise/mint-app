@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -17,6 +19,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -36,75 +39,65 @@ func IDDOCQuestionnaireUpdate(
 	emailService oddmail.EmailService,
 	emailAddressBook email.AddressBook,
 ) (*models.IDDOCQuestionnaire, error) {
-	updatedQuestionnaire, err := sqlutils.WithTransaction[models.IDDOCQuestionnaire](
-		store,
-		func(tx *sqlx.Tx) (*models.IDDOCQuestionnaire, error) {
-			// Get existing IDDOC questionnaire
-			existing, err := storage.IDDOCQuestionnaireGetByID(tx, logger, id)
-			if err != nil {
-				return nil, err
-			}
 
-			// Variable to track whether or not this update mutation caused the IDDOC questionnaire
-			// to go from some non-complete status to "Complete"
-			iddocChangedToComplete := false
-
-			// Check if the 'changes' map contains the 'isIDDOCQuestionnaireComplete' key and that the
-			// 'isIDDOCQuestionnaireComplete' is different from the existing value
-			if isIDDOCQuestionnaireComplete, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
-				isSettingToCompletePointer, ok := isIDDOCQuestionnaireComplete.(*bool)
-				if !ok || isSettingToCompletePointer == nil {
-					return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
-				}
-				isSettingToComplete := *isSettingToCompletePointer
-
-				// Check if completion timestamp has been set or is the default value
-				if existing.CompletedDts == nil && isSettingToComplete {
-					iddocChangedToComplete = true
-					// Only auto-set CompletedBy if it wasn't explicitly provided in changes
-					if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
-						existing.CompletedBy = &principal.Account().ID
-					}
-					existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
-				} else if !isSettingToComplete {
-					// When setting to incomplete, clear both fields unless explicitly set
-					if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
-						existing.CompletedBy = nil
-					}
-					existing.CompletedDts = nil
-				}
-
-				// isIDDOCQuestionnaireComplete is now a database field, so keep it in changes map
-				// to be persisted to the database
-			}
-
-			// Update the base task list section
-			err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
-			if err != nil {
-				return nil, err
-			}
-
-			// Update the IDDOC questionnaire
-			retQuestionnaire, err := storage.IDDOCQuestionnaireUpdate(tx, logger, existing)
-
-			if iddocChangedToComplete {
-				TrySendIDDOCQuestionnaireNotifications(
-					ctx,
-					existing,
-					logger,
-					emailService,
-					emailAddressBook,
-					principal,
-					tx,
-				)
-			}
-
-			return retQuestionnaire, err
-		},
-	)
-
+	// Get existing IDDOC questionnaire
+	existing, err := IDDOCQuestionnaireGetByIDLoader(ctx, id)
 	if err != nil {
 		return nil, err
+	}
+
+	// Variable to track whether or not this update mutation caused the IDDOC questionnaire
+	// to go from some non-complete status to "Complete"
+	iddocChangedToComplete := false
+
+	// Check if the 'changes' map contains the 'isIDDOCQuestionnaireComplete' key and that the
+	// 'isIDDOCQuestionnaireComplete' is different from the existing value
+	if isIDDOCQuestionnaireComplete, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
+		isSettingToCompletePointer, ok := isIDDOCQuestionnaireComplete.(*bool)
+		if !ok || isSettingToCompletePointer == nil {
+			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
+		}
+		isSettingToComplete := *isSettingToCompletePointer
+
+		// Check if completion timestamp has been set or is the default value
+		if existing.CompletedDts == nil && isSettingToComplete {
+			iddocChangedToComplete = true
+			// Only auto-set CompletedBy if it wasn't explicitly provided in changes
+			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+				existing.CompletedBy = &principal.Account().ID
+			}
+			existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
+		} else if !isSettingToComplete {
+			// When setting to incomplete, clear both fields unless explicitly set
+			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+				existing.CompletedBy = nil
+			}
+			existing.CompletedDts = nil
+		}
+	}
+
+	// Update the base task list section
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	// Update the IDDOC questionnaire
+	updatedQuestionnaire, err := storage.IDDOCQuestionnaireUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	if iddocChangedToComplete {
+		TrySendIDDOCQuestionnaireNotifications(
+			ctx,
+			existing,
+			logger,
+			emailService,
+			emailAddressBook,
+			principal,
+			store,
+		)
 	}
 
 	return updatedQuestionnaire, nil
@@ -120,14 +113,70 @@ func TrySendIDDOCQuestionnaireNotifications(
 	principal authentication.Principal,
 	np sqlutils.NamedPreparer,
 ) {
-	// TODO: Implement IDDOC questionnaire completion notifications
-	// This should include:
-	// 1. Get model plan by ID using ModelPlanGetByIDLOADER(ctx, existing.ModelPlanID)
-	// 2. Get user notification preferences for IDDOC questionnaire marked complete
-	// 3. Create activity for IDDOC questionnaire marked complete
-	// 4. Send email notifications to MINT team
-	// 5. Send email notifications to collaborators who opted in
-	logger.Info("IDDOC questionnaire marked complete - notifications not yet implemented", zap.String("questionnaire_id", existing.ID.String()))
+	// Get model plan
+	modelPlan, notifErr := ModelPlanGetByIDLOADER(ctx, existing.ModelPlanID)
+	if notifErr != nil {
+		logger.Error("failed to get model plan for IDDOC questionnaire notifications", zap.Error(notifErr))
+		return
+	}
+
+	// Get user notification preferences for IDDOC questionnaire completion
+	iddocQuestionnaireUANs, uacErr := storage.UserAccountGetNotificationPreferencesForIDDOCQuestionnaireCompleted(np, existing.ModelPlanID)
+	if uacErr != nil {
+		logger.Error("failed to get user account notification preferences", zap.Error(uacErr))
+		return
+	}
+
+	emailUANs, inAppUANs := models.FilterNotificationPreferences(iddocQuestionnaireUANs)
+
+	// Create in-app activity notifications
+	_, notifErr = notifications.ActivityIDDOCQuestionnaireCompletedCreate(
+		ctx,
+		principal.Account().ID,
+		np,
+		inAppUANs,
+		existing.ModelPlanID,
+		existing.ID,
+		principal.Account().ID,
+	)
+	if notifErr != nil {
+		logger.Error("failed to create activity", zap.Error(notifErr))
+		return
+	}
+
+	go func() {
+		// Return if there is no email service
+		if emailService == nil {
+			return
+		}
+
+		// Send email to MINT Team Email (no footer)
+		notifErr = SendIDDOCQuestionnaireCompletedEmailNotification(
+			emailService,
+			emailAddressBook,
+			modelPlan,
+			emailAddressBook.MINTTeamEmail,
+			principal.Account().CommonName,
+			false,
+		)
+		if notifErr != nil {
+			logger.Error("failed to send email notifications to MINT team", zap.Error(notifErr))
+			return
+		}
+
+		// Send email notifications to users who opted in (with footer)
+		notifErr = SendIDDOCQuestionnaireCompletedEmailNotifications(
+			emailService,
+			emailAddressBook,
+			emailUANs,
+			modelPlan,
+			principal.Account().CommonName,
+			true,
+		)
+		if notifErr != nil {
+			logger.Error("failed to send email notifications", zap.Error(notifErr))
+		}
+	}()
 }
 
 // IDDOCQuestionnaireGetByIDLoader calls a data loader to batch fetching an IDDOC questionnaire object by ID
@@ -138,4 +187,168 @@ func IDDOCQuestionnaireGetByIDLoader(ctx context.Context, id uuid.UUID) (*models
 // IDDOCQuestionnaireGetByModelPlanIDLoader calls a data loader to batch fetching an IDDOC questionnaire object that corresponds to a model plan
 func IDDOCQuestionnaireGetByModelPlanIDLoader(ctx context.Context, modelPlanID uuid.UUID) (*models.IDDOCQuestionnaire, error) {
 	return loaders.IDDOCQuestionnaire.ByModelPlanID.Load(ctx, modelPlanID)
+}
+
+func getExecutedIDDOCQuestionnaireCompletedEmail(
+	emailService oddmail.EmailService,
+	modelPlan *models.ModelPlan,
+	markedCompletedByUserCommonName string,
+	showFooter bool,
+) (string, string, error) {
+	subjectContent := email.IDDOCQuestionnaireCompletedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+
+	bodyContent := email.IDDOCQuestionnaireCompletedBodyContent{
+		ClientAddress:                   emailService.GetConfig().GetClientAddress(),
+		ModelName:                       modelPlan.ModelName,
+		ModelID:                         modelPlan.GetModelPlanID().String(),
+		MarkedCompletedByUserCommonName: markedCompletedByUserCommonName,
+		ShowFooter:                      showFooter,
+	}
+
+	emailSubject, emailBody, err := email.IDDOCQuestionnaire.Completed.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		return "", "", err
+	}
+	return emailSubject, emailBody, nil
+}
+
+func SendIDDOCQuestionnaireCompletedEmailNotification(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	modelPlan *models.ModelPlan,
+	userEmail string,
+	markedCompletedByUserCommonName string,
+	showFooter bool,
+) error {
+	emailSubject, emailBody, err := getExecutedIDDOCQuestionnaireCompletedEmail(
+		emailService,
+		modelPlan,
+		markedCompletedByUserCommonName,
+		showFooter,
+	)
+	if err != nil {
+		return err
+	}
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{userEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func SendIDDOCQuestionnaireCompletedEmailNotifications(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	receivers []*models.UserAccountAndNotificationPreferences,
+	modelPlan *models.ModelPlan,
+	markedCompletedByUserCommonName string,
+	showFooter bool,
+) error {
+	emailSubject, emailBody, err := getExecutedIDDOCQuestionnaireCompletedEmail(
+		emailService,
+		modelPlan,
+		markedCompletedByUserCommonName,
+		showFooter,
+	)
+	if err != nil {
+		return err
+	}
+
+	receiverEmails := lo.Map(
+		receivers,
+		func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
+			return pref.Email
+		},
+	)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func SendIDDOCQuestionnaireCompletedNotification(
+	ctx context.Context,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	actorID uuid.UUID,
+	np sqlutils.NamedPreparer,
+	receivers []*models.UserAccountAndNotificationPreferences,
+	modelPlan *models.ModelPlan,
+	questionnaire *models.IDDOCQuestionnaire,
+	completedBy uuid.UUID,
+) error {
+	logger := appcontext.ZLogger(ctx)
+
+	emailPreferences, inAppPreferences := models.FilterNotificationPreferences(receivers)
+
+	// Create and send in-app notifications
+	_, err := notifications.ActivityIDDOCQuestionnaireCompletedCreate(
+		ctx,
+		actorID,
+		np,
+		inAppPreferences,
+		questionnaire.ModelPlanID,
+		questionnaire.ID,
+		completedBy,
+	)
+	if err != nil {
+		logger.Error("failed to create and send in-app notifications", zap.Error(err))
+		return err
+	}
+
+	completedByUser, err := userhelpers.UserAccountGetByIDLOADER(ctx, completedBy)
+	if err != nil {
+		logger.Error("failed to get completed by user", zap.Error(err))
+		return err
+	}
+
+	// Send email to the MINTTeam email address from the address book
+	err = SendIDDOCQuestionnaireCompletedEmailNotification(
+		emailService,
+		addressBook,
+		modelPlan,
+		addressBook.MINTTeamEmail,
+		completedByUser.CommonName,
+		false,
+	)
+	if err != nil {
+		logger.Error("failed to send email to MINTTeam", zap.Error(err))
+		return err
+	}
+
+	// Create and send email notifications
+	err = SendIDDOCQuestionnaireCompletedEmailNotifications(
+		emailService,
+		addressBook,
+		emailPreferences,
+		modelPlan,
+		completedByUser.CommonName,
+		true,
+	)
+	if err != nil {
+		logger.Error("failed to send email notifications", zap.Error(err))
+		return err
+	}
+
+	return nil
 }
