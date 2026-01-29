@@ -570,19 +570,26 @@ Examples and Impact:`,
     },
     timeline: {
       description:
-        'The timeline for working with CDAC varies based on model requirements. Please reach out to the CDAC team to get started.',
+        "The onboarding process and data aggregation process will be tailored to your model's needs, but typically follows these key steps:",
       items: [
         {
-          header: 'Reach out to CDAC team',
+          header: 'Introductory Discussion and CDAC overview'
+        },
+        {
+          header:
+            'Stategy Session to define data aggregation strategy to meet model-needs'
+        },
+        {
+          header: 'Finalize Use Cases and timelines'
+        },
+        {
+          header: 'Data Aggregation Official Launch for model.',
           description:
-            'If you are interested in working with CDAC and learning more about the capabilities and support options, please reach out to the <link1>CDAC points of contact</link1> to get started. Please include the names of the model(s) you are interested in discussing for CDAC support. ',
-          links: [
-            {
-              toPoC: true
-            }
-          ]
+            'Please reach out to the CDAC points-of-contact to get started.'
         }
-      ]
+      ],
+      footer:
+        'We recommend engaging the CDAC team as early as possible in the model lifecycle, so we can help ensure the most successful data aggregation use cases, such as early integrated insights to model teams for monitoring, or optimizing adoption and use of aggregated data to model participants for improving outcomes.'
     }
   },
   [MtoCommonSolutionKey.CMS_BOX]: {
