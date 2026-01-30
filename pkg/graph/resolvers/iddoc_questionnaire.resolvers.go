@@ -29,25 +29,21 @@ func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Conte
 	return &value, nil
 }
 
+// Needed is the resolver for the needed convenience field.
+func (r *iDDOCQuestionnaireResolver) Needed(ctx context.Context, obj *models.IDDOCQuestionnaire) (bool, error) {
+	// Questionnaire is needed if status is anything other than NOT_NEEDED
+	return obj.Status != "NOT_NEEDED", nil
+}
+
+// IsIDDOCQuestionnaireComplete is the resolver for the isIDDOCQuestionnaireComplete convenience field.
+func (r *iDDOCQuestionnaireResolver) IsIDDOCQuestionnaireComplete(ctx context.Context, obj *models.IDDOCQuestionnaire) (bool, error) {
+	// Questionnaire is complete if status is COMPLETED
+	return obj.Status == "COMPLETED", nil
+}
+
 // Status is the resolver for the status field.
 func (r *iDDOCQuestionnaireResolver) Status(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireStatus, error) {
-	// If not needed, return NOT_NEEDED
-	if !obj.Needed {
-		return model.IDDOCQuestionnaireStatusNotNeeded, nil
-	}
-
-	// If completed, return COMPLETED
-	if obj.CompletedDts != nil {
-		return model.IDDOCQuestionnaireStatusCompleted, nil
-	}
-
-	// If any field has been modified after creation (excluding metadata), return IN_PROGRESS
-	if obj.ModifiedDts != nil && !obj.ModifiedDts.Equal(obj.CreatedDts) {
-		return model.IDDOCQuestionnaireStatusInProgress, nil
-	}
-
-	// Otherwise, return NOT_STARTED
-	return model.IDDOCQuestionnaireStatusNotStarted, nil
+	return model.IDDOCQuestionnaireStatus(obj.Status), nil
 }
 
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.

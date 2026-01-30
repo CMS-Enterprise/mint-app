@@ -66,7 +66,8 @@ type IDDOCQuestionnaire {
 
   # IDDOCQuestionnaire Metadata
   """
-  Indicates whether the IDDOC questionnaire is needed for this model plan
+  Convenience field indicating whether the IDDOC questionnaire is needed for this model plan.
+  Computed from status field: true when status is NOT_STARTED, IN_PROGRESS, or COMPLETED.
   """
   needed: Boolean!
 
@@ -86,12 +87,14 @@ type IDDOCQuestionnaire {
   completedDts: Time
 
   """
-  Indicates whether the questionnaire has been marked as complete
+  Convenience field indicating whether the questionnaire has been marked as complete.
+  Computed from status field: true when status is COMPLETED.
   """
   isIDDOCQuestionnaireComplete: Boolean!
 
   """
-  Computed status of the questionnaire
+  The current status of the IDDOC questionnaire.
+  Stored in database and calculated based on convenience fields and question data.
   """
   status: IDDOCQuestionnaireStatus!
 
@@ -134,9 +137,12 @@ input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
   fileNamingConventions: String
   dataMonitoringNote: String
 
+  # Convenience fields for controlling status
+  needed: Boolean
+  isIDDOCQuestionnaireComplete: Boolean
+
   # Completion metadata
   completedBy: UUID
-  isIDDOCQuestionnaireComplete: Boolean
 }
 
 extend type Mutation {

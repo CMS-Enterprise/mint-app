@@ -24,8 +24,7 @@ INSERT INTO iddoc_questionnaire (
     produce_benefit_enhancement_files,
     file_naming_conventions,
     data_monitoring_note,
-    needed,
-    is_iddoc_questionnaire_complete,
+    status,
     created_by
 )
 VALUES (
@@ -54,8 +53,7 @@ VALUES (
     :produce_benefit_enhancement_files,
     :file_naming_conventions,
     :data_monitoring_note,
-    :needed,
-    :is_iddoc_questionnaire_complete,
+    :status,
     :created_by
 )
 RETURNING
@@ -84,8 +82,7 @@ RETURNING
     produce_benefit_enhancement_files,
     file_naming_conventions,
     data_monitoring_note,
-    needed,
-    is_iddoc_questionnaire_complete,
+    status,
     completed_by,
     completed_dts,
     created_by,

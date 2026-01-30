@@ -748,16 +748,25 @@ export type IddocQuestionnaire = {
   icdNote?: Maybe<Scalars['String']['output']>;
   icdOwner?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
-  /** Indicates whether the questionnaire has been marked as complete */
+  /**
+   * Convenience field indicating whether the questionnaire has been marked as complete.
+   * Computed from status field: true when status is COMPLETED.
+   */
   isIDDOCQuestionnaireComplete: Scalars['Boolean']['output'];
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  /** Indicates whether the IDDOC questionnaire is needed for this model plan */
+  /**
+   * Convenience field indicating whether the IDDOC questionnaire is needed for this model plan.
+   * Computed from status field: true when status is NOT_STARTED, IN_PROGRESS, or COMPLETED.
+   */
   needed: Scalars['Boolean']['output'];
   produceBenefitEnhancementFiles?: Maybe<Scalars['Boolean']['output']>;
-  /** Computed status of the questionnaire */
+  /**
+   * The current status of the IDDOC questionnaire.
+   * Stored in database and calculated based on convenience fields and question data.
+   */
   status: IddocQuestionnaireStatus;
   stcNeeds?: Maybe<Scalars['String']['output']>;
   technicalContactsIdentified?: Maybe<Scalars['Boolean']['output']>;
@@ -786,6 +795,7 @@ export type IddocQuestionnaireChanges = {
   icdNote?: InputMaybe<Scalars['String']['input']>;
   icdOwner?: InputMaybe<Scalars['String']['input']>;
   isIDDOCQuestionnaireComplete?: InputMaybe<Scalars['Boolean']['input']>;
+  needed?: InputMaybe<Scalars['Boolean']['input']>;
   produceBenefitEnhancementFiles?: InputMaybe<Scalars['Boolean']['input']>;
   stcNeeds?: InputMaybe<Scalars['String']['input']>;
   technicalContactsIdentified?: InputMaybe<Scalars['Boolean']['input']>;

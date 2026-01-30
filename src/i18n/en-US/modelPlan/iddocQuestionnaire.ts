@@ -11,7 +11,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
   needed: {
     gqlField: 'needed',
     goField: 'Needed',
-    dbField: 'needed',
+    dbField: 'needed', // Note: Computed field, not actually in DB (computed from status)
     label: 'Needed',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -384,7 +384,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
   isIDDOCQuestionnaireComplete: {
     gqlField: 'isIddocQuestionnaireComplete',
     goField: 'IsIddocQuestionnaireComplete',
-    dbField: 'is_iddoc_questionnaire_complete',
+    dbField: 'is_iddoc_questionnaire_complete', // Note: Computed field, not actually in DB (computed from status)
     label: 'Questionnaire status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,

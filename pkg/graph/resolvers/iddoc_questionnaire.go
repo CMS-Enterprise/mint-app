@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"time"
 
 	"github.com/samber/lo"
@@ -26,9 +27,70 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
+// hasQuestionnaireData checks if any question fields (non-metadata fields) have data.
+// This uses reflection to check all fields except metadata, making it expandable for future fields.
+// Used to determine if status should be IN_PROGRESS vs NOT_STARTED.
+func hasQuestionnaireData(q *models.IDDOCQuestionnaire) bool {
+	// Metadata fields to exclude from the check
+	metadataFields := map[string]bool{
+		// baseStruct fields
+		"ID":          true,
+		"CreatedBy":   true,
+		"CreatedDts":  true,
+		"ModifiedBy":  true,
+		"ModifiedDts": true,
+		// modelPlanRelation fields
+		"ModelPlanID": true,
+		// Status and completion metadata
+		"Status":       true,
+		"CompletedBy":  true,
+		"CompletedDts": true,
+	}
+
+	val := reflect.ValueOf(q).Elem()
+	typ := val.Type()
+
+	// Iterate through all fields in the struct
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		fieldName := typ.Field(i).Name
+
+		// Skip metadata fields
+		if metadataFields[fieldName] {
+			continue
+		}
+
+		// Check if the field has a non-zero value
+		// For pointers, check if non-nil
+		// For slices/arrays, check if length > 0
+		// For other types, check if not zero value
+		switch field.Kind() {
+		case reflect.Ptr:
+			if !field.IsNil() {
+				return true
+			}
+		case reflect.Slice, reflect.Array:
+			if field.Len() > 0 {
+				return true
+			}
+		case reflect.String:
+			if field.String() != "" {
+				return true
+			}
+		default:
+			// For other types, check if not zero value
+			if !field.IsZero() {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 // IDDOCQuestionnaireUpdate updates an IDDOC questionnaire
-// It looks to see if a user marked the section as complete, and if so it will update the completion metadata.
-// If a user sets the section as not complete, it will clear that data.
+// It handles the convenience fields (needed, isIDDOCQuestionnaireComplete) and calculates
+// the appropriate status based on the input and existing data.
 func IDDOCQuestionnaireUpdate(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -46,48 +108,122 @@ func IDDOCQuestionnaireUpdate(
 		return nil, err
 	}
 
-	// Variable to track whether or not this update mutation caused the IDDOC questionnaire
-	// to go from some non-complete status to "Complete"
+	// Track current and new status
+	currentStatus := existing.Status
+	newStatus := currentStatus
 	iddocChangedToComplete := false
 
-	// Check if the 'changes' map contains the 'isIDDOCQuestionnaireComplete' key and that the
-	// 'isIDDOCQuestionnaireComplete' is different from the existing value
-	if isIDDOCQuestionnaireComplete, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
-		isSettingToCompletePointer, ok := isIDDOCQuestionnaireComplete.(*bool)
-		if !ok || isSettingToCompletePointer == nil {
+	// Handle convenience field: needed
+	// This allows FE to set needed=true/false to control NOT_NEEDED status
+	if neededValue, ok := changes["needed"]; ok {
+		neededPointer, ok := neededValue.(*bool)
+		if !ok || neededPointer == nil {
+			return nil, fmt.Errorf("unable to update IDDOC questionnaire, needed is not a bool")
+		}
+		needed := *neededPointer
+
+		if !needed {
+			// Setting needed=false → NOT_NEEDED
+			newStatus = "NOT_NEEDED"
+		} else if currentStatus == "NOT_NEEDED" {
+			// Setting needed=true from NOT_NEEDED
+			// Check if any question data exists
+			if hasQuestionnaireData(existing) {
+				newStatus = "IN_PROGRESS"
+			} else {
+				newStatus = "NOT_STARTED"
+			}
+		}
+		// Remove from changes map (convenience field, not in DB)
+		delete(changes, "needed")
+	}
+
+	// Handle convenience field: isIDDOCQuestionnaireComplete
+	// This allows FE to mark the questionnaire as complete/incomplete
+	if isCompleteValue, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
+		isCompletePointer, ok := isCompleteValue.(*bool)
+		if !ok || isCompletePointer == nil {
 			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
 		}
-		isSettingToComplete := *isSettingToCompletePointer
+		isComplete := *isCompletePointer
 
-		// Check if completion timestamp has been set or is the default value
-		if existing.CompletedDts == nil && isSettingToComplete {
-			iddocChangedToComplete = true
-			// Only auto-set CompletedBy if it wasn't explicitly provided in changes
-			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
-				existing.CompletedBy = &principal.Account().ID
+		if isComplete {
+			// Setting to complete
+			newStatus = "COMPLETED"
+			iddocChangedToComplete = (currentStatus != "COMPLETED")
+
+			// Set completion metadata
+			if existing.CompletedDts == nil {
+				// Only auto-set CompletedBy if it wasn't explicitly provided in changes
+				if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+					existing.CompletedBy = &principal.Account().ID
+				}
+				existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
 			}
-			existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
-		} else if !isSettingToComplete {
-			// When setting to incomplete, clear both fields unless explicitly set
+		} else {
+			// Setting to incomplete
+			// Check if data exists to determine IN_PROGRESS vs NOT_STARTED
+			if hasQuestionnaireData(existing) {
+				newStatus = "IN_PROGRESS"
+			} else if currentStatus != "NOT_NEEDED" {
+				newStatus = "NOT_STARTED"
+			}
+			// else: if currently NOT_NEEDED, keep it NOT_NEEDED
+
+			// Clear completion metadata
 			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
 				existing.CompletedBy = nil
 			}
 			existing.CompletedDts = nil
 		}
+
+		// Remove from changes map (convenience field, not in DB)
+		delete(changes, "isIDDOCQuestionnaireComplete")
 	}
 
-	// Update the base task list section
+	// Auto-detect IN_PROGRESS if any question data changed
+	// Check if any question fields are in the changes
+	questionFieldsChanged := false
+	questionFields := []string{
+		"technicalContactsIdentified", "technicalContactsIdentifiedDetail",
+		"technicalContactsIdentifiedNote", "captureParticipantInfo",
+		"captureParticipantInfoNote", "icdOwner", "draftIcdDueDate", "icdNote",
+		"uatNeeds", "stcNeeds", "testingTimelines", "testingNote",
+		"dataMonitoringFileTypes", "dataMonitoringFileOther",
+		"dataResponseType", "dataResponseFileFrequency",
+		"dataFullTimeOrIncremental", "eftSetUp", "unsolicitedAdjustmentsIncluded",
+		"dataFlowDiagramsNeeded", "produceBenefitEnhancementFiles",
+		"fileNamingConventions", "dataMonitoringNote",
+	}
+
+	for _, field := range questionFields {
+		if _, ok := changes[field]; ok {
+			questionFieldsChanged = true
+			break
+		}
+	}
+
+	// If question data changed and status is NOT_STARTED, upgrade to IN_PROGRESS
+	if questionFieldsChanged && currentStatus == "NOT_STARTED" {
+		newStatus = "IN_PROGRESS"
+	}
+
+	// Set the computed status in the model
+	existing.Status = newStatus
+
+	// Update the base struct (handles modified_by, modified_dts, etc.)
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
 
-	// Update the IDDOC questionnaire
+	// Update the IDDOC questionnaire in the database
 	updatedQuestionnaire, err := storage.IDDOCQuestionnaireUpdate(store, logger, existing)
 	if err != nil {
 		return nil, err
 	}
 
+	// Send notifications if the questionnaire was marked complete
 	if iddocChangedToComplete {
 		TrySendIDDOCQuestionnaireNotifications(
 			ctx,
