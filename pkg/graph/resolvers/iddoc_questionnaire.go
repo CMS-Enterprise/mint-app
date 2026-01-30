@@ -149,8 +149,8 @@ func IDDOCQuestionnaireUpdate(
 
 		if isComplete {
 			// Setting to complete
-			newStatus = "COMPLETED"
-			iddocChangedToComplete = (currentStatus != "COMPLETED")
+			newStatus = "COMPLETE"
+			iddocChangedToComplete = (currentStatus != "COMPLETE")
 
 			// Set completion metadata
 			if existing.CompletedDts == nil {
@@ -182,29 +182,33 @@ func IDDOCQuestionnaireUpdate(
 	}
 
 	// Auto-detect IN_PROGRESS if any question data changed
-	// Check if any question fields are in the changes
-	questionFieldsChanged := false
-	questionFields := []string{
-		"technicalContactsIdentified", "technicalContactsIdentifiedDetail",
-		"technicalContactsIdentifiedNote", "captureParticipantInfo",
-		"captureParticipantInfoNote", "icdOwner", "draftIcdDueDate", "icdNote",
-		"uatNeeds", "stcNeeds", "testingTimelines", "testingNote",
-		"dataMonitoringFileTypes", "dataMonitoringFileOther",
-		"dataResponseType", "dataResponseFileFrequency",
-		"dataFullTimeOrIncremental", "eftSetUp", "unsolicitedAdjustmentsIncluded",
-		"dataFlowDiagramsNeeded", "produceBenefitEnhancementFiles",
-		"fileNamingConventions", "dataMonitoringNote",
+	// Check if any non-metadata fields are in the changes
+	// Metadata fields to exclude (same as in hasQuestionnaireData)
+	metadataFields := map[string]bool{
+		// baseStruct fields
+		"ID":          true,
+		"CreatedBy":   true,
+		"CreatedDts":  true,
+		"ModifiedBy":  true,
+		"ModifiedDts": true,
+		// modelPlanRelation fields
+		"ModelPlanID": true,
+		// Status and completion metadata
+		"Status":       true,
+		"CompletedBy":  true,
+		"CompletedDts": true,
 	}
 
-	for _, field := range questionFields {
-		if _, ok := changes[field]; ok {
+	questionFieldsChanged := false
+	for field := range changes {
+		if !metadataFields[field] {
 			questionFieldsChanged = true
 			break
 		}
 	}
 
-	// If question data changed and status is NOT_STARTED, upgrade to IN_PROGRESS
-	if questionFieldsChanged && currentStatus == "NOT_STARTED" {
+	// If question data changed and status is READY, upgrade to IN_PROGRESS
+	if questionFieldsChanged && currentStatus == "READY" {
 		newStatus = "IN_PROGRESS"
 	}
 
