@@ -286,7 +286,28 @@ export const Table = ({
           {handleDocumentUnlink
             ? t('removeDocumentModal.cancel')
             : t('removeDocumentModal.keepDocument')}
+<p>{t('removeDocumentModal.warning')}</p>
+
+        <Button
+          type="button"
+          className="bg-red"
+          onClick={() => {
+            handleDelete(fileToRemove);
+            setModalOpen(false);
+          }}
+        >
+          {t('removeDocumentModal.confirm')}
         </Button>
+
+        <Button
+          type="button"
+          className="margin-left-2"
+          unstyled
+          onClick={() => setModalOpen(false)}
+        >
+          {t('removeDocumentModal.keepDocument')}
+        </Button>
+
       </Modal>
     );
   };
