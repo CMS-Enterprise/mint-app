@@ -255,8 +255,7 @@ func (s *Seeder) SeedData() {
 			"dataFlowDiagramsNeeded":         true,
 			"produceBenefitEnhancementFiles": true,
 			"fileNamingConventions":          "MODELNAME_FILETYPE_YYYYMMDD_HHMMSS.txt",
-			"needed":                         true,
-			"isIDDOCQuestionnaireComplete":   helpers.PointerTo(true),
+			"status":                         "NOT_NEEDED",
 		},
 	)
 

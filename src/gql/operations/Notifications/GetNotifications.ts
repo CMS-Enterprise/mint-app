@@ -170,6 +170,14 @@ export default gql(/* GraphQL */ `
                   modelName
                 }
               }
+              ... on IddocQuestionnaireCompletedActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+              }
             }
           }
         }

@@ -37,7 +37,7 @@ describe('Read Only IDDOC Questionnaire', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(
-        'Not started'
+        'Ready to start'
       );
     });
 
