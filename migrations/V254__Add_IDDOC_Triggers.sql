@@ -70,10 +70,10 @@ BEGIN
     -- Determine new status based on conditions
     IF v_should_be_needed THEN
         -- Conditions are met: IDDOC is needed
-        -- Transition from NOT_NEEDED to NOT_STARTED
+        -- Transition from NOT_NEEDED to READY
         -- Don't override IN_PROGRESS or COMPLETED (preserve user's work)
         IF v_current_status = 'NOT_NEEDED' THEN
-            v_new_status := 'NOT_STARTED';
+            v_new_status := 'READY';
         ELSE
             -- Keep current status (IN_PROGRESS or COMPLETED)
             v_new_status := v_current_status;
@@ -162,7 +162,7 @@ COMMENT ON FUNCTION sync_iddoc_questionnaire_needed() IS
 '1) plan_ops_eval_and_learning.iddoc_support = true, '
 '2) INNOVATION or ACO_OS solution exists, '
 '3) IDDOC_SUPPORT milestone exists. '
-'When conditions are met and status is NOT_NEEDED, transitions to NOT_STARTED. '
+'When conditions are met and status is NOT_NEEDED, transitions to READY. '
 'When conditions are not met, always sets status to NOT_NEEDED. '
 'Preserves IN_PROGRESS and COMPLETED statuses when conditions remain met.';
 

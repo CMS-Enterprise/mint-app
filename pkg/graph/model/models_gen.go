@@ -2018,21 +2018,21 @@ type IDDOCQuestionnaireStatus string
 
 const (
 	IDDOCQuestionnaireStatusNotNeeded  IDDOCQuestionnaireStatus = "NOT_NEEDED"
-	IDDOCQuestionnaireStatusNotStarted IDDOCQuestionnaireStatus = "NOT_STARTED"
+	IDDOCQuestionnaireStatusReady      IDDOCQuestionnaireStatus = "READY"
 	IDDOCQuestionnaireStatusInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
-	IDDOCQuestionnaireStatusCompleted  IDDOCQuestionnaireStatus = "COMPLETED"
+	IDDOCQuestionnaireStatusComplete   IDDOCQuestionnaireStatus = "COMPLETE"
 )
 
 var AllIDDOCQuestionnaireStatus = []IDDOCQuestionnaireStatus{
 	IDDOCQuestionnaireStatusNotNeeded,
-	IDDOCQuestionnaireStatusNotStarted,
+	IDDOCQuestionnaireStatusReady,
 	IDDOCQuestionnaireStatusInProgress,
-	IDDOCQuestionnaireStatusCompleted,
+	IDDOCQuestionnaireStatusComplete,
 }
 
 func (e IDDOCQuestionnaireStatus) IsValid() bool {
 	switch e {
-	case IDDOCQuestionnaireStatusNotNeeded, IDDOCQuestionnaireStatusNotStarted, IDDOCQuestionnaireStatusInProgress, IDDOCQuestionnaireStatusCompleted:
+	case IDDOCQuestionnaireStatusNotNeeded, IDDOCQuestionnaireStatusReady, IDDOCQuestionnaireStatusInProgress, IDDOCQuestionnaireStatusComplete:
 		return true
 	}
 	return false

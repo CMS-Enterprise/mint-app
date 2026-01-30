@@ -26,7 +26,6 @@ const QuestionnaireListStatusTag = ({
 
   switch (status) {
     case 'READY':
-    case 'NOT_STARTED':
       tagCopy = additionalQuestionnairesT(
         'questionnaireStatus.dataExchangeApproach.READY'
       );
@@ -45,7 +44,6 @@ const QuestionnaireListStatusTag = ({
       tagStyle = 'bg-white border-2px text-base';
       break;
     case 'COMPLETE':
-    case 'COMPLETED':
       tagCopy = additionalQuestionnairesT(
         'questionnaireStatus.dataExchangeApproach.COMPLETE'
       );
@@ -88,10 +86,7 @@ export const QuestionnaireListButton = ({
   const navigate = useNavigate();
 
   const getCtaCopy = () => {
-    if (
-      status === DataExchangeApproachStatus.READY ||
-      status === IddocQuestionnaireStatus.NOT_STARTED
-    ) {
+    if (status === DataExchangeApproachStatus.READY) {
       return additionalQuestionnairesT('questionnaireButton.start');
     }
 
@@ -102,10 +97,7 @@ export const QuestionnaireListButton = ({
       return additionalQuestionnairesT('questionnaireButton.continue');
     }
 
-    if (
-      status === DataExchangeApproachStatus.COMPLETE ||
-      status === IddocQuestionnaireStatus.COMPLETED
-    ) {
+    if (status === DataExchangeApproachStatus.COMPLETE) {
       return additionalQuestionnairesT('questionnaireButton.edit');
     }
 

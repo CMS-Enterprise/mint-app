@@ -12,9 +12,9 @@ COMMENT ON TYPE iddoc_file_type IS 'The types of files that can be exchanged in 
 -- Create enum for IDDOC questionnaire status
 CREATE TYPE iddoc_questionnaire_status AS ENUM (
     'NOT_NEEDED',
-    'NOT_STARTED',
+    'READY',
     'IN_PROGRESS',
-    'COMPLETED'
+    'COMPLETE'
 );
 
 COMMENT ON TYPE iddoc_questionnaire_status IS 'Status of the IDDOC questionnaire: NOT_NEEDED (not required), NOT_STARTED (required but not started), IN_PROGRESS (started but not complete), COMPLETED (marked complete)';

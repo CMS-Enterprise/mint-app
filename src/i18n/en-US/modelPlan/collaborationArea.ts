@@ -10,10 +10,10 @@ const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
 };
 
 const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
-  [IddocQuestionnaireStatus.NOT_STARTED]: 'Not started',
+  [IddocQuestionnaireStatus.READY]: 'Not started',
   [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
   [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not needed',
-  [IddocQuestionnaireStatus.COMPLETED]: 'Completed'
+  [IddocQuestionnaireStatus.COMPLETE]: 'Completed'
 };
 
 const collaborationArea = {

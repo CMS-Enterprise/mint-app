@@ -1,12 +1,12 @@
 -- Backfill IDDOC questionnaire status field based on trigger conditions
--- Set status = NOT_STARTED where any of the three trigger conditions are met:
+-- Set status = READY where any of the three trigger conditions are met:
 -- 1. plan_ops_eval_and_learning.iddoc_support = true
 -- 2. INNOVATION or ACO_OS solution exists
 -- 3. IDDOC_SUPPORT milestone exists
 
 UPDATE iddoc_questionnaire iq
 SET
-    status = 'NOT_STARTED'::IDDOC_QUESTIONNAIRE_STATUS,
+    status = 'READY'::IDDOC_QUESTIONNAIRE_STATUS,
     modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
     modified_dts = CURRENT_TIMESTAMP
 WHERE

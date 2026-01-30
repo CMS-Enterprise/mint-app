@@ -45,7 +45,6 @@ const QuestionnaireStatusPill = ({
   let pillCopy;
   switch (status) {
     case 'READY':
-    case 'NOT_STARTED':
       pillCopy = collaborationAreaT(
         'additionalQuestionnairesCard.questionnaireStatus.dataExchangeApproach.READY'
       );
@@ -58,7 +57,6 @@ const QuestionnaireStatusPill = ({
       pillStyle = 'bg-warning-lighter text-warning-darker';
       break;
     case 'COMPLETE':
-    case 'COMPLETED':
       pillCopy = collaborationAreaT(
         'additionalQuestionnairesCard.questionnaireStatus.dataExchangeApproach.COMPLETE'
       );

@@ -426,9 +426,9 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 7.19,
     options: {
       NOT_NEEDED: 'Not needed',
-      NOT_STARTED: 'Not started',
+      READY: 'Not started',
       IN_PROGRESS: 'In progress',
-      COMPLETED: 'Completed'
+      COMPLETE: 'Completed'
     },
     hideFromReadonly: true
   }

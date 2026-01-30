@@ -815,10 +815,10 @@ export enum IddocQuestionnaireCompletedNotificationType {
 
 /** IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire */
 export enum IddocQuestionnaireStatus {
-  COMPLETED = 'COMPLETED',
+  COMPLETE = 'COMPLETE',
   IN_PROGRESS = 'IN_PROGRESS',
   NOT_NEEDED = 'NOT_NEEDED',
-  NOT_STARTED = 'NOT_STARTED'
+  READY = 'READY'
 }
 
 export type IddocQuestionnaireCompletedActivityMeta = {

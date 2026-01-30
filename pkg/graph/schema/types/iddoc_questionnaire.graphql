@@ -3,9 +3,9 @@ IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
 """
 enum IDDOCQuestionnaireStatus {
   NOT_NEEDED
-  NOT_STARTED
+  READY
   IN_PROGRESS
-  COMPLETED
+  COMPLETE
 }
 
 """
