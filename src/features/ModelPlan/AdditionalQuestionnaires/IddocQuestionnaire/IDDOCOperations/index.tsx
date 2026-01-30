@@ -1,40 +1,63 @@
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fieldset, Label, TextInput } from '@trussworks/react-uswds';
+import {
+  Alert,
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+  Textarea,
+  TextInput
+} from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { Field, Formik, FormikProps } from 'formik';
 import {
   GetIddocQuestionnaireOperationsQuery,
   TypedUpdateIddocQuestionnaireDocument,
   useGetIddocQuestionnaireOperationsQuery
 } from 'gql/generated/graphql';
 
-import AddNote from 'components/AddNote';
-import BooleanRadio from 'components/BooleanRadioForm';
-import ConfirmLeave from 'components/ConfirmLeave';
-import MINTDatePicker from 'components/DatePicker';
-import FieldGroup from 'components/FieldGroup';
+import AddNoteRHF from 'components/AddNote/AddNoteRHF';
+import BooleanRadioRHF from 'components/BooleanRadioForm/BooleanRadioRHF';
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import DatePickerFormatted from 'components/DatePickerFormatted';
+import DatePickerWarning from 'components/DatePickerWarning';
 import FormFooter from 'components/FormFooter';
-import MINTForm from 'components/MINTForm';
+import HelpText from 'components/HelpText';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
-import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { isDateInPast } from 'utils/date';
+import mapDefaultFormValues from 'utils/mapDefaultFormValues';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-export type IDDOCOperationsFormType =
+export type IDDOCOperationsDataType =
   GetIddocQuestionnaireOperationsQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
+
+const DEFAULT_FORM_VALUES: IDDOCOperationsDataType = {
+  __typename: 'IDDOCQuestionnaire',
+  id: '',
+  technicalContactsIdentified: null,
+  technicalContactsIdentifiedDetail: '',
+  technicalContactsIdentifiedNote: '',
+  captureParticipantInfo: null,
+  captureParticipantInfoNote: '',
+  icdOwner: '',
+  draftIcdDueDate: '',
+  icdNote: ''
+};
 
 const IDDOCOperations = () => {
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaire');
-
   const { t: iddocQuestionnaireMiscT } = useTranslation(
     'iddocQuestionnaireMisc'
   );
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
   );
+  const { t: generalT } = useTranslation('general');
 
   const {
     technicalContactsIdentified: technicalContactsIdentifiedConfig,
@@ -43,48 +66,56 @@ const IDDOCOperations = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<IDDOCOperationsFormType>>(null);
   const navigate = useNavigate();
 
   const { data, loading, error } = useGetIddocQuestionnaireOperationsQuery({
     variables: {
       id: modelID
-    }
+    },
+    skip: !modelID
+  });
+
+  const formData = mapDefaultFormValues<IDDOCOperationsDataType>(
+    data?.modelPlan?.questionnaires?.iddocQuestionnaire,
+    DEFAULT_FORM_VALUES
+  );
+
+  const { __typename, id, ...defaultValues } = formData;
+
+  const methods = useForm<IDDOCOperationsDataType>({
+    defaultValues,
+    mode: 'onChange'
   });
 
   const {
-    id,
-    technicalContactsIdentified,
-    technicalContactsIdentifiedDetail,
-    technicalContactsIdentifiedNote,
-    captureParticipantInfo,
-    captureParticipantInfoNote,
-    icdOwner,
-    draftIcdDueDate,
-    icdNote
-  } = (data?.modelPlan?.questionnaires?.iddocQuestionnaire ||
-    {}) as IDDOCOperationsFormType;
+    control,
+    handleSubmit,
+    formState: { touchedFields },
+    watch,
+    setValue,
+    reset
+  } = methods;
 
-  const { mutationError } = useHandleMutation(
-    TypedUpdateIddocQuestionnaireDocument,
-    {
-      id,
-      formikRef: formikRef as any
-    }
-  );
+  const { mutationError, loading: isSubmitting } =
+    useHandleMutation<IDDOCOperationsDataType>(
+      TypedUpdateIddocQuestionnaireDocument,
+      {
+        id,
+        rhfRef: {
+          initialValues: defaultValues,
+          values: watch()
+        }
+      }
+    );
 
-  const initialValues: IDDOCOperationsFormType = {
-    __typename: 'IDDOCQuestionnaire',
-    id: id ?? '',
-    technicalContactsIdentified: technicalContactsIdentified ?? null,
-    technicalContactsIdentifiedDetail: technicalContactsIdentifiedDetail ?? '',
-    technicalContactsIdentifiedNote: technicalContactsIdentifiedNote ?? '',
-    captureParticipantInfo: captureParticipantInfo ?? null,
-    captureParticipantInfoNote: captureParticipantInfoNote ?? '',
-    icdOwner: icdOwner ?? '',
-    draftIcdDueDate: draftIcdDueDate ?? null,
-    icdNote: icdNote ?? ''
-  };
+  useEffect(() => {
+    reset(
+      mapDefaultFormValues<IDDOCOperationsDataType>(
+        data?.modelPlan?.questionnaires?.iddocQuestionnaire,
+        DEFAULT_FORM_VALUES
+      )
+    );
+  }, [data, reset]);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial errorMessage={error?.message} />;
@@ -92,181 +123,209 @@ const IDDOCOperations = () => {
 
   return (
     <>
-      <MutationErrorModal
-        isOpen={mutationError.isModalOpen}
-        closeModal={mutationError.closeModal}
-        url={mutationError.destinationURL}
-      />
+      <FormProvider {...methods}>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={mutationError.closeModal}
+          url={mutationError.destinationURL}
+        />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {
-          navigate(
-            `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing`
-          );
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-        data-testid="iddoc-questionnaire-operations"
-      >
-        {(formikProps: FormikProps<IDDOCOperationsFormType>) => {
-          const { handleSubmit, setFieldValue, values, setFieldError } =
-            formikProps;
+        <Form
+          className="maxw-none desktop:grid-col-6 margin-top-6"
+          id="iddoc-questionnaire-operations"
+          data-testid="iddoc-questionnaire-operations-form"
+          onSubmit={handleSubmit(() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/testing`
+            );
+          })}
+        >
+          <Fieldset disabled={!!error || loading}>
+            <ConfirmLeaveRHF />
 
-          const handleOnBlur = (
-            e: React.ChangeEvent<HTMLInputElement>,
-            field: string
-          ) => {
-            if (e.target.value === '') {
-              setFieldValue(field, null);
-              return;
-            }
-            try {
-              setFieldValue(field, new Date(e.target.value).toISOString());
-            } catch (err) {
-              setFieldError(field, iddocQuestionnaireT('validDate'));
-            }
-          };
+            <h3>{iddocQuestionnaireMiscT('iddocHeading')}</h3>
 
-          return (
-            <>
-              <ConfirmLeave />
+            <Controller
+              name="technicalContactsIdentified"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-4">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('technicalContactsIdentified.label')}
+                  </Label>
 
-              <MINTForm
-                className="desktop:grid-col-6 margin-top-0"
-                data-testid="iddoc-questionnaire-operations-form"
-                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-                  handleSubmit(e);
-                }}
-              >
-                <Fieldset disabled={!!error || loading}>
-                  <h3>{iddocQuestionnaireMiscT('iddocHeading')}</h3>
+                  <BooleanRadioRHF
+                    field="technicalContactsIdentified"
+                    value={field.value}
+                    options={technicalContactsIdentifiedConfig.options}
+                    childName="technicalContactsIdentifiedDetail"
+                    setValue={setValue}
+                    className="margin-top-0 margin-right-1"
+                  >
+                    {watch('technicalContactsIdentified') === true && (
+                      <Controller
+                        name="technicalContactsIdentifiedDetail"
+                        control={control}
+                        render={({
+                          field: { ref: detailRef, ...detailField }
+                        }) => (
+                          <FormGroup className="margin-left-4 margin-top-1">
+                            <Label
+                              htmlFor={convertCamelCaseToKebabCase(
+                                detailField.name
+                              )}
+                              className="text-normal"
+                            >
+                              {iddocQuestionnaireT(
+                                'technicalContactsIdentifiedDetail.label'
+                              )}
+                            </Label>
 
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="iddoc-questionnaire-technical-contacts-identified-use">
-                      {iddocQuestionnaireT('technicalContactsIdentified.label')}
-                    </Label>
+                            <Textarea
+                              {...detailField}
+                              id={convertCamelCaseToKebabCase(detailField.name)}
+                              data-testid={convertCamelCaseToKebabCase(
+                                detailField.name
+                              )}
+                              maxLength={5000}
+                              value={detailField.value || ''}
+                              className="mint-textarea"
+                            />
+                          </FormGroup>
+                        )}
+                      />
+                    )}
+                  </BooleanRadioRHF>
+                </FormGroup>
+              )}
+            />
 
-                    <BooleanRadio
-                      field="technicalContactsIdentified"
-                      id="iddoc-questionnaire-technical-contacts-identified-use"
-                      value={values.technicalContactsIdentified}
-                      setFieldValue={setFieldValue}
-                      options={technicalContactsIdentifiedConfig.options}
-                      childName="technicalContactsIdentifiedDetail"
-                    >
-                      {values.technicalContactsIdentified === true ? (
-                        <div className="margin-left-4 margin-top-1">
-                          <Label
-                            htmlFor="iddoc-questionnaire-technical-contacts-identified-detail"
-                            className="text-normal"
-                          >
-                            {iddocQuestionnaireT(
-                              'technicalContactsIdentifiedDetail.label'
-                            )}
-                          </Label>
+            <AddNoteRHF
+              className="margin-top-0"
+              field="technicalContactsIdentifiedNote"
+              control={control}
+              touched={!!touchedFields?.technicalContactsIdentifiedNote}
+            />
 
-                          <Field
-                            as={TextAreaField}
-                            id="iddoc-questionnaire-technical-contacts-identified-detail"
-                            maxLength={5000}
-                            className="mint-textarea"
-                            name="technicalContactsIdentifiedDetail"
-                          />
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </BooleanRadio>
+            <Controller
+              name="captureParticipantInfo"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-4">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('captureParticipantInfo.label')}
+                  </Label>
 
-                    <AddNote
-                      id="iddoc-questionnaire-technical-contacts-identified-use-note"
-                      field="technicalContactsIdentifiedNote"
-                    />
-                  </FieldGroup>
-
-                  <FieldGroup className="margin-y-4 margin-bottom-8">
-                    <Label htmlFor="iddoc-questionnaire-capture-participant-info">
-                      {iddocQuestionnaireT('captureParticipantInfo.label')}
-                    </Label>
-
-                    <p className="text-base margin-bottom-1 margin-top-1">
-                      {iddocQuestionnaireT('captureParticipantInfo.sublabel')}
-                    </p>
-
-                    <BooleanRadio
-                      field="captureParticipantInfo"
-                      id="iddoc-questionnaire-capture-participant-info"
-                      value={values.captureParticipantInfo}
-                      setFieldValue={setFieldValue}
-                      options={captureParticipantInfoConfig.options}
-                    />
-
-                    <AddNote
-                      id="iddoc-questionnaire-capture-participant-info-note"
-                      field="captureParticipantInfoNote"
-                    />
-                  </FieldGroup>
-
-                  <h3>{iddocQuestionnaireMiscT('icdHeading')}</h3>
-
-                  <p className="margin-y-1 margin-top-2 line-height-body-4">
-                    {iddocQuestionnaireMiscT('icdSubheading')}
+                  <p className="text-base margin-bottom-1 margin-top-1">
+                    {iddocQuestionnaireT('captureParticipantInfo.sublabel')}
                   </p>
 
-                  <FieldGroup className="margin-top-4">
-                    <Label htmlFor="iddoc-questionnaire-capture-icd-owner">
-                      {iddocQuestionnaireT('icdOwner.label')}
-                    </Label>
-
-                    <Field
-                      as={TextInput}
-                      id="iddoc-questionnaire-capture-icd-owner"
-                      data-testid="iddoc-questionnaire-capture-icd-owner"
-                      maxLength={50}
-                      name="icdOwner"
-                    />
-                  </FieldGroup>
-
-                  {!loading && (
-                    <>
-                      <MINTDatePicker
-                        fieldName="draftIcdDueDate"
-                        id="iddoc-questionnaire-icd-due-date"
-                        className="margin-top-6"
-                        label={iddocQuestionnaireT('draftIcdDueDate.label')}
-                        placeHolder
-                        handleOnBlur={handleOnBlur}
-                        formikValue={values.draftIcdDueDate}
-                        value={draftIcdDueDate}
-                        shouldShowWarning={
-                          initialValues.draftIcdDueDate !==
-                          values.draftIcdDueDate
-                        }
-                      />
-
-                      <AddNote
-                        id="iddoc-questionnaire-icd-due-date-note"
-                        field="icdNote"
-                      />
-                    </>
-                  )}
-
-                  <FormFooter
-                    homeArea={additionalQuestionnairesT(
-                      'saveAndReturnToQuestionnaires'
-                    )}
-                    homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-                    nextPage
-                    disabled={!!error || loading} // TODO: add or replace with issubmitting once refactored form
-                    id="iddoc-questionnaire-operations-form"
+                  <BooleanRadioRHF
+                    field={field.name}
+                    value={field.value}
+                    options={captureParticipantInfoConfig.options}
+                    setValue={setValue}
+                    className="margin-top-0 margin-right-1"
                   />
-                </Fieldset>
-              </MINTForm>
-            </>
-          );
-        }}
-      </Formik>
+                </FormGroup>
+              )}
+            />
+
+            <AddNoteRHF
+              className="margin-y-0"
+              field="captureParticipantInfoNote"
+              control={control}
+              touched={!!touchedFields?.captureParticipantInfoNote}
+            />
+
+            <h3 className="margin-top-4 margin-bottom-2">
+              {iddocQuestionnaireMiscT('icdHeading')}
+            </h3>
+
+            <p className="margin-y-0 line-height-body-4">
+              {iddocQuestionnaireMiscT('icdSubheading')}
+            </p>
+
+            <Controller
+              name="icdOwner"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-4">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('icdOwner.label')}
+                  </Label>
+
+                  <TextInput
+                    {...field}
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
+                    type="text"
+                    value={field.value || ''}
+                    maxLength={50}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="draftIcdDueDate"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-6">
+                  <Label htmlFor={convertCamelCaseToKebabCase(field.name)}>
+                    {iddocQuestionnaireT('draftIcdDueDate.label')}
+                  </Label>
+                  <HelpText className="usa-hint">
+                    {generalT('datePlaceholder')}
+                  </HelpText>
+
+                  <div className="position-relative">
+                    <DatePickerFormatted
+                      {...field}
+                      aria-labelledby={convertCamelCaseToKebabCase(field.name)}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      data-testid={convertCamelCaseToKebabCase(field.name)}
+                      defaultValue={field.value || ''}
+                      value={field.value || ''}
+                      suppressMilliseconds
+                    />
+                    {isDateInPast(watch('draftIcdDueDate')) && (
+                      <DatePickerWarning label={generalT('dateWarning')} />
+                    )}
+                  </div>
+                  {isDateInPast(watch('draftIcdDueDate')) && (
+                    <Alert
+                      type="warning"
+                      className="margin-top-2"
+                      headingLevel="h4"
+                      slim
+                    >
+                      {generalT('dateWarning')}
+                    </Alert>
+                  )}
+                </FormGroup>
+              )}
+            />
+
+            <AddNoteRHF
+              field="icdNote"
+              control={control}
+              touched={!!touchedFields?.icdNote}
+              className="margin-top-0"
+            />
+
+            <FormFooter
+              id="iddoc-questionnaire-operations-form"
+              homeArea={additionalQuestionnairesT(
+                'saveAndReturnToQuestionnaires'
+              )}
+              homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+              nextPage
+              disabled={isSubmitting}
+            />
+          </Fieldset>
+        </Form>
+      </FormProvider>
 
       <PageNumber currentPage={1} totalPages={3} className="margin-y-6" />
     </>
