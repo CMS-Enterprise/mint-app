@@ -252,41 +252,7 @@ export const Table = ({
           })}
         </PageHeading>
 
-        <Button
-          type="button"
-          className="bg-red"
-          onClick={() => {
-            handleDelete(fileToRemove);
-            setModalOpen(false);
-          }}
-        >
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.confirmSolutionRemove')
-            : t('removeDocumentModal.confirm')}
-        </Button>
-
-        {handleDocumentUnlink && (
-          <Button
-            type="button"
-            onClick={() => {
-              handleDocumentUnlink(fileToRemove.id, fileToRemove.fileName);
-              setModalOpen(false);
-            }}
-          >
-            {t('removeDocumentModal.disconnect')}
-          </Button>
-        )}
-
-        <Button
-          type="button"
-          className="margin-left-2"
-          unstyled
-          onClick={() => setModalOpen(false)}
-        >
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.cancel')
-            : t('removeDocumentModal.keepDocument')}
-<p>{t('removeDocumentModal.warning')}</p>
+        <p>{t('removeDocumentModal.warning')}</p>
 
         <Button
           type="button"
@@ -307,7 +273,6 @@ export const Table = ({
         >
           {t('removeDocumentModal.keepDocument')}
         </Button>
-
       </Modal>
     );
   };
