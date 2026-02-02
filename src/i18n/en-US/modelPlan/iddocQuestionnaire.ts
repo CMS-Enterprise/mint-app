@@ -428,7 +428,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
       NOT_NEEDED: 'Not needed',
       READY: 'Not started',
       IN_PROGRESS: 'In progress',
-      COMPLETE: 'Completed'
+      COMPLETE: 'Complete'
     },
     hideFromReadonly: true
   }
