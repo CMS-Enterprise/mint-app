@@ -498,8 +498,8 @@ describe('Notification Center', () => {
       'You are already unsubscribed from email notifications when a new discussion is added.'
     );
   });
-  // Skipping this test as it is under development and needs to be revisited
-  it.skip('testing Data Exchange Approach is marked Complete Notification', () => {
+
+  it('testing Data Exchange Approach is marked Complete Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
