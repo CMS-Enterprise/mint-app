@@ -29,7 +29,6 @@ interface AboutComponentType {
   description?: string;
   level?: 'h3' | 'h4';
   items: (string | ListItemType)[];
-  noList?: boolean;
   ordered?: boolean;
   links?: LinkType[]; // Must be the same number of items as items[]
   hideBullet?: number[]; // index of bullet to hide
@@ -41,7 +40,6 @@ export interface AboutConfigType {
   subDescription?: string;
   descriptionFooter?: string;
   items?: string[];
-  noList?: boolean;
   ordered?: boolean;
   components?: AboutComponentType[];
   gatheringInfo?: boolean;
@@ -217,6 +215,25 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
 
           const HeadingLevel = returnHeadingLevel(component.level);
 
+          const getListClasses = () => {
+            const { items, level, header } = component;
+            const isSingleItem = items.length === 1;
+            const isMultiItem = items.length > 1;
+
+            const shouldRemoveListStyle =
+              isSingleItem && (level === 'h4' || !header);
+
+            const shouldRemoveWithNegativeMargin =
+              isSingleItem && level !== 'h4' && header;
+
+            return classNames('padding-left-4', {
+              'list-style-none padding-left-0': shouldRemoveListStyle,
+              'list-style-none padding-left-0 margin-top-neg-2':
+                shouldRemoveWithNegativeMargin,
+              'margin-top-0': isMultiItem
+            });
+          };
+
           return (
             <div
               key={component.header + componentIndex} // eslint-disable-line react/no-array-index-key
@@ -249,23 +266,7 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                 </span>
               )}
 
-              <ComponentListType
-                className={classNames('padding-left-4', {
-                  'list-style-none padding-left-0 ':
-                    component.noList === true ||
-                    (component.items.length === 1 &&
-                      (component.level === 'h4' || !component.header) &&
-                      component.noList !== false &&
-                      component.noList !== undefined),
-                  'list-style-none padding-left-0 margin-top-neg-2':
-                    component.items.length === 1 &&
-                    component.level !== 'h4' &&
-                    component.header &&
-                    component.noList !== false &&
-                    component.noList !== undefined,
-                  'margin-top-0': component.items.length > 1
-                })}
-              >
+              <ComponentListType className={getListClasses()}>
                 {component.items.map(
                   (item: string | AboutComponentType, index: number) => {
                     return (
