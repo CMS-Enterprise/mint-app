@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation lockTaskListSection ($modelPlanID: UUID!, $section: TaskListSection!) {
-      lockTaskListSection (modelPlanID: $modelPlanID, section: $section)
+  mutation lockLockableSection ($modelPlanID: UUID!, $section: LockableSection!) {
+      lockLockableSection (modelPlanID: $modelPlanID, section: $section)
   }
 }
 
