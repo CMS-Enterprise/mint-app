@@ -7,7 +7,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -42,10 +41,10 @@ func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *stora
 // TranslatedAuditCollectionGetByModelPlanIDAndTableNames returns all TranslatedAudit for a given model plan id for the provided table names
 // TODO: refactor this to be a data loader, since it is potentially called multiple times
 func TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID,
-	//TODO refactor this to be a data loader, since it is potentially called multiple times
+//TODO refactor this to be a data loader, since it is potentially called multiple times
 	tablesToInclude []models.TableName, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
-	hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
+	hasPrivilegedAccess, err := HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to determine appropriate access level to view audit collection. err %w", err)
 		//If desired, we could just return the non-privileged version on error there

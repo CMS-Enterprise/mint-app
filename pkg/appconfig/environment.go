@@ -4,19 +4,35 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+
+	"github.com/spf13/viper"
 )
 
 var (
-	once   sync.Once
-	appEnv Environment = localEnv
+	envOnce sync.Once
+	appEnv  Environment = localEnv
+
+	viperOnce sync.Once
+	appViper  *viper.Viper
 )
 
 // SetEnvironment sets the application environment. This can only be called once.
 // Subsequent calls are silently ignored.
 func SetEnvironment(env Environment) {
-	once.Do(func() {
+	envOnce.Do(func() {
 		appEnv = env
 	})
+}
+
+func Viper() *viper.Viper {
+	viperOnce.Do(func() {
+		cfg := viper.New()
+		cfg.AutomaticEnv()
+
+		appViper = cfg
+	})
+
+	return appViper
 }
 
 // GetEnvironment returns the application environment.
@@ -143,4 +159,21 @@ func (e Environment) Deployed() bool {
 	default:
 		return false
 	}
+}
+
+func GetEnvVar(key string) (string, error) {
+	if v := Viper().GetString(key); v != "" {
+		return v, nil
+	}
+
+	return "", fmt.Errorf("problem finding env var for key: %s", key)
+}
+
+func MustGetRequired(key string) string {
+	v, err := GetEnvVar(key)
+	if err != nil {
+		panic(fmt.Errorf("%[1]s is a required environment variable: %[2]w", key, err))
+	}
+
+	return v
 }

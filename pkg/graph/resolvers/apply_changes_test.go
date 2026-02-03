@@ -21,9 +21,9 @@ func TestApplyChanges(t *testing.T) {
 	clayChanges := map[string]interface{}{
 		"age": 28,
 	}
-	err := ApplyChanges(clayChanges, &clay)
+	err := applyChanges(clayChanges, &clay)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, "Clay", clay.Name)
 	assert.Equal(t, 28, clay.Age)
@@ -32,9 +32,9 @@ func TestApplyChanges(t *testing.T) {
 	clayChanges = map[string]interface{}{
 		"nicknames": []string{},
 	}
-	err = ApplyChanges(clayChanges, &clay)
+	err = applyChanges(clayChanges, &clay)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, "Clay", clay.Name)
 	assert.Equal(t, 28, clay.Age)
@@ -44,9 +44,9 @@ func TestApplyChanges(t *testing.T) {
 		"nicknames": []string{"Clayson the Wise"},
 		"age":       50,
 	}
-	err = ApplyChanges(clayChanges, &clay)
+	err = applyChanges(clayChanges, &clay)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, "Clay", clay.Name)
 	assert.Equal(t, 50, clay.Age)
@@ -65,9 +65,9 @@ func TestApplyChangesEmptyString(t *testing.T) {
 	sonChanges := map[string]interface{}{
 		"parent": "",
 	}
-	err := ApplyChanges(sonChanges, &son)
+	err := applyChanges(sonChanges, &son)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, "Son", son.Name)
 	assert.Nil(t, son.Parent) // should set to nil
@@ -82,10 +82,10 @@ func TestApplyChangesEmptyStringPointer(t *testing.T) {
 	sonChanges := map[string]interface{}{
 		"parent": &emptyString, // passing a pointer to an empty string
 	}
-	err := ApplyChanges(sonChanges, &son)
+	err := applyChanges(sonChanges, &son)
 
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, "Son", son.Name)
 	assert.Nil(t, son.Parent) // should set to nil, not a pointer to an empty string
@@ -108,9 +108,9 @@ func TestApplyChangesWithTime(t *testing.T) {
 		"whenStarted": time.Date(2022, 5, 8, 18, 0, 0, 0, time.UTC), // should work with 'time.Time's
 		"whenEnded":   "2022-05-08T21:00:00Z",                       // and should work with strings in time.RFC3339Nano format
 	}
-	err := ApplyChanges(fdChanges, &fd)
+	err := applyChanges(fdChanges, &fd)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, time.Date(2022, 5, 8, 18, 0, 0, 0, time.UTC), fd.WhenStarted)
 	assert.Equal(t, time.Date(2022, 5, 8, 21, 0, 0, 0, time.UTC), fd.WhenEnded)
@@ -119,9 +119,9 @@ func TestApplyChangesWithTime(t *testing.T) {
 	fdChanges = map[string]interface{}{
 		"didHaveFun": true,
 	}
-	err = ApplyChanges(fdChanges, &fd)
+	err = applyChanges(fdChanges, &fd)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, time.Date(2022, 5, 8, 18, 0, 0, 0, time.UTC), fd.WhenStarted)
 	assert.Equal(t, time.Date(2022, 5, 8, 21, 0, 0, 0, time.UTC), fd.WhenEnded)
@@ -133,7 +133,7 @@ type PersonWithUUID struct {
 	Name string    `json:"name"`
 }
 
-// TestApplyChangesUUID tests that ApplyChanges works with UUIDs
+// TestApplyChangesUUID tests that applyChanges works with UUIDs
 // Note that this isn't how GQL passes UUIDs to resolvers, but is something we hackily use
 // in tests to modify the ID of an entity.
 func TestApplyChangesUUID(t *testing.T) {
@@ -146,9 +146,9 @@ func TestApplyChangesUUID(t *testing.T) {
 	clayChanges := map[string]interface{}{
 		"id": []byte{0x2, 0xa9, 0x92, 0xe, 0xb0, 0x15, 0x4d, 0xe3, 0x8e, 0x32, 0xfb, 0x96, 0x5a, 0xc4, 0x65, 0x3c},
 	}
-	err := ApplyChanges(clayChanges, &clay)
+	err := applyChanges(clayChanges, &clay)
 	if err != nil {
-		t.Errorf("ApplyChanges failed: %s", err)
+		t.Errorf("applyChanges failed: %s", err)
 	}
 	assert.Equal(t, "02a9920e-b015-4de3-8e32-fb965ac4653c", clay.ID.String())
 	assert.Equal(t, "Clay", clay.Name)

@@ -3,6 +3,8 @@ package storage
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -10,7 +12,61 @@ import (
 	"github.com/jmoiron/sqlx"
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	_ "github.com/lib/pq" // required for postgres driver in sql
+
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 )
+
+var (
+	store     *Store
+	storeOnce sync.Once
+)
+
+func GetStore() *Store {
+	storeOnce.Do(func() {
+		dbConfig := newDBConfig()
+
+		s, err := NewStore(dbConfig, nil)
+		if err != nil {
+			panic(fmt.Errorf("failed to init store: %w", err))
+		}
+
+		store = s
+	})
+
+	return store
+}
+
+func newDBConfig() DBConfig {
+	dbHost := appconfig.MustGetRequired(appconfig.DBHostConfigKey)
+	dbPort := appconfig.MustGetRequired(appconfig.DBPortConfigKey)
+	dbName := appconfig.MustGetRequired(appconfig.DBNameConfigKey)
+	dbUsername := appconfig.MustGetRequired(appconfig.DBUsernameConfigKey)
+	dbMaxConnStr := appconfig.MustGetRequired(appconfig.DBMaxConnections)
+	dbMaxConn, err := strconv.Atoi(dbMaxConnStr)
+	if err != nil {
+		panic("unable to convert db max conn to int")
+	}
+
+	env := appconfig.GetEnvironment()
+	useIAM := env.Deployed()
+	var dbPass string
+	if !useIAM {
+		dbPass = appconfig.MustGetRequired(appconfig.DBPasswordConfigKey)
+	}
+
+	dbSSLMode := appconfig.MustGetRequired(appconfig.DBSSLModeConfigKey)
+
+	return DBConfig{
+		Host:           dbHost,
+		Port:           dbPort,
+		Database:       dbName,
+		Username:       dbUsername,
+		Password:       dbPass,
+		SSLMode:        dbSSLMode,
+		UseIAM:         useIAM,
+		MaxConnections: dbMaxConn,
+	}
+}
 
 // Store performs database operations for MINT
 type Store struct {

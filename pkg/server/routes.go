@@ -71,21 +71,11 @@ func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory) transport.Webso
 func (s *Server) routes(
 	corsMiddleware func(handler http.Handler) http.Handler,
 	traceMiddleware func(handler http.Handler) http.Handler,
-	loggerMiddleware func(handler http.Handler) http.Handler) {
+	loggerMiddleware func(handler http.Handler) http.Handler,
+) {
 
-	// set up Feature Flagging utilities
-	ldClient, err := flags.NewLaunchDarklyClient(s.NewFlagConfig())
-	if err != nil {
-		s.logger.Fatal("Failed to create LaunchDarkly client", zap.Error(err))
-	}
-
-	store, storeErr := storage.NewStore(
-		s.NewDBConfig(),
-		ldClient,
-	)
-	if storeErr != nil {
-		s.logger.Fatal("Failed to create store", zap.Error(storeErr))
-	}
+	ldClient := flags.GetLDClient()
+	store := storage.GetStore()
 
 	oktaConfig := s.NewOktaClientConfig()
 	jwtVerifier := okta.NewJwtVerifier(oktaConfig.OktaClientID, oktaConfig.OktaIssuer)
@@ -147,7 +137,7 @@ func (s *Server) routes(
 	// This is a bit of a hack... sorry...
 	// Okta API tokens expire every 30 days if unused. This call to the Okta API below is strictly to ensure that the token is used whenever we deploy or
 	// create a new instance of the app. This should probably be a cron job, but this is the quick fix that helps us not have to worry about this for the time being.
-	_, err = oktaClient.SearchByName(context.Background(), "MINT") // shouldn't return any results, but that's ok, we used the token
+	_, err := oktaClient.SearchByName(context.Background(), "MINT") // shouldn't return any results, but that's ok, we used the token
 	if err != nil {
 		s.logger.Warn("failed to use okta api token on API client creation", zap.Error(err))
 	}

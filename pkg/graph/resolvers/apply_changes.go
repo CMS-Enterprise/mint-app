@@ -40,10 +40,10 @@ func sanitizeChanges(changes map[string]interface{}) {
 	}
 }
 
-// ApplyChanges applies arbitrary changes from a map to a struct
+// applyChanges applies arbitrary changes from a map to a struct
 // Code largely copied from GQLGen's docs on changesets
 // https://gqlgen.com/reference/changesets/
-func ApplyChanges(changes map[string]interface{}, to interface{}) error {
+func applyChanges(changes map[string]interface{}, to interface{}) error {
 	sanitizeChanges(changes)
 
 	// Set up the decoder. This is almost exactly ripped from https://gqlgen.com/reference/changesets/
