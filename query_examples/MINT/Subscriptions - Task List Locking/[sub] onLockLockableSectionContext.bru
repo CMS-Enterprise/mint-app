@@ -1,7 +1,7 @@
 meta {
-  name: [sub] onTaskListSectionLocksChanged
+  name: [sub] onLockTaskListSectionContext
   type: graphql
-  seq: 1
+  seq: 2
 }
 
 post {
@@ -17,14 +17,14 @@ auth:apikey {
 }
 
 body:graphql {
-  subscription onTaskListSectionLocksChanged ($modelPlanID: UUID!) {
-      onTaskListSectionLocksChanged (modelPlanID: $modelPlanID) {
+  subscription onLockLockableSectionContext ($modelPlanID: UUID!) {
+      onLockLockableSectionContext (modelPlanID: $modelPlanID) {
           changeType
           actionType
           lockStatus {
               modelPlanID
               section
-              lockedBy
+              lockedByUserAccount
               isAssessment
           }
       }
