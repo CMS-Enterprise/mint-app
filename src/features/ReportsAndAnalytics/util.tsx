@@ -370,18 +370,20 @@ export const downloadMTOMilestoneSummary = (
     });
   });
 
-  const sanitizedflattenedData = flattenedData.map((row: any) => {
+  const sanitizedFlattenedData = flattenedData.map((row: any) => {
     const sanitizedRow: Record<string, any> = {};
     Object.entries(row as Record<string, any>).forEach(([key, value]) => {
       sanitizedRow[key] =
-        typeof value === 'string' ? value.replace(/[^\x20-\x7E]/g, '') : value;
+        typeof value === 'string'
+          ? value.replace(/[^\x20-\x7E\t\n\r]/g, '')
+          : value;
     });
     return sanitizedRow;
   });
 
   // Create a new workbook
   const workbook = XLSX.utils.book_new();
-  const sheet = XLSX.utils.json_to_sheet(sanitizedflattenedData);
+  const sheet = XLSX.utils.json_to_sheet(sanitizedFlattenedData);
 
   const columnWidths = autoFitColumns(sheet);
   sheet['!cols'] = columnWidths;
