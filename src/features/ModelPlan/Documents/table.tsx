@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import {
-  Alert,
   Button,
   Checkbox,
   Icon,
@@ -253,49 +252,7 @@ export const Table = ({
           })}
         </PageHeading>
 
-        {((fileToRemove.numLinkedSolutions > 0 && !handleDocumentUnlink) ||
-          (fileToRemove.numLinkedSolutions > 1 && handleDocumentUnlink)) && (
-          <Alert type="warning" headingLevel="h4">
-            {handleDocumentUnlink
-              ? t('removeDocumentModal.linkDocsWarning2', {
-                  numLinkedSolutions: fileToRemove.numLinkedSolutions - 1,
-                  plural: fileToRemove.numLinkedSolutions - 1 > 1 ? 's' : ''
-                })
-              : t('removeDocumentModal.linkDocsWarning', {
-                  numLinkedSolutions: fileToRemove.numLinkedSolutions,
-                  plural: fileToRemove.numLinkedSolutions > 1 ? 's' : ''
-                })}
-          </Alert>
-        )}
-
-        {handleDocumentUnlink && (
-          <>
-            <p>
-              <span className="text-bold">
-                {t('removeDocumentModal.removing')}
-              </span>
-              {fileToRemove.numLinkedSolutions > 1
-                ? t('removeDocumentModal.warningRemoveSolution')
-                : t('removeDocumentModal.warningRemoveSolution2')}
-            </p>
-            <p>
-              <span className="text-bold">
-                {t('removeDocumentModal.disconnecting')}
-              </span>
-              {t('removeDocumentModal.warningDisconnectSolution')}
-            </p>
-          </>
-        )}
-
-        {!handleDocumentUnlink && (
-          <>
-            <p>
-              {fileToRemove.numLinkedSolutions > 0
-                ? t('removeDocumentModal.warning2')
-                : t('removeDocumentModal.warning')}
-            </p>
-          </>
-        )}
+        <p>{t('removeDocumentModal.warning')}</p>
 
         <Button
           type="button"
@@ -305,22 +262,8 @@ export const Table = ({
             setModalOpen(false);
           }}
         >
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.confirmSolutionRemove')
-            : t('removeDocumentModal.confirm')}
+          {t('removeDocumentModal.confirm')}
         </Button>
-
-        {handleDocumentUnlink && (
-          <Button
-            type="button"
-            onClick={() => {
-              handleDocumentUnlink(fileToRemove.id, fileToRemove.fileName);
-              setModalOpen(false);
-            }}
-          >
-            {t('removeDocumentModal.disconnect')}
-          </Button>
-        )}
 
         <Button
           type="button"
@@ -328,9 +271,7 @@ export const Table = ({
           unstyled
           onClick={() => setModalOpen(false)}
         >
-          {handleDocumentUnlink
-            ? t('removeDocumentModal.cancel')
-            : t('removeDocumentModal.keepDocument')}
+          {t('removeDocumentModal.keepDocument')}
         </Button>
       </Modal>
     );

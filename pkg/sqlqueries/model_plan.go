@@ -35,12 +35,6 @@ var modelPlanDeleteByID string
 //go:embed SQL/model_plan/get_by_id_LOADER.sql
 var modelPlanGetByIDLoaderSQL string
 
-//go:embed SQL/model_plan/get_op_solution_last_modified_dts_by_id_LOADER.sql
-var modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL string
-
-//go:embed SQL/model_plan/get_by_operational_solution_key.sql
-var modelPlanGetByOperationalSolutionKeySQL string
-
 //go:embed SQL/model_plan/get_by_mto_common_solution_key.sql
 var modelPlanGetByMTOCommonSolutionKeySQL string
 
@@ -57,44 +51,40 @@ var modelPlanGetTaskListStatus string
 var modelPlanGetByStatusGroupSQL string
 
 type modelPlanScripts struct {
-	Create                                 string
-	Update                                 string
-	GetByID                                string
-	GetByName                              string
-	CollectionWhereArchived                string
-	CollectionByCollaborator               string
-	CollectionWithCRTDL                    string
-	CollectionApproachingClearance         string
-	CollectionWhereNewlyCreated            string
-	DeleteByID                             string
-	GetByIDLoader                          string
-	GetOpSolutionLastModifiedDtsByIDLoader string
-	GetByOperationalSolutionKey            string
-	GetByMTOSolutionKeyLoader              string
-	GetByComponentGroupLoader              string
-	CollectionWhereFavoritedByUserID       string
-	GetTaskListStatus                      string
-	GetByStatusGroup                       string
+	Create                           string
+	Update                           string
+	GetByID                          string
+	GetByName                        string
+	CollectionWhereArchived          string
+	CollectionByCollaborator         string
+	CollectionWithCRTDL              string
+	CollectionApproachingClearance   string
+	CollectionWhereNewlyCreated      string
+	DeleteByID                       string
+	GetByIDLoader                    string
+	GetByMTOSolutionKeyLoader        string
+	GetByComponentGroupLoader        string
+	CollectionWhereFavoritedByUserID string
+	GetTaskListStatus                string
+	GetByStatusGroup                 string
 }
 
 // ModelPlan houses all the sql for getting data for model plan from the database
 var ModelPlan = modelPlanScripts{
-	Create:                                 modelPlanCreateSQL,
-	Update:                                 modelPlanUpdateSQL,
-	GetByID:                                modelPlanGetByIDSQL,
-	GetByName:                              modelPlanGetByNameSQL,
-	CollectionWhereArchived:                modelPlanCollectionWhereArchivedSQL,
-	CollectionByCollaborator:               modelPlanCollectionByCollaboratorSQL,
-	CollectionWithCRTDL:                    modelPlanCollectionWithCRTDlSQL,
-	CollectionApproachingClearance:         modelPlanCollectionApproachingClearanceSQL,
-	CollectionWhereNewlyCreated:            modelPlanCollectionWhereNewlyCreatedSQL,
-	DeleteByID:                             modelPlanDeleteByID,
-	GetByIDLoader:                          modelPlanGetByIDLoaderSQL,
-	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,
-	GetByOperationalSolutionKey:            modelPlanGetByOperationalSolutionKeySQL,
-	GetByMTOSolutionKeyLoader:              modelPlanGetByMTOCommonSolutionKeySQL,
-	GetByComponentGroupLoader:              modelPlanGetByComponentGroupLoaderSQL,
-	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
-	GetTaskListStatus:                      modelPlanGetTaskListStatus,
-	GetByStatusGroup:                       modelPlanGetByStatusGroupSQL,
+	Create:                           modelPlanCreateSQL,
+	Update:                           modelPlanUpdateSQL,
+	GetByID:                          modelPlanGetByIDSQL,
+	GetByName:                        modelPlanGetByNameSQL,
+	CollectionWhereArchived:          modelPlanCollectionWhereArchivedSQL,
+	CollectionByCollaborator:         modelPlanCollectionByCollaboratorSQL,
+	CollectionWithCRTDL:              modelPlanCollectionWithCRTDlSQL,
+	CollectionApproachingClearance:   modelPlanCollectionApproachingClearanceSQL,
+	CollectionWhereNewlyCreated:      modelPlanCollectionWhereNewlyCreatedSQL,
+	DeleteByID:                       modelPlanDeleteByID,
+	GetByIDLoader:                    modelPlanGetByIDLoaderSQL,
+	GetByMTOSolutionKeyLoader:        modelPlanGetByMTOCommonSolutionKeySQL,
+	GetByComponentGroupLoader:        modelPlanGetByComponentGroupLoaderSQL,
+	CollectionWhereFavoritedByUserID: modelPlanCollectionWhereFavoritedByUserID,
+	GetTaskListStatus:                modelPlanGetTaskListStatus,
+	GetByStatusGroup:                 modelPlanGetByStatusGroupSQL,
 }
