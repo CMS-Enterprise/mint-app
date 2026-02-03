@@ -999,7 +999,7 @@ Examples and Impact:
 Examples and Impact:
         </span>
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0"
         >
           <li
             class=""
@@ -2113,7 +2113,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
           Functions
         </h3>
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0 margin-top-neg-2"
         >
           <li
             class=""
@@ -2171,7 +2171,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
           Health data submissions via UI
         </h4>
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0"
         >
           <li
             class=""
@@ -2232,7 +2232,7 @@ HDR’s Configuration Management allows model teams to define and modify perform
           Quality measure results
         </h4>
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0"
         >
           <li
             class=""
@@ -4656,7 +4656,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           class="margin-bottom-2"
         />
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0"
         >
           <li
             class=""
@@ -4908,7 +4908,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           class="margin-bottom-2"
         />
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0"
         >
           <li
             class=""
@@ -5266,7 +5266,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           class="margin-bottom-2"
         />
         <ul
-          class="padding-left-4"
+          class="padding-left-4 list-style-none padding-left-0"
         >
           <li
             class=""
