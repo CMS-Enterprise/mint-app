@@ -32,6 +32,7 @@ export type TimelineConfigType = {
   items2?: TimelineItemType[];
   links?: string[];
   gatheringInfo?: boolean;
+  footer?: string;
 };
 
 export const GenericTimeline = ({
@@ -138,6 +139,10 @@ export const GenericTimeline = ({
             </ProcessListItem>
           ))}
         </ProcessList>
+      )}
+
+      {timelineConfig.footer && (
+        <p className="margin-y-0">{timelineConfig.footer}</p>
       )}
     </div>
   );
