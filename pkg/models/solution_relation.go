@@ -11,12 +11,8 @@ import (
 
 const SolutionType = "Solution"
 
-// ISolutionRelation is an interface that represents models that are related to a solution.
-type ISolutionRelation interface {
-	GetSolutionID() uuid.UUID
-}
-
 // solutionRelation is a struct meant to be embedded to show that the object should have solution relations enforced
+// it implements the resolvers.Collaborator interface
 type solutionRelation struct {
 	SolutionID uuid.UUID `json:"SolutionID" db:"solution_id"`
 }

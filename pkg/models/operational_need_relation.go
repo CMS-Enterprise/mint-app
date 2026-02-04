@@ -11,12 +11,7 @@ import (
 
 const OperationalNeedType = "OperationalNeed"
 
-// IOperationalNeedRelation is an interface that represents models that are related to an operational need.
-type IOperationalNeedRelation interface {
-	GetOperationalNeedID() uuid.UUID
-}
-
-// operationalNeedRelation is an embedded struct meant to satisify the IOperationalNeedRelation interface
+// operationalNeedRelation is an embedded struct meant to satisfy the resolvers.Collaborator interface
 type operationalNeedRelation struct {
 	OperationalNeedID uuid.UUID `json:"operationalNeedID" db:"operational_need_id"`
 }

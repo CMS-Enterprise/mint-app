@@ -11,12 +11,8 @@ import (
 
 const ModelPlanType = "ModelPlan"
 
-// IModelPlanRelation is an interface that represents models that are related to a model plan.
-type IModelPlanRelation interface {
-	GetModelPlanID() uuid.UUID
-}
-
-// ModelPlanRelation is a struct meant to be embedded to show that the object should have model plan relations enforced
+// modelPlanRelation is a struct meant to be embedded to show that the object should have model plan relations enforced
+// it implements the resolvers.Collaborator interface
 type modelPlanRelation struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 }
