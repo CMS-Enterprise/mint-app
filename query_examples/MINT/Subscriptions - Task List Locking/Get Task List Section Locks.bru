@@ -21,7 +21,10 @@ body:graphql {
       lockableSectionLocks (modelPlanID: $modelPlanID) {
           modelPlanID
           section
-          lockedByUserAccount
+          lockedByUserAccount {
+              id
+              commonName
+          }
           isAssessment
       }
   }
