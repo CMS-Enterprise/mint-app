@@ -20,7 +20,7 @@ type Collaborator interface {
 	CheckAccess(principal authentication.Principal, logger *zap.Logger, objID uuid.UUID, checkFunc models.RelationCheckFunc) (bool, error)
 }
 
-func errorIfNotCollaborator2(principal authentication.Principal, logger *zap.Logger, store *storage.Store, bs models.IBaseStruct) error {
+func errorIfNotCollaborator(principal authentication.Principal, logger *zap.Logger, store *storage.Store, bs models.IBaseStruct) error {
 	// guard
 	collaborator, ok := bs.(Collaborator)
 	if !ok {

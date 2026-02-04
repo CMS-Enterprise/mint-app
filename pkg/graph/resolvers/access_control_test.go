@@ -30,19 +30,19 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	macUser.JobCodeMAC = true
 
 	//1. User is collaborator by modelPlanID
-	err := errorIfNotCollaborator2(basicUserPrincipal, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
+	err := errorIfNotCollaborator(basicUserPrincipal, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
 	suite.NoError(err)
 
 	//2. User is  not collaborator by modelPlanID
-	err = errorIfNotCollaborator2(notCollab, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
+	err = errorIfNotCollaborator(notCollab, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
 	suite.Error(err)
 
 	//3. User is  not collaborator by modelPlanID, but is assessment user
-	err = errorIfNotCollaborator2(assessment, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
+	err = errorIfNotCollaborator(assessment, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
 	suite.NoError(err)
 
 	//4. Mac Users are NEVER collaborators
-	err = errorIfNotCollaborator2(macUser, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
+	err = errorIfNotCollaborator(macUser, suite.testConfigs.Logger, suite.testConfigs.Store, plan)
 	suite.Error(err)
 
 	//  Create discussion and reply
@@ -50,19 +50,19 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	reply := suite.createDiscussionReply(discussion, "This is a test reply")
 
 	//5. User is collaborator by discusionID
-	err = errorIfNotCollaborator2(basicUserPrincipal, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
+	err = errorIfNotCollaborator(basicUserPrincipal, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
 	suite.NoError(err)
 
 	//6. User is  not collaborator by discusionID
-	err = errorIfNotCollaborator2(notCollab, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
+	err = errorIfNotCollaborator(notCollab, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
 	suite.Error(err)
 
 	//7. User is  not collaborator by discusionID, but is assessment user
-	err = errorIfNotCollaborator2(assessment, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
+	err = errorIfNotCollaborator(assessment, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
 	suite.NoError(err)
 
 	//8. Mac Users are NEVER collaborators
-	err = errorIfNotCollaborator2(macUser, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
+	err = errorIfNotCollaborator(macUser, suite.testConfigs.Logger, suite.testConfigs.Store, reply)
 	suite.Error(err)
 
 	//  Check Operational Need relation with Operational Solutions
@@ -84,19 +84,19 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	suite.NoError(err)
 
 	//9. User is collaborator by solutionID
-	err = errorIfNotCollaborator2(basicUserPrincipal, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
+	err = errorIfNotCollaborator(basicUserPrincipal, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
 	suite.NoError(err)
 
 	//10. User is  not collaborator by solutionID
-	err = errorIfNotCollaborator2(notCollab, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
+	err = errorIfNotCollaborator(notCollab, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
 	suite.Error(err)
 
 	//11. User is not collaborator by solutionID, but is assessment user
-	err = errorIfNotCollaborator2(assessment, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
+	err = errorIfNotCollaborator(assessment, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
 	suite.NoError(err)
 
 	//12. Mac Users are NEVER collaborators
-	err = errorIfNotCollaborator2(macUser, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
+	err = errorIfNotCollaborator(macUser, suite.testConfigs.Logger, suite.testConfigs.Store, mtoSol)
 	suite.Error(err)
 
 }
