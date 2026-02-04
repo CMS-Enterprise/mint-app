@@ -20,7 +20,7 @@ body:graphql {
   query getKeyContactCategoriesByIds($ids: [UUID!]!) {
     keyContactCategoriesByIds(ids: $ids) {
       id
-      category
+      name
     }
   }
 }
