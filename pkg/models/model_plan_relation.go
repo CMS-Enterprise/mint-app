@@ -1,6 +1,15 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"errors"
+
+	"github.com/google/uuid"
+	"go.uber.org/zap"
+
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+)
+
+const ModelPlanType = "ModelPlan"
 
 // IModelPlanRelation is an interface that represents models that are related to a model plan.
 type IModelPlanRelation interface {
@@ -10,6 +19,32 @@ type IModelPlanRelation interface {
 // ModelPlanRelation is a struct meant to be embedded to show that the object should have model plan relations enforced
 type modelPlanRelation struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+}
+
+func (m modelPlanRelation) GetRelationID() uuid.UUID {
+	return m.ModelPlanID
+}
+
+func (m modelPlanRelation) GetType() string {
+	return ModelPlanType
+}
+
+func (m modelPlanRelation) CheckAccess(principal authentication.Principal, logger *zap.Logger, objID uuid.UUID, checkFunc RelationCheckFunc) (bool, error) {
+	if principal.AllowASSESSMENT() {
+		return true, nil
+	}
+
+	if principal.AllowMAC() {
+		return false, nil
+	}
+
+	if principal.AllowUSER() {
+		return checkFunc(logger, principal.Account().ID, objID)
+	}
+
+	errString := "user has no roles"
+	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", objID.String()))
+	return false, errors.New(errString)
 }
 
 // NewModelPlanRelation returns a model plan relation object

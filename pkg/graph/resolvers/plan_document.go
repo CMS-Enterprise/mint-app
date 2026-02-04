@@ -9,7 +9,6 @@ import (
 	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -85,11 +84,11 @@ func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *s3.S3C
 // PlanDocumentsReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
 func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store, s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
-	isCollaborator, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
+	isCollaborator, err := isCollaboratorModelPlanID(logger, principal, store, id)
 	if err != nil {
 		return nil, err
 	}
-	//Future Enhancement refactor this to use HasPrivilegedDocumentAccessByModelPlanID
+	//Future Enhancement refactor this to use hasPrivilegedDocumentAccessByModelPlanID
 
 	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
 	if !isCollaborator || principal.AllowNonCMSUser() {
@@ -109,39 +108,6 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal 
 	}
 	return documents, nil
 
-}
-
-// PlanDocumentsReadBySolutionID implements resolver logic to fetch a plan document object by solution ID
-func PlanDocumentsReadBySolutionID(
-	logger *zap.Logger,
-	id uuid.UUID,
-	principal authentication.Principal,
-	store *storage.Store,
-	s3Client *s3.S3Client,
-) ([]*models.PlanDocument, error) {
-
-	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, id)
-	if err != nil {
-		return nil, err
-	}
-
-	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
-	if !isCollaborator || principal.AllowNonCMSUser() {
-		notRestrictedDocuments, err := store.PlanDocumentsReadBySolutionIDNotRestricted(logger, id, s3Client)
-
-		if err != nil {
-			return nil, err
-		}
-
-		return notRestrictedDocuments, nil
-	}
-
-	documents, docErr := store.PlanDocumentsReadBySolutionID(logger, id, s3Client)
-
-	if docErr != nil {
-		return nil, docErr
-	}
-	return documents, nil
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
