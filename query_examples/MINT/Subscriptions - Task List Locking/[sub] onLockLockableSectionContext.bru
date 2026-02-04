@@ -24,7 +24,10 @@ body:graphql {
           lockStatus {
               modelPlanID
               section
-              lockedByUserAccount
+              lockedByUserAccount {
+                  id
+                  commonName
+              }
               isAssessment
           }
       }
