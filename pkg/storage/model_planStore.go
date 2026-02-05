@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"time"
 
 	"github.com/lib/pq"
 
@@ -57,49 +56,6 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 	}
 
 	return planSlice, nil
-}
-
-// ModelPlanOpSolutionLastModifiedDtsGetByModelPlanIDLOADER returns the most
-// recent tracking dates for a series of model plans
-func (s *Store) ModelPlanOpSolutionLastModifiedDtsGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) (
-	map[string]time.Time,
-	error,
-) {
-	var trackingDates = make(map[string]time.Time)
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetOpSolutionLastModifiedDtsByIDLoader)
-	if err != nil {
-		logger.Error("Failed to prepare SQL statement", zap.Error(err))
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
-	}
-
-	rows, err := stmt.Queryx(arg)
-	if err != nil {
-		logger.Error("Failed to execute query", zap.Error(err))
-		return nil, err
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var id string
-		var trackingDate time.Time
-		if err := rows.Scan(&id, &trackingDate); err != nil {
-			logger.Error("Failed to scan row", zap.Error(err))
-			continue
-		}
-
-		trackingDates[id] = trackingDate
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return trackingDates, nil
 }
 
 // ModelPlanCreate creates a model plan using a transaction
@@ -447,37 +403,6 @@ func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, component
 		return nil, err
 	}
 	return res, nil
-}
-
-func (s *Store) ModelPlanGetByOperationalSolutionKey(
-	logger *zap.Logger,
-	opSolKey models.OperationalSolutionKey,
-) ([]*models.ModelPlanAndPossibleOperationalSolution, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByOperationalSolutionKey)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"operational_solution_key": opSolKey,
-	}
-
-	var modelPlanAndOpSols []*models.ModelPlanAndPossibleOperationalSolution
-	err = stmt.Select(&modelPlanAndOpSols, arg)
-	if err != nil {
-		logger.Error(
-			"Failed to fetch model plans",
-			zap.Error(err),
-		)
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     models.ModelPlanAndPossibleOperationalSolution{},
-			Operation: apperrors.QueryFetch,
-		}
-	}
-	return modelPlanAndOpSols, nil
 }
 
 func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.UUID) (models.TaskStatus, error) {

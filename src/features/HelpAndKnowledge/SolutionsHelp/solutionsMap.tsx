@@ -161,7 +161,8 @@ export const helpSolutions: HelpSolutionsType = {
     key: MtoCommonSolutionKey.CDAC,
     categories: [
       MtoCommonSolutionSubject.CONTRACT_VEHICLES,
-      MtoCommonSolutionSubject.DATA
+      MtoCommonSolutionSubject.DATA,
+      MtoCommonSolutionSubject.QUALITY
     ],
     acronym: 'CDAC',
     type: MtoSolutionType.CONTRACTOR,

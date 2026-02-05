@@ -32,10 +32,6 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		{
 			return getUserAccountForeignKeyTranslation(store, value)
 		}
-	case models.TNOperationalSolution:
-		{
-			return getOperationalSolutionForeignKeyReference(ctx, store, value)
-		}
 	case models.TNPlanDocument:
 		{
 			return getPlanDocumentForeignKeyReference(ctx, store, value)
@@ -162,35 +158,6 @@ func parseInterfaceToInt(val interface{}) (int, error) {
 
 	return -1, fmt.Errorf("there was an issue casting the provided value (%v) to Int. It is of type %T", val, val)
 
-}
-
-// getOperationalSolutionForeignKeyReference returns a translation for an operational solution foreign key reference
-func getOperationalSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
-	// cast interface to UUID
-	uuidKey, err := parseInterfaceToUUID(key)
-	if err != nil {
-		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the operational solution reference. err %w", err)
-	}
-	logger := appcontext.ZLogger(ctx)
-
-	// get the solution
-	solution, err := store.OperationalSolutionGetByID(logger, uuidKey)
-	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the operational solution foreign key reference. err %w", err)
-	}
-
-	if solution == nil {
-		return "", fmt.Errorf("the solution for %s was not returned for this foreign key translation", uuidKey)
-	}
-
-	if solution.Name != nil {
-		return *solution.Name, nil
-	}
-
-	if solution.NameOther != nil {
-		return *solution.NameOther, nil
-	}
-	return solution.ID.String(), nil
 }
 
 func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
