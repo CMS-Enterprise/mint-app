@@ -35,6 +35,8 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
+import FilterModal from './FilterModal';
+
 import './index.scss';
 
 export type MilestoneCardType =
@@ -306,14 +308,15 @@ const MilstoneCardGroup = ({
       <div className="milestone-card-group">
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
-            <Grid tablet={{ col: 6 }}>
+            <Grid className="display-flex flex-wrap flex-align-center">
+              <FilterModal />
               {/* Search bar and results info */}
               <GlobalClientFilter
                 globalFilter={query}
                 setGlobalFilter={setQuery}
                 tableID="help-articles"
                 tableName=""
-                className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
+                className="maxw-none tablet:width-mobile-lg tablet:margin-left-1"
               />
             </Grid>
 
