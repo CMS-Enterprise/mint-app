@@ -22,8 +22,8 @@ var MTOMilestoneNote = &mtoMilestoneNoteLoaders{
 }
 
 func batchMTOMilestoneNoteGetByMilestoneID(ctx context.Context, milestoneIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOMilestoneNote] {
-	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
+	loaders, err := Loaders(ctx)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.MTOMilestoneNote](milestoneIDs, err)
 	}
@@ -38,8 +38,8 @@ func batchMTOMilestoneNoteGetByMilestoneID(ctx context.Context, milestoneIDs []u
 }
 
 func batchMTOMilestoneNoteGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.MTOMilestoneNote] {
-	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
+	loaders, err := Loaders(ctx)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, *models.MTOMilestoneNote](ids, err)
 	}
