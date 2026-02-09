@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 type MTOMilestoneNote struct {
 	baseStruct
 	milestoneRelation
+
 	Content string `json:"content" db:"content"`
 }
 
