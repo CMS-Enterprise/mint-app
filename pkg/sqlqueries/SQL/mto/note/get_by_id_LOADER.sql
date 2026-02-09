@@ -5,7 +5,6 @@ WITH QUERIED_IDs AS (
 
 SELECT
     mto_milestone_note.id,
-    mto_milestone.model_plan_id,
     mto_milestone_note.milestone_id,
     mto_milestone_note.content,
     mto_milestone_note.created_by,
@@ -13,5 +12,4 @@ SELECT
     mto_milestone_note.modified_by,
     mto_milestone_note.modified_dts
 FROM mto_milestone_note
-INNER JOIN QUERIED_IDs AS qID ON mto_milestone_note.id = qID.id
-LEFT JOIN mto_milestone ON mto_milestone_note.milestone_id = mto_milestone.id;
+INNER JOIN QUERIED_IDs AS qID ON mto_milestone_note.id = qID.id;
