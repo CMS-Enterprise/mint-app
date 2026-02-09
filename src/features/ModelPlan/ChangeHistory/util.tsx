@@ -40,6 +40,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
   | 'teamUpdate'
   | 'discussionUpdate'
@@ -818,6 +819,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
+  // If the change is a questionnaire task list status update, return 'Questionnaire task list status update'
+  if (
+    isTableWithStatus(change.tableName) &&
+    change.translatedFields.find(field => field.fieldName === 'needed')
+  ) {
+    return 'questionnaireTaskListStatusUpdate';
+  }
+
   if (
     change.tableName === TableName.MTO_INFO &&
     change.translatedFields.find(
@@ -906,12 +915,6 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       break;
     case 'taskListStatusUpdate':
       if (
-        change.tableName === TableName.IDDOC_QUESTIONNAIRE &&
-        status === 'Not started' &&
-        oldStatus === 'Not needed'
-      ) {
-        headerText = i18next.t(`changeHistory:questionnaireNeededUpdate`);
-      } else if (
         status === 'In progress' &&
         oldStatus !== 'Complete' &&
         oldStatus !== 'Ready for review'
@@ -920,6 +923,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       } else {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
+      break;
+    case 'questionnaireTaskListStatusUpdate':
+      headerText = i18next.t(`changeHistory:questionnaireNeededUpdate`);
       break;
     case 'mtoStatusUpdate':
       headerText = i18next.t(`changeHistory:taskStatusUpdate`);
@@ -992,6 +998,10 @@ export const isInitialCreatedSection = (
     (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
         field => field.fieldName === 'status' && field.old === null
+      )) ||
+    (changeType === 'questionnaireTaskListStatusUpdate' &&
+      change.translatedFields.find(
+        field => field.fieldName === 'needed' && field.old === null
       )) ||
     identifyChangeType(change) === 'operationalNeedCreate'
   );

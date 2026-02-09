@@ -255,7 +255,8 @@ func (s *Seeder) SeedData() {
 			"dataFlowDiagramsNeeded":         true,
 			"produceBenefitEnhancementFiles": true,
 			"fileNamingConventions":          "MODELNAME_FILETYPE_YYYYMMDD_HHMMSS.txt",
-			"status":                         "NOT_NEEDED",
+			"needed":                         false,
+			"status":                         "READY",
 		},
 	)
 
