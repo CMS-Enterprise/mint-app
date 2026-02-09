@@ -5,6 +5,7 @@ import "github.com/google/uuid"
 type IMilestoneRelation interface {
 	GetMilestoneID() uuid.UUID
 }
+
 type milestoneRelation struct {
 	MilestoneID uuid.UUID `json:"milestoneID" db:"milestone_id"`
 }
