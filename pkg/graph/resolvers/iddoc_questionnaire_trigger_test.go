@@ -7,7 +7,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// TestIDDOCQuestionnaireNeededTriggerOnOEL tests that the IDDOC questionnaire status
+// TestIDDOCQuestionnaireNeededTriggerOnOEL tests that the IDDOC questionnaire needed field
 // is automatically synced when the plan_ops_eval_and_learning.iddoc_support field changes
 func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnOEL() {
 	plan := suite.createModelPlan("plan for IDDOC questionnaire trigger test on OEL")
@@ -16,14 +16,15 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnOEL() {
 	iddocQuestionnaire, err := IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(iddocQuestionnaire)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed initially")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed initially")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should be READY by default")
 
 	// Get the OEL section
 	oel, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(oel)
 
-	// Update iddoc_support to true - this should trigger the IDDOC questionnaire to become needed
+	// Update iddoc_support to true - this should trigger the IDDOC questionnaire needed field to become true
 	changes := map[string]interface{}{
 		"iddocSupport": true,
 	}
@@ -33,12 +34,13 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnOEL() {
 	suite.NotNil(updatedOEL)
 	suite.True(*updatedOEL.IddocSupport)
 
-	// Reload the IDDOC questionnaire and verify that status is now READY (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now true (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("READY", iddocQuestionnaire.Status, "IDDOC questionnaire should be needed after iddoc_support is set to true")
+	suite.True(iddocQuestionnaire.Needed, "IDDOC questionnaire should be needed after iddoc_support is set to true")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 
-	// Update iddoc_support to false - this should trigger the IDDOC questionnaire to become not needed
+	// Update iddoc_support to false - this should trigger the IDDOC questionnaire needed field to become false
 	changes = map[string]interface{}{
 		"iddocSupport": false,
 	}
@@ -48,13 +50,14 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnOEL() {
 	suite.NotNil(updatedOEL)
 	suite.False(*updatedOEL.IddocSupport)
 
-	// Reload the IDDOC questionnaire and verify that status is now NOT_NEEDED (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now false (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed after iddoc_support is set to false")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed after iddoc_support is set to false")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 }
 
-// TestIDDOCQuestionnaireNeededTriggerOnSolution tests that the IDDOC questionnaire status
+// TestIDDOCQuestionnaireNeededTriggerOnSolution tests that the IDDOC questionnaire needed field
 // is automatically synced when INNOVATION or ACO_OS solutions are added, updated, or deleted
 func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnSolution() {
 	plan := suite.createModelPlan("plan for IDDOC questionnaire trigger test on solution")
@@ -63,7 +66,8 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnSolution() {
 	iddocQuestionnaire, err := IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(iddocQuestionnaire)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed initially")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed initially")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should be READY by default")
 
 	// Add an INNOVATION solution - this should trigger the IDDOC questionnaire to become needed
 	innovationSolution, err := MTOSolutionCreateCommon(
@@ -81,19 +85,21 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnSolution() {
 	suite.NotNil(innovationSolution)
 	suite.Equal(models.MTOCSKInnovation, *innovationSolution.Key)
 
-	// Reload the IDDOC questionnaire and verify that status is now READY (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now true (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("READY", iddocQuestionnaire.Status, "IDDOC questionnaire should be needed after INNOVATION solution is added")
+	suite.True(iddocQuestionnaire.Needed, "IDDOC questionnaire should be needed after INNOVATION solution is added")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 
-	// Delete the INNOVATION solution - this should trigger the IDDOC questionnaire to become not needed
+	// Delete the INNOVATION solution - this should trigger the IDDOC questionnaire needed field to become false
 	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, innovationSolution.ID)
 	suite.NoError(err)
 
-	// Reload the IDDOC questionnaire and verify that status is now NOT_NEEDED (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now false (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed after INNOVATION solution is deleted")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed after INNOVATION solution is deleted")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 
 	// Now test with ACO_OS solution
 	acoOSSolution, err := MTOSolutionCreateCommon(
@@ -111,13 +117,14 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnSolution() {
 	suite.NotNil(acoOSSolution)
 	suite.Equal(models.MTOCSKAcoOs, *acoOSSolution.Key)
 
-	// Reload the IDDOC questionnaire and verify that status is now READY (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now true (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("READY", iddocQuestionnaire.Status, "IDDOC questionnaire should be needed after ACO_OS solution is added")
+	suite.True(iddocQuestionnaire.Needed, "IDDOC questionnaire should be needed after ACO_OS solution is added")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 }
 
-// TestIDDOCQuestionnaireNeededTriggerOnMilestone tests that the IDDOC questionnaire status
+// TestIDDOCQuestionnaireNeededTriggerOnMilestone tests that the IDDOC questionnaire needed field
 // is automatically synced when IDDOC_SUPPORT milestone is added, updated, or deleted
 func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 	plan := suite.createModelPlan("plan for IDDOC questionnaire trigger test on milestone")
@@ -126,7 +133,8 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 	iddocQuestionnaire, err := IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(iddocQuestionnaire)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed initially")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed initially")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should be READY by default")
 
 	// Add an IDDOC_SUPPORT milestone - this should trigger the IDDOC questionnaire to become needed
 	iddocSupportMilestone, err := MTOMilestoneCreateCommon(
@@ -144,23 +152,25 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 	suite.NotNil(iddocSupportMilestone)
 	suite.Equal(models.MTOCommonMilestoneKeyIddocSupport, *iddocSupportMilestone.Key)
 
-	// Reload the IDDOC questionnaire and verify that status is now READY (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now true (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("READY", iddocQuestionnaire.Status, "IDDOC questionnaire should be needed after IDDOC_SUPPORT milestone is added")
+	suite.True(iddocQuestionnaire.Needed, "IDDOC questionnaire should be needed after IDDOC_SUPPORT milestone is added")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 
-	// Delete the IDDOC_SUPPORT milestone - this should trigger the IDDOC questionnaire to become not needed
+	// Delete the IDDOC_SUPPORT milestone - this should trigger the IDDOC questionnaire needed field to become false
 	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, iddocSupportMilestone.ID)
 	suite.NoError(err)
 
-	// Reload the IDDOC questionnaire and verify that status is now NOT_NEEDED (due to the database trigger)
+	// Reload the IDDOC questionnaire and verify that needed is now false (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed after IDDOC_SUPPORT milestone is deleted")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed after IDDOC_SUPPORT milestone is deleted")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY (not affected by trigger)")
 }
 
-// TestIDDOCQuestionnaireNeededTriggerMultipleConditions tests that the IDDOC questionnaire status
-// remains READY/IN_PROGRESS/COMPLETED when multiple conditions are met, and only becomes NOT_NEEDED when all conditions are unmet
+// TestIDDOCQuestionnaireNeededTriggerMultipleConditions tests that the IDDOC questionnaire needed field
+// remains true when multiple conditions are met, and only becomes false when all conditions are unmet
 func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleConditions() {
 	plan := suite.createModelPlan("plan for IDDOC questionnaire trigger test with multiple conditions")
 
@@ -168,7 +178,8 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 	iddocQuestionnaire, err := IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(iddocQuestionnaire)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed initially")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed initially")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should be READY by default")
 
 	// Get the OEL section
 	oel, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
@@ -197,10 +208,11 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 	suite.NoError(err)
 	suite.NotNil(innovationSolution)
 
-	// Reload the IDDOC questionnaire - it should be needed (status READY)
+	// Reload the IDDOC questionnaire - needed should be true
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("READY", iddocQuestionnaire.Status, "IDDOC questionnaire should be needed when multiple conditions are met")
+	suite.True(iddocQuestionnaire.Needed, "IDDOC questionnaire should be needed when multiple conditions are met")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY")
 
 	// Remove the INNOVATION solution - IDDOC questionnaire should still be needed because iddoc_support is true
 	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, innovationSolution.ID)
@@ -208,7 +220,8 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("READY", iddocQuestionnaire.Status, "IDDOC questionnaire should still be needed because iddoc_support is true")
+	suite.True(iddocQuestionnaire.Needed, "IDDOC questionnaire should still be needed because iddoc_support is true")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY")
 
 	// Set iddoc_support to false - now IDDOC questionnaire should not be needed
 	changes = map[string]interface{}{
@@ -219,5 +232,6 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Equal("NOT_NEEDED", iddocQuestionnaire.Status, "IDDOC questionnaire should not be needed when all conditions are unmet")
+	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed when all conditions are unmet")
+	suite.Equal("READY", iddocQuestionnaire.Status, "Status should remain READY")
 }

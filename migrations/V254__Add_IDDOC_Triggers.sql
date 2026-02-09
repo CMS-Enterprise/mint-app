@@ -1,12 +1,12 @@
--- Create a function to sync the IDDOC questionnaire status field based on trigger conditions
+-- Create a function to sync the IDDOC questionnaire needed field based on trigger conditions
+-- The trigger function no longer manages status transitions - it only sets needed=true/false
+-- Status is now orthogonal to needed and is managed separately by the application
 CREATE OR REPLACE FUNCTION sync_iddoc_questionnaire_needed()
 RETURNS TRIGGER AS $$
 DECLARE
     v_model_plan_id UUID;
     v_should_be_needed BOOLEAN;
     v_should_process BOOLEAN := FALSE;
-    v_current_status IDDOC_QUESTIONNAIRE_STATUS;
-    v_new_status IDDOC_QUESTIONNAIRE_STATUS;
 BEGIN
     -- Determine the model_plan_id and check if we should process this trigger
     IF TG_TABLE_NAME = 'plan_ops_eval_and_learning' THEN
@@ -37,11 +37,6 @@ BEGIN
         RETURN COALESCE(NEW, OLD);
     END IF;
 
-    -- Get current status from iddoc_questionnaire
-    SELECT status INTO v_current_status
-    FROM iddoc_questionnaire
-    WHERE model_plan_id = v_model_plan_id;
-
     -- Check if any of the three trigger conditions are met
     SELECT EXISTS (
         -- Condition 1: OEL iddoc_support = true
@@ -67,32 +62,15 @@ BEGIN
           AND mto_common_milestone_key = 'IDDOC_SUPPORT'
     ) INTO v_should_be_needed;
 
-    -- Determine new status based on conditions
-    IF v_should_be_needed THEN
-        -- Conditions are met: IDDOC is needed
-        -- Transition from NOT_NEEDED to READY
-        -- Don't override IN_PROGRESS or COMPLETED (preserve user's work)
-        IF v_current_status = 'NOT_NEEDED' THEN
-            v_new_status := 'READY';
-        ELSE
-            -- Keep current status (IN_PROGRESS or COMPLETED)
-            v_new_status := v_current_status;
-        END IF;
-    ELSE
-        -- Conditions are not met: IDDOC is not needed
-        -- Always set to NOT_NEEDED regardless of current status
-        v_new_status := 'NOT_NEEDED';
-    END IF;
-
-    -- Update status if it changed
-    IF v_new_status != v_current_status THEN
-        UPDATE iddoc_questionnaire
-        SET
-            status = v_new_status,
-            modified_by = COALESCE(NEW.modified_by, NEW.created_by, OLD.modified_by, OLD.created_by),
-            modified_dts = CURRENT_TIMESTAMP
-        WHERE model_plan_id = v_model_plan_id;
-    END IF;
+    -- Simply update the needed field (no status management)
+    -- Only update if the needed value is changing to avoid unnecessary writes
+    UPDATE iddoc_questionnaire
+    SET
+        needed = v_should_be_needed,
+        modified_by = COALESCE(NEW.modified_by, NEW.created_by, OLD.modified_by, OLD.created_by),
+        modified_dts = CURRENT_TIMESTAMP
+    WHERE model_plan_id = v_model_plan_id
+      AND needed != v_should_be_needed;
 
     RETURN COALESCE(NEW, OLD);
 END;
@@ -158,31 +136,30 @@ EXECUTE FUNCTION sync_iddoc_questionnaire_needed();
 
 -- Add comments
 COMMENT ON FUNCTION sync_iddoc_questionnaire_needed() IS
-'Automatically syncs the iddoc_questionnaire.status field based on three conditions: '
+'Automatically syncs the iddoc_questionnaire.needed field based on three business rules: '
 '1) plan_ops_eval_and_learning.iddoc_support = true, '
 '2) INNOVATION or ACO_OS solution exists, '
 '3) IDDOC_SUPPORT milestone exists. '
-'When conditions are met and status is NOT_NEEDED, transitions to READY. '
-'When conditions are not met, always sets status to NOT_NEEDED. '
-'Preserves IN_PROGRESS and COMPLETED statuses when conditions remain met.';
+'Sets needed=true when any condition is met, needed=false when no conditions are met. '
+'Does not affect the status field - that is managed by the application.';
 
 COMMENT ON TRIGGER sync_iddoc_on_oel_update ON plan_ops_eval_and_learning IS
-'Triggers IDDOC questionnaire status sync when iddoc_support field changes';
+'Triggers IDDOC questionnaire needed field sync when iddoc_support field changes';
 
 COMMENT ON TRIGGER sync_iddoc_on_solution_insert ON mto_solution IS
-'Triggers IDDOC questionnaire status sync when INNOVATION or ACO_OS solution is inserted';
+'Triggers IDDOC questionnaire needed field sync when INNOVATION or ACO_OS solution is inserted';
 
 COMMENT ON TRIGGER sync_iddoc_on_solution_update ON mto_solution IS
-'Triggers IDDOC questionnaire status sync when INNOVATION or ACO_OS solution is updated';
+'Triggers IDDOC questionnaire needed field sync when INNOVATION or ACO_OS solution is updated';
 
 COMMENT ON TRIGGER sync_iddoc_on_solution_delete ON mto_solution IS
-'Triggers IDDOC questionnaire status sync when INNOVATION or ACO_OS solution is deleted';
+'Triggers IDDOC questionnaire needed field sync when INNOVATION or ACO_OS solution is deleted';
 
 COMMENT ON TRIGGER sync_iddoc_on_milestone_insert ON mto_milestone IS
-'Triggers IDDOC questionnaire status sync when IDDOC_SUPPORT milestone is inserted';
+'Triggers IDDOC questionnaire needed field sync when IDDOC_SUPPORT milestone is inserted';
 
 COMMENT ON TRIGGER sync_iddoc_on_milestone_update ON mto_milestone IS
-'Triggers IDDOC questionnaire status sync when IDDOC_SUPPORT milestone is updated';
+'Triggers IDDOC questionnaire needed field sync when IDDOC_SUPPORT milestone is updated';
 
 COMMENT ON TRIGGER sync_iddoc_on_milestone_delete ON mto_milestone IS
-'Triggers IDDOC questionnaire status sync when IDDOC_SUPPORT milestone is deleted';
+'Triggers IDDOC questionnaire needed field sync when IDDOC_SUPPORT milestone is deleted';

@@ -34,7 +34,8 @@ CREATE TABLE iddoc_questionnaire (
     data_monitoring_note TEXT,
 
     -- Metadata
-    status IDDOC_QUESTIONNAIRE_STATUS NOT NULL DEFAULT 'NOT_NEEDED',
+    needed BOOLEAN NOT NULL DEFAULT FALSE,
+    status IDDOC_QUESTIONNAIRE_STATUS NOT NULL DEFAULT 'READY',
     completed_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
     completed_dts TIMESTAMP WITH TIME ZONE,
 
@@ -75,7 +76,8 @@ COMMENT ON COLUMN iddoc_questionnaire.data_flow_diagrams_needed IS 'Whether data
 COMMENT ON COLUMN iddoc_questionnaire.produce_benefit_enhancement_files IS 'Whether benefit enhancement files will be produced.';
 COMMENT ON COLUMN iddoc_questionnaire.file_naming_conventions IS 'File naming conventions to be used.';
 COMMENT ON COLUMN iddoc_questionnaire.data_monitoring_note IS 'Additional notes about data monitoring setup.';
-COMMENT ON COLUMN iddoc_questionnaire.status IS 'The current status of the IDDOC questionnaire (NOT_NEEDED, READY, IN_PROGRESS, COMPLETE).';
+COMMENT ON COLUMN iddoc_questionnaire.needed IS 'Whether the IDDOC questionnaire is required based on business rules. Controlled by database triggers.';
+COMMENT ON COLUMN iddoc_questionnaire.status IS 'Work completion status: READY (not started), IN_PROGRESS (started), COMPLETE (finished). Orthogonal to needed field.';
 COMMENT ON COLUMN iddoc_questionnaire.completed_by IS 'The user who completed the questionnaire.';
 COMMENT ON COLUMN iddoc_questionnaire.completed_dts IS 'The timestamp when the questionnaire was completed.';
 COMMENT ON COLUMN iddoc_questionnaire.created_by IS 'The user who created this IDDOC questionnaire record.';
@@ -97,13 +99,15 @@ SELECT audit.AUDIT_TABLE(
 INSERT INTO iddoc_questionnaire (
     id,
     model_plan_id,
+    needed,
     status,
     created_by
 )
 SELECT
     GEN_RANDOM_UUID() AS id,
     mp.id AS model_plan_id,
-    'NOT_NEEDED'::IDDOC_QUESTIONNAIRE_STATUS AS status,
+    FALSE AS needed, -- Default: not needed
+    'READY'::IDDOC_QUESTIONNAIRE_STATUS AS status, -- Default: ready to start
     '00000001-0001-0001-0001-000000000001'::UUID AS created_by -- MINT System Account
 FROM model_plan mp
 WHERE NOT EXISTS (

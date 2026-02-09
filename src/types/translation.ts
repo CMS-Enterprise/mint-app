@@ -39,7 +39,7 @@ import {
   GeographyType,
   IddocFileType,
   IddocFullTimeOrIncrementalType,
-  IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   IddocQuestionnaireTranslation,
   KeyCharacteristic,
   KeyContactCategoryTranslation,
@@ -805,7 +805,7 @@ export type TranslationOpsEvalAndLearning = {
 
 // IDDOC Questionnaire
 export type TranslationIddocQuestionnaireForm = {
-  status: TranslationFieldPropertiesWithOptions<IddocQuestionnaireStatus>;
+  status: TranslationFieldPropertiesWithOptions<IddocQuestionnaireTaskListStatus>;
   needed: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   // IDDOC Operations
   technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<

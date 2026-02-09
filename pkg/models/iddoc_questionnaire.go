@@ -95,7 +95,8 @@ type IDDOCQuestionnaire struct {
 	DataMonitoringNote             *string `json:"dataMonitoringNote" db:"data_monitoring_note"`
 
 	// Metadata
-	Status       string     `json:"status" db:"status"` // IDDOC_QUESTIONNAIRE_STATUS enum
+	Needed       bool       `json:"needed" db:"needed"` // Whether questionnaire is required (controlled by triggers)
+	Status       string     `json:"status" db:"status"` // Work status enum (READY, IN_PROGRESS, COMPLETE)
 	CompletedBy  *uuid.UUID `json:"completedBy" db:"completed_by"`
 	CompletedDts *time.Time `json:"completedDts" db:"completed_dts"`
 }
@@ -105,7 +106,8 @@ func NewIDDOCQuestionnaire(createdBy uuid.UUID, modelPlanID uuid.UUID) *IDDOCQue
 	return &IDDOCQuestionnaire{
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		Status:            "NOT_NEEDED", // Default status
+		Needed:            false,   // Default: not needed
+		Status:            "READY", // Default: ready to start if needed
 	}
 }
 

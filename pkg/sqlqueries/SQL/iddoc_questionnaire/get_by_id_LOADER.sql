@@ -29,6 +29,7 @@ SELECT
     iddoc.produce_benefit_enhancement_files,
     iddoc.file_naming_conventions,
     iddoc.data_monitoring_note,
+    iddoc.needed,
     iddoc.status,
     iddoc.completed_by,
     iddoc.completed_dts,

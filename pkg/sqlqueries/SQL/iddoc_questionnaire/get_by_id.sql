@@ -24,6 +24,7 @@ SELECT
     produce_benefit_enhancement_files,
     file_naming_conventions,
     data_monitoring_note,
+    needed,
     status,
     completed_by,
     completed_dts,

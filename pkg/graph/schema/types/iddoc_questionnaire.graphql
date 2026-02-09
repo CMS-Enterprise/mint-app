@@ -1,7 +1,18 @@
 """
-IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
+IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire.
+Does not include NOT_NEEDED - use taskListStatus for display purposes.
 """
 enum IDDOCQuestionnaireStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+IDDOCQuestionnaireTaskListStatus represents the combined status for task list display.
+Combines the needed field with work status to provide a unified view.
+"""
+enum IDDOCQuestionnaireTaskListStatus {
   NOT_NEEDED
   READY
   IN_PROGRESS
@@ -66,8 +77,9 @@ type IDDOCQuestionnaire {
 
   # IDDOCQuestionnaire Metadata
   """
-  Convenience field indicating whether the IDDOC questionnaire is needed for this model plan.
-  Computed from status field: true when status is NOT_STARTED, IN_PROGRESS, or COMPLETED.
+  Whether the IDDOC questionnaire is needed/required for this model plan.
+  Determined by business rules (database triggers) based on OEL settings, solutions, and milestones.
+  This is a stored field, not computed.
   """
   needed: Boolean!
 
@@ -88,15 +100,21 @@ type IDDOCQuestionnaire {
 
   """
   Convenience field indicating whether the questionnaire has been marked as complete.
-  Computed from status field: true when status is COMPLETED.
+  Computed from status field: true when status is COMPLETE.
   """
   isIDDOCQuestionnaireComplete: Boolean!
 
   """
-  The current status of the IDDOC questionnaire.
-  Stored in database and calculated based on convenience fields and question data.
+  The work completion status of the IDDOC questionnaire (READY, IN_PROGRESS, COMPLETE).
+  Represents user progress on the questionnaire, independent of whether it's needed.
   """
   status: IDDOCQuestionnaireStatus!
+
+  """
+  Computed status for display in task lists.
+  Returns NOT_NEEDED when needed=false, otherwise returns the actual work status.
+  """
+  taskListStatus: IDDOCQuestionnaireTaskListStatus!
 
   # Model Metadata
   createdBy: UUID!
@@ -138,7 +156,7 @@ input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
   dataMonitoringNote: String
 
   # Convenience fields for controlling status
-  needed: Boolean
+  # Note: 'needed' is NOT included - it's read-only and controlled by triggers
   isIDDOCQuestionnaireComplete: Boolean
 
   # Completion metadata

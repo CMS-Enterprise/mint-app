@@ -1,16 +1,16 @@
--- Backfill IDDOC questionnaire status field based on trigger conditions
--- Set status = READY where any of the three trigger conditions are met:
+-- Backfill IDDOC questionnaire needed field based on trigger conditions
+-- Set needed = TRUE where any of the three trigger conditions are met:
 -- 1. plan_ops_eval_and_learning.iddoc_support = true
 -- 2. INNOVATION or ACO_OS solution exists
 -- 3. IDDOC_SUPPORT milestone exists
 
 UPDATE iddoc_questionnaire iq
 SET
-    status = 'READY'::IDDOC_QUESTIONNAIRE_STATUS,
+    needed = TRUE,
     modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
-    status = 'NOT_NEEDED'
+    needed = FALSE
     AND EXISTS (
     -- Condition 1: OEL iddoc_support = true
         SELECT 1
@@ -38,15 +38,15 @@ WHERE
             AND mm.mto_common_milestone_key = 'IDDOC_SUPPORT'
     );
 
--- Set status = NOT_NEEDED where NO conditions are met
+-- Set needed = FALSE where NO conditions are met
 -- (This is for safety, but should already be the default for new records)
 UPDATE iddoc_questionnaire iq
 SET
-    status = 'NOT_NEEDED'::IDDOC_QUESTIONNAIRE_STATUS,
+    needed = FALSE,
     modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
     modified_dts = CURRENT_TIMESTAMP
 WHERE
-    status != 'NOT_NEEDED'
+    needed = TRUE
     AND NOT EXISTS (
     -- Condition 1: OEL iddoc_support = true
         SELECT 1

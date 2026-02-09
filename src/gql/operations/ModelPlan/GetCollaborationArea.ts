@@ -51,7 +51,7 @@ export default gql(/* GraphQL */ `
         }
         iddocQuestionnaire {
           id
-          status
+          taskListStatus
           needed
           modifiedDts
           modifiedByUserAccount {

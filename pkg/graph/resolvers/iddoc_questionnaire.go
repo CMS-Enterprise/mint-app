@@ -42,6 +42,7 @@ func hasQuestionnaireData(q *models.IDDOCQuestionnaire) bool {
 		// modelPlanRelation fields
 		"ModelPlanID": true,
 		// Status and completion metadata
+		"Needed":       true,
 		"Status":       true,
 		"CompletedBy":  true,
 		"CompletedDts": true,
@@ -113,30 +114,8 @@ func IDDOCQuestionnaireUpdate(
 	newStatus := currentStatus
 	iddocChangedToComplete := false
 
-	// Handle convenience field: needed
-	// This allows FE to set needed=true/false to control NOT_NEEDED status
-	if neededValue, ok := changes["needed"]; ok {
-		neededPointer, ok := neededValue.(*bool)
-		if !ok || neededPointer == nil {
-			return nil, fmt.Errorf("unable to update IDDOC questionnaire, needed is not a bool")
-		}
-		needed := *neededPointer
-
-		if !needed {
-			// Setting needed=false → NOT_NEEDED
-			newStatus = "NOT_NEEDED"
-		} else if currentStatus == "NOT_NEEDED" {
-			// Setting needed=true from NOT_NEEDED
-			// Check if any question data exists
-			if hasQuestionnaireData(existing) {
-				newStatus = "IN_PROGRESS"
-			} else {
-				newStatus = "NOT_STARTED"
-			}
-		}
-		// Remove from changes map (convenience field, not in DB)
-		delete(changes, "needed")
-	}
+	// Note: 'needed' field is read-only via mutation - controlled solely by database triggers
+	// It is not a convenience field in the input and should not be handled here
 
 	// Handle convenience field: isIDDOCQuestionnaireComplete
 	// This allows FE to mark the questionnaire as complete/incomplete
@@ -162,13 +141,12 @@ func IDDOCQuestionnaireUpdate(
 			}
 		} else {
 			// Setting to incomplete
-			// Check if data exists to determine IN_PROGRESS vs NOT_STARTED
+			// Check if data exists to determine IN_PROGRESS vs READY
 			if hasQuestionnaireData(existing) {
 				newStatus = "IN_PROGRESS"
-			} else if currentStatus != "NOT_NEEDED" {
-				newStatus = "NOT_STARTED"
+			} else {
+				newStatus = "READY"
 			}
-			// else: if currently NOT_NEEDED, keep it NOT_NEEDED
 
 			// Clear completion metadata
 			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
@@ -194,6 +172,7 @@ func IDDOCQuestionnaireUpdate(
 		// modelPlanRelation fields
 		"ModelPlanID": true,
 		// Status and completion metadata
+		"Needed":       true,
 		"Status":       true,
 		"CompletedBy":  true,
 		"CompletedDts": true,

@@ -1,6 +1,7 @@
 import { TranslationIddocQuestionnaire } from 'types/translation';
 
 import {
+  IddocQuestionnaireTaskListStatus,
   ModelViewFilter,
   TableName,
   TranslationDataType,
@@ -425,10 +426,10 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     formType: TranslationFormType.CHECKBOX,
     order: 7.19,
     options: {
-      NOT_NEEDED: 'Not needed',
-      READY: 'Not started',
-      IN_PROGRESS: 'In progress',
-      COMPLETE: 'Complete'
+      [IddocQuestionnaireTaskListStatus.NOT_NEEDED]: 'Not needed',
+      [IddocQuestionnaireTaskListStatus.READY]: 'Not started',
+      [IddocQuestionnaireTaskListStatus.IN_PROGRESS]: 'In progress',
+      [IddocQuestionnaireTaskListStatus.COMPLETE]: 'Complete'
     },
     hideFromReadonly: true
   }

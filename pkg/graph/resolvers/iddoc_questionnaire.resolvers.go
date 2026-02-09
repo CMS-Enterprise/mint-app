@@ -29,21 +29,34 @@ func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Conte
 	return &value, nil
 }
 
-// Needed is the resolver for the needed convenience field.
-func (r *iDDOCQuestionnaireResolver) Needed(ctx context.Context, obj *models.IDDOCQuestionnaire) (bool, error) {
-	// Questionnaire is needed if status is anything other than NOT_NEEDED
-	return obj.Status != "NOT_NEEDED", nil
-}
-
 // IsIDDOCQuestionnaireComplete is the resolver for the isIDDOCQuestionnaireComplete convenience field.
 func (r *iDDOCQuestionnaireResolver) IsIDDOCQuestionnaireComplete(ctx context.Context, obj *models.IDDOCQuestionnaire) (bool, error) {
-	// Questionnaire is complete if status is COMPLETED
-	return obj.Status == "COMPLETED", nil
+	// Questionnaire is complete if status is COMPLETE
+	return obj.Status == "COMPLETE", nil
 }
 
 // Status is the resolver for the status field.
 func (r *iDDOCQuestionnaireResolver) Status(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireStatus, error) {
 	return model.IDDOCQuestionnaireStatus(obj.Status), nil
+}
+
+// TaskListStatus is the resolver for the taskListStatus field.
+func (r *iDDOCQuestionnaireResolver) TaskListStatus(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireTaskListStatus, error) {
+	// Combine needed + status for display
+	if !obj.Needed {
+		return model.IDDOCQuestionnaireTaskListStatusNotNeeded, nil
+	}
+	// Map work status to task list status
+	switch obj.Status {
+	case "READY":
+		return model.IDDOCQuestionnaireTaskListStatusReady, nil
+	case "IN_PROGRESS":
+		return model.IDDOCQuestionnaireTaskListStatusInProgress, nil
+	case "COMPLETE":
+		return model.IDDOCQuestionnaireTaskListStatusComplete, nil
+	default:
+		return model.IDDOCQuestionnaireTaskListStatusReady, nil
+	}
 }
 
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.

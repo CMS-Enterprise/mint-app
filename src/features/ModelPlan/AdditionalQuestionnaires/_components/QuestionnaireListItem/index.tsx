@@ -5,7 +5,7 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireStatus
+  IddocQuestionnaireTaskListStatus
 } from 'gql/generated/graphql';
 
 import '../../index.scss';
@@ -14,7 +14,7 @@ const QuestionnaireListStatusTag = ({
   status,
   classname
 }: {
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
   classname?: string;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -77,7 +77,7 @@ export const QuestionnaireListButton = ({
   testId?: string;
   path: string;
   disabled?: boolean;
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -92,7 +92,7 @@ export const QuestionnaireListButton = ({
 
     if (
       status === DataExchangeApproachStatus.IN_PROGRESS ||
-      status === IddocQuestionnaireStatus.IN_PROGRESS
+      status === IddocQuestionnaireTaskListStatus.IN_PROGRESS
     ) {
       return additionalQuestionnairesT('questionnaireButton.continue');
     }
@@ -104,7 +104,7 @@ export const QuestionnaireListButton = ({
     return null;
   };
 
-  if (status === IddocQuestionnaireStatus.NOT_NEEDED) {
+  if (status === IddocQuestionnaireTaskListStatus.NOT_NEEDED) {
     return null;
   }
 
@@ -132,7 +132,7 @@ type QuestionnaireListItemProps = {
   children?: React.ReactNode;
   heading: string;
   description: string;
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
   testId: string;
   lastUpdated?: string | null;
 };
@@ -170,7 +170,8 @@ const QuestionnaireListItem = ({
         <div className="additional-questionnaires-list__task-description margin-right-auto line-height-body-5">
           <p
             className={classNames('margin-top-0', {
-              'text-base-dark': status === IddocQuestionnaireStatus.NOT_NEEDED
+              'text-base-dark':
+                status === IddocQuestionnaireTaskListStatus.NOT_NEEDED
             })}
           >
             {description}

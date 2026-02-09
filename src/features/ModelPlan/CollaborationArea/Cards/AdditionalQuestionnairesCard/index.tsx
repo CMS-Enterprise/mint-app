@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
   GetCollaborationAreaQuery,
-  IddocQuestionnaireStatus
+  IddocQuestionnaireTaskListStatus
 } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,7 +30,7 @@ export type AdditionalQuestionnairesCardType = {
 
 export type QuestionnairesStatusType =
   | DataExchangeApproachStatus
-  | IddocQuestionnaireStatus;
+  | IddocQuestionnaireTaskListStatus;
 
 const REQUIRED_QUESTIONNAIRES = ['dataExchangeApproach'];
 
@@ -44,6 +44,12 @@ const QuestionnaireStatusPill = ({
   let pillStyle;
   let pillCopy;
   switch (status) {
+    case 'NOT_NEEDED':
+      pillCopy = collaborationAreaT(
+        'additionalQuestionnairesCard.questionnaireStatus.iddocQuestionnaire.NOT_NEEDED'
+      );
+      pillStyle = 'bg-base-lighter text-base-darker';
+      break;
     case 'READY':
       pillCopy = collaborationAreaT(
         'additionalQuestionnairesCard.questionnaireStatus.dataExchangeApproach.READY'
@@ -153,7 +159,11 @@ const AdditionalQuestionnairesCard = ({
                   key={requiredQuestionnaire.id}
                 >
                   <QuestionnaireStatusPill
-                    status={requiredQuestionnaire.status}
+                    status={
+                      'taskListStatus' in requiredQuestionnaire
+                        ? requiredQuestionnaire.taskListStatus
+                        : (requiredQuestionnaire as any).status
+                    }
                   />
                   <p className="margin-y-0">
                     {additionalQuestionnairesT(

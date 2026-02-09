@@ -1,6 +1,6 @@
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireStatus
+  IddocQuestionnaireTaskListStatus
 } from '../../../gql/generated/graphql';
 
 const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
@@ -9,11 +9,14 @@ const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
   [DataExchangeApproachStatus.COMPLETE]: 'Completed'
 };
 
-const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
-  [IddocQuestionnaireStatus.READY]: 'Not started',
-  [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
-  [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not needed',
-  [IddocQuestionnaireStatus.COMPLETE]: 'Completed'
+const iddocQuestionnaireStatus: Record<
+  IddocQuestionnaireTaskListStatus,
+  string
+> = {
+  [IddocQuestionnaireTaskListStatus.NOT_NEEDED]: 'Not needed',
+  [IddocQuestionnaireTaskListStatus.READY]: 'Not started',
+  [IddocQuestionnaireTaskListStatus.IN_PROGRESS]: 'In progress',
+  [IddocQuestionnaireTaskListStatus.COMPLETE]: 'Completed'
 };
 
 const collaborationArea = {
