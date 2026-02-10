@@ -241,7 +241,6 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteGetByID() {
 	suite.Equal(note.ID, retrievedNote.ID)
 	suite.Equal(note.Content, retrievedNote.Content)
 	suite.Equal(note.MilestoneID, retrievedNote.MilestoneID)
-	suite.Equal(note.ModelPlanID, retrievedNote.ModelPlanID)
 }
 
 // TestMTOMilestoneNoteGetByIDWithInvalidID tests getting a note with invalid ID

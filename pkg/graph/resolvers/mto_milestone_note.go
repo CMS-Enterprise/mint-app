@@ -39,14 +39,14 @@ func GetMTOMilestoneNotesByMilestoneIDLOADER(ctx context.Context, logger *zap.Lo
 	return notes, nil
 }
 
-func CreateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
+func CreateMTOMilestoneNote(_ context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, input models.MTOMilestoneNoteCreateInput) (*models.MTOMilestoneNote, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
 	note := models.NewMTOMilestoneNote(principalAccount.ID, input.Content, input.MilestoneID)
-	if err := BaseStructPreCreate(logger, note, principal, store, false); err != nil {
+	if err := BaseStructPreCreate(logger, note, principal, store, true); err != nil {
 		return nil, err
 	}
 	return storage.MTOMilestoneNoteCreate(store, logger, note)
