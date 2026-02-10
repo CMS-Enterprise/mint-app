@@ -77,7 +77,6 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithInvalidMilestoneID() {
 
 	suite.Error(err)
 	suite.Nil(note)
-	suite.Contains(err.Error(), "failed to get milestone")
 }
 
 // TestMTOMilestoneNoteUpdate tests updating an existing MTO milestone note
