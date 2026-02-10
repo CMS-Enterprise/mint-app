@@ -2,6 +2,7 @@ const modelPlanOverview = {
   heading: 'Add a new model to MINT',
   overviewHeading: 'Overview for adding a model',
   title: 'Overview for adding a model',
+  lastUpdatedDate: '2025-08-27',
   description:
     'Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation',
   getStartedButton: 'Get started',

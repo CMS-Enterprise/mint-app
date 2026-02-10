@@ -1,5 +1,6 @@
 const phasesInvolved = {
   title: 'Phases involved in creating IT and operational support for models',
+  lastUpdatedDate: '2025-08-25',
   description:
     'There are two phases invovled in creating IT and operational support for CMMI models.',
   getStartedButton: 'Get started',

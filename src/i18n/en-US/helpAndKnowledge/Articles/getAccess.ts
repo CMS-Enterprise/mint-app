@@ -2,6 +2,7 @@ const getAccess = {
   heading: 'How to get access to MINT',
   overviewHeading: 'How to get access to MINT',
   title: 'How to get access to MINT',
+  lastUpdatedDate: '2025-09-11',
   description:
     'This guide covers the steps to get access to MINT through Enterprise User Administration (EUA) or Identity Management (IDM).',
   jobcodes: {
