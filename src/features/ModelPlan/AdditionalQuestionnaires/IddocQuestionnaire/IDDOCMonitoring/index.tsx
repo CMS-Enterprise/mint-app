@@ -44,7 +44,7 @@ const DEFAULT_FORM_VALUES: IDDOCMonitoringFormType = {
   produceBenefitEnhancementFiles: null,
   fileNamingConventions: '',
   dataMonitoringNote: '',
-  isIDDOCQuestionnaireComplete: false,
+  isComplete: false,
   completedByUserAccount: {
     __typename: 'UserAccount',
     id: '',
@@ -71,7 +71,7 @@ const IDDOCMonitoring = () => {
     unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncludedConfig,
     dataFlowDiagramsNeeded: dataFlowDiagramsNeededConfig,
     produceBenefitEnhancementFiles: produceBenefitEnhancementFilesConfig,
-    isIDDOCQuestionnaireComplete: isIDDOCQuestionnaireCompleteConfig
+    isComplete: isCompleteConfig
   } = usePlanTranslation('iddocQuestionnaire');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
@@ -300,7 +300,7 @@ const IDDOCMonitoring = () => {
             />
 
             <Controller
-              name="isIDDOCQuestionnaireComplete"
+              name="isComplete"
               control={control}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="border-2px border-base-light radius-md padding-2">
@@ -308,7 +308,7 @@ const IDDOCMonitoring = () => {
                     htmlFor={convertCamelCaseToKebabCase(field.name)}
                     className="text-normal"
                   >
-                    {isIDDOCQuestionnaireCompleteConfig.label}
+                    {isCompleteConfig.label}
                   </Label>
 
                   <FormGroup className="margin-0">
@@ -318,7 +318,7 @@ const IDDOCMonitoring = () => {
                       data-testid={convertCamelCaseToKebabCase(field.name)}
                       checked={field.value === true}
                       value="true"
-                      label={isIDDOCQuestionnaireCompleteConfig.options.true}
+                      label={isCompleteConfig.options.true}
                       onChange={e => {
                         field.onChange(e.target.checked);
                       }}

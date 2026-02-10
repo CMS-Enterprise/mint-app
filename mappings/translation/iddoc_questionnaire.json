@@ -704,10 +704,10 @@
     "formType": "TEXTAREA",
     "order": 4.07
   },
-  "isIDDOCQuestionnaireComplete": {
-    "gqlField": "isIddocQuestionnaireComplete",
-    "goField": "IsIddocQuestionnaireComplete",
-    "dbField": "is_iddoc_questionnaire_complete",
+  "isComplete": {
+    "gqlField": "isComplete",
+    "goField": "IsComplete",
+    "dbField": "status",
     "label": "Questionnaire status",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",

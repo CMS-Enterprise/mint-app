@@ -102,7 +102,7 @@ type IDDOCQuestionnaire {
   Convenience field indicating whether the questionnaire has been marked as complete.
   Computed from status field: true when status is COMPLETE.
   """
-  isIDDOCQuestionnaireComplete: Boolean!
+  isComplete: Boolean!
 
   """
   The work completion status of the IDDOC questionnaire (READY, IN_PROGRESS, COMPLETE).
@@ -157,7 +157,7 @@ input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
 
   # Convenience fields for controlling status
   # Note: 'needed' is NOT included - it's read-only and controlled by triggers
-  isIDDOCQuestionnaireComplete: Boolean
+  isComplete: Boolean
 
   # Completion metadata
   completedBy: UUID

@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"reflect"
 	"time"
 
 	"github.com/samber/lo"
@@ -27,70 +26,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
-// hasQuestionnaireData checks if any question fields (non-metadata fields) have data.
-// This uses reflection to check all fields except metadata, making it expandable for future fields.
-// Used to determine if status should be IN_PROGRESS vs NOT_STARTED.
-func hasQuestionnaireData(q *models.IDDOCQuestionnaire) bool {
-	// Metadata fields to exclude from the check
-	metadataFields := map[string]bool{
-		// baseStruct fields
-		"ID":          true,
-		"CreatedBy":   true,
-		"CreatedDts":  true,
-		"ModifiedBy":  true,
-		"ModifiedDts": true,
-		// modelPlanRelation fields
-		"ModelPlanID": true,
-		// Status and completion metadata
-		"Needed":       true,
-		"Status":       true,
-		"CompletedBy":  true,
-		"CompletedDts": true,
-	}
-
-	val := reflect.ValueOf(q).Elem()
-	typ := val.Type()
-
-	// Iterate through all fields in the struct
-	for i := 0; i < val.NumField(); i++ {
-		field := val.Field(i)
-		fieldName := typ.Field(i).Name
-
-		// Skip metadata fields
-		if metadataFields[fieldName] {
-			continue
-		}
-
-		// Check if the field has a non-zero value
-		// For pointers, check if non-nil
-		// For slices/arrays, check if length > 0
-		// For other types, check if not zero value
-		switch field.Kind() {
-		case reflect.Ptr:
-			if !field.IsNil() {
-				return true
-			}
-		case reflect.Slice, reflect.Array:
-			if field.Len() > 0 {
-				return true
-			}
-		case reflect.String:
-			if field.String() != "" {
-				return true
-			}
-		default:
-			// For other types, check if not zero value
-			if !field.IsZero() {
-				return true
-			}
-		}
-	}
-
-	return false
-}
-
 // IDDOCQuestionnaireUpdate updates an IDDOC questionnaire
-// It handles the convenience fields (needed, isIDDOCQuestionnaireComplete) and calculates
+// It handles the convenience fields (needed, isComplete) and calculates
 // the appropriate status based on the input and existing data.
 func IDDOCQuestionnaireUpdate(
 	ctx context.Context,
@@ -117,19 +54,19 @@ func IDDOCQuestionnaireUpdate(
 	// Note: 'needed' field is read-only via mutation - controlled solely by database triggers
 	// It is not a convenience field in the input and should not be handled here
 
-	// Handle convenience field: isIDDOCQuestionnaireComplete
+	// Handle convenience field: isComplete
 	// This allows FE to mark the questionnaire as complete/incomplete
-	if isCompleteValue, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
+	if isCompleteValue, ok := changes["isComplete"]; ok {
 		isCompletePointer, ok := isCompleteValue.(*bool)
 		if !ok || isCompletePointer == nil {
-			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
+			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isComplete is not a bool")
 		}
 		isComplete := *isCompletePointer
 
 		if isComplete {
 			// Setting to complete
-			newStatus = "COMPLETE"
-			iddocChangedToComplete = (currentStatus != "COMPLETE")
+			newStatus = models.IDDOCQuestionnaireComplete
+			iddocChangedToComplete = (currentStatus != models.IDDOCQuestionnaireComplete)
 
 			// Set completion metadata
 			if existing.CompletedDts == nil {
@@ -142,10 +79,12 @@ func IDDOCQuestionnaireUpdate(
 		} else {
 			// Setting to incomplete
 			// Check if data exists to determine IN_PROGRESS vs READY
-			if hasQuestionnaireData(existing) {
-				newStatus = "IN_PROGRESS"
+			// Use ModifiedBy as indicator of whether questionnaire has been worked on
+			// (matches pattern in baseTaskListSection.CalcStatus)
+			if existing.ModifiedBy != nil {
+				newStatus = models.IDDOCQuestionnaireInProgress
 			} else {
-				newStatus = "READY"
+				newStatus = models.IDDOCQuestionnaireReady
 			}
 
 			// Clear completion metadata
@@ -156,12 +95,12 @@ func IDDOCQuestionnaireUpdate(
 		}
 
 		// Remove from changes map (convenience field, not in DB)
-		delete(changes, "isIDDOCQuestionnaireComplete")
+		delete(changes, "isComplete")
 	}
 
 	// Auto-detect IN_PROGRESS if any question data changed
 	// Check if any non-metadata fields are in the changes
-	// Metadata fields to exclude (same as in hasQuestionnaireData)
+	// Metadata fields to exclude from the check
 	metadataFields := map[string]bool{
 		// baseStruct fields
 		"ID":          true,
@@ -187,8 +126,8 @@ func IDDOCQuestionnaireUpdate(
 	}
 
 	// If question data changed and status is READY, upgrade to IN_PROGRESS
-	if questionFieldsChanged && currentStatus == "READY" {
-		newStatus = "IN_PROGRESS"
+	if questionFieldsChanged && currentStatus == models.IDDOCQuestionnaireReady {
+		newStatus = models.IDDOCQuestionnaireInProgress
 	}
 
 	// Set the computed status in the model

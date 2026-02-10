@@ -75,7 +75,7 @@ type IddocQuestionnaireTranslation struct {
 	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
 	FileNamingConventions             models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
 	DataMonitoringNote                models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
-	IsIDDOCQuestionnaireComplete      models.TranslationFieldWithOptions            `json:"isIDDOCQuestionnaireComplete" db:"is_iddoc_questionnaire_complete"`
+	IsComplete                        models.TranslationFieldWithOptions            `json:"isComplete" db:"status"`
 	CompletedBy                       models.TranslationField                       `json:"completedBy" db:"completed_by"`
 	CompletedDts                      models.TranslationField                       `json:"completedDts" db:"completed_dts"`
 }
@@ -2008,65 +2008,6 @@ func (e *IDDOCFullTimeOrIncrementalType) UnmarshalJSON(b []byte) error {
 }
 
 func (e IDDOCFullTimeOrIncrementalType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
-// IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire.
-// Does not include NOT_NEEDED - use taskListStatus for display purposes.
-type IDDOCQuestionnaireStatus string
-
-const (
-	IDDOCQuestionnaireStatusReady      IDDOCQuestionnaireStatus = "READY"
-	IDDOCQuestionnaireStatusInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
-	IDDOCQuestionnaireStatusComplete   IDDOCQuestionnaireStatus = "COMPLETE"
-)
-
-var AllIDDOCQuestionnaireStatus = []IDDOCQuestionnaireStatus{
-	IDDOCQuestionnaireStatusReady,
-	IDDOCQuestionnaireStatusInProgress,
-	IDDOCQuestionnaireStatusComplete,
-}
-
-func (e IDDOCQuestionnaireStatus) IsValid() bool {
-	switch e {
-	case IDDOCQuestionnaireStatusReady, IDDOCQuestionnaireStatusInProgress, IDDOCQuestionnaireStatusComplete:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCQuestionnaireStatus) String() string {
-	return string(e)
-}
-
-func (e *IDDOCQuestionnaireStatus) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCQuestionnaireStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCQuestionnaireStatus", str)
-	}
-	return nil
-}
-
-func (e IDDOCQuestionnaireStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCQuestionnaireStatus) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCQuestionnaireStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

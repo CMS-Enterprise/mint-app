@@ -53,8 +53,7 @@ type IddocQuestionnaireTranslation {
     @goTag(key: "db", value: "file_naming_conventions")
   dataMonitoringNote: TranslationField!
     @goTag(key: "db", value: "data_monitoring_note")
-  isIDDOCQuestionnaireComplete: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "is_iddoc_questionnaire_complete")
+  isComplete: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 
   # Metadata fields
   completedBy: TranslationField! @goTag(key: "db", value: "completed_by")

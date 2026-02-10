@@ -382,10 +382,10 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 4.07,
     filterGroups: [ModelViewFilter.IDDOC]
   },
-  isIDDOCQuestionnaireComplete: {
-    gqlField: 'isIddocQuestionnaireComplete',
-    goField: 'IsIddocQuestionnaireComplete',
-    dbField: 'is_iddoc_questionnaire_complete', // Note: Computed field, not actually in DB (computed from status)
+  isComplete: {
+    gqlField: 'isComplete',
+    goField: 'IsComplete',
+    dbField: 'status', // Note: Computed from status field
     label: 'Questionnaire status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,

@@ -15,7 +15,7 @@ export default gql(/* GraphQL */ `
           produceBenefitEnhancementFiles
           fileNamingConventions
           dataMonitoringNote
-          isIDDOCQuestionnaireComplete
+          isComplete
           completedByUserAccount {
             id
             commonName

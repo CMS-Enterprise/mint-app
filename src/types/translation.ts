@@ -854,7 +854,7 @@ export type TranslationIddocQuestionnaireForm = {
   >;
   fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
   dataMonitoringNote: TranslationFieldProperties;
-  isIDDOCQuestionnaireComplete: TranslationFieldPropertiesWithOptions<Bool>;
+  isComplete: TranslationFieldPropertiesWithOptions<Bool>;
 
   // Metadata
   completedBy: TranslationFieldProperties;

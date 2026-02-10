@@ -1,17 +1,22 @@
 package models
 
 import (
-	"context"
 	"database/sql/driver"
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/lib/pq"
+)
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
+// IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire
+type IDDOCQuestionnaireStatus string
+
+// These constants represent the different values of IDDOCQuestionnaireStatus
+const (
+	IDDOCQuestionnaireReady      IDDOCQuestionnaireStatus = "READY"
+	IDDOCQuestionnaireInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
+	IDDOCQuestionnaireComplete   IDDOCQuestionnaireStatus = "COMPLETE"
 )
 
 // IDDOCFileType represents the types of files that can be exchanged
@@ -64,6 +69,7 @@ func (a *IDDOCFileTypeArray) UnmarshalJSON(data []byte) error {
 type IDDOCQuestionnaire struct {
 	baseStruct
 	modelPlanRelation
+	completedByRelation
 
 	// Questionnaire fields - Page 1 Operations
 	TechnicalContactsIdentified       *bool      `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
@@ -95,10 +101,13 @@ type IDDOCQuestionnaire struct {
 	DataMonitoringNote             *string `json:"dataMonitoringNote" db:"data_monitoring_note"`
 
 	// Metadata
-	Needed       bool       `json:"needed" db:"needed"` // Whether questionnaire is required (controlled by triggers)
-	Status       string     `json:"status" db:"status"` // Work status enum (READY, IN_PROGRESS, COMPLETE)
-	CompletedBy  *uuid.UUID `json:"completedBy" db:"completed_by"`
-	CompletedDts *time.Time `json:"completedDts" db:"completed_dts"`
+	Needed bool                     `json:"needed" db:"needed"` // Whether questionnaire is required (controlled by triggers)
+	Status IDDOCQuestionnaireStatus `json:"status" db:"status"` // Work status enum (READY, IN_PROGRESS, COMPLETE)
+}
+
+// IsComplete returns whether the questionnaire has been marked as complete
+func (iddoc *IDDOCQuestionnaire) IsComplete() bool {
+	return iddoc.Status == IDDOCQuestionnaireComplete
 }
 
 // NewIDDOCQuestionnaire returns a new IDDOCQuestionnaire object
@@ -106,24 +115,7 @@ func NewIDDOCQuestionnaire(createdBy uuid.UUID, modelPlanID uuid.UUID) *IDDOCQue
 	return &IDDOCQuestionnaire{
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		Needed:            false,   // Default: not needed
-		Status:            "READY", // Default: ready to start if needed
+		Needed:            false,                   // Default: not needed
+		Status:            IDDOCQuestionnaireReady, // Default: ready to start if needed
 	}
-}
-
-// CompletedByUserAccount returns the user account for the user who completed the questionnaire
-func (iddoc *IDDOCQuestionnaire) CompletedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
-	if iddoc.CompletedBy == nil {
-		return nil, nil
-	}
-
-	service, err := appcontext.UserAccountService(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get completed by user account, there is an issue with the user account service. err %w", err)
-	}
-	account, err := service(ctx, *iddoc.CompletedBy)
-	if err != nil {
-		return nil, err
-	}
-	return account, nil
 }
