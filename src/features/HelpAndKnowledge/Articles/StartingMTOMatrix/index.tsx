@@ -15,10 +15,10 @@ import emptyMTO from 'assets/images/02_empty_MTO.png';
 import MINTHome from 'assets/images/09_MINT_home.png';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { formatDateUtc } from 'utils/date';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import RelatedArticles from '../_components/RelatedArticles';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
@@ -142,7 +142,11 @@ export const StartingMTOMatrix = () => {
 
               <StillNeedMTOHelp />
 
-              <LatestContentUpdate file="startingMto.ts" />
+              <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+                {t('helpAndKnowledge:lastUpdated', {
+                  date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+                })}
+              </div>
             </div>
           </Grid>
         </GridContainer>

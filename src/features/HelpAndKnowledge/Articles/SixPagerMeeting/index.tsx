@@ -26,11 +26,11 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { formatDateUtc } from 'utils/date';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
 import NeedHelp from '../_components/NeedHelp';
 import SimpleList from '../_components/SimpleList';
@@ -617,7 +617,14 @@ const SixPagerMeeting = () => {
 
             <NeedHelp />
 
-            <LatestContentUpdate file="sixPageMeeting.ts" />
+            <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+              {sixPageMeetingT('helpAndKnowledge:lastUpdated', {
+                date: formatDateUtc(
+                  sixPageMeetingT('lastUpdatedDate'),
+                  'MM/dd/yyyy'
+                )
+              })}
+            </div>
           </Grid>
         </GridContainer>
       </MainContent>
