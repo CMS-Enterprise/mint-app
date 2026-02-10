@@ -1,5 +1,6 @@
 const creatingMtoMatrix = {
   title: 'Creating your Model-to-operations matrix (MTO) in MINT',
+  lastUpdatedDate: '2025-05-19',
   breadcrumb: 'Creating your MTO in MINT',
   description:
     'Learn more about the Model-to-operations matrix (MTO), what it’s for, and how to create and maintain an MTO in MINT.',

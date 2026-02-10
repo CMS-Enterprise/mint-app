@@ -16,11 +16,11 @@ import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PrintPDFWrapper, { PrintPDFContext } from 'contexts/PrintPDFContext';
+import { formatDateUtc } from 'utils/date';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 export const EvaluatingDataExchangeApproach = () => {
@@ -89,7 +89,11 @@ export const EvaluatingDataExchangeApproach = () => {
               </p>
             </div>
 
-            <LatestContentUpdate file="evaluatingDataExchangeApproach.ts" />
+            <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+              {t('helpAndKnowledge:lastUpdated', {
+                date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+              })}
+            </div>
           </Grid>
         </GridContainer>
         <RelatedArticles

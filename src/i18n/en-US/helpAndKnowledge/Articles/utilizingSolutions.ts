@@ -1,5 +1,6 @@
 const utilizingSolutions = {
   title: 'Utilizing available operational solutions',
+  lastUpdatedDate: '2025-08-25',
   description:
     'One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.',
   summaryBox: {
