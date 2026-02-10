@@ -2013,67 +2013,6 @@ func (e IDDOCFullTimeOrIncrementalType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// IDDOCQuestionnaireTaskListStatus represents the combined status for task list display.
-// Combines the needed field with work status to provide a unified view.
-type IDDOCQuestionnaireTaskListStatus string
-
-const (
-	IDDOCQuestionnaireTaskListStatusNotNeeded  IDDOCQuestionnaireTaskListStatus = "NOT_NEEDED"
-	IDDOCQuestionnaireTaskListStatusReady      IDDOCQuestionnaireTaskListStatus = "READY"
-	IDDOCQuestionnaireTaskListStatusInProgress IDDOCQuestionnaireTaskListStatus = "IN_PROGRESS"
-	IDDOCQuestionnaireTaskListStatusComplete   IDDOCQuestionnaireTaskListStatus = "COMPLETE"
-)
-
-var AllIDDOCQuestionnaireTaskListStatus = []IDDOCQuestionnaireTaskListStatus{
-	IDDOCQuestionnaireTaskListStatusNotNeeded,
-	IDDOCQuestionnaireTaskListStatusReady,
-	IDDOCQuestionnaireTaskListStatusInProgress,
-	IDDOCQuestionnaireTaskListStatusComplete,
-}
-
-func (e IDDOCQuestionnaireTaskListStatus) IsValid() bool {
-	switch e {
-	case IDDOCQuestionnaireTaskListStatusNotNeeded, IDDOCQuestionnaireTaskListStatusReady, IDDOCQuestionnaireTaskListStatusInProgress, IDDOCQuestionnaireTaskListStatusComplete:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCQuestionnaireTaskListStatus) String() string {
-	return string(e)
-}
-
-func (e *IDDOCQuestionnaireTaskListStatus) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCQuestionnaireTaskListStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCQuestionnaireTaskListStatus", str)
-	}
-	return nil
-}
-
-func (e IDDOCQuestionnaireTaskListStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCQuestionnaireTaskListStatus) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCQuestionnaireTaskListStatus) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
 type KeyCharacteristic string
 
 const (

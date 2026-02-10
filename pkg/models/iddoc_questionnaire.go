@@ -19,6 +19,17 @@ const (
 	IDDOCQuestionnaireComplete   IDDOCQuestionnaireStatus = "COMPLETE"
 )
 
+// IDDOCQuestionnaireTaskListStatus represents the combined status for task list display
+type IDDOCQuestionnaireTaskListStatus string
+
+// These constants represent the different values of IDDOCQuestionnaireTaskListStatus
+const (
+	IDDOCQuestionnaireTaskListStatusNotNeeded  IDDOCQuestionnaireTaskListStatus = "NOT_NEEDED"
+	IDDOCQuestionnaireTaskListStatusReady      IDDOCQuestionnaireTaskListStatus = "READY"
+	IDDOCQuestionnaireTaskListStatusInProgress IDDOCQuestionnaireTaskListStatus = "IN_PROGRESS"
+	IDDOCQuestionnaireTaskListStatusComplete   IDDOCQuestionnaireTaskListStatus = "COMPLETE"
+)
+
 // IDDOCFileType represents the types of files that can be exchanged
 type IDDOCFileType string
 
@@ -108,6 +119,26 @@ type IDDOCQuestionnaire struct {
 // IsComplete returns whether the questionnaire has been marked as complete
 func (iddoc *IDDOCQuestionnaire) IsComplete() bool {
 	return iddoc.Status == IDDOCQuestionnaireComplete
+}
+
+// TaskListStatus returns the combined task list status for display.
+// It combines the needed field with work status to provide a unified view.
+func (iddoc *IDDOCQuestionnaire) TaskListStatus() IDDOCQuestionnaireTaskListStatus {
+	// If not needed, return NOT_NEEDED regardless of status
+	if !iddoc.Needed {
+		return IDDOCQuestionnaireTaskListStatusNotNeeded
+	}
+	// Map work status to task list status
+	switch iddoc.Status {
+	case IDDOCQuestionnaireReady:
+		return IDDOCQuestionnaireTaskListStatusReady
+	case IDDOCQuestionnaireInProgress:
+		return IDDOCQuestionnaireTaskListStatusInProgress
+	case IDDOCQuestionnaireComplete:
+		return IDDOCQuestionnaireTaskListStatusComplete
+	default:
+		return IDDOCQuestionnaireTaskListStatusReady
+	}
 }
 
 // NewIDDOCQuestionnaire returns a new IDDOCQuestionnaire object

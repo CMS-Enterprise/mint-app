@@ -29,25 +29,6 @@ func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Conte
 	return &value, nil
 }
 
-// TaskListStatus is the resolver for the taskListStatus field.
-func (r *iDDOCQuestionnaireResolver) TaskListStatus(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireTaskListStatus, error) {
-	// Combine needed + status for display
-	if !obj.Needed {
-		return model.IDDOCQuestionnaireTaskListStatusNotNeeded, nil
-	}
-	// Map work status to task list status
-	switch obj.Status {
-	case models.IDDOCQuestionnaireReady:
-		return model.IDDOCQuestionnaireTaskListStatusReady, nil
-	case models.IDDOCQuestionnaireInProgress:
-		return model.IDDOCQuestionnaireTaskListStatusInProgress, nil
-	case models.IDDOCQuestionnaireComplete:
-		return model.IDDOCQuestionnaireTaskListStatusComplete, nil
-	default:
-		return model.IDDOCQuestionnaireTaskListStatusReady, nil
-	}
-}
-
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.
 func (r *mutationResolver) UpdateIDDOCQuestionnaire(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.IDDOCQuestionnaire, error) {
 	logger := appcontext.ZLogger(ctx)
