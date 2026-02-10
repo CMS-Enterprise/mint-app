@@ -129,18 +129,18 @@ repos:
     rev: 3.2.5
     hooks:
       - id: sqlfluff-fix
-        # Exclude SQL files in the migrations folder with version numbers V0 to V180. 
+        # Exclude SQL files in the migrations folder with version numbers V0 to V180.
         # Matches single-digit (e.g., V0), two-digit (e.g., V99), and three-digit (e.g., V180) versions.
         exclude: 'migrations/V([0-9]{1,2}|1[0-7][0-9]|180)__'
       - id: sqlfluff-lint
-        # Exclude SQL files in the migrations folder with version numbers V0 to V180. 
+        # Exclude SQL files in the migrations folder with version numbers V0 to V180.
         # Matches single-digit (e.g., V0), two-digit (e.g., V99), and three-digit (e.g., V180) versions.
         exclude: 'migrations/V([0-9]{1,2}|1[0-7][0-9]|180)__'
 
   - repo: local
     hooks:
       - id: update-help-article-last-updated
-        name: Update lastUpdatedDate for changed help articles
+        name: Check if help articles were modified
         entry: scripts/update-help-article-dates.sh
         language: script
         files: src/i18n/en-US/helpAndKnowledge/Articles/.*\.ts$
