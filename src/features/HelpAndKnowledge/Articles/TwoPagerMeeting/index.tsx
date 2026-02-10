@@ -22,10 +22,10 @@ import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { getKeys } from 'types/translation';
+import { formatDateUtc } from 'utils/date';
 import { tArray, tObject } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
 import NeedHelp from '../_components/NeedHelp';
 import { ArticleCategories, HelpArticle } from '..';
@@ -559,7 +559,14 @@ const TwoPagerMeeting = () => {
 
             <NeedHelp />
 
-            <LatestContentUpdate file="twoPageMeeting.ts" />
+            <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+              {twoPageMeetingT('helpAndKnowledge:lastUpdated', {
+                date: formatDateUtc(
+                  twoPageMeetingT('lastUpdatedDate'),
+                  'MM/dd/yyyy'
+                )
+              })}
+            </div>
           </Grid>
         </GridContainer>
       </MainContent>

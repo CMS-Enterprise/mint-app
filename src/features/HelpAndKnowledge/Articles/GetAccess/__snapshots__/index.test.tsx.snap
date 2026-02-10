@@ -734,6 +734,11 @@ exports[`Get Access Article > matches snapshot 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4"
+            >
+              Last updated 09/11/2025
+            </div>
           </main>
         </div>
       </div>

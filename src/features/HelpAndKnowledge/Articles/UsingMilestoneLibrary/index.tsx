@@ -19,9 +19,9 @@ import milestoneLibrarySolutionModalImg from 'assets/images/07_milestone_library
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { formatDateUtc } from 'utils/date';
 import { tArray } from 'utils/translation';
 
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import StillNeedMTOHelp from '../_components/StillNeedMTOHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
@@ -189,7 +189,11 @@ const UsingMilestoneLibrary = () => {
               {/* Still need help */}
               <StillNeedMTOHelp />
 
-              <LatestContentUpdate file="usingMilestoneLibrary.ts" />
+              <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+                {t('helpAndKnowledge:lastUpdated', {
+                  date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+                })}
+              </div>
             </div>
           </Grid>
         </GridContainer>

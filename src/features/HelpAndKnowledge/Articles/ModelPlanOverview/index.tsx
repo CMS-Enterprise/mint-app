@@ -14,10 +14,10 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { formatDateUtc } from 'utils/date';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 type ModelPlanOverviewContentProps = {
@@ -136,7 +136,11 @@ export const ModelPlanOverview = () => {
 
             <ModelPlanOverviewContent help />
 
-            <LatestContentUpdate file="modelPlanOverview.ts" />
+            <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+              {t('helpAndKnowledge:lastUpdated', {
+                date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+              })}
+            </div>
           </div>
         </div>
       </MainContent>
