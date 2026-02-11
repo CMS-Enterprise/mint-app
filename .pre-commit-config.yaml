@@ -147,6 +147,7 @@ repos:
         pass_filenames: true
         description: >
           Sets lastUpdatedDate to today in any staged Article .ts file. Re-stage and commit if files change.
+          Runs only locally (skipped in CI to avoid rewriting dates).
 
   - repo: local
     hooks:
