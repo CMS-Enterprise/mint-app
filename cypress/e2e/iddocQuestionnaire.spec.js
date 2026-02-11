@@ -130,7 +130,7 @@ describe('The IDDOC questionnaire Form', () => {
       .type('files start with s and are .xslx files')
       .should('have.value', 'files start with s and are .xslx files');
 
-    cy.get('#is-iddocquestionnaire-complete')
+    cy.get('#is-complete')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
