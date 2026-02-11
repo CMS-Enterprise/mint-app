@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Intended to run only locally. In CI we skip so we don't rewrite every article's date to CI's "today".
-if [ -n "${CI:-}" ] || [ -n "${GITHUB_ACTIONS:-}" ]; then
-  exit 0
-fi
-
 [ $# -eq 0 ] && exit 0
 
 TODAY=$(date +%Y-%m-%d)
