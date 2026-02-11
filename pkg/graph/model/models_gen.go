@@ -50,7 +50,8 @@ type ExistingModelLinkTranslation struct {
 
 // Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation struct {
-	Status                            models.TranslationFieldWithOptions            `json:"status" db:"status"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+	// TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
 	TaskListStatus                    models.TranslationFieldWithOptions            `json:"taskListStatus"`
 	Needed                            models.TranslationFieldWithOptionsAndChildren `json:"needed" db:"needed"`
 	TechnicalContactsIdentified       models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
@@ -76,9 +77,10 @@ type IddocQuestionnaireTranslation struct {
 	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
 	FileNamingConventions             models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
 	DataMonitoringNote                models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
-	IsComplete                        models.TranslationFieldWithOptions            `json:"isComplete" db:"status"`
-	CompletedBy                       models.TranslationField                       `json:"completedBy" db:"completed_by"`
-	CompletedDts                      models.TranslationField                       `json:"completedDts" db:"completed_dts"`
+	// IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+	IsComplete   models.TranslationFieldWithOptions `json:"isComplete"`
+	CompletedBy  models.TranslationField            `json:"completedBy" db:"completed_by"`
+	CompletedDts models.TranslationField            `json:"completedDts" db:"completed_dts"`
 }
 
 // Represents key contact category base translation data

@@ -866,11 +866,13 @@ export type IddocQuestionnaireTranslation = {
   fileNamingConventions: TranslationFieldWithParent;
   icdNote: TranslationFieldWithParent;
   icdOwner: TranslationFieldWithParent;
+  /** IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database. */
   isComplete: TranslationFieldWithOptions;
   needed: TranslationFieldWithOptionsAndChildren;
   produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent;
   status: TranslationFieldWithOptions;
   stcNeeds: TranslationFieldWithParent;
+  /** TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database. */
   taskListStatus: TranslationFieldWithOptions;
   technicalContactsIdentified: TranslationFieldWithOptionsAndParent;
   technicalContactsIdentifiedDetail: TranslationField;
