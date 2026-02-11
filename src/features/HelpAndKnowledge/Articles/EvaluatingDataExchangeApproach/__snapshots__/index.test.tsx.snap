@@ -446,6 +446,11 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
             Please describe any additional data exchange considerations.
           </p>
         </div>
+        <div
+          class="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4"
+        >
+          Last updated 08/29/2025
+        </div>
       </div>
     </div>
     <div
