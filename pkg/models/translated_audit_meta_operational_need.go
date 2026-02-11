@@ -13,16 +13,6 @@ type TranslatedAuditMetaOperationalNeed struct {
 	IsOther  bool   `json:"isOther"`
 }
 
-// NewTranslatedAuditMetaOperationalNeed creates a New TranslatedAuditMetaOperationalNeed
-func NewTranslatedAuditMetaOperationalNeed(version int, needName string, isOther bool) TranslatedAuditMetaOperationalNeed {
-
-	return TranslatedAuditMetaOperationalNeed{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalNeed, version),
-		NeedName:                      needName,
-		IsOther:                       isOther,
-	}
-}
-
 // isActivityMetaData implements the IActivityMetaGeneric
 func (hmb TranslatedAuditMetaOperationalNeed) isAuditMetaData() {}
 
