@@ -146,7 +146,7 @@ repos:
         files: src/i18n/en-US/helpAndKnowledge/Articles/.*\.ts$
         pass_filenames: true
         description: >
-          Sets lastUpdatedDate to today in any staged Article .ts file. Re-stage and commit if files change.
+          Sets lastUpdatedDate to today only when article content (excluding the date) changed. Re-stage and commit if files change. Safe in CI.
 
   - repo: local
     hooks:
