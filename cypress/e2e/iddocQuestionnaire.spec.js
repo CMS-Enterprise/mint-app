@@ -13,7 +13,7 @@ describe('The IDDOC questionnaire Form', () => {
     cy.get('[data-testid="iddoc-questionnaire-button"]').should('not.exist');
   });
 
-  it('completes a the IDDOC questionnaire form', () => {
+  it('completes the IDDOC questionnaire form', () => {
     // Trigger IDDOC needed status
     cy.enterModelPlanTaskList('Empty Plan');
     cy.get('[data-testid="ops-eval-and-learning"]').click();
@@ -76,11 +76,11 @@ describe('The IDDOC questionnaire Form', () => {
 
     cy.get('#testing-timelines')
       .type(
-        'testing will start in October, and hsould conclude by the 1st of December'
+        'testing will start in October, and should conclude by the 1st of December'
       )
       .should(
         'have.value',
-        'testing will start in October, and hsould conclude by the 1st of December'
+        'testing will start in October, and should conclude by the 1st of December'
       );
 
     cy.get('#data-monitoring-file-types-OTHER')
@@ -88,8 +88,8 @@ describe('The IDDOC questionnaire Form', () => {
       .should('be.checked');
 
     cy.get('#data-monitoring-file-other-OTHER')
-      .type('suplementary')
-      .should('have.value', 'suplementary');
+      .type('supplementary')
+      .should('have.value', 'supplementary');
 
     cy.get('#data-response-type')
       .type('survey responses')
@@ -109,10 +109,7 @@ describe('The IDDOC questionnaire Form', () => {
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#eft-set-up-true')
-      //       .check({ force: true })
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#eft-set-up-true').check({ force: true }).should('be.checked');
 
     cy.get('#unsolicited-adjustments-included-true')
       .check({ force: true })

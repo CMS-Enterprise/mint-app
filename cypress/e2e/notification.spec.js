@@ -672,7 +672,7 @@ describe('Notification Center', () => {
       'MINT Doe marked the 4i/ACO-OS questionnaire complete for Empty Plan.'
     );
 
-    cy.contains('button', 'View 4i/ACO-OS questionnaire').click();
+    cy.contains('button', 'View questionnaire').click();
 
     cy.url().should('include', '/read-view/iddoc-questionnaire');
 
@@ -682,7 +682,7 @@ describe('Notification Center', () => {
     );
 
     cy.get(
-      '[data-testid="notification-setting-email-iddocQuestionnaireCompleted"]'
+      '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
     ).should('be.not.checked');
 
     cy.get('[data-testid="toast-success"]').contains(
