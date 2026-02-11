@@ -18,21 +18,6 @@ type TranslatedAuditMetaOperationalSolutionSubtask struct {
 	SubtaskName         *string `json:"subtaskName"`
 }
 
-// NewTranslatedAuditMetaOperationalSolutionSubtask creates a New TranslatedAuditMetaOperationalSolutionSubtask
-func NewTranslatedAuditMetaOperationalSolutionSubtask(version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName *string) TranslatedAuditMetaOperationalSolutionSubtask {
-
-	return TranslatedAuditMetaOperationalSolutionSubtask{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalSolutionSubtask, version),
-		SolutionName:                  solutionName,
-		SolutionOtherHeader:           solutionOtherHeader,
-		SolutionIsOther:               solIsOther,
-		NumberOfSubtasks:              numSubtasks,
-		NeedName:                      needName,
-		NeedIsOther:                   needIsOther,
-		SubtaskName:                   subtaskName,
-	}
-}
-
 // isActivityMetaData implements the IActivityMetaGeneric
 func (hmb TranslatedAuditMetaOperationalSolutionSubtask) isAuditMetaData() {}
 

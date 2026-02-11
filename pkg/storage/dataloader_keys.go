@@ -6,14 +6,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
-type SolutionAndPossibleKey struct {
-	// OperationalNeedID is the ID of the need that a solution is associated with
-	OperationalNeedID uuid.UUID `json:"operational_need_id"`
-	// IncludeNotNeeded specifies if the query should return solutions with a status of not needed, or if possible solutions (not discrete records) should be included
-	IncludeNotNeeded bool `json:"include_not_needed"`
-}
-
 // MostRecentByModelPlanIDAndTableFilters is a key to get the most recent record by model plan ID and table filters
 // Note, if desired we could also introduce a limit param which would allow you to dynamically address how many entries get returned per key
 type MostRecentByModelPlanIDAndTableFilters struct {
