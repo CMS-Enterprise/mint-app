@@ -112,7 +112,7 @@ export const ChangeHeader = ({
   // Task list status audits
   if (changeRecordType === 'taskListStatusUpdate') {
     const status = changeRecord.translatedFields.find(
-      field => field.fieldName === 'status'
+      field => field.fieldName === 'status' || field.fieldName === 'needed'
     )?.newTranslated;
 
     return (
@@ -122,24 +122,6 @@ export const ChangeHeader = ({
         values={{
           section: t(`sections.${changeRecord.tableName}`),
           status,
-          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-          time: formatTime(changeRecord.date)
-        }}
-        components={{
-          datetime: DateSpan
-        }}
-      />
-    );
-  }
-
-  // Questionnaire Task list status audits
-  if (changeRecordType === 'questionnaireTaskListStatusUpdate') {
-    return (
-      <Trans
-        i18nKey={getHeaderText(changeRecord)}
-        shouldUnescape
-        values={{
-          section: t(`sections.${changeRecord.tableName}`),
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
           time: formatTime(changeRecord.date)
         }}

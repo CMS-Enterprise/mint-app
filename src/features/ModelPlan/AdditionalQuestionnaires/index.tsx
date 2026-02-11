@@ -77,15 +77,17 @@ const AdditionalQuestionnaires = () => {
   };
 
   // Helper to get the correct status field based on questionnaire type
-  const getQuestionnaireStatus = (
-    key: keyof typeof questionnaireSections
-  ): any => {
+  const getQuestionnaireStatus = <
+    Key extends keyof typeof questionnaireSections
+  >(
+    key: Key
+  ) => {
     const questionnaire = questionnaireSections[key];
-    // iddocQuestionnaire uses taskListStatus, others use status
+    // iddocQuestionnaire uses taskListStatus to include needed, others use status
     if ('taskListStatus' in questionnaire) {
       return questionnaire.taskListStatus;
     }
-    return (questionnaire as any).status;
+    return questionnaire.status;
   };
 
   if (loading) {

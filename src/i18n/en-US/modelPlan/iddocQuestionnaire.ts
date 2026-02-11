@@ -1,7 +1,6 @@
 import { TranslationIddocQuestionnaire } from 'types/translation';
 
 import {
-  IddocQuestionnaireTaskListStatus,
   ModelViewFilter,
   TableName,
   TranslationDataType,
@@ -18,8 +17,8 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     formType: TranslationFormType.RADIO,
     order: 1.1,
     options: {
-      true: 'Yes',
-      false: 'No'
+      true: 'required',
+      false: 'not required'
     },
     disconnectedLabel: `questionsNotApplicablePerMTO`,
     hideLabelAndOptionsInReadonly: true,
@@ -385,7 +384,7 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
   isComplete: {
     gqlField: 'isComplete',
     goField: 'IsComplete',
-    dbField: 'status', // Note: Computed from status field
+    dbField: 'is_complete', // Note: Computed from status field
     label: 'Questionnaire status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
@@ -424,12 +423,27 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     label: 'Questionnaire status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 7.18,
+    options: {
+      READY: 'Not started',
+      IN_PROGRESS: 'In progress',
+      COMPLETE: 'Complete'
+    },
+    hideFromReadonly: true
+  },
+  taskListStatus: {
+    gqlField: 'taskListStatus',
+    goField: 'TaskListStatus',
+    dbField: 'task_list_status',
+    label: 'Questionnaire tasklist status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     order: 7.19,
     options: {
-      [IddocQuestionnaireTaskListStatus.NOT_NEEDED]: 'Not needed',
-      [IddocQuestionnaireTaskListStatus.READY]: 'Not started',
-      [IddocQuestionnaireTaskListStatus.IN_PROGRESS]: 'In progress',
-      [IddocQuestionnaireTaskListStatus.COMPLETE]: 'Complete'
+      NOT_NEEDED: 'Not needed',
+      READY: 'Not started',
+      IN_PROGRESS: 'In progress',
+      COMPLETE: 'Complete'
     },
     hideFromReadonly: true
   }

@@ -4,6 +4,7 @@ Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation {
   # General fields
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  taskListStatus: TranslationFieldWithOptions!
   needed: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "needed")
 

@@ -51,6 +51,7 @@ type ExistingModelLinkTranslation struct {
 // Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation struct {
 	Status                            models.TranslationFieldWithOptions            `json:"status" db:"status"`
+	TaskListStatus                    models.TranslationFieldWithOptions            `json:"taskListStatus"`
 	Needed                            models.TranslationFieldWithOptionsAndChildren `json:"needed" db:"needed"`
 	TechnicalContactsIdentified       models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
 	TechnicalContactsIdentifiedDetail models.TranslationField                       `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`

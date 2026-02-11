@@ -10,11 +10,15 @@ import {
 
 import '../../index.scss';
 
+type QuestionnaireListStatusType =
+  | DataExchangeApproachStatus
+  | IddocQuestionnaireTaskListStatus;
+
 const QuestionnaireListStatusTag = ({
   status,
   classname
 }: {
-  status: DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
+  status: QuestionnaireListStatusType;
   classname?: string;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -77,7 +81,7 @@ export const QuestionnaireListButton = ({
   testId?: string;
   path: string;
   disabled?: boolean;
-  status: DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
+  status: QuestionnaireListStatusType;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -132,7 +136,7 @@ type QuestionnaireListItemProps = {
   children?: React.ReactNode;
   heading: string;
   description: string;
-  status: DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
+  status: QuestionnaireListStatusType;
   testId: string;
   lastUpdated?: string | null;
 };

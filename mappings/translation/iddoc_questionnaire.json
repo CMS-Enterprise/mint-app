@@ -8,8 +8,8 @@
     "formType": "RADIO",
     "order": 1.1,
     "options": {
-      "true": "Yes",
-      "false": "No"
+      "true": "required",
+      "false": "not required"
     },
     "hideLabelAndOptionsInReadonly": true,
     "childRelation": {
@@ -224,8 +224,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -275,8 +275,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -309,8 +309,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -332,8 +332,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -357,8 +357,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -380,8 +380,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -403,8 +403,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -426,8 +426,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -469,8 +469,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -504,8 +504,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -527,8 +527,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -554,8 +554,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -581,8 +581,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -608,8 +608,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -635,8 +635,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -664,8 +664,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -687,8 +687,8 @@
       "formType": "RADIO",
       "order": 1.1,
       "options": {
-        "true": "Yes",
-        "false": "No"
+        "true": "required",
+        "false": "not required"
       },
       "hideLabelAndOptionsInReadonly": true
     }
@@ -707,7 +707,7 @@
   "isComplete": {
     "gqlField": "isComplete",
     "goField": "IsComplete",
-    "dbField": "status",
+    "dbField": "is_complete",
     "label": "Questionnaire status",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
@@ -744,6 +744,21 @@
     "goField": "Status",
     "dbField": "status",
     "label": "Questionnaire status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 7.18,
+    "options": {
+      "READY": "Not started",
+      "IN_PROGRESS": "In progress",
+      "COMPLETE": "Complete"
+    },
+    "hideFromReadonly": true
+  },
+  "taskListStatus": {
+    "gqlField": "taskListStatus",
+    "goField": "TaskListStatus",
+    "dbField": "task_list_status",
+    "label": "Questionnaire tasklist status",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "order": 7.19,

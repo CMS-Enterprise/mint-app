@@ -814,17 +814,11 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   // If the change is a task list status update, return 'Task list status update'
   if (
     isTableWithStatus(change.tableName) &&
-    change.translatedFields.find(field => field.fieldName === 'status')
+    change.translatedFields.find(
+      field => field.fieldName === 'status' || field.fieldName === 'needed'
+    )
   ) {
     return 'taskListStatusUpdate';
-  }
-
-  // If the change is a questionnaire task list status update, return 'Questionnaire task list status update'
-  if (
-    isTableWithStatus(change.tableName) &&
-    change.translatedFields.find(field => field.fieldName === 'needed')
-  ) {
-    return 'questionnaireTaskListStatusUpdate';
   }
 
   if (
@@ -924,9 +918,6 @@ export const getHeaderText = (change: ChangeRecordType): string => {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
       break;
-    case 'questionnaireTaskListStatusUpdate':
-      headerText = i18next.t(`changeHistory:questionnaireNeededUpdate`);
-      break;
     case 'mtoStatusUpdate':
       headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       break;
@@ -997,11 +988,9 @@ export const isInitialCreatedSection = (
   !!(
     (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
-        field => field.fieldName === 'status' && field.old === null
-      )) ||
-    (changeType === 'questionnaireTaskListStatusUpdate' &&
-      change.translatedFields.find(
-        field => field.fieldName === 'needed' && field.old === null
+        field =>
+          (field.fieldName === 'status' || field.fieldName === 'needed') &&
+          field.old === null
       )) ||
     identifyChangeType(change) === 'operationalNeedCreate'
   );
