@@ -1,5 +1,6 @@
 const sixPageMeeting = {
   title: 'About 6-page concept papers and review meetings',
+  lastUpdatedDate: '2025-08-25',
   description:
     'Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) has signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
   summaryBox: {

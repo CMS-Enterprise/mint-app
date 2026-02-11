@@ -57,7 +57,7 @@ const ReadOnlyIddocQuestionnaire = ({
         clearanceTitle={iddocQuestionnaireMiscT('heading')}
         heading={iddocQuestionnaireMiscT('heading')}
         isViewingFilteredView={!!filteredView}
-        status={allIddocQuestionnaireData.status}
+        status={allIddocQuestionnaireData.taskListStatus}
         modelID={modelID || modelIDFromParams || ''}
         modifiedOrCreatedDts={
           allIddocQuestionnaireData.modifiedDts ||

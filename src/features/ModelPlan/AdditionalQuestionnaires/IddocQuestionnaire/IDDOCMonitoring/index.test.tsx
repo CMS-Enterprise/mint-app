@@ -18,7 +18,7 @@ const iddocMonitoringMockData: IDDOCMonitoringFormType = {
   produceBenefitEnhancementFiles: null,
   fileNamingConventions: '.pdf',
   dataMonitoringNote: '',
-  isIDDOCQuestionnaireComplete: false,
+  isComplete: false,
   completedDts: '2022-06-03T19:32:24.412662Z',
   completedByUserAccount: {
     __typename: 'UserAccount',

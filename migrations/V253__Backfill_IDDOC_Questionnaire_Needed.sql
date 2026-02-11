@@ -39,6 +39,7 @@ WHERE
     );
 
 -- Set needed = FALSE where NO conditions are met
+-- (This is for safety, but should already be the default for new records)
 UPDATE iddoc_questionnaire iq
 SET
     needed = FALSE,

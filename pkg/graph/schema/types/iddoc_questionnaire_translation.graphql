@@ -4,6 +4,10 @@ Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation {
   # General fields
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  """
+  TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
+  """
+  taskListStatus: TranslationFieldWithOptions!
   needed: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "needed")
 
@@ -53,8 +57,10 @@ type IddocQuestionnaireTranslation {
     @goTag(key: "db", value: "file_naming_conventions")
   dataMonitoringNote: TranslationField!
     @goTag(key: "db", value: "data_monitoring_note")
-  isIDDOCQuestionnaireComplete: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "is_iddoc_questionnaire_complete")
+  """
+  IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+  """
+  isComplete: TranslationFieldWithOptions!
 
   # Metadata fields
   completedBy: TranslationField! @goTag(key: "db", value: "completed_by")

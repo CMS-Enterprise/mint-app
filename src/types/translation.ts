@@ -40,6 +40,7 @@ import {
   IddocFileType,
   IddocFullTimeOrIncrementalType,
   IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   IddocQuestionnaireTranslation,
   KeyCharacteristic,
   KeyContactCategoryTranslation,
@@ -806,6 +807,7 @@ export type TranslationOpsEvalAndLearning = {
 // IDDOC Questionnaire
 export type TranslationIddocQuestionnaireForm = {
   status: TranslationFieldPropertiesWithOptions<IddocQuestionnaireStatus>;
+  taskListStatus: TranslationFieldPropertiesWithOptions<IddocQuestionnaireTaskListStatus>;
   needed: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   // IDDOC Operations
   technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
@@ -854,7 +856,7 @@ export type TranslationIddocQuestionnaireForm = {
   >;
   fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
   dataMonitoringNote: TranslationFieldProperties;
-  isIDDOCQuestionnaireComplete: TranslationFieldPropertiesWithOptions<Bool>;
+  isComplete: TranslationFieldPropertiesWithOptions<Bool>;
 
   // Metadata
   completedBy: TranslationFieldProperties;

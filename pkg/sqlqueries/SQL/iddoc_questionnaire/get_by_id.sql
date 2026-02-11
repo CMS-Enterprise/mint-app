@@ -25,7 +25,7 @@ SELECT
     file_naming_conventions,
     data_monitoring_note,
     needed,
-    is_iddoc_questionnaire_complete,
+    status,
     completed_by,
     completed_dts,
     created_by,

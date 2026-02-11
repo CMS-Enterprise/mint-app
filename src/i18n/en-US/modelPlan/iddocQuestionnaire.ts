@@ -11,14 +11,14 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
   needed: {
     gqlField: 'needed',
     goField: 'Needed',
-    dbField: 'needed',
+    dbField: 'needed', // Note: Computed field, not actually in DB (computed from status)
     label: 'Needed',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.1,
     options: {
-      true: 'Yes',
-      false: 'No'
+      true: 'required',
+      false: 'not required'
     },
     disconnectedLabel: `questionsNotApplicablePerMTO`,
     hideLabelAndOptionsInReadonly: true,
@@ -381,10 +381,10 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     order: 4.07,
     filterGroups: [ModelViewFilter.IDDOC]
   },
-  isIDDOCQuestionnaireComplete: {
-    gqlField: 'isIddocQuestionnaireComplete',
-    goField: 'IsIddocQuestionnaireComplete',
-    dbField: 'is_iddoc_questionnaire_complete',
+  isComplete: {
+    gqlField: 'isComplete',
+    goField: 'IsComplete',
+    dbField: 'is_complete', // Note: Computed from status field
     label: 'Questionnaire status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
@@ -423,12 +423,27 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     label: 'Questionnaire status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 7.18,
+    options: {
+      READY: 'Not started',
+      IN_PROGRESS: 'In progress',
+      COMPLETE: 'Complete'
+    },
+    hideFromReadonly: true
+  },
+  taskListStatus: {
+    gqlField: 'taskListStatus',
+    goField: 'TaskListStatus',
+    dbField: 'task_list_status',
+    label: 'Questionnaire tasklist status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
     order: 7.19,
     options: {
       NOT_NEEDED: 'Not needed',
-      NOT_STARTED: 'Not started',
+      READY: 'Not started',
       IN_PROGRESS: 'In progress',
-      COMPLETED: 'Completed'
+      COMPLETE: 'Complete'
     },
     hideFromReadonly: true
   }

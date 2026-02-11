@@ -38,6 +38,7 @@ export default gql(/* GraphQL */ `
           modifiedDts
           createdDts
           status
+          taskListStatus
         }
       }
     }

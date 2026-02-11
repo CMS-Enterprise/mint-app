@@ -50,7 +50,9 @@ type ExistingModelLinkTranslation struct {
 
 // Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation struct {
-	Status                            models.TranslationFieldWithOptions            `json:"status" db:"status"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+	// TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
+	TaskListStatus                    models.TranslationFieldWithOptions            `json:"taskListStatus"`
 	Needed                            models.TranslationFieldWithOptionsAndChildren `json:"needed" db:"needed"`
 	TechnicalContactsIdentified       models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
 	TechnicalContactsIdentifiedDetail models.TranslationField                       `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
@@ -75,9 +77,10 @@ type IddocQuestionnaireTranslation struct {
 	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
 	FileNamingConventions             models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
 	DataMonitoringNote                models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
-	IsIDDOCQuestionnaireComplete      models.TranslationFieldWithOptions            `json:"isIDDOCQuestionnaireComplete" db:"is_iddoc_questionnaire_complete"`
-	CompletedBy                       models.TranslationField                       `json:"completedBy" db:"completed_by"`
-	CompletedDts                      models.TranslationField                       `json:"completedDts" db:"completed_dts"`
+	// IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+	IsComplete   models.TranslationFieldWithOptions `json:"isComplete"`
+	CompletedBy  models.TranslationField            `json:"completedBy" db:"completed_by"`
+	CompletedDts models.TranslationField            `json:"completedDts" db:"completed_dts"`
 }
 
 // Represents key contact category base translation data
@@ -1957,122 +1960,6 @@ func (e GeographyType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
-type IDDOCFullTimeOrIncrementalType string
-
-const (
-	IDDOCFullTimeOrIncrementalTypeFullTime    IDDOCFullTimeOrIncrementalType = "FULL_TIME"
-	IDDOCFullTimeOrIncrementalTypeIncremental IDDOCFullTimeOrIncrementalType = "INCREMENTAL"
-)
-
-var AllIDDOCFullTimeOrIncrementalType = []IDDOCFullTimeOrIncrementalType{
-	IDDOCFullTimeOrIncrementalTypeFullTime,
-	IDDOCFullTimeOrIncrementalTypeIncremental,
-}
-
-func (e IDDOCFullTimeOrIncrementalType) IsValid() bool {
-	switch e {
-	case IDDOCFullTimeOrIncrementalTypeFullTime, IDDOCFullTimeOrIncrementalTypeIncremental:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCFullTimeOrIncrementalType) String() string {
-	return string(e)
-}
-
-func (e *IDDOCFullTimeOrIncrementalType) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCFullTimeOrIncrementalType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCFullTimeOrIncrementalType", str)
-	}
-	return nil
-}
-
-func (e IDDOCFullTimeOrIncrementalType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCFullTimeOrIncrementalType) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCFullTimeOrIncrementalType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
-// IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
-type IDDOCQuestionnaireStatus string
-
-const (
-	IDDOCQuestionnaireStatusNotNeeded  IDDOCQuestionnaireStatus = "NOT_NEEDED"
-	IDDOCQuestionnaireStatusNotStarted IDDOCQuestionnaireStatus = "NOT_STARTED"
-	IDDOCQuestionnaireStatusInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
-	IDDOCQuestionnaireStatusCompleted  IDDOCQuestionnaireStatus = "COMPLETED"
-)
-
-var AllIDDOCQuestionnaireStatus = []IDDOCQuestionnaireStatus{
-	IDDOCQuestionnaireStatusNotNeeded,
-	IDDOCQuestionnaireStatusNotStarted,
-	IDDOCQuestionnaireStatusInProgress,
-	IDDOCQuestionnaireStatusCompleted,
-}
-
-func (e IDDOCQuestionnaireStatus) IsValid() bool {
-	switch e {
-	case IDDOCQuestionnaireStatusNotNeeded, IDDOCQuestionnaireStatusNotStarted, IDDOCQuestionnaireStatusInProgress, IDDOCQuestionnaireStatusCompleted:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCQuestionnaireStatus) String() string {
-	return string(e)
-}
-
-func (e *IDDOCQuestionnaireStatus) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCQuestionnaireStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCQuestionnaireStatus", str)
-	}
-	return nil
-}
-
-func (e IDDOCQuestionnaireStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCQuestionnaireStatus) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCQuestionnaireStatus) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
 type KeyCharacteristic string
 
 const (
@@ -2464,6 +2351,382 @@ func (e *NonClaimsBasedPayType) UnmarshalJSON(b []byte) error {
 }
 
 func (e NonClaimsBasedPayType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+type OpSolutionStatus string
+
+const (
+	OpSolutionStatusNotStarted OpSolutionStatus = "NOT_STARTED"
+	OpSolutionStatusOnboarding OpSolutionStatus = "ONBOARDING"
+	OpSolutionStatusBacklog    OpSolutionStatus = "BACKLOG"
+	OpSolutionStatusInProgress OpSolutionStatus = "IN_PROGRESS"
+	OpSolutionStatusCompleted  OpSolutionStatus = "COMPLETED"
+	OpSolutionStatusAtRisk     OpSolutionStatus = "AT_RISK"
+)
+
+var AllOpSolutionStatus = []OpSolutionStatus{
+	OpSolutionStatusNotStarted,
+	OpSolutionStatusOnboarding,
+	OpSolutionStatusBacklog,
+	OpSolutionStatusInProgress,
+	OpSolutionStatusCompleted,
+	OpSolutionStatusAtRisk,
+}
+
+func (e OpSolutionStatus) IsValid() bool {
+	switch e {
+	case OpSolutionStatusNotStarted, OpSolutionStatusOnboarding, OpSolutionStatusBacklog, OpSolutionStatusInProgress, OpSolutionStatusCompleted, OpSolutionStatusAtRisk:
+		return true
+	}
+	return false
+}
+
+func (e OpSolutionStatus) String() string {
+	return string(e)
+}
+
+func (e *OpSolutionStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OpSolutionStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OpSolutionStatus", str)
+	}
+	return nil
+}
+
+func (e OpSolutionStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *OpSolutionStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e OpSolutionStatus) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+type OperationalNeedKey string
+
+const (
+	OperationalNeedKeyManageCd                                    OperationalNeedKey = "MANAGE_CD"
+	OperationalNeedKeyRevColBids                                  OperationalNeedKey = "REV_COL_BIDS"
+	OperationalNeedKeyUpdateContract                              OperationalNeedKey = "UPDATE_CONTRACT"
+	OperationalNeedKeyRecruitParticipants                         OperationalNeedKey = "RECRUIT_PARTICIPANTS"
+	OperationalNeedKeyRevScoreApp                                 OperationalNeedKey = "REV_SCORE_APP"
+	OperationalNeedKeyAppSupportCon                               OperationalNeedKey = "APP_SUPPORT_CON"
+	OperationalNeedKeyCommWPart                                   OperationalNeedKey = "COMM_W_PART"
+	OperationalNeedKeyManageProvOverlap                           OperationalNeedKey = "MANAGE_PROV_OVERLAP"
+	OperationalNeedKeyManageBenOverlap                            OperationalNeedKey = "MANAGE_BEN_OVERLAP"
+	OperationalNeedKeyHelpdeskSupport                             OperationalNeedKey = "HELPDESK_SUPPORT"
+	OperationalNeedKeyIddocSupport                                OperationalNeedKey = "IDDOC_SUPPORT"
+	OperationalNeedKeyEstablishBench                              OperationalNeedKey = "ESTABLISH_BENCH"
+	OperationalNeedKeyProcessPartAppeals                          OperationalNeedKey = "PROCESS_PART_APPEALS"
+	OperationalNeedKeyAcquireAnEvalCont                           OperationalNeedKey = "ACQUIRE_AN_EVAL_CONT"
+	OperationalNeedKeyDataToMonitor                               OperationalNeedKey = "DATA_TO_MONITOR"
+	OperationalNeedKeyDataToSupportEval                           OperationalNeedKey = "DATA_TO_SUPPORT_EVAL"
+	OperationalNeedKeyClaimsBasedMeasures                         OperationalNeedKey = "CLAIMS_BASED_MEASURES"
+	OperationalNeedKeyQualityPerformanceScores                    OperationalNeedKey = "QUALITY_PERFORMANCE_SCORES"
+	OperationalNeedKeySendRepdataToPart                           OperationalNeedKey = "SEND_REPDATA_TO_PART"
+	OperationalNeedKeyAcquireALearnCont                           OperationalNeedKey = "ACQUIRE_A_LEARN_CONT"
+	OperationalNeedKeyPartToPartCollab                            OperationalNeedKey = "PART_TO_PART_COLLAB"
+	OperationalNeedKeyEducateBenef                                OperationalNeedKey = "EDUCATE_BENEF"
+	OperationalNeedKeyAdjustFfsClaims                             OperationalNeedKey = "ADJUST_FFS_CLAIMS"
+	OperationalNeedKeyManageFfsExclPayments                       OperationalNeedKey = "MANAGE_FFS_EXCL_PAYMENTS"
+	OperationalNeedKeyMakeNonClaimsBasedPayments                  OperationalNeedKey = "MAKE_NON_CLAIMS_BASED_PAYMENTS"
+	OperationalNeedKeyComputeSharedSavingsPayment                 OperationalNeedKey = "COMPUTE_SHARED_SAVINGS_PAYMENT"
+	OperationalNeedKeyRecoverPayments                             OperationalNeedKey = "RECOVER_PAYMENTS"
+	OperationalNeedKeySignParticipationAgreements                 OperationalNeedKey = "SIGN_PARTICIPATION_AGREEMENTS"
+	OperationalNeedKeyVetProvidersForProgramIntegrity             OperationalNeedKey = "VET_PROVIDERS_FOR_PROGRAM_INTEGRITY"
+	OperationalNeedKeyUtilizeQualityMeasuresDevelopmentContractor OperationalNeedKey = "UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR"
+	OperationalNeedKeyItPlatformForLearning                       OperationalNeedKey = "IT_PLATFORM_FOR_LEARNING"
+	OperationalNeedKeyAcquireAnImpCont                            OperationalNeedKey = "ACQUIRE_AN_IMP_CONT"
+	OperationalNeedKeyAcquireAPreImpCont                          OperationalNeedKey = "ACQUIRE_A_PRE_IMP_CONT"
+	OperationalNeedKeyAcquireADataAggCont                         OperationalNeedKey = "ACQUIRE_A_DATA_AGG_CONT"
+	OperationalNeedKeySendDashboardsReportsToPart                 OperationalNeedKey = "SEND_DASHBOARDS_REPORTS_TO_PART"
+	OperationalNeedKeySendDataViaAPIToPart                        OperationalNeedKey = "SEND_DATA_VIA_API_TO_PART"
+	OperationalNeedKeySendRawFilesToPart                          OperationalNeedKey = "SEND_RAW_FILES_TO_PART"
+	OperationalNeedKeySignCooperativeAgreements                   OperationalNeedKey = "SIGN_COOPERATIVE_AGREEMENTS"
+)
+
+var AllOperationalNeedKey = []OperationalNeedKey{
+	OperationalNeedKeyManageCd,
+	OperationalNeedKeyRevColBids,
+	OperationalNeedKeyUpdateContract,
+	OperationalNeedKeyRecruitParticipants,
+	OperationalNeedKeyRevScoreApp,
+	OperationalNeedKeyAppSupportCon,
+	OperationalNeedKeyCommWPart,
+	OperationalNeedKeyManageProvOverlap,
+	OperationalNeedKeyManageBenOverlap,
+	OperationalNeedKeyHelpdeskSupport,
+	OperationalNeedKeyIddocSupport,
+	OperationalNeedKeyEstablishBench,
+	OperationalNeedKeyProcessPartAppeals,
+	OperationalNeedKeyAcquireAnEvalCont,
+	OperationalNeedKeyDataToMonitor,
+	OperationalNeedKeyDataToSupportEval,
+	OperationalNeedKeyClaimsBasedMeasures,
+	OperationalNeedKeyQualityPerformanceScores,
+	OperationalNeedKeySendRepdataToPart,
+	OperationalNeedKeyAcquireALearnCont,
+	OperationalNeedKeyPartToPartCollab,
+	OperationalNeedKeyEducateBenef,
+	OperationalNeedKeyAdjustFfsClaims,
+	OperationalNeedKeyManageFfsExclPayments,
+	OperationalNeedKeyMakeNonClaimsBasedPayments,
+	OperationalNeedKeyComputeSharedSavingsPayment,
+	OperationalNeedKeyRecoverPayments,
+	OperationalNeedKeySignParticipationAgreements,
+	OperationalNeedKeyVetProvidersForProgramIntegrity,
+	OperationalNeedKeyUtilizeQualityMeasuresDevelopmentContractor,
+	OperationalNeedKeyItPlatformForLearning,
+	OperationalNeedKeyAcquireAnImpCont,
+	OperationalNeedKeyAcquireAPreImpCont,
+	OperationalNeedKeyAcquireADataAggCont,
+	OperationalNeedKeySendDashboardsReportsToPart,
+	OperationalNeedKeySendDataViaAPIToPart,
+	OperationalNeedKeySendRawFilesToPart,
+	OperationalNeedKeySignCooperativeAgreements,
+}
+
+func (e OperationalNeedKey) IsValid() bool {
+	switch e {
+	case OperationalNeedKeyManageCd, OperationalNeedKeyRevColBids, OperationalNeedKeyUpdateContract, OperationalNeedKeyRecruitParticipants, OperationalNeedKeyRevScoreApp, OperationalNeedKeyAppSupportCon, OperationalNeedKeyCommWPart, OperationalNeedKeyManageProvOverlap, OperationalNeedKeyManageBenOverlap, OperationalNeedKeyHelpdeskSupport, OperationalNeedKeyIddocSupport, OperationalNeedKeyEstablishBench, OperationalNeedKeyProcessPartAppeals, OperationalNeedKeyAcquireAnEvalCont, OperationalNeedKeyDataToMonitor, OperationalNeedKeyDataToSupportEval, OperationalNeedKeyClaimsBasedMeasures, OperationalNeedKeyQualityPerformanceScores, OperationalNeedKeySendRepdataToPart, OperationalNeedKeyAcquireALearnCont, OperationalNeedKeyPartToPartCollab, OperationalNeedKeyEducateBenef, OperationalNeedKeyAdjustFfsClaims, OperationalNeedKeyManageFfsExclPayments, OperationalNeedKeyMakeNonClaimsBasedPayments, OperationalNeedKeyComputeSharedSavingsPayment, OperationalNeedKeyRecoverPayments, OperationalNeedKeySignParticipationAgreements, OperationalNeedKeyVetProvidersForProgramIntegrity, OperationalNeedKeyUtilizeQualityMeasuresDevelopmentContractor, OperationalNeedKeyItPlatformForLearning, OperationalNeedKeyAcquireAnImpCont, OperationalNeedKeyAcquireAPreImpCont, OperationalNeedKeyAcquireADataAggCont, OperationalNeedKeySendDashboardsReportsToPart, OperationalNeedKeySendDataViaAPIToPart, OperationalNeedKeySendRawFilesToPart, OperationalNeedKeySignCooperativeAgreements:
+		return true
+	}
+	return false
+}
+
+func (e OperationalNeedKey) String() string {
+	return string(e)
+}
+
+func (e *OperationalNeedKey) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OperationalNeedKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OperationalNeedKey", str)
+	}
+	return nil
+}
+
+func (e OperationalNeedKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *OperationalNeedKey) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e OperationalNeedKey) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+type OperationalSolutionKey string
+
+const (
+	OperationalSolutionKeyInnovation                OperationalSolutionKey = "INNOVATION"
+	OperationalSolutionKeyAcoOs                     OperationalSolutionKey = "ACO_OS"
+	OperationalSolutionKeyApps                      OperationalSolutionKey = "APPS"
+	OperationalSolutionKeyCdx                       OperationalSolutionKey = "CDX"
+	OperationalSolutionKeyCcw                       OperationalSolutionKey = "CCW"
+	OperationalSolutionKeyCmsBox                    OperationalSolutionKey = "CMS_BOX"
+	OperationalSolutionKeyCmsQualtrics              OperationalSolutionKey = "CMS_QUALTRICS"
+	OperationalSolutionKeyCbosc                     OperationalSolutionKey = "CBOSC"
+	OperationalSolutionKeyContractor                OperationalSolutionKey = "CONTRACTOR"
+	OperationalSolutionKeyCpiVetting                OperationalSolutionKey = "CPI_VETTING"
+	OperationalSolutionKeyCrossModelContract        OperationalSolutionKey = "CROSS_MODEL_CONTRACT"
+	OperationalSolutionKeyEft                       OperationalSolutionKey = "EFT"
+	OperationalSolutionKeyExistingCmsDataAndProcess OperationalSolutionKey = "EXISTING_CMS_DATA_AND_PROCESS"
+	OperationalSolutionKeyEdfr                      OperationalSolutionKey = "EDFR"
+	OperationalSolutionKeyGovdelivery               OperationalSolutionKey = "GOVDELIVERY"
+	OperationalSolutionKeyGs                        OperationalSolutionKey = "GS"
+	OperationalSolutionKeyHdr                       OperationalSolutionKey = "HDR"
+	OperationalSolutionKeyHpms                      OperationalSolutionKey = "HPMS"
+	OperationalSolutionKeyHiglas                    OperationalSolutionKey = "HIGLAS"
+	OperationalSolutionKeyIPC                       OperationalSolutionKey = "IPC"
+	OperationalSolutionKeyIDR                       OperationalSolutionKey = "IDR"
+	OperationalSolutionKeyInternalStaff             OperationalSolutionKey = "INTERNAL_STAFF"
+	OperationalSolutionKeyLdg                       OperationalSolutionKey = "LDG"
+	OperationalSolutionKeyLv                        OperationalSolutionKey = "LV"
+	OperationalSolutionKeyMarx                      OperationalSolutionKey = "MARX"
+	OperationalSolutionKeyOtherNewProcess           OperationalSolutionKey = "OTHER_NEW_PROCESS"
+	OperationalSolutionKeyOutlookMailbox            OperationalSolutionKey = "OUTLOOK_MAILBOX"
+	OperationalSolutionKeyQv                        OperationalSolutionKey = "QV"
+	OperationalSolutionKeyRmada                     OperationalSolutionKey = "RMADA"
+	OperationalSolutionKeyArs                       OperationalSolutionKey = "ARS"
+	OperationalSolutionKeyConnect                   OperationalSolutionKey = "CONNECT"
+	OperationalSolutionKeyLoi                       OperationalSolutionKey = "LOI"
+	OperationalSolutionKeyPostPortal                OperationalSolutionKey = "POST_PORTAL"
+	OperationalSolutionKeyRfa                       OperationalSolutionKey = "RFA"
+	OperationalSolutionKeySharedSystems             OperationalSolutionKey = "SHARED_SYSTEMS"
+	OperationalSolutionKeyBcda                      OperationalSolutionKey = "BCDA"
+	OperationalSolutionKeyIsp                       OperationalSolutionKey = "ISP"
+	OperationalSolutionKeyMids                      OperationalSolutionKey = "MIDS"
+	OperationalSolutionKeyModelSpace                OperationalSolutionKey = "MODEL_SPACE"
+)
+
+var AllOperationalSolutionKey = []OperationalSolutionKey{
+	OperationalSolutionKeyInnovation,
+	OperationalSolutionKeyAcoOs,
+	OperationalSolutionKeyApps,
+	OperationalSolutionKeyCdx,
+	OperationalSolutionKeyCcw,
+	OperationalSolutionKeyCmsBox,
+	OperationalSolutionKeyCmsQualtrics,
+	OperationalSolutionKeyCbosc,
+	OperationalSolutionKeyContractor,
+	OperationalSolutionKeyCpiVetting,
+	OperationalSolutionKeyCrossModelContract,
+	OperationalSolutionKeyEft,
+	OperationalSolutionKeyExistingCmsDataAndProcess,
+	OperationalSolutionKeyEdfr,
+	OperationalSolutionKeyGovdelivery,
+	OperationalSolutionKeyGs,
+	OperationalSolutionKeyHdr,
+	OperationalSolutionKeyHpms,
+	OperationalSolutionKeyHiglas,
+	OperationalSolutionKeyIPC,
+	OperationalSolutionKeyIDR,
+	OperationalSolutionKeyInternalStaff,
+	OperationalSolutionKeyLdg,
+	OperationalSolutionKeyLv,
+	OperationalSolutionKeyMarx,
+	OperationalSolutionKeyOtherNewProcess,
+	OperationalSolutionKeyOutlookMailbox,
+	OperationalSolutionKeyQv,
+	OperationalSolutionKeyRmada,
+	OperationalSolutionKeyArs,
+	OperationalSolutionKeyConnect,
+	OperationalSolutionKeyLoi,
+	OperationalSolutionKeyPostPortal,
+	OperationalSolutionKeyRfa,
+	OperationalSolutionKeySharedSystems,
+	OperationalSolutionKeyBcda,
+	OperationalSolutionKeyIsp,
+	OperationalSolutionKeyMids,
+	OperationalSolutionKeyModelSpace,
+}
+
+func (e OperationalSolutionKey) IsValid() bool {
+	switch e {
+	case OperationalSolutionKeyInnovation, OperationalSolutionKeyAcoOs, OperationalSolutionKeyApps, OperationalSolutionKeyCdx, OperationalSolutionKeyCcw, OperationalSolutionKeyCmsBox, OperationalSolutionKeyCmsQualtrics, OperationalSolutionKeyCbosc, OperationalSolutionKeyContractor, OperationalSolutionKeyCpiVetting, OperationalSolutionKeyCrossModelContract, OperationalSolutionKeyEft, OperationalSolutionKeyExistingCmsDataAndProcess, OperationalSolutionKeyEdfr, OperationalSolutionKeyGovdelivery, OperationalSolutionKeyGs, OperationalSolutionKeyHdr, OperationalSolutionKeyHpms, OperationalSolutionKeyHiglas, OperationalSolutionKeyIPC, OperationalSolutionKeyIDR, OperationalSolutionKeyInternalStaff, OperationalSolutionKeyLdg, OperationalSolutionKeyLv, OperationalSolutionKeyMarx, OperationalSolutionKeyOtherNewProcess, OperationalSolutionKeyOutlookMailbox, OperationalSolutionKeyQv, OperationalSolutionKeyRmada, OperationalSolutionKeyArs, OperationalSolutionKeyConnect, OperationalSolutionKeyLoi, OperationalSolutionKeyPostPortal, OperationalSolutionKeyRfa, OperationalSolutionKeySharedSystems, OperationalSolutionKeyBcda, OperationalSolutionKeyIsp, OperationalSolutionKeyMids, OperationalSolutionKeyModelSpace:
+		return true
+	}
+	return false
+}
+
+func (e OperationalSolutionKey) String() string {
+	return string(e)
+}
+
+func (e *OperationalSolutionKey) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OperationalSolutionKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OperationalSolutionKey", str)
+	}
+	return nil
+}
+
+func (e OperationalSolutionKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *OperationalSolutionKey) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e OperationalSolutionKey) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+type OperationalSolutionSubtaskStatus string
+
+const (
+	OperationalSolutionSubtaskStatusTodo       OperationalSolutionSubtaskStatus = "TODO"
+	OperationalSolutionSubtaskStatusInProgress OperationalSolutionSubtaskStatus = "IN_PROGRESS"
+	OperationalSolutionSubtaskStatusDone       OperationalSolutionSubtaskStatus = "DONE"
+)
+
+var AllOperationalSolutionSubtaskStatus = []OperationalSolutionSubtaskStatus{
+	OperationalSolutionSubtaskStatusTodo,
+	OperationalSolutionSubtaskStatusInProgress,
+	OperationalSolutionSubtaskStatusDone,
+}
+
+func (e OperationalSolutionSubtaskStatus) IsValid() bool {
+	switch e {
+	case OperationalSolutionSubtaskStatusTodo, OperationalSolutionSubtaskStatusInProgress, OperationalSolutionSubtaskStatusDone:
+		return true
+	}
+	return false
+}
+
+func (e OperationalSolutionSubtaskStatus) String() string {
+	return string(e)
+}
+
+func (e *OperationalSolutionSubtaskStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OperationalSolutionSubtaskStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OperationalSolutionSubtaskStatus", str)
+	}
+	return nil
+}
+
+func (e OperationalSolutionSubtaskStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *OperationalSolutionSubtaskStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e OperationalSolutionSubtaskStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

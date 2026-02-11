@@ -25,6 +25,15 @@ func setCurrentSessionUserVariable(tx *sqlx.Tx, userID uuid.UUID) error {
 	return nil
 }
 
+func convertToStringArray(uuidArray []uuid.UUID) pq.StringArray {
+	stringArray := pq.StringArray{}
+
+	for i := 0; i < len(uuidArray); i++ {
+		stringArray = append(stringArray, uuidArray[i].String())
+	}
+	return stringArray
+}
+
 func convertIntToPQStringArray(intArray []int) pq.StringArray {
 
 	stringArray := pq.StringArray{}

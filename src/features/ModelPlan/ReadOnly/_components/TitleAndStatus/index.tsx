@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   ModelStatus,
   MtoStatus,
   TaskStatus
@@ -27,7 +27,7 @@ type TitleAndStatusProps = {
     | TaskStatus
     | DataExchangeApproachStatus
     | MtoStatus
-    | IddocQuestionnaireStatus;
+    | IddocQuestionnaireTaskListStatus;
   modifiedOrCreatedDts?: string | null;
   editDates?: boolean;
 };

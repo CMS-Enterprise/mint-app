@@ -177,17 +177,17 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="data-monitoring-file-types-PART_A_CLAIMS"
+            id="data-monitoring-file-types-PART_A"
             name="dataMonitoringFileTypes"
             type="checkbox"
-            value="PART_A_CLAIMS"
+            value="PART_A"
           />
           <label
             class="usa-checkbox__label"
-            for="data-monitoring-file-types-PART_A_CLAIMS"
+            for="data-monitoring-file-types-PART_A"
             style="width: fit-content;"
           >
-            Part A Claims
+            Part A
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
@@ -198,17 +198,17 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         >
           <input
             class="usa-checkbox__input"
-            id="data-monitoring-file-types-PART_B_CLAIMS"
+            id="data-monitoring-file-types-PART_B"
             name="dataMonitoringFileTypes"
             type="checkbox"
-            value="PART_B_CLAIMS"
+            value="PART_B"
           />
           <label
             class="usa-checkbox__label"
-            for="data-monitoring-file-types-PART_B_CLAIMS"
+            for="data-monitoring-file-types-PART_B"
             style="width: fit-content;"
           >
-            Part B Claims
+            Part B
           </label>
           <p
             class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
