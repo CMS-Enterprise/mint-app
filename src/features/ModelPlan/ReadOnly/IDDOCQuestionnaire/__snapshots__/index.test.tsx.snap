@@ -29,7 +29,7 @@ exports[`Read Only IDDOC Questionnaire > matches snapshot 1`] = `
           data-testid="tasklist-tag"
         >
           <span>
-            Not started
+            Ready to start
           </span>
         </div>
         <div
@@ -403,13 +403,13 @@ exports[`Read Only IDDOC Questionnaire > matches snapshot 1`] = `
             <li
               class="mint-body-normal"
             >
-              Part A Claims
+              Part A
             </li>
             <ul />
             <li
               class="mint-body-normal"
             >
-              Part B Claims
+              Part B
             </li>
             <ul />
           </ul>

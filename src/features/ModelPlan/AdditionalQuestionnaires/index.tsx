@@ -76,6 +76,20 @@ const AdditionalQuestionnaires = () => {
     );
   };
 
+  // Helper to get the correct status field based on questionnaire type
+  const getQuestionnaireStatus = <
+    Key extends keyof typeof questionnaireSections
+  >(
+    key: Key
+  ) => {
+    const questionnaire = questionnaireSections[key];
+    // iddocQuestionnaire uses taskListStatus to include needed, others use status
+    if ('taskListStatus' in questionnaire) {
+      return questionnaire.taskListStatus;
+    }
+    return questionnaire.status;
+  };
+
   if (loading) {
     return <PageLoading />;
   }
@@ -145,7 +159,7 @@ const AdditionalQuestionnaires = () => {
                           'MM/dd/yyyy'
                         )
                       }
-                      status={questionnaireSections[key].status}
+                      status={getQuestionnaireStatus(key)}
                     >
                       <QuestionnaireListButton
                         ariaLabel={additionalQuestionnairesT(
@@ -159,7 +173,7 @@ const AdditionalQuestionnaires = () => {
                           lockedStatus !== undefined &&
                           lockedStatus.lockedByUserAccount.username !== euaId
                         }
-                        status={questionnaireSections[key].status}
+                        status={getQuestionnaireStatus(key)}
                       />
 
                       {questionnaireSectionMap[key] && (

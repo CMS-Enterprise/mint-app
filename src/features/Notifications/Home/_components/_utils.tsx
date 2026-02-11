@@ -121,7 +121,7 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
 
     case 'IddocQuestionnaireCompletedActivityMeta':
       // TODO: Add the route for the iddoc questionnaire completed activity
-      return `/models/${metaData.modelPlanID}/read-view/WHATEVER-THE-ROUTE-IS`;
+      return `/models/${metaData.modelPlanID}/read-view/iddoc-questionnaire`;
 
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':

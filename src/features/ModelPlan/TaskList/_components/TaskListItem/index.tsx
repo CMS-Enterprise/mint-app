@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   ModelStatus,
   MtoMilestoneStatus,
   MtoStatus,
@@ -31,7 +31,7 @@ export const TaskListStatusTag = ({
     | PrepareForClearanceStatus
     | ModelStatus
     | DataExchangeApproachStatus
-    | IddocQuestionnaireStatus
+    | IddocQuestionnaireTaskListStatus
     | MtoStatus
     | MtoMilestoneStatus
     | undefined;

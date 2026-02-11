@@ -50,7 +50,9 @@ type ExistingModelLinkTranslation struct {
 
 // Represents IDDOC questionnaire translation data
 type IddocQuestionnaireTranslation struct {
-	Status                            models.TranslationFieldWithOptions            `json:"status" db:"status"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+	// TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
+	TaskListStatus                    models.TranslationFieldWithOptions            `json:"taskListStatus"`
 	Needed                            models.TranslationFieldWithOptionsAndChildren `json:"needed" db:"needed"`
 	TechnicalContactsIdentified       models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
 	TechnicalContactsIdentifiedDetail models.TranslationField                       `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
@@ -75,9 +77,10 @@ type IddocQuestionnaireTranslation struct {
 	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
 	FileNamingConventions             models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
 	DataMonitoringNote                models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
-	IsIDDOCQuestionnaireComplete      models.TranslationFieldWithOptions            `json:"isIDDOCQuestionnaireComplete" db:"is_iddoc_questionnaire_complete"`
-	CompletedBy                       models.TranslationField                       `json:"completedBy" db:"completed_by"`
-	CompletedDts                      models.TranslationField                       `json:"completedDts" db:"completed_dts"`
+	// IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+	IsComplete   models.TranslationFieldWithOptions `json:"isComplete"`
+	CompletedBy  models.TranslationField            `json:"completedBy" db:"completed_by"`
+	CompletedDts models.TranslationField            `json:"completedDts" db:"completed_dts"`
 }
 
 // Represents key contact category base translation data
@@ -1952,122 +1955,6 @@ func (e *GeographyType) UnmarshalJSON(b []byte) error {
 }
 
 func (e GeographyType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
-// IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
-type IDDOCFullTimeOrIncrementalType string
-
-const (
-	IDDOCFullTimeOrIncrementalTypeFullTime    IDDOCFullTimeOrIncrementalType = "FULL_TIME"
-	IDDOCFullTimeOrIncrementalTypeIncremental IDDOCFullTimeOrIncrementalType = "INCREMENTAL"
-)
-
-var AllIDDOCFullTimeOrIncrementalType = []IDDOCFullTimeOrIncrementalType{
-	IDDOCFullTimeOrIncrementalTypeFullTime,
-	IDDOCFullTimeOrIncrementalTypeIncremental,
-}
-
-func (e IDDOCFullTimeOrIncrementalType) IsValid() bool {
-	switch e {
-	case IDDOCFullTimeOrIncrementalTypeFullTime, IDDOCFullTimeOrIncrementalTypeIncremental:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCFullTimeOrIncrementalType) String() string {
-	return string(e)
-}
-
-func (e *IDDOCFullTimeOrIncrementalType) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCFullTimeOrIncrementalType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCFullTimeOrIncrementalType", str)
-	}
-	return nil
-}
-
-func (e IDDOCFullTimeOrIncrementalType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCFullTimeOrIncrementalType) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCFullTimeOrIncrementalType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
-// IDDOCQuestionnaireStatus represents the status of an IDDOC questionnaire
-type IDDOCQuestionnaireStatus string
-
-const (
-	IDDOCQuestionnaireStatusNotNeeded  IDDOCQuestionnaireStatus = "NOT_NEEDED"
-	IDDOCQuestionnaireStatusNotStarted IDDOCQuestionnaireStatus = "NOT_STARTED"
-	IDDOCQuestionnaireStatusInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
-	IDDOCQuestionnaireStatusCompleted  IDDOCQuestionnaireStatus = "COMPLETED"
-)
-
-var AllIDDOCQuestionnaireStatus = []IDDOCQuestionnaireStatus{
-	IDDOCQuestionnaireStatusNotNeeded,
-	IDDOCQuestionnaireStatusNotStarted,
-	IDDOCQuestionnaireStatusInProgress,
-	IDDOCQuestionnaireStatusCompleted,
-}
-
-func (e IDDOCQuestionnaireStatus) IsValid() bool {
-	switch e {
-	case IDDOCQuestionnaireStatusNotNeeded, IDDOCQuestionnaireStatusNotStarted, IDDOCQuestionnaireStatusInProgress, IDDOCQuestionnaireStatusCompleted:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCQuestionnaireStatus) String() string {
-	return string(e)
-}
-
-func (e *IDDOCQuestionnaireStatus) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCQuestionnaireStatus(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCQuestionnaireStatus", str)
-	}
-	return nil
-}
-
-func (e IDDOCQuestionnaireStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCQuestionnaireStatus) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCQuestionnaireStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

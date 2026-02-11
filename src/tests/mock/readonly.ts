@@ -54,6 +54,7 @@ import {
   IddocFileType,
   IddocFullTimeOrIncrementalType,
   IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -799,7 +800,8 @@ export const dataExchangeApproachMocks = [
 export const iddocQuestionnaireData: GetAllIDDOCQuestionnaireType = {
   __typename: 'IDDOCQuestionnaire',
   id: '123',
-  status: IddocQuestionnaireStatus.NOT_STARTED,
+  status: IddocQuestionnaireStatus.READY,
+  taskListStatus: IddocQuestionnaireTaskListStatus.READY,
   needed: true,
   technicalContactsIdentified: true,
   technicalContactsIdentifiedDetail: 'Detail of technical contacts',

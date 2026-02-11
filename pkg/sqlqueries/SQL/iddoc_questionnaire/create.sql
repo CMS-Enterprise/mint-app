@@ -25,7 +25,7 @@ INSERT INTO iddoc_questionnaire (
     file_naming_conventions,
     data_monitoring_note,
     needed,
-    is_iddoc_questionnaire_complete,
+    status,
     created_by
 )
 VALUES (
@@ -55,7 +55,7 @@ VALUES (
     :file_naming_conventions,
     :data_monitoring_note,
     :needed,
-    :is_iddoc_questionnaire_complete,
+    :status,
     :created_by
 )
 RETURNING
@@ -85,7 +85,7 @@ RETURNING
     file_naming_conventions,
     data_monitoring_note,
     needed,
-    is_iddoc_questionnaire_complete,
+    status,
     completed_by,
     completed_dts,
     created_by,

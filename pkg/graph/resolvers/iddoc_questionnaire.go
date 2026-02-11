@@ -27,8 +27,8 @@ import (
 )
 
 // IDDOCQuestionnaireUpdate updates an IDDOC questionnaire
-// It looks to see if a user marked the section as complete, and if so it will update the completion metadata.
-// If a user sets the section as not complete, it will clear that data.
+// It handles the convenience fields (needed, isComplete) and calculates
+// the appropriate status based on the input and existing data.
 func IDDOCQuestionnaireUpdate(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -46,48 +46,106 @@ func IDDOCQuestionnaireUpdate(
 		return nil, err
 	}
 
-	// Variable to track whether or not this update mutation caused the IDDOC questionnaire
-	// to go from some non-complete status to "Complete"
+	// Track current and new status
+	currentStatus := existing.Status
+	newStatus := currentStatus
 	iddocChangedToComplete := false
 
-	// Check if the 'changes' map contains the 'isIDDOCQuestionnaireComplete' key and that the
-	// 'isIDDOCQuestionnaireComplete' is different from the existing value
-	if isIDDOCQuestionnaireComplete, ok := changes["isIDDOCQuestionnaireComplete"]; ok {
-		isSettingToCompletePointer, ok := isIDDOCQuestionnaireComplete.(*bool)
-		if !ok || isSettingToCompletePointer == nil {
-			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isIDDOCQuestionnaireComplete is not a bool")
-		}
-		isSettingToComplete := *isSettingToCompletePointer
+	// Note: 'needed' field is read-only via mutation - controlled solely by database triggers
+	// It is not a convenience field in the input and should not be handled here
 
-		// Check if completion timestamp has been set or is the default value
-		if existing.CompletedDts == nil && isSettingToComplete {
-			iddocChangedToComplete = true
-			// Only auto-set CompletedBy if it wasn't explicitly provided in changes
-			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
-				existing.CompletedBy = &principal.Account().ID
+	// Handle convenience field: isComplete
+	// This allows FE to mark the questionnaire as complete/incomplete
+	if isCompleteValue, ok := changes["isComplete"]; ok {
+		isCompletePointer, ok := isCompleteValue.(*bool)
+		if !ok || isCompletePointer == nil {
+			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isComplete is not a bool")
+		}
+		isComplete := *isCompletePointer
+
+		if isComplete {
+			// Setting to complete
+			newStatus = models.IDDOCQuestionnaireComplete
+			iddocChangedToComplete = (currentStatus != models.IDDOCQuestionnaireComplete)
+
+			// Set completion metadata
+			if existing.CompletedDts == nil {
+				// Only auto-set CompletedBy if it wasn't explicitly provided in changes
+				if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
+					existing.CompletedBy = &principal.Account().ID
+				}
+				existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
 			}
-			existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
-		} else if !isSettingToComplete {
-			// When setting to incomplete, clear both fields unless explicitly set
+		} else {
+			// Setting to incomplete
+			// Check if data exists to determine IN_PROGRESS vs READY
+			// Use ModifiedBy as indicator of whether questionnaire has been worked on
+			// (matches pattern in baseTaskListSection.CalcStatus)
+			if existing.ModifiedBy != nil {
+				newStatus = models.IDDOCQuestionnaireInProgress
+			} else {
+				newStatus = models.IDDOCQuestionnaireReady
+			}
+
+			// Clear completion metadata
 			if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
 				existing.CompletedBy = nil
 			}
 			existing.CompletedDts = nil
 		}
+
+		// Remove from changes map (convenience field, not in DB)
+		delete(changes, "isComplete")
 	}
 
-	// Update the base task list section
+	// Auto-detect IN_PROGRESS if any question data changed
+	// Check if any non-metadata fields are in the changes
+	// Metadata fields to exclude from the check
+	metadataFields := map[string]bool{
+		// baseStruct fields
+		"ID":          true,
+		"CreatedBy":   true,
+		"CreatedDts":  true,
+		"ModifiedBy":  true,
+		"ModifiedDts": true,
+		// modelPlanRelation fields
+		"ModelPlanID": true,
+		// Status and completion metadata
+		"Needed":       true,
+		"Status":       true,
+		"CompletedBy":  true,
+		"CompletedDts": true,
+	}
+
+	questionFieldsChanged := false
+	for field := range changes {
+		if !metadataFields[field] {
+			questionFieldsChanged = true
+			break
+		}
+	}
+
+	// If question data changed and status is READY, upgrade to IN_PROGRESS
+	if questionFieldsChanged && currentStatus == models.IDDOCQuestionnaireReady {
+		newStatus = models.IDDOCQuestionnaireInProgress
+	}
+
+	// Set the computed status in the model
+	existing.Status = newStatus
+
+	// Update the base struct (handles modified_by, modified_dts, etc.)
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
 
-	// Update the IDDOC questionnaire
+	// Update the IDDOC questionnaire in the database
 	updatedQuestionnaire, err := storage.IDDOCQuestionnaireUpdate(store, logger, existing)
 	if err != nil {
 		return nil, err
 	}
 
+	// Send notifications if the questionnaire was marked complete
 	if iddocChangedToComplete {
 		TrySendIDDOCQuestionnaireNotifications(
 			ctx,

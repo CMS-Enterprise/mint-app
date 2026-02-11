@@ -41,13 +41,14 @@ body:graphql {
         produceBenefitEnhancementFiles: true
         fileNamingConventions: "YYYYMMDD_ModelName_FileType_Version.ext"
         dataMonitoringNote: "Automated monitoring dashboard in development"
-        isIDDOCQuestionnaireComplete: false
+        isComplete: false
       }
     ) {
       id
       modelPlanID
       status
       needed
+      isComplete
   
       # Page 1 - Operations
       technicalContactsIdentified

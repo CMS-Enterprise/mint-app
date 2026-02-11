@@ -30,7 +30,7 @@ SELECT
     iddoc.file_naming_conventions,
     iddoc.data_monitoring_note,
     iddoc.needed,
-    iddoc.is_iddoc_questionnaire_complete,
+    iddoc.status,
     iddoc.completed_by,
     iddoc.completed_dts,
     iddoc.created_by,

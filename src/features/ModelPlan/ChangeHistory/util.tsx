@@ -40,7 +40,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
-  | 'questionnaireStatusUpdate'
+  | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
   | 'teamUpdate'
   | 'discussionUpdate'
@@ -93,7 +93,8 @@ export type TableWithStatus =
   | TableName.PLAN_BENEFICIARIES
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
   | TableName.PLAN_PAYMENTS
-  | TableName.PLAN_DATA_EXCHANGE_APPROACH;
+  | TableName.PLAN_DATA_EXCHANGE_APPROACH
+  | TableName.IDDOC_QUESTIONNAIRE;
 
 export const isTableWithStatus = (
   tableName: TableName
@@ -106,7 +107,8 @@ export const isTableWithStatus = (
     TableName.PLAN_BENEFICIARIES,
     TableName.PLAN_OPS_EVAL_AND_LEARNING,
     TableName.PLAN_PAYMENTS,
-    TableName.PLAN_DATA_EXCHANGE_APPROACH
+    TableName.PLAN_DATA_EXCHANGE_APPROACH,
+    TableName.IDDOC_QUESTIONNAIRE
   ].includes(tableName);
 };
 
@@ -197,7 +199,7 @@ const unneededFields: HiddenFieldTypes[] = [
   },
   {
     table: TableName.IDDOC_QUESTIONNAIRE,
-    fields: ['is_iddoc_questionnaire_complete', 'completed_by', 'completed_dts']
+    fields: ['completed_by', 'completed_dts']
   },
   {
     table: TableName.MTO_CATEGORY,
@@ -812,17 +814,11 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   // If the change is a task list status update, return 'Task list status update'
   if (
     isTableWithStatus(change.tableName) &&
-    change.translatedFields.find(field => field.fieldName === 'status')
+    change.translatedFields.find(
+      field => field.fieldName === 'status' || field.fieldName === 'needed'
+    )
   ) {
     return 'taskListStatusUpdate';
-  }
-
-  // If the change is a questionnairestatus update, return 'Questionnaire status update'
-  if (
-    change.tableName === TableName.IDDOC_QUESTIONNAIRE &&
-    change.translatedFields.find(field => field.fieldName === 'status')
-  ) {
-    return 'questionnaireStatusUpdate';
   }
 
   if (
@@ -992,7 +988,9 @@ export const isInitialCreatedSection = (
   !!(
     (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
-        field => field.fieldName === 'status' && field.old === null
+        field =>
+          (field.fieldName === 'status' || field.fieldName === 'needed') &&
+          field.old === null
       )) ||
     identifyChangeType(change) === 'operationalNeedCreate'
   );
@@ -1091,12 +1089,13 @@ export const sortChangesByDay = (
 };
 
 // Removes changes that are not needed for the change history.  Used to get accurate page count of audits
-const removeUnneededAudits = (changes: ChangeRecordType[]) =>
-  changes.filter(
+const removeUnneededAudits = (changes: ChangeRecordType[]) => {
+  return changes.filter(
     change =>
       !isInitialCreatedSection(change, identifyChangeType(change)) &&
       change.translatedFields.length !== 0
   );
+};
 
 export const sortAllChanges = (changes: ChangeRecordType[]) => {
   const changesWithStatusSeparation = separateStatusChanges(changes);

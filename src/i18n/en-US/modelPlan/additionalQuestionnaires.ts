@@ -1,6 +1,6 @@
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireStatus
+  IddocQuestionnaireTaskListStatus
 } from '../../../gql/generated/graphql';
 
 const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
@@ -9,11 +9,14 @@ const dataExchangeApproachStatus: Record<DataExchangeApproachStatus, string> = {
   [DataExchangeApproachStatus.COMPLETE]: 'Complete'
 };
 
-const iddocQuestionnaireStatus: Record<IddocQuestionnaireStatus, string> = {
-  [IddocQuestionnaireStatus.NOT_STARTED]: 'Ready to start',
-  [IddocQuestionnaireStatus.IN_PROGRESS]: 'In progress',
-  [IddocQuestionnaireStatus.NOT_NEEDED]: 'Not Needed',
-  [IddocQuestionnaireStatus.COMPLETED]: 'Complete'
+const iddocQuestionnaireStatus: Record<
+  IddocQuestionnaireTaskListStatus,
+  string
+> = {
+  [IddocQuestionnaireTaskListStatus.NOT_NEEDED]: 'Not Needed',
+  [IddocQuestionnaireTaskListStatus.READY]: 'Ready to start',
+  [IddocQuestionnaireTaskListStatus.IN_PROGRESS]: 'In progress',
+  [IddocQuestionnaireTaskListStatus.COMPLETE]: 'Complete'
 };
 
 const additionalQuestionnaires = {

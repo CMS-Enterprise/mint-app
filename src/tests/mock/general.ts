@@ -33,7 +33,7 @@ import {
   GetModelPlansDocument,
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
-  IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   ModelCategory,
   ModelPhase,
   ModelPlanFilter,
@@ -127,7 +127,7 @@ export const questionnairesMockData: QuestionnairesType = {
     id: 'b4eead7a-6603-41ed-85b7-97f1b1f0b367',
     modifiedDts: '2026-01-05T22:55:26.923527Z',
     modifiedByUserAccount: null,
-    status: IddocQuestionnaireStatus.NOT_NEEDED,
+    taskListStatus: IddocQuestionnaireTaskListStatus.NOT_NEEDED,
     needed: false
   }
 };

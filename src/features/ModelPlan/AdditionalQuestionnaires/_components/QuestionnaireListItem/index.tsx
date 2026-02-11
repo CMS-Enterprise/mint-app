@@ -5,16 +5,20 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireStatus
+  IddocQuestionnaireTaskListStatus
 } from 'gql/generated/graphql';
 
 import '../../index.scss';
+
+type QuestionnaireListStatusType =
+  | DataExchangeApproachStatus
+  | IddocQuestionnaireTaskListStatus;
 
 const QuestionnaireListStatusTag = ({
   status,
   classname
 }: {
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: QuestionnaireListStatusType;
   classname?: string;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -26,7 +30,6 @@ const QuestionnaireListStatusTag = ({
 
   switch (status) {
     case 'READY':
-    case 'NOT_STARTED':
       tagCopy = additionalQuestionnairesT(
         'questionnaireStatus.dataExchangeApproach.READY'
       );
@@ -45,7 +48,6 @@ const QuestionnaireListStatusTag = ({
       tagStyle = 'bg-white border-2px text-base';
       break;
     case 'COMPLETE':
-    case 'COMPLETED':
       tagCopy = additionalQuestionnairesT(
         'questionnaireStatus.dataExchangeApproach.COMPLETE'
       );
@@ -79,7 +81,7 @@ export const QuestionnaireListButton = ({
   testId?: string;
   path: string;
   disabled?: boolean;
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: QuestionnaireListStatusType;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -88,31 +90,25 @@ export const QuestionnaireListButton = ({
   const navigate = useNavigate();
 
   const getCtaCopy = () => {
-    if (
-      status === DataExchangeApproachStatus.READY ||
-      status === IddocQuestionnaireStatus.NOT_STARTED
-    ) {
+    if (status === DataExchangeApproachStatus.READY) {
       return additionalQuestionnairesT('questionnaireButton.start');
     }
 
     if (
       status === DataExchangeApproachStatus.IN_PROGRESS ||
-      status === IddocQuestionnaireStatus.IN_PROGRESS
+      status === IddocQuestionnaireTaskListStatus.IN_PROGRESS
     ) {
       return additionalQuestionnairesT('questionnaireButton.continue');
     }
 
-    if (
-      status === DataExchangeApproachStatus.COMPLETE ||
-      status === IddocQuestionnaireStatus.COMPLETED
-    ) {
+    if (status === DataExchangeApproachStatus.COMPLETE) {
       return additionalQuestionnairesT('questionnaireButton.edit');
     }
 
     return null;
   };
 
-  if (status === IddocQuestionnaireStatus.NOT_NEEDED) {
+  if (status === IddocQuestionnaireTaskListStatus.NOT_NEEDED) {
     return null;
   }
 
@@ -140,7 +136,7 @@ type QuestionnaireListItemProps = {
   children?: React.ReactNode;
   heading: string;
   description: string;
-  status: DataExchangeApproachStatus | IddocQuestionnaireStatus;
+  status: QuestionnaireListStatusType;
   testId: string;
   lastUpdated?: string | null;
 };
@@ -178,7 +174,8 @@ const QuestionnaireListItem = ({
         <div className="additional-questionnaires-list__task-description margin-right-auto line-height-body-5">
           <p
             className={classNames('margin-top-0', {
-              'text-base-dark': status === IddocQuestionnaireStatus.NOT_NEEDED
+              'text-base-dark':
+                status === IddocQuestionnaireTaskListStatus.NOT_NEEDED
             })}
           >
             {description}

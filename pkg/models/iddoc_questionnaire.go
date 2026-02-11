@@ -1,21 +1,46 @@
 package models
 
 import (
-	"context"
 	"database/sql/driver"
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/lib/pq"
+)
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
+// IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire
+type IDDOCQuestionnaireStatus string
+
+// These constants represent the different values of IDDOCQuestionnaireStatus
+const (
+	IDDOCQuestionnaireReady      IDDOCQuestionnaireStatus = "READY"
+	IDDOCQuestionnaireInProgress IDDOCQuestionnaireStatus = "IN_PROGRESS"
+	IDDOCQuestionnaireComplete   IDDOCQuestionnaireStatus = "COMPLETE"
+)
+
+// IDDOCQuestionnaireTaskListStatus represents the combined status for task list display
+type IDDOCQuestionnaireTaskListStatus string
+
+// These constants represent the different values of IDDOCQuestionnaireTaskListStatus
+const (
+	IDDOCQuestionnaireTaskListStatusNotNeeded  IDDOCQuestionnaireTaskListStatus = "NOT_NEEDED"
+	IDDOCQuestionnaireTaskListStatusReady      IDDOCQuestionnaireTaskListStatus = "READY"
+	IDDOCQuestionnaireTaskListStatusInProgress IDDOCQuestionnaireTaskListStatus = "IN_PROGRESS"
+	IDDOCQuestionnaireTaskListStatusComplete   IDDOCQuestionnaireTaskListStatus = "COMPLETE"
 )
 
 // IDDOCFileType represents the types of files that can be exchanged
 type IDDOCFileType string
+
+// IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
+type IDDOCFullTimeOrIncrementalType string
+
+// These constants represent the different values of IDDOCFullTimeOrIncrementalType
+const (
+	IDDOCFullTimeOrIncrementalTypeFullTime    IDDOCFullTimeOrIncrementalType = "FULL_TIME"
+	IDDOCFullTimeOrIncrementalTypeIncremental IDDOCFullTimeOrIncrementalType = "INCREMENTAL"
+)
 
 // IDDOCFileTypeArray represents an array of IDDOCFileType
 type IDDOCFileTypeArray []IDDOCFileType
@@ -64,6 +89,7 @@ func (a *IDDOCFileTypeArray) UnmarshalJSON(data []byte) error {
 type IDDOCQuestionnaire struct {
 	baseStruct
 	modelPlanRelation
+	completedByRelation
 
 	// Questionnaire fields - Page 1 Operations
 	TechnicalContactsIdentified       *bool      `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
@@ -76,29 +102,52 @@ type IDDOCQuestionnaire struct {
 	IcdNote                           *string    `json:"icdNote" db:"icd_note"`
 
 	// Page 2 Testing
-	UatNeeds                  *string            `json:"uatNeeds" db:"uat_needs"`
-	StcNeeds                  *string            `json:"stcNeeds" db:"stc_needs"`
-	TestingTimelines          *string            `json:"testingTimelines" db:"testing_timelines"`
-	TestingNote               *string            `json:"testingNote" db:"testing_note"`
-	DataMonitoringFileTypes   IDDOCFileTypeArray `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
-	DataMonitoringFileOther   *string            `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
-	DataResponseType          *string            `json:"dataResponseType" db:"data_response_type"`
-	DataResponseFileFrequency *string            `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
+	UatNeeds                  *string                  `json:"uatNeeds" db:"uat_needs"`
+	StcNeeds                  *string                  `json:"stcNeeds" db:"stc_needs"`
+	TestingTimelines          *string                  `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote               *string                  `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes   EnumArray[IDDOCFileType] `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
+	DataMonitoringFileOther   *string                  `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType          *string                  `json:"dataResponseType" db:"data_response_type"`
+	DataResponseFileFrequency *string                  `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
 
 	// Page 3 Monitoring
-	DataFullTimeOrIncremental      *string `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
-	EftSetUp                       *bool   `json:"eftSetUp" db:"eft_set_up"`
-	UnsolicitedAdjustmentsIncluded *bool   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
-	DataFlowDiagramsNeeded         *bool   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
-	ProduceBenefitEnhancementFiles *bool   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
-	FileNamingConventions          *string `json:"fileNamingConventions" db:"file_naming_conventions"`
-	DataMonitoringNote             *string `json:"dataMonitoringNote" db:"data_monitoring_note"`
+	DataFullTimeOrIncremental      *IDDOCFullTimeOrIncrementalType `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                       *bool                           `json:"eftSetUp" db:"eft_set_up"`
+	UnsolicitedAdjustmentsIncluded *bool                           `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded         *bool                           `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles *bool                           `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions          *string                         `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote             *string                         `json:"dataMonitoringNote" db:"data_monitoring_note"`
 
 	// Metadata
-	Needed                       bool       `json:"needed" db:"needed"`
-	IsIDDOCQuestionnaireComplete bool       `json:"isIDDOCQuestionnaireComplete" db:"is_iddoc_questionnaire_complete"`
-	CompletedBy                  *uuid.UUID `json:"completedBy" db:"completed_by"`
-	CompletedDts                 *time.Time `json:"completedDts" db:"completed_dts"`
+	Needed bool                     `json:"needed" db:"needed"` // Whether questionnaire is required (controlled by triggers)
+	Status IDDOCQuestionnaireStatus `json:"status" db:"status"` // Work status enum (READY, IN_PROGRESS, COMPLETE)
+}
+
+// IsComplete returns whether the questionnaire has been marked as complete
+func (iddoc *IDDOCQuestionnaire) IsComplete() bool {
+	return iddoc.Status == IDDOCQuestionnaireComplete
+}
+
+// TaskListStatus returns the combined task list status for display.
+// It combines the needed field with work status to provide a unified view.
+func (iddoc *IDDOCQuestionnaire) TaskListStatus() IDDOCQuestionnaireTaskListStatus {
+	// If not needed, return NOT_NEEDED regardless of status
+	if !iddoc.Needed {
+		return IDDOCQuestionnaireTaskListStatusNotNeeded
+	}
+	// Map work status to task list status
+	switch iddoc.Status {
+	case IDDOCQuestionnaireReady:
+		return IDDOCQuestionnaireTaskListStatusReady
+	case IDDOCQuestionnaireInProgress:
+		return IDDOCQuestionnaireTaskListStatusInProgress
+	case IDDOCQuestionnaireComplete:
+		return IDDOCQuestionnaireTaskListStatusComplete
+	default:
+		return IDDOCQuestionnaireTaskListStatusReady
+	}
 }
 
 // NewIDDOCQuestionnaire returns a new IDDOCQuestionnaire object
@@ -106,23 +155,7 @@ func NewIDDOCQuestionnaire(createdBy uuid.UUID, modelPlanID uuid.UUID) *IDDOCQue
 	return &IDDOCQuestionnaire{
 		baseStruct:        NewBaseStruct(createdBy),
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		Needed:            false, // Default to false
+		Needed:            false,                   // Default: not needed
+		Status:            IDDOCQuestionnaireReady, // Default: ready to start if needed
 	}
-}
-
-// CompletedByUserAccount returns the user account for the user who completed the questionnaire
-func (iddoc *IDDOCQuestionnaire) CompletedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
-	if iddoc.CompletedBy == nil {
-		return nil, nil
-	}
-
-	service, err := appcontext.UserAccountService(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get completed by user account, there is an issue with the user account service. err %w", err)
-	}
-	account, err := service(ctx, *iddoc.CompletedBy)
-	if err != nil {
-		return nil, err
-	}
-	return account, nil
 }

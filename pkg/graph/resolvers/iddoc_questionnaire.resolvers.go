@@ -11,43 +11,12 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // DataMonitoringFileTypes is the resolver for the dataMonitoringFileTypes field.
 func (r *iDDOCQuestionnaireResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.IDDOCQuestionnaire) ([]models.IDDOCFileType, error) {
 	return obj.DataMonitoringFileTypes, nil
-}
-
-// DataFullTimeOrIncremental is the resolver for the dataFullTimeOrIncremental field.
-func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Context, obj *models.IDDOCQuestionnaire) (*model.IDDOCFullTimeOrIncrementalType, error) {
-	if obj.DataFullTimeOrIncremental == nil {
-		return nil, nil
-	}
-	value := model.IDDOCFullTimeOrIncrementalType(*obj.DataFullTimeOrIncremental)
-	return &value, nil
-}
-
-// Status is the resolver for the status field.
-func (r *iDDOCQuestionnaireResolver) Status(ctx context.Context, obj *models.IDDOCQuestionnaire) (model.IDDOCQuestionnaireStatus, error) {
-	// If not needed, return NOT_NEEDED
-	if !obj.Needed {
-		return model.IDDOCQuestionnaireStatusNotNeeded, nil
-	}
-
-	// If completed, return COMPLETED
-	if obj.CompletedDts != nil {
-		return model.IDDOCQuestionnaireStatusCompleted, nil
-	}
-
-	// If any field has been modified after creation (excluding metadata), return IN_PROGRESS
-	if obj.ModifiedDts != nil && !obj.ModifiedDts.Equal(obj.CreatedDts) {
-		return model.IDDOCQuestionnaireStatusInProgress, nil
-	}
-
-	// Otherwise, return NOT_STARTED
-	return model.IDDOCQuestionnaireStatusNotStarted, nil
 }
 
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.

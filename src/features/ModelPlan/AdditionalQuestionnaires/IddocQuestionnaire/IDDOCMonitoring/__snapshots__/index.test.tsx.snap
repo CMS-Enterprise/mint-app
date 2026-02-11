@@ -343,7 +343,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         <label
           class="usa-label text-normal"
           data-testid="label"
-          for="is-iddocquestionnaire-complete"
+          for="is-complete"
         >
           Questionnaire status
         </label>
@@ -356,14 +356,14 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
           >
             <input
               class="usa-checkbox__input"
-              id="is-iddocquestionnaire-complete"
-              name="isIDDOCQuestionnaireComplete"
+              id="is-complete"
+              name="isComplete"
               type="checkbox"
               value="true"
             />
             <label
               class="usa-checkbox__label"
-              for="is-iddocquestionnaire-complete"
+              for="is-complete"
               style="width: fit-content;"
             >
               This questionnaire (4i and ACO-OS) is complete.

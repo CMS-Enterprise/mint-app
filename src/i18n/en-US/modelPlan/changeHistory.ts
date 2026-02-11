@@ -41,8 +41,6 @@ const changeHistory = {
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   planStatusUpdate:
     'updated the status to {{status}} <datetime>on {{date}} at {{time}}</datetime>',
-  questionnaireStatusUpdate:
-    'marked the {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:
     '{{action}} {{collaborator}} as {{role}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
   teamUPDATED:
