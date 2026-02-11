@@ -654,7 +654,7 @@ describe('Notification Center', () => {
       .should('not.be.disabled')
       .click({ force: true });
 
-    cy.get('#is-iddocquestionnaire-complete')
+    cy.get('#is-complete')
       .should('not.be.disabled')
       .check({ force: true })
       .should('be.checked');
