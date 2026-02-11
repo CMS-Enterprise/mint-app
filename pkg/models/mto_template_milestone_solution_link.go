@@ -11,4 +11,3 @@ type MTOTemplateMilestoneSolutionLink struct {
 	TemplateMilestoneID uuid.UUID `json:"templateMilestoneID" db:"mto_template_milestone"`
 	TemplateSolutionID  uuid.UUID `json:"templateSolutionID" db:"mto_template_solution"`
 }
-

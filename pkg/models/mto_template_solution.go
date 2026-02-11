@@ -14,4 +14,3 @@ type MTOTemplateSolution struct {
 	// Filled in by sql query
 	MTOMilestoneID *uuid.UUID `json:"mtoMilestoneID" db:"mto_milestone_id"`
 }
-
