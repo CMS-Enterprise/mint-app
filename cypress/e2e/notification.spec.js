@@ -597,7 +597,7 @@ describe('Notification Center', () => {
     );
   });
 
-  it.only('testing IDDOC Questionnaire is marked Complete Notification', () => {
+  it('testing IDDOC Questionnaire is marked Complete Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
