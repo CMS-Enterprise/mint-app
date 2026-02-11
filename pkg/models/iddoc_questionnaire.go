@@ -33,6 +33,15 @@ const (
 // IDDOCFileType represents the types of files that can be exchanged
 type IDDOCFileType string
 
+// IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
+type IDDOCFullTimeOrIncrementalType string
+
+// These constants represent the different values of IDDOCFullTimeOrIncrementalType
+const (
+	IDDOCFullTimeOrIncrementalTypeFullTime    IDDOCFullTimeOrIncrementalType = "FULL_TIME"
+	IDDOCFullTimeOrIncrementalTypeIncremental IDDOCFullTimeOrIncrementalType = "INCREMENTAL"
+)
+
 // IDDOCFileTypeArray represents an array of IDDOCFileType
 type IDDOCFileTypeArray []IDDOCFileType
 
@@ -93,23 +102,23 @@ type IDDOCQuestionnaire struct {
 	IcdNote                           *string    `json:"icdNote" db:"icd_note"`
 
 	// Page 2 Testing
-	UatNeeds                  *string            `json:"uatNeeds" db:"uat_needs"`
-	StcNeeds                  *string            `json:"stcNeeds" db:"stc_needs"`
-	TestingTimelines          *string            `json:"testingTimelines" db:"testing_timelines"`
-	TestingNote               *string            `json:"testingNote" db:"testing_note"`
-	DataMonitoringFileTypes   IDDOCFileTypeArray `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
-	DataMonitoringFileOther   *string            `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
-	DataResponseType          *string            `json:"dataResponseType" db:"data_response_type"`
-	DataResponseFileFrequency *string            `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
+	UatNeeds                  *string                  `json:"uatNeeds" db:"uat_needs"`
+	StcNeeds                  *string                  `json:"stcNeeds" db:"stc_needs"`
+	TestingTimelines          *string                  `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote               *string                  `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes   EnumArray[IDDOCFileType] `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
+	DataMonitoringFileOther   *string                  `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType          *string                  `json:"dataResponseType" db:"data_response_type"`
+	DataResponseFileFrequency *string                  `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
 
 	// Page 3 Monitoring
-	DataFullTimeOrIncremental      *string `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
-	EftSetUp                       *bool   `json:"eftSetUp" db:"eft_set_up"`
-	UnsolicitedAdjustmentsIncluded *bool   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
-	DataFlowDiagramsNeeded         *bool   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
-	ProduceBenefitEnhancementFiles *bool   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
-	FileNamingConventions          *string `json:"fileNamingConventions" db:"file_naming_conventions"`
-	DataMonitoringNote             *string `json:"dataMonitoringNote" db:"data_monitoring_note"`
+	DataFullTimeOrIncremental      *IDDOCFullTimeOrIncrementalType `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                       *bool                           `json:"eftSetUp" db:"eft_set_up"`
+	UnsolicitedAdjustmentsIncluded *bool                           `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded         *bool                           `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles *bool                           `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions          *string                         `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote             *string                         `json:"dataMonitoringNote" db:"data_monitoring_note"`
 
 	// Metadata
 	Needed bool                     `json:"needed" db:"needed"` // Whether questionnaire is required (controlled by triggers)

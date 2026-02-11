@@ -11,22 +11,12 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // DataMonitoringFileTypes is the resolver for the dataMonitoringFileTypes field.
 func (r *iDDOCQuestionnaireResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.IDDOCQuestionnaire) ([]models.IDDOCFileType, error) {
 	return obj.DataMonitoringFileTypes, nil
-}
-
-// DataFullTimeOrIncremental is the resolver for the dataFullTimeOrIncremental field.
-func (r *iDDOCQuestionnaireResolver) DataFullTimeOrIncremental(ctx context.Context, obj *models.IDDOCQuestionnaire) (*model.IDDOCFullTimeOrIncrementalType, error) {
-	if obj.DataFullTimeOrIncremental == nil {
-		return nil, nil
-	}
-	value := model.IDDOCFullTimeOrIncrementalType(*obj.DataFullTimeOrIncremental)
-	return &value, nil
 }
 
 // UpdateIDDOCQuestionnaire is the resolver for the updateIDDOCQuestionnaire field.

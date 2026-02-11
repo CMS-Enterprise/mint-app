@@ -1960,62 +1960,6 @@ func (e GeographyType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
-type IDDOCFullTimeOrIncrementalType string
-
-const (
-	IDDOCFullTimeOrIncrementalTypeFullTime    IDDOCFullTimeOrIncrementalType = "FULL_TIME"
-	IDDOCFullTimeOrIncrementalTypeIncremental IDDOCFullTimeOrIncrementalType = "INCREMENTAL"
-)
-
-var AllIDDOCFullTimeOrIncrementalType = []IDDOCFullTimeOrIncrementalType{
-	IDDOCFullTimeOrIncrementalTypeFullTime,
-	IDDOCFullTimeOrIncrementalTypeIncremental,
-}
-
-func (e IDDOCFullTimeOrIncrementalType) IsValid() bool {
-	switch e {
-	case IDDOCFullTimeOrIncrementalTypeFullTime, IDDOCFullTimeOrIncrementalTypeIncremental:
-		return true
-	}
-	return false
-}
-
-func (e IDDOCFullTimeOrIncrementalType) String() string {
-	return string(e)
-}
-
-func (e *IDDOCFullTimeOrIncrementalType) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = IDDOCFullTimeOrIncrementalType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid IDDOCFullTimeOrIncrementalType", str)
-	}
-	return nil
-}
-
-func (e IDDOCFullTimeOrIncrementalType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *IDDOCFullTimeOrIncrementalType) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e IDDOCFullTimeOrIncrementalType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
 type KeyCharacteristic string
 
 const (
