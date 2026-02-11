@@ -12,12 +12,3 @@ type MTOTemplateMilestoneSolutionLink struct {
 	TemplateSolutionID  uuid.UUID `json:"templateSolutionID" db:"mto_template_solution"`
 }
 
-// NewMTOTemplateMilestoneSolutionLink returns a new mtoTemplateMilestoneSolutionLink object
-func NewMTOTemplateMilestoneSolutionLink(createdBy uuid.UUID, templateMilestoneID uuid.UUID, templateSolutionID uuid.UUID, templateID uuid.UUID) *MTOTemplateMilestoneSolutionLink {
-	return &MTOTemplateMilestoneSolutionLink{
-		baseStruct:          NewBaseStruct(createdBy),
-		templateRelation:    NewTemplateRelation(templateID),
-		TemplateMilestoneID: templateMilestoneID,
-		TemplateSolutionID:  templateSolutionID,
-	}
-}
