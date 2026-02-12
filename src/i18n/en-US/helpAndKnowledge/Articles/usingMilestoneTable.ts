@@ -1,5 +1,6 @@
 const usingMilestoneTable = {
   title: 'Using the milestone table',
+  lastUpdatedDate: '2025-06-02',
   breadcrumb: 'Using the milestone table',
   description:
     'The milestone table is the main model-to-operations matrix (MTO) content view in MINT. It is closely related to the solutions and IT systems table, since each one offers a slightly different view of content you have added to your MTO.',

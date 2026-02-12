@@ -1,5 +1,6 @@
 const modelSolutionImplementation = {
   title: 'Model implementation and solution implementation',
+  lastUpdatedDate: '2025-08-25',
   description:
     'This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model and tracks work in the model-to-operations matrix (MTO).',
   summaryBox: {

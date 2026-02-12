@@ -11,13 +11,19 @@ post {
 }
 
 body:graphql {
-  query GetKeyContact{
-    keyContact(id: "{{keyContactId}}") {
+  query GetKeyContact($id:UUID!){
+    keyContact(id: $id) {
       id
       name
       email
       subjectArea
       subjectCategoryID
     }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{keyContactID}}"
   }
 }

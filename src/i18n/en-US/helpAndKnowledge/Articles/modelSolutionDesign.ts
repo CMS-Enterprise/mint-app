@@ -1,5 +1,6 @@
 const modelSolutionDesign = {
   title: 'Model design and solution design',
+  lastUpdatedDate: '2025-08-25',
   description:
     'This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, operational solutions, and contracts needed to support the model.',
   summaryBox: {
