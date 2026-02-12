@@ -84,7 +84,7 @@ const notifications = {
         cta: 'View data exchange approach'
       },
       IDDOC_QUESTIONNAIRE_COMPLETED: {
-        text: ' marked the 4i/ACO-OS questionnaire complete for  {{-modelName}}.',
+        text: ' marked the 4i/ACO-OS questionnaire complete for {{-modelName}}.',
         cta: 'View questionnaire'
       }
     },
