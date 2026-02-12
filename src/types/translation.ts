@@ -20,7 +20,6 @@ import {
   ContractorSupportType,
   DataExchangeApproachStatus,
   DataForMonitoringType,
-  DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToCollectFromParticipants,
   DataToSendParticipantsType,
@@ -51,7 +50,6 @@ import {
   ModelStatus,
   ModelType,
   ModelViewFilter,
-  MonitoringFileType,
   MtoCategoryTranslation,
   MtoCommonMilestoneKey,
   MtoCommonSolutionCmsComponent,
@@ -655,53 +653,6 @@ export type TranslationOpsEvalAndLearningForm = {
   contractorSupportNote: TranslationFieldProperties;
   iddocSupport: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   iddocSupportNote: TranslationFieldProperties;
-  // IDDOC
-  technicalContactsIdentified: TranslationFieldPropertiesWithOptionsAndParent<
-    Bool,
-    Bool
-  >;
-  technicalContactsIdentifiedDetail: TranslationFieldProperties;
-  technicalContactsIdentifiedNote: TranslationFieldProperties;
-  captureParticipantInfo: TranslationFieldPropertiesWithOptionsAndParent<
-    Bool,
-    Bool
-  >;
-  captureParticipantInfoNote: TranslationFieldProperties;
-  icdOwner: TranslationFieldPropertiesWithParent<Bool>;
-  draftIcdDueDate: TranslationFieldPropertiesWithParent<Bool>;
-  icdNote: TranslationFieldPropertiesWithParent<Bool>;
-  // IDDOC Testing
-  uatNeeds: TranslationFieldPropertiesWithParent<Bool>;
-  stcNeeds: TranslationFieldPropertiesWithParent<Bool>;
-  testingTimelines: TranslationFieldPropertiesWithParent<Bool>;
-  testingNote: TranslationFieldProperties;
-  dataMonitoringFileTypes: TranslationFieldPropertiesWithOptionsAndParent<
-    MonitoringFileType,
-    Bool
-  >;
-  dataMonitoringFileOther: TranslationFieldProperties;
-  dataResponseType: TranslationFieldPropertiesWithParent<Bool>;
-  dataResponseFileFrequency: TranslationFieldPropertiesWithParent<Bool>;
-  // IDDOC Monitoring
-  dataFullTimeOrIncremental: TranslationFieldPropertiesWithOptionsAndParent<
-    DataFullTimeOrIncrementalType,
-    Bool
-  >;
-  eftSetUp: TranslationFieldPropertiesWithOptionsAndParent<Bool, Bool>;
-  unsolicitedAdjustmentsIncluded: TranslationFieldPropertiesWithOptionsAndParent<
-    Bool,
-    Bool
-  >;
-  dataFlowDiagramsNeeded: TranslationFieldPropertiesWithOptionsAndParent<
-    Bool,
-    Bool
-  >;
-  produceBenefitEnhancementFiles: TranslationFieldPropertiesWithOptionsAndParent<
-    Bool,
-    Bool
-  >;
-  fileNamingConventions: TranslationFieldPropertiesWithParent<Bool>;
-  dataMonitoringNote: TranslationFieldProperties;
   // Performance
   benchmarkForPerformance: TranslationFieldPropertiesWithOptions<BenchmarkForPerformanceType>;
   benchmarkForPerformanceNote: TranslationFieldProperties;
