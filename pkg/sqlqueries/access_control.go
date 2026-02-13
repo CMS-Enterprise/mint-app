@@ -8,23 +8,18 @@ var checkIfCollaboratorSQL string
 //go:embed SQL/access_control/check_if_collaborator_discussion_id.sql
 var checkIfCollaboratorDiscussionIDSQL string
 
-//go:embed SQL/access_control/check_if_collaborator_by_solution_id.sql
-var checkIfCollaboratorBySolutionIDSQL string
-
-//go:embed SQL/access_control/check_if_collaborator_by_operational_need_id.sql
-var checkIfCollaboratorByOperationalNeedIDSQL string
+//go:embed SQL/access_control/check_if_collaborator_milestone_id.sql
+var checkIfCollaboratorMilestoneIDSQL string
 
 type accessControlScripts struct {
-	CheckIfCollaborator                    string
-	CheckIfCollaboratorByDiscussionID      string
-	CheckIfCollaboratorBySolutionID        string
-	CheckIfCollaboratorByOperationalNeedID string
+	CheckIfCollaborator               string
+	CheckIfCollaboratorByDiscussionID string
+	CheckIfCollaboratorByMilestoneID  string
 }
 
 // AccessControl houses all the sql for getting data for access control from the database
 var AccessControl = accessControlScripts{
-	CheckIfCollaborator:                    checkIfCollaboratorSQL,
-	CheckIfCollaboratorByDiscussionID:      checkIfCollaboratorDiscussionIDSQL,
-	CheckIfCollaboratorBySolutionID:        checkIfCollaboratorBySolutionIDSQL,
-	CheckIfCollaboratorByOperationalNeedID: checkIfCollaboratorByOperationalNeedIDSQL,
+	CheckIfCollaborator:               checkIfCollaboratorSQL,
+	CheckIfCollaboratorByDiscussionID: checkIfCollaboratorDiscussionIDSQL,
+	CheckIfCollaboratorByMilestoneID:  checkIfCollaboratorMilestoneIDSQL,
 }

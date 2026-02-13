@@ -17,11 +17,14 @@ auth:apikey {
 }
 
 body:graphql {
-  query taskListSectionLocks ($modelPlanID: UUID!) {
-      taskListSectionLocks (modelPlanID: $modelPlanID) {
+  query lockableSectionLocks ($modelPlanID: UUID!) {
+      lockableSectionLocks (modelPlanID: $modelPlanID) {
           modelPlanID
           section
-          lockedBy
+          lockedByUserAccount {
+              id
+              commonName
+          }
           isAssessment
       }
   }
@@ -29,6 +32,6 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "modelPlanID": ""
+    "modelPlanID": "{{modelPlanID}}"
   }
 }

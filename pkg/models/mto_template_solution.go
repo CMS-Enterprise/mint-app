@@ -14,16 +14,3 @@ type MTOTemplateSolution struct {
 	// Filled in by sql query
 	MTOMilestoneID *uuid.UUID `json:"mtoMilestoneID" db:"mto_milestone_id"`
 }
-
-// NewMTOTemplateSolution returns a new MTOTemplateSolution object
-func NewMTOTemplateSolution(
-	createdBy uuid.UUID,
-	templateID uuid.UUID,
-	mtoCommonSolutionID uuid.UUID,
-) *MTOTemplateSolution {
-	return &MTOTemplateSolution{
-		baseStruct:          NewBaseStruct(createdBy),
-		templateRelation:    NewTemplateRelation(templateID),
-		MTOCommonSolutionID: mtoCommonSolutionID,
-	}
-}

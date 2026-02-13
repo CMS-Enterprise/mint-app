@@ -19,8 +19,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 
 	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
 	discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
-	operationalNeedRelation, hasOperationalNeedRelation := obj.(models.IOperationalNeedRelation)
-	solutionRelation, hasSolutionRelation := obj.(models.ISolutionRelation)
+	milestoneRelation, hasMilestoneRelation := obj.(models.IMilestoneRelation)
 	notCollabErrString := "user is not a collaborator"
 
 	if hasModelPlanRelation { //Favor modelPlanRelation  first
@@ -48,26 +47,15 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 				Err: fmt.Errorf("DiscussionID: %s", discussionRelation.GetDiscussionID().String()),
 			}
 		}
-	} else if hasOperationalNeedRelation {
-		isCollaborator, err := IsCollaboratorByOperationalNeedID(logger, principal, store, operationalNeedRelation.GetOperationalNeedID())
+	} else if hasMilestoneRelation {
+		isCollaborator, err := IsCollaboratorByMilestoneID(logger, principal, store, milestoneRelation.GetMilestoneID())
 		if err != nil {
 			return err
 		}
 		if !isCollaborator {
-			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedRelation.GetOperationalNeedID().String()))
+			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("MilestoneID", milestoneRelation.GetMilestoneID().String()))
 			return apperrors.NotCollaboratorError{
-				Err: fmt.Errorf("OperationalNeedID: %s", operationalNeedRelation.GetOperationalNeedID().String()),
-			}
-		}
-	} else if hasSolutionRelation {
-		isCollaborator, err := IsCollaboratorSolutionID(logger, principal, store, solutionRelation.GetSolutionID())
-		if err != nil {
-			return err
-		}
-		if !isCollaborator {
-			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("SolutionID", solutionRelation.GetSolutionID().String()))
-			return apperrors.NotCollaboratorError{
-				Err: fmt.Errorf("SolutionID: %s", solutionRelation.GetSolutionID().String()),
+				Err: fmt.Errorf("MilestoneID: %s", milestoneRelation.GetMilestoneID().String()),
 			}
 		}
 	} else {
@@ -98,36 +86,6 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 	return false, errors.New(errString)
 }
 
-// IsCollaboratorSolutionID handles the logic to assess if a user has permission to update an object by virtue of being
-// a collaborator on a model associated with a Solution by SolutionID.
-// Users with the Assessment role are automatically allowed access to update all records.
-func IsCollaboratorSolutionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, solutionID uuid.UUID) (bool, error) {
-	if principal.AllowASSESSMENT() {
-		return true, nil
-	}
-
-	if principal.AllowMAC() {
-		return false, nil
-	}
-
-	if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaboratorBySolutionID(logger, principal.Account().ID, solutionID)
-		return collaborator, err
-	}
-
-	errString := "user has no roles"
-	logger.Warn(
-		errString,
-		zap.String("user", principal.ID()),
-		zap.String(
-			"SolutionID",
-			solutionID.String(),
-		),
-	)
-	return false, errors.New(errString)
-
-}
-
 // IsCollaboratorByDiscussionID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, discussionID uuid.UUID) (bool, error) {
@@ -148,12 +106,9 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 	errString := "user has no roles"
 	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
 	return false, errors.New(errString)
-
 }
 
-// IsCollaboratorByOperationalNeedID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
-// Users with the Assessment role are automatically allowed access to update all records.
-func IsCollaboratorByOperationalNeedID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, operationalNeedID uuid.UUID) (bool, error) {
+func IsCollaboratorByMilestoneID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, milestoneID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	}
@@ -163,15 +118,12 @@ func IsCollaboratorByOperationalNeedID(logger *zap.Logger, principal authenticat
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaboratorByOperationalNeedID(logger, principal.Account().ID, operationalNeedID)
-		return collaborator, err
-
+		return store.CheckIfCollaboratorByMilestoneID(logger, principal.Account().ID, milestoneID)
 	}
 
 	errString := "user has no roles"
-	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("OperationalNeedID", operationalNeedID.String()))
+	logger.Warn(errString, zap.String("user", principal.ID()), zap.String("MilestoneID", milestoneID.String()))
 	return false, errors.New(errString)
-
 }
 
 // HasPrivilegedDocumentAccessByModelPlanID checks if a user should be able to view restricted documents or not. True means that they can see restricted document

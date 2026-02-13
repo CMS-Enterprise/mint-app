@@ -111,39 +111,6 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal 
 
 }
 
-// PlanDocumentsReadBySolutionID implements resolver logic to fetch a plan document object by solution ID
-func PlanDocumentsReadBySolutionID(
-	logger *zap.Logger,
-	id uuid.UUID,
-	principal authentication.Principal,
-	store *storage.Store,
-	s3Client *s3.S3Client,
-) ([]*models.PlanDocument, error) {
-
-	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, id)
-	if err != nil {
-		return nil, err
-	}
-
-	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
-	if !isCollaborator || principal.AllowNonCMSUser() {
-		notRestrictedDocuments, err := store.PlanDocumentsReadBySolutionIDNotRestricted(logger, id, s3Client)
-
-		if err != nil {
-			return nil, err
-		}
-
-		return notRestrictedDocuments, nil
-	}
-
-	documents, docErr := store.PlanDocumentsReadBySolutionID(logger, id, s3Client)
-
-	if docErr != nil {
-		return nil, docErr
-	}
-	return documents, nil
-}
-
 // PlanDocumentDelete implements resolver logic to update a plan document object
 func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
 	existingdoc, err := store.PlanDocumentRead(logger, s3Client, id)
