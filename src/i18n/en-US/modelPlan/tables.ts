@@ -87,7 +87,7 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
     generalName: 'Data exchange approach'
   },
   [TableName.IDDOC_QUESTIONNAIRE]: {
-    generalName: '4i and ACO-OS'
+    generalName: 'IDDOC questionnaire'
   }, // TODO (mto) verify these names
   [TableName.MTO_CATEGORY]: {
     generalName: 'MTO category'
