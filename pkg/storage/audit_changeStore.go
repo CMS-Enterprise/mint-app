@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	zap "go.uber.org/zap"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"

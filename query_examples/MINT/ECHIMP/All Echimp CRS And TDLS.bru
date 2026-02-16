@@ -17,10 +17,11 @@ auth:apikey {
 }
 
 body:graphql {
-  query echimpCRAndTDLS {
-      echimpCRAndTDLS{
-          __typename
-      ... on EChimpCR {
+  query echimpCRAndTDLS($id: UUID!) {
+    modelPlan(id: $id) {
+      echimpCRsAndTDLs {
+        __typename
+        ... on EChimpCR {
           id
           versionNum
           initiator
@@ -30,15 +31,15 @@ body:graphql {
           sensitiveFlag
           implementationDate
           crSummary {
-              rawContent
+            rawContent
           }
           crStatus
           emergencyCrFlag
           relatedCrNumbers
           relatedCrTdlNumbers
           associatedModelUids
-      }
-      ... on     EChimpTDL {
+        }
+        ... on EChimpTDL {
           id
           versionNum
           initiator
@@ -48,7 +49,14 @@ body:graphql {
           issuedDate
           status
           associatedModelUids
+        }
       }
-      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
   }
 }
