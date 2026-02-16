@@ -53,4 +53,3 @@
 ### V2
 
 - https://www.figma.com/design/BcI7pNwfkmwaDD2EGGTsYC/IT-Lead?node-id=8117-15961&p=f&t=j1iX0ZijB6kGnhUd-0
-
