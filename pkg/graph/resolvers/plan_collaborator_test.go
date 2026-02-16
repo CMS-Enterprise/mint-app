@@ -212,7 +212,7 @@ func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
 		suite.testConfigs.Store,
 	)
 	suite.Error(err)
-	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
+	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan (P0001)", err.Error())
 	suite.Nil(updatedPlanCollaborator)
 }
 
@@ -250,7 +250,7 @@ func (suite *ResolverSuite) TestAttemptToAddDuplicateRoles() {
 	)
 
 	suite.Error(err)
-	suite.EqualValues("pq: Duplicate roles are not allowed in team_roles", err.Error())
+	suite.EqualValues("pq: Duplicate roles are not allowed in team_roles (P0001)", err.Error())
 	suite.Nil(updatedCollaborator)
 }
 
