@@ -1,5 +1,6 @@
 const usingSolutionsAndITSystemsTable = {
   title: 'Using the solutions and IT systems table',
+  lastUpdatedDate: '2025-06-02',
   breadcrumb: 'Using the solutions and IT systems table',
   description:
     'The solutions and IT systems table is accessible from the tab bar below the model-to-operations matrix (MTO) header area and is one of the main MTO content views in MINT. It is closely related to the milestone table, since each one offers a slightly different view of content you have added to your MTO.',

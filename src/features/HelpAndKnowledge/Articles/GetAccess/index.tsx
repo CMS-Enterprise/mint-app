@@ -19,10 +19,9 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHashScroll from 'hooks/useHashScroll';
+import { formatDateUtc } from 'utils/date';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
-
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 
 type GetAccessContentProps = {
   help?: boolean;
@@ -502,7 +501,11 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
           </Alert>
         </div>
 
-        <LatestContentUpdate file="getAccess.ts" />
+        <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+          {t('helpAndKnowledge:lastUpdated', {
+            date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+          })}
+        </div>
       </main>
     </div>
   );

@@ -17,8 +17,11 @@ auth:apikey {
 }
 
 body:graphql {
-  query echimpTDL {
-      echimpTDLs {
+  query echimpTDL($id: UUID!) {
+    modelPlan(id: $id) {
+      echimpCRsAndTDLs {
+        __typename
+        ... on EChimpTDL {
           id
           versionNum
           initiator
@@ -28,7 +31,14 @@ body:graphql {
           issuedDate
           status
           associatedModelUids
+        }
       }
-  
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
   }
 }

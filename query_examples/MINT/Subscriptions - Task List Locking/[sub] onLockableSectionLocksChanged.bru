@@ -17,14 +17,17 @@ auth:apikey {
 }
 
 body:graphql {
-  subscription onTaskListSectionLocksChanged ($modelPlanID: UUID!) {
-      onTaskListSectionLocksChanged (modelPlanID: $modelPlanID) {
+  subscription onLockableSectionLocksChanged ($modelPlanID: UUID!) {
+      onLockableSectionLocksChanged (modelPlanID: $modelPlanID) {
           changeType
           actionType
           lockStatus {
               modelPlanID
               section
-              lockedBy
+              lockedByUserAccount {
+                  id
+                  commonName
+              }
               isAssessment
           }
       }
@@ -33,6 +36,6 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "modelPlanID": ""
+    "modelPlanID": "{{modelPlanID}}"
   }
 }

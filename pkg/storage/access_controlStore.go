@@ -60,58 +60,26 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(
 	return isCollaborator, nil
 }
 
-// CheckIfCollaboratorBySolutionID returns true if the principal is a collaborator on a model plan associated
-// with a Solution by SolutionID.
-func (s *Store) CheckIfCollaboratorBySolutionID(
+func (s *Store) CheckIfCollaboratorByMilestoneID(
 	_ *zap.Logger,
 	principalID uuid.UUID,
-	solutionID uuid.UUID,
+	milestoneID uuid.UUID,
 ) (bool, error) {
-
-	isCollaborator := false
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorBySolutionID)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByMilestoneID)
 	if err != nil {
-		return isCollaborator, err
+		return false, err
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
-		"solution_id": solutionID,
-		"user_id":     principalID,
+	args := map[string]any{
+		"milestone_id": milestoneID,
+		"user_id":      principalID,
 	}
 
-	err = stmt.Get(&isCollaborator, arg)
-	if err != nil {
-		return isCollaborator, err
-	}
-	return isCollaborator, nil
-}
-
-// CheckIfCollaboratorByOperationalNeedID returns true if the principal is a collaborator on a model plan associated
-// with a OperationalNeed by OperationalNeedID.
-func (s *Store) CheckIfCollaboratorByOperationalNeedID(
-	_ *zap.Logger,
-	principalID uuid.UUID,
-	operationalNeedID uuid.UUID,
-) (bool, error) {
-
-	isCollaborator := false
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByOperationalNeedID)
-	if err != nil {
-		return isCollaborator, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"need_id": operationalNeedID,
-		"user_id": principalID,
+	var isCollaborator bool
+	if err := stmt.Get(&isCollaborator, args); err != nil {
+		return false, err
 	}
 
-	err = stmt.Get(&isCollaborator, arg)
-	if err != nil {
-		return isCollaborator, err
-	}
 	return isCollaborator, nil
 }

@@ -24,6 +24,7 @@ body:graphql {
           demoCode
           amsModelID
           modelCategory
+          additionalModelCategories
           cmsCenters
           cmmiGroups
           modelType
@@ -32,16 +33,6 @@ body:graphql {
           goal
           testInterventions
           note
-          completeICIP
-          clearanceStarts
-          clearanceEnds
-          announced
-          applicationsStart
-          applicationsEnd
-          performancePeriodStarts
-          performancePeriodEnds
-          wrapUpEnds
-          highLevelNote
           createdBy
           createdDts
           modifiedBy
@@ -51,23 +42,18 @@ body:graphql {
           readyForClearanceBy
           readyForClearanceDts
           status
-          createdByUserAccount 
-          {
-              commonName
-          }   
-          modifiedByUserAccount
-          {
-              commonName
-          }     
-          readyForReviewByUserAccount 
-          {
+          createdByUserAccount {
               commonName
           }
-          readyForClearanceByUserAccount 
-          {
+          modifiedByUserAccount {
               commonName
           }
-  
+          readyForReviewByUserAccount {
+              commonName
+          }
+          readyForClearanceByUserAccount {
+              commonName
+          }
       }
   }
 }
@@ -78,34 +64,17 @@ body:graphql:vars {
     "changes": {
       "demoCode": "",
       "amsModelID": "",
-      "modelCategory": "",
-      "cmsCenters": [
-        ""
-      ],
-      "cmmiGroups": [
-        ""
-      ],
-      "modelType": [
-          ""
-      ],
+      "modelCategory": null,
+      "additionalModelCategories": [],
+      "cmsCenters": [],
+      "cmmiGroups": [],
+      "modelType": [],
       "modelTypeOther": "",
       "problem": "",
       "goal": "",
       "testInterventions": "",
       "note": "",
-      "completeICIP": "",
-      "clearanceStarts": "",
-      "clearanceEnds": "",
-      "announced": "",
-      "applicationsStart": "",
-      "applicationsEnd": "",
-      "performancePeriodStarts": "",
-      "performancePeriodEnds": "",
-      "wrapUpEnds": "",
-      "highLevelNote": "",
-      "phasedIn": true,
-      "phasedInNote": "",
-      "status": ""
+      "status": null
     }
   }
 }

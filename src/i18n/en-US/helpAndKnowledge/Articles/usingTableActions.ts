@@ -1,5 +1,6 @@
 const usingTableActions = {
   title: 'Using the table actions area',
+  lastUpdatedDate: '2025-06-02',
   breadcrumb: 'Using the table actions area',
   description:
     'The table actions area is present above the main model-to-operations matrix (MTO) content views in MINT, the milestone table and the solutions and IT systems table. It offers a variety of actions to browse content and add content to your MTO.',
