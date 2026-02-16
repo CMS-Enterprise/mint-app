@@ -1,4 +1,10 @@
+### Reasoning
+
+- The goal with this ADR is to plan out the ability for admins to create/edit/archive common milestones. In order to do
+  this, there are a few migrations needed. An initial plan is outlined below (WIP)
+
 ### V1
+
 - archived, not delete
 - SQL migrations
   - create UUID column for common milestones
@@ -15,5 +21,6 @@
   - `mto_template_milestone` is another
 
 ### V2
-  - https://www.figma.com/design/BcI7pNwfkmwaDD2EGGTsYC/IT-Lead?node-id=8117-15961&p=f&t=j1iX0ZijB6kGnhUd-0
+
+- https://www.figma.com/design/BcI7pNwfkmwaDD2EGGTsYC/IT-Lead?node-id=8117-15961&p=f&t=j1iX0ZijB6kGnhUd-0
 
