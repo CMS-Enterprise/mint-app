@@ -14,10 +14,10 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { formatDateUtc } from 'utils/date';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 type StepsType = {
@@ -86,7 +86,11 @@ export const PhasesInvolved = () => {
               </ProcessList>
             </Grid>
 
-            <LatestContentUpdate file="phasesInvolved.ts" />
+            <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+              {t('helpAndKnowledge:lastUpdated', {
+                date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+              })}
+            </div>
           </Grid>
         </GridContainer>
       </MainContent>

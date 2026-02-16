@@ -122,33 +122,6 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	return documents, err
 }
 
-// PlanDocumentsReadBySolutionID reads a plan document object by solution id
-func (s *Store) PlanDocumentsReadBySolutionID(
-	logger *zap.Logger,
-	solutionID uuid.UUID,
-	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetBySolutionID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	var documents []*models.PlanDocument
-	err = stmt.Select(&documents, utilitysql.CreateSolutionIDQueryMap(solutionID))
-	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
-	}
-
-	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
-	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
-	}
-
-	err = logIfNoRowsFetched(logger, solutionID, documents)
-	return documents, err
-}
-
 // PlanDocumentsReadByModelPlanIDNotRestricted reads a plan document object by model plan id and restricted = false
 func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	logger *zap.Logger,
@@ -173,33 +146,6 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	}
 
 	err = logIfNoRowsFetched(logger, modelPlanID, documents)
-	return documents, err
-}
-
-// PlanDocumentsReadBySolutionIDNotRestricted reads a plan document object by model plan id and restricted = false
-func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
-	logger *zap.Logger,
-	solutionID uuid.UUID,
-	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetBySolutionIDNotRestricted)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	var documents []*models.PlanDocument
-	err = stmt.Select(&documents, utilitysql.CreateSolutionIDQueryMap(solutionID))
-	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
-	}
-
-	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
-	if err != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
-	}
-
-	err = logIfNoRowsFetched(logger, solutionID, documents)
 	return documents, err
 }
 
