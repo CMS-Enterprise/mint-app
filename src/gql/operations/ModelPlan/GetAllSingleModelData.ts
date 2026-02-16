@@ -269,29 +269,6 @@ export default gql(/* GraphQL */ `
         dataToSendParticicipantsNote
         shareCclfData
         shareCclfDataNote
-        technicalContactsIdentified
-        technicalContactsIdentifiedDetail
-        technicalContactsIdentifiedNote
-        captureParticipantInfo
-        captureParticipantInfoNote
-        icdOwner
-        draftIcdDueDate
-        icdNote
-        dataFullTimeOrIncremental
-        eftSetUp
-        unsolicitedAdjustmentsIncluded
-        dataFlowDiagramsNeeded
-        produceBenefitEnhancementFiles
-        fileNamingConventions
-        dataMonitoringNote
-        uatNeeds
-        stcNeeds
-        testingTimelines
-        testingNote
-        dataMonitoringFileTypes
-        dataMonitoringFileOther
-        dataResponseType
-        dataResponseFileFrequency
         modelLearningSystems
         modelLearningSystemsOther
         modelLearningSystemsNote
