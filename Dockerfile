@@ -17,7 +17,6 @@ FROM base AS dev
 
 # Install delve, gopls, and air for debugging
 # NOTE: Update delve and gopls versions when bumping the GO base image version
-# These versions are pinned for Go 1.25.7 compatibility
 RUN go install github.com/go-delve/delve/cmd/dlv@latest && \
 	go install golang.org/x/tools/gopls@latest && \
 	go install github.com/air-verse/air@latest
