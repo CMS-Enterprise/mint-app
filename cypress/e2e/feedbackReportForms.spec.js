@@ -5,24 +5,14 @@ describe('Footer report and feedback forms', () => {
   });
 
   it('verifies Report a problem footer link and submits form', () => {
-    cy.get('body').then($body => {
-      const reportLink = $body.find('a[href="/report-a-problem"]');
-      if (reportLink.length === 0) {
-        cy.url().should('include', '/');
-        cy.log(
-          'Footer feedback block not visible (feedbackEnabled may be false)'
-        );
-        return;
-      }
+    cy.get('a[href="/report-a-problem"]')
+      .should('have.attr', 'target', '_blank')
+      .invoke('attr', 'href')
+      .then(href => {
+        expect(href).to.include('/report-a-problem');
+      });
 
-      cy.get('a[href="/report-a-problem"]')
-        .should('have.attr', 'target', '_blank')
-        .invoke('attr', 'href')
-        .then(href => {
-          expect(href).to.include('/report-a-problem');
-        });
-    });
-
+    // Cypress does not support testing separate tabs, so we need to visit the page directly
     cy.visit('/report-a-problem');
 
     cy.contains('h1', 'Report a problem').should('be.visible');
@@ -45,24 +35,14 @@ describe('Footer report and feedback forms', () => {
   });
 
   it('verifies Send feedback footer link and submits form', () => {
-    cy.get('body').then($body => {
-      const feedbackLink = $body.find('a[href="/send-feedback"]');
-      if (feedbackLink.length === 0) {
-        cy.url().should('include', '/');
-        cy.log(
-          'Footer feedback block not visible (feedbackEnabled may be false)'
-        );
-        return;
-      }
+    cy.get('a[href="/send-feedback"]')
+      .should('have.attr', 'target', '_blank')
+      .invoke('attr', 'href')
+      .then(href => {
+        expect(href).to.include('/send-feedback');
+      });
 
-      cy.get('a[href="/send-feedback"]')
-        .should('have.attr', 'target', '_blank')
-        .invoke('attr', 'href')
-        .then(href => {
-          expect(href).to.include('/send-feedback');
-        });
-    });
-
+    // Cypress does not support testing separate tabs, so we need to visit the page directly
     cy.visit('/send-feedback');
 
     cy.contains('h1', 'Send feedback').should('be.visible');
