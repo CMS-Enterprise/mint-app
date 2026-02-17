@@ -20,6 +20,7 @@
     in other tables
   - refactor steps (WIP)
     - add an `id` column (type `uuid`) and populate with `gen_random_uuid()` in the `mto_common_milestone` table
+    - set this new `id` column as primary key
     - find all tables where the foreign key relation exists on the current `key` column
       - create a column on each of those tables called `mto_common_milestone_id`
       - migration to map the new `id` from the `mto_common_milestone` table where the FK relation exists on the current
@@ -29,6 +30,8 @@
       - update existing queries in app code to use the new `id` column instead of the `key` column
       - migration to port any triggers/procedures/etc to use the new `id` column instead of the outgoing  `key` column
       - migrations to drop the foreign key constraints on all those tables
+      - migration to create `created_by`, `created_dts`, `modified_by`, `modified_dts` and implement `BaseStruct` for
+        the `mto_common_milestone` return type
       - migration to drop the current FK columns on all those tables (can do after the fact for safety and simplicity)
       - migration to drop the current `key` column on the `mto_common_milestone` table (can do after the fact for safety
         and simplicity)
