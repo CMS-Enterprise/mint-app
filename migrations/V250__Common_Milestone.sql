@@ -101,7 +101,7 @@ ALTER TABLE mto_template_milestone
 ADD CONSTRAINT mto_template_milestone_mto_common_milestone_id_fkey
 FOREIGN KEY (mto_common_milestone_id) REFERENCES mto_common_milestone (id);
 
-
+-- 6: swap primary key columns
 ALTER TABLE mto_common_milestone
 DROP CONSTRAINT mto_common_milestone_pkey;
 
