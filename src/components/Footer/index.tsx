@@ -10,7 +10,6 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import cmsGovLogo from 'assets/images/cmsGovLogo.png';
 import hhsLogo from 'assets/images/hhsLogo.png';
@@ -24,8 +23,6 @@ const Footer = () => {
   const { t } = useTranslation(['footer', 'feedback']);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-
-  const { feedbackEnabled } = useFlags();
 
   const location = useLocation();
 
@@ -53,7 +50,6 @@ const Footer = () => {
   return (
     <>
       {authState?.isAuthenticated &&
-        feedbackEnabled &&
         location.pathname !== '/pre-decisional-notice' && (
           <div
             className={classNames('bg-mint-cool-5 padding-y-2', {
@@ -158,7 +154,7 @@ const Footer = () => {
 
       <UswdsFooter
         className={classNames({
-          'margin-top-7': !authState?.isAuthenticated || !feedbackEnabled
+          'margin-top-7': !authState?.isAuthenticated
         })}
         size="slim"
         primary={
