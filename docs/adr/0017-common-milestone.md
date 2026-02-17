@@ -9,10 +9,6 @@
     not require any cleanup upon deletion
   - Steps (WIP)
     - migration to create `is_archived` column in `mto_common_milestone` table - set to `false` by default
-    - find all queries where we SELECT from the `mto_common_milestone` table and ensure we do NOT select any archived
-      milestones
-      - NOTE - we should still load the archived ones when loading MTOs and their respective milestones in order to show
-        this information (and allow de-linking of the milestone) in the UI
     - add `is_archived` field to the Milestone type (not sure if needed, but we can add it for the sake of completeness)
 - The second design decision made was regarding the current implementation of foreign keys with regard to common
   milestones
@@ -45,7 +41,6 @@
   - create `created_by`, `created_dts`, `modified_by`, `modified_dts` and implement `BaseStruct`
   - run migration on all tables where we use the KEY as the FK to now use the new UUID as the FK
   - drop KEY columns across the board after done
-  - go through all SQL queries where we SELECT from `mto_common_milestone` and ensure `is_archived <> TRUE`
   - update SQL queries to use UUID as FK instead of KEY
   - remove the KEY column from all queries
   - `mto_suggested_milestone` is one of many tables where we need to make sure to only pull non-archived milestones
