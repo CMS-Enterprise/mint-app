@@ -40,7 +40,6 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             downgradeAssessmentTeam: false,
             hideGroupView: true,
             helpScoutEnabled: false,
-            feedbackEnabled: false,
             downgradeNonCMS: false,
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
