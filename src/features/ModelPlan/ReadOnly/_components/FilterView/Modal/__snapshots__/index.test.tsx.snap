@@ -69,7 +69,7 @@ exports[`Filter View Modal > matches snapshot 1`] = `
             <option
               value="iddoc"
             >
-              Innovative Design, Development, and Operations Contract (IDDOC)
+              4i and ACO-OS
             </option>
             <option
               value="mdm"
@@ -226,7 +226,7 @@ exports[`Filter View Modal > matches snapshot 1`] = `
               tabindex="-1"
               value="iddoc"
             >
-              Innovative Design, Development, and Operations Contract (IDDOC)
+              4i and ACO-OS
             </li>
             <li
               aria-posinset="7"

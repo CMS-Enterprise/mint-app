@@ -210,7 +210,7 @@ const isSubpage = (
 };
 
 export const filteredViewOutput = (value: string) => {
-  if (value === 'cmmi') {
+  if (value === 'cmmi' || value === 'iddoc') {
     return groupOptions.filter(n => n.value?.includes(value))[0].label;
   }
 
