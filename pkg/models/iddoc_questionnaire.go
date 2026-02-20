@@ -140,6 +140,10 @@ func (iddoc *IDDOCQuestionnaire) TaskListStatus() IDDOCQuestionnaireTaskListStat
 	// Map work status to task list status
 	switch iddoc.Status {
 	case IDDOCQuestionnaireReady:
+		// If data was previously entered, treat as in progress
+		if iddoc.ModifiedBy != nil {
+			return IDDOCQuestionnaireTaskListStatusInProgress
+		}
 		return IDDOCQuestionnaireTaskListStatusReady
 	case IDDOCQuestionnaireInProgress:
 		return IDDOCQuestionnaireTaskListStatusInProgress
