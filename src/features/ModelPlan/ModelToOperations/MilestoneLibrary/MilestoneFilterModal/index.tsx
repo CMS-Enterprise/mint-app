@@ -62,6 +62,18 @@ const MilestoneFilterModal = ({
     selectedFilters.categoryName.length +
     selectedFilters.facilitatedByRole.length;
 
+  const isApplyDisabled =
+    selectedFilters.categoryName.length ===
+      appliedFilters.categoryName.length &&
+    selectedFilters.facilitatedByRole.length ===
+      appliedFilters.facilitatedByRole.length &&
+    selectedFilters.categoryName.every(category =>
+      appliedFilters.categoryName.includes(category)
+    ) &&
+    selectedFilters.facilitatedByRole.every(role =>
+      appliedFilters.facilitatedByRole.includes(role)
+    );
+
   const applyFiltersLabel =
     appliedFiltersCount < 2
       ? t('filter.applyFilter')
@@ -121,7 +133,11 @@ const MilestoneFilterModal = ({
             {t('filter.clearAll')}
           </Button>
 
-          <Button type="button" onClick={handleApplyFilters}>
+          <Button
+            type="button"
+            onClick={handleApplyFilters}
+            disabled={isApplyDisabled}
+          >
             {applyFiltersLabel}
           </Button>
         </div>
