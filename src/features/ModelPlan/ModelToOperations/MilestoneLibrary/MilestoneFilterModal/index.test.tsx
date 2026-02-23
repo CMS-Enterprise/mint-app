@@ -95,15 +95,10 @@ describe('MilestoneFilterModal', () => {
   });
 
   it('applies current filters and closes modal when Apply Filter is clicked', () => {
-    const appliedFilters: MilestoneSelectedFilters = {
-      categoryName: ['Category 1'],
-      facilitatedByRole: [MtoFacilitator.MODEL_TEAM]
-    };
-
     render(
       <MilestoneFilterModal
         filters={mockFilters}
-        appliedFilters={appliedFilters}
+        appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
       />
     );
@@ -111,10 +106,16 @@ describe('MilestoneFilterModal', () => {
     const openButton = screen.getByRole('button', { name: 'Filter' });
     fireEvent.click(openButton);
 
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Category 1' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Model team' }));
+
     const applyButton = screen.getByRole('button', { name: 'Apply 2 filters' });
     fireEvent.click(applyButton);
 
-    expect(setAppliedFilters).toHaveBeenCalledWith(appliedFilters);
+    expect(setAppliedFilters).toHaveBeenCalledWith({
+      categoryName: ['Category 1'],
+      facilitatedByRole: [MtoFacilitator.MODEL_TEAM]
+    });
     expect(
       screen.queryByRole('heading', { name: 'Filter' })
     ).not.toBeInTheDocument();
