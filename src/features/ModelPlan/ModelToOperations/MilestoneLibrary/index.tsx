@@ -35,7 +35,9 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
-import getMilestoneFilters from './MilestoneFilterModal/getMilestoneFilters';
+import getMilestoneFilters, {
+  MilestoneFilters
+} from './MilestoneFilterModal/getMilestoneFilters';
 import MilestoneFilterModal, {
   MilestoneSelectedFilters
 } from './MilestoneFilterModal';
@@ -285,11 +287,16 @@ const MilstoneCardGroup = ({
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
   const filterOptions = useMemo(
-    () => getMilestoneFilters(selectedMilestones),
-    [selectedMilestones]
+    () =>
+      isHkcMilestoneLibrary ? getMilestoneFilters(selectedMilestones) : [],
+    [selectedMilestones, isHkcMilestoneLibrary]
   );
 
   const filteredMilestones = useMemo(() => {
+    if (!isHkcMilestoneLibrary) {
+      return selectedMilestones;
+    }
+
     let filtered = [...selectedMilestones];
 
     if (appliedFilters.categoryName.length > 0) {
@@ -307,7 +314,7 @@ const MilstoneCardGroup = ({
     }
 
     return filtered;
-  }, [selectedMilestones, appliedFilters]);
+  }, [selectedMilestones, appliedFilters, isHkcMilestoneLibrary]);
 
   const {
     currentItems,
@@ -343,11 +350,13 @@ const MilstoneCardGroup = ({
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
             <Grid className="display-flex flex-wrap flex-align-center">
-              <MilestoneFilterModal
-                filters={filterOptions}
-                appliedFilters={appliedFilters}
-                setAppliedFilters={setAppliedFilters}
-              />
+              {isHkcMilestoneLibrary && (
+                <MilestoneFilterModal
+                  filters={filterOptions as MilestoneFilters}
+                  appliedFilters={appliedFilters}
+                  setAppliedFilters={setAppliedFilters}
+                />
+              )}
               {/* Search bar and results info */}
               <GlobalClientFilter
                 globalFilter={query}
