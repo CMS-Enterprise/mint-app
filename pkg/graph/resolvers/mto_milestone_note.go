@@ -46,7 +46,7 @@ func CreateMTOMilestoneNote(_ context.Context, logger *zap.Logger, principal aut
 	}
 
 	note := models.NewMTOMilestoneNote(principalAccount.ID, input.Content, input.MilestoneID)
-	if err := BaseStructPreCreate(logger, note, principal, store, true); err != nil {
+	if err := BaseStructPreCreate(logger, note, principal, store, false); err != nil {
 		return nil, err
 	}
 	return storage.MTOMilestoneNoteCreate(store, logger, note)
@@ -62,8 +62,14 @@ func UpdateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 	if err != nil {
 		return nil, fmt.Errorf("unable to update MTO milestone note. Err %w", err)
 	}
+
+	// Only the note's author or an ASSESSMENT user can update it
+	if principalAccount.ID != note.CreatedBy && !principal.AllowASSESSMENT() {
+		return nil, fmt.Errorf("user does not have permission to update this note")
+	}
+
 	note.Content = input.Content
-	err = BaseStructPreUpdate(logger, note, nil, principal, store, false, true)
+	err = BaseStructPreUpdate(logger, note, nil, principal, store, false, false)
 	if err != nil {
 		return nil, err
 	}
@@ -88,9 +94,9 @@ func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 			return fmt.Errorf("error fetching mto milestone note during deletion: %s", err)
 		}
 
-		// Check permissions
-		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
-			return fmt.Errorf("error deleting mto milestone note. user doesnt have permissions. %s", err)
+		// Only the note's author or an ASSESSMENT user can delete it
+		if principalAccount.ID != existing.CreatedBy && !principal.AllowASSESSMENT() {
+			return fmt.Errorf("user does not have permission to delete this note")
 		}
 
 		// Finally, delete the milestone note
