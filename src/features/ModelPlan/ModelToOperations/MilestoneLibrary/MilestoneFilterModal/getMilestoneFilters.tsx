@@ -1,3 +1,4 @@
+import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import { MilestoneCardType } from '..';
@@ -14,7 +15,7 @@ export type MilestoneFilterObject = {
   fieldLabel: string;
   options: {
     label: string;
-    value: any;
+    value: string | MtoFacilitator;
   }[];
   /** Whether to display the "show all" checkbox option */
   displayShowAll: boolean;

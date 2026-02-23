@@ -284,7 +284,10 @@ const MilstoneCardGroup = ({
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
-  const filterOptions = getMilestoneFilters(selectedMilestones);
+  const filterOptions = useMemo(
+    () => getMilestoneFilters(selectedMilestones),
+    [selectedMilestones]
+  );
 
   const filteredMilestones = useMemo(() => {
     let filtered = [...selectedMilestones];

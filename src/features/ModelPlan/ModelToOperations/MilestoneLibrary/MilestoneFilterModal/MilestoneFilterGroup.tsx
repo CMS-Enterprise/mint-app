@@ -68,8 +68,8 @@ const MilestoneFilterGroup = ({
         {filterGroup.displayShowAll && (
           <Checkbox
             className="grid-col-12 bg-none"
-            id="show-all"
-            name="show-all"
+            id={`${filterGroup.key}-show-all`}
+            name={`${filterGroup.key}-show-all`}
             onChange={() => handleSetShowAll(!showAll)}
             label={t('filter.showAll')}
             checked={showAll}

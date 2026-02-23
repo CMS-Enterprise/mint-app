@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { Button, Icon } from '@trussworks/react-uswds';
@@ -36,6 +36,12 @@ const MilestoneFilterModal = ({
 
   const [selectedFilters, setSelectedFilters] =
     useState<MilestoneSelectedFilters>(appliedFilters);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedFilters(appliedFilters);
+    }
+  }, [isOpen, appliedFilters]);
 
   const handleApplyFilters = () => {
     setAppliedFilters(selectedFilters);
