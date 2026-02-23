@@ -3,15 +3,22 @@ import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoFacilitator } from 'gql/generated/graphql';
 
 import { MilestoneFilters } from './getMilestoneFilters';
 import MilestoneFilterGroup from './MilestoneFilterGroup';
 
 import './index.scss';
 
+export type MilestoneSelectedFilters = {
+  categoryName: string[];
+  facilitatedByRole: MtoFacilitator[];
+};
+
 type MilestoneFilterModalProps = {
   filters: MilestoneFilters;
-  setFilters: (filters: Partial<MilestoneFilters>) => void;
+  appliedFilters: MilestoneSelectedFilters;
+  setAppliedFilters: (filters: MilestoneSelectedFilters) => void;
 };
 
 /**
@@ -21,19 +28,34 @@ type MilestoneFilterModalProps = {
  */
 const MilestoneFilterModal = ({
   filters,
-  setFilters
+  appliedFilters,
+  setAppliedFilters
 }: MilestoneFilterModalProps) => {
   const { t } = useTranslation('general');
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeModal = () => {
+  const [selectedFilters, setSelectedFilters] =
+    useState<MilestoneSelectedFilters>(appliedFilters);
+
+  const handleApplyFilters = () => {
+    setAppliedFilters(selectedFilters);
+    setIsOpen(false);
+  };
+
+  const handleClearFilters = () => {
+    const emptyFilters: MilestoneSelectedFilters = {
+      categoryName: [],
+      facilitatedByRole: []
+    };
+    setSelectedFilters(emptyFilters);
+    setAppliedFilters(emptyFilters);
     setIsOpen(false);
   };
 
   return (
     <>
       <Button type="button" onClick={() => setIsOpen(true)} outline>
-        <Icon.FilterList />
+        <Icon.FilterList aria-hidden />
         {t('filter.title')}
       </Button>
 
@@ -41,7 +63,7 @@ const MilestoneFilterModal = ({
         isOpen={isOpen}
         overlayClassName={classNames('mint-modal__overlay')}
         className={classNames('mint-modal__content', 'mint-filter-modal')}
-        onRequestClose={closeModal}
+        onRequestClose={() => setIsOpen(false)}
         shouldCloseOnOverlayClick={false}
         appElement={document.getElementById('root')!}
       >
@@ -57,7 +79,7 @@ const MilestoneFilterModal = ({
             className="mint-modal__x-button text-base"
             aria-label="Close Modal"
             data-testid="close-icon"
-            onClick={closeModal}
+            onClick={() => setIsOpen(false)}
           >
             <Icon.Close size={4} aria-label="close" />
           </button>
@@ -65,16 +87,26 @@ const MilestoneFilterModal = ({
 
         <div className="padding-y-2 padding-x-3">
           {filters.map(filter => (
-            <MilestoneFilterGroup key={filter.key} filterGroup={filter} />
+            <MilestoneFilterGroup
+              key={filter.key}
+              filterGroup={filter}
+              selectedFilters={selectedFilters[filter.key]}
+              setSelectedFilters={selectedFilterOptions =>
+                setSelectedFilters({
+                  ...selectedFilters,
+                  [filter.key]: selectedFilterOptions
+                })
+              }
+            />
           ))}
         </div>
 
         <div className="border-top-1px border-base-lighter padding-y-2 padding-x-3 display-flex flex-justify">
-          <Button type="button" unstyled>
+          <Button type="button" unstyled onClick={handleClearFilters}>
             {t('filter.clearAll')}
           </Button>
 
-          <Button type="button" onClick={closeModal}>
+          <Button type="button" onClick={handleApplyFilters}>
             {t('filter.applyFilter')}
           </Button>
         </div>

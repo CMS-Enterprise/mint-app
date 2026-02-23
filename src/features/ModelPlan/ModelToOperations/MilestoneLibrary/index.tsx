@@ -36,7 +36,9 @@ import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
 import getMilestoneFilters from './MilestoneFilterModal/getMilestoneFilters';
-import MilestoneFilterModal from './MilestoneFilterModal';
+import MilestoneFilterModal, {
+  MilestoneSelectedFilters
+} from './MilestoneFilterModal';
 
 import './index.scss';
 
@@ -164,6 +166,12 @@ const MilstoneCardGroup = ({
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
+  const [appliedFilters, setAppliedFilters] =
+    useState<MilestoneSelectedFilters>({
+      categoryName: [],
+      facilitatedByRole: []
+    });
+
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const navigate = useNavigate();
@@ -276,18 +284,38 @@ const MilstoneCardGroup = ({
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
+  const filterOptions = getMilestoneFilters(selectedMilestones);
+
+  const filteredMilestones = useMemo(() => {
+    let filtered = [...selectedMilestones];
+
+    if (appliedFilters.categoryName.length > 0) {
+      filtered = filtered.filter(milestone =>
+        appliedFilters.categoryName.includes(milestone.categoryName)
+      );
+    }
+
+    if (appliedFilters.facilitatedByRole.length > 0) {
+      filtered = filtered.filter(milestone =>
+        appliedFilters.facilitatedByRole.some(role =>
+          milestone.facilitatedByRole.includes(role)
+        )
+      );
+    }
+
+    return filtered;
+  }, [selectedMilestones, appliedFilters]);
+
   const {
     currentItems,
     Pagination: PaginationComponent,
     pagination: { currentPage, pageCount }
   } = usePagination<MilestoneCardType[]>({
-    items: selectedMilestones,
+    items: filteredMilestones,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
   });
-
-  const filters = getMilestoneFilters(currentItems);
 
   return (
     <>
@@ -312,7 +340,11 @@ const MilstoneCardGroup = ({
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
             <Grid className="display-flex flex-wrap flex-align-center">
-              <MilestoneFilterModal filters={filters} setFilters={() => null} />
+              <MilestoneFilterModal
+                filters={filterOptions}
+                appliedFilters={appliedFilters}
+                setAppliedFilters={setAppliedFilters}
+              />
               {/* Search bar and results info */}
               <GlobalClientFilter
                 globalFilter={query}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, Fieldset } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MtoFacilitator } from 'gql/generated/graphql';
 
 import FieldGroup from 'components/FieldGroup';
 import HelpText from 'components/HelpText';
@@ -10,12 +11,42 @@ import { MilestoneFilter } from './getMilestoneFilters';
 
 type MilestoneFilterGroupProps = {
   filterGroup: MilestoneFilter;
+  selectedFilters: (string | MtoFacilitator)[];
+  setSelectedFilters: (filters: (string | MtoFacilitator)[]) => void;
 };
 
-const MilestoneFilterGroup = ({ filterGroup }: MilestoneFilterGroupProps) => {
+/**
+ * Displays a filter group with checkboxes for each option.
+ */
+const MilestoneFilterGroup = ({
+  filterGroup,
+  selectedFilters,
+  setSelectedFilters
+}: MilestoneFilterGroupProps) => {
   const { t } = useTranslation('general');
 
-  const [showAll, setShowAll] = useState<boolean>(false);
+  const [showAll, setShowAll] = useState<boolean>(
+    filterGroup.displayShowAll &&
+      selectedFilters.length === filterGroup.options.length
+  );
+
+  const toggleFilterOption = (option: string | MtoFacilitator) => {
+    if (selectedFilters.includes(option)) {
+      setSelectedFilters(selectedFilters.filter(filter => filter !== option));
+    } else {
+      setSelectedFilters([...selectedFilters, option]);
+    }
+  };
+
+  const handleSetShowAll = (value: boolean) => {
+    setShowAll(value);
+
+    if (value) {
+      setSelectedFilters(filterGroup.options.map(option => option.value));
+    } else {
+      setSelectedFilters([]);
+    }
+  };
 
   return (
     <Fieldset className="mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4">
@@ -39,7 +70,7 @@ const MilestoneFilterGroup = ({ filterGroup }: MilestoneFilterGroupProps) => {
             className="grid-col-12 bg-none"
             id="show-all"
             name="show-all"
-            onChange={() => setShowAll(!showAll)}
+            onChange={() => handleSetShowAll(!showAll)}
             label={t('filter.showAll')}
             checked={showAll}
           />
@@ -53,10 +84,10 @@ const MilestoneFilterGroup = ({ filterGroup }: MilestoneFilterGroupProps) => {
             key={option.value}
             id={option.value}
             name={option.value}
-            onChange={() => {}}
+            onChange={() => toggleFilterOption(option.value)}
             label={option.label}
             value={option.value}
-            checked={showAll}
+            checked={showAll || selectedFilters.includes(option.value)}
             disabled={filterGroup.displayShowAll && showAll}
           />
         ))}
