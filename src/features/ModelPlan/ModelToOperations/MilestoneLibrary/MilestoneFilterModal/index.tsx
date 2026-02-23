@@ -18,7 +18,9 @@ export type MilestoneSelectedFilters = {
 type MilestoneFilterModalProps = {
   filters: MilestoneFilters;
   appliedFilters: MilestoneSelectedFilters;
-  setAppliedFilters: (filters: MilestoneSelectedFilters) => void;
+  setAppliedFilters: React.Dispatch<
+    React.SetStateAction<MilestoneSelectedFilters>
+  >;
 };
 
 /**
@@ -119,10 +121,10 @@ const MilestoneFilterModal = ({
               filterGroup={filter}
               selectedFilters={selectedFilters[filter.key]}
               setSelectedFilters={selectedFilterOptions =>
-                setSelectedFilters({
-                  ...selectedFilters,
+                setSelectedFilters(prevSelectedFilters => ({
+                  ...prevSelectedFilters,
                   [filter.key]: selectedFilterOptions
-                })
+                }))
               }
             />
           ))}

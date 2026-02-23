@@ -35,9 +35,7 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
-import getMilestoneFilters, {
-  MilestoneFilters
-} from './MilestoneFilterModal/getMilestoneFilters';
+import getMilestoneFilters from './MilestoneFilterModal/getMilestoneFilters';
 import MilestoneFilterModal, {
   MilestoneSelectedFilters
 } from './MilestoneFilterModal';
@@ -288,9 +286,8 @@ const MilstoneCardGroup = ({
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
   const filterOptions = useMemo(
-    () =>
-      isHkcMilestoneLibrary ? getMilestoneFilters(selectedMilestones) : [],
-    [selectedMilestones, isHkcMilestoneLibrary]
+    () => getMilestoneFilters(selectedMilestones),
+    [selectedMilestones]
   );
 
   const hasAppliedFilters = useMemo(
@@ -361,7 +358,7 @@ const MilstoneCardGroup = ({
             <Grid className="display-flex flex-wrap flex-align-center">
               {isHkcMilestoneLibrary && (
                 <MilestoneFilterModal
-                  filters={filterOptions as MilestoneFilters}
+                  filters={filterOptions}
                   appliedFilters={appliedFilters}
                   setAppliedFilters={setAppliedFilters}
                 />
