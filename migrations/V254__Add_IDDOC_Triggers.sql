@@ -62,12 +62,15 @@ BEGIN
           AND mto_common_milestone_key = 'IDDOC_SUPPORT'
     ) INTO v_should_be_needed;
 
-    -- Update only the needed field. Do NOT set modified_by or modified_dts here —
-    -- this is a system-driven update, not a user action. modified_by must only be set
-    -- when a user actually edits questionnaire content so that task list status
-    -- (which uses modified_by != null to infer IN_PROGRESS) remains accurate.
+    -- Update the needed field. modified_by is set to the system account to satisfy the
+    -- audit trigger's NOT NULL constraint on audit.change.modified_by. The application
+    -- checks for the system account UUID to distinguish system-driven updates from real
+    -- user edits when inferring task list status.
     UPDATE iddoc_questionnaire
-    SET needed = v_should_be_needed
+    SET
+        needed = v_should_be_needed,
+        modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
+        modified_dts = CURRENT_TIMESTAMP
     WHERE model_plan_id = v_model_plan_id
       AND needed != v_should_be_needed;
 
@@ -140,8 +143,8 @@ COMMENT ON FUNCTION sync_iddoc_questionnaire_needed() IS
 '2) INNOVATION or ACO_OS solution exists, '
 '3) IDDOC_SUPPORT milestone exists. '
 'Sets needed=true when any condition is met, needed=false when no conditions are met. '
-'Does not set modified_by or modified_dts — this is a system update, not a user action. '
-'Status is managed by the application and relies on modified_by != null to infer IN_PROGRESS.';
+'Sets modified_by to the MINT system account (required by audit NOT NULL constraint) — '
+'the application explicitly excludes this UUID when inferring user-driven IN_PROGRESS status.';
 
 COMMENT ON TRIGGER sync_iddoc_on_oel_update ON plan_ops_eval_and_learning IS
 'Triggers IDDOC questionnaire needed field sync when iddoc_support field changes';

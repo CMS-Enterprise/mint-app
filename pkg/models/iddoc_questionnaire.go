@@ -7,6 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/lib/pq"
+
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 )
 
 // IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire
@@ -140,10 +142,11 @@ func (iddoc *IDDOCQuestionnaire) TaskListStatus() IDDOCQuestionnaireTaskListStat
 	// Map work status to task list status
 	switch iddoc.Status {
 	case IDDOCQuestionnaireReady:
-		// If the questionnaire has been touched by a user, treat as in progress.
-		// Note: the DB trigger that syncs needed=true intentionally does NOT set modified_by,
-		// so ModifiedBy only reflects actual user edits.
-		if iddoc.ModifiedBy != nil {
+		// If a real user has touched the questionnaire, treat as in progress.
+		// The DB trigger and backfill set modified_by to the system account UUID to satisfy
+		// the audit NOT NULL constraint — those do not count as user edits.
+		systemAccount := constants.GetSystemAccountUUID()
+		if iddoc.ModifiedBy != nil && *iddoc.ModifiedBy != systemAccount {
 			return IDDOCQuestionnaireTaskListStatusInProgress
 		}
 		return IDDOCQuestionnaireTaskListStatusReady

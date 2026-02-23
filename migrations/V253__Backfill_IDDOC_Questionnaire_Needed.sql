@@ -5,7 +5,10 @@
 -- 3. IDDOC_SUPPORT milestone exists
 
 UPDATE iddoc_questionnaire iq
-SET needed = TRUE
+SET
+    needed = TRUE,
+    modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
+    modified_dts = CURRENT_TIMESTAMP
 WHERE
     needed = FALSE
     AND EXISTS (
@@ -38,7 +41,10 @@ WHERE
 -- Set needed = FALSE where NO conditions are met
 -- (This is for safety, but should already be the default for new records)
 UPDATE iddoc_questionnaire iq
-SET needed = FALSE
+SET
+    needed = FALSE,
+    modified_by = '00000001-0001-0001-0001-000000000001'::UUID, -- MINT System Account
+    modified_dts = CURRENT_TIMESTAMP
 WHERE
     needed = TRUE
     AND NOT EXISTS (
