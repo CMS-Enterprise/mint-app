@@ -58,6 +58,15 @@ const MilestoneFilterModal = ({
     setIsOpen(false);
   };
 
+  const appliedFiltersCount =
+    selectedFilters.categoryName.length +
+    selectedFilters.facilitatedByRole.length;
+
+  const applyFiltersLabel =
+    appliedFiltersCount < 2
+      ? t('filter.applyFilter')
+      : t('filter.applyFilterWithCount', { count: appliedFiltersCount });
+
   return (
     <>
       <Button type="button" onClick={() => setIsOpen(true)} outline>
@@ -113,7 +122,7 @@ const MilestoneFilterModal = ({
           </Button>
 
           <Button type="button" onClick={handleApplyFilters}>
-            {t('filter.applyFilter')}
+            {applyFiltersLabel}
           </Button>
         </div>
       </ReactModal>

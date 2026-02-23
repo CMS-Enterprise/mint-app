@@ -5,18 +5,12 @@ import { MtoFacilitator } from 'gql/generated/graphql';
 import { MilestoneFilters } from './getMilestoneFilters';
 import MilestoneFilterModal, { MilestoneSelectedFilters } from '.';
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key
-  })
-}));
-
 describe('MilestoneFilterModal', () => {
   const mockFilters: MilestoneFilters = [
     {
       key: 'categoryName',
-      label: 'filters.categoryName.label',
-      fieldLabel: 'filters.categoryName.fieldLabel',
+      label: 'primary category',
+      fieldLabel: 'Category',
       options: [
         { label: 'Category 1', value: 'Category 1' },
         { label: 'Category 2', value: 'Category 2' }
@@ -25,11 +19,11 @@ describe('MilestoneFilterModal', () => {
     },
     {
       key: 'facilitatedByRole',
-      label: 'filters.facilitatedByRole.label',
-      fieldLabel: 'filters.facilitatedByRole.fieldLabel',
+      label: 'role',
+      fieldLabel: 'Facilitated by role',
       options: [
-        { label: 'Role A', value: MtoFacilitator.MODEL_TEAM },
-        { label: 'Role B', value: MtoFacilitator.IT_LEAD }
+        { label: 'Model team', value: MtoFacilitator.MODEL_TEAM },
+        { label: 'IT Lead', value: MtoFacilitator.IT_LEAD }
       ],
       displayShowAll: false
     }
@@ -58,18 +52,16 @@ describe('MilestoneFilterModal', () => {
       />
     );
 
-    const openButton = screen.getByRole('button', { name: 'filter.title' });
+    const openButton = screen.getByRole('button', { name: 'Filter' });
     fireEvent.click(openButton);
 
-    expect(
-      screen.getByRole('heading', { name: 'filter.title' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Filter' })).toBeInTheDocument();
 
     const closeButton = screen.getByTestId('close-icon');
     fireEvent.click(closeButton);
 
     expect(
-      screen.queryByRole('heading', { name: 'filter.title' })
+      screen.queryByRole('heading', { name: 'Filter' })
     ).not.toBeInTheDocument();
   });
 
@@ -87,10 +79,10 @@ describe('MilestoneFilterModal', () => {
       />
     );
 
-    const openButton = screen.getByRole('button', { name: 'filter.title' });
+    const openButton = screen.getByRole('button', { name: 'Filter' });
     fireEvent.click(openButton);
 
-    const clearButton = screen.getByRole('button', { name: 'filter.clearAll' });
+    const clearButton = screen.getByRole('button', { name: 'Clear all' });
     fireEvent.click(clearButton);
 
     expect(setAppliedFilters).toHaveBeenCalledWith({
@@ -98,7 +90,7 @@ describe('MilestoneFilterModal', () => {
       facilitatedByRole: []
     });
     expect(
-      screen.queryByRole('heading', { name: 'filter.title' })
+      screen.queryByRole('heading', { name: 'Filter' })
     ).not.toBeInTheDocument();
   });
 
@@ -116,17 +108,15 @@ describe('MilestoneFilterModal', () => {
       />
     );
 
-    const openButton = screen.getByRole('button', { name: 'filter.title' });
+    const openButton = screen.getByRole('button', { name: 'Filter' });
     fireEvent.click(openButton);
 
-    const applyButton = screen.getByRole('button', {
-      name: 'filter.applyFilter'
-    });
+    const applyButton = screen.getByRole('button', { name: 'Apply 2 filters' });
     fireEvent.click(applyButton);
 
     expect(setAppliedFilters).toHaveBeenCalledWith(appliedFilters);
     expect(
-      screen.queryByRole('heading', { name: 'filter.title' })
+      screen.queryByRole('heading', { name: 'Filter' })
     ).not.toBeInTheDocument();
   });
 
@@ -139,22 +129,55 @@ describe('MilestoneFilterModal', () => {
       />
     );
 
-    const openButton = screen.getByRole('button', { name: 'filter.title' });
+    const openButton = screen.getByRole('button', { name: 'Filter' });
     fireEvent.click(openButton);
 
     const showAllCheckbox = screen.getByRole('checkbox', {
-      name: 'filter.showAll'
+      name: 'Show all'
     });
     fireEvent.click(showAllCheckbox);
 
-    const applyButton = screen.getByRole('button', {
-      name: 'filter.applyFilter'
-    });
+    const applyButton = screen.getByRole('button', { name: 'Apply 2 filters' });
     fireEvent.click(applyButton);
 
     expect(setAppliedFilters).toHaveBeenCalledWith({
       categoryName: ['Category 1', 'Category 2'],
       facilitatedByRole: []
     });
+  });
+
+  it('displays Apply filter when 0 or 1 filter is selected', () => {
+    render(
+      <MilestoneFilterModal
+        filters={mockFilters}
+        appliedFilters={defaultAppliedFilters}
+        setAppliedFilters={setAppliedFilters}
+      />
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Filter' }));
+
+    expect(
+      screen.getByRole('button', { name: 'Apply filter' })
+    ).toBeInTheDocument();
+  });
+
+  it('displays apply button with filter count when 2+ filters are selected', () => {
+    const appliedFilters: MilestoneSelectedFilters = {
+      categoryName: ['Category 1'],
+      facilitatedByRole: [MtoFacilitator.MODEL_TEAM]
+    };
+
+    render(
+      <MilestoneFilterModal
+        filters={mockFilters}
+        appliedFilters={appliedFilters}
+        setAppliedFilters={setAppliedFilters}
+      />
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Filter' }));
+
+    expect(
+      screen.getByRole('button', { name: 'Apply 2 filters' })
+    ).toBeInTheDocument();
   });
 });
