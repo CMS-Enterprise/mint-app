@@ -35,7 +35,8 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
-import FilterModal from './FilterModal';
+import getMilestoneFilters from './MilestoneFilterModal/getMilestoneFilters';
+import MilestoneFilterModal from './MilestoneFilterModal';
 
 import './index.scss';
 
@@ -286,6 +287,8 @@ const MilstoneCardGroup = ({
     showPageIfOne: true
   });
 
+  const filters = getMilestoneFilters(currentItems);
+
   return (
     <>
       <Sidepanel
@@ -309,7 +312,7 @@ const MilstoneCardGroup = ({
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
             <Grid className="display-flex flex-wrap flex-align-center">
-              <FilterModal />
+              <MilestoneFilterModal filters={filters} setFilters={() => null} />
               {/* Search bar and results info */}
               <GlobalClientFilter
                 globalFilter={query}

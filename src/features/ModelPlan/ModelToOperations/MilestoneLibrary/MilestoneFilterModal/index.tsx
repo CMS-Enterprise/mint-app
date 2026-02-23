@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { Button, Icon, ModalFooter } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-const FilterModal = () => {
+import { MilestoneFilters } from './getMilestoneFilters';
+import MilestoneFilterGroup from './MilestoneFilterGroup';
+
+import './index.scss';
+
+type MilestoneFilterModalProps = {
+  filters: MilestoneFilters;
+  setFilters: (filters: Partial<MilestoneFilters>) => void;
+};
+
+/**
+ * This component displays a modal that allows the user to filter data by a given set of categories and filter options.
+ *
+ * Includes the "Filter" button to open the modal.
+ */
+const MilestoneFilterModal = ({
+  filters,
+  setFilters
+}: MilestoneFilterModalProps) => {
   const { t } = useTranslation('general');
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,13 +34,13 @@ const FilterModal = () => {
     <>
       <Button type="button" onClick={() => setIsOpen(true)} outline>
         <Icon.FilterList />
-        Filter
+        {t('filter.title')}
       </Button>
 
       <ReactModal
         isOpen={isOpen}
         overlayClassName={classNames('mint-modal__overlay')}
-        className={classNames('mint-modal__content', 'filter-modal')}
+        className={classNames('mint-modal__content', 'mint-filter-modal')}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={false}
         appElement={document.getElementById('root')!}
@@ -45,7 +63,11 @@ const FilterModal = () => {
           </button>
         </div>
 
-        <div className="padding-y-2 padding-x-3">Filters here!</div>
+        <div className="padding-y-2 padding-x-3">
+          {filters.map(filter => (
+            <MilestoneFilterGroup key={filter.key} filterGroup={filter} />
+          ))}
+        </div>
 
         <div className="border-top-1px border-base-lighter padding-y-2 padding-x-3 display-flex flex-justify">
           <Button type="button" unstyled>
@@ -61,4 +83,4 @@ const FilterModal = () => {
   );
 };
 
-export default FilterModal;
+export default MilestoneFilterModal;
