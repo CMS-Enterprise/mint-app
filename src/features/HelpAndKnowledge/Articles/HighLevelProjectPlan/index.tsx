@@ -22,9 +22,9 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { formatDateUtc } from 'utils/date';
 import { tArray } from 'utils/translation';
 
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 import Table from './table';
@@ -155,7 +155,11 @@ const HighLevelProjectPlan = () => {
               className="margin-bottom-4"
             />
 
-            <LatestContentUpdate file="highLevelProjectPlans.ts" />
+            <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+              {highLevelT('helpAndKnowledge:lastUpdated', {
+                date: formatDateUtc(highLevelT('lastUpdatedDate'), 'MM/dd/yyyy')
+              })}
+            </div>
           </Grid>
         </GridContainer>
         <div className="margin-top-6 margin-bottom-neg-7">

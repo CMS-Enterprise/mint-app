@@ -17,18 +17,19 @@ auth:apikey {
 }
 
 body:graphql {
-  query modelPlan ($id: UUID!) {
-      modelPlan (id: $id) {
-          id
-          modelName
-          echimpCRs{
-              title
-          }
-          echimpTDLs{
-              title
-          }
-  
+  query modelPlan($id: UUID!) {
+    modelPlan(id: $id) {
+      id
+      modelName
+      echimpCRsAndTDLs {
+        ... on EChimpCR {
+          title
+        }
+        ... on EChimpTDL {
+          title
+        }
       }
+    }
   }
 }
 

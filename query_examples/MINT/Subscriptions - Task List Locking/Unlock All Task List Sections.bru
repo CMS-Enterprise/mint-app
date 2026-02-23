@@ -17,11 +17,14 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation unlockAllTaskListSections ($modelPlanID: UUID!) {
-      unlockAllTaskListSections (modelPlanID: $modelPlanID) {
+  mutation unlockAllLockableSections ($modelPlanID: UUID!) {
+      unlockAllLockableSections (modelPlanID: $modelPlanID) {
           modelPlanID
           section
-          lockedBy
+          lockedByUserAccount {
+              id
+              commonName
+          }
           isAssessment
       }
   }
@@ -29,6 +32,6 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "modelPlanID": ""
+    "modelPlanID": "{{modelPlanID}}"
   }
 }

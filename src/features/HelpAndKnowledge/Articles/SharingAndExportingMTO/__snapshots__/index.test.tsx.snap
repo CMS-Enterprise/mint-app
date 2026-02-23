@@ -442,6 +442,11 @@ To share, complete the following fields in the form:
               </button>
               .
             </p>
+            <div
+              class="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4"
+            >
+              Last updated 06/06/2025
+            </div>
           </div>
         </div>
       </div>
