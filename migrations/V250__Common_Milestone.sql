@@ -36,8 +36,6 @@ ALTER TABLE mto_template_milestone
 DISABLE TRIGGER audit_trigger;
 
 -- -- map begins
-BEGIN;
-
 UPDATE mto_common_milestone_solution_link child
 SET mto_common_milestone_id = parent.id
 FROM mto_common_milestone parent
@@ -58,7 +56,8 @@ SET mto_common_milestone_id = parent.id
 FROM mto_common_milestone parent
 WHERE child.mto_common_milestone_key = parent.key;
 
-COMMIT;
+SET CONSTRAINTS ALL IMMEDIATE;
+
 -- -- re-enable triggers
 ALTER TABLE mto_milestone
 ENABLE TRIGGER audit_trigger;
@@ -143,3 +142,16 @@ DROP INDEX IF EXISTS uniq_template_common_milestone;
 CREATE UNIQUE INDEX uniq_template_common_milestone
 ON mto_template_milestone (template_id, mto_common_milestone_id);
 COMMENT ON INDEX uniq_template_common_milestone IS 'Constraint to ensure that each common milestone can be linked to a template only once';
+
+-- -- 7: Add audit configuration for the mto_common_milestone table
+ALTER TYPE table_name ADD VALUE 'mto_common_milestone';
+COMMIT;
+
+SELECT audit.AUDIT_TABLE(
+    'public',
+    'mto_common_milestone',
+    'id',
+    'model_plan_id',
+    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
+    '{*}'::TEXT[]
+);
