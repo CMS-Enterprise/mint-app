@@ -18,7 +18,7 @@ export type MilestoneFilterObject = {
     value: any;
   }[];
   /** Whether to display the "show all" checkbox option */
-  displayShowAll?: boolean;
+  displayShowAll: boolean;
 }[];
 
 /**
@@ -65,7 +65,8 @@ const getMilestoneFilters = (
           `mtoMilestone:facilitatedBy.options.${facilitatedByRole}`
         ),
         value: facilitatedByRole
-      }))
+      })),
+      displayShowAll: false
     }
   ] as const satisfies MilestoneFilterObject;
 };

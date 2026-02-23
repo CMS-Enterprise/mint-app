@@ -88,7 +88,8 @@ const general = {
     filterGroupHeading: 'By {{groupName}}',
     filterGroupDescription: 'This filters by the "{{groupName}}" field.',
     applyFilter: 'Apply filter',
-    clearAll: 'Clear all'
+    clearAll: 'Clear all',
+    showAll: 'Show all'
   }
 };
 
