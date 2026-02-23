@@ -25,7 +25,9 @@ const MilestoneFilterGroup = ({ filterGroup }: MilestoneFilterGroupProps) => {
         </h3>
       </legend>
       <HelpText>
-        {t('filter.filterGroupDescription', { groupName: filterGroup.label })}
+        {t('filter.filterGroupDescription', {
+          groupName: filterGroup.fieldLabel
+        })}
       </HelpText>
       <FieldGroup
         className={classNames('mint-filter-group__options margin-top-105', {
@@ -52,7 +54,6 @@ const MilestoneFilterGroup = ({ filterGroup }: MilestoneFilterGroupProps) => {
             id={option.value}
             name={option.value}
             onChange={() => {}}
-            onBlur={() => {}}
             label={option.label}
             value={option.value}
             checked={showAll}

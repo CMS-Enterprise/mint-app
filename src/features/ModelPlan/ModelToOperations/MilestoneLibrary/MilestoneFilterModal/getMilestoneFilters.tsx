@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import { lowerCase } from 'lodash';
 
 import { MilestoneCardType } from '..';
 
@@ -54,9 +53,7 @@ const getMilestoneFilters = (
     },
     {
       key: 'facilitatedByRole',
-      label: lowerCase(
-        i18next.t('helpAndKnowledge:milestoneLibrary.filters.facilitatedByRole')
-      ),
+      label: i18next.t('helpAndKnowledge:milestoneLibrary.filters.role'),
       fieldLabel: i18next.t(
         'helpAndKnowledge:milestoneLibrary.filters.facilitatedByRole'
       ),

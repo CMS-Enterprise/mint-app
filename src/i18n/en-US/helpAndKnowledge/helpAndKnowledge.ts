@@ -2637,7 +2637,8 @@ const helpAndKnowledge = {
     filters: {
       primaryCategory: 'primary category',
       category: 'Category',
-      facilitatedByRole: 'facilitated by role'
+      facilitatedByRole: 'Facilitated by',
+      role: 'role'
     }
   },
   operationalSolutions: 'Operational solutions',
