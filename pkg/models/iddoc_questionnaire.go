@@ -140,7 +140,9 @@ func (iddoc *IDDOCQuestionnaire) TaskListStatus() IDDOCQuestionnaireTaskListStat
 	// Map work status to task list status
 	switch iddoc.Status {
 	case IDDOCQuestionnaireReady:
-		// If data was previously entered, treat as in progress
+		// If the questionnaire has been touched by a user, treat as in progress.
+		// Note: the DB trigger that syncs needed=true intentionally does NOT set modified_by,
+		// so ModifiedBy only reflects actual user edits.
 		if iddoc.ModifiedBy != nil {
 			return IDDOCQuestionnaireTaskListStatusInProgress
 		}
