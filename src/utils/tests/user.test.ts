@@ -43,7 +43,6 @@ describe('user', () => {
             hideITLeadExperience: false,
             hideGroupView: true,
             helpScoutEnabled: false,
-            feedbackEnabled: false,
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
             mintAnalyticsEnabled: true,

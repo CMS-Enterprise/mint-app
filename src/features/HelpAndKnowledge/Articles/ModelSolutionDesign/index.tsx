@@ -23,11 +23,11 @@ import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { formatDateUtc } from 'utils/date';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import LatestContentUpdate from '../_components/LatestContentUpdate';
 import { ArticleCategories, HelpArticle } from '..';
 
 export const ModelSolutionDesign = () => {
@@ -375,7 +375,11 @@ export const ModelSolutionDesign = () => {
             </ol>
           </Grid>
 
-          <LatestContentUpdate file="modelSolutionDesign.ts" />
+          <div className="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4">
+            {t('helpAndKnowledge:lastUpdated', {
+              date: formatDateUtc(t('lastUpdatedDate'), 'MM/dd/yyyy')
+            })}
+          </div>
         </GridContainer>
       </MainContent>
       <RelatedArticles

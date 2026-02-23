@@ -1,11 +1,14 @@
 package authorization
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	"github.com/99designs/gqlgen/graphql"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 
@@ -76,4 +79,60 @@ func (s *AuthorizationTestSuite) TestRejectsAnonymousRequests() {
 
 	s.Equal(1, len(payload.Errors))
 	s.Equal("Unauthorized", payload.Errors[0].Message)
+}
+
+func TestNewRequirePrincipalOperationMiddleware(t *testing.T) {
+	tests := []struct {
+		name           string
+		principal      authentication.Principal
+		expectNextCall bool
+		expectError    bool
+		errorMessage   string
+	}{
+		{
+			name:           "allows operation to proceed when principal is authenticated",
+			principal:      &authentication.ApplicationPrincipal{Username: "QQQQ"},
+			expectNextCall: true,
+			expectError:    false,
+		},
+		{
+			name:           "returns unauthorized error when principal is ANON",
+			principal:      authentication.ANON,
+			expectNextCall: false,
+			expectError:    true,
+			errorMessage:   "Unauthorized",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctx := context.Background()
+			ctx = appcontext.WithPrincipal(ctx, tt.principal)
+			ctx = appcontext.WithLogger(ctx, zap.NewNop())
+
+			nextCalled := false
+			mockNext := func(ctx context.Context) graphql.ResponseHandler {
+				nextCalled = true
+				return func(ctx context.Context) *graphql.Response {
+					return &graphql.Response{}
+				}
+			}
+
+			middleware := NewRequirePrincipalOperationMiddleware()
+			handler := middleware(ctx, mockNext)
+
+			assert.Equal(t, tt.expectNextCall, nextCalled, "next handler call expectation")
+			assert.NotNil(t, handler, "handler should not be nil")
+
+			response := handler(ctx)
+			assert.NotNil(t, response, "response should not be nil")
+
+			if tt.expectError {
+				assert.NotEmpty(t, response.Errors, "response should contain errors")
+				assert.Equal(t, tt.errorMessage, response.Errors[0].Message)
+			} else {
+				assert.Empty(t, response.Errors, "response should not contain errors")
+			}
+		})
+	}
 }

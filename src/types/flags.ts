@@ -3,7 +3,6 @@ export type Flags = {
   downgradeAssessmentTeam: boolean;
   hideGroupView: boolean;
   helpScoutEnabled: boolean;
-  feedbackEnabled: boolean;
   changeHistoryReleaseDate: string;
   modelsApproachingClearanceEnabled: boolean;
   mintAnalyticsEnabled: boolean;

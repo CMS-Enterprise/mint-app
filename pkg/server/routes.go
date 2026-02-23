@@ -287,6 +287,7 @@ func (s *Server) routes(
 		Cache: lru.New[string](100),
 	})
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))
+	graphqlServer.AroundOperations(authorization.NewRequirePrincipalOperationMiddleware())
 	graphqlServer.AroundResponses(NewGQLResponseMiddleware())
 
 	gql.Handle("/query", graphqlServer)

@@ -1,5 +1,6 @@
 const evaluatingDataExchangeApproach = {
   title: 'Evaluate your data exchange approach',
+  lastUpdatedDate: '2025-08-29',
   heading: 'Evaluate your data exchange approach',
   description:
     'Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome), and we often collect health-related social needs data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange.',

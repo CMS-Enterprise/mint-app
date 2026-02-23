@@ -26,15 +26,6 @@ body:graphql {
           givenName
           id
       }
-      operationalNeeds {
-          id
-          modelPlanID
-          name
-          key
-          nameOther
-          needed
-          section    
-      }  
       basics{
           id        
       }
@@ -72,7 +63,6 @@ tests {
   opsEvalAndLearningID = responseData.opsEvalAndLearning.id
   modelLeadID = responseData.collaborators[0].id
   paymentsID = responseData.payments.id
-  firstOpNeed = responseData.operationalNeeds[0].id
   userID = responseData.createdByUserAccount.id
   
   bru.setVar("modelPlanID", modelPlanID);
@@ -84,6 +74,5 @@ tests {
   bru.setVar("opsEvalAndLearningID", opsEvalAndLearningID);
   bru.setVar("modelLeadID", modelLeadID);
   bru.setVar("paymentsID", paymentsID);
-  bru.setVar("operationalNeedID", firstOpNeed);
   bru.setVar("userID", userID);
 }
