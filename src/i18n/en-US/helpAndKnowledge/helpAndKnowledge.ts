@@ -2639,6 +2639,10 @@ const helpAndKnowledge = {
       category: 'Category',
       facilitatedByRole: 'Facilitated by',
       role: 'role'
+    },
+    noResults: {
+      heading: 'There are no results that match your filters.',
+      body: 'Try changing or clearing your filters to see more milestones.'
     }
   },
   operationalSolutions: 'Operational solutions',

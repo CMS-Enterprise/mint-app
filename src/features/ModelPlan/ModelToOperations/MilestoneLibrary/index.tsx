@@ -167,6 +167,7 @@ const MilstoneCardGroup = ({
   isHkcMilestoneLibrary: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: hkcT } = useTranslation('helpAndKnowledge');
 
   const [appliedFilters, setAppliedFilters] =
     useState<MilestoneSelectedFilters>({
@@ -290,6 +291,14 @@ const MilstoneCardGroup = ({
     () =>
       isHkcMilestoneLibrary ? getMilestoneFilters(selectedMilestones) : [],
     [selectedMilestones, isHkcMilestoneLibrary]
+  );
+
+  const hasAppliedFilters = useMemo(
+    () =>
+      isHkcMilestoneLibrary &&
+      (appliedFilters.categoryName.length > 0 ||
+        appliedFilters.facilitatedByRole.length > 0),
+    [appliedFilters, isHkcMilestoneLibrary]
   );
 
   const filteredMilestones = useMemo(() => {
@@ -524,6 +533,16 @@ const MilstoneCardGroup = ({
               />
             </Alert>
           )}
+
+        {hasAppliedFilters && filteredMilestones.length === 0 && (
+          <Alert
+            type="info"
+            className="margin-bottom-2"
+            heading={hkcT('milestoneLibrary.noResults.heading')}
+          >
+            {hkcT('milestoneLibrary.noResults.body')}
+          </Alert>
+        )}
 
         {
           <>
