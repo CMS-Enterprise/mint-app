@@ -47,6 +47,7 @@ MTOCommonMilestone represents a Milestone from the "Common Milestones" library
 """
 type MTOCommonMilestone {
   # DB Fields
+  id: UUID!
   name: String!
   description: String!
   key: MTOCommonMilestoneKey!
@@ -69,6 +70,7 @@ type MTOCommonMilestone {
   This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
   """
   isSuggested: Boolean!
+  isArchived: Boolean!
   commonSolutions: [MTOCommonSolution!]!
 }
 

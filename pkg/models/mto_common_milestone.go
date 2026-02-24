@@ -3,6 +3,7 @@ package models
 import "github.com/google/uuid"
 
 type MTOCommonMilestone struct {
+	baseStruct
 	Name              string                    `json:"name" db:"name"`
 	Description       string                    `json:"description" db:"description"`
 	Key               MTOCommonMilestoneKey     `json:"key" db:"key"`
@@ -14,6 +15,7 @@ type MTOCommonMilestone struct {
 	Section TaskListSection `json:"section" db:"section"`
 	// This field facilitate queries, but is not an actual database column (the mto_milestone table joins to the model plan, and potentially to this table, unless it is a custom milestone)
 	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	IsArchived  bool       `json:"isArchived" db:"is_archived"`
 	IsAdded     bool       `json:"isAdded" db:"is_added"`
 	IsSuggested bool       `json:"IsSuggested" db:"is_suggested"`
 }
