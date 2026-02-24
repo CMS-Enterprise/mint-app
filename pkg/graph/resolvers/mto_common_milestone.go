@@ -26,3 +26,9 @@ func MTOCommonMilestoneGetByKeyLOADER(ctx context.Context, key models.MTOCommonM
 	// Future Enhancement look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOCommonMilestone.ByKey.Load(ctx, key)
 }
+
+// MTOCommonMilestoneGetByIDLOADER returns a common milestone by its ID. Currently, it doesn't provide any contextual data.
+func MTOCommonMilestoneGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
+	// Future Enhancement look into expanding this to also take contextual model plan data to return is added etc
+	return loaders.MTOCommonMilestone.ByID.Load(ctx, id)
+}
