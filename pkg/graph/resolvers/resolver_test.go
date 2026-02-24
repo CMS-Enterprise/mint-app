@@ -299,10 +299,17 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 	return suite.createAnalyzedAudit(mp, date, *auditChange)
 
 }
+func (suite *ResolverSuite) getAllMTOCommonMilestones() []*models.MTOCommonMilestone {
+	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, nil)
+	suite.NoError(err)
+
+	return commonMilestones
+
+}
 
 func (suite *ResolverSuite) createMilestoneCommon(
 	planID uuid.UUID,
-	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonMilestoneID uuid.UUID,
 	commonSolutions []models.MTOCommonSolutionKey,
 ) *models.MTOMilestone {
 	milestone, err := MTOMilestoneCreateCommon(
@@ -312,7 +319,7 @@ func (suite *ResolverSuite) createMilestoneCommon(
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		planID,
-		commonMilestoneKey,
+		commonMilestoneID,
 		commonSolutions,
 	)
 	suite.NoError(err)

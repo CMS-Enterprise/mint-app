@@ -82,14 +82,15 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCustomDuplicates() {
 func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	// Create model plan
 	plan := suite.createModelPlan("testing common milestone creation")
-
+	commonMilestone1 := suite.getAllMTOCommonMilestones()[0]
+	commonMilestone2 := suite.getAllMTOCommonMilestones()[1]
 	// First, make sure there's no categories to start (except uncategorized)
 	categories, err := MTOCategoryGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(categories, 1) // Just uncategorized
 
 	// Then, create a common milestone
-	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}, plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}, plan.ID, commonMilestone1.ID, []models.MTOCommonSolutionKey{})
 	suite.NoError(err)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone.CreatedBy)
 	suite.Nil(milestone.ModifiedBy)
@@ -126,7 +127,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	// Finally, do the same, but ensure that if we would try to create a duplicate category by name, we fail silently
 	// For this example, models.MTOCommonMilestoneKeyAppSupportCon will attempt to create ('Operations','Internal functions'), but since
 	// the 'Operations' category already exists, we should only see a single new subcategory ('Internal functions')
-	milestone2, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}, plan.ID, models.MTOCommonMilestoneKeyAppSupportCon, []models.MTOCommonSolutionKey{})
+	milestone2, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}, plan.ID, commonMilestone2.ID, []models.MTOCommonSolutionKey{})
 	suite.NoError(err)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone2.CreatedBy)
 	suite.Nil(milestone2.ModifiedBy)
@@ -161,9 +162,10 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 	plan := suite.createModelPlan("testing common milestone creation")
 
 	// First, create a common milestone
+	commonMilestone := suite.getAllMTOCommonMilestones()[0]
 	milestone, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store,
 		nil, email.AddressBook{},
-		plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+		plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 	suite.NoError(err)
 	suite.Equal(suite.testConfigs.Principal.UserAccount.ID, milestone.CreatedBy)
 	suite.Nil(milestone.ModifiedBy)
@@ -172,7 +174,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonDuplicates() {
 	// Then, try to create another with the same Common Milestone key and expect a failure
 	milestoneDupe, err := MTOMilestoneCreateCommon(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store,
 		nil, email.AddressBook{},
-		plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+		plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 	suite.Error(err)
 	suite.Nil(milestoneDupe)
 }
@@ -220,10 +222,10 @@ func (suite *ResolverSuite) TestMTOMilestoneDescription() {
 
 func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	plan := suite.createModelPlan("plan for testing MTO create milestone solution links")
-	commonMilestoneKey := models.MTOCommonMilestoneKeyAppSupportCon
+	commonMilestone := suite.getAllMTOCommonMilestones()[0]
 
 	// create a milestone
-	milestone := suite.createMilestoneCommon(plan.ID, commonMilestoneKey, []models.MTOCommonSolutionKey{
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
@@ -268,10 +270,10 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 
 func (suite *ResolverSuite) TestCreateMilestoneSolutionLinksNoCommonSolutions() {
 	plan := suite.createModelPlan("plan for testing MTO create milestone solution links")
-	commonMilestoneKey := models.MTOCommonMilestoneKeyAppSupportCon
+	commonMilestone := suite.getAllMTOCommonMilestones()[0]
 
 	// create a milestone
-	milestone := suite.createMilestoneCommon(plan.ID, commonMilestoneKey, []models.MTOCommonSolutionKey{})
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 
 	// validate the created solutions
 	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
@@ -291,19 +293,19 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinksNoCommonSolutions() 
 
 func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 	plan1 := suite.createModelPlan("model plan 1")
-	commonMilestoneKey1 := models.MTOCommonMilestoneKeyAppSupportCon
-	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey1, []models.MTOCommonSolutionKey{
+	commonMilestone1 := suite.getAllMTOCommonMilestones()[0]
+	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestone1.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
 
-	commonMilestoneKey2 := models.MTOCommonMilestoneKeyCommWPart
-	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey2, []models.MTOCommonSolutionKey{
+	commonMilestone2 := suite.getAllMTOCommonMilestones()[1]
+	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestone2.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
-	commonMilestoneKey3 := models.MTOCommonMilestoneKeyAcquireALearnCont
-	milestone3 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey3, []models.MTOCommonSolutionKey{
+	commonMilestone3 := suite.getAllMTOCommonMilestones()[2]
+	milestone3 := suite.createMilestoneCommon(plan1.ID, commonMilestone3.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKBcda,
 		models.MTOCSKCmsBox,
 		models.MTOCSKCcw,
@@ -577,19 +579,21 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 	planA := suite.createModelPlan("NoLinkedSolutions Plan A")
 	planB := suite.createModelPlan("NoLinkedSolutions Plan B")
+	commonMilestone1 := suite.getAllMTOCommonMilestones()[0]
+	commonMilestone2 := suite.getAllMTOCommonMilestones()[1]
 
 	_ = suite.createMTOSolutionCommon(planA.ID, models.MTOCSKInnovation, nil)
 	_ = suite.createMTOSolutionCommon(planB.ID, models.MTOCSKAcoOs, nil)
 
 	_ = suite.createMilestoneCommon(
 		planA.ID,
-		models.MTOCommonMilestoneKeyManageCd,
+		commonMilestone1.ID,
 		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
 	)
 
 	nonLinkedMilestone := suite.createMilestoneCommon(
 		planB.ID,
-		models.MTOCommonMilestoneKeyRevColBids,
+		commonMilestone2.ID,
 		nil,
 	)
 
@@ -660,6 +664,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithSolutionsAndEmailSer
 
 	planName := "Plan for testing solution email"
 	plan := suite.createModelPlan(planName)
+	commonMilestone := suite.getAllMTOCommonMilestones()[0]
 
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress:         "http://localhost:3005",
@@ -687,7 +692,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithSolutionsAndEmailSer
 		mockEmailService,
 		addressBook,
 		plan.ID,
-		models.MTOCommonMilestoneKeyAppSupportCon,
+		commonMilestone.ID,
 		[]models.MTOCommonSolutionKey{models.MTOCSKCcw},
 	)
 	suite.NoError(err)

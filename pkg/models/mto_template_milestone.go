@@ -8,6 +8,7 @@ type MTOTemplateMilestone struct {
 
 	// Note name and key are copied from the common milestone table when the template milestone is applied
 	Name                  string                `json:"name"                  db:"name"`
+	MTOCommonMilestoneID  uuid.UUID             `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"`
 	Key                   MTOCommonMilestoneKey `json:"key" db:"key"`
 	MTOTemplateCategoryID *uuid.UUID            `json:"mtoTemplateCategoryID" db:"mto_template_category_id"`
 
@@ -19,13 +20,13 @@ type MTOTemplateMilestone struct {
 func NewMTOTemplateMilestone(
 	createdBy uuid.UUID,
 	templateID uuid.UUID,
-	mtoCommonMilestoneKey MTOCommonMilestoneKey,
+	mtoCommonMilestoneID uuid.UUID,
 	mtoTemplateCategoryID *uuid.UUID,
 ) *MTOTemplateMilestone {
 	return &MTOTemplateMilestone{
 		baseStruct:            NewBaseStruct(createdBy),
 		templateRelation:      NewTemplateRelation(templateID),
-		Key:                   mtoCommonMilestoneKey,
+		MTOCommonMilestoneID:  mtoCommonMilestoneID,
 		MTOTemplateCategoryID: mtoTemplateCategoryID,
 	}
 }

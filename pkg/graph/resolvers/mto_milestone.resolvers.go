@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -14,6 +15,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// Key is the resolver for the key field.
+func (r *mTOMilestoneResolver) Key(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestoneKey, error) {
+	panic(fmt.Errorf("not implemented: Key - key"))
+}
 
 // ResponsibleComponent is the resolver for the responsibleComponent field.
 func (r *mTOMilestoneResolver) ResponsibleComponent(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOMilestoneResponsibleComponent, error) {
@@ -38,8 +44,8 @@ func (r *mTOMilestoneResolver) AssignedToPlanCollaborator(ctx context.Context, o
 
 // CommonMilestone is the resolver for the commonMilestone field.
 func (r *mTOMilestoneResolver) CommonMilestone(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestone, error) {
-	if obj.Key != nil {
-		return MTOCommonMilestoneGetByKeyLOADER(ctx, *obj.Key)
+	if obj.MTOCommonMilestoneID != nil {
+		return MTOCommonMilestoneGetByIDLOADER(ctx, *obj.MTOCommonMilestoneID)
 	}
 	// if key is nil, there is no common milestone
 	return nil, nil
@@ -70,11 +76,11 @@ func (r *mutationResolver) CreateMTOMilestoneCustom(ctx context.Context, modelPl
 }
 
 // CreateMTOMilestoneCommon is the resolver for the createMTOMilestoneCommon field.
-func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneKey models.MTOCommonMilestoneKey, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOMilestone, error) {
+func (r *mutationResolver) CreateMTOMilestoneCommon(ctx context.Context, modelPlanID uuid.UUID, commonMilestoneID uuid.UUID, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, r.emailService, r.addressBook, modelPlanID, commonMilestoneKey, commonSolutions)
+	return MTOMilestoneCreateCommon(ctx, logger, principal, r.store, r.emailService, r.addressBook, modelPlanID, commonMilestoneID, commonSolutions)
 }
 
 // UpdateMTOMilestone is the resolver for the updateMTOMilestone field.

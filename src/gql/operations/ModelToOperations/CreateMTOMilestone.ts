@@ -3,12 +3,12 @@ import { gql } from '@apollo/client';
 export default gql(/* GraphQL */ `
   mutation CreateMTOMilestone(
     $modelPlanID: UUID!
-    $commonMilestoneKey: MTOCommonMilestoneKey!
+    $commonMilestoneID: UUID!
     $commonSolutions: [MTOCommonSolutionKey!]
   ) {
     createMTOMilestoneCommon(
       modelPlanID: $modelPlanID
-      commonMilestoneKey: $commonMilestoneKey
+      commonMilestoneID: $commonMilestoneID
       commonSolutions: $commonSolutions
     ) {
       id

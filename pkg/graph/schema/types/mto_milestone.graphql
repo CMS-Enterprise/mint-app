@@ -120,7 +120,7 @@ extend type Mutation {
   ): MTOMilestone! @hasRole(role: MINT_USER)
   createMTOMilestoneCommon(
     modelPlanID: UUID!
-    commonMilestoneKey: MTOCommonMilestoneKey!
+    commonMilestoneID: UUID!
     commonSolutions: [MTOCommonSolutionKey!]
   ): MTOMilestone! @hasRole(role: MINT_USER)
   updateMTOMilestone(
