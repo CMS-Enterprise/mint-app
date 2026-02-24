@@ -1,62 +1,3 @@
-ALTER TABLE mto_common_milestone
-ADD COLUMN id UUID NOT NULL UNIQUE DEFAULT GEN_RANDOM_UUID(),
-ADD COLUMN is_archived BOOLEAN NOT NULL DEFAULT FALSE,
-ADD COLUMN created_by UUID REFERENCES user_account (id) NOT NULL DEFAULT '00000001-0001-0001-0001-000000000001',
-ADD COLUMN created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN modified_by UUID REFERENCES user_account(id),
-ADD COLUMN modified_dts TIMESTAMP WITH TIME ZONE;
-
--- -- update ALL FK relationships before swapping primary key columns
--- -- table list:
--- -- * mto_common_milestone_solution_link
--- -- * mto_milestone
--- -- * mto_suggested_milestone
--- -- * mto_template_milestone
-
--- -- 1: create the new columns
--- -- start these as nullable, will be fixed later in this migration
-ALTER TABLE mto_common_milestone_solution_link
-ADD COLUMN mto_common_milestone_id UUID;
-
-ALTER TABLE mto_milestone
-ADD COLUMN mto_common_milestone_id UUID;
-
-ALTER TABLE mto_suggested_milestone
-ADD COLUMN mto_common_milestone_id UUID;
-
-ALTER TABLE mto_template_milestone
-ADD COLUMN mto_common_milestone_id UUID;
-
--- -- 2: map to the new `id` column on the `mto_common_milestone` table
--- -- disable triggers to prevent audit records from being created for these updates
-ALTER TABLE mto_milestone
-DISABLE TRIGGER audit_trigger;
-
-ALTER TABLE mto_template_milestone
-DISABLE TRIGGER audit_trigger;
-
--- -- map begins
-UPDATE mto_common_milestone_solution_link child
-SET mto_common_milestone_id = parent.id
-FROM mto_common_milestone parent
-WHERE child.mto_common_milestone_key = parent.key;
-
-UPDATE mto_milestone child
-SET mto_common_milestone_id = parent.id
-FROM mto_common_milestone parent
-WHERE child.mto_common_milestone_key = parent.key;
-
-UPDATE mto_suggested_milestone child
-SET mto_common_milestone_id = parent.id
-FROM mto_common_milestone parent
-WHERE child.mto_common_milestone_key = parent.key;
-
-UPDATE mto_template_milestone child
-SET mto_common_milestone_id = parent.id
-FROM mto_common_milestone parent
-WHERE child.mto_common_milestone_key = parent.key;
-
-SET CONSTRAINTS ALL IMMEDIATE;
 
 -- -- re-enable triggers
 ALTER TABLE mto_milestone
@@ -75,7 +16,8 @@ ALTER COLUMN mto_common_milestone_id SET NOT NULL;
 ALTER TABLE mto_template_milestone
 ALTER COLUMN mto_common_milestone_id SET NOT NULL;
 
--- -- 4: drop the old FK relationships
+-- update ALL FK relationships before swapping primary key columns
+-- -- 4: drop the old FK relationships--
 ALTER TABLE mto_common_milestone_solution_link
 DROP CONSTRAINT mto_common_milestone_solution_lin_mto_common_milestone_key_fkey;
 
@@ -144,9 +86,6 @@ ON mto_template_milestone (template_id, mto_common_milestone_id);
 COMMENT ON INDEX uniq_template_common_milestone IS 'Constraint to ensure that each common milestone can be linked to a template only once';
 
 -- -- 7: Add audit configuration for the mto_common_milestone table
-ALTER TYPE table_name ADD VALUE 'mto_common_milestone';
-COMMIT;
-
 SELECT audit.AUDIT_TABLE(
     'public',
     'mto_common_milestone',
