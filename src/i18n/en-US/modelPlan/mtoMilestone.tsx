@@ -376,12 +376,12 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
       INNOVATION: '4i'
     }
   },
-  key: {
-    gqlField: 'key',
-    goField: 'Key',
-    dbField: 'mto_common_milestone_key',
-    label: 'Key',
-    dataType: TranslationDataType.STRING,
+  mtoCommonMilestoneID: {
+    gqlField: 'mtoCommonMilestoneID',
+    goField: 'MtoCommonMilestoneID',
+    dbField: 'mto_common_milestone_id',
+    label: 'MTO common milestone ID',
+    dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 3.0,
     tableReference: TableName.MTO_COMMON_MILESTONE

@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -15,11 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// Key is the resolver for the key field.
-func (r *mTOMilestoneResolver) Key(ctx context.Context, obj *models.MTOMilestone) (*models.MTOCommonMilestoneKey, error) {
-	panic(fmt.Errorf("not implemented: Key - key"))
-}
 
 // ResponsibleComponent is the resolver for the responsibleComponent field.
 func (r *mTOMilestoneResolver) ResponsibleComponent(ctx context.Context, obj *models.MTOMilestone) ([]models.MTOMilestoneResponsibleComponent, error) {

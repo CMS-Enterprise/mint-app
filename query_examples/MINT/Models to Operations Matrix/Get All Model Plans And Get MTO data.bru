@@ -33,6 +33,7 @@ body:graphql {
               }
           }
           commonMilestones {
+              id
               name
               key
               categoryName
@@ -40,6 +41,7 @@ body:graphql {
               description
               facilitatedByRole
   
+              isArchived
               isAdded
               # isSuggested
               # commonSolutions:
@@ -71,6 +73,7 @@ body:graphql {
                           name
                           addedFromMilestoneLibrary
                           key
+                          mtoCommonMilestoneID
                           facilitatedBy
                           needBy
                           status

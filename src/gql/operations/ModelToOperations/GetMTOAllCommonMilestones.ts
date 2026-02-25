@@ -6,7 +6,6 @@ export default gql(/* GraphQL */ `
       id
       name
       description
-      key
       isArchived
       isAdded
       isSuggested

@@ -64,7 +64,7 @@ func MTOMilestoneGetByModelPlanIDAndCategoryIDLoader(np sqlutils.NamedPreparer, 
 // MTOMilestoneCreate creates a new MTOMilestone in the database
 //
 // NOTE: This method is used for creating both Custom and Library-sourced (Common) milestones. It WILL return an error
-// if you try to create one that has both custom info (like a `name`) and a CommonMilestoneKey
+// if you try to create one that has both custom info (like a `name`) and a CommonMilestoneID
 // This is controlled not by application code, but by constraints initially added in this migration: migrations/V185__Add_MTO_Milestone.sql
 func MTOMilestoneCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestone, error) {
 	if MTOMilestone.ID == uuid.Nil {
@@ -79,7 +79,7 @@ func MTOMilestoneCreate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *
 }
 
 // MTOMilestoneCreateAllowConflicts creates a new MTOMilestone in the database, allowing conflicts
-// If a milestone with the same model_plan_id and mto_common_milestone_key already exists, it returns the existing one
+// If a milestone with the same model_plan_id and mto_common_milestone_id already exists, it returns the existing one
 func MTOMilestoneCreateAllowConflicts(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestoneWithNewlyInsertedStatus, error) {
 	if MTOMilestone.ID == uuid.Nil {
 		MTOMilestone.ID = uuid.New()
