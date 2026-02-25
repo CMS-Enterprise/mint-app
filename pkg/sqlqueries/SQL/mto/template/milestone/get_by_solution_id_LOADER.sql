@@ -1,7 +1,7 @@
 SELECT 
     tm.id,
     tm.template_id,
-    tm.mto_common_milestone_key AS key,
+    tm.mto_common_milestone_id AS key,
     mcm.name,
     tm.mto_template_category_id,
     tm.created_by,
@@ -15,6 +15,6 @@ INNER JOIN mto_template_milestone_solution_link link
     ON tm.id = link.mto_template_milestone
 INNER JOIN mto_template_solution ts 
     ON link.mto_template_solution = ts.id
-LEFT JOIN mto_common_milestone mcm ON tm.mto_common_milestone_key = mcm.key
+LEFT JOIN mto_common_milestone mcm ON tm.mto_common_milestone_id = mcm.id
 WHERE ts.id = ANY(:solution_ids)
 ORDER BY tm.created_dts;
