@@ -6,8 +6,7 @@ package resolvers
 
 import (
 	"context"
-
-	"github.com/google/uuid"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
@@ -15,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
+	"github.com/google/uuid"
 )
 
 // Basics is the resolver for the basics field.
@@ -59,6 +59,11 @@ func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan
 // Discussions is the resolver for the discussions field.
 func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
 	return PlanDiscussionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Tasks is the resolver for the tasks field.
+func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*model.PlanTask, error) {
+	panic(fmt.Errorf("not implemented: Tasks - tasks"))
 }
 
 // Payments is the resolver for the payments field.
