@@ -838,6 +838,7 @@ export const routeToEnumMap: Record<string, MtoCommonSolutionKey> = {
   'centralized-data-exchange': MtoCommonSolutionKey.CDX,
   'chronic-conditions-warehouse': MtoCommonSolutionKey.CCW,
   'cmmi-data-aggregation-contract': MtoCommonSolutionKey.CDAC,
+  'cms-qualtrics': MtoCommonSolutionKey.CMS_QUALTRICS,
   'cms-box': MtoCommonSolutionKey.CMS_BOX,
   'consolidated-business-operations-support-center': MtoCommonSolutionKey.CBOSC,
   'cpi-vetting': MtoCommonSolutionKey.CPI_VETTING,
