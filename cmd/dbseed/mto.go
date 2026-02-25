@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -23,7 +21,6 @@ func (s *Seeder) seedModelPlanWithMTOData(
 		panic(err)
 	}
 	commonMilestone := commonMilestones[0] // Get a common milestone to use for seeding. We just take the first one since it doesn't matter which one we use for seeding
-	fmt.Println("Hello,", commonMilestone)
 	princ := s.getTestPrincipalByUsername(euaID)
 
 	// Make uncategorized Milestone from Common milestone library

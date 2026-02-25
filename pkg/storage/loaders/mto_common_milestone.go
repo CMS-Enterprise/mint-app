@@ -18,9 +18,6 @@ type mtoCommonMilestoneLoaders struct {
 	// ByModelPlanID Gets a list of mto Common Milestone records  with  contextual data based on its associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCommonMilestone]
 
-	// By Key returns an MTO Common Milestone associated with a specific key. It doesn't return any meta data for it.
-	ByKey LoaderWrapper[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone]
-
 	// ByID returns an MTO Common Milestone associated with a specific ID. It doesn't return any meta data for it.
 	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonMilestone]
 }
@@ -28,7 +25,6 @@ type mtoCommonMilestoneLoaders struct {
 // MTOCommonMilestone is the singleton instance of all LoaderWrappers related to MTO Common Milestones
 var MTOCommonMilestone = &mtoCommonMilestoneLoaders{
 	ByModelPlanID: NewLoaderWrapper(batchMTOCommonMilestoneGetByModelPlanID),
-	ByKey:         NewLoaderWrapper(batchMTOCommonMilestoneGetByKey),
 	ByID:          NewLoaderWrapper(batchMTOCommonMilestoneGetByID),
 }
 
@@ -59,28 +55,6 @@ func batchMTOCommonMilestoneGetByModelPlanID(ctx context.Context, modelPlanIDs [
 
 	// implement one to many
 	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
-
-}
-
-// batchMTOCommonMilestoneGetByKey returns a list of common milestones as a dataloader.Result for a list of commonMilestoneKeys
-func batchMTOCommonMilestoneGetByKey(ctx context.Context, commonMilestoneKeys []models.MTOCommonMilestoneKey) []*dataloader.Result[*models.MTOCommonMilestone] {
-	loaders, err := Loaders(ctx)
-	logger := appcontext.ZLogger(ctx)
-	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone](commonMilestoneKeys, err)
-	}
-
-	data, err := storage.MTOCommonMilestoneGetByKeyLoader(loaders.DataReader.Store, logger, commonMilestoneKeys)
-	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone](commonMilestoneKeys, err)
-	}
-
-	getKeyFunc := func(data *models.MTOCommonMilestone) models.MTOCommonMilestoneKey {
-		return data.Key
-	}
-
-	// implement one to many
-	return oneToOneDataLoader(commonMilestoneKeys, data, getKeyFunc)
 
 }
 

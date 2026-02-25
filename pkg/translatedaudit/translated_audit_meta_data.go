@@ -186,8 +186,10 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 
 	// the data is deletable, so it needs to be a pointer
 	var name *string
+	var commonMilestoneID uuid.UUID
 	nameChange, nameFieldPresent := changesFields["name"]
-	keyChange, keyFieldPresent := changesFields["mto_common_milestone_key"]
+	commonMilestoneIDChange, commonMilestoneIDChangeFieldPresent := changesFields["mto_common_milestone_id"]
+
 	if nameFieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			name = models.StringPointer(fmt.Sprint(nameChange.Old))
@@ -195,14 +197,21 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 			name = models.StringPointer(fmt.Sprint(nameChange.New))
 		}
 
-	} else if keyFieldPresent {
-		var commonMilestoneKey any
+	} else if commonMilestoneIDChangeFieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			commonMilestoneKey = keyChange.Old
+			var err error
+			commonMilestoneID, err = parseInterfaceToUUID(commonMilestoneIDChange.Old)
+			if err != nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", "mto_common_milestone_id")
+			}
 		} else {
-			commonMilestoneKey = keyChange.New
+			var err error
+			commonMilestoneID, err = parseInterfaceToUUID(commonMilestoneIDChange.New)
+			if err != nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", "mto_common_milestone_id")
+			}
 		}
-		milestoneName, err := getMTOCommonMilestoneForeignKeyReference(ctx, store, commonMilestoneKey)
+		milestoneName, err := getMTOCommonMilestoneForeignKeyReference(ctx, store, commonMilestoneID)
 		if err != nil {
 			return nil, nil, fmt.Errorf("there was an issue getting the common milestone meta data for mto milestone. err %w", err)
 		}
