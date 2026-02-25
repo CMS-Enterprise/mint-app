@@ -4,6 +4,7 @@ WITH QUERIED_IDS AS (
 )
 
 SELECT
+    mto_common_milestone.id,
     mto_common_milestone.name,
     mto_common_milestone.description,
     mto_common_milestone.key,
@@ -11,6 +12,7 @@ SELECT
     mto_common_milestone.sub_category_name,
     mto_common_milestone.facilitated_by_role,
     mto_common_milestone.section,
+    mto_common_milestone.is_archived,
     -- These are fields in the table we may choose not to expose in the app
     -- mto_common_milestone.trigger_table,
     -- mto_common_milestone.trigger_col,
@@ -23,10 +25,10 @@ FROM mto_common_milestone
 CROSS JOIN QUERIED_IDS AS qIDs
 LEFT JOIN mto_milestone 
     ON
-        mto_common_milestone.key = mto_milestone.mto_common_milestone_key 
+        mto_common_milestone.id = mto_milestone.mto_common_milestone_id 
         AND qIDs.model_plan_id = mto_milestone.model_plan_id
         /* Note, this will send a 0 value uuid for model_plan_id instead of nil*/
 LEFT JOIN mto_suggested_milestone
     ON
-        mto_common_milestone.key = mto_suggested_milestone.mto_common_milestone_key 
+        mto_common_milestone.id = mto_suggested_milestone.mto_common_milestone_id 
         AND qIDs.model_plan_id = mto_suggested_milestone.model_plan_id
