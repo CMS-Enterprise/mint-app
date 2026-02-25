@@ -6,7 +6,7 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
@@ -16,27 +16,47 @@ import (
 
 // PlanTaskToggleComplete is the resolver for the planTaskToggleComplete field.
 func (r *mutationResolver) PlanTaskToggleComplete(ctx context.Context, planTaskID uuid.UUID, isComplete bool) (*model.PlanTask, error) {
-	panic(fmt.Errorf("not implemented: PlanTaskToggleComplete - planTaskToggleComplete"))
+	// Stub: return a fake task so frontend can test; State and *UserAccount fields are resolved by field resolvers.
+	status := model.PlanTaskStatusToDo
+	if isComplete {
+		status = model.PlanTaskStatusComplete
+	}
+	now := time.Now()
+	return &model.PlanTask{
+		ID:          planTaskID,
+		Key:         model.PlanTaskKeyModelPlan,
+		Status:      status,
+		CreatedBy:   planTaskID,
+		CreatedDts:  now,
+		ModifiedDts: &now,
+	}, nil
 }
 
 // State is the resolver for the state field.
 func (r *planTaskResolver) State(ctx context.Context, obj *model.PlanTask) (model.PlanTaskState, error) {
-	panic(fmt.Errorf("not implemented: State - state"))
+	if obj == nil {
+		return model.PlanTaskStateToDo, nil
+	}
+	if obj.Status == model.PlanTaskStatusComplete {
+		return model.PlanTaskStateComplete, nil
+	}
+	return model.PlanTaskStateToDo, nil
 }
 
 // CompletedByUserAccount is the resolver for the completedByUserAccount field.
 func (r *planTaskResolver) CompletedByUserAccount(ctx context.Context, obj *model.PlanTask) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: CompletedByUserAccount - completedByUserAccount"))
+	return nil, nil
 }
 
 // CreatedByUserAccount is the resolver for the createdByUserAccount field.
 func (r *planTaskResolver) CreatedByUserAccount(ctx context.Context, obj *model.PlanTask) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: CreatedByUserAccount - createdByUserAccount"))
+	// Stub: return empty account so frontend can test until user loader is wired.
+	return &authentication.UserAccount{}, nil
 }
 
 // ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
 func (r *planTaskResolver) ModifiedByUserAccount(ctx context.Context, obj *model.PlanTask) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: ModifiedByUserAccount - modifiedByUserAccount"))
+	return nil, nil
 }
 
 // PlanTask returns generated.PlanTaskResolver implementation.

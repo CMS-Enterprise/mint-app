@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
@@ -63,7 +62,8 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 
 // Tasks is the resolver for the tasks field.
 func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*model.PlanTask, error) {
-	panic(fmt.Errorf("not implemented: Tasks - tasks"))
+	// Stub: return empty list until plan_task data layer and loader are implemented.
+	return []*model.PlanTask{}, nil
 }
 
 // Payments is the resolver for the payments field.
