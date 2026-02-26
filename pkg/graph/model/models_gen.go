@@ -771,6 +771,23 @@ type PlanTDLTranslation struct {
 	Note          models.TranslationField `json:"note" db:"note"`
 }
 
+// PlanTask represents a task on a model plan (e.g. model plan details, MTO, data exchange).
+type PlanTask struct {
+	ID                     uuid.UUID                   `json:"id"`
+	Key                    PlanTaskKey                 `json:"key"`
+	Status                 PlanTaskStatus              `json:"status"`
+	State                  PlanTaskState               `json:"state"`
+	CompletedBy            *uuid.UUID                  `json:"completedBy,omitempty"`
+	CompletedByUserAccount *authentication.UserAccount `json:"completedByUserAccount,omitempty"`
+	CompletedDts           *time.Time                  `json:"completedDts,omitempty"`
+	CreatedBy              uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount   authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts             time.Time                   `json:"createdDts"`
+	ModifiedBy             *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount  *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts            *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // Represents plan timeline translation data
 type PlanTimelineTranslation struct {
 	CompleteIcip            models.TranslationField            `json:"completeICIP" db:"complete_icip"`
@@ -3019,6 +3036,182 @@ func (e *ParticipantsType) UnmarshalJSON(b []byte) error {
 }
 
 func (e ParticipantsType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// PlanTaskKey identifies which of the three plan tasks this row represents.
+type PlanTaskKey string
+
+const (
+	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto          PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
+)
+
+var AllPlanTaskKey = []PlanTaskKey{
+	PlanTaskKeyModelPlan,
+	PlanTaskKeyMto,
+	PlanTaskKeyDataExchange,
+}
+
+func (e PlanTaskKey) IsValid() bool {
+	switch e {
+	case PlanTaskKeyModelPlan, PlanTaskKeyMto, PlanTaskKeyDataExchange:
+		return true
+	}
+	return false
+}
+
+func (e PlanTaskKey) String() string {
+	return string(e)
+}
+
+func (e *PlanTaskKey) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PlanTaskKey(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PlanTaskKey", str)
+	}
+	return nil
+}
+
+func (e PlanTaskKey) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *PlanTaskKey) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e PlanTaskKey) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// PlanTaskState is computed from PlanTaskStatus for display.
+type PlanTaskState string
+
+const (
+	PlanTaskStateToDo     PlanTaskState = "TO_DO"
+	PlanTaskStateComplete PlanTaskState = "COMPLETE"
+)
+
+var AllPlanTaskState = []PlanTaskState{
+	PlanTaskStateToDo,
+	PlanTaskStateComplete,
+}
+
+func (e PlanTaskState) IsValid() bool {
+	switch e {
+	case PlanTaskStateToDo, PlanTaskStateComplete:
+		return true
+	}
+	return false
+}
+
+func (e PlanTaskState) String() string {
+	return string(e)
+}
+
+func (e *PlanTaskState) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PlanTaskState(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PlanTaskState", str)
+	}
+	return nil
+}
+
+func (e PlanTaskState) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *PlanTaskState) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e PlanTaskState) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// PlanTaskStatus is stored in the database and represents the task lifecycle.
+type PlanTaskStatus string
+
+const (
+	PlanTaskStatusNotNeeded  PlanTaskStatus = "NOT_NEEDED"
+	PlanTaskStatusUpcoming   PlanTaskStatus = "UPCOMING"
+	PlanTaskStatusToDo       PlanTaskStatus = "TO_DO"
+	PlanTaskStatusInProgress PlanTaskStatus = "IN_PROGRESS"
+	PlanTaskStatusComplete   PlanTaskStatus = "COMPLETE"
+)
+
+var AllPlanTaskStatus = []PlanTaskStatus{
+	PlanTaskStatusNotNeeded,
+	PlanTaskStatusUpcoming,
+	PlanTaskStatusToDo,
+	PlanTaskStatusInProgress,
+	PlanTaskStatusComplete,
+}
+
+func (e PlanTaskStatus) IsValid() bool {
+	switch e {
+	case PlanTaskStatusNotNeeded, PlanTaskStatusUpcoming, PlanTaskStatusToDo, PlanTaskStatusInProgress, PlanTaskStatusComplete:
+		return true
+	}
+	return false
+}
+
+func (e PlanTaskStatus) String() string {
+	return string(e)
+}
+
+func (e *PlanTaskStatus) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PlanTaskStatus(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PlanTaskStatus", str)
+	}
+	return nil
+}
+
+func (e PlanTaskStatus) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *PlanTaskStatus) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e PlanTaskStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
