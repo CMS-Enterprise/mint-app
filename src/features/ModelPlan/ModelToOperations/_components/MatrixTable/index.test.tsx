@@ -1,6 +1,5 @@
 import {
   GetModelToOperationsMatrixQuery,
-  MtoCommonMilestoneKey,
   MtoFacilitator,
   MtoMilestoneStatus,
   MtoRiskIndicator
@@ -32,13 +31,13 @@ describe('formatAndHomogenizeMilestoneData', () => {
               {
                 __typename: 'MTOMilestone',
                 id: '789',
+                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 1',
                 solutions: [],
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                 addedFromMilestoneLibrary: false,
                 isDraft: false
               }
@@ -64,7 +63,6 @@ describe('formatAndHomogenizeMilestoneData', () => {
         isDraft: undefined,
         isUncategorized: false,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -79,11 +77,11 @@ describe('formatAndHomogenizeMilestoneData', () => {
             isDraft: undefined,
             isUncategorized: false,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
                 id: '789',
+                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 1',
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
@@ -92,8 +90,7 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                isDraft: false
               }
             ]
           }
@@ -123,7 +120,6 @@ describe('moveRow', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -137,11 +133,11 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
                 id: '789',
+                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 1',
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
@@ -150,8 +146,7 @@ describe('moveRow', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -168,11 +163,11 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
                 id: '7892',
+                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 2',
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
@@ -181,8 +176,7 @@ describe('moveRow', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -199,7 +193,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -213,7 +206,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: true
@@ -253,7 +246,6 @@ describe('moveRow', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: []
       },
       {
@@ -268,7 +260,6 @@ describe('moveRow', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -282,7 +273,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -296,7 +286,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -313,7 +303,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -327,7 +316,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -344,7 +333,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -358,7 +346,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: true
@@ -385,7 +373,6 @@ describe('moveRow', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -399,7 +386,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -413,7 +399,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -430,7 +416,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -444,7 +429,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -461,7 +446,6 @@ describe('moveRow', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -475,7 +459,7 @@ describe('moveRow', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: true
@@ -495,7 +479,6 @@ describe('moveRow', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: []
       }
     ]);
@@ -517,7 +500,6 @@ describe('getRenderedRowIndexes', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: [
           {
             __typename: 'MTOSubcategory',
@@ -531,7 +513,6 @@ describe('getRenderedRowIndexes', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -545,7 +526,7 @@ describe('getRenderedRowIndexes', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               },
               {
                 __typename: 'MTOMilestone',
@@ -559,7 +540,7 @@ describe('getRenderedRowIndexes', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -576,7 +557,6 @@ describe('getRenderedRowIndexes', () => {
             actions: undefined,
             isDraft: undefined,
             addedFromMilestoneLibrary: undefined,
-            key: undefined,
             milestones: [
               {
                 __typename: 'MTOMilestone',
@@ -590,7 +570,7 @@ describe('getRenderedRowIndexes', () => {
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
                 isDraft: false,
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -610,7 +590,6 @@ describe('getRenderedRowIndexes', () => {
         actions: undefined,
         isDraft: undefined,
         addedFromMilestoneLibrary: undefined,
-        key: undefined,
         subCategories: []
       }
     ];
