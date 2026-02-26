@@ -5,15 +5,15 @@ type PlanTask {
   id: UUID!
   key: PlanTaskKey!
   status: PlanTaskStatus!
-  state: PlanTaskState! @goField(forceResolver: true)
+  state: PlanTaskState!
   completedBy: UUID
-  completedByUserAccount: UserAccount @goField(forceResolver: true)
+  completedByUserAccount: UserAccount
   completedDts: Time
   createdBy: UUID!
-  createdByUserAccount: UserAccount! @goField(forceResolver: true)
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount @goField(forceResolver: true)
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
