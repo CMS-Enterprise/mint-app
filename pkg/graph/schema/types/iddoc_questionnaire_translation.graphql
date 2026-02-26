@@ -25,7 +25,7 @@ type IddocQuestionnaireTranslation {
   icdOwner: TranslationFieldWithParent! @goTag(key: "db", value: "icd_owner")
   draftIcdDueDate: TranslationFieldWithParent!
     @goTag(key: "db", value: "draft_icd_due_date")
-  icdNote: TranslationFieldWithParent! @goTag(key: "db", value: "icd_note")
+  icdNote: TranslationField! @goTag(key: "db", value: "icd_note")
 
   #Page 2
   uatNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "uat_needs")

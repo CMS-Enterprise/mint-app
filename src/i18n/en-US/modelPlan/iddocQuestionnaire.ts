@@ -153,7 +153,6 @@ export const iddocQuestionnaire: TranslationIddocQuestionnaire = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.08,
-    parentRelation: () => iddocQuestionnaire.needed,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   uatNeeds: {

@@ -61,7 +61,7 @@ type IddocQuestionnaireTranslation struct {
 	CaptureParticipantInfoNote        models.TranslationField                       `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
 	IcdOwner                          models.TranslationFieldWithParent             `json:"icdOwner" db:"icd_owner"`
 	DraftIcdDueDate                   models.TranslationFieldWithParent             `json:"draftIcdDueDate" db:"draft_icd_due_date"`
-	IcdNote                           models.TranslationFieldWithParent             `json:"icdNote" db:"icd_note"`
+	IcdNote                           models.TranslationField                       `json:"icdNote" db:"icd_note"`
 	UatNeeds                          models.TranslationFieldWithParent             `json:"uatNeeds" db:"uat_needs"`
 	StcNeeds                          models.TranslationFieldWithParent             `json:"stcNeeds" db:"stc_needs"`
 	TestingTimelines                  models.TranslationFieldWithParent             `json:"testingTimelines" db:"testing_timelines"`

@@ -859,7 +859,7 @@ export type IddocQuestionnaireTranslation = {
   draftIcdDueDate: TranslationFieldWithParent;
   eftSetUp: TranslationFieldWithOptionsAndParent;
   fileNamingConventions: TranslationFieldWithParent;
-  icdNote: TranslationFieldWithParent;
+  icdNote: TranslationField;
   icdOwner: TranslationFieldWithParent;
   /** IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database. */
   isComplete: TranslationFieldWithOptions;

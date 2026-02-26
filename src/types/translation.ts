@@ -774,7 +774,7 @@ export type TranslationIddocQuestionnaireForm = {
   captureParticipantInfoNote: TranslationFieldProperties;
   icdOwner: TranslationFieldPropertiesWithParent<Bool>;
   draftIcdDueDate: TranslationFieldPropertiesWithParent<Bool>;
-  icdNote: TranslationFieldPropertiesWithParent<Bool>;
+  icdNote: TranslationFieldProperties;
   // IDDOC Testing
   uatNeeds: TranslationFieldPropertiesWithParent<Bool>;
   stcNeeds: TranslationFieldPropertiesWithParent<Bool>;
