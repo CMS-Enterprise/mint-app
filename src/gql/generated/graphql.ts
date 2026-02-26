@@ -1674,6 +1674,7 @@ export type ModelPlan = {
   status: ModelStatus;
   suggestedPhase?: Maybe<PhaseSuggestion>;
   taskListStatus: TaskStatus;
+  tasks: Array<PlanTask>;
   tdls: Array<PlanTdl>;
   timeline: PlanTimeline;
 };
@@ -1932,6 +1933,7 @@ export type Mutation = {
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
+  planTaskToggleComplete: PlanTask;
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
@@ -2271,6 +2273,13 @@ export type MutationMarkNotificationAsReadArgs = {
 export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
   id: Scalars['UUID']['input'];
   solutionLinks: MtoSolutionLinks;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationPlanTaskToggleCompleteArgs = {
+  isComplete: Scalars['Boolean']['input'];
+  planTaskID: Scalars['UUID']['input'];
 };
 
 
@@ -4397,6 +4406,46 @@ export type PlanTdlTranslation = {
   note: TranslationField;
   title: TranslationField;
 };
+
+/** PlanTask represents a task on a model plan (e.g. model plan details, MTO, data exchange). */
+export type PlanTask = {
+  __typename: 'PlanTask';
+  completedBy?: Maybe<Scalars['UUID']['output']>;
+  completedByUserAccount?: Maybe<UserAccount>;
+  completedDts?: Maybe<Scalars['Time']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  key: PlanTaskKey;
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  state: PlanTaskState;
+  status: PlanTaskStatus;
+};
+
+/** PlanTaskKey identifies which of the three plan tasks this row represents. */
+export enum PlanTaskKey {
+  DATA_EXCHANGE = 'DATA_EXCHANGE',
+  MODEL_PLAN = 'MODEL_PLAN',
+  MTO = 'MTO'
+}
+
+/** PlanTaskState is computed from PlanTaskStatus for display. */
+export enum PlanTaskState {
+  COMPLETE = 'COMPLETE',
+  TO_DO = 'TO_DO'
+}
+
+/** PlanTaskStatus is stored in the database and represents the task lifecycle. */
+export enum PlanTaskStatus {
+  COMPLETE = 'COMPLETE',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NOT_NEEDED = 'NOT_NEEDED',
+  TO_DO = 'TO_DO',
+  UPCOMING = 'UPCOMING'
+}
 
 /** Represents PlanTimeline */
 export type PlanTimeline = {
