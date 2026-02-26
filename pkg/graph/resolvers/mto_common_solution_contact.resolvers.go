@@ -7,10 +7,11 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
-	"github.com/google/uuid"
 )
 
 // CreateMTOCommonSolutionMailboxContact is the resolver for the createMTOCommonSolutionMailboxContact field.
