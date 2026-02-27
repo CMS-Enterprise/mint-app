@@ -96,7 +96,7 @@ func MTOMilestoneCreateAllowConflicts(np sqlutils.NamedPreparer, _ *zap.Logger, 
 // MTOMilestoneUpdate updates a new MTOMilestone in the database
 //
 // NOTE: This method is used for updating both Custom and Library-sourced (Common) milestones. It WILL return an error
-// if you try to update one that has both custom info (like a `name`) and a CommonMilestoneKey
+// if you try to update one that has both custom info (like a `name`) and a CommonMilestoneID
 // This is controlled not by application code, but by constraints initially added in this migration: migrations/V185__Add_MTO_Milestone.sql
 func MTOMilestoneUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOMilestone *models.MTOMilestone) (*models.MTOMilestone, error) {
 	returned, procErr := sqlutils.GetProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.Update, MTOMilestone)

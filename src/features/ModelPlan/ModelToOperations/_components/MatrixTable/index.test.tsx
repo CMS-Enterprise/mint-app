@@ -31,7 +31,6 @@ describe('formatAndHomogenizeMilestoneData', () => {
               {
                 __typename: 'MTOMilestone',
                 id: '789',
-                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 1',
                 solutions: [],
@@ -81,7 +80,6 @@ describe('formatAndHomogenizeMilestoneData', () => {
               {
                 __typename: 'MTOMilestone',
                 id: '789',
-                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 1',
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
@@ -137,7 +135,6 @@ describe('moveRow', () => {
               {
                 __typename: 'MTOMilestone',
                 id: '789',
-                mtoCommonMilestoneID: 'common-milestone-1',
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 1',
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
@@ -167,7 +164,7 @@ describe('moveRow', () => {
               {
                 __typename: 'MTOMilestone',
                 id: '7892',
-                mtoCommonMilestoneID: 'common-milestone-1',
+
                 riskIndicator: MtoRiskIndicator.AT_RISK,
                 name: 'Milestone 2',
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
@@ -205,8 +202,7 @@ describe('moveRow', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                mtoCommonMilestoneID: 'common-milestone-1'
+                isDraft: false
               }
             ],
             isUncategorized: true
@@ -525,8 +521,7 @@ describe('getRenderedRowIndexes', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                mtoCommonMilestoneID: 'common-milestone-1'
+                isDraft: false
               },
               {
                 __typename: 'MTOMilestone',
@@ -539,8 +534,7 @@ describe('getRenderedRowIndexes', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                mtoCommonMilestoneID: 'common-milestone-1'
+                isDraft: false
               }
             ],
             isUncategorized: false
@@ -569,8 +563,7 @@ describe('getRenderedRowIndexes', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false,
-                mtoCommonMilestoneID: 'common-milestone-1'
+                isDraft: false
               }
             ],
             isUncategorized: false

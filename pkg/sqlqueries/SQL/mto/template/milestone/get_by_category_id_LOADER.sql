@@ -1,7 +1,7 @@
 SELECT 
     tm.id,
     tm.template_id,
-    tm.mto_common_milestone_id AS key,
+    tm.mto_common_milestone_id, 
     mcm.name,
     tm.mto_template_category_id,
     tm.created_by,
