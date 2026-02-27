@@ -33,6 +33,7 @@ import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 import TimelineCard from './Cards/TimelineCard';
+import TasksWrapper from './Tasks';
 
 import './index.scss';
 
@@ -224,6 +225,9 @@ const CollaborationArea = () => {
             <Divider className="margin-y-6" />
 
             <Grid row gap>
+              <Grid col={12}>
+                <TasksWrapper />
+              </Grid>
               <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
                 <CardGroup>
