@@ -1,12 +1,48 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, CardBody, CardGroup, CardHeader } from '@trussworks/react-uswds';
-import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
+import {
+  Card,
+  CardBody,
+  CardGroup,
+  CardHeader,
+  Icon
+} from '@trussworks/react-uswds';
 import {
   PlanTaskKey,
   PlanTaskState,
   PlanTaskStatus
 } from 'gql/generated/graphql';
+
+const StateTag = ({ state }: { state: PlanTaskState }) => {
+  const { t } = useTranslation('tasks');
+
+  let tagStyle;
+  let tagCopy;
+
+  switch (state) {
+    case PlanTaskState.TO_DO:
+      tagCopy = t('state.TO_DO');
+      tagStyle = 'bg-warning-light';
+      break;
+    case PlanTaskState.COMPLETE:
+      tagCopy = t('state.COMPLETE');
+      tagStyle = 'bg-success-dark text-white';
+      break;
+    default:
+      tagCopy = '';
+      tagStyle = 'bg-info-light';
+  }
+
+  return (
+    <div
+      data-testid="tasklist-tag"
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold ${tagStyle}`}
+    >
+      <Icon.PriorityHigh className="margin-right-1" />
+      <span>{tagCopy}</span>
+    </div>
+  );
+};
 
 const TasksWrapper = () => {
   const { t } = useTranslation('tasks');
@@ -28,7 +64,7 @@ const TasksWrapper = () => {
               <h3 className="usa-card__heading">
                 {t(`${modelPlanBaseKey}.heading`)}
               </h3>
-              <TaskListStatusTag status={PlanTaskState.TO_DO} />
+              <StateTag state={PlanTaskState.COMPLETE} />
             </div>
           </CardHeader>
           <CardBody>
