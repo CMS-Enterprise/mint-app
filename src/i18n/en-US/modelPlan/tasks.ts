@@ -1,7 +1,15 @@
-import { PlanTaskKey, PlanTaskStatus } from 'gql/generated/graphql';
+import {
+  PlanTaskKey,
+  PlanTaskState,
+  PlanTaskStatus
+} from 'gql/generated/graphql';
 
 const tasks = {
   heading: 'Current tasks',
+  state: {
+    [PlanTaskState.TO_DO]: 'To do',
+    [PlanTaskState.COMPLETE]: 'Complete'
+  },
   [PlanTaskKey.MODEL_PLAN]: {
     [PlanTaskStatus.TO_DO]: {
       heading: 'Start your Model Plan',
