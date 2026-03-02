@@ -173,7 +173,11 @@ const IDDOCMonitoring = () => {
                       value={key}
                       checked={field.value === key}
                       onChange={() => {
-                        field.onChange(key);
+                        setValue('dataFullTimeOrIncremental', key, {
+                          shouldValidate: true,
+                          shouldDirty: true,
+                          shouldTouch: true
+                        });
                       }}
                     />
                   ))}
