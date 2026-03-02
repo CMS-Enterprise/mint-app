@@ -18,9 +18,7 @@ export type MilestoneSelectedFilters = {
 type MilestoneFilterModalProps = {
   filters: MilestoneFilters;
   appliedFilters: MilestoneSelectedFilters;
-  setAppliedFilters: React.Dispatch<
-    React.SetStateAction<MilestoneSelectedFilters>
-  >;
+  setAppliedFilters: (filters: MilestoneSelectedFilters) => void;
 };
 
 /**

@@ -12,9 +12,7 @@ import { MilestoneFilter } from './getMilestoneFilters';
 type MilestoneFilterGroupProps = {
   filterGroup: MilestoneFilter;
   selectedFilters: (string | MtoFacilitator)[];
-  setSelectedFilters: React.Dispatch<
-    React.SetStateAction<(string | MtoFacilitator)[]>
-  >;
+  setSelectedFilters: (filters: (string | MtoFacilitator)[]) => void;
 };
 
 /**
@@ -32,13 +30,13 @@ const MilestoneFilterGroup = ({
       selectedFilters.length === filterGroup.options.length
   );
 
-  const toggleFilterOption = (option: string | MtoFacilitator) =>
-    setSelectedFilters(prevSelectedFilters => {
-      if (prevSelectedFilters.includes(option)) {
-        return prevSelectedFilters.filter(filter => filter !== option);
-      }
-      return [...prevSelectedFilters, option];
-    });
+  const toggleFilterOption = (option: string | MtoFacilitator) => {
+    if (selectedFilters.includes(option)) {
+      setSelectedFilters(selectedFilters.filter(filter => filter !== option));
+    } else {
+      setSelectedFilters([...selectedFilters, option]);
+    }
+  };
 
   const handleSetShowAll = (value: boolean) => {
     setShowAll(value);

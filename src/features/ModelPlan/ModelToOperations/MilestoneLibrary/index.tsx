@@ -167,12 +167,6 @@ const MilstoneCardGroup = ({
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: hkcT } = useTranslation('helpAndKnowledge');
 
-  const [appliedFilters, setAppliedFilters] =
-    useState<MilestoneSelectedFilters>({
-      categoryName: [],
-      facilitatedByRole: []
-    });
-
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const navigate = useNavigate();
@@ -188,6 +182,40 @@ const MilstoneCardGroup = ({
   // Query parameters
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+
+  const appliedFilters: MilestoneSelectedFilters = useMemo(() => {
+    const searchParams = new URLSearchParams(location.search);
+
+    return {
+      categoryName: searchParams.get('category')
+        ? (searchParams.get('category') || '').split(',')
+        : [],
+      facilitatedByRole: (searchParams.get('role')
+        ? (searchParams.get('role') || '').split(',')
+        : []) as MilestoneSelectedFilters['facilitatedByRole']
+    };
+  }, [location.search]);
+
+  const setAppliedFilters = (filters: MilestoneSelectedFilters) => {
+    const newParams = new URLSearchParams(location.search);
+
+    if (filters.categoryName.length > 0) {
+      newParams.set('category', filters.categoryName.join(','));
+    } else {
+      newParams.delete('category');
+    }
+
+    if (filters.facilitatedByRole.length > 0) {
+      newParams.set('role', filters.facilitatedByRole.join(','));
+    } else {
+      newParams.delete('role');
+    }
+
+    // Reset pagination when filters change
+    newParams.delete('page');
+
+    navigate({ search: newParams.toString() }, { replace: true });
+  };
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
   const milestoneParam: string = params.get('milestone') || '';
 
