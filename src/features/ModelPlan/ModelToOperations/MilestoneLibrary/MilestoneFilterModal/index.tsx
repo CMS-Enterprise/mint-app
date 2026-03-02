@@ -15,6 +15,11 @@ export type MilestoneSelectedFilters = {
   facilitatedByRole: MtoFacilitator[];
 };
 
+const emptyFilters: MilestoneSelectedFilters = {
+  categoryName: [],
+  facilitatedByRole: []
+};
+
 type MilestoneFilterModalProps = {
   filters: MilestoneFilters;
   appliedFilters: MilestoneSelectedFilters;
@@ -45,16 +50,6 @@ const MilestoneFilterModal = ({
 
   const handleApplyFilters = () => {
     setAppliedFilters(selectedFilters);
-    setIsOpen(false);
-  };
-
-  const handleClearFilters = () => {
-    const emptyFilters: MilestoneSelectedFilters = {
-      categoryName: [],
-      facilitatedByRole: []
-    };
-    setSelectedFilters(emptyFilters);
-    setAppliedFilters(emptyFilters);
     setIsOpen(false);
   };
 
@@ -129,7 +124,11 @@ const MilestoneFilterModal = ({
         </div>
 
         <div className="border-top-1px border-base-lighter padding-y-2 padding-x-3 display-flex flex-justify">
-          <Button type="button" unstyled onClick={handleClearFilters}>
+          <Button
+            type="button"
+            unstyled
+            onClick={() => setSelectedFilters(emptyFilters)}
+          >
             {t('filter.clearAll')}
           </Button>
 
