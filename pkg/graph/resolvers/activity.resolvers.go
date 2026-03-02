@@ -40,6 +40,11 @@ func (r *datesChangedActivityMetaResolver) ModelPlan(ctx context.Context, obj *m
 }
 
 // ModelPlan is the resolver for the modelPlan field.
+func (r *iddocQuestionnaireCompletedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.IddocQuestionnaireCompletedActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
 func (r *incorrectModelStatusActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.IncorrectModelStatusActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
@@ -132,6 +137,11 @@ func (r *Resolver) DatesChangedActivityMeta() generated.DatesChangedActivityMeta
 	return &datesChangedActivityMetaResolver{r}
 }
 
+// IddocQuestionnaireCompletedActivityMeta returns generated.IddocQuestionnaireCompletedActivityMetaResolver implementation.
+func (r *Resolver) IddocQuestionnaireCompletedActivityMeta() generated.IddocQuestionnaireCompletedActivityMetaResolver {
+	return &iddocQuestionnaireCompletedActivityMetaResolver{r}
+}
+
 // IncorrectModelStatusActivityMeta returns generated.IncorrectModelStatusActivityMetaResolver implementation.
 func (r *Resolver) IncorrectModelStatusActivityMeta() generated.IncorrectModelStatusActivityMetaResolver {
 	return &incorrectModelStatusActivityMetaResolver{r}
@@ -171,6 +181,7 @@ type activityResolver struct{ *Resolver }
 type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type datesChangedActivityMetaResolver struct{ *Resolver }
+type iddocQuestionnaireCompletedActivityMetaResolver struct{ *Resolver }
 type incorrectModelStatusActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }

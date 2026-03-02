@@ -112,7 +112,6 @@ type ModelPlan {
   discussions: [PlanDiscussion!]!
   tasks: [PlanTask!]!
   payments: PlanPayments!
-  dataExchangeApproach: PlanDataExchangeApproach!
   status: ModelStatus!
   taskListStatus: TaskStatus!
   suggestedPhase: PhaseSuggestion
@@ -125,6 +124,7 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   previousSuggestedPhase: ModelPhase
   timeline: PlanTimeline!
+  questionnaires: Questionnaires!
   """
   Most recent edit to the model plan.
   This returns the most recent edit, that doesn't require privileges to view.

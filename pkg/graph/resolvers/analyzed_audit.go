@@ -383,11 +383,30 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		return "", false
 	})
 
+	iddocQuestionnaireMarkedComplete := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
+		if audit == nil || audit.Fields == nil {
+			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
+			return "", false
+		}
+
+		keys := lo.Keys(audit.Fields)
+		if lo.Contains(keys, "status") {
+			statusField, hasStatus := audit.Fields["status"]
+			if hasStatus && statusField.New != nil {
+				if statusStr, ok := statusField.New.(string); ok && statusStr == string(models.DataExchangeApproachStatusComplete) {
+					return audit.TableName, true
+				}
+			}
+		}
+		return "", false
+	})
+
 	analyzedPlanSections := models.AnalyzedPlanSections{
 		Updated:                            updatedSections,
 		ReadyForReview:                     readyForReview,
 		ReadyForClearance:                  readyForClearance,
 		DataExchangeApproachMarkedComplete: len(dataExchangeApproachMarkedComplete) > 0,
+		IDDOCQuestionnaireMarkedComplete:   len(iddocQuestionnaireMarkedComplete) > 0,
 	}
 
 	if analyzedPlanSections.IsEmpty() {
