@@ -73,6 +73,7 @@ const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
 
   const modelPlanKey = PlanTaskKey.MODEL_PLAN;
   const modelPlanBaseKey = `${modelPlanKey}.${PlanTaskStatus.TO_DO}`;
+  // const showSectionDetails = taskState !== PlanTaskState.TO_DO;
 
   return (
     <div>
@@ -80,7 +81,7 @@ const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
       <CardGroup>
         <Card
           gridLayout={{ desktop: { col: 12 } }}
-          className="collaboration-area__card  minh-0"
+          className="collaboration-area__card minh-0"
           key={modelPlanKey}
         >
           <CardHeader>
@@ -93,20 +94,21 @@ const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
           </CardHeader>
           <CardBody>
             <p>{t(`${modelPlanBaseKey}.copy`)}</p>
-            <div className="display-flex flex-align-center flex-wrap-wrap">
-              {lastModifiedSection?.modifiedDts && (
-                <>
-                  <span className="text-base">
-                    {collaborationAreaT('modelPlanCard.sectionsStarted', {
-                      sectionsStarted: sectionStartedCounter
-                    })}
-                  </span>
-
-                  <span className="text-base margin-x-2">|</span>
-                  <LastModifiedSection section={lastModifiedSection} />
-                </>
-              )}
-            </div>
+            {!PlanTaskState.TO_DO && (
+              <div className="display-flex flex-align-center flex-wrap-wrap">
+                <span className="text-base">
+                  {collaborationAreaT('modelPlanCard.sectionsStarted', {
+                    sectionsStarted: sectionStartedCounter
+                  })}
+                </span>
+                {lastModifiedSection?.modifiedDts && (
+                  <>
+                    <span className="text-base margin-x-2">|</span>
+                    <LastModifiedSection section={lastModifiedSection} />
+                  </>
+                )}
+              </div>
+            )}
           </CardBody>
           <CardFooter className="display-flex  border-top-0">
             <Button
