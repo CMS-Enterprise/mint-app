@@ -11,10 +11,17 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import {
+  GetCollaborationAreaQuery,
   PlanTaskKey,
   PlanTaskState,
   PlanTaskStatus
 } from 'gql/generated/graphql';
+
+import LastModifiedSection from '../_components/LastModifiedSection';
+import {
+  getLastModifiedSection,
+  getSectionStartedCount
+} from '../_utils/modelPlanSectionUtils';
 
 type StateConfig = {
   style: string;
@@ -51,10 +58,18 @@ const StateTag = ({ state }: { state: PlanTaskState }) => {
   );
 };
 
-const TasksWrapper = () => {
+type TasksWrapperProps = {
+  modelPlan: GetCollaborationAreaQuery['modelPlan'];
+};
+
+const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
   const { t } = useTranslation('tasks');
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
+
+  const lastModifiedSection = getLastModifiedSection(modelPlan);
+  const sectionStartedCounter = getSectionStartedCount(modelPlan);
 
   const modelPlanKey = PlanTaskKey.MODEL_PLAN;
   const modelPlanBaseKey = `${modelPlanKey}.${PlanTaskStatus.TO_DO}`;
@@ -78,6 +93,20 @@ const TasksWrapper = () => {
           </CardHeader>
           <CardBody>
             <p>{t(`${modelPlanBaseKey}.copy`)}</p>
+            <div className="display-flex flex-align-center flex-wrap-wrap">
+              {lastModifiedSection?.modifiedDts && (
+                <>
+                  <span className="text-base">
+                    {collaborationAreaT('modelPlanCard.sectionsStarted', {
+                      sectionsStarted: sectionStartedCounter
+                    })}
+                  </span>
+
+                  <span className="text-base margin-x-2">|</span>
+                  <LastModifiedSection section={lastModifiedSection} />
+                </>
+              )}
+            </div>
           </CardBody>
           <CardFooter className="display-flex  border-top-0">
             <Button

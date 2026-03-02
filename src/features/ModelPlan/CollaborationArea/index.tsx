@@ -213,7 +213,7 @@ const CollaborationArea = () => {
           </StickyModelNameWrapper>
 
           <GridContainer>
-            <Grid desktop={{ col: 12 }}>
+            <Grid desktop={{ col: 12 }} className="margin-bottom-6">
               <CollaborationStatusBanner
                 modelID={modelID}
                 status={status}
@@ -222,12 +222,11 @@ const CollaborationArea = () => {
               />
             </Grid>
 
-            <Divider className="margin-y-6" />
-
             <Grid row gap>
               <Grid col={12}>
-                <TasksWrapper />
+                <TasksWrapper modelPlan={modelPlan} />
               </Grid>
+              <Divider className="margin-y-6" />
               <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
                 <CardGroup>
