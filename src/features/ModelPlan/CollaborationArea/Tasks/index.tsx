@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -52,6 +53,8 @@ const StateTag = ({ state }: { state: PlanTaskState }) => {
 
 const TasksWrapper = () => {
   const { t } = useTranslation('tasks');
+  const { modelID = '' } = useParams<{ modelID: string }>();
+  const navigate = useNavigate();
 
   const modelPlanKey = PlanTaskKey.MODEL_PLAN;
   const modelPlanBaseKey = `${modelPlanKey}.${PlanTaskStatus.TO_DO}`;
@@ -77,10 +80,20 @@ const TasksWrapper = () => {
             <p>{t(`${modelPlanBaseKey}.copy`)}</p>
           </CardBody>
           <CardFooter className="display-flex  border-top-0">
-            <Button type="button" className="margin-right-1">
+            <Button
+              type="button"
+              className="margin-right-1"
+              onClick={() =>
+                navigate(`/models/${modelID}/collaboration-area/model-plan`)
+              }
+            >
               {t(`${modelPlanBaseKey}.primaryAction`)}
             </Button>
-            <Button type="button" outline>
+            <Button
+              type="button"
+              outline
+              onClick={() => navigate(`/help-and-knowledge/sample-model-plan`)}
+            >
               {t(`${modelPlanBaseKey}.secondaryAction`)}
             </Button>
           </CardFooter>
