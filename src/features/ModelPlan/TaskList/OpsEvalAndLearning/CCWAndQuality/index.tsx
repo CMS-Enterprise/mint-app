@@ -80,7 +80,6 @@ const CCWAndQuality = () => {
 
   const {
     id,
-    iddocSupport,
     ccmInvolvment,
     dataNeededForMonitoring,
     sendFilesBetweenCcw,
@@ -111,7 +110,6 @@ const CCWAndQuality = () => {
   const initialValues: GetCCWAndQualityFormType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
-    iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
     dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     sendFilesBetweenCcw: sendFilesBetweenCcw ?? null,
@@ -447,13 +445,11 @@ const CCWAndQuality = () => {
         {data && (
           <PageNumber
             currentPage={renderCurrentPage(
-              7,
-              iddocSupport,
+              4,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}
             totalPages={renderTotalPages(
-              iddocSupport,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}

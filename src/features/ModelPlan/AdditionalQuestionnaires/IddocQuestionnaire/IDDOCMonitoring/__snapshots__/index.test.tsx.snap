@@ -1,0 +1,435 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="usa-form maxw-none desktop:grid-col-6 margin-top-0"
+    data-testid="iddoc-questionnaire-monitoring-form"
+    id="iddoc-questionnaire-monitoring"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <h3>
+        Data monitoring questions continued
+      </h3>
+      <div
+        class="usa-form-group"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="data-full-time-or-incremental"
+        >
+          Full time or incremental?
+        </label>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="data-full-time-or-incremental-FULL_TIME"
+            id="data-full-time-or-incremental-FULL_TIME"
+            name="dataFullTimeOrIncremental"
+            type="radio"
+            value="FULL_TIME"
+          />
+          <label
+            class="usa-radio__label"
+            for="data-full-time-or-incremental-FULL_TIME"
+          >
+            Full time
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            data-testid="data-full-time-or-incremental-INCREMENTAL"
+            id="data-full-time-or-incremental-INCREMENTAL"
+            name="dataFullTimeOrIncremental"
+            type="radio"
+            value="INCREMENTAL"
+          />
+          <label
+            class="usa-radio__label"
+            for="data-full-time-or-incremental-INCREMENTAL"
+          >
+            Incremental
+          </label>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="eft-set-up"
+        >
+          Are Electronic File Transfer (EFT) and connectivity set up?
+        </label>
+        <fieldset
+          class="usa-fieldset margin-top-0 margin-right-1"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="eft-set-up-true"
+              id="eft-set-up-true"
+              name="eftSetUp"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="eft-set-up-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="eft-set-up-false"
+              id="eft-set-up-false"
+              name="eftSetUp"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="eft-set-up-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="unsolicited-adjustments-included"
+        >
+          Will unsolicited adjustments be included?
+        </label>
+        <fieldset
+          class="usa-fieldset margin-top-0 margin-right-1"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="unsolicited-adjustments-included-true"
+              id="unsolicited-adjustments-included-true"
+              name="unsolicitedAdjustmentsIncluded"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="unsolicited-adjustments-included-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="unsolicited-adjustments-included-false"
+              id="unsolicited-adjustments-included-false"
+              name="unsolicitedAdjustmentsIncluded"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="unsolicited-adjustments-included-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="data-flow-diagrams-needed"
+        >
+          Are data flow diagrams needed?
+        </label>
+        <fieldset
+          class="usa-fieldset margin-top-0 margin-right-1"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="data-flow-diagrams-needed-true"
+              id="data-flow-diagrams-needed-true"
+              name="dataFlowDiagramsNeeded"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="data-flow-diagrams-needed-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="data-flow-diagrams-needed-false"
+              id="data-flow-diagrams-needed-false"
+              name="dataFlowDiagramsNeeded"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="data-flow-diagrams-needed-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="produce-benefit-enhancement-files"
+        >
+          Will you produce Benefit Enhancement Files?
+        </label>
+        <p
+          class="text-base margin-y-1"
+        >
+          This means we would use these files for Participating and Preferred Providers.
+        </p>
+        <fieldset
+          class="usa-fieldset margin-top-0 margin-right-1"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="produce-benefit-enhancement-files-true"
+              id="produce-benefit-enhancement-files-true"
+              name="produceBenefitEnhancementFiles"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="produce-benefit-enhancement-files-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="produce-benefit-enhancement-files-false"
+              id="produce-benefit-enhancement-files-false"
+              name="produceBenefitEnhancementFiles"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="produce-benefit-enhancement-files-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+      </div>
+      <div
+        class="usa-form-group margin-top-6"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="file-naming-conventions"
+        >
+          File naming conventions
+        </label>
+        <input
+          class="usa-input"
+          data-testid="file-naming-conventions"
+          id="file-naming-conventions"
+          maxlength="50"
+          name="fileNamingConventions"
+          type="text"
+          value=".pdf"
+        />
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6 margin-top-0"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="dataMonitoringNote-add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="add"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+      <div
+        class="usa-form-group border-2px border-base-light radius-md padding-2"
+        data-testid="formGroup"
+      >
+        <label
+          class="usa-label text-normal"
+          data-testid="label"
+          for="is-complete"
+        >
+          Questionnaire status
+        </label>
+        <div
+          class="usa-form-group margin-0"
+          data-testid="formGroup"
+        >
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="is-complete"
+              name="isComplete"
+              type="checkbox"
+              value="true"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="is-complete"
+              style="width: fit-content;"
+            >
+              This questionnaire (4i and ACO-OS) is complete.
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        id="iddoc-questionnaire-monitoring-form"
+      >
+        <div
+          class="margin-top-6 margin-bottom-3 display-flex"
+        >
+          <button
+            class="usa-button usa-button usa-button--outline margin-top-0"
+            data-testid="button"
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            class="usa-button margin-top-0"
+            data-testid="button"
+            id="iddoc-questionnaire-monitoring-form-save-button"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            aria-label="back"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+            />
+          </svg>
+          Save and return to questionnaires
+        </button>
+      </div>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 3 of 3
+    </span>
+  </div>
+</DocumentFragment>
+`;

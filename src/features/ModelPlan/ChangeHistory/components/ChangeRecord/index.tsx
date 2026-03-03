@@ -112,7 +112,7 @@ export const ChangeHeader = ({
   // Task list status audits
   if (changeRecordType === 'taskListStatusUpdate') {
     const status = changeRecord.translatedFields.find(
-      field => field.fieldName === 'status'
+      field => field.fieldName === 'status' || field.fieldName === 'needed'
     )?.newTranslated;
 
     return (
