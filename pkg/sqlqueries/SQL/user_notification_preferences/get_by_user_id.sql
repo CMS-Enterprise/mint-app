@@ -14,6 +14,8 @@ SELECT
     dates_changed_notification_type,
     data_exchange_approach_marked_complete,
     data_exchange_approach_marked_complete_notification_type,
+    iddoc_questionnaire_complete,
+    iddoc_questionnaire_completed_notification_type,
     incorrect_model_status,
     created_by,
     created_dts,

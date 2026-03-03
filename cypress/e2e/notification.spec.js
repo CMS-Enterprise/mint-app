@@ -529,7 +529,13 @@ describe('Notification Center', () => {
     cy.url().should('include', '/');
 
     cy.enterModelPlanCollaborationArea('Empty Plan');
-    cy.contains('button', 'Start approach').click();
+    cy.contains('button', 'Go to questionnaires').click();
+
+    cy.url().should('include', '/additional-questionnaires');
+    cy.get('[data-testid="data-exchange-approach-button"]').within(() => {
+      cy.contains('Start').click();
+    });
+
     cy.contains('button', 'Next')
       .should('not.be.disabled')
       .click({ force: true });
@@ -552,13 +558,10 @@ describe('Notification Center', () => {
         force: true
       });
 
-    cy.contains(
-      'button',
-      'Save and return to model collaboration area'
-    ).click();
+    cy.contains('button', 'Save and return to questionnaires').click();
 
-    cy.url().should('include', '/collaboration-area');
-    cy.get('h1').contains('Model collaboration area');
+    cy.url().should('include', '/additional-questionnaires');
+    cy.get('h1').contains('Additional questionnaires');
 
     cy.get('[data-testid="navmenu__notification"]').click();
     cy.url().should('include', '/notifications');
@@ -591,6 +594,107 @@ describe('Notification Center', () => {
 
     cy.get('[data-testid="alert"]').contains(
       'You are already unsubscribed from email notifications when a data exchange approach is completed.'
+    );
+  });
+
+  it('testing IDDOC Questionnaire is marked Complete Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the IDDOC questionnaire in-app checkbox
+    cy.get(
+      '[data-testid="notification-setting-in-app-iddocQuestionnaireComplete"]'
+    )
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get(
+      '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
+    )
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to add a new model to MINT
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.enterModelPlanTaskList('Empty Plan');
+    cy.get('[data-testid="ops-eval-and-learning"]').click();
+
+    cy.get('#ops-eval-and-learning-help-desk-use-true').should(
+      'not.be.disabled'
+    );
+
+    cy.get('#ops-eval-and-learning-iddoc-support-true')
+      .check({ force: true })
+      .should('be.checked');
+    cy.contains('button', 'Save and return to Model Plan').click();
+
+    cy.get('[data-testid="return-to-collaboration"]').click();
+
+    cy.contains('button', 'Go to questionnaires').click();
+
+    cy.url().should('include', '/additional-questionnaires');
+    cy.get('[data-testid="iddoc-questionnaire-button"]').within(() => {
+      cy.contains('Start').click();
+    });
+
+    cy.get('#iddoc-questionnaire-operations-form-next-button')
+      .should('not.be.disabled')
+      .click({ force: true });
+    cy.get('#iddoc-questionnaire-testing-form-next-button')
+      .should('not.be.disabled')
+      .click({ force: true });
+
+    cy.get('#is-complete')
+      .should('not.be.disabled')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.contains('button', 'Save and return to questionnaires').click();
+
+    cy.url().should('include', '/additional-questionnaires');
+    cy.get('h1').contains('Additional questionnaires');
+
+    cy.get('[data-testid="navmenu__notification"]').click();
+    cy.url().should('include', '/notifications');
+    cy.get('[data-testid="spinner"]').should('not.exist');
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'MINT Doe marked the 4i/ACO-OS questionnaire complete for Empty Plan.'
+    );
+
+    cy.contains('button', 'View questionnaire').click();
+
+    cy.url().should('include', '/read-view/iddoc-questionnaire');
+
+    // Unsubscribe via email link
+    cy.visit(
+      '/notifications/settings?unsubscribe_email=IDDOC_QUESTIONNAIRE_COMPLETED'
+    );
+
+    cy.get(
+      '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
+    ).should('be.not.checked');
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'You have successfully unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
+    );
+
+    cy.visit(
+      '/notifications/settings?unsubscribe_email=IDDOC_QUESTIONNAIRE_COMPLETED'
+    );
+
+    cy.get('[data-testid="alert"]').contains(
+      'You are already unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
     );
   });
 });
