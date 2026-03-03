@@ -45,30 +45,34 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         </p>
       </div>
       <div
-        class="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3"
+        class="margin-top-2 margin-bottom-3 padding-x-3"
       >
-        <span
-          class="text-base margin-right-1"
-        >
-          Most recent edit on 05/12/2022 by 
-        </span>
         <div
-          class="display-flex text-base-darkest flex-align-center"
+          class="display-inline tablet:display-flex  flex-align-center"
         >
-          <div
-            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
-            data-testid="avatar--basic"
+          <span
+            class="text-base margin-right-1"
           >
-            JD
-          </div>
+            Most recent edit on 05/12/2022 by 
+          </span>
           <div
-            class="margin-y-0"
+            class="display-flex text-base-darkest flex-align-center"
           >
-            <span
-              class=""
+            <div
+              class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+              data-testid="avatar--basic"
             >
-              John Doe
-            </span>
+              JD
+            </div>
+            <div
+              class="margin-y-0"
+            >
+              <span
+                class=""
+              >
+                John Doe
+              </span>
+            </div>
           </div>
         </div>
       </div>

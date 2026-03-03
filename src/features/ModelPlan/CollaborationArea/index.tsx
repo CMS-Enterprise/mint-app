@@ -7,6 +7,10 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import CollaborationStatusBanner from 'features/ModelPlan/CollaborationArea/StatusBanner';
 import {
   GetCollaborationAreaQuery,
+  PlanTask,
+  PlanTaskKey,
+  PlanTaskState,
+  PlanTaskStatus,
   useGetCollaborationAreaQuery
 } from 'gql/generated/graphql';
 
@@ -60,6 +64,28 @@ const CollaborationArea = () => {
   });
 
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+
+  const tasksByKey = (modelPlan.tasks || []).reduce<
+    Partial<Record<PlanTaskKey, PlanTask>>
+  >((acc, task) => {
+    acc[task.key as PlanTaskKey] = task as PlanTask;
+    return acc;
+  }, {});
+
+  // Visual test: force Model Plan task to IN_PROGRESS (remove when done)
+  const existingModelPlanTask = tasksByKey[PlanTaskKey.MODEL_PLAN];
+  tasksByKey[PlanTaskKey.MODEL_PLAN] = existingModelPlanTask
+    ? {
+        ...existingModelPlanTask,
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.IN_PROGRESS
+      }
+    : ({
+        __typename: 'PlanTask',
+        key: PlanTaskKey.MODEL_PLAN,
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE
+      } as PlanTask);
 
   const {
     modelName,
@@ -224,7 +250,7 @@ const CollaborationArea = () => {
 
             <Grid row gap>
               <Grid col={12}>
-                <TasksWrapper modelPlan={modelPlan} />
+                <TasksWrapper modelPlan={modelPlan} tasksByKey={tasksByKey} />
               </Grid>
               <Divider className="margin-y-6" />
               <Grid col={12}>
