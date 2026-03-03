@@ -1,0 +1,52 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`QuestionnaireListItem > match snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="display-flex padding-bottom-4"
+    data-testid="questionnaire-list-item"
+  >
+    <div
+      class="width-full"
+    >
+      <div
+        class="additional-questionnaires-list__task-row display-flex flex-justify flex-align-start"
+      >
+        <h3
+          class="margin-top-0 margin-bottom-1"
+        >
+          Sample Heading
+        </h3>
+        <span
+          class="display-flex flex-column flex-align-end"
+        >
+          <div
+            class="additional-questionnaires-list__task-tag line-height-body-1 text-bold bg-info-light "
+            data-testid="questionnaireList-tag"
+          >
+            <span>
+              Ready to start
+            </span>
+          </div>
+          <div
+            class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
+          >
+            <p
+              class="margin-y-0"
+            />
+          </div>
+        </span>
+      </div>
+      <div
+        class="additional-questionnaires-list__task-description margin-right-auto line-height-body-5"
+      >
+        <p
+          class="margin-top-0"
+        >
+          Sample Description
+        </p>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

@@ -28,8 +28,6 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 	opsEvalChanges := map[string]interface{}{
 		"stakeholdersNote":                   "These stakeholders might change",
 		"helpdeskUse":                        false,
-		"technicalContactsIdentified":        true,
-		"technicalContactsIdentifiedDetail":  "Mrs. Robinson",
 		"dataSharingFrequencyContinually":    "some test value for data sharing frequency",
 		"dataCollectionFrequencyContinually": "some test value for data collection frequency",
 	}

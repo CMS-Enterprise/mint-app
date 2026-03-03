@@ -33,6 +33,7 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
     <Card
       gridLayout={{ mobile: { col: 12 }, desktop: { col: 4 } }}
       className="collaboration-area__card"
+      data-testid="cr-and-tdl-card"
     >
       <CardHeader>
         <h3 className="usa-card__heading">

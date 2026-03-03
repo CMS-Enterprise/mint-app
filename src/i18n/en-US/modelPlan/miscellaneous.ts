@@ -3,8 +3,6 @@ import { FrequencyType } from 'gql/generated/graphql';
 export const miscellaneous: Record<string, Record<string, string> | string> = {
   mandatoryFields: 'All fields are mandatory',
   saveAndReturn: 'Save and return to Model Plan',
-  saveAndReturnToCollaborationArea:
-    'Save and return to model collaboration area',
   modelPlanHeading: 'Model plan: {{-heading}}',
   for: 'for',
   save: 'Save',
@@ -42,6 +40,7 @@ export const miscellaneous: Record<string, Record<string, string> | string> = {
   modelPlanCopy:
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
+  markedComplete: 'Marked as complete by {{-user}} on ',
   validDate: 'Please use a valid date format.',
   apolloFailField: 'Failed to save field value/s',
   allFieldsRequired:
