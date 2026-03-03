@@ -1,4 +1,3 @@
-
 -- -- re-enable triggers
 ALTER TABLE mto_milestone
 ENABLE TRIGGER audit_trigger;
@@ -94,3 +93,10 @@ SELECT audit.AUDIT_TABLE(
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
     '{*}'::TEXT[]
 );
+
+-- -- 8: drop the old key columns
+ALTER TABLE mto_common_milestone DROP COLUMN key;
+ALTER TABLE mto_common_milestone_solution_link DROP COLUMN mto_common_milestone_key;
+ALTER TABLE mto_milestone DROP COLUMN mto_common_milestone_key;
+ALTER TABLE mto_suggested_milestone DROP COLUMN mto_common_milestone_key;
+ALTER TABLE mto_template_milestone DROP COLUMN mto_common_milestone_key;
