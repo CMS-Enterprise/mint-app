@@ -72,21 +72,48 @@ const SUPPORTED_STATUSES: PlanTaskStatus[] = [
   PlanTaskStatus.COMPLETE
 ];
 
-function getTaskStatus(task: PlanTask | undefined): PlanTaskStatus {
+export type TasksByKey = Partial<
+  Record<PlanTaskKey, Pick<PlanTask, 'key' | 'state' | 'status'>>
+>;
+
+// TEMP
+export const MOCK_TASKS_BY_KEY: TasksByKey = {
+  [PlanTaskKey.MODEL_PLAN]: {
+    key: PlanTaskKey.MODEL_PLAN,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.IN_PROGRESS
+  },
+  [PlanTaskKey.DATA_EXCHANGE]: {
+    key: PlanTaskKey.DATA_EXCHANGE,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.TO_DO
+  },
+  [PlanTaskKey.MTO]: {
+    key: PlanTaskKey.MTO,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.IN_PROGRESS
+  }
+};
+
+function getTaskStatus(
+  task: Pick<PlanTask, 'status'> | undefined
+): PlanTaskStatus {
   const status = task?.status ?? PlanTaskStatus.TO_DO;
   return SUPPORTED_STATUSES.includes(status) ? status : PlanTaskStatus.TO_DO;
 }
 
-function getTaskState(task: PlanTask | undefined): PlanTaskState {
+function getTaskState(
+  task: Pick<PlanTask, 'state'> | undefined
+): PlanTaskState {
   return task?.state ?? PlanTaskState.TO_DO;
 }
 
 type TasksWrapperProps = {
   modelPlan: GetCollaborationAreaQuery['modelPlan'];
-  tasksByKey: Partial<Record<PlanTaskKey, PlanTask>>;
+  tasksByKey?: TasksByKey;
 };
 
-const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
+const TasksWrapper = ({ modelPlan, tasksByKey = {} }: TasksWrapperProps) => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();

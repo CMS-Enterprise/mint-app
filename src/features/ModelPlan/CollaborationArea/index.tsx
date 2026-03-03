@@ -7,8 +7,6 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import CollaborationStatusBanner from 'features/ModelPlan/CollaborationArea/StatusBanner';
 import {
   GetCollaborationAreaQuery,
-  PlanTask,
-  PlanTaskKey,
   useGetCollaborationAreaQuery
 } from 'gql/generated/graphql';
 
@@ -35,7 +33,7 @@ import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 import TimelineCard from './Cards/TimelineCard';
-import TasksWrapper from './Tasks';
+import TasksWrapper, { MOCK_TASKS_BY_KEY } from './Tasks';
 
 import './index.scss';
 
@@ -62,13 +60,6 @@ const CollaborationArea = () => {
   });
 
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
-
-  const tasksByKey = (modelPlan.tasks || []).reduce<
-    Partial<Record<PlanTaskKey, PlanTask>>
-  >((acc, task) => {
-    acc[task.key as PlanTaskKey] = task as PlanTask;
-    return acc;
-  }, {});
 
   const {
     modelName,
@@ -233,7 +224,10 @@ const CollaborationArea = () => {
 
             <Grid row gap>
               <Grid col={12}>
-                <TasksWrapper modelPlan={modelPlan} tasksByKey={tasksByKey} />
+                <TasksWrapper
+                  modelPlan={modelPlan}
+                  tasksByKey={MOCK_TASKS_BY_KEY}
+                />
               </Grid>
               <Divider className="margin-y-6" />
               <Grid col={12}>
