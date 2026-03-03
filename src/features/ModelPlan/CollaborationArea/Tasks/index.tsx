@@ -93,7 +93,7 @@ const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
             </div>
           </CardHeader>
           <CardBody>
-            <p>{t(`${modelPlanBaseKey}.copy`)}</p>
+            <p>{t(`${modelPlanKey}.copy`)}</p>
             {!PlanTaskState.TO_DO && (
               <div className="display-flex flex-align-center flex-wrap-wrap">
                 <span className="text-base">
@@ -125,7 +125,7 @@ const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
               outline
               onClick={() => navigate(`/help-and-knowledge/sample-model-plan`)}
             >
-              {t(`${modelPlanBaseKey}.secondaryAction`)}
+              {t(`${modelPlanKey}.secondaryAction`)}
             </Button>
           </CardFooter>
         </Card>
