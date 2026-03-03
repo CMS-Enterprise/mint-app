@@ -36,11 +36,11 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
 
-import getMilestoneFilters from './MilestoneFilterModal/getMilestoneFilters';
 import MilestoneFilterModal, {
   MilestoneSelectedFilters
-} from './MilestoneFilterModal';
-import MilestoneFilterTags from './MilestoneFilterTags';
+} from './_components/MilestoneFilterModal';
+import getMilestoneFilters from './_components/MilestoneFilterModal/getMilestoneFilters';
+import MilestoneFilterTags from './_components/MilestoneFilterTags';
 
 import './index.scss';
 

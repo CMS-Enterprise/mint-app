@@ -1,15 +1,15 @@
 import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
-import { MilestoneCardType } from '..';
+import { MilestoneCardType } from '../..';
 
-export type MilestoneFilterFields = Pick<
+type MilestoneFilterFields = Pick<
   MilestoneCardType,
   'categoryName' | 'facilitatedByRole'
 >;
 
 /** Base type for milestone filter groups */
-export type MilestoneFilterObject = {
+type MilestoneFilterObject = {
   key: keyof MilestoneFilterFields;
   label: string;
   fieldLabel: string;

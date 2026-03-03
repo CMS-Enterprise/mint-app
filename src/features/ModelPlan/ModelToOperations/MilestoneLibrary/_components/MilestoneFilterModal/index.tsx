@@ -5,8 +5,9 @@ import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { MtoFacilitator } from 'gql/generated/graphql';
 
+import MilestoneFilterGroup from '../MilestoneFilterGroup';
+
 import { MilestoneFilters } from './getMilestoneFilters';
-import MilestoneFilterGroup from './MilestoneFilterGroup';
 
 import './index.scss';
 

@@ -7,7 +7,7 @@ import { MtoFacilitator } from 'gql/generated/graphql';
 import FieldGroup from 'components/FieldGroup';
 import HelpText from 'components/HelpText';
 
-import { MilestoneFilter } from './getMilestoneFilters';
+import { MilestoneFilter } from '../MilestoneFilterModal/getMilestoneFilters';
 
 type MilestoneFilterGroupProps = {
   filterGroup: MilestoneFilter;
