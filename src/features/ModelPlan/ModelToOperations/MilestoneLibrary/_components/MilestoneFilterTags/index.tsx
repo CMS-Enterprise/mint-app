@@ -27,7 +27,6 @@ const FilterTag = ({ label, value, onRemove }: FilterTagProps) => {
       <button
         type="button"
         className="margin-left-05 usa-button--unstyled pointer display-flex text-base-darkest"
-        data-testid={`close-icon-${value}`}
         aria-label={generalT('filter.removeFilter', {
           filter: value
         })}
@@ -105,7 +104,10 @@ const MilestoneFilterTags = ({
 
       <ul className="display-flex flex-wrap add-list-reset">
         {categoryName.map(category => (
-          <li key={category}>
+          <li
+            key={category}
+            aria-label={`${hkcT('milestoneLibrary.filters.category')}: ${category}`}
+          >
             <FilterTag
               label={hkcT('milestoneLibrary.filters.category')}
               value={category}
@@ -114,7 +116,10 @@ const MilestoneFilterTags = ({
           </li>
         ))}
         {facilitatedByRole.map(role => (
-          <li key={role}>
+          <li
+            key={role}
+            aria-label={`${upperFirst(hkcT('milestoneLibrary.filters.role'))}: ${milestoneT(`facilitatedBy.options.${role}`)}`}
+          >
             <FilterTag
               label={upperFirst(hkcT('milestoneLibrary.filters.role'))}
               value={milestoneT(`facilitatedBy.options.${role}`)}
