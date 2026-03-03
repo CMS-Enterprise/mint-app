@@ -225,6 +225,9 @@ const CollaborationArea = () => {
 
             <Grid row gap>
               <Grid col={12}>
+                <h2>TASK CARDS PLACEHOLDER</h2>
+              </Grid>
+              <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
                 <CardGroup>
                   <ModelPlanCard
