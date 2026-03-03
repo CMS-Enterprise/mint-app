@@ -16,11 +16,12 @@ func sendMTOMilestoneAssignedTestEmail(
 ) {
 	// Create test milestone
 	milestoneName := "Complete data validation and testing"
+
 	milestone := models.NewMTOMilestone(
 		uuid.New(),
 		&milestoneName,
 		nil,
-		nil, //TODO(Elle) should use a real common milestone ID here once we have them seeded in the test DB
+		nil,
 		uuid.New(),
 		nil,
 	)

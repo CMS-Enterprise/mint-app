@@ -37,6 +37,7 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 facilitatedBy: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
                 needBy: '2022-01-01',
                 status: MtoMilestoneStatus.IN_PROGRESS,
+                mtoCommonMilestoneID: 'common-milestone-1',
                 addedFromMilestoneLibrary: false,
                 isDraft: false
               }
@@ -88,7 +89,8 @@ describe('formatAndHomogenizeMilestoneData', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false
+                isDraft: false,
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ]
           }
@@ -143,7 +145,8 @@ describe('moveRow', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false
+                isDraft: false,
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -173,7 +176,8 @@ describe('moveRow', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false
+                isDraft: false,
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: false
@@ -202,7 +206,8 @@ describe('moveRow', () => {
                 status: MtoMilestoneStatus.IN_PROGRESS,
                 actions: undefined,
                 addedFromMilestoneLibrary: false,
-                isDraft: false
+                isDraft: false,
+                mtoCommonMilestoneID: 'common-milestone-1'
               }
             ],
             isUncategorized: true

@@ -55,6 +55,7 @@ export type MilestoneType = {
   addedFromMilestoneLibrary?: boolean;
   isDraft?: boolean;
   isUncategorized?: boolean;
+  mtoCommonMilestoneID?: string | null;
 };
 
 export function isMilestoneType(data: RowType): data is MilestoneType {
@@ -79,7 +80,7 @@ export type SubCategoryType = {
   addedFromMilestoneLibrary?: undefined;
   isDraft?: undefined;
   isUncategorized?: boolean;
-  key?: undefined;
+  mtoCommonMilestoneID?: undefined;
 };
 
 export type CategoryType = {
@@ -100,7 +101,7 @@ export type CategoryType = {
   addedFromMilestoneLibrary?: undefined;
   isDraft?: undefined;
   isUncategorized?: boolean;
-  key?: undefined;
+  mtoCommonMilestoneID?: undefined;
 };
 
 export type RowType = CategoryType | SubCategoryType | MilestoneType;

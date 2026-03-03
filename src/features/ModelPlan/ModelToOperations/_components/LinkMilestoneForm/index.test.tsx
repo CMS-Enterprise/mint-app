@@ -41,7 +41,7 @@ describe('LinkMilestoneForm Component', () => {
         },
         {
           __typename: 'MTOCommonMilestone',
-          id: 'common-milestone-1',
+          id: 'common-milestone-2',
           name: 'Common Milestone 2',
           commonSolutions: [
             {
@@ -55,7 +55,7 @@ describe('LinkMilestoneForm Component', () => {
         {
           __typename: 'MTOMilestone',
           id: 'milestone-1',
-          mtoCommonMilestoneID: 'common-milestone-1',
+          mtoCommonMilestoneID: 'common-milestone-3',
           name: 'Milestone 1',
           status: MtoMilestoneStatus.COMPLETED,
           riskIndicator: MtoRiskIndicator.AT_RISK,
@@ -64,7 +64,7 @@ describe('LinkMilestoneForm Component', () => {
         {
           __typename: 'MTOMilestone',
           id: 'milestone-2',
-          mtoCommonMilestoneID: 'common-milestone-2',
+          mtoCommonMilestoneID: 'common-milestone-4',
           name: 'Milestone 2',
           status: MtoMilestoneStatus.COMPLETED,
           riskIndicator: MtoRiskIndicator.AT_RISK,
