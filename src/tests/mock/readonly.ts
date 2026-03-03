@@ -16,7 +16,6 @@ import {
   ContractorSupportType,
   DataExchangeApproachStatus,
   DataForMonitoringType,
-  DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToCollectFromParticipants,
   DataToSendParticipantsType,
@@ -36,6 +35,8 @@ import {
   GetAllDataExchangeApproachQuery,
   GetAllGeneralCharacteristicsDocument,
   GetAllGeneralCharacteristicsQuery,
+  GetAllIddocQuestionnaireDocument,
+  GetAllIddocQuestionnaireQuery,
   GetAllOpsEvalAndLearningDocument,
   GetAllOpsEvalAndLearningQuery,
   GetAllParticipantsAndProvidersDocument,
@@ -49,12 +50,15 @@ import {
   GetTimelineDocument,
   GetTimelineQuery,
   GetTimelineQueryVariables,
+  IddocFileType,
+  IddocFullTimeOrIncrementalType,
+  IddocQuestionnaireStatus,
+  IddocQuestionnaireTaskListStatus,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
   ModelStatus,
   ModelType,
-  MonitoringFileType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
   OverlapType,
@@ -97,7 +101,9 @@ type GetModelCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 type GetAllDataExchangeApproachType =
-  GetAllDataExchangeApproachQuery['modelPlan']['dataExchangeApproach'];
+  GetAllDataExchangeApproachQuery['modelPlan']['questionnaires']['dataExchangeApproach'];
+type GetAllIDDOCQuestionnaireType =
+  GetAllIddocQuestionnaireQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
 const modelBasicsData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
@@ -503,32 +509,6 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   contractorSupportNote: 'Note for support',
   iddocSupport: true,
   iddocSupportNote: 'Note iddoc support',
-  technicalContactsIdentified: true,
-  technicalContactsIdentifiedDetail: 'Detail of technical contacts',
-  technicalContactsIdentifiedNote: 'Note for contacts',
-  captureParticipantInfo: true,
-  captureParticipantInfoNote: 'Note for participants',
-  icdOwner: 'ICD owner',
-  draftIcdDueDate: '12/12/2026',
-  icdNote: 'Note for icd',
-  uatNeeds: 'UAT needs',
-  stcNeeds: 'STC needs',
-  testingTimelines: 'Testing timelines',
-  testingNote: 'Note for testing',
-  dataMonitoringFileTypes: [
-    MonitoringFileType.PART_A,
-    MonitoringFileType.PART_B
-  ],
-  dataMonitoringFileOther: 'Other data monitoring',
-  dataResponseType: 'File',
-  dataResponseFileFrequency: 'Every week',
-  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType.FULL_TIME,
-  eftSetUp: true,
-  unsolicitedAdjustmentsIncluded: true,
-  dataFlowDiagramsNeeded: true,
-  produceBenefitEnhancementFiles: true,
-  fileNamingConventions: 'PDF',
-  dataMonitoringNote: 'Note for monitoring',
   benchmarkForPerformance: BenchmarkForPerformanceType.YES_RECONCILE,
   benchmarkForPerformanceNote: 'Note for benchmark',
   computePerformanceScores: true,
@@ -780,7 +760,62 @@ export const dataExchangeApproachMocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
-          dataExchangeApproach: dataExchangeApproachData
+          questionnaires: {
+            dataExchangeApproach: dataExchangeApproachData
+          }
+        }
+      }
+    }
+  }
+];
+
+export const iddocQuestionnaireData: GetAllIDDOCQuestionnaireType = {
+  __typename: 'IDDOCQuestionnaire',
+  id: '123',
+  status: IddocQuestionnaireStatus.READY,
+  taskListStatus: IddocQuestionnaireTaskListStatus.READY,
+  needed: true,
+  technicalContactsIdentified: true,
+  technicalContactsIdentifiedDetail: 'Detail of technical contacts',
+  technicalContactsIdentifiedNote: 'Note for contacts',
+  captureParticipantInfo: true,
+  captureParticipantInfoNote: 'Note for participants',
+  icdOwner: 'ICD owner',
+  draftIcdDueDate: '12/12/2026',
+  icdNote: 'Note for icd',
+  uatNeeds: 'UAT needs',
+  stcNeeds: 'STC needs',
+  testingTimelines: 'Testing timelines',
+  testingNote: 'Note for testing',
+  dataMonitoringFileTypes: [IddocFileType.PART_A, IddocFileType.PART_B],
+  dataMonitoringFileOther: 'Other data monitoring',
+  dataResponseType: 'File',
+  dataResponseFileFrequency: 'Every week',
+  dataFullTimeOrIncremental: IddocFullTimeOrIncrementalType.FULL_TIME,
+  eftSetUp: true,
+  unsolicitedAdjustmentsIncluded: true,
+  dataFlowDiagramsNeeded: true,
+  produceBenefitEnhancementFiles: true,
+  fileNamingConventions: 'PDF',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z'
+};
+
+export const iddocQuestionnaireMocks = [
+  {
+    request: {
+      query: GetAllIddocQuestionnaireDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          questionnaires: {
+            iddocQuestionnaire: iddocQuestionnaireData
+          }
         }
       }
     }

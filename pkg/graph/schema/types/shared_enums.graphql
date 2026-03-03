@@ -191,6 +191,7 @@ enum TableName {
   discussion_reply
   existing_model
   existing_model_link
+  iddoc_questionnaire
   model_plan
   nda_agreement
   operational_need

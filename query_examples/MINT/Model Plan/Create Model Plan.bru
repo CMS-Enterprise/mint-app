@@ -17,46 +17,50 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation createModelPlan{
-    
-    createModelPlan(modelName:"Excellent Model" ){
+  mutation createModelPlan {
+    createModelPlan(modelName: "Excellent Model") {
       id
       modelName
-      createdByUserAccount{
-          givenName
-          id
+      createdByUserAccount {
+        givenName
+        id
       }
   
-      basics{
-          id        
+      basics {
+        id
       }
       generalCharacteristics {
-          id
+        id
       }
       participantsAndProviders {
-          id
+        id
       }
       beneficiaries {
-          id
+        id
       }
       opsEvalAndLearning {
-          id
+        id
       }
       collaborators {
         id
       }
-      payments{
-          id
+      payments {
+        id
       }
-      dataExchangeApproach{
+      questionnaires {
+        dataExchangeApproach {
           id
+        }
+        iddocQuestionnaire{
+          id
+        }
       }
       timeline {
         id
       }
     }
   }
-    
+  
 }
 
 tests {
@@ -70,7 +74,8 @@ tests {
   opsEvalAndLearningID = responseData.opsEvalAndLearning.id
   modelLeadID = responseData.collaborators[0].id
   paymentsID = responseData.payments.id
-  dataExchangeApproachID = responseData.dataExchangeApproach.id
+  dataExchangeApproachID = responseData.questionnaires.dataExchangeApproach.id
+  iddocQuestionnaireID = responseData.questionnaires.iddocQuestionnaire.id 
   timelineID = responseData.timeline.id
   userID = responseData.createdByUserAccount.id
   
@@ -84,6 +89,7 @@ tests {
   bru.setVar("modelLeadID", modelLeadID);
   bru.setVar("paymentsID", paymentsID);
   bru.setVar("dataExchangeApproachID", dataExchangeApproachID)
+  bru.setVar("iddocQuestionnaireID", iddocQuestionnaireID);
   bru.setVar("timelineID", timelineID);
   bru.setVar("userID", userID);
 }
