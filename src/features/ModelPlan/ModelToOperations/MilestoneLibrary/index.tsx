@@ -10,6 +10,7 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   GetMtoMilestonesQuery,
@@ -39,6 +40,7 @@ import getMilestoneFilters from './MilestoneFilterModal/getMilestoneFilters';
 import MilestoneFilterModal, {
   MilestoneSelectedFilters
 } from './MilestoneFilterModal';
+import MilestoneFilterTags from './MilestoneFilterTags';
 
 import './index.scss';
 
@@ -383,7 +385,7 @@ const MilstoneCardGroup = ({
       <div className="milestone-card-group">
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
-            <Grid className="display-flex flex-wrap flex-align-center">
+            <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
               {isHkcMilestoneLibrary && (
                 <MilestoneFilterModal
                   filters={filterOptions}
@@ -397,9 +399,20 @@ const MilstoneCardGroup = ({
                 setGlobalFilter={setQuery}
                 tableID="help-articles"
                 tableName=""
-                className="maxw-none tablet:width-mobile-lg tablet:margin-left-1"
+                className={classNames('maxw-none tablet:width-mobile-lg', {
+                  'tablet:margin-left-1': isHkcMilestoneLibrary
+                })}
+                height5
               />
             </Grid>
+
+            {isHkcMilestoneLibrary && (
+              <MilestoneFilterTags
+                appliedFilters={appliedFilters}
+                setAppliedFilters={setAppliedFilters}
+                className="margin-top-2"
+              />
+            )}
 
             {!!query && (
               <Grid desktop={{ col: 12 }}>

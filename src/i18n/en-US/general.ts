@@ -85,12 +85,14 @@ const general = {
   },
   filter: {
     title: 'Filter',
+    titlePlural: 'Filters',
     filterGroupHeading: 'By {{groupName}}',
     filterGroupDescription: 'This filters by the "{{groupName}}" field.',
     applyFilter: 'Apply filter',
     applyFilterWithCount: 'Apply {{count}} filters',
     clearAll: 'Clear all',
-    showAll: 'Show all'
+    showAll: 'Show all',
+    removeFilter: 'Remove {{filter}} filter'
   }
 };
 
