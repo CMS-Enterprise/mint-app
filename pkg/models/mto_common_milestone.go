@@ -3,7 +3,6 @@ package models
 import "github.com/google/uuid"
 
 type MTOCommonMilestone struct {
-	baseStruct
 	ID                uuid.UUID                 `json:"id" db:"id"`
 	Name              string                    `json:"name" db:"name"`
 	Description       string                    `json:"description" db:"description"`

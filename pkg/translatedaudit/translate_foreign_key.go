@@ -218,7 +218,7 @@ func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storag
 	}
 
 	if commonMilestone == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", commonMilestoneID)
+		return "", fmt.Errorf("the id for %s was not returned for this foreign key translation", commonMilestoneID)
 	}
 	return commonMilestone.Name, nil
 }
@@ -237,7 +237,7 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 	}
 
 	if commonSolution == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
+		return "", fmt.Errorf("the id for %s was not returned for this foreign key translation", enumKey)
 	}
 	return commonSolution.Name, nil
 }
