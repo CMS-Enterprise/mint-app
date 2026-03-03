@@ -134,6 +134,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
   status: ModelStatus.PLAN_DRAFT,
   taskListStatus: TaskStatus.IN_PROGRESS,
+  tasks: [],
   modelName: 'Test',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {

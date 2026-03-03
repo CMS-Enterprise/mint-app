@@ -110,7 +110,7 @@ const TasksWrapper = ({ modelPlan }: TasksWrapperProps) => {
               </div>
             )}
           </CardBody>
-          <CardFooter className="display-flex  border-top-0">
+          <CardFooter className="display-flex border-top-0">
             <Button
               type="button"
               className="margin-right-1"
