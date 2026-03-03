@@ -140,7 +140,7 @@ describe('TasksWrapper', () => {
     expect(getByText('Continue')).toBeInTheDocument();
   });
 
-  it('shows section details (sections started) only for MODEL_PLAN card when state is not TO_DO', async () => {
+  it('shows section details (sections started) only for MODEL_PLAN card when status is not TO_DO', async () => {
     const modelPlanWithModified = {
       ...collaborationAreaData,
       basics: {

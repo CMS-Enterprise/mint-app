@@ -18,6 +18,7 @@ import {
   PlanTaskStatus
 } from 'gql/generated/graphql';
 
+import type { LastModifiedSectionData } from '../_components/LastModifiedSection';
 import LastModifiedSection from '../_components/LastModifiedSection';
 import {
   getLastModifiedSection,
@@ -94,6 +95,39 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
   const lastModifiedSection = getLastModifiedSection(modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
 
+  function getLastEditSectionForTask(
+    taskKey: PlanTaskKey
+  ): LastModifiedSectionData | null {
+    if (taskKey === PlanTaskKey.MODEL_PLAN) {
+      return lastModifiedSection ?? null;
+    }
+    if (taskKey === PlanTaskKey.MTO) {
+      const recentEdit = modelPlan?.mtoMatrix?.recentEdit;
+      if (recentEdit?.date) {
+        return {
+          modifiedDts: recentEdit.date,
+          modifiedByUserAccount: {
+            commonName: recentEdit.actorName ?? ''
+          }
+        };
+      }
+      return null;
+    }
+    if (taskKey === PlanTaskKey.DATA_EXCHANGE) {
+      const de = modelPlan?.dataExchangeApproach;
+      if (de?.modifiedDts && de?.modifiedByUserAccount) {
+        return {
+          modifiedDts: de.modifiedDts,
+          modifiedByUserAccount: {
+            commonName: de.modifiedByUserAccount.commonName
+          }
+        };
+      }
+      return null;
+    }
+    return null;
+  }
+
   const getPrimaryNavigate = (taskKey: PlanTaskKey) => {
     switch (taskKey) {
       case PlanTaskKey.MODEL_PLAN:
@@ -139,9 +173,14 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
           const taskState = getTaskState(task);
           const baseKey = `${taskKey}.${taskStatus}`;
 
-          const showSectionDetails =
+          const showModelPlanSectionDetails =
             taskKey === PlanTaskKey.MODEL_PLAN &&
-            taskState !== PlanTaskState.TO_DO;
+            taskStatus !== PlanTaskStatus.TO_DO;
+          const showLastEditOnly =
+            (taskKey === PlanTaskKey.MTO ||
+              taskKey === PlanTaskKey.DATA_EXCHANGE) &&
+            taskStatus !== PlanTaskStatus.TO_DO;
+          const lastEditSection = getLastEditSectionForTask(taskKey);
 
           return (
             <Card
@@ -159,7 +198,7 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
               </CardHeader>
               <CardBody>
                 <p>{t(`${taskKey}.copy`)}</p>
-                {showSectionDetails && (
+                {showModelPlanSectionDetails && (
                   <div className="display-flex flex-align-center flex-wrap-wrap">
                     <span className="text-base">
                       {collaborationAreaT('modelPlanCard.sectionsStarted', {
@@ -172,6 +211,18 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
                         <LastModifiedSection section={lastModifiedSection} />
                       </>
                     )}
+                  </div>
+                )}
+                {showLastEditOnly && lastEditSection && (
+                  <div className="display-flex flex-align-center flex-wrap-wrap">
+                    <LastModifiedSection
+                      section={lastEditSection}
+                      translationKey={
+                        taskKey === PlanTaskKey.DATA_EXCHANGE
+                          ? 'dataExchangeApproachCard.lastModified'
+                          : undefined
+                      }
+                    />
                   </div>
                 )}
               </CardBody>

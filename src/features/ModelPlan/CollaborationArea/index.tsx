@@ -9,8 +9,6 @@ import {
   GetCollaborationAreaQuery,
   PlanTask,
   PlanTaskKey,
-  PlanTaskState,
-  PlanTaskStatus,
   useGetCollaborationAreaQuery
 } from 'gql/generated/graphql';
 
@@ -71,21 +69,6 @@ const CollaborationArea = () => {
     acc[task.key as PlanTaskKey] = task as PlanTask;
     return acc;
   }, {});
-
-  // Visual test: force Model Plan task to IN_PROGRESS (remove when done)
-  const existingModelPlanTask = tasksByKey[PlanTaskKey.MODEL_PLAN];
-  tasksByKey[PlanTaskKey.MODEL_PLAN] = existingModelPlanTask
-    ? {
-        ...existingModelPlanTask,
-        state: PlanTaskState.TO_DO,
-        status: PlanTaskStatus.IN_PROGRESS
-      }
-    : ({
-        __typename: 'PlanTask',
-        key: PlanTaskKey.MODEL_PLAN,
-        state: PlanTaskState.COMPLETE,
-        status: PlanTaskStatus.COMPLETE
-      } as PlanTask);
 
   const {
     modelName,
