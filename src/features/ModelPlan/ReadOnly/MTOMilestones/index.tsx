@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
+import MTOTableFilters from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixQuery,
@@ -60,7 +61,10 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
           {t('emptyMTOReadView')}
         </Alert>
       ) : (
-        <MTOTable queryData={data} loading={loading} error={error} readView />
+        <>
+          <MTOTableFilters />
+          <MTOTable queryData={data} loading={loading} error={error} readView />
+        </>
       )}
     </div>
   );
