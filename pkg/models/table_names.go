@@ -38,6 +38,7 @@ const (
 	TNPlanParticipantsAndProviders     TableName = "plan_participants_and_providers"
 	TNPlanPayments                     TableName = "plan_payments"
 	TNPlanTdl                          TableName = "plan_tdl"
+	TNPlanTask                         TableName = "plan_task"
 	TNTag                              TableName = "tag"
 	TNTranslatedAudit                  TableName = "translated_audit"
 	TNTranslatedAuditField             TableName = "translated_audit_field"
