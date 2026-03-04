@@ -18,7 +18,7 @@ type PlanTaskKey string
 // These constants represent the possible values of a PlanTaskKey
 const (
 	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMTO          PlanTaskKey = "MTO"
+	PlanTaskKeyMto          PlanTaskKey = "MTO"
 	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
 )
 
