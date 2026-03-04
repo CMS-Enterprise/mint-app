@@ -175,7 +175,7 @@ type MTOSolutionTranslation struct {
 	NeededBy           models.TranslationField            `json:"neededBy" db:"needed_by"`
 	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
-	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
+	Milestones         models.TranslationField            `json:"milestones" db:"milestones"`
 }
 
 // Represents Model Plan MTO Template Link translation data

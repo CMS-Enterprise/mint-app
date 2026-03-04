@@ -1387,7 +1387,7 @@ export type MtoSolutionTranslation = {
   facilitatedBy: TranslationFieldWithOptions;
   facilitatedByOther: TranslationField;
   key: TranslationField;
-  milestones: TranslationFieldWithOptions;
+  milestones: TranslationField;
   name: TranslationField;
   neededBy: TranslationField;
   pocEmail: TranslationField;

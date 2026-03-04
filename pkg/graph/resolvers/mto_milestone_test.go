@@ -82,8 +82,8 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCustomDuplicates() {
 func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 	// Create model plan
 	plan := suite.createModelPlan("testing common milestone creation")
-	commonMilestone1 := suite.getAllMTOCommonMilestones()[0]
-	commonMilestone2 := suite.getAllMTOCommonMilestones()[1]
+	commonMilestone1 := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	commonMilestone2 := suite.getMTOCommonMilestoneByName("Acquire an application support contractor")
 	// First, make sure there's no categories to start (except uncategorized)
 	categories, err := MTOCategoryGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
@@ -102,7 +102,7 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 
 	// Check and see if the categories came along as expected
 	// You can check which we expect to get created with migrations/V190__Add_Common_Milestone_Library.sql (or future similar migrations that edit the library)
-	// In this case MTOCommonMilestoneKeyManageCd should create 2 categories (parent, subcategory) of ('Operations','Participant and beneficiary tracking')
+	// In this case MTOCommonMilestone Manage Part C/D enrollment should create 2 categories (parent, subcategory) of ('Operations','Participant and beneficiary tracking')
 	categories, err = MTOCategoryGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(categories, 2) // 1 new category (Operations) + Uncategorized
