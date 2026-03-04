@@ -1,13 +1,12 @@
 package models
 
-import (
-	"github.com/google/uuid"
-)
+import "github.com/google/uuid"
 
 // PlanTask represents a task associated with a model plan
 type PlanTask struct {
 	baseStruct
 	modelPlanRelation
+	completedByRelation
 
 	Key    PlanTaskKey    `json:"key" db:"key"`
 	Status PlanTaskStatus `json:"status" db:"status"`
