@@ -16,7 +16,7 @@ const MTOTableFilters = () => {
     params.get('needed-within-thirty-days') === 'true';
 
   return (
-    <div className="margin-y-3 display-flex" style={{ gap: '1rem' }}>
+    <div className="margin-top-3 display-flex" style={{ gap: '1rem' }}>
       <p className="margin-y-0 text-bold">
         {t('table.tableFilters.tableFilters')}
       </p>

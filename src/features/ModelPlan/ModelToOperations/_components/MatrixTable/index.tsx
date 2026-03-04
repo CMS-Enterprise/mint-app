@@ -681,19 +681,19 @@ const MTOTable = ({
             <Alert
               type="info"
               heading={t(
-                'modelToOperationsMisc:table.noResultsNeededWithin30Days.header'
+                'modelToOperationsMisc:table.tableFilters.noResults.header'
               )}
-              className="margin-top-6"
+              className="margin-top-3"
             >
               <span className="mandatory-fields-alert__text">
                 <span>
                   {t(
-                    'modelToOperationsMisc:table.noResultsNeededWithin30Days.content'
+                    'modelToOperationsMisc:table.tableFilters.noResults.content'
                   )}
                 </span>
                 <Link
                   aria-label={t(
-                    'modelToOperationsMisc:table.noResultsNeededWithin30Days.emailLinkAriaLabel'
+                    'modelToOperationsMisc:table.tableFilters.noResults.emailLinkAriaLabel'
                   )}
                   className="line-height-body-5"
                   href="mailto:MINTTeam@cms.hhs.gov"

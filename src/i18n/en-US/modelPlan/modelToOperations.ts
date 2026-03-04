@@ -197,14 +197,14 @@ export const modelToOperationsMisc: Record<string, any> = {
       addCustomCategory: 'or, create a custom category'
     },
     tableFilters: {
-      tableFilters: 'Table filters',
-      neededWithinThirtyDays: 'Needed within 30 days'
-    },
-    noResultsNeededWithin30Days: {
-      header: 'There are no milestones needed within 30 days.',
-      content:
-        'Please double-check your filter or try again. If you believe a milestone should be listed here, please contact the MINT Team at ',
-      emailLinkAriaLabel: 'Send email to MINT Team'
+      tableFilters: 'Table filters:',
+      neededWithinThirtyDays: 'Needed within 30 days',
+      noResults: {
+        header: 'There are no milestones that match the selected filter(s).',
+        content:
+          'Please double-check your filter or try again. If you believe a milestone should be listed here, please contact the MINT Team at ',
+        emailLinkAriaLabel: 'Send email to MINT Team'
+      }
     },
     alert: {
       noSolutions:
