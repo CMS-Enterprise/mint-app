@@ -60,6 +60,7 @@ import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDataExchangeApproach from './DataExchangeapproach';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyIddocQuestionnaire from './IDDOCQuestionnaire';
 import ReadOnlyMTOMilestones from './MTOMilestones';
 import ReadOnlyMTOSolutions from './MTOSolutions';
 import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
@@ -147,6 +148,12 @@ export const ReadOnlyComponents = (
       component: <ReadOnlyDataExchangeApproach modelID={modelID} />,
       group: 'model-design-activities'
     },
+    'iddoc-questionnaire': {
+      route: `/models/${modelID}/read-view/iddoc-questionnaire`,
+      helpRoute: '/help-and-knowledge/sample-model-plan/iddoc-questionnaire',
+      component: <ReadOnlyIddocQuestionnaire modelID={modelID} />,
+      group: 'model-design-activities'
+    },
     milestones: {
       route: `/models/${modelID}/read-view/milestones`,
       component: <ReadOnlyMTOMilestones modelID={modelID} />,
@@ -203,7 +210,7 @@ const isSubpage = (
 };
 
 export const filteredViewOutput = (value: string) => {
-  if (value === 'cmmi') {
+  if (value === 'cmmi' || value === 'iddoc') {
     return groupOptions.filter(n => n.value?.includes(value))[0].label;
   }
 
@@ -615,6 +622,10 @@ export const readViewRoutes = {
     {
       path: '/models/:modelID/read-view/data-exchange-approach',
       element: <ReadOnlyDataExchangeApproach />
+    },
+    {
+      path: '/models/:modelID/read-view/iddoc-questionnaire',
+      element: <ReadOnlyIddocQuestionnaire />
     },
     {
       path: '/models/:modelID/read-view/milestones',

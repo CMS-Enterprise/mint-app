@@ -82,7 +82,6 @@ const Performance = () => {
 
   const {
     id,
-    iddocSupport,
     ccmInvolvment,
     dataNeededForMonitoring,
     benchmarkForPerformance,
@@ -112,24 +111,11 @@ const Performance = () => {
     }
   );
 
-  const backPage = () => {
-    if (iddocSupport) {
-      navigate(
-        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning/iddoc-monitoring`
-      );
-    } else {
-      navigate(
-        `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning`
-      );
-    }
-  };
-
   const initialValues: PerformanceFormType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     ccmInvolvment: ccmInvolvment ?? [],
     dataNeededForMonitoring: dataNeededForMonitoring ?? [],
-    iddocSupport: iddocSupport ?? null,
     benchmarkForPerformance: benchmarkForPerformance ?? null,
     benchmarkForPerformanceNote: benchmarkForPerformanceNote ?? '',
     computePerformanceScores: computePerformanceScores ?? null,
@@ -429,7 +415,9 @@ const Performance = () => {
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
-                          backPage();
+                          navigate(
+                            `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning`
+                          );
                         }}
                       >
                         {miscellaneousT('back')}
@@ -467,13 +455,11 @@ const Performance = () => {
         {data && (
           <PageNumber
             currentPage={renderCurrentPage(
-              5,
-              iddocSupport,
+              2,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}
             totalPages={renderTotalPages(
-              iddocSupport,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}

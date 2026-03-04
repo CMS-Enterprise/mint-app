@@ -27,53 +27,6 @@ type PlanOpsEvalAndLearningTranslation {
     @goTag(key: "db", value: "iddoc_support_note")
 
   #Page 2
-  technicalContactsIdentified: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "technical_contacts_identified")
-  technicalContactsIdentifiedDetail: TranslationField!
-    @goTag(key: "db", value: "technical_contacts_identified_detail")
-  technicalContactsIdentifiedNote: TranslationField!
-    @goTag(key: "db", value: "technical_contacts_identified_note")
-  captureParticipantInfo: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "capture_participant_info")
-  captureParticipantInfoNote: TranslationField!
-    @goTag(key: "db", value: "capture_participant_info_note")
-  icdOwner: TranslationFieldWithParent! @goTag(key: "db", value: "icd_owner")
-  draftIcdDueDate: TranslationFieldWithParent!
-    @goTag(key: "db", value: "draft_icd_due_date")
-  icdNote: TranslationFieldWithParent! @goTag(key: "db", value: "icd_note")
-
-  #Page 3
-  uatNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "uat_needs")
-  stcNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "stc_needs")
-  testingTimelines: TranslationFieldWithParent!
-    @goTag(key: "db", value: "testing_timelines")
-  testingNote: TranslationField! @goTag(key: "db", value: "testing_note")
-  dataMonitoringFileTypes: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "data_monitoring_file_types")
-  dataMonitoringFileOther: TranslationField!
-    @goTag(key: "db", value: "data_monitoring_file_other")
-  dataResponseType: TranslationFieldWithParent!
-    @goTag(key: "db", value: "data_response_type")
-  dataResponseFileFrequency: TranslationFieldWithParent!
-    @goTag(key: "db", value: "data_response_file_frequency")
-
-  #Page 4
-  dataFullTimeOrIncremental: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "data_full_time_or_incremental")
-  eftSetUp: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "eft_set_up")
-  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "unsolicited_adjustments_included")
-  dataFlowDiagramsNeeded: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "data_flow_diagrams_needed")
-  produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "produce_benefit_enhancement_files")
-  fileNamingConventions: TranslationFieldWithParent!
-    @goTag(key: "db", value: "file_naming_conventions")
-  dataMonitoringNote: TranslationField!
-    @goTag(key: "db", value: "data_monitoring_note")
-
-  #Page 5
   benchmarkForPerformance: TranslationFieldWithOptions!
     @goTag(key: "db", value: "benchmark_for_performance")
   benchmarkForPerformanceNote: TranslationField!
@@ -101,7 +54,7 @@ type PlanOpsEvalAndLearningTranslation {
     @goTag(key: "db", value: "appeal_other")
   appealNote: TranslationField! @goTag(key: "db", value: "appeal_note")
 
-  #Page 6
+  #Page 3
   evaluationApproaches: TranslationFieldWithOptions!
     @goTag(key: "db", value: "evaluation_approaches")
   evaluationApproachOther: TranslationField!
@@ -131,7 +84,7 @@ type PlanOpsEvalAndLearningTranslation {
   shareCclfDataNote: TranslationField!
     @goTag(key: "db", value: "share_cclf_data_note")
 
-  #Page 7
+  #Page 4
   sendFilesBetweenCcw: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "send_files_between_ccw")
   sendFilesBetweenCcwNote: TranslationField!
@@ -160,7 +113,7 @@ type PlanOpsEvalAndLearningTranslation {
   qualityPerformanceImpactsPaymentNote: TranslationField!
     @goTag(key: "db", value: "quality_performance_impacts_payment_note")
 
-  #Page 8
+  #Page 5
   dataSharingStarts: TranslationFieldWithOptions!
     @goTag(key: "db", value: "data_sharing_starts")
   dataSharingStartsOther: TranslationField!
@@ -198,7 +151,7 @@ type PlanOpsEvalAndLearningTranslation {
   qualityReportingFrequencyOther: TranslationField!
     @goTag(key: "db", value: "quality_reporting_frequency_other")
 
-  #Page 9
+  #Page 6
   modelLearningSystems: TranslationFieldWithOptions!
     @goTag(key: "db", value: "model_learning_systems")
   modelLearningSystemsOther: TranslationField!

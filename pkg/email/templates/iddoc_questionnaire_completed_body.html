@@ -1,0 +1,22 @@
+{{template "shared_header.html"}}
+
+{{template "shared_mint_mailbox_header.html" .}}
+<hr/>
+<br/>
+
+<h2>4i/ACO-OS questionnaire complete:</h2>
+<br/>
+
+<h3>{{.ModelName}}</h3>
+<p>Marked complete by {{.MarkedCompletedByUserCommonName}}</p>
+<br/>
+<p>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/iddoc-questionnaire">View questionnaire</a>
+</p>
+<br/>
+
+<hr />
+<br />
+{{template "shared_mint_mailbox_footer.html"}}
+
+{{template "shared_footer.html"}}

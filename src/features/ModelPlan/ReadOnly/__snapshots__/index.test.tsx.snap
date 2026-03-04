@@ -681,6 +681,17 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                       Data exchange approach
                     </a>
                   </li>
+                  <li
+                    class="usa-sidenav__item"
+                  >
+                    <a
+                      class=""
+                      data-discover="true"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-view/iddoc-questionnaire"
+                    >
+                      4i and ACO-OS
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div
