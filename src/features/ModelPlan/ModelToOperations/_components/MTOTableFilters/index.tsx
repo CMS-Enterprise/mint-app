@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -6,13 +6,15 @@ import CheckboxField from 'components/CheckboxField';
 
 const MTOTableFilters = () => {
   const { t } = useTranslation('modelToOperationsMisc');
-  const [filterNeededWithinThirtyDays, setFilterNeededWithinThirtyDays] =
-    useState(false);
   const location = useLocation();
-  const params = useMemo(() => {
-    return new URLSearchParams(location.search);
-  }, [location.search]);
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const navigate = useNavigate();
+  const filterNeededWithinThirtyDays =
+    params.get('needed-within-thirty-days') === 'true';
+
   return (
     <div className="margin-y-3 display-flex" style={{ gap: '1rem' }}>
       <p className="margin-y-0 text-bold">
@@ -27,13 +29,13 @@ const MTOTableFilters = () => {
         checked={filterNeededWithinThirtyDays}
         onBlur={() => null}
         onChange={() => {
-          setFilterNeededWithinThirtyDays(!filterNeededWithinThirtyDays);
-          params.set(
+          const nextParams = new URLSearchParams(location.search);
+          nextParams.set(
             'needed-within-thirty-days',
-            filterNeededWithinThirtyDays ? 'true' : 'false'
+            !filterNeededWithinThirtyDays ? 'true' : 'false'
           );
-          params.set('page', '1');
-          navigate({ search: params.toString() }, { replace: true });
+          nextParams.set('page', '1');
+          navigate({ search: nextParams.toString() }, { replace: true });
         }}
       />
     </div>

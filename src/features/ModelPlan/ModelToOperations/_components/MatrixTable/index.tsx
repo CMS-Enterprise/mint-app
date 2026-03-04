@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
-import { Button } from '@trussworks/react-uswds';
+import { Button, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -51,6 +51,46 @@ export type GetModelToOperationsMatrixQueryType =
 type GetModelToOperationsMatrixCategoryType =
   GetModelToOperationsMatrixQueryType['categories'];
 
+/**
+ * Returns true if the given ISO date string falls within the next 30 days (UTC),
+ * inclusive of today and the 30th day.
+ */
+function isNeededWithin30Days(needBy: string | null | undefined): boolean {
+  if (needBy == null) return false;
+  const d = new Date(needBy);
+  if (Number.isNaN(d.getTime())) return false;
+  const now = new Date();
+  const start = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+  );
+  const end = new Date(start);
+  end.setUTCDate(end.getUTCDate() + 30);
+  return d >= start && d <= end;
+}
+
+/**
+ * Filters the category tree to only include milestones whose needBy date
+ * is within the next 30 days (UTC). Drops empty subcategories and categories.
+ */
+function filterMilestonesNeededWithin30Days(
+  data: CategoryType[]
+): CategoryType[] {
+  return data
+    .map(category => {
+      const filteredSubCategories = category.subCategories
+        .map(subCategory => ({
+          ...subCategory,
+          milestones: subCategory.milestones.filter(m =>
+            isNeededWithin30Days(m.needBy)
+          )
+        }))
+        .filter(sub => sub.milestones.length > 0);
+      if (filteredSubCategories.length === 0) return null;
+      return { ...category, subCategories: filteredSubCategories };
+    })
+    .filter((c): c is CategoryType => c !== null);
+}
+
 const MTOTable = ({
   queryData,
   loading,
@@ -90,6 +130,14 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
+  const neededWithin30Days = params.get('needed-within-thirty-days') === 'true';
+
+  const dataForTable = useMemo(() => {
+    if (!formattedData) return formattedData;
+    if (!neededWithin30Days) return formattedData;
+    return filterMilestonesNeededWithin30Days(formattedData);
+  }, [formattedData, neededWithin30Days]);
+
   const [initLocation] = useState<string>(location.pathname);
 
   const { helpSolutions } = useHelpSolution();
@@ -112,13 +160,13 @@ const MTOTable = ({
 
   // Holds the rearranged/dragged state of data pre-sorted
   const [rearrangedData, setRearrangedData] = useState(
-    structuredClone(formattedData || [])
+    structuredClone(dataForTable || [])
   );
 
-  // Update the rearrangedData state when the formattedData changes
+  // Update the rearrangedData state when the table data changes (e.g. filter toggle)
   useEffect(() => {
-    setRearrangedData(structuredClone(formattedData));
-  }, [formattedData]);
+    setRearrangedData(structuredClone(dataForTable || []));
+  }, [dataForTable]);
 
   // Holds the sorted data state
   const [sortedData, setSortedData] = useState<CategoryType[]>([
@@ -247,7 +295,8 @@ const MTOTable = ({
 
   // Calculate the total number of milestones in the data
   const itemLength = useMemo(() => {
-    return structuredClone(formattedData).reduce(
+    if (!dataForTable) return 0;
+    return structuredClone(dataForTable).reduce(
       (acc, category) =>
         acc +
         category.subCategories.reduce(
@@ -256,7 +305,7 @@ const MTOTable = ({
         ),
       0
     );
-  }, [formattedData]);
+  }, [dataForTable]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(itemLength / itemsPerPage);
@@ -295,10 +344,10 @@ const MTOTable = ({
         )
       );
     } else {
-      setSortedData(structuredClone(formattedData));
+      setSortedData(structuredClone(dataForTable || []));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentColumn, columnSort, formattedData]);
+  }, [currentColumn, columnSort, dataForTable]);
 
   const RenderCells = ({
     row,
@@ -496,13 +545,7 @@ const MTOTable = ({
         return null;
       }
 
-      const rawSubCategory = formattedData
-        .find(category => category.id === categoryID)
-        ?.subCategories.find(sub => sub.id === subCategory.id);
-
-      const numberOfMilestones = rawSubCategory
-        ? rawSubCategory.milestones.length
-        : 0;
+      const numberOfMilestones = subCategory.milestones.length;
 
       return (
         <div style={{ display: 'contents' }} key={subCategory.id}>
@@ -557,14 +600,10 @@ const MTOTable = ({
 
       const isExpanded = !expandedRows.includes(category.id);
 
-      const rawCategory = formattedData.find(cat => cat.id === category.id);
-
-      const numberOfMilestones = rawCategory
-        ? rawCategory.subCategories.reduce(
-            (acc, subCategory) => acc + subCategory.milestones.length,
-            0
-          )
-        : 0;
+      const numberOfMilestones = category.subCategories.reduce(
+        (acc, subCategory) => acc + subCategory.milestones.length,
+        0
+      );
 
       return (
         <div style={{ display: 'contents' }} key={category.id}>
@@ -638,109 +677,141 @@ const MTOTable = ({
               closeRoute={initLocation}
             />
           )}
-          <DndProvider backend={HTML5Backend}>
-            <div
-              className="display-block"
-              style={{
-                width: '100%',
-                minWidth: '100%',
-                overflow: 'auto',
-                borderBottom: '1px solid black',
-                marginBottom: '.75rem'
-              }}
+          {neededWithin30Days && itemLength === 0 ? (
+            <Alert
+              type="info"
+              heading={t(
+                'modelToOperationsMisc:table.noResultsNeededWithin30Days.header'
+              )}
+              className="margin-top-6"
             >
-              <TopScrollContainer>
-                <table
-                  style={{
-                    width: '100%',
-                    borderCollapse: 'collapse'
-                  }}
+              <span className="mandatory-fields-alert__text">
+                <span>
+                  {t(
+                    'modelToOperationsMisc:table.noResultsNeededWithin30Days.content'
+                  )}
+                </span>
+                <Link
+                  aria-label={t(
+                    'modelToOperationsMisc:table.noResultsNeededWithin30Days.emailLinkAriaLabel'
+                  )}
+                  className="line-height-body-5"
+                  href="mailto:MINTTeam@cms.hhs.gov"
+                  target="_blank"
                 >
-                  <thead>
-                    <tr>
-                      {filteredColumns.map((column, index) => (
-                        <th
-                          key={column.accessor}
-                          style={{
-                            borderBottom: '1px solid black',
-                            padding: '1rem',
-                            paddingLeft: index === 0 ? '.5rem' : '0px',
-                            paddingBottom: '.25rem',
-                            width: column.width,
-                            minWidth: column.width,
-                            maxWidth: column.width
-                          }}
-                        >
-                          {column.canSort !== false ? (
-                            <button
-                              className={classNames(
-                                'usa-button usa-button--unstyled position-relative display-block'
-                              )}
-                              onClick={() => {
-                                const isSorted =
-                                  sortCount % 3 === 1 || sortCount % 3 === 0;
-                                const isSortedDesc = sortCount % 3 === 1;
+                  MINTTeam@cms.hhs.gov
+                </Link>
+                .
+              </span>
+            </Alert>
+          ) : (
+            <DndProvider backend={HTML5Backend}>
+              <div
+                className="display-block"
+                style={{
+                  width: '100%',
+                  minWidth: '100%',
+                  overflow: 'auto',
+                  borderBottom: '1px solid black',
+                  marginBottom: '.75rem'
+                }}
+              >
+                <TopScrollContainer>
+                  <table
+                    style={{
+                      width: '100%',
+                      borderCollapse: 'collapse'
+                    }}
+                  >
+                    <thead>
+                      <tr>
+                        {filteredColumns.map((column, index) => (
+                          <th
+                            key={column.accessor}
+                            style={{
+                              borderBottom: '1px solid black',
+                              padding: '1rem',
+                              paddingLeft: index === 0 ? '.5rem' : '0px',
+                              paddingBottom: '.25rem',
+                              width: column.width,
+                              minWidth: column.width,
+                              maxWidth: column.width
+                            }}
+                          >
+                            {column.canSort !== false ? (
+                              <button
+                                className={classNames(
+                                  'usa-button usa-button--unstyled position-relative display-block'
+                                )}
+                                onClick={() => {
+                                  const isSorted =
+                                    sortCount % 3 === 1 || sortCount % 3 === 0;
+                                  const isSortedDesc = sortCount % 3 === 1;
 
-                                setCurrentColumn(index);
-                                setSortCount(sortCount + 1);
-                                setColumnSort(prev => {
-                                  const newColumnSort = [...prev];
-                                  newColumnSort[index] = {
-                                    isSorted,
-                                    isSortedDesc,
-                                    sortColumn: column.accessor
-                                  };
-                                  return newColumnSort;
-                                });
-                              }}
-                              type="button"
-                            >
-                              {column.Header}
-                              {getHeaderSortIcon(columnSort[index], true)}
-                            </button>
-                          ) : (
-                            <span
-                              className={classNames(
-                                'usa-button usa-button--unstyled position-relative display-block',
-                                {
-                                  'text-no-underline text-black':
-                                    column.Header ===
-                                    t('modelToOperationsMisc:table.actions')
-                                }
-                              )}
-                            >
-                              {column.Header}
-                            </span>
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>{renderCategories()}</tbody>
-                </table>{' '}
-              </TopScrollContainer>
-            </div>
-
-            <div className="mint-no-print">
-              <div className="display-flex">
-                {totalPages > 0 && Pagination}
-
-                <TablePageSize
-                  className="margin-left-auto desktop:grid-col-auto"
-                  pageSize={itemsPerPage}
-                  setPageSize={setItemsPerPage}
-                  setInitPageSize={setItemsPerPageInit}
-                  valueArray={[5, 10, 15, 20, 'all']}
-                  suffix={t('modelToOperationsMisc:table.milestones')}
-                  onChange={() => {
-                    // Reset pagination to the first page when the page size changes
-                    params.set('page', '1');
-                    navigate({ search: params.toString() }, { replace: true });
-                  }}
-                />
+                                  setCurrentColumn(index);
+                                  setSortCount(sortCount + 1);
+                                  setColumnSort(prev => {
+                                    const newColumnSort = [...prev];
+                                    newColumnSort[index] = {
+                                      isSorted,
+                                      isSortedDesc,
+                                      sortColumn: column.accessor
+                                    };
+                                    return newColumnSort;
+                                  });
+                                }}
+                                type="button"
+                              >
+                                {column.Header}
+                                {getHeaderSortIcon(columnSort[index], true)}
+                              </button>
+                            ) : (
+                              <span
+                                className={classNames(
+                                  'usa-button usa-button--unstyled position-relative display-block',
+                                  {
+                                    'text-no-underline text-black':
+                                      column.Header ===
+                                      t('modelToOperationsMisc:table.actions')
+                                  }
+                                )}
+                              >
+                                {column.Header}
+                              </span>
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>{renderCategories()}</tbody>
+                  </table>{' '}
+                </TopScrollContainer>
               </div>
-            </div>
-          </DndProvider>{' '}
+
+              <div className="mint-no-print">
+                <div className="display-flex">
+                  {totalPages > 0 && Pagination}
+
+                  <TablePageSize
+                    className="margin-left-auto desktop:grid-col-auto"
+                    pageSize={itemsPerPage}
+                    setPageSize={setItemsPerPage}
+                    setInitPageSize={setItemsPerPageInit}
+                    valueArray={[5, 10, 15, 20, 'all']}
+                    suffix={t('modelToOperationsMisc:table.milestones')}
+                    onChange={() => {
+                      // Reset pagination to the first page when the page size changes
+                      params.set('page', '1');
+                      navigate(
+                        { search: params.toString() },
+                        { replace: true }
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </DndProvider>
+          )}
         </MTOSolutionPanelProvider>
       </MTOMilestonePanelProvider>
     </>

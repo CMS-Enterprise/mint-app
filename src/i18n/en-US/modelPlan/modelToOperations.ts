@@ -200,6 +200,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       tableFilters: 'Table filters',
       neededWithinThirtyDays: 'Needed within 30 days'
     },
+    noResultsNeededWithin30Days: {
+      header: 'There are no milestones needed within 30 days.',
+      content:
+        'Please double-check your filter or try again. If you believe a milestone should be listed here, please contact the MINT Team at ',
+      emailLinkAriaLabel: 'Send email to MINT Team'
+    },
     alert: {
       noSolutions:
         'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',
