@@ -239,6 +239,27 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
+                    Reaches out to 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan?solution=quality-vertical&section=about"
+                    >
+                      Quality Vertical (QV)
+                    </a>
+                     as needed and ensures CMO is informed of when 2-pager goes to FO
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
                     2-pager review with CMMI FO
                   </th>
                   <td
@@ -258,6 +279,27 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="text-baseline"
                   >
                     MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Identifies Quality Lead and schedules Kickoff Meeting with 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      data-discover="true"
+                      href="/help-and-knowledge/high-level-project-plan?solution=quality-vertical&section=about"
+                    >
+                      Quality Vertical (QV)
+                    </a>
+                     to discuss quality strategy
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team
                   </td>
                 </tr>
                 <tr>

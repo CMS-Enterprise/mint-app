@@ -1,6 +1,6 @@
 const highLevelProjectPlans = {
   title: 'High-level project plan',
-  lastUpdatedDate: '2026-01-12',
+  lastUpdatedDate: '2026-03-04',
   description:
     'Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.',
   downloadExcel: 'Download project plan as an Excel file',
@@ -64,12 +64,24 @@ const highLevelProjectPlans = {
           ]
         },
         {
+          activity:
+            'Reaches out to <ml>Quality Vertical (QV)</ml> as needed and ensures CMO is informed of when 2-pager goes to FO',
+          party: 'Model Team',
+          href: 'quality-vertical'
+        },
+        {
           activity: '2-pager review with CMMI FO',
           party: 'Model Team'
         },
         {
           activity: 'Conduct kick-off meeting',
           party: 'MINT Team'
+        },
+        {
+          activity:
+            'Identifies Quality Lead and schedules Kickoff Meeting with <ml>Quality Vertical (QV)</ml> to discuss quality strategy',
+          party: 'Model Team',
+          href: 'quality-vertical'
         },
         {
           activity: '6-pager review with CMMI FO',
