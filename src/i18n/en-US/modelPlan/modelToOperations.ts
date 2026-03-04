@@ -196,6 +196,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       addTemplateFromLibrary: 'Add templates from library',
       addCustomCategory: 'or, create a custom category'
     },
+    tableFilters: {
+      tableFilters: 'Table filters',
+      neededWithinThirtyDays: 'Needed within 30 days'
+    },
     alert: {
       noSolutions:
         'There are not yet any operational solutions added to this matrix. To see milestones without solutions, change your selected filters above.',

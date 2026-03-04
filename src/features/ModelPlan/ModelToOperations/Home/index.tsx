@@ -31,6 +31,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import MTOTableActions from '../_components/ActionsTable';
 import ITSystemsTable from '../_components/ITSystemsTable';
 import MTOTable from '../_components/MatrixTable';
+import MTOTableFilters from '../_components/MTOTableFilters';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import SuggestedMilestoneBanner from '../_components/SuggestedMilestoneBanner';
@@ -256,6 +257,7 @@ const MTOHome = () => {
                       {isMatrixStarted ? (
                         <>
                           <MTOTableActions />
+                          <MTOTableFilters />
                           <MTOTable
                             queryData={data}
                             loading={dataAvalilable}
