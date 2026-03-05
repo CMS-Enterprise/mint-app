@@ -31,6 +31,7 @@ import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
+import { isNeededWithin30Days } from 'utils/date';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import ActionMenu from '../ActionsMenu';
@@ -52,44 +53,37 @@ type GetModelToOperationsMatrixCategoryType =
   GetModelToOperationsMatrixQueryType['categories'];
 
 /**
- * Returns true if the given ISO date string falls within the next 30 days (UTC),
- * inclusive of today and the 30th day.
- */
-function isNeededWithin30Days(needBy: string | null | undefined): boolean {
-  if (needBy == null) return false;
-  const d = new Date(needBy);
-  if (Number.isNaN(d.getTime())) return false;
-  const now = new Date();
-  const start = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-  );
-  const end = new Date(start);
-  end.setUTCDate(end.getUTCDate() + 30);
-  return d >= start && d <= end;
-}
-
-/**
  * Filters the category tree to only include milestones whose needBy date
  * is within the next 30 days (UTC). Drops empty subcategories and categories.
  */
-function filterMilestonesNeededWithin30Days(
-  data: CategoryType[]
-): CategoryType[] {
-  return data
-    .map(category => {
-      const filteredSubCategories = category.subCategories
-        .map(subCategory => ({
-          ...subCategory,
-          milestones: subCategory.milestones.filter(m =>
-            isNeededWithin30Days(m.needBy)
-          )
-        }))
-        .filter(sub => sub.milestones.length > 0);
-      if (filteredSubCategories.length === 0) return null;
-      return { ...category, subCategories: filteredSubCategories };
-    })
-    .filter((c): c is CategoryType => c !== null);
-}
+const filterMilestonesNeededWithin30Days = (
+  categoryData: CategoryType[]
+): CategoryType[] => {
+  const categoriesWithFilteredSubcategories = categoryData.map(category => {
+    const subCategoriesWithFilteredMilestones = category.subCategories.map(
+      subCategory => ({
+        ...subCategory,
+        milestones: subCategory.milestones.filter(milestone =>
+          isNeededWithin30Days(milestone.needBy)
+        )
+      })
+    );
+
+    const filteredSubCategoriesWithMilestones =
+      subCategoriesWithFilteredMilestones.filter(
+        subCategory => subCategory.milestones.length > 0
+      );
+
+    return {
+      ...category,
+      subCategories: filteredSubCategoriesWithMilestones
+    };
+  });
+
+  return categoriesWithFilteredSubcategories.filter(
+    category => category.subCategories.length > 0
+  );
+};
 
 const MTOTable = ({
   queryData,
@@ -133,9 +127,9 @@ const MTOTable = ({
   const neededWithin30Days = params.get('needed-within-thirty-days') === 'true';
 
   const dataForTable = useMemo(() => {
-    if (!formattedData) return formattedData;
-    if (!neededWithin30Days) return formattedData;
-    return filterMilestonesNeededWithin30Days(formattedData);
+    return neededWithin30Days
+      ? filterMilestonesNeededWithin30Days(formattedData)
+      : formattedData;
   }, [formattedData, neededWithin30Days]);
 
   const [initLocation] = useState<string>(location.pathname);
