@@ -85,6 +85,56 @@ const filterMilestonesNeededWithin30Days = (
   );
 };
 
+/**
+ * Flattens the category tree into a single category with a single subcategory
+ * containing all milestones. Used when "needed within 30 days" filter is on
+ * so that sorting applies across all visible milestones, not per group.
+ */
+const flattenToSingleCategory = (
+  categoryData: CategoryType[]
+): CategoryType[] => {
+  const allMilestones: MilestoneType[] = [];
+  categoryData.forEach(category => {
+    category.subCategories.forEach(subCategory => {
+      allMilestones.push(...subCategory.milestones);
+    });
+  });
+
+  if (allMilestones.length === 0) {
+    return [];
+  }
+
+  const singleSubCategory: SubCategoryType = {
+    __typename: 'MTOSubcategory',
+    id: 'filtered-milestones',
+    riskIndicator: undefined,
+    name: '',
+    facilitatedBy: undefined,
+    solutions: [],
+    needBy: undefined,
+    status: undefined,
+    actions: undefined,
+    milestones: allMilestones,
+    isUncategorized: false
+  };
+
+  const singleCategory: CategoryType = {
+    __typename: 'MTOCategory',
+    id: 'filtered-milestones',
+    riskIndicator: undefined,
+    name: '',
+    facilitatedBy: undefined,
+    solutions: [],
+    needBy: undefined,
+    status: undefined,
+    actions: undefined,
+    subCategories: [singleSubCategory],
+    isUncategorized: false
+  };
+
+  return [singleCategory];
+};
+
 const MTOTable = ({
   queryData,
   loading,
@@ -127,9 +177,9 @@ const MTOTable = ({
   const neededWithin30Days = params.get('needed-within-thirty-days') === 'true';
 
   const dataForTable = useMemo(() => {
-    return neededWithin30Days
-      ? filterMilestonesNeededWithin30Days(formattedData)
-      : formattedData;
+    if (!neededWithin30Days) return formattedData;
+    const filtered = filterMilestonesNeededWithin30Days(formattedData);
+    return flattenToSingleCategory(filtered);
   }, [formattedData, neededWithin30Days]);
 
   const [initLocation] = useState<string>(location.pathname);
@@ -312,12 +362,13 @@ const MTOTable = ({
         sliceItems,
         pageNum,
         itemsPerP,
-        totalPages
+        totalPages,
+        neededWithin30Days
       );
 
       return sliceItems;
     };
-  }, [totalPages]);
+  }, [totalPages, neededWithin30Days]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -406,7 +457,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
+              onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -436,7 +487,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
+              onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -586,6 +637,19 @@ const MTOTable = ({
     });
 
   const renderCategories = () => {
+    // When "needed within 30 days" filter is on, show only milestone rows (no category/subcategory rows)
+    if (neededWithin30Days) {
+      return sortedData.flatMap((category, categoryIndex) =>
+        category.subCategories.flatMap((subCategory, subCategoryIndex) =>
+          renderMilestones(
+            subCategory.milestones,
+            categoryIndex,
+            subCategoryIndex
+          )
+        )
+      );
+    }
+
     return sortedData.map((category, index) => {
       // Don't render if the category is not in the rendered indexes
       if (!renderedRowIndexes.current.category.includes(index)) {
@@ -990,7 +1054,8 @@ export const getRenderedRowIndexes = (
   sliceItems: CategoryType[],
   pageNum: number,
   itemsPerP: number,
-  totalPages: number
+  totalPages: number,
+  milestonesOnly = false
 ) => {
   const startingIndex = pageNum * itemsPerP;
   const endingIndex = startingIndex + itemsPerP;
@@ -1025,14 +1090,21 @@ export const getRenderedRowIndexes = (
       subCategory.milestones.forEach((milestone, milIndex) => {
         milestoneCount += 1;
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
-          shownIndexes.category.push(catIndex);
-          shownIndexes.subCategory[catIndex].push(subIndex);
+          if (!milestonesOnly) {
+            shownIndexes.category.push(catIndex);
+            shownIndexes.subCategory[catIndex].push(subIndex);
+          }
           shownIndexes.milestone[catIndex][subIndex].push(milIndex);
         }
         milestoneIndex += 1;
       });
     });
   });
+
+  // When showing only milestones (e.g. "needed within 30 days" filter), skip category/subcategory rows
+  if (milestonesOnly) {
+    return shownIndexes;
+  }
 
   // If there are no milestones, we still want to show the category and subcategory on their respective pages
   sliceItemsCopy.forEach((category, catIndex) => {
