@@ -198,8 +198,8 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	suite.NoError(err)
 
 	suite.assertNumCommonMilestonesSuggested(commonMilestones, 3)
-	suite.assertCommonMilestoneSuggestion(commonMilestones, "Review and score applications", true)  // TRUE for {LOI,NOFO,APPLICATION_COLLECTION_TOOL} on column selection method
-	suite.assertCommonMilestoneSuggestion(commonMilestones, "Application support contractor", true) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
+	suite.assertCommonMilestoneSuggestion(commonMilestones, "Review and score applications", true)             // TRUE for {LOI,NOFO,APPLICATION_COLLECTION_TOOL} on column selection method
+	suite.assertCommonMilestoneSuggestion(commonMilestones, "Acquire an application support contractor", true) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
 }
 
 // assertCommonMilestoneSuggestion is a helper method to help simplify tests that often are looking through a list of common milestones,
