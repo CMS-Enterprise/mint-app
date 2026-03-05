@@ -60,20 +60,16 @@ const StateTag = ({ state }: { state: PlanTaskState }) => {
   );
 };
 
+// TEMP
 const TASK_KEY_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.MTO
 ];
 
-const SUPPORTED_STATUSES: PlanTaskStatus[] = [
-  PlanTaskStatus.TO_DO,
-  PlanTaskStatus.IN_PROGRESS,
-  PlanTaskStatus.COMPLETE
-];
-
-export type TasksByKey = Partial<
-  Record<PlanTaskKey, Pick<PlanTask, 'key' | 'state' | 'status'>>
+export type TasksByKey = Record<
+  PlanTaskKey,
+  Pick<PlanTask, 'key' | 'state' | 'status'>
 >;
 
 // TEMP
@@ -81,12 +77,12 @@ export const MOCK_TASKS_BY_KEY: TasksByKey = {
   [PlanTaskKey.MODEL_PLAN]: {
     key: PlanTaskKey.MODEL_PLAN,
     state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.IN_PROGRESS
+    status: PlanTaskStatus.TO_DO
   },
   [PlanTaskKey.DATA_EXCHANGE]: {
     key: PlanTaskKey.DATA_EXCHANGE,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.TO_DO
+    state: PlanTaskState.COMPLETE,
+    status: PlanTaskStatus.COMPLETE
   },
   [PlanTaskKey.MTO]: {
     key: PlanTaskKey.MTO,
@@ -95,25 +91,12 @@ export const MOCK_TASKS_BY_KEY: TasksByKey = {
   }
 };
 
-function getTaskStatus(
-  task: Pick<PlanTask, 'status'> | undefined
-): PlanTaskStatus {
-  const status = task?.status ?? PlanTaskStatus.TO_DO;
-  return SUPPORTED_STATUSES.includes(status) ? status : PlanTaskStatus.TO_DO;
-}
-
-function getTaskState(
-  task: Pick<PlanTask, 'state'> | undefined
-): PlanTaskState {
-  return task?.state ?? PlanTaskState.TO_DO;
-}
-
 type TasksWrapperProps = {
   modelPlan: GetCollaborationAreaQuery['modelPlan'];
-  tasksByKey?: TasksByKey;
+  tasksByKey: TasksByKey;
 };
 
-const TasksWrapper = ({ modelPlan, tasksByKey = {} }: TasksWrapperProps) => {
+const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();
@@ -141,12 +124,13 @@ const TasksWrapper = ({ modelPlan, tasksByKey = {} }: TasksWrapperProps) => {
       return null;
     }
     if (taskKey === PlanTaskKey.DATA_EXCHANGE) {
-      const de = modelPlan?.dataExchangeApproach;
-      if (de?.modifiedDts && de?.modifiedByUserAccount) {
+      const { modifiedDts, modifiedByUserAccount } =
+        modelPlan?.dataExchangeApproach ?? {};
+      if (modifiedDts && modifiedByUserAccount) {
         return {
-          modifiedDts: de.modifiedDts,
+          modifiedDts,
           modifiedByUserAccount: {
-            commonName: de.modifiedByUserAccount.commonName
+            commonName: modifiedByUserAccount.commonName
           }
         };
       }
@@ -155,59 +139,18 @@ const TasksWrapper = ({ modelPlan, tasksByKey = {} }: TasksWrapperProps) => {
     return null;
   }
 
-  const getPrimaryNavigate = (taskKey: PlanTaskKey) => {
-    switch (taskKey) {
-      case PlanTaskKey.MODEL_PLAN:
-        return () =>
-          navigate(`/models/${modelID}/collaboration-area/model-plan`);
-      case PlanTaskKey.DATA_EXCHANGE:
-        return () =>
-          navigate(
-            `/models/${modelID}/collaboration-area/data-exchange-approach/about-completing-data-exchange`
-          );
-      case PlanTaskKey.MTO:
-        return () =>
-          navigate(
-            `/models/${modelID}/collaboration-area/model-to-operations`,
-            { state: { scroll: true } }
-          );
-      default:
-        return () => {};
-    }
-  };
-
-  const getSecondaryNavigate = (taskKey: PlanTaskKey) => {
-    switch (taskKey) {
-      case PlanTaskKey.MODEL_PLAN:
-        return () => navigate(`/help-and-knowledge/sample-model-plan`);
-      case PlanTaskKey.DATA_EXCHANGE:
-        return () =>
-          navigate(`/help-and-knowledge/evaluating-data-exchange-approach`);
-      case PlanTaskKey.MTO:
-        return () => navigate(`/help-and-knowledge/creating-mto-matrix`);
-      default:
-        return () => {};
-    }
-  };
-
   return (
     <div>
       <h2 className="margin-top-0">{t('heading')}</h2>
       <CardGroup>
         {TASK_KEY_ORDER.map(taskKey => {
           const task = tasksByKey[taskKey];
-          const taskStatus = getTaskStatus(task);
-          const taskState = getTaskState(task);
+          const taskStatus = task.status;
+          const taskState = task.state;
           const baseKey = `${taskKey}.${taskStatus}`;
 
-          const showModelPlanSectionDetails =
-            taskKey === PlanTaskKey.MODEL_PLAN &&
-            taskStatus !== PlanTaskStatus.TO_DO;
-          const showLastEditOnly =
-            (taskKey === PlanTaskKey.MTO ||
-              taskKey === PlanTaskKey.DATA_EXCHANGE) &&
-            taskStatus !== PlanTaskStatus.TO_DO;
           const lastEditSection = getLastEditSectionForTask(taskKey);
+          const showSectionDetails = taskStatus !== PlanTaskStatus.TO_DO;
 
           return (
             <Card
@@ -225,31 +168,21 @@ const TasksWrapper = ({ modelPlan, tasksByKey = {} }: TasksWrapperProps) => {
               </CardHeader>
               <CardBody>
                 <p>{t(`${taskKey}.copy`)}</p>
-                {showModelPlanSectionDetails && (
+                {showSectionDetails && (
                   <div className="display-flex flex-align-center flex-wrap-wrap">
-                    <span className="text-base">
-                      {collaborationAreaT('modelPlanCard.sectionsStarted', {
-                        sectionsStarted: sectionStartedCounter
-                      })}
-                    </span>
-                    {lastModifiedSection?.modifiedDts && (
+                    {taskKey === PlanTaskKey.MODEL_PLAN && (
                       <>
+                        <span className="text-base">
+                          {collaborationAreaT('modelPlanCard.sectionsStarted', {
+                            sectionsStarted: sectionStartedCounter
+                          })}
+                        </span>
                         <span className="text-base margin-x-2">|</span>
-                        <LastModifiedSection section={lastModifiedSection} />
                       </>
                     )}
-                  </div>
-                )}
-                {showLastEditOnly && lastEditSection && (
-                  <div className="display-flex flex-align-center flex-wrap-wrap">
-                    <LastModifiedSection
-                      section={lastEditSection}
-                      translationKey={
-                        taskKey === PlanTaskKey.DATA_EXCHANGE
-                          ? 'dataExchangeApproachCard.lastModified'
-                          : undefined
-                      }
-                    />
+                    {lastEditSection && (
+                      <LastModifiedSection section={lastEditSection} />
+                    )}
                   </div>
                 )}
               </CardBody>
@@ -257,14 +190,16 @@ const TasksWrapper = ({ modelPlan, tasksByKey = {} }: TasksWrapperProps) => {
                 <Button
                   type="button"
                   className="margin-right-1"
-                  onClick={getPrimaryNavigate(taskKey)}
+                  onClick={() =>
+                    navigate(t(`${taskKey}.primaryPath`, { modelID }))
+                  }
                 >
                   {t(`${baseKey}.primaryAction`)}
                 </Button>
                 <Button
                   type="button"
                   outline
-                  onClick={getSecondaryNavigate(taskKey)}
+                  onClick={() => navigate(t(`${taskKey}.secondaryPath`))}
                 >
                   {t(`${taskKey}.secondaryAction`)}
                 </Button>
