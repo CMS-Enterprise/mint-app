@@ -31,9 +31,13 @@ import useHelpSolution from 'hooks/useHelpSolutions';
 import useMessage from 'hooks/useMessage';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
-import { isNeededWithin30Days } from 'utils/date';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import {
+  filterMilestonesNeededWithin30Days,
+  flattenToSingleCategory,
+  GetModelToOperationsMatrixCategoryType
+} from '../../_utils/neededWithin30Days';
 import ActionMenu from '../ActionsMenu';
 
 import {
@@ -49,91 +53,7 @@ import {
 export type GetModelToOperationsMatrixQueryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix'];
 
-type GetModelToOperationsMatrixCategoryType =
-  GetModelToOperationsMatrixQueryType['categories'];
-
-/**
- * Filters the category tree to only include milestones whose needBy date
- * is within the next 30 days (UTC). Drops empty subcategories and categories.
- */
-const filterMilestonesNeededWithin30Days = (
-  categoryData: CategoryType[]
-): CategoryType[] => {
-  const categoriesWithFilteredSubcategories = categoryData.map(category => {
-    const subCategoriesWithFilteredMilestones = category.subCategories.map(
-      subCategory => ({
-        ...subCategory,
-        milestones: subCategory.milestones.filter(milestone =>
-          isNeededWithin30Days(milestone.needBy)
-        )
-      })
-    );
-
-    const filteredSubCategoriesWithMilestones =
-      subCategoriesWithFilteredMilestones.filter(
-        subCategory => subCategory.milestones.length > 0
-      );
-
-    return {
-      ...category,
-      subCategories: filteredSubCategoriesWithMilestones
-    };
-  });
-
-  return categoriesWithFilteredSubcategories.filter(
-    category => category.subCategories.length > 0
-  );
-};
-
-/**
- * Flattens the category tree into a single category with a single subcategory
- * containing all milestones. Used when "needed within 30 days" filter is on
- * so that sorting applies across all visible milestones, not per group.
- */
-const flattenToSingleCategory = (
-  categoryData: CategoryType[]
-): CategoryType[] => {
-  const allMilestones: MilestoneType[] = [];
-  categoryData.forEach(category => {
-    category.subCategories.forEach(subCategory => {
-      allMilestones.push(...subCategory.milestones);
-    });
-  });
-
-  if (allMilestones.length === 0) {
-    return [];
-  }
-
-  const singleSubCategory: SubCategoryType = {
-    __typename: 'MTOSubcategory',
-    id: 'filtered-milestones',
-    riskIndicator: undefined,
-    name: '',
-    facilitatedBy: undefined,
-    solutions: [],
-    needBy: undefined,
-    status: undefined,
-    actions: undefined,
-    milestones: allMilestones,
-    isUncategorized: false
-  };
-
-  const singleCategory: CategoryType = {
-    __typename: 'MTOCategory',
-    id: 'filtered-milestones',
-    riskIndicator: undefined,
-    name: '',
-    facilitatedBy: undefined,
-    solutions: [],
-    needBy: undefined,
-    status: undefined,
-    actions: undefined,
-    subCategories: [singleSubCategory],
-    isUncategorized: false
-  };
-
-  return [singleCategory];
-};
+export type { GetModelToOperationsMatrixCategoryType } from '../../_utils/neededWithin30Days';
 
 const MTOTable = ({
   queryData,
