@@ -28,19 +28,7 @@ func PlanTaskGetByModelPlanIDLOADER(
 
 // PlanTaskByID retrieves a plan task for a given ID
 func (s *Store) PlanTaskByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTask, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTask.GetByID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	task := &models.PlanTask{}
-	err = stmt.Get(task, utilitysql.CreateIDQueryMap(id))
-	if err != nil {
-		return nil, err
-	}
-
-	return task, nil
+	return sqlutils.GetProcedure[models.PlanTask](s, sqlqueries.PlanTask.GetByID, utilitysql.CreateIDQueryMap(id))
 }
 
 // PlanTaskUpdate updates mutable fields on a plan task (status and completion fields)
@@ -48,18 +36,12 @@ func (s *Store) PlanTaskUpdate(
 	logger *zap.Logger,
 	task *models.PlanTask,
 ) (*models.PlanTask, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTask.Update)
+	updatedTask, err := sqlutils.GetProcedure[models.PlanTask](s, sqlqueries.PlanTask.Update, task)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, task)
 	}
-	defer stmt.Close()
 
-	err = stmt.Get(task, task)
-	if err != nil {
-		return nil, genericmodel.HandleModelQueryError(logger, err, task)
-	}
-
-	return task, nil
+	return updatedTask, nil
 }
 
 // PlanTaskCreate creates a new plan task (used when a model plan is created)
@@ -70,20 +52,13 @@ func (s *Store) PlanTaskCreate(
 ) (*models.PlanTask, error) {
 	task.ID = utilityuuid.ValueOrNewUUID(task.ID)
 
-	stmt, err := np.PrepareNamed(sqlqueries.PlanTask.Create)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, task)
-	}
-	defer stmt.Close()
-
 	task.ModifiedBy = nil
 	task.ModifiedDts = nil
 
-	retTask := models.PlanTask{}
-	err = stmt.Get(&retTask, task)
+	retTask, err := sqlutils.GetProcedure[models.PlanTask](np, sqlqueries.PlanTask.Create, task)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, task)
 	}
 
-	return &retTask, nil
+	return retTask, nil
 }

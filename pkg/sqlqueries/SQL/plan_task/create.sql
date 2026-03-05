@@ -3,20 +3,14 @@ INSERT INTO plan_task (
     model_plan_id,
     key,
     status,
-    completed_by,
-    completed_dts,
-    created_by,
-    modified_by
+    created_by
 )
 VALUES (
     :id,
     :model_plan_id,
     :key,
     :status,
-    :completed_by,
-    :completed_dts,
-    :created_by,
-    :modified_by
+    :created_by
 )
 RETURNING
     id,
