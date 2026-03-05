@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { commonMilestonesMock, suggestedMilestonesMock } from 'tests/mock/mto';
 
 import MilestoneLibrary from '.';
@@ -33,5 +33,34 @@ describe('MilestoneCardGroup Component', () => {
 
     // Match the snapshot
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('does not render the filter button in the MTO milestone library', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
+          element: <MilestoneLibrary />
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library'
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider
+        mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    expect(
+      screen.queryByRole('button', { name: /filter/i })
+    ).not.toBeInTheDocument();
   });
 });
