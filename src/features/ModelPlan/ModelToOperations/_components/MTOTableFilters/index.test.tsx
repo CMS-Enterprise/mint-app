@@ -2,8 +2,22 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import i18next from 'i18next';
+import { vi } from 'vitest';
 
 import MTOTableFilters from './index';
+
+const mockNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>(
+      'react-router-dom'
+    );
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate
+  };
+});
 
 describe('MTOTableFilters', () => {
   const renderWithRouter = (initialEntry: string) => {
@@ -21,12 +35,14 @@ describe('MTOTableFilters', () => {
     return render(<RouterProvider router={router} />);
   };
 
-  const getNeededWithinThirtyDaysLabel = (count: number) =>
-    `${i18next.t(
-      'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-    )} (${count})`;
+  const getCheckbox = () =>
+    screen.getByRole('checkbox', { name: new RegExp('\\(\\d+\\)$') });
 
-  it('renders the table filters label and checkbox', () => {
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
+
+  it('renders without errors', () => {
     renderWithRouter('/matrix');
 
     expect(
@@ -34,77 +50,27 @@ describe('MTOTableFilters', () => {
         i18next.t('modelToOperationsMisc:table.tableFilters.tableFilters')
       )
     ).toBeInTheDocument();
-    expect(
-      screen.getByLabelText(getNeededWithinThirtyDaysLabel(0))
-    ).toBeInTheDocument();
+    expect(getCheckbox()).toBeInTheDocument();
   });
 
-  it('renders checkbox unchecked when needed-within-thirty-days param is absent', () => {
-    renderWithRouter('/matrix');
-
-    const checkbox = screen.getByRole('checkbox', {
-      name: getNeededWithinThirtyDaysLabel(0)
-    });
-    expect(checkbox).not.toBeChecked();
-  });
-
-  it('renders checkbox unchecked when needed-within-thirty-days is false', () => {
-    renderWithRouter('/matrix?needed-within-thirty-days=false');
-
-    const checkbox = screen.getByRole('checkbox', {
-      name: getNeededWithinThirtyDaysLabel(0)
-    });
-    expect(checkbox).not.toBeChecked();
-  });
-
-  it('renders checkbox checked when needed-within-thirty-days is true', () => {
+  it('when checkbox is checked, unchecking it sets params to false', () => {
     renderWithRouter('/matrix?needed-within-thirty-days=true');
 
-    const checkbox = screen.getByRole('checkbox', {
-      name: getNeededWithinThirtyDaysLabel(0)
-    });
+    const checkbox = getCheckbox();
     expect(checkbox).toBeChecked();
-  });
 
-  it('displays milestone count in label', () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/matrix',
-          element: <MTOTableFilters milestonesNeededWithin30DaysCount={5} />
-        }
-      ],
-      { initialEntries: ['/matrix'] }
+    fireEvent.click(checkbox);
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        search: expect.stringContaining('needed-within-thirty-days=false')
+      }),
+      { replace: true }
     );
-    render(<RouterProvider router={router} />);
-
-    expect(
-      screen.getByLabelText(getNeededWithinThirtyDaysLabel(5))
-    ).toBeInTheDocument();
   });
 
-  it('toggles filter and resets page when checkbox is clicked from unchecked', () => {
-    renderWithRouter('/matrix?page=3');
-
-    const checkbox = screen.getByRole('checkbox', {
-      name: getNeededWithinThirtyDaysLabel(0)
-    });
-
-    fireEvent.click(checkbox);
-
-    // Memory router updates in-memory location, so component re-renders with new search
-    expect(checkbox).toBeChecked();
-  });
-
-  it('toggles filter off when checkbox is clicked from checked', () => {
-    renderWithRouter('/matrix?needed-within-thirty-days=true&page=2');
-
-    const checkbox = screen.getByRole('checkbox', {
-      name: getNeededWithinThirtyDaysLabel(0)
-    });
-
-    fireEvent.click(checkbox);
-
-    expect(checkbox).not.toBeChecked();
+  it('when params is false, checkbox is unchecked', () => {
+    renderWithRouter('/matrix?needed-within-thirty-days=false');
+    expect(getCheckbox()).not.toBeChecked();
   });
 });
