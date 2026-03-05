@@ -301,13 +301,6 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 
 }
 
-func (suite *ResolverSuite) getAllMTOCommonMilestones() []*models.MTOCommonMilestone {
-	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, nil)
-	suite.NoError(err)
-
-	return commonMilestones
-}
-
 func (suite *ResolverSuite) getMTOCommonMilestoneByName(nameToFind string) *models.MTOCommonMilestone {
 	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, nil)
 	suite.NoError(err)

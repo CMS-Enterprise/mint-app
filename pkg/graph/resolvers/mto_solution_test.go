@@ -14,18 +14,18 @@ import (
 
 func (suite *ResolverSuite) TestMTOSolutionGetByMilestoneIDLOADER() {
 	plan1 := suite.createModelPlan("model plan 1")
-	commonMilestone1 := suite.getAllMTOCommonMilestones()[0]
+	commonMilestone1 := suite.getMTOCommonMilestoneByName("Acquire an application support contractor")
 	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestone1.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
 
-	commonMilestone2 := suite.getAllMTOCommonMilestones()[1]
+	commonMilestone2 := suite.getMTOCommonMilestoneByName("Communicate with participants")
 	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestone2.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
-	commonMilestone3 := suite.getAllMTOCommonMilestones()[2]
+	commonMilestone3 := suite.getMTOCommonMilestoneByName("Acquire a learning contractor")
 	milestone3 := suite.createMilestoneCommon(plan1.ID, commonMilestone3.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKBcda,
 		models.MTOCSKCmsBox,
