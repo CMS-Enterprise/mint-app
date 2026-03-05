@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, Fieldset } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -25,26 +25,34 @@ const MilestoneFilterGroup = ({
 }: MilestoneFilterGroupProps) => {
   const { t } = useTranslation('general');
 
-  const [showAll, setShowAll] = useState<boolean>(
-    filterGroup.displayShowAll &&
-      selectedFilters.length === filterGroup.options.length
+  /**
+   * Determines if the "Show All" checkbox should be checked based on the selected filters.
+   * @returns true if all options in group are selected and `filterGroup.displayShowAll` is true.
+   */
+  const showAllIsChecked = useMemo(
+    () =>
+      filterGroup.displayShowAll &&
+      selectedFilters.length === filterGroup.options.length,
+    [
+      filterGroup.displayShowAll,
+      selectedFilters.length,
+      filterGroup.options.length
+    ]
   );
+
+  const handleSetShowAll = (value: boolean) => {
+    if (value) {
+      setSelectedFilters(filterGroup.options.map(option => option.value));
+    } else {
+      setSelectedFilters([]);
+    }
+  };
 
   const toggleFilterOption = (option: string | MtoFacilitator) => {
     if (selectedFilters.includes(option)) {
       setSelectedFilters(selectedFilters.filter(filter => filter !== option));
     } else {
       setSelectedFilters([...selectedFilters, option]);
-    }
-  };
-
-  const handleSetShowAll = (value: boolean) => {
-    setShowAll(value);
-
-    if (value) {
-      setSelectedFilters(filterGroup.options.map(option => option.value));
-    } else {
-      setSelectedFilters([]);
     }
   };
 
@@ -70,9 +78,9 @@ const MilestoneFilterGroup = ({
             className="grid-col-12 bg-none"
             id={`${filterGroup.key}-show-all`}
             name={`${filterGroup.key}-show-all`}
-            onChange={() => handleSetShowAll(!showAll)}
+            onChange={() => handleSetShowAll(!showAllIsChecked)}
             label={t('filter.showAll')}
-            checked={showAll}
+            checked={showAllIsChecked}
           />
         )}
         {filterGroup.options.map(option => (
@@ -87,8 +95,8 @@ const MilestoneFilterGroup = ({
             onChange={() => toggleFilterOption(option.value)}
             label={option.label}
             value={option.value}
-            checked={showAll || selectedFilters.includes(option.value)}
-            disabled={showAll}
+            checked={showAllIsChecked || selectedFilters.includes(option.value)}
+            disabled={showAllIsChecked}
           />
         ))}
       </FieldGroup>
