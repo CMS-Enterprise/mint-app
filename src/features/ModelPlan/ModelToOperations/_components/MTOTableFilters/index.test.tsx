@@ -21,6 +21,11 @@ describe('MTOTableFilters', () => {
     return render(<RouterProvider router={router} />);
   };
 
+  const getNeededWithinThirtyDaysLabel = (count: number) =>
+    `${i18next.t(
+      'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
+    )} (${count})`;
+
   it('renders the table filters label and checkbox', () => {
     renderWithRouter('/matrix');
 
@@ -30,11 +35,7 @@ describe('MTOTableFilters', () => {
       )
     ).toBeInTheDocument();
     expect(
-      screen.getByLabelText(
-        i18next.t(
-          'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-        )
-      )
+      screen.getByLabelText(getNeededWithinThirtyDaysLabel(0))
     ).toBeInTheDocument();
   });
 
@@ -42,9 +43,7 @@ describe('MTOTableFilters', () => {
     renderWithRouter('/matrix');
 
     const checkbox = screen.getByRole('checkbox', {
-      name: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-      )
+      name: getNeededWithinThirtyDaysLabel(0)
     });
     expect(checkbox).not.toBeChecked();
   });
@@ -53,9 +52,7 @@ describe('MTOTableFilters', () => {
     renderWithRouter('/matrix?needed-within-thirty-days=false');
 
     const checkbox = screen.getByRole('checkbox', {
-      name: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-      )
+      name: getNeededWithinThirtyDaysLabel(0)
     });
     expect(checkbox).not.toBeChecked();
   });
@@ -64,20 +61,33 @@ describe('MTOTableFilters', () => {
     renderWithRouter('/matrix?needed-within-thirty-days=true');
 
     const checkbox = screen.getByRole('checkbox', {
-      name: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-      )
+      name: getNeededWithinThirtyDaysLabel(0)
     });
     expect(checkbox).toBeChecked();
+  });
+
+  it('displays milestone count in label', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/matrix',
+          element: <MTOTableFilters milestonesNeededWithin30DaysCount={5} />
+        }
+      ],
+      { initialEntries: ['/matrix'] }
+    );
+    render(<RouterProvider router={router} />);
+
+    expect(
+      screen.getByLabelText(getNeededWithinThirtyDaysLabel(5))
+    ).toBeInTheDocument();
   });
 
   it('toggles filter and resets page when checkbox is clicked from unchecked', () => {
     renderWithRouter('/matrix?page=3');
 
     const checkbox = screen.getByRole('checkbox', {
-      name: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-      )
+      name: getNeededWithinThirtyDaysLabel(0)
     });
 
     fireEvent.click(checkbox);
@@ -90,9 +100,7 @@ describe('MTOTableFilters', () => {
     renderWithRouter('/matrix?needed-within-thirty-days=true&page=2');
 
     const checkbox = screen.getByRole('checkbox', {
-      name: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.neededWithinThirtyDays'
-      )
+      name: getNeededWithinThirtyDaysLabel(0)
     });
 
     fireEvent.click(checkbox);

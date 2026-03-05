@@ -6,7 +6,11 @@ import CheckboxField from 'components/CheckboxField';
 
 const FILTER_PARAM = 'needed-within-thirty-days';
 
-const MTOTableFilters = () => {
+const MTOTableFilters = ({
+  milestonesNeededWithin30DaysCount = 0
+}: {
+  milestonesNeededWithin30DaysCount?: number;
+}) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,6 +25,10 @@ const MTOTableFilters = () => {
     navigate({ search: next.toString() }, { replace: true });
   };
 
+  const neededWithinThirtyDaysLabel = `${t(
+    'table.tableFilters.neededWithinThirtyDays'
+  )} (${milestonesNeededWithin30DaysCount})`;
+
   return (
     <div className="margin-top-3 display-flex" style={{ gap: '1rem' }}>
       <p className="margin-y-0 text-bold">
@@ -30,7 +38,7 @@ const MTOTableFilters = () => {
         noMargin
         id={FILTER_PARAM}
         name={FILTER_PARAM}
-        label={t('table.tableFilters.neededWithinThirtyDays')}
+        label={neededWithinThirtyDaysLabel}
         value={isChecked ? 'true' : 'false'}
         checked={isChecked}
         onBlur={() => null}
