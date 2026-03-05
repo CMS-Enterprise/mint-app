@@ -2,6 +2,7 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
 import {
+  GetCollaborationAreaQuery,
   PlanTask,
   PlanTaskKey,
   PlanTaskState,
@@ -10,11 +11,9 @@ import {
 import { collaborationAreaData } from 'tests/mock/general';
 import setup from 'tests/util';
 
-import TasksWrapper from './index';
+import TasksWrapper, { type TasksByKey } from './index';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
-
-const emptyTasksByKey = {};
 
 const basePlanTask: Pick<
   PlanTask,
@@ -23,7 +22,7 @@ const basePlanTask: Pick<
   id: '00000000-0000-0000-0000-000000000001',
   createdBy: '00000000-0000-0000-0000-000000000002',
   createdByUserAccount: {
-    __typename: 'UserAccount' as const,
+    __typename: 'UserAccount',
     id: '00000000-0000-0000-0000-000000000002',
     commonName: 'Test User',
     email: 'test@example.com',
@@ -36,27 +35,64 @@ const basePlanTask: Pick<
   createdDts: '2024-01-01T00:00:00Z'
 };
 
-const tasksByKeyWithModelPlanComplete: Partial<Record<PlanTaskKey, PlanTask>> =
-  {
-    [PlanTaskKey.MODEL_PLAN]: {
-      ...basePlanTask,
-      __typename: 'PlanTask' as const,
-      key: PlanTaskKey.MODEL_PLAN,
-      state: PlanTaskState.COMPLETE,
-      status: PlanTaskStatus.COMPLETE
-    } as PlanTask
-  };
+const defaultTaskEntry = {
+  key: PlanTaskKey.DATA_EXCHANGE,
+  state: PlanTaskState.TO_DO,
+  status: PlanTaskStatus.TO_DO
+};
 
-const tasksByKeyWithModelPlanInProgress: Partial<
-  Record<PlanTaskKey, PlanTask>
-> = {
+const allTasksToDo: TasksByKey = {
+  [PlanTaskKey.MODEL_PLAN]: {
+    key: PlanTaskKey.MODEL_PLAN,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.TO_DO
+  },
+  [PlanTaskKey.DATA_EXCHANGE]: {
+    key: PlanTaskKey.DATA_EXCHANGE,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.TO_DO
+  },
+  [PlanTaskKey.MTO]: {
+    key: PlanTaskKey.MTO,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.TO_DO
+  }
+};
+
+const tasksByKeyWithModelPlanComplete = {
   [PlanTaskKey.MODEL_PLAN]: {
     ...basePlanTask,
-    __typename: 'PlanTask' as const,
+    __typename: 'PlanTask',
+    key: PlanTaskKey.MODEL_PLAN,
+    state: PlanTaskState.COMPLETE,
+    status: PlanTaskStatus.COMPLETE
+  },
+  [PlanTaskKey.DATA_EXCHANGE]: {
+    ...defaultTaskEntry,
+    key: PlanTaskKey.DATA_EXCHANGE
+  },
+  [PlanTaskKey.MTO]: {
+    ...defaultTaskEntry,
+    key: PlanTaskKey.MTO
+  }
+};
+
+const tasksByKeyWithModelPlanInProgress = {
+  [PlanTaskKey.MODEL_PLAN]: {
+    ...basePlanTask,
+    __typename: 'PlanTask',
     key: PlanTaskKey.MODEL_PLAN,
     state: PlanTaskState.TO_DO,
     status: PlanTaskStatus.IN_PROGRESS
-  } as PlanTask
+  },
+  [PlanTaskKey.DATA_EXCHANGE]: {
+    ...defaultTaskEntry,
+    key: PlanTaskKey.DATA_EXCHANGE
+  },
+  [PlanTaskKey.MTO]: {
+    ...defaultTaskEntry,
+    key: PlanTaskKey.MTO
+  }
 };
 
 describe('TasksWrapper', () => {
@@ -68,7 +104,7 @@ describe('TasksWrapper', () => {
           element: (
             <TasksWrapper
               modelPlan={collaborationAreaData}
-              tasksByKey={emptyTasksByKey}
+              tasksByKey={allTasksToDo}
             />
           )
         }
@@ -141,13 +177,13 @@ describe('TasksWrapper', () => {
   });
 
   it('shows section details (sections started) only for MODEL_PLAN card when status is not TO_DO', async () => {
-    const modelPlanWithModified = {
+    const modelPlanWithModified: GetCollaborationAreaQuery['modelPlan'] = {
       ...collaborationAreaData,
       basics: {
         ...collaborationAreaData.basics,
         modifiedDts: '2022-05-12T15:01:39.190679Z',
         modifiedByUserAccount: {
-          __typename: 'UserAccount' as const,
+          __typename: 'UserAccount',
           commonName: 'John Doe'
         }
       }
