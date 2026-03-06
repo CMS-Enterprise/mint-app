@@ -122,3 +122,23 @@ export const convertDateToISOString = (date: Date | null) => {
 
   return dt.toISO({ suppressMilliseconds: true });
 };
+
+/**
+ * Returns true if the given ISO date string falls within the next 30 days (UTC),
+ * inclusive of today through the end of the 30th day.
+ */
+export const isNeededWithin30Days = (needBy: string | null): boolean => {
+  if (needBy == null) return false;
+
+  const needByDate = new Date(needBy);
+  if (Number.isNaN(needByDate.getTime())) return false;
+
+  const now = new Date();
+  const todayStart = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+  );
+  const dayAfterWindowEnd = new Date(todayStart);
+  dayAfterWindowEnd.setUTCDate(dayAfterWindowEnd.getUTCDate() + 31);
+
+  return needByDate >= todayStart && needByDate < dayAfterWindowEnd;
+};
