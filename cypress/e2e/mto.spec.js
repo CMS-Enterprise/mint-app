@@ -559,15 +559,17 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.contains('button', 'Filter').click({ force: true });
 
-    cy.get('[role="dialog"]').within(() => {
-      cy.get('input[type="checkbox"]')
-        .not('#categoryName-show-all')
+    cy.get('.mint-filter-modal').within(() => {
+      // Click the category checkbox input (scoped to first filter group). .click() fires React's onChange; .check() may not.
+      cy.get('.mint-filter-group')
         .first()
-        .check({ force: true });
+        .find('#Learning')
+        .scrollIntoView()
+        .click({ force: true });
       cy.contains('button', 'Apply filter').click({ force: true });
     });
 
-    cy.get('[role="dialog"]').should('not.exist');
+    cy.get('.mint-filter-modal').should('not.exist');
 
     cy.get('@cardCountBefore').then(cardCountBefore => {
       cy.get('[data-testid="Card"]').should(
