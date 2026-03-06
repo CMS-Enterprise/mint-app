@@ -11,7 +11,7 @@ SELECT
     mto_common_solution.type,
     mto_common_solution.subjects,
     mto_common_solution.filter_view,
-    NULL AS mto_common_milestone_key,
+    NULL AS mto_common_milestone_id,
     (mto_solution.id IS NOT NULL) AS is_added,
     qIDs.model_plan_id
 FROM mto_common_solution

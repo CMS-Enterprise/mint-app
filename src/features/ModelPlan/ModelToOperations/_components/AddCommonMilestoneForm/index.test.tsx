@@ -1,7 +1,6 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { MtoCommonMilestoneKey } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
@@ -20,9 +19,10 @@ describe('Add common milestone form', () => {
               <AddCommonMilestoneForm
                 milestone={{
                   __typename: 'MTOCommonMilestone',
+                  id: '123456',
                   name: 'Milestone 1',
                   description: 'Description 1',
-                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  isArchived: false,
                   isAdded: false,
                   isSuggested: false,
                   categoryName: 'Category 1',

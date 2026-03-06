@@ -16,12 +16,16 @@ func (s *Seeder) seedModelPlanWithMTOData(
 	euaID string,
 	id *uuid.UUID) *models.ModelPlan {
 	plan := s.createModelPlan(modelName, euaID, id)
-
+	commonMilestones, err := resolvers.MTOCommonMilestoneGetByModelPlanIDLOADER(s.Config.Context, nil)
+	if err != nil {
+		panic(err)
+	}
+	commonMilestone := commonMilestones[0] // Get a common milestone to use for seeding. We just take the first one since it doesn't matter which one we use for seeding
 	princ := s.getTestPrincipalByUsername(euaID)
 
 	// Make uncategorized Milestone from Common milestone library
 	// TODO: This likely won't be uncategorized anymore once common milestones also create categories as needed
-	_, err := resolvers.MTOMilestoneCreateCommon(s.Config.Context, s.Config.Logger, princ, s.Config.Store, nil, email.AddressBook{}, plan.ID, models.MTOCommonMilestoneKeyAcquireALearnCont, []models.MTOCommonSolutionKey{})
+	_, err = resolvers.MTOMilestoneCreateCommon(s.Config.Context, s.Config.Logger, princ, s.Config.Store, nil, email.AddressBook{}, plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 	if err != nil {
 		panic(err)
 	}

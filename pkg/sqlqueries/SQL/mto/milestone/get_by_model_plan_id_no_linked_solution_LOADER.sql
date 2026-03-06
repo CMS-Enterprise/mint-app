@@ -5,7 +5,7 @@ WITH QUERIED_IDS AS (
 SELECT
     m.id,
     m.model_plan_id,
-    m.mto_common_milestone_key,
+    m.mto_common_milestone_id,
     m.mto_category_id,
     COALESCE(m.name, cm.name) AS name,
     m.description,
@@ -24,7 +24,7 @@ SELECT
 FROM mto_milestone AS m
 /* Fallback name from mto_common_milestone if m.name is null */
 LEFT JOIN mto_common_milestone AS cm
-    ON m.mto_common_milestone_key = cm.key
+    ON m.mto_common_milestone_id = cm.id
 
 /* LEFT JOIN to see if this milestone is directly linked to any solution */
 LEFT JOIN mto_milestone_solution_link AS link

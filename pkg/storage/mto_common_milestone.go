@@ -25,13 +25,13 @@ func MTOCommonMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.
 
 }
 
-// MTOCommonMilestoneGetByKeyLoader returns all common milestones for a slice of milestone keys
-func MTOCommonMilestoneGetByKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonMilestoneKey) ([]*models.MTOCommonMilestone, error) {
+// MTOCommonMilestoneGetByIDLoader returns all common milestones for a slice of milestone IDs
+func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonMilestone, error) {
 
 	args := map[string]interface{}{
-		"keys": pq.Array(keys),
+		"ids": pq.Array(ids),
 	}
-	returned, err := sqlutils.SelectProcedure[models.MTOCommonMilestone](np, sqlqueries.MTOCommonMilestone.GetByKeyLoader, args)
+	returned, err := sqlutils.SelectProcedure[models.MTOCommonMilestone](np, sqlqueries.MTOCommonMilestone.GetByIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

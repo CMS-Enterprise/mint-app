@@ -10,7 +10,8 @@ import (
 func (suite *ResolverSuite) TestMTOMilestoneNoteCreate() {
 	// Create model plan and milestone
 	plan := suite.createModelPlan("Test Plan for MTO Milestone Notes")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 
 	// Test data
 	content := "This is a test milestone note"
@@ -42,7 +43,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreate() {
 // TestMTOMilestoneNoteCreateWithEmptyContent tests that empty content is rejected
 func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithEmptyContent() {
 	plan := suite.createModelPlan("Test Plan for Empty Content Rejection")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 
 	note, err := CreateMTOMilestoneNote(
 		suite.testConfigs.Context,
@@ -83,7 +85,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteCreateWithInvalidMilestoneID() {
 func (suite *ResolverSuite) TestMTOMilestoneNoteUpdate() {
 	// Create model plan, milestone, and note
 	plan := suite.createModelPlan("Test Plan for MTO Milestone Note Update")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 	note := suite.createMTOMilestoneNote(milestone, "Original content")
 
 	// Update the note
@@ -136,7 +139,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteUpdateWithInvalidID() {
 func (suite *ResolverSuite) TestMTOMilestoneNoteDelete() {
 	// Create model plan, milestone, and note
 	plan := suite.createModelPlan("Test Plan for MTO Milestone Note Delete")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 	note := suite.createMTOMilestoneNote(milestone, "Content to be deleted")
 
 	// Delete the note
@@ -172,7 +176,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteDeleteWithInvalidID() {
 func (suite *ResolverSuite) TestMTOMilestoneNoteGetByMilestoneID() {
 	// Create model plan and milestone
 	plan := suite.createModelPlan("Test Plan for Getting MTO Milestone Notes")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 
 	// Create multiple notes for the same milestone
 	note1 := suite.createMTOMilestoneNote(milestone, "First note")
@@ -207,7 +212,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteGetByMilestoneID() {
 // TestMTOMilestoneNoteGetByMilestoneIDWithNoNotes tests getting notes for milestone with no notes
 func (suite *ResolverSuite) TestMTOMilestoneNoteGetByMilestoneIDWithNoNotes() {
 	plan := suite.createModelPlan("Test Plan for Empty Milestone Notes")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 
 	notes, err := GetMTOMilestoneNotesByMilestoneIDLOADER(
 		suite.testConfigs.Context,
@@ -224,7 +230,8 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteGetByMilestoneIDWithNoNotes() {
 // TestMTOMilestoneNoteGetByID tests getting a single note by ID
 func (suite *ResolverSuite) TestMTOMilestoneNoteGetByID() {
 	plan := suite.createModelPlan("Test Plan for Getting MTO Milestone Note by ID")
-	milestone := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
+	commonMilestone := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{})
 	note := suite.createMTOMilestoneNote(milestone, "Test note content")
 
 	retrievedNote, err := GetMTOMilestoneNoteByIDLOADER(
@@ -263,8 +270,10 @@ func (suite *ResolverSuite) TestMTOMilestoneNoteMultipleMilestones() {
 	plan := suite.createModelPlan("Test Plan for Multiple Milestone Notes")
 
 	// Create two milestones
-	milestone1 := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyManageCd, []models.MTOCommonSolutionKey{})
-	milestone2 := suite.createMilestoneCommon(plan.ID, models.MTOCommonMilestoneKeyAdjustFfsClaims, []models.MTOCommonSolutionKey{})
+	commonMilestone1 := suite.getMTOCommonMilestoneByName("Manage Part C/D enrollment")
+	commonMilestone2 := suite.getMTOCommonMilestoneByName("Adjust how FFS claims are paid")
+	milestone1 := suite.createMilestoneCommon(plan.ID, commonMilestone1.ID, []models.MTOCommonSolutionKey{})
+	milestone2 := suite.createMilestoneCommon(plan.ID, commonMilestone2.ID, []models.MTOCommonSolutionKey{})
 
 	// Create notes for each milestone
 	note1 := suite.createMTOMilestoneNote(milestone1, "Note for milestone 1")

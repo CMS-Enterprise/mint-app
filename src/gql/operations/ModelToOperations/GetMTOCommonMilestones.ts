@@ -10,9 +10,10 @@ export default gql(/* GraphQL */ `
           id
         }
         commonMilestones {
+          id
           name
           description
-          key
+          isArchived
           isAdded
           isSuggested
           categoryName

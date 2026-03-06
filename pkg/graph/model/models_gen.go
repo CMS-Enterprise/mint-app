@@ -152,7 +152,7 @@ type MTOMilestoneTranslation struct {
 	CommonSolutions      models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
 	Solutions            models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
 	Status               models.TranslationFieldWithOptions `json:"status" db:"status"`
-	Key                  models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCommonMilestoneID models.TranslationField            `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"`
 	MtoCategoryID        models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
 	AssignedTo           models.TranslationField            `json:"assignedTo" db:"assigned_to"`
 	Notes                models.TranslationField            `json:"notes" db:"notes"`
@@ -175,7 +175,7 @@ type MTOSolutionTranslation struct {
 	NeededBy           models.TranslationField            `json:"neededBy" db:"needed_by"`
 	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
-	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
+	Milestones         models.TranslationField            `json:"milestones" db:"milestones"`
 }
 
 // Represents Model Plan MTO Template Link translation data

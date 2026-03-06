@@ -47,7 +47,8 @@ const LinkMilestoneForm = ({
       allMilestones.milestones.filter(
         milestone =>
           !!commonlyUsedMilestones.some(
-            commonMilestone => commonMilestone.key === milestone.key
+            commonMilestone =>
+              commonMilestone.id === milestone.mtoCommonMilestoneID
           )
       ),
     [allMilestones, commonlyUsedMilestones]
@@ -58,7 +59,8 @@ const LinkMilestoneForm = ({
     return allMilestones?.milestones.filter(
       milestone =>
         !commonlyUsedExistingMilestones.some(
-          commonMilestone => commonMilestone.key === milestone.key
+          commonMilestone =>
+            commonMilestone.id === milestone.mtoCommonMilestoneID
         )
     );
   }, [allMilestones, commonlyUsedExistingMilestones]);

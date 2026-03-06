@@ -17,13 +17,13 @@ export default gql(/* GraphQL */ `
       type
       milestones {
         id
+        mtoCommonMilestoneID
         name
-        key
         status
         riskIndicator
         commonMilestone {
+          id
           name
-          key
           isAdded
         }
       }

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/echimptestdata"
@@ -300,9 +301,20 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 
 }
 
+func (suite *ResolverSuite) getMTOCommonMilestoneByName(nameToFind string) *models.MTOCommonMilestone {
+	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, nil)
+	suite.NoError(err)
+
+	milestone, _ := lo.Find(commonMilestones, func(cm *models.MTOCommonMilestone) bool {
+		return cm.Name == nameToFind
+	})
+
+	return milestone
+}
+
 func (suite *ResolverSuite) createMilestoneCommon(
 	planID uuid.UUID,
-	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonMilestoneID uuid.UUID,
 	commonSolutions []models.MTOCommonSolutionKey,
 ) *models.MTOMilestone {
 	milestone, err := MTOMilestoneCreateCommon(
@@ -312,7 +324,7 @@ func (suite *ResolverSuite) createMilestoneCommon(
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		planID,
-		commonMilestoneKey,
+		commonMilestoneID,
 		commonSolutions,
 	)
 	suite.NoError(err)
