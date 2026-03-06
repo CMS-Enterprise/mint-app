@@ -15,7 +15,13 @@ import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
 
 interface EditMTOSolutionContextType {
-  openEditSolutionModal: (solutionID: string) => void;
+  openEditSolutionModal: ({
+    selectedSolutionID,
+    scrollToBottom
+  }: {
+    selectedSolutionID: string;
+    scrollToBottom?: boolean;
+  }) => void;
   setSolutionID: (solutionID: string) => void;
 }
 
@@ -86,8 +92,19 @@ const EditMTOSolutionProvider = ({
     }
   }, [closeDestination, closeModal]);
 
-  const openEditSolutionModal = (id: string) => {
-    params.set('edit-solution', id);
+  const openEditSolutionModal = ({
+    selectedSolutionID,
+    scrollToBottom = false
+  }: {
+    selectedSolutionID: string;
+    scrollToBottom?: boolean;
+  }) => {
+    params.set('edit-solution', selectedSolutionID);
+
+    if (scrollToBottom) {
+      params.set('scroll-to-bottom', 'true');
+    }
+
     setParams(params);
     setIsModalOpen(true);
   };

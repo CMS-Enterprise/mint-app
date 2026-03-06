@@ -264,7 +264,7 @@ const ITSystemsTable = ({
               <Button
                 type="button"
                 unstyled
-                className="mint-print-link"
+                className="mint-print-link mint-body-normal"
                 onClick={() => {
                   openViewSolutionModal(row.original.id);
                   setViewSolutionID(row.original.id);
@@ -315,7 +315,7 @@ const ITSystemsTable = ({
               <Button
                 type="button"
                 unstyled
-                className="mint-print-link"
+                className="mint-print-link mint-body-normal"
                 onClick={() => {
                   openEditMilestoneModal(row.original.id);
                   setMilestoneID(row.original.id);
@@ -341,7 +341,7 @@ const ITSystemsTable = ({
                 <Button
                   type="button"
                   unstyled
-                  className="mint-print-link"
+                  className="mint-print-link mint-body-normal"
                   onClick={() => {
                     openEditMilestoneModal(milestones[0].id);
                     setMilestoneID(milestones[0].id);
@@ -356,23 +356,18 @@ const ITSystemsTable = ({
                 <Button
                   type="button"
                   unstyled
-                  className="mint-print-link display-block"
+                  className="mint-print-link display-block mint-body-normal"
                   onClick={() => {
                     if (readView) {
                       openViewSolutionModal(row.original.id);
                       setViewSolutionID(row.original.id);
                     } else {
                       setSolutionID(row.original.id);
-                      openEditSolutionModal(row.original.id);
+                      openEditSolutionModal({
+                        selectedSolutionID: row.original.id,
+                        scrollToBottom: true
+                      });
                     }
-
-                    // Adds scroll param to existing params
-                    const existingParams = new URLSearchParams(location.search);
-                    existingParams.set('scroll-to-bottom', 'true');
-                    navigate(
-                      { search: existingParams.toString() },
-                      { replace: true }
-                    );
                   }}
                 >
                   {t('table.moreMilestones', {
@@ -455,7 +450,9 @@ const ITSystemsTable = ({
                 className="margin-right-2"
                 onClick={() => {
                   setSolutionID(row.original.id);
-                  openEditSolutionModal(row.original.id);
+                  openEditSolutionModal({
+                    selectedSolutionID: row.original.id
+                  });
                 }}
               >
                 {t('table.editDetails')}
@@ -475,8 +472,7 @@ const ITSystemsTable = ({
     openEditSolutionModal,
     setSolutionID,
     mtoSolutionT,
-    readView,
-    navigate
+    readView
   ]);
 
   const filteredColumns = useMemo(() => {
