@@ -29,10 +29,11 @@ describe('Model-to-Operations Matrix', () => {
     cy.contains('button', 'Filter').click({ force: true });
 
     cy.get('.mint-filter-modal').within(() => {
-      // Click the category checkbox input (scoped to first filter group). .click() fires React's onChange; .check() may not.
+      // Find #Learning input, then click its label sibling so the checkbox toggles.
       cy.get('.mint-filter-group')
         .first()
         .find('#Learning')
+        .siblings('label')
         .scrollIntoView()
         .click({ force: true });
       cy.contains('button', 'Apply filter').click({ force: true });
