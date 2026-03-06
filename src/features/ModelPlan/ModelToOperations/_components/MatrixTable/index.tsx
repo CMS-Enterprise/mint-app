@@ -825,7 +825,7 @@ export const formatAndHomogenizeMilestoneData = (
     formattedCategory.addedFromMilestoneLibrary = undefined;
     formattedCategory.isDraft = undefined;
     formattedCategory.isUncategorized = category.isUncategorized;
-    formattedCategory.key = undefined;
+    formattedCategory.mtoCommonMilestoneID = undefined;
     formattedCategory.solutions = [];
     formattedCategory.subCategories = [];
 
@@ -840,7 +840,7 @@ export const formatAndHomogenizeMilestoneData = (
       formattedSubCategory.addedFromMilestoneLibrary = undefined;
       formattedSubCategory.isDraft = undefined;
       formattedSubCategory.isUncategorized = subCategory.isUncategorized;
-      formattedSubCategory.key = undefined;
+      formattedSubCategory.mtoCommonMilestoneID = undefined;
       formattedSubCategory.solutions = [];
       formattedSubCategory.milestones = [];
 

@@ -18,7 +18,7 @@ func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj 
 
 // CommonSolutions is the resolver for the commonSolutions field.
 func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *models.MTOCommonMilestone) ([]*models.MTOCommonSolution, error) {
-	return MTOCommonSolutionGetByCommonMilestoneKeyLOADER(ctx, obj.Key)
+	return MTOCommonSolutionGetByCommonMilestoneIDLOADER(ctx, obj.ID)
 }
 
 // MtoCommonMilestones is the resolver for the mtoCommonMilestones field.

@@ -19,13 +19,14 @@ auth:apikey {
 body:graphql {
   query mtoCommonMilestones {
     mtoCommonMilestones {
+      id
       name
-      key
       categoryName
       subCategoryName
       facilitatedByRole
       section
   
+      isArchived
       isAdded
       # isSuggested
       # commonSolutions:

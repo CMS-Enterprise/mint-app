@@ -313,14 +313,14 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {/* MTO milestone header */}
         {change.tableName === TableName.MTO_MILESTONE &&
           (() => {
-            const milestoneKey = getTranslatedFieldValue(
+            const commonMilestoneName = getTranslatedFieldValue(
               change,
-              'mto_common_milestone_key'
+              'mto_common_milestone_id'
             );
 
             const milestoneName = getTranslatedFieldValue(change, 'name');
 
-            let milestoneValue = milestoneName || milestoneKey;
+            let milestoneValue = milestoneName || commonMilestoneName;
 
             if (
               change.action === DatabaseOperation.UPDATE &&
@@ -693,14 +693,14 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               {/* MTO milestone audits */}
               {change.tableName === TableName.MTO_MILESTONE &&
                 (() => {
-                  const milestoneKey = getTranslatedFieldValue(
+                  const commonMilestoneName = getTranslatedFieldValue(
                     change,
-                    'mto_common_milestone_key'
+                    'mto_common_milestone_id'
                   );
 
                   const milestoneName = getTranslatedFieldValue(change, 'name');
 
-                  let milestoneValue = milestoneName || milestoneKey;
+                  let milestoneValue = milestoneName || commonMilestoneName;
 
                   if (
                     change.action === DatabaseOperation.UPDATE &&

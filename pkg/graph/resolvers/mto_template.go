@@ -328,7 +328,7 @@ func copyMilestones(
 		msWithStatus, err := MTOMilestoneCreateCommonWithTXAllowConflicts(
 			args.Ctx, deps.Logger, args.Principal, tx, deps.Store,
 			deps.EmailService, deps.AddressBook,
-			args.ModelPlanID, ms.Key, solutionKeys,
+			args.ModelPlanID, ms.MTOCommonMilestoneID, solutionKeys,
 		)
 		if err != nil {
 			warnings.Add(fmt.Sprintf("failed to create MTO milestone %s: %v", ms.Name, err))

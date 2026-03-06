@@ -81,7 +81,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                     outline
                     className="margin-right-2"
                     onClick={() => {
-                      params.set('add-milestone', milestone.key);
+                      params.set('add-milestone', milestone.id);
                       navigate(
                         { search: params.toString() },
                         { replace: true }

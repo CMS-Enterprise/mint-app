@@ -206,20 +206,19 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	return name, nil
 }
 func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
-	// cast interface to key
-	enumKey, err := parseInterfaceToEnum[models.MTOCommonMilestoneKey](key)
+	commonMilestoneID, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return "", fmt.Errorf("unable to convert the provided key to a MTOCommonMilestoneKey to get the mto common milestone reference. err %w", err)
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the mto common milestone reference. err %w", err)
 	}
 
 	// get the common milestone
-	commonMilestone, err := loaders.MTOCommonMilestone.ByKey.Load(ctx, enumKey)
+	commonMilestone, err := loaders.MTOCommonMilestone.ByID.Load(ctx, commonMilestoneID)
 	if err != nil {
 		return "", fmt.Errorf("there was an issue translating the mto common milestone foreign key reference. err %w", err)
 	}
 
 	if commonMilestone == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
+		return "", fmt.Errorf("the id for %s was not returned for this foreign key translation", commonMilestoneID)
 	}
 	return commonMilestone.Name, nil
 }
@@ -238,7 +237,7 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 	}
 
 	if commonSolution == nil {
-		return "", fmt.Errorf("the category for %s was not returned for this foreign key translation", enumKey)
+		return "", fmt.Errorf("the id for %s was not returned for this foreign key translation", enumKey)
 	}
 	return commonSolution.Name, nil
 }

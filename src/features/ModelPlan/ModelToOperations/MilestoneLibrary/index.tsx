@@ -232,7 +232,7 @@ const MilstoneCardGroup = ({
   }
 
   const selectedMilestone: MilestoneCardType | undefined = useMemo(() => {
-    return milestones.find(milestone => milestone.key === milestoneParam);
+    return milestones.find(milestone => milestone.id === milestoneParam);
   }, [milestones, milestoneParam]);
 
   const addedMilestones = useMemo(
@@ -591,7 +591,7 @@ const MilstoneCardGroup = ({
                     <Grid
                       desktop={{ col: 4 }}
                       tablet={{ col: 6 }}
-                      key={milestone.key}
+                      key={milestone.id}
                     >
                       <MilestoneCard
                         milestone={milestone}
