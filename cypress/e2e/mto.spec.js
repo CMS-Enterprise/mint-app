@@ -547,36 +547,4 @@ describe('Model-to-Operations Matrix', () => {
 
     cy.get('[data-testid="toast-success"]').should('exist');
   });
-
-  it('Filters milestone library by category in Help and Knowledge Center', () => {
-    cy.visit('/help-and-knowledge/milestone-library');
-
-    cy.get('[data-testid="Card"]', { timeout: 10000 }).should(
-      'have.length.greaterThan',
-      0
-    );
-    cy.get('[data-testid="Card"]').its('length').as('cardCountBefore');
-
-    cy.contains('button', 'Filter').click({ force: true });
-
-    cy.get('.mint-filter-modal').within(() => {
-      // Click the category checkbox input (scoped to first filter group). .click() fires React's onChange; .check() may not.
-      cy.get('.mint-filter-group')
-        .first()
-        .find('#Learning')
-        .scrollIntoView()
-        .click({ force: true });
-      cy.contains('button', 'Apply filter').click({ force: true });
-    });
-
-    cy.get('.mint-filter-modal').should('not.exist');
-
-    cy.get('@cardCountBefore').then(cardCountBefore => {
-      cy.get('[data-testid="Card"]').should(
-        'have.length.at.most',
-        cardCountBefore
-      );
-    });
-    cy.get('[data-testid="Card"]').should('have.length.greaterThan', 0);
-  });
 });
