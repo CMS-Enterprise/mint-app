@@ -6,7 +6,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -26,9 +25,17 @@ func PlanTaskGetByModelPlanIDLOADER(
 	return sqlutils.SelectProcedure[models.PlanTask](np, sqlqueries.PlanTask.GetByModelPlanIDLoader, args)
 }
 
-// PlanTaskByID retrieves a plan task for a given ID
-func (s *Store) PlanTaskByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTask, error) {
-	return sqlutils.GetProcedure[models.PlanTask](s, sqlqueries.PlanTask.GetByID, utilitysql.CreateIDQueryMap(id))
+// PlanTaskGetByIDLoader returns plan tasks for a slice of task IDs
+func PlanTaskGetByIDLoader(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	ids []uuid.UUID,
+) ([]*models.PlanTask, error) {
+	args := map[string]interface{}{
+		"ids": pq.Array(ids),
+	}
+
+	return sqlutils.SelectProcedure[models.PlanTask](np, sqlqueries.PlanTask.GetByIDLoader, args)
 }
 
 // PlanTaskUpdate updates mutable fields on a plan task (status and completion fields)
