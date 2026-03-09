@@ -99,7 +99,14 @@ const MTOTable = ({
   const dataForTable = useMemo(() => {
     if (!neededWithin30Days) return formattedData;
     const filtered = filterMilestonesNeededWithin30Days(formattedData);
-    return flattenToSingleCategory(filtered);
+    const flattened = flattenToSingleCategory(filtered);
+
+    flattened[0].subCategories[0].milestones.sort(
+      (a, b) =>
+        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
+    );
+
+    return flattened;
   }, [formattedData, neededWithin30Days]);
 
   const [initLocation] = useState<string>(location.pathname);
