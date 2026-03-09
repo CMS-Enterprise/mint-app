@@ -1,4 +1,4 @@
-describe('Model-to-Operations Matrix', () => {
+describe('Help and Knowledge Center', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
