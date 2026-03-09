@@ -50,10 +50,6 @@ import {
   SubCategoryType
 } from './columns';
 
-const NEED_BY_COLUMN_INDEX = columns.findIndex(
-  column => column.accessor === 'needBy'
-);
-
 export type GetModelToOperationsMatrixQueryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix'];
 
@@ -103,7 +99,14 @@ const MTOTable = ({
   const dataForTable = useMemo(() => {
     if (!neededWithin30Days) return formattedData;
     const filtered = filterMilestonesNeededWithin30Days(formattedData);
-    return flattenToSingleCategory(filtered);
+    const flattened = flattenToSingleCategory(filtered);
+
+    flattened[0].subCategories[0].milestones.sort(
+      (a, b) =>
+        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
+    );
+
+    return flattened;
   }, [formattedData, neededWithin30Days]);
 
   const [initLocation] = useState<string>(location.pathname);
@@ -249,42 +252,6 @@ const MTOTable = ({
   );
   // Holds the current column that should be sorted
   const [currentColumn, setCurrentColumn] = useState<number>(0);
-
-  const prevNeededWithin30DaysRef = useRef<boolean>(neededWithin30Days);
-
-  useEffect(() => {
-    const prevNeededWithin30Days = prevNeededWithin30DaysRef.current;
-
-    if (neededWithin30Days && !prevNeededWithin30Days) {
-      if (NEED_BY_COLUMN_INDEX !== -1) {
-        setCurrentColumn(NEED_BY_COLUMN_INDEX);
-        setColumnSort(prev => {
-          const newColumnSort = [...prev];
-          newColumnSort[NEED_BY_COLUMN_INDEX] = {
-            isSorted: true,
-            isSortedDesc: false,
-            sortColumn: columns[NEED_BY_COLUMN_INDEX]
-              .accessor as keyof MilestoneType
-          };
-          return newColumnSort;
-        });
-        // Next manual click on Need by should toggle to descending
-        setSortCount(4);
-      }
-    } else if (!neededWithin30Days && prevNeededWithin30Days) {
-      setColumnSort(
-        Array.from(columns, () => ({
-          isSorted: false,
-          isSortedDesc: false,
-          sortColumn: ''
-        }))
-      );
-      setCurrentColumn(0);
-      setSortCount(3);
-    }
-
-    prevNeededWithin30DaysRef.current = neededWithin30Days;
-  }, [neededWithin30Days]);
 
   // State to hold the index of rows that should be rendered in conjunction with pagination
   const renderedRowIndexes = useRef<{
