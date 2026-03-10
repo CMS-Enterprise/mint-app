@@ -7,13 +7,57 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // FacilitatedByRole is the resolver for the facilitatedByRole field.
 func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj *models.MTOCommonMilestone) ([]models.MTOFacilitator, error) {
 	return obj.FacilitatedByRole, nil
+}
+
+// Suggested is the resolver for the suggested field.
+func (r *mTOCommonMilestoneResolver) Suggested(ctx context.Context, obj *models.MTOCommonMilestone, modelPlanID *uuid.UUID) (*model.MilestoneSuggestionReasons, error) {
+	// Resolve the effective model plan ID: prefer the explicit argument, fall back to context from loader
+	planID := obj.ModelPlanID
+	if modelPlanID != nil {
+		planID = modelPlanID
+	}
+
+	notSuggested := &model.MilestoneSuggestionReasons{
+		IsSuggested: false,
+		Reasons:     []*model.MilestoneSuggestionReason{},
+		Count:       0,
+	}
+
+	// No model plan context or no suggestion record → not suggested
+	if planID == nil || *planID == uuid.Nil || obj.MTOSuggestedMilestoneID == nil {
+		return notSuggested, nil
+	}
+
+	dbReasons, err := MTOSuggestedMilestoneReasonGetByIDLOADER(ctx, *obj.MTOSuggestedMilestoneID)
+	if err != nil {
+		return nil, err
+	}
+
+	reasons := make([]*model.MilestoneSuggestionReason, 0, len(dbReasons))
+	for _, dbReason := range dbReasons {
+		answer := dbReason.TriggerVal
+		reasons = append(reasons, &model.MilestoneSuggestionReason{
+			Table:  string(dbReason.TriggerTable),
+			Field:  dbReason.TriggerCol,
+			Answer: &answer,
+		})
+	}
+
+	return &model.MilestoneSuggestionReasons{
+		IsSuggested: true,
+		Reasons:     reasons,
+		Count:       len(reasons),
+	}, nil
 }
 
 // CommonSolutions is the resolver for the commonSolutions field.

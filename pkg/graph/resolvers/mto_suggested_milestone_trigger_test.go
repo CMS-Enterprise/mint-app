@@ -202,22 +202,118 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	suite.assertCommonMilestoneSuggestion(commonMilestones, "Acquire an application support contractor", true) //TRUE for {APPLICATION_SUPPORT_CONTRACTOR} on column selection method
 }
 
+// TestSuggestedMilestoneReasons verifies that when a milestone becomes suggested,
+// the correct per-field reason rows are written to mto_suggested_milestone_reason.
+// It covers the three trigger styles used in the codebase:
+//   - Boolean:    a single true/false column
+//   - Selection:  a single enum column whose value matches one of the trigger values
+//   - Composite:  multiple columns, each producing a separate reason row
+func (suite *ResolverSuite) TestSuggestedMilestoneReasons() {
+	// --- 1. Boolean trigger: managePartCDEnrollment → plan_general_characteristics ---
+	plan := suite.createModelPlan("plan for suggested milestone reasons - boolean")
+
+	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+
+	_, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID,
+		map[string]interface{}{"managePartCDEnrollment": true},
+		suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
+	suite.NoError(err)
+
+	manageCDMilestone, found := lo.Find(commonMilestones, func(cm *models.MTOCommonMilestone) bool {
+		return cm.Name == "Manage Part C/D enrollment"
+	})
+	suite.True(found)
+	suite.Require().NotNil(manageCDMilestone.MTOSuggestedMilestoneID)
+
+	reasons, err := MTOSuggestedMilestoneReasonGetByIDLOADER(suite.testConfigs.Context, *manageCDMilestone.MTOSuggestedMilestoneID)
+	suite.NoError(err)
+	suite.Len(reasons, 1)
+	suite.Equal(models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics, reasons[0].TriggerTable)
+	suite.Equal("manage_part_c_d_enrollment", reasons[0].TriggerCol)
+	suite.Equal("t", reasons[0].TriggerVal)
+
+	// --- 2. Selection trigger: providerOverlap → plan_participants_and_providers ---
+	plan2 := suite.createModelPlan("plan for suggested milestone reasons - selection")
+
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan2.ID)
+	suite.NoError(err)
+
+	_, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID,
+		map[string]interface{}{"providerOverlap": string(models.OverlapYesNeedPolicies)},
+		suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	commonMilestones2, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan2.ID)
+	suite.NoError(err)
+
+	overlapMilestone, found := lo.Find(commonMilestones2, func(cm *models.MTOCommonMilestone) bool {
+		return cm.Name == "Manage and check provider overlaps"
+	})
+	suite.True(found)
+	suite.Require().NotNil(overlapMilestone.MTOSuggestedMilestoneID)
+
+	reasons2, err := MTOSuggestedMilestoneReasonGetByIDLOADER(suite.testConfigs.Context, *overlapMilestone.MTOSuggestedMilestoneID)
+	suite.NoError(err)
+	suite.Len(reasons2, 1)
+	suite.Equal(models.MilestoneSuggestionReasonTablePlanParticipantsAndProviders, reasons2[0].TriggerTable)
+	suite.Equal("provider_overlap", reasons2[0].TriggerCol)
+	suite.Equal(string(models.OverlapYesNeedPolicies), reasons2[0].TriggerVal)
+
+	// --- 3. Composite trigger: multiple appeal columns → multiple reason rows ---
+	plan3 := suite.createModelPlan("plan for suggested milestone reasons - composite")
+
+	oel, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan3.ID)
+	suite.NoError(err)
+
+	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oel.ID,
+		map[string]interface{}{"appealFeedback": true, "appealPerformance": true},
+		suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	commonMilestones3, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan3.ID)
+	suite.NoError(err)
+
+	appealMilestone, found := lo.Find(commonMilestones3, func(cm *models.MTOCommonMilestone) bool {
+		return cm.Name == "Process participant appeals"
+	})
+	suite.True(found)
+	suite.Require().NotNil(appealMilestone.MTOSuggestedMilestoneID)
+
+	reasons3, err := MTOSuggestedMilestoneReasonGetByIDLOADER(suite.testConfigs.Context, *appealMilestone.MTOSuggestedMilestoneID)
+	suite.NoError(err)
+	suite.Len(reasons3, 2)
+
+	cols := lo.Map(reasons3, func(r *models.MTOSuggestedMilestoneReason, _ int) string { return r.TriggerCol })
+	suite.ElementsMatch([]string{"appeal_feedback", "appeal_performance"}, cols)
+	for _, reason := range reasons3 {
+		suite.Equal(models.MilestoneSuggestionReasonTablePlanOpsEvalAndLearning, reason.TriggerTable)
+		suite.Equal("t", reason.TriggerVal)
+	}
+}
+
 // assertCommonMilestoneSuggestion is a helper method to help simplify tests that often are looking through a list of common milestones,
-// finding a specific milestone from the list, and making sure that its `.isSuggested` property is what we expect it to be
+// finding a specific milestone from the list, and making sure that its suggestion state is what we expect it to be.
+// A milestone is considered suggested when MTOSuggestedMilestoneID is non-nil.
 func (suite *ResolverSuite) assertCommonMilestoneSuggestion(commonMilestones []*models.MTOCommonMilestone, nameToFind string, expectedSuggested bool) {
 	milestone, _ := lo.Find(commonMilestones, func(cm *models.MTOCommonMilestone) bool {
 		return cm.Name == nameToFind
 	})
 
 	if suite.NotNil(milestone) {
-		suite.Equal(expectedSuggested, milestone.IsSuggested)
+		isSuggested := milestone.MTOSuggestedMilestoneID != nil
+		suite.Equal(expectedSuggested, isSuggested)
 	}
 }
 
-// assertNumCommonMilestonesSuggested is a helper method used to assert the number of Common Milestones that have the `.isSuggested` property.
+// assertNumCommonMilestonesSuggested is a helper method used to assert the number of Common Milestones that are currently suggested.
+// A milestone is considered suggested when MTOSuggestedMilestoneID is non-nil.
 func (suite *ResolverSuite) assertNumCommonMilestonesSuggested(commonMilestones []*models.MTOCommonMilestone, expectedNumSuggested int) {
 	actualNumSuggested := lo.CountBy(commonMilestones, func(cm *models.MTOCommonMilestone) bool {
-		return cm.IsSuggested
+		return cm.MTOSuggestedMilestoneID != nil
 	})
 
 	suite.Equal(expectedNumSuggested, actualNumSuggested)

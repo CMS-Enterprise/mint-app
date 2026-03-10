@@ -21,7 +21,12 @@ describe('MilestonePanel Component', () => {
     subCategoryName: 'Test SubCategory',
     isArchived: false,
     isAdded: false,
-    isSuggested: true,
+    suggested: {
+      __typename: 'MilestoneSuggestionReasons' as const,
+      isSuggested: true,
+      count: 0,
+      reasons: []
+    },
     facilitatedByRole: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
     commonSolutions: [
       {

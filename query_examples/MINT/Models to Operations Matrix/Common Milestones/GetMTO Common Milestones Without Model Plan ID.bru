@@ -28,7 +28,12 @@ body:graphql {
   
       isArchived
       isAdded
-      # isSuggested
+      # suggested requires a modelPlanID argument when fetched without model plan context:
+      # suggested(modelPlanID: "{{modelPlanID}}") {
+      #   isSuggested
+      #   count
+      #   reasons { table field answer }
+      # }
       # commonSolutions:
     }
   }

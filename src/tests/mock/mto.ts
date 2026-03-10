@@ -274,7 +274,12 @@ export const commonMilestonesMock: MockedResponse<
                 name: 'Test Milestone',
                 isArchived: false,
                 isAdded: false,
-                isSuggested: true,
+                suggested: {
+                  __typename: 'MilestoneSuggestionReasons' as const,
+                  isSuggested: true,
+                  count: 0,
+                  reasons: []
+                },
                 categoryName: 'Test Category',
                 subCategoryName: 'Test SubCategory',
                 facilitatedByRole: [],

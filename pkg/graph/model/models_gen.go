@@ -178,6 +178,32 @@ type MTOSolutionTranslation struct {
 	Milestones         models.TranslationField            `json:"milestones" db:"milestones"`
 }
 
+// MilestoneSuggestionReason represents a single per-field reason why a milestone was suggested.
+// Each reason corresponds to one (field, value) pair that matched a trigger condition stored
+// in the mto_common_milestone table.
+type MilestoneSuggestionReason struct {
+	// The task list table that contains the field which triggered this suggestion.
+	Table string `json:"table"`
+	// The specific field name (database column) that triggered this suggestion.
+	// For example: "manage_part_c_d_enrollment" or "appeal_performance".
+	Field string `json:"field"`
+	// The specific value that matched the trigger condition.
+	// For example: "t" (true), "LOI", or "APPLICATION_REVIEW_AND_SCORING_TOOL".
+	Answer *string `json:"answer,omitempty"`
+}
+
+// MilestoneSuggestionReasons is an aggregate type that represents the suggestion context for
+// a common milestone in the context of a specific model plan.
+type MilestoneSuggestionReasons struct {
+	// Whether this milestone is currently suggested based on the model plan's answers.
+	IsSuggested bool `json:"isSuggested"`
+	// The specific per-field reasons why this milestone is suggested.
+	// Empty when isSuggested is false.
+	Reasons []*MilestoneSuggestionReason `json:"reasons"`
+	// Total count of suggestion reasons (equivalent to len(reasons)).
+	Count int `json:"count"`
+}
+
 // Represents Model Plan MTO Template Link translation data
 type ModelPlanMTOTemplateLinkTranslation struct {
 	ModelPlanID models.TranslationField `json:"modelPlanID" db:"model_plan_id"`

@@ -12,9 +12,12 @@ type MTOCommonMilestone struct {
 
 	// Section specifies the Task List Section that corresponds to suggesting this common milestone
 	Section TaskListSection `json:"section" db:"section"`
-	// This field facilitate queries, but is not an actual database column (the mto_milestone table joins to the model plan, and potentially to this table, unless it is a custom milestone)
+	// These fields facilitate queries but are not actual columns on the mto_common_milestone table.
+	// They are populated via JOINs when querying in the context of a model plan.
 	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 	IsArchived  bool       `json:"isArchived" db:"is_archived"`
 	IsAdded     bool       `json:"isAdded" db:"is_added"`
-	IsSuggested bool       `json:"isSuggested" db:"is_suggested"`
+	// MTOSuggestedMilestoneID is the ID of the mto_suggested_milestone row for this milestone+model plan,
+	// or nil if the milestone is not currently suggested. Used to fetch suggestion reasons via dataloader.
+	MTOSuggestedMilestoneID *uuid.UUID `json:"mtoSuggestedMilestoneID" db:"mto_suggested_milestone_id"`
 }

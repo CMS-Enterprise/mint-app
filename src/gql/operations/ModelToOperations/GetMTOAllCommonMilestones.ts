@@ -8,7 +8,15 @@ export default gql(/* GraphQL */ `
       description
       isArchived
       isAdded
-      isSuggested
+      suggested {
+        isSuggested
+        count
+        reasons {
+          table
+          field
+          answer
+        }
+      }
       categoryName
       subCategoryName
       facilitatedByRole
