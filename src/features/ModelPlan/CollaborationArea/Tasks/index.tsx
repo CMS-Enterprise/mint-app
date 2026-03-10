@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -60,11 +60,11 @@ const StateTag = ({ state }: { state: PlanTaskState }) => {
   );
 };
 
-// TEMP
+// Fixed order per AC: Start Model Plan → Start MTO → Start Data Exchange
 const TASK_KEY_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
-  PlanTaskKey.DATA_EXCHANGE,
-  PlanTaskKey.MTO
+  PlanTaskKey.MTO,
+  PlanTaskKey.DATA_EXCHANGE
 ];
 
 export type TasksByKey = Record<
@@ -99,8 +99,19 @@ type TasksWrapperProps = {
 const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
+  const { t: tableAndPaginationT } = useTranslation('tableAndPagination');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
+
+  const orderedTasks = TASK_KEY_ORDER.map(key => tasksByKey[key]);
+  const hasNoCurrentTasks = orderedTasks.length === 0;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const maxIndex = Math.max(0, orderedTasks.length - 1);
+    setCurrentIndex(prev => Math.min(prev, maxIndex));
+  }, [orderedTasks.length]);
 
   const lastModifiedSection = getLastModifiedSection(modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
@@ -142,75 +153,124 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
     return null;
   }
 
+  if (hasNoCurrentTasks) {
+    return (
+      <div>
+        <h2 className="margin-top-0">{t('heading')}</h2>
+        <div className="padding-3 border border-base-lighter rounded-lg">
+          <h3 className="margin-top-0 margin-bottom-2">
+            {t('emptyState.heading')}
+          </h3>
+          <p className="margin-0">{t('emptyState.copy')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentTaskKey = TASK_KEY_ORDER[currentIndex];
+  const currentTask = tasksByKey[currentTaskKey];
+  const taskStatus = currentTask.status;
+  const taskState = currentTask.state;
+  const baseKey = `${currentTaskKey}.${taskStatus}`;
+  const lastEditSection = getLastEditSectionForTask(currentTaskKey);
+  const showSectionDetails = taskStatus !== PlanTaskStatus.TO_DO;
+
+  const canGoPrev = currentIndex > 0;
+  const canGoNext = currentIndex < orderedTasks.length - 1;
+
   return (
     <div>
       <h2 className="margin-top-0">{t('heading')}</h2>
       <CardGroup>
-        {TASK_KEY_ORDER.map(taskKey => {
-          const task = tasksByKey[taskKey];
-          const taskStatus = task.status;
-          const taskState = task.state;
-          const baseKey = `${taskKey}.${taskStatus}`;
-
-          const lastEditSection = getLastEditSectionForTask(taskKey);
-          const showSectionDetails = taskStatus !== PlanTaskStatus.TO_DO;
-
-          return (
-            <Card
-              key={taskKey}
-              gridLayout={{ desktop: { col: 12 } }}
-              className="collaboration-area__card minh-0"
-            >
-              <CardHeader>
-                <div className="display-flex flex-align-center flex-justify">
-                  <h3 className="usa-card__heading">
-                    {t(`${baseKey}.heading`)}
-                  </h3>
-                  <StateTag state={taskState} />
-                </div>
-              </CardHeader>
-              <CardBody>
-                <p>{t(`${taskKey}.copy`)}</p>
-                {showSectionDetails && (
-                  <div className="display-flex flex-align-center flex-wrap-wrap">
-                    {taskKey === PlanTaskKey.MODEL_PLAN && (
-                      <>
-                        <span className="text-base">
-                          {collaborationAreaT('modelPlanCard.sectionsStarted', {
-                            sectionsStarted: sectionStartedCounter
-                          })}
-                        </span>
-                        <span className="text-base margin-x-2">|</span>
-                      </>
-                    )}
-                    {lastEditSection && (
-                      <LastModifiedSection section={lastEditSection} />
-                    )}
-                  </div>
+        <Card
+          gridLayout={{ desktop: { col: 12 } }}
+          className="collaboration-area__card minh-0"
+        >
+          <CardHeader>
+            <div className="display-flex flex-align-center flex-justify">
+              <h3 className="usa-card__heading">{t(`${baseKey}.heading`)}</h3>
+              <StateTag state={taskState} />
+            </div>
+          </CardHeader>
+          <CardBody>
+            <p>{t(`${currentTaskKey}.copy`)}</p>
+            {showSectionDetails && (
+              <div className="display-flex flex-align-center flex-wrap-wrap">
+                {currentTaskKey === PlanTaskKey.MODEL_PLAN && (
+                  <>
+                    <span className="text-base">
+                      {collaborationAreaT('modelPlanCard.sectionsStarted', {
+                        sectionsStarted: sectionStartedCounter
+                      })}
+                    </span>
+                    <span className="text-base margin-x-2">|</span>
+                  </>
                 )}
-              </CardBody>
-              <CardFooter className="display-flex border-top-0">
-                <Button
-                  type="button"
-                  className="margin-right-1"
-                  onClick={() =>
-                    navigate(t(`${taskKey}.primaryPath`, { modelID }))
-                  }
-                >
-                  {t(`${baseKey}.primaryAction`)}
-                </Button>
-                <Button
-                  type="button"
-                  outline
-                  onClick={() => navigate(t(`${taskKey}.secondaryPath`))}
-                >
-                  {t(`${taskKey}.secondaryAction`)}
-                </Button>
-              </CardFooter>
-            </Card>
-          );
-        })}
+                {lastEditSection && (
+                  <LastModifiedSection section={lastEditSection} />
+                )}
+              </div>
+            )}
+          </CardBody>
+          <CardFooter className="display-flex border-top-0">
+            <Button
+              type="button"
+              className="margin-right-1"
+              onClick={() =>
+                navigate(t(`${currentTaskKey}.primaryPath`, { modelID }))
+              }
+            >
+              {t(`${baseKey}.primaryAction`)}
+            </Button>
+            <Button
+              type="button"
+              outline
+              onClick={() => navigate(t(`${currentTaskKey}.secondaryPath`))}
+            >
+              {t(`${currentTaskKey}.secondaryAction`)}
+            </Button>
+          </CardFooter>
+        </Card>
       </CardGroup>
+
+      <div className="display-flex flex-align-center flex-justify margin-top-2">
+        <div className="display-flex flex-align-center">
+          <Button
+            type="button"
+            outline
+            disabled={!canGoPrev}
+            onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
+            className="margin-right-1"
+          >
+            {tableAndPaginationT('pagination.previous')}
+          </Button>
+          <Button
+            type="button"
+            outline
+            disabled={!canGoNext}
+            onClick={() =>
+              setCurrentIndex(prev =>
+                Math.min(orderedTasks.length - 1, prev + 1)
+              )
+            }
+          >
+            {tableAndPaginationT('pagination.next')}
+          </Button>
+        </div>
+        <div className="display-flex flex-align-center margin-left-auto">
+          <Button
+            type="button"
+            unstyled
+            className="usa-link"
+            onClick={() => {
+              // TODO: navigate to "See all tasks" page when built
+              navigate(`/models/${modelID}/collaboration-area`);
+            }}
+          >
+            {t('seeAll', { count: orderedTasks.length })}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
