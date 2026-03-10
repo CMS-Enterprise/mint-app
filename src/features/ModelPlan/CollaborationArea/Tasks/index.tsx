@@ -184,7 +184,7 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
       <CardGroup>
         <Card
           gridLayout={{ desktop: { col: 12 } }}
-          className="collaboration-area__card minh-0"
+          className="collaboration-area__card minh-0 margin-bottom-3"
         >
           <CardHeader>
             <div className="display-flex flex-align-center flex-justify">
@@ -233,28 +233,36 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
         </Card>
       </CardGroup>
 
-      <div className="display-flex flex-align-center flex-justify margin-top-2">
+      <div className="display-flex flex-align-center flex-justify">
         <div className="display-flex flex-align-center">
           <Button
             type="button"
-            outline
+            unstyled
             disabled={!canGoPrev}
             onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
-            className="margin-right-1"
+            className="usa-button--unstyled"
           >
+            <Icon.NavigateBefore
+              aria-label={tableAndPaginationT('pagination.previous')}
+            />
             {tableAndPaginationT('pagination.previous')}
           </Button>
+          <span className="margin-x-3 text-base">|</span>
           <Button
             type="button"
-            outline
+            unstyled
             disabled={!canGoNext}
             onClick={() =>
               setCurrentIndex(prev =>
                 Math.min(orderedTasks.length - 1, prev + 1)
               )
             }
+            className="usa-button--unstyled"
           >
             {tableAndPaginationT('pagination.next')}
+            <Icon.NavigateNext
+              aria-label={tableAndPaginationT('pagination.next')}
+            />
           </Button>
         </div>
         <div className="display-flex flex-align-center margin-left-auto">
