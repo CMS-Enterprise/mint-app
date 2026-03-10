@@ -163,12 +163,15 @@ describe('The Model Plan Task List', () => {
       }
     ],
     collaborators: [],
-    dataExchangeApproach: {
-      __typename: 'PlanDataExchangeApproach',
-      id: '4321',
-      status: DataExchangeApproachStatus.IN_PROGRESS,
-      modifiedDts: null,
-      modifiedByUserAccount: null
+    questionnaires: {
+      __typename: 'Questionnaires',
+      dataExchangeApproach: {
+        __typename: 'PlanDataExchangeApproach',
+        id: '4321',
+        status: DataExchangeApproachStatus.IN_PROGRESS,
+        modifiedDts: null,
+        modifiedByUserAccount: null
+      }
     },
     mtoMatrix: {
       __typename: 'ModelsToOperationMatrix',

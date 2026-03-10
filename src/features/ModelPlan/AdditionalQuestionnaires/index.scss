@@ -1,0 +1,29 @@
+@use 'viewports' as *;
+@use "uswds-core" as *;
+
+.additional-questionnaires-list {
+  &__task-row {
+    @media screen and (max-width: $mobile) {
+      @include u-flex('column');
+    }
+  }
+
+  &__task-tag {
+    padding: 7px 11px;
+  }
+
+  &__task-description {
+    max-width: 600px;
+  }
+
+  &__last-updated-status {
+    text-align: right;
+    position: absolute;
+    margin-top: 2rem;
+    @media screen and (max-width: $desktop) {
+      position: relative !important;
+      margin-top: .5rem !important;
+      margin-bottom: 1rem !important;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
-import { Button } from '@trussworks/react-uswds';
+import { Button, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -33,6 +33,11 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import {
+  filterMilestonesNeededWithin30Days,
+  flattenToSingleCategory,
+  GetModelToOperationsMatrixCategoryType
+} from '../../_utils/neededWithin30Days';
 import ActionMenu from '../ActionsMenu';
 
 import {
@@ -48,8 +53,7 @@ import {
 export type GetModelToOperationsMatrixQueryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix'];
 
-type GetModelToOperationsMatrixCategoryType =
-  GetModelToOperationsMatrixQueryType['categories'];
+export type { GetModelToOperationsMatrixCategoryType } from '../../_utils/neededWithin30Days';
 
 const MTOTable = ({
   queryData,
@@ -90,6 +94,21 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
+  const neededWithin30Days = params.get('needed-within-thirty-days') === 'true';
+
+  const dataForTable = useMemo(() => {
+    if (!neededWithin30Days) return formattedData;
+    const filtered = filterMilestonesNeededWithin30Days(formattedData);
+    const flattened = flattenToSingleCategory(filtered);
+
+    flattened[0].subCategories[0].milestones.sort(
+      (a, b) =>
+        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
+    );
+
+    return flattened;
+  }, [formattedData, neededWithin30Days]);
+
   const [initLocation] = useState<string>(location.pathname);
 
   const { helpSolutions } = useHelpSolution();
@@ -112,13 +131,13 @@ const MTOTable = ({
 
   // Holds the rearranged/dragged state of data pre-sorted
   const [rearrangedData, setRearrangedData] = useState(
-    structuredClone(formattedData || [])
+    structuredClone(dataForTable || [])
   );
 
-  // Update the rearrangedData state when the formattedData changes
+  // Update the rearrangedData state when the table data changes (e.g. filter toggle)
   useEffect(() => {
-    setRearrangedData(structuredClone(formattedData));
-  }, [formattedData]);
+    setRearrangedData(structuredClone(dataForTable || []));
+  }, [dataForTable]);
 
   // Holds the sorted data state
   const [sortedData, setSortedData] = useState<CategoryType[]>([
@@ -247,7 +266,8 @@ const MTOTable = ({
 
   // Calculate the total number of milestones in the data
   const itemLength = useMemo(() => {
-    return structuredClone(formattedData).reduce(
+    if (!dataForTable) return 0;
+    return structuredClone(dataForTable).reduce(
       (acc, category) =>
         acc +
         category.subCategories.reduce(
@@ -256,7 +276,7 @@ const MTOTable = ({
         ),
       0
     );
-  }, [formattedData]);
+  }, [dataForTable]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(itemLength / itemsPerPage);
@@ -269,12 +289,13 @@ const MTOTable = ({
         sliceItems,
         pageNum,
         itemsPerP,
-        totalPages
+        totalPages,
+        neededWithin30Days
       );
 
       return sliceItems;
     };
-  }, [totalPages]);
+  }, [totalPages, neededWithin30Days]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -295,10 +316,10 @@ const MTOTable = ({
         )
       );
     } else {
-      setSortedData(structuredClone(formattedData));
+      setSortedData(structuredClone(dataForTable || []));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentColumn, columnSort, formattedData]);
+  }, [currentColumn, columnSort, dataForTable]);
 
   const RenderCells = ({
     row,
@@ -363,7 +384,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
+              onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -393,7 +414,7 @@ const MTOTable = ({
                   )
                 );
               }}
-              onKeyPress={(e: React.KeyboardEvent<HTMLButtonElement>) => {
+              onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) => {
                 e.stopPropagation();
               }}
               className="share-export-modal__menu-item padding-y-1 padding-x-2 action-menu-item"
@@ -496,13 +517,7 @@ const MTOTable = ({
         return null;
       }
 
-      const rawSubCategory = formattedData
-        .find(category => category.id === categoryID)
-        ?.subCategories.find(sub => sub.id === subCategory.id);
-
-      const numberOfMilestones = rawSubCategory
-        ? rawSubCategory.milestones.length
-        : 0;
+      const numberOfMilestones = subCategory.milestones.length;
 
       return (
         <div style={{ display: 'contents' }} key={subCategory.id}>
@@ -549,6 +564,19 @@ const MTOTable = ({
     });
 
   const renderCategories = () => {
+    // When "needed within 30 days" filter is on, show only milestone rows (no category/subcategory rows)
+    if (neededWithin30Days) {
+      return sortedData.flatMap((category, categoryIndex) =>
+        category.subCategories.flatMap((subCategory, subCategoryIndex) =>
+          renderMilestones(
+            subCategory.milestones,
+            categoryIndex,
+            subCategoryIndex
+          )
+        )
+      );
+    }
+
     return sortedData.map((category, index) => {
       // Don't render if the category is not in the rendered indexes
       if (!renderedRowIndexes.current.category.includes(index)) {
@@ -557,14 +585,10 @@ const MTOTable = ({
 
       const isExpanded = !expandedRows.includes(category.id);
 
-      const rawCategory = formattedData.find(cat => cat.id === category.id);
-
-      const numberOfMilestones = rawCategory
-        ? rawCategory.subCategories.reduce(
-            (acc, subCategory) => acc + subCategory.milestones.length,
-            0
-          )
-        : 0;
+      const numberOfMilestones = category.subCategories.reduce(
+        (acc, subCategory) => acc + subCategory.milestones.length,
+        0
+      );
 
       return (
         <div style={{ display: 'contents' }} key={category.id}>
@@ -638,109 +662,141 @@ const MTOTable = ({
               closeRoute={initLocation}
             />
           )}
-          <DndProvider backend={HTML5Backend}>
-            <div
-              className="display-block"
-              style={{
-                width: '100%',
-                minWidth: '100%',
-                overflow: 'auto',
-                borderBottom: '1px solid black',
-                marginBottom: '.75rem'
-              }}
+          {neededWithin30Days && itemLength === 0 ? (
+            <Alert
+              type="info"
+              heading={t(
+                'modelToOperationsMisc:table.tableFilters.noResults.header'
+              )}
+              className="margin-top-3"
             >
-              <TopScrollContainer>
-                <table
-                  style={{
-                    width: '100%',
-                    borderCollapse: 'collapse'
-                  }}
+              <span className="mandatory-fields-alert__text">
+                <span>
+                  {t(
+                    'modelToOperationsMisc:table.tableFilters.noResults.content'
+                  )}
+                </span>
+                <Link
+                  aria-label={t(
+                    'modelToOperationsMisc:table.tableFilters.noResults.emailLinkAriaLabel'
+                  )}
+                  className="line-height-body-5"
+                  href="mailto:MINTTeam@cms.hhs.gov"
+                  target="_blank"
                 >
-                  <thead>
-                    <tr>
-                      {filteredColumns.map((column, index) => (
-                        <th
-                          key={column.accessor}
-                          style={{
-                            borderBottom: '1px solid black',
-                            padding: '1rem',
-                            paddingLeft: index === 0 ? '.5rem' : '0px',
-                            paddingBottom: '.25rem',
-                            width: column.width,
-                            minWidth: column.width,
-                            maxWidth: column.width
-                          }}
-                        >
-                          {column.canSort !== false ? (
-                            <button
-                              className={classNames(
-                                'usa-button usa-button--unstyled position-relative display-block'
-                              )}
-                              onClick={() => {
-                                const isSorted =
-                                  sortCount % 3 === 1 || sortCount % 3 === 0;
-                                const isSortedDesc = sortCount % 3 === 1;
+                  MINTTeam@cms.hhs.gov
+                </Link>
+                .
+              </span>
+            </Alert>
+          ) : (
+            <DndProvider backend={HTML5Backend}>
+              <div
+                className="display-block"
+                style={{
+                  width: '100%',
+                  minWidth: '100%',
+                  overflow: 'auto',
+                  borderBottom: '1px solid black',
+                  marginBottom: '.75rem'
+                }}
+              >
+                <TopScrollContainer>
+                  <table
+                    style={{
+                      width: '100%',
+                      borderCollapse: 'collapse'
+                    }}
+                  >
+                    <thead>
+                      <tr>
+                        {filteredColumns.map((column, index) => (
+                          <th
+                            key={column.accessor}
+                            style={{
+                              borderBottom: '1px solid black',
+                              padding: '1rem',
+                              paddingLeft: index === 0 ? '.5rem' : '0px',
+                              paddingBottom: '.25rem',
+                              width: column.width,
+                              minWidth: column.width,
+                              maxWidth: column.width
+                            }}
+                          >
+                            {column.canSort !== false ? (
+                              <button
+                                className={classNames(
+                                  'usa-button usa-button--unstyled position-relative display-block'
+                                )}
+                                onClick={() => {
+                                  const isSorted =
+                                    sortCount % 3 === 1 || sortCount % 3 === 0;
+                                  const isSortedDesc = sortCount % 3 === 1;
 
-                                setCurrentColumn(index);
-                                setSortCount(sortCount + 1);
-                                setColumnSort(prev => {
-                                  const newColumnSort = [...prev];
-                                  newColumnSort[index] = {
-                                    isSorted,
-                                    isSortedDesc,
-                                    sortColumn: column.accessor
-                                  };
-                                  return newColumnSort;
-                                });
-                              }}
-                              type="button"
-                            >
-                              {column.Header}
-                              {getHeaderSortIcon(columnSort[index], true)}
-                            </button>
-                          ) : (
-                            <span
-                              className={classNames(
-                                'usa-button usa-button--unstyled position-relative display-block',
-                                {
-                                  'text-no-underline text-black':
-                                    column.Header ===
-                                    t('modelToOperationsMisc:table.actions')
-                                }
-                              )}
-                            >
-                              {column.Header}
-                            </span>
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>{renderCategories()}</tbody>
-                </table>{' '}
-              </TopScrollContainer>
-            </div>
-
-            <div className="mint-no-print">
-              <div className="display-flex">
-                {totalPages > 0 && Pagination}
-
-                <TablePageSize
-                  className="margin-left-auto desktop:grid-col-auto"
-                  pageSize={itemsPerPage}
-                  setPageSize={setItemsPerPage}
-                  setInitPageSize={setItemsPerPageInit}
-                  valueArray={[5, 10, 15, 20, 'all']}
-                  suffix={t('modelToOperationsMisc:table.milestones')}
-                  onChange={() => {
-                    // Reset pagination to the first page when the page size changes
-                    params.set('page', '1');
-                    navigate({ search: params.toString() }, { replace: true });
-                  }}
-                />
+                                  setCurrentColumn(index);
+                                  setSortCount(sortCount + 1);
+                                  setColumnSort(prev => {
+                                    const newColumnSort = [...prev];
+                                    newColumnSort[index] = {
+                                      isSorted,
+                                      isSortedDesc,
+                                      sortColumn: column.accessor
+                                    };
+                                    return newColumnSort;
+                                  });
+                                }}
+                                type="button"
+                              >
+                                {column.Header}
+                                {getHeaderSortIcon(columnSort[index], true)}
+                              </button>
+                            ) : (
+                              <span
+                                className={classNames(
+                                  'usa-button usa-button--unstyled position-relative display-block',
+                                  {
+                                    'text-no-underline text-black':
+                                      column.Header ===
+                                      t('modelToOperationsMisc:table.actions')
+                                  }
+                                )}
+                              >
+                                {column.Header}
+                              </span>
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>{renderCategories()}</tbody>
+                  </table>{' '}
+                </TopScrollContainer>
               </div>
-            </div>
-          </DndProvider>{' '}
+
+              <div className="mint-no-print">
+                <div className="display-flex">
+                  {totalPages > 0 && Pagination}
+
+                  <TablePageSize
+                    className="margin-left-auto desktop:grid-col-auto"
+                    pageSize={itemsPerPage}
+                    setPageSize={setItemsPerPage}
+                    setInitPageSize={setItemsPerPageInit}
+                    valueArray={[5, 10, 15, 20, 'all']}
+                    suffix={t('modelToOperationsMisc:table.milestones')}
+                    onChange={() => {
+                      // Reset pagination to the first page when the page size changes
+                      params.set('page', '1');
+                      navigate(
+                        { search: params.toString() },
+                        { replace: true }
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </DndProvider>
+          )}
         </MTOSolutionPanelProvider>
       </MTOMilestonePanelProvider>
     </>
@@ -925,7 +981,8 @@ export const getRenderedRowIndexes = (
   sliceItems: CategoryType[],
   pageNum: number,
   itemsPerP: number,
-  totalPages: number
+  totalPages: number,
+  milestonesOnly = false
 ) => {
   const startingIndex = pageNum * itemsPerP;
   const endingIndex = startingIndex + itemsPerP;
@@ -960,14 +1017,21 @@ export const getRenderedRowIndexes = (
       subCategory.milestones.forEach((milestone, milIndex) => {
         milestoneCount += 1;
         if (milestoneIndex >= startingIndex && milestoneIndex < endingIndex) {
-          shownIndexes.category.push(catIndex);
-          shownIndexes.subCategory[catIndex].push(subIndex);
+          if (!milestonesOnly) {
+            shownIndexes.category.push(catIndex);
+            shownIndexes.subCategory[catIndex].push(subIndex);
+          }
           shownIndexes.milestone[catIndex][subIndex].push(milIndex);
         }
         milestoneIndex += 1;
       });
     });
   });
+
+  // When showing only milestones (e.g. "needed within 30 days" filter), skip category/subcategory rows
+  if (milestonesOnly) {
+    return shownIndexes;
+  }
 
   // If there are no milestones, we still want to show the category and subcategory on their respective pages
   sliceItemsCopy.forEach((category, catIndex) => {

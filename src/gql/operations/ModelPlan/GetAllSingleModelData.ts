@@ -269,29 +269,6 @@ export default gql(/* GraphQL */ `
         dataToSendParticicipantsNote
         shareCclfData
         shareCclfDataNote
-        technicalContactsIdentified
-        technicalContactsIdentifiedDetail
-        technicalContactsIdentifiedNote
-        captureParticipantInfo
-        captureParticipantInfoNote
-        icdOwner
-        draftIcdDueDate
-        icdNote
-        dataFullTimeOrIncremental
-        eftSetUp
-        unsolicitedAdjustmentsIncluded
-        dataFlowDiagramsNeeded
-        produceBenefitEnhancementFiles
-        fileNamingConventions
-        dataMonitoringNote
-        uatNeeds
-        stcNeeds
-        testingTimelines
-        testingNote
-        dataMonitoringFileTypes
-        dataMonitoringFileOther
-        dataResponseType
-        dataResponseFileFrequency
         modelLearningSystems
         modelLearningSystemsOther
         modelLearningSystemsNote
@@ -428,35 +405,37 @@ export default gql(/* GraphQL */ `
         readyForReviewDts
         status
       }
-      dataExchangeApproach {
-        id
-        dataToCollectFromParticipants
-        dataToCollectFromParticipantsReportsDetails
-        dataToCollectFromParticipantsOther
-        dataWillNotBeCollectedFromParticipants
-        dataToCollectFromParticipantsNote
-        dataToSendToParticipants
-        dataToSendToParticipantsNote
-        doesNeedToMakeMultiPayerDataAvailable
-        anticipatedMultiPayerDataAvailabilityUseCase
-        doesNeedToMakeMultiPayerDataAvailableNote
-        doesNeedToCollectAndAggregateMultiSourceData
-        multiSourceDataToCollect
-        multiSourceDataToCollectOther
-        doesNeedToCollectAndAggregateMultiSourceDataNote
-        willImplementNewDataExchangeMethods
-        newDataExchangeMethodsDescription
-        newDataExchangeMethodsNote
-        additionalDataExchangeConsiderationsDescription
-        isDataExchangeApproachComplete
-        markedCompleteByUserAccount {
+      questionnaires {
+        dataExchangeApproach {
           id
-          commonName
+          dataToCollectFromParticipants
+          dataToCollectFromParticipantsReportsDetails
+          dataToCollectFromParticipantsOther
+          dataWillNotBeCollectedFromParticipants
+          dataToCollectFromParticipantsNote
+          dataToSendToParticipants
+          dataToSendToParticipantsNote
+          doesNeedToMakeMultiPayerDataAvailable
+          anticipatedMultiPayerDataAvailabilityUseCase
+          doesNeedToMakeMultiPayerDataAvailableNote
+          doesNeedToCollectAndAggregateMultiSourceData
+          multiSourceDataToCollect
+          multiSourceDataToCollectOther
+          doesNeedToCollectAndAggregateMultiSourceDataNote
+          willImplementNewDataExchangeMethods
+          newDataExchangeMethodsDescription
+          newDataExchangeMethodsNote
+          additionalDataExchangeConsiderationsDescription
+          isDataExchangeApproachComplete
+          markedCompleteByUserAccount {
+            id
+            commonName
+          }
+          markedCompleteDts
+          modifiedDts
+          createdDts
+          status
         }
-        markedCompleteDts
-        modifiedDts
-        createdDts
-        status
       }
       mtoMatrix {
         info {

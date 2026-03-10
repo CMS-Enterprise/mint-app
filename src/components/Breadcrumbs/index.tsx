@@ -37,6 +37,8 @@ export enum BreadcrumbItemOptions {
   CR_TDLS = 'CR_TDLS',
   STATUS = 'STATUS',
   TIMELINE = 'TIMELINE',
+  ADDITIONAL_QUESTIONNAIRES = 'ADDITIONAL_QUESTIONNAIRES',
+  IDDOC_QUESTIONNAIRE = 'IDDOC_QUESTIONNAIRE',
   ANALYTICS = 'ANALYTICS'
 }
 
@@ -66,10 +68,6 @@ export const commonBreadCrumbs = (
   COLLABORATION_AREA: {
     text: 'collaborationArea:heading',
     url: `/models/${modelID}/collaboration-area`
-  },
-  DATA_EXCHANGE_APPROACH: {
-    text: 'dataExchangeApproachMisc:heading',
-    url: `/models/${modelID}/collaboration-area/data-exchange-approach`
   },
   MODEL_TO_OPERATIONS: {
     text: 'modelToOperationsMisc:heading',
@@ -134,6 +132,18 @@ export const commonBreadCrumbs = (
   TIMELINE: {
     text: 'timelineMisc:heading',
     url: `/models/${modelID}/collaboration-area/model-timeline`
+  },
+  ADDITIONAL_QUESTIONNAIRES: {
+    text: 'additionalQuestionnaires:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires`
+  },
+  DATA_EXCHANGE_APPROACH: {
+    text: 'dataExchangeApproachMisc:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/about-data-exchange-approach`
+  },
+  IDDOC_QUESTIONNAIRE: {
+    text: 'iddocQuestionnaireMisc:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`
   },
   ANALYTICS: {
     text: 'analytics:heading',

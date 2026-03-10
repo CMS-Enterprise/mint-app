@@ -209,6 +209,26 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDiscussionAdded(
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesDiscussionAdded, arg)
 }
 
+// UserAccountGetNotificationPreferencesForIDDOCQuestionnaireCompleted returns a collection of
+// user accounts that should be notified of when an IDDOC questionnaire is completed
+func UserAccountGetNotificationPreferencesForIDDOCQuestionnaireCompleted(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) ([]*models.UserAccountAndNotificationPreferences, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesIDDOCQuestionnaireCompleted, arg)
+}
+
+// UserAccountsGetNotificationRecipientsForIDDOCQuestionnaireCompleted returns a collection of
+// user accounts that should be notified of when an IDDOC questionnaire is completed
+func (s *Store) UserAccountsGetNotificationRecipientsForIDDOCQuestionnaireCompleted(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) ([]*models.UserAccountAndNotificationPreferences, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesIDDOCQuestionnaireCompleted, arg)
+}
+
 // UserAccountGetLeadModelPlanCount returns the count of model plans where the user is a lead.
 func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUID) (int, error) {
 	arg := map[string]interface{}{

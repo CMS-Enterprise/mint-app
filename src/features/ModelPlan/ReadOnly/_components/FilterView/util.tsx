@@ -32,7 +32,7 @@ export const groupOptions: GroupOption[] = [
   { value: 'ipc', label: 'Innovation Payment Contractor (IPC)' },
   {
     value: 'iddoc',
-    label: 'Innovative Design, Development, and Operations Contract (IDDOC)'
+    label: '4i and ACO-OS'
   },
   { value: 'mdm', label: 'Master Data Management (MDM)' },
   { value: 'oact', label: 'Office of the Actuary (OACT)' },

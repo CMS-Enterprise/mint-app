@@ -34,12 +34,6 @@ func (r *planOpsEvalAndLearningResolver) ContractorSupport(ctx context.Context, 
 	return contractorSupportTypes, nil
 }
 
-// DataMonitoringFileTypes is the resolver for the dataMonitoringFileTypes field.
-func (r *planOpsEvalAndLearningResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.MonitoringFileType, error) {
-	monitoringFileTypes := models.ConvertEnums[model.MonitoringFileType](obj.DataMonitoringFileTypes)
-	return monitoringFileTypes, nil
-}
-
 // EvaluationApproaches is the resolver for the evaluationApproaches field.
 func (r *planOpsEvalAndLearningResolver) EvaluationApproaches(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.EvaluationApproachType, error) {
 	evaluationApproachTypes := models.ConvertEnums[model.EvaluationApproachType](obj.EvaluationApproaches)
