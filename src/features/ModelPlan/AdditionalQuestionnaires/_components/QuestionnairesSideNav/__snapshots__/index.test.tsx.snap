@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`QuestionnairesSideNav > match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="border-top-05 border-primary-lighter padding-top-2 margin-top-2"
+    data-testid="sidenav"
+  >
+    <div
+      class="margin-top-4 margin-bottom-6"
+    >
+      <h4
+        class="margin-bottom-1"
+      >
+        Related content
+      </h4>
+      <div
+        class="margin-bottom-1"
+      >
+        <a
+          class="usa-link line-height-body-5"
+          data-discover="true"
+          href="/help-and-knowledge/high-level-project-plan"
+          target="_blank"
+        >
+          High-level project plan (opens in a new tab)
+        </a>
+      </div>
+      <div
+        class="margin-bottom-1"
+      >
+        <a
+          class="usa-link line-height-body-5"
+          data-discover="true"
+          href="/help-and-knowledge/creating-mto-matrix"
+          target="_blank"
+        >
+          Creating your model-to-operations matrix (MTO) in MINT (opens in a new tab)
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

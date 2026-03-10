@@ -77,7 +77,6 @@ const DataSharing = () => {
 
   const {
     id,
-    iddocSupport,
     ccmInvolvment,
     dataNeededForMonitoring,
     dataSharingStarts,
@@ -126,7 +125,6 @@ const DataSharing = () => {
   const initialValues: GetDataSharingFormType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
-    iddocSupport: iddocSupport ?? null,
     ccmInvolvment: ccmInvolvment ?? [],
     dataNeededForMonitoring: dataNeededForMonitoring ?? [],
     dataSharingStarts: dataSharingStarts ?? null,
@@ -496,13 +494,11 @@ const DataSharing = () => {
         {data && (
           <PageNumber
             currentPage={renderCurrentPage(
-              8,
-              iddocSupport,
+              5,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}
             totalPages={renderTotalPages(
-              iddocSupport,
               isCCWInvolvement(ccmInvolvment) ||
                 isQualityMeasures(dataNeededForMonitoring)
             )}

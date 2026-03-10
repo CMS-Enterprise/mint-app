@@ -33,6 +33,7 @@ func sendTestDailyDigestEmail(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
+				IDDOCQuestionnaireMarkedComplete: true,
 			},
 		},
 	}
@@ -82,6 +83,7 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
+				IDDOCQuestionnaireMarkedComplete: true,
 			},
 		},
 	}
@@ -105,6 +107,7 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
+				IDDOCQuestionnaireMarkedComplete: true,
 			},
 		},
 	}

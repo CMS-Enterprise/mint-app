@@ -15,14 +15,6 @@ enum ContractorSupportType {
   OTHER
 }
 
-enum MonitoringFileType {
-  BENEFICIARY
-  PROVIDER
-  PART_A
-  PART_B
-  OTHER
-}
-
 enum EvaluationApproachType {
   CONTROL_INTERVENTION
   COMPARISON_MATCH
@@ -72,11 +64,6 @@ enum ModelLearningSystemType {
   NO_LEARNING_SYSTEM
 }
 
-enum DataFullTimeOrIncrementalType {
-  FULL_TIME
-  INCREMENTAL
-}
-
 enum BenchmarkForPerformanceType {
   YES_RECONCILE
   YES_NO_RECONCILE
@@ -115,35 +102,6 @@ type PlanOpsEvalAndLearning {
   iddocSupportNote: String
 
   #Page 2
-  technicalContactsIdentified: Boolean
-  technicalContactsIdentifiedDetail: String
-  technicalContactsIdentifiedNote: String
-  captureParticipantInfo: Boolean
-  captureParticipantInfoNote: String
-  icdOwner: String
-  draftIcdDueDate: Time
-  icdNote: String
-
-  #Page 3
-  uatNeeds: String
-  stcNeeds: String
-  testingTimelines: String
-  testingNote: String
-  dataMonitoringFileTypes: [MonitoringFileType!]!
-  dataMonitoringFileOther: String
-  dataResponseType: String
-  dataResponseFileFrequency: String
-
-  #Page 4
-  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-  eftSetUp: Boolean
-  unsolicitedAdjustmentsIncluded: Boolean
-  dataFlowDiagramsNeeded: Boolean
-  produceBenefitEnhancementFiles: Boolean
-  fileNamingConventions: String
-  dataMonitoringNote: String
-
-  #Page 5
   benchmarkForPerformance: BenchmarkForPerformanceType
   benchmarkForPerformanceNote: String
   computePerformanceScores: Boolean
@@ -159,7 +117,7 @@ type PlanOpsEvalAndLearning {
   appealOther: Boolean
   appealNote: String
 
-  #Page 6
+  #Page 3
   evaluationApproaches: [EvaluationApproachType!]!
   evaluationApproachOther: String
   evaluationApproachNote: String
@@ -175,7 +133,7 @@ type PlanOpsEvalAndLearning {
   shareCclfData: Boolean
   shareCclfDataNote: String
 
-  #Page 7
+  #Page 4
   sendFilesBetweenCcw: Boolean
   sendFilesBetweenCcwNote: String
   appToSendFilesToKnown: Boolean
@@ -189,7 +147,7 @@ type PlanOpsEvalAndLearning {
   qualityPerformanceImpactsPaymentOther: String
   qualityPerformanceImpactsPaymentNote: String
 
-  #Page 8
+  #Page 5
   dataSharingStarts: DataStartsType
   dataSharingStartsOther: String
   dataSharingFrequency: [FrequencyType!]!
@@ -209,7 +167,7 @@ type PlanOpsEvalAndLearning {
   qualityReportingFrequencyContinually: String
   qualityReportingFrequencyOther: String
 
-  #Page 9
+  #Page 6
   modelLearningSystems: [ModelLearningSystemType!]!
   modelLearningSystemsOther: String
   modelLearningSystemsNote: String
@@ -252,32 +210,6 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
   iddocSupport: Boolean
   iddocSupportNote: String
   #Page 2
-  technicalContactsIdentified: Boolean
-  technicalContactsIdentifiedDetail: String
-  technicalContactsIdentifiedNote: String
-  captureParticipantInfo: Boolean
-  captureParticipantInfoNote: String
-  icdOwner: String
-  draftIcdDueDate: Time
-  icdNote: String
-  #Page 3
-  uatNeeds: String
-  stcNeeds: String
-  testingTimelines: String
-  testingNote: String
-  dataMonitoringFileTypes: [MonitoringFileType!]
-  dataMonitoringFileOther: String
-  dataResponseType: String
-  dataResponseFileFrequency: String
-  #Page 4
-  dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
-  eftSetUp: Boolean
-  unsolicitedAdjustmentsIncluded: Boolean
-  dataFlowDiagramsNeeded: Boolean
-  produceBenefitEnhancementFiles: Boolean
-  fileNamingConventions: String
-  dataMonitoringNote: String
-  #Page 5
   benchmarkForPerformance: BenchmarkForPerformanceType
   benchmarkForPerformanceNote: String
   computePerformanceScores: Boolean
@@ -292,7 +224,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
   appealPayments: Boolean
   appealOther: Boolean
   appealNote: String
-  #Page 6
+  #Page 3
   evaluationApproaches: [EvaluationApproachType!]
   evaluationApproachOther: String
   evaluationApproachNote: String
@@ -307,7 +239,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
   dataToSendParticicipantsNote: String
   shareCclfData: Boolean
   shareCclfDataNote: String
-  #Page 7
+  #Page 4
   sendFilesBetweenCcw: Boolean
   sendFilesBetweenCcwNote: String
   appToSendFilesToKnown: Boolean
@@ -320,7 +252,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
   qualityPerformanceImpactsPayment: YesNoOtherType
   qualityPerformanceImpactsPaymentOther: String
   qualityPerformanceImpactsPaymentNote: String
-  #Page 8
+  #Page 5
   dataSharingStarts: DataStartsType
   dataSharingStartsOther: String
   dataSharingFrequency: [FrequencyType!]
@@ -339,7 +271,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
   qualityReportingFrequency: [FrequencyType!]
   qualityReportingFrequencyContinually: String
   qualityReportingFrequencyOther: String
-  #Page 9
+  #Page 6
   modelLearningSystems: [ModelLearningSystemType!]
   modelLearningSystemsOther: String
   modelLearningSystemsNote: String

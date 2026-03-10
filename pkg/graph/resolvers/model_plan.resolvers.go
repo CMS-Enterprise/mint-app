@@ -62,19 +62,14 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 }
 
 // Tasks is the resolver for the tasks field.
-func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*model.PlanTask, error) {
+func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTask, error) {
 	// Stub: return empty list until plan_task data layer and loader are implemented.
-	return []*model.PlanTask{}, nil
+	return []*models.PlanTask{}, nil
 }
 
 // Payments is the resolver for the payments field.
 func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error) {
 	return PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
-}
-
-// DataExchangeApproach is the resolver for the dataExchangeApproach field.
-func (r *modelPlanResolver) DataExchangeApproach(ctx context.Context, obj *models.ModelPlan) (*models.PlanDataExchangeApproach, error) {
-	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ID)
 }
 
 // TaskListStatus is the resolver for the taskListStatus field.
@@ -141,6 +136,13 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // Timeline is the resolver for the timeline field.
 func (r *modelPlanResolver) Timeline(ctx context.Context, obj *models.ModelPlan) (*models.PlanTimeline, error) {
 	return PlanTimelineGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// Questionnaires is the resolver for the questionnaires field.
+func (r *modelPlanResolver) Questionnaires(ctx context.Context, obj *models.ModelPlan) (*models.Questionnaires, error) {
+	return &models.Questionnaires{
+		ModelPlanID: obj.ID,
+	}, nil
 }
 
 // MostRecentEdit is the resolver for the mostRecentEdit field.
