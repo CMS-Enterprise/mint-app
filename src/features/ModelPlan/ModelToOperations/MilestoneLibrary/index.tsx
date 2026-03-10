@@ -10,6 +10,7 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   GetMtoMilestonesQuery,
@@ -34,6 +35,12 @@ import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MilestoneCard from '../_components/MilestoneCard';
 import MilestonePanel from '../_components/MilestonePanel';
+
+import MilestoneFilterModal, {
+  MilestoneSelectedFilters
+} from './_components/MilestoneFilterModal';
+import getMilestoneFilters from './_components/MilestoneFilterModal/getMilestoneFilters';
+import MilestoneFilterTags from './_components/MilestoneFilterTags';
 
 import './index.scss';
 
@@ -160,6 +167,7 @@ const MilstoneCardGroup = ({
   isHkcMilestoneLibrary: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const { t: hkcT } = useTranslation('helpAndKnowledge');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -176,6 +184,40 @@ const MilstoneCardGroup = ({
   // Query parameters
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+
+  const appliedFilters: MilestoneSelectedFilters = useMemo(() => {
+    const searchParams = new URLSearchParams(location.search);
+
+    return {
+      categoryName: searchParams.get('category')
+        ? (searchParams.get('category') || '').split(',')
+        : [],
+      facilitatedByRole: (searchParams.get('role')
+        ? (searchParams.get('role') || '').split(',')
+        : []) as MilestoneSelectedFilters['facilitatedByRole']
+    };
+  }, [location.search]);
+
+  const setAppliedFilters = (filters: MilestoneSelectedFilters) => {
+    const newParams = new URLSearchParams(location.search);
+
+    if (filters.categoryName.length > 0) {
+      newParams.set('category', filters.categoryName.join(','));
+    } else {
+      newParams.delete('category');
+    }
+
+    if (filters.facilitatedByRole.length > 0) {
+      newParams.set('role', filters.facilitatedByRole.join(','));
+    } else {
+      newParams.delete('role');
+    }
+
+    // Reset pagination when filters change
+    newParams.delete('page');
+
+    navigate({ search: newParams.toString() }, { replace: true });
+  };
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
   const milestoneParam: string = params.get('milestone') || '';
 
@@ -273,12 +315,49 @@ const MilstoneCardGroup = ({
 
   const { itemsPerPage, setItemsPerPage } = pageSize;
 
+  const filterOptions = useMemo(
+    () => getMilestoneFilters(selectedMilestones),
+    [selectedMilestones]
+  );
+
+  const hasAppliedFilters = useMemo(
+    () =>
+      isHkcMilestoneLibrary &&
+      (appliedFilters.categoryName.length > 0 ||
+        appliedFilters.facilitatedByRole.length > 0),
+    [appliedFilters, isHkcMilestoneLibrary]
+  );
+
+  const filteredMilestones = useMemo(() => {
+    if (!isHkcMilestoneLibrary) {
+      return selectedMilestones;
+    }
+
+    let filtered = [...selectedMilestones];
+
+    if (appliedFilters.categoryName.length > 0) {
+      filtered = filtered.filter(milestone =>
+        appliedFilters.categoryName.includes(milestone.categoryName)
+      );
+    }
+
+    if (appliedFilters.facilitatedByRole.length > 0) {
+      filtered = filtered.filter(milestone =>
+        appliedFilters.facilitatedByRole.some(role =>
+          milestone.facilitatedByRole.includes(role)
+        )
+      );
+    }
+
+    return filtered;
+  }, [selectedMilestones, appliedFilters, isHkcMilestoneLibrary]);
+
   const {
     currentItems,
     Pagination: PaginationComponent,
     pagination: { currentPage, pageCount }
   } = usePagination<MilestoneCardType[]>({
-    items: selectedMilestones,
+    items: filteredMilestones,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
@@ -306,16 +385,34 @@ const MilstoneCardGroup = ({
       <div className="milestone-card-group">
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
-            <Grid tablet={{ col: 6 }}>
+            <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
+              {isHkcMilestoneLibrary && (
+                <MilestoneFilterModal
+                  filters={filterOptions}
+                  appliedFilters={appliedFilters}
+                  setAppliedFilters={setAppliedFilters}
+                />
+              )}
               {/* Search bar and results info */}
               <GlobalClientFilter
                 globalFilter={query}
                 setGlobalFilter={setQuery}
                 tableID="help-articles"
                 tableName=""
-                className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
+                className={classNames('maxw-none tablet:width-mobile-lg', {
+                  'tablet:margin-left-1': isHkcMilestoneLibrary
+                })}
+                height5
               />
             </Grid>
+
+            {isHkcMilestoneLibrary && (
+              <MilestoneFilterTags
+                appliedFilters={appliedFilters}
+                setAppliedFilters={setAppliedFilters}
+                className="margin-top-2"
+              />
+            )}
 
             {!!query && (
               <Grid desktop={{ col: 12 }}>
@@ -474,6 +571,16 @@ const MilstoneCardGroup = ({
               />
             </Alert>
           )}
+
+        {hasAppliedFilters && filteredMilestones.length === 0 && (
+          <Alert
+            type="info"
+            className="margin-bottom-2"
+            heading={hkcT('milestoneLibrary.noResults.heading')}
+          >
+            {hkcT('milestoneLibrary.noResults.body')}
+          </Alert>
+        )}
 
         {
           <>

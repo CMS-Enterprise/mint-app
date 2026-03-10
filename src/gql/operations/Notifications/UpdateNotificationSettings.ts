@@ -20,6 +20,8 @@ export default gql(/* GraphQL */ `
       dataExchangeApproachMarkedComplete
       dataExchangeApproachMarkedCompleteNotificationType
       incorrectModelStatus
+      iddocQuestionnaireComplete
+      iddocQuestionnaireCompletedNotificationType
     }
   }
 `);

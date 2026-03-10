@@ -114,7 +114,20 @@ const Table = ({ content }: TableType) => {
             // eslint-disable-next-line react/no-array-index-key
             <tr key={contentMapIndex}>
               <th scope="row" className="padding-y-1">
-                <TransOrPrint copy={item.activity} />
+                {item.activity.includes('<ml') ? (
+                  <Trans
+                    i18nKey={item.activity}
+                    components={{
+                      ml: (
+                        <ModalLink solutionRoute={item.href || ''}>
+                          {item.activity}
+                        </ModalLink>
+                      )
+                    }}
+                  />
+                ) : (
+                  <TransOrPrint copy={item.activity} />
+                )}
                 {item.link && item.href && (
                   <div className="display-flex flex-align-center">
                     <ExternalLink href={item.href}>

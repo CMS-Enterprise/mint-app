@@ -80,7 +80,7 @@ const MTOCard = ({ modelID, mtoMatrix }: MtoCardProps) => {
           {date && actorName && !isLocked && (
             <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
               <span className="text-base margin-right-1">
-                {collaborationAreaT('dataExchangeApproachCard.lastModified', {
+                {collaborationAreaT('mtoCard.lastModified', {
                   date: formatDateLocal(date, 'MM/dd/yyyy')
                 })}
               </span>

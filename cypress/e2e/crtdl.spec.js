@@ -7,8 +7,10 @@ describe('FFS CRs and TDLs', () => {
   it('navigates to the FFS CR and TDL page', () => {
     cy.enterModelPlanCollaborationArea('Plan With CRs and TDLs 1');
 
-    cy.contains('h3', 'FFS CRs and TDLS');
-    cy.contains('a', 'View all').click();
+    cy.get('[data-testid="cr-and-tdl-card"]').within(() => {
+      cy.contains('h3', 'FFS CRs and TDLS');
+      cy.contains('a', 'View all').click();
+    });
 
     cy.url().should('include', '/collaboration-area/cr-and-tdl');
 

@@ -18,29 +18,6 @@ export default gql(/* GraphQL */ `
         contractorSupportNote
         iddocSupport
         iddocSupportNote
-        technicalContactsIdentified
-        technicalContactsIdentifiedDetail
-        technicalContactsIdentifiedNote
-        captureParticipantInfo
-        captureParticipantInfoNote
-        icdOwner
-        draftIcdDueDate
-        icdNote
-        uatNeeds
-        stcNeeds
-        testingTimelines
-        testingNote
-        dataMonitoringFileTypes
-        dataMonitoringFileOther
-        dataResponseType
-        dataResponseFileFrequency
-        dataFullTimeOrIncremental
-        eftSetUp
-        unsolicitedAdjustmentsIncluded
-        dataFlowDiagramsNeeded
-        produceBenefitEnhancementFiles
-        fileNamingConventions
-        dataMonitoringNote
         benchmarkForPerformance
         benchmarkForPerformanceNote
         computePerformanceScores

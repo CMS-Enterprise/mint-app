@@ -56,7 +56,9 @@ const notificationPreferences: NotificationPerferenceType = {
   ],
   newDiscussionAddedNotificationType: null,
   dataExchangeApproachMarkedCompleteNotificationType: null,
-  incorrectModelStatus: [UserNotificationPreferenceFlag.EMAIL]
+  incorrectModelStatus: [UserNotificationPreferenceFlag.EMAIL],
+  iddocQuestionnaireComplete: [UserNotificationPreferenceFlag.EMAIL],
+  iddocQuestionnaireCompletedNotificationType: null
 };
 
 const notificationsSettingsMock = [
@@ -67,7 +69,9 @@ const notificationsSettingsMock = [
     result: {
       data: {
         currentUser: {
-          notificationPreferences
+          __typename: 'CurrentUser',
+          notificationPreferences,
+          leadModelPlanCount: 0
         }
       }
     }
@@ -93,7 +97,7 @@ describe('Notification Settings Page', () => {
     );
 
     const { user } = setup(
-      <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsSettingsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -177,7 +181,7 @@ describe('Notification Settings Page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsSettingsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

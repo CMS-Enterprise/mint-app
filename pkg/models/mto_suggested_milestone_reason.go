@@ -5,8 +5,9 @@ import "github.com/google/uuid"
 // MilestoneSuggestionReasonTable is an enum of database tables that can trigger MTO milestone suggestions
 type MilestoneSuggestionReasonTable string
 
-// These constants correspond to the mto_milestone_suggestion_reason_table PostgreSQL enum created in V253
+// These constants correspond to the mto_milestone_suggestion_reason_table PostgreSQL enum created in V260
 const (
+	MilestoneSuggestionReasonTableIddocQuestionnaire           MilestoneSuggestionReasonTable = "iddoc_questionnaire"
 	MilestoneSuggestionReasonTablePlanBasics                   MilestoneSuggestionReasonTable = "plan_basics"
 	MilestoneSuggestionReasonTablePlanBeneficiaries            MilestoneSuggestionReasonTable = "plan_beneficiaries"
 	MilestoneSuggestionReasonTablePlanGeneralCharacteristics   MilestoneSuggestionReasonTable = "plan_general_characteristics"

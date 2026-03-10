@@ -48,6 +48,41 @@ type ExistingModelLinkTranslation struct {
 	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
+// Represents IDDOC questionnaire translation data
+type IddocQuestionnaireTranslation struct {
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+	// TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
+	TaskListStatus                    models.TranslationFieldWithOptions            `json:"taskListStatus"`
+	Needed                            models.TranslationFieldWithOptionsAndChildren `json:"needed" db:"needed"`
+	TechnicalContactsIdentified       models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
+	TechnicalContactsIdentifiedDetail models.TranslationField                       `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
+	TechnicalContactsIdentifiedNote   models.TranslationField                       `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
+	CaptureParticipantInfo            models.TranslationFieldWithOptionsAndParent   `json:"captureParticipantInfo" db:"capture_participant_info"`
+	CaptureParticipantInfoNote        models.TranslationField                       `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
+	IcdOwner                          models.TranslationFieldWithParent             `json:"icdOwner" db:"icd_owner"`
+	DraftIcdDueDate                   models.TranslationFieldWithParent             `json:"draftIcdDueDate" db:"draft_icd_due_date"`
+	IcdNote                           models.TranslationField                       `json:"icdNote" db:"icd_note"`
+	UatNeeds                          models.TranslationFieldWithParent             `json:"uatNeeds" db:"uat_needs"`
+	StcNeeds                          models.TranslationFieldWithParent             `json:"stcNeeds" db:"stc_needs"`
+	TestingTimelines                  models.TranslationFieldWithParent             `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote                       models.TranslationField                       `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes           models.TranslationFieldWithOptionsAndParent   `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
+	DataMonitoringFileOther           models.TranslationField                       `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType                  models.TranslationFieldWithParent             `json:"dataResponseType" db:"data_response_type"`
+	DataResponseFileFrequency         models.TranslationFieldWithParent             `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
+	DataFullTimeOrIncremental         models.TranslationFieldWithOptionsAndParent   `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
+	EftSetUp                          models.TranslationFieldWithOptionsAndParent   `json:"eftSetUp" db:"eft_set_up"`
+	UnsolicitedAdjustmentsIncluded    models.TranslationFieldWithOptionsAndParent   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
+	DataFlowDiagramsNeeded            models.TranslationFieldWithOptionsAndParent   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
+	ProduceBenefitEnhancementFiles    models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
+	FileNamingConventions             models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
+	DataMonitoringNote                models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
+	// IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+	IsComplete   models.TranslationFieldWithOptions `json:"isComplete"`
+	CompletedBy  models.TranslationField            `json:"completedBy" db:"completed_by"`
+	CompletedDts models.TranslationField            `json:"completedDts" db:"completed_dts"`
+}
+
 // Represents key contact category base translation data
 type KeyContactCategoryTranslation struct {
 	Name models.TranslationField `json:"name" db:"name"`
@@ -529,29 +564,6 @@ type PlanOpsEvalAndLearningTranslation struct {
 	ContractorSupportNote                        models.TranslationField                       `json:"contractorSupportNote" db:"contractor_support_note"`
 	IddocSupport                                 models.TranslationFieldWithOptionsAndChildren `json:"iddocSupport" db:"iddoc_support"`
 	IddocSupportNote                             models.TranslationField                       `json:"iddocSupportNote" db:"iddoc_support_note"`
-	TechnicalContactsIdentified                  models.TranslationFieldWithOptionsAndParent   `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
-	TechnicalContactsIdentifiedDetail            models.TranslationField                       `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
-	TechnicalContactsIdentifiedNote              models.TranslationField                       `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
-	CaptureParticipantInfo                       models.TranslationFieldWithOptionsAndParent   `json:"captureParticipantInfo" db:"capture_participant_info"`
-	CaptureParticipantInfoNote                   models.TranslationField                       `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
-	IcdOwner                                     models.TranslationFieldWithParent             `json:"icdOwner" db:"icd_owner"`
-	DraftIcdDueDate                              models.TranslationFieldWithParent             `json:"draftIcdDueDate" db:"draft_icd_due_date"`
-	IcdNote                                      models.TranslationFieldWithParent             `json:"icdNote" db:"icd_note"`
-	UatNeeds                                     models.TranslationFieldWithParent             `json:"uatNeeds" db:"uat_needs"`
-	StcNeeds                                     models.TranslationFieldWithParent             `json:"stcNeeds" db:"stc_needs"`
-	TestingTimelines                             models.TranslationFieldWithParent             `json:"testingTimelines" db:"testing_timelines"`
-	TestingNote                                  models.TranslationField                       `json:"testingNote" db:"testing_note"`
-	DataMonitoringFileTypes                      models.TranslationFieldWithOptionsAndParent   `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
-	DataMonitoringFileOther                      models.TranslationField                       `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
-	DataResponseType                             models.TranslationFieldWithParent             `json:"dataResponseType" db:"data_response_type"`
-	DataResponseFileFrequency                    models.TranslationFieldWithParent             `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
-	DataFullTimeOrIncremental                    models.TranslationFieldWithOptionsAndParent   `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
-	EftSetUp                                     models.TranslationFieldWithOptionsAndParent   `json:"eftSetUp" db:"eft_set_up"`
-	UnsolicitedAdjustmentsIncluded               models.TranslationFieldWithOptionsAndParent   `json:"unsolicitedAdjustmentsIncluded" db:"unsolicited_adjustments_included"`
-	DataFlowDiagramsNeeded                       models.TranslationFieldWithOptionsAndParent   `json:"dataFlowDiagramsNeeded" db:"data_flow_diagrams_needed"`
-	ProduceBenefitEnhancementFiles               models.TranslationFieldWithOptionsAndParent   `json:"produceBenefitEnhancementFiles" db:"produce_benefit_enhancement_files"`
-	FileNamingConventions                        models.TranslationFieldWithParent             `json:"fileNamingConventions" db:"file_naming_conventions"`
-	DataMonitoringNote                           models.TranslationField                       `json:"dataMonitoringNote" db:"data_monitoring_note"`
 	BenchmarkForPerformance                      models.TranslationFieldWithOptions            `json:"benchmarkForPerformance" db:"benchmark_for_performance"`
 	BenchmarkForPerformanceNote                  models.TranslationField                       `json:"benchmarkForPerformanceNote" db:"benchmark_for_performance_note"`
 	ComputePerformanceScores                     models.TranslationFieldWithOptions            `json:"computePerformanceScores" db:"compute_performance_scores"`
@@ -2215,67 +2227,6 @@ func (e ModelPlanFilter) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-type MonitoringFileType string
-
-const (
-	MonitoringFileTypeBeneficiary MonitoringFileType = "BENEFICIARY"
-	MonitoringFileTypeProvider    MonitoringFileType = "PROVIDER"
-	MonitoringFileTypePartA       MonitoringFileType = "PART_A"
-	MonitoringFileTypePartB       MonitoringFileType = "PART_B"
-	MonitoringFileTypeOther       MonitoringFileType = "OTHER"
-)
-
-var AllMonitoringFileType = []MonitoringFileType{
-	MonitoringFileTypeBeneficiary,
-	MonitoringFileTypeProvider,
-	MonitoringFileTypePartA,
-	MonitoringFileTypePartB,
-	MonitoringFileTypeOther,
-}
-
-func (e MonitoringFileType) IsValid() bool {
-	switch e {
-	case MonitoringFileTypeBeneficiary, MonitoringFileTypeProvider, MonitoringFileTypePartA, MonitoringFileTypePartB, MonitoringFileTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e MonitoringFileType) String() string {
-	return string(e)
-}
-
-func (e *MonitoringFileType) UnmarshalGQL(v any) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MonitoringFileType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MonitoringFileType", str)
-	}
-	return nil
-}
-
-func (e MonitoringFileType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-func (e *MonitoringFileType) UnmarshalJSON(b []byte) error {
-	s, err := strconv.Unquote(string(b))
-	if err != nil {
-		return err
-	}
-	return e.UnmarshalGQL(s)
-}
-
-func (e MonitoringFileType) MarshalJSON() ([]byte, error) {
-	var buf bytes.Buffer
-	e.MarshalGQL(&buf)
-	return buf.Bytes(), nil
-}
-
 type NonClaimsBasedPayType string
 
 const (
@@ -3045,6 +2996,62 @@ func (e *ParticipantsType) UnmarshalJSON(b []byte) error {
 }
 
 func (e ParticipantsType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// PlanTaskState is computed from PlanTaskStatus for display.
+type PlanTaskState string
+
+const (
+	PlanTaskStateToDo     PlanTaskState = "TO_DO"
+	PlanTaskStateComplete PlanTaskState = "COMPLETE"
+)
+
+var AllPlanTaskState = []PlanTaskState{
+	PlanTaskStateToDo,
+	PlanTaskStateComplete,
+}
+
+func (e PlanTaskState) IsValid() bool {
+	switch e {
+	case PlanTaskStateToDo, PlanTaskStateComplete:
+		return true
+	}
+	return false
+}
+
+func (e PlanTaskState) String() string {
+	return string(e)
+}
+
+func (e *PlanTaskState) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PlanTaskState(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PlanTaskState", str)
+	}
+	return nil
+}
+
+func (e PlanTaskState) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *PlanTaskState) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e PlanTaskState) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
