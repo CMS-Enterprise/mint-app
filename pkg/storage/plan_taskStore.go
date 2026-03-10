@@ -39,11 +39,12 @@ func PlanTaskGetByIDLoader(
 }
 
 // PlanTaskUpdate updates mutable fields on a plan task (status and completion fields)
-func (s *Store) PlanTaskUpdate(
+func PlanTaskUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	task *models.PlanTask,
 ) (*models.PlanTask, error) {
-	updatedTask, err := sqlutils.GetProcedure[models.PlanTask](s, sqlqueries.PlanTask.Update, task)
+	updatedTask, err := sqlutils.GetProcedure[models.PlanTask](np, sqlqueries.PlanTask.Update, task)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, task)
 	}
@@ -52,15 +53,12 @@ func (s *Store) PlanTaskUpdate(
 }
 
 // PlanTaskCreate creates a new plan task (used when a model plan is created)
-func (s *Store) PlanTaskCreate(
+func PlanTaskCreate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	task *models.PlanTask,
-	np sqlutils.NamedPreparer,
 ) (*models.PlanTask, error) {
 	task.ID = utilityuuid.ValueOrNewUUID(task.ID)
-
-	task.ModifiedBy = nil
-	task.ModifiedDts = nil
 
 	retTask, err := sqlutils.GetProcedure[models.PlanTask](np, sqlqueries.PlanTask.Create, task)
 	if err != nil {
