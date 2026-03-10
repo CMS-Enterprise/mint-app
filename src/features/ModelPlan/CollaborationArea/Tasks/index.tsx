@@ -18,6 +18,8 @@ import {
   PlanTaskStatus
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
+
 import type { LastModifiedSectionData } from '../_components/LastModifiedSection';
 import LastModifiedSection from '../_components/LastModifiedSection';
 import {
@@ -157,15 +159,12 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
 
   if (hasNoCurrentTasks) {
     return (
-      <div>
-        <h2 className="margin-top-0">{t('heading')}</h2>
-        <div className="padding-3 border border-base-lighter rounded-lg">
-          <h3 className="margin-top-0 margin-bottom-2">
-            {t('emptyState.heading')}
-          </h3>
-          <p className="margin-0">{t('emptyState.copy')}</p>
-        </div>
-      </div>
+      <Alert type="info">
+        <h3 className="margin-top-0 margin-bottom-1">
+          {t('emptyState.heading')}
+        </h3>
+        <p className="margin-0">{t('emptyState.copy')}</p>
+      </Alert>
     );
   }
 
@@ -175,10 +174,6 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
   const taskState = currentTask.state;
   const baseKey = `${currentTaskKey}.${taskStatus}`;
   const lastEditSection = getLastEditSectionForTask(currentTaskKey);
-  const showSectionDetails = taskStatus !== PlanTaskStatus.TO_DO;
-
-  const canGoPrev = currentIndex > 0;
-  const canGoNext = currentIndex < orderedTasks.length - 1;
 
   return (
     <div>
@@ -196,7 +191,9 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
           </CardHeader>
           <CardBody>
             <p>{t(`${currentTaskKey}.copy`)}</p>
-            {showSectionDetails && (
+
+            {/* Only show section details if task is not TO_DO */}
+            {taskStatus !== PlanTaskStatus.TO_DO && (
               <div className="display-flex flex-align-center flex-wrap-wrap">
                 {currentTaskKey === PlanTaskKey.MODEL_PLAN && (
                   <>
@@ -240,7 +237,7 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
           <Button
             type="button"
             unstyled
-            disabled={!canGoPrev}
+            disabled={currentIndex === 0}
             onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
             className="usa-button--unstyled"
           >
@@ -253,7 +250,7 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
           <Button
             type="button"
             unstyled
-            disabled={!canGoNext}
+            disabled={currentIndex === orderedTasks.length - 1}
             onClick={() =>
               setCurrentIndex(prev =>
                 Math.min(orderedTasks.length - 1, prev + 1)
