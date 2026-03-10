@@ -90,56 +90,63 @@ const MilestoneFilterModal = ({
         shouldCloseOnOverlayClick={false}
         appElement={document.getElementById('root')!}
       >
-        <div
-          className={classNames(
-            'display-flex flex-align-center text-base padding-y-1 padding-left-3 padding-right-1 border-bottom-1px border-base-lighter'
-          )}
-        >
-          <h4 className="margin-bottom-0 margin-top-05">{t('filter.title')}</h4>
-
-          <button
-            type="button"
-            className="mint-modal__x-button text-base"
-            aria-label="Close Modal"
-            data-testid="close-icon"
-            onClick={() => setIsOpen(false)}
+        <div className="mint-body-normal">
+          <div
+            className={classNames(
+              'display-flex flex-align-center text-base padding-y-1 padding-left-3 padding-right-1 border-bottom-1px border-base-lighter'
+            )}
           >
-            <Icon.Close size={4} aria-label="close" />
-          </button>
-        </div>
+            <h4 className="margin-bottom-0 margin-top-05">
+              {t('filter.title')}
+            </h4>
 
-        <div className="padding-y-2 padding-x-3">
-          {filters.map(filter => (
-            <MilestoneFilterGroup
-              key={filter.key}
-              filterGroup={filter}
-              selectedFilters={selectedFilters[filter.key]}
-              setSelectedFilters={selectedFilterOptions =>
-                setSelectedFilters(prevSelectedFilters => ({
-                  ...prevSelectedFilters,
-                  [filter.key]: selectedFilterOptions
-                }))
-              }
-            />
-          ))}
-        </div>
+            <button
+              type="button"
+              className="mint-modal__x-button text-base"
+              aria-label="Close Modal"
+              data-testid="close-icon"
+              onClick={() => setIsOpen(false)}
+            >
+              <Icon.Close size={4} aria-label="close" />
+            </button>
+          </div>
 
-        <div className="border-top-1px border-base-lighter padding-y-2 padding-x-3 display-flex flex-justify">
-          <Button
-            type="button"
-            unstyled
-            onClick={() => setSelectedFilters(emptyFilters)}
+          <div
+            className="padding-y-2 padding-x-3 overflow-y-auto"
+            style={{ maxHeight: '600px' }}
           >
-            {t('filter.clearAll')}
-          </Button>
+            {filters.map(filter => (
+              <MilestoneFilterGroup
+                key={filter.key}
+                filterGroup={filter}
+                selectedFilters={selectedFilters[filter.key]}
+                setSelectedFilters={selectedFilterOptions =>
+                  setSelectedFilters(prevSelectedFilters => ({
+                    ...prevSelectedFilters,
+                    [filter.key]: selectedFilterOptions
+                  }))
+                }
+              />
+            ))}
+          </div>
 
-          <Button
-            type="button"
-            onClick={handleApplyFilters}
-            disabled={isApplyDisabled}
-          >
-            {applyFiltersLabel}
-          </Button>
+          <div className="border-top-1px border-base-lighter padding-y-2 padding-x-3 display-flex flex-justify">
+            <Button
+              type="button"
+              unstyled
+              onClick={() => setSelectedFilters(emptyFilters)}
+            >
+              {t('filter.clearAll')}
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleApplyFilters}
+              disabled={isApplyDisabled}
+            >
+              {applyFiltersLabel}
+            </Button>
+          </div>
         </div>
       </ReactModal>
     </>
