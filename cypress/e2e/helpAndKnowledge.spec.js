@@ -1,4 +1,4 @@
-describe('Model-to-Operations Matrix', () => {
+describe('Help and Knowledge Center', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
@@ -8,7 +8,7 @@ describe('Model-to-Operations Matrix', () => {
     cy.get('[data-testid="Card"]')
       .filter(':has(h3:contains("Model-to-operations matrix"))')
       .within(() => {
-        cy.contains('button', 'Go to matrix').click({ force: true });
+        cy.contains('button', 'Go to matrix').click();
       });
 
     cy.url().should(
@@ -26,7 +26,7 @@ describe('Model-to-Operations Matrix', () => {
     );
     cy.get('[data-testid="Card"]').its('length').as('cardCountBefore');
 
-    cy.contains('button', 'Filter').click({ force: true });
+    cy.contains('button', 'Filter').click();
 
     cy.get('.mint-filter-modal').within(() => {
       // Find #Learning input, then click its label sibling so the checkbox toggles.
@@ -35,8 +35,8 @@ describe('Model-to-Operations Matrix', () => {
         .find('#Learning')
         .siblings('label')
         .scrollIntoView()
-        .click({ force: true });
-      cy.contains('button', 'Apply filter').click({ force: true });
+        .click();
+      cy.contains('button', 'Apply filter').click();
     });
 
     cy.get('.mint-filter-modal').should('not.exist');
