@@ -10,13 +10,18 @@ import {
   PayType,
   TaskStatus
 } from 'gql/generated/graphql';
-import { modelPlanBaseMock } from 'tests/mock/general';
+import { modelID, modelPlanBaseMock } from 'tests/mock/general';
 
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 
 import Recover from './index';
 
 type GetRecoverType = GetRecoverQuery['modelPlan']['payments'];
+
+const RECOVER_PATH =
+  '/models/:modelID/collaboration-area/task-list/payment/recover-payment';
+const recoverRoute = (modelId: string) =>
+  `/models/${modelId}/collaboration-area/task-list/payment/recover-payment`;
 
 const mockData: GetRecoverType = {
   __typename: 'PlanPayments',
@@ -46,97 +51,92 @@ const mockData: GetRecoverType = {
   status: TaskStatus.IN_PROGRESS
 };
 
-const paymentsMock = [
-  {
-    request: {
-      query: GetRecoverDocument,
-      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
-          modelName: 'My excellent plan that I just initiated',
-          payments: mockData,
-          operationalNeeds: [
-            {
-              __typename: 'OperationalNeed',
-              id: '424213',
-              modifiedDts: null
-            }
-          ]
-        }
+const getRecoverMock = {
+  request: {
+    query: GetRecoverDocument,
+    variables: { id: modelID }
+  },
+  result: {
+    data: {
+      modelPlan: {
+        __typename: 'ModelPlan',
+        id: modelID,
+        modelName: 'My excellent plan that I just initiated',
+        payments: mockData,
+        operationalNeeds: [
+          {
+            __typename: 'OperationalNeed',
+            id: '424213',
+            modifiedDts: null
+          }
+        ]
       }
     }
-  },
+  }
+};
+
+// Each mock is consumed once per matching query. React Strict Mode double-mounts components,
+// so GetRecover can run twice in a single test. We include two of each so mocks aren't exhausted.
+const getPaymentsMocks = () => [
+  getRecoverMock,
+  getRecoverMock,
+  ...modelPlanBaseMock,
   ...modelPlanBaseMock
 ];
 
+function createRecoverRouter() {
+  return createMemoryRouter(
+    [
+      {
+        path: RECOVER_PATH,
+        element: (
+          <ModelInfoWrapper>
+            <Recover />
+          </ModelInfoWrapper>
+        )
+      }
+    ],
+    { initialEntries: [recoverRoute(modelID)] }
+  );
+}
+
+async function waitForRecoverForm() {
+  await waitFor(() => {
+    expect(screen.getByTestId('payment-recover-form')).toBeInTheDocument();
+  });
+  await waitFor(() => {
+    expect(
+      screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
+    ).toBeChecked();
+  });
+}
+
+function renderRecover() {
+  return render(
+    <MockedProvider mocks={getPaymentsMocks()}>
+      <RouterProvider router={createRecoverRouter()} />
+    </MockedProvider>
+  );
+}
+
 describe('Model Plan -- Recover', () => {
   it('renders without errors', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/payment/recover-payment',
-          element: (
-            <ModelInfoWrapper>
-              <Recover />
-            </ModelInfoWrapper>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/recover-payment'
-        ]
-      }
-    );
-
-    render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId('payment-recover-form')).toBeInTheDocument();
-    });
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
-      ).toBeChecked();
-    });
+    renderRecover();
+    await waitForRecoverForm();
   });
 
   it('matches snapshot', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/models/:modelID/collaboration-area/task-list/payment/recover-payment',
-          element: (
-            <ModelInfoWrapper>
-              <Recover />
-            </ModelInfoWrapper>
-          )
-        }
-      ],
-      {
-        initialEntries: [
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/recover-payment'
-        ]
-      }
-    );
+    const { asFragment } = renderRecover();
+    await waitForRecoverForm();
 
-    const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
-        <RouterProvider router={router} />
-      </MockedProvider>
-    );
-
+    // Wait for AddNote textareas (they sync from Formik in useEffect); avoids flaky snapshot.
     await waitFor(() => {
       expect(
-        screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
-      ).toBeChecked();
+        screen.getByTestId('payment-recover-payment-note')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('payment-payment-start-date-note')
+      ).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
