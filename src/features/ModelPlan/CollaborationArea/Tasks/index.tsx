@@ -124,13 +124,16 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
       return null;
     }
     if (taskKey === PlanTaskKey.DATA_EXCHANGE) {
-      const { modifiedDts, modifiedByUserAccount } =
-        modelPlan?.dataExchangeApproach ?? {};
-      if (modifiedDts && modifiedByUserAccount) {
+      const dataExchangeApproach =
+        modelPlan?.questionnaires?.dataExchangeApproach;
+      if (
+        dataExchangeApproach?.modifiedDts &&
+        dataExchangeApproach.modifiedByUserAccount?.commonName
+      ) {
         return {
-          modifiedDts,
+          modifiedDts: dataExchangeApproach.modifiedDts,
           modifiedByUserAccount: {
-            commonName: modifiedByUserAccount.commonName
+            commonName: dataExchangeApproach.modifiedByUserAccount.commonName
           }
         };
       }
