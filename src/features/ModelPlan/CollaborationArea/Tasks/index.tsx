@@ -103,7 +103,9 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
 
-  const orderedTasks = TASK_KEY_ORDER.map(key => tasksByKey[key]);
+  const orderedTasks = TASK_KEY_ORDER.map(key => tasksByKey[key]).filter(
+    Boolean
+  );
   const hasNoCurrentTasks = orderedTasks.length === 0;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -167,8 +169,8 @@ const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
     );
   }
 
-  const currentTaskKey = TASK_KEY_ORDER[currentIndex];
-  const currentTask = tasksByKey[currentTaskKey];
+  const currentTask = orderedTasks[currentIndex];
+  const currentTaskKey = currentTask.key;
   const taskStatus = currentTask.status;
   const taskState = currentTask.state;
   const baseKey = `${currentTaskKey}.${taskStatus}`;
