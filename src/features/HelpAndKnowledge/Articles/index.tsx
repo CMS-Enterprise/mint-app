@@ -41,7 +41,8 @@ export enum HelpArticle {
   ADD_CUSTOM_SOLUTION = 'ADD_CUSTOM_SOLUTION',
   UPDATING_MTO_STATUS = 'UPDATING_MTO_STATUS',
   SHARING_EXPORTING_MTO = 'SHARING_EXPORTING_MTO',
-  LESSON_LEARNED_REPOSITORY = 'LESSON_LEARNED_REPOSITORY'
+  LESSON_LEARNED_REPOSITORY = 'LESSON_LEARNED_REPOSITORY',
+  OPERATIONAL_PLANNING = 'OPERATIONAL_PLANNING'
 }
 
 export type ArticleProps = {
@@ -244,6 +245,12 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     translation: HelpArticle.LESSON_LEARNED_REPOSITORY,
     type: ArticleCategories.GETTING_STARTED,
     external: true
+  },
+  {
+    key: HelpArticle.OPERATIONAL_PLANNING,
+    route: '/operational-planning-for-medicare-advantage-and-part-d-models',
+    translation: 'operationalPlanning',
+    type: ArticleCategories.GETTING_STARTED
   }
 ];
 
