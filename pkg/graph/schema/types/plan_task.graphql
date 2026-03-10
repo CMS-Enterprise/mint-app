@@ -1,0 +1,50 @@
+"""
+PlanTask represents a task on a model plan (e.g. model plan details, MTO, data exchange).
+"""
+type PlanTask {
+  id: UUID!
+  key: PlanTaskKey!
+  status: PlanTaskStatus!
+  state: PlanTaskState! @goField(forceResolver: true)
+  completedBy: UUID
+  completedByUserAccount: UserAccount @goField(forceResolver: true)
+  completedDts: Time
+  createdBy: UUID!
+  createdByUserAccount: UserAccount! @goField(forceResolver: true)
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount @goField(forceResolver: true)
+  modifiedDts: Time
+}
+
+"""
+PlanTaskKey identifies which of the three plan tasks this row represents.
+"""
+enum PlanTaskKey {
+  MODEL_PLAN
+  MTO
+  DATA_EXCHANGE
+}
+
+"""
+PlanTaskStatus is stored in the database and represents the task lifecycle.
+"""
+enum PlanTaskStatus {
+  NOT_NEEDED
+  UPCOMING
+  TO_DO
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+PlanTaskState is computed from PlanTaskStatus for display.
+"""
+enum PlanTaskState {
+  TO_DO
+  COMPLETE
+}
+
+extend type Mutation {
+  planTaskToggleComplete(planTaskID: UUID!, isComplete: Boolean!): PlanTask!
+}

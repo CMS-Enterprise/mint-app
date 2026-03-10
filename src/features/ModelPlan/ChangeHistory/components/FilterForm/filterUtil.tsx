@@ -18,6 +18,7 @@ export enum TypeOfChange {
 // Relevant values refer to TableName in the gql schema
 export enum TypeOfOtherChange {
   DATA_EXCHANGE_APPROACH = 'data_exchange_approach',
+  IDDOC_QUESTIONNAIRE = 'iddoc_questionnaire',
   DISCUSSIONS = 'discussions',
   DOCUMENTS = 'documents',
   OVERALL_STATUS = 'overall_status',
@@ -44,6 +45,7 @@ export const modelPlanTables: Record<
 export const otherChangeTables: Record<TypeOfOtherChange, TableName | string> =
   {
     data_exchange_approach: TableName.PLAN_DATA_EXCHANGE_APPROACH,
+    iddoc_questionnaire: TableName.IDDOC_QUESTIONNAIRE,
     discussions: TableName.PLAN_DISCUSSION,
     documents: TableName.PLAN_DOCUMENT,
     overall_status: 'overall_status',

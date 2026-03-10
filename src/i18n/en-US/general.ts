@@ -82,6 +82,17 @@ const general = {
     label: 'Date picker',
     open: 'Open date picker',
     warning: 'Date is in the past'
+  },
+  filter: {
+    title: 'Filter',
+    titlePlural: 'Filters',
+    filterGroupHeading: 'By {{groupName}}',
+    filterGroupDescription: 'This filters by the "{{groupName}}" field.',
+    applyFilter: 'Apply filter',
+    applyFilterWithCount: 'Apply {{count}} filters',
+    clearAll: 'Clear all',
+    showAll: 'Show all',
+    removeFilter: 'Remove {{filter}} filter'
   }
 };
 

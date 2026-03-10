@@ -47,6 +47,7 @@ export const modelPlanSectionMap: LockableSectionMapType = {
   'participants-and-providers': LockableSection.PARTICIPANTS_AND_PROVIDERS,
   payment: LockableSection.PAYMENT,
   'data-exchange-approach': LockableSection.DATA_EXCHANGE_APPROACH,
+  'iddoc-questionnaire': LockableSection.IDDOC_QUESTIONNAIRE,
   'model-to-operations': LockableSection.MODELS_TO_OPERATION_MATRIX,
   'model-timeline': LockableSection.TIMELINE
 };
@@ -82,7 +83,6 @@ const lockedRouteParser = (route: string): string => {
   const modelPlanRoute: string = route.split('/')[4];
 
   if (
-    modelPlanRoute === 'data-exchange-approach' ||
     modelPlanRoute === 'model-to-operations' ||
     modelPlanRoute === 'model-timeline'
   ) {
@@ -106,7 +106,7 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
 
   const isLockable: boolean =
     modelPlanRoute === 'model-plan' ||
-    (modelPlanRoute === 'data-exchange-approach' && !isReadView) ||
+    modelPlanRoute === 'additional-questionnaires' ||
     (modelPlanRoute === 'model-timeline' && !isReadView) ||
     (modelPlanRoute === 'model-to-operations' && !isReadView);
 

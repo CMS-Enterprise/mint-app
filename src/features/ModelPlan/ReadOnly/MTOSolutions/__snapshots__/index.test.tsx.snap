@@ -406,7 +406,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                   style="padding-left: 0px; white-space: normal; max-width: 275px;"
                 >
                   <button
-                    class="usa-button usa-button--unstyled mint-print-link"
+                    class="usa-button usa-button--unstyled mint-print-link mint-body-normal"
                     data-testid="button"
                     type="button"
                   >
@@ -418,7 +418,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                   style="padding-left: 0px; white-space: normal; max-width: auto;"
                 >
                   <button
-                    class="usa-button usa-button--unstyled mint-print-link"
+                    class="usa-button usa-button--unstyled mint-print-link mint-body-normal"
                     data-testid="button"
                     type="button"
                   >
@@ -506,7 +506,7 @@ exports[`Read view MTO milestones > matches snapshot 1`] = `
                   style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
                 >
                   <button
-                    class="usa-button usa-button--unstyled mint-print-link"
+                    class="usa-button usa-button--unstyled mint-print-link mint-body-normal"
                     data-testid="button"
                     type="button"
                   >
