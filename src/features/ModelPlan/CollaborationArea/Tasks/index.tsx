@@ -12,7 +12,6 @@ import {
 } from '@trussworks/react-uswds';
 import {
   GetCollaborationAreaQuery,
-  PlanTask,
   PlanTaskKey,
   PlanTaskState,
   PlanTaskStatus
@@ -69,44 +68,23 @@ const TASK_KEY_ORDER: PlanTaskKey[] = [
   PlanTaskKey.DATA_EXCHANGE
 ];
 
-export type TasksByKey = Record<
-  PlanTaskKey,
-  Pick<PlanTask, 'key' | 'state' | 'status'>
->;
-
-// TEMP
-export const MOCK_TASKS_BY_KEY: TasksByKey = {
-  [PlanTaskKey.MODEL_PLAN]: {
-    key: PlanTaskKey.MODEL_PLAN,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.TO_DO
-  },
-  [PlanTaskKey.DATA_EXCHANGE]: {
-    key: PlanTaskKey.DATA_EXCHANGE,
-    state: PlanTaskState.COMPLETE,
-    status: PlanTaskStatus.COMPLETE
-  },
-  [PlanTaskKey.MTO]: {
-    key: PlanTaskKey.MTO,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.IN_PROGRESS
-  }
-};
-
 type TasksWrapperProps = {
   modelPlan: GetCollaborationAreaQuery['modelPlan'];
-  tasksByKey: TasksByKey;
+  tasks: GetCollaborationAreaQuery['modelPlan']['tasks'];
 };
 
-const TasksWrapper = ({ modelPlan, tasksByKey }: TasksWrapperProps) => {
+const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { t: tableAndPaginationT } = useTranslation('tableAndPagination');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
 
-  const orderedTasks = TASK_KEY_ORDER.map(key => tasksByKey[key]).filter(
-    Boolean
+  const orderedTasks = TASK_KEY_ORDER.map(key =>
+    tasks.find(task => task.key === key)
+  ).filter(
+    (task): task is GetCollaborationAreaQuery['modelPlan']['tasks'][number] =>
+      Boolean(task)
   );
   const hasNoCurrentTasks = orderedTasks.length === 0;
 

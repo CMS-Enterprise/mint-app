@@ -1,5 +1,6 @@
 import { MockedResponse } from '@apollo/client/testing';
 import {
+  GetCollaborationAreaQuery,
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
@@ -50,12 +51,52 @@ import {
   MtoSolutionStatus,
   MtoSolutionType,
   MtoStatus,
-  MtoTemplateKey
+  MtoTemplateKey,
+  PlanTaskKey,
+  PlanTaskState,
+  PlanTaskStatus
 } from 'gql/generated/graphql';
 
 import { MtoTemplateType } from 'contexts/MTOModalContext';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
+export type PlanTaskEntry =
+  GetCollaborationAreaQuery['modelPlan']['tasks'][number];
+
+const PLAN_TASK_KEYS_ORDER = [
+  PlanTaskKey.MODEL_PLAN,
+  PlanTaskKey.MTO,
+  PlanTaskKey.DATA_EXCHANGE
+] as const;
+
+export function makePlanTasks(
+  overrides?: Partial<
+    Record<PlanTaskKey, Partial<Pick<PlanTaskEntry, 'state' | 'status'>>>
+  >
+): PlanTaskEntry[] {
+  return PLAN_TASK_KEYS_ORDER.map(key => ({
+    __typename: 'PlanTask' as const,
+    key,
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.TO_DO,
+    ...overrides?.[key]
+  }));
+}
+
+export const planTasksAllToDo = makePlanTasks();
+export const planTasksWithModelPlanComplete = makePlanTasks({
+  [PlanTaskKey.MODEL_PLAN]: {
+    state: PlanTaskState.COMPLETE,
+    status: PlanTaskStatus.COMPLETE
+  }
+});
+export const planTasksWithModelPlanInProgress = makePlanTasks({
+  [PlanTaskKey.MODEL_PLAN]: {
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.IN_PROGRESS
+  }
+});
 
 export const pointsOfContact = [
   {
