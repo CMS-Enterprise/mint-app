@@ -13,16 +13,6 @@ type SectionWithModified = ModelPlan[keyof ModelPlan] & {
   modifiedByUserAccount: UserAccount;
 };
 
-// Section keys used for "sections started" count (excludes operationalNeeds)
-const MODEL_PLAN_SECTIONS_FOR_COUNT = [
-  'basics',
-  'generalCharacteristics',
-  'participantsAndProviders',
-  'beneficiaries',
-  'opsEvalAndLearning',
-  'payments'
-] as const;
-
 /**
  * Returns the section with the most recent modifiedDts, or undefined if none.
  */
@@ -47,7 +37,8 @@ export const getLastModifiedSection = (
  * Returns the number of sections that have been started (i.e. not in 'READY' status).
  */
 export const getSectionStartedCount = (modelPlan: ModelPlan): number => {
-  return MODEL_PLAN_SECTIONS_FOR_COUNT.filter(key => {
+  return (TaskListSectionKeys as (keyof ModelPlan)[]).filter(key => {
+    // Safely access the section by restricting keys to keyof ModelPlan
     const section = modelPlan[key] as { status?: TaskStatus } | undefined;
     return section?.status !== TaskStatus.READY;
   }).length;
