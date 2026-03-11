@@ -224,7 +224,10 @@ BEGIN
         VALUES (gen_random_uuid(), source.mto_common_milestone_id, source.model_plan_id, modified_by_id);
 
     -- Step 3: Refresh reasons for this trigger table + model plan
-    -- Delete stale reasons (those originating from TG_TABLE_NAME for affected milestones)
+    -- Delete stale reasons only for the columns that actually changed (changedKeys).
+    -- Scoping by changedKeys keeps this DELETE symmetric with the INSERT below:
+    -- if only metadata (modified_dts, modified_by) changed, no data-column reasons are
+    -- touched, preventing the DELETE from wiping reasons that the INSERT cannot restore.
     DELETE FROM mto_suggested_milestone_reason r
     USING mto_suggested_milestone s,
           public.mto_common_milestone cm
@@ -232,7 +235,8 @@ BEGIN
       AND s.mto_common_milestone_id    = cm.id
       AND s.model_plan_id              = plan_id
       AND r.trigger_table              = TG_TABLE_NAME::mto_milestone_suggestion_reason_table
-      AND cm.trigger_table             = TG_TABLE_NAME::text;
+      AND cm.trigger_table             = TG_TABLE_NAME::text
+      AND r.trigger_col                = ANY(changedKeys);
 
     -- Insert updated reasons (joining function output to the current mto_suggested_milestone rows)
     INSERT INTO mto_suggested_milestone_reason (
