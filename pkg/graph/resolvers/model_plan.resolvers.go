@@ -63,8 +63,20 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 
 // Tasks is the resolver for the tasks field.
 func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTask, error) {
-	// Stub: return empty list until plan_task data layer and loader are implemented.
-	return []*models.PlanTask{}, nil
+	// For now, only return stubbed tasks for the sample model plan; all other plans show an empty list.
+	if obj.ModelName != constants.SampleModelName {
+		return []*models.PlanTask{}, nil
+	}
+
+	tasks := []*models.PlanTask{
+		models.NewPlanTask(uuid.Nil, obj.ID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusToDo),
+		models.NewPlanTask(uuid.Nil, obj.ID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress),
+		models.NewPlanTask(uuid.Nil, obj.ID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusComplete),
+	}
+	for i := range tasks {
+		tasks[i].ID = uuid.New()
+	}
+	return tasks, nil
 }
 
 // Payments is the resolver for the payments field.
