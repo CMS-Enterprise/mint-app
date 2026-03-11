@@ -13,6 +13,11 @@ export default gql(/* GraphQL */ `
       }
       status
       taskListStatus
+      tasks {
+        key
+        state
+        status
+      }
       isFavorite
       suggestedPhase {
         phase
