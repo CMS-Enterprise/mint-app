@@ -427,13 +427,13 @@ export const Support = () => {
                               link1: (
                                 <UswdsReactLink
                                   className="deep-underline"
-                                  to="?solution=accountable-care-organization&section=about"
+                                  to="?solution=4-innovation&section=about"
                                 />
                               ),
                               link2: (
                                 <UswdsReactLink
                                   className="deep-underline"
-                                  to="?solution=4-innovation&section=about"
+                                  to="?solution=accountable-care-organization&section=about"
                                 />
                               )
                             }}
