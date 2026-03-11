@@ -20,10 +20,10 @@ export type AccordionItemsConfigType = {
   content: {
     paragraphs: {
       text: string;
-      orderedList: boolean;
-      list: {
+      orderedList?: boolean;
+      list?: {
         text: string;
-        subList: string[];
+        subList?: string[];
       }[];
     }[];
     paragraphLinks?: {
@@ -67,7 +67,7 @@ const OperationalPlanning = () => {
                             `accordionItems.${title}.content.paragraphLinks.link1.href`
                           )}
                         >
-                          fake child
+                          {' '}
                         </ExternalLink>
                       )
                     }}
