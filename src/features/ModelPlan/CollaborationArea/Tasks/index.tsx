@@ -29,26 +29,23 @@ import {
 type StateConfig = {
   style: string;
   icon: React.ReactNode;
-  copy: string;
 };
 
 const STATE_CONFIG: Record<PlanTaskState, StateConfig> = {
   [PlanTaskState.TO_DO]: {
     style: 'bg-warning-light',
-    icon: <Icon.PriorityHigh />,
-    copy: 'state.TO_DO'
+    icon: <Icon.PriorityHigh />
   },
   [PlanTaskState.COMPLETE]: {
     style: 'bg-success-dark text-white',
-    icon: <Icon.Check />,
-    copy: 'state.COMPLETE'
+    icon: <Icon.Check />
   }
 };
 
 const StateTag = ({ state }: { state: PlanTaskState }) => {
   const { t } = useTranslation('tasks');
 
-  const { style, icon, copy } = STATE_CONFIG[state];
+  const { style, icon } = STATE_CONFIG[state];
 
   return (
     <div
@@ -56,7 +53,7 @@ const StateTag = ({ state }: { state: PlanTaskState }) => {
       style={{ padding: '7px 11px', gap: '0.5rem' }}
     >
       {icon}
-      <span>{t(copy)}</span>
+      <span>{t(`state.${state}`)}</span>
     </div>
   );
 };
