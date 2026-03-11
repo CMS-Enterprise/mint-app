@@ -33,7 +33,7 @@ import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 import TimelineCard from './Cards/TimelineCard';
-import TasksWrapper, { MOCK_TASKS_BY_KEY } from './Tasks';
+import TasksWrapper from './Tasks';
 
 import './index.scss';
 
@@ -75,7 +75,8 @@ const CollaborationArea = () => {
     suggestedPhase,
     mtoMatrix,
     mostRecentEdit,
-    createdDts
+    createdDts,
+    tasks
   } = modelPlan;
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -224,10 +225,7 @@ const CollaborationArea = () => {
 
             <Grid row gap>
               <Grid col={12}>
-                <TasksWrapper
-                  modelPlan={modelPlan}
-                  tasksByKey={MOCK_TASKS_BY_KEY}
-                />
+                <TasksWrapper modelPlan={modelPlan} tasks={tasks} />
               </Grid>
               <Divider className="margin-y-6" />
               <Grid col={12}>

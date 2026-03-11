@@ -1,102 +1,20 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
-import {
-  GetCollaborationAreaQuery,
-  PlanTask,
-  PlanTaskKey,
-  PlanTaskState,
-  PlanTaskStatus
-} from 'gql/generated/graphql';
+import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 import { collaborationAreaData } from 'tests/mock/general';
+import {
+  modelID,
+  planTasksAllToDo,
+  planTasksWithModelPlanComplete,
+  planTasksWithModelPlanInProgress
+} from 'tests/mock/mto';
 import setup from 'tests/util';
 
-import TasksWrapper, { type TasksByKey } from './index';
-
-const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
-
-const basePlanTask: Pick<
-  PlanTask,
-  'id' | 'createdBy' | 'createdByUserAccount' | 'createdDts'
-> = {
-  id: '00000000-0000-0000-0000-000000000001',
-  createdBy: '00000000-0000-0000-0000-000000000002',
-  createdByUserAccount: {
-    __typename: 'UserAccount',
-    id: '00000000-0000-0000-0000-000000000002',
-    commonName: 'Test User',
-    email: 'test@example.com',
-    familyName: 'User',
-    givenName: 'Test',
-    locale: 'en',
-    username: 'testuser',
-    zoneInfo: 'America/New_York'
-  },
-  createdDts: '2024-01-01T00:00:00Z'
-};
-
-const defaultTaskEntry = {
-  key: PlanTaskKey.DATA_EXCHANGE,
-  state: PlanTaskState.TO_DO,
-  status: PlanTaskStatus.TO_DO
-};
-
-const allTasksToDo: TasksByKey = {
-  [PlanTaskKey.MODEL_PLAN]: {
-    key: PlanTaskKey.MODEL_PLAN,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.TO_DO
-  },
-  [PlanTaskKey.DATA_EXCHANGE]: {
-    key: PlanTaskKey.DATA_EXCHANGE,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.TO_DO
-  },
-  [PlanTaskKey.MTO]: {
-    key: PlanTaskKey.MTO,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.TO_DO
-  }
-};
-
-const tasksByKeyWithModelPlanComplete = {
-  [PlanTaskKey.MODEL_PLAN]: {
-    ...basePlanTask,
-    __typename: 'PlanTask',
-    key: PlanTaskKey.MODEL_PLAN,
-    state: PlanTaskState.COMPLETE,
-    status: PlanTaskStatus.COMPLETE
-  },
-  [PlanTaskKey.DATA_EXCHANGE]: {
-    ...defaultTaskEntry,
-    key: PlanTaskKey.DATA_EXCHANGE
-  },
-  [PlanTaskKey.MTO]: {
-    ...defaultTaskEntry,
-    key: PlanTaskKey.MTO
-  }
-};
-
-const tasksByKeyWithModelPlanInProgress = {
-  [PlanTaskKey.MODEL_PLAN]: {
-    ...basePlanTask,
-    __typename: 'PlanTask',
-    key: PlanTaskKey.MODEL_PLAN,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.IN_PROGRESS
-  },
-  [PlanTaskKey.DATA_EXCHANGE]: {
-    ...defaultTaskEntry,
-    key: PlanTaskKey.DATA_EXCHANGE
-  },
-  [PlanTaskKey.MTO]: {
-    ...defaultTaskEntry,
-    key: PlanTaskKey.MTO
-  }
-};
+import TasksWrapper from './index';
 
 describe('TasksWrapper', () => {
-  it('renders three task cards for MODEL_PLAN, DATA_EXCHANGE, and MTO', async () => {
+  it('renders current tasks stack with first task (Model Plan) and navigation', async () => {
     const router = createMemoryRouter(
       [
         {
@@ -104,7 +22,7 @@ describe('TasksWrapper', () => {
           element: (
             <TasksWrapper
               modelPlan={collaborationAreaData}
-              tasksByKey={allTasksToDo}
+              tasks={planTasksAllToDo}
             />
           )
         }
@@ -119,13 +37,12 @@ describe('TasksWrapper', () => {
     });
 
     expect(getByText('Start your Model Plan')).toBeInTheDocument();
-    expect(getByText('Start your data exchange approach')).toBeInTheDocument();
-    expect(
-      getByText('Start your model-to-operations matrix (MTO)')
-    ).toBeInTheDocument();
+    expect(getByText('Previous')).toBeInTheDocument();
+    expect(getByText('Next')).toBeInTheDocument();
+    expect(getByText('See all (3)')).toBeInTheDocument();
   });
 
-  it('uses StateTag reflecting task state when tasksByKey has COMPLETE state', async () => {
+  it('uses StateTag reflecting task state when tasks have COMPLETE state', async () => {
     const router = createMemoryRouter(
       [
         {
@@ -133,7 +50,7 @@ describe('TasksWrapper', () => {
           element: (
             <TasksWrapper
               modelPlan={collaborationAreaData}
-              tasksByKey={tasksByKeyWithModelPlanComplete}
+              tasks={planTasksWithModelPlanComplete}
             />
           )
         }
@@ -158,7 +75,7 @@ describe('TasksWrapper', () => {
           element: (
             <TasksWrapper
               modelPlan={collaborationAreaData}
-              tasksByKey={tasksByKeyWithModelPlanInProgress}
+              tasks={planTasksWithModelPlanInProgress}
             />
           )
         }
@@ -196,7 +113,7 @@ describe('TasksWrapper', () => {
           element: (
             <TasksWrapper
               modelPlan={modelPlanWithModified}
-              tasksByKey={tasksByKeyWithModelPlanComplete}
+              tasks={planTasksWithModelPlanComplete}
             />
           )
         }
