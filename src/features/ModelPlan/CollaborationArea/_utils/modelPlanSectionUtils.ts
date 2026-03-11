@@ -5,7 +5,6 @@ import {
 } from 'gql/generated/graphql';
 
 import TaskListSectionKeys from 'constants/enums';
-import { getKeys } from 'types/translation';
 
 type ModelPlan = GetCollaborationAreaQuery['modelPlan'];
 
@@ -32,19 +31,13 @@ export const getLastModifiedSection = (
 ): SectionWithModified | null | undefined => {
   if (!modelPlan) return null;
   let latestSection: SectionWithModified | undefined;
-  getKeys(modelPlan).forEach(section => {
-    if (!TaskListSectionKeys.includes(section)) {
-      return;
-    }
-    const sectionData = modelPlan[section] as unknown as {
-      modifiedDts: string;
-      modifiedByUserAccount: UserAccount;
-    } | null;
+  (TaskListSectionKeys as (keyof ModelPlan)[]).forEach(section => {
+    const sectionData = modelPlan[section] as SectionWithModified | null;
     if (
       sectionData?.modifiedDts &&
       sectionData.modifiedDts > (latestSection?.modifiedDts || '')
     ) {
-      latestSection = modelPlan[section] as SectionWithModified;
+      latestSection = sectionData;
     }
   });
   return latestSection;
